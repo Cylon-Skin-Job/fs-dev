@@ -12,6 +12,8 @@
  * the display type, chat config, and layout.
  */
 
+import { usePanelStore } from '../state/panelStore';
+
 // --- Types ---
 
 export interface PanelTheme {
@@ -242,6 +244,27 @@ export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {
   return configs
     .filter((c): c is PanelConfig => c !== null)
     .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+}
+
+/**
+ * Re-run panel discovery after a workspace switch. Clears the existing
+ * panelConfigs briefly (so the UI shows its loading branch), discovers
+ * the new workspace's panels, and sends a set_panel for the first one.
+ *
+ * Used by workspace-handlers on `workspace:switched`. Fire-and-forget:
+ * callers should `.catch(console.error)`.
+ */
+export async function rediscoverPanels(ws: WebSocket): Promise<void> {
+  usePanelStore.getState().setPanelConfigs([]);
+  const configs = await loadAllPanels(ws);
+  usePanelStore.getState().setPanelConfigs(configs);
+  if (configs.length > 0) {
+    const first = configs[0];
+    usePanelStore.getState().setCurrentPanel(first.id);
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'set_panel', panel: first.id }));
+    }
+  }
 }
 
 /**

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useFileStore } from '../../state/fileStore';
 import { useFileTreeListener, loadExpandedFolders } from '../../hooks/useFileTree';
-import { useCodeViewerWorkspaceStyles } from '../../hooks/usePanelWorkspaceStyles';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { FileTree } from './FileTree';
 import { FileViewer } from './FileViewer';
+import { RightSecondaryResize } from '../ResizeHandle';
 
 export function FileExplorer() {
-  useCodeViewerWorkspaceStyles();
+  useViewLayoutStyles('code-viewer');
 
   const viewMode = useFileStore((s) => s.viewMode);
   const rootNodes = useFileStore((s) => s.rootNodes);
@@ -35,8 +36,11 @@ export function FileExplorer() {
         )}
       </div>
 
-      {/* Right sidebar: file tree */}
+      {/* Right sidebar: file tree. Left edge has a resize handle that writes
+       * to viewStates[code-viewer].widths.rightSecondary — the same width
+       * variable the sticky secondary chat uses. Drag either and both resize. */}
       <div className="file-tree-sidebar">
+        <RightSecondaryResize panel="code-viewer" />
         {error && (
           <div className="file-explorer-error">
             <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>error</span>

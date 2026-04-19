@@ -25,6 +25,7 @@
  */
 
 const path = require('path');
+const fsPromises = require('fs').promises;
 const { v4: generateId } = require('uuid');
 
 const { ThreadWebSocketHandler } = require('../thread');
@@ -49,7 +50,7 @@ const { getUsername } = require('../thread/ChatFile');
  * @param {Map} deps.sessions - server.js module-level sessions Map (for close handler)
  * @param {Function} deps.setSessionRoot
  * @param {Function} deps.clearSessionRoot
- * @param {() => string} deps.getDefaultProjectRoot
+ * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @param {() => object} deps.getRobinHandlers - getter closure over server.js let robinHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
  * @returns {{ handleClientMessage: Function, handleClientClose: Function }}
@@ -64,7 +65,7 @@ function createClientMessageRouter({
   sessions,
   setSessionRoot,
   clearSessionRoot,
-  getDefaultProjectRoot,
+  getProjectRoot,
   getRobinHandlers,
   getClipboardHandlers,
 }) {
@@ -119,9 +120,17 @@ function createClientMessageRouter({
         console.log(`[WS] Spawning wire for ${scope} thread:`, threadId);
         session.currentThreadId = threadId;
         session.currentScope = scope;  // SPEC-26b: track which scope owns the active wire
-        const wire = spawnThreadWire(threadId, projectRoot);
+        // CHAT_SCOPE_SPEC: populate scope fields so resolveScope() can build the
+        // structured workspace string for every chat:* event this wire emits.
+        session.currentWorkspaceId = path.basename(projectRoot);
+        session.currentViewId = (scope === 'view') ? (state?.panelId || state?.viewName || null) : null;
+        const scopeContext = {
+          workspaceId: session.currentWorkspaceId,
+          viewId: session.currentViewId,
+        };
+        const wire = spawnThreadWire(threadId, projectRoot, scopeContext);
         session.wire = wire;
-        registerWire(threadId, wire, projectRoot, ws);
+        registerWire(threadId, wire, projectRoot, ws, scopeContext);
 
         console.log('[WS] Wire spawned, awaiting harness ready...');
         await awaitHarnessReady(wire);
@@ -192,7 +201,16 @@ function createClientMessageRouter({
       if (clientMsg.type === 'set_panel') {
         const { panel, rootFolder } = clientMsg;
         if (panel) {
-          const projectRoot = getDefaultProjectRoot();
+          const projectRoot = session.projectRoot;
+          if (!projectRoot) {
+            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+            return;
+          }
+          // CHAT_SCOPE_SPEC: track the current view name so view-bound chats
+          // can resolve the correct scope string. resolveScope() only reads
+          // this when session.currentScope === 'view', so setting it here
+          // unconditionally is safe for workspace-universal chats too.
+          session.currentViewId = panel;
           setSessionRoot(ws, panel, rootFolder || null);
 
           // Check if this view has chat before setting up threads
@@ -324,7 +342,11 @@ function createClientMessageRouter({
 
       if (clientMsg.type === 'state:get') {
         try {
-          const projectRoot = getDefaultProjectRoot();
+          const projectRoot = session.projectRoot;
+          if (!projectRoot) {
+            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+            return;
+          }
           const username = getUsername();
           const state = await resolveViewState(projectRoot, clientMsg.view, username);
           ws.send(JSON.stringify({
@@ -341,7 +363,11 @@ function createClientMessageRouter({
 
       if (clientMsg.type === 'state:set') {
         try {
-          const projectRoot = getDefaultProjectRoot();
+          const projectRoot = session.projectRoot;
+          if (!projectRoot) {
+            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+            return;
+          }
           const username = getUsername();
           const merged = await writeViewStatePatch(projectRoot, clientMsg.view, username, clientMsg.state);
           ws.send(JSON.stringify({
@@ -359,7 +385,11 @@ function createClientMessageRouter({
       if (clientMsg.type === 'file:move') {
         try {
           const { source, target } = clientMsg;
-          const projectRoot = getDefaultProjectRoot();
+          const projectRoot = session.projectRoot;
+          if (!projectRoot) {
+            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+            return;
+          }
           const result = moveFileWithArchive(source, target, projectRoot);
           emit('system:file_deployed', {
             source,
@@ -481,6 +511,99 @@ function createClientMessageRouter({
             error: err.message
           }));
         }
+        return;
+      }
+
+      // ---- Folder picker (FOLDER_PICKER_SPEC) ----
+
+      if (clientMsg.type === 'folder:browse') {
+        const browsePath = clientMsg.path || '/';
+        try {
+          const resolved = path.resolve(browsePath);
+          const entries = await fsPromises.readdir(resolved, { withFileTypes: true });
+          const folders = [];
+
+          for (const entry of entries) {
+            if (!entry.isDirectory()) continue;
+            if (entry.name.startsWith('.')) continue;
+            if (entry.name === 'node_modules') continue;
+
+            const fullPath = path.join(resolved, entry.name);
+            let hasChildren = false;
+            let isRepo = false;
+            try {
+              const children = await fsPromises.readdir(fullPath);
+              hasChildren = children.length > 0;
+              isRepo = children.includes('.git');
+            } catch (_) {}
+
+            folders.push({ name: entry.name, path: fullPath, hasChildren, isRepo });
+          }
+
+          folders.sort((a, b) => a.name.localeCompare(b.name));
+          const parent = resolved === '/' ? null : path.dirname(resolved);
+          ws.send(JSON.stringify({
+            type: 'folder:browse_result',
+            path: resolved,
+            folders,
+            parent,
+            success: true,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'folder:browse_result',
+            path: browsePath,
+            success: false,
+            error: err.message,
+          }));
+        }
+        return;
+      }
+
+      // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
+
+      if (clientMsg.type === 'workspace:add_requested') {
+        if (typeof clientMsg.repoPath !== 'string' || clientMsg.repoPath.trim() === '') {
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'workspace:add_requested requires repoPath',
+          }));
+          return;
+        }
+        emit('workspace:add_requested', {
+          repoPath: clientMsg.repoPath,
+          connectionId: session.connectionId,
+        });
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:switch_requested') {
+        if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'workspace:switch_requested requires workspaceId',
+          }));
+          return;
+        }
+        emit('workspace:switch_requested', {
+          workspaceId: clientMsg.workspaceId,
+          connectionId: session.connectionId,
+        });
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:remove_requested') {
+        if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'workspace:remove_requested requires workspaceId',
+          }));
+          return;
+        }
+        emit('workspace:remove_requested', {
+          workspaceId: clientMsg.workspaceId,
+          connectionId: session.connectionId,
+        });
         return;
       }
 

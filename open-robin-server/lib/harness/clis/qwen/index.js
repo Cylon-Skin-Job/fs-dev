@@ -127,13 +127,15 @@ class QwenHarness extends BaseCLIHarness {
    *
    * @param {string} threadId
    * @param {string} projectRoot
+   * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<HarnessSession>}
    */
-  async startThread(threadId, projectRoot) {
+  async startThread(threadId, projectRoot, scopeContext = {}) {
     if (!this.cliPath) {
       throw new Error(`Harness not initialized. Call initialize() first.`);
     }
 
+    this._captureScope(threadId, projectRoot, scopeContext);
     const args = this.getSpawnArgs(threadId, projectRoot);
 
     const { spawn } = require('child_process');
@@ -386,7 +388,7 @@ class QwenHarness extends BaseCLIHarness {
     });
 
     emit('chat:turn_end', {
-      workspace: 'code-viewer',
+      workspace: this._getScopeString(threadId),
       threadId,
       turnId: event.turnId,
       userInput: state.currentTurn?.userInput || '',
@@ -405,6 +407,7 @@ class QwenHarness extends BaseCLIHarness {
     this.translators.delete(threadId);
     this.processes.delete(threadId);
     this.sessions.delete(threadId);
+    this.threadScopes.delete(threadId);
   }
 
   /**

@@ -27,50 +27,56 @@ import type { WebSocketMessage, Scope } from '../../types';
  * Resolve the target scope for a stream message.
  *  - Prefer msg.scope (server-side wire tag, 26b+).
  *  - Fall back to store.currentScope (set by wire_ready / thread:opened).
- *  - Final fallback: 'view' — conservative default so a stale stream can't
- *    accidentally pollute project chat.
+ *  - Final fallback: 'project' — SECONDARY_CHAT_SPEC narrowed view-scope to
+ *    agents-viewer only; everything else is project.
  */
 function resolveScope(msg: WebSocketMessage): Scope {
   if (msg.scope === 'project' || msg.scope === 'view') return msg.scope;
   const current = usePanelStore.getState().currentScope;
   if (current) return current;
-  return 'view';
+  return 'project';
 }
 
 /**
- * Read the active chat state slot for a given scope.
- * Mirrors the panelStore's internal getChatState helper — kept local to
- * avoid exposing a private store helper.
+ * Read the active chat state slot for a given scope + threadId.
+ * PER_THREAD_CHAT_STATE: project slots are keyed by threadId.
  */
-function readChatState(scope: Scope) {
+function readChatState(scope: Scope, threadId: string | null) {
   const state = usePanelStore.getState();
-  if (scope === 'project') return state.projectChat;
-  return state.panels[state.currentPanel];
+  if (scope === 'view') return state.panels[state.currentPanel];
+  const tid = threadId ?? state.currentThreadIds.project;
+  if (!tid) return undefined;
+  return state.projectChats[tid];
 }
 
 /**
  * Handle stream-related WebSocket messages.
  * Returns true if the message was handled, false if not recognized.
+ *
+ * PER_THREAD_CHAT_STATE: every write is routed via msg.threadId so primary
+ * and secondary streams stay isolated into their own chat slots. Server
+ * stamps threadId on every outbound chat:* event (wire-broadcaster.js).
  */
 export function handleStreamMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
   const scope = resolveScope(msg);
+  const threadId: string | null = msg.threadId ?? null;
 
   switch (msg.type) {
     case 'turn_begin': {
-      console.log('[WS] Turn begin scope=', scope);
+      console.log('[WS] Turn begin scope=', scope, 'threadId=', threadId?.slice(0, 8));
       // Safety net: if the previous turn wasn't finalized (edge case —
       // finalizeTurn normally handles this), snapshot it now. In the
       // normal flow, currentTurn is already null by this point because
       // finalizeTurn cleared it.
-      const chatState = readChatState(scope);
+      const chatState = readChatState(scope, threadId);
       if (chatState) {
         const prevTurn = chatState.currentTurn;
         const segments = chatState.segments;
 
         if (prevTurn) {
           console.warn('[WS] turn_begin: previous turn was not finalized — snapshotting now');
-          store.addMessage(scope, {
+          store.addMessage(scope, threadId, {
             id: prevTurn.id,
             type: 'assistant',
             content: prevTurn.content,
@@ -80,7 +86,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         }
       }
 
-      store.resetSegments(scope);
+      store.resetSegments(scope, threadId);
       resetGrouper();
 
       // CRITICAL: Clear pendingTurnEnd from the PREVIOUS turn.
@@ -95,9 +101,9 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       // Omitting this line caused new turns to finalize immediately
       // after their first segment, because the stale pendingTurnEnd
       // from the previous turn was still set.
-      store.setPendingTurnEnd(scope, false);
+      store.setPendingTurnEnd(scope, threadId, false);
 
-      store.setCurrentTurn(scope, {
+      store.setCurrentTurn(scope, threadId, {
         id: msg.turnId || '',
         content: '',
         status: 'streaming',
@@ -118,11 +124,11 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           console.log(`[TIMING] FIRST TOKEN (content) at ${t.firstTokenAt.toFixed(1)}ms — TTFT: ${ttft.toFixed(1)}ms`);
         }
         breakSequence();
-        store.appendSegment(scope, 'text', msg.text);
+        store.appendSegment(scope, threadId, 'text', msg.text);
 
-        const turn = readChatState(scope)?.currentTurn;
+        const turn = readChatState(scope, threadId)?.currentTurn;
         if (turn) {
-          store.updateTurnContent(scope, turn.content + msg.text);
+          store.updateTurnContent(scope, threadId, turn.content + msg.text);
         }
       }
       return true;
@@ -137,19 +143,19 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           console.log(`[TIMING] FIRST TOKEN (thinking) at ${t.firstTokenAt.toFixed(1)}ms — TTFT: ${ttft.toFixed(1)}ms`);
         }
         breakSequence();
-        store.appendSegment(scope, 'think', msg.text);
+        store.appendSegment(scope, threadId, 'think', msg.text);
       }
       return true;
 
     case 'tool_call': {
       const segType = toolNameToSegmentType(msg.toolName || '');
       const toolCallId = msg.toolCallId || '';
-      const segCount = readChatState(scope)?.segments.length ?? 0;
+      const segCount = readChatState(scope, threadId)?.segments.length ?? 0;
 
       const action = onToolCall(segType, toolCallId, segCount);
 
       if (action.action === 'new') {
-        store.pushSegment(scope, {
+        store.pushSegment(scope, threadId, {
           type: segType,
           content: '',
           toolCallId,
@@ -173,12 +179,12 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         const summaryLine = typeof summaryValue === 'string'
           ? summaryValue
           : msg.toolOutput?.slice(0, 80) || groupLookup.type;
-        const existing = readChatState(scope)?.segments[groupLookup.segmentIndex]?.content;
+        const existing = readChatState(scope, threadId)?.segments[groupLookup.segmentIndex]?.content;
         const prefix = existing ? '\n' : '';
-        store.appendSegmentContentByIndex(scope, groupLookup.segmentIndex, prefix + summaryLine);
+        store.appendSegmentContentByIndex(scope, threadId, groupLookup.segmentIndex, prefix + summaryLine);
       } else if (toolCallId) {
         // Non-grouped tool — set full content on the segment.
-        store.updateSegmentByToolCallId(scope, toolCallId, {
+        store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
           content: msg.toolOutput || '',
           toolArgs: msg.toolArgs,
           toolDisplay: msg.toolDisplay,
@@ -213,23 +219,23 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       //
       // See LiveSegmentRenderer.tsx completion detection comments for the
       // full explanation of why this is an effect and not a callback.
-      const currentTurn = readChatState(scope)?.currentTurn;
+      const currentTurn = readChatState(scope, threadId)?.currentTurn;
 
       if (currentTurn) {
         // Mark last segment complete (closing tag) so reveal knows it's done
-        const segs = readChatState(scope)?.segments || [];
+        const segs = readChatState(scope, threadId)?.segments || [];
         if (segs.length > 0) {
           const lastSeg = segs[segs.length - 1];
           if (!lastSeg.complete) {
-            store.updateSegmentByToolCallId(scope, lastSeg.toolCallId || '', {
+            store.updateSegmentByToolCallId(scope, threadId, lastSeg.toolCallId || '', {
               complete: true,
             });
             if (!lastSeg.toolCallId) {
-              store.updateLastSegment(scope, { complete: true });
+              store.updateLastSegment(scope, threadId, { complete: true });
             }
           }
         }
-        store.setPendingTurnEnd(scope, true);
+        store.setPendingTurnEnd(scope, threadId, true);
       }
 
       return true;

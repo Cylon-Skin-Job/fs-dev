@@ -105,7 +105,25 @@ export type WebSocketMessageType =
   | 'thread:create:confirm'
   // View UI state (SPEC-26c-2)
   | 'state:result'
-  | 'state:error';
+  | 'state:error'
+  // Workspace messages (WORKSPACE_CLIENT_UI_SPEC)
+  | 'workspace:init'
+  | 'workspace:registry_changed'
+  | 'workspace:switched'
+  | 'workspace:added'
+  | 'workspace:removed'
+  | 'workspace:add_rejected_duplicate'
+  | 'workspace:culled_at_launch'
+  | 'thread:state_changed';
+
+export interface Workspace {
+  id: string;
+  label: string;
+  icon: string;
+  description: string | null;
+  repoPath: string;
+  sortOrder: number;
+}
 
 export interface WebSocketMessage {
   type: WebSocketMessageType;
@@ -142,19 +160,25 @@ export interface WebSocketMessage {
   // SPEC-26b: every thread:* response and wire_ready carries scope
   scope?: Scope;
   viewId?: string | null;
+  // Workspace fields (WORKSPACE_CLIENT_UI_SPEC)
+  workspaces?: Workspace[];
+  workspace?: Workspace;
+  activeWorkspaceId?: string | null;
+  workspaceId?: string;
+  from?: string | null;
+  to?: string | null;
+  repoPath?: string | null;
+  homePath?: string;
+  existingWorkspace?: Workspace;
+  reason?: string;
 }
 
 // SPEC-26c-2: per-view UI state (collapse + pane widths)
-export type Pane = 'leftSidebar' | 'leftChat';
-
-// SPEC-26d: floating popup state for view-scoped chats
-export interface PopupState {
-  open: boolean;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+// SECONDARY_CHAT_SPEC: `rightSecondary` added for the sticky-right column.
+export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary';
+// Only the left panes have collapse state — the secondary has its own
+// show/hide via traffic-light modes, not a collapse toggle.
+export type CollapsablePane = 'leftSidebar' | 'leftChat';
 
 export interface ViewUIState {
   collapsed: {
@@ -164,8 +188,23 @@ export interface ViewUIState {
   widths: {
     leftSidebar: number;
     leftChat: number;
+    rightSecondary?: number;  // optional — new slice; absent = default (300)
   };
-  popup?: PopupState;  // SPEC-26d — optional so old state files still parse
+}
+
+// SECONDARY_CHAT_SPEC: singleton secondary-chat state (replaces SPEC-26d popup).
+// Top-level, not per-panel — at most one secondary exists per workspace.
+export type SecondaryMode = 'floating' | 'minimized' | 'sticky-right';
+
+export interface SecondaryState {
+  threadId: string;
+  mode: SecondaryMode;
+  previousMode: 'floating' | 'sticky-right';  // where minimize came from
+  float: { x: number; y: number; width: number; height: number };
+  // Set true by restoreSecondary; read by SecondaryChat/SecondaryChatSticky
+  // on mount to play the reverse genie animation. Cleared by the component
+  // after the animation finishes.
+  justRestored?: boolean;
 }
 
 // SPEC-26: dual-chat paradigm. Every thread lives in one of two scopes.

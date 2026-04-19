@@ -48,7 +48,7 @@ async function queryLatestExchange(threadId) {
 
 async function runTest() {
   // Initialize DB connection first
-  await initDb('/Users/rccurtrightjr./projects/kimi-claude');
+  await initDb();
   console.log('[DB] Initialized\n');
   
   console.log('=== Audit Logging Test ===\n');

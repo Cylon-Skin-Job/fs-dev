@@ -25,6 +25,7 @@
  */
 
 const { v4: generateId } = require('uuid');
+const { resolveScope } = require('../chat-scope');
 
 /**
  * Create a per-connection wire message router.
@@ -68,7 +69,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           session.pendingUserInput = null;
           session.hasToolCalls = false;
           session.assistantParts = [];  // Reset parts for new exchange
-          emit('chat:turn_begin', { workspace: 'code-viewer', threadId: session.currentThreadId, turnId: session.currentTurn.id, userInput: session.currentTurn.userInput });
+          emit('chat:turn_begin', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn.id, userInput: session.currentTurn.userInput });
           break;
 
         case 'ContentPart':
@@ -86,7 +87,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
               });
             }
 
-            emit('chat:content', { workspace: 'code-viewer', threadId: session.currentThreadId, turnId: session.currentTurn.id, text: payload.text });
+            emit('chat:content', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn.id, text: payload.text });
           } else if (payload?.type === 'think') {
             // Track thinking separately (not combined with text)
             const lastPart = session.assistantParts[session.assistantParts.length - 1];
@@ -98,7 +99,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
                 content: payload.think || ''
               });
             }
-            emit('chat:thinking', { workspace: 'code-viewer', threadId: session.currentThreadId, turnId: session.currentTurn?.id, text: payload.think || '' });
+            emit('chat:thinking', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn?.id, text: payload.think || '' });
           }
           break;
 
@@ -118,7 +119,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
               isError: false
             }
           });
-          emit('chat:tool_call', { workspace: 'code-viewer', threadId: session.currentThreadId, turnId: session.currentTurn?.id, toolName: payload?.function?.name || 'unknown', toolCallId: session.activeToolId });
+          emit('chat:tool_call', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn?.id, toolName: payload?.function?.name || 'unknown', toolCallId: session.activeToolId });
           break;
 
         case 'ToolCallPart':
@@ -139,7 +140,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           const bounce = checkSettingsBounce(toolNameForBounce, parsedArgs);
           if (bounce) {
             emit('system:tool_bounced', {
-              workspace: 'code-viewer',
+              workspace: resolveScope(session),
               threadId: session.currentThreadId,
               toolName: toolNameForBounce,
               filePath: parsedArgs.file_path,
@@ -149,7 +150,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
             // handles delivery uniformly. Same shape as a normal tool_result
             // but with isError=true and the bounce message as output.
             emit('chat:tool_result', {
-              workspace: 'code-viewer',
+              workspace: resolveScope(session),
               threadId: session.currentThreadId,
               turnId: session.currentTurn?.id,
               toolCallId,
@@ -178,7 +179,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           }
 
           emit('chat:tool_result', {
-            workspace: 'code-viewer',
+            workspace: resolveScope(session),
             threadId: session.currentThreadId,
             turnId: session.currentTurn?.id,
             toolCallId,
@@ -214,7 +215,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
             );
 
             emit('chat:turn_end', {
-              workspace: 'code-viewer',
+              workspace: resolveScope(session),
               threadId: session.currentThreadId,
               turnId: session.currentTurn.id,
               fullText: session.currentTurn.text,
@@ -247,7 +248,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
 
           // Flow audit metadata through event bus (subscriber will filter/persist)
           emit('chat:status_update', {
-            workspace: 'code-viewer',
+            workspace: resolveScope(session),
             threadId: session.currentThreadId,
             contextUsage: payload?.context_usage,
             tokenUsage: payload?.token_usage,

@@ -11,10 +11,10 @@
   "created": "2026-03-20T14:00:00-07:00",
   "settings": {
     "theme": {
-      "primary": "#ec4899",
-      "sidebar_bg": "#1a1020",
+      "primary": "#00d4ff",
+      "sidebar_bg": "#0a1a1f",
       "content_bg": "#0d0d0d",
-      "panel_border": "#ec489933"
+      "panel_border": "#00d4ff33"
     },
     "syncTarget": "gitlab",
     "gitlabProjectId": 80453361,

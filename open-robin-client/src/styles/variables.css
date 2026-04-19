@@ -25,6 +25,7 @@
   --tools-width: 60px;
   --sidebar-width: 250px;
   --chat-width: 400px;
+  --chat-header-height: 40px;
   
   /* Z-Index Hierarchy */
   --z-content: 1;

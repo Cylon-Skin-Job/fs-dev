@@ -1,16 +1,22 @@
 import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { usePanelStore } from '../state/panelStore';
+import { useWorkspaceStore } from '../state/workspaceStore';
 import { applyPanelTheme } from '../lib/panels';
 import { useWebSocket } from '../hooks/useWebSocket';
+import { useSharedWorkspaceStyles } from '../hooks/useSharedWorkspaceStyles';
 import { ToolsPanel } from './ToolsPanel';
 import { Sidebar } from './Sidebar';
 import { ChatArea } from './ChatArea';
 import { ContentArea } from './ContentArea';
-import { ResizeHandle } from './ResizeHandle';
+import { LeftSidebarResize, LeftChatResize } from './ResizeHandle';
 import { Toast } from './Toast';
 import { ModalOverlay } from './Modal/ModalOverlay';
 import { RobinOverlay } from './Robin/RobinOverlay';
-import { FloatingChat } from './FloatingChat';
+import { SecondaryChat, SecondaryChatSticky } from './SecondaryChat';
+import { SecondaryDockButton } from './SecondaryDockButton';
+import { EmptyStateView } from './EmptyStateView';
+import { WorkspaceSwitcher } from './WorkspaceSwitcher';
+import { WorkspaceAddModal } from './WorkspaceAddModal';
 import './App.css';
 
 // SPEC-26c-2: defaults for the 3-column layout
@@ -30,19 +36,24 @@ interface PanelContentProps {
   hasChat: boolean;
   collapsedSidebar: boolean;
   collapsedChat: boolean;
+  secondarySticky: boolean;
 }
-const PanelContent = memo(function PanelContent({ panel, hasChat, collapsedSidebar, collapsedChat }: PanelContentProps) {
+const PanelContent = memo(function PanelContent({ panel, hasChat, collapsedSidebar, collapsedChat, secondarySticky }: PanelContentProps) {
   if (!hasChat) {
     return <ContentArea panel={panel} />;
   }
   // SPEC-26c-2: [project sidebar][handle][project chat][handle][content]
+  // SECONDARY_CHAT_SPEC §7c: when secondary is sticky-right, it overlays
+  // the view's right column via absolute positioning + z-index. Grid stays
+  // at 5 tracks; sticky chat sits on top of the existing content.
   return (
     <>
       <Sidebar panel={panel} scope="project" collapsed={collapsedSidebar} />
-      <ResizeHandle panel={panel} pane="leftSidebar" />
-      <ChatArea panel={panel} scope="project" collapsed={collapsedChat} />
-      <ResizeHandle panel={panel} pane="leftChat" />
+      <LeftSidebarResize panel={panel} />
+      <ChatArea panel={panel} scope="project" collapsed={collapsedChat} sidebarCollapsed={collapsedSidebar} />
+      <LeftChatResize panel={panel} />
       <ContentArea panel={panel} />
+      {secondarySticky && <SecondaryChatSticky />}
     </>
   );
 });
@@ -59,18 +70,37 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
   isActive: boolean;
 }) {
   const viewState = usePanelStore((s) => s.viewStates[panelId]);
+  const secondaryMode = usePanelStore((s) => s.secondary?.mode ?? null);
   const widths = viewState?.widths ?? DEFAULT_WIDTHS;
   const collapsed = viewState?.collapsed ?? DEFAULT_COLLAPSED;
 
+  // Only the active panel renders the sticky secondary (one grid track
+  // at a time; the popup persists state across panel switches but the
+  // column is painted in whichever panel is currently active).
+  const secondarySticky = isActive && secondaryMode === 'sticky-right';
+  const rightSecondaryWidth = widths.rightSecondary ?? 300;
+
   const gridStyle: CSSProperties = hasChat ? {
-    '--left-sidebar-w': `${collapsed.leftSidebar ? 40 : widths.leftSidebar}px`,
-    '--left-chat-w':    `${collapsed.leftChat    ? 40 : widths.leftChat   }px`,
+    '--left-sidebar-w':   `${collapsed.leftSidebar ? 0 : widths.leftSidebar}px`,
+    '--left-chat-w':      `${collapsed.leftChat    ? 40 : widths.leftChat   }px`,
+    // PER_THREAD_CHAT_STATE: right-col width is shared between the view's
+    // right column (e.g. code-viewer file tree) and the sticky secondary
+    // chat when docked. Resizing either affects both via this one var.
+    '--right-col-w': `${rightSecondaryWidth}px`,
   } as CSSProperties : {};
+
+  const panelClasses = [
+    'rv-panel',
+    layoutClass,
+    isActive ? 'active' : '',
+    secondarySticky ? 'rv-panel--secondary-sticky' : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <div
       data-panel={panelId}
-      className={`rv-panel ${layoutClass} ${isActive ? 'active' : ''}`}
+      data-secondary-sticky={secondarySticky ? 'true' : undefined}
+      className={panelClasses}
       style={gridStyle}
     >
       <PanelContent
@@ -78,6 +108,7 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
         hasChat={hasChat}
         collapsedSidebar={collapsed.leftSidebar}
         collapsedChat={collapsed.leftChat}
+        secondarySticky={secondarySticky}
       />
     </div>
   );
@@ -87,6 +118,8 @@ function App() {
   // WebSocket connection — must run BEFORE the loading gate
   // so discovery can complete and populate configs
   useWebSocket();
+  // Load themes + components + views CSS from the active workspace at runtime
+  useSharedWorkspaceStyles();
 
   const currentPanel = usePanelStore((state) => state.currentPanel);
   const setCurrentPanel = usePanelStore((state) => state.setCurrentPanel);
@@ -97,6 +130,15 @@ function App() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [robinOpen, setRobinOpen] = useState(false);
+
+  const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
+  const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
+
+  const toggleSwitcher = useCallback(() => {
+    const s = useWorkspaceStore.getState();
+    if (s.isSwitcherOpen) s.closeSwitcher();
+    else s.openSwitcher();
+  }, []);
 
   const loading = configs.length === 0;
 
@@ -152,12 +194,45 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  // Waiting for workspace:init from server. Brief flash on first connect.
+  if (isConnected && !hasReceivedWorkspaceInit) {
+    return null;
+  }
+
+  // No active workspace — render the empty-state tile, but keep the
+  // switcher and add-modal mounted so the user can add one.
+  if (hasReceivedWorkspaceInit && activeWorkspaceId === null) {
+    return (
+      <div ref={containerRef} className="rv-app-container">
+        <header className="rv-header">
+          <div className="rv-header-left">
+            <button className="rv-menu-btn" onClick={toggleSwitcher}>
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+            <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
+              {isConnected ? 'Connected' : 'Connecting...'}
+            </div>
+          </div>
+          <div className="rv-header-right">
+            <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
+              <span className="material-symbols-outlined">raven</span>
+            </button>
+          </div>
+        </header>
+        <EmptyStateView />
+        <WorkspaceSwitcher />
+        <WorkspaceAddModal />
+        <ModalOverlay />
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
-            <button className="rv-menu-btn">
+            <button className="rv-menu-btn" onClick={toggleSwitcher}>
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
@@ -173,6 +248,8 @@ function App() {
         <div className="rv-panel-container rv-panel-container--loading">
           Discovering panels...
         </div>
+        <WorkspaceSwitcher />
+        <WorkspaceAddModal />
       </div>
     );
   }
@@ -182,7 +259,7 @@ function App() {
       {/* Header */}
       <header className="rv-header">
         <div className="rv-header-left">
-          <button className="rv-menu-btn">
+          <button className="rv-menu-btn" onClick={toggleSwitcher}>
             <span className="material-symbols-outlined">menu</span>
           </button>
           <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
@@ -223,7 +300,10 @@ function App() {
       <Toast />
       <ModalOverlay />
       <RobinOverlay open={robinOpen} onClose={() => setRobinOpen(false)} />
-      <FloatingChat />
+      <SecondaryChat />
+      <SecondaryDockButton />
+      <WorkspaceSwitcher />
+      <WorkspaceAddModal />
     </div>
   );
 }

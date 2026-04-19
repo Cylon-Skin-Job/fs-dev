@@ -10,6 +10,7 @@ import { usePanelStore } from '../state/panelStore';
 import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
+import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
@@ -126,16 +127,14 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleStreamMessage(msg)) return;
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;
+  if (handleWorkspaceMessage(msg)) return;
 
-  // SPEC-26c-2: view UI state responses
+  // SPEC-26c-2: view UI state responses.
+  // SECONDARY_CHAT_SPEC retired SPEC-26d popup state — any stale `popup`
+  // field in persisted state is simply ignored.
   if (msg.type === 'state:result') {
     const store = usePanelStore.getState();
     store.setViewState((msg as any).view, (msg as any).state);
-    // SPEC-26d: if the loaded view state says popup was open AND this is
-    // the current panel, sync the popup visibility.
-    if ((msg as any).view === store.currentPanel && (msg as any).state?.popup?.open) {
-      store.openFloatingChat();
-    }
     return;
   }
   if (msg.type === 'state:error') {

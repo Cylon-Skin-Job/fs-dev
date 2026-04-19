@@ -99,16 +99,18 @@ class CodexHarness extends BaseCLIHarness {
   /**
    * Start a new thread with this harness.
    * Spawns the Codex-ACP process and sets up ACP wire parsing.
-   * 
+   *
    * @param {string} threadId
    * @param {string} projectRoot
+   * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<HarnessSession>}
    */
-  async startThread(threadId, projectRoot) {
+  async startThread(threadId, projectRoot, scopeContext = {}) {
     if (!this.cliPath) {
       throw new Error(`Harness not initialized. Call initialize() first.`);
     }
 
+    this._captureScope(threadId, projectRoot, scopeContext);
     const args = this.getSpawnArgs(threadId, projectRoot);
     
     const { spawn } = require('child_process');
@@ -355,7 +357,7 @@ class CodexHarness extends BaseCLIHarness {
     });
 
     emit('chat:turn_end', {
-      workspace: 'code-viewer',
+      workspace: this._getScopeString(threadId),
       threadId,
       turnId: event.turnId,
       userInput: state.currentTurn?.userInput || '',
@@ -373,6 +375,7 @@ class CodexHarness extends BaseCLIHarness {
     this.sessionStates.delete(threadId);
     this.translators.delete(threadId);
     this.sessions.delete(threadId);
+    this.threadScopes.delete(threadId);
   }
 
   /**

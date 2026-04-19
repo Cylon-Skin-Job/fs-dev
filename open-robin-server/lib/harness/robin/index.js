@@ -1,7 +1,15 @@
+const path = require('path');
 const { EventEmitter } = require('events');
 const { streamText, tool } = require('ai');
 const { emit } = require('../../event-bus');
 const { normalizeTokenUsage } = require('../model-catalog');
+
+// CHAT_SCOPE_SPEC: build the structured `workspace:` string for event bus
+// emission. Matches lib/chat-scope.js::resolveScope but without a session.
+function buildScopeString(workspaceId, viewId) {
+  if (!workspaceId) return 'workspace:unknown';
+  return viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`;
+}
 
 /**
  * Robin Harness - Built-in Vercel AI SDK implementation
@@ -34,14 +42,17 @@ class RobinHarness extends EventEmitter {
     console.log('[RobinHarness] Initialized with provider:', this.config.provider);
   }
 
-  async startThread(threadId, projectRoot) {
+  async startThread(threadId, projectRoot, scopeContext = {}) {
+    const workspaceId = scopeContext.workspaceId || (projectRoot ? path.basename(projectRoot) : null);
+    const viewId = scopeContext.viewId || null;
     const session = {
       threadId,
       projectRoot,
       messages: [],
-      config: { ...this.config }
+      config: { ...this.config },
+      scopeString: buildScopeString(workspaceId, viewId),
     };
-    
+
     this.sessions.set(threadId, session);
     
     return {
@@ -150,7 +161,7 @@ class RobinHarness extends EventEmitter {
       const parts = fullText ? [{ type: 'text', content: fullText }] : [];
 
       emit('chat:turn_end', {
-        workspace: 'code-viewer',
+        workspace: session.scopeString || 'workspace:unknown',
         threadId,
         turnId,
         userInput: message,

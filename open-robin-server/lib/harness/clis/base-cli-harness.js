@@ -1,3 +1,4 @@
+const path = require('path');
 const { spawn } = require('child_process');
 const { EventEmitter } = require('events');
 const { platform } = require('os');
@@ -36,9 +37,38 @@ class BaseCLIHarness extends EventEmitter {
     this.config = {};
     /** @type {Map<string, HarnessSession>} */
     this.sessions = new Map();
-    
+    /** @type {Map<string, string>} CHAT_SCOPE_SPEC: threadId → scope string */
+    this.threadScopes = new Map();
+
     // Detect Windows for command differences
     this.isWindows = platform() === 'win32';
+  }
+
+  /**
+   * CHAT_SCOPE_SPEC: capture the structured `workspace:` string for a thread
+   * at spawn time. Called by subclass startThread() before the first emit.
+   *
+   * @param {string} threadId
+   * @param {string} projectRoot
+   * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
+   */
+  _captureScope(threadId, projectRoot, scopeContext = {}) {
+    const workspaceId = scopeContext.workspaceId || (projectRoot ? path.basename(projectRoot) : null);
+    const viewId = scopeContext.viewId || null;
+    const scopeString = !workspaceId
+      ? 'workspace:unknown'
+      : (viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`);
+    this.threadScopes.set(threadId, scopeString);
+    return scopeString;
+  }
+
+  /**
+   * CHAT_SCOPE_SPEC: read the captured scope for a thread, or a safe default.
+   * @param {string} threadId
+   * @returns {string}
+   */
+  _getScopeString(threadId) {
+    return this.threadScopes.get(threadId) || 'workspace:unknown';
   }
 
   /**
@@ -322,6 +352,7 @@ class BaseCLIHarness extends EventEmitter {
     proc.on('exit', (code) => {
       console.log(`[${this.name}] Process exited (pid: ${proc.pid}, code: ${code})`);
       this.sessions.delete(threadId);
+      this.threadScopes.delete(threadId);
       this.emit('exit', { threadId, code });
     });
 

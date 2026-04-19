@@ -1,3 +1,4 @@
+const path = require('path');
 const { spawn } = require('child_process');
 const { EventEmitter } = require('events');
 const { WireParser } = require('./wire-parser');
@@ -5,6 +6,15 @@ const { EventTranslator } = require('./event-translator');
 const { KimiSessionState } = require('./session-state');
 const { emit } = require('../../event-bus');
 const { normalizeTokenUsage } = require('../model-catalog');
+
+// CHAT_SCOPE_SPEC: build the structured `workspace:` string from spawn-time
+// context. Matches lib/chat-scope.js::resolveScope but without a session —
+// harnesses capture the scope at startThread() and keep it for the thread's
+// lifetime.
+function buildScopeString(workspaceId, viewId) {
+  if (!workspaceId) return 'workspace:unknown';
+  return viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`;
+}
 
 /**
  * @typedef {Object} KimiSession
@@ -45,9 +55,13 @@ class KimiHarness extends EventEmitter {
   /**
    * @param {string} threadId
    * @param {string} projectRoot
+   * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<import('../types').HarnessSession>}
    */
-  async startThread(threadId, projectRoot) {
+  async startThread(threadId, projectRoot, scopeContext = {}) {
+    const workspaceId = scopeContext.workspaceId || (projectRoot ? path.basename(projectRoot) : null);
+    const viewId = scopeContext.viewId || null;
+    const scopeString = buildScopeString(workspaceId, viewId);
     const robinPath = this.config.cliPath || process.env.KIMI_PATH || 'kimi';
     const args = ['--wire', '--yolo', '--session', threadId];
     
@@ -72,6 +86,7 @@ class KimiHarness extends EventEmitter {
       process: proc,
       state,
       parser,
+      scopeString,
       async *sendMessage(message, options) {
         // Send initialize handshake if needed
         // Send prompt
@@ -148,8 +163,9 @@ class KimiHarness extends EventEmitter {
         tokenUsage: normalized,
       });
 
+      const scopeString = this.sessions.get(threadId)?.scopeString || 'workspace:unknown';
       emit('chat:turn_end', {
-        workspace: 'code-viewer',
+        workspace: scopeString,
         threadId,
         turnId: event.turnId,
         userInput: state.currentTurn?.userInput || '',

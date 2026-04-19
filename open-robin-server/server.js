@@ -33,7 +33,8 @@ const { createFileExplorerHandlers } = require('./lib/file-explorer');
 const wikiHooks = require('./lib/wiki/hooks');
 
 // Event bus for TRIGGERS.md automations
-const { emit } = require('./lib/event-bus');
+const { emit, on } = require('./lib/event-bus');
+const workspaceController = require('./lib/workspace/workspace-controller');
 
 // Phase 1 & 2: Robin Harness - compatibility layer for gradual migration
 const { spawnThreadWire } = require('./lib/harness/compat');
@@ -116,7 +117,9 @@ app.get('/api/panel-file/:panel/{*filePath}', (req, res) => {
   const panel = req.params.panel;
   const rawPath = req.params.filePath;
   const filePath = Array.isArray(rawPath) ? rawPath.join('/') : rawPath;
-  const dirPath = path.join(getDefaultProjectRoot(), 'ai', 'views', panel, path.dirname(filePath));
+  const root = getProjectRoot();
+  if (!root) return res.status(503).send('No active workspace');
+  const dirPath = path.join(root, 'ai', 'views', panel, path.dirname(filePath));
   const fileName = path.basename(filePath);
 
   try {
@@ -179,19 +182,24 @@ const sessions = new Map();
 // Project Root & Path Resolution
 // ============================================================================
 
-function getDefaultProjectRoot() {
-  const cfg = config.getConfig();
-  if (cfg.lastProject && fs.existsSync(cfg.lastProject)) {
-    return path.resolve(cfg.lastProject);
+/**
+ * Resolve the project root for a given connection, or the server-wide
+ * active workspace root when no connection context is available.
+ *
+ * Returns null when no workspace is active (empty state). Callers must
+ * handle null — boot pipeline skips, per-connection handlers send an error.
+ *
+ * @param {import('ws').WebSocket} [ws] - connection context (optional)
+ * @returns {string|null}
+ */
+function getProjectRoot(ws) {
+  if (ws) {
+    const session = sessions.get(ws);
+    if (session && session.projectRoot) return session.projectRoot;
   }
-  return path.resolve(path.join(__dirname, '..'));
+  const active = workspaceController.getActiveWorkspaceSync();
+  return active ? active.repo_path : null;
 }
-
-// AI panels path for thread storage
-// Relative to PROJECT ROOT (not server directory)
-// This allows the IDE to work with any project, not just kimi-claude
-const AI_PANELS_PATH = path.join(getDefaultProjectRoot(), 'ai', 'views');
-console.log(`[Server] AI views path: ${AI_PANELS_PATH}`);
 
 // ============================================================================
 // File Explorer Functions (unchanged from original)
@@ -205,11 +213,13 @@ function setSessionRoot(ws, panel, rootFolder) {
 }
 
 function getSessionRoot(ws, panel) {
-  const session = sessionRoots.get(ws);
-  if (session && session.panel === panel && session.rootFolder) {
-    return session.rootFolder;
+  const sessionRoot = sessionRoots.get(ws);
+  if (sessionRoot && sessionRoot.panel === panel && sessionRoot.rootFolder) {
+    return sessionRoot.rootFolder;
   }
-  return getDefaultProjectRoot();
+  // Per-connection projectRoot is the only source of truth; null = empty state.
+  const connSession = sessions.get(ws);
+  return (connSession && connSession.projectRoot) || null;
 }
 
 function clearSessionRoot(ws) {
@@ -217,7 +227,8 @@ function clearSessionRoot(ws) {
 }
 
 function getPanelPath(panel, ws) {
-  const projectRoot = getDefaultProjectRoot();
+  const projectRoot = getProjectRoot(ws);
+  if (!projectRoot) return null;
 
   // __panels__ pseudo-panel: resolves to ai/views/ (for client discovery)
   if (panel === '__panels__') {
@@ -241,7 +252,7 @@ function getPanelPath(panel, ws) {
 
 const fileExplorer = createFileExplorerHandlers({
   getPanelPath,
-  getDefaultProjectRoot,
+  getProjectRoot,
 });
 
 // ============================================================================
@@ -256,12 +267,13 @@ const fileExplorer = createFileExplorerHandlers({
 // WebSocket Connection Handler with Thread Support
 // ============================================================================
 
-wss.on('connection', (ws) => {
+wss.on('connection', async (ws) => {
   console.log('[WS] Client connected (thread-enabled)');
-  
-  const projectRoot = getDefaultProjectRoot();
+
+  const activeWs = workspaceController.getActiveWorkspaceSync();
+  const projectRoot = activeWs ? activeWs.repo_path : null;
   const connectionId = generateId();
-  
+
   // Session state
   const session = {
     connectionId,
@@ -276,21 +288,38 @@ wss.on('connection', (ws) => {
     contextUsage: null,  // Latest context usage from wire (0-1 decimal)
     tokenUsage: null,    // Latest token usage from wire
     messageId: null,     // OpenAI message ID from StatusUpdate
-    planMode: false      // Whether turn was in plan mode
+    planMode: false,     // Whether turn was in plan mode
+    projectRoot,         // Mutable per-connection root; updated on workspace:switched. null when no active workspace.
+    currentWorkspaceId: activeWs ? activeWs.id : null,
+    currentViewId: null  // CHAT_SCOPE_SPEC: set when scope='view'
   };
   sessions.set(ws, session);
+
+  // Per-connection workspace switch listener: every connection tracks the
+  // server-wide active workspace and mirrors its repoPath into its own
+  // session so subsequent router/file/thread operations resolve against
+  // the new root. One-active-workspace-server-wide model (see plan §1).
+  const unsubscribeWorkspaceSwitched = on('workspace:switched', (event) => {
+    if (event && event.repoPath) {
+      session.projectRoot = event.repoPath;
+      session.currentWorkspaceId = event.to;
+    }
+  });
+  ws.on('close', unsubscribeWorkspaceSwitched);
   
   // Set up a default panel so ThreadManager exists for wire spawning.
   // Don't send the thread list yet — wait for the client's set_panel message
   // to avoid cross-contamination (e.g., issues-viewer seeing code-viewer threads).
   // Only set up threads if the default view has chat (SPEC-24c: storage is
   // unified at ai/views/chat/threads/<user>/, no panelPath needed).
-  const defaultChatConfig = views.resolveChatConfig(projectRoot, 'code-viewer');
-  if (defaultChatConfig) {
-    ThreadWebSocketHandler.setPanel(ws, 'code-viewer', {
-      projectRoot,
-      viewName: 'code-viewer',
-    });
+  if (projectRoot) {
+    const defaultChatConfig = views.resolveChatConfig(projectRoot, 'code-viewer');
+    if (defaultChatConfig) {
+      ThreadWebSocketHandler.setPanel(ws, 'code-viewer', {
+        projectRoot,
+        viewName: 'code-viewer',
+      });
+    }
   }
   
   // ==========================================================================
@@ -336,7 +365,7 @@ wss.on('connection', (ws) => {
     sessions,
     setSessionRoot,
     clearSessionRoot,
-    getDefaultProjectRoot,
+    getProjectRoot,
     getRobinHandlers: () => robinHandlers,
     getClipboardHandlers: () => clipboardHandlers,
   });
@@ -354,13 +383,28 @@ wss.on('connection', (ws) => {
     message: 'Thread-enabled connection established'
   }));
 
+  // Send current workspace registry and active workspace so the client
+  // can gate its UI (empty state, switcher) before panel discovery runs.
+  try {
+    const workspaces = await workspaceController.listWorkspaces();
+    const activeWorkspaceId = workspaceController.getActiveWorkspaceId();
+    ws.send(JSON.stringify({
+      type: 'workspace:init',
+      workspaces,
+      activeWorkspaceId,
+      homePath: require('os').homedir(),
+    }));
+  } catch (err) {
+    console.error('[WS] workspace:init failed:', err);
+  }
+
   // Send project root info without assuming a panel — the client will
-  // send set_panel to identify itself.
-  const initialProjectName = path.basename(projectRoot);
+  // send set_panel to identify itself. When no workspace is active,
+  // projectRoot is null and the client renders the empty state.
   ws.send(JSON.stringify({
     type: 'panel_config',
     projectRoot,
-    projectName: initialProjectName
+    projectName: projectRoot ? path.basename(projectRoot) : null
   }));
 });
 
@@ -379,8 +423,7 @@ let clipboardHandlers = {};
 startServer({
   server,
   sessions,
-  getDefaultProjectRoot,
-  AI_PANELS_PATH,
+  getProjectRoot,
 })
   .then(result => {
     robinHandlers = result.robinHandlers;

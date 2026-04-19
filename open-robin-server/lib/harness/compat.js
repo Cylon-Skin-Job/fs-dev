@@ -11,6 +11,7 @@
  * @see ../specs/PHASE-2-COMPATIBILITY-LAYER-SPEC.md
  */
 
+const path = require('path');
 const { spawn } = require('child_process');
 const { EventEmitter } = require('events');
 const {
@@ -244,28 +245,35 @@ async function spawnThreadWireParallel(threadId, projectRoot) {
  *
  * @param {string} threadId
  * @param {string} projectRoot
+ * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
+ *   CHAT_SCOPE_SPEC: flows to the harness so its emit calls can build the
+ *   structured `workspace:` string for the event bus. Falls back to
+ *   `path.basename(projectRoot)` and `null` when absent (legacy callers).
  * @returns {import('child_process').ChildProcess}
  */
-function spawnThreadWire(threadId, projectRoot) {
+function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
+  const workspaceId = scopeContext.workspaceId || path.basename(projectRoot);
+  const viewId = scopeContext.viewId || null;
+  const resolvedScope = { workspaceId, viewId };
   const mode = getHarnessMode(threadId);
 
   switch (mode) {
     case 'new':
       console.log(`[Compat] Using NEW harness for thread ${threadId.slice(0, 8)}...`);
-      
+
       // Create a deferred process proxy
       const dummyProc = spawn('echo', ['harness-loading'], { stdio: 'pipe' });
-      
+
       const startHarness = async () => {
         const harnessId = await getHarnessIdForThread(threadId);
         const harness = registry.get(harnessId);
-        
+
         if (!harness) {
           throw new Error(`Harness not found: ${harnessId}`);
         }
 
         await harness.initialize({});
-        return await harness.startThread(threadId, projectRoot);
+        return await harness.startThread(threadId, projectRoot, resolvedScope);
       };
 
       const sessionPromise = startHarness();

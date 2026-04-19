@@ -8,8 +8,8 @@
  *
  * Uses a factory pattern so server.js can inject getPanelPath (which
  * depends on per-WS session roots and the views resolver) and
- * getDefaultProjectRoot (used by the symlink fallback branch of
- * isPathAllowed).
+ * getProjectRoot (used by the symlink fallback branch of isPathAllowed
+ * to permit cross-workspace symlinks within the active project root).
  */
 
 const fs = require('fs');
@@ -19,9 +19,9 @@ const path = require('path');
 /**
  * @param {object} deps
  * @param {(panel: string, ws: import('ws').WebSocket) => string|null} deps.getPanelPath
- * @param {() => string} deps.getDefaultProjectRoot
+ * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  */
-function createFileExplorerHandlers({ getPanelPath, getDefaultProjectRoot }) {
+function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
 
   function mapFileErrorCode(err) {
     if (err.code === 'ENOENT') return 'ENOENT';
@@ -60,10 +60,10 @@ function createFileExplorerHandlers({ getPanelPath, getDefaultProjectRoot }) {
         if (realTarget.startsWith(basePath)) {
           return true;
         }
-        // Also allow if real target is within the project root
+        // Also allow if real target is within the active workspace's project root
         // (covers cross-workspace symlinks within the same project)
-        const projectRoot = getDefaultProjectRoot();
-        if (realTarget.startsWith(projectRoot)) {
+        const projectRoot = getProjectRoot();
+        if (projectRoot && realTarget.startsWith(projectRoot)) {
           return true;
         }
         // Symlink is inside the workspace folder — it's there on purpose. Allow it.

@@ -13,6 +13,7 @@
 
 import { useCallback } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { useTicketStore, type Ticket } from '../../state/ticketStore';
 import './tickets.css';
 
@@ -122,6 +123,8 @@ function Column({ title, tickets, icon }: { title: string; tickets: Ticket[]; ic
 }
 
 export function TicketBoard() {
+  useViewLayoutStyles('issues-viewer');
+
   const onIndex = useCallback((content: string) => {
     try {
       const index = JSON.parse(content);

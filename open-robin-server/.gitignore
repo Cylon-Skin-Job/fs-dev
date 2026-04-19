@@ -7,3 +7,6 @@ build/
 test-results/
 .gitlab_wikis.json
 kimi_wikis.json
+data/robin.db
+data/robin.db-journal
+data/robin.db-wal

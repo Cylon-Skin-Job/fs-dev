@@ -1,11 +1,14 @@
 /**
- * Event Bus — central pub/sub for server-side automations.
+ * Event Bus — central pub/sub for all server-side cross-module communication.
  *
- * Emitters: server.js (chat), dispatch.js (tickets), runner/index.js (agents)
- * Listeners: trigger-loader.js (TRIGGERS.md-defined reactions)
+ * This is the backbone of the system. All chat events, workspace lifecycle,
+ * thread lifecycle, ticket dispatch, agent runs, and user-defined automations
+ * flow through this bus.
  *
- * This is a notification channel for user-defined automations.
- * It does NOT replace direct module calls in the core flow.
+ * Emitters: wire message router, all harnesses (kimi, claude-code, gemini,
+ *           codex, qwen, robin), client message router, runner, dispatch
+ * Listeners: wire-broadcaster, audit-subscriber, trigger-loader,
+ *            (future) workspace/thread lifecycle controllers
  */
 
 const EventEmitter = require('events');
@@ -21,9 +24,12 @@ let currentTrigger = null;
 
 /**
  * Extract the key field from event data for dedup comparison.
+ * CHAT_SCOPE_SPEC: `workspaceId` is added at the end (forward-compat) so that
+ * future workspace-lifecycle events don't accidentally dedup against unrelated
+ * entity events when multi-workspace ships.
  */
 function eventKey(data) {
-  return data.ticketId ?? data.threadId ?? data.runId ?? null;
+  return data.ticketId ?? data.threadId ?? data.runId ?? data.workspaceId ?? null;
 }
 
 /**

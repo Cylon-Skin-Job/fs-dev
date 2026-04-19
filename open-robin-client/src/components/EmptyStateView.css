@@ -1,0 +1,39 @@
+.rv-empty-state {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--document-code-bg, #161616);
+}
+
+.rv-empty-state-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 56px;
+  background: var(--sidebar-surface-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.rv-empty-state-tile:hover {
+  border-color: var(--theme-primary, rgba(255, 255, 255, 0.35));
+  background: var(--panel-chrome-bg, #1f1f1f);
+}
+
+.rv-empty-state-icon {
+  font-size: 64px;
+  opacity: 0.85;
+}
+
+.rv-empty-state-label {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}

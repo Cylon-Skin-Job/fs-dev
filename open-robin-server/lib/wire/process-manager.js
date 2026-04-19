@@ -18,13 +18,14 @@
  *   - Wire spawning (that's in lib/harness/compat.js)
  */
 
+const path = require('path');
 const { v4: generateId } = require('uuid');
 const { logWire } = require('./wire-log');
 
 // ── Registry ────────────────────────────────────────────────────────────────
 
 // Module-private Map. Do not export.
-// threadId → { wire, projectRoot, ws }
+// threadId → { wire, projectRoot, ws, workspaceId, viewId }
 const wireRegistry = new Map();
 
 function getWireForThread(threadId) {
@@ -35,14 +36,29 @@ function getClientForThread(threadId) {
   return wireRegistry.get(threadId)?.ws || null;
 }
 
-function registerWire(threadId, wire, projectRoot, ws) {
-  wireRegistry.set(threadId, { wire, projectRoot, ws });
-  console.log(`[WireRegistry] Registered wire for thread ${threadId.slice(0,8)}, pid: ${wire?.pid}`);
+function registerWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
+  const workspaceId = scopeContext.workspaceId || path.basename(projectRoot);
+  const viewId = scopeContext.viewId || null;
+  wireRegistry.set(threadId, { wire, projectRoot, ws, workspaceId, viewId });
+  console.log(`[WireRegistry] Registered wire for thread ${threadId.slice(0,8)}, pid: ${wire?.pid}, scope: ${viewId ? `${workspaceId}/${viewId}` : workspaceId}`);
 }
 
 function unregisterWire(threadId) {
   wireRegistry.delete(threadId);
   console.log(`[WireRegistry] Unregistered wire for thread ${threadId.slice(0,8)}`);
+}
+
+/**
+ * CHAT_SCOPE_SPEC: return the structured `workspace:` string for a thread's
+ * wire by reading the registry, for callers that don't have `session` access.
+ * Returns null if the thread isn't registered.
+ */
+function getScopeForThread(threadId) {
+  const entry = wireRegistry.get(threadId);
+  if (!entry) return null;
+  const { workspaceId, viewId } = entry;
+  if (!workspaceId) return 'workspace:unknown';
+  return viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`;
 }
 
 // ── Marshalling ─────────────────────────────────────────────────────────────
@@ -139,7 +155,10 @@ function createWireLifecycle({ session, ws, connectionId, onWireMessage }) {
     wire.on('exit', (code) => {
       console.log(`[Wire] Session ${connectionId} exited with code ${code}`);
       if (session.wire === wire) session.wire = null;
-      if (threadId) unregisterWire(threadId);
+      // Only unregister if this wire is still the one in the registry.
+      // A new wire may have already been registered for this threadId
+      // (e.g. when the client reopens the same thread quickly).
+      if (threadId && getWireForThread(threadId) === wire) unregisterWire(threadId);
       // Only notify if WebSocket is still open
       if (ws.readyState === 1) {
         ws.send(JSON.stringify({ type: 'wire_disconnected', code }));
@@ -156,6 +175,7 @@ module.exports = {
   getClientForThread,
   registerWire,
   unregisterWire,
+  getScopeForThread,
   // Marshalling
   sendToWire,
   // Per-connection factory

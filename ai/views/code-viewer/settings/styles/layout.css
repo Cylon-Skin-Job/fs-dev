@@ -48,12 +48,15 @@
   opacity: 0.4;
 }
 
+/* SECONDARY_CHAT_SPEC §7c: width bound to --right-col-w (set on .rv-panel
+ * by PanelWrapper), so when the sticky chat resizes, the file tree follows. */
 .file-tree-sidebar {
-  width: 220px;
+  width: var(--right-col-w, 220px);
   flex-shrink: 0;
   border-left: 1px solid var(--file-viewer-chrome-border);
   overflow-y: auto;
   background: var(--sidebar-surface-bg, #161616);
+  position: relative;
 }
 
 .file-explorer {

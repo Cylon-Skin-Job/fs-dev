@@ -14,29 +14,54 @@ import {
 } from './hover-icon-modal';
 import { ChatHarnessPicker, type HarnessStatus } from './ChatHarnessPicker';
 import { ConnectingOverlay } from './ConnectingOverlay';
+import { CliPickerDropdown } from './CliPickerDropdown';
+import { ThreadJumpDropdown } from './ThreadJumpDropdown';
 import { getHarnessOption } from '../config/harness';
-import type { Scope, PanelState } from '../types';
+import type { Scope, PanelState, Message, StreamSegment } from '../types';
+
+// PER_THREAD_CHAT_STATE: stable empty references so Zustand selectors that
+// fall back on a missing thread slot don't return a fresh `[]` each render,
+// which would cause React error #185 (infinite re-render).
+const EMPTY_MESSAGES: Message[] = [];
+const EMPTY_SEGMENTS: StreamSegment[] = [];
 
 interface ChatAreaProps {
   panel: string;
   scope: Scope;
   collapsed?: boolean;
+  sidebarCollapsed?: boolean;
+  /**
+   * PER_THREAD_CHAT_STATE: when set, ChatArea reads/writes chat state for
+   * this specific thread instead of currentThreadIds[scope]. Used by the
+   * secondary popup so it can display a different project thread than the
+   * primary. Only meaningful when scope='project'.
+   */
+  threadIdOverride?: string | null;
 }
 
 /**
- * SPEC-26c: ChatArea is parameterized by scope. Project scope reads from
- * state.projectChat (top-level, follows the user across panel switches);
- * view scope reads from state.panels[panel] (per-panel view chat).
+ * PER_THREAD_CHAT_STATE: project chat state is now keyed by threadId.
+ * Primary ChatArea reads projectChats[currentThreadIds.project];
+ * secondary ChatArea reads projectChats[threadIdOverride];
+ * view still reads panels[panel] for agents-viewer.
  */
-function selectChatState(scope: Scope, panel: string) {
+function selectChatState(scope: Scope, panel: string, tid: string | null) {
   return (state: ReturnType<typeof usePanelStore.getState>): PanelState | undefined => {
-    if (scope === 'project') return state.projectChat;
+    if (scope === 'project') {
+      return tid ? state.projectChats[tid] : undefined;
+    }
     return state.panels[panel];
   };
 }
 
-export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
+export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOverride }: ChatAreaProps) {
   const toggleCollapsed = usePanelStore((s) => s.toggleCollapsed);
+  const toggleCliPicker = usePanelStore((s) => s.toggleCliPicker);
+  const toggleThreadDropdown = usePanelStore((s) => s.toggleThreadDropdown);
+  const closeAllChatHeaderDropdowns = usePanelStore((s) => s.closeAllChatHeaderDropdowns);
+  const cliPickerOpen = usePanelStore((s) => !!s.cliPickerOpen[panel]);
+  const threadDropdownOpen = usePanelStore((s) => !!s.threadDropdownOpen[panel]);
+  const chatHeaderRef = useRef<HTMLDivElement>(null);
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<ChatInputRef>(null);
@@ -50,14 +75,15 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
     chatInputRef.current?.insertText(text);
   };
 
-  // SPEC-26c: all chat state reads are scope-keyed. Project state lives at
-  // state.projectChat; view state lives at state.panels[panel].
-  const selector = selectChatState(scope, panel);
-  const messages = usePanelStore((state) => selector(state)?.messages || []);
-  const currentTurn = usePanelStore((state) => selector(state)?.currentTurn || null);
-  const segments = usePanelStore((state) => selector(state)?.segments || []);
+  // PER_THREAD_CHAT_STATE: resolve the thread this ChatArea is viewing.
+  // Primary uses currentThreadIds[scope]; secondary passes threadIdOverride.
+  const primaryThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
+  const currentThreadId = threadIdOverride ?? primaryThreadId;
+  const selector = selectChatState(scope, panel, currentThreadId);
+  const messages = usePanelStore((state) => selector(state)?.messages ?? EMPTY_MESSAGES);
+  const currentTurn = usePanelStore((state) => selector(state)?.currentTurn ?? null);
+  const segments = usePanelStore((state) => selector(state)?.segments ?? EMPTY_SEGMENTS);
   const contextUsage = usePanelStore((state) => state.contextUsage);
-  const currentThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
   const currentScope = usePanelStore((state) => state.currentScope);
   const ws = usePanelStore((state) => state.ws);
   const wireReady = usePanelStore((state) => state.wireReady);
@@ -102,6 +128,26 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
     fetchHarnessStatuses();
   }, [fetchHarnessStatuses]);
 
+  // Close chat-header dropdowns on Escape or outside click.
+  useEffect(() => {
+    if (!cliPickerOpen && !threadDropdownOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeAllChatHeaderDropdowns(panel);
+    };
+    const onDown = (e: MouseEvent) => {
+      const node = chatHeaderRef.current;
+      if (node && e.target instanceof Node && !node.contains(e.target)) {
+        closeAllChatHeaderDropdowns(panel);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('mousedown', onDown);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('mousedown', onDown);
+    };
+  }, [cliPickerOpen, threadDropdownOpen, panel, closeAllChatHeaderDropdowns]);
+
   // Clear overlay once wire is ready
   useEffect(() => {
     if (wireReady && connectingHarnessId) {
@@ -140,21 +186,26 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
     //
     // KNOWN PAST BUG (DO NOT REINTRODUCE):
     // User bubble appeared above the live assistant response mid-stream.
+    // PER_THREAD_CHAT_STATE: tid respects threadIdOverride (secondary) or
+    // falls back to the primary's current thread.
     const state = usePanelStore.getState();
-    const cs = scope === 'project' ? state.projectChat : state.panels[panel];
+    const tid = scope === 'project' ? currentThreadId : null;
+    const cs = scope === 'project'
+      ? (tid ? state.projectChats[tid] : undefined)
+      : state.panels[panel];
     if (cs?.currentTurn) {
-      finalizeTurn(scope);
+      finalizeTurn(scope, tid);
     }
 
     justSentRef.current = true;
-    addMessage(scope, {
+    addMessage(scope, tid, {
       id: Date.now().toString(),
       type: 'user',
       content: text,
       timestamp: Date.now()
     });
 
-    sendMessage(text, scope);
+    sendMessage(text, scope, tid);
   };
 
   // Stop: immediately finalize the turn — snap all remaining content
@@ -162,9 +213,12 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
   // but the client moves on.
   const handleStop = () => {
     const state = usePanelStore.getState();
-    const cs = scope === 'project' ? state.projectChat : state.panels[panel];
+    const tid = scope === 'project' ? currentThreadId : null;
+    const cs = scope === 'project'
+      ? (tid ? state.projectChats[tid] : undefined)
+      : state.panels[panel];
     if (cs?.currentTurn) {
-      finalizeTurn(scope);
+      finalizeTurn(scope, tid);
     }
     setIsSending(false);
   };
@@ -189,16 +243,60 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
     );
   }
 
+  // SECONDARY_CHAT_SPEC: secondary has its own SecondaryHeader (traffic lights).
+  // Skip the primary chat-header row entirely when we're embedded in the
+  // secondary popup to avoid a double-header.
+  const isSecondary = !!threadIdOverride;
+
   return (
     <section className={sectionClass}>
-      <button
-        className="rv-collapse-btn"
-        onClick={() => toggleCollapsed(panel, 'leftChat')}
-        title="Collapse chat"
-        style={{ position: 'absolute', top: 8, right: 8, zIndex: 10 }}
-      >
-        <span className="material-symbols-outlined">chevron_left</span>
-      </button>
+      {!isSecondary && (
+      <div className="rv-chat-header" ref={chatHeaderRef}>
+        {sidebarCollapsed && (
+          <>
+            <button
+              className="rv-chat-header-btn rv-chat-header-btn--left"
+              onClick={() => toggleCollapsed(panel, 'leftSidebar')}
+              aria-label="Show threads sidebar"
+              aria-expanded={false}
+              title="Show threads sidebar"
+            >
+              <span className="material-symbols-outlined">arrow_menu_open</span>
+            </button>
+            <div className="rv-chat-header-right">
+              <button
+                className="rv-chat-header-btn"
+                onClick={() => toggleCliPicker(panel)}
+                aria-haspopup="menu"
+                aria-expanded={cliPickerOpen}
+                aria-controls={`cli-picker-${panel}`}
+                aria-label="New chat"
+                title="New chat"
+              >
+                <span className="material-symbols-outlined">playlist_add</span>
+              </button>
+              <button
+                className="rv-chat-header-btn"
+                onClick={() => toggleThreadDropdown(panel)}
+                aria-haspopup="menu"
+                aria-expanded={threadDropdownOpen}
+                aria-controls={`thread-dropdown-${panel}`}
+                aria-label="Show thread list"
+                title="Show thread list"
+              >
+                <span className="material-symbols-outlined">subject</span>
+              </button>
+            </div>
+            <CliPickerDropdown
+              panel={panel}
+              statuses={harnessStatuses}
+              onSelect={handleHarnessSelect}
+            />
+            <ThreadJumpDropdown panel={panel} scope={scope} />
+          </>
+        )}
+      </div>
+      )}
       <div className="chat-messages" ref={chatContainerRef} style={{ position: 'relative' }}>
         {connectingHarnessId ? (
           <ConnectingOverlay harnessName={getHarnessOption(connectingHarnessId)?.name} />
@@ -216,6 +314,7 @@ export function ChatArea({ panel, scope, collapsed }: ChatAreaProps) {
           <MessageList
             panel={panel}
             scope={scope}
+            threadId={currentThreadId}
             messages={messages}
             currentTurn={currentTurn}
             segments={segments}

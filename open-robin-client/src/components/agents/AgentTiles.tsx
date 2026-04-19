@@ -9,6 +9,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { usePanelStore } from '../../state/panelStore';
 import { useAgentStore, AGENT_CONFIG_FILES, type Agent } from '../../state/agentStore';
 import { PromptCardView } from './PromptCardView';
@@ -282,6 +283,8 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
 }
 
 export function AgentTiles() {
+  useViewLayoutStyles('agents-viewer');
+
   const onIndex = useCallback((content: string) => {
     try {
       const index = JSON.parse(content);

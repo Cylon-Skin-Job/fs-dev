@@ -19,15 +19,29 @@ import type { WebSocketMessage, ExchangeData, AssistantPart, StreamSegment, Scop
  */
 export function handleThreadMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
-  // SPEC-26c: every thread:* response carries scope since 26b. Default 'view'
-  // for any older messages that slip through without scope.
-  const scope: Scope = msg.scope === 'project' ? 'project' : 'view';
+  // SECONDARY_CHAT_SPEC: view-scope narrowed to agents-viewer. Default 'project'
+  // for any messages that slip through without scope.
+  const scope: Scope = msg.scope === 'view' ? 'view' : 'project';
 
   switch (msg.type) {
     case 'thread:list':
       console.log('[WS] thread:list received:', msg.threads?.length, 'threads scope=', scope);
       if (msg.threads) {
         store.setThreads(scope, msg.threads);
+        // Auto-open MRU thread if none is active for this scope
+        const hasActive = store.currentThreadIds[scope];
+        if (!hasActive && msg.threads.length > 0) {
+          const mru = msg.threads[0];
+          const ws = store.ws;
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            console.log('[WS] Auto-opening MRU thread:', mru.threadId?.slice(0, 8), 'scope=', scope);
+            ws.send(JSON.stringify({
+              type: 'thread:open-assistant',
+              scope,
+              threadId: mru.threadId,
+            }));
+          }
+        }
       }
       return true;
 
@@ -37,7 +51,8 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         store.addThread(scope, { threadId: msg.threadId, entry: msg.thread });
         store.setCurrentThreadId(scope, msg.threadId);
         store.setCurrentScope(scope);
-        store.clearChat(scope);
+        // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
+        store.clearChat(scope, msg.threadId);
         loadRootTree();
       } else {
         console.error('[WS] thread:created missing data:', msg);
@@ -47,16 +62,34 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'thread:opened': {
       console.log('[WS] thread:opened:', msg.threadId?.slice(0, 8), 'scope=', scope, 'exchanges:', msg.exchanges?.length, 'history:', msg.history?.length, 'contextUsage:', msg.contextUsage);
       if (msg.threadId && msg.thread) {
+        // SECONDARY_CHAT_SPEC: if this thread:opened is for the secondary's
+        // thread, hydrate its chat slot but do NOT touch primary state.
+        // Calling setCurrentThreadId here would hit the §3c auto-close guard
+        // (primary switching to secondary's thread → secondary self-destructs)
+        // and we'd see a flicker of the popup before it disappears.
+        const isForSecondary = store.secondary?.threadId === msg.threadId;
+
+        if (isForSecondary) {
+          store.clearChat(scope, msg.threadId);
+          if (msg.exchanges && msg.exchanges.length > 0) {
+            convertExchangesToMessages(scope, msg.threadId, msg.exchanges);
+          } else if (msg.history && msg.history.length > 0) {
+            convertHistoryToMessages(scope, msg.threadId, msg.history);
+          }
+          return true;
+        }
+
         store.setCurrentThreadId(scope, msg.threadId);
         store.setCurrentScope(scope);
-        store.clearChat(scope);
+        // PER_THREAD_CHAT_STATE: clear then hydrate this thread's slot.
+        store.clearChat(scope, msg.threadId);
 
         if (msg.exchanges && msg.exchanges.length > 0) {
           console.log('[WS] Loading', msg.exchanges.length, 'exchanges (rich format)');
-          convertExchangesToMessages(scope, msg.exchanges);
+          convertExchangesToMessages(scope, msg.threadId, msg.exchanges);
         } else if (msg.history && msg.history.length > 0) {
           console.log('[WS] Loading', msg.history.length, 'messages (legacy format)');
-          convertHistoryToMessages(scope, msg.history);
+          convertHistoryToMessages(scope, msg.threadId, msg.history);
         }
 
         // Restore context usage from last exchange if available
@@ -99,10 +132,10 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
 
 // --- History conversion helpers (private to this module) ---
 
-function convertExchangesToMessages(scope: Scope, exchanges: ExchangeData[]) {
+function convertExchangesToMessages(scope: Scope, threadId: string, exchanges: ExchangeData[]) {
   const store = usePanelStore.getState();
   exchanges.forEach((exchange, idx) => {
-    store.addMessage(scope, {
+    store.addMessage(scope, threadId, {
       id: `ex-${idx}-user`,
       type: 'user',
       content: exchange.user,
@@ -115,7 +148,7 @@ function convertExchangesToMessages(scope: Scope, exchanges: ExchangeData[]) {
       .map((p) => p.content)
       .join('');
 
-    store.addMessage(scope, {
+    store.addMessage(scope, threadId, {
       id: `ex-${idx}-assistant`,
       type: 'assistant',
       content: assistantContent,
@@ -147,11 +180,12 @@ function convertPartToSegment(part: AssistantPart): StreamSegment {
 
 function convertHistoryToMessages(
   scope: Scope,
+  threadId: string,
   history: { role: 'user' | 'assistant'; content: string; hasToolCalls?: boolean }[],
 ) {
   const store = usePanelStore.getState();
   history.forEach((h, idx) => {
-    store.addMessage(scope, {
+    store.addMessage(scope, threadId, {
       id: `hist-${idx}`,
       type: h.role,
       content: h.content,

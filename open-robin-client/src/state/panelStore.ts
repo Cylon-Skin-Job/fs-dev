@@ -7,8 +7,9 @@ import type {
   Thread,
   Scope,
   ViewUIState,
-  PopupState,
-  Pane
+  Pane,
+  CollapsablePane,
+  SecondaryState
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 
@@ -30,24 +31,33 @@ const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   widths:    { leftSidebar: 220,   leftChat: 320   },
 };
 
-function clampWidth(n: number): number {
-  return Math.max(120, Math.min(600, n));
+export function clampPaneWidth(pane: Pane, n: number): number {
+  let min = 120;
+  let max = 600;
+  if (pane === 'leftChat') {
+    min = 300;
+  } else if (pane === 'rightSecondary') {
+    // Right column is shared between the view's right column (e.g. file tree)
+    // and the sticky secondary chat. Allow narrower than the chat's default
+    // so file tree can be compact when no chat is docked.
+    min = 160;
+  }
+  return Math.max(min, Math.min(max, n));
 }
 
-// SPEC-26d: floating popup defaults
-const DEFAULT_POPUP: PopupState = {
-  open: false,
-  x: -1,   // -1 means "compute default on first render" (bottom-right with padding)
-  y: -1,
-  width: 420,
-  height: 520,
-};
+// SECONDARY_CHAT_SPEC §7a: default floating popup size.
+const DEFAULT_SECONDARY_FLOAT = { x: -1, y: -1, width: 380, height: 520 };
 
 interface AppState {
   // Panel configs (dynamically discovered)
   panelConfigs: PanelConfig[];
   setPanelConfigs: (configs: PanelConfig[]) => void;
   getPanelConfig: (id: string) => PanelConfig | undefined;
+
+  // Monotonic counter — bumped on workspace switch so style hooks refetch
+  // even when the WebSocket reference is stable.
+  sharedStylesGeneration: number;
+  bumpSharedStylesGeneration: () => void;
 
   // Current panel
   currentPanel: string;
@@ -58,31 +68,34 @@ interface AppState {
   // chat lives at panels[state.currentPanel].
   panels: Record<string, PanelState>;
 
-  // SPEC-26c: project-scoped chat state is top-level because the project
-  // chat follows the user across panel switches (it is NOT per-panel).
-  projectChat: PanelState;
+  // PER_THREAD_CHAT_STATE: project chat state is now keyed by threadId so
+  // primary and secondary can display different threads simultaneously.
+  // (Replaces the singleton projectChat.)
+  projectChats: Record<string, PanelState>;
 
-  // Chat state actions — every action takes a scope:
-  //  - 'project' routes to state.projectChat
-  //  - 'view'    routes to state.panels[state.currentPanel]
-  addMessage: (scope: Scope, message: Message) => void;
-  setCurrentTurn: (scope: Scope, turn: AssistantTurn | null) => void;
-  updateTurnContent: (scope: Scope, content: string) => void;
-  appendSegment: (scope: Scope, segType: StreamSegment['type'], text: string) => void;
-  pushSegment: (scope: Scope, segment: StreamSegment) => void;
-  updateLastSegment: (scope: Scope, updates: Partial<StreamSegment>) => void;
-  updateSegmentByToolCallId: (scope: Scope, toolCallId: string, updates: Partial<StreamSegment>) => void;
-  appendSegmentContentByIndex: (scope: Scope, index: number, text: string) => void;
-  resetSegments: (scope: Scope) => void;
-  setPendingTurnEnd: (scope: Scope, pending: boolean) => void;
-  setPendingMessage: (scope: Scope, message: Message | null) => void;
-  finalizeTurn: (scope: Scope) => void;
-  clearChat: (scope: Scope) => void;
+  // Chat state actions — every action takes a scope and a threadId:
+  //  - 'project' + threadId routes to projectChats[threadId]
+  //  - 'view'    routes to panels[state.currentPanel] (threadId ignored)
+  //  - threadId=null on project → fallback to currentThreadIds.project; if
+  //    that's also null, the action is a no-op.
+  addMessage: (scope: Scope, threadId: string | null, message: Message) => void;
+  setCurrentTurn: (scope: Scope, threadId: string | null, turn: AssistantTurn | null) => void;
+  updateTurnContent: (scope: Scope, threadId: string | null, content: string) => void;
+  appendSegment: (scope: Scope, threadId: string | null, segType: StreamSegment['type'], text: string) => void;
+  pushSegment: (scope: Scope, threadId: string | null, segment: StreamSegment) => void;
+  updateLastSegment: (scope: Scope, threadId: string | null, updates: Partial<StreamSegment>) => void;
+  updateSegmentByToolCallId: (scope: Scope, threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => void;
+  appendSegmentContentByIndex: (scope: Scope, threadId: string | null, index: number, text: string) => void;
+  resetSegments: (scope: Scope, threadId: string | null) => void;
+  setPendingTurnEnd: (scope: Scope, threadId: string | null, pending: boolean) => void;
+  setPendingMessage: (scope: Scope, threadId: string | null, message: Message | null) => void;
+  finalizeTurn: (scope: Scope, threadId: string | null) => void;
+  clearChat: (scope: Scope, threadId: string | null) => void;
 
   // WebSocket
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
-  sendMessage: (text: string, scope: Scope) => void;
+  sendMessage: (text: string, scope: Scope, threadId?: string | null) => void;
 
   // Project root (absolute path from server)
   projectRoot: string | null;
@@ -110,39 +123,76 @@ interface AppState {
   viewStates: Record<string, ViewUIState>;
   loadViewState: (view: string) => void;
   setViewState: (view: string, state: ViewUIState) => void;
-  toggleCollapsed: (view: string, pane: Pane) => void;
+  toggleCollapsed: (view: string, pane: CollapsablePane) => void;
   setPaneWidth: (view: string, pane: Pane, width: number) => void;
   commitPaneWidths: (view: string) => void;
 
-  // SPEC-26d: floating popup for view chats
-  openFloatingChat: () => void;
-  closeFloatingChat: () => void;
-  setPopupPosition: (panel: string, x: number, y: number) => void;
-  setPopupSize: (panel: string, width: number, height: number) => void;
-  commitPopupState: (panel: string) => void;
+  // Chat-header dropdown UI state (transient, not persisted).
+  // Keyed by panel id; per-panel independence.
+  cliPickerOpen: Record<string, boolean>;
+  threadDropdownOpen: Record<string, boolean>;
+  toggleCliPicker: (panel: string) => void;
+  closeCliPicker: (panel: string) => void;
+  toggleThreadDropdown: (panel: string) => void;
+  closeThreadDropdown: (panel: string) => void;
+  closeAllChatHeaderDropdowns: (panel: string) => void;
+
+  // SECONDARY_CHAT_SPEC: singleton secondary chat (replaces SPEC-26d popup).
+  secondary: SecondaryState | null;
+  openSecondary: (threadId: string) => void;
+  closeSecondary: () => void;
+  minimizeSecondary: () => void;
+  restoreSecondary: () => void;
+  clearJustRestored: () => void;
+  dockSecondary: () => void;
+  undockSecondary: () => void;
+  setSecondaryFloat: (x: number, y: number, width: number, height: number) => void;
+  setSecondaryStickyWidth: (width: number) => void;
 }
 
 /**
- * SPEC-26c helper: resolve the chat state slot for a given scope.
- *  - 'project' → top-level state.projectChat
- *  - 'view'    → state.panels[state.currentPanel] (auto-init if missing)
+ * PER_THREAD_CHAT_STATE helper: resolve the chat state slot.
+ *  - 'view'    → state.panels[currentPanel]
+ *  - 'project' + threadId → projectChats[threadId] (auto-init if missing)
+ *  - 'project' + null threadId → fallback to currentThreadIds.project;
+ *    if still null, returns an empty state (actions become no-ops).
  */
-function getChatState(state: AppState, scope: Scope): PanelState {
-  if (scope === 'project') return state.projectChat;
-  return state.panels[state.currentPanel] || createInitialPanelState();
-}
-
-/**
- * SPEC-26c helper: build the partial state update to write a new chat-state
- * slot back to the store, correctly keyed by scope.
- */
-function writeChatState(state: AppState, scope: Scope, next: PanelState): Partial<AppState> {
-  if (scope === 'project') {
-    return { projectChat: next };
+function getChatState(state: AppState, scope: Scope, threadId: string | null): PanelState {
+  if (scope === 'view') {
+    return state.panels[state.currentPanel] || createInitialPanelState();
   }
-  return {
-    panels: { ...state.panels, [state.currentPanel]: next }
-  };
+  const tid = threadId ?? state.currentThreadIds.project;
+  if (!tid) return createInitialPanelState();
+  return state.projectChats[tid] || createInitialPanelState();
+}
+
+/**
+ * PER_THREAD_CHAT_STATE helper: build the partial state update to write a
+ * new chat-state slot back to the store, correctly keyed by scope + threadId.
+ * Returns {} (no-op) when scope is 'project' and no threadId can be resolved.
+ */
+function writeChatState(
+  state: AppState,
+  scope: Scope,
+  threadId: string | null,
+  next: PanelState
+): Partial<AppState> {
+  if (scope === 'view') {
+    return { panels: { ...state.panels, [state.currentPanel]: next } };
+  }
+  const tid = threadId ?? state.currentThreadIds.project;
+  if (!tid) return {};
+  return { projectChats: { ...state.projectChats, [tid]: next } };
+}
+
+/**
+ * Resolve a threadId from its optional form to the concrete project thread
+ * for no-op-checking inside action implementations. Returns null if
+ * scope='project' and no thread is active.
+ */
+function resolveThreadId(state: AppState, scope: Scope, threadId: string | null): string | null {
+  if (scope === 'view') return null;
+  return threadId ?? state.currentThreadIds.project;
 }
 
 export const usePanelStore = create<AppState>((set, get) => ({
@@ -160,10 +210,15 @@ export const usePanelStore = create<AppState>((set, get) => ({
   },
   getPanelConfig: (id) => get().panelConfigs.find((c) => c.id === id),
 
+  // Shared-styles reload signal (see useSharedWorkspaceStyles)
+  sharedStylesGeneration: 0,
+  bumpSharedStylesGeneration: () =>
+    set((s) => ({ sharedStylesGeneration: s.sharedStylesGeneration + 1 })),
+
   // Initial state — empty until discovery populates
   currentPanel: 'code-viewer',
   panels: {},
-  projectChat: createInitialPanelState(),  // SPEC-26c
+  projectChats: {},  // PER_THREAD_CHAT_STATE: keyed by threadId
   ws: null,
   projectRoot: null,
   contextUsage: 0,
@@ -172,6 +227,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
   currentScope: null,
   wireReady: false,
   viewStates: {},
+  cliPickerOpen: {},
+  threadDropdownOpen: {},
+  secondary: null,
 
   // Actions
   setCurrentPanel: (id) => {
@@ -183,6 +241,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
       // when panel changes); project thread persists across panels.
       currentThreadIds: { ...state.currentThreadIds, view: null },
       currentScope: null,
+      // Close any open chat-header dropdowns for the panel we're leaving.
+      cliPickerOpen: { ...state.cliPickerOpen, [state.currentPanel]: false },
+      threadDropdownOpen: { ...state.threadDropdownOpen, [state.currentPanel]: false },
     };
     if (!state.panels[id]) {
       set({
@@ -203,27 +264,27 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }
   },
 
-  addMessage: (scope, message) => set((state) => {
-    const cs = getChatState(state, scope);
-    return writeChatState(state, scope, { ...cs, messages: [...cs.messages, message] });
+  addMessage: (scope, threadId, message) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
+    return writeChatState(state, scope, threadId, { ...cs, messages: [...cs.messages, message] });
   }),
 
-  setCurrentTurn: (scope, turn) => set((state) => {
-    const cs = getChatState(state, scope);
-    return writeChatState(state, scope, { ...cs, currentTurn: turn });
+  setCurrentTurn: (scope, threadId, turn) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
+    return writeChatState(state, scope, threadId, { ...cs, currentTurn: turn });
   }),
 
-  updateTurnContent: (scope, content) => set((state) => {
-    const cs = getChatState(state, scope);
+  updateTurnContent: (scope, threadId, content) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     if (!cs.currentTurn) return state;
-    return writeChatState(state, scope, {
+    return writeChatState(state, scope, threadId, {
       ...cs,
       currentTurn: { ...cs.currentTurn, content }
     });
   }),
 
-  appendSegment: (scope, segType, text) => set((state) => {
-    const cs = getChatState(state, scope);
+  appendSegment: (scope, threadId, segType, text) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     const segments = [...cs.segments];
     const last = segments[segments.length - 1];
     if (last && last.type === segType) {
@@ -236,11 +297,11 @@ export const usePanelStore = create<AppState>((set, get) => ({
       }
       segments.push({ type: segType, content: text });
     }
-    return writeChatState(state, scope, { ...cs, segments });
+    return writeChatState(state, scope, threadId, { ...cs, segments });
   }),
 
-  pushSegment: (scope, segment) => set((state) => {
-    const cs = getChatState(state, scope);
+  pushSegment: (scope, threadId, segment) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     const segments = [...cs.segments];
     // Mark prior segment complete before pushing new one
     const last = segments[segments.length - 1];
@@ -248,49 +309,49 @@ export const usePanelStore = create<AppState>((set, get) => ({
       segments[segments.length - 1] = { ...last, complete: true };
     }
     segments.push(segment);
-    return writeChatState(state, scope, { ...cs, segments });
+    return writeChatState(state, scope, threadId, { ...cs, segments });
   }),
 
-  updateLastSegment: (scope, updates) => set((state) => {
-    const cs = getChatState(state, scope);
+  updateLastSegment: (scope, threadId, updates) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     const segments = [...cs.segments];
     const last = segments[segments.length - 1];
     if (last) {
       segments[segments.length - 1] = { ...last, ...updates };
     }
-    return writeChatState(state, scope, { ...cs, segments });
+    return writeChatState(state, scope, threadId, { ...cs, segments });
   }),
 
-  updateSegmentByToolCallId: (scope, toolCallId, updates) => set((state) => {
-    const cs = getChatState(state, scope);
+  updateSegmentByToolCallId: (scope, threadId, toolCallId, updates) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     const idx = cs.segments.findIndex((s) => s.toolCallId === toolCallId);
     if (idx < 0) return state;
     const segments = [...cs.segments];
     segments[idx] = { ...segments[idx], ...updates };
-    return writeChatState(state, scope, { ...cs, segments });
+    return writeChatState(state, scope, threadId, { ...cs, segments });
   }),
 
-  appendSegmentContentByIndex: (scope, index, text) => set((state) => {
-    const cs = getChatState(state, scope);
+  appendSegmentContentByIndex: (scope, threadId, index, text) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
     if (index < 0 || index >= cs.segments.length) return state;
     const segments = [...cs.segments];
     segments[index] = { ...segments[index], content: segments[index].content + text };
-    return writeChatState(state, scope, { ...cs, segments });
+    return writeChatState(state, scope, threadId, { ...cs, segments });
   }),
 
-  resetSegments: (scope) => set((state) => {
-    const cs = getChatState(state, scope);
-    return writeChatState(state, scope, { ...cs, segments: [] });
+  resetSegments: (scope, threadId) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
+    return writeChatState(state, scope, threadId, { ...cs, segments: [] });
   }),
 
-  setPendingTurnEnd: (scope, pending) => set((state) => {
-    const cs = getChatState(state, scope);
-    return writeChatState(state, scope, { ...cs, pendingTurnEnd: pending });
+  setPendingTurnEnd: (scope, threadId, pending) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
+    return writeChatState(state, scope, threadId, { ...cs, pendingTurnEnd: pending });
   }),
 
-  setPendingMessage: (scope, message) => set((state) => {
-    const cs = getChatState(state, scope);
-    return writeChatState(state, scope, { ...cs, pendingMessage: message });
+  setPendingMessage: (scope, threadId, message) => set((state) => {
+    const cs = getChatState(state, scope, threadId);
+    return writeChatState(state, scope, threadId, { ...cs, pendingMessage: message });
   }),
 
   // TURN FINALIZATION — completes the full turn lifecycle in one atomic update.
@@ -314,9 +375,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
   //   - User bubble appearing above the live response on mid-stream send
   //   - Turn never moving to history if no follow-up message was sent
   //   - Stale LiveSegmentRenderer state persisting after animation completed
-  finalizeTurn: (scope) => {
+  finalizeTurn: (scope, threadId) => {
     const state = get();
-    const cs = getChatState(state, scope);
+    const cs = getChatState(state, scope, threadId);
     const turn = cs.currentTurn;
     if (turn) {
       const segments = cs.segments;
@@ -330,8 +391,8 @@ export const usePanelStore = create<AppState>((set, get) => ({
           segments: segments.length > 0 ? [...segments] : undefined,
         },
       ];
-      set((s) => writeChatState(s, scope, {
-        ...getChatState(s, scope),
+      set((s) => writeChatState(s, scope, threadId, {
+        ...getChatState(s, scope, threadId),
         messages: newMessages,
         currentTurn: null,
         segments: [],
@@ -342,23 +403,23 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }
   },
 
-  clearChat: (scope) => set((state) =>
-    writeChatState(state, scope, createInitialPanelState())
+  clearChat: (scope, threadId) => set((state) =>
+    writeChatState(state, scope, threadId, createInitialPanelState())
   ),
 
   setWs: (ws) => set({ ws }),
-  sendMessage: (text, scope) => {
+  sendMessage: (text, scope, threadIdOpt) => {
     const state = get();
     const socket = state.ws;
     if (!socket || socket.readyState !== WebSocket.OPEN) return;
-    const threadId = state.currentThreadIds[scope];
+    const threadId = resolveThreadId(state, scope, threadIdOpt ?? null);
     if (!threadId) {
       console.error(`[Store] sendMessage: no active thread in scope=${scope}`);
       return;
     }
     const now = performance.now();
     (window as any).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
-    console.log(`[TIMING] SEND at ${now.toFixed(1)}ms scope=${scope}`);
+    console.log(`[TIMING] SEND at ${now.toFixed(1)}ms scope=${scope} threadId=${threadId.slice(0,8)}`);
     socket.send(JSON.stringify({
       type: 'prompt',
       scope,
@@ -373,9 +434,21 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setThreads: (scope, threads) => set((state) => ({
     threads: { ...state.threads, [scope]: threads },
   })),
-  setCurrentThreadId: (scope, threadId) => set((state) => ({
-    currentThreadIds: { ...state.currentThreadIds, [scope]: threadId },
-  })),
+  setCurrentThreadId: (scope, threadId) => set((state) => {
+    // SECONDARY_CHAT_SPEC §3c: if the primary is being switched to the
+    // secondary's thread, the secondary auto-closes (switch wins).
+    const base: Partial<AppState> = {
+      currentThreadIds: { ...state.currentThreadIds, [scope]: threadId },
+    };
+    if (
+      state.secondary &&
+      scope === 'project' &&
+      threadId === state.secondary.threadId
+    ) {
+      base.secondary = null;
+    }
+    return base;
+  }),
   setCurrentScope: (scope) => set({ currentScope: scope }),
   setWireReady: (ready) => set({ wireReady: ready }),
   addThread: (scope, thread) => set((state) => ({
@@ -392,16 +465,25 @@ export const usePanelStore = create<AppState>((set, get) => ({
       ),
     },
   })),
-  removeThread: (scope, threadId) => set((state) => ({
-    threads: {
-      ...state.threads,
-      [scope]: state.threads[scope].filter(t => t.threadId !== threadId),
-    },
-    currentThreadIds: {
-      ...state.currentThreadIds,
-      [scope]: state.currentThreadIds[scope] === threadId ? null : state.currentThreadIds[scope],
-    },
-  })),
+  removeThread: (scope, threadId) => set((state) => {
+    // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
+    const dropSecondary = state.secondary?.threadId === threadId;
+    // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
+    const nextProjectChats = { ...state.projectChats };
+    delete nextProjectChats[threadId];
+    return {
+      threads: {
+        ...state.threads,
+        [scope]: state.threads[scope].filter(t => t.threadId !== threadId),
+      },
+      currentThreadIds: {
+        ...state.currentThreadIds,
+        [scope]: state.currentThreadIds[scope] === threadId ? null : state.currentThreadIds[scope],
+      },
+      projectChats: nextProjectChats,
+      ...(dropSecondary ? { secondary: null } : {}),
+    };
+  }),
 
   // SPEC-26c-2: per-view UI state actions
   loadViewState: (view) => {
@@ -417,9 +499,10 @@ export const usePanelStore = create<AppState>((set, get) => ({
   toggleCollapsed: (view, pane) => {
     set((s) => {
       const current = s.viewStates[view] ?? DEFAULT_VIEW_UI_STATE;
+      const wasCollapsed = current.collapsed[pane];
       const nextCollapsed = {
         ...current.collapsed,
-        [pane]: !current.collapsed[pane],
+        [pane]: !wasCollapsed,
       };
       const nextState: ViewUIState = { ...current, collapsed: nextCollapsed };
 
@@ -433,15 +516,48 @@ export const usePanelStore = create<AppState>((set, get) => ({
         }));
       }
 
+      // When the sidebar is being expanded (was collapsed, now not), close
+      // any open chat-header dropdowns for that panel.
+      const closeDropdowns = pane === 'leftSidebar' && wasCollapsed;
       return {
         viewStates: { ...s.viewStates, [view]: nextState },
+        ...(closeDropdowns && {
+          cliPickerOpen: { ...s.cliPickerOpen, [view]: false },
+          threadDropdownOpen: { ...s.threadDropdownOpen, [view]: false },
+        }),
       };
     });
   },
 
+  // Chat-header dropdown actions (mutex: opening one closes the other).
+  toggleCliPicker: (panel) => set((s) => {
+    const next = !s.cliPickerOpen[panel];
+    return {
+      cliPickerOpen: { ...s.cliPickerOpen, [panel]: next },
+      threadDropdownOpen: { ...s.threadDropdownOpen, [panel]: false },
+    };
+  }),
+  closeCliPicker: (panel) => set((s) => ({
+    cliPickerOpen: { ...s.cliPickerOpen, [panel]: false },
+  })),
+  toggleThreadDropdown: (panel) => set((s) => {
+    const next = !s.threadDropdownOpen[panel];
+    return {
+      threadDropdownOpen: { ...s.threadDropdownOpen, [panel]: next },
+      cliPickerOpen: { ...s.cliPickerOpen, [panel]: false },
+    };
+  }),
+  closeThreadDropdown: (panel) => set((s) => ({
+    threadDropdownOpen: { ...s.threadDropdownOpen, [panel]: false },
+  })),
+  closeAllChatHeaderDropdowns: (panel) => set((s) => ({
+    cliPickerOpen: { ...s.cliPickerOpen, [panel]: false },
+    threadDropdownOpen: { ...s.threadDropdownOpen, [panel]: false },
+  })),
+
   setPaneWidth: (view, pane, width) => set((s) => {
     const current = s.viewStates[view] ?? DEFAULT_VIEW_UI_STATE;
-    const clamped = clampWidth(width);
+    const clamped = clampPaneWidth(pane, width);
     const nextWidths = { ...current.widths, [pane]: clamped };
     return {
       viewStates: {
@@ -463,85 +579,84 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }));
   },
 
-  // SPEC-26d: floating popup actions
-  openFloatingChat: () => {
+  // SECONDARY_CHAT_SPEC: secondary chat actions.
+  // Guards live in openSecondary: (a) already open → noop; (b) threadId is
+  // primary's current project thread → noop (§3c: no co-primary).
+  openSecondary: (threadId) => {
     const state = get();
-    const panel = state.currentPanel;
-    const threads = state.threads.view;
+    if (state.secondary) return;
+    if (state.currentThreadIds.project === threadId) return;
+    set({
+      secondary: {
+        threadId,
+        mode: 'floating',
+        previousMode: 'floating',
+        float: { ...DEFAULT_SECONDARY_FLOAT },
+      },
+    });
+    // Activate the thread on the server so it gets its own wire.
     const ws = state.ws;
-
-    // If there are view threads, activate the MRU one on the server
-    if (threads.length > 0 && ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({
-        type: 'thread:open-assistant',
-        scope: 'view',
-        threadId: threads[0].threadId,
-      }));
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope: 'project', threadId }));
     }
-    // If no threads, ChatArea will show the harness picker automatically
-
-    // Update popup.open in viewStates
-    set((s) => {
-      const vs = s.viewStates[panel] || { ...DEFAULT_VIEW_UI_STATE };
-      const popup = vs.popup || { ...DEFAULT_POPUP };
-      return {
-        viewStates: {
-          ...s.viewStates,
-          [panel]: { ...vs, popup: { ...popup, open: true } },
-        },
-      };
-    });
   },
 
-  closeFloatingChat: () => {
-    const panel = get().currentPanel;
-    set((s) => {
-      const vs = s.viewStates[panel];
-      if (!vs?.popup) return s;
-      return {
-        viewStates: {
-          ...s.viewStates,
-          [panel]: { ...vs, popup: { ...vs.popup, open: false } },
-        },
-      };
-    });
-    // Persist the close state
-    get().commitPopupState(panel);
-  },
+  closeSecondary: () => set({ secondary: null }),
 
-  setPopupPosition: (panel, x, y) => set((s) => {
-    const vs = s.viewStates[panel] || { ...DEFAULT_VIEW_UI_STATE };
-    const popup = vs.popup || { ...DEFAULT_POPUP };
+  minimizeSecondary: () => set((s) => {
+    if (!s.secondary || s.secondary.mode === 'minimized') return s;
     return {
-      viewStates: {
-        ...s.viewStates,
-        [panel]: { ...vs, popup: { ...popup, x, y } },
+      secondary: {
+        ...s.secondary,
+        previousMode: s.secondary.mode as 'floating' | 'sticky-right',
+        mode: 'minimized',
       },
     };
   }),
 
-  setPopupSize: (panel, width, height) => set((s) => {
-    const vs = s.viewStates[panel] || { ...DEFAULT_VIEW_UI_STATE };
-    const popup = vs.popup || { ...DEFAULT_POPUP };
+  restoreSecondary: () => set((s) => {
+    if (!s.secondary || s.secondary.mode !== 'minimized') return s;
+    // justRestored=true triggers the reverse genie animation in whichever
+    // component mounts next (floating or sticky). The component clears the
+    // flag after the animation completes.
     return {
-      viewStates: {
-        ...s.viewStates,
-        [panel]: { ...vs, popup: { ...popup, width, height } },
-      },
+      secondary: { ...s.secondary, mode: s.secondary.previousMode, justRestored: true },
     };
   }),
 
-  commitPopupState: (panel) => {
-    const state = get();
-    const vs = state.viewStates[panel];
-    if (!vs?.popup) return;
-    const ws = state.ws;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    ws.send(JSON.stringify({
-      type: 'state:set',
-      view: panel,
-      state: { popup: vs.popup },
-    }));
-  },
+  clearJustRestored: () => set((s) => {
+    if (!s.secondary?.justRestored) return s;
+    return { secondary: { ...s.secondary, justRestored: false } };
+  }),
+
+  dockSecondary: () => set((s) => {
+    if (!s.secondary || s.secondary.mode === 'sticky-right') return s;
+    return { secondary: { ...s.secondary, mode: 'sticky-right' } };
+  }),
+
+  undockSecondary: () => set((s) => {
+    if (!s.secondary || s.secondary.mode !== 'sticky-right') return s;
+    return { secondary: { ...s.secondary, mode: 'floating' } };
+  }),
+
+  setSecondaryFloat: (x, y, width, height) => set((s) => {
+    if (!s.secondary) return s;
+    return { secondary: { ...s.secondary, float: { x, y, width, height } } };
+  }),
+
+  setSecondaryStickyWidth: (width) => set((s) => {
+    const panel = s.currentPanel;
+    const current = s.viewStates[panel] ?? DEFAULT_VIEW_UI_STATE;
+    const clamped = clampPaneWidth('rightSecondary', width);
+    return {
+      viewStates: {
+        ...s.viewStates,
+        [panel]: {
+          ...current,
+          widths: { ...current.widths, rightSecondary: clamped },
+        },
+      },
+    };
+  }),
 
 }));

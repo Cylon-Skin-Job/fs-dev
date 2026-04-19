@@ -2,7 +2,7 @@
  * @module scopePanelCss
  * @role Prefix selectors with [data-panel="…"] for workspace-injected panel CSS
  *
- * Shared by runtime module ctx.injectStyles and usePanelWorkspaceStyles.
+ * Shared by runtime module ctx.injectStyles and useViewLayoutStyles.
  */
 
 export function scopePanelCss(css: string, panelId: string): string {

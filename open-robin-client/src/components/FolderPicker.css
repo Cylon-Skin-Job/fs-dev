@@ -1,0 +1,221 @@
+/* Folder Picker — tree-based, mirrors code viewer FolderNode pattern */
+
+.rv-fp-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal, 1003);
+}
+
+.rv-fp {
+  width: 540px;
+  max-width: calc(100vw - 32px);
+  height: 560px;
+  max-height: calc(100vh - 64px);
+  background: var(--sidebar-surface-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.rv-fp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+.rv-fp-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rv-fp-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.7;
+  border-radius: 4px;
+  transition: opacity 120ms ease, background 120ms ease;
+}
+
+.rv-fp-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Breadcrumb */
+.rv-fp-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.08));
+  font-size: 12px;
+  color: var(--text-dim, #999);
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rv-fp-breadcrumb-sep {
+  margin: 0 3px;
+  opacity: 0.5;
+}
+
+.rv-fp-breadcrumb-label {
+  opacity: 0.8;
+}
+
+/* Tree area */
+.rv-fp-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+/* Tree items — mirrors code viewer's .file-tree-item */
+.rv-fp-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: var(--file-tree-font-size, 0.85rem);
+  color: var(--text-primary, #e0e0e0);
+  transition: background 80ms ease;
+  user-select: none;
+}
+
+.rv-fp-tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rv-fp-tree-item.selected {
+  background: rgba(var(--theme-primary-rgb, 79, 195, 247), 0.12);
+}
+
+/* Icons — same sizing/color as code viewer */
+.rv-fp-tree-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.rv-fp-folder-filled {
+  color: var(--text-dim, #999);
+}
+
+.rv-fp-folder-outline {
+  color: var(--text-dim, #666);
+  font-variation-settings: 'FILL' 0;
+}
+
+.rv-fp-repo {
+  color: var(--theme-primary, #4fc3f7);
+}
+
+.rv-fp-tree-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-fp-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: rgba(var(--theme-primary-rgb, 79, 195, 247), 0.15);
+  color: var(--theme-primary, #4fc3f7);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* Children container — no extra spacing, indentation via paddingLeft */
+.rv-fp-children {
+  /* empty — structure only, indentation is inline */
+}
+
+.rv-fp-tree-empty {
+  font-size: var(--file-tree-font-size, 0.85rem);
+  color: var(--text-dim, #666);
+  padding: 4px 12px;
+}
+
+/* Status messages */
+.rv-fp-status {
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--text-dim, #999);
+}
+
+.rv-fp-error {
+  color: #ff6b6b;
+}
+
+/* Footer */
+.rv-fp-footer {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  padding: 12px 18px;
+  flex-shrink: 0;
+}
+
+.rv-fp-selected-path {
+  font-size: 11px;
+  color: var(--text-dim, #999);
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.rv-fp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.rv-fp-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.2));
+  border-radius: 6px;
+  color: inherit;
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.rv-fp-btn:hover {
+  border-color: var(--theme-primary, rgba(255, 255, 255, 0.4));
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rv-fp-btn-primary {
+  background: var(--theme-primary, rgba(255, 255, 255, 0.15));
+  border-color: transparent;
+  color: #fff;
+}
+
+.rv-fp-btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.rv-fp-btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: none;
+}

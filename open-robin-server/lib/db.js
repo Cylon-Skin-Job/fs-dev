@@ -11,19 +11,18 @@ const fs = require('fs');
 let instance = null;
 
 /**
- * Initialize the database. Creates ai/system/ if needed, runs migrations.
- * @param {string} projectRoot - Absolute path to project root
+ * Initialize the database. Creates data/ if needed, runs migrations.
  * @returns {Promise<import('knex').Knex>}
  */
-async function initDb(projectRoot) {
+async function initDb() {
   if (instance) return instance;
 
-  const systemDir = path.join(projectRoot, 'ai', 'system');
-  fs.mkdirSync(systemDir, { recursive: true });
+  const dataDir = path.join(__dirname, '..', 'data');
+  fs.mkdirSync(dataDir, { recursive: true });
 
   instance = knex({
     client: 'better-sqlite3',
-    connection: { filename: path.join(systemDir, 'robin.db') },
+    connection: { filename: path.join(dataDir, 'robin.db') },
     useNullAsDefault: true,
     pool: {
       afterCreate: (conn, done) => {

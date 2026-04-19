@@ -35,6 +35,9 @@ import { InstantSegmentRenderer } from './InstantSegmentRenderer';
 interface MessageListProps {
   panel: string;
   scope: Scope;
+  // PER_THREAD_CHAT_STATE: required for project scope; ignored for view.
+  // Primary passes currentThreadIds.project; secondary passes secondary.threadId.
+  threadId: string | null;
   messages: Message[];
   currentTurn: AssistantTurn | null;
   segments: StreamSegment[];
@@ -45,24 +48,26 @@ interface MessageListProps {
 export function MessageList({
   panel,
   scope,
+  threadId,
   messages,
   currentTurn,
   segments,
   lastUserMsgRef,
   showOrb,
 }: MessageListProps) {
-  // SPEC-26c: pendingTurnEnd is scoped. Project reads from projectChat;
-  // view reads from panels[currentPanel].
-  const pendingTurnEnd = usePanelStore((s) =>
-    scope === 'project'
-      ? s.projectChat.pendingTurnEnd
-      : (s.panels[panel]?.pendingTurnEnd ?? false)
-  );
+  // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId for project;
+  // view still reads from panels[currentPanel].
+  const pendingTurnEnd = usePanelStore((s) => {
+    if (scope === 'project') {
+      return threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false;
+    }
+    return s.panels[panel]?.pendingTurnEnd ?? false;
+  });
   const finalizeTurn = usePanelStore((s) => s.finalizeTurn);
 
   // CRITICAL: undefined when not pending, NOT a no-op function.
   // LiveSegmentRenderer's completion effect checks `if (!onRevealComplete) return;`
-  const onRevealComplete = pendingTurnEnd ? () => finalizeTurn(scope) : undefined;
+  const onRevealComplete = pendingTurnEnd ? () => finalizeTurn(scope, threadId) : undefined;
 
   // Find the last user message index for scroll anchoring
   let lastUserIdx = -1;

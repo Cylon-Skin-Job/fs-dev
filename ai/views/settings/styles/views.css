@@ -135,14 +135,160 @@
   align-self: flex-end;
 }
 
-/* --- Floating chat (wiki / popup layout) --- */
+/* --- SECONDARY_CHAT_SPEC: singleton secondary chat (replaces SPEC-26d popup) --- */
 
-.floating-chat-fab {
+/* Floating mode: absolutely-positioned popup, draggable by header, resizable from bottom-right. */
+.rv-secondary-popup {
+  position: fixed;
+  background: var(--bg-solid, #0d0d0d);
+  border: 1px solid var(--ws-panel-border, var(--theme-border, #333));
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 501;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Sticky-right mode: grid child inside the active panel. */
+.rv-secondary-sticky {
+  background: var(--bg-solid, #0d0d0d);
+  border-left: 1px solid var(--ws-panel-border, var(--theme-border, #333));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 40px header with three traffic-light buttons (upper-left) + a dedicated
+ * grab zone to the right. The header itself no longer sets cursor: grab —
+ * only the drag zone does, so button cursors don't compete. */
+.rv-secondary-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--chat-header-height, 40px);
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--ws-panel-border, var(--theme-border, #333));
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.rv-secondary-drag-zone {
+  flex: 1;
+  align-self: stretch;
+  cursor: grab;
+}
+
+.rv-secondary-drag-zone:active {
+  cursor: grabbing;
+}
+
+.rv-secondary-tl {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer !important;
+  opacity: 0.85;
+  transition: opacity 120ms, transform 120ms;
+}
+
+.rv-secondary-tl:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.rv-secondary-tl--red    { background: #ff5f57; }
+.rv-secondary-tl--yellow { background: #febc2e; }
+.rv-secondary-tl--green  { background: #28c840; }
+
+/* Body wraps the embedded ChatArea. */
+.rv-secondary-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.rv-secondary-body .chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  min-height: 0;
+}
+
+.rv-secondary-body .chat-messages {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Genie-style animation. Forward (0% → 100%) = minimize: phase 1 squeezes
+ * sides + stretches vertically, phase 2 translates + shrinks toward the
+ * dock-button center and fades. Restore replays the same keyframe with
+ * `animation-direction: reverse`, so the popup grows out of the dock.
+ * `transform-origin: bottom right` pins the anchor through the scale so
+ * the translate delta lands on the dock button. */
+@keyframes rv-secondary-minimize {
+  0% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+  40% {
+    transform: scaleX(0.18) scaleY(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform:
+      translate(var(--minimize-dx, 0px), var(--minimize-dy, 0px))
+      scale(0.04);
+    opacity: 0;
+  }
+}
+
+.rv-secondary-popup--minimizing,
+.rv-secondary-sticky--minimizing {
+  animation: rv-secondary-minimize 450ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  transform-origin: bottom right;
+  pointer-events: none;
+}
+
+.rv-secondary-popup--restoring,
+.rv-secondary-sticky--restoring {
+  animation: rv-secondary-minimize 450ms cubic-bezier(0.4, 0, 0.6, 1) reverse forwards;
+  transform-origin: bottom right;
+  pointer-events: none;
+}
+
+/* Drag-resize handle at bottom-right of floating popup. */
+.rv-secondary-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 50%, var(--text-dim, #555) 50%);
+  opacity: 0.3;
+  border-radius: 0 0 12px 0;
+}
+
+.rv-secondary-resize-handle:hover {
+  opacity: 0.6;
+}
+
+/* Minimized: round dock button fixed to bottom-right. */
+.rv-secondary-dock-btn {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: none;
   background: var(--ws-primary, var(--theme-primary, #ec4899));
@@ -156,215 +302,27 @@
   transition: transform 150ms, box-shadow 150ms;
 }
 
-.floating-chat-fab:hover {
+.rv-secondary-dock-btn:hover {
   transform: scale(1.08);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
 }
 
-.floating-chat-fab .material-symbols-outlined {
+.rv-secondary-dock-btn .material-symbols-outlined {
   font-size: 1.5rem;
 }
 
-.floating-chat-panel {
-  position: fixed;
-  /* SPEC-26d: width + height come from inline styles (store-driven) */
-  background: var(--bg-solid, #0d0d0d);
-  border: 1px solid var(--ws-panel-border, var(--theme-border, #333));
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  z-index: 501;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+/* Thread-list indented row when a secondary is open (§4). */
+.chat-item--secondary-indent {
+  margin-left: 16px;
 }
 
-.floating-chat-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid var(--ws-panel-border, var(--theme-border, #333));
-  cursor: grab;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.floating-chat-header:active {
-  cursor: grabbing;
-}
-
-.floating-chat-header .material-symbols-outlined {
-  color: var(--ws-primary, var(--theme-primary, #ec4899));
-}
-
-.floating-chat-title {
-  flex: 1;
-  font-size: 0.8125rem;
-  font-weight: 500;
+.chat-item--secondary-indent .chat-item-text::before {
+  content: 'subdirectory_arrow_right';
+  font-family: 'Material Symbols Outlined';
+  font-size: 14px;
+  margin-right: 4px;
+  vertical-align: middle;
   color: var(--text-dim, #888);
-  text-transform: capitalize;
-}
-
-.floating-chat-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: none;
-  color: var(--text-dim, #888);
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 0;
-}
-
-.floating-chat-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-primary, #eee);
-}
-
-.floating-chat-close .material-symbols-outlined {
-  font-size: 1.125rem;
-}
-
-/* SPEC-26d: menu button in the popup header */
-.floating-chat-menu-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: none;
-  color: var(--text-dim, #888);
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 0;
-}
-
-.floating-chat-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--ws-primary, var(--theme-primary, #ec4899));
-}
-
-.floating-chat-menu-btn .material-symbols-outlined {
-  font-size: 1.125rem;
-}
-
-/* SPEC-26d: resize handle (bottom-right corner) */
-.floating-chat-resize-handle {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  cursor: nwse-resize;
-  background: linear-gradient(135deg, transparent 50%, var(--text-dim, #555) 50%);
-  opacity: 0.3;
-  border-radius: 0 0 12px 0;
-}
-
-.floating-chat-resize-handle:hover {
-  opacity: 0.6;
-}
-
-.floating-chat-body {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.floating-chat-body .chat-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  min-height: 0;
-}
-
-.floating-chat-body .chat-messages {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.floating-chat-body .context-usage {
-  display: none;
-}
-
-/* --- SPEC-26d: Thread picker modal (list items inside rv-modal shell) --- */
-
-.rv-thread-picker-modal {
-  min-width: 360px;
-  max-width: 480px;
-}
-
-.rv-thread-picker-new {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-  background: var(--ws-primary, var(--theme-primary, #ec4899));
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.8125rem;
-}
-
-.rv-thread-picker-new:hover {
-  opacity: 0.9;
-}
-
-.rv-thread-picker-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-height: 50vh;
-  overflow-y: auto;
-}
-
-.rv-thread-picker-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: var(--text-primary, #ddd);
-  cursor: pointer;
-  text-align: left;
-}
-
-.rv-thread-picker-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--theme-border, #444);
-}
-
-.rv-thread-picker-item--active {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--ws-primary, var(--theme-primary, #ec4899));
-}
-
-.rv-thread-picker-name {
-  font-size: 0.8125rem;
-}
-
-.rv-thread-picker-meta {
-  font-size: 0.6875rem;
-  color: var(--text-dim, #888);
-}
-
-.rv-thread-picker-empty {
-  padding: 16px;
-  text-align: center;
-  color: var(--text-dim, #888);
-  font-size: 0.8125rem;
 }
 
 /* --- Messages --- */
@@ -520,12 +478,12 @@
   padding: 0 4px;
   font-size: 16px;
   line-height: 1;
-  opacity: 0;
+  opacity: 0.4;
   transition: opacity 0.15s;
 }
 
 .chat-item:hover .thread-menu-btn {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .thread-menu-btn:hover {
@@ -537,13 +495,22 @@
   position: absolute;
   right: 8px;
   top: 32px;
-  background: var(--bg-secondary);
+  background: var(--bg-secondary, var(--bg-solid, #1e1e1e));
   border: 1px solid var(--theme-border);
   border-radius: 6px;
   padding: 4px 0;
   min-width: 120px;
   z-index: 100;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Promote the containing .chat-item above later siblings so the open
+   dropdown paints on top of rows rendered after it in DOM order.
+   Without this, .chat-item (position:relative, no z-index) doesn't
+   create a stacking context, and the dropdown's z-index:100 only wins
+   within its own chat-item — not against siblings further down the list. */
+.chat-item:has(.thread-menu-dropdown) {
+  z-index: 1000;
 }
 
 .thread-menu-dropdown button {
@@ -558,8 +525,14 @@
   font-size: 13px;
 }
 
-.thread-menu-dropdown button:hover {
+.thread-menu-dropdown button:hover:not([disabled]) {
   background: rgba(var(--theme-primary-rgb), 0.1);
+}
+
+.thread-menu-dropdown button[disabled] {
+  color: var(--text-dim, #777);
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .chat-item:hover:not(.active) {

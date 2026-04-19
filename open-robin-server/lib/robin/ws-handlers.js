@@ -15,20 +15,24 @@ const path = require('path');
  * @param {Object} deps
  * @param {Function} deps.getDb - Returns Knex instance
  * @param {Map} deps.sessions - WebSocket → session state map
- * @param {Function} deps.getDefaultProjectRoot - Returns project root path
+ * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot - Returns active workspace project root, or null in empty state
  * @returns {Object<string, Function>} Message type → async handler
  */
-module.exports = function createRobinHandlers({ getDb, sessions, getDefaultProjectRoot }) {
+module.exports = function createRobinHandlers({ getDb, sessions, getProjectRoot }) {
 
-  /** Read the filesystem themes.css, or null if it doesn't exist. */
+  /** Read the filesystem themes.css, or null if it doesn't exist or no active workspace. */
   async function readFilesystemCss() {
-    const cssPath = path.join(getDefaultProjectRoot(), 'ai', 'views', 'settings', 'themes.css');
+    const root = getProjectRoot();
+    if (!root) return null;
+    const cssPath = path.join(root, 'ai', 'views', 'settings', 'themes.css');
     try { return await fsPromises.readFile(cssPath, 'utf8'); } catch { return null; }
   }
 
   /** Write themes.css to the filesystem, creating directories if needed. */
   async function writeFilesystemCss(css) {
-    const dir = path.join(getDefaultProjectRoot(), 'ai', 'views', 'settings');
+    const root = getProjectRoot();
+    if (!root) throw new Error('No active workspace');
+    const dir = path.join(root, 'ai', 'views', 'settings');
     await fsPromises.mkdir(dir, { recursive: true });
     await fsPromises.writeFile(path.join(dir, 'themes.css'), css, 'utf8');
   }

@@ -11,6 +11,30 @@ function formatThreadDisplayName(thread: Thread): string {
   return thread.threadId.replace(/-\d{3}$/, '');
 }
 
+/**
+ * SECONDARY_CHAT_SPEC §4: when a secondary chat is open, move the secondary's
+ * thread to position 2 (right after the primary's active thread). This runs
+ * both in the sidebar and the thread-jump dropdown, so the visual ordering
+ * is consistent everywhere.
+ */
+function reorderWithSecondary<T extends { threadId: string }>(
+  threads: T[],
+  primaryId: string | null,
+  secondaryId: string | null,
+): T[] {
+  if (!threads || threads.length === 0) return threads;
+  if (!secondaryId) return threads;
+  const secondary = threads.find((t) => t.threadId === secondaryId);
+  if (!secondary) return threads;
+  const remainder = threads.filter((t) => t.threadId !== secondaryId);
+  const primaryIdx = remainder.findIndex((t) => t.threadId === primaryId);
+  // Insert secondary right after primary; if primary not present, put it at head.
+  const insertAt = primaryIdx >= 0 ? primaryIdx + 1 : 0;
+  const out = [...remainder];
+  out.splice(insertAt, 0, secondary);
+  return out;
+}
+
 // FLIP animation for thread reordering
 function useThreadAnimation(threads: { threadId: string }[]) {
   const threadRefs = useRef<Map<string, HTMLElement>>(new Map());
@@ -126,15 +150,34 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   const ws = usePanelStore((state) => state.ws);
   // SPEC-26c: sidebar reads from its scope's thread list. Project sidebar
   // reads state.threads.project; view sidebar reads state.threads.view.
-  const threads = usePanelStore((state) => state.threads[scope]);
+  const rawThreads = usePanelStore((state) => state.threads[scope]);
   const currentThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
   const currentScope = usePanelStore((state) => state.currentScope);
+  const secondary = usePanelStore((state) => state.secondary);
+  const openSecondary = usePanelStore((state) => state.openSecondary);
+
+  // SECONDARY_CHAT_SPEC §4: when a secondary is open, reorder the list so
+  // the secondary's thread sits at position 2, indented beneath the primary.
+  const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
   const { setThreadRef } = useThreadAnimation(threads);
 
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState('');
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const setCurrentThreadId = usePanelStore((state) => state.setCurrentThreadId);
+
+  // Close kebab menu on click outside of both the dropdown and its trigger.
+  useEffect(() => {
+    if (!menuOpenId) return;
+    const onMouseDown = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest('.thread-menu-dropdown') || target.closest('.thread-menu-btn')) return;
+      setMenuOpenId(null);
+    };
+    document.addEventListener('mousedown', onMouseDown);
+    return () => document.removeEventListener('mousedown', onMouseDown);
+  }, [menuOpenId]);
 
   // Request thread list when connected. SPEC-26c: scoped per sidebar.
   useEffect(() => {
@@ -244,32 +287,24 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   const isActive = currentScope === scope;
   const headerLabel = scope === 'project' ? 'Project' : (config?.name || panel);
 
-  // SPEC-26c-2: collapsed rail variant
+  // Collapsed — render an empty placeholder so the grid's 5-child layout
+  // stays aligned (track 1 is 0px, so nothing shows). Returning null would
+  // shift ResizeHandle/ChatArea/ContentArea one track left and blank the UI.
   if (collapsed) {
-    return (
-      <aside className={`sidebar sidebar--${scope} sidebar--collapsed`}>
-        <button
-          className="rv-collapse-rail-btn"
-          onClick={() => toggleCollapsed(panel, 'leftSidebar')}
-          title="Expand sidebar"
-        >
-          <span className="material-symbols-outlined">chevron_right</span>
-        </button>
-      </aside>
-    );
+    return <aside className="sidebar sidebar--collapsed" aria-hidden="true" />;
   }
 
   return (
     <aside className={`sidebar sidebar--${scope}${isActive ? ' sidebar--active' : ''}`}>
+      <button
+        className="rv-collapse-btn"
+        onClick={() => toggleCollapsed(panel, 'leftSidebar')}
+        title="Collapse sidebar"
+      >
+        <span className="material-symbols-outlined">arrow_menu_close</span>
+      </button>
       <div className="sidebar-header">
         {headerLabel}
-        <button
-          className="rv-collapse-btn"
-          onClick={() => toggleCollapsed(panel, 'leftSidebar')}
-          title="Collapse sidebar"
-        >
-          <span className="material-symbols-outlined">chevron_left</span>
-        </button>
       </div>
 
       <button 
@@ -286,11 +321,18 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
             <span className="chat-item-text">No threads yet</span>
           </div>
         ) : (
-          threads.filter(t => t && t.threadId && t.entry).map((thread) => (
-            <div 
+          threads.filter(t => t && t.threadId && t.entry).map((thread) => {
+            const isSecondaryRow = secondary?.threadId === thread.threadId;
+            const rowClass = [
+              'chat-item',
+              currentThreadId === thread.threadId ? 'active' : '',
+              isSecondaryRow ? 'chat-item--secondary-indent' : '',
+            ].filter(Boolean).join(' ');
+            return (
+            <div
               key={thread.threadId}
               ref={(el) => setThreadRef(thread.threadId, el)}
-              className={`chat-item ${currentThreadId === thread.threadId ? 'active' : ''}`}
+              className={rowClass}
               onClick={() => handleOpenThread(thread.threadId)}
             >
               {renamingId === thread.threadId ? (
@@ -334,9 +376,37 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                     >
                       ⋮
                     </button>
-                    {menuOpenId === thread.threadId && (
-                      <div className="thread-menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                        <button 
+                    {menuOpenId === thread.threadId && (() => {
+                      // SECONDARY_CHAT_SPEC §5a: "Open as Secondary" at top of
+                      // the menu. Grayed (never hidden) when:
+                      //   - this thread is already the primary's active thread
+                      //   - a secondary is already open (any thread)
+                      const isPrimary = currentThreadId === thread.threadId;
+                      const secondaryOpen = !!secondary;
+                      const openAsSecondaryDisabled = isPrimary || secondaryOpen;
+                      const openAsSecondaryTitle = isPrimary
+                        ? 'Already primary'
+                        : secondaryOpen
+                          ? 'Close the current secondary first'
+                          : undefined;
+                      return (
+                      <div
+                        className="thread-menu-dropdown"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseLeave={() => setMenuOpenId(null)}
+                      >
+                        <button
+                          onClick={() => {
+                            if (openAsSecondaryDisabled) return;
+                            openSecondary(thread.threadId);
+                            setMenuOpenId(null);
+                          }}
+                          disabled={openAsSecondaryDisabled}
+                          title={openAsSecondaryTitle}
+                        >
+                          ↳ Open a side chat
+                        </button>
+                        <button
                           onClick={() => {
                             handleRenameStart(thread.threadId, thread.entry?.name || '');
                             setMenuOpenId(null);
@@ -344,7 +414,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                         >
                           ✎ Rename
                         </button>
-                        <button 
+                        <button
                           onClick={() => {
                             handleCopyLink(thread.threadId);
                             setMenuOpenId(null);
@@ -352,7 +422,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                         >
                           ⎘ Copy Link
                         </button>
-                        <button 
+                        <button
                           onClick={() => {
                             handleDeleteThread(thread.threadId);
                             setMenuOpenId(null);
@@ -361,7 +431,8 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                           × Delete
                         </button>
                       </div>
-                    )}
+                      );
+                    })()}
                   </div>
                   <div className="thread-row thread-row-bottom">
                     <span className="chat-item-meta">
@@ -371,7 +442,8 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                 </>
               )}
             </div>
-          ))
+            );
+          })
         )}
       </div>
     </aside>

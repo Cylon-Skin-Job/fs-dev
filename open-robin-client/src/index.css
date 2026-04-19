@@ -71,7 +71,7 @@ body {
 
 /* ========== File Explorer / code-viewer ========== */
 /* Document/code/markdown: src/styles/document.css (bundled). */
-/* Explorer chrome + tree overrides: workspace CSS via useCodeViewerWorkspaceStyles. */
+/* Explorer chrome + tree overrides: workspace CSS via useViewLayoutStyles('code-viewer'). */
 
 /* ============================================
    CONFIRMATION MODAL

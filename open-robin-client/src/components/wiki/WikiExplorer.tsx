@@ -9,6 +9,7 @@
 
 import { useCallback, useEffect } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { usePanelStore } from '../../state/panelStore';
 import { useWikiStore } from '../../state/wikiStore';
 import { TopicList } from './TopicList';
@@ -17,6 +18,7 @@ import { EdgePanel } from './EdgePanel';
 import './wiki.css';
 
 export function WikiExplorer() {
+  useViewLayoutStyles('wiki-viewer');
   const activeTopic = useWikiStore((s) => s.activeTopic);
   const ws = usePanelStore((s) => s.ws);
 

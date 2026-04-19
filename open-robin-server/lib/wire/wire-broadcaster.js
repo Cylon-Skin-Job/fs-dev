@@ -41,9 +41,13 @@ function createWireBroadcaster({ getClientForThread }) {
     ws.send(JSON.stringify(wireMessage));
   }
 
+  // Every outbound wire message carries threadId so the client can route
+  // streams to the right per-thread chat slot when primary + secondary
+  // are both open (SECONDARY_CHAT_SPEC / PER_THREAD_CHAT_STATE).
   on('chat:turn_begin', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_begin',
+      threadId: event.threadId,
       turnId: event.turnId,
       userInput: event.userInput,
     });
@@ -52,6 +56,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:content', (event) => {
     sendToThread(event.threadId, {
       type: 'content',
+      threadId: event.threadId,
       text: event.text,
       turnId: event.turnId,
     });
@@ -60,6 +65,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:thinking', (event) => {
     sendToThread(event.threadId, {
       type: 'thinking',
+      threadId: event.threadId,
       text: event.text,
       turnId: event.turnId,
     });
@@ -68,6 +74,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:tool_call', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_call',
+      threadId: event.threadId,
       toolName: event.toolName,
       toolCallId: event.toolCallId,
       turnId: event.turnId,
@@ -77,6 +84,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:tool_result', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_result',
+      threadId: event.threadId,
       toolCallId: event.toolCallId,
       toolArgs: event.toolArgs,
       toolOutput: event.toolOutput,
@@ -89,6 +97,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:turn_end', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_end',
+      threadId: event.threadId,
       turnId: event.turnId,
       fullText: event.fullText,
       hasToolCalls: event.hasToolCalls,
@@ -98,6 +107,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:status_update', (event) => {
     sendToThread(event.threadId, {
       type: 'status_update',
+      threadId: event.threadId,
       contextUsage: event.contextUsage,
       tokenUsage: event.tokenUsage,
     });

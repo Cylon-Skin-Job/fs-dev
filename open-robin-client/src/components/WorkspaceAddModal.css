@@ -1,0 +1,117 @@
+.rv-add-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal, 1003);
+}
+
+.rv-add-modal {
+  width: 440px;
+  max-width: calc(100vw - 32px);
+  background: var(--sidebar-surface-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.rv-add-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-add-modal-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rv-add-modal-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.7;
+  border-radius: 4px;
+  transition: opacity 120ms ease, background 120ms ease;
+}
+
+.rv-add-modal-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rv-add-modal-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-add-modal-label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.rv-add-modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--document-code-bg, #0f0f0f);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.15));
+  border-radius: 6px;
+  color: inherit;
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.rv-add-modal-input:focus {
+  border-color: var(--theme-primary, rgba(255, 255, 255, 0.35));
+}
+
+.rv-add-modal-error {
+  font-size: 12px;
+  color: #ff6b6b;
+}
+
+.rv-add-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.rv-add-modal-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.2));
+  border-radius: 6px;
+  color: inherit;
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.rv-add-modal-btn:hover {
+  border-color: var(--theme-primary, rgba(255, 255, 255, 0.4));
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rv-add-modal-btn-primary {
+  background: var(--theme-primary, rgba(255, 255, 255, 0.15));
+  border-color: transparent;
+}
+
+.rv-add-modal-btn-primary:hover {
+  background: var(--theme-primary, rgba(255, 255, 255, 0.25));
+  border-color: transparent;
+  filter: brightness(1.1);
+}
