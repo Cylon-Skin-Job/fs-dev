@@ -153,68 +153,15 @@ class HarnessRegistry {
   }
 
   /**
-   * Get all harnesses with their installation status.
-   * 
-   * This method checks if each external CLI harness is installed
-   * by calling its isInstalled() method.
-   * 
+   * Get all harnesses with their installation status, sourced from
+   * the harness_status SQLite cache. See harness-status-service for
+   * revalidation semantics.
+   *
    * @returns {Promise<HarnessInfo[]>}
    */
   async getAvailableHarnesses() {
-    const results = [];
-
-    for (const [id, harness] of this.harnesses) {
-      const meta = this.metadata.get(id) || {};
-      
-      /** @type {HarnessInfo} */
-      const info = {
-        id,
-        name: harness.name,
-        provider: harness.provider,
-        installed: meta.builtIn, // Built-ins are always "installed"
-        builtIn: meta.builtIn,
-        version: null,
-        action: null,
-        installCommand: meta.installCommand || null,
-        error: null
-      };
-
-      // For external CLIs, check installation status
-      if (!meta.builtIn) {
-        try {
-          // Check if isInstalled method exists (BaseCLIHarness has it)
-          if (typeof harness.isInstalled === 'function') {
-            info.installed = await harness.isInstalled();
-            
-            // If installed, try to get version
-            if (info.installed && typeof harness.getVersion === 'function') {
-              try {
-                info.version = await harness.getVersion();
-              } catch (versionErr) {
-                // Version check failed but CLI is installed
-                info.version = 'unknown';
-              }
-            }
-          } else {
-            // Fallback for harnesses without isInstalled
-            info.installed = false;
-          }
-
-          // Set action based on installation status
-          if (!info.installed) {
-            info.action = 'install';
-          }
-        } catch (err) {
-          info.installed = false;
-          info.error = err instanceof Error ? err.message : String(err);
-          info.action = 'install';
-        }
-      }
-
-      results.push(info);
-    }
-
-    return results;
+    const service = require('./harness-status-service');
+    return service.getAll();
   }
 
   /**
