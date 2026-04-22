@@ -96,9 +96,9 @@
   font-weight: 600;
 }
 
-.rv-agent-tile-status.idle { color: var(--text-dim, #666); background: rgba(255, 255, 255, 0.05); }
-.rv-agent-tile-status.running { color: #22c55e; background: rgba(34, 197, 94, 0.1); }
-.rv-agent-tile-status.error { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+.rv-agent-tile-status.idle    { color: var(--text-dim, rgba(255, 255, 255, 0.6)); background: rgba(255, 255, 255, 0.05); }
+.rv-agent-tile-status.running { color: var(--status-ok, #4caf50);    background: color-mix(in srgb, transparent 90%, var(--status-ok, #4caf50) 10%); }
+.rv-agent-tile-status.error   { color: var(--status-error, #ef4444); background: color-mix(in srgb, transparent 90%, var(--status-error, #ef4444) 10%); }
 
 .rv-agent-tile-meta {
   display: flex;
@@ -351,7 +351,7 @@
 
 .rv-agent-card-item-desc {
   font-size: 0.75rem;
-  color: #999;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -364,7 +364,7 @@
 .rv-agent-detail-viewer {
   overflow-y: auto;
   padding: 16px 24px;
-  color: #e0e0e0;
+  color: var(--text-primary, #e0e0e0);
 }
 
 /* --- Prompt content (plain text fallback) --- */
@@ -372,7 +372,7 @@
 .rv-agent-detail-prompt-content {
   font-size: 0.8125rem;
   font-family: inherit;
-  color: #ddd;
+  color: var(--text-primary, #e0e0e0);
   line-height: 1.6;
   white-space: pre-wrap;
   word-wrap: break-word;

@@ -81,7 +81,7 @@
 }
 
 .rv-panel[data-tint-cards="true"] .rv-wiki-topic-item.active {
-  background: rgba(236, 72, 153, 0.1);
+  background: color-mix(in srgb, transparent 90%, var(--ws-primary, #ec4899) 10%);
   color: var(--ws-primary, #ec4899);
 }
 
@@ -307,7 +307,7 @@
 }
 
 .rv-panel[data-tint-cards="true"] .rv-wiki-edge-link:hover {
-  background: rgba(236, 72, 153, 0.1);
+  background: color-mix(in srgb, transparent 90%, var(--ws-primary, #ec4899) 10%);
 }
 
 .rv-wiki-edge-empty {

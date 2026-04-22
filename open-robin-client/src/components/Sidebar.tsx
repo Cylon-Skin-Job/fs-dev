@@ -417,7 +417,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                       </span>
                       {formatThreadDisplayName(thread)}
                       {thread.entry?.status === 'active' && (
-                        <span style={{ color: '#4caf50', marginLeft: '4px', fontSize: '8px' }}>●</span>
+                        <span className="rv-thread-status-dot--active">●</span>
                       )}
                     </span>
                     <button 

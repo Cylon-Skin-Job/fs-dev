@@ -1,7 +1,7 @@
 /* Workflow Card View — step cards (left) + detail (right) */
 
 .rv-wf-container {
-  color: #e0e0e0;
+  color: var(--text-primary, #e0e0e0);
 }
 
 .rv-wf-heading {
@@ -13,7 +13,7 @@
 
 .rv-wf-description {
   font-size: 0.8125rem;
-  color: #bbb;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.66));
   line-height: 1.5;
   margin-bottom: 20px;
 }
@@ -90,7 +90,7 @@
 
 .rv-wf-step-summary {
   font-size: 0.75rem;
-  color: #999;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -138,7 +138,7 @@
 .rv-wf-detail-body {
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #ccc;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.66));
 }
 
 /* --- Detail content elements --- */
@@ -176,21 +176,21 @@
   gap: 6px;
   margin-top: 12px;
   padding: 8px 12px;
-  background: rgba(74, 222, 128, 0.04);
-  border: 1px solid rgba(74, 222, 128, 0.12);
+  background: color-mix(in srgb, transparent 96%, var(--status-ok, #4caf50) 4%);
+  border: 1px solid color-mix(in srgb, transparent 88%, var(--status-ok, #4caf50) 12%);
   border-radius: 6px;
   font-size: 0.8125rem;
-  color: #ccc;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.66));
 }
 
 .rv-wf-evaluate .material-symbols-outlined {
-  color: #4ade80;
+  color: var(--status-ok, #4caf50);
   flex-shrink: 0;
   margin-top: 1px;
 }
 
 .rv-wf-evaluate-label {
   font-weight: 600;
-  color: #4ade80;
+  color: var(--status-ok, #4caf50);
   flex-shrink: 0;
 }

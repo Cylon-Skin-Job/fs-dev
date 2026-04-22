@@ -1,0 +1,20 @@
+/*
+ * Toast notification — floating bottom-center transient message.
+ * Background / border use neutral chrome tokens so themes don't bleed in;
+ * the toast is status chrome, not accented.
+ */
+
+.rv-toast {
+  position: fixed;
+  bottom: var(--space-xl, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-lg, 8px);
+  padding: 10px 20px;
+  color: var(--text-white, #fff);
+  font-size: 0.8125rem;
+  z-index: var(--z-tooltip, 1004);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}

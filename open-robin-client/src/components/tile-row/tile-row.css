@@ -17,7 +17,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #a78bfa;
+  color: var(--ws-primary, #a78bfa);
 }
 
 .rv-tile-row-count {
@@ -37,7 +37,7 @@
   width: 100%;
   box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12)) var(--scrollbar-track, transparent);
 }
 
 .rv-tile-row-scroll::-webkit-scrollbar {
@@ -45,11 +45,11 @@
 }
 
 .rv-tile-row-scroll::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track, transparent);
 }
 
 .rv-tile-row-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
   border-radius: 2px;
 }
 
@@ -59,12 +59,12 @@
   justify-content: center;
   width: 140px;
   height: 180px;
-  border: 1px dashed #333;
+  border: 1px dashed var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: 10px;
-  color: #666;
+  color: var(--text-subtle, rgba(255, 255, 255, 0.4));
   font-size: 0.6875rem;
   flex-shrink: 0;
-  background: #111;
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
 /* ── Document Tile ───────────────────────────────────────── */
@@ -74,8 +74,8 @@
   width: 140px;
   height: 180px;
   border-radius: 10px;
-  background: #111;
-  border: 1px solid #333;
+  background: var(--document-surface-bg, #0d0d0d);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
@@ -83,13 +83,13 @@
 }
 
 .rv-doc-tile:hover {
-  border-color: #a78bfa;
+  border-color: var(--ws-primary, #a78bfa);
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .rv-doc-tile.active {
-  border-color: #a78bfa;
+  border-color: var(--ws-primary, #a78bfa);
 }
 
 /* Small variant — used in ribbon strips */
@@ -131,8 +131,8 @@
   color: var(--text-primary, #e0e0e0);
   white-space: pre-wrap;
   word-break: break-word;
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: 6px;
 }
 
@@ -159,7 +159,7 @@
   left: 0;
   right: 0;
   padding: 8px 10px;
-  background: linear-gradient(transparent, #111 50%);
+  background: linear-gradient(transparent, var(--document-surface-bg, #0d0d0d) 50%);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -167,13 +167,13 @@
 
 .rv-doc-tile-icon {
   font-size: 14px;
-  color: #a78bfa;
+  color: var(--ws-primary, #a78bfa);
 }
 
 .rv-doc-tile-name {
   font-size: 0.6875rem;
   font-weight: 500;
-  color: #aaa;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.66));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -193,7 +193,7 @@
 .rv-tile-grid-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-white, #fff);
   margin-bottom: 24px;
   display: flex;
   align-items: center;
@@ -202,5 +202,5 @@
 
 .rv-tile-grid-title .material-symbols-outlined {
   font-size: 22px;
-  color: #a78bfa;
+  color: var(--ws-primary, #a78bfa);
 }

@@ -69,44 +69,48 @@
 
 .rv-file-viewer-content .rv-code-editor::-webkit-scrollbar-track,
 .rv-file-viewer-content .rv-wiki-page-content::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track, transparent);
 }
 
 .rv-file-viewer-content .rv-code-editor::-webkit-scrollbar-thumb,
 .rv-file-viewer-content .rv-wiki-page-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
   border-radius: 5px;
 }
 
 .rv-file-viewer-content .rv-code-editor::-webkit-scrollbar-thumb:hover,
 .rv-file-viewer-content .rv-wiki-page-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.22));
 }
 
-/* --- Syntax highlighting (shared wherever highlight emits .token-*) --- */
+/* --- Syntax highlighting (shared wherever highlight emits .token-*) ---
+ * Tokens live in variables.css (--token-*). Themes re-skin code blocks
+ * by overriding any of those custom properties. */
 
-.token-keyword { color: #ff79c6; }
-.token-string { color: #f1fa8c; }
-.token-number { color: #bd93f9; }
-.token-comment { color: #6272a4; font-style: italic; }
-.token-function { color: #50fa7b; }
-.token-class { color: #8be9fd; }
-.token-variable { color: #f8f8f2; }
-.token-operator { color: #ff79c6; }
-.token-punctuation { color: #f8f8f2; }
+.token-keyword     { color: var(--token-keyword,     #ff79c6); }
+.token-string      { color: var(--token-string,      #f1fa8c); }
+.token-number      { color: var(--token-number,      #bd93f9); }
+.token-comment     { color: var(--token-comment,     #6272a4); font-style: italic; }
+.token-function    { color: var(--token-function,    #50fa7b); }
+.token-class       { color: var(--token-class,       #8be9fd); }
+.token-variable    { color: var(--token-variable,    #f8f8f2); }
+.token-operator    { color: var(--token-operator,    #ff79c6); }
+.token-punctuation { color: var(--token-punctuation, #f8f8f2); }
 
-/* Tab strip file-type tint (file explorer) */
-.rv-file-icon-js { color: #f7df1e; }
-.rv-file-icon-ts { color: #3178c6; }
-.rv-file-icon-tsx { color: #3178c6; }
-.rv-file-icon-jsx { color: #61dafb; }
-.rv-file-icon-css { color: #264de4; }
+/* Tab strip file-type tint — intentional platform brand colors, NOT theme
+ * accents. Themes should not re-skin these (JavaScript is yellow, TypeScript
+ * is blue, etc.). Left as literal hex on purpose. */
+.rv-file-icon-js   { color: #f7df1e; }
+.rv-file-icon-ts   { color: #3178c6; }
+.rv-file-icon-tsx  { color: #3178c6; }
+.rv-file-icon-jsx  { color: #61dafb; }
+.rv-file-icon-css  { color: #264de4; }
 .rv-file-icon-html { color: #e34c26; }
 .rv-file-icon-json { color: #f7df1e; }
-.rv-file-icon-py { color: #3776ab; }
-.rv-file-icon-md { color: #ffffff; }
-.rv-file-icon-rs { color: #dea584; }
-.rv-file-icon-go { color: #00add8; }
+.rv-file-icon-py   { color: #3776ab; }
+.rv-file-icon-md   { color: #ffffff; }
+.rv-file-icon-rs   { color: #dea584; }
+.rv-file-icon-go   { color: #00add8; }
 
 /* --- Code editor (line numbers + body) — same in explorer & Capture raw mode --- */
 

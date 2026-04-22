@@ -8,6 +8,7 @@
 
 import { useState, useEffect } from 'react';
 import { registerToastSetter, unregisterToastSetter } from '../lib/toast';
+import './Toast.css';
 
 // Re-export for existing consumers
 export { showToast } from '../lib/toast';
@@ -27,22 +28,5 @@ export function Toast() {
 
   if (!visible) return null;
 
-  return (
-    <div style={{
-      position: 'fixed',
-      bottom: '24px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      background: '#1a1a1a',
-      border: '1px solid #333',
-      borderRadius: '8px',
-      padding: '10px 20px',
-      color: '#eee',
-      fontSize: '0.8125rem',
-      zIndex: 9999,
-      boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-    }}>
-      {message}
-    </div>
-  );
+  return <div className="rv-toast">{message}</div>;
 }

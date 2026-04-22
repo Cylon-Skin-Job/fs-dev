@@ -15,10 +15,36 @@
   --border-primary: rgba(0, 212, 255, 0.38);
   --border-glow: rgba(0, 212, 255, 0.68);
   --glass-bg: rgba(0, 212, 255, 0.05);
-  --text-white: #ffffff;
-  --text-dim: rgba(255, 255, 255, 0.6);
+  --text-white:     #ffffff;
+  --text-primary:   #e0e0e0;
+  --text-secondary: rgba(255, 255, 255, 0.66);
+  --text-dim:       rgba(255, 255, 255, 0.6);
+  --text-subtle:    rgba(255, 255, 255, 0.4);
   /* Neutral hairlines: tools↔threads, threads↔chat, explorer splits, composer top — not theme accent */
   --neutral-chrome-border: rgba(255, 255, 255, 0.12);
+
+  /* Semantic status */
+  --status-ok:    #4caf50;
+  --status-error: #ef4444;
+
+  /* Scrollbar — single canonical pair used by every scrollable surface.
+   * Neutral white-alpha by design so scrollbars recede; themes can
+   * override to black-alpha on light backgrounds. */
+  --scrollbar-track:       transparent;
+  --scrollbar-thumb:       rgba(255, 255, 255, 0.12);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.22);
+
+  /* Syntax highlighting — defaults mirror the Dracula palette.
+   * Themes may re-skin code blocks by overriding any of these tokens. */
+  --token-keyword:     #ff79c6;
+  --token-string:      #f1fa8c;
+  --token-number:      #bd93f9;
+  --token-comment:     #6272a4;
+  --token-function:    #50fa7b;
+  --token-class:       #8be9fd;
+  --token-variable:    #f8f8f2;
+  --token-operator:    #ff79c6;
+  --token-punctuation: #f8f8f2;
   
   /* Layout */
   --header-height: 60px;
@@ -59,14 +85,9 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
-
-  /* Theme Variables (Dynamic per panel) */
-  --theme-primary: #00d4ff;
-  --theme-primary-rgb: 0, 212, 255;
-  --theme-border: rgba(0, 212, 255, 0.38);
-  --theme-border-glow: rgba(0, 212, 255, 0.68);
 }
 
-/* Panel themes are now applied dynamically via JS (applyPanelTheme).
-   --theme-primary, --theme-primary-rgb, --theme-border, --theme-border-glow
-   are set as inline CSS custom properties on the app container. */
+/* Theme tokens live in ai/views/settings/themes.css (loaded at runtime by
+ * useSharedWorkspaceStyles). That file is the canonical home for every
+ * theme-editable CSS custom property. Per-view overrides go in
+ * ai/views/<view>/settings/themes.css and win via the cascade. */

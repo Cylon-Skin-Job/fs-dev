@@ -45,11 +45,11 @@
   --hover-modal-thumb-size: 48px;
   --hover-modal-thumb-radius: 4px;
   
-  /* Scrollbar - shared across all modals */
+  /* Scrollbar - canonical workspace tokens (variables.css). */
   --hover-modal-scrollbar-width: 8px;
-  --hover-modal-scrollbar-track: var(--neutral-chrome-bg, #222);
-  --hover-modal-scrollbar-thumb: var(--neutral-chrome-border, #444);
-  --hover-modal-scrollbar-thumb-hover: var(--text-dim, #666);
+  --hover-modal-scrollbar-track:       var(--scrollbar-track, transparent);
+  --hover-modal-scrollbar-thumb:       var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
+  --hover-modal-scrollbar-thumb-hover: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.22));
   
   /* Preview popover */
   --hover-modal-preview-width: 400px;
