@@ -12,6 +12,8 @@ import type {
   SecondaryState
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
+import { secondaryTracker } from '../lib/secondary-tracker';
+import type { HarnessStatus, ResolvedCliEntry, CliEntryOverride } from '../types';
 
 // Initial panel state factory
 function createInitialPanelState(): PanelState {
@@ -25,10 +27,27 @@ function createInitialPanelState(): PanelState {
   };
 }
 
-// SPEC-26c-2: per-view UI state defaults
+// STATE_OVERRIDE_SPEC §5: per-view UI state defaults (full shape).
 const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   collapsed: { leftSidebar: false, leftChat: false },
   widths:    { leftSidebar: 220,   leftChat: 320   },
+  popup: {
+    open: false,
+    x: -1,
+    y: -1,
+    width: 420,
+    height: 520,
+    threadId: null,
+  },
+  currentThreadId: null,
+  secondaryThreadId: null,
+  // TINTS_SPEC §8a: surface tint toggles, all neutral by default.
+  tints: {
+    leftPanel:  false,
+    rightPanel: false,
+    cards:      false,
+    borders: { threads: false, chat: false },
+  },
 };
 
 export function clampPaneWidth(pane: Pane, n: number): number {
@@ -37,9 +56,10 @@ export function clampPaneWidth(pane: Pane, n: number): number {
   if (pane === 'leftChat') {
     min = 300;
   } else if (pane === 'rightSecondary') {
-    // Right column is shared between the view's right column (e.g. file tree)
-    // and the sticky secondary chat. Allow narrower than the chat's default
-    // so file tree can be compact when no chat is docked.
+    min = 300;
+  } else if (pane === 'rightCol') {
+    // View's right column (e.g. file tree). Allow narrower than the chat
+    // so the tree can be compact when no sticky chat is docked.
     min = 160;
   }
   return Math.max(min, Math.min(max, n));
@@ -47,6 +67,9 @@ export function clampPaneWidth(pane: Pane, n: number): number {
 
 // SECONDARY_CHAT_SPEC §7a: default floating popup size.
 const DEFAULT_SECONDARY_FLOAT = { x: -1, y: -1, width: 380, height: 520 };
+
+// TINTS_SPEC §8b: leaf paths the setTint action accepts.
+type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
 
 interface AppState {
   // Panel configs (dynamically discovered)
@@ -123,9 +146,13 @@ interface AppState {
   viewStates: Record<string, ViewUIState>;
   loadViewState: (view: string) => void;
   setViewState: (view: string, state: ViewUIState) => void;
+  // STATE_OVERRIDE_SPEC: send a minimal state:set patch for `view`.
+  _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => void;
   toggleCollapsed: (view: string, pane: CollapsablePane) => void;
   setPaneWidth: (view: string, pane: Pane, width: number) => void;
   commitPaneWidths: (view: string) => void;
+  // TINTS_SPEC §8b: flip a tint leaf locally and persist via _persistViewPatch.
+  setTint: (view: string, path: TintPath, value: boolean) => void;
 
   // Chat-header dropdown UI state (transient, not persisted).
   // Keyed by panel id; per-panel independence.
@@ -136,6 +163,31 @@ interface AppState {
   toggleThreadDropdown: (panel: string) => void;
   closeThreadDropdown: (panel: string) => void;
   closeAllChatHeaderDropdowns: (panel: string) => void;
+
+  // HARNESS_STATUS_CACHE_SPEC: install status per harness id, seeded from
+  // /api/harnesses on first mount and patched reactively by the server's
+  // `harness:status_changed` WebSocket event.
+  harnessStatuses: Record<string, HarnessStatus>;
+  setHarnessStatuses: (map: Record<string, HarnessStatus>) => void;
+  setHarnessStatus: (id: string, status: HarnessStatus) => void;
+
+  // CLI_CONFIG_SPEC §8a: resolved CLI catalog (workspace-level) + per-view deltas.
+  cliConfig: Record<string, ResolvedCliEntry>;
+  cliConfigViewDelta: Record<string, Record<string, CliEntryOverride>>;
+  hydrateCliConfig: (cfg: Record<string, ResolvedCliEntry>) => void;
+  setCliConfigViewDelta: (viewId: string, delta: Record<string, CliEntryOverride>) => void;
+
+  // Harness currently being connected after the user picked it in the
+  // CLI picker. Drives the ConnectingOverlay in ChatArea. Cleared on
+  // wire_ready (stream-handlers) or on an explicit setConnectingHarnessId(null).
+  connectingHarnessId: string | null;
+  setConnectingHarnessId: (id: string | null) => void;
+  /** Picked a harness: clears the current thread for the scope, marks the
+   *  connecting state, and fires thread:open-assistant. Unified entry point
+   *  for both the sidebar's New Thread button and the chat-header's CLI
+   *  picker so the visual behavior (blank chat + connecting overlay) is
+   *  identical regardless of which trigger opened the picker. */
+  selectHarness: (harnessId: string, scope: Scope) => void;
 
   // SECONDARY_CHAT_SPEC: singleton secondary chat (replaces SPEC-26d popup).
   secondary: SecondaryState | null;
@@ -230,6 +282,34 @@ export const usePanelStore = create<AppState>((set, get) => ({
   cliPickerOpen: {},
   threadDropdownOpen: {},
   secondary: null,
+  harnessStatuses: {},
+  setHarnessStatuses: (map) => set({ harnessStatuses: map }),
+  setHarnessStatus: (id, status) => set((s) => ({
+    harnessStatuses: { ...s.harnessStatuses, [id]: status },
+  })),
+
+  // CLI_CONFIG_SPEC §8a
+  cliConfig: {},
+  cliConfigViewDelta: {},
+  hydrateCliConfig: (cfg) => set({ cliConfig: cfg }),
+  setCliConfigViewDelta: (viewId, delta) => set((s) => ({
+    cliConfigViewDelta: { ...s.cliConfigViewDelta, [viewId]: delta },
+  })),
+
+  connectingHarnessId: null,
+  setConnectingHarnessId: (id) => set({ connectingHarnessId: id }),
+  selectHarness: (harnessId, scope) => {
+    const s = get();
+    set({
+      connectingHarnessId: harnessId,
+      wireReady: false,
+      currentThreadIds: { ...s.currentThreadIds, [scope]: null },
+    });
+    const ws = s.ws;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope, harnessId }));
+    }
+  },
 
   // Actions
   setCurrentPanel: (id) => {
@@ -240,7 +320,11 @@ export const usePanelStore = create<AppState>((set, get) => ({
       // SPEC-26c: view thread resets on panel switch (server kills the wire
       // when panel changes); project thread persists across panels.
       currentThreadIds: { ...state.currentThreadIds, view: null },
-      currentScope: null,
+      // Preserve 'project' scope across panel switches since the project-scope
+      // wire persists. Null only if the previous scope was 'view', which the
+      // server kills on panel change. Null-ing unconditionally here made the
+      // primary chat render as inactive (opacity 0.55) after panel changes.
+      currentScope: state.currentScope === 'view' ? null : state.currentScope,
       // Close any open chat-header dropdowns for the panel we're leaving.
       cliPickerOpen: { ...state.cliPickerOpen, [state.currentPanel]: false },
       threadDropdownOpen: { ...state.threadDropdownOpen, [state.currentPanel]: false },
@@ -434,21 +518,30 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setThreads: (scope, threads) => set((state) => ({
     threads: { ...state.threads, [scope]: threads },
   })),
-  setCurrentThreadId: (scope, threadId) => set((state) => {
-    // SECONDARY_CHAT_SPEC §3c: if the primary is being switched to the
-    // secondary's thread, the secondary auto-closes (switch wins).
-    const base: Partial<AppState> = {
-      currentThreadIds: { ...state.currentThreadIds, [scope]: threadId },
-    };
-    if (
-      state.secondary &&
-      scope === 'project' &&
-      threadId === state.secondary.threadId
-    ) {
-      base.secondary = null;
+  setCurrentThreadId: (scope, threadId) => {
+    const state = get();
+    // STATE_OVERRIDE_SPEC: persist project-scope thread on the current view
+    // so it carries across view switches (or pins per-view if override file
+    // already has the key).
+    if (scope === 'project' && state.currentThreadIds.project !== threadId) {
+      get()._persistViewPatch(state.currentPanel, { currentThreadId: threadId });
     }
-    return base;
-  }),
+    set((s) => {
+      // SECONDARY_CHAT_SPEC §3c: if the primary is being switched to the
+      // secondary's thread, the secondary auto-closes (switch wins).
+      const base: Partial<AppState> = {
+        currentThreadIds: { ...s.currentThreadIds, [scope]: threadId },
+      };
+      if (
+        s.secondary &&
+        scope === 'project' &&
+        threadId === s.secondary.threadId
+      ) {
+        base.secondary = null;
+      }
+      return base;
+    });
+  },
   setCurrentScope: (scope) => set({ currentScope: scope }),
   setWireReady: (ready) => set({ wireReady: ready }),
   addThread: (scope, thread) => set((state) => ({
@@ -490,6 +583,15 @@ export const usePanelStore = create<AppState>((set, get) => ({
     const ws = get().ws;
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     ws.send(JSON.stringify({ type: 'state:get', view }));
+  },
+
+  // STATE_OVERRIDE_SPEC: send a minimal state:set patch for the given view.
+  // Server decides per-key whether the write lands in the workspace default
+  // or the per-view override file.
+  _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => {
+    const ws = get().ws;
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    ws.send(JSON.stringify({ type: 'state:set', view, state: patch }));
   },
 
   setViewState: (view, state) => set((s) => ({
@@ -579,6 +681,37 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }));
   },
 
+  // TINTS_SPEC §8b: flip a single tint leaf for `view`. Updates the local
+  // viewStates slot AND fires a minimal state:set patch. The server's
+  // per-leaf writer routes the write to the per-view override file when the
+  // leaf is already pinned there, otherwise to the workspace default.
+  setTint: (view, path, value) => {
+    const s = get();
+    const current = s.viewStates[view] ?? DEFAULT_VIEW_UI_STATE;
+    const nextTints = {
+      ...current.tints,
+      borders: { ...current.tints.borders },
+    };
+    const patch: Partial<ViewUIState> = {};
+    if (path === 'borders.threads') {
+      nextTints.borders.threads = value;
+      patch.tints = { ...current.tints, borders: { ...current.tints.borders, threads: value } };
+    } else if (path === 'borders.chat') {
+      nextTints.borders.chat = value;
+      patch.tints = { ...current.tints, borders: { ...current.tints.borders, chat: value } };
+    } else {
+      nextTints[path] = value;
+      patch.tints = { ...current.tints, [path]: value };
+    }
+    set({
+      viewStates: {
+        ...s.viewStates,
+        [view]: { ...current, tints: nextTints },
+      },
+    });
+    get()._persistViewPatch(view, patch);
+  },
+
   // SECONDARY_CHAT_SPEC: secondary chat actions.
   // Guards live in openSecondary: (a) already open → noop; (b) threadId is
   // primary's current project thread → noop (§3c: no co-primary).
@@ -586,6 +719,11 @@ export const usePanelStore = create<AppState>((set, get) => ({
     const state = get();
     if (state.secondary) return;
     if (state.currentThreadIds.project === threadId) return;
+    // Claim this threadId in the secondary tracker BEFORE sending the WS
+    // message, so a late thread:opened response still routes to secondary
+    // logic (preventing primary hijack if the user clicks red before the
+    // server responds).
+    secondaryTracker.mark(threadId);
     set({
       secondary: {
         threadId,
@@ -599,9 +737,47 @@ export const usePanelStore = create<AppState>((set, get) => ({
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'thread:open-assistant', scope: 'project', threadId }));
     }
+    // STATE_OVERRIDE_SPEC: persist popup open + thread id.
+    get()._persistViewPatch(state.currentPanel, {
+      secondaryThreadId: threadId,
+      popup: {
+        ...DEFAULT_VIEW_UI_STATE.popup,
+        ...(state.viewStates[state.currentPanel]?.popup ?? {}),
+        open: true,
+        threadId,
+      },
+    });
   },
 
-  closeSecondary: () => set({ secondary: null }),
+  closeSecondary: () => {
+    const s = get();
+    if (s.secondary?.threadId) {
+      // Keep the tracker claim alive so any pending thread:opened from the
+      // server still routes to the secondary branch (which is a no-op now)
+      // instead of hijacking the primary.
+      secondaryTracker.markForClose(s.secondary.threadId);
+    }
+    set({ secondary: null });
+    // STATE_OVERRIDE_SPEC: persist popup closed.
+    get()._persistViewPatch(s.currentPanel, {
+      secondaryThreadId: null,
+      popup: {
+        ...DEFAULT_VIEW_UI_STATE.popup,
+        ...(s.viewStates[s.currentPanel]?.popup ?? {}),
+        open: false,
+        threadId: null,
+      },
+    });
+    // Bump the primary's MRU on the server so the thread list re-sorts
+    // with primary on top — opening the secondary had bumped *its* updated_at,
+    // so without this the formerly-secondary thread sorts above the primary
+    // once the display override is removed.
+    const ws = s.ws;
+    const primaryId = s.currentThreadIds.project;
+    if (primaryId && ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'thread:touch', scope: 'project', threadId: primaryId }));
+    }
+  },
 
   minimizeSecondary: () => set((s) => {
     if (!s.secondary || s.secondary.mode === 'minimized') return s;
@@ -639,10 +815,19 @@ export const usePanelStore = create<AppState>((set, get) => ({
     return { secondary: { ...s.secondary, mode: 'floating' } };
   }),
 
-  setSecondaryFloat: (x, y, width, height) => set((s) => {
-    if (!s.secondary) return s;
-    return { secondary: { ...s.secondary, float: { x, y, width, height } } };
-  }),
+  setSecondaryFloat: (x, y, width, height) => {
+    const s = get();
+    if (!s.secondary) return;
+    set({ secondary: { ...s.secondary, float: { x, y, width, height } } });
+    // STATE_OVERRIDE_SPEC: persist popup geometry.
+    get()._persistViewPatch(s.currentPanel, {
+      popup: {
+        ...DEFAULT_VIEW_UI_STATE.popup,
+        ...(s.viewStates[s.currentPanel]?.popup ?? {}),
+        x, y, width, height,
+      },
+    });
+  },
 
   setSecondaryStickyWidth: (width) => set((s) => {
     const panel = s.currentPanel;

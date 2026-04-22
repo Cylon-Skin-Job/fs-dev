@@ -1,4 +1,6 @@
 import { usePanelStore } from '../state/panelStore';
+import { useResolvedHarness } from '../config/harness';
+import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 
 interface SecondaryHeaderProps {
   /** Override the default minimize action — lets the parent play a
@@ -12,6 +14,14 @@ export function SecondaryHeader({ onMinimize }: SecondaryHeaderProps = {}) {
   const dockSecondary = usePanelStore((s) => s.dockSecondary);
   const undockSecondary = usePanelStore((s) => s.undockSecondary);
   const mode = usePanelStore((s) => s.secondary?.mode);
+  const secondaryThreadId = usePanelStore((s) => s.secondary?.threadId);
+  const threads = usePanelStore((s) => s.threads.project);
+  const secondaryThread = threads.find(t => t.threadId === secondaryThreadId);
+  const resolvedHarness = useResolvedHarness(secondaryThread?.entry?.harnessId);
+  const identity = resolvedHarness
+    ? { name: resolvedHarness.name, icon: resolvedHarness.materialIcon }
+    : { name: 'Unknown', icon: 'help' };
+  const resolveCliAccent = useCliAccentResolver();
 
   const onGreen = mode === 'sticky-right' ? undockSecondary : dockSecondary;
   const onYellow = onMinimize ?? minimizeSecondary;
@@ -39,6 +49,15 @@ export function SecondaryHeader({ onMinimize }: SecondaryHeaderProps = {}) {
         title={mode === 'sticky-right' ? 'Undock' : 'Dock right'}
         aria-label={mode === 'sticky-right' ? 'Undock secondary chat' : 'Dock secondary chat to the right'}
       />
+      {secondaryThreadId && (
+        <div
+          className="rv-secondary-header-identity"
+          style={resolveCliAccent(secondaryThread?.entry?.harnessId)}
+        >
+          <span className="material-symbols-outlined">{identity.icon}</span>
+          <span className="rv-secondary-header-identity-name">{identity.name}</span>
+        </div>
+      )}
       {/* Grab zone — only this div initiates a drag. Buttons live outside it. */}
       <div className="rv-secondary-drag-zone" aria-hidden="true" />
     </div>

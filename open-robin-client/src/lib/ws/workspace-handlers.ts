@@ -35,6 +35,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       store.setWorkspaces(msg.workspaces ?? []);
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
       if (msg.homePath) store.setHomePath(msg.homePath);
+      usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
       store.markInit();
       return true;
 

@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { usePanelStore } from '../state/panelStore';
+import { threadLinkIntent } from '../lib/thread-link-intent';
+import { useResolvedHarnessResolver } from '../config/harness';
+import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 import type { Scope, Thread } from '../types';
 
 interface ThreadJumpDropdownProps {
@@ -58,6 +61,8 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
   }, [menuOpenId]);
 
   const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
+  const resolveCliAccent = useCliAccentResolver();
+  const resolveHarness = useResolvedHarnessResolver();
 
   const sendMessage = (msg: object) => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -117,9 +122,19 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
               className={rowClass}
               aria-current={active ? 'true' : undefined}
               onClick={() => handleSelect(t.threadId)}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                ...(resolveCliAccent(t.entry?.harnessId) || {}),
+              }}
             >
-              <span>{formatThreadName(t)}</span>
+              <span>
+                <span className="material-symbols-outlined rv-thread-row-icon">
+                  {resolveHarness(t.entry?.harnessId)?.materialIcon ?? 'help'}
+                </span>
+                {formatThreadName(t)}
+              </span>
               <button
                 className="thread-menu-btn"
                 onClick={(e) => {
@@ -138,6 +153,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                   onMouseLeave={() => setMenuOpenId(null)}
                 >
                   <button
+                    className="rv-dropdown-item"
                     onClick={() => {
                       if (openAsSecondaryDisabled) return;
                       openSecondary(t.threadId);
@@ -147,23 +163,39 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                     disabled={openAsSecondaryDisabled}
                     title={openAsSecondaryTitle}
                   >
-                    ↳ Open a side chat
+                    <span className="material-symbols-outlined">subdirectory_arrow_right</span>
+                    <span>Open a side chat</span>
                   </button>
                   <button
+                    className="rv-dropdown-item"
                     onClick={() => {
                       handleCopyLink(t.threadId);
                       setMenuOpenId(null);
                     }}
                   >
-                    ⎘ Copy Link
+                    <span className="material-symbols-outlined">link_2</span>
+                    <span>Copy Link</span>
                   </button>
                   <button
+                    className="rv-dropdown-item"
+                    onClick={() => {
+                      threadLinkIntent.set('view');
+                      sendMessage({ type: 'thread:copyLink', scope, threadId: t.threadId });
+                      setMenuOpenId(null);
+                    }}
+                  >
+                    <span className="material-symbols-outlined">docs</span>
+                    <span>View Markdown</span>
+                  </button>
+                  <button
+                    className="rv-dropdown-item"
                     onClick={() => {
                       handleDelete(t.threadId);
                       setMenuOpenId(null);
                     }}
                   >
-                    × Delete
+                    <span className="material-symbols-outlined">delete</span>
+                    <span>Delete</span>
                   </button>
                 </div>
               )}

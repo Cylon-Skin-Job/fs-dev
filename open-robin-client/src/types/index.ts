@@ -87,6 +87,7 @@ export type WebSocketMessageType =
   | 'file:moved'
   | 'file:move_error'
   | 'panel_config'
+  | 'panel_changed'
   | 'file_changed'
   | 'file_tree_response'
   | 'file_content_response'
@@ -114,7 +115,9 @@ export type WebSocketMessageType =
   | 'workspace:removed'
   | 'workspace:add_rejected_duplicate'
   | 'workspace:culled_at_launch'
-  | 'thread:state_changed';
+  | 'thread:state_changed'
+  // Harness install-status cache (HARNESS_STATUS_CACHE_SPEC)
+  | 'harness:status_changed';
 
 export interface Workspace {
   id: string;
@@ -124,6 +127,26 @@ export interface Workspace {
   repoPath: string;
   sortOrder: number;
 }
+
+// CLI_CONFIG_SPEC §6: resolved CLI catalog entry (factory + workspace + view).
+export interface ResolvedCliEntry {
+  id: string;
+  name: string;
+  description: string;
+  materialIcon: string;
+  accentColor?: string;
+  details: {
+    provider: string;
+    model: string;
+    features: string[];
+  };
+  enabled: boolean;
+  comingSoon?: boolean;
+  recommended?: boolean;
+  order: number;
+}
+
+export type CliEntryOverride = Partial<Pick<ResolvedCliEntry, 'enabled' | 'name' | 'materialIcon' | 'accentColor' | 'order'>>;
 
 export interface WebSocketMessage {
   type: WebSocketMessageType;
@@ -171,11 +194,21 @@ export interface WebSocketMessage {
   homePath?: string;
   existingWorkspace?: Workspace;
   reason?: string;
+  // Harness status-change fields (HARNESS_STATUS_CACHE_SPEC)
+  installed?: boolean;
+  version?: string | null;
+  binary_path?: string | null;
+  // CLI config (CLI_CONFIG_SPEC §7c, §7d)
+  cliConfig?: Record<string, ResolvedCliEntry>;
+  cliConfigDelta?: Record<string, CliEntryOverride>;
 }
 
 // SPEC-26c-2: per-view UI state (collapse + pane widths)
 // SECONDARY_CHAT_SPEC: `rightSecondary` added for the sticky-right column.
-export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary';
+// `rightCol` is the view's right column (e.g. code-viewer file tree) — kept
+// separate from rightSecondary so the file tree retains its own width when
+// the sticky chat undocks.
+export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary' | 'rightCol';
 // Only the left panes have collapse state — the secondary has its own
 // show/hide via traffic-light modes, not a collapse toggle.
 export type CollapsablePane = 'leftSidebar' | 'leftChat';
@@ -188,7 +221,31 @@ export interface ViewUIState {
   widths: {
     leftSidebar: number;
     leftChat: number;
-    rightSecondary?: number;  // optional — new slice; absent = default (300)
+    rightSecondary?: number;  // sticky secondary chat width (when docked)
+    rightCol?: number;        // view's right column (e.g. code-viewer file tree)
+  };
+  // STATE_OVERRIDE_SPEC §5: persisted popup geometry.
+  popup: {
+    open: boolean;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    threadId: string | null;
+  };
+  currentThreadId: string | null;
+  secondaryThreadId: string | null;
+  // TINTS_SPEC §4: per-surface tint toggles. All default false (neutral).
+  tints: ViewStateTints;
+}
+
+export interface ViewStateTints {
+  leftPanel:  boolean;
+  rightPanel: boolean;
+  cards:      boolean;
+  borders: {
+    threads: boolean;
+    chat:    boolean;
   };
 }
 
@@ -224,6 +281,18 @@ export interface ThreadEntry {
   // SPEC-26a: server returns scope + viewId on every thread entry
   scope?: Scope;
   viewId?: string | null;
+  // CLI_IDENTITY_SPEC: which harness owns this thread
+  harnessId?: string;
+}
+
+// Moved from ChatHarnessPicker — harness installation status
+export interface HarnessStatus {
+  id: string;
+  installed: boolean;
+  builtIn: boolean;
+  version: string | null;
+  action: string | null;
+  installCommand: string | null;
 }
 
 export interface Thread {

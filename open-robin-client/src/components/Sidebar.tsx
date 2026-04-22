@@ -1,6 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import { logger } from '../lib/logger';
+import { useFileStore } from '../state/fileStore';
+import { useHarnessStatuses } from '../hooks/useHarnessStatuses';
+import { threadLinkIntent } from '../lib/thread-link-intent';
+import { showToast } from '../lib/toast';
+import { CliPickerDropdown } from './CliPickerDropdown';
+import { useResolvedHarnessResolver } from '../config/harness';
+import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 import type { Thread, Scope } from '../types';
 
 // SPEC-24e: display name fallback. When a thread has no name (null),
@@ -35,11 +41,18 @@ function reorderWithSecondary<T extends { threadId: string }>(
   return out;
 }
 
-// FLIP animation for thread reordering
+// FLIP animation for thread reordering.
+// A previous version gated on `isAnimating` and would skip the next reorder
+// if a prior animation's 400ms cleanup hadn't fired yet. That stranded
+// inline styles (background / transform / box-shadow) on DOM elements that
+// then overrode the class-based `.chat-item.active` highlight whenever the
+// user rapidly opened-then-closed a secondary chat. Now: on every reorder
+// we synchronously cancel any pending cleanup and scrub inline styles off
+// every known row before capturing new positions.
 function useThreadAnimation(threads: { threadId: string }[]) {
   const threadRefs = useRef<Map<string, HTMLElement>>(new Map());
   const prevOrder = useRef<string[]>([]);
-  const isAnimating = useRef(false);
+  const cleanupTimerRef = useRef<number | null>(null);
 
   const setThreadRef = useCallback((threadId: string, el: HTMLElement | null) => {
     if (el) {
@@ -49,16 +62,32 @@ function useThreadAnimation(threads: { threadId: string }[]) {
     }
   }, []);
 
+  const scrubInlineStyles = useCallback(() => {
+    threadRefs.current.forEach((el) => {
+      el.style.transition = '';
+      el.style.transform = '';
+      el.style.zIndex = '';
+      el.style.boxShadow = '';
+      el.style.background = '';
+    });
+  }, []);
+
   useEffect(() => {
-    if (isAnimating.current) return;
-    
-    const currentOrder = threads.map(t => t.threadId);
+    const currentOrder = threads.map((t) => t.threadId);
     const prev = prevOrder.current;
-    
-    // Skip first render or if order hasn't changed
+
+    // First render, or no change, just update the baseline.
     if (prev.length === 0 || JSON.stringify(prev) === JSON.stringify(currentOrder)) {
       prevOrder.current = currentOrder;
       return;
+    }
+
+    // Cancel any pending cleanup from a prior animation and flush inline
+    // styles so this reorder starts from a clean slate.
+    if (cleanupTimerRef.current != null) {
+      window.clearTimeout(cleanupTimerRef.current);
+      cleanupTimerRef.current = null;
+      scrubInlineStyles();
     }
 
     // Capture initial positions (First)
@@ -68,20 +97,16 @@ function useThreadAnimation(threads: { threadId: string }[]) {
       positions.set(threadId, { top: rect.top, left: rect.left });
     });
 
-    // Store previous order and let React update DOM (Last happens after this effect)
     prevOrder.current = currentOrder;
-    
-    // Next frame: calculate differences and animate (Invert + Play)
+
     requestAnimationFrame(() => {
       const animations: { el: HTMLElement; dy: number }[] = [];
-      
+
       threadRefs.current.forEach((el, threadId) => {
         const oldPos = positions.get(threadId);
         if (!oldPos) return;
-        
         const newRect = el.getBoundingClientRect();
         const dy = oldPos.top - newRect.top;
-        
         if (Math.abs(dy) > 1) {
           animations.push({ el, dy });
         }
@@ -89,21 +114,18 @@ function useThreadAnimation(threads: { threadId: string }[]) {
 
       if (animations.length === 0) return;
 
-      isAnimating.current = true;
-
-      // Find the thread moving to top (highest upward movement)
-      const topMover = animations.reduce((max, curr) => 
-        curr.dy > max.dy ? curr : max, animations[0]
+      const topMover = animations.reduce(
+        (max, curr) => (curr.dy > max.dy ? curr : max),
+        animations[0],
       );
 
-      // Apply initial offset (Invert)
+      // Invert
       animations.forEach(({ el, dy }) => {
         el.style.transform = `translateY(${dy}px)`;
         el.style.transition = 'none';
         el.style.zIndex = '1';
       });
 
-      // Highlight the thread being promoted to top
       if (topMover && topMover.dy > 50) {
         topMover.el.style.zIndex = '20';
         topMover.el.style.boxShadow = '0 8px 32px rgba(var(--theme-primary-rgb), 0.15), 0 0 0 1px rgba(var(--theme-primary-rgb), 0.3)';
@@ -113,27 +135,20 @@ function useThreadAnimation(threads: { threadId: string }[]) {
       // Force reflow
       document.body.offsetHeight;
 
-      // Animate to final position (Play)
+      // Play
       requestAnimationFrame(() => {
         animations.forEach(({ el }) => {
           el.style.transition = 'transform 400ms cubic-bezier(0.2, 0, 0.2, 1), box-shadow 400ms ease, background 400ms ease';
           el.style.transform = 'translateY(0)';
         });
 
-        // Cleanup after animation
-        setTimeout(() => {
-          animations.forEach(({ el }) => {
-            el.style.transition = '';
-            el.style.transform = '';
-            el.style.zIndex = '';
-            el.style.boxShadow = '';
-            el.style.background = '';
-          });
-          isAnimating.current = false;
+        cleanupTimerRef.current = window.setTimeout(() => {
+          scrubInlineStyles();
+          cleanupTimerRef.current = null;
         }, 400);
       });
     });
-  }, [threads]);
+  }, [threads, scrubInlineStyles]);
 
   return { setThreadRef };
 }
@@ -146,7 +161,6 @@ interface SidebarProps {
 
 export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   const config = usePanelStore((s) => s.getPanelConfig(panel));
-  const toggleCollapsed = usePanelStore((s) => s.toggleCollapsed);
   const ws = usePanelStore((state) => state.ws);
   // SPEC-26c: sidebar reads from its scope's thread list. Project sidebar
   // reads state.threads.project; view sidebar reads state.threads.view.
@@ -155,16 +169,18 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   const currentScope = usePanelStore((state) => state.currentScope);
   const secondary = usePanelStore((state) => state.secondary);
   const openSecondary = usePanelStore((state) => state.openSecondary);
+  const toggleCliPicker = usePanelStore((state) => state.toggleCliPicker);
 
   // SECONDARY_CHAT_SPEC §4: when a secondary is open, reorder the list so
   // the secondary's thread sits at position 2, indented beneath the primary.
   const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
   const { setThreadRef } = useThreadAnimation(threads);
+  const resolveCliAccent = useCliAccentResolver();
+  const resolveHarness = useResolvedHarnessResolver();
 
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState('');
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
-  const setCurrentThreadId = usePanelStore((state) => state.setCurrentThreadId);
 
   // Close kebab menu on click outside of both the dropdown and its trigger.
   useEffect(() => {
@@ -194,10 +210,37 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
       try {
         const msg = JSON.parse(event.data);
         if (msg.type === 'thread:link') {
-          // Copy the file path to clipboard
-          if (msg.filePath) {
+          if (!msg.filePath) return;
+          const intent = threadLinkIntent.consume();
+          if (intent === 'view') {
+            // View Markdown: switch to code-viewer and open the file tab.
+            // Server returns an absolute path; file_content_request expects
+            // a workspace-relative path (it re-joins with the workspace
+            // root on the server side). Strip everything up to the "ai/"
+            // segment to get the relative form.
+            const aiIdx = msg.filePath.indexOf('ai/');
+            const relPath = aiIdx >= 0 ? msg.filePath.slice(aiIdx) : msg.filePath;
+            const store = usePanelStore.getState();
+            store.setCurrentPanel('code-viewer');
+            const name = relPath.split('/').pop() || relPath;
+            const { shouldFetch } = useFileStore.getState().openFileTab({
+              path: relPath,
+              name,
+              type: 'file',
+              extension: 'md',
+            });
+            if (shouldFetch) {
+              ws.send(JSON.stringify({
+                type: 'file_content_request',
+                panel: 'code-viewer',
+                path: relPath,
+              }));
+            }
+          } else {
+            // Default intent: copy the file path to clipboard.
             navigator.clipboard.writeText(msg.filePath).then(() => {
               console.log('[Sidebar] Copied link to clipboard:', msg.filePath);
+              showToast('Thread link copied');
             }).catch(err => {
               console.error('[Sidebar] Failed to copy link:', err);
             });
@@ -221,10 +264,17 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
     }
   }, [ws]);
   
+  // Open the CLI picker dropdown — same entry point as the chat header's
+  // playlist_add button. Selecting a CLI creates the new thread.
   const handleCreateThread = () => {
-    logger.info('[Sidebar] New Thread — clearing thread to show harness picker scope=%s', scope);
-    setCurrentThreadId(scope, null);
+    toggleCliPicker(panel);
   };
+
+  const harnessStatuses = useHarnessStatuses();
+  const selectHarness = usePanelStore((state) => state.selectHarness);
+  const handleHarnessSelect = useCallback((harnessId: string) => {
+    selectHarness(harnessId, scope);
+  }, [selectHarness, scope]);
 
   const handleOpenThread = (threadId: string) => {
     sendMessage({ type: 'thread:open-assistant', scope, threadId });
@@ -296,24 +346,24 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
 
   return (
     <aside className={`sidebar sidebar--${scope}${isActive ? ' sidebar--active' : ''}`}>
-      <button
-        className="rv-collapse-btn"
-        onClick={() => toggleCollapsed(panel, 'leftSidebar')}
-        title="Collapse sidebar"
-      >
-        <span className="material-symbols-outlined">arrow_menu_close</span>
-      </button>
-      <div className="sidebar-header">
-        {headerLabel}
-      </div>
+      {scope !== 'project' && (
+        <div className="sidebar-header">
+          {headerLabel}
+        </div>
+      )}
 
-      <button 
+      <button
         className="new-chat-btn"
+        onMouseDown={(e) => e.stopPropagation()}
         onClick={handleCreateThread}
       >
-        <span className="material-symbols-outlined">add</span>
         New Thread
       </button>
+      <CliPickerDropdown
+        panel={panel}
+        statuses={harnessStatuses}
+        onSelect={handleHarnessSelect}
+      />
       
       <div className="thread-list">
         {!threads || threads.length === 0 ? (
@@ -333,6 +383,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
               key={thread.threadId}
               ref={(el) => setThreadRef(thread.threadId, el)}
               className={rowClass}
+              style={resolveCliAccent(thread.entry?.harnessId)}
               onClick={() => handleOpenThread(thread.threadId)}
             >
               {renamingId === thread.threadId ? (
@@ -361,6 +412,9 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                 <>
                   <div className="thread-row thread-row-top">
                     <span className="chat-item-text" title={formatThreadDisplayName(thread)}>
+                      <span className="material-symbols-outlined rv-thread-row-icon">
+                        {resolveHarness(thread.entry?.harnessId)?.materialIcon ?? 'help'}
+                      </span>
                       {formatThreadDisplayName(thread)}
                       {thread.entry?.status === 'active' && (
                         <span style={{ color: '#4caf50', marginLeft: '4px', fontSize: '8px' }}>●</span>
@@ -396,6 +450,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                         onMouseLeave={() => setMenuOpenId(null)}
                       >
                         <button
+                          className="rv-dropdown-item"
                           onClick={() => {
                             if (openAsSecondaryDisabled) return;
                             openSecondary(thread.threadId);
@@ -404,31 +459,49 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                           disabled={openAsSecondaryDisabled}
                           title={openAsSecondaryTitle}
                         >
-                          ↳ Open a side chat
+                          <span className="material-symbols-outlined">subdirectory_arrow_right</span>
+                          <span>Open a side chat</span>
                         </button>
                         <button
+                          className="rv-dropdown-item"
                           onClick={() => {
                             handleRenameStart(thread.threadId, thread.entry?.name || '');
                             setMenuOpenId(null);
                           }}
                         >
-                          ✎ Rename
+                          <span className="material-symbols-outlined">edit</span>
+                          <span>Rename</span>
                         </button>
                         <button
+                          className="rv-dropdown-item"
                           onClick={() => {
                             handleCopyLink(thread.threadId);
                             setMenuOpenId(null);
                           }}
                         >
-                          ⎘ Copy Link
+                          <span className="material-symbols-outlined">link_2</span>
+                          <span>Copy Link</span>
                         </button>
                         <button
+                          className="rv-dropdown-item"
+                          onClick={() => {
+                            threadLinkIntent.set('view');
+                            sendMessage({ type: 'thread:copyLink', scope, threadId: thread.threadId });
+                            setMenuOpenId(null);
+                          }}
+                        >
+                          <span className="material-symbols-outlined">docs</span>
+                          <span>View Markdown</span>
+                        </button>
+                        <button
+                          className="rv-dropdown-item"
                           onClick={() => {
                             handleDeleteThread(thread.threadId);
                             setMenuOpenId(null);
                           }}
                         >
-                          × Delete
+                          <span className="material-symbols-outlined">delete</span>
+                          <span>Delete</span>
                         </button>
                       </div>
                       );

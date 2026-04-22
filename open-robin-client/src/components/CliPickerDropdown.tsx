@@ -1,6 +1,7 @@
 import { usePanelStore } from '../state/panelStore';
-import { HARNESS_OPTIONS, type HarnessOption } from '../config/harness';
-import type { HarnessStatus } from './ChatHarnessPicker';
+import { useResolvedCliList } from '../config/harness';
+import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
+import type { HarnessStatus, ResolvedCliEntry } from '../types';
 
 interface CliPickerDropdownProps {
   panel: string;
@@ -8,30 +9,34 @@ interface CliPickerDropdownProps {
   onSelect: (harnessId: string) => void;
 }
 
-function isSelectable(option: HarnessOption, statuses: Record<string, HarnessStatus>): boolean {
-  const s = statuses[option.id];
+function isSelectable(entry: ResolvedCliEntry, statuses: Record<string, HarnessStatus>): boolean {
+  const s = statuses[entry.id];
   if (s) return s.installed || s.builtIn;
-  return option.enabled;
+  return entry.enabled;
 }
 
-function badgeLabel(option: HarnessOption, s: HarnessStatus | undefined): string | null {
+function badgeLabel(entry: ResolvedCliEntry, s: HarnessStatus | undefined): string | null {
   if (s?.builtIn) return 'Built-in';
   if (s?.installed) return 'Installed';
   if (s?.action === 'install') return 'Not installed';
-  if (option.recommended) return 'Recommended';
+  if (entry.recommended) return 'Recommended';
   return null;
 }
 
 export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdownProps) {
   const open = usePanelStore((s) => !!s.cliPickerOpen[panel]);
   const closeCliPicker = usePanelStore((s) => s.closeCliPicker);
+  const resolveCliAccent = useCliAccentResolver();
+  const resolvedList = useResolvedCliList();
 
   const handleSelect = (id: string) => {
     onSelect(id);
     closeCliPicker(panel);
   };
 
-  const anySelectable = HARNESS_OPTIONS.some((o) => isSelectable(o, statuses));
+  // CLI_CONFIG_SPEC §8c: filter hidden entries; list is already sorted by order.
+  const visible = resolvedList.filter((e) => e.enabled);
+  const anySelectable = visible.some((e) => isSelectable(e, statuses));
 
   return (
     <div
@@ -44,21 +49,22 @@ export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdo
       {!anySelectable ? (
         <div className="rv-dropdown-empty">No AI backends available</div>
       ) : (
-        HARNESS_OPTIONS.map((option) => {
-          const s = statuses[option.id];
-          const selectable = isSelectable(option, statuses);
-          const label = badgeLabel(option, s);
+        visible.map((entry) => {
+          const s = statuses[entry.id];
+          const selectable = isSelectable(entry, statuses);
+          const label = badgeLabel(entry, s);
           return (
             <button
-              key={option.id}
+              key={entry.id}
               role="menuitem"
               className="rv-dropdown-item"
-              onClick={() => selectable && handleSelect(option.id)}
+              style={resolveCliAccent(entry.id)}
+              onClick={() => selectable && handleSelect(entry.id)}
               disabled={!selectable}
-              aria-label={`Start chat with ${option.name}`}
+              aria-label={`Start chat with ${entry.name}`}
             >
-              <span aria-hidden="true">{option.icon}</span>
-              <span>{option.name}</span>
+              <span className="material-symbols-outlined">{entry.materialIcon}</span>
+              <span>{entry.name}</span>
               {label && <span className="rv-dropdown-item-badge">{label}</span>}
             </button>
           );

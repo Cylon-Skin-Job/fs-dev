@@ -11,6 +11,7 @@
 import { usePanelStore } from '../../state/panelStore';
 import { toolNameToSegmentType, SEGMENT_ICONS } from '../instructions';
 import { loadRootTree } from '../file-tree';
+import { secondaryTracker } from '../secondary-tracker';
 import type { WebSocketMessage, ExchangeData, AssistantPart, StreamSegment, Scope } from '../../types';
 
 /**
@@ -64,12 +65,17 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       if (msg.threadId && msg.thread) {
         // SECONDARY_CHAT_SPEC: if this thread:opened is for the secondary's
         // thread, hydrate its chat slot but do NOT touch primary state.
-        // Calling setCurrentThreadId here would hit the §3c auto-close guard
-        // (primary switching to secondary's thread → secondary self-destructs)
-        // and we'd see a flicker of the popup before it disappears.
-        const isForSecondary = store.secondary?.threadId === msg.threadId;
+        // Check both the live secondary state AND the secondary tracker —
+        // the tracker catches the race where the user clicks red before the
+        // server's response arrives (secondary is already null, but the
+        // response was originally intended for the secondary and must not
+        // hijack the primary's current thread).
+        const isForSecondary =
+          store.secondary?.threadId === msg.threadId ||
+          secondaryTracker.has(msg.threadId);
 
         if (isForSecondary) {
+          secondaryTracker.unmark(msg.threadId);
           store.clearChat(scope, msg.threadId);
           if (msg.exchanges && msg.exchanges.length > 0) {
             convertExchangesToMessages(scope, msg.threadId, msg.exchanges);

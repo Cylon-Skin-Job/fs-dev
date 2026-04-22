@@ -11,6 +11,7 @@ import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
+import { handleHarnessMessage } from './ws/harness-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
@@ -128,13 +129,24 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;
   if (handleWorkspaceMessage(msg)) return;
+  if (handleHarnessMessage(msg)) return;
 
-  // SPEC-26c-2: view UI state responses.
-  // SECONDARY_CHAT_SPEC retired SPEC-26d popup state — any stale `popup`
-  // field in persisted state is simply ignored.
+  // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {
     const store = usePanelStore.getState();
-    store.setViewState((msg as any).view, (msg as any).state);
+    const view = (msg as any).view;
+    const incoming = (msg as any).state;
+    store.setViewState(view, incoming);
+    // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
+    // live slot when loading the active view. Guarded equality check in
+    // setCurrentThreadId prevents a persist-echo loop.
+    if (
+      view === store.currentPanel &&
+      incoming?.currentThreadId &&
+      incoming.currentThreadId !== store.currentThreadIds.project
+    ) {
+      store.setCurrentThreadId('project', incoming.currentThreadId);
+    }
     return;
   }
   if (msg.type === 'state:error') {
@@ -156,6 +168,13 @@ function handleMessage(msg: WebSocketMessage) {
     case 'panel_config':
       if ((msg as any).projectRoot) {
         store.setProjectRoot((msg as any).projectRoot);
+      }
+      break;
+
+    case 'panel_changed':
+      // CLI_CONFIG_SPEC §7d: stash per-view overrides for render-time merge.
+      if (msg.panel) {
+        store.setCliConfigViewDelta(msg.panel, msg.cliConfigDelta ?? {});
       }
       break;
 

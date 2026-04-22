@@ -12,11 +12,13 @@ import {
   HoverIconModalContainer,
   HoverIconModalList,
 } from './hover-icon-modal';
-import { ChatHarnessPicker, type HarnessStatus } from './ChatHarnessPicker';
 import { ConnectingOverlay } from './ConnectingOverlay';
 import { CliPickerDropdown } from './CliPickerDropdown';
 import { ThreadJumpDropdown } from './ThreadJumpDropdown';
-import { getHarnessOption } from '../config/harness';
+import { useResolvedHarness } from '../config/harness';
+import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
+import { useHarnessStatuses } from '../hooks/useHarnessStatuses';
+import { threadLinkIntent } from '../lib/thread-link-intent';
 import type { Scope, PanelState, Message, StreamSegment } from '../types';
 
 // PER_THREAD_CHAT_STATE: stable empty references so Zustand selectors that
@@ -67,9 +69,11 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
   const chatInputRef = useRef<ChatInputRef>(null);
   const justSentRef = useRef(false);
   const [isSending, setIsSending] = useState(false);
-  const [connectingHarnessId, setConnectingHarnessId] = useState<string | null>(null);
-  const [harnessStatuses, setHarnessStatuses] = useState<Record<string, HarnessStatus>>({});
-  const [harnessLoading, setHarnessLoading] = useState(false);
+  const connectingHarnessId = usePanelStore((s) => s.connectingHarnessId);
+  const setConnectingHarnessId = usePanelStore((s) => s.setConnectingHarnessId);
+  const selectHarness = usePanelStore((s) => s.selectHarness);
+  const harnessStatuses = useHarnessStatuses();
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
 
   const handleInsertText = (text: string) => {
     chatInputRef.current?.insertText(text);
@@ -85,8 +89,15 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
   const segments = usePanelStore((state) => selector(state)?.segments ?? EMPTY_SEGMENTS);
   const contextUsage = usePanelStore((state) => state.contextUsage);
   const currentScope = usePanelStore((state) => state.currentScope);
-  const ws = usePanelStore((state) => state.ws);
   const wireReady = usePanelStore((state) => state.wireReady);
+  const threads = usePanelStore((state) => state.threads[scope]);
+  const currentThread = threads.find(t => t.threadId === currentThreadId);
+  const resolvedHarness = useResolvedHarness(currentThread?.entry?.harnessId);
+  const connectingHarness = useResolvedHarness(connectingHarnessId);
+  const identity = resolvedHarness
+    ? { name: resolvedHarness.name, icon: resolvedHarness.materialIcon, accentColor: resolvedHarness.accentColor }
+    : { name: 'Unknown', icon: 'help', accentColor: undefined };
+  const resolveCliAccent = useCliAccentResolver();
   const setWireReady = usePanelStore((state) => state.setWireReady);
 
   const addMessage = usePanelStore((state) => state.addMessage);
@@ -101,43 +112,30 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
   const isActive = currentScope === scope;
 
   const handleHarnessSelect = useCallback((harnessId: string) => {
-    setWireReady(false);
-    setConnectingHarnessId(harnessId);
-    if (ws?.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope, harnessId }));
-    }
-  }, [ws, setWireReady, scope]);
-
-  // Fetch harness install statuses once on mount — passed to ChatHarnessPicker as props
-  const fetchHarnessStatuses = useCallback(async () => {
-    setHarnessLoading(true);
-    try {
-      const res = await fetch('/api/harnesses');
-      if (!res.ok) return;
-      const list: HarnessStatus[] = await res.json();
-      const map = list.reduce((acc, s) => { acc[s.id] = s; return acc; }, {} as Record<string, HarnessStatus>);
-      setHarnessStatuses(map);
-    } catch {
-      // silent — show local config as fallback
-    } finally {
-      setHarnessLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchHarnessStatuses();
-  }, [fetchHarnessStatuses]);
+    selectHarness(harnessId, scope);
+  }, [selectHarness, scope]);
 
   // Close chat-header dropdowns on Escape or outside click.
   useEffect(() => {
-    if (!cliPickerOpen && !threadDropdownOpen) return;
+    if (!cliPickerOpen && !threadDropdownOpen && !moreMenuOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeAllChatHeaderDropdowns(panel);
+      if (e.key === 'Escape') {
+        closeAllChatHeaderDropdowns(panel);
+        setMoreMenuOpen(false);
+      }
     };
     const onDown = (e: MouseEvent) => {
+      // Don't close if the click lands inside an open dropdown anywhere in
+      // the app — the sidebar's CLI-picker is outside chatHeaderRef, so
+      // without this, clicking a harness item closes the dropdown before
+      // its own click handler fires.
+      if (e.target instanceof Element && e.target.closest('.rv-dropdown[data-open="true"]')) {
+        return;
+      }
       const node = chatHeaderRef.current;
       if (node && e.target instanceof Node && !node.contains(e.target)) {
         closeAllChatHeaderDropdowns(panel);
+        setMoreMenuOpen(false);
       }
     };
     document.addEventListener('keydown', onKey);
@@ -146,7 +144,55 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('mousedown', onDown);
     };
-  }, [cliPickerOpen, threadDropdownOpen, panel, closeAllChatHeaderDropdowns]);
+  }, [cliPickerOpen, threadDropdownOpen, moreMenuOpen, panel, closeAllChatHeaderDropdowns]);
+
+  // More-menu handlers (opened by the more_vert button in the chat header).
+  const handleToggleThreads = useCallback(() => {
+    toggleCollapsed(panel, 'leftSidebar');
+    setMoreMenuOpen(false);
+  }, [toggleCollapsed, panel]);
+
+  const handleCopyLink = useCallback(() => {
+    const store = usePanelStore.getState();
+    const tid = store.currentThreadIds.project;
+    const socket = store.ws;
+    if (tid && socket && socket.readyState === WebSocket.OPEN) {
+      threadLinkIntent.set('copy');
+      socket.send(JSON.stringify({ type: 'thread:copyLink', scope: 'project', threadId: tid }));
+    }
+    setMoreMenuOpen(false);
+  }, []);
+
+  const handleRename = useCallback(() => {
+    const store = usePanelStore.getState();
+    const tid = store.currentThreadIds.project;
+    const socket = store.ws;
+    setMoreMenuOpen(false);
+    if (!tid || !socket || socket.readyState !== WebSocket.OPEN) return;
+    const current = store.threads.project.find((t) => t.threadId === tid);
+    const currentName = current?.entry?.name ?? '';
+    const next = window.prompt('Rename thread:', currentName);
+    const trimmed = next?.trim();
+    if (trimmed && trimmed !== currentName) {
+      socket.send(JSON.stringify({
+        type: 'thread:rename',
+        scope: 'project',
+        threadId: tid,
+        name: trimmed,
+      }));
+    }
+  }, []);
+
+  const handleViewMarkdown = useCallback(() => {
+    const store = usePanelStore.getState();
+    const tid = store.currentThreadIds.project;
+    const socket = store.ws;
+    if (tid && socket && socket.readyState === WebSocket.OPEN) {
+      threadLinkIntent.set('view');
+      socket.send(JSON.stringify({ type: 'thread:copyLink', scope: 'project', threadId: tid }));
+    }
+    setMoreMenuOpen(false);
+  }, []);
 
   // Clear overlay once wire is ready
   useEffect(() => {
@@ -154,7 +200,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
       setConnectingHarnessId(null);
       setWireReady(false);
     }
-  }, [wireReady, connectingHarnessId, setWireReady]);
+  }, [wireReady, connectingHarnessId, setConnectingHarnessId, setWireReady]);
 
   // On send: scroll user bubble to top of viewport
   useEffect(() => {
@@ -252,18 +298,18 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     <section className={sectionClass}>
       {!isSecondary && (
       <div className="rv-chat-header" ref={chatHeaderRef}>
-        {sidebarCollapsed && (
-          <>
-            <button
-              className="rv-chat-header-btn rv-chat-header-btn--left"
-              onClick={() => toggleCollapsed(panel, 'leftSidebar')}
-              aria-label="Show threads sidebar"
-              aria-expanded={false}
-              title="Show threads sidebar"
-            >
-              <span className="material-symbols-outlined">arrow_menu_open</span>
-            </button>
-            <div className="rv-chat-header-right">
+        {currentThreadId && (
+          <div
+            className="rv-chat-header-identity"
+            style={resolveCliAccent(currentThread?.entry?.harnessId)}
+          >
+            <span className="material-symbols-outlined">{identity.icon}</span>
+            <span className="rv-chat-header-identity-name">{identity.name}</span>
+          </div>
+        )}
+        <div className="rv-chat-header-right">
+          {sidebarCollapsed && (
+            <>
               <button
                 className="rv-chat-header-btn"
                 onClick={() => toggleCliPicker(panel)}
@@ -286,7 +332,27 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
               >
                 <span className="material-symbols-outlined">subject</span>
               </button>
-            </div>
+            </>
+          )}
+          {/* more_vert button — always visible on primary chat */}
+          <button
+            className="rv-chat-header-btn"
+            onClick={() => setMoreMenuOpen((o) => !o)}
+            aria-haspopup="menu"
+            aria-expanded={moreMenuOpen}
+            aria-controls={`chat-more-${panel}`}
+            aria-label="More options"
+            title="More options"
+          >
+            <span className="material-symbols-outlined">more_vert</span>
+          </button>
+        </div>
+        {/* When the sidebar is collapsed, the CLI picker + thread-jump
+         * dropdowns live here (anchored under their chat-header triggers).
+         * When the sidebar is expanded, the sidebar renders its own CLI
+         * picker centered under its "New Thread" button. */}
+        {sidebarCollapsed && (
+          <>
             <CliPickerDropdown
               panel={panel}
               statuses={harnessStatuses}
@@ -295,20 +361,59 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
             <ThreadJumpDropdown panel={panel} scope={scope} />
           </>
         )}
+        <div
+          className="rv-dropdown rv-chat-more-dropdown"
+          role="menu"
+          id={`chat-more-${panel}`}
+          data-open={moreMenuOpen}
+        >
+          <button
+            className="rv-dropdown-item"
+            role="menuitem"
+            onClick={handleToggleThreads}
+          >
+            <span className="material-symbols-outlined">
+              {sidebarCollapsed ? 'left_panel_open' : 'left_panel_close'}
+            </span>
+            <span>{sidebarCollapsed ? 'Show threads' : 'Hide threads'}</span>
+          </button>
+          <button
+            className="rv-dropdown-item"
+            role="menuitem"
+            onClick={handleRename}
+            disabled={!currentThreadId}
+          >
+            <span className="material-symbols-outlined">edit</span>
+            <span>Rename</span>
+          </button>
+          <button
+            className="rv-dropdown-item"
+            role="menuitem"
+            onClick={handleCopyLink}
+            disabled={!currentThreadId}
+            title={currentThreadId ? 'Copy link to this thread' : 'No active thread'}
+          >
+            <span className="material-symbols-outlined">link_2</span>
+            <span>Copy Link</span>
+          </button>
+          <button
+            className="rv-dropdown-item"
+            role="menuitem"
+            onClick={handleViewMarkdown}
+            disabled={!currentThreadId}
+          >
+            <span className="material-symbols-outlined">docs</span>
+            <span>View Markdown</span>
+          </button>
+        </div>
       </div>
       )}
       <div className="chat-messages" ref={chatContainerRef} style={{ position: 'relative' }}>
         {connectingHarnessId ? (
-          <ConnectingOverlay harnessName={getHarnessOption(connectingHarnessId)?.name} />
-        ) : noThread ? (
-          <ChatHarnessPicker
-            onSelect={handleHarnessSelect}
-            statuses={harnessStatuses}
-            isLoading={harnessLoading}
-          />
+          <ConnectingOverlay harnessName={connectingHarness?.name} />
         ) : messages.length === 0 && !currentTurn && !showOrb ? (
           <div className="message message-system">
-            Start a conversation
+            {noThread ? 'No thread — use New Thread to pick a CLI' : 'Start a conversation'}
           </div>
         ) : (
           <MessageList
