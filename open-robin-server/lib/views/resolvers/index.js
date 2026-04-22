@@ -13,9 +13,5 @@ module.exports = {
   'tiled-rows': require('./tiled-rows'),
   'tabbed': require('./tabbed'),
   'columns': require('./columns'),
-  'library': require('./library'),
-  'terminal': require('./terminal'),
-  'browser': require('./browser'),
-  'calendar': require('./calendar'),
   'list': require('./list'),
 };
