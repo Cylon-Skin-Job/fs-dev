@@ -35,7 +35,6 @@ const views = require('../views');
 const { moveFileWithArchive } = require('../file-ops');
 const { emit } = require('../event-bus');
 const { resolveViewState, writeViewStatePatch } = require('../view-state');
-const { getUsername } = require('../thread/ChatFile');
 
 /**
  * Create a per-connection client message router.
@@ -171,6 +170,11 @@ function createClientMessageRouter({
         return;
       }
 
+      if (clientMsg.type === 'thread:touch') {
+        await ThreadWebSocketHandler.handleThreadTouch(ws, clientMsg);
+        return;
+      }
+
       if (clientMsg.type === 'thread:list') {
         // SPEC-26b: forward optional scope field; sendThreadList defaults to 'view'.
         await ThreadWebSocketHandler.sendThreadList(ws, clientMsg.scope);
@@ -226,6 +230,9 @@ function createClientMessageRouter({
 
           // Send view config to client (includes content.json + layout.json)
           const viewConfig = views.loadView(projectRoot, panel);
+          // CLI_CONFIG_SPEC §7d: per-view override delta (may be {}).
+          const { resolveViewDelta } = require('../cli-config');
+          const cliConfigDelta = await resolveViewDelta(projectRoot, panel);
           ws.send(JSON.stringify({
             type: 'panel_changed',
             panel,
@@ -235,6 +242,7 @@ function createClientMessageRouter({
             hasChat: !!chatConfig,
             chatType: chatConfig?.chatType || null,
             chatPosition: chatConfig?.chatPosition || null,
+            cliConfigDelta,
           }));
 
           if (rootFolder) {
@@ -347,8 +355,7 @@ function createClientMessageRouter({
             ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
             return;
           }
-          const username = getUsername();
-          const state = await resolveViewState(projectRoot, clientMsg.view, username);
+          const state = await resolveViewState(projectRoot, clientMsg.view);
           ws.send(JSON.stringify({
             type: 'state:result',
             view: clientMsg.view,
@@ -368,8 +375,7 @@ function createClientMessageRouter({
             ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
             return;
           }
-          const username = getUsername();
-          const merged = await writeViewStatePatch(projectRoot, clientMsg.view, username, clientMsg.state);
+          const merged = await writeViewStatePatch(projectRoot, clientMsg.view, clientMsg.state);
           ws.send(JSON.stringify({
             type: 'state:result',
             view: clientMsg.view,

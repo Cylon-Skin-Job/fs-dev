@@ -148,10 +148,13 @@ app.get('/api/panel-file/:panel/{*filePath}', (req, res) => {
 // ---- External CLI harnesses API (Phase 3) ----
 
 app.get('/api/harnesses', async (req, res) => {
-  const { registry } = require('./lib/harness');
+  const service = require('./lib/harness/harness-status-service');
   try {
-    const harnesses = await registry.getAvailableHarnesses();
+    const harnesses = await service.getAll();
     res.json(harnesses);
+    // Fire-and-forget revalidation so repeated hits stay sub-ms while
+    // the cache converges on real state. Debounced internally.
+    service.revalidateAll().catch(() => {});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -388,11 +391,15 @@ wss.on('connection', async (ws) => {
   try {
     const workspaces = await workspaceController.listWorkspaces();
     const activeWorkspaceId = workspaceController.getActiveWorkspaceId();
+    const { resolveCliConfig } = require('./lib/cli-config');
+    const activeRoot = getProjectRoot();
+    const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
     ws.send(JSON.stringify({
       type: 'workspace:init',
       workspaces,
       activeWorkspaceId,
       homePath: require('os').homedir(),
+      cliConfig,
     }));
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);

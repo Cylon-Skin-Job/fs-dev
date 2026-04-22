@@ -89,11 +89,35 @@ async function start({ server, sessions, getProjectRoot }) {
   const { createWorkspaceBroadcaster } = require('./ws/workspace-broadcaster');
   createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId });
 
+  // 3.7b. Harness-status broadcaster + initial revalidation pass.
+  // Subscribe before any revalidate() emits so the first diff is
+  // delivered. Kick off revalidateAll as a fire-and-forget so we
+  // don't block listen(); the picker reads from cache with optimistic
+  // defaults while the pass completes.
+  const { createHarnessBroadcaster } = require('./ws/harness-broadcaster');
+  createHarnessBroadcaster({ getAllClients });
+  const harnessStatusService = require('./harness/harness-status-service');
+  harnessStatusService.revalidateAll().catch((err) => {
+    console.error('[Startup] harness revalidateAll failed:', err.message);
+  });
+
   // 3.8. Workspace controller — workspace CRUD, launch validator, switch
   // logic. Must run before listen() so the registry is validated and the
   // active workspace is set before the first client connects.
   const workspaceController = require('./workspace/workspace-controller');
   await workspaceController.start();
+
+  // 3.8b. CLI-config workspace file — ensure ai/views/settings/cli.json
+  // exists so discovery is trivial (CLI_CONFIG_SPEC §7e). Runs after
+  // workspaceController.start() so getProjectRoot() resolves to the active
+  // workspace root; otherwise bootstrap silently no-ops.
+  const projectRootForCli = getProjectRoot();
+  if (projectRootForCli) {
+    const { ensureWorkspaceFile } = require('./cli-config');
+    ensureWorkspaceFile(projectRootForCli).catch((err) => {
+      console.warn('[cli-config] ensureWorkspaceFile failed:', err.message);
+    });
+  }
 
   // 4. listen() — must come before watcher/hooks start, they broadcast to clients
   await new Promise((resolve, reject) => {
