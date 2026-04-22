@@ -5,7 +5,7 @@
  *
  * The server responds to `thread:copyLink` with `thread:link` containing
  * the file path. Callers want different behaviors (copy to clipboard, open
- * in code-viewer). This module is a tiny mailbox: set the intent before
+ * in file-viewer). This module is a tiny mailbox: set the intent before
  * sending the WS message, consume it in the response handler.
  */
 

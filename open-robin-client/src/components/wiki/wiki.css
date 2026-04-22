@@ -244,7 +244,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  color: #ef4444;
+  color: var(--status-error, #ef4444);
   font-size: 0.8125rem;
 }
 

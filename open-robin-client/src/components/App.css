@@ -213,7 +213,7 @@
  * overlays the view's existing right column via z-index. The grid stays
  * at 5 tracks — no extra track added. The chat's width is bound to
  * --right-col-w, which is also read by the view's right-column CSS
- * (e.g. file-tree-sidebar in code-viewer), so both resize together. */
+ * (e.g. file-tree-sidebar in file-viewer), so both resize together. */
 .rv-secondary-sticky {
   position: absolute;
   top: 0;
@@ -278,7 +278,7 @@
 }
 
 /* Right-column resize handle: lives on the left edge of either the file
- * tree sidebar (code-viewer → pane="rightCol") or the sticky secondary
+ * tree sidebar (file-viewer → pane="rightCol") or the sticky secondary
  * chat (pane="rightSecondary"). Both parents use position: relative so
  * this sits absolutely over the left edge. Visible strip is 1px to match
  * the in-grid chat handle; hit target comes from the base ::before (±4px). */

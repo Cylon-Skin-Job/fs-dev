@@ -8,10 +8,10 @@ import { usePanelStore } from '../state/panelStore';
 import { showToast } from './toast';
 
 const PANEL_PREFIX: Record<string, string> = {
-  'capture-viewer': 'ai/views/capture-viewer',
+  'doc-viewer': 'ai/views/doc-viewer',
   'wiki-viewer': 'ai/views/wiki-viewer/content',
   'agents-viewer': 'ai/views/agents-viewer',
-  'code-viewer': '',
+  'file-viewer': '',
   'issues-viewer': 'ai/views/issues-viewer',
 };
 

@@ -77,7 +77,7 @@ export function fetchViewsRootFile(ws: WebSocket, pathUnderViews: string): Promi
 
 /**
  * Read a file from under ai/views/{panelId}/ regardless of display type.
- * Use this for index.json, settings/themes.css, etc. (Not for browsing project files on code-viewer.)
+ * Use this for index.json, settings/themes.css, etc. (Not for browsing project files on file-viewer.)
  */
 export function fetchPanelWorkspaceFile(
   ws: WebSocket,

@@ -205,7 +205,7 @@ export interface WebSocketMessage {
 
 // SPEC-26c-2: per-view UI state (collapse + pane widths)
 // SECONDARY_CHAT_SPEC: `rightSecondary` added for the sticky-right column.
-// `rightCol` is the view's right column (e.g. code-viewer file tree) — kept
+// `rightCol` is the view's right column (e.g. file-viewer file tree) — kept
 // separate from rightSecondary so the file tree retains its own width when
 // the sticky chat undocks.
 export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary' | 'rightCol';
@@ -222,7 +222,7 @@ export interface ViewUIState {
     leftSidebar: number;
     leftChat: number;
     rightSecondary?: number;  // sticky secondary chat width (when docked)
-    rightCol?: number;        // view's right column (e.g. code-viewer file tree)
+    rightCol?: number;        // view's right column (e.g. file-viewer file tree)
   };
   // STATE_OVERRIDE_SPEC §5: persisted popup geometry.
   popup: {

@@ -5,7 +5,7 @@ name: source-file-change
 type: file-change
 events: [modify, create, delete]
 match: "open-robin-server/lib/**/*.js"
-exclude: ["ai/views/capture-viewer/**"]
+exclude: ["ai/views/doc-viewer/**"]
 prompt: PROMPT_01.md
 message: |
   Source file changed: {{filePath}} ({{event}})

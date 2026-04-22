@@ -77,9 +77,9 @@ body {
   scrollbar-width: thin;
 }
 
-/* ========== File Explorer / code-viewer ========== */
+/* ========== File Explorer / file-viewer ========== */
 /* Document/code/markdown: src/styles/document.css (bundled). */
-/* Explorer chrome + tree overrides: workspace CSS via useViewLayoutStyles('code-viewer'). */
+/* Explorer chrome + tree overrides: workspace CSS via useViewLayoutStyles('file-viewer'). */
 
 /* ============================================
    CONFIRMATION MODAL

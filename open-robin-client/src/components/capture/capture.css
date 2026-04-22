@@ -96,7 +96,7 @@
 }
 
 .rv-file-page-content.rv-file-page-document .rv-code-editor {
-  background: #1e1e1e;
+  background: var(--document-code-bg, #161616);
   width: 100%;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   overflow: visible;

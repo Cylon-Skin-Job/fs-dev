@@ -17,7 +17,7 @@ export function loadRootTree() {
   useFileStore.getState().setError(null);
   ws.send(JSON.stringify({
     type: 'file_tree_request',
-    panel: 'code-viewer',
+    panel: 'file-viewer',
   }));
 }
 
@@ -53,7 +53,7 @@ export function loadFolderChildren(folderPath: string): Promise<FileTreeNode[]> 
     ws.addEventListener('message', handleMessage);
     ws.send(JSON.stringify({
       type: 'file_tree_request',
-      panel: 'code-viewer',
+      panel: 'file-viewer',
       path: folderPath,
     }));
 
@@ -98,7 +98,7 @@ export function loadFileContent(file: FileInfo) {
   if (!shouldFetch) return;
   ws.send(JSON.stringify({
     type: 'file_content_request',
-    panel: 'code-viewer',
+    panel: 'file-viewer',
     path: file.path,
   }));
 }

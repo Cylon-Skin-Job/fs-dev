@@ -60,7 +60,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
             currentWs.addEventListener('message', handleMessage);
             currentWs.send(JSON.stringify({
               type: 'file_tree_request',
-              panel: 'code-viewer',
+              panel: 'file-viewer',
               path: node.path,
             }));
             // Timeout after 5 seconds

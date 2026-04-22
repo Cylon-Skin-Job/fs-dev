@@ -125,7 +125,7 @@ function loadAllViews(projectRoot) {
  *
  * @param {string} projectRoot
  * @param {string} viewId
- * @param {object} [context] - Additional context (e.g., session root for code-viewer)
+ * @param {object} [context] - Additional context (e.g., session root for file-viewer)
  * @returns {string|null} - Filesystem path to the view's content root
  */
 function resolveContentPath(projectRoot, viewId, context = {}) {

@@ -43,7 +43,7 @@ class ChatFile {
   /**
    * @param {object} opts
    * @param {string} opts.viewsDir - Absolute path to the per-user threads directory
-   *   (e.g. ai/views/code-viewer/chat/threads/rccurtrightjr.).
+   *   (e.g. ai/views/file-viewer/chat/threads/rccurtrightjr.).
    * @param {string} opts.threadId - Timestamp thread ID (YYYY-MM-DDTHH-MM-SS-mmm)
    *   from SPEC-24a. Becomes the filename: ${threadId}.md — immutable for the
    *   life of the file. Rename is a frontmatter operation, not a filesystem one.

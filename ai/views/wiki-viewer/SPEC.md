@@ -12,7 +12,7 @@ Each run folder freezes the PROMPT.md and WORKFLOW.md that were active at run ti
 
 Wiki pages sync to GitLab for a browser-readable UI, but the local folders are the source of truth.
 
-This panel follows the universal panel agent model defined in `ai/views/capture-viewer/specs/PANEL-AGENT-SPEC.md`.
+This panel follows the universal panel agent model defined in `ai/views/doc-viewer/specs/PANEL-AGENT-SPEC.md`.
 
 ---
 
@@ -20,7 +20,7 @@ This panel follows the universal panel agent model defined in `ai/views/capture-
 
 ```
 ai/views/wiki-viewer/
-├── PROMPT.md                ← agent identity (see ai/views/capture-viewer/specs/PANEL-AGENT-SPEC.md)
+├── PROMPT.md                ← agent identity (see ai/views/doc-viewer/specs/PANEL-AGENT-SPEC.md)
 ├── TOOLS.md                 ← agent capabilities
 ├── WORKFLOW.md              ← agent process rules (injected on every write)
 ├── SPEC.md                  ← this file
@@ -369,7 +369,7 @@ The wiki agent routinely reads from other panels and project locations:
 
 | Source | What it reads | Why |
 |--------|--------------|-----|
-| `ai/views/code-viewer/threads/` | Recent coding conversations | Capture decisions made during development |
+| `ai/views/file-viewer/threads/` | Recent coding conversations | Capture decisions made during development |
 | `kimi-ide-server/lib/` | Source code | Verify wiki accuracy against implementation |
 | `git log` | Recent commits | Detect what changed since last wiki update |
 | `ai/STATE.md` | Cross-panel activity | Know what other panels did recently |

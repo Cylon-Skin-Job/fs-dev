@@ -54,7 +54,7 @@ export function CaptureTiles() {
       <FilePageView
         file={selected.file}
         siblings={selected.siblings}
-        panel="capture-viewer"
+        panel="doc-viewer"
         folder={selected.folder}
         onBack={handleBack}
         onSelectSibling={handleSelectSibling}
@@ -73,7 +73,7 @@ export function CaptureTiles() {
         <TileRow
           key={row.folder}
           label={row.label}
-          panel="capture-viewer"
+          panel="doc-viewer"
           folder={row.folder}
           onFileSelect={handleFileSelect(row.folder)}
         />

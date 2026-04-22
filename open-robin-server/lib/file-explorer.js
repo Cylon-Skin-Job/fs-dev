@@ -83,7 +83,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
   }
 
   async function handleFileTreeRequest(ws, msg) {
-    const panel = msg.panel || 'code-viewer';
+    const panel = msg.panel || 'file-viewer';
     const requestPath = msg.path || '';
     const panelPath = getPanelPath(panel, ws);
 
@@ -212,7 +212,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
   }
 
   async function handleFileContentRequest(ws, msg) {
-    const panel = msg.panel || 'code-viewer';
+    const panel = msg.panel || 'file-viewer';
     const requestPath = msg.path || '';
     const panelPath = getPanelPath(panel, ws);
 
@@ -298,7 +298,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
   }
 
   async function handleRecentFilesRequest(ws, msg) {
-    const panel = msg.panel || 'code-viewer';
+    const panel = msg.panel || 'file-viewer';
     const limit = msg.limit || 30;
     const panelPath = getPanelPath(panel, ws);
 

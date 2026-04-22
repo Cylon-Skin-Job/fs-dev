@@ -466,7 +466,7 @@
   margin-top: 2px;
 }
 
-.rv-robin-setting-item-badge.on { color: #4caf50; background: rgba(76, 175, 80, 0.12); }
+.rv-robin-setting-item-badge.on { color: var(--status-ok, #4caf50); background: color-mix(in srgb, transparent 88%, var(--status-ok, #4caf50) 12%); }
 .rv-robin-setting-item-badge.off { color: var(--text-dim, #666); background: rgba(255, 255, 255, 0.04); }
 .rv-robin-setting-item-badge.value { color: var(--robin-primary, #4fc3f7); background: rgba(79, 195, 247, 0.12); }
 

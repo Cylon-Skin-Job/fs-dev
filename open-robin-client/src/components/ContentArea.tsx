@@ -19,8 +19,8 @@ import { CaptureTiles } from './capture/CaptureTiles';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
-  'capture-viewer': CaptureTiles,
-  'code-viewer': FileExplorer,
+  'doc-viewer': CaptureTiles,
+  'file-viewer': FileExplorer,
   'wiki-viewer': WikiExplorer,
   'issues-viewer': TicketBoard,
   'agents-viewer': AgentTiles,

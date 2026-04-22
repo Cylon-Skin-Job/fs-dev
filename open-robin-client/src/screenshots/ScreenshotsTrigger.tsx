@@ -1,6 +1,6 @@
 /**
  * @module ScreenshotsTrigger
- * @role Icon button showing screenshots from capture-viewer/content/screenshots
+ * @role Icon button showing screenshots from doc-viewer/content/screenshots
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
@@ -28,7 +28,7 @@ interface ScreenshotItem {
 }
 
 const SCREENSHOTS_PATH = 'screenshots';
-const PANEL = 'capture-viewer';
+const PANEL = 'doc-viewer';
 
 interface ScreenshotsTriggerProps {
   onInsert?: (text: string) => void;
@@ -86,7 +86,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
   }, [screenshots.length, loadScreenshots]);
 
   const getImageUrl = (filename: string) => {
-    return `/api/panel-file/capture-viewer/content/screenshots/${encodeURIComponent(filename)}`;
+    return `/api/panel-file/doc-viewer/content/screenshots/${encodeURIComponent(filename)}`;
   };
 
   const parseScreenshotName = (filename: string): { displayName: string; timestamp: number } => {
@@ -206,7 +206,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
           <HoverIconModalEmpty
             icon="image_not_supported"
             message="No screenshots found"
-            hint="ai/views/capture-viewer/content/screenshots/"
+            hint="ai/views/doc-viewer/content/screenshots/"
           />
         ) : (
           <>

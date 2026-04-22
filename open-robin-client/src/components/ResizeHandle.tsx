@@ -145,7 +145,7 @@ export function RightSecondaryResize({ panel }: { panel: string }) {
   return <div {...props} />;
 }
 
-/** View's right column (e.g. code-viewer file tree). Left-edge handle.
+/** View's right column (e.g. file-viewer file tree). Left-edge handle.
  *  Writes to widths.rightCol, independent of the sticky chat's width so the
  *  file tree returns to its own size when the chat undocks. */
 export function RightColResize({ panel }: { panel: string }) {

@@ -7,7 +7,7 @@ import { FileViewer } from './FileViewer';
 import { RightColResize } from '../ResizeHandle';
 
 export function FileExplorer() {
-  useViewLayoutStyles('code-viewer');
+  useViewLayoutStyles('file-viewer');
 
   const viewMode = useFileStore((s) => s.viewMode);
   const rootNodes = useFileStore((s) => s.rootNodes);
@@ -37,10 +37,10 @@ export function FileExplorer() {
       </div>
 
       {/* Right sidebar: file tree. Left edge has a resize handle that writes
-       * to viewStates[code-viewer].widths.rightSecondary — the same width
+       * to viewStates[file-viewer].widths.rightSecondary — the same width
        * variable the sticky secondary chat uses. Drag either and both resize. */}
       <div className="file-tree-sidebar">
-        <RightColResize panel="code-viewer" />
+        <RightColResize panel="file-viewer" />
         {error && (
           <div className="file-explorer-error">
             <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>error</span>

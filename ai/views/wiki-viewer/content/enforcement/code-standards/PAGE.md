@@ -164,56 +164,56 @@ Before writing code, verify the plan against these standards:
 
 Full audit completed 2026-04-06. 22 specs with dependencies, gotchas, and silent fail risks.
 
-**Spec index:** `ai/views/capture-viewer/content/todo/specs/00-INDEX.md`
+**Spec index:** `ai/views/doc-viewer/content/todo/specs/00-INDEX.md`
 
 ### CSS / Style Layer (target: settings system, not variables.css)
 
 - [ ] **Z-index hierarchy** — 2 active collision bugs, 10 hardcoded values
-  `ai/views/capture-viewer/content/todo/specs/15-css-zindex-standardization.md`
+  `ai/views/doc-viewer/content/todo/specs/15-css-zindex-standardization.md`
 
 - [ ] **Spacing & font variables** — 38 hardcoded values, no scale exists
-  `ai/views/capture-viewer/content/todo/specs/17-css-spacing-standardization.md`
+  `ai/views/doc-viewer/content/todo/specs/17-css-spacing-standardization.md`
 
 - [ ] **Inline styles extraction** — 6+ components, blocked by spacing variables
-  `ai/views/capture-viewer/content/todo/specs/21-inline-styles-extraction.md`
+  `ai/views/doc-viewer/content/todo/specs/21-inline-styles-extraction.md`
 
 - [ ] **.rv- class prefix** — 0/395 classes namespaced, querySelector gotcha
-  `ai/views/capture-viewer/content/todo/specs/18-rv-prefix-migration.md`
+  `ai/views/doc-viewer/content/todo/specs/18-rv-prefix-migration.md`
 
 - [ ] **Delete Vite boilerplate** — 3 dead color rules in App.css
-  `ai/views/capture-viewer/content/todo/specs/16-css-color-standardization.md`
+  `ai/views/doc-viewer/content/todo/specs/16-css-color-standardization.md`
 
 ### Server Module Extraction
 
 - [ ] **ThreadManager split** — session manager + auto-rename (do first, no deps)
-  `ai/views/capture-viewer/content/todo/specs/04-thread-manager-split.md`
+  `ai/views/doc-viewer/content/todo/specs/04-thread-manager-split.md`
 
 - [ ] **ThreadWebSocketHandler split** — CRUD + messages (after ThreadManager)
-  `ai/views/capture-viewer/content/todo/specs/03-thread-ws-handler-split.md`
+  `ai/views/doc-viewer/content/todo/specs/03-thread-ws-handler-split.md`
 
 - [ ] **compat.js split** — legacy/parallel paths may be deletable
-  `ai/views/capture-viewer/content/todo/specs/11-compat-js-split.md`
+  `ai/views/doc-viewer/content/todo/specs/11-compat-js-split.md`
 
 - [ ] **Qwen + Gemini shared extraction** — 95% identical, 5% subtle differences
-  `ai/views/capture-viewer/content/todo/specs/10-qwen-harness-split.md`
-  `ai/views/capture-viewer/content/todo/specs/14-gemini-harness-split.md`
+  `ai/views/doc-viewer/content/todo/specs/10-qwen-harness-split.md`
+  `ai/views/doc-viewer/content/todo/specs/14-gemini-harness-split.md`
 
 - [ ] **server.js decomposition** — 1752-line God file, do LAST
-  `ai/views/capture-viewer/content/todo/specs/01-server-js-decomposition.md`
+  `ai/views/doc-viewer/content/todo/specs/01-server-js-decomposition.md`
 
 ### Client Component Extraction
 
 - [ ] **ws-client.ts split** — turn lifecycle fragile, past bugs documented
-  `ai/views/capture-viewer/content/todo/specs/05-ws-client-split.md`
+  `ai/views/doc-viewer/content/todo/specs/05-ws-client-split.md`
 
 - [ ] **RobinOverlay split** — 4 sub-components, after spacing tokens
-  `ai/views/capture-viewer/content/todo/specs/02-robin-overlay-split.md`
+  `ai/views/doc-viewer/content/todo/specs/02-robin-overlay-split.md`
 
 - [ ] **HoverIconModal split** — hook + UI, module-level state gotcha
-  `ai/views/capture-viewer/content/todo/specs/08-hover-icon-modal-split.md`
+  `ai/views/doc-viewer/content/todo/specs/08-hover-icon-modal-split.md`
 
 - [ ] **VoiceRecorder split** — audio hook + viz, cleanup order matters
-  `ai/views/capture-viewer/content/todo/specs/06-voice-recorder-split.md`
+  `ai/views/doc-viewer/content/todo/specs/06-voice-recorder-split.md`
 
 ### No Action Required
 

@@ -162,7 +162,7 @@
 }
 
 .rv-fp-error {
-  color: #ff6b6b;
+  color: var(--status-error, #ef4444);
 }
 
 /* Footer */
@@ -207,7 +207,7 @@
 .rv-fp-btn-primary {
   background: var(--theme-primary, rgba(255, 255, 255, 0.15));
   border-color: transparent;
-  color: #fff;
+  color: var(--text-white, #fff);
 }
 
 .rv-fp-btn-primary:hover {

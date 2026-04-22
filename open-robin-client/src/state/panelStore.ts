@@ -268,7 +268,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
     set((s) => ({ sharedStylesGeneration: s.sharedStylesGeneration + 1 })),
 
   // Initial state — empty until discovery populates
-  currentPanel: 'code-viewer',
+  currentPanel: 'file-viewer',
   panels: {},
   projectChats: {},  // PER_THREAD_CHAT_STATE: keyed by threadId
   ws: null,

@@ -40,7 +40,7 @@ export function useFileTreeListener() {
           }
         }
 
-        if (msg.type === 'file_content_response' && msg.panel === 'code-viewer') {
+        if (msg.type === 'file_content_response' && msg.panel === 'file-viewer') {
           if (msg.success) {
             useFileStore.getState().applyFileContent(msg.path, msg.content, msg.size);
           } else {
@@ -62,7 +62,7 @@ export function useFileTreeListener() {
   // Load root tree when first connecting or reconnecting.
   // Reset lastWsRef on cleanup so strict-mode remount re-sends the request.
   useEffect(() => {
-    if (!ws || currentPanel !== 'code-viewer') return;
+    if (!ws || currentPanel !== 'file-viewer') return;
     if (ws === lastWsRef.current) return;
     if (ws.readyState !== WebSocket.OPEN) return;
 

@@ -213,7 +213,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
           if (!msg.filePath) return;
           const intent = threadLinkIntent.consume();
           if (intent === 'view') {
-            // View Markdown: switch to code-viewer and open the file tab.
+            // View Markdown: switch to file-viewer and open the file tab.
             // Server returns an absolute path; file_content_request expects
             // a workspace-relative path (it re-joins with the workspace
             // root on the server side). Strip everything up to the "ai/"
@@ -221,7 +221,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
             const aiIdx = msg.filePath.indexOf('ai/');
             const relPath = aiIdx >= 0 ? msg.filePath.slice(aiIdx) : msg.filePath;
             const store = usePanelStore.getState();
-            store.setCurrentPanel('code-viewer');
+            store.setCurrentPanel('file-viewer');
             const name = relPath.split('/').pop() || relPath;
             const { shouldFetch } = useFileStore.getState().openFileTab({
               path: relPath,
@@ -232,7 +232,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
             if (shouldFetch) {
               ws.send(JSON.stringify({
                 type: 'file_content_request',
-                panel: 'code-viewer',
+                panel: 'file-viewer',
                 path: relPath,
               }));
             }

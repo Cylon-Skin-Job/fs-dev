@@ -93,10 +93,10 @@ function getViewThreadManager(viewId, projectRoot) {
  * thread state resets.
  *
  * @param {import('ws').WebSocket} ws
- * @param {string} panelId - Panel identifier (e.g., 'code-viewer', 'agent:bot-name')
+ * @param {string} panelId - Panel identifier (e.g., 'file-viewer', 'agent:bot-name')
  * @param {object} [config]
  * @param {string} [config.projectRoot] - Project root (required for thread storage)
- * @param {string} [config.viewName] - View name for client messages (e.g., 'code-viewer')
+ * @param {string} [config.viewName] - View name for client messages (e.g., 'file-viewer')
  */
 function setPanel(ws, panelId, config = {}) {
   if (!config.projectRoot) {

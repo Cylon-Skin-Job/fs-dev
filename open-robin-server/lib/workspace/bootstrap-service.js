@@ -21,7 +21,7 @@ const FILES = {
   'ai/views/index.json': JSON.stringify(
     {
       views: [
-        { id: 'code-viewer', label: 'Code', icon: 'code', rank: 0 },
+        { id: 'file-viewer', label: 'Code', icon: 'code', rank: 0 },
       ],
     },
     null,

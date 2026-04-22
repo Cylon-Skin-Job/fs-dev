@@ -39,7 +39,7 @@ export function FilePageView({
   const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
 
   useEffect(() => {
-    setActiveResource('capture-viewer', file.path);
+    setActiveResource('doc-viewer', file.path);
   }, [file.path]);
 
   return (
@@ -53,7 +53,7 @@ export function FilePageView({
         <div className="rv-file-page-actions">
           <button
             className="rv-file-page-action"
-            onClick={() => copyResourcePath('capture-viewer', file.path)}
+            onClick={() => copyResourcePath('doc-viewer', file.path)}
             title="Copy file path"
           >
             <span className="material-symbols-outlined">link_2</span>

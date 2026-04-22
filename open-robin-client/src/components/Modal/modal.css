@@ -143,9 +143,9 @@
 
 /* Success state */
 .rv-modal-target.deployed {
-  border-color: #4caf50;
-  background: rgba(76, 175, 80, 0.08);
-  color: #4caf50;
+  border-color: var(--status-ok, #4caf50);
+  background: color-mix(in srgb, transparent 92%, var(--status-ok, #4caf50) 8%);
+  color: var(--status-ok, #4caf50);
 }
 
 /* Alert modal */
@@ -179,7 +179,7 @@
 
 .rv-modal-btn-primary {
   background: var(--theme-primary, #4fc3f7);
-  color: #000;
+  color: var(--bg-solid, #000);
   border-color: transparent;
 }
 

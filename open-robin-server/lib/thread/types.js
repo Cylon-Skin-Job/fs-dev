@@ -2,7 +2,7 @@
  * Thread Management Types
  * 
  * Based on SPEC.md - Thread Management Specification
- * @see ../../../ai/views/capture-viewer/specs/SPEC.md
+ * @see ../../../ai/views/doc-viewer/specs/SPEC.md
  */
 
 /**

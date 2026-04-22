@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "id": "doc-viewer",
+  "folderName": "doc-viewer",
+  "label": "Docs",
+  "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
+  "type": "file-explorer",
+  "icon": "open_run",
+  "rank": 0,
+  "sort": "created",
+  "created": "2026-03-23T12:00:00-07:00",
+  "settings": {
+    "wikiExempt": true,
+    "folders": {
+      "captures": "Raw ideas, observations, and fragments caught during conversation",
+      "specs": "Drafted specifications before they move to a domain or project file",
+      "todo": "Tasks and action items that need to happen but don't have tickets yet",
+      "playground": "HTML mockups, visual designs, and UI experiments",
+      "assets": "Reusable files — icons, fonts, color palettes, shared resources",
+      "screenshots": "Visual references, UI snapshots, design inspiration"
+    }
+  }
+}
