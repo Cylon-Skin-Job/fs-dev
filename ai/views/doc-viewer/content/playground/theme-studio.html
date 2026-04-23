@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Theme Studio — Mockup</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <style>
+    /* ==========================================================================
+       THEME STUDIO — full-page layout.
+       Left: controls. Right: interactive iframe with a mini workspace.
+       Every control updates the iframe's CSS custom properties in real time.
+       ========================================================================== */
+
+    :root {
+      --chrome-bg:     #121212;
+      --chrome-panel:  #1a1a1a;
+      --chrome-border: rgba(255,255,255,0.12);
+      --chrome-text:   #e0e0e0;
+      --chrome-dim:    rgba(255,255,255,0.6);
+      --chrome-subtle: rgba(255,255,255,0.4);
+      --chrome-accent: #00d4ff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--chrome-bg); color: var(--chrome-text); overflow: hidden; }
+
+    /* ==========================================================================
+       LAYOUT
+       ========================================================================== */
+    .studio { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+
+    /* LEFT — controls */
+    .controls { background: var(--chrome-panel); border-right: 1px solid var(--chrome-border); padding: 20px 18px; overflow-y: auto; }
+    .ctrl-header { font-size: 14px; font-weight: 600; color: #fff; margin: 0 0 4px; }
+    .ctrl-subhead { font-size: 11px; color: var(--chrome-dim); margin: 0 0 22px; }
+    .section + .section { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--chrome-border); }
+    .section-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--chrome-dim); margin-bottom: 10px; display: block; }
+
+    /* Mode row */
+    .mode-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .mode-btn {
+      padding: 8px 4px; border-radius: 6px; cursor: pointer; text-align: center;
+      background: var(--chrome-bg); border: 1px solid var(--chrome-border);
+      color: var(--chrome-dim); font-size: 11px;
+      transition: all 120ms;
+    }
+    .mode-btn:hover { color: #fff; border-color: var(--chrome-dim); }
+    .mode-btn.active { color: #fff; border-color: var(--chrome-accent); background: rgba(0, 212, 255, 0.08); }
+
+    /* Accent grid */
+    .accent-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .accent {
+      aspect-ratio: 1; border-radius: 6px; cursor: pointer;
+      border: 2px solid transparent; position: relative;
+      transition: transform 100ms, border-color 100ms;
+    }
+    .accent:hover { transform: scale(1.1); }
+    .accent.active { border-color: #fff; box-shadow: 0 0 0 2px var(--chrome-panel), 0 0 0 3px #fff; }
+
+    .custom-accent { margin-top: 10px; display: flex; gap: 6px; align-items: center; }
+    .custom-accent input[type="color"] { width: 32px; height: 32px; padding: 0; border: 1px solid var(--chrome-border); border-radius: 4px; background: transparent; cursor: pointer; }
+    .custom-accent input[type="text"] {
+      flex: 1; min-width: 0;
+      padding: 6px 8px; background: var(--chrome-bg);
+      border: 1px solid var(--chrome-border); border-radius: 4px;
+      color: var(--chrome-text); font-family: ui-monospace, Menlo, monospace; font-size: 11px; outline: none;
+    }
+    .btn-save-custom {
+      width: 32px; height: 32px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: 1px solid var(--chrome-border); border-radius: 4px;
+      color: var(--chrome-dim); cursor: pointer;
+      transition: color 100ms, border-color 100ms;
+    }
+    .btn-save-custom:hover { color: #fff; border-color: var(--chrome-dim); }
+    .btn-save-custom:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-save-custom .material-symbols-outlined { font-size: 16px; }
+
+    /* Custom-color row — empty slots shown as dashed boxes with a plus. */
+    .accent-grid-custom { margin-top: 8px; }
+    .accent-grid-custom .section-minilabel {
+      grid-column: 1 / -1;
+      font-size: 9px;
+      color: var(--chrome-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .accent-slot { aspect-ratio: 1; border-radius: 6px; cursor: pointer; position: relative; transition: transform 100ms; }
+    .accent-slot:hover { transform: scale(1.1); }
+    .accent-slot.empty {
+      border: 2px dashed rgba(255,255,255,0.15);
+      background: transparent;
+      cursor: pointer;
+    }
+    .accent-slot.empty:hover { border-color: var(--chrome-dim); }
+    .accent-slot.empty::before {
+      content: '+';
+      color: var(--chrome-subtle);
+      font-size: 14px;
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .accent-slot.filled { border: 2px solid transparent; }
+    .accent-slot.filled.active { border-color: #fff; box-shadow: 0 0 0 2px var(--chrome-panel), 0 0 0 3px #fff; }
+    .accent-slot .remove-x {
+      position: absolute; top: -5px; right: -5px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #ff6b6b; color: #fff; font-size: 10px; font-weight: 700; line-height: 1;
+      display: none; align-items: center; justify-content: center;
+      border: 1px solid var(--chrome-panel); cursor: pointer;
+    }
+    .accent-slot.filled:hover .remove-x { display: flex; }
+
+    /* Effect sliders (replaces toggle switches). Same look as luminance/tint. */
+    .effect-row + .effect-row { margin-top: 14px; }
+    .effect-row .effect-title { font-size: 13px; color: var(--chrome-text); margin-bottom: 2px; }
+    .effect-row .effect-hint  { font-size: 10px; color: var(--chrome-subtle); margin-bottom: 8px; }
+
+    /* Slider */
+    .slider-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--chrome-dim); margin-bottom: 6px; }
+    .slider-label .val { font-family: ui-monospace, Menlo, monospace; color: var(--chrome-text); }
+    .slider-track {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 24px; background: transparent; cursor: pointer; outline: none;
+    }
+    .slider-track::-webkit-slider-runnable-track {
+      height: 6px; border-radius: 3px;
+      background: linear-gradient(to right, #000, #888, #fff);
+    }
+    .slider-track::-moz-range-track {
+      height: 6px; border-radius: 3px;
+      background: linear-gradient(to right, #000, #888, #fff);
+    }
+    .slider-track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px; margin-top: -6px; border-radius: 50%;
+      background: #fff; border: 2px solid var(--chrome-accent);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4); cursor: pointer;
+    }
+    .slider-track::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; border: 2px solid var(--chrome-accent);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4); cursor: pointer;
+    }
+    .slider-tint::-webkit-slider-runnable-track { background: linear-gradient(to right, #444, var(--chrome-accent)); }
+    .slider-tint::-moz-range-track { background: linear-gradient(to right, #444, var(--chrome-accent)); }
+
+    /* Toggle */
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 13px; }
+    .toggle-row + .toggle-row { border-top: 1px solid rgba(255,255,255,0.04); }
+    .toggle-row label { flex: 1; cursor: pointer; }
+    .toggle-row .hint { display: block; font-size: 10px; color: var(--chrome-subtle); margin-top: 1px; }
+    .switch {
+      position: relative; width: 34px; height: 18px; background: #333;
+      border-radius: 99px; cursor: pointer; transition: background 120ms;
+    }
+    .switch::after {
+      content: ''; position: absolute; left: 2px; top: 2px;
+      width: 14px; height: 14px; border-radius: 50%; background: #fff;
+      transition: left 140ms;
+    }
+    .switch.on { background: var(--chrome-accent); }
+    .switch.on::after { left: 18px; }
+
+    /* Actions */
+    .actions { display: flex; gap: 6px; margin-top: 24px; }
+    .btn {
+      flex: 1; padding: 8px; border-radius: 4px; border: 1px solid var(--chrome-border);
+      background: transparent; color: var(--chrome-text); font-size: 12px; cursor: pointer;
+    }
+    .btn:hover { background: rgba(255,255,255,0.04); }
+    .btn-primary { background: var(--chrome-accent); color: #000; border-color: transparent; font-weight: 500; }
+    .btn-primary:hover { filter: brightness(1.1); }
+
+    /* RIGHT — iframe preview area */
+    .preview-area { display: flex; flex-direction: column; padding: 20px; min-width: 0; }
+    .preview-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .preview-title { font-size: 13px; color: var(--chrome-text); font-weight: 500; }
+    .preview-title .hint { font-size: 11px; color: var(--chrome-dim); font-weight: 400; margin-left: 8px; }
+
+    .preview-frame-wrap {
+      flex: 1;
+      border: 1px solid var(--chrome-border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    iframe.preview { width: 100%; height: 100%; border: 0; display: block; }
+
+    /* Readout of computed token values (optional, for debugging) */
+    .readout {
+      margin-top: 14px;
+      max-height: 180px;
+      overflow-y: auto;
+      background: #0a0a0a;
+      border: 1px solid var(--chrome-border);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 10px;
+      color: var(--chrome-dim);
+    }
+    .readout .k { color: var(--chrome-subtle); }
+    .readout .v { color: var(--chrome-text); }
+    .readout-hide { display: none; }
+    .readout-toggle { font-size: 11px; color: var(--chrome-dim); background: transparent; border: none; cursor: pointer; padding: 0; margin-top: 8px; }
+    .readout-toggle:hover { color: var(--chrome-text); }
+  </style>
+</head>
+<body>
+  <div class="studio">
+
+    <!-- ================================================================ -->
+    <!-- LEFT: CONTROLS                                                   -->
+    <!-- ================================================================ -->
+    <aside class="controls">
+      <h1 class="ctrl-header">Theme Studio</h1>
+      <p class="ctrl-subhead">Preview updates live — click a panel in the workspace to switch views.</p>
+
+      <!-- Luminance — mode presets pick a starting point, slider fine-tunes -->
+      <div class="section">
+        <span class="section-label">Luminance</span>
+        <div class="mode-row">
+          <button class="mode-btn" data-lum="0"  title="Pure black — no light leak">OLED</button>
+          <button class="mode-btn active" data-lum="10" title="Current app baseline">Dark</button>
+          <button class="mode-btn" data-lum="35" title="Lifted greys, still dark">Medium</button>
+          <button class="mode-btn" data-lum="92" title="Pale backgrounds, dark text">Light</button>
+        </div>
+        <div class="slider-label" style="margin-top: 12px;">
+          <span>OLED</span>
+          <span class="val" id="lumVal">10</span>
+          <span>Light</span>
+        </div>
+        <input type="range" min="0" max="100" value="10" class="slider-track" id="lumSlider">
+      </div>
+
+      <!-- Accent color + chrome tint (one section) -->
+      <div class="section">
+        <span class="section-label">Accent color on chrome</span>
+        <div class="accent-grid" id="accentGrid"></div>
+
+        <div class="accent-grid accent-grid-custom" id="customGrid">
+          <div class="section-minilabel">Custom · click + to save current</div>
+        </div>
+
+        <div class="custom-accent">
+          <input type="color" id="customColor" value="#00d4ff" />
+          <input type="text" id="customHex" value="#00d4ff" />
+          <button class="btn-save-custom" id="saveCustomBtn" title="Save this color to the next empty slot">
+            <span class="material-symbols-outlined">bookmark_add</span>
+          </button>
+        </div>
+
+        <div class="slider-label" style="margin-top: 14px;">
+          <span>No tint</span>
+          <span class="val" id="tintVal">12%</span>
+          <span>Heavy tint</span>
+        </div>
+        <input type="range" min="0" max="30" value="12" class="slider-track slider-tint" id="tintSlider">
+      </div>
+
+      <!-- Card highlights -->
+      <div class="section">
+        <span class="section-label">Card highlights</span>
+        <div class="custom-accent">
+          <input type="color" id="cardsColor" value="#00d4ff" />
+          <input type="text" id="cardsHex" value="#00d4ff" />
+        </div>
+        <div class="slider-label" style="margin-top: 10px;">
+          <span>None</span>
+          <span class="val" id="cardsVal">0%</span>
+          <span>Heavy</span>
+        </div>
+        <input type="range" min="0" max="100" value="0" class="slider-track slider-tint" id="cardsSlider">
+      </div>
+
+      <!-- Border accent -->
+      <div class="section">
+        <span class="section-label">Border accent</span>
+        <div class="custom-accent">
+          <input type="color" id="bordersColor" value="#00d4ff" />
+          <input type="text" id="bordersHex" value="#00d4ff" />
+        </div>
+        <div class="slider-label" style="margin-top: 10px;">
+          <span>Neutral</span>
+          <span class="val" id="bordersVal">0%</span>
+          <span>Accent</span>
+        </div>
+        <input type="range" min="0" max="100" value="0" class="slider-track slider-tint" id="bordersSlider">
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="resetBtn">Reset</button>
+        <button class="btn btn-primary" id="saveBtn">Save theme</button>
+      </div>
+    </aside>
+
+    <!-- ================================================================ -->
+    <!-- RIGHT: PREVIEW (iframe)                                          -->
+    <!-- ================================================================ -->
+    <main class="preview-area">
+      <div class="preview-header">
+        <div class="preview-title">
+          Live workspace preview
+          <span class="hint">· click any view icon in the preview to switch</span>
+        </div>
+        <button class="readout-toggle" id="readoutBtn">Show computed tokens</button>
+      </div>
+
+      <div class="preview-frame-wrap">
+        <iframe class="preview" id="preview"></iframe>
+      </div>
+
+      <div class="readout readout-hide" id="readout"></div>
+    </main>
+  </div>
+
+  <script>
+    // =========================================================================
+    // MINI WORKSPACE — what the iframe renders.
+    //
+    // srcDoc HTML. Its CSS reads :root CSS custom properties; the parent pushes
+    // values via iframe.contentDocument.documentElement.style.setProperty().
+    // =========================================================================
+    const IFRAME_SRC = `<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <style>
+    :root {
+      /* Filled in by parent via setProperty. These are safe defaults. */
+      --bg-solid:              #000;
+      --document-surface-bg:   #0d0d0d;
+      --document-code-bg:      #161616;
+      --panel-chrome-bg:       #1a1a1a;
+      --sidebar-surface-bg:    #161616;
+      --chat-surface-bg:       #1a1a1a;
+      --neutral-chrome-border: rgba(255,255,255,0.12);
+      --text-white:            #fff;
+      --text-primary:          #e0e0e0;
+      --text-dim:              rgba(255,255,255,0.6);
+      --text-subtle:           rgba(255,255,255,0.4);
+
+      --theme-primary:      #00d4ff;
+      --theme-primary-rgb:  0, 212, 255;
+      --theme-border:       rgba(0,212,255,0.38);
+      --ws-primary:         var(--theme-primary);
+      --ws-sidebar-bg:      #0a1a1f;
+      --ws-content-bg:      #0d0d0d;
+      --ws-panel-border:    rgba(0,212,255,0.2);
+
+      /* Effect switches — also pushed by parent */
+      --card-bg:            var(--sidebar-surface-bg);
+      --card-title-color:   var(--text-primary);
+      --card-border:        var(--neutral-chrome-border);
+      --column-border:      var(--neutral-chrome-border);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; height:100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-solid); color: var(--text-primary); overflow: hidden; }
+
+    .app { display: grid; grid-template-rows: 36px 1fr; height: 100%; }
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px;
+      background: var(--document-code-bg);
+      border-bottom: 1px solid var(--neutral-chrome-border);
+    }
+    .header-left { font-size: 10px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+    .header-left .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--theme-primary); }
+    .header-right .material-symbols-outlined { color: var(--text-dim); font-size: 16px; }
+
+    .body { display: grid; grid-template-columns: 40px 140px 200px 1fr; height: 100%; overflow: hidden; }
+
+    .tools { background: var(--document-code-bg); border-right: 1px solid var(--column-border); display: flex; flex-direction: column; padding: 6px 0; gap: 2px; }
+    .tool { height: 36px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); cursor: pointer; position: relative; }
+    .tool:hover { color: var(--theme-primary); background: rgba(var(--theme-primary-rgb), 0.06); }
+    .tool.active { color: var(--theme-primary); }
+    .tool.active::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 16px; background: var(--theme-primary); border-radius: 0 2px 2px 0; }
+    .tool .material-symbols-outlined { font-size: 18px; }
+
+    .sidebar { background: var(--sidebar-surface-bg); border-right: 1px solid var(--column-border); padding: 10px; overflow: hidden; }
+    .sidebar-heading { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--theme-primary); margin-bottom: 8px; }
+    .thread { padding: 4px 6px; border-radius: 4px; font-size: 10px; color: var(--text-dim); cursor: pointer; margin-bottom: 2px; }
+    .thread:hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+    .thread.active { background: rgba(var(--theme-primary-rgb), 0.08); color: var(--text-primary); border-left: 2px solid var(--theme-primary); padding-left: 4px; }
+
+    .chat { background: var(--chat-surface-bg); border-right: 1px solid var(--column-border); display: flex; flex-direction: column; min-width: 0; }
+    .chat-header { padding: 6px 10px; border-bottom: 1px solid var(--neutral-chrome-border); display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-primary); }
+    .chat-header .material-symbols-outlined { color: var(--theme-primary); font-size: 14px; }
+    .chat-messages { flex: 1; background: var(--bg-solid); border-radius: 6px; margin: 6px; padding: 8px; font-size: 10px; line-height: 1.4; color: var(--text-primary); overflow-y: auto; }
+    .chat-bubble { background: rgba(var(--theme-primary-rgb), 0.08); padding: 6px 8px; border-radius: 4px; border-left: 2px solid var(--theme-primary); margin-bottom: 6px; }
+
+    /* Content views */
+    .content { min-width: 0; overflow: auto; }
+    .view { display: none; padding: 14px; height: 100%; box-sizing: border-box; }
+    .view.active { display: block; }
+
+    /* File-viewer content (code-like) */
+    .fv { display: grid; grid-template-columns: 120px 1fr; gap: 10px; height: 100%; }
+    .fv-tree { background: var(--sidebar-surface-bg); border: 1px solid var(--column-border); border-radius: 6px; padding: 8px; font-size: 10px; color: var(--text-dim); }
+    .fv-tree-item { padding: 3px 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .fv-tree-item .material-symbols-outlined { font-size: 12px; }
+    .fv-tree-item.active { color: var(--theme-primary); background: rgba(var(--theme-primary-rgb), 0.08); border-radius: 3px; }
+    .fv-code { background: var(--document-code-bg); border: 1px solid var(--neutral-chrome-border); border-radius: 6px; padding: 10px; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--text-primary); line-height: 1.5; overflow: hidden; }
+    .fv-code .kw { color: #ff79c6; }
+    .fv-code .str { color: #f1fa8c; }
+    .fv-code .cm { color: #6272a4; font-style: italic; }
+
+    /* Doc-viewer content (tiles) */
+    .dv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .dv-tile { background: var(--document-surface-bg); border: 1px solid var(--neutral-chrome-border); border-radius: 6px; aspect-ratio: 4/5; padding: 8px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--text-dim); cursor: pointer; position: relative; font-size: 10px; }
+    .dv-tile:hover { border-color: var(--theme-primary); }
+    .dv-tile-icon { color: var(--ws-primary); font-size: 14px; }
+
+    /* Wiki-viewer content (topic list + card) */
+    .wv { display: grid; grid-template-columns: 120px 1fr; gap: 10px; height: 100%; }
+    .wv-list { background: var(--ws-sidebar-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 8px; font-size: 10px; }
+    .wv-list-header { color: var(--ws-primary); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .wv-topic { padding: 3px 4px; color: var(--text-dim); cursor: pointer; border-radius: 3px; }
+    .wv-topic.active { background: color-mix(in srgb, transparent 88%, var(--ws-primary) 12%); color: var(--ws-primary); }
+    .wv-page { background: var(--ws-content-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; font-size: 10px; color: var(--text-primary); line-height: 1.5; }
+    .wv-page h3 { color: var(--ws-primary); font-size: 12px; margin: 0 0 6px; }
+
+    /* Issues-viewer content (ticket cards) */
+    .iv { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .iv-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 8px; font-size: 10px; cursor: pointer; }
+    .iv-card:hover { border-color: var(--ws-primary); }
+    .iv-card-id { color: var(--ws-primary); font-size: 9px; font-family: ui-monospace, Menlo, monospace; margin-bottom: 3px; }
+    .iv-card-title { color: var(--card-title-color); font-weight: 500; margin-bottom: 4px; }
+    .iv-card-meta { color: var(--text-dim); font-size: 9px; }
+
+    /* Agents-viewer content (agent tiles) */
+    .av { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .av-tile { background: var(--document-surface-bg); border: 1px solid var(--neutral-chrome-border); border-radius: 6px; aspect-ratio: 1; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; font-size: 10px; }
+    .av-tile:hover { border-color: var(--theme-primary); }
+    .av-tile-name { color: var(--text-primary); font-weight: 500; }
+    .av-tile-status { font-size: 8px; color: #4caf50; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="header-left">
+        <span class="dot"></span>
+        <span>Connected</span>
+      </div>
+      <div class="header-right"><span class="material-symbols-outlined">raven</span></div>
+    </div>
+
+    <div class="body">
+      <!-- Tools rail -->
+      <nav class="tools">
+        <div class="tool" data-view="doc"><span class="material-symbols-outlined">description</span></div>
+        <div class="tool active" data-view="file"><span class="material-symbols-outlined">folder</span></div>
+        <div class="tool" data-view="issues"><span class="material-symbols-outlined">business_messages</span></div>
+        <div class="tool" data-view="wiki"><span class="material-symbols-outlined">full_coverage</span></div>
+        <div class="tool" data-view="agents"><span class="material-symbols-outlined">smart_toy</span></div>
+      </nav>
+
+      <aside class="sidebar">
+        <div class="sidebar-heading">Threads</div>
+        <div class="thread active">Theme studio mockup</div>
+        <div class="thread">Token contract</div>
+        <div class="thread">Picker redesign</div>
+      </aside>
+
+      <section class="chat">
+        <div class="chat-header"><span class="material-symbols-outlined">smart_toy</span><span>Claude</span></div>
+        <div class="chat-messages">
+          <div class="chat-bubble">Pick a color from the left — this whole preview updates live.</div>
+          <p style="color: var(--text-dim);">The mini nav in the tools rail switches the right-panel view. Tint slider blends accent into chrome; luminance slider shifts the grey floor.</p>
+        </div>
+      </section>
+
+      <main class="content">
+        <!-- FILE VIEWER -->
+        <div class="view active" data-view="file">
+          <div class="fv">
+            <div class="fv-tree">
+              <div class="fv-tree-item"><span class="material-symbols-outlined">folder</span>src</div>
+              <div class="fv-tree-item active"><span class="material-symbols-outlined">description</span>App.tsx</div>
+              <div class="fv-tree-item"><span class="material-symbols-outlined">description</span>main.tsx</div>
+              <div class="fv-tree-item"><span class="material-symbols-outlined">folder</span>components</div>
+            </div>
+            <pre class="fv-code"><span class="cm">// Theme tokens flow through here</span>
+<span class="kw">import</span> { usePanelStore } <span class="kw">from</span> <span class="str">'./store'</span>;
+<span class="kw">export function</span> App() {
+  <span class="kw">const</span> cfg = usePanelStore();
+  <span class="kw">return</span> &lt;div&gt;{cfg.name}&lt;/div&gt;;
+}</pre>
+          </div>
+        </div>
+
+        <!-- DOC VIEWER -->
+        <div class="view" data-view="doc">
+          <div class="dv">
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>theme-studio.html</span></div>
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>spec-notes.md</span></div>
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>mockup-v2.html</span></div>
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>tokens.md</span></div>
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>slugs.json</span></div>
+            <div class="dv-tile"><span class="material-symbols-outlined dv-tile-icon">description</span><span>TODO</span></div>
+          </div>
+        </div>
+
+        <!-- WIKI VIEWER -->
+        <div class="view" data-view="wiki">
+          <div class="wv">
+            <div class="wv-list">
+              <div class="wv-list-header">Topics</div>
+              <div class="wv-topic active">Theme picker</div>
+              <div class="wv-topic">Token contract</div>
+              <div class="wv-topic">State override</div>
+              <div class="wv-topic">CLI config</div>
+            </div>
+            <div class="wv-page">
+              <h3>Theme Picker</h3>
+              <p>Four luminance modes plus an accent palette. Each slug derives a complete themes.css.</p>
+              <p style="color: var(--text-dim);">Wiki card backgrounds use <code>--ws-sidebar-bg</code>; headers use <code>--ws-primary</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ISSUES VIEWER -->
+        <div class="view" data-view="issues">
+          <div class="iv">
+            <div class="iv-card">
+              <div class="iv-card-id">ISS-041</div>
+              <div class="iv-card-title">Wire theme picker to SQLite</div>
+              <div class="iv-card-meta">Open · high · backend</div>
+            </div>
+            <div class="iv-card">
+              <div class="iv-card-id">ISS-042</div>
+              <div class="iv-card-title">Per-view override cascade</div>
+              <div class="iv-card-meta">Open · medium · frontend</div>
+            </div>
+            <div class="iv-card">
+              <div class="iv-card-id">ISS-043</div>
+              <div class="iv-card-title">Luminance slider perceptual uniformity</div>
+              <div class="iv-card-meta">Backlog · low · design</div>
+            </div>
+            <div class="iv-card">
+              <div class="iv-card-id">ISS-044</div>
+              <div class="iv-card-title">Retire applyPanelTheme</div>
+              <div class="iv-card-meta">Done</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AGENTS VIEWER -->
+        <div class="view" data-view="agents">
+          <div class="av">
+            <div class="av-tile"><span class="av-tile-name">wiki-manager</span><span class="av-tile-status">● idle</span></div>
+            <div class="av-tile"><span class="av-tile-name">code-manager</span><span class="av-tile-status">● idle</span></div>
+            <div class="av-tile"><span class="av-tile-name">ops-manager</span><span class="av-tile-status">● idle</span></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Click a tool in the mini rail → swap content view + active state.
+    document.querySelectorAll('.tool').forEach(el => {
+      el.addEventListener('click', () => {
+        const view = el.dataset.view;
+        document.querySelectorAll('.tool').forEach(x => x.classList.toggle('active', x.dataset.view === view));
+        document.querySelectorAll('.view').forEach(x => x.classList.toggle('active', x.dataset.view === view));
+      });
+    });
+  </script>
+</body>
+</html>`;
+
+    // =========================================================================
+    // STATE
+    // =========================================================================
+    const state = {
+      accent:       '#00d4ff',
+      luminance:    10,
+      tint:         12,   // chrome tint 0-30
+      cards:        0,    // card intensity 0-100
+      cardsColor:   '#00d4ff',
+      borders:      0,    // border intensity 0-100
+      bordersColor: '#00d4ff',
+      customColors: [],
+    };
+    const MAX_CUSTOM = 6;
+    const CUSTOM_KEY = 'theme-studio-custom-colors';
+    try {
+      const saved = JSON.parse(localStorage.getItem(CUSTOM_KEY) || '[]');
+      if (Array.isArray(saved)) state.customColors = saved.slice(0, MAX_CUSTOM);
+    } catch { /* ignore */ }
+
+    // In the real app, this is fetched from ai/views/settings/themes.json.
+    // Here we embed a representative subset from the full 59-theme library.
+    const PRESET_ACCENTS_THEMES = [
+      { id:'oled-black',  label:'OLED Black',  accent:'#e0e0e0', luminance:0,  borders:0,  cards:0 },
+      { id:'tron',        label:'Tron',        accent:'#00e5ff', luminance:0,  borders:85, cards:0 },
+      { id:'stripe',      label:'Stripe',      accent:'#533afd', luminance:6  },
+      { id:'supabase',    label:'Supabase',    accent:'#00c573', luminance:6  },
+      { id:'spotify',     label:'Spotify',     accent:'#1ed760', luminance:6  },
+      { id:'vercel',      label:'Vercel',      accent:'#0072f5', luminance:92 },
+      { id:'linear.app',  label:'Linear',      accent:'#10b981', luminance:6  },
+      { id:'raycast',     label:'Raycast',     accent:'#ff6363', luminance:6  },
+      { id:'warp',        label:'Warp',        accent:'#c8ff00', luminance:6  },
+      { id:'figma',       label:'Figma',       accent:'#f24e1e', luminance:92 },
+      { id:'notion',      label:'Notion',      accent:'#097fe8', luminance:18 },
+      { id:'mistral.ai',  label:'Mistral',     accent:'#ff8a00', luminance:92 },
+      { id:'together.ai', label:'Together',    accent:'#fc4c02', luminance:92 },
+    ];
+    // Flat accent list for the grid (uses luminance preset on click)
+    const PRESET_ACCENTS = PRESET_ACCENTS_THEMES.map(t => t.accent);
+
+    // =========================================================================
+    // LUMINANCE + TINT MATH
+    // =========================================================================
+    function hexToRgb(hex) {
+      const m = hex.match(/^#([0-9a-f]{6})$/i);
+      if (!m) return [0, 0, 0];
+      const n = parseInt(m[1], 16);
+      return [(n>>16)&255, (n>>8)&255, n&255];
+    }
+    function rgbToHex(r, g, b) {
+      const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
+      return '#' + [clamp(r), clamp(g), clamp(b)].map(v => v.toString(16).padStart(2,'0')).join('');
+    }
+    function hslToHex(h, s, l) {
+      s = s / 100; l = l / 100;
+      const a = s * Math.min(l, 1 - l);
+      const f = n => {
+        const k = (n + h / 30) % 12;
+        return l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
+      };
+      return rgbToHex(f(0) * 255, f(8) * 255, f(4) * 255);
+    }
+    function mix(hexA, hexB, ratio) {
+      const [r1,g1,b1] = hexToRgb(hexA);
+      const [r2,g2,b2] = hexToRgb(hexB);
+      return rgbToHex(
+        r1*(1-ratio) + r2*ratio,
+        g1*(1-ratio) + g2*ratio,
+        b1*(1-ratio) + b2*ratio,
+      );
+    }
+
+    /**
+     * Build the full neutral surface palette from a luminance L ∈ [0,100].
+     * Each surface has a fixed +delta above the floor so relative contrast
+     * survives all the way from OLED (L=0) to Light (L=100).
+     */
+    function surfaces(L) {
+      const grey = (l) => hslToHex(0, 0, Math.max(0, Math.min(100, l)));
+      return {
+        '--bg-solid':            grey(L),        // floor
+        '--document-surface-bg': grey(L + 5),
+        '--document-code-bg':    grey(L + 8),
+        '--panel-chrome-bg':     grey(L + 10),
+        '--sidebar-surface-bg':  grey(L + 8),
+        '--chat-surface-bg':     grey(L + 10),
+      };
+    }
+
+    function invertTextFor(L) {
+      // Flip text hierarchy at midpoint.
+      if (L > 50) {
+        return {
+          '--text-white':   '#000000',
+          '--text-primary': '#1a1a1a',
+          '--text-dim':     'rgba(0,0,0,0.6)',
+          '--text-subtle':  'rgba(0,0,0,0.4)',
+        };
+      }
+      return {
+        '--text-white':   '#ffffff',
+        '--text-primary': '#e0e0e0',
+        '--text-dim':     'rgba(255,255,255,0.6)',
+        '--text-subtle':  'rgba(255,255,255,0.4)',
+      };
+    }
+
+    /** Apply accent tint to each neutral surface via mix(). */
+    function tintSurfaces(surfaceMap, accent, tintPct) {
+      if (tintPct <= 0) return surfaceMap;
+      const t = tintPct / 100;
+      const out = {};
+      for (const [k, v] of Object.entries(surfaceMap)) {
+        out[k] = mix(v, accent, t);
+      }
+      return out;
+    }
+
+    // =========================================================================
+    // APPLY → write tokens into the iframe
+    // =========================================================================
+    const iframe = document.getElementById('preview');
+
+    function apply() {
+      const doc = iframe.contentDocument;
+      if (!doc) return;
+      const root = doc.documentElement.style;
+
+      // Neutrals — luminance-based, then tint-blended.
+      const surf = tintSurfaces(surfaces(state.luminance), state.accent, state.tint);
+      for (const [k, v] of Object.entries(surf)) root.setProperty(k, v);
+
+      // Text hierarchy (inverts at midpoint).
+      for (const [k, v] of Object.entries(invertTextFor(state.luminance))) root.setProperty(k, v);
+
+      // Accent family.
+      const [r, g, b] = hexToRgb(state.accent);
+      root.setProperty('--theme-primary',     state.accent);
+      root.setProperty('--theme-primary-rgb', `${r}, ${g}, ${b}`);
+      root.setProperty('--theme-border',      `rgba(${r}, ${g}, ${b}, 0.38)`);
+      root.setProperty('--ws-primary',        state.accent);
+      root.setProperty('--ws-sidebar-bg',     mix(surf['--bg-solid'], state.accent, 0.08));
+      root.setProperty('--ws-content-bg',     mix(surf['--bg-solid'], state.accent, 0.04));
+      root.setProperty('--ws-panel-border',   `rgba(${r}, ${g}, ${b}, 0.20)`);
+
+      // Card highlights — uses its own color, independent of main accent.
+      const [cr, cg, cb] = hexToRgb(state.cardsColor);
+      const cardStrength = state.cards / 100;
+      root.setProperty('--card-bg',
+        mix(surf['--sidebar-surface-bg'], state.cardsColor, cardStrength * 0.10));
+      const textBase = state.luminance > 50 ? '#1a1a1a' : '#e0e0e0';
+      root.setProperty('--card-title-color', mix(textBase, state.cardsColor, cardStrength));
+      root.setProperty('--card-border',
+        `rgba(${cr}, ${cg}, ${cb}, ${(0.12 + cardStrength * 0.08).toFixed(3)})`);
+
+      // Border accent — uses its own color.
+      const [br2, bg2, bb2] = hexToRgb(state.bordersColor);
+      const borderStrength = state.borders / 100;
+      if (borderStrength === 0) {
+        root.setProperty('--column-border', 'rgba(255,255,255,0.12)');
+      } else {
+        root.setProperty('--column-border',
+          `color-mix(in srgb, rgba(255,255,255,0.12) ${100 - state.borders}%, rgba(${br2},${bg2},${bb2},0.38) ${state.borders}%)`);
+      }
+
+      renderReadout(surf, r, g, b);
+    }
+
+    // =========================================================================
+    // CONTROL WIRING
+    // =========================================================================
+
+    // Mode buttons
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const lum = Number(btn.dataset.lum);
+        state.luminance = lum;
+        document.getElementById('lumSlider').value = lum;
+        document.getElementById('lumVal').textContent = lum;
+        apply();
+      });
+    });
+
+    // Luminance slider
+    const lumSlider = document.getElementById('lumSlider');
+    lumSlider.addEventListener('input', () => {
+      state.luminance = Number(lumSlider.value);
+      document.getElementById('lumVal').textContent = state.luminance;
+      // Clear mode-btn active when user drags manually
+      document.querySelectorAll('.mode-btn').forEach(b => {
+        b.classList.toggle('active', Number(b.dataset.lum) === state.luminance);
+      });
+      apply();
+    });
+
+    // Tint slider
+    const tintSlider = document.getElementById('tintSlider');
+    tintSlider.addEventListener('input', () => {
+      state.tint = Number(tintSlider.value);
+      document.getElementById('tintVal').textContent = state.tint + '%';
+      apply();
+    });
+
+    // Accent grid
+    const accentGrid = document.getElementById('accentGrid');
+    PRESET_ACCENTS.forEach((color, idx) => {
+      const theme = PRESET_ACCENTS_THEMES[idx];
+      const el = document.createElement('div');
+      el.className = 'accent' + (color === state.accent ? ' active' : '');
+      el.style.background = color;
+      el.dataset.color = color;
+      el.title = theme ? `${theme.label} · ${color}` : color;
+      el.addEventListener('click', () => {
+        const prev = state.accent;
+        state.accent = color;
+        document.getElementById('customColor').value = color;
+        document.getElementById('customHex').value = color;
+        syncSubColors(prev, color);
+        // Snap luminance + optional borders/cards to theme defaults
+        const theme = PRESET_ACCENTS_THEMES[idx];
+        if (theme) {
+          state.luminance = theme.luminance;
+          document.getElementById('lumSlider').value = theme.luminance;
+          document.getElementById('lumVal').textContent = theme.luminance;
+          document.querySelectorAll('.mode-btn').forEach(b =>
+            b.classList.toggle('active', Number(b.dataset.lum) === theme.luminance));
+          if (theme.borders !== undefined) {
+            state.borders = theme.borders;
+            document.getElementById('bordersSlider').value = theme.borders;
+            document.getElementById('bordersVal').textContent = theme.borders + '%';
+          }
+          if (theme.cards !== undefined) {
+            state.cards = theme.cards;
+            document.getElementById('cardsSlider').value = theme.cards;
+            document.getElementById('cardsVal').textContent = theme.cards + '%';
+          }
+        }
+        el.title = theme ? `${theme.label} · ${color}` : color;
+        setActiveIndicator();
+        updateSaveBtn();
+        apply();
+      });
+      accentGrid.appendChild(el);
+    });
+
+    // Custom accent
+    const customColor = document.getElementById('customColor');
+    const customHex = document.getElementById('customHex');
+    function syncSubColors(oldAccent, newAccent) {
+      // Keep card/border colors in sync with accent unless user has diverged them.
+      if (state.cardsColor === oldAccent) {
+        state.cardsColor = newAccent;
+        document.getElementById('cardsColor').value = newAccent;
+        document.getElementById('cardsHex').value   = newAccent;
+      }
+      if (state.bordersColor === oldAccent) {
+        state.bordersColor = newAccent;
+        document.getElementById('bordersColor').value = newAccent;
+        document.getElementById('bordersHex').value   = newAccent;
+      }
+    }
+
+    customColor.addEventListener('input', e => {
+      const prev = state.accent;
+      state.accent = e.target.value;
+      customHex.value = e.target.value;
+      syncSubColors(prev, e.target.value);
+      setActiveIndicator();
+      updateSaveBtn();
+      apply();
+    });
+    customHex.addEventListener('change', e => {
+      if (/^#[0-9a-f]{6}$/i.test(e.target.value)) {
+        const prev = state.accent;
+        state.accent = e.target.value;
+        customColor.value = e.target.value;
+        syncSubColors(prev, e.target.value);
+        setActiveIndicator();
+        updateSaveBtn();
+        apply();
+      }
+    });
+
+    // Card highlights color picker
+    document.getElementById('cardsColor').addEventListener('input', e => {
+      state.cardsColor = e.target.value;
+      document.getElementById('cardsHex').value = e.target.value;
+      apply();
+    });
+    document.getElementById('cardsHex').addEventListener('change', e => {
+      if (/^#[0-9a-f]{6}$/i.test(e.target.value)) {
+        state.cardsColor = e.target.value;
+        document.getElementById('cardsColor').value = e.target.value;
+        apply();
+      }
+    });
+
+    // Border accent color picker
+    document.getElementById('bordersColor').addEventListener('input', e => {
+      state.bordersColor = e.target.value;
+      document.getElementById('bordersHex').value = e.target.value;
+      apply();
+    });
+    document.getElementById('bordersHex').addEventListener('change', e => {
+      if (/^#[0-9a-f]{6}$/i.test(e.target.value)) {
+        state.bordersColor = e.target.value;
+        document.getElementById('bordersColor').value = e.target.value;
+        apply();
+      }
+    });
+
+    // Effect sliders
+    const cardsSlider = document.getElementById('cardsSlider');
+    cardsSlider.addEventListener('input', () => {
+      state.cards = Number(cardsSlider.value);
+      document.getElementById('cardsVal').textContent = state.cards + '%';
+      apply();
+    });
+    const bordersSlider = document.getElementById('bordersSlider');
+    bordersSlider.addEventListener('input', () => {
+      state.borders = Number(bordersSlider.value);
+      document.getElementById('bordersVal').textContent = state.borders + '%';
+      apply();
+    });
+
+    // Custom color grid — 6 slots, saves persisted via localStorage.
+    const customGrid = document.getElementById('customGrid');
+    const saveCustomBtn = document.getElementById('saveCustomBtn');
+
+    function persistCustom() {
+      try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(state.customColors)); } catch {}
+    }
+    function setActiveIndicator() {
+      // Clear active everywhere, then mark the swatch (preset or custom) that matches.
+      document.querySelectorAll('.accent').forEach(a => a.classList.toggle('active', a.dataset.color === state.accent));
+      document.querySelectorAll('.accent-slot.filled').forEach(s => s.classList.toggle('active', s.dataset.color === state.accent));
+    }
+    function renderCustomGrid() {
+      // Remove old slot nodes but keep the minilabel child.
+      [...customGrid.querySelectorAll('.accent-slot')].forEach(n => n.remove());
+      for (let i = 0; i < MAX_CUSTOM; i++) {
+        const color = state.customColors[i];
+        const slot = document.createElement('div');
+        slot.className = 'accent-slot ' + (color ? 'filled' : 'empty');
+        if (color) {
+          slot.style.background = color;
+          slot.dataset.color = color;
+          slot.title = color;
+          slot.addEventListener('click', () => {
+            state.accent = color;
+            document.getElementById('customColor').value = color;
+            document.getElementById('customHex').value = color;
+            setActiveIndicator();
+            apply();
+          });
+          const x = document.createElement('span');
+          x.className = 'remove-x';
+          x.textContent = '×';
+          x.title = 'Remove';
+          x.addEventListener('click', (e) => {
+            e.stopPropagation();
+            state.customColors.splice(i, 1);
+            persistCustom();
+            renderCustomGrid();
+            setActiveIndicator();
+            updateSaveBtn();
+          });
+          slot.appendChild(x);
+        } else {
+          slot.title = 'Click + to save the current color here';
+          slot.addEventListener('click', () => {
+            if (state.customColors.length >= MAX_CUSTOM) return;
+            // Save the CURRENT accent into the FIRST empty slot (not this one specifically —
+            // keeps the flow "always leftmost" so users don't have to think about slot order).
+            if (!state.customColors.includes(state.accent)) {
+              state.customColors.push(state.accent);
+              persistCustom();
+              renderCustomGrid();
+              setActiveIndicator();
+              updateSaveBtn();
+            }
+          });
+        }
+        customGrid.appendChild(slot);
+      }
+    }
+    function updateSaveBtn() {
+      const full = state.customColors.length >= MAX_CUSTOM;
+      const dup = state.customColors.includes(state.accent);
+      saveCustomBtn.disabled = full || dup;
+      saveCustomBtn.title = full ? 'Custom slots full'
+                           : dup ? 'Already saved'
+                           : 'Save this color to the next empty slot';
+    }
+    saveCustomBtn.addEventListener('click', () => {
+      if (saveCustomBtn.disabled) return;
+      state.customColors.push(state.accent);
+      persistCustom();
+      renderCustomGrid();
+      setActiveIndicator();
+      updateSaveBtn();
+    });
+    renderCustomGrid();
+    updateSaveBtn();
+
+    // Readout panel
+    const readoutBtn = document.getElementById('readoutBtn');
+    const readoutEl = document.getElementById('readout');
+    readoutBtn.addEventListener('click', () => {
+      readoutEl.classList.toggle('readout-hide');
+      readoutBtn.textContent = readoutEl.classList.contains('readout-hide') ? 'Show computed tokens' : 'Hide computed tokens';
+    });
+
+    function renderReadout(surf, r, g, b) {
+      const pairs = [
+        ['--bg-solid', surf['--bg-solid']],
+        ['--document-surface-bg', surf['--document-surface-bg']],
+        ['--document-code-bg', surf['--document-code-bg']],
+        ['--panel-chrome-bg', surf['--panel-chrome-bg']],
+        ['--sidebar-surface-bg', surf['--sidebar-surface-bg']],
+        ['--chat-surface-bg', surf['--chat-surface-bg']],
+        ['--theme-primary', state.accent],
+        ['--theme-primary-rgb', `${r}, ${g}, ${b}`],
+        ['--ws-sidebar-bg', mix(surf['--bg-solid'], state.accent, 0.08)],
+        ['--ws-content-bg', mix(surf['--bg-solid'], state.accent, 0.04)],
+      ];
+      readoutEl.innerHTML = pairs.map(([k,v]) =>
+        `<div><span class="k">${k}</span>: <span class="v">${v}</span></div>`
+      ).join('');
+    }
+
+    // Reset + Save
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state.accent = '#00d4ff';
+      state.luminance = 10;
+      state.tint = 12;
+      state.cards = 0;        state.cardsColor   = '#00d4ff';
+      state.borders = 0;      state.bordersColor = '#00d4ff';
+      document.getElementById('lumSlider').value = 10;
+      document.getElementById('tintSlider').value = 12;
+      document.getElementById('cardsSlider').value = 0;
+      document.getElementById('bordersSlider').value = 0;
+      document.getElementById('lumVal').textContent = '10';
+      document.getElementById('tintVal').textContent = '12%';
+      document.getElementById('cardsVal').textContent = '0%';
+      document.getElementById('bordersVal').textContent = '0%';
+      customColor.value = '#00d4ff';
+      customHex.value = '#00d4ff';
+      document.getElementById('cardsColor').value   = '#00d4ff';
+      document.getElementById('cardsHex').value     = '#00d4ff';
+      document.getElementById('bordersColor').value = '#00d4ff';
+      document.getElementById('bordersHex').value   = '#00d4ff';
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.lum === '10'));
+      setActiveIndicator();
+      updateSaveBtn();
+      apply();
+    });
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      alert(
+        'Would write slug:\n\n' +
+        JSON.stringify({
+          accent:    state.accent,
+          luminance: state.luminance,
+          tint:      state.tint + '%',
+          cards:     state.cards + '%',
+          borders:   state.borders + '%',
+        }, null, 2) +
+        '\n\n→ SQLite upsert + regenerate ai/views/settings/themes.css'
+      );
+    });
+
+    // =========================================================================
+    // BOOT
+    // =========================================================================
+    iframe.srcdoc = IFRAME_SRC;
+    iframe.addEventListener('load', apply);
+  </script>
+</body>
+</html>

@@ -137,29 +137,32 @@ Per-view files may contain ANY subset of the theme-editable tokens (§4). Files 
 
 ## 6. Slug schema
 
-A **theme slug** is the structured data the SQLite row stores. A slug renders deterministically to one `themes.css` file.
+A **theme slug** is one entry in `ai/views/settings/themes.json`. The file is the canonical source of truth — no SQLite, no separate database. A slug renders deterministically to one `themes.css` file.
 
 ```jsonc
 {
-  "id":          "arctic-blue",       // slug — lowercase kebab, unique
-  "label":       "Arctic Blue",       // display name
-  "description": "Cool cyan on deep charcoal",
+  "id":        "arctic-blue",   // slug — lowercase kebab, unique per file
+  "label":     "Arctic Blue",   // display name shown in the picker
+  "accent":    "#00d4ff",       // ONE hex; derivations computed at write time (see below)
+  "luminance": 10,              // 0-100 — floor luminance of the neutral surface stack
 
-  // Accent family — user picks ONE hex; derivations computed at write time.
-  "accent":      "#00d4ff",
+  // Effect defaults — picker applies these when the theme is activated.
+  // Omit for 0 (the common case). Users can drag the sliders away from these.
+  "borders":   0,               // 0-100 — column border accent intensity
+  "cards":     0,               // 0-100 — card surface tint intensity
 
-  // Chrome fills — EITHER derived from accent (default) OR explicit overrides.
-  "sidebarBg":   null,                 // null → derive; hex → use literal
-  "contentBg":   null,
-  "panelBorder": null,
-
-  // Metadata
-  "builtin":     true,                 // shipped with the app, cannot be deleted
-  "active":      false                 // exactly one row has active: true
+  "builtin":   true,            // true = shipped with the app; false = user-created
+  "active":    false            // exactly ONE entry in the file has active: true
 }
 ```
 
-**Derivation at render time** — when the app writes `themes.css` from a slug:
+**Adding a custom theme:** drop a new entry into `themes.json` with `"builtin": false`. It appears in the picker immediately on next server start (or hot-reload per SPEC-30). No migrations, no tooling — a text editor is the interface.
+
+**Sharing a theme:** copy the JSON object, send it to anyone. They paste it into their workspace's `themes.json`. Done.
+
+**Forking a builtin:** copy the entry, change `"id"` to something unique, set `"builtin": false`, edit values. The original is untouched.
+
+**Derivation at render time** — when the server writes `themes.css` from the active slug:
 
 ```css
 :root {
@@ -170,11 +173,14 @@ A **theme slug** is the structured data the SQLite row stores. A slug renders de
   --ws-primary:         var(--theme-primary);
   --ws-primary-rgb:     var(--theme-primary-rgb);
 
-  --ws-sidebar-bg:      <sidebarBg if set, else color-mix 92/8 with accent>;
-  --ws-content-bg:      <contentBg if set, else color-mix 96/4 with accent>;
-  --ws-panel-border:    <panelBorder if set, else rgba(R, G, B, 0.20)>;
+  /* Chrome fills — derived from accent by default */
+  --ws-sidebar-bg:   color-mix(in srgb, <neutral-floor> 92%, <accent> 8%);
+  --ws-content-bg:   color-mix(in srgb, <neutral-floor> 96%, <accent> 4%);
+  --ws-panel-border: rgba(<R>, <G>, <B>, 0.20);
 }
 ```
+
+Where `<neutral-floor>` is the HSL grey at `luminance` on the 0-100 scale (see §4b).
 
 Every slug produces a complete, valid `themes.css` — no partial slugs, no missing tokens.
 
@@ -182,19 +188,26 @@ Every slug produces a complete, valid `themes.css` — no partial slugs, no miss
 
 ## 7. Write flow
 
-The picker's write lands in TWO places:
+The picker's write touches TWO files:
 
-1. **SQLite row** — canonical source of truth. Stores the slug. Survives workspace wipes.
-2. **`ai/views/settings/themes.css`** — generated from the active slug. This is what the CSS cascade actually reads.
+1. **`ai/views/settings/themes.json`** — canonical source of truth. Stores all slugs. The active slug is the one with `"active": true`.
+2. **`ai/views/settings/themes.css`** — derived from the active slug. This is what the CSS cascade reads.
 
-When the user picks a new theme (slug) or edits the active accent:
+When the user activates a theme:
 
-1. Server updates/inserts the slug row.
-2. Server marks it `active: true`; clears any prior `active` row.
-3. Server regenerates `ai/views/settings/themes.css` from the active slug (§6 derivation).
-4. Server emits a WS event so every open client reloads shared styles via `resetSharedStyles()`.
+1. Server sets `"active": true` on the chosen entry; clears `"active"` on all others.
+2. Server regenerates `themes.css` from the now-active slug (§6 derivation).
+3. Server writes both files atomically (tmp + rename).
+4. Server broadcasts WS event → every open client calls `resetSharedStyles()`.
 
-**Invariant:** the file is always derived. Hand-edits to `ai/views/settings/themes.css` survive until the next theme-picker write, then get overwritten. Power users who want permanent customization drop a **per-view** `themes.css` override — that path is never touched by the picker.
+When the user creates or saves a modified theme:
+
+1. Server upserts the entry in `themes.json` (insert if new `id`, update if exists).
+2. If it's the active theme, regenerate `themes.css` and broadcast.
+
+**Invariant:** `themes.css` is always derived from the active slug in `themes.json`. Hand-edits to `themes.css` survive until the next picker write. Power users wanting permanent CSS divergence use per-view overrides (`ai/views/<view>/settings/themes.css`) — the picker never touches those.
+
+**Per-workspace isolation:** `themes.json` lives inside the workspace (`ai/views/settings/`). Different workspaces have different theme catalogs automatically. A workspace can carry its own builtin themes and user themes without any cross-contamination.
 
 ---
 
@@ -234,28 +247,31 @@ A lint pass can check these after implementation (out of scope here).
 
 ---
 
-## 10. Files changed (by this spec → informational, no code touches yet)
+## 10. Files changed
 
-| File | Action |
-|------|--------|
-| `docs/TOKEN_CONTRACT_SPEC.md` | new (this doc) |
-| `ai/views/settings/themes.css` | already in shape; comment header updated to name the contract it satisfies (quick follow-up) |
+| File | Status | Notes |
+|------|--------|-------|
+| `docs/TOKEN_CONTRACT_SPEC.md` | this doc | — |
+| `ai/views/settings/themes.css` | exists | comment header points at this contract |
+| `ai/views/settings/themes.json` | exists | 59 builtin slugs extracted from getdesign CLI; schema matches §6 |
 
-No code changes land from this spec alone. Implementation lands in the picker spec.
+`themes.json` already exists and is the right shape. No migrations, no schema changes — the file IS the database.
 
 ---
 
 ## 11. Rollout
 
-This is a documentation-only commit. No runtime behavior changes.
+**Already landed (as of this revision):**
+- `themes.json` — 59 builtin slugs (minus CLI-tool brands, plus OLED Black + Tron)
+- `themes.css` — workspace theme file, pointing at this contract in its header
+- Studio mockup at `ai/views/doc-viewer/content/playground/theme-studio.html` — live preview of the full picker surface
 
-**When the picker spec lands**, it will consume this contract. The contract is the lock.
+**Next: `THEME_PICKER_SPEC`** — the actual header UI, WS round-trip, and file-write path. This spec is the write target. Suggested sequence:
 
-Suggested sequence:
-1. **(This commit)** Token contract doc + header comment on `themes.css` pointing at it.
-2. **(Next)** `THEME_PICKER_SPEC` — SQLite schema, picker UI in header, WS round-trip for activate/preview, file-regeneration path.
-3. **(Next-next)** Picker implementation.
-4. **(Optional, later)** Lint rule enforcing §9.
+1. `THEME_PICKER_SPEC` — picker UI in header, server handlers (`theme:activate`, `theme:save`, `theme:delete`), `themes.json` read/write, `themes.css` regeneration, WS broadcast.
+2. Picker implementation.
+3. Remove theme section from system/Robin panel (superseded by header picker).
+4. *(Optional, later)* Lint rule enforcing §9.
 
 ---
 
@@ -264,7 +280,7 @@ Suggested sequence:
 1. **Consolidation candidates in `variables.css`.** Five legacy tokens — `--color-primary`, `--color-secondary`, `--border-primary`, `--border-glow`, `--glass-bg` — duplicate the accent family with cyan-literal rgba values. If they still have consumers, they should be rewritten to `rgba(var(--theme-primary-rgb), X)`. If orphaned, delete. Not a blocker for this spec; flag for an extraction pass before the picker lands.
 2. **Chrome-fill derivation percentages.** `color-mix 92/8` and `96/4` are proposals. If the picker's output feels too muted at blend, tune these. Per-theme override possible via the explicit `sidebarBg`/`contentBg`/`panelBorder` slug fields (§6).
 3. **Typography contract.** If we add `--font-body`, `--font-mono`, `--font-ui` per theme later, they join §4c as a second required block and §8 gets an example.
-4. **Syntax-theme slugs.** Tokenized already (variables.css §3a), but not theme-controlled in v1. Could become its own slug category (e.g., `syntax_themes` table), keyed independently so users can pair any workspace theme with any syntax theme.
+4. **Syntax-theme slugs.** Tokenized already (variables.css §3a), but not theme-controlled in v1. Could become its own slug category in a `syntax-themes.json` alongside `themes.json`, following the same file-based paradigm. Users could pair any workspace theme with any syntax theme independently.
 5. **Light themes.** The structural neutrals (§3a) are dark-assumed (`#161616`, etc.). A light theme would need to override those, which the contract forbids. Two paths:
    - (a) A separate "luminance scheme" track (light/dark) layered above themes — swaps the neutral floor.
    - (b) Accept that v1 is dark-only; defer light mode.

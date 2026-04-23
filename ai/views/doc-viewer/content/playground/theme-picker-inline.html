@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Theme Picker — Inline (Robin overlay variant)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <style>
+    /* Same token surface as popover variant (TOKEN_CONTRACT_SPEC §4) */
+    :root {
+      --bg-solid: #000;
+      --document-code-bg: #161616;
+      --panel-chrome-bg: #1a1a1a;
+      --neutral-chrome-border: rgba(255,255,255,0.12);
+      --text-white: #fff;
+      --text-primary: #e0e0e0;
+      --text-secondary: rgba(255,255,255,0.66);
+      --text-dim: rgba(255,255,255,0.6);
+      --text-subtle: rgba(255,255,255,0.4);
+
+      --theme-primary: #00d4ff;
+      --theme-primary-rgb: 0, 212, 255;
+      --theme-border: rgba(0,212,255,0.38);
+      --ws-primary: var(--theme-primary);
+      --ws-sidebar-bg: #0a1a1f;
+      --ws-content-bg: #0d0d0d;
+      --ws-panel-border: rgba(0,212,255,0.2);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--bg-solid); color: var(--text-primary); display: flex; align-items: center; justify-content: center; padding: 40px; }
+
+    /* Overlay sheet — mimics the Robin overlay detail pane */
+    .overlay {
+      width: 760px;
+      max-height: 90vh;
+      background: var(--panel-chrome-bg);
+      border: 1px solid var(--neutral-chrome-border);
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow: hidden;
+    }
+
+    /* LEFT — theme list */
+    .list {
+      background: var(--document-code-bg);
+      border-right: 1px solid var(--neutral-chrome-border);
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .list-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+    .list-add {
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: 1px solid var(--neutral-chrome-border); border-radius: 4px;
+      color: var(--text-dim); cursor: pointer;
+    }
+    .list-add:hover { color: var(--text-white); border-color: var(--text-dim); }
+
+    .theme-row {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      margin: 0 -10px;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+    }
+    .theme-row:hover { background: rgba(255,255,255,0.04); }
+    .theme-row.selected { background: rgba(var(--theme-primary-rgb), 0.1); }
+    .theme-row.selected::before {
+      content: ''; position: absolute; left: -10px; top: 4px; bottom: 4px; width: 2px;
+      background: var(--theme-primary); border-radius: 0 2px 2px 0;
+    }
+    .theme-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--neutral-chrome-border); }
+    .theme-meta { min-width: 0; }
+    .theme-name { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+    .theme-sub { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .theme-active-pill {
+      font-size: 9px; font-weight: 600;
+      padding: 2px 6px; border-radius: 99px;
+      background: var(--theme-primary);
+      color: var(--bg-solid);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    /* RIGHT — detail */
+    .detail {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .detail-swatch-lg {
+      width: 56px; height: 56px; border-radius: 10px;
+      background: var(--theme-primary);
+      box-shadow: 0 4px 16px rgba(var(--theme-primary-rgb), 0.4);
+    }
+    .detail-name { font-size: 18px; color: var(--text-white); font-weight: 600; margin: 0; }
+    .detail-desc { font-size: 12px; color: var(--text-dim); margin: 2px 0 0; }
+
+    .section + .section { margin-top: 18px; }
+    .section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 8px; }
+
+    /* Preview strip — shows tokens applied to mini surfaces */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .preview-card {
+      border: 1px solid var(--ws-panel-border);
+      background: var(--ws-sidebar-bg);
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .preview-card-title { color: var(--ws-primary); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .preview-card-body { font-size: 11px; color: var(--text-secondary); }
+    .preview-row { display: flex; gap: 6px; align-items: center; font-size: 12px; padding: 4px 0; }
+    .preview-row .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--theme-primary); }
+
+    /* Accent input */
+    .hex-row { display: flex; gap: 10px; align-items: center; }
+    .hex-row input[type="color"] {
+      width: 40px; height: 40px; padding: 0; border: 1px solid var(--neutral-chrome-border); border-radius: 6px; background: transparent; cursor: pointer;
+    }
+    .hex-row input[type="text"] {
+      flex: 1; max-width: 180px;
+      padding: 9px 12px;
+      background: var(--document-code-bg);
+      border: 1px solid var(--neutral-chrome-border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      outline: none;
+    }
+    .hex-row input[type="text"]:focus { border-color: var(--theme-primary); }
+
+    /* Actions */
+    .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--neutral-chrome-border); }
+    .btn {
+      padding: 8px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;
+      border: 1px solid var(--neutral-chrome-border); background: transparent; color: var(--text-primary);
+    }
+    .btn:hover { background: rgba(255,255,255,0.05); }
+    .btn-danger { color: #ff6b6b; border-color: rgba(255,107,107,0.3); }
+    .btn-danger:hover { background: rgba(255,107,107,0.08); }
+    .btn-primary { background: var(--theme-primary); color: var(--bg-solid); border-color: transparent; font-weight: 500; }
+    .btn-primary:hover { filter: brightness(1.1); }
+
+    /* Hint */
+    .hint { font-size: 11px; color: var(--text-subtle); margin-top: 12px; line-height: 1.5; }
+    .hint code { background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 3px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; color: var(--text-dim); }
+
+    /* Label-tag */
+    .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 6px; border-radius: 99px; background: rgba(255,255,255,0.06); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+
+    <!-- LEFT: theme list -->
+    <nav class="list">
+      <div class="list-header">
+        <span class="list-title">Themes</span>
+        <button class="list-add" id="addBtn" title="Create new theme"><span class="material-symbols-outlined" style="font-size:16px;">add</span></button>
+      </div>
+      <div id="themeList"></div>
+    </nav>
+
+    <!-- RIGHT: detail -->
+    <section class="detail">
+      <div class="detail-header">
+        <div class="detail-swatch-lg" id="detailSwatch"></div>
+        <div>
+          <h2 class="detail-name" id="detailName">Arctic Blue</h2>
+          <p class="detail-desc" id="detailDesc">Cool cyan on deep charcoal</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Accent</div>
+        <div class="hex-row">
+          <input type="color" id="colorPicker" value="#00d4ff" />
+          <input type="text" id="hexInput" value="#00d4ff" />
+          <span class="tag" id="derivedTag">5 tokens derived</span>
+        </div>
+        <div class="hint">
+          The picker writes one hex; <code>--theme-primary-rgb</code>,
+          <code>--theme-border</code>, <code>--theme-border-glow</code>, and the
+          <code>--ws-primary</code> aliases are derived automatically.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Preview</div>
+        <div class="preview-grid">
+          <div class="preview-card">
+            <div class="preview-card-title">Wiki card</div>
+            <div class="preview-card-body">Topic headers use <code>--ws-primary</code>. Borders use <code>--ws-panel-border</code>.</div>
+          </div>
+          <div class="preview-card">
+            <div class="preview-card-title">Issue card</div>
+            <div class="preview-card-body">
+              <div class="preview-row"><span class="dot"></span> Accent dot on status labels</div>
+              <div class="preview-row" style="color: var(--text-dim);">• Hover states blend accent into background</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Chrome fills (advanced)</div>
+        <div class="hint">
+          Derived from accent by default using <code>color-mix</code>. Override them only if the
+          derived values feel wrong for this accent — most themes won't need to.
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-danger" id="deleteBtn">Delete</button>
+        <div style="flex:1"></div>
+        <button class="btn" id="duplicateBtn">Duplicate</button>
+        <button class="btn btn-primary" id="activateBtn">Activate</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const THEMES = [
+      { id: 'arctic-blue',   name: 'Arctic Blue',   desc: 'Cool cyan on deep charcoal',     accent: '#00d4ff', builtin: true,  active: true  },
+      { id: 'cylon',         name: 'Cylon',         desc: 'Angry red',                      accent: '#ff3131', builtin: true,  active: false },
+      { id: 'jason-surf',    name: 'Jason',         desc: 'Teal board wax',                 accent: '#2e8b8f', builtin: true,  active: false },
+      { id: 'qwen-lavender', name: 'Lavender',      desc: 'Soft purple drift',              accent: '#b19cd9', builtin: true,  active: false },
+      { id: 'codex-royal',   name: 'Royal Blue',    desc: 'Classic, readable',              accent: '#4169e1', builtin: true,  active: false },
+      { id: 'claude-peach',  name: 'Peach',         desc: 'Warm coral on char',             accent: '#d97757', builtin: true,  active: false },
+      { id: 'gemini-gold',   name: 'Gemini Gold',   desc: 'Soft starlight',                 accent: '#f5de9b', builtin: true,  active: false },
+      { id: 'custom-forest', name: 'Forest (custom)', desc: 'User-created',                 accent: '#4d7a4d', builtin: false, active: false },
+    ];
+
+    let selectedId = THEMES.find(t => t.active)?.id ?? THEMES[0].id;
+
+    function hexToRgb(hex) {
+      const m = hex.match(/^#([0-9a-f]{6})$/i);
+      if (!m) return null;
+      const n = parseInt(m[1], 16);
+      return [(n>>16)&255, (n>>8)&255, n&255];
+    }
+
+    function applyLivePreview(accent) {
+      const rgb = hexToRgb(accent); if (!rgb) return;
+      const [r,g,b] = rgb;
+      const root = document.documentElement.style;
+      root.setProperty('--theme-primary', accent);
+      root.setProperty('--theme-primary-rgb', `${r}, ${g}, ${b}`);
+      root.setProperty('--theme-border', `rgba(${r}, ${g}, ${b}, 0.38)`);
+      root.setProperty('--ws-sidebar-bg', `color-mix(in srgb, #0d0d0d 92%, ${accent} 8%)`);
+      root.setProperty('--ws-content-bg', `color-mix(in srgb, #0d0d0d 96%, ${accent} 4%)`);
+      root.setProperty('--ws-panel-border', `rgba(${r}, ${g}, ${b}, 0.20)`);
+    }
+
+    function renderList() {
+      const wrap = document.getElementById('themeList');
+      wrap.innerHTML = '';
+      THEMES.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'theme-row' + (t.id === selectedId ? ' selected' : '');
+        row.innerHTML = `
+          <span class="theme-swatch" style="background:${t.accent};"></span>
+          <div class="theme-meta">
+            <div class="theme-name">${t.name}</div>
+            <div class="theme-sub">${t.desc}</div>
+          </div>
+          ${t.active ? '<span class="theme-active-pill">Active</span>' : (t.builtin ? '' : '<span class="tag">Custom</span>')}
+        `;
+        row.addEventListener('click', () => { selectedId = t.id; renderDetail(); renderList(); });
+        wrap.appendChild(row);
+      });
+    }
+
+    function renderDetail() {
+      const t = THEMES.find(x => x.id === selectedId);
+      if (!t) return;
+      document.getElementById('detailSwatch').style.background = t.accent;
+      document.getElementById('detailName').textContent = t.name;
+      document.getElementById('detailDesc').textContent = t.desc + (t.builtin ? ' · built-in' : ' · custom');
+      document.getElementById('colorPicker').value = t.accent;
+      document.getElementById('hexInput').value = t.accent;
+
+      document.getElementById('deleteBtn').disabled = t.builtin;
+      document.getElementById('deleteBtn').style.opacity = t.builtin ? 0.3 : 1;
+      document.getElementById('deleteBtn').style.cursor = t.builtin ? 'not-allowed' : 'pointer';
+
+      const activateBtn = document.getElementById('activateBtn');
+      activateBtn.textContent = t.active ? 'Currently active' : 'Activate';
+      activateBtn.disabled = t.active;
+      activateBtn.style.opacity = t.active ? 0.5 : 1;
+
+      applyLivePreview(t.accent);
+    }
+
+    document.getElementById('colorPicker').addEventListener('input', (e) => {
+      const t = THEMES.find(x => x.id === selectedId);
+      if (t) t.accent = e.target.value;
+      document.getElementById('hexInput').value = e.target.value;
+      document.getElementById('detailSwatch').style.background = e.target.value;
+      applyLivePreview(e.target.value);
+      renderList();
+    });
+    document.getElementById('hexInput').addEventListener('change', (e) => {
+      if (/^#[0-9a-f]{6}$/i.test(e.target.value)) {
+        const t = THEMES.find(x => x.id === selectedId);
+        if (t) t.accent = e.target.value;
+        document.getElementById('colorPicker').value = e.target.value;
+        document.getElementById('detailSwatch').style.background = e.target.value;
+        applyLivePreview(e.target.value);
+        renderList();
+      }
+    });
+
+    document.getElementById('activateBtn').addEventListener('click', () => {
+      THEMES.forEach(t => t.active = t.id === selectedId);
+      renderList();
+      renderDetail();
+      alert(`Would mark '${selectedId}' active in SQLite and regenerate ai/views/settings/themes.css from the slug.`);
+    });
+
+    document.getElementById('duplicateBtn').addEventListener('click', () => {
+      const src = THEMES.find(x => x.id === selectedId);
+      if (!src) return;
+      const newId = src.id + '-copy-' + (THEMES.length + 1);
+      THEMES.push({ id: newId, name: src.name + ' (copy)', desc: 'Copy of ' + src.name, accent: src.accent, builtin: false, active: false });
+      selectedId = newId;
+      renderList(); renderDetail();
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', () => {
+      const t = THEMES.find(x => x.id === selectedId);
+      if (!t || t.builtin) return;
+      const idx = THEMES.indexOf(t);
+      THEMES.splice(idx, 1);
+      selectedId = THEMES[0].id;
+      renderList(); renderDetail();
+    });
+
+    document.getElementById('addBtn').addEventListener('click', () => {
+      const newId = 'custom-' + Date.now();
+      THEMES.push({ id: newId, name: 'New theme', desc: 'Custom · edit me', accent: '#888888', builtin: false, active: false });
+      selectedId = newId;
+      renderList(); renderDetail();
+    });
+
+    renderList();
+    renderDetail();
+  </script>
+</body>
+</html>
