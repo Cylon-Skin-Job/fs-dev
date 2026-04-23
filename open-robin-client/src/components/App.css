@@ -544,6 +544,12 @@
   margin-bottom: -15px;
 }
 
+/* Scroll sentinel — gives the last user bubble room to scroll to the top
+ * of the viewport. Invisible; only present when a thread is active. */
+.rv-chat-scroll-sentinel {
+  min-height: 80vh;
+}
+
 /* Chat footer layout - icons and button on one row */
 .rv-chat-composer-meta-row {
   display: flex;

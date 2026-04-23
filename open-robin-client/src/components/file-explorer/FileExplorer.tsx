@@ -43,7 +43,7 @@ export function FileExplorer() {
         <RightColResize panel="file-viewer" />
         {error && (
           <div className="file-explorer-error">
-            <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>error</span>
+            <span className="material-symbols-outlined rv-icon-md">error</span>
             <span>{error}</span>
           </div>
         )}

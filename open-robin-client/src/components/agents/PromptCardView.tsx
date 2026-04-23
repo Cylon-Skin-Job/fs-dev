@@ -131,7 +131,7 @@ function renderFullContent(content: string): ReactElement {
         if (line.match(/^evaluate:/i)) {
           return (
             <div key={i} className="rv-wf-evaluate">
-              <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>checklist</span>
+              <span className="material-symbols-outlined rv-icon-sm">checklist</span>
               <span className="rv-wf-evaluate-label">Evaluate:</span>
               <span>{line.replace(/^evaluate:\s*/i, '')}</span>
             </div>

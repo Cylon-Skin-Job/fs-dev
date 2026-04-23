@@ -21,7 +21,7 @@ export function SecondaryDockButton() {
       title={`Restore chat (${secondary.threadId.slice(0, 8)})`}
       aria-label="Restore secondary chat"
     >
-      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+      <span className="material-symbols-outlined rv-icon-filled">
         chat_bubble
       </span>
     </button>

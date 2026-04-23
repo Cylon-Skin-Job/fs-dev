@@ -19,7 +19,7 @@ export function EdgePanel() {
       {edgesIn.length > 0 && (
         <div className="rv-wiki-edge-section">
           <div className="rv-wiki-edge-heading">
-            <span className="material-symbols-outlined" style={{ fontSize: '0.875rem' }}>arrow_back</span>
+            <span className="material-symbols-outlined rv-icon-sm">arrow_back</span>
             <span>Incoming</span>
           </div>
           {edgesIn.map((slug) => (
@@ -36,7 +36,7 @@ export function EdgePanel() {
       {edgesOut.length > 0 && (
         <div className="rv-wiki-edge-section">
           <div className="rv-wiki-edge-heading">
-            <span className="material-symbols-outlined" style={{ fontSize: '0.875rem' }}>arrow_forward</span>
+            <span className="material-symbols-outlined rv-icon-sm">arrow_forward</span>
             <span>Outgoing</span>
           </div>
           {edgesOut.map((slug) => (

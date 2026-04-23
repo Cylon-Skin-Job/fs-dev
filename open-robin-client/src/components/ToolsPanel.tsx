@@ -17,7 +17,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
           onClick={() => onSwitch(config.id)}
           title={config.name}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
+          <span className="material-symbols-outlined rv-icon-xl">
             {config.icon}
           </span>
         </button>

@@ -49,7 +49,7 @@ function AgentCard({ agent }: { agent: Agent }) {
           <span className="rv-agent-tile-bot">{agent.bot_name}</span>
           {agent.schedule && (
             <span title={agent.schedule}>
-              <span className="material-symbols-outlined" style={{ fontSize: '12px' }}>schedule</span>
+              <span className="material-symbols-outlined rv-icon-xs">schedule</span>
               {agent.schedule_label || agent.schedule}
             </span>
           )}
@@ -180,7 +180,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
           <span className="material-symbols-outlined">link_2</span>
         </button>
         <button className="rv-agent-detail-exit" onClick={() => setExpanded(null)}>
-          <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>close</span>
+          <span className="material-symbols-outlined rv-icon-xl">close</span>
         </button>
       </div>
 
@@ -218,7 +218,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
                     onClick={() => setActiveFile(item.name)}
                   >
                     <div className="rv-agent-card-item-icon">
-                      <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>{item.icon}</span>
+                      <span className="material-symbols-outlined rv-icon-md">{item.icon}</span>
                     </div>
                     <div className="rv-agent-card-item-text">
                       <div className="rv-agent-card-item-name">{item.displayName}</div>

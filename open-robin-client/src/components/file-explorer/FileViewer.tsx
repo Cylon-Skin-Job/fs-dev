@@ -125,7 +125,7 @@ function TabRow({
         disabled={tab.loading}
         title="Close tab"
       >
-        <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>
+        <span className="material-symbols-outlined rv-icon-sm">
           close
         </span>
       </button>
@@ -212,7 +212,7 @@ export function FileViewer() {
             disabled={isLoading}
             title="Back to explorer"
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+            <span className="material-symbols-outlined rv-icon-md">
               folder_open
             </span>
           </button>

@@ -99,7 +99,7 @@ export function PageViewer() {
     return (
       <div className="rv-wiki-page-viewer">
         <div className="rv-wiki-page-empty">
-          <span className="material-symbols-outlined" style={{ fontSize: '2rem', opacity: 0.3 }}>full_coverage</span>
+          <span className="material-symbols-outlined">full_coverage</span>
           <p>Select a topic to view</p>
         </div>
       </div>
@@ -168,7 +168,7 @@ export function PageViewer() {
       {/* Content */}
       {error && (
         <div className="rv-wiki-page-error">
-          <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>error</span>
+          <span className="material-symbols-outlined rv-icon-md">error</span>
           <span>{error}</span>
         </div>
       )}

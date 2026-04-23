@@ -117,6 +117,15 @@
 
 .rv-wiki-frozen-icon {
   color: var(--text-dim, #666);
+  font-size: 0.75rem;
+  margin-left: 4px;
+  opacity: 0.5;
+}
+
+/* Large dim icon inside the wiki page-empty placeholder. */
+.rv-wiki-page-empty .material-symbols-outlined {
+  font-size: 2rem;
+  opacity: 0.3;
 }
 
 /* --- Page Viewer (center) --- */

@@ -29,7 +29,7 @@ export function TopicList() {
   return (
     <div className="rv-wiki-topic-list">
       <div className="rv-wiki-topic-list-header">
-        <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>full_coverage</span>
+        <span className="material-symbols-outlined rv-icon-md">full_coverage</span>
         <span>Topics</span>
       </div>
       <div className="rv-wiki-topic-list-items">
@@ -38,7 +38,7 @@ export function TopicList() {
             <div className="rv-wiki-collection-header">
               {collection.label}
               {collection.frozen && (
-                <span className="material-symbols-outlined rv-wiki-frozen-icon" style={{ fontSize: '0.75rem', marginLeft: '4px', opacity: 0.5 }}>lock</span>
+                <span className="material-symbols-outlined rv-wiki-frozen-icon">lock</span>
               )}
             </div>
             {colTopics.map(([id, meta]: [string, TopicMeta]) => {

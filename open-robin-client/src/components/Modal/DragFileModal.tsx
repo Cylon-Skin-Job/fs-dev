@@ -80,7 +80,7 @@ export function DragFileModal({ config, onDismiss }: Props) {
         onDragStart={handleDragStart}
       >
         <div className="rv-modal-source-label">
-          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>description</span>
+          <span className="material-symbols-outlined rv-icon-md">description</span>
           {sourceName}
         </div>
         <div className="rv-modal-source-content">

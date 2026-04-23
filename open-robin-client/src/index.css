@@ -77,6 +77,22 @@ body {
   scrollbar-width: thin;
 }
 
+/* ============================================
+   Icon size utilities
+   Applied alongside .material-symbols-outlined to swap glyph size.
+   The font defaults to 24px (font's own default); these classes override.
+   ============================================ */
+.rv-icon-xs  { font-size: 12px; }
+.rv-icon-sm  { font-size: 14px; }
+.rv-icon-md  { font-size: 16px; }
+.rv-icon-lg  { font-size: 20px; }
+.rv-icon-xl  { font-size: 24px; }
+.rv-icon-2xl { font-size: 32px; }
+
+/* Filled variant — material-symbols is a variable font; FILL axis at 1
+   renders the solid glyph instead of outlined. Use alongside the size class. */
+.rv-icon-filled { font-variation-settings: 'FILL' 1; }
+
 /* ========== File Explorer / file-viewer ========== */
 /* Document/code/markdown: src/styles/document.css (bundled). */
 /* Explorer chrome + tree overrides: workspace CSS via useViewLayoutStyles('file-viewer'). */

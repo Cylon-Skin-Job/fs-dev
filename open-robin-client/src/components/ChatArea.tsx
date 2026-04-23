@@ -430,7 +430,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
 
         {/* Fixed spacer — always present, never changes size.
             Provides scroll room so user bubble can scroll to top of viewport. */}
-        {!noThread && <div style={{ minHeight: '80vh' }} />}
+        {!noThread && <div className="rv-chat-scroll-sentinel" />}
       </div>
 
       <div className={`chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}>
@@ -444,7 +444,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           isTurnActive={isTurnActive}
         />
         <div className="rv-chat-composer-meta-row">
-          <div style={{ display: 'flex', gap: '4px' }}>
+          <div>
             <ClipboardTrigger onInsert={handleInsertText} />
             <ScreenshotsTrigger onInsert={handleInsertText} />
             <RecentFilesTrigger onInsert={handleInsertText} />
@@ -457,7 +457,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
               onClick={handleStop}
               title="Stop generating"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+              <span className="material-symbols-outlined rv-icon-md">
                 stop
               </span>
             </button>
@@ -542,7 +542,7 @@ function SendButtonGroup({ chatInputRef, onSend }: SendButtonGroupProps) {
           title="More options"
           {...triggerProps}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+          <span className="material-symbols-outlined rv-icon-md">
             arrow_drop_down
           </span>
         </button>
