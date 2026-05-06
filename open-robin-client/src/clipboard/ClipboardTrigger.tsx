@@ -1,6 +1,10 @@
 /**
  * @module ClipboardTrigger
- * @role Icon button that triggers the clipboard popover
+ * @role Icon button that triggers the clipboard popover.
+ *
+ * Click on a row → fetch value via clipboard:use → call onInsert(value) so
+ * the chat input receives the text. Secret-typed rows render their stored
+ * fingerprint as the preview. Per-row trash-can deletes via clipboard:delete.
  */
 
 import { useEffect, useState, useRef } from 'react';
@@ -16,7 +20,7 @@ import {
   HoverIconModalEmpty,
 } from '../components/hover-icon-modal';
 import { useClipboardStore } from './clipboard-store';
-import { listPage } from './clipboard-api';
+import { listPage, useEntry, deleteEntry } from './clipboard-api';
 import type { ClipboardEntry } from './types';
 
 interface ClipboardTriggerProps {
@@ -39,8 +43,8 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
   const loadItems = async () => {
     try {
       useClipboardStore.getState().setLoading(true);
-      const { items: newItems } = await listPage(0, 50);
-      useClipboardStore.getState().setItems(newItems, newItems.length);
+      const { items: newItems, total } = await listPage(0, 50);
+      useClipboardStore.getState().setItems(newItems, total);
     } catch (err) {
       console.error('[Clipboard] Failed to load items:', err);
       useClipboardStore.getState().setError('Failed to load clipboard history');
@@ -62,8 +66,21 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
     id: 'clipboard',
   });
 
-  // Reverse items so newest is at bottom
+  // Reverse items so newest is at bottom.
   const displayItems = [...items].reverse();
+
+  const handleSelect = async (entry: ClipboardEntry) => {
+    if (!onInsert) {
+      console.warn('[Clipboard] onInsert handler not wired; entry click ignored');
+      return;
+    }
+    try {
+      const value = await useEntry(entry.id);
+      onInsert(value);
+    } catch (err) {
+      console.error('[Clipboard] useEntry failed:', err);
+    }
+  };
 
   const {
     selectedIndex,
@@ -72,10 +89,27 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
   } = useListNavigation<ClipboardEntry>({
     items: displayItems,
     isOpen,
-    onSelect: (entry) => onInsert?.(entry.text),
+    onSelect: handleSelect,
     onClose: close,
     selectFromBottom: true,
   });
+
+  const handleDelete = async (e: React.MouseEvent, entry: ClipboardEntry) => {
+    e.stopPropagation();
+    try {
+      await deleteEntry(entry.id);
+      // The server broadcasts clipboard:state on success and the store
+      // syncs from there; the optimistic local removal here keeps the row
+      // from briefly persisting if the broadcast lag is perceptible.
+      const { items: cur, total } = useClipboardStore.getState();
+      useClipboardStore.getState().setItems(
+        cur.filter((i) => i.id !== entry.id),
+        Math.max(0, total - 1),
+      );
+    } catch (err) {
+      console.error('[Clipboard] deleteEntry failed:', err);
+    }
+  };
 
   useEffect(() => {
     if (isOpen && triggerRef.current) {
@@ -84,7 +118,6 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
         left: rect.left,
         bottom: window.innerHeight - rect.top + 12,
       });
-      // Scroll to bottom to show newest
       setTimeout(() => {
         if (listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
@@ -125,10 +158,26 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
                 onMouseEnter={() => handleItemHover(index)}
                 isSelected={index === selectedIndex}
               >
+                {entry.type === 'secret' && (
+                  <span
+                    className="material-symbols-outlined clipboard-row-icon"
+                    aria-label="secret"
+                  >
+                    lock
+                  </span>
+                )}
                 <HoverIconModalContent
                   primary={entry.preview}
                   secondary={formatDate(entry.last_used_at)}
                 />
+                <button
+                  type="button"
+                  className="clipboard-row-delete"
+                  title="Remove this entry"
+                  onClick={(e) => handleDelete(e, entry)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </HoverIconModalRow>
             ))}
           </HoverIconModalList>

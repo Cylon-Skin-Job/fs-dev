@@ -1,70 +1,89 @@
 /**
  * @module clipboard/clipboard-api
  * @role Public API for clipboard operations — uses ws-client for transport
+ *
+ * Post-keychain-redesign: list/append/touch/state broadcasts carry metadata
+ * only. The full value is fetched per-click via `clipboard:use`, which is
+ * also the hook for the under-chat icon → click → insert into chat input
+ * flow. The value is sent only to the requesting socket; broadcasts and
+ * server-live.log never see it.
  */
 
 import { sendRobinMessage, onRobinMessage } from '../lib/ws-client';
 import { showToast } from '../lib/toast';
+import { useClipboardStore } from './clipboard-store';
 import type {
   ClipboardEntry,
   ClipboardListResponse,
   ClipboardAppendResponse,
+  ClipboardUseResponse,
   ClipboardTouchResponse,
+  ClipboardDeleteResponse,
   ClipboardClearResponse,
+  ClipboardStateBroadcast,
 } from './types';
 
-// Clipboard monitoring state
-let lastClipboardText = '';
-let monitorInterval: ReturnType<typeof setInterval> | null = null;
-const MONITOR_INTERVAL_MS = 1000; // Check every second
+// ── State broadcast subscription ─────────────────────────────
+
+let stateUnsubscribe: (() => void) | null = null;
 
 /**
- * Start monitoring the system clipboard for new content.
- * Requires clipboard read permission.
+ * Subscribe the clipboard store to server-side `clipboard:state` broadcasts.
+ * Call once at app start. Idempotent.
  */
+export function subscribeClipboardBroadcasts(): void {
+  if (stateUnsubscribe) return;
+  stateUnsubscribe = onRobinMessage('clipboard:state', (msg: ClipboardStateBroadcast) => {
+    if (Array.isArray(msg.items)) {
+      useClipboardStore.getState().setItems(msg.items, msg.total ?? msg.items.length);
+    }
+  });
+}
+
+export function unsubscribeClipboardBroadcasts(): void {
+  if (stateUnsubscribe) {
+    stateUnsubscribe();
+    stateUnsubscribe = null;
+  }
+}
+
+// ── System clipboard monitor ─────────────────────────────────
+
+let lastClipboardText = '';
+let monitorInterval: ReturnType<typeof setInterval> | null = null;
+const MONITOR_INTERVAL_MS = 1000;
+
 export function startClipboardMonitor(): void {
-  if (monitorInterval) return; // Already running
-  
-  // Check if we have clipboard read permission
+  if (monitorInterval) return;
+
   if (!navigator.clipboard || !navigator.clipboard.readText) {
     console.log('[Clipboard] Clipboard reading not supported');
     return;
   }
-  
+
   monitorInterval = setInterval(async () => {
     try {
       const text = await navigator.clipboard.readText();
-      
-      // Only record if text changed and not empty
+
+      // Server-side hash dedup handles repeats; we only suppress the
+      // immediately-prior value to avoid round-tripping the same string
+      // every second.
       if (text && text !== lastClipboardText) {
         lastClipboardText = text;
-        
-        // Check if this text is already in our history (avoid duplicates)
-        const { items } = await listPage(0, 10);
-        const exists = items.some(item => item.text === text);
-        
-        if (!exists) {
-          // Silently record without showing toast for auto-captured items
-          sendRobinMessage({ 
-            type: 'clipboard:append', 
-            text, 
-            itemType: 'text', 
-            source: 'auto' 
-          });
-        }
+        sendRobinMessage({
+          type: 'clipboard:append',
+          text,
+          source: 'auto',
+        });
       }
-    } catch (err) {
-      // Permission denied or other error - silently ignore
-      // This is expected if user hasn't granted clipboard permission
+    } catch {
+      // Permission denied / no focus — silently ignore.
     }
   }, MONITOR_INTERVAL_MS);
-  
+
   console.log('[Clipboard] Monitor started');
 }
 
-/**
- * Stop monitoring the clipboard.
- */
 export function stopClipboardMonitor(): void {
   if (monitorInterval) {
     clearInterval(monitorInterval);
@@ -73,49 +92,11 @@ export function stopClipboardMonitor(): void {
   }
 }
 
-/**
- * Write text to system clipboard and record in history.
- */
-export async function writeAndRecord(text: string, itemType: string = 'text'): Promise<ClipboardEntry | null> {
-  try {
-    // Write to system clipboard
-    await navigator.clipboard.writeText(text);
+// ── WS request helpers ───────────────────────────────────────
 
-    // Send to server
-    return new Promise((resolve, reject) => {
-      const unsubscribe = onRobinMessage('clipboard:append', (msg: ClipboardAppendResponse) => {
-        unsubscribe();
-        if (msg.error) {
-          reject(new Error(msg.error));
-        } else if (msg.item) {
-          showToast('Copied to clipboard');
-          resolve(msg.item);
-        } else {
-          reject(new Error('Unknown error'));
-        }
-      });
-
-      sendRobinMessage({ type: 'clipboard:append', text, itemType, source: 'user' });
-
-      // Timeout after 5 seconds
-      setTimeout(() => {
-        unsubscribe();
-        reject(new Error('Timeout waiting for clipboard:append'));
-      }, 5000);
-    });
-  } catch (err) {
-    console.error('[Clipboard] writeAndRecord error:', err);
-    showToast('Failed to copy to clipboard');
-    return null;
-  }
-}
-
-/**
- * List clipboard items with pagination.
- */
-export async function listPage(offset: number = 0, limit: number = 50): Promise<ClipboardListResponse> {
+function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 5000): Promise<T> {
   return new Promise((resolve, reject) => {
-    const unsubscribe = onRobinMessage('clipboard:list', (msg: ClipboardListResponse & { error?: string }) => {
+    const unsubscribe = onRobinMessage(type, (msg: T & { error?: string }) => {
       unsubscribe();
       if (msg.error) {
         reject(new Error(msg.error));
@@ -123,70 +104,69 @@ export async function listPage(offset: number = 0, limit: number = 50): Promise<
         resolve(msg);
       }
     });
-
-    sendRobinMessage({ type: 'clipboard:list', offset, limit });
-
+    sendRobinMessage({ type, ...payload });
     setTimeout(() => {
       unsubscribe();
-      reject(new Error('Timeout waiting for clipboard:list'));
-    }, 5000);
+      reject(new Error(`Timeout waiting for ${type}`));
+    }, timeoutMs);
   });
 }
 
-/**
- * Touch an entry (update last_used_at, move to front).
- */
+// ── Public surface ───────────────────────────────────────────
+
+export async function appendEntry(text: string, source = 'user'): Promise<ClipboardEntry | null> {
+  const msg = await request<ClipboardAppendResponse>('clipboard:append', { text, source });
+  return msg.item ?? null;
+}
+
+export async function listPage(offset = 0, limit = 50): Promise<ClipboardListResponse> {
+  return request<ClipboardListResponse>('clipboard:list', { offset, limit });
+}
+
+export async function useEntry(id: number): Promise<string> {
+  const msg = await request<ClipboardUseResponse>('clipboard:use', { id });
+  return msg.value;
+}
+
 export async function touchEntry(id: number): Promise<ClipboardEntry | null> {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onRobinMessage('clipboard:touch', (msg: ClipboardTouchResponse) => {
-      unsubscribe();
-      if (msg.error) {
-        reject(new Error(msg.error));
-      } else {
-        resolve(msg.item || null);
-      }
-    });
-
-    sendRobinMessage({ type: 'clipboard:touch', id });
-
-    setTimeout(() => {
-      unsubscribe();
-      reject(new Error('Timeout waiting for clipboard:touch'));
-    }, 5000);
-  });
+  const msg = await request<ClipboardTouchResponse>('clipboard:touch', { id });
+  return msg.item ?? null;
 }
 
-/**
- * Clear all clipboard history.
- */
+export async function deleteEntry(id: number): Promise<boolean> {
+  const msg = await request<ClipboardDeleteResponse>('clipboard:delete', { id });
+  return msg.removed;
+}
+
 export async function clearHistory(): Promise<number> {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onRobinMessage('clipboard:clear', (msg: ClipboardClearResponse) => {
-      unsubscribe();
-      if (msg.error) {
-        reject(new Error(msg.error));
-      } else {
-        showToast('Clipboard history cleared');
-        resolve(msg.deleted);
-      }
-    });
-
-    sendRobinMessage({ type: 'clipboard:clear' });
-
-    setTimeout(() => {
-      unsubscribe();
-      reject(new Error('Timeout waiting for clipboard:clear'));
-    }, 5000);
-  });
+  const msg = await request<ClipboardClearResponse>('clipboard:clear', {});
+  showToast('Clipboard history cleared');
+  return msg.deleted;
 }
 
 /**
- * Copy an entry to system clipboard and touch it.
+ * Write text to the system clipboard and record it in history. The clipboard
+ * monitor will see it on the next tick anyway, but this gives the caller a
+ * direct write + immediate confirmation.
+ */
+export async function writeAndRecord(text: string, source = 'user'): Promise<ClipboardEntry | null> {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    console.error('[Clipboard] writeAndRecord — system clipboard write failed:', err);
+  }
+  return appendEntry(text, source);
+}
+
+/**
+ * Fetch the value for an entry and write it to the system clipboard. Used
+ * for system-clipboard paste-back paths (distinct from the chat-input
+ * insertion path, which calls `useEntry` directly).
  */
 export async function copyFromHistory(entry: ClipboardEntry): Promise<boolean> {
   try {
-    await navigator.clipboard.writeText(entry.text);
-    await touchEntry(entry.id);
+    const value = await useEntry(entry.id);
+    await navigator.clipboard.writeText(value);
     showToast('Copied to clipboard');
     return true;
   } catch (err) {

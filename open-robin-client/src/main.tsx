@@ -5,10 +5,12 @@ import './styles/document.css';
 import 'material-symbols/outlined.css';
 import App from './components/App';
 import { startClipboardMonitor } from './clipboard';
+import { subscribeClipboardBroadcasts } from './clipboard/clipboard-api';
 
 // Start monitoring clipboard for new content
 // This requires clipboard read permission which the user may need to grant
 startClipboardMonitor();
+subscribeClipboardBroadcasts();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

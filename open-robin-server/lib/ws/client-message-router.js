@@ -35,6 +35,7 @@ const views = require('../views');
 const { moveFileWithArchive } = require('../file-ops');
 const { emit } = require('../event-bus');
 const { resolveViewState, writeViewStatePatch } = require('../view-state');
+const { redactWsMessage } = require('./redaction-map');
 
 /**
  * Create a per-connection client message router.
@@ -77,10 +78,12 @@ function createClientMessageRouter({
 
   async function handleClientMessage(message) {
     const text = message.toString();
-    console.log('[WS →]:', text.slice(0, 200));
-
     try {
       const clientMsg = JSON.parse(text);
+      // Redact credential-bearing fields before logging the payload.
+      // See lib/ws/redaction-map.js + CLIPBOARD_KEYCHAIN_REDESIGN.md §3i.
+      const safe = redactWsMessage(clientMsg);
+      console.log('[WS →]:', JSON.stringify(safe).slice(0, 200));
       console.log('[WS] Message type:', clientMsg.type, 'Conn:', session.connectionId.slice(0,8), 'Has wire:', !!session.wire, 'Wire pid:', session.wire?.pid || 'none');
 
       // Thread Management Messages

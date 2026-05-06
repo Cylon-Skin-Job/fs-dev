@@ -6,7 +6,18 @@
 export { ClipboardTrigger } from './ClipboardTrigger';
 export { ClipboardPopover } from './ClipboardPopover';
 export { useClipboardStore } from './clipboard-store';
-export { writeAndRecord, listPage, touchEntry, clearHistory, copyFromHistory, startClipboardMonitor, stopClipboardMonitor } from './clipboard-api';
+export {
+  appendEntry,
+  listPage,
+  useEntry,
+  touchEntry,
+  deleteEntry,
+  clearHistory,
+  copyFromHistory,
+  writeAndRecord,
+  startClipboardMonitor,
+  stopClipboardMonitor,
+} from './clipboard-api';
 export {
   getClipboardController,
   attachClipboardController,
