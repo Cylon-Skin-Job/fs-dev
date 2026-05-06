@@ -12,7 +12,7 @@
 }
 
 .rv-modal-shell {
-  background: var(--modal-bg, #1a1a1a);
+  background: var(--modal-bg, var(--sidebar-surface-bg, #161616));
   border: 1px solid var(--modal-border, #333);
   border-radius: var(--space-sm, 8px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);

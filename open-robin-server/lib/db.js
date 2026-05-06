@@ -8,6 +8,12 @@ const knex = require('knex');
 const path = require('path');
 const fs = require('fs');
 
+// Resolved at module-load time so consumers (e.g. lib/startup.js) can read
+// the canonical DB path before initDb() runs. Single source of truth.
+// See docs/DB_RELOCATION_SPEC.md §3a.
+const DATA_DIR = path.join(__dirname, '..', 'data');
+const DB_PATH = path.join(DATA_DIR, 'robin.db');
+
 let instance = null;
 
 /**
@@ -17,12 +23,11 @@ let instance = null;
 async function initDb() {
   if (instance) return instance;
 
-  const dataDir = path.join(__dirname, '..', 'data');
-  fs.mkdirSync(dataDir, { recursive: true });
+  fs.mkdirSync(DATA_DIR, { recursive: true });
 
   instance = knex({
     client: 'better-sqlite3',
-    connection: { filename: path.join(dataDir, 'robin.db') },
+    connection: { filename: DB_PATH },
     useNullAsDefault: true,
     pool: {
       afterCreate: (conn, done) => {
@@ -58,4 +63,4 @@ async function closeDb() {
   }
 }
 
-module.exports = { initDb, getDb, closeDb };
+module.exports = { initDb, getDb, closeDb, DB_PATH };

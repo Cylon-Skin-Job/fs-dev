@@ -1,11 +1,18 @@
 {
   "version": "1.0",
-  "last_updated": "2026-04-22T05:31:20.700Z",
+  "last_updated": "2026-05-04T19:25:36.883Z",
   "collections": [
     {
       "id": "project",
       "label": "Project",
       "rank": 1,
+      "sort": "ranked",
+      "frozen": false
+    },
+    {
+      "id": "system-tools",
+      "label": "System Tools",
+      "rank": 30,
       "sort": "ranked",
       "frozen": false
     },
@@ -415,8 +422,41 @@
       ],
       "sources": []
     },
+    "system-tools/custom-theme-css": {
+      "slug": "Custom Theme CSS",
+      "collection": "system-tools",
+      "collectionLabel": "System Tools",
+      "collectionRank": 30,
+      "rank": 10,
+      "frozen": false,
+      "edges_out": [],
+      "edges_in": [],
+      "sources": []
+    },
+    "system-tools/secrets-manager": {
+      "slug": "Secrets Manager",
+      "collection": "system-tools",
+      "collectionLabel": "System Tools",
+      "collectionRank": 30,
+      "rank": 20,
+      "frozen": false,
+      "edges_out": [],
+      "edges_in": [],
+      "sources": []
+    },
     "enforcement/code-standards": {
       "slug": "Code Standards",
+      "collection": "enforcement",
+      "collectionLabel": "Enforcement",
+      "collectionRank": 50,
+      "rank": 10,
+      "frozen": false,
+      "edges_out": [],
+      "edges_in": [],
+      "sources": []
+    },
+    "enforcement/themes-and-state": {
+      "slug": "Themes-And-State",
       "collection": "enforcement",
       "collectionLabel": "Enforcement",
       "collectionRank": 50,

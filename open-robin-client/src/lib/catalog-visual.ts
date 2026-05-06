@@ -97,12 +97,14 @@ export interface SegmentDefinition {
 /** Default visual style applied to all segments */
 const DEFAULT_VISUAL_STYLE: SegmentVisualStyle = {
   icon: '',
-  iconColor: 'var(--theme-primary)',
+  /* Tool icons and text are chrome-accented so they stand out as actionable
+   * UI within the chat stream. */
+  iconColor: 'var(--chrome-accent, var(--text-dim))',
   iconSize: 16,
-  labelColor: 'var(--text-dim)',
+  labelColor: 'var(--chrome-accent, var(--text-dim))',
   labelStyle: 'normal',
   contentTypography: 'body',
-  contentColor: 'var(--text-dim)',
+  contentColor: 'var(--chrome-accent, var(--text-dim))',
 };
 
 /** Default behavior applied to all segments */

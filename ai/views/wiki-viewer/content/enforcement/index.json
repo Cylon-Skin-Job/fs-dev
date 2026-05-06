@@ -8,9 +8,12 @@
   "icon": "shield",
   "color": null,
   "created": "2026-04-06T00:00:00Z",
-  "updated": "2026-04-06T00:00:00Z",
+  "updated": "2026-04-26T22:51:03.047Z",
   "frozen": false,
-  "children": ["code-standards"],
+  "children": [
+    "code-standards",
+    "themes-and-state"
+  ],
   "edges_out": null,
   "edges_in": null,
   "sources": null,

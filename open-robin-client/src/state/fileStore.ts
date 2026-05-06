@@ -28,7 +28,6 @@ interface FileState {
   /** Move active tab by delta (-1 = previous in strip, +1 = next). Wraps at ends. */
   activateAdjacentTab: (delta: -1 | 1) => void;
   closeTab: (path: string) => void;
-  closeActiveTab: () => void;
 
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -187,12 +186,6 @@ export const useFileStore = create<FileState>((set, get) => ({
       error: null,
     };
   }),
-
-  closeActiveTab: () => {
-    const { activeTabPath } = get();
-    if (!activeTabPath) return;
-    get().closeTab(activeTabPath);
-  },
 
   setLoading: (loading) => set({ isLoading: loading }),
   setError: (error) => set({ error }),

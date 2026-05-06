@@ -7,11 +7,13 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
+import { useSecretsStore } from '../state/secretsStore';
 import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
+import { handleThemeMessage } from './ws/theme-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
@@ -130,6 +132,7 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleFileMessage(msg)) return;
   if (handleWorkspaceMessage(msg)) return;
   if (handleHarnessMessage(msg)) return;
+  if (handleThemeMessage(msg)) return;
 
   // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {
@@ -182,7 +185,6 @@ function handleMessage(msg: WebSocketMessage) {
     case 'robin:tabs':
     case 'robin:items':
     case 'robin:wiki':
-    case 'robin:theme-data':
       emitRobin(msg.type, msg);
       break;
 
@@ -193,6 +195,21 @@ function handleMessage(msg: WebSocketMessage) {
     case 'clipboard:clear':
       emitRobin(msg.type, msg);
       break;
+
+    case 'secrets:api-keys:state': {
+      const m = msg as any;
+      useSecretsStore.getState().setApiKeys(m.items);
+      break;
+    }
+
+    case 'secrets:api-keys:error': {
+      const m = msg as any;
+      useSecretsStore.getState().setApiKeysError({
+        code: m.code ?? 'UNKNOWN',
+        message: m.message ?? '',
+      });
+      break;
+    }
 
     default:
       break;

@@ -29,13 +29,14 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       console.log('[WS] thread:list received:', msg.threads?.length, 'threads scope=', scope);
       if (msg.threads) {
         store.setThreads(scope, msg.threads);
-        // Auto-open MRU thread if none is active for this scope
+        // Auto-open the MRU (top) thread when none is active. Fills the chat
+        // on refresh even when the threads sidebar is hidden.
         const hasActive = store.currentThreadIds[scope];
         if (!hasActive && msg.threads.length > 0) {
           const mru = msg.threads[0];
           const ws = store.ws;
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            console.log('[WS] Auto-opening MRU thread:', mru.threadId?.slice(0, 8), 'scope=', scope);
+          if (ws && ws.readyState === WebSocket.OPEN && mru.threadId) {
+            console.log('[WS] Auto-opening MRU thread:', mru.threadId.slice(0, 8), 'scope=', scope);
             ws.send(JSON.stringify({
               type: 'thread:open-assistant',
               scope,

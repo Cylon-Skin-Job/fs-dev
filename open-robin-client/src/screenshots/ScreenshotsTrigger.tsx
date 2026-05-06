@@ -18,6 +18,7 @@ import {
   HoverIconModalPreview,
 } from '../components/hover-icon-modal';
 import type { FileTreeNode } from '../types/file-explorer';
+import { getPanelFileUrl } from '../lib/panels';
 
 interface ScreenshotItem {
   name: string;
@@ -86,7 +87,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
   }, [screenshots.length, loadScreenshots]);
 
   const getImageUrl = (filename: string) => {
-    return `/api/panel-file/doc-viewer/content/screenshots/${encodeURIComponent(filename)}`;
+    return getPanelFileUrl(PANEL, `${SCREENSHOTS_PATH}/${filename}`);
   };
 
   const parseScreenshotName = (filename: string): { displayName: string; timestamp: number } => {

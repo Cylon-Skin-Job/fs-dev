@@ -1,0 +1,120 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Doc-viewer chrome — color/background/border layer for FilePageView
+   ═══════════════════════════════════════════════════════════════════════════
+   Lifted out of ai/views/doc-viewer/settings/layout.css per the
+   themes-and-state spec ("per-view files are layout-only"). Every value here
+   resolves to a theme variable; nothing is hardcoded.
+
+   Selectors mirror the per-view layout file — this layer applies color
+   where the layout file applies structure.
+
+   Scope: FilePageView (the document detail view inside Capture). Tile/grid
+   color rules still live in the layout file; they can migrate here in a
+   future pass if/when the doc-viewer accumulates more chrome surfaces.
+*/
+
+/* ── Outer surface (header rail + around-document margin share this) ── */
+.rv-file-page-view {
+  background: var(--sidebar-surface-bg, #161616);
+}
+
+/* ── Top bar: hairline beneath the header row ── */
+.rv-file-page-topbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Back button (chevron / arrow_back glyph) ──
+   Glyph driven by the picker's "Accent settings" sliders via --chrome-accent.
+   Transparent — no button surface, just the icon. */
+.rv-file-page-back {
+  background: transparent;
+  color: var(--chrome-accent, var(--text-primary, #e0e0e0));
+}
+
+.rv-file-page-back:hover {
+  background: transparent;
+}
+
+/* ── Filename label ──
+   Driven by the picker's "Accent settings" sliders via --chrome-accent. */
+.rv-file-page-filename {
+  color: var(--chrome-accent, var(--text-secondary, #aaa));
+}
+
+/* ── Action buttons (link copy, markdown/code switch) ──
+   Driven by the picker's "Chrome settings" sliders via --accent-dim. Hover
+   escalates to --chrome-accent (Accent) so the active state pops. Scoped to
+   FilePageView so the wiki's link button keeps its own theming. */
+.rv-file-page-view .rv-file-page-action {
+  color: var(--accent-dim, var(--text-secondary));
+}
+
+.rv-file-page-view .rv-file-page-action:hover {
+  color: var(--chrome-accent, var(--text-primary));
+}
+
+/* ── Document treatment: gray page floats on the chrome rail ── */
+.rv-file-page-content.rv-file-page-document .rv-code-editor {
+  background: var(--document-bg, #161616);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Plain text fallback ── */
+.rv-file-page-text {
+  color: var(--text-primary, #e0e0e0);
+}
+
+/* ── Bottom ribbon strip ──
+   Uses the same glass scheme as the popup chat (.rv-secondary-popup):
+   diagonal white-alpha gradient, blurred + saturated backdrop, thin top
+   highlight + faint border. */
+.rv-file-page-ribbon {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Markdown render mode — wiki paradigm
+   ───────────────────────────────────────────────────────────────────────────
+   When Capture's switch flips a .md file into rendered view, the prose
+   surface gets the same heuristics the wiki uses:
+     - headings + h1 underline → --content-emphasized / --content-highlight
+     - inline code chip + in-content borders → --content-highlight
+     - links → --content-link
+   All driven by the Content sliders, just like the wiki.
+   Scoped under .rv-file-page-view so non-FilePageView markdown surfaces
+   (file-explorer, doc-viewer plain prose, etc.) keep the global defaults. */
+
+.rv-file-page-view .rv-wiki-page-content h1,
+.rv-file-page-view .rv-wiki-page-content h2,
+.rv-file-page-view .rv-wiki-page-content h3 {
+  color: var(--content-emphasized, #c0a0e0);
+}
+
+.rv-file-page-view .rv-wiki-page-content h1 {
+  border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+}
+
+.rv-file-page-view .rv-wiki-page-content pre {
+  border: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+}
+
+.rv-file-page-view .rv-wiki-page-content th,
+.rv-file-page-view .rv-wiki-page-content td {
+  border-color: var(--content-highlight, rgba(192, 160, 224, 0.16));
+}
+
+.rv-file-page-view .rv-wiki-page-content code {
+  background: var(--content-highlight, rgba(192, 160, 224, 0.16));
+}
+
+.rv-file-page-view .rv-wiki-page-content a {
+  color: var(--content-link, #c97cf6);
+}

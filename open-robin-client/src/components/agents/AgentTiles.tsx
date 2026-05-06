@@ -14,7 +14,7 @@ import { usePanelStore } from '../../state/panelStore';
 import { useAgentStore, AGENT_CONFIG_FILES, type Agent } from '../../state/agentStore';
 import { PromptCardView } from './PromptCardView';
 import { copyResourcePath } from '../../lib/resource-path';
-import './agents.css';
+
 
 /** Strip YAML frontmatter, return just the markdown body */
 function stripFrontmatter(content: string): string {
@@ -32,7 +32,6 @@ function AgentCard({ agent }: { agent: Agent }) {
   return (
     <div
       className="rv-agent-tile"
-      style={{ '--tile-color': agent.color } as React.CSSProperties}
       onClick={() => setExpanded(agent.id)}
     >
       <div className="rv-agent-tile-top">
@@ -166,7 +165,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
   const isWorkflow = activeFile ? workflows.includes(activeFile) : false;
 
   return (
-    <div className="rv-agent-detail-fullscreen" style={{ '--tile-color': agent.color } as React.CSSProperties}>
+    <div className="rv-agent-detail-fullscreen">
       {/* Header: bot name + exit */}
       <div className="rv-agent-detail-header">
         <span className="material-symbols-outlined rv-agent-detail-header-icon">{agent.icon}</span>

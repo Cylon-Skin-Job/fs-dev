@@ -33,9 +33,10 @@ const HARDCODED_DEFAULTS = Object.freeze({
   secondaryThreadId: null,
   // TINTS_SPEC §3: per-surface tint toggles. All default false (neutral).
   tints: {
-    leftPanel:  false,
-    rightPanel: false,
-    cards:      false,
+    leftPanel:     false,
+    rightPanel:    false,
+    cards:         false,
+    contentPanels: false,
     borders: {
       threads: false,
       chat:    false,
@@ -44,7 +45,7 @@ const HARDCODED_DEFAULTS = Object.freeze({
 });
 
 function workspacePath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'views', 'settings', 'state.json');
+  return path.join(projectRoot, 'ai', 'settings', 'state.json');
 }
 
 function viewOverridePath(projectRoot, viewId) {

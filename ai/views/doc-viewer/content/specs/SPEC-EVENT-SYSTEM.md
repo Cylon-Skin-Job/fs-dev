@@ -599,6 +599,40 @@ on('*', (event) => {
 
 Not every event needs logging. Filter by domain — log `agent:*`, `ticket:*`, `chat:turn_end`, file changes. Skip high-frequency noise like `chat:content` (individual token streams).
 
+### ⚠️ Pending integration — what's spec'd here but not yet wired
+
+As of 2026-05-03, the persistent event log is spec'd but not implemented. Current state:
+
+- ✅ `lib/event-bus.js` exists and is used in production.
+- ✅ `lib/audit/audit-subscriber.js` persists chat exchanges (subset of the ledger vision).
+- ❌ The general-purpose `on('*', appendToEventLog)` listener does **not** exist. Events fire in-memory and are not persisted to `ai/system/event-log.json`.
+- ❌ Nightly rotation of `event-log.json` is not implemented.
+- ❌ Run ledger files (`runs/{Workflow Name}/ledger.json`) — see "Run Ledger System" section — are not implemented.
+
+**Consumers waiting on this listener:**
+
+| Feature | Spec | Events emitted |
+|---------|------|----------------|
+| Secrets Manager | `docs/SECRETS_MANAGER_SPEC.md` §7g | `secret:added`, `secret:updated`, `secret:deleted` (with `kind` field) |
+| Ticket dispatch | this spec, §"Integration Points" | `ticket:created`, `ticket:dispatched`, `ticket:closed` |
+| Agent runner | this spec, §"Integration Points" | `agent:run_started`, `agent:run_completed`, `agent:run_failed` |
+| Session manager | this spec, §"Integration Points" | `system:session_created`, `system:session_evicted`, `system:project_switched`, `system:workspace_switched` |
+| Trigger lifecycle | this spec, §"Integration Points" | `trigger:registered`, `trigger:unregistered`, `trigger:fired` |
+
+Each of these will start emitting (or already emits) on the bus. Until the persistent listener lands, consumers can subscribe to events in-process but cannot replay history. The Secrets Manager explicitly relies on this future capture for credential mutation history (see SECRETS_MANAGER_SPEC §7h).
+
+**Implementation order when this is picked up:**
+
+1. **Decide storage shape and path.** This spec's "System Event Log" section originally proposed `ai/system/event-log.json` (append-only JSON). Two updates needed:
+   - **`ai/system/` is gone** per `docs/DB_RELOCATION_SPEC.md`. The replacement path is server-owned (`open-robin-server/data/event-log.json`) or — per the project rule "SQLite is system, files are work product" — a SQLite table `event_log` in `robin.db` alongside `secrets_index`, `clipboard`, etc. SQLite is probably the right answer: it gives indexed query, FIFO trimming via `DELETE WHERE id NOT IN (SELECT id ORDER BY ts DESC LIMIT N)`, and atomic writes for free. Revisit at implementation.
+   - **Path exposure.** Whichever it is, scripts that diff the log (e.g., the nightly audit) need to find it. Same env-var pattern the Secrets Manager uses (`ROBIN_DB`) extends naturally — the same DB holds the `event_log` table.
+2. Build the `appendToEventLog(event)` writer with atomic append (rename pattern for JSON, transactional INSERT for SQLite).
+3. Register the wildcard listener: `on('*', appendToEventLog)`.
+4. Add domain filtering to skip high-frequency noise (`chat:content` token streams).
+5. Build the rotation/trim mechanism (nightly archive for JSON; FIFO `DELETE` for SQLite).
+6. Decide retention: spec elsewhere mentioned 100k–500k FIFO entries; confirm and implement the cap.
+7. Confirm all consumers in the table above are actually emitting (some may still be at "spec'd, not built" — audit before declaring the log complete).
+
 ### How Agents Use It
 
 Agents never read the event log directly. **Triggers + scripts do the diffing.** The agent just sees a clean list of what's new.

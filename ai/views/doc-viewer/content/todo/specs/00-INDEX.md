@@ -42,6 +42,12 @@
 | [SPEC-12](12-emoji-trigger-split.md) | LOW — optional data extraction | Minimal |
 | [SPEC-19](19-chat-harness-picker-fetch.md) | LOW — remove redundant fetch | Minimal |
 
+### Architecture Corrections
+| Spec | Priority | Risk |
+|------|----------|------|
+| [SPEC-27](27-tints-to-theme-system.md) | **HIGH** — tints are styles, not state | MEDIUM — touches state, themes, CSS across all views |
+| [SPEC-28](28-universal-sidebar-collapse.md) | **MEDIUM** — collapse/resize UI missing in non-chat views | LOW-MEDIUM — touches wiki, file explorer, agents layouts |
+
 ### Do Not Implement (deprioritized or no-split)
 | Spec | Reason |
 |------|--------|

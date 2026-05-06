@@ -5,8 +5,6 @@
  * Seeds: default dark theme, 7 stub workspaces, customization tab + wiki page
  */
 
-const { generateThemeCss } = require('../../robin/theme-css');
-
 exports.up = async function (knex) {
   // --- New tables ---
 
@@ -39,7 +37,49 @@ exports.up = async function (knex) {
 
   // --- Seed: system_theme ---
 
-  const defaultCss = generateThemeCss('dark', '#4fc3f7', '79, 195, 247');
+  const defaultCss = `:root {
+  /* Accent color */
+  --color-primary: #4fc3f7;
+  --color-primary-rgb: 79, 195, 247;
+  --color-primary-ghost: rgba(79, 195, 247, 0.05);
+  --color-primary-fill: rgba(79, 195, 247, 0.08);
+  --color-primary-dim: rgba(79, 195, 247, 0.12);
+  --color-primary-border: rgba(79, 195, 247, 0.25);
+
+  /* Background scale */
+  --bg-void: #0a0a0a;
+  --bg-inset: #0d0d0d;
+  --bg-base: #111111;
+  --bg-card: #161616;
+  --bg-hover: #1c1c1c;
+
+  /* Borders */
+  --border-subtle: #1e1e1e;
+  --border-default: #282828;
+
+  /* Text */
+  --text-primary: #e0e0e0;
+  --text-secondary: #aaaaaa;
+  --text-dim: #666666;
+
+  /* Scrollbar */
+  --scrollbar-thumb: #282828;
+  --scrollbar-thumb-hover: rgba(79, 195, 247, 0.33);
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+  /* Transitions */
+  --transition-fast: 150ms;
+
+  /* Status */
+  --status-on: #4caf50;
+  --status-off: #666666;
+  --status-error: #f44336;
+  --status-warn: #ff9800;
+}
+`;
 
   await knex('system_theme').insert({
     id: 'default',

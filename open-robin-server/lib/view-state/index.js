@@ -1,7 +1,7 @@
 /**
  * View-state — STATE_OVERRIDE_SPEC.
  *
- * Workspace default:  ai/views/settings/state.json
+ * Workspace default:  ai/settings/state.json
  * Per-view override:  ai/views/<view>/settings/state.json (user-created only)
  *
  * Resolver deep-merges workspace ← override. Writer routes each leaf key

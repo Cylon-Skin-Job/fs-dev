@@ -100,10 +100,10 @@
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, 
-    var(--text-dim) 0%, 
-    var(--theme-primary) 50%, 
-    var(--text-dim) 100%
+  background: linear-gradient(90deg,
+    var(--icon-dim, var(--text-dim)) 0%,
+    var(--chrome-accent, var(--theme-primary)) 50%,
+    var(--icon-dim, var(--text-dim)) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;

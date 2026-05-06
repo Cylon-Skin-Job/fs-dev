@@ -71,7 +71,9 @@ export function useFolderFiles(panel: string, folder: string): {
       }
     }
 
-    files.sort((a, b) => a.name.localeCompare(b.name));
+    // Newest first — screenshots and other date-prefixed filenames sort by
+    // filename in reverse so the most recent appear at the left of the row.
+    files.sort((a, b) => b.name.localeCompare(a.name));
 
     return { files, loading: !allLoaded };
   }, [nodes, contents, panel]);

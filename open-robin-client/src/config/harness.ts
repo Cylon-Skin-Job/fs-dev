@@ -171,12 +171,12 @@ export function resolveCliAccent(
  * read `var(--cli-accent, fallback)`.
  */
 export function cliAccentStyle(
-  harnessId: string | null | undefined,
-  overrides: Record<string, string> = {},
+  _harnessId: string | null | undefined,
+  _overrides: Record<string, string> = {},
 ): CSSProperties | undefined {
-  const color = resolveCliAccent(harnessId, overrides);
-  if (!color) return undefined;
-  return { ['--cli-accent' as string]: color } as CSSProperties;
+  // Per-CLI accent disabled — IDE icons/titles unify on the chosen theme accent.
+  // Function preserved so existing call sites keep working.
+  return undefined;
 }
 
 // CLI_CONFIG_SPEC §8b: build a factory-shaped ResolvedCliEntry from a

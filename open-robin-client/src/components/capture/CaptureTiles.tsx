@@ -10,11 +10,11 @@
  */
 
 import { useState, useCallback } from 'react';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { TileRow } from '../tile-row/TileRow';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { FilePageView } from './FilePageView';
-import '../tile-row/tile-row.css';
-import './capture.css';
+
 
 const ROWS = [
   { label: 'Captures', folder: 'captures' },
@@ -32,6 +32,7 @@ interface SelectedFile {
 }
 
 export function CaptureTiles() {
+  useViewLayoutStyles('doc-viewer');
   const [selected, setSelected] = useState<SelectedFile | null>(null);
 
   const handleFileSelect = useCallback((folder: string) => {
@@ -65,10 +66,6 @@ export function CaptureTiles() {
   // Grid view
   return (
     <div className="rv-tile-grid">
-      <div className="rv-tile-grid-title">
-        <span className="material-symbols-outlined">open_run</span>
-        Capture
-      </div>
       {ROWS.map((row) => (
         <TileRow
           key={row.folder}

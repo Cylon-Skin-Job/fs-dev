@@ -119,7 +119,12 @@ app.get('/api/panel-file/:panel/{*filePath}', (req, res) => {
   const filePath = Array.isArray(rawPath) ? rawPath.join('/') : rawPath;
   const root = getProjectRoot();
   if (!root) return res.status(503).send('No active workspace');
-  const dirPath = path.join(root, 'ai', 'views', panel, path.dirname(filePath));
+  // Resolve via the same view resolver the file-tree WS handler uses, so
+  // tiled-rows views (doc-viewer / agents-viewer) correctly point at
+  // ai/views/{panel}/content/ instead of the bare ai/views/{panel}/.
+  const panelPath = getPanelPath(panel);
+  const baseDir = panelPath || path.join(root, 'ai', 'views', panel);
+  const dirPath = path.join(baseDir, path.dirname(filePath));
   const fileName = path.basename(filePath);
 
   try {
@@ -169,6 +174,45 @@ app.get('/api/harnesses/:id/status', async (req, res) => {
     }
     res.json(status);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+const layoutService = require('./lib/theme/layout-service');
+
+app.get('/api/view-config', async (req, res) => {
+  try {
+    const projectRoot = getProjectRoot();
+    const viewName = req.query.panel;
+    if (!viewName) {
+      return res.status(400).json({ error: 'Missing panel query param' });
+    }
+    if (!projectRoot) {
+      return res.status(503).json({ error: 'No active workspace' });
+    }
+
+    let globalCss = '';
+    try {
+      const globalCssPath = path.join(projectRoot, 'ai', 'settings', 'themes.css');
+      globalCss = await fsPromises.readFile(globalCssPath, 'utf8');
+    } catch {
+      globalCss = '';
+    }
+
+    let viewCss = '';
+    try {
+      const viewCssPath = path.join(projectRoot, 'ai', 'views', viewName, 'settings', 'themes.css');
+      viewCss = await fsPromises.readFile(viewCssPath, 'utf8');
+    } catch {
+      viewCss = '';
+    }
+
+    const viewStateService = require('./lib/view-state');
+    const layout = await viewStateService.resolveViewState(projectRoot, viewName);
+
+    res.json({ globalCss, viewCss, layout });
+  } catch (err) {
+    console.error('[ViewConfig] Error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -237,6 +281,13 @@ function getPanelPath(panel, ws) {
   if (panel === '__panels__') {
     const viewsRoot = views.getViewsRoot(projectRoot);
     if (fs.existsSync(viewsRoot)) return viewsRoot;
+    return null;
+  }
+
+  // __settings__ pseudo-panel: resolves to ai/settings/ (for global theme/settings)
+  if (panel === '__settings__') {
+    const settingsRoot = path.join(projectRoot, 'ai', 'settings');
+    if (fs.existsSync(settingsRoot)) return settingsRoot;
     return null;
   }
 
@@ -371,6 +422,8 @@ wss.on('connection', async (ws) => {
     getProjectRoot,
     getRobinHandlers: () => robinHandlers,
     getClipboardHandlers: () => clipboardHandlers,
+    getThemeHandlers: () => themeHandlers,
+    getSecretsHandlers: () => secretsHandlers,
   });
 
   ws.on('message', handleClientMessage);
@@ -394,12 +447,24 @@ wss.on('connection', async (ws) => {
     const { resolveCliConfig } = require('./lib/cli-config');
     const activeRoot = getProjectRoot();
     const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
+    let themes = [];
+    let activeThemeId = null;
+    if (activeRoot) {
+      try {
+        const themesService = require('./lib/theme/themes-service');
+        themes = await themesService.list(activeRoot);
+        const active = themes.find(t => t.active);
+        activeThemeId = active ? active.id : null;
+      } catch (_) {}
+    }
     ws.send(JSON.stringify({
       type: 'workspace:init',
       workspaces,
       activeWorkspaceId,
       homePath: require('os').homedir(),
       cliConfig,
+      themes,
+      activeThemeId,
     }));
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);
@@ -426,6 +491,8 @@ wss.on('connection', async (ws) => {
 // createClientMessageRouter. See SPEC-01b for the mutable-reference rationale.
 let robinHandlers = {};
 let clipboardHandlers = {};
+let themeHandlers = {};
+let secretsHandlers = {};
 
 startServer({
   server,
@@ -435,6 +502,8 @@ startServer({
   .then(result => {
     robinHandlers = result.robinHandlers;
     clipboardHandlers = result.clipboardHandlers;
+    themeHandlers = result.themeHandlers;
+    secretsHandlers = result.secretsHandlers;
   })
   .catch(err => {
     console.error('[Server] Startup failed:', err);

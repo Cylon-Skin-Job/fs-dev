@@ -81,7 +81,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
       loadChildren();
     }
     // Intentionally exclude 'ws' from deps - use wsRef to avoid re-triggering
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [isExpanded, hasChildrenLoaded, node.path, node.hasChildren]);
 
   // Icon logic per spec

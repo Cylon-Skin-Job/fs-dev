@@ -10,6 +10,7 @@
  */
 
 import { CodeView } from '../CodeView';
+import { getPanelFileUrl } from '../../lib/panels';
 
 interface DocumentTileProps {
   name: string;
@@ -57,7 +58,7 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
       <div className="rv-doc-tile-preview">
         {isImage ? (
           <img
-            src={`/api/panel-file/${panel}/${folderPath}/${encodeURIComponent(name)}`}
+            src={getPanelFileUrl(panel ?? '', `${folderPath ?? ''}/${name}`)}
             alt={name}
             loading="lazy"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}

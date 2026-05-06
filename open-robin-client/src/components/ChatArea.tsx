@@ -269,10 +269,12 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     setIsSending(false);
   };
 
-  const sectionClass = `chat-area chat-area--${scope}${isActive ? ' chat-area--active' : ' chat-area--inactive'}`;
-  const inputPlaceholder = !isActive && !noThread
-    ? 'Click a thread in this sidebar to activate'
-    : undefined;
+  const sectionClass = `chat-area chat-area--${scope}${isActive ? ' chat-area--active' : ' chat-area--inactive'}${noThread ? ' chat-area--no-thread' : ''}`;
+  const inputPlaceholder = noThread
+    ? ''
+    : !isActive
+      ? 'Click a thread in this sidebar to activate'
+      : undefined;
 
   // SPEC-26c-2: collapsed rail variant
   if (collapsed) {
@@ -413,7 +415,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           <ConnectingOverlay harnessName={connectingHarness?.name} />
         ) : messages.length === 0 && !currentTurn && !showOrb ? (
           <div className="message message-system">
-            {noThread ? 'No thread — use New Thread to pick a CLI' : 'Start a conversation'}
+            {noThread ? 'No thread selected' : 'Start a conversation'}
           </div>
         ) : (
           <MessageList

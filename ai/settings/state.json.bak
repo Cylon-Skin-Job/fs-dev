@@ -1,0 +1,32 @@
+{
+  "widths": {
+    "leftSidebar": 239.7578125,
+    "leftChat": 386.02734375,
+    "rightSecondary": 425.51171875,
+    "rightCol": 243.89453125
+  },
+  "collapsed": {
+    "leftSidebar": false,
+    "leftChat": false
+  },
+  "popup": {
+    "open": false,
+    "x": 1096,
+    "y": 283,
+    "width": 511,
+    "height": 700,
+    "threadId": null
+  },
+  "currentThreadId": "2026-04-19T18-54-25-495",
+  "secondaryThreadId": null,
+  "tints": {
+    "leftPanel": false,
+    "rightPanel": false,
+    "cards": false,
+    "borders": {
+      "threads": false,
+      "chat": true
+    },
+    "contentPanels": false
+  }
+}

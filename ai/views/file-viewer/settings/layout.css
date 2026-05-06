@@ -1,19 +1,19 @@
 /*
- * file-viewer panel layout + chrome (file explorer + viewer).
- * ai/views/file-viewer/settings/styles/layout.css
+ * file-viewer panel layout — STRUCTURE ONLY.
+ * ai/views/file-viewer/settings/layout.css
  *
- * Structural borders use neutral chrome (--file-viewer-chrome-border), not the
- * workspace accent (--theme-border), so splits match chat/workspace separators.
+ * Per the themes-and-state spec, this file handles widths, heights,
+ * flex/grid, padding, margins, positioning, and visibility. All color,
+ * background, border-color, and theme-driven styling lives in
+ * ai/settings/file-viewer.css (loaded as a global layer by
+ * useSharedWorkspaceStyles).
  *
- * File-picker column background: --sidebar-surface-bg (variables.css; default #161616),
- * same paradigm as .sidebar / .chat-area in views.css.
+ * Border WIDTH/STYLE remain here because they are layout (they consume
+ * structural pixels). Border COLOR is set in the global file-viewer.css.
  */
 
-/* Split layout: viewer left, tree right */
+/* ── Layout: viewer left, tree right ── */
 .file-explorer-layout {
-  --file-viewer-chrome-border: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  /* Viewer header / tab strip / nav — same as --panel-chrome-bg (variables.css) */
-  --file-tree-sidebar-bg: var(--panel-chrome-bg, #1a1a1a);
   display: flex;
   height: 100%;
   overflow: hidden;
@@ -26,11 +26,6 @@
   flex-direction: column;
 }
 
-/* Viewer mode, no tab yet — FileViewer returns null; main has no children */
-.file-explorer-main:empty {
-  background: var(--bg-solid);
-}
-
 .file-explorer-empty {
   flex: 1;
   display: flex;
@@ -38,9 +33,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: var(--text-dim);
   font-size: 13px;
-  background: var(--bg-solid);
 }
 
 .file-explorer-empty .material-symbols-outlined {
@@ -53,22 +46,10 @@
 .file-tree-sidebar {
   width: var(--right-col-w, 220px);
   flex-shrink: 0;
-  border-left: 1px solid var(--file-viewer-chrome-border);
+  /* No border-left — the absolutely-positioned .rv-resize-handle[data-pane="rightCol"]
+   * overlays this edge and provides the visible divider (and stays draggable). */
   overflow-y: auto;
-  background: var(--sidebar-surface-bg, #161616);
   position: relative;
-}
-
-/* TINTS_SPEC §5b: opt-in accent blend on the view's right column. The
- * docked sticky chat sibling is also covered for parity with the spec
- * audit, though its background is normally glass and the blend has
- * limited visual effect there. */
-.rv-panel[data-tint-right="true"] .file-tree-sidebar {
-  background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
-}
-
-.rv-panel[data-tint-right="true"] .rv-secondary-sticky > .chat-area {
-  background: color-mix(in srgb, var(--chat-surface-bg, #1a1a1a) 88%, var(--ws-primary, #ec4899) 12%);
 }
 
 .file-explorer {
@@ -87,7 +68,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--text-error, #ef4444);
 }
 
 /* ============================================
@@ -99,8 +79,6 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Open file: same as document code canvas (empty main uses --bg-solid) */
-  background: var(--document-code-bg, #161616);
 }
 
 .file-viewer-content.loading {
@@ -113,10 +91,21 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  background: var(--file-tree-sidebar-bg, #1a1a1a);
-  border-bottom: none;
+  /* The bottom border is drawn by ::after so that z-index layering lets the
+   * active tab cover it while inactive tabs (translateY) leave it visible. */
   position: relative;
   z-index: 0;
+}
+
+.file-viewer-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .file-viewer-nav {
@@ -132,16 +121,10 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: var(--file-tree-sidebar-bg, #1a1a1a);
   border: none;
   border-radius: 4px;
-  color: var(--text-dim);
   cursor: pointer;
   transition: color 0.15s ease;
-}
-
-.file-viewer-nav .nav-btn:hover:not(:disabled) {
-  color: var(--text-white);
 }
 
 .file-viewer-nav .nav-btn:disabled {
@@ -165,21 +148,16 @@
   overflow: hidden;
   align-items: stretch;
   padding-left: 4px;
-  background: var(--file-tree-sidebar-bg, #1a1a1a);
 }
 
-/* Inactive = same rail as header; .active overrides below — do not change .active */
+/* Tab borders (width + color) live in ai/settings/file-viewer.css. */
 .file-viewer-tab {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 12px calc(5px + 1px);
-  margin-bottom: -1px;
-  border-left: 1px solid var(--file-viewer-chrome-border);
-  border-right: 1px solid var(--file-viewer-chrome-border);
+  padding: 0 12px 5px;
   border-bottom: none;
   box-sizing: border-box;
-  background-color: var(--file-tree-sidebar-bg, #1a1a1a);
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.15s ease;
   max-width: 200px;
@@ -192,23 +170,18 @@
   transform: translateY(-2px);
 }
 
-.file-viewer-tab:not(.active) .tab-name {
-  color: var(--text-dim);
-}
-
 .file-viewer-tab.active {
   transform: translateY(0);
-  background-color: var(--document-code-bg, #161616);
+  /* Render above the header ::after border so the active tab covers the line. */
+  z-index: 3;
 }
 
 .file-viewer-tab .tab-icon {
   font-size: 16px;
-  color: var(--text-dim);
 }
 
 .file-viewer-tab .tab-name {
   font-size: 13px;
-  color: var(--text-white);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -222,7 +195,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  color: var(--text-dim);
   opacity: 0;
   transition: all 0.15s ease;
   pointer-events: none;
@@ -234,47 +206,14 @@
   opacity: 1;
 }
 
-.file-viewer-tab .tab-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-white);
-}
-
-.file-viewer-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 8px;
-}
-
-.file-viewer-actions .action-btn {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  border-radius: 4px;
-  color: var(--text-dim);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.file-viewer-actions .action-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-white);
-}
-
 .file-viewer-info {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 4px 16px;
-  background: var(--document-code-bg, #161616);
   border-top: none;
-  border-bottom: 1px solid var(--file-viewer-chrome-border);
+  /* Border-bottom (width + color) lives in ai/settings/file-viewer.css. */
   font-size: 12px;
-  color: var(--text-dim);
 }
 
 .file-viewer-info .info-item {
@@ -294,5 +233,4 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--document-code-bg, #161616);
 }

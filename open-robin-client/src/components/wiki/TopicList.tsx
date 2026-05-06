@@ -28,10 +28,6 @@ export function TopicList() {
 
   return (
     <div className="rv-wiki-topic-list">
-      <div className="rv-wiki-topic-list-header">
-        <span className="material-symbols-outlined rv-icon-md">full_coverage</span>
-        <span>Topics</span>
-      </div>
       <div className="rv-wiki-topic-list-items">
         {grouped.map(({ collection, topics: colTopics }) => (
           <div key={collection.id} className="rv-wiki-collection-group">

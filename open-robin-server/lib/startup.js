@@ -23,9 +23,12 @@
 const path = require('path');
 const fs = require('fs');
 
-const { initDb, getDb, closeDb } = require('./db');
+const { initDb, getDb, closeDb, DB_PATH } = require('./db');
 const createRobinHandlers = require('./robin/ws-handlers');
 const createClipboardHandlers = require('./clipboard/ws-handlers');
+const createThemeHandlers = require('./ws/theme-handlers');
+const { createHandlers: createSecretsHandlers } = require('./secrets/index');
+const themesService = require('./theme/themes-service');
 const { startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
 const wikiHooks = require('./wiki/hooks');
@@ -41,7 +44,7 @@ const PORT = process.env.PORT || 3001;
  * @param {import('http').Server} deps.server
  * @param {Map} deps.sessions
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
- * @returns {Promise<{ robinHandlers: object, clipboardHandlers: object }>}
+ * @returns {Promise<{ robinHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
  */
 async function start({ server, sessions, getProjectRoot }) {
   // 1. DB init — robin.db lives at <server>/data/robin.db (fixed,
@@ -50,6 +53,7 @@ async function start({ server, sessions, getProjectRoot }) {
   // chicken-and-egg. The DB is the registry's home; workspaces resolve
   // through it, not the other way around.
   await initDb();
+  process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] robin.db initialized');
 
   // 2. Handlers — depend on DB being ready
@@ -96,6 +100,15 @@ async function start({ server, sessions, getProjectRoot }) {
   // defaults while the pass completes.
   const { createHarnessBroadcaster } = require('./ws/harness-broadcaster');
   createHarnessBroadcaster({ getAllClients });
+
+  // 3.7c. Theme handlers — need getAllClients for broadcast, created here
+  // alongside the other getAllClients consumers.
+  const themeHandlers = createThemeHandlers({ getAllClients, getProjectRoot });
+
+  // 3.7d. Secrets handlers — also depend on getAllClients for broadcast.
+  // Required via explicit /index path: bare `./secrets` would resolve to
+  // lib/secrets.js (the keychain wrapper), not the WS handler aggregator.
+  const secretsHandlers = createSecretsHandlers({ getAllClients });
   const harnessStatusService = require('./harness/harness-status-service');
   harnessStatusService.revalidateAll().catch((err) => {
     console.error('[Startup] harness revalidateAll failed:', err.message);
@@ -107,7 +120,21 @@ async function start({ server, sessions, getProjectRoot }) {
   const workspaceController = require('./workspace/workspace-controller');
   await workspaceController.start();
 
-  // 3.8b. CLI-config workspace file — ensure ai/views/settings/cli.json
+  // 3.8b. Themes CSS — re-derive themes.css from the active slug in themes.json
+  // on every boot so the CSS is never stale after a hand-edit (THEME_PICKER_SPEC §5c).
+  const projectRootForThemes = getProjectRoot();
+  if (projectRootForThemes) {
+    themesService.list(projectRootForThemes).then(themes => {
+      const active = themes.find(t => t.active);
+      if (active) {
+        return themesService.generateCss(projectRootForThemes, active.id);
+      }
+    }).catch(err => {
+      console.warn('[themes] boot CSS generation failed:', err.message);
+    });
+  }
+
+  // 3.8c. CLI-config workspace file — ensure ai/settings/cli.json
   // exists so discovery is trivial (CLI_CONFIG_SPEC §7e). Runs after
   // workspaceController.start() so getProjectRoot() resolves to the active
   // workspace root; otherwise bootstrap silently no-ops.
@@ -141,7 +168,7 @@ async function start({ server, sessions, getProjectRoot }) {
   process.on('SIGTERM', _handleShutdown);
   process.on('SIGINT', _handleShutdown);
 
-  return { robinHandlers, clipboardHandlers };
+  return { robinHandlers, clipboardHandlers, themeHandlers, secretsHandlers };
 }
 
 /**

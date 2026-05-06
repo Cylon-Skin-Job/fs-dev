@@ -29,17 +29,22 @@ export function CodeView({ content, extension, mode = 'code' }: CodeViewProps) {
       .join('');
   }, [lines]);
 
+  // Mark markdown source files so the syntax palette stays on the rainbow
+  // (--hljs-md-*) regardless of the global Theme Code toggle. Applies to both
+  // rendered-markdown view AND raw-code view of the same file.
+  const mdSource = extension === 'md' || extension === 'markdown' ? ' rv-md-source' : '';
+
   if (mode === 'markdown') {
     return (
       <div
-        className="rv-wiki-page-content"
+        className={`rv-wiki-page-content${mdSource}`}
         dangerouslySetInnerHTML={{ __html: markdownHtml }}
       />
     );
   }
 
   return (
-    <div className="rv-code-editor">
+    <div className={`rv-code-editor${mdSource}`}>
       <div className="rv-code-gutter">
         {lines.map((_, i) => (
           <span key={i} className="rv-line-number">{i + 1}</span>

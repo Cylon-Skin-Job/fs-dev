@@ -13,7 +13,7 @@ import type {
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 import { secondaryTracker } from '../lib/secondary-tracker';
-import type { HarnessStatus, ResolvedCliEntry, CliEntryOverride } from '../types';
+import type { HarnessStatus, ResolvedCliEntry, CliEntryOverride, ThemeEntry } from '../types';
 
 // Initial panel state factory
 function createInitialPanelState(): PanelState {
@@ -43,16 +43,16 @@ const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   secondaryThreadId: null,
   // TINTS_SPEC §8a: surface tint toggles, all neutral by default.
   tints: {
-    leftPanel:  false,
-    rightPanel: false,
-    cards:      false,
+    leftPanel:     false,
+    rightPanel:    false,
+    cards:         false,
     borders: { threads: false, chat: false },
   },
 };
 
 export function clampPaneWidth(pane: Pane, n: number): number {
   let min = 120;
-  let max = 600;
+  const max = 600;
   if (pane === 'leftChat') {
     min = 300;
   } else if (pane === 'rightSecondary') {
@@ -171,6 +171,14 @@ interface AppState {
   setHarnessStatuses: (map: Record<string, HarnessStatus>) => void;
   setHarnessStatus: (id: string, status: HarnessStatus) => void;
 
+  // THEME_PICKER_SPEC §6a: theme catalog + active id
+  themes: ThemeEntry[];
+  activeThemeId: string | null;
+  hydrateThemes: (themes: ThemeEntry[], activeId: string | null) => void;
+  activateTheme: (id: string) => void;
+  saveTheme: (entry: Partial<ThemeEntry> & { id: string }) => void;
+  deleteTheme: (id: string) => void;
+
   // CLI_CONFIG_SPEC §8a: resolved CLI catalog (workspace-level) + per-view deltas.
   cliConfig: Record<string, ResolvedCliEntry>;
   cliConfigViewDelta: Record<string, Record<string, CliEntryOverride>>;
@@ -287,6 +295,30 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setHarnessStatus: (id, status) => set((s) => ({
     harnessStatuses: { ...s.harnessStatuses, [id]: status },
   })),
+
+  // THEME_PICKER_SPEC §6a
+  themes: [],
+  activeThemeId: null,
+  hydrateThemes: (themes, activeId) => set({ themes, activeThemeId: activeId }),
+  activateTheme: (id) => {
+    set({ activeThemeId: id });
+    const ws = get().ws;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'theme:activate', id }));
+    }
+  },
+  saveTheme: (entry) => {
+    const ws = get().ws;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'theme:save', theme: entry }));
+    }
+  },
+  deleteTheme: (id) => {
+    const ws = get().ws;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'theme:delete', id }));
+    }
+  },
 
   // CLI_CONFIG_SPEC §8a
   cliConfig: {},
@@ -595,7 +627,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
   },
 
   setViewState: (view, state) => set((s) => ({
-    viewStates: { ...s.viewStates, [view]: state },
+    viewStates: { ...s.viewStates, [view]: { ...s.viewStates[view], ...state } },
   })),
 
   toggleCollapsed: (view, pane) => {

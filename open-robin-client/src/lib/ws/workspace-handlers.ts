@@ -36,6 +36,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
+      usePanelStore.getState().hydrateThemes((msg as any).themes ?? [], (msg as any).activeThemeId ?? null);
       store.markInit();
       return true;
 

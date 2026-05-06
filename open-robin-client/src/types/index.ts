@@ -94,7 +94,6 @@ export type WebSocketMessageType =
   | 'robin:tabs'
   | 'robin:items'
   | 'robin:wiki'
-  | 'robin:theme-data'
   // Clipboard messages
   | 'clipboard:list'
   | 'clipboard:append'
@@ -117,7 +116,54 @@ export type WebSocketMessageType =
   | 'workspace:culled_at_launch'
   | 'thread:state_changed'
   // Harness install-status cache (HARNESS_STATUS_CACHE_SPEC)
-  | 'harness:status_changed';
+  | 'harness:status_changed'
+  // Theme picker (THEME_PICKER_SPEC)
+  | 'theme:list'
+  | 'theme:state'
+  | 'theme:activate'
+  | 'theme:save'
+  | 'theme:delete'
+  | 'theme:error'
+  // Secrets manager (SECRETS_MANAGER_SPEC §8a)
+  | 'secrets:api-keys:state'
+  | 'secrets:api-keys:error';
+
+// Slider-only theme model — accent + 4 sliders.
+export interface ThemeEntry {
+  id:             string;
+  label:          string;
+  accent:         string;   // hex #RRGGBB
+  luminance:      number;   // 0-100
+  panelContrast?: number;   // 0-100 (50 = baseline panel deltas; 0 = monotone; 100 = 2× exaggerated)
+  bgTint?:        number;   // 0-30 percent accent blended into background surfaces
+  contentLuminance?: number; // 0-100 luminance for content/code surfaces only
+  contentContrast?: number;  // 0-100 contrast for content/code surfaces (stub)
+  contentTint?:   number;   // 0-30 percent accent blended into content/code surfaces
+  borders?:       number;   // 0-100 percent accent blended into borders (legacy — replaced by borderLuminance + borderTint)
+  borderLuminance?: number; // 0-100 black-to-white base for borders
+  borderTint?:    number;   // 0-100 percent accent blended into border base
+  chromeLuminance?: number; // 0-100 black-to-white base for chrome accents
+  chromeTint?:    number;   // 0-100 percent accent blended into chrome base
+  accentLuminance?: number; // 0-100 black-to-white base for muted accent surfaces
+  accentTint?:    number;   // 0-100 percent accent blended into muted accent base
+  chatBubbleChrome?: boolean; // When true, user chat bubble bg uses --chrome-accent
+  themeCode?:        boolean; // When true, syntax palette hues derive from accent instead of fixed rainbow
+  tints?: {
+    borders?: { chat?: boolean };
+  };
+  builtin:        boolean;
+  active:         boolean;
+  // Schema 2.0 vestigial fields (preserved but unused in slider-only mode)
+  mode?:         'light' | 'dark' | 'unknown';
+  bgPrimary?:    string | null;
+  bgSurface?:    string | null;
+  bgDark?:       string | null;
+  textPrimary?:  string | null;
+  textDim?:      string | null;
+  link?:         string | null;
+  border?:       string | null;
+  focus?:        string | null;
+}
 
 export interface Workspace {
   id: string;
@@ -240,9 +286,9 @@ export interface ViewUIState {
 }
 
 export interface ViewStateTints {
-  leftPanel:  boolean;
-  rightPanel: boolean;
-  cards:      boolean;
+  leftPanel:     boolean;
+  rightPanel:    boolean;
+  cards:         boolean;
   borders: {
     threads: boolean;
     chat:    boolean;

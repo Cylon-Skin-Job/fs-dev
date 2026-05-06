@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "id": "system-tools",
+  "label": "System Tools",
+  "description": "Operator-facing how-tos for AI agents — recipes for tasks like custom theming, settings overrides, and tooling that don't fit Project (knowledge) or Enforcement (rules).",
+  "type": "collection",
+  "rank": 30,
+  "icon": "construction",
+  "color": null,
+  "created": "2026-05-03T00:00:00Z",
+  "updated": "2026-05-03T00:00:00Z",
+  "frozen": false,
+  "children": [
+    "custom-theme-css",
+    "secrets-manager"
+  ],
+  "edges_out": null,
+  "edges_in": null,
+  "sources": null,
+  "settings": {}
+}

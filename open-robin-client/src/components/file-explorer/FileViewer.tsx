@@ -138,7 +138,6 @@ export function FileViewer() {
   const activeTabPath = useFileStore((s) => s.activeTabPath);
   const activateAdjacentTab = useFileStore((s) => s.activateAdjacentTab);
   const closeTab = useFileStore((s) => s.closeTab);
-  const closeActiveTab = useFileStore((s) => s.closeActiveTab);
 
   const activeTab = tabs.find((t) => t.file.path === activeTabPath) ?? null;
 
@@ -202,20 +201,6 @@ export function FileViewer() {
               }}
             />
           ))}
-        </div>
-
-        <div className="file-viewer-actions">
-          <button
-            type="button"
-            className="action-btn"
-            onClick={closeActiveTab}
-            disabled={isLoading}
-            title="Back to explorer"
-          >
-            <span className="material-symbols-outlined rv-icon-md">
-              folder_open
-            </span>
-          </button>
         </div>
       </div>
 

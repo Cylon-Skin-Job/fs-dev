@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--document-code-bg, #161616);
+  background: var(--document-bg, #161616);
 }
 
 .rv-empty-state-tile {

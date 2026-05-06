@@ -9,10 +9,7 @@ import { useWikiStore } from '../../state/wikiStore';
 export function EdgePanel() {
   const edgesIn = useWikiStore((s) => s.edgesIn);
   const edgesOut = useWikiStore((s) => s.edgesOut);
-  const activeTopic = useWikiStore((s) => s.activeTopic);
   const navigateToTopic = useWikiStore((s) => s.navigateToTopic);
-
-  if (!activeTopic) return null;
 
   return (
     <div className="rv-wiki-edge-panel">

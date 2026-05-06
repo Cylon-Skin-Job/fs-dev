@@ -133,4 +133,4 @@ async function getMany(keys) {
   return Object.fromEntries(results);
 }
 
-module.exports = { get, set, del, has, getMany, SecretsError, ACCOUNT };
+module.exports = { get, set, del, has, getMany, SecretsError, ACCOUNT, KEY_PATTERN };

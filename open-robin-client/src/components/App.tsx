@@ -16,6 +16,8 @@ import { SecondaryDockButton } from './SecondaryDockButton';
 import { EmptyStateView } from './EmptyStateView';
 import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
+import ThemePickerButton from './ThemePickerButton';
+import SecretsManagerButton from './secrets/SecretsManagerButton';
 import './App.css';
 
 // SPEC-26c-2: defaults for the 3-column layout
@@ -23,9 +25,9 @@ const DEFAULT_WIDTHS = { leftSidebar: 220, leftChat: 320 };
 const DEFAULT_COLLAPSED = { leftSidebar: false, leftChat: false };
 // TINTS_SPEC §8c: all-off fallback when viewState hasn't loaded yet.
 const DEFAULT_TINTS = {
-  leftPanel:  false,
-  rightPanel: false,
-  cards:      false,
+  leftPanel:     false,
+  rightPanel:    false,
+  cards:         false,
   borders: { threads: false, chat: false },
 };
 
@@ -77,9 +79,11 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
 }) {
   const viewState = usePanelStore((s) => s.viewStates[panelId]);
   const secondaryMode = usePanelStore((s) => s.secondary?.mode ?? null);
-  const widths = viewState?.widths ?? DEFAULT_WIDTHS;
-  const collapsed = viewState?.collapsed ?? DEFAULT_COLLAPSED;
-  const tints = viewState?.tints ?? DEFAULT_TINTS;
+
+  // Fallback to defaults if viewState is not yet loaded or is partial.
+  // We merge to ensure that missing keys (like leftSidebar) don't result in "undefinedpx".
+  const widths = { ...DEFAULT_WIDTHS, ...(viewState?.widths ?? {}) };
+  const collapsed = { ...DEFAULT_COLLAPSED, ...(viewState?.collapsed ?? {}) };
 
   // Only the active panel renders the sticky secondary (one grid track
   // at a time; the popup persists state across panel switches but the
@@ -110,11 +114,6 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
     <div
       data-panel={panelId}
       data-secondary-sticky={secondarySticky ? 'true' : undefined}
-      data-tint-left={tints.leftPanel ? 'true' : undefined}
-      data-tint-right={tints.rightPanel ? 'true' : undefined}
-      data-tint-cards={tints.cards ? 'true' : undefined}
-      data-tint-border-threads={tints.borders.threads ? 'true' : undefined}
-      data-tint-border-chat={tints.borders.chat ? 'true' : undefined}
       className={panelClasses}
       style={gridStyle}
     >
@@ -157,7 +156,7 @@ function App() {
   const loading = configs.length === 0;
 
   // Per-panel runtime theming was retired: theme tokens now live in
-  // ai/views/settings/themes.css (workspace) with optional overrides at
+  // ai/settings/themes.css (workspace) with optional overrides at
   // ai/views/<view>/settings/themes.css. No JS setProperty.
 
   // Once discovery completes, set currentPanel to first available if current isn't valid
@@ -196,6 +195,24 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  // Sync tint toggles to <body> so global tints.css rules match.
+  // TINTS_SPEC §8: tint attributes are workspace-wide, applied once on body.
+  // Theme-scoped toggles (borders.chat) come from the active theme; the
+  // others remain on view state until they are migrated.
+  const currentTints = usePanelStore((s) => s.viewStates[currentPanel]?.tints ?? DEFAULT_TINTS);
+  const activeTheme = usePanelStore((s) =>
+    s.themes.find((t) => t.id === s.activeThemeId) ?? s.themes.find((t) => t.active),
+  );
+  const themeChatBorder = activeTheme?.tints?.borders?.chat ?? false;
+  useEffect(() => {
+    const body = document.body;
+    if (currentTints.leftPanel) body.dataset.tintLeft = 'true'; else delete body.dataset.tintLeft;
+    if (currentTints.rightPanel) body.dataset.tintRight = 'true'; else delete body.dataset.tintRight;
+    if (currentTints.cards) body.dataset.tintCards = 'true'; else delete body.dataset.tintCards;
+    if (currentTints.borders.threads) body.dataset.tintBorderThreads = 'true'; else delete body.dataset.tintBorderThreads;
+    if (themeChatBorder) body.dataset.tintBorderChat = 'true'; else delete body.dataset.tintBorderChat;
+  }, [currentTints, themeChatBorder]);
+
   // Waiting for workspace:init from server. Brief flash on first connect.
   if (isConnected && !hasReceivedWorkspaceInit) {
     return null;
@@ -216,6 +233,8 @@ function App() {
             </div>
           </div>
           <div className="rv-header-right">
+            <ThemePickerButton />
+            <SecretsManagerButton />
             <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
@@ -242,6 +261,8 @@ function App() {
             </div>
           </div>
           <div className="rv-header-right">
+            <ThemePickerButton />
+            <SecretsManagerButton />
             <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
@@ -270,6 +291,8 @@ function App() {
         </div>
 
         <div className="rv-header-right">
+          <ThemePickerButton />
+          <SecretsManagerButton />
           <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
             <span className="material-symbols-outlined">raven</span>
           </button>

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "id": "secrets-manager",
+  "label": "Secrets Manager",
+  "description": "Read API keys, tokens, and passwords from the OS keychain without exposing values to chat.",
+  "type": "page",
+  "rank": 20,
+  "icon": "key",
+  "color": null,
+  "created": "2026-05-03T00:00:00Z",
+  "updated": "2026-05-03T00:00:00Z",
+  "frozen": false,
+  "children": null,
+  "edges_out": [],
+  "edges_in": [],
+  "sources": [],
+  "settings": {}
+}

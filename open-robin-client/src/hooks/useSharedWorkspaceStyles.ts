@@ -17,19 +17,31 @@ import { usePanelStore } from '../state/panelStore';
 import {
   fetchPanelWorkspaceFile,
   fetchViewsRootFile,
-  VIEWS_SETTINGS_STYLES_COMPONENTS,
-  VIEWS_SETTINGS_STYLES_THEMES,
-  VIEWS_SETTINGS_STYLES_VIEWS,
+  fetchSettingsFile,
+  SETTINGS_STYLES_THEMES,
+  SETTINGS_STYLES_COMPONENTS,
+  SETTINGS_STYLES_VIEWS,
+  SETTINGS_STYLES_FILE_VIEWER,
+  SETTINGS_STYLES_DOC_VIEWER,
+  SETTINGS_STYLES_TINTS,
+  SETTINGS_STYLES_VARIABLES,
 } from '../lib/panels';
 import { scopePanelCss } from '../lib/scopePanelCss';
 
 const SHARED_STYLE_PREFIX = 'ws-shared-styles-';
 const VIEW_LAYOUT_STYLE_PREFIX = 'ws-view-layout-';
 
-const SHARED_LAYERS: { id: string; path: string }[] = [
-  { id: 'themes',     path: VIEWS_SETTINGS_STYLES_THEMES },
-  { id: 'components', path: VIEWS_SETTINGS_STYLES_COMPONENTS },
-  { id: 'views',      path: VIEWS_SETTINGS_STYLES_VIEWS },
+const SHARED_LAYERS: { id: string; path: string; fetcher: 'settings' | 'views' }[] = [
+  // Load fallback defaults FIRST so theme + tint layers override them
+  { id: 'variables',   path: SETTINGS_STYLES_VARIABLES,   fetcher: 'settings' },
+  { id: 'themes',      path: SETTINGS_STYLES_THEMES,      fetcher: 'settings' },
+  { id: 'components',  path: SETTINGS_STYLES_COMPONENTS,  fetcher: 'settings' },
+  { id: 'views',       path: SETTINGS_STYLES_VIEWS,       fetcher: 'settings' },
+  // Per-view chrome layers — global selectors keyed to a single view's classes.
+  // Live in ai/settings/ so colors stay out of per-view layout.css files.
+  { id: 'file-viewer', path: SETTINGS_STYLES_FILE_VIEWER, fetcher: 'settings' },
+  { id: 'doc-viewer',  path: SETTINGS_STYLES_DOC_VIEWER,  fetcher: 'settings' },
+  { id: 'tints',       path: SETTINGS_STYLES_TINTS,       fetcher: 'settings' },
 ];
 
 // Guard against repeat loads from multiple consumers on the same WS connection.
@@ -37,7 +49,14 @@ const SHARED_LAYERS: { id: string; path: string }[] = [
 let loadGeneration = 0;
 
 function fetchAndInject(ws: WebSocket, generation: number): void {
-  Promise.all(SHARED_LAYERS.map((layer) => fetchViewsRootFile(ws, layer.path)))
+  Promise.all(
+    SHARED_LAYERS.map((layer) => {
+      if (layer.fetcher === 'settings') {
+        return fetchSettingsFile(ws, layer.path);
+      }
+      return fetchViewsRootFile(ws, layer.path);
+    })
+  )
     .then((contents) => {
       // Abort if a newer reload has started (e.g. another workspace switch)
       if (generation !== loadGeneration) return;
@@ -112,6 +131,35 @@ export function useViewLayoutStyles(panelId: string) {
         /* ENOENT — no per-view theme override, that's the common case */
       });
 
+    // --- /api/view-config for per-view theme CSS + layout ---
+    fetch(`/api/view-config?panel=${panelId}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(({ viewCss, layout }) => {
+        if (cancelled) return;
+
+        // Inject per-view theme CSS from REST endpoint (supersedes WS fetch above if present)
+        if (viewCss) {
+          document.getElementById(themeStyleId)?.remove();
+          const el = document.createElement('style');
+          el.id = themeStyleId;
+          el.textContent = scopePanelCss(viewCss, panelId);
+          document.head.appendChild(el);
+        }
+
+        // Apply layout to store if non-empty
+        if (layout && Object.keys(layout).length > 0) {
+          const store = usePanelStore.getState();
+          const current = store.viewStates[panelId];
+          store.setViewState(panelId, { ...current, ...layout });
+        }
+      })
+      .catch((err) => {
+        console.warn(`[ViewLayoutStyles] /api/view-config failed for ${panelId}:`, err.message);
+      });
+
     return () => {
       cancelled = true;
       document.getElementById(layoutStyleId)?.remove();
@@ -121,11 +169,34 @@ export function useViewLayoutStyles(panelId: string) {
 }
 
 export function resetSharedStyles() {
-  SHARED_LAYERS.forEach((layer) => {
-    document.getElementById(`${SHARED_STYLE_PREFIX}${layer.id}`)?.remove();
-  });
-  // Bump the generation counter so every useSharedWorkspaceStyles consumer
-  // re-runs its effect and refetches from the now-active workspace.
+  // Don't pre-remove the existing <style> tags — leave them in place so the
+  // page stays styled while fetchAndInject does its WS roundtrip. Once the
+  // new content arrives, fetchAndInject swaps each tag atomically (remove old
+  // + append new in the same synchronous block). This eliminates the flash
+  // of unstyled chat/threads that lasted the duration of the WS fetch.
   const store = usePanelStore.getState();
   store.bumpSharedStylesGeneration();
+}
+
+// Reload only the themes layer (called when theme:state arrives). Components
+// and views CSS don't change with theme switches, so refetching them is wasted
+// work and prolongs the swap window.
+export function reloadThemesLayer(ws: WebSocket) {
+  if (!ws || ws.readyState !== WebSocket.OPEN) return;
+  const themeLayer = SHARED_LAYERS.find(l => l.id === 'themes');
+  if (!themeLayer) return;
+  fetchSettingsFile(ws, themeLayer.path)
+    .then((css) => {
+      if (!css) {
+        document.getElementById(`${SHARED_STYLE_PREFIX}themes`)?.remove();
+        return;
+      }
+      const styleId = `${SHARED_STYLE_PREFIX}themes`;
+      document.getElementById(styleId)?.remove();
+      const el = document.createElement('style');
+      el.id = styleId;
+      el.textContent = css;
+      document.head.appendChild(el);
+    })
+    .catch((err) => console.error('[SharedStyles] themes reload failed:', err));
 }

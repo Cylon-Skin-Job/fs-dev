@@ -15,7 +15,7 @@ import { useCallback } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { useTicketStore, type Ticket } from '../../state/ticketStore';
-import './tickets.css';
+
 
 // Bot names we recognize — matches registry.json
 const BOT_NAMES = new Set(['kimi-wiki', 'kimi-code', 'kimi-review', 'kimi-bot']);

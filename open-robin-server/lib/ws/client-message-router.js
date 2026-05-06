@@ -52,6 +52,8 @@ const { resolveViewState, writeViewStatePatch } = require('../view-state');
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @param {() => object} deps.getRobinHandlers - getter closure over server.js let robinHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
+ * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
+ * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
  * @returns {{ handleClientMessage: Function, handleClientClose: Function }}
  */
 function createClientMessageRouter({
@@ -67,6 +69,8 @@ function createClientMessageRouter({
   getProjectRoot,
   getRobinHandlers,
   getClipboardHandlers,
+  getThemeHandlers,
+  getSecretsHandlers,
 }) {
 
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
@@ -431,6 +435,26 @@ function createClientMessageRouter({
 
       if (clientMsg.type.startsWith('clipboard:')) {
         const handler = getClipboardHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Theme picker (delegated to lib/ws/theme-handlers.js) ----
+
+      if (clientMsg.type.startsWith('theme:')) {
+        const handler = getThemeHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Secrets manager (delegated to lib/secrets/index.js) ----
+
+      if (clientMsg.type.startsWith('secrets:')) {
+        const handler = getSecretsHandlers()[clientMsg.type];
         if (handler) {
           await handler(ws, clientMsg);
           return;

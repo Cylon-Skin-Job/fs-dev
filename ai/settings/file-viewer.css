@@ -1,0 +1,127 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   File-viewer chrome — color/background/border layer
+   ═══════════════════════════════════════════════════════════════════════════
+   Lifted out of ai/views/file-viewer/settings/layout.css per the
+   themes-and-state spec ("per-view files are layout-only"). Every value here
+   resolves to a theme variable; nothing is hardcoded.
+
+   Selectors and pseudo-class semantics mirror the per-view layout file —
+   this layer applies color where the layout file applies structure.
+
+   Token map:
+     --file-viewer-chrome-border = neutral chrome border (Border sliders)
+     --file-tree-sidebar-bg      = panel-chrome surface
+     --content-attenuated        = Content Contrast luminance + Content Tint
+*/
+
+/* ── Local theme aliases (scoped to the file-viewer layout root) ── */
+.file-explorer-layout {
+  --file-viewer-chrome-border: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  --file-tree-sidebar-bg:      var(--panel-chrome-bg, #1a1a1a);
+}
+
+/* ── Empty states (file picker not yet showing a viewer) ── */
+.file-explorer-main:empty {
+  background: var(--bg-solid);
+}
+
+.file-explorer-empty {
+  color: var(--text-dim);
+  background: var(--bg-solid);
+}
+
+.file-explorer-error {
+  color: var(--text-error, #ef4444);
+}
+
+/* ── File tree sidebar surface ── */
+.file-tree-sidebar {
+  background: var(--sidebar-surface-bg, #161616);
+}
+
+/* ── Open file: same surface as document code canvas ── */
+.file-viewer {
+  background: var(--document-bg, #161616);
+}
+
+/* ── Header rail + chrome divider beneath tabs ──
+   Header rail matches the sidebar surface so the area around the nav
+   buttons and the gap where no tabs are visible reads as a continuation
+   of the workspace's sidebar/rail chrome. */
+.file-viewer-header {
+  background: var(--sidebar-surface-bg, #161616);
+}
+
+.file-viewer-header::after {
+  /* Chrome divider (between the tab strip and the content frame).
+   * Driven by the Border sliders via --file-viewer-chrome-border. */
+  background: var(--file-viewer-chrome-border, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+}
+
+/* ── Header nav buttons (chevrons) ── */
+.file-viewer-nav .nav-btn {
+  background: var(--sidebar-surface-bg, #161616);
+  color: var(--text-dim);
+}
+
+.file-viewer-nav .nav-btn:hover:not(:disabled) {
+  color: var(--text-white);
+}
+
+/* ── Tab strip rail + tab chrome ──
+   Strip surface matches the sidebar so the area between/beside tabs reads
+   as a continuation of the workspace's sidebar chrome. Individual tab chips
+   keep --file-tree-sidebar-bg so they read as raised elements on the rail. */
+.file-viewer-tabs {
+  background: var(--sidebar-surface-bg, #161616);
+}
+
+.file-viewer-tab {
+  border-left:  1px solid var(--file-viewer-chrome-border);
+  border-right: 1px solid var(--file-viewer-chrome-border);
+  background-color: var(--file-tree-sidebar-bg, #1a1a1a);
+}
+
+.file-viewer-tab.active {
+  background-color: var(--document-bg, #161616);
+}
+
+/* Tab name + icon — driven by the picker's "Chrome settings" sliders
+   (Luminance + Tint) via --accent-dim. */
+.file-viewer-tab .tab-icon {
+  color: var(--accent-dim, var(--text-dim));
+}
+
+.file-viewer-tab .tab-name {
+  color: var(--accent-dim, var(--text-dim));
+}
+
+.file-viewer-tab:not(.active) .tab-name {
+  color: var(--accent-dim, var(--text-dim));
+}
+
+.file-viewer-tab .tab-close {
+  color: var(--text-dim);
+}
+
+.file-viewer-tab .tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+}
+
+/* ── Filename info row + content divider ── */
+.file-viewer-info {
+  background: var(--document-bg, #161616);
+  /* Content divider (between filename row and the code body). Inherits the
+     wiki's border paradigm (--content-highlight) so file-viewer in-content
+     borders match the wiki's borders. Not driven by the Border sliders. */
+  border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+  /* Filename row text — driven by the picker's "Chrome settings" sliders
+     via --accent-dim. The border above stays on the wiki content paradigm. */
+  color: var(--accent-dim, var(--text-dim));
+}
+
+/* ── Code-content fill ── */
+.file-viewer-content {
+  background: var(--document-bg, #161616);
+}

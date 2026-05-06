@@ -4,9 +4,9 @@
 
   /* Shared document / code canvas (see document.css) — not pure black so “page” reads clearly */
   --document-surface-bg: #0d0d0d;
-  --document-code-bg: #161616;
+  --document-bg: #161616;
   /* Thread list, file-picker rail, and other typed sidebars — same default as document code canvas */
-  --sidebar-surface-bg: var(--document-code-bg);
+  --sidebar-surface-bg: var(--document-bg);
   /* Tab/header rail (code viewer) + main chat column — separate from sidebars */
   --panel-chrome-bg: #1a1a1a;
   --chat-surface-bg: var(--panel-chrome-bg);
@@ -87,7 +87,7 @@
   --radius-lg: 8px;
 }
 
-/* Theme tokens live in ai/views/settings/themes.css (loaded at runtime by
+/* Theme tokens live in ai/settings/themes.css (loaded at runtime by
  * useSharedWorkspaceStyles). That file is the canonical home for every
  * theme-editable CSS custom property. Per-view overrides go in
  * ai/views/<view>/settings/themes.css and win via the cascade. */

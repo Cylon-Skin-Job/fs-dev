@@ -64,15 +64,48 @@ export interface PanelConfig {
  * Request a file from a panel via WebSocket.
  * Returns a promise that resolves with the file content or rejects on error.
  */
-/** Under ai/views/settings/ — workspace-wide CSS loaded by useSharedWorkspaceStyles. */
+/** Legacy paths under ai/views/settings/ — kept for backward compatibility. */
 export const VIEWS_SETTINGS_STYLES_THEMES     = 'settings/themes.css' as const;
 export const VIEWS_SETTINGS_STYLES_COMPONENTS = 'settings/components.css' as const;
 /** Chat + thread list + composer. */
 export const VIEWS_SETTINGS_STYLES_VIEWS      = 'settings/views.css' as const;
 
+// --- ai/settings/ constants (via __settings__ pseudo-panel) ---
+export const SETTINGS_STYLES_THEMES      = 'themes.css' as const;
+export const SETTINGS_STYLES_COMPONENTS  = 'components.css' as const;
+export const SETTINGS_STYLES_VIEWS       = 'views.css' as const;
+export const SETTINGS_STYLES_FILE_VIEWER = 'file-viewer.css' as const;
+export const SETTINGS_STYLES_DOC_VIEWER  = 'doc-viewer.css' as const;
+export const SETTINGS_STYLES_TINTS       = 'tints.css' as const;
+export const SETTINGS_STYLES_VARIABLES   = 'variables.css' as const;
+
 /** Fetch a file under ai/views/ (same mechanism as panel discovery). */
 export function fetchViewsRootFile(ws: WebSocket, pathUnderViews: string): Promise<string> {
   return fetchPanelFile(ws, '__panels__', pathUnderViews);
+}
+
+/** Fetch a file under ai/settings/ via the __settings__ pseudo-panel. */
+export function fetchSettingsFile(ws: WebSocket, pathUnderSettings: string): Promise<string> {
+  return fetchPanelFile(ws, '__settings__', pathUnderSettings);
+}
+
+/**
+ * Build the HTTP URL for an image (or any binary asset) served from a
+ * panel's content tree. Use this for every <img src=...> or background-image
+ * URL that points at panel content — keeps the format in one place.
+ *
+ * The path is relative to the panel's content root (the same root the
+ * file_tree_request WebSocket handler uses), e.g. for the doc-viewer
+ * (tiled-rows) the content root resolves server-side to
+ * `ai/views/doc-viewer/content/`. Pass `screenshots/foo.png`, NOT
+ * `content/screenshots/foo.png`.
+ */
+export function getPanelFileUrl(panel: string, pathUnderContent: string): string {
+  const segments = pathUnderContent
+    .split('/')
+    .filter(Boolean)
+    .map((s) => encodeURIComponent(s));
+  return `/api/panel-file/${encodeURIComponent(panel)}/${segments.join('/')}`;
 }
 
 /**

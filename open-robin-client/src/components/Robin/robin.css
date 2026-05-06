@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  border-bottom: 1px solid var(--robin-border, #1e1e1e);
+  border-bottom: 1px solid var(--component-border, #1e1e1e);
   flex-shrink: 0;
 }
 
@@ -37,13 +37,13 @@
 
 .rv-robin-overlay-header-icon {
   font-size: 26px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-overlay-header-name {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-overlay-header-subtitle {
@@ -54,7 +54,7 @@
 
 .rv-robin-exit-btn {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--robin-border, #282828);
+  border: 1px solid var(--component-border, #282828);
   color: var(--text-dim, #666);
   cursor: pointer;
   padding: 8px;
@@ -87,8 +87,8 @@
 .rv-robin-chat {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--robin-border, #1e1e1e);
-  background: var(--robin-chat-bg, #111111);
+  border-right: 1px solid var(--component-border, #1e1e1e);
+  background: var(--chat-bg, #111111);
 }
 
 .rv-robin-chat-messages {
@@ -127,12 +127,12 @@
 
 .rv-robin-msg-avatar .material-symbols-outlined {
   font-size: 18px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-msg-bubble {
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.8125rem;
@@ -161,14 +161,14 @@
 
 .rv-robin-chat-input {
   padding: 16px;
-  border-top: 1px solid var(--robin-border, #1e1e1e);
+  border-top: 1px solid var(--component-border, #1e1e1e);
 }
 
 .rv-robin-chat-input textarea {
   width: 100%;
   padding: 10px 14px;
-  background: var(--robin-input-bg, #0d0d0d);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--input-bg, #0d0d0d);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
   color: var(--text-primary, #e0e0e0);
   font-size: 0.8125rem;
@@ -213,7 +213,7 @@
 .rv-robin-settings-header-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -241,7 +241,7 @@
 
 .rv-robin-faq-link {
   font-size: 0.75rem;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   cursor: pointer;
   transition: opacity 150ms;
   white-space: nowrap;
@@ -276,12 +276,12 @@
 }
 
 .rv-robin-guide-link:hover {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.05);
 }
 
 .rv-robin-guide-link.active {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.1);
 }
 
@@ -291,7 +291,7 @@
 
 .rv-robin-list-separator {
   height: 1px;
-  background: var(--robin-border, rgba(79, 195, 247, 0.15));
+  background: var(--component-border, rgba(79, 195, 247, 0.15));
   margin: 4px 8px 8px;
 }
 
@@ -302,7 +302,7 @@
   gap: 16px;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  border-bottom: 1px solid var(--robin-border, rgba(79, 195, 247, 0.15));
+  border-bottom: 1px solid var(--component-border, rgba(79, 195, 247, 0.15));
 }
 
 .rv-robin-wiki-nav-link {
@@ -314,12 +314,12 @@
 }
 
 .rv-robin-wiki-nav-link:hover {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-wiki-nav-link.active {
-  color: var(--robin-primary, #4fc3f7);
-  border-bottom: 1px solid var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
+  border-bottom: 1px solid var(--chrome-accent, #4fc3f7);
   padding-bottom: 2px;
 }
 
@@ -329,13 +329,13 @@
   display: flex;
   gap: 6px;
   padding: 16px 24px;
-  border-bottom: 1px solid var(--robin-border, #1e1e1e);
+  border-bottom: 1px solid var(--component-border, #1e1e1e);
   flex-shrink: 0;
 }
 
 .rv-robin-settings-tab {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--robin-border, #282828);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 20px;
   padding: 6px 16px;
   font-size: 0.8125rem;
@@ -357,7 +357,7 @@
 .rv-robin-settings-tab.active {
   background: rgba(79, 195, 247, 0.12);
   border-color: rgba(79, 195, 247, 0.25);
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   font-weight: 600;
 }
 
@@ -381,7 +381,7 @@
 .rv-robin-settings-list {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--robin-border, #1e1e1e);
+  border-right: 1px solid var(--component-border, #1e1e1e);
   overflow-y: auto;
   padding: 16px;
   gap: 8px;
@@ -402,8 +402,8 @@
 }
 
 .rv-robin-setting-item {
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
   padding: 10px 12px;
   cursor: pointer;
@@ -415,11 +415,11 @@
 
 .rv-robin-setting-item:hover {
   border-color: rgba(79, 195, 247, 0.25);
-  background: var(--robin-card-hover, #1c1c1c);
+  background: var(--card-hover, #1c1c1c);
 }
 
 .rv-robin-setting-item.active {
-  border-color: var(--robin-primary, #4fc3f7);
+  border-color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.05);
 }
 
@@ -430,7 +430,7 @@
 
 .rv-robin-setting-item-icon .material-symbols-outlined {
   font-size: 18px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-setting-item-text {
@@ -468,7 +468,7 @@
 
 .rv-robin-setting-item-badge.on { color: var(--status-ok, #4caf50); background: color-mix(in srgb, transparent 88%, var(--status-ok, #4caf50) 12%); }
 .rv-robin-setting-item-badge.off { color: var(--text-dim, #666); background: rgba(255, 255, 255, 0.04); }
-.rv-robin-setting-item-badge.value { color: var(--robin-primary, #4fc3f7); background: rgba(79, 195, 247, 0.12); }
+.rv-robin-setting-item-badge.value { color: var(--chrome-accent, #4fc3f7); background: rgba(79, 195, 247, 0.12); }
 
 /* ==========================================================
    WIKI DETAIL PANEL
@@ -501,7 +501,7 @@
 }
 
 .rv-robin-detail-breadcrumb span {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   cursor: pointer;
 }
 
@@ -517,7 +517,7 @@
 
 .rv-robin-detail-title .material-symbols-outlined {
   font-size: 28px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-detail-subtitle {
@@ -533,8 +533,8 @@
   gap: 24px;
   margin-top: 16px;
   padding: 16px;
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
 }
 
@@ -559,7 +559,7 @@
 }
 
 .rv-robin-detail-meta-value.highlight {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-detail-meta-value code {
@@ -578,8 +578,8 @@
   justify-content: space-between;
   margin-top: 16px;
   padding: 16px;
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
 }
 
@@ -599,7 +599,7 @@
   position: relative;
   width: 40px;
   height: 22px;
-  background: var(--robin-border, #282828);
+  background: var(--component-border, #282828);
   border-radius: 11px;
   cursor: pointer;
   transition: background 200ms;
@@ -607,7 +607,7 @@
 }
 
 .rv-robin-toggle.on {
-  background: var(--robin-primary, #4fc3f7);
+  background: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-toggle::after {
@@ -639,7 +639,7 @@
   margin-bottom: 8px;
   margin-top: 32px;
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--robin-border, #1e1e1e);
+  border-bottom: 1px solid var(--component-border, #1e1e1e);
 }
 
 .rv-robin-detail-body h2:first-child {
@@ -674,12 +674,12 @@
   border-radius: 3px;
   font-size: 0.75rem;
   font-family: 'SF Mono', 'Fira Code', monospace;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-detail-body pre {
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 6px;
   padding: 16px;
   font-size: 0.75rem;
@@ -711,7 +711,7 @@
 .rv-robin-detail-related {
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid var(--robin-border, #1e1e1e);
+  border-top: 1px solid var(--component-border, #1e1e1e);
 }
 
 .rv-robin-detail-related-title {
@@ -731,7 +731,7 @@
 
 .rv-robin-detail-related-link {
   font-size: 0.75rem;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.12);
   border: 1px solid rgba(79, 195, 247, 0.25);
   border-radius: 14px;
@@ -764,7 +764,7 @@
   padding: 10px;
   margin-top: 8px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed var(--robin-border, #282828);
+  border: 1px dashed var(--component-border, #282828);
   border-radius: 10px;
   color: var(--text-dim, #666);
   font-size: 0.8125rem;
@@ -776,14 +776,14 @@
 
 .rv-robin-add-btn:hover {
   border-color: rgba(79, 195, 247, 0.25);
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.05);
 }
 
 .rv-robin-add-btn.active {
-  border-color: var(--robin-primary, #4fc3f7);
+  border-color: var(--chrome-accent, #4fc3f7);
   border-style: solid;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   background: rgba(79, 195, 247, 0.08);
 }
 
@@ -812,8 +812,8 @@
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
   transition: border-color 150ms;
 }
@@ -866,7 +866,7 @@
   background: rgba(79, 195, 247, 0.12);
   border: 1px solid rgba(79, 195, 247, 0.25);
   border-radius: 8px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   font-size: 0.8125rem;
   font-family: inherit;
   font-weight: 500;
@@ -896,7 +896,7 @@
   background: transparent;
   border: none;
   border-radius: 8px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--accent-dim, var(--text-dim));
   cursor: pointer;
   transition: all 200ms;
 }
@@ -914,8 +914,8 @@
    ========================================================== */
 
 .rv-robin-color-picker {
-  background: var(--robin-card-bg, #161616);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--card-bg, #161616);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 10px;
   padding: 20px;
   margin: 16px 0;
@@ -957,7 +957,7 @@
 
 .rv-robin-color-swatch.active {
   border-color: var(--text-primary, #e0e0e0);
-  box-shadow: 0 0 0 2px var(--robin-card-bg, #161616), 0 0 0 4px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px var(--card-bg, #161616), 0 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
 .rv-robin-color-current {
@@ -970,15 +970,15 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid var(--robin-border, #282828);
+  border: 1px solid var(--component-border, #282828);
   flex-shrink: 0;
 }
 
 .rv-robin-color-hex-input {
   width: 90px;
   padding: 6px 10px;
-  background: var(--robin-input-bg, #0d0d0d);
-  border: 1px solid var(--robin-border, #282828);
+  background: var(--input-bg, #0d0d0d);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 6px;
   color: var(--text-primary, #e0e0e0);
   font-size: 0.8125rem;
@@ -1005,7 +1005,7 @@
   background: rgba(79, 195, 247, 0.12);
   border: 1px solid rgba(79, 195, 247, 0.25);
   border-radius: 10px;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   font-size: 0.8125rem;
   font-family: inherit;
   font-weight: 600;
@@ -1031,7 +1031,7 @@
 }
 
 .rv-robin-diverged-card {
-  background: var(--robin-card-bg, #161616);
+  background: var(--card-bg, #161616);
   border: 1px solid rgba(255, 152, 0, 0.3);
   border-radius: 10px;
   padding: 16px;
@@ -1055,7 +1055,7 @@
 
 .rv-robin-preset-btn {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--robin-border, #282828);
+  border: 1px solid var(--component-border, #282828);
   border-radius: 8px;
   padding: 6px 14px;
   font-size: 0.75rem;
@@ -1074,7 +1074,7 @@
 .rv-robin-preset-btn.active {
   background: rgba(79, 195, 247, 0.12);
   border-color: rgba(79, 195, 247, 0.25);
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   font-weight: 600;
 }
 
@@ -1113,7 +1113,7 @@
 }
 
 .rv-robin-wiki-index-item.active .rv-robin-wiki-index-title {
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-wiki-index-desc {
@@ -1168,12 +1168,12 @@
 
 .rv-robin-wiki-context-toggle.active {
   opacity: 1;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-wiki-link-btn.copied {
   opacity: 1;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
 }
 
 .rv-robin-wiki-context-view {
@@ -1189,7 +1189,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--robin-primary, #4fc3f7);
+  color: var(--chrome-accent, #4fc3f7);
   opacity: 0.6;
   margin-bottom: 16px;
 }

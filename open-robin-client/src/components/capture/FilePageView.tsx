@@ -14,6 +14,7 @@ import type { FileWithContent } from '../tile-row/TileRow';
 import { DocumentTile, isImageFile } from '../tile-row/DocumentTile';
 import { CodeView } from '../CodeView';
 import { copyResourcePath } from '../../lib/resource-path';
+import { getPanelFileUrl } from '../../lib/panels';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
 
 interface FilePageViewProps {
@@ -72,13 +73,15 @@ export function FilePageView({
         </div>
       </div>
 
-      {/* Content area — fills remaining space; document-surface unifies padding with file explorer + wiki */}
+      {/* Content area — fills remaining space. Owns its own padding/scroll/
+          box-sizing so it no longer reuses the wiki/file-explorer
+          .rv-document-surface paradigm. */}
       <div
-        className={`rv-file-page-content${!isImage ? ' rv-document-surface' : ''}${!isImage && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
+        className={`rv-file-page-content${!isImage && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
       >
         {isImage ? (
           <img
-            src={`/api/panel-file/${panel}/${folder}/${encodeURIComponent(file.name)}`}
+            src={getPanelFileUrl(panel, `${folder}/${file.name}`)}
             alt={file.name}
             className="rv-file-page-image"
           />

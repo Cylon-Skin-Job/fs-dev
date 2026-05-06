@@ -15,8 +15,7 @@ import { sendRobinMessage, onRobinMessage } from '../../lib/ws-client';
 import { WikiDetail } from './WikiDetail';
 import { ConfigDetail } from './ConfigDetail';
 import { CLIDetail, CLIRegistry } from './CLIDetail';
-import { SystemThemeDetail, WorkspaceThemeDetail } from './ThemeDetail';
-import type { Tab, WikiPage, ConfigItem, CliItem, SystemTheme, WorkspaceItem } from './robin-types';
+import type { Tab, WikiPage, ConfigItem, CliItem } from './robin-types';
 import './robin.css';
 
 // --- Types ---
@@ -50,11 +49,6 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
   const [selectedItemId, setSelectedItemId] = useState('');
   const [showRegistry, setShowRegistry] = useState(false);
   const initializedRef = useRef(false);
-
-  // Customization state
-  const [systemTheme, setSystemTheme] = useState<SystemTheme | null>(null);
-  const [workspacesList, setWorkspacesList] = useState<WorkspaceItem[]>([]);
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState('');
 
   // Wiki context toggle
   const [showContext, setShowContext] = useState(false);
@@ -100,12 +94,6 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
           setWikiPage(msg as WikiPage);
         }
       }),
-      onRobinMessage('robin:theme-data', (msg: any) => {
-        if (!msg.error) {
-          setSystemTheme(msg.systemTheme || null);
-          setWorkspacesList(msg.workspaces || []);
-        }
-      }),
     ];
     return () => unsubs.forEach(fn => fn());
   }, []);
@@ -132,18 +120,12 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
   function switchTab(tabId: string) {
     setActiveTab(tabId);
     setSelectedItemId('');
-    setSelectedWorkspaceId('');
     setShowRegistry(false);
     setShowContext(false);
     setWikiPage(null);
     setItems([]);
-    if (tabId === 'customization') {
-      sendRobinMessage({ type: 'robin:theme-load' });
-      sendRobinMessage({ type: 'robin:wiki-page', slug: tabId });
-    } else {
-      sendRobinMessage({ type: 'robin:tab-items', tab: tabId });
-      sendRobinMessage({ type: 'robin:wiki-page', slug: tabId });
-    }
+    sendRobinMessage({ type: 'robin:tab-items', tab: tabId });
+    sendRobinMessage({ type: 'robin:wiki-page', slug: tabId });
     sendRobinMessage({ type: 'robin:context', tab: tabId, item: null });
   }
 
@@ -245,8 +227,8 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
 
               {/* Guide link — always at top, returns right panel to wiki */}
               <div
-                className={`rv-robin-guide-link ${!selectedItemId && !selectedWorkspaceId && !showRegistry ? 'active' : ''}`}
-                onClick={() => { setSelectedItemId(''); setSelectedWorkspaceId(''); setShowRegistry(false); }}
+                className={`rv-robin-guide-link ${!selectedItemId && !showRegistry ? 'active' : ''}`}
+                onClick={() => { setSelectedItemId(''); setShowRegistry(false); }}
               >
                 <span className="material-symbols-outlined">menu_book</span>
                 {currentTab?.label} Guide
@@ -254,50 +236,7 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
 
               <div className="rv-robin-list-separator" />
 
-              {activeTab === 'customization' ? (
-                // Customization tab: system theme + workspace list
-                <>
-                  <div className="rv-robin-settings-section-divider">System</div>
-                  <div
-                    className={`rv-robin-setting-item ${selectedWorkspaceId === 'system' ? 'active' : ''}`}
-                    onClick={() => { setSelectedWorkspaceId('system'); setSelectedItemId(''); }}
-                  >
-                    <div className="rv-robin-setting-item-icon">
-                      <span className="material-symbols-outlined">settings</span>
-                    </div>
-                    <div className="rv-robin-setting-item-text">
-                      <div className="rv-robin-setting-item-name">System Theme</div>
-                      <div className="rv-robin-setting-item-desc">Baseline for all workspaces</div>
-                    </div>
-                    {systemTheme && (
-                      <div className="rv-robin-workspace-dot" style={{ background: systemTheme.primary_color }} />
-                    )}
-                  </div>
-
-                  <div className="rv-robin-settings-section-divider">Workspaces</div>
-                  {workspacesList.filter(w => w.id !== 'system').map(ws => (
-                    <div
-                      key={ws.id}
-                      className={`rv-robin-setting-item ${selectedWorkspaceId === ws.id ? 'active' : ''}`}
-                      onClick={() => { setSelectedWorkspaceId(ws.id); setSelectedItemId(''); }}
-                    >
-                      <div className="rv-robin-setting-item-icon">
-                        <span className="material-symbols-outlined">{ws.icon}</span>
-                      </div>
-                      <div className="rv-robin-setting-item-text">
-                        <div className="rv-robin-setting-item-name">{ws.label}</div>
-                        <div className="rv-robin-setting-item-desc">{ws.description}</div>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <div className="rv-robin-workspace-dot" style={{ background: ws.primary_color }} />
-                        <span className={`rv-robin-setting-item-badge ${ws.themeState === 'override' ? 'value' : 'off'}`}>
-                          {ws.themeState}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ) : activeTab === 'clis' ? (
+              {activeTab === 'clis' ? (
                 // CLIs tab: show installed CLIs as flat list
                 <>
                   {(items as CliItem[]).map(cli => (
@@ -391,21 +330,7 @@ export function RobinOverlay({ open, onClose }: RobinOverlayProps) {
             {/* Right panel: wiki, item detail, registry, or customization */}
             <div className="rv-robin-detail">
               <div className="rv-robin-detail-scroll">
-                {activeTab === 'customization' && selectedWorkspaceId ? (
-                  selectedWorkspaceId === 'system' ? (
-                    <SystemThemeDetail
-                      theme={systemTheme}
-                      onUpdate={(preset, color) => sendRobinMessage({ type: 'robin:theme-update-system', preset, primary_color: color })}
-                    />
-                  ) : (
-                    <WorkspaceThemeDetail
-                      workspace={workspacesList.find(w => w.id === selectedWorkspaceId)!}
-                      onUpdateColor={(color) => sendRobinMessage({ type: 'robin:theme-update-workspace', workspace_id: selectedWorkspaceId, primary_color: color })}
-                      onInherit={() => sendRobinMessage({ type: 'robin:theme-inherit', workspace_id: selectedWorkspaceId })}
-                      onApply={() => sendRobinMessage({ type: 'robin:theme-apply-diverged', workspace_id: selectedWorkspaceId })}
-                    />
-                  )
-                ) : showRegistry && activeTab === 'clis' ? (
+                {showRegistry && activeTab === 'clis' ? (
                   <CLIRegistry items={registryItems} />
                 ) : selectedItem && activeTab !== 'system-wiki' ? (
                   activeTab === 'clis' ? (

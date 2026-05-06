@@ -15,7 +15,7 @@ import { useWikiStore } from '../../state/wikiStore';
 import { TopicList } from './TopicList';
 import { PageViewer } from './PageViewer';
 import { EdgePanel } from './EdgePanel';
-import './wiki.css';
+
 
 export function WikiExplorer() {
   useViewLayoutStyles('wiki-viewer');

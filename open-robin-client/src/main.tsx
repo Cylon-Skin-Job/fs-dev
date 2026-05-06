@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import './styles/document.css';
 import 'material-symbols/outlined.css';
-import 'highlight.js/styles/github-dark.css';
 import App from './components/App';
 import { startClipboardMonitor } from './clipboard';
 

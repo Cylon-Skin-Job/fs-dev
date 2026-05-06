@@ -104,29 +104,6 @@ async function setCliActive(db, id) {
   await db('cli_registry').where('id', id).update({ active: 1 });
 }
 
-// --- Theme queries ---
-
-/**
- * Get the system theme (single row).
- * @param {import('knex').Knex} db
- * @returns {Promise<Object>}
- */
-async function getSystemTheme(db) {
-  return db('system_theme').where('id', 'default').first();
-}
-
-/**
- * Update the system theme.
- * @param {import('knex').Knex} db
- * @param {Object} theme - { preset, primary_color, primary_rgb, theme_css }
- */
-async function updateSystemTheme(db, { preset, primary_color, primary_rgb, theme_css }) {
-  return db('system_theme').where('id', 'default').update({
-    preset, primary_color, primary_rgb, theme_css,
-    updated_at: new Date().toISOString(),
-  });
-}
-
 /**
  * Get all workspaces, ordered.
  * @param {import('knex').Knex} db
@@ -134,36 +111,6 @@ async function updateSystemTheme(db, { preset, primary_color, primary_rgb, theme
  */
 async function getWorkspaces(db) {
   return db('workspaces').orderBy('sort_order');
-}
-
-/**
- * Get a workspace's custom theme (may return undefined if inheriting).
- * @param {import('knex').Knex} db
- * @param {string} workspaceId
- * @returns {Promise<Object|undefined>}
- */
-async function getWorkspaceTheme(db, workspaceId) {
-  return db('workspace_themes').where('workspace_id', workspaceId).first();
-}
-
-/**
- * Create or update a workspace's custom theme.
- * @param {import('knex').Knex} db
- * @param {string} workspaceId
- * @param {Object} theme - { primary_color, primary_rgb, theme_css }
- */
-async function upsertWorkspaceTheme(db, workspaceId, { primary_color, primary_rgb, theme_css }) {
-  const exists = await db('workspace_themes').where('workspace_id', workspaceId).first();
-  if (exists) {
-    return db('workspace_themes').where('workspace_id', workspaceId).update({
-      primary_color, primary_rgb, theme_css,
-      updated_at: new Date().toISOString(),
-    });
-  }
-  return db('workspace_themes').insert({
-    workspace_id: workspaceId,
-    primary_color, primary_rgb, theme_css,
-  });
 }
 
 module.exports = {
@@ -176,9 +123,5 @@ module.exports = {
   getCliRegistry,
   setCliInstalled,
   setCliActive,
-  getSystemTheme,
-  updateSystemTheme,
   getWorkspaces,
-  getWorkspaceTheme,
-  upsertWorkspaceTheme,
 };

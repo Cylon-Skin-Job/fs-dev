@@ -94,7 +94,7 @@
   padding: 5px 12px;
   cursor: pointer;
   font-size: var(--file-tree-font-size, 0.85rem);
-  color: var(--text-primary, #e0e0e0);
+  color: var(--nav-text-color, var(--text-primary, #e0e0e0));
   transition: background 80ms ease;
   user-select: none;
 }
@@ -114,11 +114,11 @@
 }
 
 .rv-fp-folder-filled {
-  color: var(--text-dim, #999);
+  color: var(--nav-icon-color, var(--text-dim, #999));
 }
 
 .rv-fp-folder-outline {
-  color: var(--text-dim, #666);
+  color: var(--nav-icon-color, var(--text-dim, #666));
   font-variation-settings: 'FILL' 0;
 }
 

@@ -1,0 +1,123 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Global Tint Rules
+   ═══════════════════════════════════════════════════════════════════════════
+   These rules respond to body[data-tint-*] attributes set by the active theme.
+   They apply universally across every view. Per-view CSS never defines tint
+   responses.
+*/
+
+/* ── Content Panels ── */
+/* Content panel surfaces always match the chat content area
+   (`.chat-messages` background = --bg-solid), not the chat panel chrome. */
+.rv-ticket-column,
+.rv-tile-grid,
+.file-explorer-empty,
+.file-explorer-main:empty {
+  background: var(--bg-solid, #000);
+}
+
+/* ── Cards ── */
+body[data-tint-cards="true"] .rv-ticket-board {
+  background: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-ticket-column {
+  background: var(--ws-content-bg, #0d0d0d);
+}
+
+body[data-tint-cards="true"] .rv-ticket-column-header {
+  border-bottom-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-ticket-column-count {
+  background: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-ticket-card {
+  background: var(--ws-sidebar-bg, #111);
+  border-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-ticket-card:hover {
+  border-color: var(--ws-primary, #facc15);
+  background: color-mix(in srgb, var(--ws-sidebar-bg, #111) 90%, var(--ws-primary, #facc15));
+}
+
+body[data-tint-cards="true"] .rv-ticket-card.active {
+  border-color: var(--ws-primary, #facc15);
+}
+
+body[data-tint-cards="true"] .rv-ticket-card-id {
+  color: var(--ws-primary, #facc15);
+}
+
+body[data-tint-cards="true"] .rv-ticket-card-bot .material-symbols-outlined {
+  color: var(--ws-primary, #facc15);
+}
+
+body[data-tint-cards="true"] .rv-ticket-detail {
+  background: var(--ws-content-bg, #0d0d0d);
+}
+
+body[data-tint-cards="true"] .rv-ticket-detail-header {
+  border-bottom-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-ticket-detail-id {
+  color: var(--ws-primary, #facc15);
+}
+
+body[data-tint-cards="true"] .rv-wiki-topic-list {
+  background: var(--ws-sidebar-bg, #111);
+  border-right-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-wiki-page-viewer {
+  background: var(--ws-content-bg, #0d0d0d);
+}
+
+body[data-tint-cards="true"] .rv-wiki-page-nav {
+  background: var(--ws-sidebar-bg, #111);
+  border-bottom-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-wiki-tab-bar {
+  background: var(--ws-sidebar-bg, #111);
+  border-bottom-color: var(--ws-panel-border, #333);
+}
+
+body[data-tint-cards="true"] .rv-wiki-edge-panel {
+  background: var(--ws-sidebar-bg, #111);
+  border-left-color: var(--ws-panel-border, #333);
+}
+
+/* ── Left Panel ── */
+body[data-tint-left="true"] .sidebar {
+  background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
+}
+
+/* ── Right Panel ── */
+body[data-tint-right="true"] .file-tree-sidebar {
+  background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
+}
+
+body[data-tint-right="true"] .rv-secondary-sticky > .chat-area {
+  background: color-mix(in srgb, var(--chat-surface-bg, #1a1a1a) 88%, var(--ws-primary, #ec4899) 12%);
+}
+
+/* ── Border: Threads ── */
+body[data-tint-border-threads="true"] .sidebar {
+  border-right-color: var(--theme-border, rgba(255, 255, 255, 0.38));
+}
+
+/* ── Border: Chat ── */
+body[data-tint-border-chat="true"] .chat-messages,
+body[data-tint-border-chat="true"] .chat-input-wrapper,
+body[data-tint-border-chat="true"] .message-user-content,
+body[data-tint-border-chat="true"] .rv-send-button-group {
+  border: 1px solid var(--border-color, var(--neutral-chrome-border));
+}
+
+body[data-tint-border-chat="true"] .chat-input-wrapper:focus-within {
+  border-color: color-mix(in srgb, var(--text-primary) 24%, var(--border-color));
+}
