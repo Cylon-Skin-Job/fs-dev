@@ -1,6 +1,6 @@
 # Secrets Manager — Spec
 
-**Status:** Draft — ready for handoff.
+**Status:** Implemented — landed at 008cb94 (2026-05-05). v1.1 hardening tracked in `docs/CLIPBOARD_KEYCHAIN_REDESIGN.md` §7.
 **Owner:** Open Robin core.
 **Precedes implementation of:** the header secrets button + popover, the API Keys sub-module, the `secrets_index` SQLite table, and the wiki page at `ai/views/wiki-viewer/content/system-tools/secrets-manager/PAGE.md`.
 **Depends on:**
