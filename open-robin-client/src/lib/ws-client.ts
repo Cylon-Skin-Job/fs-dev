@@ -192,7 +192,11 @@ function handleMessage(msg: WebSocketMessage) {
     case 'clipboard:list':
     case 'clipboard:append':
     case 'clipboard:touch':
+    case 'clipboard:use':
+    case 'clipboard:delete':
     case 'clipboard:clear':
+    case 'clipboard:state':
+    case 'clipboard:error':
       emitRobin(msg.type, msg);
       break;
 
