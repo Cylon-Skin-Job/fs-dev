@@ -5,7 +5,7 @@
 set -e
 
 PROJECT_DIR="$HOME/projects/open-robin"
-SERVER_PATH="$PROJECT_DIR/open-robin-server/server.js"
+SERVER_PATH="$PROJECT_DIR/fusion-studio-server/server.js"
 PID_FILE="/tmp/fusion-studio.pid"
 LOG_FILE="/tmp/fusion-studio.log"
 PORT=3001
@@ -20,7 +20,7 @@ if [ -f "$PID_FILE" ]; then
 fi
 
 # 2. Fallback: kill any stray process running THIS project's server.js (by full path).
-pkill -9 -f "open-robin-server/server\.js" 2>/dev/null || true
+pkill -9 -f "fusion-studio-server/server\.js" 2>/dev/null || true
 
 # 3. Last-resort: kill anything still holding our port.
 lsof -ti:$PORT | xargs kill -9 2>/dev/null || true
@@ -35,11 +35,11 @@ if lsof -ti:$PORT >/dev/null 2>&1; then
 fi
 
 # Build frontend (fails loudly if TypeScript errors)
-cd "$PROJECT_DIR/open-robin-client" && npm run build
+cd "$PROJECT_DIR/fusion-studio-client" && npm run build
 
 # Start server from the main project directory. Capture stdout+stderr to log file;
 # record PID for next restart. Disown so the process outlives this shell.
-cd "$PROJECT_DIR/open-robin-server"
+cd "$PROJECT_DIR/fusion-studio-server"
 : > "$LOG_FILE"
 nohup node server.js >>"$LOG_FILE" 2>&1 &
 SERVER_PID=$!
