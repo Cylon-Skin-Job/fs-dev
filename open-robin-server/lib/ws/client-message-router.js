@@ -6,7 +6,7 @@
  * copyLink / list), file explorer (tree / content / recent), panel
  * management (set_panel), wire protocol (initialize / prompt /
  * response), file operations (file:move), robin system panel
- * (robin:*), clipboard (clipboard:*), and harness admin
+ * (fusion:*), clipboard (clipboard:*), and harness admin
  * (harness:get_mode / set_mode / rollback / list / check_install).
  *
  * Also handles ws.on('close') for per-connection cleanup.
@@ -51,7 +51,7 @@ const { redactWsMessage } = require('./redaction-map');
  * @param {Function} deps.setSessionRoot
  * @param {Function} deps.clearSessionRoot
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
- * @param {() => object} deps.getRobinHandlers - getter closure over server.js let robinHandlers
+ * @param {() => object} deps.getFusionHandlers - getter closure over server.js let fusionHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
  * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
  * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
@@ -68,7 +68,7 @@ function createClientMessageRouter({
   setSessionRoot,
   clearSessionRoot,
   getProjectRoot,
-  getRobinHandlers,
+  getFusionHandlers,
   getClipboardHandlers,
   getThemeHandlers,
   getSecretsHandlers,
@@ -435,10 +435,10 @@ function createClientMessageRouter({
         return;
       }
 
-      // ---- Robin system panel (delegated to lib/robin/ws-handlers.js) ----
+      // ---- Robin system panel (delegated to lib/fusion/ws-handlers.js) ----
 
-      if (clientMsg.type.startsWith('robin:')) {
-        const handler = getRobinHandlers()[clientMsg.type];
+      if (clientMsg.type.startsWith('fusion:')) {
+        const handler = getFusionHandlers()[clientMsg.type];
         if (handler) {
           await handler(ws, clientMsg);
           return;

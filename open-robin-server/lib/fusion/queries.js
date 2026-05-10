@@ -1,7 +1,7 @@
 /**
  * Robin queries — data access for the system panel
  *
- * One job: read/write robin.db for system panel data.
+ * One job: read/write fusion.db for system panel data.
  * All functions take a Knex instance as first arg.
  */
 

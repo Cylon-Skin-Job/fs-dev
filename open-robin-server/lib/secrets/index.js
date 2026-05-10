@@ -5,7 +5,7 @@
  *       returned by createHandlers().
  *
  * Mirrors the factory-returning-handler-map convention used by
- * lib/ws/theme-handlers.js and lib/robin/ws-handlers.js so server.js can
+ * lib/ws/theme-handlers.js and lib/fusion/ws-handlers.js so server.js can
  * register `secrets:*` messages with the same getter-closure pattern as the
  * existing feature modules.
  *

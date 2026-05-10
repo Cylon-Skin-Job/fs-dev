@@ -182,9 +182,9 @@ function handleMessage(msg: WebSocketMessage) {
       break;
 
     // Fusion system panel responses
-    case 'robin:tabs':
-    case 'robin:items':
-    case 'robin:wiki':
+    case 'fusion:tabs':
+    case 'fusion:items':
+    case 'fusion:wiki':
       emitFusion(msg.type, msg);
       break;
 

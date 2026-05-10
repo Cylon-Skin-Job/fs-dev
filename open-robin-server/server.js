@@ -20,8 +20,8 @@ const fsPromises = require('fs').promises;
 const { ThreadWebSocketHandler } = require('./lib/thread');
 const { initDb, getDb } = require('./lib/db');
 
-// Robin system panel
-const createRobinHandlers = require('./lib/robin/ws-handlers');
+// Fusion system panel
+const createFusionHandlers = require('./lib/fusion/ws-handlers');
 
 // Clipboard manager
 const createClipboardHandlers = require('./lib/secrets/clipboard/handlers');
@@ -413,7 +413,7 @@ wss.on('connection', async (ws) => {
   //
   // Per-connection client message router. Depends on the wire lifecycle
   // and file explorer — must be created AFTER those factories.
-  // robinHandlers / clipboardHandlers are injected as getter closures to
+  // fusionHandlers / clipboardHandlers are injected as getter closures to
   // preserve the mutable-reference pattern from SPEC-01b (the
   // module-level `let` bindings are reassigned inside the
   // startServer().then() callback).
@@ -428,7 +428,7 @@ wss.on('connection', async (ws) => {
     setSessionRoot,
     clearSessionRoot,
     getProjectRoot,
-    getRobinHandlers: () => robinHandlers,
+    getFusionHandlers: () => fusionHandlers,
     getClipboardHandlers: () => clipboardHandlers,
     getThemeHandlers: () => themeHandlers,
     getSecretsHandlers: () => secretsHandlers,
@@ -518,9 +518,9 @@ wss.on('connection', async (ws) => {
 
 // Module-level mutable handler references. Populated when startServer() resolves.
 // The client message router (lib/ws/client-message-router.js) reads from these
-// via getRobinHandlers / getClipboardHandlers getter closures injected into
+// via getFusionHandlers / getClipboardHandlers getter closures injected into
 // createClientMessageRouter. See SPEC-01b for the mutable-reference rationale.
-let robinHandlers = {};
+let fusionHandlers = {};
 let clipboardHandlers = {};
 let themeHandlers = {};
 let secretsHandlers = {};
@@ -531,7 +531,7 @@ startServer({
   getProjectRoot,
 })
   .then(result => {
-    robinHandlers = result.robinHandlers;
+    fusionHandlers = result.fusionHandlers;
     clipboardHandlers = result.clipboardHandlers;
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;

@@ -3,7 +3,7 @@
  *
  * Extracted from server.js — handles the full bootstrap sequence:
  *   1. initDb
- *   2. createRobinHandlers + createClipboardHandlers
+ *   2. createFusionHandlers + createClipboardHandlers
  *   3. startAuditSubscriber
  *   4. server.listen()
  *   5. wiki hooks
@@ -15,7 +15,7 @@
  * Ordering is load-bearing. Do not reorder steps. See the gotchas in
  * SPEC-01b for the specific hard dependencies.
  *
- * Returns { robinHandlers, clipboardHandlers } so server.js can wire
+ * Returns { fusionHandlers, clipboardHandlers } so server.js can wire
  * them into the client message router (which reads from module-level
  * mutable references).
  */
@@ -24,7 +24,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { initDb, getDb, closeDb, DB_PATH } = require('./db');
-const createRobinHandlers = require('./robin/ws-handlers');
+const createFusionHandlers = require('./fusion/ws-handlers');
 const createClipboardHandlers = require('./secrets/clipboard/handlers');
 const createThemeHandlers = require('./ws/theme-handlers');
 const { createHandlers: createSecretsHandlers } = require('./secrets/index');
@@ -44,20 +44,20 @@ const PORT = process.env.PORT || 3001;
  * @param {import('http').Server} deps.server
  * @param {Map} deps.sessions
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
- * @returns {Promise<{ robinHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
+ * @returns {Promise<{ fusionHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
  */
 async function start({ server, sessions, getProjectRoot }) {
-  // 1. DB init — robin.db lives at <server>/data/robin.db (fixed,
+  // 1. DB init — fusion.db lives at <server>/data/fusion.db (fixed,
   // workspace-independent). It is intentionally NOT tied to the active
   // workspace, because the workspace registry is *in* the DB —
   // chicken-and-egg. The DB is the registry's home; workspaces resolve
   // through it, not the other way around.
   await initDb();
   process.env.ROBIN_DB = DB_PATH;
-  console.log('[DB] robin.db initialized');
+  console.log('[DB] fusion.db initialized');
 
   // 2. Handlers — depend on DB being ready
-  const robinHandlers = createRobinHandlers({ getDb, sessions, getProjectRoot });
+  const fusionHandlers = createFusionHandlers({ getDb, sessions, getProjectRoot });
 
   // 3. Audit subscriber — listens to event bus, persists exchange metadata
   startAuditSubscriber();
@@ -171,7 +171,7 @@ async function start({ server, sessions, getProjectRoot }) {
   process.on('SIGTERM', _handleShutdown);
   process.on('SIGINT', _handleShutdown);
 
-  return { robinHandlers, clipboardHandlers, themeHandlers, secretsHandlers };
+  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers };
 }
 
 /**

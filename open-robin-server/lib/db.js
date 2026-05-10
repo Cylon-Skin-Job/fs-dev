@@ -1,7 +1,7 @@
 /**
  * Database singleton — Knex + better-sqlite3
  *
- * One job: manage the lifecycle of robin.db (init, get, close).
+ * One job: manage the lifecycle of fusion.db (init, get, close).
  */
 
 const knex = require('knex');
@@ -12,7 +12,7 @@ const fs = require('fs');
 // the canonical DB path before initDb() runs. Single source of truth.
 // See docs/DB_RELOCATION_SPEC.md §3a.
 const DATA_DIR = path.join(__dirname, '..', 'data');
-const DB_PATH = path.join(DATA_DIR, 'robin.db');
+const DB_PATH = path.join(DATA_DIR, 'fusion.db');
 
 let instance = null;
 

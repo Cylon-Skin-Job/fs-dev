@@ -91,9 +91,9 @@ export type WebSocketMessageType =
   | 'file_changed'
   | 'file_tree_response'
   | 'file_content_response'
-  | 'robin:tabs'
-  | 'robin:items'
-  | 'robin:wiki'
+  | 'fusion:tabs'
+  | 'fusion:items'
+  | 'fusion:wiki'
   // Clipboard messages
   | 'clipboard:list'
   | 'clipboard:append'

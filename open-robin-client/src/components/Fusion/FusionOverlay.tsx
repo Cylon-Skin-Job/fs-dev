@@ -68,18 +68,18 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
   // Subscribe to fusion: messages
   useEffect(() => {
     const unsubs = [
-      onFusionMessage('robin:tabs', (msg: any) => {
+      onFusionMessage('fusion:tabs', (msg: any) => {
         setTabs(msg.tabs || []);
         // On first load, activate the first tab
         if (!initializedRef.current && msg.tabs?.length > 0) {
           initializedRef.current = true;
           const firstTab = msg.tabs[0].id;
           setActiveTab(firstTab);
-          sendFusionMessage({ type: 'robin:tab-items', tab: firstTab });
-          sendFusionMessage({ type: 'robin:wiki-page', slug: firstTab });
+          sendFusionMessage({ type: 'fusion:tab-items', tab: firstTab });
+          sendFusionMessage({ type: 'fusion:wiki-page', slug: firstTab });
         }
       }),
-      onFusionMessage('robin:items', (msg: any) => {
+      onFusionMessage('fusion:items', (msg: any) => {
         setItems(msg.items || []);
         // For CLIs tab, separate installed from registry
         if (msg.tab === 'clis') {
@@ -89,7 +89,7 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
           setRegistryItems(notInstalled);
         }
       }),
-      onFusionMessage('robin:wiki', (msg: any) => {
+      onFusionMessage('fusion:wiki', (msg: any) => {
         if (!msg.error) {
           setWikiPage(msg as WikiPage);
         }
@@ -102,7 +102,7 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
   useEffect(() => {
     if (open) {
       initializedRef.current = false;
-      sendFusionMessage({ type: 'robin:tabs' });
+      sendFusionMessage({ type: 'fusion:tabs' });
     }
   }, [open]);
 
@@ -124,16 +124,16 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
     setShowContext(false);
     setWikiPage(null);
     setItems([]);
-    sendFusionMessage({ type: 'robin:tab-items', tab: tabId });
-    sendFusionMessage({ type: 'robin:wiki-page', slug: tabId });
-    sendFusionMessage({ type: 'robin:context', tab: tabId, item: null });
+    sendFusionMessage({ type: 'fusion:tab-items', tab: tabId });
+    sendFusionMessage({ type: 'fusion:wiki-page', slug: tabId });
+    sendFusionMessage({ type: 'fusion:context', tab: tabId, item: null });
   }
 
   function selectItem(id: string) {
     setSelectedItemId(id);
     setShowRegistry(false);
     setShowContext(false);
-    sendFusionMessage({ type: 'robin:context', tab: activeTab, item: id });
+    sendFusionMessage({ type: 'fusion:context', tab: activeTab, item: id });
   }
 
   function openRegistry() {
@@ -269,9 +269,9 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
                         setSelectedItemId(item.key);
                         setShowContext(false);
                         if (item.wiki_slug) {
-                          sendFusionMessage({ type: 'robin:wiki-page', slug: item.wiki_slug });
+                          sendFusionMessage({ type: 'fusion:wiki-page', slug: item.wiki_slug });
                         }
-                        sendFusionMessage({ type: 'robin:context', tab: activeTab, item: item.key });
+                        sendFusionMessage({ type: 'fusion:context', tab: activeTab, item: item.key });
                       }}
                     >
                       <span className="rv-fusion-wiki-index-title">{item.key.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/\bCli\b/g, 'CLI').replace(/\bAi\b/g, 'AI').replace(/\bApi\b/g, 'API').replace(/\bLlm\b/g, 'LLM')}</span>
