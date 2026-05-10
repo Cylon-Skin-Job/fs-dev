@@ -71,8 +71,47 @@ const DEFAULT_SECONDARY_FLOAT = { x: -1, y: -1, width: 380, height: 520 };
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
 
+interface WorkspacePanelState {
+  projectRoot: string | null;
+  currentPanel: string;
+  panels: Record<string, PanelState>;
+  projectChats: Record<string, PanelState>;
+  threads: { project: Thread[]; view: Thread[] };
+  currentThreadIds: { project: string | null; view: string | null };
+  currentScope: Scope | null;
+  wireReady: boolean;
+  contextUsage: number;
+  panelConfigs: PanelConfig[];
+  viewStates: Record<string, ViewUIState>;
+}
+
+function createEmptyWorkspaceState(): WorkspacePanelState {
+  return {
+    projectRoot: null,
+    currentPanel: 'file-viewer',
+    panels: {},
+    projectChats: {},
+    threads: { project: [], view: [] },
+    currentThreadIds: { project: null, view: null },
+    currentScope: null,
+    wireReady: false,
+    contextUsage: 0,
+    panelConfigs: [],
+    viewStates: {},
+  };
+}
+
 interface AppState {
-  // Panel configs (dynamically discovered)
+  // Workspace isolation (WORKSPACE_ISOLATION_SPEC)
+  activeWorkspaceId: string | null;
+  workspaceState: Record<string, WorkspacePanelState>;
+  activateWorkspace: (workspaceId: string | null) => void;
+  seedWorkspaceState: (workspaceId: string, state: Partial<WorkspacePanelState>) => void;
+
+  // Prefetch cancellation token
+  _prefetchAbort: AbortController | null;
+  setPrefetchAbort: (controller: AbortController | null) => void;
+  // Panel configs (dynamically discovered; workspace-scoped via cache)
   panelConfigs: PanelConfig[];
   setPanelConfigs: (configs: PanelConfig[]) => void;
   getPanelConfig: (id: string) => PanelConfig | undefined;
@@ -120,7 +159,7 @@ interface AppState {
   setWs: (ws: WebSocket | null) => void;
   sendMessage: (text: string, scope: Scope, threadId?: string | null) => void;
 
-  // Project root (absolute path from server)
+  // Project root (absolute path from server; workspace-scoped via cache)
   projectRoot: string | null;
   setProjectRoot: (root: string) => void;
 
@@ -256,6 +295,93 @@ function resolveThreadId(state: AppState, scope: Scope, threadId: string | null)
 }
 
 export const usePanelStore = create<AppState>((set, get) => ({
+  // Workspace isolation (WORKSPACE_ISOLATION_SPEC)
+  activeWorkspaceId: null,
+  workspaceState: {},
+  _prefetchAbort: null,
+  setPrefetchAbort: (controller) => set({ _prefetchAbort: controller }),
+
+  activateWorkspace: (workspaceId) => {
+    const state = get();
+    const oldId = state.activeWorkspaceId;
+
+    // Cancel any pending prefetch for the old workspace
+    if (state._prefetchAbort) {
+      state._prefetchAbort.abort();
+    }
+
+    // Save only lightweight, safe-to-cache state (panelConfigs + viewStates).
+    // projectRoot/currentPanel are NOT cached — they come from panel_config
+    // on every switch to avoid path-rotation bugs.
+    const nextWorkspaceState = { ...state.workspaceState };
+    if (oldId) {
+      const oldState: WorkspacePanelState = {
+        projectRoot: null,
+        currentPanel: state.currentPanel,
+        panels: {},
+        projectChats: {},
+        threads: { project: [], view: [] },
+        currentThreadIds: { project: null, view: null },
+        currentScope: null,
+        wireReady: false,
+        contextUsage: 0,
+        panelConfigs: state.panelConfigs,
+        viewStates: state.viewStates,
+      };
+      nextWorkspaceState[oldId] = oldState;
+
+      // Push old workspace state to server for persistence across refreshes
+      if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+        state.ws.send(JSON.stringify({
+          type: 'workspace:cache_push',
+          workspaceId: oldId,
+          state: oldState,
+        }));
+      }
+    }
+
+    // Load new workspace state from cache or create empty
+    const cached = workspaceId ? nextWorkspaceState[workspaceId] : null;
+    const loaded = cached ? { ...cached } : createEmptyWorkspaceState();
+
+    // Validate currentPanel against cached panelConfigs. If the cached panel
+    // doesn't exist in this workspace's config, reset to first or default.
+    const validPanel = loaded.panelConfigs.find((c) => c.id === loaded.currentPanel)
+      ? loaded.currentPanel
+      : (loaded.panelConfigs[0]?.id ?? 'file-viewer');
+
+    set({
+      activeWorkspaceId: workspaceId,
+      workspaceState: nextWorkspaceState,
+      projectRoot: null,           // will be set by panel_config
+      currentPanel: validPanel,
+      panels: {},                  // re-created on demand
+      projectChats: {},            // re-fetched from server
+      threads: { project: [], view: [] },
+      currentThreadIds: { project: null, view: null },
+      currentScope: null,
+      wireReady: false,
+      contextUsage: 0,
+      panelConfigs: loaded.panelConfigs,
+      viewStates: loaded.viewStates,
+      _prefetchAbort: null,
+    });
+  },
+
+  // Seed workspace state from server cache (on workspace:init) without activating
+  seedWorkspaceState: (workspaceId, partial) => {
+    set((s) => {
+      if (s.workspaceState[workspaceId]) return s; // already cached
+      const seeded: WorkspacePanelState = {
+        ...createEmptyWorkspaceState(),
+        ...partial,
+      };
+      return {
+        workspaceState: { ...s.workspaceState, [workspaceId]: seeded },
+      };
+    });
+  },
+
   // Panel configs — empty until discovery populates them
   panelConfigs: [],
   setPanelConfigs: (configs) => {
@@ -877,3 +1003,26 @@ export const usePanelStore = create<AppState>((set, get) => ({
   }),
 
 }));
+
+// ── Workspace-keyed convenience selectors (WORKSPACE_ISOLATION_SPEC) ──
+// These abstract the workspaceState[activeWorkspaceId] lookup so components
+// don't inline it everywhere. If the active workspace is missing, sensible
+// fallbacks are returned.
+
+export function getCurrentWorkspaceState(state: AppState): WorkspacePanelState | null {
+  const id = state.activeWorkspaceId;
+  if (!id) return null;
+  return state.workspaceState[id] ?? null;
+}
+
+export function getCurrentProjectRoot(state: AppState): string | null {
+  return state.projectRoot;
+}
+
+export function getCurrentPanel(state: AppState): string {
+  return state.currentPanel;
+}
+
+export function getCurrentThreads(state: AppState, scope: Scope): Thread[] {
+  return state.threads[scope] ?? [];
+}

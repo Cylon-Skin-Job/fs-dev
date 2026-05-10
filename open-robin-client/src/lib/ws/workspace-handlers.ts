@@ -21,10 +21,11 @@
 import { useWorkspaceStore } from '../../state/workspaceStore';
 import { usePanelStore } from '../../state/panelStore';
 import { useFileStore } from '../../state/fileStore';
+import { useWikiStore } from '../../state/wikiStore';
 import { rediscoverPanels } from '../panels';
 import { loadRootTree } from '../file-tree';
 import { showModal, onModalAction } from '../modal';
-import { resetSharedStyles } from '../../hooks/useSharedWorkspaceStyles';
+import { resetSharedStyles, injectWorkspaceStyles } from '../../hooks/useSharedWorkspaceStyles';
 import type { WebSocketMessage } from '../../types';
 
 export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
@@ -34,9 +35,39 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     case 'workspace:init':
       store.setWorkspaces(msg.workspaces ?? []);
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
+      store.setWorkspaceType((msg as any).workspaceType ?? 'code');
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
       usePanelStore.getState().hydrateThemes((msg as any).themes ?? [], (msg as any).activeThemeId ?? null);
+      // INSTANT_THEME_SWITCH: inject pre-loaded CSS synchronously if available
+      if ((msg as any).styles) {
+        injectWorkspaceStyles((msg as any).styles);
+      }
+      // WORKSPACE_CACHE_PERSISTENCE: hydrate cached workspace states from server
+      const cachedStates = (msg as any).cachedStates ?? {};
+      for (const [wsId, cached] of Object.entries(cachedStates)) {
+        if (typeof cached === 'object' && cached !== null) {
+          // Strip internal server metadata before seeding
+          const { _savedAt, ...state } = cached as any;
+          usePanelStore.getState().seedWorkspaceState(wsId, state);
+        }
+      }
+      // If there's an active workspace on init, activate it so the cached
+      // state loads immediately (avoids a blank-first-load after refresh).
+      const activeId = msg.activeWorkspaceId ?? null;
+      const panelBefore = usePanelStore.getState().currentPanel;
+      if (activeId) {
+        usePanelStore.getState().activateWorkspace(activeId);
+        useFileStore.getState().activateWorkspace(activeId);
+        useWikiStore.getState().activateWorkspace(activeId);
+      }
+      // Sync panel with server if the cached panel differs from the default
+      // that was already sent in ws.onopen (set_panel is idempotent-ish).
+      const panelStore = usePanelStore.getState();
+      const wsConn = panelStore.ws;
+      if (wsConn && wsConn.readyState === WebSocket.OPEN && panelStore.currentPanel && panelStore.currentPanel !== panelBefore) {
+        wsConn.send(JSON.stringify({ type: 'set_panel', panel: panelStore.currentPanel }));
+      }
       store.markInit();
       return true;
 
@@ -45,23 +76,64 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'workspace:switched': {
-      store.setActiveWorkspaceId(msg.to ?? null);
+      const workspaceId = msg.to ?? null;
+      store.setActiveWorkspaceId(workspaceId);
+      store.setWorkspaceType((msg as any).workspaceType ?? 'code');
       store.closeSwitcher();
-      // Reset file tree — the old workspace's files are stale
-      useFileStore.getState().reset();
-      // Drop cached shared CSS so the next render loads it from the new workspace
-      resetSharedStyles();
+
+      // WORKSPACE_ISOLATION_SPEC: swap to cached workspace state (or empty)
+      usePanelStore.getState().activateWorkspace(workspaceId);
+      useFileStore.getState().activateWorkspace(workspaceId);
+      useWikiStore.getState().activateWorkspace(workspaceId);
+
+      // Re-read stores AFTER activateWorkspace so we use the NEW workspace's state
+      const panelStore = usePanelStore.getState();
+
+      // Use repoPath from the switch message to seed projectRoot if the cache
+      // is empty. panel_config will arrive shortly after with the canonical value.
+      if (msg.repoPath && !panelStore.projectRoot) {
+        panelStore.setProjectRoot(msg.repoPath);
+      }
+
+      // INSTANT_THEME_SWITCH: if the server sent pre-loaded CSS, inject it
+      // synchronously instead of triggering 7 async WebSocket fetches.
+      if ((msg as any).styles) {
+        injectWorkspaceStyles((msg as any).styles);
+      } else {
+        // Fallback for older servers: invalidate cache so the hook refetches
+        resetSharedStyles();
+      }
+
       // SECONDARY_CHAT_SPEC §7d: secondary chat is workspace-scoped — blanket close.
-      usePanelStore.getState().closeSecondary();
-      const ws = usePanelStore.getState().ws;
-      if (ws && msg.to) {
+      panelStore.closeSecondary();
+
+      // If this workspace has never been visited, request panels and file tree.
+      // If cached, render immediately without blocking.
+      const isCached = workspaceId && panelStore.workspaceState[workspaceId];
+      const ws = panelStore.ws;
+
+      if (!isCached && ws && workspaceId) {
+        // First visit: discover panels from the new workspace
         rediscoverPanels(ws).then(() => {
-          // Reload file tree from the new workspace's project root
+          // After discovery, load file tree in the background
           loadRootTree();
         }).catch((err) => {
           console.error('[workspace] rediscover failed:', err);
         });
+      } else if (ws && workspaceId) {
+        // Cached visit: panels already known; tell the server which panel we're on
+        // so it can set up the correct view manager and thread scope.
+        if (panelStore.panelConfigs.length === 0) {
+          // Edge case: cache exists but has no panels (shouldn't happen, but safe)
+          rediscoverPanels(ws).catch((err) => {
+            console.error('[workspace] rediscover failed:', err);
+          });
+        } else if (panelStore.currentPanel) {
+          ws.send(JSON.stringify({ type: 'set_panel', panel: panelStore.currentPanel }));
+        }
+        loadRootTree();
       }
+
       return true;
     }
 

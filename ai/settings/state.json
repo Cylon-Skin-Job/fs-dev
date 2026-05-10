@@ -10,13 +10,14 @@
     "leftChat": false
   },
   "popup": {
-    "open": true,
-    "x": 1020,
-    "y": 130,
-    "width": 380,
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
     "height": 520,
-    "threadId": "2026-04-19T22-29-40-441"
+    "threadId": null
   },
   "currentThreadId": "2026-04-12T17-28-44-269",
-  "secondaryThreadId": "2026-04-19T22-29-40-441"
+  "secondaryThreadId": null
+}l
 }

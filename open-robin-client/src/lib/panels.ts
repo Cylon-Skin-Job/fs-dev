@@ -54,6 +54,8 @@ export interface PanelConfig {
   layoutConfig: LayoutConfig | null;
   contentConfig: ContentConfig | null;
   rank?: number;
+  /** Derived from which directory the panel was discovered in */
+  category: 'app' | 'tool';
   /** True if panel has a ui/ folder with module.js (runtime-loaded plugin) */
   hasUiFolder?: boolean;
 }
@@ -153,9 +155,9 @@ export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): 
 /**
  * Load a JSON file from a panel, returning null on failure.
  */
-async function fetchPanelJson(ws: WebSocket, panelId: string, filePath: string): Promise<any | null> {
+async function fetchPanelJson(ws: WebSocket, panelId: string, filePath: string, panelAlias = '__panels__'): Promise<any | null> {
   try {
-    const raw = await fetchPanelFile(ws, '__panels__', `${panelId}/${filePath}`);
+    const raw = await fetchPanelFile(ws, panelAlias, `${panelId}/${filePath}`);
     return JSON.parse(raw);
   } catch {
     return null;
@@ -165,22 +167,27 @@ async function fetchPanelJson(ws: WebSocket, panelId: string, filePath: string):
 /**
  * Load a single panel's config from its index.json + content.json + layout JSON.
  */
-export async function loadPanelConfig(ws: WebSocket, panelId: string): Promise<PanelConfig | null> {
+export async function loadPanelConfig(
+  ws: WebSocket,
+  panelId: string,
+  category: 'app' | 'tool' = 'tool'
+): Promise<PanelConfig | null> {
   try {
-    const json = await fetchPanelJson(ws, panelId, 'index.json');
+    const panelAlias = category === 'app' ? '__apps__' : '__panels__';
+    const json = await fetchPanelJson(ws, panelId, 'index.json', panelAlias);
     if (!json) return null;
 
     // Load content.json — declares display type and chat config
-    const contentConfig: ContentConfig | null = await fetchPanelJson(ws, panelId, 'content.json');
+    const contentConfig: ContentConfig | null = await fetchPanelJson(ws, panelId, 'content.json', panelAlias);
 
-    const layoutConfig: LayoutConfig | null = await fetchPanelJson(ws, panelId, 'settings/layout.json');
+    const layoutConfig: LayoutConfig | null = await fetchPanelJson(ws, panelId, 'settings/layout.json', panelAlias);
 
     // Chat is determined by content.json, not by probing the filesystem
     const chatConfig = contentConfig?.chat || null;
     const hasChat = chatConfig !== null;
 
     // Check if panel has a ui/ folder with module.js
-    const hasUiFolder = await fetchPanelFile(ws, '__panels__', `${panelId}/ui/module.js`)
+    const hasUiFolder = await fetchPanelFile(ws, panelAlias, `${panelId}/ui/module.js`)
       .then(() => true)
       .catch(() => false);
 
@@ -195,6 +202,7 @@ export async function loadPanelConfig(ws: WebSocket, panelId: string): Promise<P
       layoutConfig,
       contentConfig,
       rank: json.rank,
+      category,
       hasUiFolder,
     };
   } catch {
@@ -203,15 +211,15 @@ export async function loadPanelConfig(ws: WebSocket, panelId: string): Promise<P
 }
 
 /**
- * Discover all panels by requesting the folder listing of ai/views/.
+ * Discover panels or apps by requesting a folder listing.
  * Returns panel IDs (folder names).
  */
-export function discoverPanels(ws: WebSocket): Promise<string[]> {
+export function discoverPanels(ws: WebSocket, panelAlias: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'file_tree_response' && msg.panel === '__panels__') {
+        if (msg.type === 'file_tree_response' && msg.panel === panelAlias) {
           ws.removeEventListener('message', handleMessage);
           if (msg.success) {
             const folders = (msg.nodes || [])
@@ -228,7 +236,7 @@ export function discoverPanels(ws: WebSocket): Promise<string[]> {
     ws.addEventListener('message', handleMessage);
     ws.send(JSON.stringify({
       type: 'file_tree_request',
-      panel: '__panels__',
+      panel: panelAlias,
       path: '',
     }));
 
@@ -240,18 +248,31 @@ export function discoverPanels(ws: WebSocket): Promise<string[]> {
 }
 
 /**
- * Load all panel configs. Discovers panel folders, loads each config,
- * returns sorted by rank (from index.json rank field).
+ * Load all panel configs from both ai/views/ (tools) and ai/apps/ (apps).
+ * Returns sorted by rank within each category.
  */
 export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {
-  const ids = await discoverPanels(ws);
-  const configs = await Promise.all(
-    ids.map((id) => loadPanelConfig(ws, id))
+  const [toolIds, appIds] = await Promise.all([
+    discoverPanels(ws, '__panels__').catch(() => [] as string[]),
+    discoverPanels(ws, '__apps__').catch(() => [] as string[]),
+  ]);
+
+  const toolConfigs = await Promise.all(
+    toolIds.map((id) => loadPanelConfig(ws, id, 'tool'))
   );
-  // Filter nulls and sort by rank (panels without rank go last)
-  return configs
-    .filter((c): c is PanelConfig => c !== null)
-    .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  const appConfigs = await Promise.all(
+    appIds.map((id) => loadPanelConfig(ws, id, 'app'))
+  );
+
+  const all = [
+    ...appConfigs.filter((c): c is PanelConfig => c !== null),
+    ...toolConfigs.filter((c): c is PanelConfig => c !== null),
+  ];
+
+  // Sort within each category by rank, but keep apps first
+  const apps = all.filter((c) => c.category === 'app').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  const tools = all.filter((c) => c.category === 'tool').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  return [...apps, ...tools];
 }
 
 /**

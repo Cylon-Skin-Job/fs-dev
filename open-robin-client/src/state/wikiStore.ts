@@ -25,11 +25,30 @@ export interface TopicMeta {
   edges_in: string[];
 }
 
-export interface WikiState {
-  // Index
+interface WorkspaceWikiState {
   topics: Record<string, TopicMeta>;
   collections: CollectionMeta[];
   indexLoaded: boolean;
+}
+
+function createEmptyWorkspaceWikiState(): WorkspaceWikiState {
+  return {
+    topics: {},
+    collections: [],
+    indexLoaded: false,
+  };
+}
+
+export interface WikiState {
+  // Current workspace wiki state (rendered)
+  topics: Record<string, TopicMeta>;
+  collections: CollectionMeta[];
+  indexLoaded: boolean;
+
+  // Workspace-keyed cache (WORKSPACE_ISOLATION_SPEC)
+  workspaceTopics: Record<string, WorkspaceWikiState>;
+  activeWorkspaceId: string | null;
+  activateWorkspace: (workspaceId: string | null) => void;
 
   // Navigation
   activeTopic: string | null;
@@ -84,6 +103,46 @@ export const useWikiStore = create<WikiState>((set, get) => ({
   topics: {},
   collections: [],
   indexLoaded: false,
+  workspaceTopics: {},
+  activeWorkspaceId: null,
+
+  activateWorkspace: (workspaceId) => {
+    const state = get();
+
+    // Save current wiki index into the OLD workspace's cache slot
+    const nextWorkspaceTopics = { ...state.workspaceTopics };
+    if (state.activeWorkspaceId) {
+      nextWorkspaceTopics[state.activeWorkspaceId] = {
+        topics: state.topics,
+        collections: state.collections,
+        indexLoaded: state.indexLoaded,
+      };
+    }
+
+    // Load new workspace wiki state from cache or create empty
+    const cached = workspaceId ? state.workspaceTopics[workspaceId] : null;
+    const loaded = cached ? { ...cached } : createEmptyWorkspaceWikiState();
+
+    set({
+      activeWorkspaceId: workspaceId,
+      workspaceTopics: nextWorkspaceTopics,
+      topics: loaded.topics,
+      collections: loaded.collections,
+      indexLoaded: loaded.indexLoaded,
+      // Reset transient view state on switch (page content, navigation, etc.)
+      activeTopic: null,
+      navigationHistory: [],
+      historyIndex: -1,
+      pageContent: '',
+      pageLoading: false,
+      activeTab: 'page',
+      edgesIn: [],
+      edgesOut: [],
+      logContent: '',
+      error: null,
+    });
+  },
+
   activeTopic: null,
   navigationHistory: [],
   historyIndex: -1,

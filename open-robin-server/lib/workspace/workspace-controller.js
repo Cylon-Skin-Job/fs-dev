@@ -140,6 +140,10 @@ async function handleAddRequested(event) {
   const label = toTitleCase(path.basename(canonical));
   const nextSortOrder = (await registry.maxSortOrder()) + 1;
 
+  // Detect workspace paradigm: 'app' if ai/apps/ exists, otherwise 'code'
+  const hasAppsDir = fs.existsSync(path.join(canonical, 'ai', 'apps'));
+  const workspaceType = hasAppsDir ? 'app' : 'code';
+
   const workspace = await registry.add({
     id,
     label,
@@ -147,6 +151,7 @@ async function handleAddRequested(event) {
     description: null,
     repoPath: canonical,
     sortOrder: nextSortOrder,
+    type: workspaceType,
   });
 
   emit('workspace:added', { workspace });

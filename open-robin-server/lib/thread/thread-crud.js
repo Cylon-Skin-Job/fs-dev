@@ -24,6 +24,8 @@
  * @param {Map} deps.pendingReorderTimers - Pending reorder timers (shared with coordinator)
  * @param {number} deps.REORDER_DELAY_MS - Delay for thread list refresh
  */
+const { search: searchExchanges } = require('./chat-search');
+
 function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReorderTimers, REORDER_DELAY_MS }) {
 
   /**
@@ -432,12 +434,60 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     }
   }
 
+  /**
+   * Handle thread:search — query exchanges across threads.
+   * WORKSPACE_ISOLATION_SPEC §11c.
+   * @param {import('ws').WebSocket} ws
+   * @param {object} msg
+   * @param {string} msg.query
+   * @param {string|null} [msg.workspaceId] - Omit for current workspace; null for all
+   * @param {number} [msg.limit]
+   * @param {number} [msg.offset]
+   */
+  async function handleThreadSearch(ws, msg) {
+    try {
+      let workspaceId = msg.workspaceId;
+      // Default to current workspace if omitted
+      if (workspaceId === undefined) {
+        const state = wsState.get(ws);
+        const manager = state?.threadManagers?.project || state?.threadManagers?.view;
+        workspaceId = manager?.workspaceId ?? null;
+      }
+
+      const { total, results } = await searchExchanges({
+        workspaceId,
+        query: msg.query,
+        limit: msg.limit ?? 50,
+        offset: msg.offset ?? 0,
+      });
+
+      ws.send(JSON.stringify({
+        type: 'thread:search_result',
+        query: msg.query,
+        workspaceId,
+        total,
+        results,
+      }));
+    } catch (err) {
+      console.error('[ThreadWS] Search failed:', err);
+      ws.send(JSON.stringify({
+        type: 'thread:search_result',
+        query: msg.query,
+        workspaceId: msg.workspaceId ?? null,
+        total: 0,
+        results: [],
+        error: err.message,
+      }));
+    }
+  }
+
   return {
     handleThreadOpenAssistant,
     handleThreadRename,
     handleThreadDelete,
     handleThreadCopyLink,
     handleThreadTouch,
+    handleThreadSearch,
   };
 }
 

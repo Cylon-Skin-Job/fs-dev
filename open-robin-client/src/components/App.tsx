@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } fr
 import { usePanelStore } from '../state/panelStore';
 import { useWorkspaceStore } from '../state/workspaceStore';
 import { useWebSocket } from '../hooks/useWebSocket';
+import { useWorkspaceKeyboard } from '../hooks/useWorkspaceKeyboard';
 import { useSharedWorkspaceStyles } from '../hooks/useSharedWorkspaceStyles';
 import { ToolsPanel } from './ToolsPanel';
 import { Sidebar } from './Sidebar';
@@ -15,6 +16,7 @@ import { SecondaryChat, SecondaryChatSticky } from './SecondaryChat';
 import { SecondaryDockButton } from './SecondaryDockButton';
 import { EmptyStateView } from './EmptyStateView';
 import { WorkspaceSwitcher } from './WorkspaceSwitcher';
+import { WorkspaceRibbon } from './WorkspaceRibbon';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
 import ThemePickerButton from './ThemePickerButton';
 import SecretsManagerButton from './secrets/SecretsManagerButton';
@@ -132,6 +134,7 @@ function App() {
   // WebSocket connection — must run BEFORE the loading gate
   // so discovery can complete and populate configs
   useWebSocket();
+  useWorkspaceKeyboard();
   // Load themes + components + views CSS from the active workspace at runtime
   useSharedWorkspaceStyles();
 
@@ -146,12 +149,62 @@ function App() {
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
   const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
+  const workspaces = useWorkspaceStore((s) => s.workspaces);
+  const activeWorkspace = workspaces.find((w) => w.id === activeWorkspaceId) ?? null;
 
-  const toggleSwitcher = useCallback(() => {
+  const toggleRibbon = useCallback(() => {
     const s = useWorkspaceStore.getState();
-    if (s.isSwitcherOpen) s.closeSwitcher();
-    else s.openSwitcher();
+    if (s.isRibbonOpen) s.closeRibbon();
+    else s.openRibbon();
   }, []);
+
+  const cycleWorkspace = useCallback((direction: 'left' | 'right') => {
+    const s = useWorkspaceStore.getState();
+    const { workspaces, activeWorkspaceId } = s;
+    if (workspaces.length <= 1 || !activeWorkspaceId) return;
+
+    const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
+    const ids = sorted.map((w) => w.id);
+    const idx = ids.indexOf(activeWorkspaceId);
+    if (idx < 0) return;
+
+    const nextIdx =
+      direction === 'right'
+        ? (idx + 1) % ids.length
+        : (idx - 1 + ids.length) % ids.length;
+
+    s.requestSwitch(ids[nextIdx]);
+  }, []);
+
+  const WorkspaceTitle = () =>
+    activeWorkspace ? (
+      <div className="rv-header-center">
+        <button
+          className="rv-header-nav-btn"
+          onClick={() => cycleWorkspace('left')}
+          type="button"
+          title="Previous workspace"
+        >
+          <span className="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button
+          className="rv-header-center-title"
+          onClick={toggleRibbon}
+          type="button"
+          title="Switch workspace"
+        >
+          <span className="rv-workspace-name">{activeWorkspace.label}</span>
+        </button>
+        <button
+          className="rv-header-nav-btn"
+          onClick={() => cycleWorkspace('right')}
+          type="button"
+          title="Next workspace"
+        >
+          <span className="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+    ) : null;
 
   const loading = configs.length === 0;
 
@@ -225,13 +278,11 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
-            <button className="rv-menu-btn" onClick={toggleSwitcher}>
-              <span className="material-symbols-outlined">menu</span>
-            </button>
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
           </div>
+          <WorkspaceTitle />
           <div className="rv-header-right">
             <ThemePickerButton />
             <SecretsManagerButton />
@@ -242,6 +293,7 @@ function App() {
         </header>
         <EmptyStateView />
         <WorkspaceSwitcher />
+        <WorkspaceRibbon />
         <WorkspaceAddModal />
         <ModalOverlay />
       </div>
@@ -253,13 +305,11 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
-            <button className="rv-menu-btn" onClick={toggleSwitcher}>
-              <span className="material-symbols-outlined">menu</span>
-            </button>
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
           </div>
+          <WorkspaceTitle />
           <div className="rv-header-right">
             <ThemePickerButton />
             <SecretsManagerButton />
@@ -272,6 +322,7 @@ function App() {
           Discovering panels...
         </div>
         <WorkspaceSwitcher />
+        <WorkspaceRibbon />
         <WorkspaceAddModal />
       </div>
     );
@@ -282,13 +333,12 @@ function App() {
       {/* Header */}
       <header className="rv-header">
         <div className="rv-header-left">
-          <button className="rv-menu-btn" onClick={toggleSwitcher}>
-            <span className="material-symbols-outlined">menu</span>
-          </button>
           <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
             {isConnected ? 'Connected' : 'Disconnected'}
           </div>
         </div>
+
+        <WorkspaceTitle />
 
         <div className="rv-header-right">
           <ThemePickerButton />
@@ -328,6 +378,7 @@ function App() {
       <SecondaryChat />
       <SecondaryDockButton />
       <WorkspaceSwitcher />
+      <WorkspaceRibbon />
       <WorkspaceAddModal />
     </div>
   );

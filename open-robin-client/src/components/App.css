@@ -609,6 +609,69 @@
   gap: 12px;
 }
 
+.rv-header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-header-center-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 120ms ease;
+  width: 180px;
+}
+
+.rv-header-center-title:hover {
+  background: rgba(var(--theme-primary-rgb), 0.08);
+}
+
+.rv-header-nav-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--accent-dim, var(--text-dim));
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.rv-header-nav-btn:hover {
+  background: rgba(var(--theme-primary-rgb), 0.08);
+  color: var(--theme-primary);
+}
+
+.rv-header-nav-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-workspace-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--chrome-accent, var(--text-primary, #e0e0e0));
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 100%;
+}
+
 /* Context usage chip: views.css */
 
 .rv-connection-status {
@@ -677,6 +740,39 @@
   height: 24px;
   background: var(--chrome-accent, var(--theme-primary));
   border-radius: 0 2px 2px 0;
+}
+
+/* App-mode sidebar: two zones with divider */
+.rv-tools-panel--app {
+  gap: 0;
+}
+
+.rv-tools-apps {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 8px;
+}
+
+.rv-tools-divider {
+  border: none;
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.25));
+  margin: 8px 16px;
+}
+
+.rv-tools-tools {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 8px;
+}
+
+.rv-tool-btn--app {
+  height: 56px;
+}
+
+.rv-tool-btn--tool {
+  height: 48px;
 }
 
 /* Panel Container */

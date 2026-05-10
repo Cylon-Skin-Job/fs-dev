@@ -1,14 +1,34 @@
 import { create } from 'zustand';
 import type { FileTreeNode, FileInfo, EditorTab } from '../types/file-explorer';
 
+interface WorkspaceFileState {
+  rootNodes: FileTreeNode[];
+  expandedFolders: Set<string>;
+  folderChildren: Map<string, FileTreeNode[]>;
+}
+
+function createEmptyWorkspaceFileState(): WorkspaceFileState {
+  return {
+    rootNodes: [],
+    expandedFolders: new Set(),
+    folderChildren: new Map(),
+  };
+}
+
 interface FileState {
   viewMode: 'tree' | 'viewer';
   tabs: EditorTab[];
   activeTabPath: string | null;
 
+  // Current workspace tree state (rendered)
   rootNodes: FileTreeNode[];
   expandedFolders: Set<string>;
   folderChildren: Map<string, FileTreeNode[]>;
+
+  // Workspace-keyed cache (WORKSPACE_ISOLATION_SPEC)
+  workspaceTrees: Record<string, WorkspaceFileState>;
+  activeWorkspaceId: string | null;
+  activateWorkspace: (workspaceId: string | null) => void;
 
   isLoading: boolean;
   error: string | null;
@@ -48,6 +68,36 @@ export const useFileStore = create<FileState>((set, get) => ({
   rootNodes: [],
   expandedFolders: new Set(),
   folderChildren: new Map(),
+  workspaceTrees: {},
+  activeWorkspaceId: null,
+
+  activateWorkspace: (workspaceId) => {
+    const state = get();
+
+    // Save current tree state into the OLD workspace's cache slot
+    const nextWorkspaceTrees = { ...state.workspaceTrees };
+    if (state.activeWorkspaceId) {
+      nextWorkspaceTrees[state.activeWorkspaceId] = {
+        rootNodes: state.rootNodes,
+        expandedFolders: state.expandedFolders,
+        folderChildren: state.folderChildren,
+      };
+    }
+
+    // Load new workspace tree state from cache or create empty
+    const cached = workspaceId ? state.workspaceTrees[workspaceId] : null;
+    const loaded = cached ? { ...cached } : createEmptyWorkspaceFileState();
+
+    set({
+      activeWorkspaceId: workspaceId,
+      workspaceTrees: nextWorkspaceTrees,
+      rootNodes: loaded.rootNodes,
+      expandedFolders: loaded.expandedFolders,
+      folderChildren: loaded.folderChildren,
+      // Tabs remain global — spec says open files are NOT workspace-scoped yet
+    });
+  },
+
   isLoading: false,
   error: null,
 

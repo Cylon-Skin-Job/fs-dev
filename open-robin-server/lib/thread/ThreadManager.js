@@ -1,9 +1,9 @@
 /**
  * ThreadManager - Single-scope thread orchestrator
  *
- * One ThreadManager instance is bound to one (projectId, scope, viewId)
+ * One ThreadManager instance is bound to one (workspaceId, scope, viewId)
  * tuple. Project-scoped managers handle threads shared across all views
- * in the project; view-scoped managers handle threads tied to a single
+ * in the workspace; view-scoped managers handle threads tied to a single
  * view. SPEC-26b. The WS coordinator (ThreadWebSocketHandler) holds two
  * managers per connection — one for each scope.
  *
@@ -31,6 +31,7 @@ class ThreadManager {
    * @param {'project'|'view'} config.scope - Thread scope (SPEC-26b)
    * @param {string|null} [config.viewId] - View name when scope='view'; null for scope='project'
    * @param {string} config.projectRoot - Absolute project root path (required)
+   * @param {string} [config.workspaceId] - Workspace identifier (workspaces.id); falls back to basename(projectRoot)
    * @param {number} [config.maxActiveSessions]
    * @param {number} [config.idleTimeoutMinutes]
    */
@@ -51,10 +52,11 @@ class ThreadManager {
     this.viewId = config.scope === 'view' ? config.viewId : null;
     this.projectRoot = config.projectRoot;
     this.projectId = path.basename(this.projectRoot);
+    this.workspaceId = config.workspaceId || this.projectId;
     this.config = { ...DEFAULT_CONFIG, ...config };
 
     /** @type {ThreadIndex} */
-    this.index = new ThreadIndex(this.projectId, this.scope, this.viewId);
+    this.index = new ThreadIndex(this.workspaceId, this.scope, this.viewId);
 
     /** @type {SessionManager} */
     this.sessionManager = new SessionManager(
@@ -125,7 +127,10 @@ class ThreadManager {
     await this._enforceSessionLimit();
 
     // Create index entry (SQLite)
-    const entry = await this.index.create(threadId, name, options);
+    const entry = await this.index.create(threadId, name, {
+      ...options,
+      projectId: this.projectId, // backward compat
+    });
 
     // Create chat markdown file
     const chatFile = this._createChatFile(threadId);

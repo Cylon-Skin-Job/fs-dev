@@ -11,6 +11,7 @@ const { ChatFile, TOOL_CALL_MARKER } = require('./ChatFile');
 const { ThreadManager } = require('./ThreadManager');
 const { HistoryFile, SCHEMA_VERSION } = require('./HistoryFile');
 const ThreadWebSocketHandler = require('./ThreadWebSocketHandler');
+const { search } = require('./chat-search');
 
 module.exports = {
   ThreadIndex,
@@ -19,5 +20,6 @@ module.exports = {
   HistoryFile,
   ThreadWebSocketHandler,
   TOOL_CALL_MARKER,
-  SCHEMA_VERSION
+  SCHEMA_VERSION,
+  search,
 };

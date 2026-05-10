@@ -16,14 +16,14 @@ const path = require('path');
 const { ThreadManager } = require('./ThreadManager');
 const { createCrudHandlers } = require('./thread-crud');
 const { createMessageHandlers } = require('./thread-messages');
+const { search: searchExchanges } = require('./chat-search');
 
 // Global registries — one per scope (SPEC-26b).
-// Project managers are keyed by projectId (typically a singleton per server
-// process, since the server runs against one project root). View managers
-// are keyed by `${projectId}:${viewId}` to handle the eventual workspace
+// Project managers are keyed by workspaceId. View managers
+// are keyed by `${workspaceId}:${viewId}` to handle the workspace
 // switcher (multi-project) without collisions.
-const projectThreadManagers = new Map(); // key: projectId
-const viewThreadManagers = new Map();    // key: `${projectId}:${viewId}`
+const projectThreadManagers = new Map(); // key: workspaceId
+const viewThreadManagers = new Map();    // key: `${workspaceId}:${viewId}`
 
 // Per-WS state. SPEC-26b: dual-scope shape.
 //   ws -> {
@@ -42,40 +42,41 @@ const pendingReorderTimers = new Map();
 const REORDER_DELAY_MS = 3000;
 
 /**
- * Get or create the project-scoped ThreadManager for a project root.
- * Project managers are stable across panel switches (one per project per
+ * Get or create the project-scoped ThreadManager for a workspace.
+ * Project managers are stable across panel switches (one per workspace per
  * server process). SPEC-26b.
  *
  * @param {string} projectRoot
+ * @param {string} [workspaceId] - Workspace identifier; falls back to basename(projectRoot)
  * @returns {ThreadManager}
  */
-function getProjectThreadManager(projectRoot) {
-  const projectId = path.basename(projectRoot);
-  let mgr = projectThreadManagers.get(projectId);
+function getProjectThreadManager(projectRoot, workspaceId) {
+  const key = workspaceId || path.basename(projectRoot);
+  let mgr = projectThreadManagers.get(key);
   if (!mgr) {
-    mgr = new ThreadManager({ scope: 'project', projectRoot });
-    projectThreadManagers.set(projectId, mgr);
+    mgr = new ThreadManager({ scope: 'project', projectRoot, workspaceId });
+    projectThreadManagers.set(key, mgr);
     mgr.init().catch(err => {
-      console.error(`[ProjectThreadManager] Failed to init ${projectId}:`, err);
+      console.error(`[ProjectThreadManager] Failed to init ${key}:`, err);
     });
   }
   return mgr;
 }
 
 /**
- * Get or create the view-scoped ThreadManager for a (projectRoot, viewId)
+ * Get or create the view-scoped ThreadManager for a (workspaceId, viewId)
  * pair. View managers swap as the user switches panels. SPEC-26b.
  *
  * @param {string} viewId
  * @param {string} projectRoot
+ * @param {string} [workspaceId] - Workspace identifier; falls back to basename(projectRoot)
  * @returns {ThreadManager}
  */
-function getViewThreadManager(viewId, projectRoot) {
-  const projectId = path.basename(projectRoot);
-  const key = `${projectId}:${viewId}`;
+function getViewThreadManager(viewId, projectRoot, workspaceId) {
+  const key = `${workspaceId || path.basename(projectRoot)}:${viewId}`;
   let mgr = viewThreadManagers.get(key);
   if (!mgr) {
-    mgr = new ThreadManager({ scope: 'view', viewId, projectRoot });
+    mgr = new ThreadManager({ scope: 'view', viewId, projectRoot, workspaceId });
     viewThreadManagers.set(key, mgr);
     mgr.init().catch(err => {
       console.error(`[ViewThreadManager] Failed to init ${key}:`, err);
@@ -97,6 +98,7 @@ function getViewThreadManager(viewId, projectRoot) {
  * @param {object} [config]
  * @param {string} [config.projectRoot] - Project root (required for thread storage)
  * @param {string} [config.viewName] - View name for client messages (e.g., 'file-viewer')
+ * @param {string} [config.workspaceId] - Workspace identifier (workspaces.id)
  */
 function setPanel(ws, panelId, config = {}) {
   if (!config.projectRoot) {
@@ -104,27 +106,35 @@ function setPanel(ws, panelId, config = {}) {
   }
 
   const existing = wsState.get(ws);
+  const workspaceChanged = existing?.threadManagers?.project
+    && existing.threadManagers.project.workspaceId !== config.workspaceId;
 
   // Close currently open VIEW thread when switching panels — view threads
   // are tied to a specific view. Project threads PERSIST across panel
-  // switches (that's the whole point of project scope).
+  // switches (that's the whole point of project scope), but NOT across
+  // workspace switches — a project thread in workspace A is meaningless
+  // in workspace B.
   if (existing && existing.threadIds?.view) {
     closeThread(ws, 'view');
   }
+  if (workspaceChanged && existing?.threadIds?.project) {
+    closeThread(ws, 'project');
+  }
 
-  // Project manager: stable across panel switches. Reuse if the connection
-  // already has one (it always will, since setPanel runs on first connect).
-  const projectMgr = existing?.threadManagers?.project
-    || getProjectThreadManager(config.projectRoot);
+  // Project manager: stable across panel switches, but swapped when the
+  // workspace changes so queries target the correct workspace_id.
+  const projectMgr = (!existing?.threadManagers?.project || workspaceChanged)
+    ? getProjectThreadManager(config.projectRoot, config.workspaceId)
+    : existing.threadManagers.project;
 
   // View manager: always replace with the manager for the new panel.
-  const viewMgr = getViewThreadManager(panelId, config.projectRoot);
+  const viewMgr = getViewThreadManager(panelId, config.projectRoot, config.workspaceId);
 
   wsState.set(ws, {
     panelId,
     viewName: config.viewName || panelId,
     threadIds: {
-      project: existing?.threadIds?.project || null,
+      project: workspaceChanged ? null : (existing?.threadIds?.project || null),
       view: null,
     },
     threadManagers: {

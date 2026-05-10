@@ -29,6 +29,29 @@ import {
 import { scopePanelCss } from '../lib/scopePanelCss';
 
 const SHARED_STYLE_PREFIX = 'ws-shared-styles-';
+
+export function injectWorkspaceStyles(styles: Record<string, string>): void {
+  const files = [
+    'variables.css',
+    'themes.css',
+    'components.css',
+    'views.css',
+    'file-viewer.css',
+    'doc-viewer.css',
+    'tints.css',
+  ];
+  for (const file of files) {
+    const css = styles[file]?.trim();
+    const layerId = file.replace('.css', '');
+    const styleId = `${SHARED_STYLE_PREFIX}${layerId}`;
+    document.getElementById(styleId)?.remove();
+    if (!css) continue;
+    const el = document.createElement('style');
+    el.id = styleId;
+    el.textContent = css;
+    document.head.appendChild(el);
+  }
+}
 const VIEW_LAYOUT_STYLE_PREFIX = 'ws-view-layout-';
 
 const SHARED_LAYERS: { id: string; path: string; fetcher: 'settings' | 'views' }[] = [

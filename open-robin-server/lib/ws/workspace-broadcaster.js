@@ -22,6 +22,37 @@
  */
 
 const { on } = require('../event-bus');
+const path = require('path');
+const fsPromises = require('fs').promises;
+const registry = require('../workspace/registry-service');
+
+const STYLE_FILES = [
+  'variables.css',
+  'themes.css',
+  'components.css',
+  'views.css',
+  'file-viewer.css',
+  'doc-viewer.css',
+  'tints.css',
+];
+
+async function readWorkspaceStyles(repoPath) {
+  if (!repoPath) return {};
+  const settingsDir = path.join(repoPath, 'ai', 'settings');
+  const styles = {};
+  await Promise.all(
+    STYLE_FILES.map(async (file) => {
+      try {
+        const css = await fsPromises.readFile(path.join(settingsDir, file), 'utf8');
+        styles[file] = css;
+      } catch {
+        // ENOENT is fine — not every workspace has every layer
+        styles[file] = '';
+      }
+    })
+  );
+  return styles;
+}
 
 /**
  * Initialize the workspace broadcaster. Call once at server startup,
@@ -66,13 +97,35 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
     broadcastAll({ type: 'workspace:registry_changed', workspaces: event.workspaces });
   });
 
-  on('workspace:switched', (event) => {
-    broadcastAll({
+  on('workspace:switched', async (event) => {
+    const target = event.to ? await registry.getById(event.to) : null;
+    const baseMessage = {
       type: 'workspace:switched',
       from: event.from,
       to: event.to,
       repoPath: event.repoPath,
-    });
+      workspaceType: target ? target.type : 'code',
+    };
+
+    // WORKSPACE_ISOLATION_SPEC: include compiled CSS so the client can
+    // inject styles synchronously without 7 separate WebSocket round-trips.
+    if (event.repoPath) {
+      try {
+        baseMessage.styles = await readWorkspaceStyles(event.repoPath);
+      } catch (err) {
+        console.error('[WorkspaceBroadcaster] Failed to read styles:', err.message);
+        baseMessage.styles = {};
+      }
+
+      // Also send panel_config so clients update projectRoot immediately
+      broadcastAll({
+        type: 'panel_config',
+        projectRoot: event.repoPath,
+        projectName: path.basename(event.repoPath),
+      });
+    }
+
+    broadcastAll(baseMessage);
   });
 
   on('workspace:culled_at_launch', (event) => {

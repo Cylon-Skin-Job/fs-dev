@@ -26,7 +26,7 @@ async function getByRepoPath(repoPath) {
   return getDb()('workspaces').where('repo_path', repoPath).first();
 }
 
-async function add({ id, label, icon, description, repoPath, sortOrder }) {
+async function add({ id, label, icon, description, repoPath, sortOrder, type }) {
   await getDb()('workspaces').insert({
     id,
     label,
@@ -34,6 +34,7 @@ async function add({ id, label, icon, description, repoPath, sortOrder }) {
     description: description || null,
     repo_path: repoPath,
     sort_order: sortOrder ?? 0,
+    type: type || 'code',
   });
   return getById(id);
 }

@@ -128,15 +128,14 @@ function createClientMessageRouter({
         session.currentScope = scope;  // SPEC-26b: track which scope owns the active wire
         // CHAT_SCOPE_SPEC: populate scope fields so resolveScope() can build the
         // structured workspace string for every chat:* event this wire emits.
-        session.currentWorkspaceId = path.basename(projectRoot);
         session.currentViewId = (scope === 'view') ? (state?.panelId || state?.viewName || null) : null;
         const scopeContext = {
           workspaceId: session.currentWorkspaceId,
           viewId: session.currentViewId,
         };
-        const wire = spawnThreadWire(threadId, projectRoot, scopeContext);
+        const wire = spawnThreadWire(threadId, session.projectRoot, scopeContext);
         session.wire = wire;
-        registerWire(threadId, wire, projectRoot, ws, scopeContext);
+        registerWire(threadId, wire, session.projectRoot, ws, scopeContext);
 
         console.log('[WS] Wire spawned, awaiting harness ready...');
         await awaitHarnessReady(wire);
@@ -182,6 +181,11 @@ function createClientMessageRouter({
         return;
       }
 
+      if (clientMsg.type === 'thread:search') {
+        await ThreadWebSocketHandler.handleThreadSearch(ws, clientMsg);
+        return;
+      }
+
       if (clientMsg.type === 'thread:list') {
         // SPEC-26b: forward optional scope field; sendThreadList defaults to 'view'.
         await ThreadWebSocketHandler.sendThreadList(ws, clientMsg.scope);
@@ -209,6 +213,12 @@ function createClientMessageRouter({
       // Panel Management
       // --------------------------------------------------
 
+      if (clientMsg.type === 'workspace:cache_push') {
+        const stateCache = require('../workspace/state-cache');
+        stateCache.save(clientMsg.workspaceId, clientMsg.state);
+        return;
+      }
+
       if (clientMsg.type === 'set_panel') {
         const { panel, rootFolder } = clientMsg;
         if (panel) {
@@ -231,6 +241,7 @@ function createClientMessageRouter({
             ThreadWebSocketHandler.setPanel(ws, panel, {
               projectRoot,
               viewName: panel,
+              workspaceId: session.currentWorkspaceId,
             });
             await ThreadWebSocketHandler.sendThreadList(ws);
           }

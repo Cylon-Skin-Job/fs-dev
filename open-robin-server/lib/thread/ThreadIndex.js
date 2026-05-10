@@ -9,19 +9,19 @@ const { getDb } = require('../db');
 
 class ThreadIndex {
   /**
-   * @param {string} projectId - Project identifier (basename of projectRoot)
+   * @param {string} workspaceId - Workspace identifier (workspaces.id)
    * @param {'project'|'view'} scope - Thread scope
    * @param {string|null} viewId - View name when scope='view'; null when scope='project'
    */
-  constructor(projectId, scope, viewId) {
-    if (!projectId) throw new Error('ThreadIndex: projectId is required');
+  constructor(workspaceId, scope, viewId) {
+    if (!workspaceId) throw new Error('ThreadIndex: workspaceId is required');
     if (scope !== 'project' && scope !== 'view') {
       throw new Error(`ThreadIndex: scope must be 'project' or 'view', got "${scope}"`);
     }
     if (scope === 'view' && !viewId) {
       throw new Error('ThreadIndex: viewId is required when scope="view"');
     }
-    this.projectId = projectId;
+    this.workspaceId = workspaceId;
     this.scope = scope;
     this.viewId = scope === 'view' ? viewId : null;
   }
@@ -38,7 +38,7 @@ class ThreadIndex {
   async list() {
     const db = getDb();
     const query = db('threads')
-      .where('project_id', this.projectId)
+      .where('workspace_id', this.workspaceId)
       .where('scope', this.scope);
 
     if (this.scope === 'view') {
@@ -71,6 +71,7 @@ class ThreadIndex {
    * @param {object} [options]
    * @param {string} [options.harnessId='kimi']
    * @param {object} [options.harnessConfig]
+   * @param {string} [options.projectId] - Deprecated backward-compat basename(projectRoot)
    * @returns {Promise<object>}
    */
   async create(threadId, name = null, options = {}) {
@@ -82,7 +83,8 @@ class ThreadIndex {
 
     await db('threads').insert({
       thread_id: threadId,
-      project_id: this.projectId,
+      workspace_id: this.workspaceId,
+      project_id: options.projectId || null, // DEPRECATED: use workspace_id
       scope: this.scope,
       view_id: this.viewId,  // null when scope='project'
       name,
@@ -201,7 +203,7 @@ class ThreadIndex {
   async rebuild() {
     const db = getDb();
     const query = db('threads')
-      .where('project_id', this.projectId)
+      .where('workspace_id', this.workspaceId)
       .where('scope', this.scope);
 
     if (this.scope === 'view') {

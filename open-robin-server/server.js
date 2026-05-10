@@ -284,6 +284,13 @@ function getPanelPath(panel, ws) {
     return null;
   }
 
+  // __apps__ pseudo-panel: resolves to ai/apps/ (for client app discovery)
+  if (panel === '__apps__') {
+    const appsRoot = path.join(projectRoot, 'ai', 'apps');
+    if (fs.existsSync(appsRoot)) return appsRoot;
+    return null;
+  }
+
   // __settings__ pseudo-panel: resolves to ai/settings/ (for global theme/settings)
   if (panel === '__settings__') {
     const settingsRoot = path.join(projectRoot, 'ai', 'settings');
@@ -367,11 +374,12 @@ wss.on('connection', async (ws) => {
   // Only set up threads if the default view has chat (SPEC-24c: storage is
   // unified at ai/views/chat/threads/<user>/, no panelPath needed).
   if (projectRoot) {
-    const defaultChatConfig = views.resolveChatConfig(projectRoot, 'code-viewer');
+    const defaultChatConfig = views.resolveChatConfig(projectRoot, 'file-viewer');
     if (defaultChatConfig) {
-      ThreadWebSocketHandler.setPanel(ws, 'code-viewer', {
+      ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
         projectRoot,
-        viewName: 'code-viewer',
+        viewName: 'file-viewer',
+        workspaceId: activeWs ? activeWs.id : null,
       });
     }
   }
@@ -449,6 +457,9 @@ wss.on('connection', async (ws) => {
     const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
     let themes = [];
     let activeThemeId = null;
+    let styles = {};
+    const stateCache = require('./lib/workspace/state-cache');
+    const cachedStates = stateCache.loadAll();
     if (activeRoot) {
       try {
         const themesService = require('./lib/theme/themes-service');
@@ -456,15 +467,35 @@ wss.on('connection', async (ws) => {
         const active = themes.find(t => t.active);
         activeThemeId = active ? active.id : null;
       } catch (_) {}
+      // Pre-read shared CSS layers so the client can inject synchronously
+      const styleFiles = [
+        'variables.css', 'themes.css', 'components.css', 'views.css',
+        'file-viewer.css', 'doc-viewer.css', 'tints.css',
+      ];
+      const settingsDir = path.join(activeRoot, 'ai', 'settings');
+      await Promise.all(
+        styleFiles.map(async (file) => {
+          try {
+            const css = await fsPromises.readFile(path.join(settingsDir, file), 'utf8');
+            styles[file] = css;
+          } catch {
+            styles[file] = '';
+          }
+        })
+      );
     }
+    const activeWs = workspaceController.getActiveWorkspaceSync();
     ws.send(JSON.stringify({
       type: 'workspace:init',
       workspaces,
       activeWorkspaceId,
+      workspaceType: activeWs ? activeWs.type : 'code',
       homePath: require('os').homedir(),
       cliConfig,
       themes,
       activeThemeId,
+      styles,
+      cachedStates,
     }));
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);
