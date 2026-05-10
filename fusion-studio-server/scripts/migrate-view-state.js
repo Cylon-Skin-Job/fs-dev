@@ -17,7 +17,7 @@
  *   5. Delete legacy <view>/state/ directories.
  *
  * Usage:  node fusion-studio-server/scripts/migrate-view-state.js [--force]
- *         Run from the root of an open-robin workspace (CWD is projectRoot).
+ *         Run from the root of an fs-dev workspace (CWD is projectRoot).
  */
 
 const fs = require('fs');
@@ -97,7 +97,7 @@ function main() {
   const workspaceFile = path.join(viewsDir, 'settings', 'state.json');
 
   if (!fs.existsSync(viewsDir)) {
-    console.error(`[migrate] not an open-robin workspace (no ${viewsDir})`);
+    console.error(`[migrate] not an fs-dev workspace (no ${viewsDir})`);
     process.exit(1);
   }
 

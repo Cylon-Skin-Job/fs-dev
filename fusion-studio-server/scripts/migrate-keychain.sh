@@ -1,10 +1,10 @@
 #!/bin/bash
-# Migrate keychain secrets from kimi-ide -> open-robin
+# Migrate keychain secrets from kimi-ide -> fusion-studio
 # Run ONCE before Phase 4 code changes take effect.
 # Old entries are left intact for rollback safety.
 
 OLD_ACCOUNT="kimi-ide"
-NEW_ACCOUNT="open-robin"
+NEW_ACCOUNT="fusion-studio"
 
 for SERVICE in GITLAB_TOKEN ANTHROPIC_API_KEY GOOGLE_API_KEY OPENAI_API_KEY; do
   VALUE=$(/usr/bin/security find-generic-password -a "$OLD_ACCOUNT" -s "$SERVICE" -w 2>/dev/null)

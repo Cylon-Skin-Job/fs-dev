@@ -788,7 +788,7 @@
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "wiki-viewer",
+    "currentPanel": "issues-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -1012,6 +1012,6 @@
         }
       }
     },
-    "_savedAt": 1778451330665
+    "_savedAt": 1778451943748
   }
 }

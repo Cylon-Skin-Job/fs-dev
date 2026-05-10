@@ -13,3 +13,8 @@ ai/system/*.db-journal
 ai/system/*.db-wal
 **/threads.json
 **/history.json
+# Runtime database and chat artifacts
+fusion-studio-server/data/*.db
+fusion-studio-server/data/*.db-journal
+fusion-studio-server/data/*.db-wal
+ai/views/chat/threads/

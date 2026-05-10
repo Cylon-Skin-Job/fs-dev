@@ -97,7 +97,7 @@ describe('detect — non-matches', () => {
   });
 
   test('absolute project path is not secret', () => {
-    const out = detect('/Users/somebody/projects/open-robin/fusion-studio-server/lib/secrets/clipboard/secret-detector.js');
+    const out = detect('/Users/somebody/projects/fs-dev/fusion-studio-server/lib/secrets/clipboard/secret-detector.js');
     expect(out.type).not.toBe('secret');
   });
 

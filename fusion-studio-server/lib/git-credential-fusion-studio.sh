@@ -1,5 +1,5 @@
 #!/bin/sh
-# Git credential helper for open-robin secrets (macOS Keychain).
+# Git credential helper for fusion-studio secrets (macOS Keychain).
 # Reads GITLAB_TOKEN from Keychain when git needs gitlab.com credentials.
 #
 # Git calls this with "get", "store", or "erase" as $1.
@@ -18,7 +18,7 @@ case "$1" in
     # Only respond for gitlab.com
     case "$host" in
       gitlab.com)
-        TOKEN=$(/usr/bin/security find-generic-password -a "open-robin" -s "GITLAB_TOKEN" -w 2>/dev/null)
+        TOKEN=$(/usr/bin/security find-generic-password -a "fusion-studio" -s "GITLAB_TOKEN" -w 2>/dev/null)
         if [ -n "$TOKEN" ]; then
           echo "protocol=https"
           echo "host=gitlab.com"
