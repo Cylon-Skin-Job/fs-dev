@@ -56,7 +56,7 @@ cd ..
 echo ""
 
 echo "Step 4/4: Rebuilding client and restarting server..."
-./restart-kimi.sh &
+~/Projects/Fusion-Home/restart-fusion.sh &
 echo ""
 
 echo -e "${GREEN}🎉 Voice transcription is ready!${NC}"
