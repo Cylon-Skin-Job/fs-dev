@@ -1,4 +1,3 @@
-const { RobinHarness } = require('./robin');
 const { KimiHarness } = require('./kimi');
 const { CodexHarness } = require('./clis/codex');
 const { GeminiHarness } = require('./clis/gemini');
@@ -40,12 +39,6 @@ class HarnessRegistry {
    * @private
    */
   registerDefaults() {
-    // Built-in harness (always available)
-    this.register('robin', new RobinHarness(), {
-      builtIn: true,
-      description: 'Built-in AI assistant using Vercel AI SDK'
-    });
-
     // External CLI harnesses
     this.register('kimi', new KimiHarness(), {
       builtIn: false,

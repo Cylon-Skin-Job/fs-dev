@@ -36,7 +36,7 @@ const wikiHooks = require('./lib/wiki/hooks');
 const { emit, on } = require('./lib/event-bus');
 const workspaceController = require('./lib/workspace/workspace-controller');
 
-// Phase 1 & 2: Robin Harness - compatibility layer for gradual migration
+// Harness compatibility layer for external CLI harnesses
 const { spawnThreadWire } = require('./lib/harness/compat');
 const { getHarnessMode } = require('./lib/harness/feature-flags');
 
@@ -321,7 +321,7 @@ const fileExplorer = createFileExplorerHandlers({
 // ============================================================================
 
 // NOTE: spawnThreadWire is now imported from ./lib/harness/compat
-// The implementation has been moved there for gradual migration to RobinHarness
+// The implementation has been moved to lib/harness/compat for external CLI harness support
 // NOTE: sendToWire is now imported from ./lib/wire/process-manager
 
 // ============================================================================

@@ -23,18 +23,6 @@ const CATALOG = Object.freeze([
     recommended: true,
   }),
   Object.freeze({
-    id: 'robin',
-    name: 'Robin',
-    description: 'Built-in Vercel AI SDK — BYOK, works with any OpenAI-compatible provider',
-    materialIcon: 'auto_awesome',
-    details: Object.freeze({
-      provider: 'byok',
-      model: 'configurable',
-      features: Object.freeze(['tools', 'streaming']),
-    }),
-    enabled: true,
-  }),
-  Object.freeze({
     id: 'claude-code',
     name: 'Claude Code',
     description: 'Anthropic Claude Code CLI — thinking blocks, 1M context',

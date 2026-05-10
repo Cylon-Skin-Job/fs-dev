@@ -58,11 +58,6 @@ const MODEL_CATALOG = {
     'gpt-4.1':            1_000_000,
   },
 
-  robin: {
-    // Robin uses Vercel AI SDK — model depends on provider config
-    // Defaults to KIMI k2.5 context window
-    'default':              256_000,
-  },
 };
 
 /**

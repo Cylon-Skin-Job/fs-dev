@@ -58,7 +58,7 @@
  * @property {'thread:open-assistant'} type
  * @property {string} [threadId] - If present and valid, resume; otherwise create new
  * @property {string} [name] - Optional display name for new threads (default null)
- * @property {string} [harnessId] - Harness selection for new threads ('kimi' | 'robin')
+ * @property {string} [harnessId] - Harness selection for new threads ('kimi' | 'claude-code' | 'gemini' | 'qwen' | 'codex')
  */
 
 /**

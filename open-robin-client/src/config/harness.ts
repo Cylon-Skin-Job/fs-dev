@@ -49,18 +49,6 @@ export const HARNESS_OPTIONS: HarnessOption[] = [
     recommended: true
   },
   {
-    id: 'robin',
-    name: 'Robin',
-    description: 'Built-in Vercel AI SDK — BYOK, works with any OpenAI-compatible provider',
-    materialIcon: 'auto_awesome',
-    details: {
-      provider: 'byok',
-      model: 'configurable',
-      features: ['tools', 'streaming']
-    },
-    enabled: true
-  },
-  {
     id: 'claude-code',
     name: 'Claude Code',
     description: 'Anthropic Claude Code CLI — thinking blocks, 1M context',
@@ -116,9 +104,6 @@ export const HARNESS_OPTIONS: HarnessOption[] = [
 
 // Default harness - KIMI is the primary experience
 export const DEFAULT_HARNESS = 'kimi';
-
-// System prompt prefix for Robin
-export const ROBIN_SYSTEM_PROMPT = `You are Robin, a helpful AI assistant. You provide clear, accurate, and helpful responses while being direct and efficient in your communication.`;
 
 // Helper to get harness option by ID
 export function getHarnessOption(id: string): HarnessOption | undefined {

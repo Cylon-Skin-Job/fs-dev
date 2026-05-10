@@ -64,7 +64,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} [msg.name]
-   * @param {string} [msg.harnessId] - Harness selection ('kimi' | 'robin')
+   * @param {string} [msg.harnessId] - Harness selection ('kimi' | 'claude-code' | 'gemini' | 'qwen' | 'codex')
    * @param {object} [msg.harnessConfig] - BYOK configuration
    * @param {'project'|'view'} [scope='view']
    */
@@ -232,7 +232,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {object} msg
    * @param {string} [msg.threadId] - If present and valid, resume. Otherwise create.
    * @param {string} [msg.name] - Optional display name for new threads (default null).
-   * @param {string} [msg.harnessId] - Harness selection for new threads ('kimi' | 'robin').
+   * @param {string} [msg.harnessId] - Harness selection for new threads ('kimi' | 'claude-code' | 'gemini' | 'qwen' | 'codex').
    * @param {object} [msg.harnessConfig] - BYOK configuration for new threads.
    */
   async function handleThreadOpenAssistant(ws, msg) {

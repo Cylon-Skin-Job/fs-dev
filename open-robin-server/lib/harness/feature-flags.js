@@ -20,7 +20,6 @@ const VALID_MODES = ['legacy', 'new', 'parallel'];
  * @type {Array<{id: string, name: string, provider: string}>}
  */
 const HARNESS_OPTIONS = [
-  { id: 'robin', name: 'Robin', provider: 'vercel-sdk' },  // Built-in default
   { id: 'kimi', name: 'KIMI CLI', provider: 'kimi' },       // External CLI
 ];
 

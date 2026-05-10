@@ -70,7 +70,6 @@ const { HarnessRegistry, registry } = require('./registry');
 // Harness Implementations
 // ============================================================================
 
-const { RobinHarness } = require('./robin');
 const { KimiHarness } = require('./kimi');
 const { CodexHarness } = require('./clis/codex');
 const { BaseCLIHarness } = require('./clis/base-cli-harness');
@@ -112,7 +111,6 @@ module.exports = {
   clearParallelResults,
 
   // Harness implementations
-  RobinHarness,
   KimiHarness,
   CodexHarness,
   BaseCLIHarness,
