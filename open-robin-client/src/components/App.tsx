@@ -11,7 +11,7 @@ import { ContentArea } from './ContentArea';
 import { LeftSidebarResize, LeftChatResize } from './ResizeHandle';
 import { Toast } from './Toast';
 import { ModalOverlay } from './Modal/ModalOverlay';
-import { RobinOverlay } from './Robin/RobinOverlay';
+import { FusionOverlay } from './Fusion/FusionOverlay';
 import { SecondaryChat, SecondaryChatSticky } from './SecondaryChat';
 import { SecondaryDockButton } from './SecondaryDockButton';
 import { EmptyStateView } from './EmptyStateView';
@@ -145,7 +145,7 @@ function App() {
   const isConnected = ws?.readyState === WebSocket.OPEN;
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [robinOpen, setRobinOpen] = useState(false);
+  const [fusionOpen, setFusionOpen] = useState(false);
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
   const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
@@ -286,7 +286,7 @@ function App() {
           <div className="rv-header-right">
             <ThemePickerButton />
             <SecretsManagerButton />
-            <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
+            <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
           </div>
@@ -313,7 +313,7 @@ function App() {
           <div className="rv-header-right">
             <ThemePickerButton />
             <SecretsManagerButton />
-            <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
+            <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
           </div>
@@ -343,7 +343,7 @@ function App() {
         <div className="rv-header-right">
           <ThemePickerButton />
           <SecretsManagerButton />
-          <button className="rv-robin-icon-btn" onClick={() => setRobinOpen(true)}>
+          <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
             <span className="material-symbols-outlined">raven</span>
           </button>
         </div>
@@ -374,7 +374,7 @@ function App() {
       </div>
       <Toast />
       <ModalOverlay />
-      <RobinOverlay open={robinOpen} onClose={() => setRobinOpen(false)} />
+      <FusionOverlay open={fusionOpen} onClose={() => setFusionOpen(false)} />
       <SecondaryChat />
       <SecondaryDockButton />
       <WorkspaceSwitcher />

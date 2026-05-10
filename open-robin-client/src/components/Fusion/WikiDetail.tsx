@@ -1,19 +1,19 @@
 import { markdownToHtml } from '../../lib/transforms/markdown';
-import type { WikiPage } from './robin-types';
+import type { WikiPage } from './fusion-types';
 
 export function WikiToolbar({ page, showContext, onToggleContext }: { page: WikiPage; showContext: boolean; onToggleContext: () => void }) {
   const copyRef = () => {
-    const ref = `robin.db → system_wiki → slug: ${page.slug}\nFields: content (user-facing), context (AI-facing)`;
+    const ref = `fusion.db → system_wiki → slug: ${page.slug}\nFields: content (user-facing), context (AI-facing)`;
     navigator.clipboard.writeText(ref);
     // Brief visual feedback
-    const btn = document.querySelector('.rv-robin-wiki-link-btn') as HTMLElement;
+    const btn = document.querySelector('.rv-fusion-wiki-link-btn') as HTMLElement;
     if (btn) { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 1200); }
   };
 
   return (
-    <div className="rv-robin-wiki-toolbar">
+    <div className="rv-fusion-wiki-toolbar">
       <button
-        className="rv-robin-wiki-link-btn"
+        className="rv-fusion-wiki-link-btn"
         onClick={copyRef}
         title="Copy reference path"
       >
@@ -21,7 +21,7 @@ export function WikiToolbar({ page, showContext, onToggleContext }: { page: Wiki
       </button>
       {page.context && (
         <button
-          className={`rv-robin-wiki-context-toggle ${showContext ? 'active' : ''}`}
+          className={`rv-fusion-wiki-context-toggle ${showContext ? 'active' : ''}`}
           onClick={onToggleContext}
           title={showContext ? 'Show user guide' : 'Show agent system message'}
         >
@@ -34,11 +34,11 @@ export function WikiToolbar({ page, showContext, onToggleContext }: { page: Wiki
 
 export function WikiDetail({ page, showContext, onToggleContext }: { page: WikiPage; showContext: boolean; onToggleContext: () => void }) {
   return (
-    <div className={`rv-robin-detail-body rv-robin-wiki-content ${showContext ? 'rv-robin-wiki-context-view' : ''}`}>
+    <div className={`rv-fusion-detail-body rv-fusion-wiki-content ${showContext ? 'rv-fusion-wiki-context-view' : ''}`}>
       <WikiToolbar page={page} showContext={showContext} onToggleContext={onToggleContext} />
       {showContext ? (
-        <div className="rv-robin-wiki-context-content">
-          <div className="rv-robin-wiki-context-label">
+        <div className="rv-fusion-wiki-context-content">
+          <div className="rv-fusion-wiki-context-label">
             <span className="material-symbols-outlined">smart_toy</span>
             Agent System Message
           </div>

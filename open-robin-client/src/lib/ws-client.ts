@@ -26,26 +26,26 @@ const WS_URL = 'ws://localhost:3001';
 let socket: WebSocket | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 
-// --- Robin message listeners ---
-// Components subscribe to specific message types for robin: responses.
+// --- Fusion message listeners ---
+// Components subscribe to specific message types for fusion: responses.
 
-type RobinListener = (msg: any) => void;
-const robinListeners: Map<string, Set<RobinListener>> = new Map();
+type FusionListener = (msg: any) => void;
+const fusionListeners: Map<string, Set<FusionListener>> = new Map();
 
-export function sendRobinMessage(msg: Record<string, unknown>) {
+export function sendFusionMessage(msg: Record<string, unknown>) {
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify(msg));
   }
 }
 
-export function onRobinMessage(type: string, listener: RobinListener): () => void {
-  if (!robinListeners.has(type)) robinListeners.set(type, new Set());
-  robinListeners.get(type)!.add(listener);
-  return () => { robinListeners.get(type)?.delete(listener); };
+export function onFusionMessage(type: string, listener: FusionListener): () => void {
+  if (!fusionListeners.has(type)) fusionListeners.set(type, new Set());
+  fusionListeners.get(type)!.add(listener);
+  return () => { fusionListeners.get(type)?.delete(listener); };
 }
 
-function emitRobin(type: string, msg: any) {
-  const listeners = robinListeners.get(type);
+function emitFusion(type: string, msg: any) {
+  const listeners = fusionListeners.get(type);
   if (listeners) {
     for (const fn of listeners) fn(msg);
   }
@@ -181,11 +181,11 @@ function handleMessage(msg: WebSocketMessage) {
       }
       break;
 
-    // Robin system panel responses
+    // Fusion system panel responses
     case 'robin:tabs':
     case 'robin:items':
     case 'robin:wiki':
-      emitRobin(msg.type, msg);
+      emitFusion(msg.type, msg);
       break;
 
     // Clipboard manager responses
@@ -197,7 +197,7 @@ function handleMessage(msg: WebSocketMessage) {
     case 'clipboard:clear':
     case 'clipboard:state':
     case 'clipboard:error':
-      emitRobin(msg.type, msg);
+      emitFusion(msg.type, msg);
       break;
 
     case 'secrets:api-keys:state': {

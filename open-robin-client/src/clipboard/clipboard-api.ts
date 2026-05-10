@@ -9,7 +9,7 @@
  * server-live.log never see it.
  */
 
-import { sendRobinMessage, onRobinMessage } from '../lib/ws-client';
+import { sendFusionMessage, onFusionMessage } from '../lib/ws-client';
 import { showToast } from '../lib/toast';
 import { useClipboardStore } from './clipboard-store';
 import type {
@@ -33,7 +33,7 @@ let stateUnsubscribe: (() => void) | null = null;
  */
 export function subscribeClipboardBroadcasts(): void {
   if (stateUnsubscribe) return;
-  stateUnsubscribe = onRobinMessage('clipboard:state', (msg: ClipboardStateBroadcast) => {
+  stateUnsubscribe = onFusionMessage('clipboard:state', (msg: ClipboardStateBroadcast) => {
     if (Array.isArray(msg.items)) {
       useClipboardStore.getState().setItems(msg.items, msg.total ?? msg.items.length);
     }
@@ -70,7 +70,7 @@ export function startClipboardMonitor(): void {
       // every second.
       if (text && text !== lastClipboardText) {
         lastClipboardText = text;
-        sendRobinMessage({
+        sendFusionMessage({
           type: 'clipboard:append',
           text,
           source: 'auto',
@@ -96,7 +96,7 @@ export function stopClipboardMonitor(): void {
 
 function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 5000): Promise<T> {
   return new Promise((resolve, reject) => {
-    const unsubscribe = onRobinMessage(type, (msg: T & { error?: string }) => {
+    const unsubscribe = onFusionMessage(type, (msg: T & { error?: string }) => {
       unsubscribe();
       if (msg.error) {
         reject(new Error(msg.error));
@@ -104,7 +104,7 @@ function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 
         resolve(msg);
       }
     });
-    sendRobinMessage({ type, ...payload });
+    sendFusionMessage({ type, ...payload });
     setTimeout(() => {
       unsubscribe();
       reject(new Error(`Timeout waiting for ${type}`));

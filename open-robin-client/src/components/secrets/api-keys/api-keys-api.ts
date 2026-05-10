@@ -3,10 +3,10 @@
  * @role Typed thin wrappers around secrets:api-keys:* WS messages — fire-and-forget send
  */
 
-import { sendRobinMessage } from '../../../lib/ws-client';
+import { sendFusionMessage } from '../../../lib/ws-client';
 
 export function listApiKeys(): void {
-  sendRobinMessage({ type: 'secrets:api-keys:list' });
+  sendFusionMessage({ type: 'secrets:api-keys:list' });
 }
 
 export function setApiKey(opts: {
@@ -15,9 +15,9 @@ export function setApiKey(opts: {
   description?: string;
   expires_at?: number | null;
 }): void {
-  sendRobinMessage({ type: 'secrets:api-keys:set', ...opts });
+  sendFusionMessage({ type: 'secrets:api-keys:set', ...opts });
 }
 
 export function deleteApiKey(name: string): void {
-  sendRobinMessage({ type: 'secrets:api-keys:delete', name });
+  sendFusionMessage({ type: 'secrets:api-keys:delete', name });
 }

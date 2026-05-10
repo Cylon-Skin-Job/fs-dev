@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { COLOR_SWATCHES } from './robin-types';
-import type { SystemTheme, WorkspaceItem } from './robin-types';
+import { COLOR_SWATCHES } from './fusion-types';
+import type { SystemTheme, WorkspaceItem } from './fusion-types';
 
 export function ColorPicker({ value, onChange, disabled }: { value: string; onChange: (hex: string) => void; disabled?: boolean }) {
   const [inputValue, setInputValue] = useState(value);
@@ -17,23 +17,23 @@ export function ColorPicker({ value, onChange, disabled }: { value: string; onCh
   }
 
   return (
-    <div className={`rv-robin-color-picker ${disabled ? 'disabled' : ''}`}>
-      <div className="rv-robin-color-picker-label">Primary Color</div>
-      <div className="rv-robin-color-swatches">
+    <div className={`rv-fusion-color-picker ${disabled ? 'disabled' : ''}`}>
+      <div className="rv-fusion-color-picker-label">Primary Color</div>
+      <div className="rv-fusion-color-swatches">
         {COLOR_SWATCHES.map(s => (
           <div
             key={s.hex}
-            className={`rv-robin-color-swatch ${value === s.hex ? 'active' : ''}`}
+            className={`rv-fusion-color-swatch ${value === s.hex ? 'active' : ''}`}
             style={{ background: s.hex }}
             title={s.name}
             onClick={() => onChange(s.hex)}
           />
         ))}
       </div>
-      <div className="rv-robin-color-current">
-        <div className="rv-robin-color-current-dot" style={{ background: value }} />
+      <div className="rv-fusion-color-current">
+        <div className="rv-fusion-color-current-dot" style={{ background: value }} />
         <input
-          className="rv-robin-color-hex-input"
+          className="rv-fusion-color-hex-input"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onBlur={handleHexSubmit}
@@ -52,40 +52,40 @@ export function SystemThemeDetail({ theme, onUpdate }: {
 
   return (
     <>
-      <div className="rv-robin-detail-header">
-        <div className="rv-robin-detail-breadcrumb">
+      <div className="rv-fusion-detail-header">
+        <div className="rv-fusion-detail-breadcrumb">
           <span>Customization</span> / System Theme
         </div>
-        <div className="rv-robin-detail-title">
+        <div className="rv-fusion-detail-title">
           <span className="material-symbols-outlined">palette</span>
           System Theme
         </div>
-        <div className="rv-robin-detail-subtitle">
+        <div className="rv-fusion-detail-subtitle">
           The baseline look for all workspaces. Workspaces inherit this unless they have custom overrides.
         </div>
 
-        <div className="rv-robin-detail-meta">
-          <div className="rv-robin-detail-meta-item">
-            <span className="rv-robin-detail-meta-label">Preset</span>
-            <span className="rv-robin-detail-meta-value highlight">
+        <div className="rv-fusion-detail-meta">
+          <div className="rv-fusion-detail-meta-item">
+            <span className="rv-fusion-detail-meta-label">Preset</span>
+            <span className="rv-fusion-detail-meta-value highlight">
               {theme.preset.charAt(0).toUpperCase() + theme.preset.slice(1)}
             </span>
           </div>
-          <div className="rv-robin-detail-meta-item">
-            <span className="rv-robin-detail-meta-label">Accent</span>
-            <span className="rv-robin-detail-meta-value" style={{ color: theme.primary_color }}>
+          <div className="rv-fusion-detail-meta-item">
+            <span className="rv-fusion-detail-meta-label">Accent</span>
+            <span className="rv-fusion-detail-meta-value" style={{ color: theme.primary_color }}>
               {theme.primary_color}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="rv-robin-color-picker-label" style={{ marginTop: '24px' }}>Theme Preset</div>
-      <div className="rv-robin-preset-selector">
+      <div className="rv-fusion-color-picker-label" style={{ marginTop: '24px' }}>Theme Preset</div>
+      <div className="rv-fusion-preset-selector">
         {['dark', 'oled', 'medium', 'light'].map(p => (
           <button
             key={p}
-            className={`rv-robin-preset-btn ${theme.preset === p ? 'active' : ''}`}
+            className={`rv-fusion-preset-btn ${theme.preset === p ? 'active' : ''}`}
             onClick={() => onUpdate(p, theme.primary_color)}
           >
             {p.charAt(0).toUpperCase() + p.slice(1)}
@@ -111,15 +111,15 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
 
   return (
     <>
-      <div className="rv-robin-detail-header">
-        <div className="rv-robin-detail-breadcrumb">
+      <div className="rv-fusion-detail-header">
+        <div className="rv-fusion-detail-breadcrumb">
           <span>Customization</span> / {workspace.label}
         </div>
-        <div className="rv-robin-detail-title">
+        <div className="rv-fusion-detail-title">
           <span className="material-symbols-outlined">{workspace.icon}</span>
           {workspace.label}
         </div>
-        <div className="rv-robin-detail-subtitle">
+        <div className="rv-fusion-detail-subtitle">
           {workspace.themeState === 'inherited'
             ? 'This workspace uses the system theme.'
             : workspace.themeState === 'individual'
@@ -129,20 +129,20 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
       </div>
 
       {workspace.themeState === 'override' ? (
-        <div className="rv-robin-diverged-card">
-          <div className="rv-robin-diverged-card-text">
+        <div className="rv-fusion-diverged-card">
+          <div className="rv-fusion-diverged-card-text">
             The CSS file has been edited directly and no longer matches what's saved here.
             Click Apply to absorb your changes into the system.
           </div>
-          <button className="rv-robin-apply-btn" onClick={onApply}>
+          <button className="rv-fusion-apply-btn" onClick={onApply}>
             <span className="material-symbols-outlined">sync</span>
             Apply Changes
           </button>
         </div>
       ) : (
-        <div className="rv-robin-inherit-row">
+        <div className="rv-fusion-inherit-row">
           <div
-            className={`rv-robin-toggle ${workspace.themeState === 'inherited' ? 'on' : ''}`}
+            className={`rv-fusion-toggle ${workspace.themeState === 'inherited' ? 'on' : ''}`}
             onClick={() => {
               if (workspace.themeState === 'inherited') {
                 onUpdateColor(workspace.primary_color);
@@ -151,7 +151,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
               }
             }}
           />
-          <span className="rv-robin-inherit-label">Inherit system theme</span>
+          <span className="rv-fusion-inherit-label">Inherit system theme</span>
         </div>
       )}
 
@@ -161,7 +161,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
         disabled={workspace.themeState === 'inherited'}
       />
 
-      <div className="rv-robin-detail-body" style={{ marginTop: '16px' }}>
+      <div className="rv-fusion-detail-body" style={{ marginTop: '16px' }}>
         <h2>Customizing by hand</h2>
         <p>
           You can edit the workspace CSS directly at: <code>ai/settings/themes.css</code>
