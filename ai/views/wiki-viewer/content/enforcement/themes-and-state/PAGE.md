@@ -82,8 +82,8 @@ Never use the raw theme color (`--theme-primary`) for UI chrome. The chrome slid
 
 | Element type | Variable | What the slider controls |
 |--------------|----------|--------------------------|
-| Section titles, active labels, primary buttons, selected states | `--chrome-accent` | `chromeLuminance` / `chromeTint` |
-| Inactive icons, secondary badges, dimmed chrome | `--accent-dim` | `accentLuminance` / `accentTint` |
+| Section titles, active labels, primary buttons, selected states | `--accent-dim` | `accentLuminance` / `accentTint` |
+| Inactive icons, secondary badges, dimmed chrome | `--chrome-accent` | `chromeLuminance` / `chromeTint` |
 | Body text, paragraphs, descriptions | `--text-primary`, `--text-secondary` | `luminance` (via global text contrast) |
 | Panel/card surfaces | `--surface-elevated`, `--surface-hover` | `panelContrast` / `bgTint` |
 | Document/code surfaces | `--document-surface-bg`, `--document-bg` | `contentLuminance` / `contentContrast` |
@@ -171,7 +171,7 @@ A human may drop a CSS file into a view's `settings/` folder to override a speci
 | Scoping tint CSS to `.rv-panel[data-tint-*]` | Breaks when switching views | Scope to `body[data-tint-*]` |
 | Creating a new slider and wiring it to `--bg-solid` | Sliders should target semantic variables | Target `--sidebar-surface-bg`, `--document-surface-bg`, etc. |
 | Using `contentContrast` to compute background spread | Content contrast is for syntax tokens only | Use `panelContrast` for background spread |
-| Using `--theme-primary` for UI chrome (titles, labels, icons, buttons) | Bypasses the chrome sliders; user loses control of tinting | Use `--chrome-accent` for active/primary chrome, `--accent-dim` for inactive/secondary chrome |
+| Using `--theme-primary` for UI chrome (titles, labels, icons, buttons) | Bypasses the chrome sliders; user loses control of tinting | Use `--accent-dim` for active/primary chrome, `--chrome-accent` for inactive/secondary chrome |
 | Putting color rules in `ai/views/{viewer}/settings/layout.css` | Per-view CSS is layout-only | Colors go in `ai/settings/tints.css` |
 | Hardcoding a path like `ai/views/settings/themes.css` in the server | Global settings belong at `ai/settings/` | Use `ai/settings/` for global files |
 | Referencing `ai/views/settings/` at all | That folder was deleted in the refactor | All global files are in `ai/settings/` |
