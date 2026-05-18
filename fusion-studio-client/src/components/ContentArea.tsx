@@ -18,10 +18,6 @@ import { TicketBoard } from './tickets/TicketBoard';
 import { AgentTiles } from './agents/AgentTiles';
 import { CaptureTiles } from './capture/CaptureTiles';
 import { OfficeGrid } from './office/OfficeGrid';
-// Calendar viewer disconnected — Apple JXA/EventKit data fetch is being
-// reengineered. The 'calendar-viewer' panel falls through to the placeholder
-// renderer below until the new data layer lands.
-// import { CalendarViewer } from './calendar/CalendarViewer';
 import { FileExplorer } from './file-explorer/FileExplorer';
 
 /** Built-in component map: panel ID → content component */
@@ -32,7 +28,7 @@ const CONTENT_COMPONENTS: Record<string, ComponentType> = {
   'wiki-viewer': WikiExplorer,
   'issues-viewer': TicketBoard,
   'agents-viewer': AgentTiles,
-  // 'calendar-viewer': CalendarViewer,
+  // calendar-viewer disconnected; falls through to placeholder
 };
 
 interface ContentAreaProps {
