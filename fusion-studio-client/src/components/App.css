@@ -905,16 +905,16 @@
  * translucent ghost block under the chat in the empty/no-thread state.
  * Render at full opacity; the chat-footer keeps pointer-events:none so
  * the inactive scope still can't be typed into. */
-.chat-area--inactive .chat-footer {
+.rv-chat-area--inactive .chat-footer {
   pointer-events: none;
 }
 
-.sidebar--active {
-  /* no active-wire highlight — .chat-area--inactive opacity dimming is enough */
+.rv-sidebar--active {
+  /* no active-wire highlight — .rv-chat-area--inactive opacity dimming is enough */
 }
 
 /* SPEC-26c-2: chat-area needs position context for absolute collapse button */
-.chat-area {
+.rv-chat-area {
   position: relative;
 }
 
@@ -970,13 +970,13 @@
    with only an expand icon. Width comes from the inline CSS variable
    on .rv-panel (set to 40px when collapsed). Hide child content except
    the expand affordance. */
-.sidebar--collapsed,
-.chat-area--collapsed {
+.rv-sidebar--collapsed,
+.rv-chat-area--collapsed {
   overflow: hidden;
 }
 
-.sidebar--collapsed > *:not(.rv-collapse-rail-btn),
-.chat-area--collapsed > *:not(.rv-collapse-rail-btn) {
+.rv-sidebar--collapsed > *:not(.rv-collapse-rail-btn),
+.rv-chat-area--collapsed > *:not(.rv-collapse-rail-btn) {
   display: none;
 }
 
@@ -994,7 +994,7 @@
 }
 
 /* Anchor the absolute collapse button to the sidebar */
-.sidebar {
+.rv-sidebar {
   position: relative;
 }
 
@@ -1136,7 +1136,7 @@
 /* When the dropdown lives inside the sidebar (triggered from the sidebar's
  * "New Thread" button), center it under the button instead. 16px sidebar
  * padding + ~40px button height + 4px gap puts the top at ~60px. */
-.sidebar .rv-cli-picker-dropdown {
+.rv-sidebar .rv-cli-picker-dropdown {
   top: 60px;
   left: 50%;
   right: auto;
@@ -1412,8 +1412,8 @@
 /* No-thread state: dim the inner chat content (messages list + composer)
    so the column reads as inactive. The chat-area panel surface itself
    stays opaque (no ghost block under the chat). */
-.chat-area--no-thread .chat-messages,
-.chat-area--no-thread .chat-footer {
+.rv-chat-area--no-thread .chat-messages,
+.rv-chat-area--no-thread .chat-footer {
   opacity: 0.35;
 }
 

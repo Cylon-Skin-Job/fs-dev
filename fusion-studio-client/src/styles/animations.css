@@ -18,7 +18,7 @@
   100% { opacity: 1; }
 }
 
-.user-bubble-in {
+.rv-user-bubble-in {
   animation: user-bubble-in 200ms ease-out forwards;
 }
 
@@ -28,7 +28,7 @@
   100% { opacity: 1; }
 }
 
-.tool-fade-in {
+.rv-tool-fade-in {
   animation: tool-fade-in 200ms ease-in forwards;
 }
 
@@ -99,7 +99,7 @@
   51%, 100% { opacity: 0; }
 }
 
-.shimmer-text {
+.rv-shimmer-text {
   background: linear-gradient(90deg,
     var(--icon-dim, var(--text-dim)) 0%,
     var(--accent-dim, var(--theme-primary)) 50%,
@@ -118,7 +118,7 @@
   51%, 100% { opacity: 0; }
 }
 
-.typing-cursor {
+.rv-typing-cursor {
   animation: blink 800ms infinite;
   color: var(--theme-primary);
   font-size: 0.85em;

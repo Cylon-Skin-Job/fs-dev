@@ -280,7 +280,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     setIsSending(false);
   };
 
-  const sectionClass = `chat-area chat-area--${scope}${isActive ? ' chat-area--active' : ' chat-area--inactive'}${noThread ? ' chat-area--no-thread' : ''}`;
+  const sectionClass = `rv-chat-area rv-chat-area--${scope}${isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${noThread ? ' rv-chat-area--no-thread' : ''}`;
   const inputPlaceholder = noThread
     ? ''
     : !isActive
@@ -290,7 +290,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
   // SPEC-26c-2: collapsed rail variant
   if (collapsed) {
     return (
-      <section className={`chat-area chat-area--${scope} chat-area--collapsed`}>
+      <section className={`rv-chat-area rv-chat-area--${scope} rv-chat-area--collapsed`}>
         <button
           className="rv-collapse-rail-btn"
           onClick={() => toggleCollapsed(panel, 'leftChat')}

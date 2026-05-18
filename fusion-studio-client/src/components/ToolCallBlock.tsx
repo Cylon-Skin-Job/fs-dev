@@ -52,7 +52,7 @@ export function ToolCallBlock({
   const hasContent = !!children;
 
   return (
-    <div className="tool-fade-in" style={{ marginBottom: '12px' }}>
+    <div className="rv-tool-fade-in" style={{ marginBottom: '12px' }}>
       {/* Header */}
       <button
         type="button"
@@ -79,7 +79,7 @@ export function ToolCallBlock({
           </span>
         )}
         <span
-          className={shimmer ? 'shimmer-text' : undefined}
+          className={shimmer ? 'rv-shimmer-text' : undefined}
           style={{ fontSize: '13px', fontStyle: visual.labelStyle }}
         >
           {label}

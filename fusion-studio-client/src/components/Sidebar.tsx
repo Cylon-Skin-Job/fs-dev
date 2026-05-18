@@ -341,11 +341,11 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   // stays aligned (track 1 is 0px, so nothing shows). Returning null would
   // shift ResizeHandle/ChatArea/ContentArea one track left and blank the UI.
   if (collapsed) {
-    return <aside className="sidebar sidebar--collapsed" aria-hidden="true" />;
+    return <aside className="rv-sidebar rv-sidebar--collapsed" aria-hidden="true" />;
   }
 
   return (
-    <aside className={`sidebar sidebar--${scope}${isActive ? ' sidebar--active' : ''}`}>
+    <aside className={`rv-sidebar rv-sidebar--${scope}${isActive ? ' rv-sidebar--active' : ''}`}>
       {scope !== 'project' && (
         <div className="sidebar-header">
           {headerLabel}

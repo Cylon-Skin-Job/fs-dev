@@ -9,7 +9,7 @@
  */
 
 /** Cursor block character rendered inline with typed content. */
-export const CURSOR_HTML = '<span class="typing-cursor">&#x2588;</span>';
+export const CURSOR_HTML = '<span class="rv-typing-cursor">&#x2588;</span>';
 
 /** Promise-based delay. */
 export function sleep(ms: number): Promise<void> {
