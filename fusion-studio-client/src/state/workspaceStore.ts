@@ -41,6 +41,10 @@ interface WorkspaceStoreState {
   requestAdd: (repoPath: string) => void;
   requestSwitch: (workspaceId: string) => void;
   requestRemove: (workspaceId: string) => void;
+
+  // Canonical navigation — one source of truth for cycling and toggling
+  cycleWorkspace: (direction: 'left' | 'right') => void;
+  toggleRibbon: () => void;
 }
 
 function sendWorkspaceMessage(message: Record<string, unknown>): void {
@@ -50,7 +54,7 @@ function sendWorkspaceMessage(message: Record<string, unknown>): void {
   }
 }
 
-export const useWorkspaceStore = create<WorkspaceStoreState>((set) => ({
+export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   workspaces: [],
   activeWorkspaceId: null,
   workspaceType: 'code',
@@ -64,7 +68,10 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set) => ({
   setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
   setWorkspaceType: (type) => set({ workspaceType: type }),
   setHomePath: (p) => set({ homePath: p }),
-  markInit: () => set({ hasReceivedInit: true }),
+  markInit: () => {
+    console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
+    set({ hasReceivedInit: true });
+  },
   openSwitcher: () => set({ isSwitcherOpen: true }),
   closeSwitcher: () => set({ isSwitcherOpen: false }),
   openRibbon: () => set({ isRibbonOpen: true }),
@@ -80,5 +87,27 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set) => ({
   },
   requestRemove: (workspaceId) => {
     sendWorkspaceMessage({ type: 'workspace:remove_requested', workspaceId });
+  },
+
+  cycleWorkspace: (direction) => {
+    const { workspaces, activeWorkspaceId } = get();
+    if (workspaces.length <= 1 || !activeWorkspaceId) return;
+
+    const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
+    const ids = sorted.map((w) => w.id);
+    const idx = ids.indexOf(activeWorkspaceId);
+    if (idx < 0) return;
+
+    const nextIdx =
+      direction === 'right'
+        ? (idx + 1) % ids.length
+        : (idx - 1 + ids.length) % ids.length;
+
+    get().requestSwitch(ids[nextIdx]);
+  },
+
+  toggleRibbon: () => {
+    const { isRibbonOpen } = get();
+    set({ isRibbonOpen: !isRibbonOpen });
   },
 }));

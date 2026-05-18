@@ -53,8 +53,10 @@ const { redactWsMessage } = require('./redaction-map');
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @param {() => object} deps.getFusionHandlers - getter closure over server.js let fusionHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
+ * @param {() => object} deps.getRecentDocsHandlers - getter closure over server.js let recentDocsHandlers
  * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
  * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
+ * @param {() => object} deps.getScreenshotHandlers - getter closure over server.js let screenshotHandlers
  * @returns {{ handleClientMessage: Function, handleClientClose: Function }}
  */
 function createClientMessageRouter({
@@ -70,8 +72,10 @@ function createClientMessageRouter({
   getProjectRoot,
   getFusionHandlers,
   getClipboardHandlers,
+  getRecentDocsHandlers,
   getThemeHandlers,
   getSecretsHandlers,
+  getScreenshotHandlers,
 }) {
 
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
@@ -207,6 +211,11 @@ function createClientMessageRouter({
 
       if (clientMsg.type === 'recent_files_request') {
         await fileExplorer.handleRecentFilesRequest(ws, clientMsg);
+        return;
+      }
+
+      if (clientMsg.type === 'file_save') {
+        await fileExplorer.handleFileSaveRequest(ws, clientMsg);
         return;
       }
 
@@ -455,6 +464,16 @@ function createClientMessageRouter({
         }
       }
 
+      // ---- Recent docs manager ----
+
+      if (clientMsg.type.startsWith('recent_docs:')) {
+        const handler = getRecentDocsHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
       // ---- Theme picker (delegated to lib/ws/theme-handlers.js) ----
 
       if (clientMsg.type.startsWith('theme:')) {
@@ -649,6 +668,16 @@ function createClientMessageRouter({
           connectionId: session.connectionId,
         });
         return;
+      }
+
+      // ---- Screenshot manager (delegated to lib/screenshot/ws-handlers.js) ----
+
+      if (clientMsg.type.startsWith('screenshot:')) {
+        const handler = getScreenshotHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
       }
 
       // Unknown message type

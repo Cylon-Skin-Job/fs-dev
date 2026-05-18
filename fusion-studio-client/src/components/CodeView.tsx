@@ -20,14 +20,27 @@ interface CodeViewProps {
 }
 
 export function CodeView({ content, extension, mode = 'code' }: CodeViewProps) {
-  const markdownHtml = useMemo(() => markdownToHtml(stripFrontmatter(content)), [content]);
-  const highlighted = useMemo(() => highlightCode(content, extension), [content, extension]);
-  const lines = useMemo(() => highlighted.split('\n'), [highlighted]);
+  const markdownHtml = useMemo(() => {
+    if (mode !== 'markdown') return '';
+    return markdownToHtml(stripFrontmatter(content));
+  }, [content, mode]);
+
+  const highlighted = useMemo(() => {
+    if (mode !== 'code') return '';
+    return highlightCode(content, extension);
+  }, [content, extension, mode]);
+
+  const lines = useMemo(() => {
+    if (mode !== 'code') return [];
+    return highlighted.split('\n');
+  }, [highlighted, mode]);
+
   const codeHtml = useMemo(() => {
+    if (mode !== 'code') return '';
     return lines
       .map((line) => `<span class="rv-code-line">${line || ' '}</span>`)
       .join('');
-  }, [lines]);
+  }, [lines, mode]);
 
   // Mark markdown source files so the syntax palette stays on the rainbow
   // (--hljs-md-*) regardless of the global Theme Code toggle. Applies to both

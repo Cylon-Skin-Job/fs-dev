@@ -15,13 +15,15 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
+const { commitIfChanged } = require('./versioning');
 
 /**
  * @param {object} deps
  * @param {(panel: string, ws: import('ws').WebSocket) => string|null} deps.getPanelPath
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
+ * @param {(type: string, data?: object) => void} [deps.emit]
  */
-function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
+function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
 
   function mapFileErrorCode(err) {
     if (err.code === 'ENOENT') return 'ENOENT';
@@ -389,10 +391,103 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
     }
   }
 
+  async function handleFileSaveRequest(ws, msg) {
+    const panel = msg.panel || 'file-viewer';
+    const requestPath = msg.path || '';
+    const content = msg.content || '';
+    const panelPath = getPanelPath(panel, ws);
+
+    if (panelPath === null) {
+      ws.send(JSON.stringify({
+        type: 'file_save_response',
+        panel,
+        path: requestPath,
+        success: false,
+        error: `Panel "${panel}" is not filesystem-backed`,
+        code: 'ENOTPANEL',
+      }));
+      return;
+    }
+
+    const basePath = path.resolve(panelPath);
+    const targetPath = path.join(basePath, requestPath);
+
+    if (!isPathAllowed(basePath, targetPath)) {
+      ws.send(JSON.stringify({
+        type: 'file_save_response',
+        panel,
+        path: requestPath,
+        success: false,
+        error: 'Invalid path',
+        code: 'ENOENT',
+      }));
+      return;
+    }
+
+    try {
+      const stat = await fsPromises.stat(targetPath).catch(() => null);
+      if (stat && stat.isDirectory()) {
+        ws.send(JSON.stringify({
+          type: 'file_save_response',
+          panel,
+          path: requestPath,
+          success: false,
+          error: 'Expected file, got directory',
+          code: 'EISDIR',
+        }));
+        return;
+      }
+
+      const tmpPath = targetPath + '.tmp';
+      fs.writeFileSync(tmpPath, content, 'utf8');
+      fs.renameSync(tmpPath, targetPath);
+
+      if (emit) {
+        emit('file_changed', { panel, filePath: requestPath, change: 'modified', timestamp: Date.now() });
+      }
+
+      // Versioning: commit on session_end, checkpoint, or milestone
+      const reason = msg.reason || 'autosave';
+      if (reason === 'session_end' || reason === 'checkpoint' || reason === 'milestone') {
+        const milestone = msg.milestone;
+        const fileName = path.basename(requestPath);
+        const message =
+          reason === 'milestone'
+            ? `milestone: ${milestone} — ${fileName}`
+            : reason === 'checkpoint'
+              ? `checkpoint: ${fileName} @ ${new Date().toISOString()}`
+              : `session: ${fileName}`;
+
+        try {
+          await commitIfChanged(basePath, requestPath, message);
+        } catch (err) {
+          console.warn('[Versioning] Commit failed:', err.message);
+        }
+      }
+
+      ws.send(JSON.stringify({
+        type: 'file_save_response',
+        panel,
+        path: requestPath,
+        success: true,
+      }));
+    } catch (err) {
+      ws.send(JSON.stringify({
+        type: 'file_save_response',
+        panel,
+        path: requestPath,
+        success: false,
+        error: err.message,
+        code: mapFileErrorCode(err),
+      }));
+    }
+  }
+
   return {
     handleFileTreeRequest,
     handleFileContentRequest,
     handleRecentFilesRequest,
+    handleFileSaveRequest,
   };
 }
 

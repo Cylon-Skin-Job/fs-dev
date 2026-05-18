@@ -26,8 +26,10 @@ const fs = require('fs');
 const { initDb, getDb, closeDb, DB_PATH } = require('./db');
 const createFusionHandlers = require('./fusion/ws-handlers');
 const createClipboardHandlers = require('./secrets/clipboard/handlers');
+const createRecentDocsHandlers = require('./recent-docs/handlers');
 const createThemeHandlers = require('./ws/theme-handlers');
 const { createHandlers: createSecretsHandlers } = require('./secrets/index');
+const createScreenshotHandlers = require('./screenshot/ws-handlers');
 const themesService = require('./theme/themes-service');
 const { startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
@@ -112,6 +114,8 @@ async function start({ server, sessions, getProjectRoot }) {
   // 3.7e. Clipboard handlers — keychain-backed; depends on getAllClients for
   // broadcast on append/use/touch/delete/clear.
   const clipboardHandlers = createClipboardHandlers({ getAllClients });
+  const recentDocsHandlers = createRecentDocsHandlers({ getAllClients });
+  const screenshotHandlers = createScreenshotHandlers({ getAllClients });
   const harnessStatusService = require('./harness/harness-status-service');
   harnessStatusService.revalidateAll().catch((err) => {
     console.error('[Startup] harness revalidateAll failed:', err.message);
@@ -171,7 +175,7 @@ async function start({ server, sessions, getProjectRoot }) {
   process.on('SIGTERM', _handleShutdown);
   process.on('SIGINT', _handleShutdown);
 
-  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers };
+  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, recentDocsHandlers };
 }
 
 /**

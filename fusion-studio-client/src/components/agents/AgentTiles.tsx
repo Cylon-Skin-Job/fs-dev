@@ -92,14 +92,14 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
       if (!active) return;
       try {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `System/${agent.id}`) {
+        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}`) {
           const files = (msg.nodes || [])
             .filter((n: any) => n.type === 'file' && AGENT_CONFIG_FILES.includes(n.name))
             .map((n: any) => n.name)
             .sort((a: string, b: string) => AGENT_CONFIG_FILES.indexOf(a) - AGENT_CONFIG_FILES.indexOf(b));
           useAgentStore.getState().setConfigFiles(files);
         }
-        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `System/${agent.id}/workflows`) {
+        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}/workflows`) {
           const folders = (msg.nodes || [])
             .filter((n: any) => n.type === 'folder')
             .map((n: any) => n.name)
@@ -122,26 +122,26 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
     };
 
     ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `System/${agent.id}` }));
-    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `System/${agent.id}/workflows` }));
+    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `${agent.folder}/${agent.id}` }));
+    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `${agent.folder}/${agent.id}/workflows` }));
 
     return () => { active = false; ws.removeEventListener('message', handleMessage); };
-  }, [agent.id, ws]);
+  }, [agent.id, agent.folder, ws]);
 
   // Load all files once discovered
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     for (const f of configFiles) {
-      if (!fileCache[f]) request(`System/${agent.id}/${f}`);
+      if (!fileCache[f]) request(`${agent.folder}/${agent.id}/${f}`);
     }
-  }, [configFiles, ws, agent.id]);
+  }, [configFiles, ws, agent.id, agent.folder]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     for (const wf of workflows) {
-      if (!fileCache[wf]) request(`System/${agent.id}/workflows/${wf}/WORKFLOW.md`);
+      if (!fileCache[wf]) request(`${agent.folder}/${agent.id}/workflows/${wf}/WORKFLOW.md`);
     }
-  }, [workflows, ws, agent.id]);
+  }, [workflows, ws, agent.id, agent.folder]);
 
   // Auto-select first item when switching tabs
   useEffect(() => {
@@ -173,7 +173,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
         <span className={`rv-agent-tile-status ${agent.status}`}>{agent.status}</span>
         <button
           className="rv-file-page-action"
-          onClick={() => copyResourcePath('agents-viewer', `System/${agent.id}/`)}
+          onClick={() => copyResourcePath('agents-viewer', `${agent.folder}/${agent.id}/`)}
           title="Copy agent path"
         >
           <span className="material-symbols-outlined">link_2</span>
@@ -287,7 +287,18 @@ export function AgentTiles() {
   const onIndex = useCallback((content: string) => {
     try {
       const index = JSON.parse(content);
-      useAgentStore.getState().setAgentsFromIndex(index.agents || {});
+      const folderEntries = Object.entries(index.folders || {}) as [string, any][];
+      const sortedFolders = folderEntries.sort((a, b) => (a[1].rank ?? 999) - (b[1].rank ?? 999));
+
+      const agents: Agent[] = [];
+      for (const [folderName, folderData] of sortedFolders) {
+        const agentEntries = Object.entries(folderData.agents || {}) as [string, any][];
+        for (const [agentId, agentData] of agentEntries) {
+          agents.push({ id: agentId, folder: folderName, ...agentData });
+        }
+      }
+
+      useAgentStore.getState().setAgents(agents);
     } catch {
       useAgentStore.getState().setError('Failed to parse agents.json');
     }
@@ -306,7 +317,7 @@ export function AgentTiles() {
 
   const { request } = usePanelData({
     panel: 'agents-viewer',
-    indexPath: 'agents.json',
+    indexPath: 'settings/agents.json',
     onIndex,
     onFileContent,
     onError,

@@ -79,6 +79,17 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     chatInputRef.current?.insertText(text);
   };
 
+  // Listen for global chat-insert events from other components (e.g. Office Viewer)
+  useEffect(() => {
+    if (threadIdOverride) return; // Secondary chat ignores global inserts
+    const handler = (e: Event) => {
+      const text = (e as CustomEvent<string>).detail;
+      if (typeof text === 'string') handleInsertText(text);
+    };
+    window.addEventListener('fusion:chat-insert', handler);
+    return () => window.removeEventListener('fusion:chat-insert', handler);
+  }, [threadIdOverride]);
+
   // PER_THREAD_CHAT_STATE: resolve the thread this ChatArea is viewing.
   // Primary uses currentThreadIds[scope]; secondary passes threadIdOverride.
   const primaryThreadId = usePanelStore((state) => state.currentThreadIds[scope]);

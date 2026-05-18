@@ -1,7 +1,7 @@
 {
   "media-editor": {
     "projectRoot": null,
-    "currentPanel": "wiki-viewer",
+    "currentPanel": "image-editor",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -132,7 +132,7 @@
         "id": "agents-viewer",
         "name": "Agents",
         "type": "agents",
-        "icon": "smart_toy",
+        "icon": "robot_2",
         "hasChat": false,
         "chatConfig": null,
         "layoutConfig": null,
@@ -165,7 +165,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-10T14-51-07-416",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -197,103 +197,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": null,
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "video-editor": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": null,
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "asset-library": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": null,
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "issues-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-10T14-51-07-416",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -325,7 +229,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-10T14-51-07-416",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -357,7 +261,39 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-10T14-51-07-416",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
+      },
+      "issues-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-10T14-51-07-416",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -389,7 +325,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-10T14-51-07-416",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -403,11 +339,11 @@
         }
       }
     },
-    "_savedAt": 1778451395382
+    "_savedAt": 1779138996957
   },
   "fusion-home": {
     "projectRoot": null,
-    "currentPanel": "wiki-viewer",
+    "currentPanel": "office-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -423,11 +359,11 @@
     "contextUsage": 0,
     "panelConfigs": [
       {
-        "id": "doc-viewer",
-        "name": "Docs",
+        "id": "office-viewer",
+        "name": "Office Viewer",
         "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
         "type": "tiled-rows",
-        "icon": "open_run",
+        "icon": "clarify",
         "hasChat": true,
         "chatConfig": {
           "type": "threaded",
@@ -452,9 +388,32 @@
         "hasUiFolder": false
       },
       {
+        "id": "calendar-viewer",
+        "name": "Calendar",
+        "description": "Schedule and event management — track dates, meetings, and deadlines",
+        "type": "tiled-rows",
+        "icon": "calendar_month",
+        "hasChat": true,
+        "chatConfig": {
+          "type": "threaded",
+          "position": "right"
+        },
+        "layoutConfig": null,
+        "contentConfig": {
+          "display": "tiled-rows",
+          "chat": {
+            "type": "threaded",
+            "position": "right"
+          }
+        },
+        "rank": 1,
+        "category": "tool",
+        "hasUiFolder": false
+      },
+      {
         "id": "file-viewer",
         "name": "Files",
-        "description": "Primary coding assistant \u2014 write, edit, and explore source files",
+        "description": "Primary coding assistant — write, edit, and explore source files",
         "type": "file-explorer",
         "icon": "code_blocks",
         "hasChat": true,
@@ -479,7 +438,7 @@
       {
         "id": "issues-viewer",
         "name": "Issues",
-        "description": "Ticket router \u2014 receives tickets from all panels, routes to agents by type and domain",
+        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
         "type": "tabbed",
         "icon": "business_messages",
         "hasChat": true,
@@ -508,7 +467,7 @@
       {
         "id": "wiki-viewer",
         "name": "Wiki",
-        "description": "Living reference layer \u2014 browse topics, read pages, create update tickets",
+        "description": "Living reference layer — browse topics, read pages, create update tickets",
         "type": "navigation",
         "icon": "full_coverage",
         "hasChat": true,
@@ -542,7 +501,7 @@
       {
         "id": "agents-viewer",
         "name": "Agents",
-        "description": "Agent command center \u2014 tiles UI for all background agents, their status, runs, and pending tickets",
+        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
         "type": "tiled-rows",
         "icon": "smart_toy",
         "hasChat": true,
@@ -570,15 +529,15 @@
       }
     ],
     "viewStates": {
-      "file-viewer": {
+      "office-viewer": {
         "widths": {
-          "leftSidebar": 239.7578125,
-          "leftChat": 386.02734375,
+          "leftSidebar": 342.55078125,
+          "leftChat": 396.58984375,
           "rightSecondary": 425.51171875,
-          "rightCol": 243.89453125
+          "rightCol": 281.49609375
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -589,7 +548,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-16T21-49-15-280",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -602,15 +561,15 @@
           }
         }
       },
-      "doc-viewer": {
+      "file-viewer": {
         "widths": {
-          "leftSidebar": 239.7578125,
-          "leftChat": 386.02734375,
+          "leftSidebar": 342.55078125,
+          "leftChat": 396.58984375,
           "rightSecondary": 425.51171875,
-          "rightCol": 243.89453125
+          "rightCol": 281.49609375
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -621,7 +580,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-16T21-49-15-280",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -636,10 +595,10 @@
       },
       "issues-viewer": {
         "widths": {
-          "leftSidebar": 239.7578125,
+          "leftSidebar": 342.55078125,
           "leftChat": 461.09765625,
           "rightSecondary": 425.51171875,
-          "rightCol": 243.89453125
+          "rightCol": 281.49609375
         },
         "collapsed": {
           "leftSidebar": true,
@@ -653,7 +612,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-16T21-49-15-280",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -668,10 +627,10 @@
       },
       "agents-viewer": {
         "widths": {
-          "leftSidebar": 239.7578125,
+          "leftSidebar": 342.55078125,
           "leftChat": 372.8046875,
           "rightSecondary": 425.51171875,
-          "rightCol": 243.89453125
+          "rightCol": 281.49609375
         },
         "collapsed": {
           "leftSidebar": false,
@@ -685,7 +644,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-16T21-49-15-280",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -700,13 +659,13 @@
       },
       "wiki-viewer": {
         "widths": {
-          "leftSidebar": 239.7578125,
-          "leftChat": 427.82421875,
+          "leftSidebar": 342.55078125,
+          "leftChat": 300,
           "rightSecondary": 425.51171875,
-          "rightCol": 243.89453125
+          "rightCol": 281.49609375
         },
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "popup": {
@@ -717,7 +676,39 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-04-19T18-54-25-495",
+        "currentThreadId": "2026-05-16T21-49-15-280",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
+      },
+      "calendar-viewer": {
+        "widths": {
+          "leftSidebar": 342.55078125,
+          "leftChat": 396.58984375,
+          "rightSecondary": 425.51171875,
+          "rightCol": 281.49609375
+        },
+        "collapsed": {
+          "leftSidebar": true,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-16T21-49-15-280",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -731,7 +722,7 @@
         }
       }
     },
-    "_savedAt": 1778451400191
+    "_savedAt": 1779138996494
   },
   "karens-lab": {
     "projectRoot": null,
@@ -784,11 +775,11 @@
         }
       }
     },
-    "_savedAt": 1778451401081
+    "_savedAt": 1778535510384
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "issues-viewer",
+    "currentPanel": "agents-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -835,7 +826,7 @@
       {
         "id": "file-viewer",
         "name": "Files",
-        "description": "Primary coding assistant \u2014 write, edit, and explore source files",
+        "description": "Primary coding assistant — write, edit, and explore source files",
         "type": "file-explorer",
         "icon": "code_blocks",
         "hasChat": true,
@@ -860,7 +851,7 @@
       {
         "id": "issues-viewer",
         "name": "Issues",
-        "description": "Ticket router \u2014 receives tickets from all panels, routes to agents by type and domain",
+        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
         "type": "tabbed",
         "icon": "business_messages",
         "hasChat": true,
@@ -889,7 +880,7 @@
       {
         "id": "wiki-viewer",
         "name": "Wiki",
-        "description": "Living reference layer \u2014 browse topics, read pages, create update tickets",
+        "description": "Living reference layer — browse topics, read pages, create update tickets",
         "type": "navigation",
         "icon": "full_coverage",
         "hasChat": true,
@@ -923,9 +914,9 @@
       {
         "id": "agents-viewer",
         "name": "Agents",
-        "description": "Agent command center \u2014 tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "tiled-rows",
-        "icon": "smart_toy",
+        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
+        "type": "agent-tiles",
+        "icon": "robot_2",
         "hasChat": true,
         "chatConfig": {
           "type": "rolling-daily",
@@ -939,7 +930,6 @@
           "popup": null
         },
         "contentConfig": {
-          "display": "tiled-rows",
           "chat": {
             "type": "rolling-daily",
             "position": "right"
@@ -989,7 +979,8 @@
         "widths": {
           "leftSidebar": 339.16796875,
           "leftChat": 320,
-          "rightSecondary": 350.27734375
+          "rightSecondary": 300,
+          "rightCol": 302.08984375
         },
         "popup": {
           "open": false,
@@ -1010,8 +1001,123 @@
             "chat": false
           }
         }
+      },
+      "wiki-viewer": {
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 300
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": null,
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
+      },
+      "office-viewer": {
+        "widths": {
+          "leftSidebar": 342.55078125,
+          "leftChat": 436.9453125,
+          "rightSecondary": 425.51171875,
+          "rightCol": 281.49609375
+        },
+        "collapsed": {
+          "leftSidebar": true,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-16T21-49-15-280",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
       }
     },
-    "_savedAt": 1778451943748
+    "_savedAt": 1779114579751
+  },
+  "income-and-spending": {
+    "projectRoot": null,
+    "currentPanel": "file-viewer",
+    "panels": {},
+    "projectChats": {},
+    "threads": {
+      "project": [],
+      "view": []
+    },
+    "currentThreadIds": {
+      "project": null,
+      "view": null
+    },
+    "currentScope": null,
+    "wireReady": false,
+    "contextUsage": 0,
+    "panelConfigs": [],
+    "viewStates": {
+      "file-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-16T21-49-15-280",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
+      }
+    },
+    "_savedAt": 1779138997469
   }
 }

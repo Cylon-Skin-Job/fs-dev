@@ -7,10 +7,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "electron electron/main.cjs",
+    "electron:dev": "npm run build && electron electron/main.cjs",
+    "download-pandoc": "node scripts/download-pandoc.cjs"
   },
   "dependencies": {
+    "@milkdown/crepe": "^7.20.0",
+    "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
+    "html-to-image": "^1.11.13",
     "marked": "^17.0.3",
     "material-symbols": "^0.44.3",
     "react": "^19.2.0",
@@ -26,6 +32,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "electron": "^42.0.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

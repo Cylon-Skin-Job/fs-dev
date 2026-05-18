@@ -1,0 +1,712 @@
+/* ============================================
+   Calendar Components — Pure UI
+   ============================================ */
+
+/* EventBar */
+.rv-calendar-event {
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-size: var(--font-xs, 11px);
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 18px;
+  cursor: pointer;
+  background: var(--event-color, #5EADF2);
+}
+
+.rv-calendar-event--start {
+  border-radius: 4px 0 0 4px;
+}
+
+.rv-calendar-event--middle {
+  border-radius: 0;
+}
+
+.rv-calendar-event--end {
+  border-radius: 0 4px 4px 0;
+}
+
+/* CalendarDayCell */
+.rv-calendar-day {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xs, 4px);
+  gap: 2px;
+  min-height: 100px;
+  background: var(--bg-surface, #1e1e1e);
+}
+
+.rv-calendar-day--padding {
+  background: var(--bg-solid, #000);
+  opacity: 0.4;
+}
+
+.rv-calendar-day-number {
+  font-size: var(--font-md, 13px);
+  font-weight: 500;
+  color: var(--accent-dim, #e0e0e0);
+  margin-bottom: var(--space-xs, 4px);
+}
+
+.rv-calendar-day--today .rv-calendar-day-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--chrome-accent, #00d4ff);
+  color: var(--bg-solid, #000);
+  border-radius: 50%;
+}
+
+/* MiniCalendar */
+.rv-calendar-mini {
+  padding: var(--space-sm, 8px);
+}
+
+.rv-calendar-mini-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm, 8px);
+}
+
+.rv-calendar-mini-month-label {
+  font-size: var(--font-md, 13px);
+  font-weight: 600;
+  color: var(--accent-dim, #e0e0e0);
+}
+
+.rv-calendar-mini-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  color: var(--accent-dim, #e0e0e0);
+  cursor: pointer;
+  border-radius: var(--radius-sm, 2px);
+}
+
+.rv-calendar-mini-nav:hover {
+  background: var(--surface-hover, rgba(255,255,255,0.06));
+}
+
+.rv-calendar-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.rv-calendar-mini-day-header {
+  text-align: center;
+  font-size: var(--font-xs, 11px);
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  padding: 4px 0;
+}
+
+.rv-calendar-mini-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  font-size: var(--font-xs, 11px);
+  color: var(--accent-dim, #e0e0e0);
+  border-radius: var(--radius-sm, 2px);
+  cursor: pointer;
+}
+
+.rv-calendar-mini-day:hover {
+  background: var(--surface-hover, rgba(255,255,255,0.06));
+}
+
+.rv-calendar-mini-day--selected {
+  background: var(--chrome-accent, #00d4ff);
+  color: var(--bg-solid, #000);
+}
+
+.rv-calendar-mini-day--today {
+  font-weight: 700;
+  color: var(--chrome-accent, #00d4ff);
+}
+
+/* Empty states */
+.rv-calendar-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xl, 24px);
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  text-align: center;
+}
+
+.rv-calendar-empty-state .material-symbols-outlined {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+/* CalendarListView */
+.rv-calendar-list {
+  padding: var(--space-sm, 8px);
+}
+
+.rv-calendar-list-section {
+  margin-bottom: var(--space-md, 12px);
+}
+
+.rv-calendar-list-section-title {
+  font-size: var(--font-xs, 11px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  margin-bottom: var(--space-xs, 4px);
+  padding-left: var(--space-sm, 8px);
+}
+
+.rv-calendar-list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  border-radius: var(--radius-sm, 2px);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.rv-calendar-list-row:hover {
+  background: var(--surface-hover, rgba(255,255,255,0.06));
+}
+
+.rv-calendar-list-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.rv-calendar-list-dot--disabled {
+  opacity: 0.25;
+}
+
+.rv-calendar-list-name {
+  font-size: var(--font-sm, 12px);
+  color: var(--accent-dim, #e0e0e0);
+}
+
+/* ============================================
+   CalendarMonthView — Grid Layout
+   ============================================ */
+
+.rv-calendar-month-view {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Day-of-week headers */
+.rv-calendar-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+.rv-calendar-day-header {
+  padding: var(--space-sm, 8px) var(--space-xs, 4px);
+  text-align: center;
+  font-size: var(--font-sm, 12px);
+  font-weight: 500;
+  color: var(--text-dim, rgba(255,255,255,0.66));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Month block */
+.rv-calendar-month-block {
+  /* container for weeks + separator */
+}
+
+/* Week row */
+.rv-calendar-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+.rv-calendar-week > .rv-calendar-day {
+  border-left: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+.rv-calendar-week > .rv-calendar-day:first-child {
+  border-left: none;
+}
+
+.rv-calendar-week > .rv-calendar-day--other-month {
+  border-left-color: transparent;
+}
+
+.rv-calendar-week > .rv-calendar-day--last-day {
+  border-right: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+/* Month separator */
+.rv-calendar-month-separator {
+  position: relative;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+.rv-calendar-month-label {
+  position: relative;
+  padding-left: var(--space-md, 12px);
+  font-size: var(--font-lg, 16px);
+  font-weight: 600;
+  color: var(--accent-dim, #e0e0e0);
+  z-index: 1;
+}
+
+/* ============================================
+   CalendarViewer — Layout + Header + Drawer
+   ============================================ */
+
+@keyframes rv-calendar-view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rv-calendar-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-surface, #1e1e1e);
+  position: relative;
+  animation: rv-calendar-view-enter 0.18s ease-out;
+}
+
+/* Header */
+.rv-calendar-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 12px) var(--space-lg, 16px);
+  flex-shrink: 0;
+  min-height: 64px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+}
+
+.rv-calendar-header-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--accent-dim, #e0e0e0);
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Dropdown */
+.rv-calendar-header-dropdown {
+  position: relative;
+}
+
+.rv-calendar-header-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  padding: 6px 16px;
+  background: var(--surface-elevated, #202020);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  color: var(--accent-dim, #e0e0e0);
+  font-size: var(--font-sm, 12px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.rv-calendar-header-dropdown-btn:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  border-color: var(--border-focus, rgba(255, 255, 255, 0.22));
+}
+
+.rv-calendar-header-dropdown-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-calendar-header-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-dropdown, 200);
+  min-width: 120px;
+  padding: var(--space-xs, 4px) 0;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 4px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: rv-calendar-view-enter 0.12s ease-out;
+}
+
+.rv-calendar-header-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  border: none;
+  background: transparent;
+  color: var(--accent-dim, #e0e0e0);
+  font-size: var(--font-sm, 12px);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.rv-calendar-header-dropdown-item:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--chrome-accent, #00d4ff);
+}
+
+.rv-calendar-header-dropdown-item:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Today nav */
+.rv-calendar-header-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-calendar-header-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 2px);
+  color: var(--accent-dim, #e0e0e0);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-calendar-header-nav-btn:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--chrome-accent, #00d4ff);
+}
+
+.rv-calendar-header-today {
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-sm, 2px);
+  color: var(--accent-dim, #e0e0e0);
+  font-size: var(--font-sm, 12px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-calendar-header-today:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  border-color: var(--chrome-accent, #00d4ff);
+  color: var(--chrome-accent, #00d4ff);
+}
+
+/* Actions */
+.rv-calendar-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  margin-left: auto;
+}
+
+.rv-calendar-header-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 2px);
+  color: var(--accent-dim, #e0e0e0);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-calendar-header-action:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--chrome-accent, #00d4ff);
+}
+
+.rv-calendar-header-action--active {
+  color: var(--chrome-accent, #00d4ff);
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+}
+
+.rv-calendar-header-action--floating {
+  position: relative;
+  z-index: 10;
+}
+
+/* Body */
+.rv-calendar-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rv-calendar-grid-container {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-calendar-grid--drawer-open .rv-calendar-month-view {
+  padding-right: 240px;
+}
+
+/* Drawer */
+.rv-calendar-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 240px;
+  background: var(--sidebar-surface-bg, #161616);
+  border-left: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  z-index: 1;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease-out, opacity 0.18s ease-out;
+  overflow-y: auto;
+}
+
+.rv-calendar-drawer[data-open='true'] {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Permission banner */
+.rv-calendar-permission-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  background: rgba(252, 60, 68, 0.1);
+  border-bottom: 1px solid rgba(252, 60, 68, 0.2);
+  color: #ff6b6b;
+  font-size: var(--font-sm, 12px);
+  flex-shrink: 0;
+}
+
+.rv-calendar-permission-banner .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ============================================
+   Event Modal
+   ============================================ */
+
+@keyframes rv-calendar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rv-calendar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1003);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg, 16px);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  animation: rv-calendar-fade-in 0.15s ease-out;
+}
+
+.rv-calendar-modal {
+  width: min(420px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-xl, 24px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-lg, 8px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+  color: var(--text-primary, #f2f2f2);
+  animation: rv-calendar-view-enter 0.18s ease-out;
+}
+
+.rv-calendar-modal-title {
+  margin: 0 0 var(--space-lg, 16px);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-dim, #f5f5f5);
+}
+
+.rv-calendar-modal-field {
+  margin-bottom: var(--space-md, 12px);
+}
+
+.rv-calendar-modal-field > label {
+  display: block;
+  margin-bottom: var(--space-2xs, 2px);
+  font-size: var(--font-xs, 11px);
+  font-weight: 500;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rv-calendar-modal-field input,
+.rv-calendar-modal-field select,
+.rv-calendar-modal-field textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-sm, 2px);
+  background: var(--bg-surface, #1e1e1e);
+  color: var(--accent-dim, #e0e0e0);
+  font-size: var(--font-sm, 12px);
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.rv-calendar-modal-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.rv-calendar-modal-field input:focus,
+.rv-calendar-modal-field select:focus,
+.rv-calendar-modal-field textarea:focus {
+  outline: none;
+  border-color: var(--chrome-accent, #00d4ff);
+}
+
+.rv-calendar-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm, 8px);
+}
+
+.rv-calendar-modal-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-calendar-modal-checkbox input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+}
+
+.rv-calendar-modal-checkbox label {
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--font-sm, 12px);
+  color: var(--accent-dim, #e0e0e0);
+}
+
+.rv-calendar-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  margin-top: var(--space-lg, 16px);
+  padding-top: var(--space-md, 12px);
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-calendar-modal-actions-spacer {
+  flex: 1;
+}
+
+.rv-calendar-modal-btn {
+  min-height: 34px;
+  padding: 0 var(--space-md, 12px);
+  border-radius: var(--radius-sm, 2px);
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, filter 0.15s ease;
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+
+.rv-calendar-modal-btn--secondary {
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-calendar-modal-btn--secondary:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  border-color: var(--border-focus, rgba(255, 255, 255, 0.22));
+}
+
+.rv-calendar-modal-btn--primary {
+  border: 1px solid var(--chrome-accent, #00d4ff);
+  background: var(--chrome-accent, #00d4ff);
+  color: var(--bg-solid, #000);
+}
+
+.rv-calendar-modal-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.rv-calendar-modal-btn--primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rv-calendar-modal-btn--danger {
+  border: 1px solid var(--status-error, #ef4444);
+  background: transparent;
+  color: var(--status-error, #ef4444);
+}
+
+.rv-calendar-modal-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}

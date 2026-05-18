@@ -11,6 +11,7 @@
 
 import { create } from 'zustand';
 import { usePanelStore } from './panelStore';
+import { showToast } from '../lib/toast';
 
 // --- Types ---
 
@@ -25,6 +26,8 @@ export interface FileWithContent extends FileNode {
   content: string;
 }
 
+export type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milestone';
+
 // --- Store ---
 
 interface FileDataState {
@@ -36,14 +39,21 @@ interface FileDataState {
   pendingTrees: Set<string>;
   /** In-flight content requests (prevents duplicate sends) */
   pendingContents: Set<string>;
+  /** Dirty flags: key = "panel:path" -> true if unsaved */
+  dirtyFlags: Record<string, boolean>;
+  /** In-flight save requests (prevents duplicate sends) */
+  pendingSaves: Set<string>;
 
   // --- Actions called by ws-client ---
   handleTreeResponse: (panel: string, path: string, nodes: FileNode[]) => void;
   handleContentResponse: (panel: string, path: string, content: string) => void;
+  handleSaveResponse: (panel: string, path: string, success: boolean, error?: string) => void;
 
   // --- Actions called by components ---
   requestTree: (panel: string, folder: string) => void;
   requestContent: (panel: string, path: string) => void;
+  setDirty: (panel: string, path: string, dirty: boolean) => void;
+  saveFile: (panel: string, path: string, content: string, reason?: SaveReason, milestone?: string) => void;
 
   // --- Invalidation (called by file_changed handler) ---
   invalidate: (panel: string, filePath: string) => void;
@@ -68,6 +78,8 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
   contents: {},
   pendingTrees: new Set(),
   pendingContents: new Set(),
+  dirtyFlags: {},
+  pendingSaves: new Set(),
 
   handleTreeResponse: (panel, path, nodes) => {
     const key = cacheKey(panel, path);
@@ -91,6 +103,44 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
         pendingContents: pending,
       };
     });
+  },
+
+  handleSaveResponse: (panel, path, success, error) => {
+    const key = cacheKey(panel, path);
+    set((s) => {
+      const pending = new Set(s.pendingSaves);
+      pending.delete(key);
+      const dirtyFlags = { ...s.dirtyFlags };
+      if (success) delete dirtyFlags[key];
+      return { pendingSaves: pending, dirtyFlags };
+    });
+    if (!success) {
+      console.error(`[fileDataStore] Save failed for ${key}:`, error);
+      showToast(`Save failed: ${error || 'Unknown error'}`);
+    }
+  },
+
+  setDirty: (panel, path, dirty) => {
+    const key = cacheKey(panel, path);
+    set((s) => ({
+      dirtyFlags: dirty
+        ? { ...s.dirtyFlags, [key]: true }
+        : Object.fromEntries(Object.entries(s.dirtyFlags).filter(([k]) => k !== key)),
+    }));
+  },
+
+  saveFile: (panel, path, content, reason, milestone) => {
+    const key = cacheKey(panel, path);
+    if (get().pendingSaves.has(key)) return; // Skip if already in-flight
+    set((s) => {
+      const pending = new Set(s.pendingSaves);
+      pending.add(key);
+      return { pendingSaves: pending };
+    });
+    const payload: Record<string, unknown> = { type: 'file_save', panel, path, content };
+    if (reason) payload.reason = reason;
+    if (milestone) payload.milestone = milestone;
+    sendWs(payload);
   },
 
   requestTree: (panel, folder) => {
@@ -160,5 +210,7 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
     contents: {},
     pendingTrees: new Set(),
     pendingContents: new Set(),
+    dirtyFlags: {},
+    pendingSaves: new Set(),
   }),
 }));

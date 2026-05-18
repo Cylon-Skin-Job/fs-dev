@@ -47,20 +47,27 @@ export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: Til
         ) : files.length === 0 ? (
           <div className="rv-tile-row-empty">Empty</div>
         ) : (
-          files.map((file) => (
-            <DocumentTile
-              key={file.path}
-              name={file.name}
-              content={file.content}
-              extension={file.extension}
-              panel={panel}
-              folderPath={folder}
-              onClick={() => {
-                onFileClick?.(file.path);
-                onFileSelect?.(file, files);
-              }}
-            />
-          ))
+          <>
+            {files.slice(0, 30).map((file) => (
+              <DocumentTile
+                key={file.path}
+                name={file.name}
+                content={file.content}
+                extension={file.extension}
+                panel={panel}
+                folderPath={folder}
+                onClick={() => {
+                  onFileClick?.(file.path);
+                  onFileSelect?.(file, files);
+                }}
+              />
+            ))}
+            {files.length > 30 && (
+              <div className="rv-tile-row-more">
+                +{files.length - 30} more
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -22,6 +22,7 @@ import { useWorkspaceStore } from '../../state/workspaceStore';
 import { usePanelStore } from '../../state/panelStore';
 import { useFileStore } from '../../state/fileStore';
 import { useWikiStore } from '../../state/wikiStore';
+import { useFileDataStore } from '../../state/fileDataStore';
 import { preloadIcons } from '../icon-registry';
 import { rediscoverPanels } from '../panels';
 import { loadRootTree } from '../file-tree';
@@ -34,10 +35,12 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
 
   switch (msg.type) {
     case 'workspace:init': {
+      console.log('[workspace-handlers] workspace:init received:', msg);
       const workspaces = msg.workspaces ?? [];
       store.setWorkspaces(workspaces);
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
       store.setWorkspaceType((msg as any).workspaceType ?? 'code');
+      console.log('[workspace-handlers] activeWorkspaceId set to:', msg.activeWorkspaceId);
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
       usePanelStore.getState().hydrateThemes((msg as any).themes ?? [], (msg as any).activeThemeId ?? null);
@@ -78,6 +81,11 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       }
 
       store.markInit();
+      // Request existing screenshots so the ribbon can show thumbnails immediately
+      const wsConn2 = usePanelStore.getState().ws;
+      if (wsConn2 && wsConn2.readyState === WebSocket.OPEN) {
+        wsConn2.send(JSON.stringify({ type: 'screenshot:list' }));
+      }
       return true;
     }
 
@@ -103,6 +111,11 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       useFileStore.getState().activateWorkspace(workspaceId);
       useWikiStore.getState().activateWorkspace(workspaceId);
 
+      // Clear the global file data cache so we don't show stale trees/content
+      // from a different workspace. fileDataStore keys are panel:path, not
+      // workspace-scoped, so cross-workspace pollution is possible.
+      useFileDataStore.getState().clearAll();
+
       // Re-read stores AFTER activateWorkspace so we use the NEW workspace's state
       const panelStore = usePanelStore.getState();
 
@@ -120,6 +133,13 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
         // Fallback for older servers: invalidate cache so the hook refetches
         resetSharedStyles();
       }
+
+      // Hydrate themes for the new workspace so the theme picker shows the
+      // correct workspace's settings instead of stale data from the previous one.
+      usePanelStore.getState().hydrateThemes(
+        (msg as any).themes ?? [],
+        (msg as any).activeThemeId ?? null,
+      );
 
       // SECONDARY_CHAT_SPEC §7d: secondary chat is workspace-scoped — blanket close.
       panelStore.closeSecondary();

@@ -25,6 +25,7 @@ const { on } = require('../event-bus');
 const path = require('path');
 const fsPromises = require('fs').promises;
 const registry = require('../workspace/registry-service');
+const themesService = require('../theme/themes-service');
 
 const STYLE_FILES = [
   'variables.css',
@@ -115,6 +116,18 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
       } catch (err) {
         console.error('[WorkspaceBroadcaster] Failed to read styles:', err.message);
         baseMessage.styles = {};
+      }
+
+      // Include themes so the client's theme picker stays in sync
+      try {
+        const themes = await themesService.list(event.repoPath);
+        baseMessage.themes = themes;
+        const active = themes.find(t => t.active);
+        baseMessage.activeThemeId = active ? active.id : null;
+      } catch (err) {
+        console.error('[WorkspaceBroadcaster] Failed to read themes:', err.message);
+        baseMessage.themes = [];
+        baseMessage.activeThemeId = null;
       }
 
       // Also send panel_config so clients update projectRoot immediately

@@ -1,5 +1,4 @@
 {
-  "display": "tiled-rows",
   "chat": {
     "type": "rolling-daily",
     "position": "right"

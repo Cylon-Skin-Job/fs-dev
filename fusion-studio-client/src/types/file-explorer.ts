@@ -47,6 +47,17 @@ export interface FileContentRequest {
   path: string;
 }
 
+export type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milestone';
+
+export interface FileSaveRequest {
+  type: 'file_save';
+  panel: string;
+  path: string;
+  content: string;
+  reason?: SaveReason;
+  milestone?: string;
+}
+
 // Server -> Client (success)
 export interface FileTreeResponse {
   type: 'file_tree_response';
@@ -67,6 +78,15 @@ export interface FileContentResponse {
 }
 
 // Server -> Client (error)
+export interface FileSaveResponse {
+  type: 'file_save_response';
+  panel: string;
+  path: string;
+  success: boolean;
+  error?: string;
+  code?: FileErrorCode;
+}
+
 export interface FileOperationError {
   type: 'file_tree_response' | 'file_content_response';
   panel: string;
@@ -80,9 +100,9 @@ export interface FileOperationError {
 export interface FileChangedNotification {
   type: 'file_changed';
   panel: string;
-  path: string;
+  filePath: string;
   change: 'created' | 'modified' | 'deleted';
-  timestamp: number;
+  timestamp?: number;
 }
 
 // Server -> Client (panel configuration on connect)

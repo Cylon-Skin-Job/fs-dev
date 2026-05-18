@@ -25,6 +25,7 @@ const createFusionHandlers = require('./lib/fusion/ws-handlers');
 
 // Clipboard manager
 const createClipboardHandlers = require('./lib/secrets/clipboard/handlers');
+const createRecentDocsHandlers = require('./lib/recent-docs/handlers');
 
 // File explorer handlers
 const { createFileExplorerHandlers } = require('./lib/file-explorer');
@@ -107,16 +108,18 @@ app.use(
   })
 );
 
+// Workspace screenshot API
+app.use('/api/screenshot', require('./lib/screenshot/router').createRouter());
+
 // Voice transcription API (Whisper V3)
 const transcription = require('./lib/transcription');
 app.use('/api', transcription.createRouter());
 
 // Serve panel files (images, etc.) via HTTP
 // Uses fuzzy filename matching to handle macOS Unicode spaces in screenshot names
-app.get('/api/panel-file/:panel/{*filePath}', (req, res) => {
+app.get('/api/panel-file/:panel/*splat', (req, res) => {
   const panel = req.params.panel;
-  const rawPath = req.params.filePath;
-  const filePath = Array.isArray(rawPath) ? rawPath.join('/') : rawPath;
+  const filePath = req.params.splat;
   const root = getProjectRoot();
   if (!root) return res.status(503).send('No active workspace');
   // Resolve via the same view resolver the file-tree WS handler uses, so
@@ -316,6 +319,7 @@ function getPanelPath(panel, ws) {
 const fileExplorer = createFileExplorerHandlers({
   getPanelPath,
   getProjectRoot,
+  emit,
 });
 
 // ============================================================================
@@ -434,6 +438,8 @@ wss.on('connection', async (ws) => {
     getClipboardHandlers: () => clipboardHandlers,
     getThemeHandlers: () => themeHandlers,
     getSecretsHandlers: () => secretsHandlers,
+    getScreenshotHandlers: () => screenshotHandlers,
+    getRecentDocsHandlers: () => recentDocsHandlers,
   });
 
   ws.on('message', handleClientMessage);
@@ -454,8 +460,10 @@ wss.on('connection', async (ws) => {
   try {
     const workspaces = await workspaceController.listWorkspaces();
     const activeWorkspaceId = workspaceController.getActiveWorkspaceId();
+    console.log('[WS] activeWorkspaceId:', activeWorkspaceId, 'workspaces count:', workspaces.length);
     const { resolveCliConfig } = require('./lib/cli-config');
     const activeRoot = getProjectRoot();
+    console.log('[WS] activeRoot:', activeRoot);
     const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
     let themes = [];
     let activeThemeId = null;
@@ -487,7 +495,7 @@ wss.on('connection', async (ws) => {
       );
     }
     const activeWs = workspaceController.getActiveWorkspaceSync();
-    ws.send(JSON.stringify({
+    const msg = {
       type: 'workspace:init',
       workspaces,
       activeWorkspaceId,
@@ -498,7 +506,9 @@ wss.on('connection', async (ws) => {
       activeThemeId,
       styles,
       cachedStates,
-    }));
+    };
+    console.log('[WS] Sending workspace:init message');
+    ws.send(JSON.stringify(msg));
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);
   }
@@ -524,8 +534,10 @@ wss.on('connection', async (ws) => {
 // createClientMessageRouter. See SPEC-01b for the mutable-reference rationale.
 let fusionHandlers = {};
 let clipboardHandlers = {};
+let recentDocsHandlers = {};
 let themeHandlers = {};
 let secretsHandlers = {};
+let screenshotHandlers = {};
 
 startServer({
   server,
@@ -535,8 +547,10 @@ startServer({
   .then(result => {
     fusionHandlers = result.fusionHandlers;
     clipboardHandlers = result.clipboardHandlers;
+    recentDocsHandlers = result.recentDocsHandlers;
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;
+    screenshotHandlers = result.screenshotHandlers || {};
 
     // Serve Material Symbols from Fusion Home (runtime asset, not bundled).
     // Looked up from DB so the path stays correct even if Fusion Home moves.

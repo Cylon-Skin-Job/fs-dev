@@ -91,6 +91,8 @@ export type WebSocketMessageType =
   | 'file_changed'
   | 'file_tree_response'
   | 'file_content_response'
+  | 'file_save'
+  | 'file_save_response'
   | 'fusion:tabs'
   | 'fusion:items'
   | 'fusion:wiki'
@@ -103,6 +105,13 @@ export type WebSocketMessageType =
   | 'clipboard:clear'
   | 'clipboard:state'
   | 'clipboard:error'
+  // Recent docs messages
+  | 'recent_docs:list'
+  | 'recent_docs:record'
+  | 'recent_docs:clear'
+  | 'recent_docs:updated'
+  | 'recent_docs:cleared'
+  | 'recent_docs:error'
   | 'wire_ready'
   | 'wire_disconnected'
   | 'parse_error'
@@ -130,7 +139,13 @@ export type WebSocketMessageType =
   | 'theme:error'
   // Secrets manager (SECRETS_MANAGER_SPEC §8a)
   | 'secrets:api-keys:state'
-  | 'secrets:api-keys:error';
+  | 'secrets:api-keys:error'
+  // Screenshot manager
+  | 'screenshot:data'
+  | 'screenshot:list'
+  | 'screenshot:updated'
+  | 'screenshot:missing'
+  | 'screenshot:error';
 
 // Slider-only theme model — accent + 4 sliders.
 export interface ThemeEntry {

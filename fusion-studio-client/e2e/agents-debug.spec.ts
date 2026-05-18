@@ -7,8 +7,8 @@ test('agents workspace debug', async ({ page }) => {
   await page.goto('/');
   await page.waitForTimeout(2000);
 
-  // Click agents tab (smart_toy icon)
-  await page.locator('.tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'smart_toy' }) }).click();
+  // Click agents tab (robot_2 icon)
+  await page.locator('.tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'robot_2' }) }).click();
   await page.waitForTimeout(3000);
 
   const tiles = page.locator('.agent-tile');

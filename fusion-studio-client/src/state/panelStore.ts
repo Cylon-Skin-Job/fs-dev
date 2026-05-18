@@ -210,6 +210,12 @@ interface AppState {
   setHarnessStatuses: (map: Record<string, HarnessStatus>) => void;
   setHarnessStatus: (id: string, status: HarnessStatus) => void;
 
+  // Modal open state — driven by Electron menu or header buttons
+  isThemePickerOpen: boolean;
+  setThemePickerOpen: (open: boolean) => void;
+  isSecretsManagerOpen: boolean;
+  setSecretsManagerOpen: (open: boolean) => void;
+
   // THEME_PICKER_SPEC §6a: theme catalog + active id
   themes: ThemeEntry[];
   activeThemeId: string | null;
@@ -421,6 +427,12 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setHarnessStatus: (id, status) => set((s) => ({
     harnessStatuses: { ...s.harnessStatuses, [id]: status },
   })),
+
+  // Modal open state
+  isThemePickerOpen: false,
+  setThemePickerOpen: (open) => set({ isThemePickerOpen: open }),
+  isSecretsManagerOpen: false,
+  setSecretsManagerOpen: (open) => set({ isSecretsManagerOpen: open }),
 
   // THEME_PICKER_SPEC §6a
   themes: [],

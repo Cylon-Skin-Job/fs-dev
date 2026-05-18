@@ -16,14 +16,17 @@ import { CodeView } from '../CodeView';
 import { copyResourcePath } from '../../lib/resource-path';
 import { getPanelFileUrl } from '../../lib/panels';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
+import './FilePageView.css';
 
 interface FilePageViewProps {
   file: FileWithContent;
-  siblings: FileWithContent[];
+  siblings?: FileWithContent[];
   panel: string;
   folder: string;
+  folderName?: string;
+  showRibbon?: boolean;
   onBack: () => void;
-  onSelectSibling: (file: FileWithContent) => void;
+  onSelectSibling?: (file: FileWithContent) => void;
 }
 
 export function FilePageView({
@@ -31,6 +34,8 @@ export function FilePageView({
   siblings,
   panel,
   folder,
+  folderName,
+  showRibbon = true,
   onBack,
   onSelectSibling,
 }: FilePageViewProps) {
@@ -40,8 +45,8 @@ export function FilePageView({
   const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
 
   useEffect(() => {
-    setActiveResource('doc-viewer', file.path);
-  }, [file.path]);
+    setActiveResource(panel, file.path);
+  }, [panel, file.path]);
 
   return (
     <div className="rv-file-page-view">
@@ -50,11 +55,13 @@ export function FilePageView({
         <button className="rv-file-page-back" onClick={onBack} title="Back to tiles">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <span className="rv-file-page-filename">{file.name}</span>
+        <span className="rv-file-page-filename">
+          {folderName ? `${folderName} / ${file.name}` : file.name}
+        </span>
         <div className="rv-file-page-actions">
           <button
             className="rv-file-page-action"
-            onClick={() => copyResourcePath('doc-viewer', file.path)}
+            onClick={() => copyResourcePath(panel, file.path)}
             title="Copy file path"
           >
             <span className="material-symbols-outlined">link_2</span>
@@ -91,23 +98,25 @@ export function FilePageView({
       </div>
 
       {/* Bottom ribbon — sibling tiles */}
-      <div className="rv-file-page-ribbon">
-        <div className="rv-file-page-ribbon-scroll">
-          {siblings.map((sib) => (
-            <DocumentTile
-              key={sib.path}
-              name={sib.name}
-              content={sib.content}
-              extension={sib.extension}
-              panel={panel}
-              folderPath={folder}
-              size="small"
-              active={sib.path === file.path}
-              onClick={() => onSelectSibling(sib)}
-            />
-          ))}
+      {showRibbon && siblings && siblings.length > 0 && onSelectSibling && (
+        <div className="rv-file-page-ribbon">
+          <div className="rv-file-page-ribbon-scroll">
+            {siblings.map((sib) => (
+              <DocumentTile
+                key={sib.path}
+                name={sib.name}
+                content={sib.content}
+                extension={sib.extension}
+                panel={panel}
+                folderPath={folder}
+                size="small"
+                active={sib.path === file.path}
+                onClick={() => onSelectSibling(sib)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

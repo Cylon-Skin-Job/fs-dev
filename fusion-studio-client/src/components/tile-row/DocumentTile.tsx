@@ -9,6 +9,7 @@
  * Reusable across any workspace that wants a tile view.
  */
 
+import { useMemo } from 'react';
 import { CodeView } from '../CodeView';
 import { getPanelFileUrl } from '../../lib/panels';
 
@@ -53,6 +54,17 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
   if (size === 'small') classes.push('rv-doc-tile-small');
   if (active) classes.push('active');
 
+  // Truncate content for preview to prevent performance issues with large files.
+  // Thumbnails only need a snippet; full rendering happens in detail view.
+  const previewContent = useMemo(() => {
+    if (isImage || !content) return '';
+    const lines = content.split('\n');
+    if (lines.length > 100) {
+      return lines.slice(0, 100).join('\n') + '\n...';
+    }
+    return content;
+  }, [content, isImage]);
+
   return (
     <div className={classes.join(' ')} onClick={onClick} title={name}>
       <div className="rv-doc-tile-preview">
@@ -64,7 +76,7 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : (
-          <CodeView content={content} extension={ext} />
+          <CodeView content={previewContent} extension={ext} />
         )}
       </div>
       <div className="rv-doc-tile-footer">

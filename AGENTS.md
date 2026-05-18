@@ -74,11 +74,44 @@ This is a **web-based IDE** that integrates with command-line AI assistants via 
 
 ---
 
+## Workspace Architecture (CRITICAL)
+
+This project has **two distinct workspace concepts**. Do not conflate them.
+
+### 1. Fusion Home — The Default Workspace
+
+**Fusion Home** (`~/Projects/Fusion-Home/`) is the **app itself** — the workspace manager, wiki hub, and default view. When the app is wrapped in Electron, Fusion Home is what loads on startup. It is the "inner" app that manages other projects.
+
+- **Location:** `~/Projects/Fusion-Home/`
+- **Purpose:** Hub workspace with wiki, panels, and workspace templates
+- **Panels:** `office-viewer` (grid layout), `wiki-viewer`, `file-viewer`, etc.
+- **Templates:** `~/Projects/Fusion-Home/workspace-templates/` (fusion-home, media-studio, project-repo)
+
+### 2. fs-dev — The Development Repo (TEMPORARY)
+
+**fs-dev** (`~/Projects/fs-dev/`) is the **source code being developed** — it is managed *by* Fusion Home. It will **not exist** in the final Electron app. It is only present during development because we are using the app to build itself.
+
+- **Location:** `~/Projects/fs-dev/`
+- **Purpose:** React client + Node server source code
+- **Panels:** `doc-viewer` (horizontal tile rows), `wiki-viewer`, `file-viewer`, etc.
+- **Status:** Dev-only; will not ship
+
+### Key Rules
+
+| Rule | Why |
+|------|-----|
+| **Fusion Home is the default** | Server `last_active_workspace_id` defaults to `fusion-home`. The user's browser cache controls switching, but the boot default is always Fusion Home. |
+| **Never override the active workspace** | Do not edit `system_config.last_active_workspace_id` in the database. The client pushes `workspace:cache_push` on connect — the client's cache is the source of truth. |
+| **fs-dev ≠ the app** | Changes to fs-dev's `doc-viewer` do not affect Fusion Home's `office-viewer`. They are separate panels in separate workspaces. |
+| **Templates are the source of truth** | Workspace templates live in `~/Projects/Fusion-Home/workspace-templates/`. Changes to templates propagate to new workspaces, not existing ones. |
+
+---
+
 ## Project Structure
 
 ```
-kimi-claude/
-├── open-robin-client/          # React + TypeScript + Vite frontend
+fs-dev/
+├── fusion-studio-client/       # React + TypeScript + Vite frontend
 │   ├── src/
 │   │   ├── components/       # UI components (pure renderers)
 │   │   │   ├── App.tsx

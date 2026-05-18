@@ -43,6 +43,7 @@ async function start() {
   on('workspace:remove_requested', handleRemoveRequested);
 
   console.log('[WorkspaceController] Started (active: ' + (activeWorkspaceId || 'none') + ')');
+  emit('workspace:controller_ready');
 }
 
 async function validateRegistry() {

@@ -1,0 +1,165 @@
+/* ============================================
+   OfficeDocumentTile — document thumbnail for .md files
+   ============================================ */
+
+.rv-office-doc-tile {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  border-radius: var(--radius-md, 6px);
+  overflow: hidden;
+  background: var(--surface-elevated, #1a1a1a);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+.rv-office-doc-tile:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: var(--border-focus, rgba(255, 255, 255, 0.2));
+}
+
+.rv-office-doc-tile:active {
+  transform: translateY(0);
+}
+
+.rv-office-doc-tile.active {
+  border-color: var(--theme-primary, var(--ws-primary, #ec4899));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--theme-primary, var(--ws-primary, #ec4899)) 30%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.rv-office-doc-tile--highlighted {
+  border-color: var(--palette-accent, #22c55e);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--palette-accent, #22c55e) 30%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Small variant */
+.rv-office-doc-tile-small {
+  max-width: 140px;
+}
+
+.rv-office-doc-tile-small .rv-office-doc-tile-footer {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+}
+
+.rv-office-doc-tile-small .rv-office-doc-tile-name {
+  font-size: 0.75rem;
+}
+
+/* Preview container — letter-like aspect ratio, light page like editor */
+.rv-office-doc-tile-preview {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 8.5 / 11;
+  background: #faf9f6;
+  border-radius: var(--radius-sm, 4px) var(--radius-sm, 4px) 0 0;
+}
+
+.rv-office-doc-tile-open {
+  position: absolute;
+  top: var(--space-sm, 8px);
+  right: var(--space-sm, 8px);
+  z-index: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.14));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-elevated, #1a1a1a) 88%, transparent);
+  color: var(--text-primary, #e0e0e0);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.rv-office-doc-tile:hover .rv-office-doc-tile-open,
+.rv-office-doc-tile.active .rv-office-doc-tile-open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scaled document surface — light page matching Milkdown editor */
+.rv-office-doc-tile-document {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  padding: 24px;
+  background: #faf9f6;
+  color: #1c1c1c;
+  font-size: 14px;
+  line-height: 1.6;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+/* Override wiki-page-content dark styles inside the preview */
+.rv-office-doc-tile-document.rv-wiki-page-content h1,
+.rv-office-doc-tile-document.rv-wiki-page-content h2,
+.rv-office-doc-tile-document.rv-wiki-page-content h3,
+.rv-office-doc-tile-document.rv-wiki-page-content h4,
+.rv-office-doc-tile-document.rv-wiki-page-content p,
+.rv-office-doc-tile-document.rv-wiki-page-content li,
+.rv-office-doc-tile-document.rv-wiki-page-content blockquote {
+  color: #1c1c1c !important;
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content a {
+  color: #2563eb;
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content code {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1c1c1c;
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content pre {
+  background: #f0efe9;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content pre code {
+  color: #1c1c1c;
+}
+
+.rv-office-doc-tile-document.rv-wiki-page-content th,
+.rv-office-doc-tile-document.rv-wiki-page-content td {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Footer */
+.rv-office-doc-tile-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  flex-shrink: 0;
+  background: var(--surface-elevated, #1a1a1a);
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+.rv-office-doc-tile-icon {
+  font-size: 18px;
+  color: var(--accent-dim, #888);
+  flex-shrink: 0;
+}
+
+.rv-office-doc-tile-name {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary, #e0e0e0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

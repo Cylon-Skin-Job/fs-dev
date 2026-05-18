@@ -49,8 +49,6 @@ export function Icon({ name, className = '', style, filled = false, symbolStyle 
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '1em',
-          height: '1em',
         }}
         dangerouslySetInnerHTML={{ __html: svg }}
       />
@@ -59,7 +57,13 @@ export function Icon({ name, className = '', style, filled = false, symbolStyle 
 
   // Fallback: render as font glyph (instant, no layout shift)
   return (
-    <span className={`material-symbols-outlined ${className}`} style={style}>
+    <span
+      className={`material-symbols-outlined ${className}`}
+      style={{
+        ...style,
+        fontVariationSettings: filled ? "'FILL' 1" : undefined,
+      }}
+    >
       {name}
     </span>
   );

@@ -1,0 +1,122 @@
+/* FilePageView — full-content file viewer */
+
+.rv-file-page-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Top bar */
+.rv-file-page-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+.rv-file-page-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.rv-file-page-back:hover {
+  background: var(--surface-hover);
+}
+
+.rv-file-page-back .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-file-page-filename {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-file-page-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.rv-file-page-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--accent-dim);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-file-page-action:hover {
+  background: var(--surface-hover);
+  color: var(--chrome-accent);
+}
+
+.rv-file-page-action .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Content area */
+.rv-file-page-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-lg);
+  box-sizing: border-box;
+}
+
+.rv-file-page-document {
+  background: var(--document-surface-bg);
+}
+
+/* Markdown render fills the width of the content area */
+.rv-file-page-content > .rv-wiki-page-content {
+  width: 100%;
+}
+
+.rv-file-page-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Bottom ribbon */
+.rv-file-page-ribbon {
+  flex-shrink: 0;
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  padding: var(--space-sm) var(--space-md);
+  overflow-x: auto;
+}
+
+.rv-file-page-ribbon-scroll {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}

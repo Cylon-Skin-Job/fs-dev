@@ -5,64 +5,61 @@
  * Priority order:
  * 1. If panel has ui/ folder (hasUiFolder) → RuntimeModule (plugin)
  * 2. If panel has built-in component → static component
- * 3. Otherwise → placeholder
+ * 3. Fallback → Simple placeholder
+ *
+ * SPEC-26c-2: right-side view chat removed. ContentArea is now a single-column
+ * layout that renders the view's main component or a loading state.
  */
 
-import type { ComponentType } from 'react';
+import React, { type ComponentType } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import { RuntimeModule } from './RuntimeModule';
-import { FileExplorer } from './file-explorer/FileExplorer';
 import { WikiExplorer } from './wiki/WikiExplorer';
 import { TicketBoard } from './tickets/TicketBoard';
 import { AgentTiles } from './agents/AgentTiles';
 import { CaptureTiles } from './capture/CaptureTiles';
+import { OfficeGrid } from './office/OfficeGrid';
+// Calendar viewer disconnected — Apple JXA/EventKit data fetch is being
+// reengineered. The 'calendar-viewer' panel falls through to the placeholder
+// renderer below until the new data layer lands.
+// import { CalendarViewer } from './calendar/CalendarViewer';
+import { FileExplorer } from './file-explorer/FileExplorer';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
   'doc-viewer': CaptureTiles,
+  'office-viewer': OfficeGrid,
   'file-viewer': FileExplorer,
   'wiki-viewer': WikiExplorer,
   'issues-viewer': TicketBoard,
   'agents-viewer': AgentTiles,
+  // 'calendar-viewer': CalendarViewer,
 };
 
 interface ContentAreaProps {
   panel: string;
 }
 
-export function ContentArea({ panel }: ContentAreaProps) {
-  const config = usePanelStore((s) => s.getPanelConfig(panel));
+export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
+  const configs = usePanelStore((state) => state.panelConfigs);
+  const config = configs.find((c) => c.id === panel);
 
-  // Priority 1: Runtime-loaded plugin (ui/ folder exists)
-  if (config?.hasUiFolder) {
-    return (
-      <main className="rv-content-area">
-        <RuntimeModule panel={panel} config={config} />
-      </main>
-    );
-  }
+  // If a built-in static component exists, use it.
+  const StaticComponent = CONTENT_COMPONENTS[panel];
 
-  // Priority 2: Built-in component
-  const Component = CONTENT_COMPONENTS[panel];
-  if (Component) {
-    return (
-      <main className="rv-content-area">
-        <Component />
-      </main>
-    );
-  }
-
-  // Priority 3: Placeholder
   return (
     <main className="rv-content-area">
-      <div className="rv-panel-placeholder">
-        <h3 style={{ color: 'var(--theme-primary)', marginBottom: '16px' }}>
-          {config?.name || panel}
-        </h3>
-        <p style={{ color: 'var(--text-dim)' }}>
-          Content area for {(config?.name || panel).toLowerCase()} panel.
-        </p>
-      </div>
+      {StaticComponent ? (
+        <StaticComponent />
+      ) : (
+        <div className="rv-content-placeholder">
+          <h3 style={{ color: 'var(--text-bright)', marginBottom: '16px' }}>
+            {config?.name || panel}
+          </h3>
+          <p style={{ color: 'var(--text-dim)' }}>
+            Content area for {(config?.name || panel).toLowerCase()} panel.
+          </p>
+        </div>
+      )}
     </main>
   );
 }

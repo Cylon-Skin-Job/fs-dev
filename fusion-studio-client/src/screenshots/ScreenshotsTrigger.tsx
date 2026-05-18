@@ -1,6 +1,6 @@
 /**
  * @module ScreenshotsTrigger
- * @role Icon button showing screenshots from doc-viewer/content/screenshots
+ * @role Icon button showing screenshots from office-viewer/content/screenshots
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
@@ -29,7 +29,7 @@ interface ScreenshotItem {
 }
 
 const SCREENSHOTS_PATH = 'screenshots';
-const PANEL = 'doc-viewer';
+const PANEL = 'office-viewer';
 
 interface ScreenshotsTriggerProps {
   onInsert?: (text: string) => void;
@@ -207,7 +207,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
           <HoverIconModalEmpty
             icon="image_not_supported"
             message="No screenshots found"
-            hint="ai/views/doc-viewer/content/screenshots/"
+            hint="ai/views/office-viewer/content/screenshots/"
           />
         ) : (
           <>

@@ -5,28 +5,14 @@
  * See THEME_PICKER_SPEC.md §3a.
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import { usePanelStore } from '../state/panelStore';
 import ThemePicker from './ThemePicker';
 
 export default function ThemePickerButton() {
-  const [open, setOpen] = useState(false);
+  const open = usePanelStore((s) => s.isThemePickerOpen);
+  const setOpen = usePanelStore((s) => s.setThemePickerOpen);
   const btnRef = useRef<HTMLButtonElement>(null);
-  const pickerRef = useRef<HTMLDivElement>(null);
-
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    function handlePointerDown(e: PointerEvent) {
-      if (
-        btnRef.current && !btnRef.current.contains(e.target as Node) &&
-        pickerRef.current && !pickerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener('pointerdown', handlePointerDown);
-    return () => document.removeEventListener('pointerdown', handlePointerDown);
-  }, [open]);
 
   // Close on Escape
   useEffect(() => {
@@ -36,7 +22,7 @@ export default function ThemePickerButton() {
     }
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [open]);
+  }, [open, setOpen]);
 
   return (
     <div className="rv-theme-swatch-wrapper">
@@ -44,16 +30,18 @@ export default function ThemePickerButton() {
         ref={btnRef}
         className={`rv-theme-swatch-btn${open ? ' open' : ''}`}
         title="Workspace theme"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen(!open)}
         aria-label="Open theme picker"
       >
         <span className="material-symbols-outlined">palette</span>
       </button>
       {open && (
-        <div ref={pickerRef} className="rv-theme-picker-popover">
-          <div className="rv-theme-picker-arrow" />
-          <ThemePicker onClose={() => setOpen(false)} />
-        </div>
+        <>
+          <div className="rv-theme-picker-scrim" onClick={() => setOpen(false)} />
+          <div className="rv-theme-picker-modal">
+            <ThemePicker onClose={() => setOpen(false)} />
+          </div>
+        </>
       )}
     </div>
   );

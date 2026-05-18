@@ -1,0 +1,207 @@
+/* ============================================
+   OfficeGrid — folder card grid + file tile grid
+   ============================================ */
+
+.rv-office-grid {
+  width: 100%;
+  height: 100%;
+  padding: var(--space-xl);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.rv-office-view-transition {
+  animation: rv-office-view-enter 0.18s ease-out;
+}
+
+/* Header */
+.rv-office-header {
+  margin-bottom: var(--space-xl);
+}
+
+.rv-office-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent-dim);
+  margin: 0;
+}
+
+/* Folder grid (root view) */
+.rv-office-folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-sm);
+}
+
+.rv-office-folder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.1s ease;
+  min-height: 140px;
+}
+
+.rv-office-folder-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.rv-office-folder-card:active {
+  transform: translateY(0);
+}
+
+.rv-office-folder-icon {
+  width: 80px;
+  height: 80px;
+  color: var(--accent-dim);
+}
+
+.rv-office-folder-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.rv-office-folder-name {
+  font-size: 12pt;
+  font-weight: 500;
+  color: var(--accent-dim);
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Folder view — matches FilePageView header paradigm */
+.rv-office-folder-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rv-office-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+.rv-office-topbar-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.rv-office-topbar-back:hover {
+  background: var(--surface-hover);
+}
+
+.rv-office-topbar-back .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-topbar-title {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-office-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.rv-office-topbar-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--accent-dim);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-office-topbar-action:hover {
+  background: var(--surface-hover);
+  color: var(--chrome-accent);
+}
+
+.rv-office-topbar-action .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-folder-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-xl);
+}
+
+/* File grid (folder view) */
+.rv-office-file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* Loading & Empty states */
+.rv-office-loading,
+.rv-office-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: 200px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+.rv-office-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--text-dim);
+}
+
+@keyframes rv-office-view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

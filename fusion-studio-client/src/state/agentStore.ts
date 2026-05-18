@@ -8,6 +8,7 @@ import { create } from 'zustand';
 
 export interface Agent {
   id: string;
+  folder: string;
   bot_name: string;
   description: string;
   icon: string;
@@ -40,6 +41,7 @@ export interface AgentState {
   activeSection: 'agent' | 'workflows' | 'runs';
   error: string | null;
 
+  setAgents: (agents: Agent[]) => void;
   setAgentsFromIndex: (agents: Record<string, Omit<Agent, 'id'>>) => void;
   setExpandedAgent: (id: string | null) => void;
   setActiveFile: (file: string | null) => void;
@@ -63,12 +65,13 @@ export const useAgentStore = create<AgentState>((set) => ({
   activeSection: 'agent',
   error: null,
 
+  setAgents: (agents) => set({ agents, loaded: true, error: null }),
   setAgentsFromIndex: (agentMap) => {
     const agents = Object.entries(agentMap).map(([id, data]) => ({
       id,
       ...data,
-    }));
-    set({ agents, loaded: true });
+    })) as Agent[];
+    set({ agents, loaded: true, error: null });
   },
   setExpandedAgent: (id) => set({
     expandedAgent: id,

@@ -4,33 +4,19 @@
  * See SECRETS_MANAGER_SPEC.md §5a.
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import { usePanelStore } from '../../state/panelStore';
 import SecretsManager from './SecretsManager';
 import { listApiKeys } from './api-keys/api-keys-api';
 
 export default function SecretsManagerButton() {
-  const [open, setOpen] = useState(false);
+  const open = usePanelStore((s) => s.isSecretsManagerOpen);
+  const setOpen = usePanelStore((s) => s.setSecretsManagerOpen);
   const btnRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
 
   // Hydrate the store whenever the popover opens.
   useEffect(() => {
     if (open) listApiKeys();
-  }, [open]);
-
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    function handlePointerDown(e: PointerEvent) {
-      if (
-        btnRef.current && !btnRef.current.contains(e.target as Node) &&
-        popoverRef.current && !popoverRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener('pointerdown', handlePointerDown);
-    return () => document.removeEventListener('pointerdown', handlePointerDown);
   }, [open]);
 
   // Close on Escape
@@ -41,7 +27,7 @@ export default function SecretsManagerButton() {
     }
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [open]);
+  }, [open, setOpen]);
 
   return (
     <div className="rv-secrets-swatch-wrapper">
@@ -49,16 +35,18 @@ export default function SecretsManagerButton() {
         ref={btnRef}
         className={`rv-secrets-swatch-btn${open ? ' open' : ''}`}
         title="Secrets"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen(!open)}
         aria-label="Open secrets manager"
       >
         <span className="material-symbols-outlined">key</span>
       </button>
       {open && (
-        <div ref={popoverRef} className="rv-secrets-popover">
-          <div className="rv-secrets-popover-arrow" />
-          <SecretsManager onClose={() => setOpen(false)} />
-        </div>
+        <>
+          <div className="rv-secrets-scrim" onClick={() => setOpen(false)} />
+          <div className="rv-secrets-modal">
+            <SecretsManager onClose={() => setOpen(false)} />
+          </div>
+        </>
       )}
     </div>
   );

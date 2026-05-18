@@ -80,6 +80,15 @@
   background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.12);
 }
 
+.rv-workspace-ribbon-item-thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-md, 4px);
+  background: var(--bg-base, #111);
+  flex-shrink: 0;
+}
+
 .rv-workspace-ribbon-item-icon {
   font-size: 32px;
   color: var(--accent-dim, var(--text-dim));

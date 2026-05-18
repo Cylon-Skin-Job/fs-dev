@@ -45,7 +45,7 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     // --- Central file data cache population ---
     case 'file_tree_response': {
       const m = msg as any;
-      if (m.panel && m.path) {
+      if (m.panel && m.path !== undefined) {
         useFileDataStore.getState().handleTreeResponse(m.panel, m.path, m.nodes || []);
       }
       return true;
@@ -55,6 +55,14 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
       const m = msg as any;
       if (m.panel && m.path && m.success) {
         useFileDataStore.getState().handleContentResponse(m.panel, m.path, m.content || '');
+      }
+      return true;
+    }
+
+    case 'file_save_response': {
+      const m = msg as any;
+      if (m.panel && m.path) {
+        useFileDataStore.getState().handleSaveResponse(m.panel, m.path, m.success, m.error);
       }
       return true;
     }

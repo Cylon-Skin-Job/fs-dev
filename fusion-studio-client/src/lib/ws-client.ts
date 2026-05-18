@@ -14,6 +14,8 @@ import { handleFileMessage } from './ws/file-handlers';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
+import { handleScreenshotMessage } from './ws/screenshot-handlers';
+import { handleRecentDocsMessage } from './ws/recent-docs-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
@@ -95,6 +97,7 @@ export function connectWs() {
   ws.onmessage = (event) => {
     try {
       const msg: WebSocketMessage = JSON.parse(event.data);
+      console.log('[WS] Message received:', msg.type, msg);
       handleMessage(msg);
     } catch (err) {
       console.error('[WS] Parse error:', err);
@@ -133,6 +136,8 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleWorkspaceMessage(msg)) return;
   if (handleHarnessMessage(msg)) return;
   if (handleThemeMessage(msg)) return;
+  if (handleScreenshotMessage(msg)) return;
+  if (handleRecentDocsMessage(msg)) return;
 
   // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {

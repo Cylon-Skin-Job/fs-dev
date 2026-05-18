@@ -9,8 +9,8 @@
  * diagonal white-alpha gradient, blurred backdrop, thin border.
  */
 
-import { useEffect } from 'react';
 import { useWorkspaceStore } from '../state/workspaceStore';
+import { useScreenshotStore } from '../state/screenshotStore';
 import { Icon } from './Icon';
 import type { Workspace } from '../types';
 import './WorkspaceRibbon.css';
@@ -24,15 +24,7 @@ export function WorkspaceRibbon() {
   const requestSwitch = useWorkspaceStore((s) => s.requestSwitch);
   const requestRemove = useWorkspaceStore((s) => s.requestRemove);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeRibbon();
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [isOpen, closeRibbon]);
-
+  const screenshots = useScreenshotStore((s) => s.screenshots);
   const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
 
   const onItemClick = (w: Workspace) => {
@@ -74,10 +66,19 @@ export function WorkspaceRibbon() {
                 onClick={() => onItemClick(w)}
                 title={w.label}
               >
-                <Icon
-                  name={w.icon || 'folder'}
-                  className="rv-workspace-ribbon-item-icon"
-                />
+                {screenshots[w.id] ? (
+                  <img
+                    src={screenshots[w.id]}
+                    alt={w.label}
+                    className="rv-workspace-ribbon-item-thumb"
+                    draggable={false}
+                  />
+                ) : (
+                  <Icon
+                    name={w.icon || 'folder'}
+                    className="rv-workspace-ribbon-item-icon"
+                  />
+                )}
                 <span className="rv-workspace-ribbon-item-label">{w.label}</span>
                 <button
                   className="rv-workspace-ribbon-item-remove"

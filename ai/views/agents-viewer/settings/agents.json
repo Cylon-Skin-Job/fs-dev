@@ -182,7 +182,7 @@
         "oscar": {
           "bot_name": "Oscar",
           "description": "Looks for dead code and stuff to clean up. Keeps the codebase tidy and removes technical debt.",
-          "icon": "trash",
+          "icon": "delete",
           "color": "#6b7280",
           "status": "idle",
           "last_run": null,
