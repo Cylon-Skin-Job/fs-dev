@@ -137,7 +137,7 @@
 /* Drag-over state */
 .rv-modal-target.drag-over {
   border-color: var(--theme-primary, #4fc3f7);
-  background: rgba(79, 195, 247, 0.08);
+  background: color-mix(in srgb, var(--accent-dim) 8%, transparent);
   color: var(--theme-primary, #4fc3f7);
 }
 

@@ -952,7 +952,7 @@
 
 .clipboard-clear-btn:hover {
   color: var(--theme-error);
-  background: rgba(239, 68, 68, 0.1);
+  background: color-mix(in srgb, var(--status-error) 10%, transparent);
 }
 
 /* Loading and empty states */

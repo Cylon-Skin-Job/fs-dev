@@ -118,7 +118,7 @@
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: rgba(79, 195, 247, 0.12);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,8 +155,8 @@
 }
 
 .rv-fusion-msg-user .rv-fusion-msg-bubble {
-  background: rgba(79, 195, 247, 0.12);
-  border-color: rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
 }
 
 .rv-fusion-chat-input {
@@ -179,7 +179,7 @@
 }
 
 .rv-fusion-chat-input textarea:focus {
-  border-color: rgba(79, 195, 247, 0.25);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
 }
 
 .rv-fusion-chat-input textarea::placeholder {
@@ -277,12 +277,12 @@
 
 .rv-fusion-guide-link:hover {
   color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.05);
+  background: color-mix(in srgb, var(--accent-dim) 5%, transparent);
 }
 
 .rv-fusion-guide-link.active {
   color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.1);
+  background: color-mix(in srgb, var(--accent-dim) 10%, transparent);
 }
 
 .rv-fusion-guide-link .material-symbols-outlined {
@@ -355,8 +355,8 @@
 }
 
 .rv-fusion-settings-tab.active {
-  background: rgba(79, 195, 247, 0.12);
-  border-color: rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
   color: var(--accent-dim, #4fc3f7);
   font-weight: 600;
 }
@@ -414,13 +414,13 @@
 }
 
 .rv-fusion-setting-item:hover {
-  border-color: rgba(79, 195, 247, 0.25);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
   background: var(--card-hover, #1c1c1c);
 }
 
 .rv-fusion-setting-item.active {
   border-color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.05);
+  background: color-mix(in srgb, var(--accent-dim) 5%, transparent);
 }
 
 .rv-fusion-setting-item-icon {
@@ -468,7 +468,7 @@
 
 .rv-fusion-setting-item-badge.on { color: var(--status-ok, #4caf50); background: color-mix(in srgb, transparent 88%, var(--status-ok, #4caf50) 12%); }
 .rv-fusion-setting-item-badge.off { color: var(--text-dim, #666); background: rgba(255, 255, 255, 0.04); }
-.rv-fusion-setting-item-badge.value { color: var(--accent-dim, #4fc3f7); background: rgba(79, 195, 247, 0.12); }
+.rv-fusion-setting-item-badge.value { color: var(--accent-dim, #4fc3f7); background: color-mix(in srgb, var(--accent-dim) 12%, transparent); }
 
 /* ==========================================================
    WIKI DETAIL PANEL
@@ -732,8 +732,8 @@
 .rv-fusion-detail-related-link {
   font-size: 0.75rem;
   color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.12);
-  border: 1px solid rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-dim) 25%, transparent);
   border-radius: 14px;
   padding: 4px 12px;
   cursor: pointer;
@@ -744,7 +744,7 @@
 }
 
 .rv-fusion-detail-related-link:hover {
-  background: rgba(79, 195, 247, 0.18);
+  background: color-mix(in srgb, var(--accent-dim) 18%, transparent);
 }
 
 .rv-fusion-detail-related-link .material-symbols-outlined {
@@ -775,16 +775,16 @@
 }
 
 .rv-fusion-add-btn:hover {
-  border-color: rgba(79, 195, 247, 0.25);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
   color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.05);
+  background: color-mix(in srgb, var(--accent-dim) 5%, transparent);
 }
 
 .rv-fusion-add-btn.active {
   border-color: var(--accent-dim, #4fc3f7);
   border-style: solid;
   color: var(--accent-dim, #4fc3f7);
-  background: rgba(79, 195, 247, 0.08);
+  background: color-mix(in srgb, var(--accent-dim) 8%, transparent);
 }
 
 .rv-fusion-add-btn .material-symbols-outlined {
@@ -819,7 +819,7 @@
 }
 
 .rv-fusion-registry-item:hover {
-  border-color: rgba(79, 195, 247, 0.25);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
 }
 
 .rv-fusion-registry-item-info {
@@ -863,8 +863,8 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: rgba(79, 195, 247, 0.12);
-  border: 1px solid rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-dim) 25%, transparent);
   border-radius: 8px;
   color: var(--accent-dim, #4fc3f7);
   font-size: 0.8125rem;
@@ -876,7 +876,7 @@
 }
 
 .rv-fusion-registry-add-btn:hover {
-  background: rgba(79, 195, 247, 0.2);
+  background: color-mix(in srgb, var(--accent-dim) 20%, transparent);
 }
 
 .rv-fusion-registry-add-btn .material-symbols-outlined {
@@ -902,7 +902,7 @@
 }
 
 .rv-fusion-icon-btn:hover {
-  background: rgba(79, 195, 247, 0.08);
+  background: color-mix(in srgb, var(--accent-dim) 8%, transparent);
 }
 
 .rv-fusion-icon-btn .material-symbols-outlined {
@@ -987,7 +987,7 @@
 }
 
 .rv-fusion-color-hex-input:focus {
-  border-color: rgba(79, 195, 247, 0.25);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
 }
 
 .rv-fusion-workspace-dot {
@@ -1002,8 +1002,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 20px;
-  background: rgba(79, 195, 247, 0.12);
-  border: 1px solid rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-dim) 25%, transparent);
   border-radius: 10px;
   color: var(--accent-dim, #4fc3f7);
   font-size: 0.8125rem;
@@ -1014,7 +1014,7 @@
 }
 
 .rv-fusion-apply-btn:hover {
-  background: rgba(79, 195, 247, 0.2);
+  background: color-mix(in srgb, var(--accent-dim) 20%, transparent);
 }
 
 .rv-fusion-inherit-row {
@@ -1072,8 +1072,8 @@
 }
 
 .rv-fusion-preset-btn.active {
-  background: rgba(79, 195, 247, 0.12);
-  border-color: rgba(79, 195, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-dim) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent-dim) 25%, transparent);
   color: var(--accent-dim, #4fc3f7);
   font-weight: 600;
 }
@@ -1101,7 +1101,7 @@
 }
 
 .rv-fusion-wiki-index-item.active {
-  background: rgba(79, 195, 247, 0.08);
+  background: color-mix(in srgb, var(--accent-dim) 8%, transparent);
 }
 
 .rv-fusion-wiki-index-title {
@@ -1177,7 +1177,7 @@
 }
 
 .rv-fusion-wiki-context-view {
-  border-left: 2px solid rgba(79, 195, 247, 0.2);
+  border-left: 2px solid color-mix(in srgb, var(--accent-dim) 20%, transparent);
   padding-left: 16px;
 }
 
