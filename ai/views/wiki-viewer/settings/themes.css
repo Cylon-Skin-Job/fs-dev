@@ -1,1 +1,9 @@
-:root { --text-primary: red; }
+/*
+ * wiki-viewer per-view theme override.
+ * ai/views/wiki-viewer/settings/themes.css
+ *
+ * Loaded at runtime by useSharedWorkspaceStyles and scoped to
+ * [data-panel="wiki-viewer"]. Only add rules here that must override
+ * the global workspace theme specifically for this view.
+ * Human-only: AI agents must not write to per-view themes.css files.
+ */
