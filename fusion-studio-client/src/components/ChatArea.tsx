@@ -137,7 +137,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     };
     const onDown = (e: MouseEvent) => {
       // Don't close if the click lands inside an open dropdown anywhere in
-      // the app — the sidebar's CLI-picker is outside chatHeaderRef, so
+      // the app — the rv-sidebar's CLI-picker is outside chatHeaderRef, so
       // without this, clicking a harness item closes the dropdown before
       // its own click handler fires.
       if (e.target instanceof Element && e.target.closest('.rv-dropdown[data-open="true"]')) {
@@ -239,7 +239,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
     setIsSending(true);
 
     // If there's an active turn, finalize it BEFORE adding the user
-    // message. finalizeTurn snapshots to messages[], clears currentTurn.
+    // rv-message. finalizeTurn snapshots to messages[], clears currentTurn.
     //
     // KNOWN PAST BUG (DO NOT REINTRODUCE):
     // User bubble appeared above the live assistant response mid-stream.
@@ -284,7 +284,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
   const inputPlaceholder = noThread
     ? ''
     : !isActive
-      ? 'Click a thread in this sidebar to activate'
+      ? 'Click a thread in this rv-sidebar to activate'
       : undefined;
 
   // SPEC-26c-2: collapsed rail variant
@@ -360,9 +360,9 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
             <span className="material-symbols-outlined">more_vert</span>
           </button>
         </div>
-        {/* When the sidebar is collapsed, the CLI picker + thread-jump
+        {/* When the rv-sidebar is collapsed, the CLI picker + thread-jump
          * dropdowns live here (anchored under their chat-header triggers).
-         * When the sidebar is expanded, the sidebar renders its own CLI
+         * When the rv-sidebar is expanded, the rv-sidebar renders its own CLI
          * picker centered under its "New Thread" button. */}
         {sidebarCollapsed && (
           <>
@@ -421,11 +421,11 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
         </div>
       </div>
       )}
-      <div className="chat-messages" ref={chatContainerRef} style={{ position: 'relative' }}>
+      <div className="rv-chat-messages" ref={chatContainerRef} style={{ position: 'relative' }}>
         {connectingHarnessId ? (
           <ConnectingOverlay harnessName={connectingHarness?.name} />
         ) : messages.length === 0 && !currentTurn && !showOrb ? (
-          <div className="message message-system">
+          <div className="rv-message rv-message-system">
             {noThread ? 'No thread selected' : 'Start a conversation'}
           </div>
         ) : (
@@ -446,7 +446,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
         {!noThread && <div className="rv-chat-scroll-sentinel" />}
       </div>
 
-      <div className={`chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}>
+      <div className={`rv-chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}>
         <ChatInput
           ref={chatInputRef}
           onSend={handleSend}
@@ -466,7 +466,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           </div>
           {isTurnActive ? (
             <button
-              className="rv-chat-footer-btn stop-btn"
+              className="rv-chat-footer-btn rv-stop-btn"
               onClick={handleStop}
               title="Stop generating"
             >

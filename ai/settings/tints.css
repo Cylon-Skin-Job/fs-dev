@@ -8,7 +8,7 @@
 
 /* ── Content Panels ── */
 /* Content panel surfaces always match the chat content area
-   (`.chat-messages` background = --bg-solid), not the chat panel chrome. */
+   (`.rv-chat-messages` background = --bg-solid), not the chat panel chrome. */
 .rv-ticket-column,
 .rv-tile-grid,
 .rv-file-explorer-empty,
@@ -111,13 +111,13 @@ body[data-tint-border-threads="true"] .rv-sidebar {
 }
 
 /* ── Border: Chat ── */
-body[data-tint-border-chat="true"] .chat-messages,
-body[data-tint-border-chat="true"] .chat-input-wrapper,
-body[data-tint-border-chat="true"] .message-user-content,
+body[data-tint-border-chat="true"] .rv-chat-messages,
+body[data-tint-border-chat="true"] .rv-chat-input-wrapper,
+body[data-tint-border-chat="true"] .rv-message-user-content,
 body[data-tint-border-chat="true"] .rv-send-button-group {
   border: 1px solid var(--border-color, var(--neutral-chrome-border));
 }
 
-body[data-tint-border-chat="true"] .chat-input-wrapper:focus-within {
+body[data-tint-border-chat="true"] .rv-chat-input-wrapper:focus-within {
   border-color: color-mix(in srgb, var(--text-primary) 24%, var(--border-color));
 }

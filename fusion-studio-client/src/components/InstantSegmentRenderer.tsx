@@ -50,7 +50,7 @@ function groupSegments(segments: StreamSegment[]): SegmentGroup[] {
 
 export function InstantSegmentRenderer({ segments }: InstantSegmentRendererProps) {
   if (!segments || segments.length === 0) {
-    return <div className="message-assistant-content" />;
+    return <div className="rv-message-assistant-content" />;
   }
 
   const groups = groupSegments(segments);
@@ -89,7 +89,7 @@ function InstantText({ content }: { content: string }) {
   const html = renderTextInstant(content);
   return (
     <div
-      className="message-assistant-content"
+      className="rv-message-assistant-content"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

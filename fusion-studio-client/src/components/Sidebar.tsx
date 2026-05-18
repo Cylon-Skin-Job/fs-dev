@@ -20,7 +20,7 @@ function formatThreadDisplayName(thread: Thread): string {
 /**
  * SECONDARY_CHAT_SPEC §4: when a secondary chat is open, move the secondary's
  * thread to position 2 (right after the primary's active thread). This runs
- * both in the sidebar and the thread-jump dropdown, so the visual ordering
+ * both in the rv-sidebar and the thread-jump dropdown, so the visual ordering
  * is consistent everywhere.
  */
 function reorderWithSecondary<T extends { threadId: string }>(
@@ -45,7 +45,7 @@ function reorderWithSecondary<T extends { threadId: string }>(
 // A previous version gated on `isAnimating` and would skip the next reorder
 // if a prior animation's 400ms cleanup hadn't fired yet. That stranded
 // inline styles (background / transform / box-shadow) on DOM elements that
-// then overrode the class-based `.chat-item.active` highlight whenever the
+// then overrode the class-based `.rv-chat-item.active` highlight whenever the
 // user rapidly opened-then-closed a secondary chat. Now: on every reorder
 // we synchronously cancel any pending cleanup and scrub inline styles off
 // every known row before capturing new positions.
@@ -162,8 +162,8 @@ interface SidebarProps {
 export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   const config = usePanelStore((s) => s.getPanelConfig(panel));
   const ws = usePanelStore((state) => state.ws);
-  // SPEC-26c: sidebar reads from its scope's thread list. Project sidebar
-  // reads state.threads.project; view sidebar reads state.threads.view.
+  // SPEC-26c: rv-sidebar reads from its scope's thread list. Project rv-sidebar
+  // reads state.threads.project; view rv-sidebar reads state.threads.view.
   const rawThreads = usePanelStore((state) => state.threads[scope]);
   const currentThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
   const currentScope = usePanelStore((state) => state.currentScope);
@@ -188,14 +188,14 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
     const onMouseDown = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      if (target.closest('.thread-menu-dropdown') || target.closest('.thread-menu-btn')) return;
+      if (target.closest('.rv-thread-menu-dropdown') || target.closest('.rv-thread-menu-btn')) return;
       setMenuOpenId(null);
     };
     document.addEventListener('mousedown', onMouseDown);
     return () => document.removeEventListener('mousedown', onMouseDown);
   }, [menuOpenId]);
 
-  // Request thread list when connected. SPEC-26c: scoped per sidebar.
+  // Request thread list when connected. SPEC-26c: scoped per rv-sidebar.
   useEffect(() => {
     if (ws?.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'thread:list', scope }));
@@ -347,13 +347,13 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
   return (
     <aside className={`rv-sidebar rv-sidebar--${scope}${isActive ? ' rv-sidebar--active' : ''}`}>
       {scope !== 'project' && (
-        <div className="sidebar-header">
+        <div className="rv-sidebar-header">
           {headerLabel}
         </div>
       )}
 
       <button
-        className="new-chat-btn"
+        className="rv-new-chat-btn"
         onMouseDown={(e) => e.stopPropagation()}
         onClick={handleCreateThread}
       >
@@ -365,18 +365,18 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
         onSelect={handleHarnessSelect}
       />
       
-      <div className="thread-list">
+      <div className="rv-thread-list">
         {!threads || threads.length === 0 ? (
-          <div className="chat-item">
-            <span className="chat-item-text">No threads yet</span>
+          <div className="rv-chat-item">
+            <span className="rv-chat-item-text">No threads yet</span>
           </div>
         ) : (
           threads.filter(t => t && t.threadId && t.entry).map((thread) => {
             const isSecondaryRow = secondary?.threadId === thread.threadId;
             const rowClass = [
-              'chat-item',
+              'rv-chat-item',
               currentThreadId === thread.threadId ? 'active' : '',
-              isSecondaryRow ? 'chat-item--secondary-indent' : '',
+              isSecondaryRow ? 'rv-chat-item--secondary-indent' : '',
             ].filter(Boolean).join(' ');
             return (
             <div
@@ -410,8 +410,8 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                 />
               ) : (
                 <>
-                  <div className="thread-row thread-row-top">
-                    <span className="chat-item-text" title={formatThreadDisplayName(thread)}>
+                  <div className="rv-thread-row rv-thread-row-top">
+                    <span className="rv-chat-item-text" title={formatThreadDisplayName(thread)}>
                       <span className="material-symbols-outlined rv-thread-row-icon">
                         {resolveHarness(thread.entry?.harnessId)?.materialIcon ?? 'help'}
                       </span>
@@ -421,7 +421,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                       )}
                     </span>
                     <button 
-                      className="thread-menu-btn"
+                      className="rv-thread-menu-btn"
                       onClick={(e) => {
                         e.stopPropagation();
                         setMenuOpenId(menuOpenId === thread.threadId ? null : thread.threadId);
@@ -445,7 +445,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                           : undefined;
                       return (
                       <div
-                        className="thread-menu-dropdown"
+                        className="rv-thread-menu-dropdown"
                         onClick={(e) => e.stopPropagation()}
                         onMouseLeave={() => setMenuOpenId(null)}
                       >
@@ -507,8 +507,8 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                       );
                     })()}
                   </div>
-                  <div className="thread-row thread-row-bottom">
-                    <span className="chat-item-meta">
+                  <div className="rv-thread-row rv-thread-row-bottom">
+                    <span className="rv-chat-item-meta">
                       {thread.entry?.messageCount || 0} msgs · {formatDate(thread.entry?.createdAt)}
                     </span>
                   </div>

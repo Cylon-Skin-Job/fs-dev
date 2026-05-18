@@ -1,7 +1,7 @@
 /**
  * ChatInput — Send button + Stop button in the same position.
  *
- * Send: visible when no turn is active. Sends user message.
+ * Send: visible when no turn is active. Sends user rv-message.
  * Stop: visible when a turn is active (streaming or revealing).
  *       Immediately ends the turn — renders all remaining content
  *       instantly and finalizes to history.
@@ -105,10 +105,10 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
 
   return (
     <div className="rv-chat-input-container">
-      <div className="chat-input-wrapper">
+      <div className="rv-chat-input-wrapper">
         <textarea
           ref={textareaRef}
-          className="chat-input"
+          className="rv-chat-input"
           placeholder={placeholder ?? `Ask about ${(config?.name || panel).toLowerCase()}...`}
           value={text}
           onChange={(e) => setText(e.target.value)}

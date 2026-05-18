@@ -53,7 +53,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
     const onMouseDown = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      if (target.closest('.thread-menu-dropdown') || target.closest('.thread-menu-btn')) return;
+      if (target.closest('.rv-thread-menu-dropdown') || target.closest('.rv-thread-menu-btn')) return;
       setMenuOpenId(null);
     };
     document.addEventListener('mousedown', onMouseDown);
@@ -103,7 +103,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
           const isSecondaryRow = secondary?.threadId === t.threadId;
           const rowClass = [
             'rv-dropdown-item',
-            isSecondaryRow ? 'chat-item--secondary-indent' : '',
+            isSecondaryRow ? 'rv-chat-item--secondary-indent' : '',
           ].filter(Boolean).join(' ');
 
           const isPrimary = currentThreadId === t.threadId;
@@ -136,7 +136,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                 {formatThreadName(t)}
               </span>
               <button
-                className="thread-menu-btn"
+                className="rv-thread-menu-btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   setMenuOpenId(menuOpenId === t.threadId ? null : t.threadId);
@@ -148,7 +148,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
               </button>
               {menuOpenId === t.threadId && (
                 <div
-                  className="thread-menu-dropdown"
+                  className="rv-thread-menu-dropdown"
                   onClick={(e) => e.stopPropagation()}
                   onMouseLeave={() => setMenuOpenId(null)}
                 >

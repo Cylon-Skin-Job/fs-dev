@@ -179,7 +179,7 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
 
   // Phase 2: Orb is done. Render segments sequentially.
   if (!segments || segments.length === 0) {
-    return <div className="message-assistant-content streaming" />;
+    return <div className="rv-message-assistant-content streaming" />;
   }
 
   // Mount only completed segments + the one currently animating
@@ -269,7 +269,7 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
 
   return (
     <div
-      className="message-assistant-content streaming"
+      className="rv-message-assistant-content streaming"
       dangerouslySetInnerHTML={{ __html: displayedHtml }}
     />
   );

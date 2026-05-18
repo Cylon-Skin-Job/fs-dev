@@ -762,7 +762,7 @@
   border-radius: 0 2px 2px 0;
 }
 
-/* App-mode sidebar: two zones with divider */
+/* App-mode rv-sidebar: two zones with divider */
 .rv-tools-panel--app {
   gap: 0;
 }
@@ -816,7 +816,7 @@
   inset: 0;
   display: grid;
   grid-template-columns: var(--sidebar-width) var(--chat-width) 1fr;
-  /* One row fills the panel so content-area / chat / sidebar get a definite height */
+  /* One row fills the panel so content-area / chat / rv-sidebar get a definite height */
   grid-template-rows: minmax(0, 1fr);
   opacity: 0;
   visibility: hidden;
@@ -868,14 +868,14 @@
 }
 
 /* SPEC-26c-2: 3-column asymmetric layout.
- * [project sidebar] [handle] [project chat] [handle] [content]
+ * [project rv-sidebar] [handle] [project chat] [handle] [content]
  * Widths come from per-view state (viewStates), written to inline style
  * as CSS variables on the .rv-panel container.
  */
 .rv-layout-dual-chat {
   grid-template-columns:
     var(--left-sidebar-w, 220px)
-    /* hide the first handle when sidebar is collapsed (width 0) */
+    /* hide the first handle when rv-sidebar is collapsed (width 0) */
     max(0px, min(1px, var(--left-sidebar-w, 220px)))
     var(--left-chat-w,    320px)
     1px   /* resize handle 2 */
@@ -903,9 +903,9 @@
 /* SPEC-26c: inactive chat column — the one whose scope does NOT currently
  * hold the live wire. Previously dimmed via opacity: 0.55, which created a
  * translucent ghost block under the chat in the empty/no-thread state.
- * Render at full opacity; the chat-footer keeps pointer-events:none so
+ * Render at full opacity; the rv-chat-footer keeps pointer-events:none so
  * the inactive scope still can't be typed into. */
-.rv-chat-area--inactive .chat-footer {
+.rv-chat-area--inactive .rv-chat-footer {
   pointer-events: none;
 }
 
@@ -913,7 +913,7 @@
   /* no active-wire highlight — .rv-chat-area--inactive opacity dimming is enough */
 }
 
-/* SPEC-26c-2: chat-area needs position context for absolute collapse button */
+/* SPEC-26c-2: rv-chat-area needs position context for absolute collapse button */
 .rv-chat-area {
   position: relative;
 }
@@ -952,7 +952,7 @@
 }
 
 /* Right-column resize handle: lives on the left edge of either the file
- * tree sidebar (file-viewer → pane="rightCol") or the sticky secondary
+ * tree rv-sidebar (file-viewer → pane="rightCol") or the sticky secondary
  * chat (pane="rightSecondary"). Both parents use position: relative so
  * this sits absolutely over the left edge. Visible strip is 1px to match
  * the in-grid chat handle; hit target comes from the base ::before (±4px). */
@@ -966,7 +966,7 @@
   z-index: 6;
 }
 
-/* SPEC-26c-2: collapsed rail — sidebar/chat collapses to a 40px strip
+/* SPEC-26c-2: collapsed rail — rv-sidebar/chat collapses to a 40px strip
    with only an expand icon. Width comes from the inline CSS variable
    on .rv-panel (set to 40px when collapsed). Hide child content except
    the expand affordance. */
@@ -993,12 +993,12 @@
   color: var(--theme-primary, #888);
 }
 
-/* Anchor the absolute collapse button to the sidebar */
+/* Anchor the absolute collapse button to the rv-sidebar */
 .rv-sidebar {
   position: relative;
 }
 
-/* Chat area header — hosts expand button + new-chat/thread-jump dropdowns when sidebar is collapsed */
+/* Chat area header — hosts expand button + new-chat/thread-jump dropdowns when rv-sidebar is collapsed */
 .rv-chat-header {
   display: flex;
   align-items: center;
@@ -1085,7 +1085,7 @@
   font-size: 20px;
 }
 
-/* Menu-item icons (shared across rv-dropdown and thread-menu-dropdown).
+/* Menu-item icons (shared across rv-dropdown and rv-thread-menu-dropdown).
  * Default Material Symbols are 24px; size them down so they read inline
  * with the 12–13px text. */
 .rv-dropdown-item .material-symbols-outlined {
@@ -1133,8 +1133,8 @@
   background: color-mix(in srgb, var(--cli-accent, #ffffff) 10%, transparent);
 }
 
-/* When the dropdown lives inside the sidebar (triggered from the sidebar's
- * "New Thread" button), center it under the button instead. 16px sidebar
+/* When the dropdown lives inside the rv-sidebar (triggered from the rv-sidebar's
+ * "New Thread" button), center it under the button instead. 16px rv-sidebar
  * padding + ~40px button height + 4px gap puts the top at ~60px. */
 .rv-sidebar .rv-cli-picker-dropdown {
   top: 60px;
@@ -1410,10 +1410,10 @@
 }
 
 /* No-thread state: dim the inner chat content (messages list + composer)
-   so the column reads as inactive. The chat-area panel surface itself
+   so the column reads as inactive. The rv-chat-area panel surface itself
    stays opaque (no ghost block under the chat). */
-.rv-chat-area--no-thread .chat-messages,
-.rv-chat-area--no-thread .chat-footer {
+.rv-chat-area--no-thread .rv-chat-messages,
+.rv-chat-area--no-thread .rv-chat-footer {
   opacity: 0.35;
 }
 

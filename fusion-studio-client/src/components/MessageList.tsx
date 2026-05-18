@@ -69,7 +69,7 @@ export function MessageList({
   // LiveSegmentRenderer's completion effect checks `if (!onRevealComplete) return;`
   const onRevealComplete = pendingTurnEnd ? () => finalizeTurn(scope, threadId) : undefined;
 
-  // Find the last user message index for scroll anchoring
+  // Find the last user rv-message index for scroll anchoring
   let lastUserIdx = -1;
   for (let i = messages.length - 1; i >= 0; i--) {
     if (messages[i].type === 'user') { lastUserIdx = i; break; }
@@ -81,10 +81,10 @@ export function MessageList({
         <div
           key={msg.id}
           ref={i === lastUserIdx ? lastUserMsgRef : undefined}
-          className={`message message-${msg.type}`}
+          className={`rv-message rv-message-${msg.type}`}
         >
           {msg.type === 'user' ? (
-            <div className="message-user-content">{msg.content}</div>
+            <div className="rv-message-user-content">{msg.content}</div>
           ) : (
             <InstantSegmentRenderer segments={msg.segments} />
           )}
@@ -92,7 +92,7 @@ export function MessageList({
       ))}
 
       {(currentTurn || showOrb) && (
-        <div className="message message-assistant">
+        <div className="rv-message rv-message-assistant">
           <LiveSegmentRenderer
             segments={segments}
             onRevealComplete={onRevealComplete}
