@@ -24,11 +24,11 @@
 }
 
 /* ── Back button (chevron / arrow_back glyph) ──
-   Glyph driven by the picker's "Accent settings" sliders via --chrome-accent.
+   Glyph driven by the picker's "Accent settings" sliders via --accent-dim.
    Transparent — no button surface, just the icon. */
 .rv-file-page-back {
   background: transparent;
-  color: var(--chrome-accent, var(--text-primary, #e0e0e0));
+  color: var(--accent-dim, var(--text-primary, #e0e0e0));
 }
 
 .rv-file-page-back:hover {
@@ -36,21 +36,21 @@
 }
 
 /* ── Filename label ──
-   Driven by the picker's "Accent settings" sliders via --chrome-accent. */
+   Driven by the picker's "Accent settings" sliders via --accent-dim. */
 .rv-file-page-filename {
-  color: var(--chrome-accent, var(--text-secondary, #aaa));
+  color: var(--accent-dim, var(--text-secondary, #aaa));
 }
 
 /* ── Action buttons (link copy, markdown/code switch) ──
-   Driven by the picker's "Chrome settings" sliders via --accent-dim. Hover
-   escalates to --chrome-accent (Accent) so the active state pops. Scoped to
+   Driven by the picker's "Chrome settings" sliders via --chrome-accent. Hover
+   escalates to --accent-dim (Accent) so the active state pops. Scoped to
    FilePageView so the wiki's link button keeps its own theming. */
 .rv-file-page-view .rv-file-page-action {
-  color: var(--accent-dim, var(--text-secondary));
+  color: var(--chrome-accent, var(--text-secondary));
 }
 
 .rv-file-page-view .rv-file-page-action:hover {
-  color: var(--chrome-accent, var(--text-primary));
+  color: var(--accent-dim, var(--text-primary));
 }
 
 /* ── Document treatment: gray page floats on the chrome rail ── */

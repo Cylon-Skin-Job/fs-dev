@@ -29,17 +29,17 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  /* Driven by the picker's "Accent settings" sliders via --chrome-accent. */
-  color: var(--chrome-accent, var(--ws-primary, #a78bfa));
+  /* Driven by the picker's "Accent settings" sliders via --accent-dim. */
+  color: var(--accent-dim, var(--ws-primary, #a78bfa));
 }
 
 .rv-tile-row-count {
   font-size: 0.6875rem;
   font-weight: 500;
-  /* Themed like the tile icons — text on Chrome (--accent-dim), background a
+  /* Themed like the tile icons — text on Chrome (--chrome-accent), background a
      low-alpha wash of the same so the badge stays in the chrome family. */
-  color: var(--accent-dim, var(--text-dim));
-  background: color-mix(in srgb, var(--accent-dim, #888) 16%, transparent);
+  color: var(--chrome-accent, var(--text-dim));
+  background: color-mix(in srgb, var(--chrome-accent, #888) 16%, transparent);
   padding: 1px 6px;
   border-radius: 8px;
 }
@@ -183,8 +183,8 @@
 
 .rv-doc-tile-icon {
   font-size: 14px;
-  /* Driven by the picker's "Chrome settings" sliders via --accent-dim. */
-  color: var(--accent-dim, var(--text-dim));
+  /* Driven by the picker's "Chrome settings" sliders via --chrome-accent. */
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-doc-tile-name {

@@ -87,17 +87,17 @@
 }
 
 /* Tab name + icon — driven by the picker's "Chrome settings" sliders
-   (Luminance + Tint) via --accent-dim. */
+   (Luminance + Tint) via --chrome-accent. */
 .file-viewer-tab .tab-icon {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .file-viewer-tab .tab-name {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .file-viewer-tab:not(.active) .tab-name {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .file-viewer-tab .tab-close {
@@ -117,8 +117,8 @@
      borders match the wiki's borders. Not driven by the Border sliders. */
   border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
   /* Filename row text — driven by the picker's "Chrome settings" sliders
-     via --accent-dim. The border above stays on the wiki content paradigm. */
-  color: var(--accent-dim, var(--text-dim));
+     via --chrome-accent. The border above stays on the wiki content paradigm. */
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 /* ── Code-content fill ── */

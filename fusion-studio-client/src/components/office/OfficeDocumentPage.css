@@ -33,7 +33,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
@@ -52,7 +52,7 @@
   gap: var(--space-sm);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -63,7 +63,7 @@
   padding: 2px 7px;
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
   border-radius: 999px;
-  color: var(--chrome-accent, #f8d477);
+  color: var(--accent-dim, #f8d477);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -114,7 +114,7 @@
   padding: var(--space-sm) var(--space-md);
   border: none;
   background: transparent;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
@@ -125,7 +125,7 @@
 
 .rv-office-export-submenu-option:hover:not(:disabled) {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-export-submenu-option:disabled {
@@ -168,7 +168,7 @@
   flex: 1;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
 }
 
 .rv-office-margins-row input {
@@ -177,7 +177,7 @@
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--radius-sm);
   background: var(--bg-surface, #1e1e1e);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
   font-size: 0.8125rem;
   text-align: right;
   transition: border-color 0.15s ease;
@@ -185,7 +185,7 @@
 
 .rv-office-margins-row input:focus {
   outline: none;
-  border-color: var(--chrome-accent);
+  border-color: var(--accent-dim);
 }
 
 .rv-office-document-actions {
@@ -204,14 +204,14 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-office-document-action:hover:not(:disabled) {
   background: var(--surface-hover);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-document-action:disabled {
@@ -252,19 +252,19 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-office-document-toolbar-btn:hover {
   background: var(--surface-hover);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-document-toolbar-btn.rv-office-toolbar-btn--active {
   background: var(--surface-hover, rgba(255, 255, 255, 0.08));
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-document-toolbar-btn .material-symbols-outlined {
@@ -296,7 +296,7 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   cursor: pointer;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -313,17 +313,17 @@
 .rv-office-document-toolbar-select:hover {
   background-color: var(--surface-hover);
   border-color: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-document-toolbar-select:focus-visible {
   outline: none;
-  border-color: var(--chrome-accent);
+  border-color: var(--accent-dim);
 }
 
 .rv-office-document-toolbar-select option {
   background: var(--bg-surface, #1e1e1e);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
 }
 
 .rv-office-document-toolbar-spacer {
@@ -333,7 +333,7 @@
 .rv-office-document-toolbar-zoom {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   min-width: 36px;
   text-align: center;
   user-select: none;
@@ -342,7 +342,7 @@
 .rv-office-document-toolbar-fontsize {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   min-width: 28px;
   text-align: center;
   user-select: none;
@@ -489,7 +489,7 @@
 }
 
 .rv-office-document-action--active {
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
 }
 
@@ -551,7 +551,7 @@
 
 .rv-office-dirty-modal h3 {
   margin: 0 0 var(--space-sm);
-  color: var(--accent-dim, #f5f5f5);
+  color: var(--chrome-accent, #f5f5f5);
   font-size: 1rem;
 }
 
@@ -596,8 +596,8 @@
 }
 
 .rv-office-dirty-action-primary {
-  border: 1px solid var(--chrome-accent, #f8d477);
-  background: var(--chrome-accent, #f8d477);
+  border: 1px solid var(--accent-dim, #f8d477);
+  background: var(--accent-dim, #f8d477);
   color: var(--bg-surface, #111);
 }
 
@@ -661,7 +661,7 @@
   padding: var(--space-sm) var(--space-md);
   border: none;
   background: transparent;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
@@ -673,7 +673,7 @@
 .rv-office-send-option:hover:not(:disabled),
 .rv-office-export-option:hover:not(:disabled) {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-send-option:disabled,

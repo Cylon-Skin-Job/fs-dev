@@ -28,7 +28,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
@@ -45,7 +45,7 @@
   flex: 1 1 auto;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -67,14 +67,14 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-file-page-action:hover {
   background: var(--surface-hover);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-file-page-action .material-symbols-outlined {

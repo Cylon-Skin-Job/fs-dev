@@ -39,10 +39,10 @@
   margin-bottom: 16px;
   background: var(--sidebar-surface-bg, #161616);
   /* Border + label both follow the picker's "Chrome settings" sliders via
-     --accent-dim. Hover escalates to --chrome-accent (Accent settings). */
-  border: 1px solid var(--accent-dim, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+     --chrome-accent. Hover escalates to --accent-dim (Accent settings). */
+  border: 1px solid var(--chrome-accent, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
   border-radius: 4px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -54,8 +54,8 @@
 
 .new-chat-btn:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: var(--chrome-accent, var(--accent-dim));
-  color: var(--chrome-accent, var(--text-white));
+  border-color: var(--accent-dim, var(--chrome-accent));
+  color: var(--accent-dim, var(--text-white));
 }
 
 .chat-area {
@@ -411,10 +411,10 @@
   height: 48px;
   border-radius: 50%;
   border: none;
-  /* Driven by the picker's "Accent settings" sliders via --chrome-accent.
+  /* Driven by the picker's "Accent settings" sliders via --accent-dim.
      Foreground flips light/dark via --chrome-accent-fg so the icon stays
      legible regardless of accent brightness. */
-  background: var(--chrome-accent, var(--ws-primary, #ec4899));
+  background: var(--accent-dim, var(--ws-primary, #ec4899));
   color: var(--chrome-accent-fg, var(--text-white));
   cursor: pointer;
   display: flex;
@@ -605,7 +605,7 @@
 .thread-menu-btn {
   background: none;
   border: none;
-  color: var(--accent-dim, var(--text-secondary));
+  color: var(--chrome-accent, var(--text-secondary));
   cursor: pointer;
   padding: 0 4px;
   font-size: 16px;
@@ -653,7 +653,7 @@
 
 .chat-item:hover {
   /* Light tint using the raw accent (NOT --cli-accent, which is now an alias
-   * for the already-darkened --chrome-accent — would compound). */
+   * for the already-darkened --accent-dim — would compound). */
   background: color-mix(in srgb, var(--theme-primary, #00d4ff) 8%, transparent);
 }
 
@@ -662,14 +662,14 @@
  * Connected dot, tool-call icons, and shimmer all share one color. Border
  * keeps the row visible at minimum panel contrast. */
 .chat-item.active {
-  background: var(--chrome-accent);
+  background: var(--accent-dim);
 }
 
 .chat-item-text {
   flex: 1;
   font-size: 14px;
   /* Inactive threads pick up accent-dim; active stays white. */
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -684,7 +684,7 @@
  * (bg-tinted via --text-dim); active row matches the active thread name (white). */
 .rv-thread-row-icon {
   font-size: 16px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   margin-right: var(--space-xs, 4px);
   opacity: 0.95;
   vertical-align: -2px;
@@ -697,7 +697,7 @@
 
 .chat-item-meta {
   font-size: 11px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 /* Active thread: meta (count + date) tracks the name color so the row reads

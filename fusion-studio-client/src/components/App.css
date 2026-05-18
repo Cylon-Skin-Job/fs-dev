@@ -24,7 +24,7 @@
 
 .rv-theme-swatch-btn .material-symbols-outlined {
   font-size: 22px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   transition: transform 120ms;
 }
 
@@ -139,7 +139,7 @@
 .rv-tp-mode-btn--active {
   /* Selected mode: filled with Accent. Text picks up --chrome-accent-fg so
      it stays legible regardless of accent brightness. */
-  background: var(--chrome-accent, var(--theme-primary, #00d4ff));
+  background: var(--accent-dim, var(--theme-primary, #00d4ff));
   color: var(--chrome-accent-fg, var(--bg-solid, #000));
 }
 
@@ -458,7 +458,7 @@
   width: 100%;
   /* accent-color tints the thumb + filled (left) portion with Accent;
      the empty (right) portion stays the browser-native white/dark. */
-  accent-color: var(--chrome-accent, var(--theme-primary));
+  accent-color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-tp-slider-label {
@@ -488,7 +488,7 @@
 .rv-tp-toggle-icon {
   font-size: 20px;
   /* Switch glyph stays chrome-colored (outline) in both states. */
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 /* Switched-on state: keep the chrome outline, add an Accent-colored fill
@@ -496,8 +496,8 @@
    FILL=1 variation axis (solid interior). */
 .rv-tp-toggle-row[aria-pressed="true"] .rv-tp-toggle-icon {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  color: var(--chrome-accent, var(--theme-primary));
-  -webkit-text-stroke: 1px var(--accent-dim);
+  color: var(--accent-dim, var(--theme-primary));
+  -webkit-text-stroke: 1px var(--chrome-accent);
 }
 
 .rv-tp-toggle-label {
@@ -606,7 +606,7 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   cursor: pointer;
   transition: color 0.2s ease, background 0.2s ease;
 }
@@ -664,7 +664,7 @@
   background: transparent;
   border: none;
   border-radius: 6px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   cursor: pointer;
   transition: background 120ms ease, color 120ms ease;
   padding: 0;
@@ -683,7 +683,7 @@
 .rv-workspace-name {
   font-size: 16px;
   font-weight: 500;
-  color: var(--chrome-accent, var(--text-primary, #e0e0e0));
+  color: var(--accent-dim, var(--text-primary, #e0e0e0));
   letter-spacing: 0.3px;
   white-space: nowrap;
   overflow: hidden;
@@ -703,7 +703,7 @@
 }
 
 .rv-connection-status.connected {
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-connection-status::before {
@@ -715,7 +715,7 @@
 }
 
 .rv-connection-status.connected::before {
-  background: var(--chrome-accent, var(--theme-primary));
+  background: var(--accent-dim, var(--theme-primary));
 }
 
 /* Tools Panel */
@@ -736,7 +736,7 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   cursor: pointer;
   position: relative;
 }
@@ -747,7 +747,7 @@
 }
 
 .rv-tool-btn.active {
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-tool-btn.active::before {
@@ -758,7 +758,7 @@
   transform: translateY(-50%);
   width: 3px;
   height: 24px;
-  background: var(--chrome-accent, var(--theme-primary));
+  background: var(--accent-dim, var(--theme-primary));
   border-radius: 0 2px 2px 0;
 }
 
@@ -1025,9 +1025,9 @@
   border-radius: var(--radius-md, 4px);
   cursor: pointer;
   /* Idle icon: driven by the picker's "Chrome settings" sliders via
-     --accent-dim. Hover + expanded escalate to --chrome-accent (Accent
+     --chrome-accent. Hover + expanded escalate to --accent-dim (Accent
      sliders) so an open dropdown reads as "active". */
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   padding: 0;
   display: flex;
   align-items: center;
@@ -1036,7 +1036,7 @@
 
 .rv-chat-header-btn:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-chat-header-btn:focus-visible {
@@ -1046,7 +1046,7 @@
 
 .rv-chat-header-btn[aria-expanded="true"] {
   background: rgba(255, 255, 255, 0.08);
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 /* CLI_IDENTITY_SPEC: harness icon + name in primary chat header */
@@ -1162,8 +1162,8 @@
   padding: var(--space-sm, 8px) var(--space-md, 12px);
   background: transparent;
   border: none;
-  /* Menu items follow the picker's "Chrome settings" sliders via --accent-dim. */
-  color: var(--accent-dim, var(--text-dim));
+  /* Menu items follow the picker's "Chrome settings" sliders via --chrome-accent. */
+  color: var(--chrome-accent, var(--text-dim));
   font-size: var(--font-sm, 12px);
   text-align: left;
   cursor: pointer;
@@ -1260,7 +1260,7 @@
 .rv-send-button-group {
   display: flex;
   align-items: center;
-  background: var(--chrome-accent, var(--neutral-chrome-bg));
+  background: var(--accent-dim, var(--neutral-chrome-bg));
   /* Border is opt-in via data-tint-border-chat toggle. */
   border: none;
   border-radius: 4px;
@@ -1357,7 +1357,7 @@
   flex: 1;
   height: 4px;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--accent-dim, rgba(255, 255, 255, 0.2));
+  border: 1px solid var(--chrome-accent, rgba(255, 255, 255, 0.2));
   border-radius: 2px;
   overflow: hidden;
   min-width: 100px;
@@ -1365,7 +1365,7 @@
 
 .rv-context-usage-bar-standalone .rv-context-usage-fill {
   height: 100%;
-  background: var(--chrome-accent, var(--theme-primary, #00d4ff));
+  background: var(--accent-dim, var(--theme-primary, #00d4ff));
   border-radius: 1px;
   transition: width 0.3s ease;
   box-shadow: 0 0 6px rgba(var(--theme-primary-rgb, 0, 212, 255), 0.5);
@@ -1373,7 +1373,7 @@
 
 /* Context usage percentage text */
 .rv-context-usage-text {
-  color: var(--accent-dim, rgba(255, 255, 255, 0.6));
+  color: var(--chrome-accent, rgba(255, 255, 255, 0.6));
   font-size: 12px;
   min-width: 30px;
   flex-shrink: 0;
@@ -1388,7 +1388,7 @@
   background: var(--neutral-chrome-bg);
   border: 1px solid var(--neutral-chrome-border);
   border-radius: 4px;
-  color: var(--accent-dim, var(--text-secondary));
+  color: var(--chrome-accent, var(--text-secondary));
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -1490,7 +1490,7 @@
 
 .rv-secrets-swatch-btn .material-symbols-outlined {
   font-size: 22px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   transition: transform 120ms;
 }
 
@@ -1766,7 +1766,7 @@
 
 .rv-secrets-form-input:focus,
 .rv-secrets-form-textarea:focus {
-  border-color: var(--chrome-accent, var(--accent-dim, rgba(255,255,255,0.4)));
+  border-color: var(--accent-dim, var(--chrome-accent, rgba(255,255,255,0.4)));
 }
 
 .rv-secrets-form-input--mono {
@@ -1864,9 +1864,9 @@
 }
 
 .rv-secrets-btn-primary {
-  background: var(--chrome-accent, var(--accent-dim, var(--text-dim)));
+  background: var(--accent-dim, var(--chrome-accent, var(--text-dim)));
   color: var(--chrome-accent-fg, var(--text-primary, #fff));
-  border-color: var(--chrome-accent, var(--accent-dim, var(--text-dim)));
+  border-color: var(--accent-dim, var(--chrome-accent, var(--text-dim)));
 }
 
 .rv-secrets-btn-primary:hover:not(:disabled) {

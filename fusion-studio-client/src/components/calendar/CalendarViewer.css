@@ -48,7 +48,7 @@
 .rv-calendar-day-number {
   font-size: var(--font-md, 13px);
   font-weight: 500;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   margin-bottom: var(--space-xs, 4px);
 }
 
@@ -58,7 +58,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: var(--chrome-accent, #00d4ff);
+  background: var(--accent-dim, #00d4ff);
   color: var(--bg-solid, #000);
   border-radius: 50%;
 }
@@ -78,7 +78,7 @@
 .rv-calendar-mini-month-label {
   font-size: var(--font-md, 13px);
   font-weight: 600;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
 }
 
 .rv-calendar-mini-nav {
@@ -89,7 +89,7 @@
   height: 24px;
   background: transparent;
   border: none;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   cursor: pointer;
   border-radius: var(--radius-sm, 2px);
 }
@@ -117,7 +117,7 @@
   justify-content: center;
   height: 28px;
   font-size: var(--font-xs, 11px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   border-radius: var(--radius-sm, 2px);
   cursor: pointer;
 }
@@ -127,13 +127,13 @@
 }
 
 .rv-calendar-mini-day--selected {
-  background: var(--chrome-accent, #00d4ff);
+  background: var(--accent-dim, #00d4ff);
   color: var(--bg-solid, #000);
 }
 
 .rv-calendar-mini-day--today {
   font-weight: 700;
-  color: var(--chrome-accent, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
 }
 
 /* Empty states */
@@ -199,7 +199,7 @@
 
 .rv-calendar-list-name {
   font-size: var(--font-sm, 12px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
 }
 
 /* ============================================
@@ -276,7 +276,7 @@
   padding-left: var(--space-md, 12px);
   font-size: var(--font-lg, 16px);
   font-weight: 600;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   z-index: 1;
 }
 
@@ -320,7 +320,7 @@
 .rv-calendar-header-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;
@@ -339,7 +339,7 @@
   background: var(--surface-elevated, #202020);
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: 999px;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   font-size: var(--font-sm, 12px);
   font-weight: 500;
   cursor: pointer;
@@ -376,7 +376,7 @@
   padding: var(--space-sm, 8px) var(--space-md, 12px);
   border: none;
   background: transparent;
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   font-size: var(--font-sm, 12px);
   font-weight: 500;
   cursor: pointer;
@@ -386,7 +386,7 @@
 
 .rv-calendar-header-dropdown-item:hover:not(:disabled) {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--chrome-accent, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
 }
 
 .rv-calendar-header-dropdown-item:disabled {
@@ -411,14 +411,14 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm, 2px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-calendar-header-nav-btn:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--chrome-accent, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
 }
 
 .rv-calendar-header-today {
@@ -426,7 +426,7 @@
   background: transparent;
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--radius-sm, 2px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   font-size: var(--font-sm, 12px);
   font-weight: 500;
   cursor: pointer;
@@ -435,8 +435,8 @@
 
 .rv-calendar-header-today:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  border-color: var(--chrome-accent, #00d4ff);
-  color: var(--chrome-accent, #00d4ff);
+  border-color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
 }
 
 /* Actions */
@@ -457,18 +457,18 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm, 2px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-calendar-header-action:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--chrome-accent, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
 }
 
 .rv-calendar-header-action--active {
-  color: var(--chrome-accent, #00d4ff);
+  color: var(--accent-dim, #00d4ff);
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
 }
 
@@ -581,7 +581,7 @@
   margin: 0 0 var(--space-lg, 16px);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--accent-dim, #f5f5f5);
+  color: var(--chrome-accent, #f5f5f5);
 }
 
 .rv-calendar-modal-field {
@@ -606,7 +606,7 @@
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--radius-sm, 2px);
   background: var(--bg-surface, #1e1e1e);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
   font-size: var(--font-sm, 12px);
   transition: border-color 0.15s ease;
   box-sizing: border-box;
@@ -622,7 +622,7 @@
 .rv-calendar-modal-field select:focus,
 .rv-calendar-modal-field textarea:focus {
   outline: none;
-  border-color: var(--chrome-accent, #00d4ff);
+  border-color: var(--accent-dim, #00d4ff);
 }
 
 .rv-calendar-modal-row {
@@ -647,7 +647,7 @@
   text-transform: none;
   letter-spacing: normal;
   font-size: var(--font-sm, 12px);
-  color: var(--accent-dim, #e0e0e0);
+  color: var(--chrome-accent, #e0e0e0);
 }
 
 .rv-calendar-modal-actions {
@@ -687,8 +687,8 @@
 }
 
 .rv-calendar-modal-btn--primary {
-  border: 1px solid var(--chrome-accent, #00d4ff);
-  background: var(--chrome-accent, #00d4ff);
+  border: 1px solid var(--accent-dim, #00d4ff);
+  background: var(--accent-dim, #00d4ff);
   color: var(--bg-solid, #000);
 }
 

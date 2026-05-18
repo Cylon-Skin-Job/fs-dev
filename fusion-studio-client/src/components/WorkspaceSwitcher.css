@@ -76,8 +76,8 @@
 
 .rv-switcher-item-icon {
   font-size: 20px;
-  /* Driven by the picker's "Chrome settings" sliders via --accent-dim. */
-  color: var(--accent-dim, var(--text-dim));
+  /* Driven by the picker's "Chrome settings" sliders via --chrome-accent. */
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-switcher-item-label {
@@ -86,7 +86,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-switcher-item-remove {

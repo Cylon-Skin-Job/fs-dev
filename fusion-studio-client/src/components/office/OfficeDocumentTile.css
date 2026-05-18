@@ -151,7 +151,7 @@
 
 .rv-office-doc-tile-icon {
   font-size: 18px;
-  color: var(--accent-dim, #888);
+  color: var(--chrome-accent, #888);
   flex-shrink: 0;
 }
 

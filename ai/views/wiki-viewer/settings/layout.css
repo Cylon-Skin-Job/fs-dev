@@ -65,7 +65,7 @@
 }
 
 .rv-wiki-topic-item.active {
-  background: var(--chrome-accent);
+  background: var(--accent-dim);
 }
 
 .rv-wiki-topic-item.active .rv-wiki-topic-indicator,
@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
   padding: 8px 12px 4px;
-  color: var(--chrome-accent, var(--text-dim, #888));
+  color: var(--accent-dim, var(--text-dim, #888));
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -178,7 +178,7 @@
 /* Base button reset for .rv-file-page-action now lives globally in
    ai/settings/views.css. Wiki-specific theming layered on top: */
 .rv-wiki-page-viewer .rv-wiki-page-nav .rv-file-page-action {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-wiki-page-viewer .rv-wiki-page-nav .rv-file-page-action:hover {
@@ -186,25 +186,25 @@
 }
 
 /* Header rails above the page:
-   - Passive header content (breadcrumb, inactive tabs) → --accent-dim (Chrome)
+   - Passive header content (breadcrumb, inactive tabs) → --chrome-accent (Chrome)
    - Active states (active tab text + underline, enabled front/back buttons)
-     → --chrome-accent (Accent)
-   - Disabled front/back buttons → --accent-dim (Chrome) */
+     → --accent-dim (Accent)
+   - Disabled front/back buttons → --chrome-accent (Chrome) */
 .rv-wiki-page-viewer .rv-wiki-tab.active {
-  color: var(--chrome-accent, var(--theme-primary));
-  border-bottom-color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
+  border-bottom-color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-wiki-page-viewer .rv-wiki-breadcrumb {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-wiki-page-viewer .rv-wiki-nav-btn {
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-wiki-page-viewer .rv-wiki-nav-btn:disabled {
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
 }
 
 .rv-wiki-page-empty {
@@ -235,7 +235,7 @@
   height: 28px;
   border: none;
   background: none;
-  color: var(--chrome-accent, var(--text-dim, #888));
+  color: var(--accent-dim, var(--text-dim, #888));
   cursor: pointer;
   border-radius: 4px;
   padding: 0;
@@ -257,7 +257,7 @@
 
 .rv-wiki-breadcrumb {
   margin-left: 8px;
-  color: var(--chrome-accent, var(--text-primary, #eee));
+  color: var(--accent-dim, var(--text-primary, #eee));
   font-size: 0.8125rem;
   font-weight: 500;
 }
@@ -293,8 +293,8 @@
 }
 
 .rv-wiki-tab.active {
-  color: var(--chrome-accent, var(--text-primary, #eee));
-  border-bottom-color: var(--chrome-accent, var(--neutral-chrome-border, rgba(255, 255, 255, 0.38)));
+  color: var(--accent-dim, var(--text-primary, #eee));
+  border-bottom-color: var(--accent-dim, var(--neutral-chrome-border, rgba(255, 255, 255, 0.38)));
 }
 
 /* Prose for rendered PAGE/LOG lives in src/styles/document.css (.rv-wiki-page-content) */
@@ -331,7 +331,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  color: var(--chrome-accent, var(--text-dim, #888));
+  color: var(--accent-dim, var(--text-dim, #888));
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;

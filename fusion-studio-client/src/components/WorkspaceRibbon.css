@@ -91,12 +91,12 @@
 
 .rv-workspace-ribbon-item-icon {
   font-size: 32px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   line-height: 1;
 }
 
 .rv-workspace-ribbon-item.is-active .rv-workspace-ribbon-item-icon {
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-workspace-ribbon-item-label {
@@ -111,7 +111,7 @@
 }
 
 .rv-workspace-ribbon-item.is-active .rv-workspace-ribbon-item-label {
-  color: var(--chrome-accent, var(--theme-primary));
+  color: var(--accent-dim, var(--theme-primary));
 }
 
 .rv-workspace-ribbon-item-remove {

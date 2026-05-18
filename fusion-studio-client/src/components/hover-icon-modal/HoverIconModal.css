@@ -35,7 +35,7 @@
   --hover-modal-title-weight: 500;
   --hover-modal-title-color: var(--text-primary, #fff);
   --hover-modal-item-size: 13px;
-  --hover-modal-item-color: var(--accent-dim, var(--text-dim));
+  --hover-modal-item-color: var(--chrome-accent, var(--text-dim));
   --hover-modal-meta-size: 12px;
   --hover-modal-meta-color: var(--text-dim, #888);
   --hover-modal-hint-size: 12px;
@@ -304,7 +304,7 @@
   background: transparent;
   border: none;
   border-radius: 4px;
-  color: var(--accent-dim, var(--text-dim));
+  color: var(--chrome-accent, var(--text-dim));
   cursor: pointer;
   transition: opacity 0.15s, background 0.15s;
 }

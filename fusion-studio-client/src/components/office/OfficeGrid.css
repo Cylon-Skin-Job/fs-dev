@@ -22,7 +22,7 @@
 .rv-office-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   margin: 0;
 }
 
@@ -62,7 +62,7 @@
 .rv-office-folder-icon {
   width: 80px;
   height: 80px;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
 }
 
 .rv-office-folder-icon svg {
@@ -74,7 +74,7 @@
 .rv-office-folder-name {
   font-size: 12pt;
   font-weight: 500;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   text-align: center;
   word-break: break-word;
   max-width: 100%;
@@ -108,7 +108,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
@@ -125,7 +125,7 @@
   flex: 1 1 auto;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -147,14 +147,14 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--accent-dim);
+  color: var(--chrome-accent);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .rv-office-topbar-action:hover {
   background: var(--surface-hover);
-  color: var(--chrome-accent);
+  color: var(--accent-dim);
 }
 
 .rv-office-topbar-action .material-symbols-outlined {
