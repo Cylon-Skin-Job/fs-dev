@@ -23,6 +23,18 @@
   /* Neutral hairlines: tools↔threads, threads↔chat, explorer splits, composer top — not theme accent */
   --neutral-chrome-border: rgba(255, 255, 255, 0.12);
 
+  /* Glass surface tokens — neutral white-alpha overlays for hover/interactive states.
+   * Use --glass-xs for barely-there backgrounds, --glass-md for standard hover,
+   * --glass-lg for strong hover or focused borders. */
+  --glass-xs:  rgba(255, 255, 255, 0.04);
+  --glass-sm:  rgba(255, 255, 255, 0.06);
+  --glass-md:  rgba(255, 255, 255, 0.08);
+
+  /* Overlay tokens — black-alpha darken layers for backdrops and modals. */
+  --overlay-sm: rgba(0, 0, 0, 0.3);
+  --overlay-md: rgba(0, 0, 0, 0.5);
+  --overlay-lg: rgba(0, 0, 0, 0.7);
+
   /* Semantic status */
   --status-ok:    #4caf50;
   --status-error: #ef4444;
