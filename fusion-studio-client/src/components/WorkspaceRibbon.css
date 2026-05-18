@@ -10,7 +10,7 @@
 .rv-workspace-ribbon-scrim {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--overlay-sm, rgba(0, 0, 0, 0.3));
   z-index: var(--z-overlay, 1000);
 }
 
@@ -73,7 +73,7 @@
 }
 
 .rv-workspace-ribbon-item:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
 }
 
 .rv-workspace-ribbon-item.is-active {
@@ -139,7 +139,7 @@
 
 .rv-workspace-ribbon-item-remove:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
 }
 
 .rv-workspace-ribbon-item-remove .material-symbols-outlined {
@@ -166,7 +166,7 @@
 
 .rv-workspace-ribbon-add:hover {
   border-color: var(--theme-primary, rgba(255, 255, 255, 0.4));
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-xs, rgba(255, 255, 255, 0.04));
 }
 
 .rv-workspace-ribbon-add-icon {

@@ -1035,7 +1035,7 @@
 }
 
 .rv-chat-header-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
   color: var(--accent-dim, var(--theme-primary));
 }
 
@@ -1045,7 +1045,7 @@
 }
 
 .rv-chat-header-btn[aria-expanded="true"] {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
   color: var(--accent-dim, var(--theme-primary));
 }
 
@@ -1178,7 +1178,7 @@
 }
 
 .rv-dropdown-item:hover:not([disabled]) {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
 }
 
 .rv-dropdown-item[aria-current="true"] {
@@ -1333,7 +1333,7 @@
 }
 
 .rv-send-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-sm, rgba(255, 255, 255, 0.05));
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -1356,7 +1356,7 @@
 .rv-context-usage-bar-standalone {
   flex: 1;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-md, rgba(255, 255, 255, 0.1));
   border: 1px solid var(--chrome-accent, rgba(255, 255, 255, 0.2));
   border-radius: 2px;
   overflow: hidden;
@@ -1661,7 +1661,7 @@
 }
 
 .rv-secrets-key-delete:hover {
-  background: rgba(255,255,255,0.06);
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
   color: var(--text-primary, #fff);
 }
 
@@ -1724,7 +1724,7 @@
 }
 
 .rv-secrets-add-btn:hover {
-  background: rgba(255,255,255,0.04);
+  background: var(--glass-xs, rgba(255, 255, 255, 0.04));
   color: var(--text-primary, #fff);
   border-color: var(--neutral-chrome-border-strong, rgba(255,255,255,0.3));
 }
@@ -1837,8 +1837,8 @@
 .rv-secrets-duplicate-prompt {
   font-size: 12px;
   color: var(--text-primary, #fff);
-  background: rgba(255, 200, 80, 0.08);
-  border: 1px solid rgba(255, 200, 80, 0.25);
+  background: rgba(255, 200, 80, 0.08); /* warning-tint */
+  border: 1px solid rgba(255, 200, 80, 0.25); /* warning-tint */
   border-radius: 4px;
   padding: 8px;
   margin-top: 8px;
@@ -1886,7 +1886,7 @@
 
 .rv-secrets-btn-secondary:hover {
   color: var(--text-primary, #fff);
-  background: rgba(255,255,255,0.04);
+  background: var(--glass-xs, rgba(255, 255, 255, 0.04));
 }
 
 .rv-secrets-btn-danger {

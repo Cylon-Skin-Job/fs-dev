@@ -1,7 +1,7 @@
 .rv-add-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-md, rgba(0, 0, 0, 0.5));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +45,7 @@
 
 .rv-add-modal-close:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
 }
 
 .rv-add-modal-body {
@@ -102,7 +102,7 @@
 
 .rv-add-modal-btn:hover {
   border-color: var(--theme-primary, rgba(255, 255, 255, 0.4));
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-xs, rgba(255, 255, 255, 0.04));
 }
 
 .rv-add-modal-btn-primary {
