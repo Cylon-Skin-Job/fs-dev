@@ -214,29 +214,29 @@ export function applyLivePreview(
 
   const chromeBase = luminanceToHex(clamp(chromeLuminance));
   const chromeAccent = mixHex(chromeBase, accent, clamp(chromeTint) / 100);
-  root.setProperty('--chrome-accent', chromeAccent);
+  const accentDimBase = luminanceToHex(clamp(accentLuminance));
+  const accentDim = mixHex(accentDimBase, accent, clamp(accentTint) / 100);
 
-  // Contrast foreground for surfaces filled with --chrome-accent. Mirrors
-  // accent-css.js → pickContrastFg. Light accent → fall back to the Chrome
-  // sliders (--accent-dim) instead of flat black so vibrant accents still
-  // pair with a tonally related foreground.
+  root.setProperty('--chrome-accent', accentDim);
+
+  // Contrast foreground for surfaces filled with --accent-dim (bright accent).
+  // Mirrors accent-css.js → pickContrastFg. Light accent → fall back to the
+  // dim structural chrome (--chrome-accent) instead of flat black.
   {
     const [cr, cg, cb] = hexToRgb(chromeAccent);
     const lum = (0.2126 * cr + 0.7152 * cg + 0.0722 * cb) / 255;
-    root.setProperty('--chrome-accent-fg', lum > 0.55 ? 'var(--accent-dim)' : '#ffffff');
+    root.setProperty('--chrome-accent-fg', lum > 0.55 ? 'var(--chrome-accent)' : '#ffffff');
   }
 
-  const accentDimBase = luminanceToHex(clamp(accentLuminance));
-  const accentDim = mixHex(accentDimBase, accent, clamp(accentTint) / 100);
-  root.setProperty('--accent-dim', accentDim);
+  root.setProperty('--accent-dim', chromeAccent);
 
   root.setProperty('--icon-dim', 'var(--text-dim)');
-  root.setProperty('--cli-accent', 'var(--chrome-accent)');
-  root.setProperty('--tile-color', 'var(--chrome-accent)');
+  root.setProperty('--cli-accent', 'var(--accent-dim)');
+  root.setProperty('--tile-color', 'var(--accent-dim)');
   root.setProperty('--chat-bubble-bg', chatBubbleChrome ? 'var(--chrome-accent)' : 'var(--bg-secondary)');
   root.setProperty('--chat-bubble-fg', chatBubbleChrome ? 'var(--chrome-accent-fg)' : 'var(--text-white)');
-  root.setProperty('--nav-icon-color', 'var(--accent-dim)');
-  root.setProperty('--nav-text-color', 'var(--accent-dim)');
+  root.setProperty('--nav-icon-color', 'var(--chrome-accent)');
+  root.setProperty('--nav-text-color', 'var(--chrome-accent)');
 
   root.setProperty('--ws-sidebar-bg', `color-mix(in srgb, ${floor} 92%, ${accent} 8%)`);
   root.setProperty('--ws-content-bg', `color-mix(in srgb, ${floor} 96%, ${accent} 4%)`);

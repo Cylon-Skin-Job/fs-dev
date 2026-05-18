@@ -10,15 +10,14 @@ function hexToRgb(hex) {
 
 /** Pick a foreground for surfaces filled with the given hex bg.
  *  - Dark bg → white (clean on saturated darks)
- *  - Light bg → --accent-dim (the Chrome family — the user's chosen Chrome
- *    sliders carry a darker companion to a light accent, so we lean on that
- *    rather than flat black, which clashes with vibrant accents).
+ *  - Light bg → --chrome-accent (the Chrome family — dim structural companion
+ *    to a bright accent; avoids flat black which clashes with vibrant accents).
  */
 function pickContrastFg(hex) {
   const [r, g, b] = hexToRgb(hex);
   // W3C-style relative luminance approximation in sRGB.
   const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-  return lum > 0.55 ? 'var(--accent-dim)' : '#ffffff';
+  return lum > 0.55 ? 'var(--chrome-accent)' : '#ffffff';
 }
 
 function render(entry) {
@@ -47,9 +46,9 @@ function render(entry) {
   const chatBubbleFg = chatBubbleChrome ? 'var(--chrome-accent-fg)' : 'var(--text-white)';
 
   // Themed navigation is the default — nav glyphs and labels follow the
-  // muted accent (--accent-dim) regardless of theme.
-  const navIconColor = 'var(--accent-dim)';
-  const navTextColor = 'var(--accent-dim)';
+  // dim structural chrome (--chrome-accent) regardless of theme.
+  const navIconColor = 'var(--chrome-accent)';
+  const navTextColor = 'var(--chrome-accent)';
 
   return `  --theme-primary:     ${accent};
   --theme-primary-rgb: ${r}, ${g}, ${b};
@@ -57,11 +56,11 @@ function render(entry) {
   --theme-border-glow: rgba(${r}, ${g}, ${b}, 0.68);
   --ws-primary:        var(--theme-primary);
   --ws-primary-rgb:    var(--theme-primary-rgb);
-  --chrome-accent:     ${chromeAccent};
+  --chrome-accent:     ${accentDim};
   --chrome-accent-fg:  ${chromeAccentFg};
-  --cli-accent:        var(--chrome-accent);
-  --tile-color:        var(--chrome-accent);
-  --accent-dim:        ${accentDim};
+  --cli-accent:        var(--accent-dim);
+  --tile-color:        var(--accent-dim);
+  --accent-dim:        ${chromeAccent};
   --chat-bubble-bg:    ${chatBubbleBg};
   --chat-bubble-fg:    ${chatBubbleFg};
   --nav-icon-color:    ${navIconColor};
