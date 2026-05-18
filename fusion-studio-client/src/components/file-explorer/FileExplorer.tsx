@@ -23,13 +23,13 @@ export function FileExplorer() {
   }, []);
 
   return (
-    <div className="file-explorer-layout">
+    <div className="rv-file-explorer-layout">
       {/* Main viewer area */}
-      <div className="file-explorer-main">
+      <div className="rv-file-explorer-main">
         {viewMode === 'viewer' ? (
           <FileViewer />
         ) : (
-          <div className="file-explorer-empty">
+          <div className="rv-file-explorer-empty">
             <span className="material-symbols-outlined">description</span>
             <span>Select a file to view</span>
           </div>
@@ -39,20 +39,20 @@ export function FileExplorer() {
       {/* Right sidebar: file tree. Left edge has a resize handle that writes
        * to viewStates[file-viewer].widths.rightSecondary — the same width
        * variable the sticky secondary chat uses. Drag either and both resize. */}
-      <div className="file-tree-sidebar">
+      <div className="rv-file-tree-sidebar">
         <RightColResize panel="file-viewer" />
         {error && (
-          <div className="file-explorer-error">
+          <div className="rv-file-explorer-error">
             <span className="material-symbols-outlined rv-icon-md">error</span>
             <span>{error}</span>
           </div>
         )}
         {isLoading && rootNodes.length === 0 ? (
-          <div className="file-explorer-loading">
+          <div className="rv-file-explorer-loading">
             <span style={{ color: 'var(--text-dim)' }}>Loading files...</span>
           </div>
         ) : (
-          <div className="file-explorer">
+          <div className="rv-file-explorer">
             <FileTree nodes={rootNodes} />
           </div>
         )}

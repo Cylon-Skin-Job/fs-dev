@@ -15,32 +15,32 @@
 */
 
 /* ── Local theme aliases (scoped to the file-viewer layout root) ── */
-.file-explorer-layout {
+.rv-file-explorer-layout {
   --file-viewer-chrome-border: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   --file-tree-sidebar-bg:      var(--panel-chrome-bg, #1a1a1a);
 }
 
 /* ── Empty states (file picker not yet showing a viewer) ── */
-.file-explorer-main:empty {
+.rv-file-explorer-main:empty {
   background: var(--bg-solid);
 }
 
-.file-explorer-empty {
+.rv-file-explorer-empty {
   color: var(--text-dim);
   background: var(--bg-solid);
 }
 
-.file-explorer-error {
+.rv-file-explorer-error {
   color: var(--text-error, #ef4444);
 }
 
 /* ── File tree sidebar surface ── */
-.file-tree-sidebar {
+.rv-file-tree-sidebar {
   background: var(--sidebar-surface-bg, #161616);
 }
 
 /* ── Open file: same surface as document code canvas ── */
-.file-viewer {
+.rv-file-viewer {
   background: var(--document-bg, #161616);
 }
 
@@ -48,23 +48,23 @@
    Header rail matches the sidebar surface so the area around the nav
    buttons and the gap where no tabs are visible reads as a continuation
    of the workspace's sidebar/rail chrome. */
-.file-viewer-header {
+.rv-file-viewer-header {
   background: var(--sidebar-surface-bg, #161616);
 }
 
-.file-viewer-header::after {
+.rv-file-viewer-header::after {
   /* Chrome divider (between the tab strip and the content frame).
    * Driven by the Border sliders via --file-viewer-chrome-border. */
   background: var(--file-viewer-chrome-border, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 /* ── Header nav buttons (chevrons) ── */
-.file-viewer-nav .nav-btn {
+.rv-file-viewer-nav .rv-nav-btn {
   background: var(--sidebar-surface-bg, #161616);
   color: var(--text-dim);
 }
 
-.file-viewer-nav .nav-btn:hover:not(:disabled) {
+.rv-file-viewer-nav .rv-nav-btn:hover:not(:disabled) {
   color: var(--text-white);
 }
 
@@ -72,45 +72,45 @@
    Strip surface matches the sidebar so the area between/beside tabs reads
    as a continuation of the workspace's sidebar chrome. Individual tab chips
    keep --file-tree-sidebar-bg so they read as raised elements on the rail. */
-.file-viewer-tabs {
+.rv-file-viewer-tabs {
   background: var(--sidebar-surface-bg, #161616);
 }
 
-.file-viewer-tab {
+.rv-file-viewer-tab {
   border-left:  1px solid var(--file-viewer-chrome-border);
   border-right: 1px solid var(--file-viewer-chrome-border);
   background-color: var(--file-tree-sidebar-bg, #1a1a1a);
 }
 
-.file-viewer-tab.active {
+.rv-file-viewer-tab.active {
   background-color: var(--document-bg, #161616);
 }
 
 /* Tab name + icon — driven by the picker's "Chrome settings" sliders
    (Luminance + Tint) via --chrome-accent. */
-.file-viewer-tab .tab-icon {
+.rv-file-viewer-tab .rv-tab-icon {
   color: var(--chrome-accent, var(--text-dim));
 }
 
-.file-viewer-tab .tab-name {
+.rv-file-viewer-tab .rv-tab-name {
   color: var(--chrome-accent, var(--text-dim));
 }
 
-.file-viewer-tab:not(.active) .tab-name {
+.rv-file-viewer-tab:not(.active) .rv-tab-name {
   color: var(--chrome-accent, var(--text-dim));
 }
 
-.file-viewer-tab .tab-close {
+.rv-file-viewer-tab .rv-tab-close {
   color: var(--text-dim);
 }
 
-.file-viewer-tab .tab-close:hover {
+.rv-file-viewer-tab .rv-tab-close:hover {
   background: var(--glass-md, rgba(255, 255, 255, 0.1));
   color: var(--text-white);
 }
 
 /* ── Filename info row + content divider ── */
-.file-viewer-info {
+.rv-file-viewer-info {
   background: var(--document-bg, #161616);
   /* Content divider (between filename row and the code body). Inherits the
      wiki's border paradigm (--content-highlight) so file-viewer in-content
@@ -122,6 +122,6 @@
 }
 
 /* ── Code-content fill ── */
-.file-viewer-content {
+.rv-file-viewer-content {
   background: var(--document-bg, #161616);
 }

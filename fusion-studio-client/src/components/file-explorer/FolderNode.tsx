@@ -89,16 +89,16 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
   let iconClass: string;
   if (node.isSymlink) {
     icon = 'folder_special';
-    iconClass = 'tree-icon';
+    iconClass = 'rv-tree-icon';
   } else if (isExpanded) {
     icon = 'folder_open';
-    iconClass = 'tree-icon';
+    iconClass = 'rv-tree-icon';
   } else if (node.hasChildren) {
     icon = 'folder';
-    iconClass = 'tree-icon folder-filled';
+    iconClass = 'rv-tree-icon folder-filled';
   } else {
     icon = 'folder';
-    iconClass = 'tree-icon folder-outline';
+    iconClass = 'rv-tree-icon folder-outline';
   }
 
   async function handleClick() {
@@ -118,14 +118,14 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
   return (
     <div className="folder-node">
       <div
-        className={`file-tree-item${showLoading ? ' disabled' : ''}`}
+        className={`rv-file-tree-item${showLoading ? ' disabled' : ''}`}
         style={{ paddingLeft }}
         onClick={handleClick}
       >
         <span className={`material-symbols-outlined ${iconClass}`}>
           {icon}
         </span>
-        <span className="tree-label">{formatNodeName(node.name)}</span>
+        <span className="rv-tree-label">{formatNodeName(node.name)}</span>
         {isLoadingChildren && <span className="loading-indicator">...</span>}
       </div>
       {isExpanded && hasChildrenLoaded && children && children.length > 0 && (
@@ -135,7 +135,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
       )}
       {isExpanded && hasChildrenLoaded && children && children.length === 0 && (
         <div className="folder-children">
-          <div className="file-tree-empty" style={{ paddingLeft: `${0.75 + (depth + 1) * 1.25}rem` }}>
+          <div className="rv-file-tree-empty" style={{ paddingLeft: `${0.75 + (depth + 1) * 1.25}rem` }}>
             <span style={{ color: 'var(--text-dim)', fontSize: 'var(--file-tree-font-size, 0.85rem)' }}>
               Empty folder
             </span>

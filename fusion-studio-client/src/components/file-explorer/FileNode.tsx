@@ -28,14 +28,14 @@ export function FileNode({ node, depth }: FileNodeProps) {
 
   return (
     <div
-      className={`file-tree-item${isThisFileLoading ? ' disabled' : ''}`}
+      className={`rv-file-tree-item${isThisFileLoading ? ' disabled' : ''}`}
       style={{ paddingLeft }}
       onClick={handleClick}
     >
-      <span className={`material-symbols-outlined tree-icon icon-${icon}`}>
+      <span className={`material-symbols-outlined rv-tree-icon icon-${icon}`}>
         {icon}
       </span>
-      <span className="tree-label">{formatNodeName(node.name)}</span>
+      <span className="rv-tree-label">{formatNodeName(node.name)}</span>
     </div>
   );
 }

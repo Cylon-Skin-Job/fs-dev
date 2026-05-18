@@ -11,8 +11,8 @@
    (`.chat-messages` background = --bg-solid), not the chat panel chrome. */
 .rv-ticket-column,
 .rv-tile-grid,
-.file-explorer-empty,
-.file-explorer-main:empty {
+.rv-file-explorer-empty,
+.rv-file-explorer-main:empty {
   background: var(--bg-solid, #000);
 }
 
@@ -92,21 +92,21 @@ body[data-tint-cards="true"] .rv-wiki-edge-panel {
 }
 
 /* ── Left Panel ── */
-body[data-tint-left="true"] .sidebar {
+body[data-tint-left="true"] .rv-sidebar {
   background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
 }
 
 /* ── Right Panel ── */
-body[data-tint-right="true"] .file-tree-sidebar {
+body[data-tint-right="true"] .rv-file-tree-sidebar {
   background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
 }
 
-body[data-tint-right="true"] .rv-secondary-sticky > .chat-area {
+body[data-tint-right="true"] .rv-secondary-sticky > .rv-chat-area {
   background: color-mix(in srgb, var(--chat-surface-bg, #1a1a1a) 88%, var(--ws-primary, #ec4899) 12%);
 }
 
 /* ── Border: Threads ── */
-body[data-tint-border-threads="true"] .sidebar {
+body[data-tint-border-threads="true"] .rv-sidebar {
   border-right-color: var(--theme-border, rgba(255, 255, 255, 0.38));
 }
 

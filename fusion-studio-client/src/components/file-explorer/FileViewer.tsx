@@ -106,7 +106,7 @@ function TabRow({
       aria-selected={active}
       data-tab-path={path}
       tabIndex={active ? 0 : -1}
-      className={`file-viewer-tab${active ? ' active' : ''}`}
+      className={`rv-file-viewer-tab${active ? ' active' : ''}`}
       onKeyDown={(e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -114,13 +114,13 @@ function TabRow({
         }
       }}
     >
-      <span className={`material-symbols-outlined tab-icon file-icon-${tab.file.extension}`}>
+      <span className={`material-symbols-outlined rv-tab-icon file-icon-${tab.file.extension}`}>
         {fileIcon}
       </span>
-      <span className="tab-name">{tab.file.name}</span>
+      <span className="rv-tab-name">{tab.file.name}</span>
       <button
         type="button"
-        className="tab-close"
+        className="rv-tab-close"
         onClick={onClose}
         disabled={tab.loading}
         title="Close tab"
@@ -157,7 +157,7 @@ export function FileViewer() {
   const canGoNext = tabs.length > 1 && activeIdx >= 0 && activeIdx < tabs.length - 1;
 
   function handleTabStripClick(e: MouseEvent<HTMLDivElement>) {
-    if ((e.target as HTMLElement).closest('button.tab-close')) return;
+    if ((e.target as HTMLElement).closest('button.rv-tab-close')) return;
     const row = (e.target as HTMLElement).closest('[data-tab-path]');
     if (!row) return;
     const path = row.getAttribute('data-tab-path');
@@ -167,12 +167,12 @@ export function FileViewer() {
   }
 
   return (
-    <div className="file-viewer">
-      <div className="file-viewer-header">
-        <div className="file-viewer-nav">
+    <div className="rv-file-viewer">
+      <div className="rv-file-viewer-header">
+        <div className="rv-file-viewer-nav">
           <button
             type="button"
-            className="nav-btn"
+            className="rv-nav-btn"
             title="Previous tab"
             disabled={!canGoPrev}
             onClick={() => activateAdjacentTab(-1)}
@@ -181,7 +181,7 @@ export function FileViewer() {
           </button>
           <button
             type="button"
-            className="nav-btn"
+            className="rv-nav-btn"
             title="Next tab"
             disabled={!canGoNext}
             onClick={() => activateAdjacentTab(1)}
@@ -189,7 +189,7 @@ export function FileViewer() {
             <span className="material-symbols-outlined">chevron_right</span>
           </button>
         </div>
-        <div className="file-viewer-tabs" onClick={handleTabStripClick}>
+        <div className="rv-file-viewer-tabs" onClick={handleTabStripClick}>
           {tabs.map((tab) => (
             <TabRow
               key={tab.file.path}
@@ -204,7 +204,7 @@ export function FileViewer() {
         </div>
       </div>
 
-      <div className="file-viewer-info">
+      <div className="rv-file-viewer-info">
         <div className="info-item">
           <span>{formatFilePath(selectedFile.path)}</span>
         </div>
@@ -222,7 +222,7 @@ export function FileViewer() {
         </div>
       </div>
 
-      <div className={`file-viewer-content${isLoading ? ' loading' : ''}`}>
+      <div className={`rv-file-viewer-content${isLoading ? ' loading' : ''}`}>
         <FileContentRenderer
           content={fileContent}
           extension={selectedFile.extension}
