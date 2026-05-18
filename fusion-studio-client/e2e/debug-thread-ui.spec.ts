@@ -19,7 +19,7 @@ test('debug thread UI', async ({ page }) => {
   await page.screenshot({ path: 'test-results/thread-ui-debug.png' });
   
   // Check if thread-list exists
-  const threadList = page.locator('.thread-list');
+  const threadList = page.locator('.rv-thread-list');
   const count = await threadList.count();
   console.log('thread-list count:', count);
   
@@ -27,7 +27,7 @@ test('debug thread UI', async ({ page }) => {
     const html = await threadList.first().innerHTML();
     console.log('thread-list HTML (first 500 chars):', html.substring(0, 500));
     
-    const chatItems = await threadList.locator('.chat-item').count();
+    const chatItems = await threadList.locator('.rv-chat-item').count();
     console.log('chat-item count:', chatItems);
   }
   

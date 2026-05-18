@@ -22,7 +22,7 @@ test('debug new thread click', async ({ page }) => {
   console.log('=== Page loaded, clicking button ===');
   
   // Find and click the New Thread button
-  const btn = page.locator('.new-chat-btn').first();
+  const btn = page.locator('.rv-new-chat-btn').first();
   await btn.click();
   
   await page.waitForTimeout(2000);

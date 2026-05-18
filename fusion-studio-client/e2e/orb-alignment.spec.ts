@@ -16,7 +16,7 @@ test('orb and thinking lightbulb icon are horizontally aligned', async ({ page }
   await page.waitForTimeout(2000); // let WS connect
 
   // Step 1: Click new chat button (first visible one)
-  const newChatBtn = page.locator('.new-chat-btn').first();
+  const newChatBtn = page.locator('.rv-new-chat-btn').first();
   if (await newChatBtn.isVisible()) {
     await newChatBtn.click();
     await page.waitForTimeout(1500); // wait for thread creation

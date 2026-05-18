@@ -37,7 +37,7 @@ test('render debug — fresh message', async ({ page }) => {
   }
 
   // Check if there's a new chat button visible
-  const newChatBtns = page.locator('.new-chat-btn');
+  const newChatBtns = page.locator('.rv-new-chat-btn');
   for (let i = 0; i < await newChatBtns.count(); i++) {
     const btn = newChatBtns.nth(i);
     const vis = await btn.isVisible();

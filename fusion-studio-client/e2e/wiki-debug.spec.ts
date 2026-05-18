@@ -30,7 +30,7 @@ test('wiki floating chat', async ({ page }) => {
     process.stdout.write(`Panel visible: ${await panel.isVisible()}\n`);
 
     // Check ChatArea is inside
-    const chatArea = page.locator('.floating-chat-body .chat-area');
+    const chatArea = page.locator('.floating-chat-body .rv-chat-area');
     process.stdout.write(`ChatArea inside panel: ${await chatArea.count()}\n`);
 
     // Try dragging the panel

@@ -4,7 +4,7 @@ test('debug - click target identification', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('.chat-area .clipboard-trigger:visible').first();
+  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
 
   // Get info about the trigger element
   const triggerInfo = await trigger.evaluate(el => ({
@@ -28,7 +28,7 @@ test('debug - click target identification', async ({ page }) => {
   await page.waitForTimeout(500);
 
   // Check popover state
-  const popover = page.locator('.chat-area .clipboard-bubble').first();
+  const popover = page.locator('.rv-hover-icon-modal').first();
   const dataState = await popover.evaluate(el => el.getAttribute('data-state'));
   console.log('Popover data-state after click:', dataState);
 });

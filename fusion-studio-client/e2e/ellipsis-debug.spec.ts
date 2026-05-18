@@ -26,8 +26,8 @@ test('ellipsis menu opacity diagnostic', async ({ page }) => {
   await page.screenshot({ path: path.join(OUT_DIR, '01-initial.png'), fullPage: true });
 
   // Find the active panel's sidebar → first chat-item (target only visible)
-  const chatItem = page.locator('.rv-panel.active .chat-item:not(.active)').first();
-  const chatItemCount = await page.locator('.rv-panel.active .chat-item').count();
+  const chatItem = page.locator('.rv-panel.active .rv-chat-item:not(.active)').first();
+  const chatItemCount = await page.locator('.rv-panel.active .rv-chat-item').count();
   console.log('[DEBUG] active panel chat-item count:', chatItemCount);
 
   await chatItem.waitFor({ state: 'visible' });

@@ -12,15 +12,15 @@ test.describe('Thread Management', () => {
     await page.waitForTimeout(3000);
     
     // Get sidebar
-    const sidebar = page.locator('.workspace.active .sidebar');
-    const threadList = sidebar.locator('.thread-list');
+    const sidebar = page.locator('.workspace.active .rv-sidebar');
+    const threadList = sidebar.locator('.rv-thread-list');
     
     // Get initial thread count
-    const initialThreads = await threadList.locator('.chat-item').count();
+    const initialThreads = await threadList.locator('.rv-chat-item').count();
     console.log('Initial threads:', initialThreads);
     
     // Click New Thread button
-    const newThreadBtn = sidebar.locator('.new-chat-btn');
+    const newThreadBtn = sidebar.locator('.rv-new-chat-btn');
     await expect(newThreadBtn).toBeVisible();
     await newThreadBtn.click();
     
@@ -28,14 +28,14 @@ test.describe('Thread Management', () => {
     await page.waitForTimeout(2000);
     
     // Verify new thread appears
-    const finalThreads = await threadList.locator('.chat-item').count();
+    const finalThreads = await threadList.locator('.rv-chat-item').count();
     console.log('Final threads:', finalThreads);
     
     expect(finalThreads).toBe(initialThreads + 1);
     
     // Verify the new thread has the default name
-    const firstThread = threadList.locator('.chat-item').first();
-    const threadText = await firstThread.locator('.chat-item-text').textContent();
+    const firstThread = threadList.locator('.rv-chat-item').first();
+    const threadText = await firstThread.locator('.rv-chat-item-text').textContent();
     expect(threadText).toContain('New Chat');
     
     console.log('✅ Thread created:', threadText);
@@ -50,15 +50,15 @@ test.describe('Thread Management', () => {
     await expect(activeWorkspace).toBeVisible();
     
     // Find the sidebar in the active workspace
-    const sidebar = activeWorkspace.locator('.sidebar');
+    const sidebar = activeWorkspace.locator('.rv-sidebar');
     await expect(sidebar).toBeVisible();
     
     // Should show thread list (check it's in DOM, visibility handled by CSS)
-    const threadList = sidebar.locator('.thread-list');
+    const threadList = sidebar.locator('.rv-thread-list');
     await expect(threadList).toHaveCount(1);
     
     // Should have the "New Thread" button
-    const newThreadBtn = sidebar.locator('.new-chat-btn');
+    const newThreadBtn = sidebar.locator('.rv-new-chat-btn');
     await expect(newThreadBtn).toBeVisible();
     
     console.log('✅ Thread list loaded');

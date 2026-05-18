@@ -13,7 +13,7 @@ test('diagnose content clipping during render', async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Click new chat
-  const newChatBtn = page.locator('.new-chat-btn').first();
+  const newChatBtn = page.locator('.rv-new-chat-btn').first();
   if (await newChatBtn.isVisible()) {
     await newChatBtn.click();
     await page.waitForTimeout(1500);

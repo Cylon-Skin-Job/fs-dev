@@ -22,8 +22,8 @@ test('thread list styling diagnostic', async ({ page }) => {
         id,
         exists: !!el,
         length: el?.textContent?.length ?? 0,
-        hasThreadList: el?.textContent?.includes('.thread-list') ?? false,
-        hasChatItem: el?.textContent?.includes('.chat-item') ?? false,
+        hasThreadList: el?.textContent?.includes('.rv-thread-list') ?? false,
+        hasChatItem: el?.textContent?.includes('.rv-chat-item') ?? false,
       };
     });
   });
@@ -31,7 +31,7 @@ test('thread list styling diagnostic', async ({ page }) => {
 
   // 2) Is the sidebar rendered, and what does it look like?
   const sidebarInfo = await page.evaluate(() => {
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelector('.rv-sidebar');
     if (!sidebar) return { found: false };
     const cs = window.getComputedStyle(sidebar);
     return {
@@ -47,8 +47,8 @@ test('thread list styling diagnostic', async ({ page }) => {
 
   // 3) Is there a thread-list element, and are chat-items styled?
   const threadListInfo = await page.evaluate(() => {
-    const list = document.querySelector('.thread-list');
-    const items = document.querySelectorAll('.chat-item');
+    const list = document.querySelector('.rv-thread-list');
+    const items = document.querySelectorAll('.rv-chat-item');
     const firstItem = items[0] as HTMLElement | undefined;
     return {
       listFound: !!list,

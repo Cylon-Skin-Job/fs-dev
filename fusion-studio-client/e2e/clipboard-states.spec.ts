@@ -4,7 +4,7 @@ test('clipboard states - hover and inactive only, no color highlight', async ({ 
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('.chat-area .clipboard-trigger:visible').first();
+  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
 
   // Default state
   const defaultStyles = await trigger.evaluate(el => {
@@ -41,7 +41,7 @@ test('clipboard states - hover and inactive only, no color highlight', async ({ 
     for (const sheet of document.styleSheets) {
       try {
         for (const rule of sheet.cssRules) {
-          if (rule instanceof CSSStyleRule && rule.selectorText === '.clipboard-trigger.open') {
+          if (rule instanceof CSSStyleRule && rule.selectorText === '.rv-hover-icon-trigger.open') {
             return {
               opacity: rule.style.opacity,
               color: rule.style.color
@@ -55,7 +55,7 @@ test('clipboard states - hover and inactive only, no color highlight', async ({ 
     return null;
   });
 
-  console.log('CSS .clipboard-trigger.open:', openClassStyles);
+  console.log('CSS .rv-hover-icon-trigger.open:', openClassStyles);
 
   // Should have opacity: 1 but NO color change (color should be empty/undefined)
   if (openClassStyles) {

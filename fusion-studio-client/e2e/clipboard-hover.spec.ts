@@ -4,7 +4,7 @@ test('clipboard hover - no background change', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('.chat-area .clipboard-trigger:visible').first();
+  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
 
   // Default state
   const defaultStyles = await trigger.evaluate(el => {

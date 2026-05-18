@@ -4,8 +4,8 @@ test('clipboard trigger styling verification', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('.chat-area .clipboard-trigger:visible').first();
-  const popover = page.locator('.chat-area .clipboard-bubble').first();
+  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const popover = page.locator('.rv-hover-icon-modal').first();
 
   // ========== DEFAULT STATE ==========
   const defaultStyles = await trigger.evaluate(el => {
@@ -122,7 +122,7 @@ test('clipboard controller state transitions', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('.chat-area .clipboard-trigger:visible').first();
+  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
 
   // Click to open
   await trigger.click();
@@ -148,7 +148,7 @@ test('clipboard popover positioning and z-index', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1000);
 
-  const popover = page.locator('.chat-area .clipboard-bubble').first();
+  const popover = page.locator('.rv-hover-icon-modal').first();
 
   // Get computed positioning
   const positioning = await popover.evaluate(el => {
