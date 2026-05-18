@@ -865,7 +865,7 @@
 }
 
 /* Clipboard trigger button - matches robin-wiki-context-toggle */
-.clipboard-trigger {
+.rv-clipboard-trigger {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -880,16 +880,16 @@
   position: relative;
 }
 
-.clipboard-trigger:hover {
+.rv-clipboard-trigger:hover {
   opacity: 0.8;
 }
 
-.clipboard-trigger.open {
+.rv-clipboard-trigger.open {
   opacity: 1;
 }
 
 /* Clipboard popover bubble */
-.clipboard-bubble {
+.rv-clipboard-bubble {
   position: fixed;
   width: 600px;
   max-height: calc(100vh - 200px);
@@ -906,14 +906,14 @@
   flex-direction: column;
 }
 
-.clipboard-bubble.open {
+.rv-clipboard-bubble.open {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
 
 /* Bridge hit zone for mouse path */
-.clipboard-bubble::after {
+.rv-clipboard-bubble::after {
   content: '';
   position: absolute;
   bottom: -16px;
@@ -924,7 +924,7 @@
 }
 
 /* Header */
-.clipboard-bubble-header {
+.rv-clipboard-bubble-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -932,13 +932,13 @@
   border-bottom: 1px solid var(--neutral-chrome-border);
 }
 
-.clipboard-bubble-title {
+.rv-clipboard-bubble-title {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-white);
 }
 
-.clipboard-clear-btn {
+.rv-clipboard-clear-btn {
   background: none;
   border: none;
   color: var(--text-dim);
@@ -950,27 +950,27 @@
   transition: all 0.2s ease;
 }
 
-.clipboard-clear-btn:hover {
+.rv-clipboard-clear-btn:hover {
   color: var(--theme-error);
   background: color-mix(in srgb, var(--status-error) 10%, transparent);
 }
 
 /* Loading and empty states */
-.clipboard-bubble-loading,
-.clipboard-bubble-empty,
-.clipboard-bubble-error {
+.rv-clipboard-bubble-loading,
+.rv-clipboard-bubble-empty,
+.rv-clipboard-bubble-error {
   padding: 24px 16px;
   text-align: center;
   font-size: 13px;
   color: var(--text-dim);
 }
 
-.clipboard-bubble-error {
+.rv-clipboard-bubble-error {
   color: var(--theme-error);
 }
 
 /* Load more button */
-.clipboard-load-more {
+.rv-clipboard-load-more {
   background: none;
   border: none;
   border-bottom: 1px solid var(--neutral-chrome-border);
@@ -982,35 +982,35 @@
   transition: background 0.2s ease;
 }
 
-.clipboard-load-more:hover {
+.rv-clipboard-load-more:hover {
   background: rgba(var(--theme-primary-rgb), 0.1);
 }
 
 /* List */
-.clipboard-list {
+.rv-clipboard-list {
   flex: 1;
   overflow-y: auto;
   max-height: 400px;
 }
 
 /* Entry */
-.clipboard-entry {
+.rv-clipboard-entry {
   padding: 8px 12px;
   border-left: 2px solid transparent;
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
-.clipboard-entry:hover {
+.rv-clipboard-entry:hover {
   background: var(--glass-sm, rgba(255, 255, 255, 0.05));
 }
 
-.clipboard-entry-selected {
+.rv-clipboard-entry-selected {
   border-left-color: var(--theme-primary);
   background: rgba(var(--theme-primary-rgb), 0.1);
 }
 
-.clipboard-entry-preview {
+.rv-clipboard-entry-preview {
   font-size: 13px;
   color: var(--text-white);
   white-space: nowrap;
@@ -1019,7 +1019,7 @@
   line-height: 1.4;
 }
 
-.clipboard-entry-meta {
+.rv-clipboard-entry-meta {
   display: flex;
   gap: 8px;
   margin-top: 4px;
@@ -1027,7 +1027,7 @@
   color: var(--text-dim);
 }
 
-.clipboard-entry-type {
+.rv-clipboard-entry-type {
   text-transform: uppercase;
   font-size: 10px;
   padding: 1px 4px;
@@ -1036,12 +1036,12 @@
 }
 
 /* Divider between entries */
-.clipboard-entry + .clipboard-entry {
+.rv-clipboard-entry + .rv-clipboard-entry {
   border-top: 1px solid var(--neutral-chrome-border);
 }
 
 /* Keyboard hint */
-.clipboard-hint {
+.rv-clipboard-hint {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1051,16 +1051,16 @@
   color: var(--text-dim);
 }
 
-.clipboard-hint .material-symbols-outlined {
+.rv-clipboard-hint .material-symbols-outlined {
   font-size: 14px;
 }
 
 /* Hide in floating chat */
-.floating-chat-body .clipboard-bubble {
+.floating-chat-body .rv-clipboard-bubble {
   display: none;
 }
 
-.floating-chat-body .clipboard-trigger {
+.floating-chat-body .rv-clipboard-trigger {
   display: none;
 }
 

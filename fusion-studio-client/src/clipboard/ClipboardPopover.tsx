@@ -99,7 +99,7 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
   return (
     <div
       ref={ref}
-      className={`clipboard-bubble open ${state === 'LOCKED' ? 'locked' : ''}`}
+      className={`rv-clipboard-bubble open ${state === 'LOCKED' ? 'locked' : ''}`}
       style={{
         position: 'fixed',
         left: position.left,
@@ -107,11 +107,11 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
       }}
       {...popoverProps}
     >
-      <div className="clipboard-bubble-header">
-        <span className="clipboard-bubble-title">History</span>
+      <div className="rv-clipboard-bubble-header">
+        <span className="rv-clipboard-bubble-title">History</span>
         {items.length > 0 && (
           <button
-            className="clipboard-clear-btn"
+            className="rv-clipboard-clear-btn"
             onClick={handleClear}
             title="Clear history"
           >
@@ -121,31 +121,31 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
       </div>
 
       {isLoading && items.length === 0 ? (
-        <div className="clipboard-bubble-loading">Loading...</div>
+        <div className="rv-clipboard-bubble-loading">Loading...</div>
       ) : error ? (
-        <div className="clipboard-bubble-error">{error}</div>
+        <div className="rv-clipboard-bubble-error">{error}</div>
       ) : items.length === 0 ? (
-        <div className="clipboard-bubble-empty">No clipboard history</div>
+        <div className="rv-clipboard-bubble-empty">No clipboard history</div>
       ) : (
         <>
           {hasMore && (
-            <button className="clipboard-load-more" onClick={handleLoadMore}>
+            <button className="rv-clipboard-load-more" onClick={handleLoadMore}>
               See more ({total - items.length} remaining)
             </button>
           )}
 
-          <div ref={listRef} className="clipboard-list">
+          <div ref={listRef} className="rv-clipboard-list">
             {items.map((entry, index) => (
               <div
                 key={entry.id}
                 ref={index === selectedIndex ? selectedRef : null}
-                className={`clipboard-entry ${index === selectedIndex ? 'clipboard-entry-selected' : ''}`}
+                className={`rv-clipboard-entry ${index === selectedIndex ? 'rv-clipboard-entry-selected' : ''}`}
                 onClick={() => handleItemClick(entry)}
                 onMouseEnter={() => useClipboardStore.getState().setSelected(index)}
               >
-                <div className="clipboard-entry-preview">{entry.preview}</div>
-                <div className="clipboard-entry-meta">
-                  <span className="clipboard-entry-date">
+                <div className="rv-clipboard-entry-preview">{entry.preview}</div>
+                <div className="rv-clipboard-entry-meta">
+                  <span className="rv-clipboard-entry-date">
                     {formatDate(entry.last_used_at)}
                   </span>
                 </div>
@@ -153,7 +153,7 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
             ))}
           </div>
 
-          <div className="clipboard-hint">
+          <div className="rv-clipboard-hint">
             <span className="material-symbols-outlined">keyboard</span>
             <span>↑↓ to navigate, Enter to copy, Esc to close</span>
           </div>
