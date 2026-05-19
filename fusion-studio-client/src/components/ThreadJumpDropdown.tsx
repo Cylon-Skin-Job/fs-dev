@@ -5,37 +5,12 @@ import { usePanelStore } from '../state/panelStore';
 import { threadLinkIntent } from '../lib/thread-link-intent';
 import { useResolvedHarnessResolver } from '../config/harness';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
-import type { Scope, Thread } from '../types';
+import type { Scope } from '../types';
+import { formatThreadDisplayName, reorderWithSecondary } from './sidebar/threadOrderUtils';
 
 interface ThreadJumpDropdownProps {
   panel: string;
   scope: Scope;
-}
-
-function formatThreadName(thread: Thread): string {
-  if (thread.entry?.name) return thread.entry.name;
-  return thread.threadId.replace(/-\d{3}$/, '');
-}
-
-/**
- * SECONDARY_CHAT_SPEC §4: same reorder as Sidebar — secondary's thread
- * goes to position 2 (right after primary's active thread).
- */
-function reorderWithSecondary(
-  threads: Thread[],
-  primaryId: string | null,
-  secondaryId: string | null,
-): Thread[] {
-  if (!threads || threads.length === 0) return threads;
-  if (!secondaryId) return threads;
-  const secondary = threads.find((t) => t.threadId === secondaryId);
-  if (!secondary) return threads;
-  const remainder = threads.filter((t) => t.threadId !== secondaryId);
-  const primaryIdx = remainder.findIndex((t) => t.threadId === primaryId);
-  const insertAt = primaryIdx >= 0 ? primaryIdx + 1 : 0;
-  const out = [...remainder];
-  out.splice(insertAt, 0, secondary);
-  return out;
 }
 
 export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
@@ -130,7 +105,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                 <span className="material-symbols-outlined rv-thread-row-icon">
                   {resolveHarness(t.entry?.harnessId)?.materialIcon ?? 'help'}
                 </span>
-                {formatThreadName(t)}
+                {formatThreadDisplayName(t)}
               </span>
               <button
                 className="rv-thread-menu-btn"
