@@ -421,7 +421,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
         </div>
       </div>
       )}
-      <div className="rv-chat-messages" ref={chatContainerRef} style={{ position: 'relative' }}>
+      <div className="rv-chat-messages" ref={chatContainerRef}>
         {connectingHarnessId ? (
           <ConnectingOverlay harnessName={connectingHarness?.name} />
         ) : messages.length === 0 && !currentTurn && !showOrb ? (
@@ -485,7 +485,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           <div className="rv-context-usage-bar-standalone">
             <div
               className="rv-context-usage-fill"
-              style={{ width: `${Math.min(contextUsage * 100, 100)}%` }}
+              style={{ '--ctx-fill': `${Math.min(contextUsage * 100, 100)}%` } as React.CSSProperties}
             />
           </div>
           <span className="rv-context-usage-text">{Math.round(contextUsage * 100)}%</span>

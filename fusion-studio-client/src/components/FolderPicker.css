@@ -92,6 +92,7 @@
   align-items: center;
   gap: 8px;
   padding: 5px 12px;
+  padding-left: var(--tree-indent, 12px);
   cursor: pointer;
   font-size: var(--file-tree-font-size, 0.85rem);
   color: var(--nav-text-color, var(--text-primary, #e0e0e0));
@@ -152,6 +153,7 @@
   font-size: var(--file-tree-font-size, 0.85rem);
   color: var(--text-dim, #666);
   padding: 4px 12px;
+  padding-left: var(--tree-indent, 12px);
 }
 
 /* Status messages */

@@ -149,7 +149,7 @@ function renderFullContent(content: string): ReactElement {
           );
         }
         if (line.trim() === '') {
-          return <div key={i} style={{ height: '8px' }} />;
+          return <div key={i} className="rv-wf-step-spacer" />;
         }
         return <div key={i} className="rv-wf-text-line">{line}</div>;
       })}

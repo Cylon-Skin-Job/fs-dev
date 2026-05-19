@@ -544,6 +544,14 @@
   gap: 2px;
 }
 
+.rv-fusion-detail-meta-item--spaced {
+  margin-top: var(--space-md, 12px);
+}
+
+.rv-fusion-detail-meta-item--tight {
+  margin-top: var(--space-xs, 4px);
+}
+
 .rv-fusion-detail-meta-label {
   font-size: 0.625rem;
   font-weight: 600;

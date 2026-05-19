@@ -718,6 +718,24 @@
   background: var(--accent-dim, var(--theme-primary));
 }
 
+/* ── Shared utility classes ── */
+.rv-dim-label {
+  color: var(--text-dim);
+}
+
+.rv-wf-step-spacer {
+  height: 8px;
+}
+
+.rv-content-placeholder-heading {
+  color: var(--text-bright);
+  margin-bottom: var(--space-lg, 16px);
+}
+
+.rv-content-placeholder-body {
+  color: var(--text-dim);
+}
+
 /* ── Tool-call block (ToolCallBlock.tsx) ── */
 .rv-tool-header-btn {
   display: flex;

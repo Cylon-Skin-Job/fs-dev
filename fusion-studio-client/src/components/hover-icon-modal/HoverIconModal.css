@@ -59,6 +59,8 @@
 /* Base Modal Container */
 .rv-hover-icon-modal {
   position: fixed;
+  left: var(--modal-left);
+  bottom: var(--modal-bottom);
   width: var(--hover-modal-width);
   max-height: var(--hover-modal-max-height);
   min-height: var(--hover-modal-min-height);
@@ -252,6 +254,8 @@
 /* Preview Popover */
 .rv-hover-icon-modal-preview {
   position: fixed;
+  left: var(--modal-left);
+  top: var(--modal-top);
   width: var(--hover-modal-preview-width);
   max-height: var(--hover-modal-preview-max-height);
   background: var(--hover-modal-bg);

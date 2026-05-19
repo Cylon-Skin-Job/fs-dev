@@ -66,11 +66,7 @@ export function HoverIconModalContainer({
     <div
       ref={popoverRef}
       className={`rv-hover-icon-modal ${isOpen ? 'open' : ''} ${state === 'LOCKED' ? 'locked' : ''} ${className}`}
-      style={{
-        position: 'fixed',
-        left: position.left,
-        bottom: position.bottom,
-      }}
+      style={{ '--modal-left': position.left, '--modal-bottom': position.bottom } as React.CSSProperties}
       {...popoverProps}
     >
       {children}
@@ -217,11 +213,7 @@ export function HoverIconModalPreview({ src, label, position }: HoverIconModalPr
   return (
     <div
       className="rv-hover-icon-modal-preview"
-      style={{
-        position: 'fixed',
-        left: position.left,
-        top: position.top,
-      }}
+      style={{ '--modal-left': position.left, '--modal-top': position.top } as React.CSSProperties}
     >
       <img src={src} alt={label} />
       <div className="rv-hover-icon-modal-preview-label">{label}</div>

@@ -70,7 +70,7 @@ function TicketDetail({ ticket }: { ticket: Ticket }) {
   const setActive = useTicketStore((s) => s.setActiveTicket);
 
   return (
-    <div className="rv-ticket-detail" style={{ position: 'relative' }}>
+    <div className="rv-ticket-detail">
       <button className="rv-ticket-detail-close" onClick={() => setActive(null)}>
         <span className="material-symbols-outlined">close</span>
       </button>
@@ -152,7 +152,7 @@ export function TicketBoard() {
   if (!loaded) {
     return (
       <div className="rv-ticket-board-loading">
-        <span style={{ color: 'var(--text-dim)' }}>Loading tickets...</span>
+        <span className="rv-dim-label">Loading tickets...</span>
       </div>
     );
   }

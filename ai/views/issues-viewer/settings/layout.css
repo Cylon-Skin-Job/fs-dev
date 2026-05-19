@@ -150,6 +150,7 @@
   flex-direction: column;
   background: var(--bg-solid, #0d0d0d);
   overflow: hidden;
+  position: relative;
 }
 
 .rv-ticket-detail-header {

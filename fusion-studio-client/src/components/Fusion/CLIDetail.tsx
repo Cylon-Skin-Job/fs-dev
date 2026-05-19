@@ -32,7 +32,7 @@ export function CLIDetail({ cli }: { cli: CliItem }) {
       </div>
 
       {cli.pricing_url && (
-        <div className="rv-fusion-detail-meta-item" style={{ marginTop: '12px' }}>
+        <div className="rv-fusion-detail-meta-item rv-fusion-detail-meta-item--spaced">
           <span className="rv-fusion-detail-meta-label">Pricing</span>
           <a href={cli.pricing_url} target="_blank" rel="noopener noreferrer" className="rv-fusion-detail-meta-value highlight">
             View plans →
@@ -41,7 +41,7 @@ export function CLIDetail({ cli }: { cli: CliItem }) {
       )}
 
       {cli.docs_url && (
-        <div className="rv-fusion-detail-meta-item" style={{ marginTop: '4px' }}>
+        <div className="rv-fusion-detail-meta-item rv-fusion-detail-meta-item--tight">
           <span className="rv-fusion-detail-meta-label">Docs</span>
           <a href={cli.docs_url} target="_blank" rel="noopener noreferrer" className="rv-fusion-detail-meta-value highlight">
             Documentation →

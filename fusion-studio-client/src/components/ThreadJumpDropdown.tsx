@@ -119,15 +119,10 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
             <div
               key={t.threadId}
               role="menuitem"
-              className={rowClass}
+              className={`${rowClass} rv-thread-jump-row`}
               aria-current={active ? 'true' : undefined}
               onClick={() => handleSelect(t.threadId)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                ...(resolveCliAccent(t.entry?.harnessId) || {}),
-              }}
+              style={resolveCliAccent(t.entry?.harnessId) || undefined}
             >
               <span>
                 <span className="material-symbols-outlined rv-thread-row-icon">
@@ -142,7 +137,6 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                   setMenuOpenId(menuOpenId === t.threadId ? null : t.threadId);
                 }}
                 title="More options"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}
               >
                 ⋮
               </button>

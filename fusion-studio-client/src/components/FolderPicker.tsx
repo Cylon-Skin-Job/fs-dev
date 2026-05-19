@@ -110,7 +110,7 @@ function FolderRow({
     <div className="rv-fp-node">
       <div
         className={`rv-fp-tree-item ${isSelected ? 'selected' : ''}`}
-        style={{ paddingLeft }}
+        style={{ '--tree-indent': paddingLeft } as React.CSSProperties}
         onClick={handleClick}
       >
         <span className={`material-symbols-outlined ${iconClass}`}>{icon}</span>
@@ -137,7 +137,7 @@ function FolderRow({
       {isExpanded && children && children.length === 0 && (
         <div
           className="rv-fp-tree-empty"
-          style={{ paddingLeft: `${0.75 + (depth + 1) * 1.25}rem` }}
+          style={{ '--tree-indent': `${0.75 + (depth + 1) * 1.25}rem` } as React.CSSProperties}
         >
           Empty folder
         </div>

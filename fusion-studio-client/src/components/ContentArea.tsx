@@ -48,10 +48,10 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
         <StaticComponent />
       ) : (
         <div className="rv-content-placeholder">
-          <h3 style={{ color: 'var(--text-bright)', marginBottom: '16px' }}>
+          <h3 className="rv-content-placeholder-heading">
             {config?.name || panel}
           </h3>
-          <p style={{ color: 'var(--text-dim)' }}>
+          <p className="rv-content-placeholder-body">
             Content area for {(config?.name || panel).toLowerCase()} panel.
           </p>
         </div>
