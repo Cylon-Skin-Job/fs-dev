@@ -13,20 +13,20 @@
  */
 
 /* ── Layout: viewer left, tree right ── */
-.file-explorer-layout {
+.rv-file-explorer-layout {
   display: flex;
   height: 100%;
   overflow: hidden;
 }
 
-.file-explorer-main {
+.rv-file-explorer-main {
   flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.file-explorer-empty {
+.rv-file-explorer-empty {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -36,14 +36,14 @@
   font-size: 13px;
 }
 
-.file-explorer-empty .material-symbols-outlined {
+.rv-file-explorer-empty .material-symbols-outlined {
   font-size: 32px;
   opacity: 0.4;
 }
 
 /* SECONDARY_CHAT_SPEC §7c: width bound to --right-col-w (set on .rv-panel
  * by PanelWrapper), so when the sticky chat resizes, the file tree follows. */
-.file-tree-sidebar {
+.rv-file-tree-sidebar {
   width: var(--right-col-w, 220px);
   flex-shrink: 0;
   /* No border-left — the absolutely-positioned .rv-resize-handle[data-pane="rightCol"]
@@ -52,19 +52,19 @@
   position: relative;
 }
 
-.file-explorer {
+.rv-file-explorer {
   padding: 0.5rem 0;
   height: 100%;
   overflow-y: auto;
 }
 
-.file-explorer-loading,
-.file-explorer-error {
+.rv-file-explorer-loading,
+.rv-file-explorer-error {
   padding: 1rem 0.75rem;
   font-size: 0.85rem;
 }
 
-.file-explorer-error {
+.rv-file-explorer-error {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -74,20 +74,20 @@
    FILE VIEWER - IDE Style
    ============================================ */
 
-.file-viewer {
+.rv-file-viewer {
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.file-viewer-content.loading {
+.rv-file-viewer-content.loading {
   opacity: 0.7;
   pointer-events: none;
 }
 
 /* Full top row: same rail as file tree + tab strip (nav padding / actions gutter included) */
-.file-viewer-header {
+.rv-file-viewer-header {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -97,7 +97,7 @@
   z-index: 0;
 }
 
-.file-viewer-header::after {
+.rv-file-viewer-header::after {
   content: '';
   position: absolute;
   left: 0;
@@ -108,14 +108,14 @@
   pointer-events: none;
 }
 
-.file-viewer-nav {
+.rv-file-viewer-nav {
   display: flex;
   align-items: center;
   padding: 0 4px 0 6px;
   gap: 2px;
 }
 
-.file-viewer-nav .nav-btn {
+.rv-file-viewer-nav .rv-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,21 +127,21 @@
   transition: color 0.15s ease;
 }
 
-.file-viewer-nav .nav-btn:disabled {
+.rv-file-viewer-nav .rv-nav-btn:disabled {
   cursor: default;
 }
 
 /* Dim glyph only — never opacity on the button (would wash out background) */
-.file-viewer-nav .nav-btn:disabled .material-symbols-outlined {
+.rv-file-viewer-nav .rv-nav-btn:disabled .material-symbols-outlined {
   opacity: 0.35;
 }
 
-.file-viewer-nav .nav-btn .material-symbols-outlined {
+.rv-file-viewer-nav .rv-nav-btn .material-symbols-outlined {
   font-size: 20px;
 }
 
-/* Same rail as .file-viewer-header (redundant fill; keeps flex column explicit) */
-.file-viewer-tabs {
+/* Same rail as .rv-file-viewer-header (redundant fill; keeps flex column explicit) */
+.rv-file-viewer-tabs {
   display: flex;
   flex: 1;
   min-width: 0;
@@ -151,7 +151,7 @@
 }
 
 /* Tab borders (width + color) live in ai/settings/file-viewer.css. */
-.file-viewer-tab {
+.rv-file-viewer-tab {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -166,21 +166,21 @@
   z-index: 2;
 }
 
-.file-viewer-tab:not(.active) {
+.rv-file-viewer-tab:not(.active) {
   transform: translateY(-2px);
 }
 
-.file-viewer-tab.active {
+.rv-file-viewer-tab.active {
   transform: translateY(0);
   /* Render above the header ::after border so the active tab covers the line. */
   z-index: 3;
 }
 
-.file-viewer-tab .tab-icon {
+.rv-file-viewer-tab .rv-tab-icon {
   font-size: 16px;
 }
 
-.file-viewer-tab .tab-name {
+.rv-file-viewer-tab .rv-tab-name {
   font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
@@ -188,7 +188,7 @@
   flex: 1;
 }
 
-.file-viewer-tab .tab-close {
+.rv-file-viewer-tab .rv-tab-close {
   width: 16px;
   height: 16px;
   display: flex;
@@ -200,13 +200,13 @@
   pointer-events: none;
 }
 
-.file-viewer-tab:hover .tab-close,
-.file-viewer-tab:focus-within .tab-close {
+.rv-file-viewer-tab:hover .rv-tab-close,
+.rv-file-viewer-tab:focus-within .rv-tab-close {
   pointer-events: auto;
   opacity: 1;
 }
 
-.file-viewer-info {
+.rv-file-viewer-info {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -216,18 +216,18 @@
   font-size: 12px;
 }
 
-.file-viewer-info .info-item {
+.rv-file-viewer-info .info-item {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.file-viewer-info .info-item .material-symbols-outlined {
+.rv-file-viewer-info .info-item .material-symbols-outlined {
   font-size: 14px;
 }
 
 /* Fills tab under header + info bar; inner .code-content / markdown scrolls (see document.css) */
-.file-viewer-content {
+.rv-file-viewer-content {
   flex: 1;
   min-height: 0;
   display: flex;
