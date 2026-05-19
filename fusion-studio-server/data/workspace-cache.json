@@ -339,7 +339,7 @@
         }
       }
     },
-    "_savedAt": 1779138996957
+    "_savedAt": 1779156776400
   },
   "fusion-home": {
     "projectRoot": null,
@@ -580,7 +580,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-16T21-49-15-280",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -722,7 +722,7 @@
         }
       }
     },
-    "_savedAt": 1779138996494
+    "_savedAt": 1779156775935
   },
   "karens-lab": {
     "projectRoot": null,
@@ -779,7 +779,7 @@
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "agents-viewer",
+    "currentPanel": "file-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -973,11 +973,11 @@
       },
       "file-viewer": {
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "widths": {
-          "leftSidebar": 339.16796875,
+          "leftSidebar": 302.3359375,
           "leftChat": 320,
           "rightSecondary": 300,
           "rightCol": 302.08984375
@@ -1065,7 +1065,7 @@
         }
       }
     },
-    "_savedAt": 1779114579751
+    "_savedAt": 1779156721464
   },
   "income-and-spending": {
     "projectRoot": null,
@@ -1118,6 +1118,6 @@
         }
       }
     },
-    "_savedAt": 1779138997469
+    "_savedAt": 1779156776739
   }
 }
