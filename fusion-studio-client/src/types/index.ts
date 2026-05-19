@@ -145,7 +145,9 @@ export type WebSocketMessageType =
   | 'screenshot:list'
   | 'screenshot:updated'
   | 'screenshot:missing'
-  | 'screenshot:error';
+  | 'screenshot:error'
+  // Calendar messages
+  | 'calendar:sync_complete';
 
 // Slider-only theme model — accent + 4 sliders.
 export interface ThemeEntry {

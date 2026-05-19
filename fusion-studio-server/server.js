@@ -220,6 +220,35 @@ app.get('/api/view-config', async (req, res) => {
   }
 });
 
+// Calendar API routes
+app.get('/api/calendar/calendars', async (req, res) => {
+  try {
+    const knex = require('./lib/db').getDb();
+    const rows = await knex('calendar_sources').orderBy('title');
+    res.json(rows);
+  } catch (err) {
+    console.error('[Calendar API] /calendars error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/calendar/events', async (req, res) => {
+  try {
+    const knex = require('./lib/db').getDb();
+    const { start, end, source } = req.query;
+    let q = knex('calendar_events')
+      .where('startDate', '<', Number(end))
+      .andWhere('endDate', '>', Number(start))
+      .orderBy('startDate');
+    if (source) q = q.andWhere('source', source);
+    const rows = await q;
+    res.json(rows);
+  } catch (err) {
+    console.error('[Calendar API] /events error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Fallback to index.html for SPA routing
 // Exclude /api/* and /material-symbols/* so backend routes and static assets
 // are not swallowed by the SPA fallback.

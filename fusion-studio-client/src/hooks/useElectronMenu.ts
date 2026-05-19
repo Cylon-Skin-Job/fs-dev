@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
+import { sendFusionMessage } from '../lib/ws-client';
 
 /**
  * Listens for menu actions from the Electron main process
@@ -18,6 +19,11 @@ export function useElectronMenu() {
         }
         case 'open-secrets-manager': {
           usePanelStore.getState().setSecretsManagerOpen(true);
+          break;
+        }
+        case 'sync-apple-calendar': {
+          console.log('[Menu] Sync Apple Calendar triggered');
+          sendFusionMessage({ type: 'calendar:force_sync', source: 'apple' });
           break;
         }
       }

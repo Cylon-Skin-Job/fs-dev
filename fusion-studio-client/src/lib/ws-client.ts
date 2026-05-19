@@ -16,6 +16,7 @@ import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
 import { handleScreenshotMessage } from './ws/screenshot-handlers';
 import { handleRecentDocsMessage } from './ws/recent-docs-handlers';
+import { handleCalendarMessage } from './ws/calendar-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
@@ -138,6 +139,7 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleThemeMessage(msg)) return;
   if (handleScreenshotMessage(msg)) return;
   if (handleRecentDocsMessage(msg)) return;
+  if (handleCalendarMessage(msg)) return;
 
   // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {

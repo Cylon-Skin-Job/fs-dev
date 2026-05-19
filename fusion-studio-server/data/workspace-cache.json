@@ -165,7 +165,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -197,7 +197,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -229,7 +229,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -261,7 +261,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -293,7 +293,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -325,7 +325,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-10T14-51-07-416",
+        "currentThreadId": "2026-05-18T19-12-39-646",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -339,7 +339,7 @@
         }
       }
     },
-    "_savedAt": 1779156776400
+    "_savedAt": 1779224036240
   },
   "fusion-home": {
     "projectRoot": null,
@@ -542,13 +542,13 @@
         },
         "popup": {
           "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
+          "x": 1394,
+          "y": 431,
+          "width": 400,
+          "height": 700,
           "threadId": null
         },
-        "currentThreadId": "2026-05-16T21-49-15-280",
+        "currentThreadId": "2026-05-19T13-26-34-682",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -574,13 +574,13 @@
         },
         "popup": {
           "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
+          "x": 1394,
+          "y": 431,
+          "width": 400,
+          "height": 700,
           "threadId": null
         },
-        "currentThreadId": "2026-05-18T19-12-39-646",
+        "currentThreadId": "2026-05-19T13-26-34-682",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -606,13 +606,13 @@
         },
         "popup": {
           "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
+          "x": 1394,
+          "y": 431,
+          "width": 400,
+          "height": 700,
           "threadId": null
         },
-        "currentThreadId": "2026-05-16T21-49-15-280",
+        "currentThreadId": "2026-05-19T13-26-34-682",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -638,13 +638,13 @@
         },
         "popup": {
           "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
+          "x": 1394,
+          "y": 431,
+          "width": 400,
+          "height": 700,
           "threadId": null
         },
-        "currentThreadId": "2026-05-16T21-49-15-280",
+        "currentThreadId": "2026-05-19T13-26-34-682",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -673,10 +673,10 @@
           "x": 1092,
           "y": 143,
           "width": 486,
-          "height": 520,
+          "height": 700,
           "threadId": null
         },
-        "currentThreadId": "2026-05-16T21-49-15-280",
+        "currentThreadId": "2026-05-19T13-26-34-682",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -722,7 +722,7 @@
         }
       }
     },
-    "_savedAt": 1779156775935
+    "_savedAt": 1779224035755
   },
   "karens-lab": {
     "projectRoot": null,
@@ -779,7 +779,7 @@
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "file-viewer",
+    "currentPanel": "wiki-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -1065,7 +1065,7 @@
         }
       }
     },
-    "_savedAt": 1779156721464
+    "_savedAt": 1779222684694
   },
   "income-and-spending": {
     "projectRoot": null,
@@ -1118,6 +1118,59 @@
         }
       }
     },
-    "_savedAt": 1779156776739
+    "_savedAt": 1779222681282
+  },
+  "solobooks": {
+    "projectRoot": null,
+    "currentPanel": "file-viewer",
+    "panels": {},
+    "projectChats": {},
+    "threads": {
+      "project": [],
+      "view": []
+    },
+    "currentThreadIds": {
+      "project": null,
+      "view": null
+    },
+    "currentScope": null,
+    "wireReady": false,
+    "contextUsage": 0,
+    "panelConfigs": [],
+    "viewStates": {
+      "file-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-16T21-49-15-280",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        }
+      }
+    },
+    "_savedAt": 1779224032358
   }
 }

@@ -102,6 +102,10 @@ async function start({ server, sessions, getProjectRoot }) {
   const { createHarnessBroadcaster } = require('./ws/harness-broadcaster');
   createHarnessBroadcaster({ getAllClients });
 
+  // 3.7c-alt. Calendar broadcaster — bus → WebSocket for calendar sync events
+  const { createCalendarBroadcaster } = require('./ws/calendar-broadcaster');
+  createCalendarBroadcaster({ getAllClients });
+
   // 3.7c. Theme handlers — need getAllClients for broadcast, created here
   // alongside the other getAllClients consumers.
   const themeHandlers = createThemeHandlers({ getAllClients, getProjectRoot });
@@ -116,6 +120,11 @@ async function start({ server, sessions, getProjectRoot }) {
   const clipboardHandlers = createClipboardHandlers({ getAllClients });
   const recentDocsHandlers = createRecentDocsHandlers({ getAllClients });
   const screenshotHandlers = createScreenshotHandlers({ getAllClients });
+
+  // 3.7f. Calendar adapters — start after DB init so migrations have run
+  const calendar = require('./calendar');
+  calendar.start();
+
   const harnessStatusService = require('./harness/harness-status-service');
   harnessStatusService.revalidateAll().catch((err) => {
     console.error('[Startup] harness revalidateAll failed:', err.message);
