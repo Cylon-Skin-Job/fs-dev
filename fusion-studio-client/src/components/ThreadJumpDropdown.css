@@ -1,0 +1,11 @@
+/* ThreadJumpDropdown — position + item color override */
+
+.rv-thread-dropdown {
+  top: calc(var(--chat-header-height, 40px) - 4px);
+  right: 15px;
+}
+
+/* Threads menu uses full-white items instead of the chrome-accent color. */
+.rv-thread-dropdown .rv-dropdown-item {
+  color: var(--text-white, #fff);
+}

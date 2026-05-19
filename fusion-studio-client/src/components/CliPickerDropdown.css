@@ -1,0 +1,18 @@
+/* CLI Picker Dropdown — position + per-row CLI accent overrides */
+
+.rv-cli-picker-dropdown {
+  top: calc(var(--chat-header-height, 40px) - 4px);
+  /* Anchored roughly under the playlist_add button: subject button (28px) + gap (4px) + right-edge padding (15px). */
+  right: calc(15px + 28px + var(--space-xs, 4px));
+}
+
+/* Each row carries its CLI's accent as `--cli-accent`.
+ * Icon colors + hover tint pick that up so rows feel identifiably themed. */
+.rv-cli-picker-dropdown .rv-dropdown-item .material-symbols-outlined {
+  color: var(--cli-accent, var(--text-primary));
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.rv-cli-picker-dropdown .rv-dropdown-item:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--cli-accent, #ffffff) 10%, transparent);
+}

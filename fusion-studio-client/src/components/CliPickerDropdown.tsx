@@ -1,3 +1,5 @@
+import '../styles/dropdown.css';
+import './CliPickerDropdown.css';
 import { usePanelStore } from '../state/panelStore';
 import { useResolvedCliList } from '../config/harness';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';

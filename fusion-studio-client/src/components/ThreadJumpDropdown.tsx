@@ -1,3 +1,5 @@
+import '../styles/dropdown.css';
+import './ThreadJumpDropdown.css';
 import { useEffect, useState } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { threadLinkIntent } from '../lib/thread-link-intent';

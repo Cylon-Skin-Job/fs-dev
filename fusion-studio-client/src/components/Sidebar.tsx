@@ -1,3 +1,4 @@
+import '../styles/dropdown.css';
 import './Sidebar.css';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { usePanelStore } from '../state/panelStore';

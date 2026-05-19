@@ -1,3 +1,4 @@
+import '../styles/dropdown.css';
 import './ChatArea.css';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../state/panelStore';
