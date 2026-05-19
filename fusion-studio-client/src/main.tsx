@@ -1,3 +1,9 @@
+// gray-matter (used by front-matter.ts) calls Buffer.from() internally.
+// Electron renderer runs without nodeIntegration, so Buffer is not a global.
+// Polyfill it from the 'buffer' package before any other imports.
+import { Buffer } from 'buffer';
+(globalThis as unknown as Record<string, unknown>).Buffer = Buffer;
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';

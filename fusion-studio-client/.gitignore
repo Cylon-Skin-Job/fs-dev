@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Bundled Pandoc binary (276MB, install via: brew install pandoc + copy to electron/resources/)
+electron/resources/pandoc/

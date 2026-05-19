@@ -34,6 +34,10 @@ const spreadsheetSubmodule = require('./export/submodules/spreadsheets/index.cjs
 
 let mainWindow;
 
+const RENDERER_LOG = path.join(os.tmpdir(), 'electron-renderer.log');
+// Clear on each launch so the log stays fresh
+try { fs.writeFileSync(RENDERER_LOG, `--- renderer log started ${new Date().toISOString()} ---\n`); } catch {}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
@@ -46,6 +50,15 @@ function createWindow() {
   });
 
   mainWindow.loadURL('http://localhost:3001');
+
+  // Pipe renderer console → log file so we can debug without opening DevTools
+  mainWindow.webContents.on('console-message', (_e, level, message, line, sourceId) => {
+    const LEVELS = ['verbose', 'info', 'warn', 'error'];
+    const tag = LEVELS[level] ?? 'log';
+    const entry = `[renderer:${tag}] ${message}  (${sourceId}:${line})\n`;
+    process.stdout.write(entry);
+    try { fs.appendFileSync(RENDERER_LOG, entry); } catch {}
+  });
 
   // Open DevTools in development
   // mainWindow.webContents.openDevTools();
@@ -134,6 +147,15 @@ function buildMenu() {
           accelerator: 'CmdOrCtrl+Shift+S',
           click: () => sendMenuAction({ type: 'open-secrets-manager' }),
         },
+        ...(isMac
+          ? [
+              {
+                label: 'Sync Apple Calendar',
+                accelerator: 'CmdOrCtrl+Shift+C',
+                click: () => sendMenuAction({ type: 'sync-apple-calendar' }),
+              },
+            ]
+          : []),
       ],
     },
 
@@ -288,7 +310,7 @@ ipcMain.handle('export-document', async (_event, payload) => {
       const safeName = sanitizeFilename(filename);
       return {
         success: true,
-        base64: buffer.toString('base64'),
+        base64: Buffer.from(buffer).toString('base64'),
         filename: `${safeName}.pdf`,
       };
     } catch (err) {
