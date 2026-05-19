@@ -4,6 +4,7 @@
  * See SECRETS_MANAGER_SPEC.md §5a.
  */
 
+import './secrets.css';
 import { useRef, useEffect } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import SecretsManager from './SecretsManager';

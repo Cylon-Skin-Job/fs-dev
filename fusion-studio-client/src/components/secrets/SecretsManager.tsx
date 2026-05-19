@@ -4,6 +4,7 @@
  * See SECRETS_MANAGER_SPEC.md §5b.
  */
 
+import './secrets.css';
 import ApiKeysPanel from './api-keys/ApiKeysPanel';
 
 interface Props { onClose: () => void; }

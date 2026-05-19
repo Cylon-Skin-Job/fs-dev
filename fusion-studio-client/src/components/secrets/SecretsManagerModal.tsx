@@ -1,3 +1,4 @@
+import './secrets.css';
 import { usePanelStore } from '../../state/panelStore';
 import SecretsManager from './SecretsManager';
 
