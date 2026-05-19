@@ -5,6 +5,7 @@
  * Used by both LiveSegmentRenderer and InstantSegmentRenderer.
  */
 
+import './ToolsPanel.css';
 import type { SegmentType } from '../types';
 import {
   getSegmentVisual,

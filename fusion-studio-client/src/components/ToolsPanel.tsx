@@ -1,3 +1,4 @@
+import './ToolsPanel.css';
 import { usePanelStore } from '../state/panelStore';
 import { useWorkspaceStore } from '../state/workspaceStore';
 
