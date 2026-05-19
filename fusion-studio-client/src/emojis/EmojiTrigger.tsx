@@ -10,6 +10,7 @@ import {
   HoverIconModalContainer,
   HoverIconModalList,
 } from '../components/hover-icon-modal';
+import './EmojiTrigger.css';
 
 interface EmojiItem {
   emoji: string;
@@ -360,48 +361,19 @@ export function EmojiTrigger({ onInsert }: EmojiTriggerProps) {
         popoverProps={popoverProps}
       >
         <HoverIconModalList listRef={listRef}>
-          <div style={{ padding: '4px', width: '580px' }}>
+          <div className="rv-emoji-picker-panel">
             {Object.entries(groupedEmojis).map(([category, items]) => (
-              <div key={category} style={{ marginBottom: '12px' }}>
-                <div
-                  style={{
-                    fontSize: '10px',
-                    fontWeight: 600,
-                    color: 'var(--text-dim)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    marginBottom: '4px',
-                    paddingLeft: '4px',
-                  }}
-                >
+              <div key={category} className="rv-emoji-category-block">
+                <div className="rv-emoji-category-label">
                   {category}
                 </div>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(20, 28px)',
-                    gap: '0',
-                  }}
-                >
+                <div className="rv-emoji-grid">
                   {items.map((item) => (
                     <button
                       key={item.name}
-                      className={item.index === selectedIndex ? 'selected' : ''}
+                      className={`rv-emoji-item${item.index === selectedIndex ? ' selected' : ''}`}
                       onClick={() => handleClick(item.index)}
                       onMouseEnter={() => setSelectedIndex(item.index)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '28px',
-                        height: '28px',
-                        fontSize: '18px',
-                        background: item.index === selectedIndex ? 'var(--hover-modal-row-hover-bg)' : 'transparent',
-                        border: '1px solid transparent',
-                        borderRadius: '3px',
-                        cursor: 'pointer',
-                        padding: 0,
-                      }}
                       title={item.name}
                     >
                       {item.emoji}

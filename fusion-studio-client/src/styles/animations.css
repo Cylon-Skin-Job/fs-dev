@@ -30,6 +30,7 @@
 
 .rv-tool-fade-in {
   animation: tool-fade-in 200ms ease-in forwards;
+  margin-bottom: var(--space-md, 12px);
 }
 
 /* Shimmer for thinking */

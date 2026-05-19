@@ -79,6 +79,7 @@
   border-radius: var(--radius-sm, 2px);
   transition: height 0.05s ease-out;
   min-height: 4px;
+  height: var(--kitt-h, 4px);
 }
 
 /* Content area for other states */

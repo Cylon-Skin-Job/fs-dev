@@ -52,48 +52,30 @@ export function ToolCallBlock({
   const hasContent = !!children;
 
   return (
-    <div className="rv-tool-fade-in" style={{ marginBottom: '12px' }}>
+    <div className="rv-tool-fade-in">
       {/* Header */}
       <button
         type="button"
         onClick={() => hasContent && onToggle()}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '4px 0',
-          border: 'none',
-          background: 'none',
-          cursor: hasContent ? 'pointer' : 'default',
-          color: labelColor,
-          font: 'inherit',
-          opacity: 1,
-        }}
+        className="rv-tool-header-btn"
+        data-interactive={hasContent ? 'true' : undefined}
+        data-expanded={expanded ? 'true' : undefined}
+        style={{ '--tool-label-color': labelColor } as React.CSSProperties}
       >
         {icon && (
           <span
-            className="material-symbols-outlined"
-            style={{ fontSize: `${visual.iconSize}px`, color: iconColor }}
+            className="material-symbols-outlined rv-tool-icon"
+            style={{ '--tool-icon-size': `${visual.iconSize}px`, '--tool-icon-color': iconColor } as React.CSSProperties}
           >
             {icon}
           </span>
         )}
-        <span
-          className={shimmer ? 'rv-shimmer-text' : undefined}
-          style={{ fontSize: '13px', fontStyle: visual.labelStyle }}
+        <span className={`rv-tool-label${shimmer ? ' rv-shimmer-text' : ''}`}
+          style={{ '--tool-label-style': visual.labelStyle } as React.CSSProperties}
         >
           {label}
           {hasContent && (
-            <span
-              className="material-symbols-outlined"
-              style={{
-                fontSize: '16px',
-                verticalAlign: 'middle',
-                marginLeft: '2px',
-                transform: expanded ? 'rotate(0deg)' : 'rotate(-90deg)',
-                transition: `transform ${effectiveCollapse}ms ease`,
-              }}
-            >
+            <span className="material-symbols-outlined rv-tool-arrow-icon">
               arrow_drop_down
             </span>
           )}
@@ -103,26 +85,18 @@ export function ToolCallBlock({
       {/* Content area */}
       {hasContent && (
         <div
+          className="rv-tool-content-area"
+          data-expanded={expanded ? 'true' : undefined}
           style={{
-            marginLeft: '24px',
-            maxHeight: expanded ? '2000px' : '0px',
-            opacity: expanded ? 1 : 0,
-            overflow: 'hidden',
-            transition: `max-height ${effectiveCollapse}ms ease, opacity ${effectiveCollapse}ms ease`,
-            ...(visual.borderLeft
-              ? {
-                  borderLeft: `${visual.borderLeft.width} solid ${visual.borderLeft.color}`,
-                  paddingLeft: '12px',
-                }
-              : {}),
-          }}
+            '--tool-collapse-ms': `${effectiveCollapse}ms`,
+            '--tool-border-w': visual.borderLeft?.width ?? '0px',
+            '--tool-border-color': visual.borderLeft?.color ?? 'transparent',
+            '--tool-border-pl': visual.borderLeft ? '12px' : '0px',
+          } as React.CSSProperties}
         >
           <div
-            style={{
-              padding: '8px 0',
-              fontSize: '13px',
-              color: visual.contentColor,
-            }}
+            className="rv-tool-content-body"
+            style={{ '--tool-content-color': visual.contentColor } as React.CSSProperties}
           >
             {children}
           </div>

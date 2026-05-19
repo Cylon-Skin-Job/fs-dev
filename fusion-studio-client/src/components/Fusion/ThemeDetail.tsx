@@ -24,14 +24,14 @@ export function ColorPicker({ value, onChange, disabled }: { value: string; onCh
           <div
             key={s.hex}
             className={`rv-fusion-color-swatch ${value === s.hex ? 'active' : ''}`}
-            style={{ background: s.hex }}
+            style={{ '--swatch-hex': s.hex } as React.CSSProperties}
             title={s.name}
             onClick={() => onChange(s.hex)}
           />
         ))}
       </div>
       <div className="rv-fusion-color-current">
-        <div className="rv-fusion-color-current-dot" style={{ background: value }} />
+        <div className="rv-fusion-color-current-dot" style={{ '--current-color': value } as React.CSSProperties} />
         <input
           className="rv-fusion-color-hex-input"
           value={inputValue}
@@ -73,14 +73,17 @@ export function SystemThemeDetail({ theme, onUpdate }: {
           </div>
           <div className="rv-fusion-detail-meta-item">
             <span className="rv-fusion-detail-meta-label">Accent</span>
-            <span className="rv-fusion-detail-meta-value" style={{ color: theme.primary_color }}>
+            <span
+              className="rv-fusion-detail-meta-value rv-fusion-accent-swatch-value"
+              style={{ '--accent-preview': theme.primary_color } as React.CSSProperties}
+            >
               {theme.primary_color}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="rv-fusion-color-picker-label" style={{ marginTop: '24px' }}>Theme Preset</div>
+      <div className="rv-fusion-color-picker-label">Theme Preset</div>
       <div className="rv-fusion-preset-selector">
         {['dark', 'oled', 'medium', 'light'].map(p => (
           <button
@@ -161,7 +164,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
         disabled={workspace.themeState === 'inherited'}
       />
 
-      <div className="rv-fusion-detail-body" style={{ marginTop: '16px' }}>
+      <div className="rv-fusion-detail-body">
         <h2>Customizing by hand</h2>
         <p>
           You can edit the workspace CSS directly at: <code>ai/settings/themes.css</code>

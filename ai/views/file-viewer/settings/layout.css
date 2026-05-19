@@ -226,6 +226,12 @@
   font-size: 14px;
 }
 
+/* Empty folder / empty tree message label */
+.rv-file-tree-empty-label {
+  color: var(--text-dim);
+  font-size: var(--file-tree-font-size, 0.85rem);
+}
+
 /* Fills tab under header + info bar; inner .code-content / markdown scrolls (see document.css) */
 .rv-file-viewer-content {
   flex: 1;

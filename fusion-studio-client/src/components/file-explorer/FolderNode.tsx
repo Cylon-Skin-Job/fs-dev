@@ -119,7 +119,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
     <div className="folder-node">
       <div
         className={`rv-file-tree-item${showLoading ? ' disabled' : ''}`}
-        style={{ paddingLeft }}
+        style={{ '--tree-indent': paddingLeft } as React.CSSProperties}
         onClick={handleClick}
       >
         <span className={`material-symbols-outlined ${iconClass}`}>
@@ -135,10 +135,8 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
       )}
       {isExpanded && hasChildrenLoaded && children && children.length === 0 && (
         <div className="folder-children">
-          <div className="rv-file-tree-empty" style={{ paddingLeft: `${0.75 + (depth + 1) * 1.25}rem` }}>
-            <span style={{ color: 'var(--text-dim)', fontSize: 'var(--file-tree-font-size, 0.85rem)' }}>
-              Empty folder
-            </span>
+          <div className="rv-file-tree-empty" style={{ '--tree-indent': `${0.75 + (depth + 1) * 1.25}rem` } as React.CSSProperties}>
+            <span className="rv-file-tree-empty-label">Empty folder</span>
           </div>
         </div>
       )}

@@ -9,6 +9,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 0.75rem;
+  padding-left: var(--tree-indent, 0.75rem);
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -56,4 +57,5 @@
 
 .rv-file-tree-empty {
   padding: 0.4rem 0;
+  padding-left: var(--tree-indent, 0.75rem);
 }

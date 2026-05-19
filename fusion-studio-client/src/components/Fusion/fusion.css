@@ -562,6 +562,10 @@
   color: var(--accent-dim, #4fc3f7);
 }
 
+.rv-fusion-accent-swatch-value {
+  color: var(--accent-preview, var(--text-primary, #e0e0e0));
+}
+
 .rv-fusion-detail-meta-value code {
   background: rgba(255, 255, 255, 0.06);
   padding: 1px 5px;
@@ -629,7 +633,7 @@
 /* Wiki body */
 
 .rv-fusion-detail-body {
-  margin-top: 32px;
+  margin-top: var(--space-lg, 16px);
 }
 
 .rv-fusion-detail-body h2 {
@@ -932,6 +936,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-dim, #666);
+  margin-top: var(--space-xl, 24px);
   margin-bottom: 12px;
 }
 
@@ -948,6 +953,7 @@
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
+  background: var(--swatch-hex);
   transition: all 150ms;
 }
 
@@ -972,6 +978,7 @@
   border-radius: 50%;
   border: 1px solid var(--component-border, #282828);
   flex-shrink: 0;
+  background: var(--current-color);
 }
 
 .rv-fusion-color-hex-input {

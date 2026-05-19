@@ -718,6 +718,69 @@
   background: var(--accent-dim, var(--theme-primary));
 }
 
+/* ── Tool-call block (ToolCallBlock.tsx) ── */
+.rv-tool-header-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) 0;
+  border: none;
+  background: none;
+  cursor: default;
+  color: var(--tool-label-color, var(--text-dim));
+  font: inherit;
+  opacity: 1;
+}
+
+.rv-tool-header-btn[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.rv-tool-icon {
+  font-size: var(--tool-icon-size, 16px);
+  color: var(--tool-icon-color, currentColor);
+}
+
+.rv-tool-label {
+  font-size: 13px;
+  font-style: var(--tool-label-style, normal);
+}
+
+.rv-tool-arrow-icon {
+  font-size: 16px;
+  vertical-align: middle;
+  margin-left: 2px;
+  transform: rotate(-90deg);
+  transition: transform var(--tool-collapse-ms, 250ms) ease;
+}
+
+.rv-tool-header-btn[data-expanded="true"] .rv-tool-arrow-icon {
+  transform: rotate(0deg);
+}
+
+.rv-tool-content-area {
+  margin-left: var(--space-xl, 24px);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height var(--tool-collapse-ms, 250ms) ease,
+    opacity var(--tool-collapse-ms, 250ms) ease;
+  border-left: var(--tool-border-w, 0px) solid var(--tool-border-color, transparent);
+  padding-left: var(--tool-border-pl, 0px);
+}
+
+.rv-tool-content-area[data-expanded="true"] {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.rv-tool-content-body {
+  padding: var(--space-sm, 8px) 0;
+  font-size: 13px;
+  color: var(--tool-content-color, var(--text-dim));
+}
+
 /* Tools Panel */
 .rv-tools-panel {
   background: var(--panel-chrome-bg, #1a1a1a);
