@@ -1,3 +1,4 @@
+import './Sidebar.css';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { useFileStore } from '../state/fileStore';

@@ -1019,10 +1019,6 @@
   pointer-events: none;
 }
 
-.rv-sidebar--active {
-  /* no active-wire highlight — .rv-chat-area--inactive opacity dimming is enough */
-}
-
 /* SPEC-26c-2: rv-chat-area needs position context for absolute collapse button */
 .rv-chat-area {
   position: relative;
@@ -1076,36 +1072,16 @@
   z-index: 6;
 }
 
-/* SPEC-26c-2: collapsed rail — rv-sidebar/chat collapses to a 40px strip
+/* SPEC-26c-2: collapsed rail — chat collapses to a 40px strip
    with only an expand icon. Width comes from the inline CSS variable
    on .rv-panel (set to 40px when collapsed). Hide child content except
-   the expand affordance. */
-.rv-sidebar--collapsed,
+   the expand affordance. See Sidebar.css for .rv-sidebar--collapsed. */
 .rv-chat-area--collapsed {
   overflow: hidden;
 }
 
-.rv-sidebar--collapsed > *:not(.rv-collapse-rail-btn),
 .rv-chat-area--collapsed > *:not(.rv-collapse-rail-btn) {
   display: none;
-}
-
-.rv-collapse-rail-btn {
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--text-dim, #888);
-}
-
-.rv-collapse-rail-btn:hover {
-  color: var(--theme-primary, #888);
-}
-
-/* Anchor the absolute collapse button to the rv-sidebar */
-.rv-sidebar {
-  position: relative;
 }
 
 /* Chat area header — hosts expand button + new-chat/thread-jump dropdowns when rv-sidebar is collapsed */
@@ -1190,8 +1166,7 @@
   padding: 0;
 }
 
-.rv-chat-header-btn .material-symbols-outlined,
-.rv-collapse-btn .material-symbols-outlined {
+.rv-chat-header-btn .material-symbols-outlined {
   font-size: 20px;
 }
 
@@ -1243,15 +1218,6 @@
   background: color-mix(in srgb, var(--cli-accent, #ffffff) 10%, transparent);
 }
 
-/* When the dropdown lives inside the rv-sidebar (triggered from the rv-sidebar's
- * "New Thread" button), center it under the button instead. 16px rv-sidebar
- * padding + ~40px button height + 4px gap puts the top at ~60px. */
-.rv-sidebar .rv-cli-picker-dropdown {
-  top: 60px;
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-}
 
 .rv-thread-dropdown {
   top: calc(var(--chat-header-height, 40px) - 4px);
@@ -1313,25 +1279,6 @@
   padding: var(--space-sm, 8px) var(--space-md, 12px);
   color: var(--text-dim, rgba(255, 255, 255, 0.6));
   font-size: var(--font-sm, 12px);
-}
-
-.rv-collapse-btn {
-  position: absolute;
-  top: 7px;
-  right: -3px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--text-dim, #888);
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-.rv-collapse-btn:hover {
-  color: var(--theme-primary, #888);
 }
 
 /* Chat input - reduce gap to icons */

@@ -1,0 +1,69 @@
+/* SPEC-26c-2: Sidebar collapse/expand chrome */
+
+/* Anchor the absolute collapse button to the sidebar */
+.rv-sidebar {
+  position: relative;
+}
+
+.rv-sidebar--active {
+  /* no active-wire highlight — .rv-chat-area--inactive opacity dimming is enough */
+}
+
+/* SPEC-26c-2: collapsed rail — sidebar collapses to a 40px strip
+   with only an expand icon. Width comes from the inline CSS variable
+   on .rv-panel (set to 40px when collapsed). Hide child content except
+   the expand affordance. */
+.rv-sidebar--collapsed {
+  overflow: hidden;
+}
+
+.rv-sidebar--collapsed > *:not(.rv-collapse-rail-btn) {
+  display: none;
+}
+
+.rv-collapse-rail-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim, #888);
+}
+
+.rv-collapse-rail-btn:hover {
+  color: var(--theme-primary, #888);
+}
+
+/* Collapse button — absolutely positioned over the sidebar edge */
+.rv-collapse-btn {
+  position: absolute;
+  top: 7px;
+  right: -3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim, #888);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.rv-collapse-btn:hover {
+  color: var(--theme-primary, #888);
+}
+
+.rv-collapse-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* When the CLI picker dropdown is triggered from the sidebar's "New Thread"
+   button, center it under the button. 16px sidebar padding + ~40px button
+   height + 4px gap puts the top at ~60px. */
+.rv-sidebar .rv-cli-picker-dropdown {
+  top: 60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
