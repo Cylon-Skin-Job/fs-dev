@@ -5,9 +5,9 @@
  * switch for thread lifecycle (open-assistant / rename / delete /
  * copyLink / list), file explorer (tree / content / recent), panel
  * management (set_panel), wire protocol (initialize / prompt /
- * response), file operations (file:move), robin system panel
- * (fusion:*), clipboard (clipboard:*), and harness admin
- * (harness:get_mode / set_mode / rollback / list / check_install).
+ * response), robin system panel (fusion:*), clipboard (clipboard:*),
+ * and harness admin (harness:get_mode / set_mode / rollback / list /
+ * check_install).
  *
  * Also handles ws.on('close') for per-connection cleanup.
  *
@@ -17,25 +17,21 @@
  * Closes over ws, session, connectionId, projectRoot, and the
  * per-connection helpers.
  *
- * Architectural note: most of the handlers in this module are thin
- * delegations to already-extracted modules. The five harness:* admin
- * handlers keep their inline require() calls (only paid when the
- * rarely-used admin command arrives) rather than hoisting them to
- * module-level imports.
+ * Architectural note: most handlers are thin delegations to already-
+ * extracted modules. Thread, harness, workspace-request, and folder
+ * handlers are delegated via per-connection sub-factories.
  */
 
 const path = require('path');
-const fsPromises = require('fs').promises;
 const { v4: generateId } = require('uuid');
 
-const { ThreadWebSocketHandler } = require('../thread');
-const { spawnThreadWire } = require('../harness/compat');
-const { registerWire, getWireForThread, sendToWire } = require('../wire/process-manager');
+const ThreadWebSocketHandler = require('../thread');
+const { getWireForThread, sendToWire } = require('../wire/process-manager');
 const views = require('../views');
-const { moveFileWithArchive } = require('../file-ops');
-const { emit } = require('../event-bus');
-const { resolveViewState, writeViewStatePatch } = require('../view-state');
 const { redactWsMessage } = require('./redaction-map');
+const { createThreadWsHandlers } = require('./thread-ws-handlers');
+const { createHarnessWsHandlers } = require('./harness-ws-handlers');
+const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
 
 /**
  * Create a per-connection client message router.
@@ -78,6 +74,11 @@ function createClientMessageRouter({
   getScreenshotHandlers,
 }) {
 
+  // Per-connection sub-factories for larger handler groups
+  const threadHandlers = createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot });
+  const harnessHandlers = createHarnessWsHandlers({ ws });
+  const workspaceRequestHandlers = createWorkspaceRequestHandlers({ ws, session });
+
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
 
   async function handleClientMessage(message) {
@@ -90,110 +91,19 @@ function createClientMessageRouter({
       console.log('[WS →]:', JSON.stringify(safe).slice(0, 200));
       console.log('[WS] Message type:', clientMsg.type, 'Conn:', session.connectionId.slice(0,8), 'Has wire:', !!session.wire, 'Wire pid:', session.wire?.pid || 'none');
 
-      // Thread Management Messages
-      // --------------------------------------------------
-
       // Client logging - forward to server logs
       if (clientMsg.type === 'client_log') {
-        const { level, message, data, timestamp } = clientMsg;
+        const { level, message, data } = clientMsg;
         console.log(`[CLIENT ${level.toUpperCase()}] ${message}`, data || '');
         return;
       }
 
-      if (clientMsg.type === 'thread:open-assistant') {
-        // SPEC-26b: extract scope early; used throughout this case to route
-        // state access to the correct manager/thread. Defaults to 'view' for
-        // backward compat with pre-26b clients.
-        const scope = clientMsg.scope === 'project' ? 'project' : 'view';
-        console.log('[WS] thread:open-assistant received, threadId:', clientMsg.threadId?.slice(0, 8) || '(new)', 'scope:', scope);
+      // Thread Management Messages
+      // --------------------------------------------------
 
-        // Close current wire if one is open (switching threads or reopening).
-        // Single-wire model preserved in 26b — see SPEC. 26d adds dual-wire.
-        if (session.wire) {
-          console.log('[WS] Closing previous wire before opening assistant thread');
-          session.wire.kill('SIGTERM');
-          session.wire = null;
-        }
-
-        // Dispatcher: create or resume based on whether msg.threadId exists.
-        await ThreadWebSocketHandler.handleThreadOpenAssistant(ws, clientMsg);
-
-        // After the handler runs, the per-ws state should have the current
-        // thread ID for the requested scope.
-        const state = ThreadWebSocketHandler.getState(ws);
-        const threadId = state?.threadIds?.[scope];
-        if (!threadId) {
-          console.error(`[WS] No threadId for scope=${scope} after handleThreadOpenAssistant — dispatch failed`);
-          return;
-        }
-
-        console.log(`[WS] Spawning wire for ${scope} thread:`, threadId);
-        session.currentThreadId = threadId;
-        session.currentScope = scope;  // SPEC-26b: track which scope owns the active wire
-        // CHAT_SCOPE_SPEC: populate scope fields so resolveScope() can build the
-        // structured workspace string for every chat:* event this wire emits.
-        session.currentViewId = (scope === 'view') ? (state?.panelId || state?.viewName || null) : null;
-        const scopeContext = {
-          workspaceId: session.currentWorkspaceId,
-          viewId: session.currentViewId,
-        };
-        const wire = spawnThreadWire(threadId, session.projectRoot, scopeContext);
-        session.wire = wire;
-        registerWire(threadId, wire, session.projectRoot, ws, scopeContext);
-
-        console.log('[WS] Wire spawned, awaiting harness ready...');
-        await awaitHarnessReady(wire);
-        console.log('[WS] Setting up handlers...');
-        setupWireHandlers(wire, threadId);
-        session.wire = wire;  // Re-assign in case exit handler cleared it
-        console.log('[WS] Initializing wire...');
-        initializeWire(wire);
-        console.log('[WS] Wire initialization complete');
-
-        // Fire wire_ready for BOTH create and resume — this harmonizes the two
-        // paths (previously only thread:create sent it, which was a latent bug
-        // in the resume flow: the connecting overlay would not clear).
-        ws.send(JSON.stringify({ type: 'wire_ready', threadId, scope }));
-
-        // Register with the scope-appropriate ThreadManager
-        const manager = state?.threadManagers?.[scope];
-        if (manager) {
-          console.log('[WS] Registering with ThreadManager...');
-          await manager.openSession(threadId, wire, ws);
-          console.log('[WS] ThreadManager registration complete');
-        }
-        return;
-      }
-
-      if (clientMsg.type === 'thread:rename') {
-        await ThreadWebSocketHandler.handleThreadRename(ws, clientMsg);
-        return;
-      }
-
-      if (clientMsg.type === 'thread:delete') {
-        await ThreadWebSocketHandler.handleThreadDelete(ws, clientMsg);
-        return;
-      }
-
-      if (clientMsg.type === 'thread:copyLink') {
-        await ThreadWebSocketHandler.handleThreadCopyLink(ws, clientMsg);
-        return;
-      }
-
-      if (clientMsg.type === 'thread:touch') {
-        await ThreadWebSocketHandler.handleThreadTouch(ws, clientMsg);
-        return;
-      }
-
-      if (clientMsg.type === 'thread:search') {
-        await ThreadWebSocketHandler.handleThreadSearch(ws, clientMsg);
-        return;
-      }
-
-      if (clientMsg.type === 'thread:list') {
-        // SPEC-26b: forward optional scope field; sendThreadList defaults to 'view'.
-        await ThreadWebSocketHandler.sendThreadList(ws, clientMsg.scope);
-        return;
+      if (clientMsg.type.startsWith('thread:')) {
+        const handler = threadHandlers[clientMsg.type];
+        if (handler) { await handler(clientMsg); return; }
       }
 
       // File Explorer Messages
@@ -373,77 +283,6 @@ function createClientMessageRouter({
         return;
       }
 
-      // ---- View UI state (SPEC-26c-2) ----
-
-      if (clientMsg.type === 'state:get') {
-        try {
-          const projectRoot = session.projectRoot;
-          if (!projectRoot) {
-            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
-            return;
-          }
-          const state = await resolveViewState(projectRoot, clientMsg.view);
-          ws.send(JSON.stringify({
-            type: 'state:result',
-            view: clientMsg.view,
-            state,
-          }));
-        } catch (err) {
-          console.error('[state:get] failed:', err);
-          ws.send(JSON.stringify({ type: 'state:error', message: err.message }));
-        }
-        return;
-      }
-
-      if (clientMsg.type === 'state:set') {
-        try {
-          const projectRoot = session.projectRoot;
-          if (!projectRoot) {
-            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
-            return;
-          }
-          const merged = await writeViewStatePatch(projectRoot, clientMsg.view, clientMsg.state);
-          ws.send(JSON.stringify({
-            type: 'state:result',
-            view: clientMsg.view,
-            state: merged,
-          }));
-        } catch (err) {
-          console.error('[state:set] failed:', err);
-          ws.send(JSON.stringify({ type: 'state:error', message: err.message }));
-        }
-        return;
-      }
-
-      if (clientMsg.type === 'file:move') {
-        try {
-          const { source, target } = clientMsg;
-          const projectRoot = session.projectRoot;
-          if (!projectRoot) {
-            ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
-            return;
-          }
-          const result = moveFileWithArchive(source, target, projectRoot);
-          emit('system:file_deployed', {
-            source,
-            target,
-            archived: result.archived,
-            moved: result.moved,
-          });
-          ws.send(JSON.stringify({
-            type: 'file:moved',
-            ...result,
-          }));
-        } catch (err) {
-          console.error(`[FileMove] ${err.message}`);
-          ws.send(JSON.stringify({
-            type: 'file:move_error',
-            error: err.message,
-          }));
-        }
-        return;
-      }
-
       // ---- Robin system panel (delegated to lib/fusion/ws-handlers.js) ----
 
       if (clientMsg.type.startsWith('fusion:')) {
@@ -494,179 +333,20 @@ function createClientMessageRouter({
         }
       }
 
-      // ---- Harness mode management (Phase 2 compatibility layer) ----
+      // ---- Harness mode management + external CLI harnesses ----
 
-      if (clientMsg.type === 'harness:get_mode') {
-        const { getModeStatus } = require('../harness/compat');
-        const { getHarnessMode } = require('../harness/feature-flags');
-        ws.send(JSON.stringify({
-          type: 'harness:mode_status',
-          threadId: clientMsg.threadId,
-          data: getModeStatus(clientMsg.threadId),
-          mode: getHarnessMode(clientMsg.threadId)
-        }));
-        return;
-      }
-
-      if (clientMsg.type === 'harness:set_mode') {
-        const { setThreadMode } = require('../harness/feature-flags');
-        try {
-          setThreadMode(clientMsg.threadId, clientMsg.mode);
-          ws.send(JSON.stringify({
-            type: 'harness:mode_changed',
-            threadId: clientMsg.threadId,
-            mode: clientMsg.mode
-          }));
-          console.log(`[Harness] Mode changed for thread ${clientMsg.threadId?.slice(0, 8)}... to ${clientMsg.mode}`);
-        } catch (err) {
-          ws.send(JSON.stringify({
-            type: 'harness:mode_error',
-            threadId: clientMsg.threadId,
-            error: err.message
-          }));
-        }
-        return;
-      }
-
-      if (clientMsg.type === 'harness:rollback') {
-        const { emergencyRollback } = require('../harness/compat');
-        emergencyRollback();
-        ws.send(JSON.stringify({
-          type: 'harness:rollback_complete',
-          message: 'Emergency rollback triggered. All threads now use legacy mode.'
-        }));
-        console.log('[Harness] Emergency rollback triggered via WebSocket');
-        return;
-      }
-
-      // ---- External CLI harnesses (Phase 3) ----
-
-      if (clientMsg.type === 'harness:list') {
-        const { registry } = require('../harness');
-        try {
-          const harnesses = await registry.getAvailableHarnesses();
-          ws.send(JSON.stringify({
-            type: 'harness:list_result',
-            harnesses
-          }));
-        } catch (err) {
-          ws.send(JSON.stringify({
-            type: 'harness:list_error',
-            error: err.message
-          }));
-        }
-        return;
-      }
-
-      if (clientMsg.type === 'harness:check_install') {
-        const { registry } = require('../harness');
-        try {
-          const status = await registry.getHarnessStatus(clientMsg.harnessId);
-          ws.send(JSON.stringify({
-            type: 'harness:install_status',
-            harnessId: clientMsg.harnessId,
-            status
-          }));
-        } catch (err) {
-          ws.send(JSON.stringify({
-            type: 'harness:check_error',
-            harnessId: clientMsg.harnessId,
-            error: err.message
-          }));
-        }
-        return;
-      }
-
-      // ---- Folder picker (FOLDER_PICKER_SPEC) ----
-
-      if (clientMsg.type === 'folder:browse') {
-        const browsePath = clientMsg.path || '/';
-        try {
-          const resolved = path.resolve(browsePath);
-          const entries = await fsPromises.readdir(resolved, { withFileTypes: true });
-          const folders = [];
-
-          for (const entry of entries) {
-            if (!entry.isDirectory()) continue;
-            if (entry.name.startsWith('.')) continue;
-            if (entry.name === 'node_modules') continue;
-
-            const fullPath = path.join(resolved, entry.name);
-            let hasChildren = false;
-            let isRepo = false;
-            try {
-              const children = await fsPromises.readdir(fullPath);
-              hasChildren = children.length > 0;
-              isRepo = children.includes('.git');
-            } catch (_) {}
-
-            folders.push({ name: entry.name, path: fullPath, hasChildren, isRepo });
-          }
-
-          folders.sort((a, b) => a.name.localeCompare(b.name));
-          const parent = resolved === '/' ? null : path.dirname(resolved);
-          ws.send(JSON.stringify({
-            type: 'folder:browse_result',
-            path: resolved,
-            folders,
-            parent,
-            success: true,
-          }));
-        } catch (err) {
-          ws.send(JSON.stringify({
-            type: 'folder:browse_result',
-            path: browsePath,
-            success: false,
-            error: err.message,
-          }));
-        }
-        return;
-      }
-
-      // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
-
-      if (clientMsg.type === 'workspace:add_requested') {
-        if (typeof clientMsg.repoPath !== 'string' || clientMsg.repoPath.trim() === '') {
-          ws.send(JSON.stringify({
-            type: 'error',
-            message: 'workspace:add_requested requires repoPath',
-          }));
+      if (clientMsg.type.startsWith('harness:')) {
+        const handler = harnessHandlers[clientMsg.type];
+        if (handler) {
+          await handler(clientMsg);
           return;
         }
-        emit('workspace:add_requested', {
-          repoPath: clientMsg.repoPath,
-          connectionId: session.connectionId,
-        });
-        return;
       }
 
-      if (clientMsg.type === 'workspace:switch_requested') {
-        if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
-          ws.send(JSON.stringify({
-            type: 'error',
-            message: 'workspace:switch_requested requires workspaceId',
-          }));
-          return;
-        }
-        emit('workspace:switch_requested', {
-          workspaceId: clientMsg.workspaceId,
-          connectionId: session.connectionId,
-        });
-        return;
-      }
+      // ---- Workspace lifecycle, folder browse, view state, file:move ----
 
-      if (clientMsg.type === 'workspace:remove_requested') {
-        if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
-          ws.send(JSON.stringify({
-            type: 'error',
-            message: 'workspace:remove_requested requires workspaceId',
-          }));
-          return;
-        }
-        emit('workspace:remove_requested', {
-          workspaceId: clientMsg.workspaceId,
-          connectionId: session.connectionId,
-        });
+      if (workspaceRequestHandlers[clientMsg.type]) {
+        await workspaceRequestHandlers[clientMsg.type](clientMsg);
         return;
       }
 
