@@ -398,15 +398,7 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
                   onBlur={() => handleRenameSubmit(thread.threadId)}
                   autoFocus
                   onClick={(e) => e.stopPropagation()}
-                  style={{
-                    width: '100%',
-                    padding: '2px 4px',
-                    fontSize: '12px',
-                    border: '1px solid var(--theme-border)',
-                    borderRadius: '4px',
-                    background: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)'
-                  }}
+                  className="rv-thread-rename-input"
                 />
               ) : (
                 <>

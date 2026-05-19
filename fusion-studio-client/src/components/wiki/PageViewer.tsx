@@ -193,7 +193,7 @@ export function PageViewer() {
 
       {activeTab === 'runs' && (
         <div className="rv-wiki-page-content rv-document-surface">
-          <p style={{ color: 'var(--text-dim)' }}>Run history — coming soon</p>
+          <p className="rv-dim-label">Run history — coming soon</p>
         </div>
       )}
     </div>

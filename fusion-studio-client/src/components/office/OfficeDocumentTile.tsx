@@ -90,10 +90,7 @@ function MarkdownOfficeDocumentTile(props: OfficeDocumentTileProps) {
         <div className="rv-office-doc-tile-open">Open</div>
         <div
           className="rv-office-doc-tile-document rv-wiki-page-content"
-          style={{
-            transform: `scale(${scale})`,
-            width: `${BASE_DOCUMENT_WIDTH}px`,
-          }}
+          style={{ '--tile-scale': scale } as React.CSSProperties}
           dangerouslySetInnerHTML={{ __html: previewContent }}
         />
       </div>

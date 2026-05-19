@@ -208,7 +208,7 @@ export function FileViewer() {
         <div className="info-item">
           <span>{formatFilePath(selectedFile.path)}</span>
         </div>
-        <div className="info-item" style={{ marginLeft: 'auto' }}>
+        <div className="info-item rv-file-viewer-info-spacer">
           <span className="material-symbols-outlined">code</span>
           <span>{languageName}</span>
         </div>

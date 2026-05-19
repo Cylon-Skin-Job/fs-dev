@@ -899,6 +899,8 @@
 /* Clipboard popover bubble */
 .rv-clipboard-bubble {
   position: fixed;
+  left: var(--popup-left);
+  bottom: var(--popup-bottom);
   width: 600px;
   max-height: calc(100vh - 200px);
   background: var(--document-bg);

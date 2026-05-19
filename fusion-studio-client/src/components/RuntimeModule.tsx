@@ -50,9 +50,8 @@ export function RuntimeModule({ panel, config }: RuntimeModuleProps) {
   return (
     <div
       ref={containerRef}
-      className="runtime-module-container"
+      className="runtime-module-container rv-runtime-module-frame"
       data-panel={panel}
-      style={{ width: '100%', height: '100%', overflow: 'auto' }}
     />
   );
 }

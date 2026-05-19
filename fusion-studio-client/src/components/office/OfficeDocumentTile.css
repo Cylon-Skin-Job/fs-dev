@@ -95,6 +95,8 @@
   left: 0;
   transform-origin: top left;
   padding: 24px;
+  width: 800px;
+  transform: scale(var(--tile-scale, 1));
   background: #faf9f6;
   color: #1c1c1c;
   font-size: 14px;

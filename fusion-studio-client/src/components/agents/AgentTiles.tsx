@@ -243,7 +243,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
                   agentColor={agent.color}
                 />
               ) : (
-                <div style={{ color: 'var(--text-dim)', fontSize: '0.8125rem', fontStyle: 'italic', padding: '20px' }}>
+                <div className="rv-agent-tiles-placeholder">
                   {activeTab === 'runs' ? 'Select a run to view' :
                    activeTab === 'settings' ? '' :
                    'Select an item to view'}

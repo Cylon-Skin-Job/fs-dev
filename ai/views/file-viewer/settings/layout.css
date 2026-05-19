@@ -222,6 +222,10 @@
   gap: 4px;
 }
 
+.rv-file-viewer-info-spacer {
+  margin-left: auto;
+}
+
 .rv-file-viewer-info .info-item .material-symbols-outlined {
   font-size: 14px;
 }

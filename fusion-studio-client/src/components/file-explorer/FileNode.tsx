@@ -29,7 +29,7 @@ export function FileNode({ node, depth }: FileNodeProps) {
   return (
     <div
       className={`rv-file-tree-item${isThisFileLoading ? ' disabled' : ''}`}
-      style={{ paddingLeft }}
+      style={{ '--tree-indent': paddingLeft } as React.CSSProperties}
       onClick={handleClick}
     >
       <span className={`material-symbols-outlined rv-tree-icon icon-${icon}`}>

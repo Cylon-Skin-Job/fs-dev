@@ -49,7 +49,7 @@ export function FileExplorer() {
         )}
         {isLoading && rootNodes.length === 0 ? (
           <div className="rv-file-explorer-loading">
-            <span style={{ color: 'var(--text-dim)' }}>Loading files...</span>
+            <span className="rv-dim-label">Loading files...</span>
           </div>
         ) : (
           <div className="rv-file-explorer">

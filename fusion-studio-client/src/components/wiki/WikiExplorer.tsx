@@ -73,7 +73,7 @@ export function WikiExplorer() {
     return (
       <div className="rv-wiki-explorer">
         <div className="rv-wiki-loading">
-          <span style={{ color: 'var(--text-dim)' }}>Loading wiki...</span>
+          <span className="rv-dim-label">Loading wiki...</span>
         </div>
       </div>
     );

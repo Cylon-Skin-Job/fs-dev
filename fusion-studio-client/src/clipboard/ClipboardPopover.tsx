@@ -100,11 +100,7 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
     <div
       ref={ref}
       className={`rv-clipboard-bubble open ${state === 'LOCKED' ? 'locked' : ''}`}
-      style={{
-        position: 'fixed',
-        left: position.left,
-        bottom: position.bottom,
-      }}
+      style={{ '--popup-left': position.left, '--popup-bottom': position.bottom } as React.CSSProperties}
       {...popoverProps}
     >
       <div className="rv-clipboard-bubble-header">

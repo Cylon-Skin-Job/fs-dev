@@ -24,10 +24,7 @@ export function WorkspaceCarousel() {
     <div className="rv-workspace-carousel">
       <div
         className="rv-workspace-carousel-track"
-        style={{
-          transform: `translateX(${-activeIndex * 100}vw)`,
-          transition: 'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        }}
+        style={{ '--carousel-offset': `${-activeIndex * 100}vw` } as React.CSSProperties}
       >
         {sorted.map((w) => (
           <div key={w.id} className="rv-workspace-carousel-slide">

@@ -73,7 +73,7 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
             src={getPanelFileUrl(panel ?? '', `${folderPath ?? ''}/${name}`)}
             alt={name}
             loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            className="rv-doc-tile-img"
           />
         ) : (
           <CodeView content={previewContent} extension={ext} />
