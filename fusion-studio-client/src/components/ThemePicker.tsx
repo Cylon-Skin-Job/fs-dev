@@ -11,6 +11,7 @@
  * See THEME_PICKER_SPEC.md §3b.
  */
 
+import './ThemePicker.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { applyLivePreview, clearLivePreview } from '../lib/theme/live-preview';

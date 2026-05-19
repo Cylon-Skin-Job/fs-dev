@@ -5,6 +5,7 @@
  * See THEME_PICKER_SPEC.md §3a.
  */
 
+import './ThemePicker.css';
 import { useRef, useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import ThemePicker from './ThemePicker';

@@ -1,0 +1,569 @@
+/* ── Theme Picker (THEME_PICKER_SPEC) ─────────────────────────────────────── */
+
+.rv-theme-swatch-wrapper {
+  position: relative;
+}
+
+.rv-theme-swatch-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 120ms;
+}
+
+.rv-theme-swatch-btn:hover,
+.rv-theme-swatch-btn.open {
+  background: rgba(var(--theme-primary-rgb), 0.08);
+}
+
+.rv-theme-swatch-btn .material-symbols-outlined {
+  font-size: 22px;
+  color: var(--chrome-accent, var(--text-dim));
+  transition: transform 120ms;
+}
+
+.rv-theme-swatch-btn:hover .material-symbols-outlined,
+.rv-theme-swatch-btn.open .material-symbols-outlined {
+  transform: scale(1.1);
+}
+
+.rv-theme-picker-scrim {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: var(--z-overlay, 1000);
+}
+
+.rv-theme-picker-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  width: 480px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 16px;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  z-index: calc(var(--z-overlay, 1000) + 1);
+  animation: tp-modal-in 250ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes tp-modal-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.rv-theme-picker-arrow {
+  display: none;
+}
+
+/* ThemePicker inner */
+
+.rv-theme-picker {
+  padding: 14px;
+}
+
+.rv-tp-section {
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+}
+
+.rv-tp-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.rv-tp-divider {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  margin: 8px 0;
+}
+
+.rv-tp-group-header {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-subtle, rgba(255,255,255,0.4));
+  margin-bottom: 10px;
+}
+
+.rv-tp-mode-row {
+  display: flex;
+  gap: 0;
+}
+
+.rv-tp-mode-btn {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  background: var(--bg-secondary, #1a1a1a);
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  cursor: pointer;
+}
+
+.rv-tp-mode-btn:first-child {
+  border-radius: 6px 0 0 6px;
+  border-right: none;
+}
+
+.rv-tp-mode-btn:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.rv-tp-mode-btn--active {
+  /* Selected mode: filled with Accent. Text picks up --chrome-accent-fg so
+     it stays legible regardless of accent brightness. */
+  background: var(--accent-dim, var(--theme-primary, #00d4ff));
+  color: var(--chrome-accent-fg, var(--bg-solid, #000));
+}
+
+.rv-tp-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  margin-bottom: 8px;
+}
+
+/* Theme thumbnails */
+
+.rv-tp-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.rv-tp-thumb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: transform 120ms;
+}
+
+.rv-tp-thumb-card:hover {
+  transform: translateY(-1px);
+}
+
+.rv-tp-thumb {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--thumb-border, rgba(255,255,255,0.10));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+
+.rv-tp-thumb-card:hover .rv-tp-thumb {
+  border-color: var(--text-dim, rgba(255,255,255,0.45));
+}
+
+.rv-tp-thumb-card.active .rv-tp-thumb {
+  border-color: var(--theme-primary, #fff);
+  box-shadow: 0 0 0 1px var(--theme-primary, #fff);
+}
+
+.rv-tp-thumb-header {
+  height: 18%;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  border-bottom: 1px solid var(--thumb-border);
+}
+
+.rv-tp-thumb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.rv-tp-thumb-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.rv-tp-thumb-side {
+  width: 30%;
+  padding: 4px 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-right: 1px solid var(--thumb-border);
+}
+
+.rv-tp-thumb-line {
+  height: 3px;
+  border-radius: 1px;
+  width: 100%;
+}
+
+.rv-tp-thumb-line--dim {
+  background: var(--thumb-dim, rgba(255,255,255,0.18));
+  width: 75%;
+}
+
+.rv-tp-thumb-main {
+  flex: 1;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rv-tp-thumb-block {
+  height: 8px;
+  border-radius: 2px;
+  background: var(--thumb-dim, rgba(255,255,255,0.12));
+  border: 1px solid var(--thumb-border);
+}
+
+.rv-tp-thumb-label {
+  font-size: 10px;
+  color: var(--text-dim, rgba(255,255,255,0.7));
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.rv-tp-thumb-card.active .rv-tp-thumb-label {
+  color: var(--text-primary, #fff);
+  font-weight: 500;
+}
+
+.rv-tp-thumb-remove {
+  display: none;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.2));
+  border-radius: 50%;
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+  color: var(--text-primary, #e0e0e0);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.rv-tp-thumb-card:hover .rv-tp-thumb-remove {
+  display: block;
+}
+
+/* Curated palette rows (Canonical / Pop / Electric) */
+
+.rv-tp-palette {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rv-tp-palette-row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+}
+
+.rv-tp-swatch {
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 100ms ease, box-shadow 100ms ease, border-color 100ms ease;
+}
+
+.rv-tp-swatch:hover {
+  transform: scale(1.12);
+  border-color: var(--text-dim, rgba(255,255,255,0.5));
+}
+
+.rv-tp-swatch.active {
+  border-color: var(--text-white, #ffffff);
+  box-shadow: 0 0 0 1px var(--panel-chrome-bg, #1a1a1a), 0 0 0 2px var(--text-white, #ffffff);
+}
+
+/* Custom slots */
+
+.rv-tp-slots {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.rv-tp-slot {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 120ms;
+}
+
+.rv-tp-slot--empty {
+  border: 2px dashed var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  cursor: default;
+}
+
+.rv-tp-slot--filled:hover {
+  transform: scale(1.05);
+}
+
+.rv-tp-slot--filled .rv-tp-chip-remove {
+  display: none;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  color: var(--text-primary, #e0e0e0);
+  cursor: pointer;
+}
+
+.rv-tp-slot--filled:hover .rv-tp-chip-remove {
+  display: block;
+}
+
+/* Color input row */
+
+.rv-tp-color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-tp-color-native {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.rv-tp-color-native::-webkit-color-swatch-wrapper { padding: 0; }
+.rv-tp-color-native::-webkit-color-swatch { border: none; border-radius: 50%; }
+.rv-tp-color-native::-moz-color-swatch { border: none; border-radius: 50%; }
+
+.rv-tp-hex-input {
+  flex: 1;
+  padding: 8px 10px;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  border-radius: 6px;
+  color: var(--text-primary, #e0e0e0);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  outline: none;
+}
+
+.rv-tp-hex-input:focus {
+  border-color: var(--theme-primary);
+}
+
+.rv-tp-icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  border-radius: 6px;
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+
+.rv-tp-icon-btn:hover:not(:disabled) {
+  background: rgba(var(--theme-primary-rgb), 0.08);
+  color: var(--theme-primary);
+}
+
+.rv-tp-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.rv-tp-icon-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Sliders */
+
+.rv-tp-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rv-tp-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 22px;
+}
+
+.rv-tp-slider {
+  width: 100%;
+  /* accent-color tints the thumb + filled (left) portion with Accent;
+     the empty (right) portion stays the browser-native white/dark. */
+  accent-color: var(--accent-dim, var(--theme-primary));
+}
+
+.rv-tp-slider-label {
+  font-size: 11px;
+  color: var(--text-dim, rgba(255,255,255,0.6));
+  display: flex;
+  justify-content: space-between;
+}
+
+.rv-tp-slider-val {
+  color: var(--text-secondary, rgba(255,255,255,0.66));
+}
+
+/* Toggle row */
+.rv-tp-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 100%;
+}
+
+.rv-tp-toggle-icon {
+  font-size: 20px;
+  /* Switch glyph stays chrome-colored (outline) in both states. */
+  color: var(--chrome-accent, var(--text-dim));
+}
+
+/* Switched-on state: keep the chrome outline, add an Accent-colored fill
+   inside the glyph using -webkit-text-stroke (outline) + the glyph's
+   FILL=1 variation axis (solid interior). */
+.rv-tp-toggle-row[aria-pressed="true"] .rv-tp-toggle-icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  color: var(--accent-dim, var(--theme-primary));
+  -webkit-text-stroke: 1px var(--chrome-accent);
+}
+
+.rv-tp-toggle-label {
+  font-size: 11px;
+  color: var(--text-dim, rgba(255,255,255,0.6));
+}
+
+/* Footer */
+
+.rv-tp-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 14px;
+}
+
+.rv-tp-save-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  align-items: center;
+}
+
+.rv-tp-save-input {
+  flex: 1;
+  padding: 7px 10px;
+  background: var(--document-bg, #161616);
+  border: 1px solid var(--theme-primary);
+  border-radius: 6px;
+  color: var(--text-primary, #e0e0e0);
+  font-size: 12px;
+  outline: none;
+}
+
+.rv-tp-btn {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--neutral-chrome-border, rgba(255,255,255,0.12));
+  background: transparent;
+  color: var(--text-secondary, rgba(255,255,255,0.66));
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+  white-space: nowrap;
+}
+
+.rv-tp-btn:hover:not(:disabled) {
+  background: rgba(var(--theme-primary-rgb), 0.08);
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-tp-btn--primary {
+  background: var(--theme-primary);
+  border-color: var(--theme-primary);
+  color: #000; /* FIXED: on-theme-primary fill; --theme-primary-fg token pending Phase 5 */
+}
+
+.rv-tp-btn--primary:hover:not(:disabled) {
+  background: var(--theme-primary);
+  filter: brightness(1.1);
+  color: #000; /* FIXED: on-theme-primary fill; --theme-primary-fg token pending Phase 5 */
+}
+
+.rv-tp-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+

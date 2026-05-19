@@ -1,3 +1,4 @@
+import './ThemePicker.css';
 import { usePanelStore } from '../state/panelStore';
 import ThemePicker from './ThemePicker';
 
