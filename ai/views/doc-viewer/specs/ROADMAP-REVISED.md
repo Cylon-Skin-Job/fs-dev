@@ -268,7 +268,7 @@ Enriched handoff specs live in `ai/views/doc-viewer/specs/chunks/`.
 | B | [chunk-B-filesystem-restructure.md](chunks/chunk-B-filesystem-restructure.md) | 2.1 | A | **complete** |
 | C | [chunk-C-custom-protocol.md](chunks/chunk-C-custom-protocol.md) | 2.3 (partial) | K, B | **complete** |
 | D | [chunk-D-view-loader-iframe.md](chunks/chunk-D-view-loader-iframe.md) | 2.3 | C | **complete** |
-| E | `chunk-E-theme-token-bridge.md` | 2.4 | D | *pending* |
+| E | [chunk-E-theme-token-bridge.md](chunks/chunk-E-theme-token-bridge.md) | 2.4 | D | **complete** |
 | F | `chunk-F-connectors.md` | 1 | A | *pending* |
 | G | `chunk-G-system-files-engine.md` | 2.10 | B | *pending* |
 | H | `chunk-H-view-discovery-add.md` | 2.2 + 2.5 | G, D | *pending* |

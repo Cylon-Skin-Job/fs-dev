@@ -6,6 +6,7 @@ import { useWebSocket } from '../hooks/useWebSocket';
 import { useWorkspaceKeyboard } from '../hooks/useWorkspaceKeyboard';
 import { useScreenshotCapture } from '../hooks/useScreenshotCapture';
 import { useSharedWorkspaceStyles } from '../hooks/useSharedWorkspaceStyles';
+import { useThemeTokenBridge } from '../hooks/useThemeTokenBridge';
 import { useElectronMenu } from '../hooks/useElectronMenu';
 import { ToolsPanel } from './ToolsPanel';
 import { Sidebar } from './Sidebar';
@@ -145,6 +146,7 @@ function App() {
   useElectronMenu();
   // Load themes + components + views CSS from the active workspace at runtime
   useSharedWorkspaceStyles();
+  useThemeTokenBridge();
 
   const currentPanel = usePanelStore((state) => state.currentPanel);
   const setCurrentPanel = usePanelStore((state) => state.setCurrentPanel);
