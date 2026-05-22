@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "id": "wiki-viewer",
+  "folderName": "wiki-viewer",
+  "label": "Wiki",
+  "description": "Living reference layer — browse topics, read pages, create update tickets",
+  "type": "wiki-viewer",
+  "icon": "full_coverage",
+  "rank": 4,
+  "sort": "ranked",
+  "created": "2026-03-20T14:00:00-07:00",
+  "settings": {
+    "syncTarget": "gitlab",
+    "gitlabProjectId": null,
+    "gitlabNamespace": null,
+    "repoDir": ".wiki-repo",
+    "contentDir": "ai/views/wiki-viewer/content/project",
+    "systemWikiDir": "ai/views/wiki-viewer/content/system"
+  }
+}

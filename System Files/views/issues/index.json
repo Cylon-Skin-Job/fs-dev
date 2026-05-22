@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "id": "issues",
+  "folderName": "issues",
+  "label": "Issues",
+  "description": "Ticket board — Kanban-style issue tracking with AI dispatch",
+  "type": "columns",
+  "icon": "task",
+  "rank": 3,
+  "sort": "created",
+  "created": "2026-03-20T20:00:00-07:00",
+  "settings": {},
+  "tools": [
+    {
+      "name": "search_tickets",
+      "description": "Search tickets by title, assignee, or body text",
+      "parameters": {
+        "query": { "type": "string" }
+      }
+    },
+    {
+      "name": "move_ticket",
+      "description": "Move a ticket to a different column by changing its state",
+      "parameters": {
+        "ticketId": { "type": "string" },
+        "newState": { "type": "string", "enum": ["open", "closed"] }
+      }
+    }
+  ]
+}

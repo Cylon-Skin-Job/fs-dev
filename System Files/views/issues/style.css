@@ -1,0 +1,233 @@
+:root {
+  --bg: var(--shell-bg, #0a0a0a);
+  --text: var(--shell-text, #e0e0e0);
+  --text-secondary: var(--shell-text-secondary, #888);
+  --primary: var(--shell-primary, #00d4ff);
+  --border: var(--shell-border, #333);
+  --surface: var(--shell-surface, #141414);
+  --surface-hover: var(--shell-surface-hover, #1a1a1a);
+  --spacing-xs: var(--shell-spacing-xs, 0.25rem);
+  --spacing-sm: var(--shell-spacing-sm, 0.5rem);
+  --spacing-md: var(--shell-spacing-md, 1rem);
+  --radius: var(--shell-radius, 8px);
+  --font: var(--shell-font, system-ui, -apple-system, sans-serif);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.view-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-md);
+}
+
+/* Header */
+.board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.board-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.ticket-count {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Board */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  flex: 1;
+  min-height: 0;
+}
+
+/* Columns */
+.column {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  min-height: 0;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.column-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.125rem;
+  color: var(--primary);
+}
+
+.column-count {
+  margin-left: auto;
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.column-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Ticket Cards */
+.ticket-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ticket-card:hover {
+  border-color: var(--primary);
+  background: var(--surface-hover);
+}
+
+.ticket-card.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.ticket-id {
+  font-size: 0.75rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.ticket-title {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-bottom: var(--spacing-xs);
+}
+
+.ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.ticket-assignee {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ticket-assignee.bot {
+  color: var(--primary);
+}
+
+/* Detail Panel */
+.detail-panel {
+  position: fixed;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  bottom: var(--spacing-md);
+  width: 400px;
+  max-width: 50vw;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.detail-panel[hidden] {
+  display: none;
+}
+
+.detail-close {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.detail-close:hover {
+  color: var(--text);
+}
+
+.detail-content h2 {
+  font-size: 1.125rem;
+  margin-bottom: var(--spacing-sm);
+  padding-right: 2rem;
+}
+
+.detail-content .detail-id {
+  font-size: 0.875rem;
+  color: var(--primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.detail-content .detail-fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.detail-content .detail-label {
+  color: var(--text-secondary);
+}
+
+.detail-content .detail-body {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Empty state */
+.column-empty {
+  text-align: center;
+  padding: var(--spacing-md);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-style: italic;
+}

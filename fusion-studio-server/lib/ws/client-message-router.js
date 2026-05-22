@@ -25,7 +25,7 @@
 const path = require('path');
 const { v4: generateId } = require('uuid');
 
-const ThreadWebSocketHandler = require('../thread');
+const { ThreadWebSocketHandler } = require('../thread');
 const { getWireForThread, sendToWire } = require('../wire/process-manager');
 const views = require('../views');
 const { redactWsMessage } = require('./redaction-map');

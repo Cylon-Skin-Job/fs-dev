@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "id": "wiki",
+  "label": "Wiki",
+  "icon": "menu_book",
+  "rank": 1,
+  "type": "navigation",
+  "settings": {
+    "theme": {
+      "primary": "#00d4ff"
+    }
+  }
+}

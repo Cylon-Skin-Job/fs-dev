@@ -11,4 +11,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('menu-action', listener);
     return () => ipcRenderer.removeListener('menu-action', listener);
   },
+  setWorkspaceRoot: (repoPath) => ipcRenderer.send('workspace:set-root', repoPath),
 });

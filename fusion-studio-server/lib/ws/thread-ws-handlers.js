@@ -11,7 +11,7 @@
  * touch/search/list.
  */
 
-const ThreadWebSocketHandler = require('../thread');
+const { ThreadWebSocketHandler } = require('../thread');
 const { spawnThreadWire } = require('../harness/compat');
 const { registerWire } = require('../wire/process-manager');
 

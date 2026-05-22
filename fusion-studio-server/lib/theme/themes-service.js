@@ -16,11 +16,11 @@ const fs   = require('fs').promises;
 const themeCssGenerator = require('./theme-css-generator');
 
 function themesPath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'settings', 'themes.json');
+  return path.join(projectRoot, 'ai', 'system', 'styles', 'themes.json');
 }
 
 function cssPath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'settings', 'themes.css');
+  return path.join(projectRoot, 'ai', 'system', 'styles', 'themes.css');
 }
 async function readThemesJson(projectRoot) {
   const file = themesPath(projectRoot);

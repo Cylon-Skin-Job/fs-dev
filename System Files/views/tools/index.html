@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="view-root">
+    <header class="board-header">
+      <h1>Tools</h1>
+      <span class="system-files-badge" id="system-files-path">System Files</span>
+    </header>
+
+    <nav class="tab-bar" id="tab-bar">
+      <button class="tab active" data-tab="skills">
+        <span class="tab-icon">psychology</span>
+        <span class="tab-label">Skills</span>
+      </button>
+      <button class="tab" data-tab="triggers">
+        <span class="tab-icon">bolt</span>
+        <span class="tab-label">Triggers</span>
+      </button>
+      <button class="tab" data-tab="scripts">
+        <span class="tab-icon">code</span>
+        <span class="tab-label">Scripts</span>
+      </button>
+      <button class="tab" data-tab="hooks">
+        <span class="tab-icon">link</span>
+        <span class="tab-label">Hooks</span>
+      </button>
+    </nav>
+
+    <div class="tab-content">
+      <div class="panel active" data-panel="skills" id="skills-panel">
+        <div class="panel-header">
+          <h2>Skills</h2>
+          <span class="panel-subtitle">AI capabilities available across all workspaces</span>
+        </div>
+        <div class="items-list" id="skills-list"></div>
+      </div>
+
+      <div class="panel" data-panel="triggers" id="triggers-panel">
+        <div class="panel-header">
+          <h2>Triggers</h2>
+          <span class="panel-subtitle">Event-driven automations</span>
+        </div>
+        <div class="items-list" id="triggers-list"></div>
+      </div>
+
+      <div class="panel" data-panel="scripts" id="scripts-panel">
+        <div class="panel-header">
+          <h2>Scripts</h2>
+          <span class="panel-subtitle">Runnable automation scripts</span>
+        </div>
+        <div class="items-list" id="scripts-list"></div>
+      </div>
+
+      <div class="panel" data-panel="hooks" id="hooks-panel">
+        <div class="panel-header">
+          <h2>CLI Hooks</h2>
+          <span class="panel-subtitle">Connected AI assistants</span>
+        </div>
+        <div class="cli-registry" id="cli-registry"></div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

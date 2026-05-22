@@ -1,0 +1,57 @@
+:root {
+  --bg: var(--shell-bg, #0a0a0a);
+  --text: var(--shell-text, #e0e0e0);
+  --primary: var(--shell-primary, #00d4ff);
+  --border: var(--shell-border, #333);
+  --spacing: var(--shell-spacing-md, 1rem);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--shell-font, system-ui, sans-serif);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.view-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing);
+}
+
+.view-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+  padding-bottom: var(--spacing);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--spacing);
+}
+
+.view-header .icon {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.view-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.view-content {
+  flex: 1;
+  overflow: auto;
+}
+
+.placeholder {
+  opacity: 0.5;
+  font-style: italic;
+}

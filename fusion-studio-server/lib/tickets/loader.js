@@ -41,22 +41,34 @@ function loadTicket(filePath) {
 }
 
 /**
- * Load all tickets from a directory.
+ * Load all tickets from a directory and its subdirectories.
  * @param {string} dirPath - Directory containing ticket .md files
+ * @param {number} depth - Current recursion depth (default 0)
  * @returns {Array<{ frontmatter: Object, body: string, filename: string }>}
  */
-function loadAllTickets(dirPath) {
-  let files;
+function loadAllTickets(dirPath, depth = 0) {
+  let entries;
   try {
-    files = fs.readdirSync(dirPath);
+    entries = fs.readdirSync(dirPath, { withFileTypes: true });
   } catch {
     return [];
   }
 
-  return files
-    .filter(f => f.endsWith('.md') && f.startsWith('KIMI-'))
-    .map(f => loadTicket(path.join(dirPath, f)))
-    .filter(Boolean);
+  const tickets = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name);
+
+    if (entry.isDirectory() && depth === 0) {
+      // Scan subdirectories (inbox, open, complete, archive) one level deep
+      tickets.push(...loadAllTickets(fullPath, depth + 1));
+    } else if (entry.isFile() && entry.name.endsWith('.md') && (entry.name.startsWith('KIMI-') || entry.name.startsWith('RCC-'))) {
+      const ticket = loadTicket(fullPath);
+      if (ticket) tickets.push(ticket);
+    }
+  }
+
+  return tickets;
 }
 
 /**

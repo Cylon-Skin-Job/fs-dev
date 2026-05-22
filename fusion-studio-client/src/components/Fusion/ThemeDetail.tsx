@@ -167,7 +167,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
       <div className="rv-fusion-detail-body">
         <h2>Customizing by hand</h2>
         <p>
-          You can edit the workspace CSS directly at: <code>ai/settings/themes.css</code>
+          You can edit the workspace CSS directly at: <code>ai/system/styles/themes.css</code>
         </p>
         <p>
           After editing, come back here and click Apply to save your changes to the system.

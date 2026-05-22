@@ -1,7 +1,7 @@
 /**
  * CLI-config file loaders (CLI_CONFIG_SPEC §7b).
  *
- * Reads `ai/settings/cli.json` (workspace) and
+ * Reads `ai/system/config/cli.json` (workspace) and
  * `ai/views/<viewId>/settings/cli.json` (per-view). Returns `{}` on missing
  * or malformed. Logs a warning on parse failure. Never throws.
  */
@@ -10,7 +10,7 @@ const path = require('path');
 const fs = require('fs').promises;
 
 function workspacePath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'settings', 'cli.json');
+  return path.join(projectRoot, 'ai', 'system', 'config', 'cli.json');
 }
 
 function viewPath(projectRoot, viewId) {

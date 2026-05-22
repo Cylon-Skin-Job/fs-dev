@@ -16,11 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadTicket, loadAllTickets } = require('./loader');
-const { emit } = require('../event-bus');
-
-// Debounce map — prevent double-fires from fs.watch
-const pending = new Map();
-const DEBOUNCE_MS = 200;
+const { emit, on } = require('../event-bus');
 
 /**
  * Claim a ticket — write state: claimed to file + tickets.json.
@@ -169,96 +165,94 @@ function startDispatchWatcher(projectRoot) {
   console.log(`   Bot names: ${Object.keys(loadRegistry(projectRoot).agents).join(', ') || '(none)'}`);
   console.log('');
 
-  const watcher = fs.watch(issuesDir, (event, filename) => {
-    if (!filename || !filename.endsWith('.md') || !filename.startsWith('KIMI-')) return;
+  async function handleChange(event, filePath) {
+    const basename = path.basename(filePath);
+    if (!basename.startsWith('KIMI-') && !basename.startsWith('RCC-')) return;
 
-    // Debounce — fs.watch often fires twice for a single write
-    if (pending.has(filename)) {
-      clearTimeout(pending.get(filename));
-    }
+    const ticket = loadTicket(filePath);
+    if (!ticket) return;
 
-    pending.set(filename, setTimeout(async () => {
-      pending.delete(filename);
+    const registry = loadRegistry(projectRoot);
 
-      const ticketPath = path.join(issuesDir, filename);
-      const ticket = loadTicket(ticketPath);
-      if (!ticket) return;
+    const allTickets = loadAllTickets(issuesDir);
+    if (shouldDispatch(ticket, registry, allTickets)) {
+      // Step 1: Claim immediately — prevents other instances from grabbing it
+      if (!claimTicket(issuesDir, ticket)) {
+        console.log(`[Dispatch] ${ticket.frontmatter.id} — could not claim (already claimed or closed)`);
+        return;
+      }
 
-      const registry = loadRegistry(projectRoot);
+      try {
+        const { syncPull, syncPush } = require('../sync');
 
-      const allTickets = loadAllTickets(issuesDir);
-      if (shouldDispatch(ticket, registry, allTickets)) {
-        // Step 1: Claim immediately — prevents other instances from grabbing it
-        if (!claimTicket(issuesDir, ticket)) {
-          console.log(`[Dispatch] ${ticket.frontmatter.id} — could not claim (already claimed or closed)`);
+        // Step 2: Push the claim to GitLab so other machines see it
+        console.log(`[Dispatch] Pushing claim to GitLab...`);
+        await syncPush(projectRoot, ticket.frontmatter.id);
+
+        // Step 3: Pull from GitLab — catch new blocks, closed tickets, etc.
+        console.log(`[Dispatch] Pulling from GitLab before dispatch...`);
+        await syncPull(projectRoot);
+
+        // Step 4: Re-load and re-check — something may have changed
+        const freshTicket = loadTicket(filePath);
+        if (!freshTicket) {
+          releaseClaim(issuesDir, ticket);
           return;
         }
 
-        try {
-          const { syncPull, syncPush } = require('../sync');
+        // For re-check, treat 'claimed' as eligible (we claimed it)
+        const freshAll = loadAllTickets(issuesDir);
+        const freshRegistry = loadRegistry(projectRoot);
 
-          // Step 2: Push the claim to GitLab so other machines see it
-          console.log(`[Dispatch] Pushing claim to GitLab...`);
-          await syncPush(projectRoot, ticket.frontmatter.id);
+        // Check blocking constraints (skip state check since we own the claim)
+        const fm = freshTicket.frontmatter;
+        let blocked = false;
 
-          // Step 3: Pull from GitLab — catch new blocks, closed tickets, etc.
-          console.log(`[Dispatch] Pulling from GitLab before dispatch...`);
-          await syncPull(projectRoot);
-
-          // Step 4: Re-load and re-check — something may have changed
-          const freshTicket = loadTicket(ticketPath);
-          if (!freshTicket) {
-            releaseClaim(issuesDir, ticket);
-            return;
-          }
-
-          // For re-check, treat 'claimed' as eligible (we claimed it)
-          const freshAll = loadAllTickets(issuesDir);
-          const freshRegistry = loadRegistry(projectRoot);
-
-          // Check blocking constraints (skip state check since we own the claim)
-          const fm = freshTicket.frontmatter;
-          let blocked = false;
-
-          if (fm.blocked_by) {
-            const blocker = freshAll.find(t =>
-              t.frontmatter.id === fm.blocked_by && t.frontmatter.state === 'open'
-            );
-            if (blocker) { blocked = true; console.log(`[Dispatch] ${fm.id} — blocked by ${fm.blocked_by} after pull`); }
-          }
-
-          if (!blocked) {
-            const topic = extractTopic(freshTicket);
-            if (topic) {
-              const topicBlocker = freshAll.find(t =>
-                t.frontmatter.blocks === topic &&
-                t.frontmatter.state === 'open' &&
-                t.frontmatter.id !== fm.id
-              );
-              if (topicBlocker) { blocked = true; console.log(`[Dispatch] ${fm.id} — topic blocked after pull`); }
-            }
-          }
-
-          if (blocked) {
-            releaseClaim(issuesDir, freshTicket);
-            await syncPush(projectRoot, freshTicket.frontmatter.id);
-            return;
-          }
-
-          dispatch(freshTicket, freshRegistry);
-        } catch (err) {
-          console.error(`[Dispatch] Sync failed, dispatching with claimed state:`, err.message);
-          dispatch(ticket, registry);
+        if (fm.blocked_by) {
+          const blocker = freshAll.find(t =>
+            t.frontmatter.id === fm.blocked_by && t.frontmatter.state === 'open'
+          );
+          if (blocker) { blocked = true; console.log(`[Dispatch] ${fm.id} — blocked by ${fm.blocked_by} after pull`); }
         }
-      } else {
-        const assignee = ticket.frontmatter.assignee || '(none)';
-        const isBot = registry.agents[assignee];
-        console.log(`📋 ${ticket.frontmatter.id} — assignee: ${assignee}${isBot ? '' : ' (human, no dispatch)'}`);
+
+        if (!blocked) {
+          const topic = extractTopic(freshTicket);
+          if (topic) {
+            const topicBlocker = freshAll.find(t =>
+              t.frontmatter.blocks === topic &&
+              t.frontmatter.state === 'open' &&
+              t.frontmatter.id !== fm.id
+            );
+            if (topicBlocker) { blocked = true; console.log(`[Dispatch] ${fm.id} — topic blocked after pull`); }
+          }
+        }
+
+        if (blocked) {
+          releaseClaim(issuesDir, freshTicket);
+          await syncPush(projectRoot, freshTicket.frontmatter.id);
+          return;
+        }
+
+        dispatch(freshTicket, freshRegistry);
+      } catch (err) {
+        console.error(`[Dispatch] Sync failed, dispatching with claimed state:`, err.message);
+        dispatch(ticket, registry);
       }
-    }, DEBOUNCE_MS));
+    } else {
+      const assignee = ticket.frontmatter.assignee || '(none)';
+      const isBot = registry.agents[assignee];
+      console.log(`📋 ${ticket.frontmatter.id} — assignee: ${assignee}${isBot ? '' : ' (human, no dispatch)'}`);
+    }
+  }
+
+  const unsub = on('file:changed', ({ filePath, event }) => {
+    const abs = path.join(projectRoot, filePath);
+    if (!abs.startsWith(issuesDir)) return;
+    if (!filePath.endsWith('.md')) return;
+    handleChange(event, abs);
   });
 
-  return watcher;
+  return { close: unsub };
 }
 
 // -- CLI entry point --

@@ -1,0 +1,315 @@
+:root {
+  --bg: var(--shell-bg, #0a0a0a);
+  --text: var(--shell-text, #e0e0e0);
+  --text-secondary: var(--shell-text-secondary, #888);
+  --primary: var(--shell-primary, #00d4ff);
+  --border: var(--shell-border, #333);
+  --surface: var(--shell-surface, #141414);
+  --surface-hover: var(--shell-surface-hover, #1a1a1a);
+  --spacing-xs: var(--shell-spacing-xs, 0.25rem);
+  --spacing-sm: var(--shell-spacing-sm, 0.5rem);
+  --spacing-md: var(--shell-spacing-md, 1rem);
+  --radius: var(--shell-radius, 8px);
+  --font: var(--shell-font, system-ui, -apple-system, sans-serif);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.view-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-md);
+}
+
+/* Header */
+.board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.board-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.system-files-badge {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: var(--surface);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+/* Tab Bar */
+.tab-bar {
+  display: flex;
+  gap: var(--spacing-xs);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--spacing-md);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.tab.active {
+  color: var(--primary);
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.tab-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.125rem;
+}
+
+/* Tab Content */
+.tab-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.panel {
+  display: none;
+  height: 100%;
+}
+
+.panel.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.panel-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.panel-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Items List */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.item-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+  transition: border-color 0.15s;
+}
+
+.item-card:hover {
+  border-color: var(--primary);
+}
+
+.item-toggle {
+  flex-shrink: 0;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.item-toggle.active {
+  background: var(--primary);
+}
+
+.item-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform 0.15s;
+}
+
+.item-toggle.active::after {
+  transform: translateX(16px);
+}
+
+.item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.item-summary {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.item-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Run Button */
+.run-button {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--primary);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.run-button:hover {
+  opacity: 0.9;
+}
+
+.run-button .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+/* CLI Registry */
+.cli-registry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.cli-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-md);
+}
+
+.cli-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.cli-info {
+  flex: 1;
+}
+
+.cli-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.cli-path {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: ui-monospace, monospace;
+}
+
+.cli-status {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.cli-status.connected {
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--primary);
+}
+
+.cli-status.disconnected {
+  background: var(--bg);
+  color: var(--text-secondary);
+}
+
+.cli-action {
+  padding: 6px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.cli-action:hover {
+  border-color: var(--primary);
+}
+
+/* Empty state */
+.items-empty {
+  text-align: center;
+  padding: var(--spacing-md) * 2;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}

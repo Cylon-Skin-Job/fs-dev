@@ -24,3 +24,14 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 );
+
+// Electron/macOS: compositor sometimes drops the layer after minimize — nudge a repaint.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  const root = document.getElementById('root');
+  if (!root) return;
+  root.style.transform = 'translateZ(0)';
+  requestAnimationFrame(() => {
+    root.style.transform = '';
+  });
+});

@@ -24,7 +24,7 @@ import type { WebSocketMessage } from '../types';
 
 // --- Module state ---
 
-const WS_URL = 'ws://localhost:3001';
+const WS_URL = `ws://${window.location.host}`;
 
 let socket: WebSocket | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;

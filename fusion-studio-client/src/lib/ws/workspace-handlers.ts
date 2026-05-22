@@ -80,6 +80,13 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
         preloadIcons(iconNames).catch(() => {});
       }
 
+      // Keep Electron protocol handler's workspace root in sync
+      const activeWs = workspaces.find((w: any) => w.id === msg.activeWorkspaceId);
+      const activeRepoPath = (msg as any).activeRepoPath ?? activeWs?.repoPath ?? null;
+      if (activeRepoPath) {
+        window.electronAPI?.setWorkspaceRoot(activeRepoPath);
+      }
+
       store.markInit();
       // Request existing screenshots so the ribbon can show thumbnails immediately
       const wsConn2 = usePanelStore.getState().ws;
@@ -105,6 +112,11 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       store.setActiveWorkspaceId(workspaceId);
       store.setWorkspaceType((msg as any).workspaceType ?? 'code');
       store.closeSwitcher();
+
+      // Keep Electron protocol handler's workspace root in sync
+      if ((msg as any).repoPath) {
+        window.electronAPI?.setWorkspaceRoot((msg as any).repoPath);
+      }
 
       // WORKSPACE_ISOLATION_SPEC: swap to cached workspace state (or empty)
       usePanelStore.getState().activateWorkspace(workspaceId);

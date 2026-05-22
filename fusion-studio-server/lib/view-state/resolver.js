@@ -45,7 +45,7 @@ const HARDCODED_DEFAULTS = Object.freeze({
 });
 
 function workspacePath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'settings', 'state.json');
+  return path.join(projectRoot, 'ai', 'system', 'state', 'state.json');
 }
 
 function viewOverridePath(projectRoot, viewId) {

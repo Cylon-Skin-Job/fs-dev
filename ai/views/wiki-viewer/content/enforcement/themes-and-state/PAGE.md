@@ -104,11 +104,21 @@ State is resolved per-view. The system merges a **workspace default** with an op
 
 If a per-view override file exists and contains a key, that value wins. Otherwise, the workspace default is used. The writer never creates per-view override files — only humans do.
 
-### What Belongs in State
+### Persistent State (Survives workspace close/open indefinitely)
 - `widths.leftSidebar`, `widths.leftChat`, `widths.rightCol`, `widths.rightSecondary`
 - `collapsed.leftSidebar`, `collapsed.leftChat`
-- `popup.x`, `popup.y`, `popup.width`, `popup.height`, `popup.open`, `popup.threadId`
+- `popup.x`, `popup.y`, `popup.width`, `popup.height`
+- `collections.fileExplorerTabs` — open files as a working set
+- `filters.{viewId}` — per-view filter settings (decided per view during migration)
+- `sort.{viewId}` — per-view sort order (decided per view during migration)
+
+### Session State (Cleared on workspace close or nightly refresh)
+- `popup.open`, `popup.threadId`
 - `currentThreadId`, `secondaryThreadId`
+- `selectedItemId`, `scrollPosition`, `activeWorkflow`, `centeredDocument`
+- `activeViewId` — which view panel is focused
+
+Session state is ephemeral by design. It persists during normal workspace use (switching views, scrolling, selecting items) but is discarded when the workspace is closed from the ribbon or during the nightly cleanup. This prevents stale focus from accumulating.
 
 ### What Does NOT Belong in State
 - Any tint boolean (see Theme Toggles above)

@@ -39,7 +39,7 @@ const STYLE_FILES = [
 
 async function readWorkspaceStyles(repoPath) {
   if (!repoPath) return {};
-  const settingsDir = path.join(repoPath, 'ai', 'settings');
+  const settingsDir = path.join(repoPath, 'ai', 'system', 'styles');
   const styles = {};
   await Promise.all(
     STYLE_FILES.map(async (file) => {

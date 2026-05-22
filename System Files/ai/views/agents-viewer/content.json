@@ -1,0 +1,6 @@
+{
+  "chat": {
+    "type": "rolling-daily",
+    "position": "right"
+  }
+}

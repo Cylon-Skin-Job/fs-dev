@@ -1,7 +1,7 @@
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const appleWatcher = require('./apple/watcher');
+const appleWatcher = require('../watch/calendar-watcher');
 const appleSync = require('./apple/sync');
 const googlePoller = require('./google/poller');
 

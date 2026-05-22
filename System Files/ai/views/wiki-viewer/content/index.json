@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "id": "wiki",
+  "label": "Wiki",
+  "description": "System documentation — how Fusion Studio works",
+  "type": "root",
+  "rank": 1,
+  "icon": "full_coverage",
+  "color": null,
+  "created": "2026-05-20T00:00:00Z",
+  "updated": "2026-05-20T00:00:00Z",
+  "frozen": false,
+  "children": ["enforcement"],
+  "edges_out": null,
+  "edges_in": null,
+  "sources": null,
+  "settings": {}
+}

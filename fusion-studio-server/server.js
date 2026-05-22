@@ -119,7 +119,9 @@ app.use('/api', transcription.createRouter());
 // Uses fuzzy filename matching to handle macOS Unicode spaces in screenshot names
 app.get('/api/panel-file/:panel/*splat', (req, res) => {
   const panel = req.params.panel;
-  const filePath = req.params.splat;
+  // Express 5: *splat is an array of path segments; Express 4 used a string.
+  const splat = req.params.splat;
+  const filePath = Array.isArray(splat) ? splat.join('/') : String(splat ?? '');
   const root = getProjectRoot();
   if (!root) return res.status(503).send('No active workspace');
   // Resolve via the same view resolver the file-tree WS handler uses, so
@@ -196,7 +198,7 @@ app.get('/api/view-config', async (req, res) => {
 
     let globalCss = '';
     try {
-      const globalCssPath = path.join(projectRoot, 'ai', 'settings', 'themes.css');
+      const globalCssPath = path.join(projectRoot, 'ai', 'system', 'styles', 'themes.css');
       globalCss = await fsPromises.readFile(globalCssPath, 'utf8');
     } catch {
       globalCss = '';
@@ -325,9 +327,9 @@ function getPanelPath(panel, ws) {
     return null;
   }
 
-  // __settings__ pseudo-panel: resolves to ai/settings/ (for global theme/settings)
+  // __settings__ pseudo-panel: resolves to ai/system/styles/ (for global theme/settings)
   if (panel === '__settings__') {
-    const settingsRoot = path.join(projectRoot, 'ai', 'settings');
+    const settingsRoot = path.join(projectRoot, 'ai', 'system', 'styles');
     if (fs.existsSync(settingsRoot)) return settingsRoot;
     return null;
   }
@@ -511,7 +513,7 @@ wss.on('connection', async (ws) => {
         'variables.css', 'themes.css', 'components.css', 'views.css',
         'file-viewer.css', 'doc-viewer.css', 'tints.css',
       ];
-      const settingsDir = path.join(activeRoot, 'ai', 'settings');
+      const settingsDir = path.join(activeRoot, 'ai', 'system', 'styles');
       await Promise.all(
         styleFiles.map(async (file) => {
           try {
@@ -528,6 +530,7 @@ wss.on('connection', async (ws) => {
       type: 'workspace:init',
       workspaces,
       activeWorkspaceId,
+      activeRepoPath: activeWs ? activeWs.repo_path : null,
       workspaceType: activeWs ? activeWs.type : 'code',
       homePath: require('os').homedir(),
       cliConfig,

@@ -61,7 +61,7 @@ const SHARED_LAYERS: { id: string; path: string; fetcher: 'settings' | 'views' }
   { id: 'components',  path: SETTINGS_STYLES_COMPONENTS,  fetcher: 'settings' },
   { id: 'views',       path: SETTINGS_STYLES_VIEWS,       fetcher: 'settings' },
   // Per-view chrome layers — global selectors keyed to a single view's classes.
-  // Live in ai/settings/ so colors stay out of per-view layout.css files.
+  // Live in ai/system/styles/ so colors stay out of per-view layout.css files.
   { id: 'file-viewer', path: SETTINGS_STYLES_FILE_VIEWER, fetcher: 'settings' },
   { id: 'doc-viewer',  path: SETTINGS_STYLES_DOC_VIEWER,  fetcher: 'settings' },
   { id: 'tints',       path: SETTINGS_STYLES_TINTS,       fetcher: 'settings' },

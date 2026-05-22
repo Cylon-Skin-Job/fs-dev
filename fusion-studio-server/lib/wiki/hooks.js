@@ -15,12 +15,14 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
+const { on } = require('../event-bus');
 
 const DEBOUNCE_MS = 500;
 const pending = new Map();
-const watchers = [];
-const knownTopics = new Map(); // "collection/topic" → true
 let onIndexRebuilt = null;
+let unsub = null;
+
+const WIKI_CONTENT_PREFIX = 'ai/views/wiki-viewer/content/';
 
 /**
  * Discover collections by reading the root index.json children array.
@@ -162,77 +164,35 @@ async function appendLog(topicPath, message) {
 }
 
 /**
- * Watch a topic folder for PAGE.md changes.
+ * Handle a wiki file change event from the UEB.
  */
-function watchTopicFolder(wikiRoot, collectionId, topicName) {
+function handleWikiChange(wikiRoot, event, filePath) {
+  if (!filePath.endsWith('.md')) return;
+
+  const relativeToWiki = filePath.slice(WIKI_CONTENT_PREFIX.length);
+  const parts = relativeToWiki.split(path.sep);
+  if (parts.length < 3) return; // need collection/topic/file.md
+
+  const collectionId = parts[0];
+  const topicName = parts[1];
   const key = `${collectionId}/${topicName}`;
-  if (knownTopics.has(key)) return;
-  knownTopics.set(key, true);
-
   const folderPath = path.join(wikiRoot, collectionId, topicName);
-  try {
-    const tw = fs.watch(folderPath, (event, filename) => {
-      if (filename !== 'PAGE.md') return;
 
-      const debounceKey = `${key}/PAGE.md`;
-      if (pending.has(debounceKey)) clearTimeout(pending.get(debounceKey));
+  const debounceKey = `${key}/PAGE.md`;
+  if (pending.has(debounceKey)) clearTimeout(pending.get(debounceKey));
 
-      pending.set(debounceKey, setTimeout(async () => {
-        pending.delete(debounceKey);
-        console.log(`[WikiHooks] on_edit: ${key}`);
-        await rebuildTopicsIndex(wikiRoot);
-        await appendLog(folderPath, 'Updated');
-      }, DEBOUNCE_MS));
-    });
-    watchers.push(tw);
-  } catch (err) {
-    console.error(`[WikiHooks] Failed to watch ${key}:`, err.message);
-  }
-}
-
-/**
- * Watch a collection folder for new topic folders.
- */
-function watchCollection(wikiRoot, collectionId) {
-  const collectionPath = path.join(wikiRoot, collectionId);
-
-  try {
-    const tw = fs.watch(collectionPath, (event, filename) => {
-      if (!filename) return;
-
-      const debounceKey = `collection:${collectionId}:${filename}`;
-      if (pending.has(debounceKey)) clearTimeout(pending.get(debounceKey));
-
-      pending.set(debounceKey, setTimeout(async () => {
-        pending.delete(debounceKey);
-
-        const fullPath = path.join(collectionPath, filename);
-        const stat = await fsPromises.stat(fullPath).catch(() => null);
-        if (!stat || !stat.isDirectory()) return;
-
-        const key = `${collectionId}/${filename}`;
-        if (knownTopics.has(key)) return;
-
-        // Check if PAGE.md exists
-        try {
-          await fsPromises.access(path.join(fullPath, 'PAGE.md'));
-          console.log(`[WikiHooks] on_create: ${key}`);
-          watchTopicFolder(wikiRoot, collectionId, filename);
-          await rebuildTopicsIndex(wikiRoot);
-          await appendLog(fullPath, 'Created');
-        } catch {}
-      }, DEBOUNCE_MS));
-    });
-    watchers.push(tw);
-  } catch (err) {
-    console.error(`[WikiHooks] Failed to watch collection ${collectionId}:`, err.message);
-  }
+  pending.set(debounceKey, setTimeout(async () => {
+    pending.delete(debounceKey);
+    console.log(`[WikiHooks] on_${event === 'create' ? 'create' : 'edit'}: ${key}`);
+    await rebuildTopicsIndex(wikiRoot);
+    await appendLog(folderPath, event === 'create' ? 'Created' : 'Updated');
+  }, DEBOUNCE_MS));
 }
 
 /**
  * Start watching the wiki tree for changes.
- * Scans all collections, sets up watchers on each collection and topic folder,
- * and builds the initial topics.json.
+ * Scans all collections, builds the initial topics.json,
+ * and subscribes to UEB file:changed events.
  */
 function start(wikiRoot) {
   if (!fs.existsSync(wikiRoot)) {
@@ -251,35 +211,22 @@ function start(wikiRoot) {
       .map(e => e.name);
   }
 
-  // Scan each collection for existing topics and set up watchers
-  for (const collectionId of collections) {
-    const collectionPath = path.join(wikiRoot, collectionId);
-    if (!fs.existsSync(collectionPath)) continue;
-
-    const entries = fs.readdirSync(collectionPath, { withFileTypes: true });
-    for (const entry of entries) {
-      if (!entry.isDirectory()) continue;
-      const pagePath = path.join(collectionPath, entry.name, 'PAGE.md');
-      if (fs.existsSync(pagePath)) {
-        watchTopicFolder(wikiRoot, collectionId, entry.name);
-      }
-    }
-
-    watchCollection(wikiRoot, collectionId);
-  }
-
   // Build initial topics.json
   rebuildTopicsIndex(wikiRoot).catch(err => {
     console.error('[WikiHooks] Failed to build initial topics.json:', err);
   });
 
-  console.log(`[WikiHooks] Watching ${wikiRoot} — ${knownTopics.size} topics across ${collections.length} collections`);
+  // Subscribe to UEB file events
+  unsub = on('file:changed', ({ filePath, event }) => {
+    if (!filePath.startsWith(WIKI_CONTENT_PREFIX)) return;
+    handleWikiChange(wikiRoot, event, filePath);
+  });
+
+  console.log(`[WikiHooks] Watching ${wikiRoot} — ${collections.length} collections`);
 
   return {
     close() {
-      for (const tw of watchers) { tw.close(); }
-      watchers.length = 0;
-      knownTopics.clear();
+      if (unsub) { unsub(); unsub = null; }
       pending.clear();
       console.log('[WikiHooks] Stopped watching');
     }

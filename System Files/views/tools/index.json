@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "id": "tools",
+  "folderName": "tools",
+  "label": "Tools",
+  "description": "Global template management — skills, triggers, scripts, and CLI hooks",
+  "type": "tabbed",
+  "icon": "manufacturing",
+  "rank": 5,
+  "sort": "created",
+  "created": "2026-03-20T20:00:00-07:00",
+  "settings": {
+    "systemFilesView": true,
+    "targetPaths": {
+      "skills": "skills/",
+      "hooks": "hooks/",
+      "scripts": "scripts/",
+      "triggers": "triggers/"
+    }
+  },
+  "tools": [
+    {
+      "name": "toggle_skill",
+      "description": "Activate or deactivate a skill",
+      "parameters": {
+        "skillId": { "type": "string" },
+        "active": { "type": "boolean" }
+      }
+    },
+    {
+      "name": "run_script",
+      "description": "Execute an automation script",
+      "parameters": {
+        "scriptId": { "type": "string" }
+      }
+    },
+    {
+      "name": "relink_cli",
+      "description": "Re-establish symlink between Fusion Studio skills and a CLI",
+      "parameters": {
+        "cliName": { "type": "string", "enum": ["claude", "kimi", "codex", "antigravity"] }
+      }
+    }
+  ]
+}

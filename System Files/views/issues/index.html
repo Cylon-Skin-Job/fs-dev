@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Issues</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="view-root">
+    <header class="board-header">
+      <h1>Issues</h1>
+      <span class="ticket-count" id="ticket-count">0 tickets</span>
+    </header>
+    <div class="board" id="board">
+      <div class="column" data-column="inbox">
+        <div class="column-header">
+          <span class="column-icon">inbox</span>
+          <span class="column-title">Inbox</span>
+          <span class="column-count" id="inbox-count">0</span>
+        </div>
+        <div class="column-items" id="inbox-items"></div>
+      </div>
+      <div class="column" data-column="open">
+        <div class="column-header">
+          <span class="column-icon">play_circle</span>
+          <span class="column-title">Open</span>
+          <span class="column-count" id="open-count">0</span>
+        </div>
+        <div class="column-items" id="open-items"></div>
+      </div>
+      <div class="column" data-column="completed">
+        <div class="column-header">
+          <span class="column-icon">check_circle</span>
+          <span class="column-title">Completed</span>
+          <span class="column-count" id="completed-count">0</span>
+        </div>
+        <div class="column-items" id="completed-items"></div>
+      </div>
+    </div>
+    <div class="detail-panel" id="detail-panel" hidden>
+      <button class="detail-close" id="detail-close">&times;</button>
+      <div class="detail-content" id="detail-content"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

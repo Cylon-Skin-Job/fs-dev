@@ -11,10 +11,11 @@
  * For now, only open tickets from the root are loaded.
  */
 
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { useTicketStore, type Ticket } from '../../state/ticketStore';
+import { copyResourcePath } from '../../lib/resource-path';
 
 
 // Bot names we recognize — matches registry.json
@@ -22,6 +23,11 @@ const BOT_NAMES = new Set(['kimi-wiki', 'kimi-code', 'kimi-review', 'kimi-bot'])
 
 function isBot(assignee: string): boolean {
   return BOT_NAMES.has(assignee);
+}
+
+function ticketFolder(ticket: Ticket): string {
+  if (ticket.state === 'closed') return 'done';
+  return isBot(ticket.assignee) ? 'open' : 'inbox';
 }
 
 function formatTime(iso: string): string {
@@ -45,13 +51,33 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
   const activeTicket = useTicketStore((s) => s.activeTicket);
   const setActive = useTicketStore((s) => s.setActiveTicket);
   const bot = isBot(ticket.assignee);
+  const linkBtnRef = useRef<HTMLButtonElement>(null);
+
+  const handleCopyPath = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    copyResourcePath('issues-viewer', `${ticketFolder(ticket)}/${ticket.id}.md`);
+    if (linkBtnRef.current) {
+      linkBtnRef.current.classList.add('copied');
+      setTimeout(() => linkBtnRef.current?.classList.remove('copied'), 1200);
+    }
+  };
 
   return (
     <div
       className={`rv-ticket-card ${activeTicket === ticket.id ? 'active' : ''}`}
       onClick={() => setActive(activeTicket === ticket.id ? null : ticket.id)}
     >
-      <div className="rv-ticket-card-id">{ticket.id}</div>
+      <div className="rv-ticket-card-id-row">
+        <span className="rv-ticket-card-id">{ticket.id}</span>
+        <button
+          ref={linkBtnRef}
+          className="rv-ticket-card-link"
+          onClick={handleCopyPath}
+          title="Copy file path"
+        >
+          <span className="material-symbols-outlined">link_2</span>
+        </button>
+      </div>
       <div className="rv-ticket-card-title">{ticket.title}</div>
       <div className="rv-ticket-card-meta">
         <span className={`rv-ticket-card-assignee ${bot ? 'rv-ticket-card-bot' : ''}`}>

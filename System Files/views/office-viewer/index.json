@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "id": "office-viewer",
+  "label": "Office Viewer",
+  "icon": "grid_view",
+  "rank": 1,
+  "type": "grid",
+  "settings": {
+    "theme": {
+      "primary": "#00d4ff"
+    }
+  }
+}

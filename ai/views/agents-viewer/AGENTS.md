@@ -1,62 +1,71 @@
 # Agents
 
-You are inside **kimi-claude**, a web-based IDE that uses Kimi CLI in wire mode as the agent backend. This panel manages autonomous background agents that execute work from the ticketing system.
+You are inside **Fusion Studio**, a desktop IDE built on Electron + React. This panel manages autonomous background agents that execute work from the ticketing system.
 
 ## Where You Are
 
 ```
-kimi-claude/
+fs-dev/
 ├── ai/
-│   ├── panels/
-│   │   ├── explorer/         ← Interactive code panel (human-driven)
-│   │   ├── wiki/             ← Living reference layer
-│   │   ├── issues/           ← Ticket board (dispatch source)
-│   │   └── agents/           ← You are here
-│   └── STATE.md              ← Cross-panel activity log
-├── open-robin-server/          ← WebSocket server
-└── open-robin-client/          ← React frontend
+│   └── views/
+│       ├── file-viewer/          ← File explorer
+│       ├── wiki-viewer/          ← Living reference layer
+│       ├── issues-viewer/        ← Ticket board (dispatch source)
+│       └── agents-viewer/        ← You are here
+│           ├── Background Workers/   ← Default agents shipped with the app
+│           │   ├── wiki-manager/
+│           │   ├── code-manager/
+│           │   └── ops-manager/
+│           ├── Chat Assistants/
+│           ├── Expert Helpers/
+│           └── registry.json         ← Agent registry (id → folder mapping)
+├── fusion-studio-server/         ← Node.js WebSocket + API server
+└── fusion-studio-client/         ← Electron + React frontend
 ```
 
 ## How It Works
 
-1. Tickets are created in `ai/views/issues-viewer/` and tracked in `tickets.json`
-2. When a ticket is assigned to a bot name (e.g., `kimi-wiki`), the dispatch watcher fires
+1. Tickets are created in `ai/views/issues-viewer/inbox/` as `RCC-NNNN.md`
+2. When a ticket is assigned to a bot name, the dispatch watcher fires
 3. The runner looks up the bot name in `registry.json` → finds the agent folder
 4. The runner spawns an orchestrator from the agent's `prompt.md` with the ticket as context
 5. The orchestrator delegates steps to sub-agents, evaluates results, retries or approves
-6. On completion, the orchestrator closes the ticket and updates `issues/index.json`
+6. On completion, the orchestrator closes the ticket and updates `tickets.json`
 
 ## Agent Folder Convention
 
-Each agent is a folder under `agents/`. The folder name is the agent ID.
+Each agent is a folder inside a category (`Background Workers/`, `Chat Assistants/`, `Expert Helpers/`).
 
 ```
-agents/{agent-id}/
+agents/{Category}/{agent-id}/
 ├── prompt.md       ← Single instruction file (YAML frontmatter + prompt body)
 ├── LESSONS.md      ← Agent's living notebook (appended after each run)
-└── runs/           ← Execution history (created by the runner)
-    └── {timestamp}/
-        ├── ticket.md       (frozen copy of triggering ticket)
-        ├── prompt.md       (frozen copy of prompt at execution time)
-        ├── lessons.md      (frozen copy of LESSONS.md at execution time)
-        ├── manifest.json   (run metadata: status, timing, outcome)
-        ├── run-index.json  (step-by-step progress tracker)
-        ├── 00-validate.md  (evidence card: preflight check)
-        ├── 01-{step}.md    (evidence card per step)
-        └── ...             (retries: 01-{step}.retry-1.md)
+├── MEMORY.md       ← Persistent facts the agent carries across runs
+├── SESSION.md      ← Current session state
+├── HISTORY.md      ← Run history log
+├── workflows/      ← Named workflow definitions
+├── runs/           ← Execution history (created by the runner)
+│   └── {timestamp}/
+│       ├── ticket.md       (frozen copy of triggering ticket)
+│       ├── prompt.md       (frozen copy of prompt at execution time)
+│       ├── manifest.json   (run metadata: status, timing, outcome)
+│       ├── run-index.json  (step-by-step progress tracker)
+│       ├── 00-validate.md  (evidence card: preflight check)
+│       ├── 01-{step}.md    (evidence card per step)
+│       └── ...             (retries: 01-{step}.retry-1.md)
+└── settings/       ← Agent-specific configuration
 ```
 
 ## Key Resources
 
 - **Wiki:** `ai/views/wiki-viewer/content/` — browse topics via `topics.json`, read `{collection}/{topic}/PAGE.md`
-- **Tickets:** `ai/views/issues-viewer/` — board state via `tickets.json`, individual tickets as `KIMI-NNNN.md`
-- **Cross-panel state:** `ai/STATE.md` — recent activity from all views
-- **Secrets:** macOS Keychain, account `open-robin` — access via `security find-generic-password -a "open-robin" -s "KEY_NAME" -w`
+- **Tickets:** `ai/views/issues-viewer/` — board state via `content/tickets.json`, individual tickets as `RCC-NNNN.md` in `inbox/`, `open/`, `complete/`, `archive/`
+- **Registry:** `ai/views/agents-viewer/registry.json` — maps agent IDs to folder paths and current status
 
 ## Rules
 
 - Agents read broadly but write only within their declared scope
 - The orchestrator delegates to sub-agents — it does not do the work itself
 - Sub-agent context is discarded after each step; the orchestrator accumulates decisions
-- If confidence drops below the threshold defined in `prompt.md`, stop and mark the ticket
-- Never commit directly — report results, let the IDE operator commit
+- If confidence drops below the threshold defined in `prompt.md`, stop and mark the ticket blocked
+- Never commit directly — report results, let the operator commit

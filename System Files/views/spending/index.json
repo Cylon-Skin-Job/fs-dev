@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "id": "spending",
+  "label": "Spending",
+  "icon": "account_balance_wallet",
+  "rank": 1,
+  "type": "columns",
+  "settings": {
+    "theme": {
+      "primary": "#00d4ff"
+    }
+  }
+}
