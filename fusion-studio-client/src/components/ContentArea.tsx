@@ -2,9 +2,9 @@
  * @module ContentArea
  * @role Routes panel ID to the correct content component
  *
- * Priority order:
- * 1. If panel has ui/ folder (hasUiFolder) → RuntimeModule (plugin)
- * 2. If panel has built-in component → static component
+ * Dual-track transition (Chunk D):
+ * 1. If panel has app/index.html (hasAppHtml) → iframe via fusion-studio://
+ * 2. If panel has built-in component → static React component
  * 3. Fallback → Simple placeholder
  *
  * SPEC-26c-2: right-side view chat removed. ContentArea is now a single-column
@@ -39,7 +39,21 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
   const configs = usePanelStore((state) => state.panelConfigs);
   const config = configs.find((c) => c.id === panel);
 
-  // If a built-in static component exists, use it.
+  // Track 1: iframe view (view ships app/index.html)
+  if (config?.hasAppHtml) {
+    return (
+      <main className="rv-content-area">
+        <iframe
+          className="rv-view-iframe"
+          src={`fusion-studio://${panel}/app/index.html`}
+          title={config.name || panel}
+          sandbox="allow-scripts allow-same-origin"
+        />
+      </main>
+    );
+  }
+
+  // Track 2: built-in static React component
   const StaticComponent = CONTENT_COMPONENTS[panel];
 
   return (
@@ -58,4 +72,4 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
       )}
     </main>
   );
-}
+};

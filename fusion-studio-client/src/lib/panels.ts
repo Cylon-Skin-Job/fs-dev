@@ -58,6 +58,8 @@ export interface PanelConfig {
   category: 'app' | 'tool';
   /** True if panel has a ui/ folder with module.js (runtime-loaded plugin) */
   hasUiFolder?: boolean;
+  /** True if panel ships an app/index.html iframe entry point */
+  hasAppHtml?: boolean;
 }
 
 // --- Helpers ---
@@ -72,7 +74,7 @@ export const VIEWS_SETTINGS_STYLES_COMPONENTS = 'settings/components.css' as con
 /** Chat + thread list + composer. */
 export const VIEWS_SETTINGS_STYLES_VIEWS      = 'settings/views.css' as const;
 
-// --- ai/settings/ constants (via __settings__ pseudo-panel) ---
+// --- ai/system/styles/ constants (via __settings__ pseudo-panel) ---
 export const SETTINGS_STYLES_THEMES      = 'themes.css' as const;
 export const SETTINGS_STYLES_COMPONENTS  = 'components.css' as const;
 export const SETTINGS_STYLES_VIEWS       = 'views.css' as const;
@@ -86,7 +88,7 @@ export function fetchViewsRootFile(ws: WebSocket, pathUnderViews: string): Promi
   return fetchPanelFile(ws, '__panels__', pathUnderViews);
 }
 
-/** Fetch a file under ai/settings/ via the __settings__ pseudo-panel. */
+/** Fetch a file under ai/system/styles/ via the __settings__ pseudo-panel. */
 export function fetchSettingsFile(ws: WebSocket, pathUnderSettings: string): Promise<string> {
   return fetchPanelFile(ws, '__settings__', pathUnderSettings);
 }
@@ -191,6 +193,11 @@ export async function loadPanelConfig(
       .then(() => true)
       .catch(() => false);
 
+    // Check if panel ships an iframe entry point (Chunk D)
+    const hasAppHtml = await fetchPanelFile(ws, panelAlias, `${panelId}/app/index.html`)
+      .then(() => true)
+      .catch(() => false);
+
     return {
       id: json.id || panelId,
       name: json.label || panelId,
@@ -204,6 +211,7 @@ export async function loadPanelConfig(
       rank: json.rank,
       category,
       hasUiFolder,
+      hasAppHtml,
     };
   } catch {
     return null;

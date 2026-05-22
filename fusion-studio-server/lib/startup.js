@@ -36,7 +36,7 @@ const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller')
 const wikiHooks = require('./wiki/hooks');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT ?? '3001', 10);
 
 /**
  * Bootstrap and start the server. Must be called after the http.Server
@@ -150,7 +150,7 @@ async function start({ server, sessions, getProjectRoot }) {
     });
   }
 
-  // 3.8c. CLI-config workspace file — ensure ai/settings/cli.json
+  // 3.8c. CLI-config workspace file — ensure ai/system/config/cli.json
   // exists so discovery is trivial (CLI_CONFIG_SPEC §7e). Runs after
   // workspaceController.start() so getProjectRoot() resolves to the active
   // workspace root; otherwise bootstrap silently no-ops.
@@ -165,8 +165,10 @@ async function start({ server, sessions, getProjectRoot }) {
   // 4. listen() — must come before watcher/hooks start, they broadcast to clients
   await new Promise((resolve, reject) => {
     server.listen(PORT, () => {
-      console.log(`[Server] Running on http://localhost:${PORT}`);
+      const boundPort = server.address().port;
+      console.log(`[Server] Running on http://localhost:${boundPort}`);
       console.log(`[Server] Default CLI: ${process.env.KIMI_PATH || 'kimi'}`);
+      process.stdout.write(`SERVER_READY:${boundPort}\n`);
 
       try {
         _startPipeline({ sessions, getProjectRoot });
@@ -215,7 +217,7 @@ function _startPipeline({ sessions, getProjectRoot }) {
   }
 
   // Start project-wide file watcher
-  const { createWatcher } = require('./watcher');
+  const { createWatcher } = require('./watch/workspace-watcher');
   const { loadFilters } = require('./watcher/filter-loader');
   const { createActionHandlers } = require('./watcher/actions');
 
@@ -316,6 +318,8 @@ function _startPipeline({ sessions, getProjectRoot }) {
 }
 
 async function _handleShutdown() {
+  const { closeAll } = require('./watch/core');
+  closeAll();
   await closeDb();
   process.exit(0);
 }
