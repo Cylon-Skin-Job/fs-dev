@@ -1,0 +1,143 @@
+/* ConnectorsDropdown — macOS Connectors Panel dropdown styles */
+
+.rv-connectors-trigger-wrap {
+  position: relative;
+}
+
+.rv-connectors-dropdown {
+  width: 280px;
+  right: 0;
+  top: calc(100% + 6px);
+}
+
+.rv-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--text-dim, #a0a0a0);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.08));
+  pointer-events: none;
+}
+
+.rv-dropdown-header .material-symbols-outlined {
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.rv-connectors-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  min-height: 40px;
+}
+
+.rv-connectors-item:hover {
+  background: var(--hover-bg, rgba(255, 255, 255, 0.04));
+}
+
+.rv-connectors-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  opacity: 0.85;
+  color: var(--chrome-accent, var(--text-dim));
+}
+
+.rv-connectors-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.rv-connectors-name {
+  font-size: var(--font-sm, 12px);
+  color: var(--chrome-accent, var(--text-dim));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-connectors-meta {
+  font-size: 11px;
+  color: var(--text-muted, #666);
+}
+
+.rv-connectors-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  flex-shrink: 0;
+}
+
+/* Status dot */
+.rv-connectors-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rv-connectors-status--gray   { background: #666; }
+.rv-connectors-status--yellow { background: #e5a000; }
+.rv-connectors-status--green  { background: #2ecc71; }
+.rv-connectors-status--red    { background: #e74c3c; }
+
+/* Toggle switch */
+.rv-connectors-toggle {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.15));
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: background 150ms ease;
+  flex-shrink: 0;
+}
+
+.rv-connectors-toggle.on {
+  background: var(--accent-primary, #3b82f6);
+}
+
+.rv-connectors-toggle-knob {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateX(0);
+  transition: transform 150ms ease;
+}
+
+.rv-connectors-toggle.on .rv-connectors-toggle-knob {
+  transform: translateX(14px);
+}
+
+/* Footer */
+.rv-dropdown-footer {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.08));
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rv-dropdown-footer-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim, #a0a0a0);
+  font-size: var(--font-sm, 12px);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm, 3px);
+}
+
+.rv-dropdown-footer-btn:hover {
+  color: var(--chrome-accent, #fff);
+  background: var(--hover-bg, rgba(255, 255, 255, 0.04));
+}

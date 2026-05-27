@@ -13,7 +13,7 @@
 
 import React, { type ComponentType } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import { WikiExplorer } from './wiki/WikiExplorer';
+import { WikiViewer } from './WikiViewer';
 import { TicketBoard } from './tickets/TicketBoard';
 import { AgentTiles } from './agents/AgentTiles';
 import { CaptureTiles } from './capture/CaptureTiles';
@@ -26,7 +26,7 @@ const CONTENT_COMPONENTS: Record<string, ComponentType> = {
   'doc-viewer': CaptureTiles,
   'office-viewer': OfficeGrid,
   'file-viewer': FileExplorer,
-  'wiki-viewer': WikiExplorer,
+  'wiki-viewer': WikiViewer,
   'issues-viewer': TicketBoard,
   'agents-viewer': AgentTiles,
   'system-viewer': SystemViewer,
