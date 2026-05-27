@@ -1,10 +1,10 @@
 {
   "version": "1.0.0",
-  "name": "Fusion Studio System Files",
+  "name": "Fusion Studio System Source Files",
   "description": "Reference templates, skills, hooks, scripts, and triggers shipped with Fusion Studio.",
   "workspace": {
     "id": "system-files",
-    "label": "System Files",
+    "label": "System Source Files",
     "icon": "folder_open",
     "preloaded": true,
     "special": true,

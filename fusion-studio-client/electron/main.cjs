@@ -255,10 +255,31 @@ function buildMenu() {
         },
         ...(isMac
           ? [
+              { type: 'separator' },
               {
-                label: 'Sync Apple Calendar',
-                accelerator: 'CmdOrCtrl+Shift+C',
-                click: () => sendMenuAction({ type: 'sync-apple-calendar' }),
+                label: 'Connectors',
+                submenu: [
+                  {
+                    label: 'Apple Mail',
+                    accelerator: 'CmdOrCtrl+Shift+M',
+                    click: () => sendMenuAction({ type: 'toggle-connector-mail' }),
+                  },
+                  {
+                    label: 'Apple Calendar',
+                    accelerator: 'CmdOrCtrl+Shift+C',
+                    click: () => sendMenuAction({ type: 'toggle-connector-calendar' }),
+                  },
+                  {
+                    label: 'Apple Notes',
+                    accelerator: 'CmdOrCtrl+Shift+N',
+                    click: () => sendMenuAction({ type: 'toggle-connector-notes' }),
+                  },
+                  {
+                    label: 'Apple Reminders',
+                    accelerator: 'CmdOrCtrl+Shift+R',
+                    click: () => sendMenuAction({ type: 'toggle-connector-reminders' }),
+                  },
+                ],
               },
             ]
           : []),

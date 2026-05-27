@@ -27,6 +27,7 @@ import { WorkspaceTitle } from './WorkspaceTitle';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
 import { ThemePickerModal } from './ThemePickerModal';
 import { SecretsManagerModal } from './secrets/SecretsManagerModal';
+import { ConnectorsDropdown } from './ConnectorsDropdown';
 import './App.css';
 
 // SPEC-26c-2: defaults for the 3-column layout
@@ -156,6 +157,7 @@ function App() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [fusionOpen, setFusionOpen] = useState(false);
+  const connectorsRef = useRef<HTMLDivElement>(null);
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
 
@@ -171,6 +173,17 @@ function App() {
       setCurrentPanel(configs[0].id);
     }
   }, [configs, currentPanel, setCurrentPanel]);
+
+  // Click outside connectors dropdown closes it
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (connectorsRef.current && !connectorsRef.current.contains(e.target as Node)) {
+        usePanelStore.getState().setConnectorsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Keyboard: Escape defocuses content, Option+Up/Down cycles panels
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -290,6 +303,17 @@ function App() {
         <WorkspaceTitle />
 
         <div className="rv-header-right">
+          <div className="rv-connectors-trigger-wrap" ref={connectorsRef}>
+            <button
+              className="rv-fusion-icon-btn"
+              onClick={() => usePanelStore.getState().setConnectorsDropdownOpen(true)}
+              title="macOS Connectors"
+              aria-label="Open macOS Connectors panel"
+            >
+              <span className="material-symbols-outlined">hub</span>
+            </button>
+            <ConnectorsDropdown />
+          </div>
           <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
             <span className="material-symbols-outlined">raven</span>
           </button>

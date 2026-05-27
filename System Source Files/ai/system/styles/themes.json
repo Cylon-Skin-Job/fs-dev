@@ -21,25 +21,25 @@
     {
       "id": "user-current",
       "label": "Current",
-      "accent": "#4fc3f7",
-      "luminance": 0,
-      "panelContrast": 44,
+      "accent": "#0e71a0",
+      "luminance": 20,
+      "panelContrast": 79,
       "bgTint": 18,
       "contentLuminance": 0,
       "contentContrast": 50,
-      "contentTint": 18,
+      "contentTint": 15,
       "borderLuminance": 0,
       "borderTint": 0,
-      "chromeLuminance": 0,
+      "chromeLuminance": 45,
       "chromeTint": 18,
       "chatBubbleChrome": false,
-      "accentLuminance": 50,
-      "accentTint": 0,
+      "accentLuminance": 94,
+      "accentTint": 75,
       "themeCode": false,
       "mode": "dark",
       "tints": {
         "borders": {
-          "chat": false
+          "chat": true
         }
       },
       "builtin": false,

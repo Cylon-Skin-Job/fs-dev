@@ -1,0 +1,81 @@
+{
+  "version": "1.0",
+  "id": "system-viewer-content",
+  "label": "System Documentation",
+  "description": "Documentation for connectors, skills, triggers, scripts, and hooks.",
+  "type": "root",
+  "generated": "2026-05-24T00:00:00Z",
+  "sections": [
+    {
+      "id": "connectors",
+      "title": "Connectors",
+      "description": "How to enable Fusion Studio to interact with calendar, email, notes, tasks, and other apps.",
+      "wiki": "connectors_guide.md",
+      "groups": [
+        {
+          "id": "MacOS_Connectors",
+          "title": "MacOS Connectors",
+          "articles": [
+            { "id": "mail", "title": "Apple Mail", "file": "MacOS_Connectors/mail.md" },
+            { "id": "calendar", "title": "Apple Calendar", "file": "MacOS_Connectors/calendar.md" },
+            { "id": "reminders", "title": "Apple Reminders", "file": "MacOS_Connectors/reminders.md" },
+            { "id": "notes", "title": "Apple Notes", "file": "MacOS_Connectors/notes.md" }
+          ]
+        },
+        {
+          "id": "Google_OAuth",
+          "title": "Google OAuth",
+          "articles": [
+            { "id": "gmail", "title": "Gmail", "file": "Google_OAuth/gmail.md" },
+            { "id": "google_calendar", "title": "Google Calendar", "file": "Google_OAuth/google_calendar.md" },
+            { "id": "google_tasks", "title": "Google Tasks", "file": "Google_OAuth/google_tasks.md" }
+          ]
+        },
+        {
+          "id": "Slack",
+          "title": "Slack",
+          "articles": [
+            { "id": "slack", "title": "Slack", "file": "Slack/slack.md" }
+          ]
+        },
+        {
+          "id": "Reference",
+          "title": "Reference",
+          "articles": [
+            { "id": "styleguide", "title": "Styleguide", "file": "resources/Styleguide.md" },
+            { "id": "error_taxonomy", "title": "Error Taxonomy", "file": "resources/Connector_Error_Taxonomy.md" },
+            { "id": "state_machine", "title": "State Machine", "file": "resources/Connector_State_Machine.md" },
+            { "id": "schema_template", "title": "Data Schema Template", "file": "resources/Data_Schema_Template.md" },
+            { "id": "event_payloads", "title": "Event Payload Schema", "file": "resources/Event_Payload_Schema.md" },
+            { "id": "ai_query", "title": "AI Query Interface", "file": "resources/AI_Query_Interface.md" },
+            { "id": "architecture", "title": "Connector Architecture", "file": "resources/Connector_Architecture.md" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "title": "Skills",
+      "description": "Reusable capabilities that extend Fusion Studio and CLI agents.",
+      "wiki": "user.md"
+    },
+    {
+      "id": "triggers",
+      "title": "Triggers",
+      "description": "Event-driven automation hooks that fire on filesystem or schedule events.",
+      "wiki": "user.md"
+    },
+    {
+      "id": "scripts",
+      "title": "Scripts",
+      "description": "Standalone automation scripts for repetitive tasks and workflows.",
+      "wiki": "user.md"
+    },
+    {
+      "id": "hooks",
+      "title": "Hooks",
+      "description": "CLI integration points that bridge Fusion Studio with external tools.",
+      "wiki": "user.md"
+    }
+  ]
+}

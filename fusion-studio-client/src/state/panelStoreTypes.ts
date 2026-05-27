@@ -24,6 +24,16 @@ import type { PanelConfig } from '../lib/panels';
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 export type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
 
+// ── Connector state (Chunk F — macOS Connectors Panel) ──
+export type ConnectorId = 'mail' | 'calendar' | 'notes' | 'reminders';
+export type ConnectorStatusColor = 'gray' | 'yellow' | 'green' | 'red';
+
+export interface ConnectorState {
+  enabled: boolean;
+  status: ConnectorStatusColor;
+  lastSync: string | null;
+}
+
 // Lightweight, safe-to-cache per-workspace state shape.
 export interface WorkspacePanelState {
   projectRoot: string | null;
@@ -149,6 +159,13 @@ export interface AppState {
   cliConfigViewDelta: Record<string, Record<string, CliEntryOverride>>;
   hydrateCliConfig: (cfg: Record<string, ResolvedCliEntry>) => void;
   setCliConfigViewDelta: (viewId: string, delta: Record<string, CliEntryOverride>) => void;
+
+  // ── Connectors (Chunk F — macOS Connectors Panel) ──
+  isConnectorsDropdownOpen: boolean;
+  setConnectorsDropdownOpen: (open: boolean) => void;
+  connectorStatuses: Record<ConnectorId, ConnectorState>;
+  toggleConnector: (id: ConnectorId) => void;
+  setConnectorStatus: (id: ConnectorId, patch: Partial<ConnectorState>) => void;
 
   // ── Harness connection state ──
   connectingHarnessId: string | null;

@@ -6,7 +6,7 @@
  */
 import { create } from 'zustand';
 import type { Thread, Scope } from '../types';
-import type { AppState, WorkspacePanelState } from './panelStoreTypes';
+import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
 import { createChatSlice, createInitialPanelState } from './slices/chatSlice';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createSecondarySlice } from './slices/secondarySlice';
@@ -254,6 +254,34 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setThemePickerOpen: (open) => set({ isThemePickerOpen: open }),
   isSecretsManagerOpen: false,
   setSecretsManagerOpen: (open) => set({ isSecretsManagerOpen: open }),
+
+  // ── Connectors dropdown (Chunk F) ──
+  isConnectorsDropdownOpen: false,
+  setConnectorsDropdownOpen: (open) => set({ isConnectorsDropdownOpen: open }),
+
+  connectorStatuses: {
+    mail:      { enabled: false, status: 'gray', lastSync: null },
+    calendar:  { enabled: false, status: 'gray', lastSync: null },
+    notes:     { enabled: false, status: 'gray', lastSync: null },
+    reminders: { enabled: false, status: 'gray', lastSync: null },
+  } as Record<ConnectorId, ConnectorState>,
+
+  toggleConnector: (id: ConnectorId) => set((s) => {
+    const current = s.connectorStatuses[id];
+    if (!current) return s;
+    const next: ConnectorState = {
+      ...current,
+      enabled: !current.enabled,
+      status: current.enabled ? 'gray' : 'yellow',
+    };
+    return { connectorStatuses: { ...s.connectorStatuses, [id]: next } };
+  }),
+
+  setConnectorStatus: (id: ConnectorId, patch: Partial<ConnectorState>) => set((s) => {
+    const current = s.connectorStatuses[id];
+    if (!current) return s;
+    return { connectorStatuses: { ...s.connectorStatuses, [id]: { ...current, ...patch } } };
+  }),
 
   // ── Theme catalog (THEME_PICKER_SPEC §6a) ─────────────────────────────────
   themes: [],

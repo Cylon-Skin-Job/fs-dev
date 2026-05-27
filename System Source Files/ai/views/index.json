@@ -13,7 +13,8 @@
     "file-viewer",
     "issues-viewer",
     "wiki-viewer",
-    "agents-viewer"
+    "agents-viewer",
+    "system-viewer"
   ],
   "settings": {}
 }

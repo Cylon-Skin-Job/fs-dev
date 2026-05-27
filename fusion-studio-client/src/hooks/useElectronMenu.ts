@@ -26,6 +26,22 @@ export function useElectronMenu() {
           sendFusionMessage({ type: 'calendar:force_sync', source: 'apple' });
           break;
         }
+        case 'toggle-connector-mail': {
+          usePanelStore.getState().toggleConnector('mail');
+          break;
+        }
+        case 'toggle-connector-calendar': {
+          usePanelStore.getState().toggleConnector('calendar');
+          break;
+        }
+        case 'toggle-connector-notes': {
+          usePanelStore.getState().toggleConnector('notes');
+          break;
+        }
+        case 'toggle-connector-reminders': {
+          usePanelStore.getState().toggleConnector('reminders');
+          break;
+        }
       }
     });
 
