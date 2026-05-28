@@ -8,6 +8,23 @@
   overflow: hidden;
 }
 
+/* Wrapper fills remaining flex space; webview needs definite-size parent */
+.rv-browser-viewer-webview-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.rv-browser-viewer-webview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
 /* ── Chrome bar ── */
 .rv-browser-viewer-chrome {
   flex-shrink: 0;

@@ -6,6 +6,7 @@
   "description": "Full browser using Electron webview — for AI automation, testing, and general web navigation",
   "type": "browser-viewer",
   "icon": "public",
+  "hasChat": true,
   "rank": 5,
   "url": "https://google.com",
   "mode": "browser",
