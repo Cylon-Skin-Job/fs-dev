@@ -15,6 +15,8 @@ import './BrowserView.css';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import type { PanelConfig } from '../../lib/panels';
 import { BrowserChrome } from './BrowserChrome';
+import { BrowserContextMenu } from './BrowserContextMenu';
+import type { MenuItem } from './BrowserContextMenu';
 import { validateUrl, getUrlOrigin } from './urlValidator';
 
 export interface BrowserViewProps {
@@ -58,6 +60,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [currentUrl, setCurrentUrl] = useState(initialUrl);
   const [isFullscreen, setIsFullscreen] = useState(initialFullscreen);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
 
   // History stack for back/forward (refs to avoid re-renders on every load)
   const historyRef = useRef<string[]>([initialUrl]);
@@ -68,6 +71,10 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
 
   const canGoBack = historyIndexRef.current > 0;
   const canGoForward = historyIndexRef.current < historyRef.current.length - 1;
+
+  const handleToggleFullscreen = useCallback(() => {
+    setIsFullscreen((prev) => !prev);
+  }, []);
 
   // Navigate to a new URL (user-initiated or validation-corrected)
   const navigateTo = useCallback((url: string) => {
@@ -119,9 +126,22 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
     }
   }, []);
 
-  const handleToggleFullscreen = useCallback(() => {
-    setIsFullscreen((prev) => !prev);
-  }, []);
+  const menuItems = React.useMemo<MenuItem[]>(
+    () => [
+      {
+        label: isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
+        icon: isFullscreen ? 'fullscreen_exit' : 'fullscreen',
+        action: handleToggleFullscreen,
+      },
+      { separator: true, label: '', action: () => {} },
+      {
+        label: 'Reload',
+        icon: 'refresh',
+        action: handleReload,
+      },
+    ],
+    [isFullscreen, handleToggleFullscreen, handleReload]
+  );
 
   // Handle iframe load events
   const handleLoad = useCallback(() => {
@@ -180,12 +200,17 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
     }
   }, [currentUrl]);
 
+  const handleContextMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY });
+  }, []);
+
   const containerClass = isFullscreen
     ? 'rv-browser-view-fullscreen'
     : 'rv-browser-view';
 
   return (
-    <div className={containerClass}>
+    <div className={containerClass} onContextMenu={handleContextMenu}>
       {!isFullscreen && (
         <BrowserChrome
           url={currentUrl}
@@ -194,6 +219,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
           onForward={handleForward}
           onReload={handleReload}
           onToggleFullscreen={handleToggleFullscreen}
+          onOpenMenu={(e) => setContextMenu({ x: e.clientX, y: e.clientY })}
           canGoBack={canGoBack}
           canGoForward={canGoForward}
           showUrlBar={showUrlBar}
@@ -212,6 +238,14 @@ export const BrowserView: React.FC<BrowserViewProps> = ({ config }) => {
           onLoad={handleLoad}
         />
       </div>
+      {contextMenu && (
+        <BrowserContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          items={menuItems}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </div>
   );
 };

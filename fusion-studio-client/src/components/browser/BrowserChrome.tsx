@@ -12,6 +12,7 @@ export interface BrowserChromeProps {
   onForward: () => void;
   onReload: () => void;
   onToggleFullscreen: () => void;
+  onOpenMenu: (e: React.MouseEvent) => void;
   canGoBack: boolean;
   canGoForward: boolean;
   showUrlBar: boolean;
@@ -27,6 +28,7 @@ export const BrowserChrome: React.FC<BrowserChromeProps> = ({
   onForward,
   onReload,
   onToggleFullscreen,
+  onOpenMenu,
   canGoBack,
   canGoForward,
   showUrlBar,
@@ -105,6 +107,15 @@ export const BrowserChrome: React.FC<BrowserChromeProps> = ({
         <span className="material-symbols-outlined">
           {isFullscreen ? 'fullscreen_exit' : 'fullscreen'}
         </span>
+      </button>
+
+      <button
+        type="button"
+        className="rv-browser-chrome-btn"
+        onClick={onOpenMenu}
+        title="Menu"
+      >
+        <span className="material-symbols-outlined">more_vert</span>
       </button>
     </form>
   );

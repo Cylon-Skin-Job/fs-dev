@@ -33,7 +33,6 @@ const createScreenshotHandlers = require('./screenshot/ws-handlers');
 const themesService = require('./theme/themes-service');
 const { startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
-const wikiHooks = require('./wiki/hooks');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
@@ -207,14 +206,6 @@ function _startPipeline({ sessions, getProjectRoot }) {
   }
   const viewsPath = path.join(projectRoot, 'ai', 'views');
   console.log(`[Server] Thread storage: ${viewsPath}`);
-
-  // Start wiki hooks — watches ai/views/wiki-viewer/content/ tree (collections with topics)
-  const wikiPath = path.join(viewsPath, 'wiki-viewer', 'content');
-  if (fs.existsSync(wikiPath)) {
-    wikiHooks.start(wikiPath);
-  } else {
-    console.log('[Server] wiki-viewer/content not found — wiki hooks skipped');
-  }
 
   // Start project-wide file watcher
   const { createWatcher } = require('./watch/workspace-watcher');

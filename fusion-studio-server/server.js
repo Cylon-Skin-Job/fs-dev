@@ -30,9 +30,6 @@ const createRecentDocsHandlers = require('./lib/recent-docs/handlers');
 // File explorer handlers
 const { createFileExplorerHandlers } = require('./lib/file-explorer');
 
-// Wiki hooks
-const wikiHooks = require('./lib/wiki/hooks');
-
 // Event bus for TRIGGERS.md automations
 const { emit, on } = require('./lib/event-bus');
 const workspaceController = require('./lib/workspace/workspace-controller');

@@ -97,3 +97,61 @@
   border: none;
   display: block;
 }
+
+/* Context menu */
+.rv-browser-context-menu {
+  position: fixed;
+  z-index: 500;
+  min-width: 160px;
+  background: var(--surface-1, #1e1e2e);
+  border: 1px solid var(--border-subtle, #2a2a3c);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.rv-browser-context-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-primary, #e0e0e0);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.rv-browser-context-item:hover {
+  background: var(--surface-2, #2a2a3c);
+}
+
+.rv-browser-context-item.danger {
+  color: var(--palette-error, #f44336);
+}
+
+.rv-browser-context-item.danger:hover {
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.rv-browser-context-icon {
+  font-size: 16px;
+  color: var(--text-secondary, #a0a0b0);
+}
+
+.rv-browser-context-label {
+  flex: 1;
+}
+
+.rv-browser-context-separator {
+  height: 1px;
+  background: var(--border-subtle, #2a2a3c);
+  margin: 3px 6px;
+}
