@@ -258,6 +258,13 @@
   padding: 0;
 }
 
+/* Browser view: remove the brown content-area frame so the iframe fills
+   the entire panel edge-to-edge. */
+main.rv-content-area:has(> .rv-browser-view) {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
 .rv-content-area > * {
   flex: 1;
   min-height: 0;

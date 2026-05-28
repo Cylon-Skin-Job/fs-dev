@@ -1,6 +1,6 @@
 /**
  * @module BrowserChrome
- * @role Chrome bar for browser views: back/forward/reload, URL input, fullscreen toggle
+ * @role Chrome bar for browser views: back/forward/reload, URL input, address bar toggle
  */
 
 import React, { useRef, useEffect } from 'react';
@@ -11,13 +11,12 @@ export interface BrowserChromeProps {
   onBack: () => void;
   onForward: () => void;
   onReload: () => void;
-  onToggleFullscreen: () => void;
-  onOpenMenu: (e: React.MouseEvent) => void;
+  onToggleAddressBar: () => void;
   canGoBack: boolean;
   canGoForward: boolean;
   showUrlBar: boolean;
   showNavButtons: boolean;
-  isFullscreen: boolean;
+  isAddressBarHidden: boolean;
   mode: 'browser' | 'app';
 }
 
@@ -27,13 +26,12 @@ export const BrowserChrome: React.FC<BrowserChromeProps> = ({
   onBack,
   onForward,
   onReload,
-  onToggleFullscreen,
-  onOpenMenu,
+  onToggleAddressBar,
   canGoBack,
   canGoForward,
   showUrlBar,
   showNavButtons,
-  isFullscreen,
+  isAddressBarHidden,
   mode,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,69 +52,71 @@ export const BrowserChrome: React.FC<BrowserChromeProps> = ({
     }
   };
 
+  const chromeClass = isAddressBarHidden
+    ? 'rv-browser-chrome-inner collapsed'
+    : 'rv-browser-chrome-inner';
+
   return (
     <form className="rv-browser-chrome" onSubmit={handleSubmit}>
-      {showNavButtons && (
-        <>
-          <button
-            type="button"
-            className="rv-browser-chrome-btn"
-            onClick={onBack}
-            disabled={!canGoBack}
-            title="Back"
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <button
-            type="button"
-            className="rv-browser-chrome-btn"
-            onClick={onForward}
-            disabled={!canGoForward}
-            title="Forward"
-          >
-            <span className="material-symbols-outlined">arrow_forward</span>
-          </button>
-          <button
-            type="button"
-            className="rv-browser-chrome-btn"
-            onClick={onReload}
-            title="Reload"
-          >
-            <span className="material-symbols-outlined">refresh</span>
-          </button>
-        </>
-      )}
+      <div className={chromeClass}>
+        <div className="rv-browser-nav-group">
+        {showNavButtons && (
+          <>
+            <button
+              type="button"
+              className="rv-browser-chrome-btn"
+              onClick={onBack}
+              disabled={!canGoBack}
+              title="Back"
+            >
+              <span className="material-symbols-outlined">arrow_back</span>
+            </button>
+            <button
+              type="button"
+              className="rv-browser-chrome-btn"
+              onClick={onForward}
+              disabled={!canGoForward}
+              title="Forward"
+            >
+              <span className="material-symbols-outlined">arrow_forward</span>
+            </button>
+            <button
+              type="button"
+              className="rv-browser-chrome-btn"
+              onClick={onReload}
+              title="Reload"
+            >
+              <span className="material-symbols-outlined">refresh</span>
+            </button>
+          </>
+        )}
 
-      {showUrlBar && (
-        <input
-          ref={inputRef}
-          type="text"
-          className="rv-browser-url-input"
-          defaultValue={url}
-          readOnly={mode === 'app'}
-          title={mode === 'app' ? 'URL is locked in app mode' : 'Enter a URL'}
-        />
-      )}
+        {showUrlBar && (
+          <input
+            ref={inputRef}
+            type="text"
+            className="rv-browser-url-input"
+            defaultValue={url}
+            readOnly={mode === 'app'}
+            title={mode === 'app' ? 'URL is locked in app mode' : 'Enter a URL'}
+          />
+        )}
+      </div>
 
-      <button
-        type="button"
-        className="rv-browser-chrome-btn rv-browser-fullscreen-btn"
-        onClick={onToggleFullscreen}
-        title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-      >
-        <span className="material-symbols-outlined">
-          {isFullscreen ? 'fullscreen_exit' : 'fullscreen'}
-        </span>
-      </button>
+      <div className="rv-browser-actions-group">
+        <button
+          type="button"
+          className="rv-browser-chrome-btn"
+          onClick={onToggleAddressBar}
+          title={isAddressBarHidden ? 'Show Address Bar' : 'Hide Address Bar'}
+        >
+          <span className="material-symbols-outlined">
+            {isAddressBarHidden ? 'variable_insert' : 'variable_remove'}
+          </span>
+        </button>
 
-      <button
-        type="button"
-        className="rv-browser-chrome-btn"
-        onClick={onOpenMenu}
-        title="Menu"
-      >
-        <span className="material-symbols-outlined">more_vert</span>
-      </button>
+      </div>
+      </div>
     </form>
   );
 };
