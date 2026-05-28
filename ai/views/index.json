@@ -15,7 +15,8 @@
     "issues-viewer",
     "wiki-viewer",
     "agents-viewer",
-    "custom-viewer"
+    "custom-viewer",
+    "browser-viewer"
   ],
   "settings": {}
 }
