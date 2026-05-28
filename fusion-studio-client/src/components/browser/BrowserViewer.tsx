@@ -220,16 +220,21 @@ export const BrowserViewer: React.FC<BrowserViewerProps> = ({ config }) => {
         showNavButtons={showNavButtons}
         mode={mode}
       />
-      <div className="rv-browser-viewer-webview-container">
-        <webview
-          ref={webviewRef as any}
-          className="rv-browser-viewer-webview"
-          src={initialUrl}
-          partition={partition}
-          allowpopups={true}
-          webpreferences="contextIsolation=yes,nodeIntegration=no"
-        />
-      </div>
+      <webview
+        ref={webviewRef as any}
+        className="rv-browser-viewer-webview"
+        src={initialUrl}
+        partition={partition}
+        allowpopups={true}
+        webpreferences="contextIsolation=yes,nodeIntegration=no"
+        style={{
+          flex: '1 1 auto',
+          minHeight: 0,
+          width: '100%',
+          border: 'none',
+          display: 'block',
+        }}
+      />
     </div>
   );
 };
