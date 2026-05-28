@@ -118,6 +118,8 @@ function createWindow(port) {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
+      // Enable <webview> tag for browser-viewer panel
+      webviewTag: true,
       // Keep WS/timers alive while minimized so restore doesn't look "dead".
       backgroundThrottling: false,
     },

@@ -21,6 +21,7 @@ import { OfficeGrid } from './office/OfficeGrid';
 import { FileExplorer } from './file-explorer/FileExplorer';
 import { SystemViewer } from './SystemViewer';
 import { BrowserView } from './browser/BrowserView';
+import { BrowserViewer } from './browser/BrowserViewer';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
@@ -61,6 +62,15 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
     return (
       <main className="rv-content-area">
         <BrowserView config={config} />
+      </main>
+    );
+  }
+
+  // Track 2b: webview-based browser viewer
+  if (config?.type === 'browser-viewer') {
+    return (
+      <main className="rv-content-area">
+        <BrowserViewer config={config} />
       </main>
     );
   }

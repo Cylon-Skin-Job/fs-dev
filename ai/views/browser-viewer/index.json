@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "id": "browser-viewer",
+  "folderName": "browser-viewer",
+  "label": "Browser",
+  "description": "Full browser using Electron webview — for AI automation, testing, and general web navigation",
+  "type": "browser-viewer",
+  "icon": "public",
+  "rank": 5,
+  "url": "https://google.com",
+  "mode": "browser",
+  "chrome": {
+    "urlBar": true,
+    "navButtons": true
+  }
+}
