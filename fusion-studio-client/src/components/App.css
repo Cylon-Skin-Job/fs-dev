@@ -260,7 +260,8 @@
 
 /* Browser view: remove the brown content-area frame so the iframe fills
    the entire panel edge-to-edge. */
-main.rv-content-area:has(> .rv-browser-view) {
+main.rv-content-area:has(> .rv-browser-view),
+main.rv-content-area:has(> .rv-browser-viewer) {
   background: transparent !important;
   padding: 0 !important;
 }

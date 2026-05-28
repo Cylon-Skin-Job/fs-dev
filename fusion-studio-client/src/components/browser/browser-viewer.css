@@ -5,21 +5,18 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Webview fills all remaining space */
+/* Webview container fills entire panel edge-to-edge */
 .rv-browser-viewer-webview-container {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-}
-
-.rv-browser-viewer-webview {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rv-browser-viewer-webview {
   width: 100%;
   height: 100%;
   border: none;
@@ -28,10 +25,14 @@
 
 /* ── Chrome bar ── */
 .rv-browser-viewer-chrome {
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
   padding: 4px 10px;
-  background: var(--panel-chrome-bg, #1a1a1a);
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
