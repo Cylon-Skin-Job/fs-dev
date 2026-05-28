@@ -1,61 +1,63 @@
 /**
  * @module TopicList
- * @role Left sidebar — lists wiki topics grouped by collection, highlights active
- * @reads wikiStore: topics, collections, activeTopic
+ * @role Left sidebar — lists wiki sections and articles, highlights active
+ * @reads wikiStore: sections, articlesBySection, activeSection, activeArticle
  */
 
 import { useWikiStore } from '../../state/wikiStore';
-import type { TopicMeta } from '../../state/wikiStore';
-
-function displaySlug(slug: string): string {
-  return slug.replace(/-/g, ' ');
-}
 
 export function TopicList() {
-  const topics = useWikiStore((s) => s.topics);
-  const collections = useWikiStore((s) => s.collections);
-  const activeTopic = useWikiStore((s) => s.activeTopic);
-  const navigateToTopic = useWikiStore((s) => s.navigateToTopic);
+  const sections = useWikiStore((s) => s.sections);
+  const articlesBySection = useWikiStore((s) => s.articlesBySection);
+  const activeSection = useWikiStore((s) => s.activeSection);
+  const activeArticle = useWikiStore((s) => s.activeArticle);
+  const selectArticle = useWikiStore((s) => s.selectArticle);
 
-  // Group topics by collection, sorted by collection rank
-  const grouped = collections.map((col) => {
-    const colTopics = Object.entries(topics)
-      .filter(([, meta]) => meta.collection === col.id)
-      .sort((a, b) => {
-        // Home always first within a collection
-        if (a[0].endsWith('/home')) return -1;
-        if (b[0].endsWith('/home')) return 1;
-        return (a[1].rank ?? 10) - (b[1].rank ?? 10);
-      });
-    return { collection: col, topics: colTopics };
-  });
+  const handleSectionClick = (sectionId: string) => {
+    const articles = articlesBySection[sectionId] || [];
+    if (articles.length > 0 && activeSection !== sectionId) {
+      selectArticle(sectionId, articles[0].id);
+    }
+  };
+
+  const handleArticleClick = (sectionId: string, articleId: string) => {
+    selectArticle(sectionId, articleId);
+  };
 
   return (
     <div className="rv-wiki-topic-list">
       <div className="rv-wiki-topic-list-items">
-        {grouped.map(({ collection, topics: colTopics }) => (
-          <div key={collection.id} className="rv-wiki-collection-group">
-            <div className="rv-wiki-collection-header">
-              {collection.label}
-              {collection.frozen && (
-                <span className="material-symbols-outlined rv-wiki-frozen-icon">lock</span>
-              )}
+        {sections.map((section) => {
+          const articles = articlesBySection[section.id] || [];
+          const isActiveSection = section.id === activeSection;
+
+          return (
+            <div key={section.id} className="rv-wiki-collection-group">
+              <div
+                className={`rv-wiki-collection-header ${isActiveSection ? 'active' : ''}`}
+                onClick={() => handleSectionClick(section.id)}
+                style={{ cursor: articles.length > 0 ? 'pointer' : 'default' }}
+              >
+                {section.title}
+              </div>
+              {articles.map((article) => {
+                const isActive = isActiveSection && article.id === activeArticle;
+                return (
+                  <button
+                    key={article.id}
+                    className={`rv-wiki-topic-item ${isActive ? 'active' : ''}`}
+                    onClick={() => handleArticleClick(section.id, article.id)}
+                  >
+                    <span className="rv-wiki-topic-indicator">
+                      {isActive ? '\u25C9' : '\u25CB'}
+                    </span>
+                    <span className="rv-wiki-topic-name">{article.title}</span>
+                  </button>
+                );
+              })}
             </div>
-            {colTopics.map(([id, meta]: [string, TopicMeta]) => {
-              const isActive = id === activeTopic;
-              return (
-                <button
-                  key={id}
-                  className={`rv-wiki-topic-item ${isActive ? 'active' : ''}`}
-                  onClick={() => navigateToTopic(meta.slug)}
-                >
-                  <span className="rv-wiki-topic-indicator">{isActive ? '\u25C9' : '\u25CB'}</span>
-                  <span className="rv-wiki-topic-name">{displaySlug(meta.slug)}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -1,54 +1,84 @@
 /**
  * @module EdgePanel
- * @role Right column — shows incoming/outgoing edges for active topic
- * @reads wikiStore: edgesIn, edgesOut, activeTopic
+ * @role Right column — guide header + groups/articles for active article
+ * @reads wikiStore: groupsByArticle, activeArticle, activeArticleFile, articlesBySection, activeSection
  */
 
 import { useWikiStore } from '../../state/wikiStore';
 
 export function EdgePanel() {
-  const edgesIn = useWikiStore((s) => s.edgesIn);
-  const edgesOut = useWikiStore((s) => s.edgesOut);
-  const navigateToTopic = useWikiStore((s) => s.navigateToTopic);
+  const activeArticle = useWikiStore((s) => s.activeArticle);
+  const activeArticleFile = useWikiStore((s) => s.activeArticleFile);
+  const activeSection = useWikiStore((s) => s.activeSection);
+  const articlesBySection = useWikiStore((s) => s.articlesBySection);
+  const groupsByArticle = useWikiStore((s) => s.groupsByArticle);
+  const selectArticle = useWikiStore((s) => s.selectArticle);
+  const showArticleGuide = useWikiStore((s) => s.showArticleGuide);
+
+  const article = activeSection
+    ? (articlesBySection[activeSection] || []).find((a) => a.id === activeArticle)
+    : undefined;
+
+  const groups = activeArticle ? (groupsByArticle[activeArticle] || []) : [];
+
+  // Derive guide title from guide filename (e.g., Connectors_Guide.md → "Connectors Guide")
+  const guideTitle = article
+    ? (article.guide || `${article.id}_Guide.md`)
+        .replace(/\.md$/, '')
+        .replace(/_/g, ' ')
+    : 'Guide';
+
+  const isGuideActive = activeArticleFile === '';
+
+  const handleGuideClick = () => {
+    if (!isGuideActive) showArticleGuide();
+  };
+
+  const handleArticleClick = (file: string) => {
+    if (!activeSection || !activeArticle) return;
+    selectArticle(activeSection, activeArticle, file);
+  };
+
+  if (!article) {
+    return (
+      <div className="rv-wiki-edge-panel">
+        <div className="rv-wiki-edge-empty">Select an article</div>
+      </div>
+    );
+  }
 
   return (
     <div className="rv-wiki-edge-panel">
-      {edgesIn.length > 0 && (
-        <div className="rv-wiki-edge-section">
-          <div className="rv-wiki-edge-heading">
-            <span className="material-symbols-outlined rv-icon-sm">arrow_back</span>
-            <span>Incoming</span>
-          </div>
-          {edgesIn.map((slug) => (
-            <button
-              key={slug}
-              className="rv-wiki-edge-link"
-              onClick={() => navigateToTopic(slug)}
-            >
-              {slug}
-            </button>
-          ))}
+      {/* Guide header */}
+      <button
+        className={`rv-wiki-edge-guide-header ${isGuideActive ? 'active' : ''}`}
+        onClick={handleGuideClick}
+      >
+        <span className="material-symbols-outlined">chrome_reader_mode</span>
+        <span>{guideTitle}</span>
+      </button>
+
+      {/* Groups */}
+      {groups.map((group) => (
+        <div key={group.id} className="rv-wiki-edge-section">
+          <div className="rv-wiki-edge-heading">{group.title}</div>
+          {group.articles.map((ref) => {
+            const isActive = activeArticleFile === ref.file;
+            return (
+              <button
+                key={ref.id}
+                className={`rv-wiki-edge-link ${isActive ? 'active' : ''}`}
+                onClick={() => handleArticleClick(ref.file)}
+              >
+                {ref.title}
+              </button>
+            );
+          })}
         </div>
-      )}
-      {edgesOut.length > 0 && (
-        <div className="rv-wiki-edge-section">
-          <div className="rv-wiki-edge-heading">
-            <span className="material-symbols-outlined rv-icon-sm">arrow_forward</span>
-            <span>Outgoing</span>
-          </div>
-          {edgesOut.map((slug) => (
-            <button
-              key={slug}
-              className="rv-wiki-edge-link"
-              onClick={() => navigateToTopic(slug)}
-            >
-              {slug}
-            </button>
-          ))}
-        </div>
-      )}
-      {edgesIn.length === 0 && edgesOut.length === 0 && (
-        <div className="rv-wiki-edge-empty">No edges</div>
+      ))}
+
+      {groups.length === 0 && (
+        <div className="rv-wiki-edge-empty">No groups</div>
       )}
     </div>
   );

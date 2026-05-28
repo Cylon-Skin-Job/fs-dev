@@ -1,117 +1,72 @@
 /**
  * @module PageViewer
- * @role Center column — renders PAGE.md as formatted markdown
- * @reads wikiStore: pageContent, pageLoading, activeTopic, activeTab, logContent
+ * @role Center column — renders guide or article markdown
+ * @reads wikiStore: guideContent, articleContent, loading, activeArticle, activeArticleFile, showGuide
  *
- * Intercepts wiki-internal links: hrefs matching known slugs navigate
- * within the wiki instead of opening a URL.
+ * No tabs, no breadcrumbs. Header shows article name + back/forward nav.
  */
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback } from 'react';
 import { markdownToHtml } from '../../lib/transforms';
 import { useWikiStore } from '../../state/wikiStore';
-import { usePanelStore } from '../../state/panelStore';
-import { copyResourcePath } from '../../lib/resource-path';
-import { useActiveResourceStore } from '../../state/activeResourceStore';
 
 export function PageViewer() {
-  const activeTopic = useWikiStore((s) => s.activeTopic);
-  const pageContent = useWikiStore((s) => s.pageContent);
-  const pageLoading = useWikiStore((s) => s.pageLoading);
-  const activeTab = useWikiStore((s) => s.activeTab);
-  const logContent = useWikiStore((s) => s.logContent);
-  const setActiveTab = useWikiStore((s) => s.setActiveTab);
-  const topics = useWikiStore((s) => s.topics);
-  const navigateToTopic = useWikiStore((s) => s.navigateToTopic);
-  const navigationHistory = useWikiStore((s) => s.navigationHistory);
+  const activeArticle = useWikiStore((s) => s.activeArticle);
+  const activeArticleFile = useWikiStore((s) => s.activeArticleFile);
+  const showGuide = useWikiStore((s) => s.showGuide);
+  const guideContent = useWikiStore((s) => s.guideContent);
+  const articleContent = useWikiStore((s) => s.articleContent);
+  const loading = useWikiStore((s) => s.loading);
+  const error = useWikiStore((s) => s.error);
   const historyIndex = useWikiStore((s) => s.historyIndex);
+  const history = useWikiStore((s) => s.history);
   const goBack = useWikiStore((s) => s.goBack);
   const goForward = useWikiStore((s) => s.goForward);
-  const error = useWikiStore((s) => s.error);
+  const articlesBySection = useWikiStore((s) => s.articlesBySection);
+  const activeSection = useWikiStore((s) => s.activeSection);
 
-  // Track active resource for live refresh
-  const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
-  useEffect(() => {
-    if (activeTopic) setActiveResource('wiki-viewer', `${activeTopic}/${activeTab === 'log' ? 'LOG' : 'PAGE'}.md`);
-  }, [activeTopic, activeTab]);
+  const getArticleTitle = useCallback(() => {
+    const articles = articlesBySection[activeSection] || [];
+    const article = articles.find((a) => a.id === activeArticle);
+    if (!article) return activeArticle;
+    if (activeArticleFile === '' || showGuide) return article.title;
+    // Derive title from filename for specific files
+    const name = activeArticleFile.replace(/\.md$/, '').replace(/_/g, ' ');
+    return name;
+  }, [articlesBySection, activeSection, activeArticle, activeArticleFile, showGuide]);
 
-  // Build set of known slugs for link interception
-  const knownSlugs = useRef(new Set<string>());
-  useEffect(() => {
-    const slugs = new Set<string>();
-    for (const [id, meta] of Object.entries(topics)) {
-      slugs.add(id);
-      slugs.add(meta.slug);
-      slugs.add(meta.slug.toLowerCase());
-      slugs.add(id.toLowerCase());
-    }
-    knownSlugs.current = slugs;
-  }, [topics]);
-
-  // Intercept link clicks for wiki-internal navigation
+  // Intercept wiki-internal links
   const handleContentClick = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     const anchor = target.closest('a');
     if (!anchor) return;
 
     const href = anchor.getAttribute('href') || '';
-    // Check if this is a wiki-internal link (no protocol, matches a known slug)
-    if (!href.includes('://') && !href.startsWith('#') && !href.startsWith('/')) {
-      // Normalize: "../topic-name/PAGE.md" → "topic-name", "topic-name" → "topic-name"
-      let slug = href
-        .replace(/\/PAGE\.md$/i, '')  // strip /PAGE.md
-        .replace(/\.md$/i, '')         // strip .md
-        .replace(/^\.\.\//g, '');      // strip leading ../
+    // Only handle relative markdown links
+    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('/')) return;
 
-      // If slug doesn't contain a collection prefix, try resolving within current topic's collection
-      if (!slug.includes('/') && activeTopic) {
-        const currentCollection = activeTopic.split('/')[0];
-        const fullId = `${currentCollection}/${slug}`;
-        if (knownSlugs.current.has(fullId)) {
-          slug = fullId;
-        }
-      }
+    // TODO: resolve internal wiki links to article navigation
+    // For now, let them behave as normal links
+  }, []);
 
-      if (knownSlugs.current.has(slug) || knownSlugs.current.has(slug.toLowerCase())) {
-        e.preventDefault();
-        e.stopPropagation();
-        navigateToTopic(slug);
-      }
-    }
-  }, [navigateToTopic, activeTopic]);
-
-  // Load log when switching to log tab
-  const handleTabClick = (tab: 'page' | 'log' | 'runs') => {
-    setActiveTab(tab);
-    if (tab === 'log' && activeTopic && !logContent) {
-      const ws = usePanelStore.getState().ws;
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({
-          type: 'file_content_request',
-          panel: 'wiki-viewer',
-          path: `${activeTopic}/LOG.md`,
-        }));
-      }
-    }
-  };
-
-  if (!activeTopic) {
+  if (!activeArticle) {
     return (
       <div className="rv-wiki-page-viewer">
         <div className="rv-wiki-page-empty">
           <span className="material-symbols-outlined">full_coverage</span>
-          <p>Select a topic to view</p>
+          <p>Select an article to view</p>
         </div>
       </div>
     );
   }
 
-  const renderedPage = pageContent ? markdownToHtml(pageContent) : '';
-  const renderedLog = logContent ? markdownToHtml(logContent) : '';
+  const rendered = showGuide || activeArticleFile === ''
+    ? markdownToHtml(guideContent)
+    : markdownToHtml(articleContent);
 
   return (
     <div className="rv-wiki-page-viewer" onClick={handleContentClick}>
-      {/* Breadcrumb / Nav */}
+      {/* Header: nav + article name */}
       <div className="rv-wiki-page-nav">
         <button
           className="rv-wiki-nav-btn"
@@ -124,45 +79,12 @@ export function PageViewer() {
         <button
           className="rv-wiki-nav-btn"
           onClick={goForward}
-          disabled={historyIndex >= navigationHistory.length - 1}
+          disabled={historyIndex >= history.length - 1}
           title="Forward"
         >
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
-        <span className="rv-wiki-breadcrumb">
-          {(topics[activeTopic]?.slug || activeTopic).replace(/-/g, ' ')}
-        </span>
-        <div className="rv-wiki-nav-actions">
-          <button
-            className="rv-file-page-action"
-            onClick={() => copyResourcePath('wiki-viewer', `${activeTopic}/${activeTab === 'log' ? 'LOG' : 'PAGE'}.md`)}
-            title="Copy file path"
-          >
-            <span className="material-symbols-outlined">link_2</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Tab bar */}
-      <div className="rv-wiki-tab-bar">
-        <button
-          className={`rv-wiki-tab ${activeTab === 'page' ? 'active' : ''}`}
-          onClick={() => handleTabClick('page')}
-        >
-          Page
-        </button>
-        <button
-          className={`rv-wiki-tab ${activeTab === 'log' ? 'active' : ''}`}
-          onClick={() => handleTabClick('log')}
-        >
-          Log
-        </button>
-        <button
-          className={`rv-wiki-tab ${activeTab === 'runs' ? 'active' : ''}`}
-          onClick={() => handleTabClick('runs')}
-        >
-          Runs
-        </button>
+        <span className="rv-wiki-breadcrumb">{getArticleTitle()}</span>
       </div>
 
       {/* Content */}
@@ -173,29 +95,14 @@ export function PageViewer() {
         </div>
       )}
 
-      {pageLoading && (
+      {loading && !rendered && (
         <div className="rv-wiki-page-loading">Loading...</div>
       )}
 
-      {activeTab === 'page' && !pageLoading && (
-        <div
-          className="rv-wiki-page-content rv-document-surface"
-          dangerouslySetInnerHTML={{ __html: renderedPage as string }}
-        />
-      )}
-
-      {activeTab === 'log' && (
-        <div
-          className="rv-wiki-page-content rv-document-surface"
-          dangerouslySetInnerHTML={{ __html: renderedLog as string }}
-        />
-      )}
-
-      {activeTab === 'runs' && (
-        <div className="rv-wiki-page-content rv-document-surface">
-          <p className="rv-dim-label">Run history — coming soon</p>
-        </div>
-      )}
+      <div
+        className="rv-wiki-page-content rv-document-surface"
+        dangerouslySetInnerHTML={{ __html: rendered as string }}
+      />
     </div>
   );
 }

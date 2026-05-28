@@ -1,251 +1,224 @@
 /**
  * @module wikiStore
- * @role State management for the wiki-viewer workspace
- * @reads topics.json, {collection}/{topic}/PAGE.md, {collection}/{topic}/LOG.md
+ * @role State management for the wiki-viewer panel
+ * @reads content/index.json, content/{section}/index.json, content/{section}/{article}/{file}.md
+ *
+ * Folder-driven structure:
+ *   content/index.json → sections
+ *   content/{section}/index.json → articles
+ *   content/{section}/{article}/index.json → groups (right sidebar)
+ *   content/{section}/{article}/{Name}_Guide.md → guide markdown
+ *   content/{section}/{article}/{group}/{file}.md → article markdown
  */
 
 import { create } from 'zustand';
 
-export interface CollectionMeta {
+export interface Section {
   id: string;
-  label: string;
-  rank: number;
-  sort: string;
-  frozen: boolean;
+  title: string;
 }
 
-export interface TopicMeta {
-  slug: string;
-  collection: string;
-  collectionLabel: string;
-  collectionRank: number;
-  rank: number;
-  frozen: boolean;
-  edges_out: string[];
-  edges_in: string[];
+export interface Article {
+  id: string;
+  title: string;
+  folder: string;
+  guide?: string;
 }
 
-interface WorkspaceWikiState {
-  topics: Record<string, TopicMeta>;
-  collections: CollectionMeta[];
-  indexLoaded: boolean;
+export interface ArticleRef {
+  id: string;
+  title: string;
+  file: string;
 }
 
-function createEmptyWorkspaceWikiState(): WorkspaceWikiState {
+export interface ArticleGroup {
+  id: string;
+  title: string;
+  articles: ArticleRef[];
+}
+
+interface WikiState {
+  // Index data
+  sections: Section[];
+  articlesBySection: Record<string, Article[]>;
+  groupsByArticle: Record<string, ArticleGroup[]>;
+
+  // Navigation
+  activeSection: string;
+  activeArticle: string;
+  activeArticleFile: string; // '' = show guide
+  showGuide: boolean;
+
+  // Content
+  guideContent: string;
+  articleContent: string;
+  loading: boolean;
+  error: string | null;
+
+  // History (back/forward through articles)
+  history: { sectionId: string; articleId: string; file: string }[];
+  historyIndex: number;
+}
+
+type WikiActions = {
+  setIndex: (sections: Section[], articlesBySection: Record<string, Article[]>) => void;
+  setArticleGroups: (articleId: string, groups: ArticleGroup[]) => void;
+  selectArticle: (sectionId: string, articleId: string, file?: string) => void;
+  showArticleGuide: () => void;
+  goBack: () => void;
+  goForward: () => void;
+  setGuideContent: (content: string) => void;
+  setArticleContent: (content: string) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  activateWorkspace: (workspaceId: string | null) => void;
+  reset: () => void;
+};
+
+type FullWikiState = WikiState & WikiActions;
+
+function createEmptyState(): WikiState {
   return {
-    topics: {},
-    collections: [],
-    indexLoaded: false,
+    sections: [],
+    articlesBySection: {},
+    groupsByArticle: {},
+    activeSection: '',
+    activeArticle: '',
+    activeArticleFile: '',
+    showGuide: true,
+    guideContent: '',
+    articleContent: '',
+    loading: false,
+    error: null,
+    history: [],
+    historyIndex: -1,
   };
 }
 
-export interface WikiState {
-  // Current workspace wiki state (rendered)
-  topics: Record<string, TopicMeta>;
-  collections: CollectionMeta[];
-  indexLoaded: boolean;
+export const useWikiStore = create<FullWikiState>((set, get) => ({
+  ...createEmptyState(),
 
-  // Workspace-keyed cache (WORKSPACE_ISOLATION_SPEC)
-  workspaceTopics: Record<string, WorkspaceWikiState>;
-  activeWorkspaceId: string | null;
-  activateWorkspace: (workspaceId: string | null) => void;
+  setIndex: (sections, articlesBySection) => {
+    const firstWithArticles = sections.find(
+      (s) => (articlesBySection[s.id] || []).length > 0
+    );
+    const defaultSection = firstWithArticles?.id || sections[0]?.id || '';
+    const defaultArticle = defaultSection
+      ? (articlesBySection[defaultSection] || [])[0]?.id || ''
+      : '';
 
-  // Navigation
-  activeTopic: string | null;
-  navigationHistory: string[];
-  historyIndex: number;
+    set({
+      sections,
+      articlesBySection,
+      activeSection: defaultSection,
+      activeArticle: defaultArticle,
+      activeArticleFile: '',
+      showGuide: true,
+      guideContent: '',
+      articleContent: '',
+      loading: false,
+      error: null,
+      history: defaultArticle
+        ? [{ sectionId: defaultSection, articleId: defaultArticle, file: '' }]
+        : [],
+      historyIndex: defaultArticle ? 0 : -1,
+    });
+  },
 
-  // Page content
-  pageContent: string;
-  pageLoading: boolean;
-  activeTab: 'page' | 'log' | 'runs';
+  setArticleGroups: (articleId, groups) =>
+    set((state) => ({
+      groupsByArticle: { ...state.groupsByArticle, [articleId]: groups },
+    })),
 
-  // Edges for active topic
-  edgesIn: string[];
-  edgesOut: string[];
-
-  // Log
-  logContent: string;
-
-  // Error
-  error: string | null;
-
-  // Actions
-  setIndex: (topics: Record<string, TopicMeta>, collections: CollectionMeta[]) => void;
-  setActiveTopic: (topicId: string) => void;
-  navigateToTopic: (slug: string) => void;
-  goBack: () => void;
-  goForward: () => void;
-  setPageContent: (content: string) => void;
-  setPageLoading: (loading: boolean) => void;
-  setLogContent: (content: string) => void;
-  setActiveTab: (tab: 'page' | 'log' | 'runs') => void;
-  setError: (error: string | null) => void;
-  reset: () => void;
-}
-
-function findTopicBySlug(topics: Record<string, TopicMeta>, slug: string): string | null {
-  // Direct match on topic ID
-  if (topics[slug]) return slug;
-  // Match on slug field (e.g., "Secrets" → "secrets")
-  for (const [id, meta] of Object.entries(topics)) {
-    if (meta.slug === slug) return id;
-  }
-  // Case-insensitive fallback
-  const lower = slug.toLowerCase();
-  for (const [id, meta] of Object.entries(topics)) {
-    if (id.toLowerCase() === lower || meta.slug.toLowerCase() === lower) return id;
-  }
-  return null;
-}
-
-export const useWikiStore = create<WikiState>((set, get) => ({
-  topics: {},
-  collections: [],
-  indexLoaded: false,
-  workspaceTopics: {},
-  activeWorkspaceId: null,
-
-  activateWorkspace: (workspaceId) => {
+  selectArticle: (sectionId, articleId, file = '') => {
     const state = get();
-
-    // Save current wiki index into the OLD workspace's cache slot
-    const nextWorkspaceTopics = { ...state.workspaceTopics };
-    if (state.activeWorkspaceId) {
-      nextWorkspaceTopics[state.activeWorkspaceId] = {
-        topics: state.topics,
-        collections: state.collections,
-        indexLoaded: state.indexLoaded,
-      };
-    }
-
-    // Load new workspace wiki state from cache or create empty
-    const cached = workspaceId ? state.workspaceTopics[workspaceId] : null;
-    const loaded = cached ? { ...cached } : createEmptyWorkspaceWikiState();
+    const newEntry = { sectionId, articleId, file };
+    const newHistory = state.history.slice(0, state.historyIndex + 1);
+    newHistory.push(newEntry);
 
     set({
-      activeWorkspaceId: workspaceId,
-      workspaceTopics: nextWorkspaceTopics,
-      topics: loaded.topics,
-      collections: loaded.collections,
-      indexLoaded: loaded.indexLoaded,
-      // Reset transient view state on switch (page content, navigation, etc.)
-      activeTopic: null,
-      navigationHistory: [],
-      historyIndex: -1,
-      pageContent: '',
-      pageLoading: false,
-      activeTab: 'page',
-      edgesIn: [],
-      edgesOut: [],
-      logContent: '',
+      activeSection: sectionId,
+      activeArticle: articleId,
+      activeArticleFile: file,
+      showGuide: file === '',
+      guideContent: file === '' ? '' : state.guideContent,
+      articleContent: '',
+      loading: true,
       error: null,
-    });
-  },
-
-  activeTopic: null,
-  navigationHistory: [],
-  historyIndex: -1,
-  pageContent: '',
-  pageLoading: false,
-  activeTab: 'page',
-  edgesIn: [],
-  edgesOut: [],
-  logContent: '',
-  error: null,
-
-  setIndex: (topics, collections) => set({ topics, collections, indexLoaded: true }),
-
-  setActiveTopic: (topicId) => {
-    const { topics } = get();
-    const meta = topics[topicId];
-    set({
-      activeTopic: topicId,
-      edgesIn: meta?.edges_in || [],
-      edgesOut: meta?.edges_out || [],
-      activeTab: 'page',
-      pageContent: '',
-      logContent: '',
-      error: null,
-    });
-  },
-
-  navigateToTopic: (slug) => {
-    const { topics, navigationHistory, historyIndex } = get();
-    const topicId = findTopicBySlug(topics, slug);
-    if (!topicId) return;
-
-    // Trim forward history and push new entry
-    const newHistory = navigationHistory.slice(0, historyIndex + 1);
-    newHistory.push(topicId);
-
-    const meta = topics[topicId];
-    set({
-      activeTopic: topicId,
-      navigationHistory: newHistory,
+      history: newHistory,
       historyIndex: newHistory.length - 1,
-      edgesIn: meta?.edges_in || [],
-      edgesOut: meta?.edges_out || [],
-      activeTab: 'page',
-      pageContent: '',
-      logContent: '',
+    });
+  },
+
+  showArticleGuide: () => {
+    const state = get();
+    if (state.activeArticleFile === '') return;
+    const newEntry = {
+      sectionId: state.activeSection,
+      articleId: state.activeArticle,
+      file: '',
+    };
+    const newHistory = state.history.slice(0, state.historyIndex + 1);
+    newHistory.push(newEntry);
+
+    set({
+      activeArticleFile: '',
+      showGuide: true,
+      articleContent: '',
+      loading: true,
       error: null,
+      history: newHistory,
+      historyIndex: newHistory.length - 1,
     });
   },
 
   goBack: () => {
-    const { navigationHistory, historyIndex, topics } = get();
-    if (historyIndex <= 0) return;
-    const newIndex = historyIndex - 1;
-    const topicId = navigationHistory[newIndex];
-    const meta = topics[topicId];
+    const state = get();
+    if (state.historyIndex <= 0) return;
+    const newIndex = state.historyIndex - 1;
+    const entry = state.history[newIndex];
     set({
-      activeTopic: topicId,
       historyIndex: newIndex,
-      edgesIn: meta?.edges_in || [],
-      edgesOut: meta?.edges_out || [],
-      activeTab: 'page',
-      pageContent: '',
-      logContent: '',
+      activeSection: entry.sectionId,
+      activeArticle: entry.articleId,
+      activeArticleFile: entry.file,
+      showGuide: entry.file === '',
+      loading: true,
+      error: null,
     });
   },
 
   goForward: () => {
-    const { navigationHistory, historyIndex, topics } = get();
-    if (historyIndex >= navigationHistory.length - 1) return;
-    const newIndex = historyIndex + 1;
-    const topicId = navigationHistory[newIndex];
-    const meta = topics[topicId];
+    const state = get();
+    if (state.historyIndex >= state.history.length - 1) return;
+    const newIndex = state.historyIndex + 1;
+    const entry = state.history[newIndex];
     set({
-      activeTopic: topicId,
       historyIndex: newIndex,
-      edgesIn: meta?.edges_in || [],
-      edgesOut: meta?.edges_out || [],
-      activeTab: 'page',
-      pageContent: '',
-      logContent: '',
+      activeSection: entry.sectionId,
+      activeArticle: entry.articleId,
+      activeArticleFile: entry.file,
+      showGuide: entry.file === '',
+      loading: true,
+      error: null,
     });
   },
 
-  setPageContent: (content) => set({ pageContent: content, pageLoading: false }),
-  setPageLoading: (loading) => set({ pageLoading: loading }),
-  setLogContent: (content) => set({ logContent: content }),
-  setActiveTab: (tab) => set({ activeTab: tab }),
-  setError: (error) => set({ error }),
+  setGuideContent: (content) =>
+    set({ guideContent: content, loading: false, error: null }),
 
-  reset: () => set({
-    topics: {},
-    collections: [],
-    indexLoaded: false,
-    activeTopic: null,
-    navigationHistory: [],
-    historyIndex: -1,
-    pageContent: '',
-    pageLoading: false,
-    activeTab: 'page',
-    edgesIn: [],
-    edgesOut: [],
-    logContent: '',
-    error: null,
-  }),
+  setArticleContent: (content) =>
+    set({ articleContent: content, loading: false, error: null }),
+
+  setLoading: (loading) => set({ loading }),
+
+  setError: (error) => set({ error, loading: false }),
+
+  activateWorkspace: () => {
+    // Reset wiki state on workspace switch. Content will be reloaded
+    // via usePanelData when the wiki-viewer panel is rendered.
+    set(createEmptyState());
+  },
+
+  reset: () => set(createEmptyState()),
 }));

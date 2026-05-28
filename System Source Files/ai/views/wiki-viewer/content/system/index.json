@@ -1,6 +1,6 @@
 {
   "version": "1.0",
   "articles": [
-    { "id": "connectors", "title": "Connectors", "folder": "connectors" }
+    { "id": "connectors", "title": "Connectors", "folder": "connectors", "guide": "Connectors_Guide.md" }
   ]
 }

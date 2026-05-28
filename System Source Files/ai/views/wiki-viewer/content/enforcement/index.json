@@ -1,6 +1,6 @@
 {
   "version": "1.0",
   "articles": [
-    { "id": "code-standards", "title": "Code Standards", "folder": "code-standards" }
+    { "id": "code-standards", "title": "Code Standards", "folder": "code-standards", "guide": "Code_Standards.md" }
   ]
 }

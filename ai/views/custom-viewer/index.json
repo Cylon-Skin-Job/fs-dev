@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "id": "custom-viewer",
+  "folderName": "custom-viewer",
+  "label": "Custom Viewer",
+  "description": "Demo browser view for testing free navigation",
+  "type": "browser",
+  "icon": "app_registration",
+  "rank": 99,
+  "url": "https://example.com",
+  "mode": "browser",
+  "chrome": {
+    "urlBar": true,
+    "tabs": false,
+    "navButtons": true
+  }
+}

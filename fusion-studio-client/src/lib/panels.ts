@@ -60,6 +60,8 @@ export interface PanelConfig {
   hasUiFolder?: boolean;
   /** True if panel ships an app/index.html iframe entry point */
   hasAppHtml?: boolean;
+  /** Raw index.json settings for view-specific configuration */
+  settings?: Record<string, any>;
 }
 
 // --- Helpers ---
@@ -212,6 +214,7 @@ export async function loadPanelConfig(
       category,
       hasUiFolder,
       hasAppHtml,
+      settings: json,
     };
   } catch {
     return null;

@@ -13,20 +13,21 @@
 
 import React, { type ComponentType } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import { WikiViewer } from './WikiViewer';
+import { WikiExplorer } from './wiki/WikiExplorer';
 import { TicketBoard } from './tickets/TicketBoard';
 import { AgentTiles } from './agents/AgentTiles';
 import { CaptureTiles } from './capture/CaptureTiles';
 import { OfficeGrid } from './office/OfficeGrid';
 import { FileExplorer } from './file-explorer/FileExplorer';
 import { SystemViewer } from './SystemViewer';
+import { BrowserView } from './browser/BrowserView';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
   'doc-viewer': CaptureTiles,
   'office-viewer': OfficeGrid,
   'file-viewer': FileExplorer,
-  'wiki-viewer': WikiViewer,
+  'wiki-viewer': WikiExplorer,
   'issues-viewer': TicketBoard,
   'agents-viewer': AgentTiles,
   'system-viewer': SystemViewer,
@@ -55,7 +56,16 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
     );
   }
 
-  // Track 2: built-in static React component
+  // Track 2: dynamic type-based routing (browser views)
+  if (config?.type === 'browser') {
+    return (
+      <main className="rv-content-area">
+        <BrowserView config={config} />
+      </main>
+    );
+  }
+
+  // Track 3: built-in static React component
   const StaticComponent = CONTENT_COMPONENTS[panel];
 
   return (
