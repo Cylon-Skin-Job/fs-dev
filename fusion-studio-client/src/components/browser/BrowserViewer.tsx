@@ -77,7 +77,7 @@ export const BrowserViewer: React.FC<BrowserViewerProps> = ({ config }) => {
   const [pageTitle, setPageTitle] = useState('');
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
-  const [isChromeHidden, setIsChromeHidden] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Update nav state from webview
@@ -202,9 +202,7 @@ export const BrowserViewer: React.FC<BrowserViewerProps> = ({ config }) => {
     if (wv) wv.reload();
   }, []);
 
-  const handleToggleChrome = useCallback(() => {
-    setIsChromeHidden((prev) => !prev);
-  }, []);
+
 
   return (
     <div className="rv-browser-viewer">
@@ -215,13 +213,11 @@ export const BrowserViewer: React.FC<BrowserViewerProps> = ({ config }) => {
         onBack={handleBack}
         onForward={handleForward}
         onReload={handleReload}
-        onToggleChrome={handleToggleChrome}
         canGoBack={canGoBack}
         canGoForward={canGoForward}
         isLoading={isLoading}
         showUrlBar={showUrlBar}
         showNavButtons={showNavButtons}
-        isChromeHidden={isChromeHidden}
         mode={mode}
       />
       <div className="rv-browser-viewer-webview-container">

@@ -15,13 +15,11 @@ export interface BrowserViewerChromeProps {
   onBack: () => void;
   onForward: () => void;
   onReload: () => void;
-  onToggleChrome: () => void;
   canGoBack: boolean;
   canGoForward: boolean;
   isLoading: boolean;
   showUrlBar: boolean;
   showNavButtons: boolean;
-  isChromeHidden: boolean;
   mode: 'browser' | 'app';
 }
 
@@ -32,13 +30,11 @@ export const BrowserViewerChrome: React.FC<BrowserViewerChromeProps> = ({
   onBack,
   onForward,
   onReload,
-  onToggleChrome,
   canGoBack,
   canGoForward,
   isLoading,
   showUrlBar,
   showNavButtons,
-  isChromeHidden,
   mode,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -59,9 +55,7 @@ export const BrowserViewerChrome: React.FC<BrowserViewerChromeProps> = ({
     }
   };
 
-  const chromeClass = isChromeHidden
-    ? 'rv-browser-viewer-chrome-inner collapsed'
-    : 'rv-browser-viewer-chrome-inner';
+  const chromeClass = 'rv-browser-viewer-chrome-inner';
 
   return (
     <form className="rv-browser-viewer-chrome" onSubmit={handleSubmit}>
@@ -115,25 +109,14 @@ export const BrowserViewerChrome: React.FC<BrowserViewerChromeProps> = ({
                 readOnly={mode === 'app'}
                 title={mode === 'app' ? 'URL is locked in app mode' : 'Enter a URL'}
               />
-              {pageTitle && !isChromeHidden && (
+              {pageTitle && (
                 <span className="rv-browser-viewer-url-title">{pageTitle}</span>
               )}
             </div>
           )}
         </div>
 
-        <div className="rv-browser-viewer-actions-group">
-          <button
-            type="button"
-            className="rv-browser-viewer-chrome-btn"
-            onClick={onToggleChrome}
-            title={isChromeHidden ? 'Show Chrome' : 'Hide Chrome'}
-          >
-            <span className="material-symbols-outlined">
-              {isChromeHidden ? 'expand_more' : 'expand_less'}
-            </span>
-          </button>
-        </div>
+
       </div>
     </form>
   );

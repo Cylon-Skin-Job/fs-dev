@@ -46,17 +46,6 @@
   max-width: 100%;
 }
 
-/* Collapsed state: hide everything except a sliver */
-.rv-browser-viewer-chrome-inner.collapsed .rv-browser-viewer-nav-group,
-.rv-browser-viewer-chrome-inner.collapsed .rv-browser-viewer-actions-group {
-  display: none;
-}
-
-.rv-browser-viewer-chrome-inner.collapsed {
-  height: 4px;
-  cursor: pointer;
-}
-
 /* Nav group (back/forward/reload + URL input) */
 .rv-browser-viewer-nav-group {
   display: flex;
