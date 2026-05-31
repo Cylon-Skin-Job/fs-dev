@@ -81,6 +81,16 @@ function createWireBroadcaster({ getClientForThread }) {
     });
   });
 
+  on('chat:tool_call_args', (event) => {
+    sendToThread(event.threadId, {
+      type: 'tool_call_args',
+      threadId: event.threadId,
+      toolCallId: event.toolCallId,
+      argsChunk: event.argsChunk,
+      turnId: event.turnId,
+    });
+  });
+
   on('chat:tool_result', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_result',
@@ -88,9 +98,24 @@ function createWireBroadcaster({ getClientForThread }) {
       toolCallId: event.toolCallId,
       toolArgs: event.toolArgs,
       toolOutput: event.toolOutput,
+      toolStatus: event.toolStatus,
       toolDisplay: event.toolDisplay,
+      returnedDiff: event.returnedDiff,
       isError: event.isError,
       turnId: event.turnId,
+    });
+  });
+
+  on('chat:subagent_event', (event) => {
+    sendToThread(event.threadId, {
+      type: 'subagent_event',
+      threadId: event.threadId,
+      turnId: event.turnId,
+      parentToolCallId: event.parentToolCallId,
+      agentId: event.agentId,
+      subagentType: event.subagentType,
+      subagentEventType: event.eventType,
+      subagentPayload: event.eventPayload,
     });
   });
 

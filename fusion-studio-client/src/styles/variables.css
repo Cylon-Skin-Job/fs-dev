@@ -10,6 +10,8 @@
   /* Tab/header rail (code viewer) + main chat column — separate from sidebars */
   --panel-chrome-bg: #1a1a1a;
   --chat-surface-bg: var(--panel-chrome-bg);
+  /* Browser chrome — active tab + address bar share this surface */
+  --browser-active-surface: var(--document-bg, #161616);
   --color-primary: #00d4ff;
   --color-secondary: #00a8cc;
   --border-primary: rgba(0, 212, 255, 0.38);

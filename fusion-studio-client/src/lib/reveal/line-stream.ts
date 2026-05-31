@@ -11,7 +11,7 @@ import type { RevealController } from './types';
 
 export const lineStreamReveal: RevealController = {
   async run(contentRef, setDisplayed, cancelRef, completeRef, options?) {
-    const parser = createLineBreakParser();
+    const parser = options?.parser ?? createLineBreakParser();
     await orchestrateReveal(contentRef, setDisplayed, cancelRef, completeRef, parser, options);
   },
 };

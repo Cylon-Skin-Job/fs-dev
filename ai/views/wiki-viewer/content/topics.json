@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-28T08:31:47.394Z",
+  "last_updated": "2026-05-29T00:00:00.000Z",
   "collections": [
     {
       "id": "project",
@@ -56,9 +56,32 @@
       "rank": 5,
       "frozen": false,
       "edges_out": [
-        "turn-lifecycle"
+        "Chat-Thread-Lifecycle"
       ],
       "edges_in": [],
+      "sources": []
+    },
+    "project/chat-thread-lifecycle": {
+      "slug": "Chat-Thread-Lifecycle",
+      "collection": "project",
+      "collectionLabel": "Project",
+      "collectionRank": 1,
+      "rank": 4,
+      "frozen": false,
+      "edges_out": [
+        "chat-panel-architecture",
+        "model-config",
+        "warmth-settings"
+      ],
+      "edges_in": [
+        "Home",
+        "Chat Panel Architecture",
+        "Workspaces",
+        "Workspace-Index",
+        "Model-Config",
+        "Progressive-Disclosure",
+        "Path-Resolution"
+      ],
       "sources": []
     },
     "project/gitlab": {
@@ -92,7 +115,7 @@
         "Workspaces",
         "Background-Agents",
         "Progressive-Disclosure",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Model-Config",
         "Wiki-System",
         "Wiki-Interface",
@@ -133,14 +156,14 @@
       "frozen": false,
       "edges_out": [
         "Workspace-Agent-Model",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Workspaces"
       ],
       "edges_in": [
         "Home",
         "Workspace-Agent-Model",
         "Workspaces",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Background-Agents"
       ],
       "sources": []
@@ -155,7 +178,7 @@
       "edges_out": [
         "Workspaces",
         "Workspace-Agent-Model",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Workspace-Index"
       ],
       "edges_in": [
@@ -174,12 +197,12 @@
       "edges_out": [
         "Workspace-Agent-Model",
         "Wiki-System",
-        "Session-Scoping"
+        "Chat-Thread-Lifecycle"
       ],
       "edges_in": [
         "Home",
         "Workspace-Agent-Model",
-        "Session-Scoping"
+        "Chat-Thread-Lifecycle"
       ],
       "sources": []
     },
@@ -215,28 +238,6 @@
       "edges_in": [
         "Home",
         "Setup-Wizard"
-      ],
-      "sources": []
-    },
-    "project/session-scoping": {
-      "slug": "Session-Scoping",
-      "collection": "project",
-      "collectionLabel": "Project",
-      "collectionRank": 1,
-      "rank": 10,
-      "frozen": false,
-      "edges_out": [
-        "Workspace-Agent-Model",
-        "Model-Config",
-        "Workspaces",
-        "Progressive-Disclosure"
-      ],
-      "edges_in": [
-        "Home",
-        "Workspace-Agent-Model",
-        "Workspaces",
-        "Model-Config",
-        "Progressive-Disclosure"
       ],
       "sources": []
     },
@@ -278,20 +279,6 @@
         "Run-Auditing",
         "Background-Agents"
       ],
-      "sources": []
-    },
-    "project/turn-lifecycle": {
-      "slug": "Turn Lifecycle & Finalization",
-      "collection": "project",
-      "collectionLabel": "Project",
-      "collectionRank": 1,
-      "rank": 4,
-      "frozen": true,
-      "edges_out": [
-        "code-standards",
-        "database-architecture"
-      ],
-      "edges_in": [],
       "sources": []
     },
     "project/warmth-settings": {
@@ -349,7 +336,7 @@
       "frozen": false,
       "edges_out": [
         "chat-panel-architecture",
-        "turn-lifecycle"
+        "Chat-Thread-Lifecycle"
       ],
       "edges_in": [],
       "sources": []
@@ -364,7 +351,7 @@
       "edges_out": [
         "Workspaces",
         "Model-Config",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Progressive-Disclosure",
         "Background-Agents"
       ],
@@ -374,7 +361,7 @@
         "Ticket-Routing",
         "Run-Auditing",
         "Model-Config",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Progressive-Disclosure",
         "Background-Agents"
       ],
@@ -389,7 +376,7 @@
       "frozen": false,
       "edges_out": [
         "Workspaces",
-        "Session-Scoping"
+        "Chat-Thread-Lifecycle"
       ],
       "edges_in": [
         "Workspaces"
@@ -406,7 +393,7 @@
       "edges_out": [
         "Workspace-Agent-Model",
         "Ticket-Routing",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Model-Config",
         "Wiki-Interface",
         "Background-Agents",
@@ -417,7 +404,7 @@
         "Workspace-Agent-Model",
         "Ticket-Routing",
         "Model-Config",
-        "Session-Scoping",
+        "Chat-Thread-Lifecycle",
         "Background-Agents"
       ],
       "sources": []

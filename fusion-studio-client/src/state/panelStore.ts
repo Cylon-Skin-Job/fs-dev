@@ -27,6 +27,7 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
     wireReady: false,
     contextUsage: 0,
     panelConfigs: [],
+    panelRoots: {},
     viewStates: {},
   };
 }
@@ -174,6 +175,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
   // ── Project root ──────────────────────────────────────────────────────────
   projectRoot: null,
   setProjectRoot: (root) => set({ projectRoot: root }),
+
+  panelRoots: {},
+  setPanelRoots: (roots) => set({ panelRoots: roots }),
 
   // ── Thread management (SPEC-26c: dual-scope) ──────────────────────────────
   threads: { project: [], view: [] },

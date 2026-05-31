@@ -1,10 +1,9 @@
 /**
  * @module ScreenshotsTrigger
- * @role Icon button showing screenshots from office-viewer/content/screenshots
+ * @role Icon button showing screenshots from System Source Files/Screenshots/
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
-import { usePanelStore } from '../state/panelStore';
 import {
   useHoverIconModal,
   useListNavigation,
@@ -17,68 +16,56 @@ import {
   HoverIconModalEmpty,
   HoverIconModalPreview,
 } from '../components/hover-icon-modal';
-import type { FileTreeNode } from '../types/file-explorer';
-import { getPanelFileUrl } from '../lib/panels';
 
 interface ScreenshotItem {
   name: string;
-  path: string;
   url: string;
   timestamp: number;
   displayName: string;
 }
-
-const SCREENSHOTS_PATH = 'screenshots';
-const PANEL = 'office-viewer';
 
 interface ScreenshotsTriggerProps {
   onInsert?: (text: string) => void;
 }
 
 export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
-  const [screenshots, setScreenshots] = useState<FileTreeNode[]>([]);
+  const [screenshots, setScreenshots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [hoveredItem, setHoveredItem] = useState<ScreenshotItem | null>(null);
   const [previewPos, setPreviewPos] = useState<{ left: number; top: number } | null>(null);
-  const ws = usePanelStore((state) => state.ws);
+  const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
 
   const loadScreenshots = useCallback(() => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-
     setLoading(true);
+    window.electronAPI?.listScreenshots()
+      .then((files) => {
+        setScreenshots(files);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
 
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const msg = JSON.parse(event.data);
-        if (msg.type === 'file_tree_response' && msg.panel === PANEL && msg.path === SCREENSHOTS_PATH) {
-          ws.removeEventListener('message', handleMessage);
-          if (msg.success) {
-            const images = msg.nodes.filter((n: FileTreeNode) =>
-              n.type === 'file' && /\.(png|jpg|jpeg|gif|webp)$/i.test(n.name)
-            );
-            setScreenshots(images);
-          }
-          setLoading(false);
-        }
-      } catch {
-        // Ignore
-      }
+  useEffect(() => {
+    let cancelled = false;
+
+    screenshots.forEach((name) => {
+      if (imageUrls[name]) return;
+      window.electronAPI?.readScreenshot(name)
+        .then(({ base64, mimeType }) => {
+          if (cancelled) return;
+          setImageUrls((prev) => ({ ...prev, [name]: `data:${mimeType};base64,${base64}` }));
+        })
+        .catch(() => {});
+    });
+
+    return () => {
+      cancelled = true;
     };
-
-    ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({
-      type: 'file_tree_request',
-      panel: PANEL,
-      path: SCREENSHOTS_PATH,
-    }));
-
-    setTimeout(() => {
-      ws.removeEventListener('message', handleMessage);
-      setLoading(false);
-    }, 5000);
-  }, [ws]);
+  }, [screenshots]);
 
   const handleOpen = useCallback(() => {
     if (screenshots.length === 0) {
@@ -86,49 +73,50 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
     }
   }, [screenshots.length, loadScreenshots]);
 
-  const getImageUrl = (filename: string) => {
-    return getPanelFileUrl(PANEL, `${SCREENSHOTS_PATH}/${filename}`);
-  };
-
   const parseScreenshotName = (filename: string): { displayName: string; timestamp: number } => {
     const baseName = filename.replace(/\.(png|jpg|jpeg|gif|webp)$/i, '');
     const match = baseName.match(/^Screenshot (\d{4})-(\d{2})-(\d{2}) at (\d{1,2})\.(\d{2})\.(\d{2}) (AM|PM)$/i);
-    
+
     if (match) {
       const [, year, month, day, hour, minute, second, meridian] = match;
       let hours = parseInt(hour, 10);
       if (meridian.toUpperCase() === 'PM' && hours !== 12) hours += 12;
       if (meridian.toUpperCase() === 'AM' && hours === 12) hours = 0;
-      
-      const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10), hours, parseInt(minute, 10), parseInt(second, 10));
-      
+
+      const date = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10),
+        hours,
+        parseInt(minute, 10),
+        parseInt(second, 10)
+      );
+
       return {
         displayName: baseName,
-        timestamp: date.getTime()
+        timestamp: date.getTime(),
       };
     }
-    
+
     return {
       displayName: baseName,
-      timestamp: 0
+      timestamp: 0,
     };
   };
 
   const screenshotItems: ScreenshotItem[] = useMemo(() => {
-    const items = screenshots.map((s) => {
-      const parsed = parseScreenshotName(s.name);
+    const items = screenshots.map((name) => {
+      const parsed = parseScreenshotName(name);
       return {
-        name: s.name,
-        path: s.path,
-        url: getImageUrl(s.name),
+        name,
+        url: imageUrls[name] || '',
         timestamp: parsed.timestamp,
-        displayName: parsed.displayName
+        displayName: parsed.displayName,
       };
     });
-    // Sort: oldest first, newest last (so we can show oldest at top, newest at bottom)
     items.sort((a, b) => a.timestamp - b.timestamp);
     return items;
-  }, [screenshots]);
+  }, [screenshots, imageUrls]);
 
   const {
     isOpen,
@@ -143,7 +131,6 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
     id: 'screenshots',
   });
 
-  // Take 20 most recent (last 20 since sorted oldest-first)
   const visibleItems = useMemo(() => screenshotItems.slice(-20), [screenshotItems]);
 
   const {
@@ -165,7 +152,6 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
         left: rect.left,
         bottom: window.innerHeight - rect.top + 12,
       });
-      // Scroll to bottom to show newest
       setTimeout(() => {
         if (listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
@@ -174,15 +160,18 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
     }
   }, [isOpen, triggerRef]);
 
-  const handleMouseEnter = useCallback((item: ScreenshotItem, index: number, e: React.MouseEvent) => {
-    handleItemHover(index);
-    setHoveredItem(item);
-    const rect = e.currentTarget.getBoundingClientRect();
-    setPreviewPos({
-      left: rect.right + 12,
-      top: rect.top
-    });
-  }, [handleItemHover]);
+  const handleMouseEnter = useCallback(
+    (item: ScreenshotItem, index: number, e: React.MouseEvent) => {
+      handleItemHover(index);
+      setHoveredItem(item);
+      const rect = e.currentTarget.getBoundingClientRect();
+      setPreviewPos({
+        left: rect.right + 12,
+        top: rect.top,
+      });
+    },
+    [handleItemHover]
+  );
 
   return (
     <>
@@ -207,14 +196,14 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
           <HoverIconModalEmpty
             icon="image_not_supported"
             message="No screenshots found"
-            hint="ai/views/office-viewer/content/screenshots/"
+            hint="System Source Files/Screenshots/"
           />
         ) : (
           <>
             <HoverIconModalList listRef={listRef}>
               {visibleItems.map((item, index) => (
                 <div
-                  key={item.path}
+                  key={item.name}
                   className={`rv-hover-icon-modal-row ${index === selectedIndex ? 'selected' : ''}`}
                   onClick={() => handleItemClick(item)}
                   onMouseEnter={(e) => handleMouseEnter(item, index, e)}

@@ -1,4 +1,5 @@
 const { mapRobinToolName } = require('./tool-mapper');
+const { normalizeKimiToolResult } = require('./display-normalizer');
 
 /**
  * Translates Robin wire protocol events to canonical events.
@@ -157,13 +158,15 @@ class EventTranslator {
     const toolCallId = String(payload?.tool_call_id || '');
     const robinToolName = String(payload?.function?.name || 'unknown');
     const toolName = mapRobinToolName(robinToolName);
-    const returnValue = payload?.return_value || {};
+    const result = normalizeKimiToolResult(payload?.return_value || {});
 
     this.state.completeToolCall(toolCallId, toolName, {
-      output: String(returnValue.output || ''),
-      display: returnValue.display || [],
-      is_error: Boolean(returnValue.is_error),
-      files: returnValue.files || []
+      output: result.output,
+      statusMessage: result.statusMessage,
+      display: result.display,
+      returnedDiff: result.returnedDiff,
+      isError: result.isError,
+      files: result.files,
     });
 
     return {
@@ -171,10 +174,12 @@ class EventTranslator {
       timestamp,
       toolCallId,
       toolName,
-      output: String(returnValue.output || ''),
-      display: returnValue.display || [],
-      isError: Boolean(returnValue.is_error),
-      files: returnValue.files || []
+      output: result.output,
+      statusMessage: result.statusMessage,
+      display: result.display,
+      returnedDiff: result.returnedDiff,
+      isError: result.isError,
+      files: result.files,
     };
   }
 

@@ -1,0 +1,110 @@
+/* CustomViewer — app container with collapsible chrome bar */
+
+.rv-custom-viewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rv-custom-viewer-iframe-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rv-custom-viewer-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* App chrome bar — absolutely positioned overlay at the top */
+.rv-app-chrome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 4px 10px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inner bar — solid background, this is what hides/shows */
+.rv-app-chrome-inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 8px;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+/* Collapsed state: inner bar completely invisible */
+.rv-app-chrome-inner.collapsed {
+  opacity: 0;
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Hover restores full visibility */
+.rv-app-chrome-inner.collapsed:hover {
+  opacity: 1;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border-color: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+/* URL input */
+.rv-app-url-input {
+  flex: 1;
+  min-width: 120px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 6px;
+  background: var(--document-bg, #161616);
+  color: var(--text-primary, #e0e0e0);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.rv-app-url-input:focus {
+  border-color: var(--color-primary, #00d4ff);
+}
+
+/* Toggle button */
+.rv-app-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.rv-app-toggle-btn:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-app-toggle-btn .material-symbols-outlined {
+  font-size: 18px;
+}

@@ -80,13 +80,18 @@ export async function orchestrateReveal(
       setDisplayed(contentRef.current);
       await sleep(POLL_INTERVAL);
     }
-    setDisplayed(contentRef.current);
+    const finalContent = contentRef.current;
+    const chunks = [
+      ...parser.feed(finalContent, 0),
+      ...(parser.flush ? parser.flush(finalContent) : []),
+    ];
+    setDisplayed(chunks.length > 0 ? chunks.map(chunk => chunk.text).join('') : finalContent);
     return;
   }
 
   const buffer: ParsedChunk[] = [];
   let bufferCursor = 0;   // next chunk to render
-  let charCursor = 0;     // characters rendered so far
+  let displayed = '';     // parsed/render-ready content displayed so far
   let lastFedLength = 0;  // content length last fed to parser
   let stallStart = 0;     // timestamp when buffer became empty with pending content
 
@@ -111,8 +116,8 @@ export async function orchestrateReveal(
 
       // ── Step 3: Type this chunk ──
       await typeChunk(chunk.text, speed, batch, (typed) => {
-        charCursor += typed.length;
-        setDisplayed(contentRef.current.slice(0, charCursor));
+        displayed += typed;
+        setDisplayed(displayed);
       }, cancelRef);
 
       bufferCursor++;
@@ -135,12 +140,19 @@ export async function orchestrateReveal(
           lastFedLength = finalContent.length;
         }
 
-        // If there's still trailing content the parser held back
-        // (no final newline), push it as a final chunk
-        if (charCursor < finalContent.length) {
-          const tail = finalContent.slice(charCursor);
-          if (tail.length > 0) {
-            buffer.push({ text: tail });
+        if (parser.flush) {
+          const flushed = parser.flush(finalContent);
+          for (const chunk of flushed) {
+            buffer.push(chunk);
+          }
+        } else {
+          // Fallback for parsers without flush support. Most parsers provide
+          // flush(), especially when their chunk text may differ from source.
+          if (displayed.length < finalContent.length) {
+            const tail = finalContent.slice(displayed.length);
+            if (tail.length > 0) {
+              buffer.push({ text: tail });
+            }
           }
         }
 
@@ -148,8 +160,8 @@ export async function orchestrateReveal(
         while (bufferCursor < buffer.length && !cancelRef.current) {
           const chunk = buffer[bufferCursor];
           await typeChunk(chunk.text, speedSlow, 1, (typed) => {
-            charCursor += typed.length;
-            setDisplayed(contentRef.current.slice(0, charCursor));
+            displayed += typed;
+            setDisplayed(displayed);
           }, cancelRef);
           bufferCursor++;
         }
@@ -161,7 +173,8 @@ export async function orchestrateReveal(
       // ── Step 4b: Flush stalled partial content ──
       // If the parser is holding back content (e.g., no \n yet) and
       // we've been waiting longer than FLUSH_TIMEOUT, force-flush it.
-      const hasUnrenderedContent = charCursor < contentRef.current.length;
+      const hasUnrenderedContent = displayed.length < contentRef.current.length
+        || lastFedLength < contentRef.current.length;
       if (hasUnrenderedContent && parser.flush) {
         if (stallStart === 0) {
           stallStart = Date.now();
@@ -183,6 +196,7 @@ export async function orchestrateReveal(
     }
   }
 
-  // Ensure final content is fully displayed
-  setDisplayed(contentRef.current);
+  // Ensure final parsed content is fully displayed without replacing transformed
+  // chunks with raw transport text.
+  setDisplayed(displayed || contentRef.current);
 }

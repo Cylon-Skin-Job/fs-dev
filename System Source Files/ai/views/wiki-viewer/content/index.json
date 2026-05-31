@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "sections": [
-    { "id": "workspaces", "title": "Workspaces" },
+    { "id": "workspaces & views", "title": "Workspaces & Views" },
     { "id": "enforcement", "title": "Enforcement" },
     { "id": "system", "title": "System" }
   ]

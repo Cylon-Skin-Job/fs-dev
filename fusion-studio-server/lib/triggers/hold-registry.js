@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { setSafeTimeout } = require('../background-services/safety');
 
 const HOLD_DURATION_MS = 9 * 60 * 1000; // 9 minutes
 
@@ -40,10 +41,10 @@ function createHoldRegistry(issuesDir, options = {}) {
         entry.ticketIds.push(ticketId);
         // Reset timer
         clearTimeout(entry.timerId);
-        entry.timerId = setTimeout(() => releaseHold(key), HOLD_DURATION_MS);
+        entry.timerId = setSafeTimeout(`HoldRegistry:${key}`, () => releaseHold(key), HOLD_DURATION_MS);
         console.log(`[HoldRegistry] ${ticketId} added to hold ${key} (${entry.ticketIds.length} tickets, timer reset)`);
       } else {
-        const timerId = setTimeout(() => releaseHold(key), HOLD_DURATION_MS);
+        const timerId = setSafeTimeout(`HoldRegistry:${key}`, () => releaseHold(key), HOLD_DURATION_MS);
         holds.set(key, { ticketIds: [ticketId], timerId });
         console.log(`[HoldRegistry] ${ticketId} held (${key}, 9min timer started)`);
       }

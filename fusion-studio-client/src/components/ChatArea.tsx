@@ -4,6 +4,7 @@ import { MessageList } from './MessageList';
 import { ConnectingOverlay } from './ConnectingOverlay';
 import { ChatAreaHeader } from './chat/ChatAreaHeader';
 import { ChatAreaFooter } from './chat/ChatAreaFooter';
+import { TodoDrawer } from './chat/TodoDrawer';
 import { useChatArea } from './chat/useChatArea';
 import type { Scope } from '../types';
 
@@ -47,27 +48,31 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           sidebarCollapsed={sidebarCollapsed}
         />
       )}
-      <div className="rv-chat-messages" ref={chat.chatContainerRef}>
-        {chat.connectingHarnessId ? (
-          <ConnectingOverlay harnessName={chat.connectingHarness?.name} />
-        ) : chat.messages.length === 0 && !chat.currentTurn && !chat.showOrb ? (
-          <div className="rv-message rv-message-system">
-            {chat.noThread ? 'No thread selected' : 'Start a conversation'}
-          </div>
-        ) : (
-          <MessageList
-            panel={panel}
-            scope={scope}
-            threadId={chat.currentThreadId}
-            messages={chat.messages}
-            currentTurn={chat.currentTurn}
-            segments={chat.segments}
-            lastUserMsgRef={chat.lastUserMsgRef}
-            showOrb={chat.showOrb}
-          />
-        )}
+      <div className="rv-chat-messages">
+        <div className="rv-chat-scroll-viewport" ref={chat.chatContainerRef}>
+          {chat.connectingHarnessId ? (
+            <ConnectingOverlay harnessName={chat.connectingHarness?.name} />
+          ) : chat.messages.length === 0 && !chat.currentTurn && !chat.showOrb ? (
+            <div className="rv-message rv-message-system">
+              {chat.noThread ? 'No thread selected' : 'Start a conversation'}
+            </div>
+          ) : (
+            <MessageList
+              panel={panel}
+              scope={scope}
+              threadId={chat.currentThreadId}
+              messages={chat.messages}
+              currentTurn={chat.currentTurn}
+              segments={chat.segments}
+              lastUserMsgRef={chat.lastUserMsgRef}
+              showOrb={chat.showOrb}
+            />
+          )}
 
-        {!chat.noThread && <div className="rv-chat-scroll-sentinel" />}
+          {!chat.noThread && <div className="rv-chat-scroll-sentinel" />}
+        </div>
+
+        <TodoDrawer scope={scope} panel={panel} threadId={chat.currentThreadId} />
       </div>
 
       <ChatAreaFooter {...chat} />

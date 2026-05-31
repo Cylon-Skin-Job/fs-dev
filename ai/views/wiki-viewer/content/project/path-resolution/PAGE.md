@@ -89,5 +89,5 @@ components/  →  hooks/  →  lib/  →  state/
 
 - [[Workspaces]] — workspace ownership and domain separation
 - [[Workspace-Agent-Model]] — agent folder structure and session lifecycle
-- [[Session-Scoping]] — SESSION.md depth model and thread management
+- [[Chat-Thread-Lifecycle]] — current thread routing, SQLite history, and turn lifecycle
 - [[Workspace-Index]] — index.json and workspace.json conventions

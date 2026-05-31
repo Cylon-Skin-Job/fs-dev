@@ -5,7 +5,7 @@
  * Creates tickets when the schedule fires and conditions are met.
  */
 
-const path = require('path');
+const { runSafely, setSafeInterval, setSafeTimeout } = require('../background-services/safety');
 
 /**
  * Parse a schedule string into interval milliseconds and a check function.
@@ -134,7 +134,7 @@ function createCronScheduler(createTicketFn, options = {}) {
      */
     start() {
       for (const job of jobs) {
-        const timer = setInterval(() => {
+        const timer = setSafeInterval(`CronScheduler:${job.name}`, () => {
           if (!job.parsed.shouldFire()) return;
 
           // Prevent double-fire in the same minute
@@ -151,7 +151,7 @@ function createCronScheduler(createTicketFn, options = {}) {
             if (!conditionMet) {
               console.log(`[CronScheduler] ${job.name}: condition not met`);
               if (job.retryMs > 0 && !job.retryTimer) {
-                job.retryTimer = setTimeout(() => {
+                job.retryTimer = setSafeTimeout(`CronScheduler:${job.name}:retry`, () => {
                   job.retryTimer = null;
                   // Re-evaluate on retry — create ticket if condition now met
                   const retryMet = options.evaluateCondition
@@ -209,12 +209,12 @@ function createCronScheduler(createTicketFn, options = {}) {
       ? message.split('\n')[0].trim()
       : `Scheduled: ${job.name}`;
 
-    createTicketFn({
+    runSafely(`CronScheduler:${job.name}:fire`, () => createTicketFn({
       title,
       assignee: job.assignee,
       body: message || `Cron trigger: ${job.name}`,
       prompt: job.trigger.prompt || null,
-    });
+    }));
 
     console.log(`[CronScheduler] Fired: ${job.name} → ${job.assignee}`);
   }

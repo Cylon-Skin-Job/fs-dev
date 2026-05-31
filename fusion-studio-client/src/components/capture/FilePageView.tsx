@@ -13,7 +13,8 @@ import { useState, useEffect } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { DocumentTile, isImageFile } from '../tile-row/DocumentTile';
 import { CodeView } from '../CodeView';
-import { copyResourcePath } from '../../lib/resource-path';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 import { getPanelFileUrl } from '../../lib/panels';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
 import './FilePageView.css';
@@ -59,13 +60,8 @@ export function FilePageView({
           {folderName ? `${folderName} / ${file.name}` : file.name}
         </span>
         <div className="rv-file-page-actions">
-          <button
-            className="rv-file-page-action"
-            onClick={() => copyResourcePath(panel, file.path)}
-            title="Copy file path"
-          >
-            <span className="material-symbols-outlined">link_2</span>
-          </button>
+          <CopyPathButton panel={panel} relativePath={file.path} title="Copy file path" />
+          <SendToChatButton panel={panel} relativePath={file.path} title="Send file path to chat" />
           {isMarkdown && (
             <button
               className="rv-file-page-action"

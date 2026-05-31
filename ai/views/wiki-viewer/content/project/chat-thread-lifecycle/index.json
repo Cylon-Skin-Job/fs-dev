@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "id": "chat-thread-lifecycle",
+  "label": "Chat Threads & Turn Lifecycle",
+  "description": "Current thread, SQLite persistence, wire routing, and live turn finalization model.",
+  "type": "page",
+  "rank": 4,
+  "icon": "forum",
+  "color": null,
+  "created": "2026-05-29T00:00:00Z",
+  "updated": "2026-05-29T00:00:00Z",
+  "frozen": false,
+  "children": null,
+  "edges_out": ["chat-panel-architecture", "model-config", "warmth-settings"],
+  "edges_in": ["home", "chat-panel-architecture", "workspaces", "workspace-index", "model-config", "progressive-disclosure", "path-resolution"],
+  "sources": null,
+  "settings": {}
+}

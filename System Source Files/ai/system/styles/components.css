@@ -1,3 +1,4 @@
+/* File Tree - shared by FolderNode and FileNode */
 /*
  * file-viewer–scoped file tree (workspace-loaded).
  * Shared code/markdown presentation: kimi-ide-client/src/styles/document.css
@@ -10,8 +11,9 @@
   gap: 0.5rem;
   padding: 0.6rem 0.75rem;
   padding-left: var(--tree-indent, 0.75rem);
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
+  user-select: none;
   transition: background-color 0.15s ease;
   margin-bottom: 2px;
   color: var(--nav-text-color, var(--text-primary, #e0e0e0));
@@ -58,4 +60,27 @@
 .rv-file-tree-empty {
   padding: 0.4rem 0;
   padding-left: var(--tree-indent, 0.75rem);
+}
+
+/* Hover actions for file tree items */
+.rv-file-tree-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+
+.rv-file-tree-item:hover .rv-file-tree-item-actions {
+  opacity: 1;
+}
+
+.rv-file-tree-item-actions .rv-file-page-action {
+  width: 22px;
+  height: 22px;
+}
+
+.rv-file-tree-item-actions .rv-file-page-action .material-symbols-outlined {
+  font-size: 16px;
 }

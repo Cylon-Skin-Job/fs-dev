@@ -3,7 +3,7 @@
  *
  * Extracted from server.js per SPEC-01d. Handles the 10-case event switch
  * (TurnBegin, ContentPart, ToolCall, ToolCallPart, ToolResult, TurnEnd,
- * StepBegin, StatusUpdate, default), plus the four non-event fallthroughs
+ * StepBegin, StatusUpdate, SubagentEvent, default), plus the four non-event fallthroughs
  * (request, response result, response error, unknown).
  *
  * Chat events (turn_begin, content, thinking, tool_call, tool_result,
@@ -26,6 +26,7 @@
 
 const { v4: generateId } = require('uuid');
 const { resolveScope } = require('../chat-scope');
+const { normalizeKimiToolResult } = require('../harness/kimi/display-normalizer');
 
 /**
  * Create a per-connection wire message router.
@@ -125,6 +126,13 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
         case 'ToolCallPart':
           if (session.activeToolId && payload?.arguments_part) {
             session.toolArgs[session.activeToolId] += payload.arguments_part;
+            emit('chat:tool_call_args', {
+              workspace: resolveScope(session),
+              threadId: session.currentThreadId,
+              turnId: session.currentTurn?.id,
+              toolCallId: session.activeToolId,
+              argsChunk: payload.arguments_part
+            });
           }
           break;
 
@@ -157,24 +165,33 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
               toolName: toolNameForBounce,
               toolArgs: parsedArgs,
               toolOutput: bounce.message,
+              toolStatus: bounce.message,
               toolDisplay: [],
+              returnedDiff: false,
               isError: true
             });
             break;
           }
           // --- End enforcement ---
 
+          const normalizedResult = normalizeKimiToolResult(payload?.return_value || {});
+
           // Find and update the corresponding tool_call part
           const toolCallPart = session.assistantParts.find(
-            p => p.type === 'tool_call' && p.name === (payload?.function?.name || '')
+            p => p.type === 'tool_call' && p.toolCallId === toolCallId
           );
           if (toolCallPart) {
             toolCallPart.arguments = parsedArgs;
             toolCallPart.result = {
-              output: payload?.return_value?.output || '',
-              display: payload?.return_value?.display || [],
-              error: payload?.return_value?.is_error ? (payload?.return_value?.output || 'Tool failed') : undefined,
-              files: payload?.return_value?.files || []
+              output: normalizedResult.output,
+              statusMessage: normalizedResult.statusMessage,
+              display: normalizedResult.display,
+              returnedDiff: normalizedResult.returnedDiff,
+              isError: normalizedResult.isError,
+              error: normalizedResult.isError
+                ? (normalizedResult.output || normalizedResult.statusMessage || 'Tool failed')
+                : undefined,
+              files: normalizedResult.files
             };
           }
 
@@ -185,12 +202,27 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
             toolCallId,
             toolName: payload?.function?.name,
             toolArgs: parsedArgs,
-            toolOutput: payload?.return_value?.output || '',
-            toolDisplay: payload?.return_value?.display || [],
-            isError: payload?.return_value?.is_error || false
+            toolOutput: normalizedResult.output,
+            toolStatus: normalizedResult.statusMessage,
+            toolDisplay: normalizedResult.display,
+            returnedDiff: normalizedResult.returnedDiff,
+            isError: normalizedResult.isError
           });
           break;
         }
+
+        case 'SubagentEvent':
+          emit('chat:subagent_event', {
+            workspace: resolveScope(session),
+            threadId: session.currentThreadId,
+            turnId: session.currentTurn?.id,
+            parentToolCallId: payload?.parent_tool_call_id || '',
+            agentId: payload?.agent_id || '',
+            subagentType: payload?.subagent_type || '',
+            eventType: payload?.event?.type || '',
+            eventPayload: payload?.event?.payload || {},
+          });
+          break;
 
         case 'TurnEnd':
           if (session.currentTurn) {

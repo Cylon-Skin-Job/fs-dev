@@ -10,6 +10,26 @@
 /* SPEC-26c-2: rv-chat-area needs position context for absolute collapse button */
 .rv-chat-area {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Chat messages container — holds the scroll viewport + the absolutely
+   positioned todo drawer overlay */
+.rv-chat-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollable message area — scrolls independently of the todo drawer */
+.rv-chat-scroll-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* SPEC-26c-2: collapsed rail — chat collapses to a 40px strip

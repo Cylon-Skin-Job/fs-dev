@@ -113,4 +113,4 @@ The workspace's own scripts maintain it. The server never writes to `index.json`
 ## Related
 
 - [Workspaces](Workspaces) — overview of all workspace types
-- [Session-Scoping](Session-Scoping) — how workspace sessions are isolated
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — current thread routing and chat persistence model

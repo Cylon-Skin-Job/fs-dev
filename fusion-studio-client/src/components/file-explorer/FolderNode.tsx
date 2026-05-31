@@ -4,6 +4,8 @@ import { formatNodeName } from '../../lib/file-utils';
 import { useFileStore } from '../../state/fileStore';
 import { usePanelStore } from '../../state/panelStore';
 import { FileTree } from './FileTree';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 interface FolderNodeProps {
   node: FileTreeNode;
@@ -127,6 +129,20 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
         </span>
         <span className="rv-tree-label">{formatNodeName(node.name)}</span>
         {isLoadingChildren && <span className="loading-indicator">...</span>}
+        <div className="rv-file-tree-item-actions" onClick={(e) => e.stopPropagation()}>
+          <CopyPathButton
+            panel="file-viewer"
+            relativePath={node.path}
+            className="rv-file-page-action"
+            title="Copy folder path"
+          />
+          <SendToChatButton
+            panel="file-viewer"
+            relativePath={node.path}
+            className="rv-file-page-action"
+            title="Send folder path to chat"
+          />
+        </div>
       </div>
       {isExpanded && hasChildrenLoaded && children && children.length > 0 && (
         <div className="folder-children">

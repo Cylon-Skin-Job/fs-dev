@@ -1,0 +1,100 @@
+/* BookmarkDialog — popup for adding/editing bookmarks */
+
+.rv-bookmark-dialog {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  min-width: 260px;
+  padding: 12px;
+  background: var(--document-bg, #1e1e1e);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.15));
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-bookmark-dialog-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-bookmark-dialog-icon {
+  font-size: 18px;
+  color: var(--text-dim, rgba(255, 255, 255, 0.5));
+  flex-shrink: 0;
+}
+
+.rv-bookmark-dialog-name {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--browser-active-surface), black 10%);
+  color: var(--text-primary, #e0e0e0);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+}
+
+.rv-bookmark-dialog-name:focus {
+  border-color: var(--color-primary, #00d4ff);
+}
+
+.rv-bookmark-dialog-folder {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--browser-active-surface), black 10%);
+  color: var(--text-primary, #e0e0e0);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.rv-bookmark-dialog-folder option {
+  background: var(--document-bg, #1e1e1e);
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-bookmark-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.rv-bookmark-dialog-btn {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-primary, #e0e0e0);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.rv-bookmark-dialog-btn:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+}
+
+.rv-bookmark-dialog-btn--primary {
+  background: var(--color-primary, #00d4ff);
+  color: #000;
+  border-color: var(--color-primary, #00d4ff);
+}
+
+.rv-bookmark-dialog-btn--primary:hover {
+  background: color-mix(in srgb, var(--color-primary, #00d4ff), white 15%);
+}

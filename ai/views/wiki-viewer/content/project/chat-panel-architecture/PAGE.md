@@ -43,7 +43,7 @@ Every message has a `segments[]` array. The same data renders through two comple
 
 **LiveSegmentRenderer** — Current turn. Animated. Sequential reveal (one segment at a time). Orb gatekeeper before first content. Used for: active streaming.
 
-The transition between them happens at finalization (see Turn Lifecycle wiki).
+The transition between them happens at finalization (see Chat Threads & Turn Lifecycle).
 
 ## Sequential Reveal
 
@@ -96,7 +96,7 @@ If the cursor is appended AFTER the HTML (e.g., `<p>text</p><span>█</span>`), 
 
 ## Completion Detection
 
-Turn finalization uses an effect, not a callback. See the Turn Lifecycle wiki for the full explanation.
+Turn finalization uses an effect, not a callback. See Chat Threads & Turn Lifecycle for the full explanation.
 
 The short version: `onSegmentDone` only bumps `revealedCount`. A separate `useEffect` watches `[revealedCount, segments.length, onRevealComplete]` and fires `finalizeTurn()` when all three conditions align. This handles both orderings (stream finishes first OR renderer finishes first).
 

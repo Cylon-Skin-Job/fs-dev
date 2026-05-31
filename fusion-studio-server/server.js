@@ -468,6 +468,7 @@ wss.on('connection', async (ws) => {
     getSecretsHandlers: () => secretsHandlers,
     getScreenshotHandlers: () => screenshotHandlers,
     getRecentDocsHandlers: () => recentDocsHandlers,
+    getBookmarksHandlers: () => bookmarksHandlers,
   });
 
   ws.on('message', handleClientMessage);
@@ -542,13 +543,25 @@ wss.on('connection', async (ws) => {
     console.error('[WS] workspace:init failed:', err);
   }
 
+  // Compute panel roots once using the canonical resolver.
+  // The client needs these to build absolute paths for copy-to-clipboard.
+  const panelRoots = {};
+  if (projectRoot) {
+    const viewIds = views.listViews(projectRoot);
+    for (const viewId of viewIds) {
+      const root = views.resolveContentPath(projectRoot, viewId);
+      if (root) panelRoots[viewId] = root;
+    }
+  }
+
   // Send project root info without assuming a panel — the client will
   // send set_panel to identify itself. When no workspace is active,
   // projectRoot is null and the client renders the empty state.
   ws.send(JSON.stringify({
     type: 'panel_config',
     projectRoot,
-    projectName: projectRoot ? path.basename(projectRoot) : null
+    projectName: projectRoot ? path.basename(projectRoot) : null,
+    panelRoots
   }));
 });
 
@@ -564,6 +577,7 @@ wss.on('connection', async (ws) => {
 let fusionHandlers = {};
 let clipboardHandlers = {};
 let recentDocsHandlers = {};
+let bookmarksHandlers = {};
 let themeHandlers = {};
 let secretsHandlers = {};
 let screenshotHandlers = {};
@@ -577,6 +591,7 @@ startServer({
     fusionHandlers = result.fusionHandlers;
     clipboardHandlers = result.clipboardHandlers;
     recentDocsHandlers = result.recentDocsHandlers;
+    bookmarksHandlers = result.bookmarksHandlers;
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;
     screenshotHandlers = result.screenshotHandlers || {};

@@ -24,6 +24,8 @@ import type { RevealController } from './reveal/types';
 import { createSingleChunkStrategy } from './chunk-strategies/active/single-chunk';
 import { createLineChunkStrategy } from './chunk-strategies/active/line-chunk';
 import { createMarkdownChunkStrategy } from './chunk-strategies/active/markdown-chunk';
+import { createWebSearchChunkStrategy } from './chunk-strategies/active/web-search-chunk';
+import { createFetchChunkStrategy } from './chunk-strategies/active/fetch-chunk';
 
 // ── Content renderers ──
 import { lineStreamRenderer } from './segment-renderers/line-stream';
@@ -108,7 +110,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
-    awaitsResult: true,
   },
 
   write: {
@@ -155,8 +156,8 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
 
   web_search: {
     type: 'web_search',
-    tags: ['WebSearch', 'web_search'],
-    createStrategy: (parent) => createLineChunkStrategy(parent, 'code'),
+    tags: ['SearchWeb', 'WebSearch', 'web_search'],
+    createStrategy: (parent) => createWebSearchChunkStrategy(parent),
     renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
@@ -165,8 +166,8 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
 
   fetch: {
     type: 'fetch',
-    tags: ['WebFetch', 'fetch'],
-    createStrategy: (parent) => createLineChunkStrategy(parent, 'code'),
+    tags: ['FetchURL', 'WebFetch', 'fetch'],
+    createStrategy: (parent) => createFetchChunkStrategy(parent),
     renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
@@ -179,6 +180,7 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     createStrategy: (parent) => createLineChunkStrategy(parent, 'text'),
     renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
+    speed: 'fast',
   },
 
   todo: {

@@ -1,8 +1,8 @@
 /**
  * @module screenshots
- * @role Lightweight screenshots gallery using existing file API
- * 
- * Reads from ai/views/doc-viewer/content/screenshots/ via file_tree_request
+ * @role Lightweight screenshots gallery using direct file paths
+ *
+ * Reads from System Source Files/Screenshots/ via Electron IPC
  */
 
 export { ScreenshotsTrigger } from './ScreenshotsTrigger';

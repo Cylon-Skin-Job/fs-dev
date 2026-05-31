@@ -11,6 +11,7 @@
  */
 
 const { on, emit } = require('../event-bus');
+const { setSafeTimeout } = require('../background-services/safety');
 
 const STATE_IDLE = 'idle';
 const STATE_IN_FLIGHT = 'in_flight';
@@ -126,7 +127,7 @@ function scheduleIdleTimer(threadId) {
   if (idleTimeoutMinutes <= 0) return;
   const entry = threads.get(threadId);
   if (!entry) return;
-  entry.timer = setTimeout(() => onIdleTimerFire(threadId), idleTimeoutMinutes * 60_000);
+  entry.timer = setSafeTimeout(`ThreadLifecycle:idle:${threadId}`, () => onIdleTimerFire(threadId), idleTimeoutMinutes * 60_000);
 }
 
 function onIdleTimerFire(threadId) {

@@ -15,9 +15,14 @@ export {
   clearHistory,
   copyFromHistory,
   writeAndRecord,
+} from './clipboard-api';
+export {
+  initializeClipboardMonitorFromConfig,
+  isClipboardMonitorEnabled,
+  setClipboardMonitorEnabled,
   startClipboardMonitor,
   stopClipboardMonitor,
-} from './clipboard-api';
+} from './clipboard-monitor';
 export {
   getClipboardController,
   attachClipboardController,

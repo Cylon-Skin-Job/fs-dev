@@ -107,5 +107,5 @@ Manages Claude Code commands and Cursor skills. Read-only view of current skills
 - [Workspace-Agent-Model](Workspace-Agent-Model) — the file pattern for workspace chat agents
 - [Background-Agents](Background-Agents) — the agent command center and execution workspace
 - [Ticket-Routing](Ticket-Routing) — how tickets flow between workspaces
-- [Session-Scoping](Session-Scoping) — isolated sessions per workspace
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — current project-thread chat model
 - [Model-Config](Model-Config) — per-workspace model preferences

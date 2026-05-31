@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "id": "background-services-audit",
+  "label": "Background Services Audit",
+  "description": "Audit of automatic startup pullers, background connectors, watchers, timers, and external dependency paths.",
+  "type": "page",
+  "rank": 11,
+  "icon": "manage_search",
+  "color": null,
+  "created": "2026-05-30T00:00:00Z",
+  "updated": "2026-05-30T00:00:00Z",
+  "frozen": false,
+  "children": null,
+  "edges_out": ["Background-Agents", "Ticket-Routing", "Workspaces", "Screenshot-Capture"],
+  "edges_in": ["Home", "Background-Agents"],
+  "sources": [],
+  "settings": {}
+}

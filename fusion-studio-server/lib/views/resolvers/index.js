@@ -1,17 +1,10 @@
 /**
  * @module resolvers
- * @role Registry of display-type resolvers
+ * @role Stub — the display-type resolver registry has been eliminated.
  *
- * Each display type gets its own module. Add a new type by creating
- * a new file and registering it here. If a type has no resolver,
- * the default behavior (view root = content root) applies.
+ * Path resolution is now handled directly in lib/views/index.js.
+ * This file is kept as a placeholder so any legacy require('./resolvers')
+ * calls don't crash during a transition period.
  */
 
-module.exports = {
-  'file-explorer': require('./file-explorer'),
-  'navigation': require('./navigation'),
-  'tiled-rows': require('./tiled-rows'),
-  'tabbed': require('./tabbed'),
-  'columns': require('./columns'),
-  'list': require('./list'),
-};
+module.exports = {};

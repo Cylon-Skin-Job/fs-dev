@@ -30,7 +30,10 @@ export interface ElectronAPI {
   createEvent: (payload: { calendarName: string; title: string; startDate: string; endDate: string; allDay: boolean; location?: string; notes?: string }) => Promise<{ success: boolean; uid?: string; error?: string }>;
   updateEvent: (payload: { uid: string; calendarName: string; title: string; startDate: string; endDate: string; allDay: boolean; location?: string; notes?: string }) => Promise<{ success: boolean; error?: string }>;
   deleteEvent: (payload: { uid: string }) => Promise<{ success: boolean; error?: string }>;
+  onBrowserUrlChanged: (callback: (payload: { url: string }) => void) => (() => void);
   setWorkspaceRoot: (repoPath: string) => void;
+  listScreenshots: () => Promise<string[]>;
+  readScreenshot: (filename: string) => Promise<{ base64: string; mimeType: string }>;
 }
 
 declare global {

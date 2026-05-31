@@ -11,8 +11,8 @@
   "updated": "2026-03-27T21:00:00Z",
   "frozen": false,
   "children": null,
-  "edges_out": ["Workspaces", "Model-Config", "Session-Scoping", "Progressive-Disclosure", "Background-Agents"],
-  "edges_in": ["Home", "Workspaces", "Ticket-Routing", "Run-Auditing", "Model-Config", "Session-Scoping", "Progressive-Disclosure", "Background-Agents"],
+  "edges_out": ["Workspaces", "Model-Config", "Chat-Thread-Lifecycle", "Progressive-Disclosure", "Background-Agents"],
+  "edges_in": ["Home", "Workspaces", "Ticket-Routing", "Run-Auditing", "Model-Config", "Chat-Thread-Lifecycle", "Progressive-Disclosure", "Background-Agents"],
   "sources": [],
   "settings": {}
 }

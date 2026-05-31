@@ -1,14 +1,14 @@
 /**
- * fetch — URL display (grouped).
+ * fetch — extracted page content preview.
  *
- * Content has summary lines (URLs).
+ * Live content is chunked one paragraph at a time by the active strategy.
  */
 
 import { escapeHtml } from '../transforms';
 import type { ToolRenderer } from './types';
 
 export const fetchRenderer: ToolRenderer = {
-  grouped: true,
+  grouped: false,
 
   buildTitle: (n) => n === 1 ? 'Fetch' : `Fetch (${n})`,
 
@@ -21,7 +21,7 @@ export const fetchRenderer: ToolRenderer = {
 
   showCursor: false,
 
-  formatContent: (content, _args) => {
+  formatContent: (content) => {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line => {

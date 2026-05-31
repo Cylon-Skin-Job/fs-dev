@@ -44,6 +44,8 @@ export interface RevealOptions {
   interChunkPause?: number;
   /** Skip typing entirely — wait for content to be complete, then show at once. */
   instantReveal?: boolean;
+  /** Optional semantic parser supplied by a catalog strategy adapter. */
+  parser?: ChunkParser;
 }
 
 /**

@@ -12,7 +12,7 @@
  */
 
 const chokidar = require('chokidar');
-const path = require('path');
+const { runSafely } = require('../background-services/safety');
 
 const DEFAULT_OPTIONS = {
   followSymlinks: true,
@@ -60,11 +60,7 @@ function subscribe({ id, path: watchPath, options = {}, handler }) {
 
     instance.watcher.on('all', (event, filePath) => {
       for (const [subId, sub] of instance.subscribers) {
-        try {
-          sub.handler(event, filePath);
-        } catch (err) {
-          console.error(`[WatchCore] Handler error for subscriber "${subId}":`, err.message);
-        }
+        runSafely(`WatchCore:${subId}`, () => sub.handler(event, filePath));
       }
     });
 

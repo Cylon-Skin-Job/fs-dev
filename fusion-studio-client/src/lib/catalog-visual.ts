@@ -102,7 +102,7 @@ const DEFAULT_VISUAL_STYLE: SegmentVisualStyle = {
   iconColor: 'var(--accent-dim, var(--text-dim))',
   iconSize: 16,
   labelColor: 'var(--accent-dim, var(--text-dim))',
-  labelStyle: 'normal',
+  labelStyle: 'italic',
   contentTypography: 'body',
   contentColor: 'var(--accent-dim, var(--text-dim))',
 };
@@ -132,7 +132,6 @@ const VISUAL_OVERRIDES: Record<SegmentType, Partial<SegmentVisualStyle>> = {
 
   think: {
     icon: 'lightbulb',
-    labelStyle: 'italic',
     borderLeft: { width: '1px', color: 'var(--theme-primary)' },
     contentTypography: 'italic',
   },
@@ -145,7 +144,6 @@ const VISUAL_OVERRIDES: Record<SegmentType, Partial<SegmentVisualStyle>> = {
 
   read: {
     icon: 'description',
-    labelStyle: 'italic',
     contentTypography: 'monospace',
   },
 
@@ -162,33 +160,27 @@ const VISUAL_OVERRIDES: Record<SegmentType, Partial<SegmentVisualStyle>> = {
   },
 
   glob: {
-    icon: 'folder_data',
-    labelStyle: 'italic',
+    icon: 'map_search',
   },
 
   grep: {
     icon: 'document_search',
-    labelStyle: 'italic',
   },
 
   web_search: {
     icon: 'travel_explore',
-    labelStyle: 'italic',
   },
 
   fetch: {
     icon: 'link_2',
-    labelStyle: 'italic',
   },
 
   subagent: {
     icon: 'smart_toy',
-    labelStyle: 'italic',
   },
 
   todo: {
-    icon: 'checklist',
-    labelStyle: 'italic',
+    icon: 'list_alt_check',
   },
 };
 
@@ -249,15 +241,15 @@ const BEHAVIOR_OVERRIDES: Record<SegmentType, Partial<SegmentBehavior>> = {
 
   web_search: {
     contentFormat: 'plain',
-    renderMode: 'grouped-summary',
-    groupable: true,
+    renderMode: 'line-stream',
+    groupable: false,
     summaryField: 'query',
   },
 
   fetch: {
     contentFormat: 'plain',
-    renderMode: 'grouped-summary',
-    groupable: true,
+    renderMode: 'line-stream',
+    groupable: false,
     summaryField: 'url',
   },
 
@@ -353,7 +345,7 @@ const LABEL_BUILDERS: Record<SegmentType, (args?: Record<string, unknown>) => st
   web_search: () => 'Web Search',
   fetch: () => 'Fetch',
   subagent: () => 'Subagent',
-  todo: () => 'Todo',
+  todo: () => 'Update ToDo List',
 };
 
 // =============================================================================
@@ -491,4 +483,3 @@ export function getRenderMode(type: SegmentType): RenderMode {
 export function getSummaryField(type: SegmentType): string | undefined {
   return SEGMENT_CATALOG[type].behavior.summaryField;
 }
-

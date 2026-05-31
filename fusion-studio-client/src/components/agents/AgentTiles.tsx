@@ -13,7 +13,8 @@ import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { usePanelStore } from '../../state/panelStore';
 import { useAgentStore, AGENT_CONFIG_FILES, type Agent } from '../../state/agentStore';
 import { PromptCardView } from './PromptCardView';
-import { copyResourcePath } from '../../lib/resource-path';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 
 /** Strip YAML frontmatter, return just the markdown body */
@@ -171,13 +172,18 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
         <span className="material-symbols-outlined rv-agent-detail-header-icon">{agent.icon}</span>
         <span className="rv-agent-detail-header-name">{formatId(agent.id)}</span>
         <span className={`rv-agent-tile-status ${agent.status}`}>{agent.status}</span>
-        <button
+        <CopyPathButton
+          panel="agents-viewer"
+          relativePath={`${agent.folder}/${agent.id}/`}
           className="rv-file-page-action"
-          onClick={() => copyResourcePath('agents-viewer', `${agent.folder}/${agent.id}/`)}
           title="Copy agent path"
-        >
-          <span className="material-symbols-outlined">link_2</span>
-        </button>
+        />
+        <SendToChatButton
+          panel="agents-viewer"
+          relativePath={`${agent.folder}/${agent.id}/`}
+          className="rv-file-page-action"
+          title="Send agent path to chat"
+        />
         <button className="rv-agent-detail-exit" onClick={() => setExpanded(null)}>
           <span className="material-symbols-outlined rv-icon-xl">close</span>
         </button>

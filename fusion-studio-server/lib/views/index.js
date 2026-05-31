@@ -3,8 +3,7 @@
  * @role View discovery and resolution
  *
  * Reads ai/views/ folder structure and content.json declarations.
- * Provides per-view-type path resolution and configuration.
- * Each display type has its own resolver module.
+ * Provides path resolution and configuration.
  *
  * Nothing in this module touches the database. Everything comes from
  * the filesystem (index.json, content.json, settings/layout.json).
@@ -12,9 +11,6 @@
 
 const path = require('path');
 const fs = require('fs');
-
-// Display-type resolvers — one module per type
-const resolvers = require('./resolvers');
 
 /**
  * Get the views root directory for a project.
@@ -121,7 +117,14 @@ function loadAllViews(projectRoot) {
 
 /**
  * Resolve the content path for a view.
- * Delegates to the display-type-specific resolver.
+ *
+ * Rules:
+ *   - file-viewer → project root (or per-session root if provided)
+ *   - Any other view → viewRoot/content/ if that folder exists, else viewRoot
+ *
+ * The old display-type resolver registry has been eliminated. Layout is now
+ * driven by per-workspace settings/layout.json and React component mapping,
+ * not by a server-side content.json display field.
  *
  * @param {string} projectRoot
  * @param {string} viewId
@@ -132,14 +135,16 @@ function resolveContentPath(projectRoot, viewId, context = {}) {
   const view = loadView(projectRoot, viewId);
   if (!view) return null;
 
-  const displayType = view.content.display;
-  const resolver = resolvers[displayType];
-
-  if (resolver && typeof resolver.resolveContentPath === 'function') {
-    return resolver.resolveContentPath(projectRoot, viewId, view, context);
+  // file-viewer is special: it browses the project root, not its own folder
+  if (viewId === 'file-viewer') {
+    return context.sessionRoot || projectRoot;
   }
 
-  // Default: the view's own folder
+  // If the view has a content/ subfolder, use it. Otherwise the view root
+  // itself is the content area.
+  const contentPath = path.join(view.viewRoot, 'content');
+  if (fs.existsSync(contentPath)) return contentPath;
+
   return view.viewRoot;
 }
 

@@ -1,6 +1,5 @@
 {
   "version": "1.0",
-  "display": "tabbed",
   "chat": {
     "type": "threaded",
     "position": "right"

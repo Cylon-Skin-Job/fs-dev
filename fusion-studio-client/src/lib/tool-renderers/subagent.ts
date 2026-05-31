@@ -4,17 +4,17 @@
  * Line-by-line streaming, similar to thinking but not italic.
  */
 
-import { escapeHtml } from '../transforms';
+import { buildSubagentTitle, formatSubagentContent } from '../subagent-output';
 import type { ToolRenderer } from './types';
 
 export const subagentRenderer: ToolRenderer = {
   grouped: false,
-  buildTitle: () => 'Subagent',
+  buildTitle: (_itemCount, args) => buildSubagentTitle(args),
   contentStyle: {
-    whiteSpace: 'pre-wrap',
+    whiteSpace: 'normal',
     fontFamily: 'inherit',
     fontStyle: 'normal',
   },
   showCursor: true,
-  formatContent: (content) => escapeHtml(content),
+  formatContent: (content) => formatSubagentContent(content),
 };

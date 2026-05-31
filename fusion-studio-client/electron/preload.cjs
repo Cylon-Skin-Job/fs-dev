@@ -11,5 +11,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('menu-action', listener);
     return () => ipcRenderer.removeListener('menu-action', listener);
   },
+  onBrowserUrlChanged: (callback) => {
+    const listener = (_event, payload) => callback(payload);
+    ipcRenderer.on('browser:url-changed', listener);
+    return () => ipcRenderer.removeListener('browser:url-changed', listener);
+  },
   setWorkspaceRoot: (repoPath) => ipcRenderer.send('workspace:set-root', repoPath),
+  listScreenshots: () => ipcRenderer.invoke('screenshots:list'),
+  readScreenshot: (filename) => ipcRenderer.invoke('screenshots:read', filename),
 });

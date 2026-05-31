@@ -22,7 +22,7 @@ export const globRenderer: ToolRenderer = {
 
   showCursor: false,
 
-  formatContent: (content, _args) => {
+  formatContent: (content) => {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line =>

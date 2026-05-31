@@ -76,5 +76,5 @@ If `api.json` doesn't exist in a workspace, the agent inherits base `config.toml
 ## Related
 
 - [Workspace-Agent-Model](Workspace-Agent-Model) — the 5-file pattern including api.json
-- [Session-Scoping](Session-Scoping) — how sessions are isolated per workspace
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — how harness choice and thread state are opened and persisted
 - [Workspaces](Workspaces) — which workspaces use which settings

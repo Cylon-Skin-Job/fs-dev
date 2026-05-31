@@ -12,7 +12,7 @@
  * @property {string} [toolCallId]
  * @property {string} [name]
  * @property {Record<string, unknown>} [arguments]
- * @property {{output: string, display: unknown[], error?: string, files?: string[]}} [result]
+ * @property {{output: string, statusMessage?: string, display: unknown[], returnedDiff?: boolean, isError?: boolean, error?: string, files?: string[]}} [result]
  */
 
 /**
@@ -110,7 +110,7 @@ class KimiSessionState {
       toolCallId,
       name: toolName,
       arguments: {},
-      result: { output: '', display: [] }
+      result: { output: '', display: [], returnedDiff: false, isError: false }
     });
   }
 
@@ -129,11 +129,11 @@ class KimiSessionState {
    * Complete a tool call with result
    * @param {string} toolCallId
    * @param {string} toolName
-   * @param {{output: string, display: unknown[], is_error?: boolean, files?: string[]}} result
+   * @param {{output: string, statusMessage?: string, display: unknown[], returnedDiff?: boolean, isError?: boolean, is_error?: boolean, files?: string[]}} result
    */
   completeToolCall(toolCallId, toolName, result) {
     const toolPart = this.assistantParts.find(
-      p => p.type === 'tool_call' && p.name === toolName
+      p => p.type === 'tool_call' && p.toolCallId === toolCallId
     );
     
     if (toolPart) {
@@ -142,10 +142,14 @@ class KimiSessionState {
       } catch {
         toolPart.arguments = {};
       }
+      const isError = Boolean(result.isError ?? result.is_error);
       toolPart.result = {
         output: result.output,
+        statusMessage: result.statusMessage,
         display: result.display,
-        error: result.is_error ? result.output : undefined,
+        returnedDiff: Boolean(result.returnedDiff),
+        isError,
+        error: isError ? (result.output || result.statusMessage || 'Tool failed') : undefined,
         files: result.files
       };
     }

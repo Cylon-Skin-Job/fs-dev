@@ -50,19 +50,17 @@ import { isGroupable } from './catalog-visual';
 // Types
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-/** Layer 1: the current sequence being built. */
-interface ActiveGroup {
+/** Shared grouped state for both sequence decisions and result routing. */
+export interface GroupState {
   type: SegmentType;
   segmentIndex: number;
   toolCallIds: Set<string>;
-  count: number;
+  expected: number;
+  completed: number;
 }
 
-/** Layer 2: per-toolCallId registration (survives interleaving). */
-interface GroupEntry {
-  type: SegmentType;
-  segmentIndex: number;
-}
+/** Layer 1: the current sequence being built. */
+type ActiveGroup = GroupState;
 
 /** Result of onToolCall — tells the caller what to do. */
 export interface ToolCallAction {
@@ -72,6 +70,8 @@ export interface ToolCallAction {
   segmentType: SegmentType;
   /** For 'extend': the segment index to append content to. */
   segmentIndex?: number;
+  /** Number of tool calls expected in this group after this call. */
+  groupCount?: number;
 }
 
 /** Result of getGroupForResult — tells the caller how to handle tool_result. */
@@ -82,6 +82,18 @@ export interface ToolResultLookup {
   type: SegmentType;
   /** The segment index to append summary content to (grouped only). */
   segmentIndex: number;
+  /** Number of tool calls expected in this group. */
+  expected: number;
+  /** Number of tool results completed in this group before recording this result. */
+  completed: number;
+}
+
+/** Result of recording a grouped tool_result. */
+export interface ToolResultCompletion {
+  segmentIndex: number;
+  expected: number;
+  completed: number;
+  complete: boolean;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -92,7 +104,7 @@ export interface ToolResultLookup {
 let activeGroup: ActiveGroup | null = null;
 
 /** Layer 2: every toolCallId → group info. Survives interleaving. Cleared on turn_end. */
-const toolCallMap = new Map<string, GroupEntry>();
+const toolCallMap = new Map<string, GroupState>();
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Public API
@@ -116,25 +128,25 @@ export function onToolCall(
     if (activeGroup && activeGroup.type === segType) {
       // Extend current group
       activeGroup.toolCallIds.add(toolCallId);
-      activeGroup.count++;
-      toolCallMap.set(toolCallId, {
-        type: segType,
+      activeGroup.expected++;
+      toolCallMap.set(toolCallId, activeGroup);
+      return {
+        action: 'extend',
+        segmentType: segType,
         segmentIndex: activeGroup.segmentIndex,
-      });
-      return { action: 'extend', segmentType: segType, segmentIndex: activeGroup.segmentIndex };
+        groupCount: activeGroup.expected,
+      };
     } else {
       // Start new group
       activeGroup = {
         type: segType,
         segmentIndex: currentSegmentCount,
         toolCallIds: new Set([toolCallId]),
-        count: 1,
+        expected: 1,
+        completed: 0,
       };
-      toolCallMap.set(toolCallId, {
-        type: segType,
-        segmentIndex: currentSegmentCount,
-      });
-      return { action: 'new', segmentType: segType };
+      toolCallMap.set(toolCallId, activeGroup);
+      return { action: 'new', segmentType: segType, groupCount: 1 };
     }
   } else {
     // Non-groupable — always a new segment, breaks any active group
@@ -156,6 +168,24 @@ export function getGroupForResult(toolCallId: string): ToolResultLookup | null {
     grouped: true,
     type: entry.type,
     segmentIndex: entry.segmentIndex,
+    expected: entry.expected,
+    completed: entry.completed,
+  };
+}
+
+/**
+ * Record that a grouped tool_result has been applied to its segment.
+ */
+export function recordGroupResult(toolCallId: string): ToolResultCompletion | null {
+  const entry = toolCallMap.get(toolCallId);
+  if (!entry) return null;
+
+  entry.completed++;
+  return {
+    segmentIndex: entry.segmentIndex,
+    expected: entry.expected,
+    completed: entry.completed,
+    complete: entry.completed >= entry.expected,
   };
 }
 

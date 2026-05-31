@@ -1,20 +1,20 @@
 /**
- * todo — Task list (singular).
+ * todo — Inline marker only. The actionable checklist lives in TodoDrawer.
  *
- * Line-by-line streaming.
+ * formatContent returns '' so ToolCallBlock renders no dropdown arrow
+ * and no body, keeping the transcript compact.
  */
 
-import { escapeHtml } from '../transforms';
 import type { ToolRenderer } from './types';
 
 export const todoRenderer: ToolRenderer = {
   grouped: false,
-  buildTitle: () => 'Todo',
+  buildTitle: () => 'Update ToDo List',
   contentStyle: {
     whiteSpace: 'pre-wrap',
     fontFamily: 'inherit',
     fontStyle: 'normal',
   },
-  showCursor: true,
-  formatContent: (content) => escapeHtml(content),
+  showCursor: false,
+  formatContent: () => '',
 };

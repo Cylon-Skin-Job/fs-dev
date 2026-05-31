@@ -11,11 +11,12 @@
  * For now, only open tickets from the root are loaded.
  */
 
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { useTicketStore, type Ticket } from '../../state/ticketStore';
-import { copyResourcePath } from '../../lib/resource-path';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 
 // Bot names we recognize — matches registry.json
@@ -51,17 +52,6 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
   const activeTicket = useTicketStore((s) => s.activeTicket);
   const setActive = useTicketStore((s) => s.setActiveTicket);
   const bot = isBot(ticket.assignee);
-  const linkBtnRef = useRef<HTMLButtonElement>(null);
-
-  const handleCopyPath = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    copyResourcePath('issues-viewer', `${ticketFolder(ticket)}/${ticket.id}.md`);
-    if (linkBtnRef.current) {
-      linkBtnRef.current.classList.add('copied');
-      setTimeout(() => linkBtnRef.current?.classList.remove('copied'), 1200);
-    }
-  };
-
   return (
     <div
       className={`rv-ticket-card ${activeTicket === ticket.id ? 'active' : ''}`}
@@ -69,14 +59,27 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
     >
       <div className="rv-ticket-card-id-row">
         <span className="rv-ticket-card-id">{ticket.id}</span>
-        <button
-          ref={linkBtnRef}
-          className="rv-ticket-card-link"
-          onClick={handleCopyPath}
-          title="Copy file path"
-        >
-          <span className="material-symbols-outlined">link_2</span>
-        </button>
+        <div className="rv-ticket-card-actions">
+          <CopyPathButton
+            panel="issues-viewer"
+            relativePath={`${ticketFolder(ticket)}/${ticket.id}.md`}
+            className="rv-ticket-card-link"
+            title="Copy file path"
+          />
+          <SendToChatButton
+            panel="issues-viewer"
+            relativePath={`${ticketFolder(ticket)}/${ticket.id}.md`}
+            className="rv-ticket-card-link"
+            title="Send file path to chat"
+          />
+          <button
+            className="rv-ticket-card-link"
+            onClick={(e) => { e.stopPropagation(); }}
+            title="Expand content"
+          >
+            <span className="material-symbols-outlined">open_in_new</span>
+          </button>
+        </div>
       </div>
       <div className="rv-ticket-card-title">{ticket.title}</div>
       <div className="rv-ticket-card-meta">
@@ -173,12 +176,21 @@ export function TicketBoard() {
 
   const tickets = useTicketStore((s) => s.tickets);
   const loaded = useTicketStore((s) => s.loaded);
+  const error = useTicketStore((s) => s.error);
   const activeTicketId = useTicketStore((s) => s.activeTicket);
 
   if (!loaded) {
     return (
       <div className="rv-ticket-board-loading">
         <span className="rv-dim-label">Loading tickets...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rv-ticket-board-loading">
+        <span className="rv-dim-label">{error}</span>
       </div>
     );
   }

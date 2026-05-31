@@ -42,5 +42,5 @@ export const useTicketStore = create<TicketState>((set) => ({
     set({ tickets, loaded: true });
   },
   setActiveTicket: (id) => set({ activeTicket: id }),
-  setError: (error) => set({ error }),
+  setError: (error) => set({ error, loaded: true }),
 }));

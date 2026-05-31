@@ -46,6 +46,7 @@ export interface WorkspacePanelState {
   wireReady: boolean;
   contextUsage: number;
   panelConfigs: PanelConfig[];
+  panelRoots: Record<string, string>;
   viewStates: Record<string, ViewUIState>;
 }
 
@@ -81,11 +82,13 @@ export interface AppState {
   appendSegment: (scope: Scope, threadId: string | null, segType: StreamSegment['type'], text: string) => void;
   pushSegment: (scope: Scope, threadId: string | null, segment: StreamSegment) => void;
   updateLastSegment: (scope: Scope, threadId: string | null, updates: Partial<StreamSegment>) => void;
+  updateSegmentByIndex: (scope: Scope, threadId: string | null, index: number, updates: Partial<StreamSegment>) => void;
   updateSegmentByToolCallId: (scope: Scope, threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => void;
   appendSegmentContentByIndex: (scope: Scope, threadId: string | null, index: number, text: string) => void;
   resetSegments: (scope: Scope, threadId: string | null) => void;
   setPendingTurnEnd: (scope: Scope, threadId: string | null, pending: boolean) => void;
   setPendingMessage: (scope: Scope, threadId: string | null, message: Message | null) => void;
+  setTodoDrawer: (scope: Scope, threadId: string | null, drawer: PanelState['todoDrawer']) => void;
   finalizeTurn: (scope: Scope, threadId: string | null) => void;
   clearChat: (scope: Scope, threadId: string | null) => void;
 
@@ -97,6 +100,9 @@ export interface AppState {
   // ── Project root ──
   projectRoot: string | null;
   setProjectRoot: (root: string) => void;
+
+  panelRoots: Record<string, string>;
+  setPanelRoots: (roots: Record<string, string>) => void;
 
   // ── Context usage ──
   contextUsage: number;

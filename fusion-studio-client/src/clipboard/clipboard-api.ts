@@ -47,51 +47,6 @@ export function unsubscribeClipboardBroadcasts(): void {
   }
 }
 
-// ── System clipboard monitor ─────────────────────────────────
-
-let lastClipboardText = '';
-let monitorInterval: ReturnType<typeof setInterval> | null = null;
-const MONITOR_INTERVAL_MS = 1000;
-
-export function startClipboardMonitor(): void {
-  if (monitorInterval) return;
-
-  if (!navigator.clipboard || !navigator.clipboard.readText) {
-    console.log('[Clipboard] Clipboard reading not supported');
-    return;
-  }
-
-  monitorInterval = setInterval(async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-
-      // Server-side hash dedup handles repeats; we only suppress the
-      // immediately-prior value to avoid round-tripping the same string
-      // every second.
-      if (text && text !== lastClipboardText) {
-        lastClipboardText = text;
-        sendFusionMessage({
-          type: 'clipboard:append',
-          text,
-          source: 'auto',
-        });
-      }
-    } catch {
-      // Permission denied / no focus — silently ignore.
-    }
-  }, MONITOR_INTERVAL_MS);
-
-  console.log('[Clipboard] Monitor started');
-}
-
-export function stopClipboardMonitor(): void {
-  if (monitorInterval) {
-    clearInterval(monitorInterval);
-    monitorInterval = null;
-    console.log('[Clipboard] Monitor stopped');
-  }
-}
-
 // ── WS request helpers ───────────────────────────────────────
 
 function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 5000): Promise<T> {

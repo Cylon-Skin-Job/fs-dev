@@ -1,14 +1,14 @@
 /**
- * web_search — URL list (grouped).
+ * web_search — semantic search result preview.
  *
- * Content has summary lines (queries or URLs).
+ * Live content is chunked one result at a time by the active strategy.
  */
 
 import { escapeHtml } from '../transforms';
 import type { ToolRenderer } from './types';
 
 export const webSearchRenderer: ToolRenderer = {
-  grouped: true,
+  grouped: false,
 
   buildTitle: (n) => n === 1 ? 'Web Search' : `Web Search (${n})`,
 
@@ -21,7 +21,7 @@ export const webSearchRenderer: ToolRenderer = {
 
   showCursor: false,
 
-  formatContent: (content, _args) => {
+  formatContent: (content) => {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line => {

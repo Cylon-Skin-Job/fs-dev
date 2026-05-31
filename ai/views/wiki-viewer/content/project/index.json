@@ -1,21 +1,27 @@
 {
   "version": "1.0",
-  "id": "project",
-  "label": "Project",
-  "description": "Per-project living documentation maintained by agents",
-  "type": "collection",
-  "rank": 1,
-  "icon": "folder_open",
-  "color": null,
-  "created": "2026-03-20T14:00:00Z",
-  "updated": "2026-03-27T21:00:00Z",
-  "frozen": false,
-  "children": ["home", "background-agents", "chat-panel-architecture", "wire-protocol", "gitlab", "hooks", "model-config", "path-resolution", "progressive-disclosure", "run-auditing", "screenshot-capture", "session-scoping", "setup-wizard", "ticket-routing", "turn-lifecycle", "warmth-settings", "wiki-interface", "wiki-system", "workspace-agent-model", "workspace-index", "workspaces"],
-  "edges_out": null,
-  "edges_in": null,
-  "sources": null,
-  "settings": {
-    "syncTarget": "gitlab",
-    "gitlabProjectId": 80453361
-  }
+  "articles": [
+    { "id": "home", "title": "Home", "folder": "home", "guide": "PAGE.md" },
+    { "id": "background-agents", "title": "Background Agents", "folder": "background-agents", "guide": "PAGE.md" },
+    { "id": "background-services-audit", "title": "Background Services Audit", "folder": "background-services-audit", "guide": "Background_Services_Audit.md" },
+    { "id": "browser_views", "title": "Browser Views", "folder": "browser_views", "guide": "Browser_Views_Guide.md" },
+    { "id": "chat-panel-architecture", "title": "Chat Panel Architecture", "folder": "chat-panel-architecture", "guide": "PAGE.md" },
+    { "id": "chat-thread-lifecycle", "title": "Chat Threads & Turn Lifecycle", "folder": "chat-thread-lifecycle", "guide": "PAGE.md" },
+    { "id": "coding-clis", "title": "Coding CLIs", "folder": "Coding-CLIs", "guide": "Coding_CLI_Harness.md" },
+    { "id": "gitlab", "title": "GitLab", "folder": "gitlab", "guide": "PAGE.md" },
+    { "id": "hooks", "title": "Hooks", "folder": "hooks", "guide": "PAGE.md" },
+    { "id": "model-config", "title": "Model Config", "folder": "model-config", "guide": "PAGE.md" },
+    { "id": "path-resolution", "title": "Path Resolution", "folder": "path-resolution", "guide": "PAGE.md" },
+    { "id": "progressive-disclosure", "title": "Progressive Disclosure", "folder": "progressive-disclosure", "guide": "PAGE.md" },
+    { "id": "run-auditing", "title": "Run Auditing", "folder": "run-auditing", "guide": "PAGE.md" },
+    { "id": "screenshot-capture", "title": "Screenshot Capture", "folder": "screenshot-capture", "guide": "PAGE.md" },
+    { "id": "setup-wizard", "title": "Setup Wizard", "folder": "setup-wizard", "guide": "PAGE.md" },
+    { "id": "ticket-routing", "title": "Ticket Routing", "folder": "ticket-routing", "guide": "PAGE.md" },
+    { "id": "warmth-settings", "title": "Warmth Settings", "folder": "warmth-settings", "guide": "PAGE.md" },
+    { "id": "wiki-interface", "title": "Wiki Interface", "folder": "wiki-interface", "guide": "PAGE.md" },
+    { "id": "wiki-system", "title": "Wiki System", "folder": "wiki-system", "guide": "PAGE.md" },
+    { "id": "workspace-agent-model", "title": "Workspace Agent Model", "folder": "workspace-agent-model", "guide": "PAGE.md" },
+    { "id": "workspace-index", "title": "Workspace Index", "folder": "workspace-index", "guide": "PAGE.md" },
+    { "id": "workspaces", "title": "Workspaces", "folder": "workspaces", "guide": "PAGE.md" }
+  ]
 }

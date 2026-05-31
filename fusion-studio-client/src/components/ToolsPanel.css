@@ -62,6 +62,15 @@
   color: var(--tool-content-color, var(--text-dim));
 }
 
+.rv-shell-command {
+  color: var(--text-white, currentColor);
+}
+
+.rv-shell-status {
+  color: var(--error, #ef4444);
+  opacity: 0.85;
+}
+
 /* ── ToolsPanel — left-rail workspace/tool switcher ─────────────────────── */
 
 .rv-tools-panel {

@@ -5,6 +5,8 @@
  */
 
 import { useWikiStore } from '../../state/wikiStore';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 export function TopicList() {
   const sections = useWikiStore((s) => s.sections);
@@ -42,6 +44,7 @@ export function TopicList() {
               </div>
               {articles.map((article) => {
                 const isActive = isActiveSection && article.id === activeArticle;
+                const relativePath = `${section.id}/${article.folder}/${article.guide || `${article.id}_Guide.md`}`;
                 return (
                   <button
                     key={article.id}
@@ -52,6 +55,20 @@ export function TopicList() {
                       {isActive ? '\u25C9' : '\u25CB'}
                     </span>
                     <span className="rv-wiki-topic-name">{article.title}</span>
+                    <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+                      <CopyPathButton
+                        panel="wiki-viewer"
+                        relativePath={relativePath}
+                        className="rv-file-page-action"
+                        title="Copy article path"
+                      />
+                      <SendToChatButton
+                        panel="wiki-viewer"
+                        relativePath={relativePath}
+                        className="rv-file-page-action"
+                        title="Send article path to chat"
+                      />
+                    </div>
                   </button>
                 );
               })}

@@ -1,3 +1,5 @@
+import type { StreamSegment } from '../../types';
+
 /**
  * ToolRenderer — Per-tool-type presentation module.
  *
@@ -28,7 +30,7 @@ export interface ToolRenderer {
    * @param itemCount - Number of items rendered so far (1 for singular, N for grouped)
    * @param args - Tool arguments from the segment (file_path, pattern, url, etc.)
    */
-  buildTitle(itemCount: number, args?: Record<string, unknown>): string;
+  buildTitle(itemCount: number, args?: Record<string, unknown>, segment?: StreamSegment): string;
 
   /** Content container styles — applied to the wrapper div inside ToolCallBlock. */
   contentStyle: ContentStyle;
@@ -43,7 +45,7 @@ export interface ToolRenderer {
    * For singular tools: called once with the full content.
    * For grouped tools: called once per consumed segment.
    */
-  formatContent(content: string, args?: Record<string, unknown>): string;
+  formatContent(content: string, args?: Record<string, unknown>, segment?: StreamSegment): string;
 
   /**
    * For grouped renderers: should we consume the next segment into this block?

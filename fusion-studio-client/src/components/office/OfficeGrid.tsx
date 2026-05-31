@@ -21,7 +21,8 @@ import { OfficeDocumentTile } from './OfficeDocumentTile';
 import { OfficeDocumentPage } from './OfficeDocumentPage';
 import { FilePageView } from '../capture/FilePageView';
 import { Icon } from '../Icon';
-import { copyResourcePath } from '../../lib/resource-path';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 import './OfficeGrid.css';
 
 const PANEL = 'office-viewer';
@@ -184,13 +185,8 @@ export function OfficeGrid() {
           </button>
           <span className="rv-office-topbar-title">{folderName}</span>
           <div className="rv-office-topbar-actions">
-            <button
-              className="rv-office-topbar-action"
-              onClick={() => copyResourcePath(PANEL, currentFolder)}
-              title="Copy folder path"
-            >
-              <span className="material-symbols-outlined">link_2</span>
-            </button>
+            <CopyPathButton panel={PANEL} relativePath={currentFolder} className="rv-office-topbar-action" title="Copy folder path" />
+            <SendToChatButton panel={PANEL} relativePath={currentFolder} className="rv-office-topbar-action" title="Send folder path to chat" />
           </div>
         </div>
 

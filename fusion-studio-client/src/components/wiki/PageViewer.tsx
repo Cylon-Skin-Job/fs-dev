@@ -6,9 +6,11 @@
  * No tabs, no breadcrumbs. Header shows article name + back/forward nav.
  */
 
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { markdownToHtml } from '../../lib/transforms';
 import { useWikiStore } from '../../state/wikiStore';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 export function PageViewer() {
   const activeArticle = useWikiStore((s) => s.activeArticle);
@@ -34,6 +36,17 @@ export function PageViewer() {
     const name = activeArticleFile.replace(/\.md$/, '').replace(/_/g, ' ');
     return name;
   }, [articlesBySection, activeSection, activeArticle, activeArticleFile, showGuide]);
+
+  // Build the filesystem-relative path for the current article/guide
+  const relativePath = useMemo(() => {
+    const articles = articlesBySection[activeSection] || [];
+    const article = articles.find((a) => a.id === activeArticle);
+    if (!article) return '';
+    const fileName = showGuide || activeArticleFile === ''
+      ? (article.guide || `${article.id}_Guide.md`)
+      : activeArticleFile;
+    return `${activeSection}/${article.folder}/${fileName}`;
+  }, [articlesBySection, activeSection, activeArticle, showGuide, activeArticleFile]);
 
   // Intercept wiki-internal links
   const handleContentClick = useCallback((e: React.MouseEvent) => {
@@ -85,6 +98,24 @@ export function PageViewer() {
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
         <span className="rv-wiki-breadcrumb">{getArticleTitle()}</span>
+        <div className="rv-wiki-nav-actions">
+          {relativePath && (
+            <>
+              <CopyPathButton
+                panel="wiki-viewer"
+                relativePath={relativePath}
+                className="rv-file-page-action"
+                title="Copy article path"
+              />
+              <SendToChatButton
+                panel="wiki-viewer"
+                relativePath={relativePath}
+                className="rv-file-page-action"
+                title="Send article path to chat"
+              />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Content */}

@@ -79,6 +79,8 @@
 }
 
 .rv-wiki-topic-name {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -347,7 +349,8 @@
 }
 
 .rv-wiki-edge-link {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   padding: 4px 8px;
   border: none;
@@ -370,9 +373,43 @@
   color: var(--accent-dim, var(--theme-primary, #ec4899));
 }
 
+.rv-wiki-edge-link-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rv-wiki-edge-empty {
   color: var(--nav-icon-color, var(--text-dim, #666));
   font-size: 0.75rem;
   text-align: center;
   padding: 16px 0;
+}
+
+/* --- Hover actions for wiki nav items --- */
+
+.rv-wiki-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+
+.rv-wiki-topic-item:hover .rv-wiki-item-actions,
+.rv-wiki-edge-guide-header:hover .rv-wiki-item-actions,
+.rv-wiki-edge-link:hover .rv-wiki-item-actions {
+  opacity: 1;
+}
+
+.rv-wiki-item-actions .rv-file-page-action {
+  width: 22px;
+  height: 22px;
+}
+
+.rv-wiki-item-actions .rv-file-page-action .material-symbols-outlined {
+  font-size: 16px;
 }

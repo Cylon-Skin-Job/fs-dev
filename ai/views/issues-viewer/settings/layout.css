@@ -110,6 +110,18 @@
   margin-bottom: 4px;
 }
 
+.rv-ticket-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+
+.rv-ticket-card:hover .rv-ticket-card-actions {
+  opacity: 1;
+}
+
 .rv-ticket-card-id {
   font-size: 0.7rem;
   font-family: var(--font-mono, monospace);

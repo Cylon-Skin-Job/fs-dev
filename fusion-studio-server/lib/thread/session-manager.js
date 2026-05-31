@@ -10,6 +10,8 @@
  * Accepts an onClose callback to notify the owner when a session closes.
  */
 
+const { setSafeTimeout } = require('../background-services/safety');
+
 class SessionManager {
   /**
    * @param {object} [config]
@@ -148,7 +150,7 @@ class SessionManager {
     this._clearIdleTimeout(threadId);
 
     const timeoutMs = this.idleTimeoutMinutes * 60 * 1000;
-    const timeout = setTimeout(async () => {
+    const timeout = setSafeTimeout(`SessionManager:idle:${threadId}`, async () => {
       console.log(`[SessionManager] Idle timeout for ${threadId}`);
       this.closeSession(threadId);
       if (this._onClose) {

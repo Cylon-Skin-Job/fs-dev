@@ -3,15 +3,16 @@
   "id": "custom-viewer",
   "folderName": "custom-viewer",
   "label": "Custom Viewer",
-  "description": "Demo browser view for testing free navigation",
-  "type": "browser",
+  "description": "App container for user-built Node servers",
+  "type": "custom",
   "icon": "app_registration",
   "rank": 99,
   "url": "https://example.com",
-  "mode": "browser",
+  "mode": "app",
+  "hasChat": true,
   "chrome": {
     "urlBar": true,
     "tabs": false,
-    "navButtons": true
+    "navButtons": false
   }
 }

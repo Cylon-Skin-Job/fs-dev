@@ -20,8 +20,8 @@ import { CaptureTiles } from './capture/CaptureTiles';
 import { OfficeGrid } from './office/OfficeGrid';
 import { FileExplorer } from './file-explorer/FileExplorer';
 import { SystemViewer } from './SystemViewer';
-import { BrowserView } from './browser/BrowserView';
-import { BrowserViewer } from './browser/BrowserViewer';
+import { WebBrowser } from './browser/WebBrowser';
+import { CustomViewer } from './browser/CustomViewer';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
@@ -57,20 +57,20 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
     );
   }
 
-  // Track 2: dynamic type-based routing (browser views)
-  if (config?.type === 'browser') {
+  // Track 2: app container — user-built Node servers, origin-locked, collapsible chrome
+  if (config?.type === 'custom') {
     return (
       <main className="rv-content-area">
-        <BrowserView config={config} />
+        <CustomViewer config={config} />
       </main>
     );
   }
 
-  // Track 2b: webview-based browser viewer
-  if (config?.type === 'browser-viewer') {
+  // Track 2b: general browser — free navigation, always-visible chrome, back/forward
+  if (config?.type === 'browser') {
     return (
       <main className="rv-content-area">
-        <BrowserViewer config={config} />
+        <WebBrowser config={config} />
       </main>
     );
   }

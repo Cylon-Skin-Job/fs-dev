@@ -18,7 +18,7 @@ Living reference layer for architecture, decisions, and evolving knowledge.
 - [Workspaces](Workspaces) — Overview of all 8 workspaces (readers, router, executor)
 - [Background-Agents](Background-Agents) — Agent folders, numbered prompts, wire protocol runner
 - [Progressive-Disclosure](Progressive-Disclosure) — How agents load context layer by layer
-- [Session-Scoping](Session-Scoping) — Isolated sessions per workspace
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — Current project-thread chat, SQLite history, and turn lifecycle
 - [Model-Config](Model-Config) — Per-workspace model preferences and hot-swapping
 
 ## Wiki System

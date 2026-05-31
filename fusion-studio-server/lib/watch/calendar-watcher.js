@@ -21,9 +21,7 @@ function start(onTrigger) {
       depth: 0,
       awaitWriteFinish: { stabilityThreshold: 500, pollInterval: 100 },
     },
-    handler: (event, filePath) => {
-      onTrigger(event, filePath);
-    },
+    handler: (event, filePath) => onTrigger(event, filePath),
   });
 
   return unsub;

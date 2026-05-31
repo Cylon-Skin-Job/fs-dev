@@ -5,8 +5,8 @@
  *       actions, the export dropdown menu, and the side-panel toggles.
  */
 import type { FileWithContent } from '../../state/fileDataStore';
-import { copyResourcePath, resolveAbsolutePath } from '../../lib/resource-path';
-import { showToast } from '../../lib/toast';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 const PANEL = 'office-viewer';
 
@@ -57,28 +57,8 @@ export function OfficeDocumentTopbar({
       </span>
 
       <div className="rv-office-document-actions">
-        <button
-          className="rv-office-document-action"
-          onClick={() => copyResourcePath(PANEL, file.path)}
-          title="Copy path"
-        >
-          <span className="material-symbols-outlined">link_2</span>
-        </button>
-        <button
-          className="rv-office-document-action"
-          onClick={() => {
-            const absPath = resolveAbsolutePath(PANEL, file.path);
-            if (absPath) {
-              window.dispatchEvent(new CustomEvent('fusion:chat-insert', { detail: absPath }));
-              showToast('Path sent to chat');
-            } else {
-              showToast('Path not available');
-            }
-          }}
-          title="Send path to chat"
-        >
-          <span className="material-symbols-outlined">chat_paste_go</span>
-        </button>
+        <CopyPathButton panel={PANEL} relativePath={file.path} className="rv-office-document-action" title="Copy path" />
+        <SendToChatButton panel={PANEL} relativePath={file.path} className="rv-office-document-action" title="Send path to chat" />
 
         <div className="rv-office-export-menu" ref={exportMenuRef}>
           <button

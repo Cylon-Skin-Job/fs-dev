@@ -84,4 +84,4 @@ The pattern is universal. Only load what the current step of the current workflo
 
 - [Workspace-Agent-Model](Workspace-Agent-Model) — how agents load context via the 5-file model
 - [Wiki-System](Wiki-System) — how the wiki implements Layer 3
-- [Session-Scoping](Session-Scoping) — how each workspace session loads its own context
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — how threads, wires, and persisted chat history fit together

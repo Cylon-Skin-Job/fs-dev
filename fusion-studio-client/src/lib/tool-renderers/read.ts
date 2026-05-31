@@ -1,9 +1,9 @@
 /**
- * read — File list (grouped).
+ * read — Compact file list (grouped).
  *
  * At the wire level, consecutive reads are grouped into ONE segment
- * by ws-client. The segment's content contains summary lines (one
- * file path per line). toolArgs only has the first file's args.
+ * by ws-client. The segment's content contains one compact path per
+ * file, formatted as ~/parent-folder/filename.ext where possible.
  *
  * formatContent renders the CONTENT (summary lines), not the args.
  */
@@ -26,9 +26,8 @@ export const readRenderer: ToolRenderer = {
 
   showCursor: false,
 
-  formatContent: (content, _args) => {
+  formatContent: (content) => {
     if (!content) return '';
-    // Content is summary lines from ws-client (one file path per line)
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line =>
       `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncatePath(line))}</div>`

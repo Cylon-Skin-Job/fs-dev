@@ -3,11 +3,19 @@
  * @role Chat, segment, and turn state actions for the panel store.
  *       All message streaming, finalization, and project/view chat routing lives here.
  */
-import type { Scope, PanelState, Message, AssistantTurn, StreamSegment } from '../../types';
+import type { Scope, PanelState, Message, AssistantTurn, StreamSegment, TodoDrawerState } from '../../types';
 import type { AppState } from '../panelStoreTypes';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
+
+interface TimingProbeWindow extends Window {
+  __TIMING?: {
+    sendAt: number;
+    firstTokenAt: number;
+    firstTokenType: string;
+  };
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -19,6 +27,7 @@ export function createInitialPanelState(): PanelState {
     pendingMessage: null,
     segments: [],
     lastReleasedSegmentCount: 0,
+    todoDrawer: undefined,
   };
 }
 
@@ -100,7 +109,7 @@ export function createChatSlice(set: Set, get: Get) {
       if (last && last.type === segType) {
         segments[segments.length - 1] = { ...last, content: last.content + text };
       } else {
-        if (last && !last.complete) {
+        if (last && !last.complete && !last.toolCallId) {
           segments[segments.length - 1] = { ...last, complete: true };
         }
         segments.push({ type: segType, content: text });
@@ -112,7 +121,7 @@ export function createChatSlice(set: Set, get: Get) {
       const cs = getChatState(state, scope, threadId);
       const segments = [...cs.segments];
       const last = segments[segments.length - 1];
-      if (last && !last.complete) {
+      if (last && !last.complete && !last.toolCallId) {
         segments[segments.length - 1] = { ...last, complete: true };
       }
       segments.push(segment);
@@ -126,6 +135,14 @@ export function createChatSlice(set: Set, get: Get) {
       if (last) {
         segments[segments.length - 1] = { ...last, ...updates };
       }
+      return writeChatState(state, scope, threadId, { ...cs, segments });
+    }),
+
+    updateSegmentByIndex: (scope: Scope, threadId: string | null, index: number, updates: Partial<StreamSegment>) => set((state) => {
+      const cs = getChatState(state, scope, threadId);
+      if (index < 0 || index >= cs.segments.length) return state;
+      const segments = [...cs.segments];
+      segments[index] = { ...segments[index], ...updates };
       return writeChatState(state, scope, threadId, { ...cs, segments });
     }),
 
@@ -198,6 +215,11 @@ export function createChatSlice(set: Set, get: Get) {
       }
     },
 
+    setTodoDrawer: (scope: Scope, threadId: string | null, drawer: TodoDrawerState | undefined) => set((state) => {
+      const cs = getChatState(state, scope, threadId);
+      return writeChatState(state, scope, threadId, { ...cs, todoDrawer: drawer });
+    }),
+
     clearChat: (scope: Scope, threadId: string | null) => set((state) =>
       writeChatState(state, scope, threadId, createInitialPanelState())
     ),
@@ -212,7 +234,7 @@ export function createChatSlice(set: Set, get: Get) {
         return;
       }
       const now = performance.now();
-      (window as any).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
+      (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
       console.log(`[TIMING] SEND at ${now.toFixed(1)}ms scope=${scope} threadId=${threadId.slice(0, 8)}`);
       socket.send(JSON.stringify({
         type: 'prompt',

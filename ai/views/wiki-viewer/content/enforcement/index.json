@@ -1,21 +1,7 @@
 {
   "version": "1.0",
-  "id": "enforcement",
-  "label": "Enforcement",
-  "description": "Safety rules, code standards, and constraints for AI behavior",
-  "type": "collection",
-  "rank": 50,
-  "icon": "shield",
-  "color": null,
-  "created": "2026-04-06T00:00:00Z",
-  "updated": "2026-04-26T22:51:03.047Z",
-  "frozen": false,
-  "children": [
-    "code-standards",
-    "themes-and-state"
-  ],
-  "edges_out": null,
-  "edges_in": null,
-  "sources": null,
-  "settings": {}
+  "articles": [
+    { "id": "code-standards", "title": "Code Standards", "folder": "code-standards", "guide": "PAGE.md" },
+    { "id": "themes-and-state", "title": "Themes and State", "folder": "themes-and-state", "guide": "PAGE.md" }
+  ]
 }

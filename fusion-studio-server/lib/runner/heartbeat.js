@@ -6,6 +6,7 @@
  */
 
 const fs = require('fs');
+const { runSafely, setSafeInterval } = require('../background-services/safety');
 
 /**
  * @typedef {Object} HeartbeatOptions
@@ -64,9 +65,9 @@ function createHeartbeatMonitor(activeRuns, options = {}) {
 
       if (run.stalls >= maxStalls) {
         console.log(`[Runner:Heartbeat] Run ${runId} reached max stalls — killing`);
-        onMaxStalls(runId);
+        runSafely(`Runner:Heartbeat:max-stalls:${runId}`, () => onMaxStalls(runId));
       } else {
-        onStall(runId, run.stalls);
+        runSafely(`Runner:Heartbeat:stall:${runId}`, () => onStall(runId, run.stalls));
       }
     }
   }
@@ -78,7 +79,7 @@ function createHeartbeatMonitor(activeRuns, options = {}) {
     start() {
       if (timer) return;
       console.log(`[Runner:Heartbeat] Started (interval: ${intervalMs}ms, maxStalls: ${maxStalls})`);
-      timer = setInterval(tick, intervalMs);
+      timer = setSafeInterval('Runner:Heartbeat', tick, intervalMs);
     },
 
     /**

@@ -1,5 +1,4 @@
 {
-  "display": "navigation",
   "chat": {
     "type": "rolling-daily",
     "position": "popup"

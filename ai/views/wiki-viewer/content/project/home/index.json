@@ -11,7 +11,7 @@
   "updated": "2026-03-27T21:00:00Z",
   "frozen": false,
   "children": null,
-  "edges_out": ["Secrets", "GitLab", "Workspace-Agent-Model", "Workspaces", "Background-Agents", "Progressive-Disclosure", "Session-Scoping", "Model-Config", "Wiki-System", "Wiki-Interface", "Ticket-Routing", "Run-Auditing"],
+  "edges_out": ["Secrets", "GitLab", "Workspace-Agent-Model", "Workspaces", "Background-Agents", "Progressive-Disclosure", "Chat-Thread-Lifecycle", "Model-Config", "Wiki-System", "Wiki-Interface", "Ticket-Routing", "Run-Auditing"],
   "edges_in": ["Workspaces", "GitLab", "Secrets"],
   "sources": [],
   "settings": {}

@@ -50,6 +50,7 @@ const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers
  * @param {() => object} deps.getFusionHandlers - getter closure over server.js let fusionHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
  * @param {() => object} deps.getRecentDocsHandlers - getter closure over server.js let recentDocsHandlers
+ * @param {() => object} deps.getBookmarksHandlers - getter closure over server.js let bookmarksHandlers
  * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
  * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
  * @param {() => object} deps.getScreenshotHandlers - getter closure over server.js let screenshotHandlers
@@ -69,6 +70,7 @@ function createClientMessageRouter({
   getFusionHandlers,
   getClipboardHandlers,
   getRecentDocsHandlers,
+  getBookmarksHandlers,
   getThemeHandlers,
   getSecretsHandlers,
   getScreenshotHandlers,
@@ -307,6 +309,16 @@ function createClientMessageRouter({
 
       if (clientMsg.type.startsWith('recent_docs:')) {
         const handler = getRecentDocsHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Bookmarks manager ----
+
+      if (clientMsg.type.startsWith('bookmarks:')) {
+        const handler = getBookmarksHandlers()[clientMsg.type];
         if (handler) {
           await handler(ws, clientMsg);
           return;

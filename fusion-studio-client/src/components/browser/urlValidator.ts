@@ -53,7 +53,17 @@ export function validateUrl(input: string): UrlValidationResult {
   try {
     parsed = new URL(urlStr);
   } catch {
-    return { valid: false, reason: 'Invalid URL format' };
+    // Auto-prefix https:// for bare domains (e.g. "google.com" → "https://google.com")
+    if (!urlStr.includes('://') && !urlStr.startsWith('/')) {
+      try {
+        parsed = new URL('https://' + urlStr);
+        urlStr = 'https://' + urlStr;
+      } catch {
+        return { valid: false, reason: 'Invalid URL format' };
+      }
+    } else {
+      return { valid: false, reason: 'Invalid URL format' };
+    }
   }
 
   const scheme = parsed.protocol.toLowerCase();

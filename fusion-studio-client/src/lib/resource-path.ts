@@ -13,6 +13,8 @@ const PANEL_PREFIX: Record<string, string> = {
   'agents-viewer': 'ai/views/agents-viewer',
   'file-viewer': '',
   'issues-viewer': 'ai/views/issues-viewer',
+  'office-viewer': 'ai/views/office-viewer/content',
+  'calendar-viewer': 'ai/views/calendar-viewer/content',
 };
 
 export function resolveAbsolutePath(panel: string, relativePath: string): string | null {

@@ -53,7 +53,7 @@ export async function animateTool(opts: ToolAnimateOptions): Promise<void> {
   // ── Build reveal options from pressure + catalog speed ──
   const revealOptions = buildRevealOptions(entry, getTimingProfile);
 
-  // ── Handle awaitsResult: feed content to strategy, signal result on complete ──
+  // ── Handle awaitsResult: wait for content, then reveal through the adapter ──
   if (entry.awaitsResult) {
     await runWithResultHolding(
       contentRef, completeRef, cancelRef,
@@ -98,20 +98,20 @@ function createAdapter(
       let chunk = strategy.next();
       while (chunk) {
         const transformed = entry.transform ? entry.transform(chunk, toolArgs) : chunk;
-        const html = renderChunkToText(transformed, entry);
+        const html = renderChunkToText(transformed);
         result.push({ text: html });
         chunk = strategy.next();
       }
       return result;
     },
 
-    flush(_content: string): ParsedChunk[] {
+    flush(): ParsedChunk[] {
       // Feed any remaining content
       strategy.onContent('');
       const flushed = strategy.flush();
       return flushed.map(chunk => {
         const transformed = entry.transform ? entry.transform(chunk, toolArgs) : chunk;
-        return { text: renderChunkToText(transformed, entry) };
+        return { text: renderChunkToText(transformed) };
       });
     },
   };
@@ -120,7 +120,7 @@ function createAdapter(
 /**
  * Convert a tagged chunk to display text using the entry's renderer.
  */
-function renderChunkToText(chunk: TaggedChunk, _entry: CatalogEntry): string {
+function renderChunkToText(chunk: TaggedChunk): string {
   // For line-by-line rendering, each chunk is one line
   return chunk.content;
 }
@@ -130,35 +130,28 @@ function renderChunkToText(chunk: TaggedChunk, _entry: CatalogEntry): string {
 // =============================================================================
 
 /**
- * For awaitsResult tools: feed content to strategy in a loop,
- * signal onResult when completeRef fires, then reveal the chunk.
+ * For awaitsResult tools: wait until result content is available, signal the
+ * strategy, then reveal through the catalog adapter/parser.
  */
 async function runWithResultHolding(
   contentRef: { current: string },
   completeRef: { current: boolean },
   cancelRef: { current: boolean },
   strategy: ActiveChunkStrategy,
-  _adapter: ChunkParser,
+  adapter: ChunkParser,
   entry: CatalogEntry,
   setDisplayedContent: (html: string) => void,
   getTimingProfile: () => TimingProfile,
   revealOptions: RevealOptions,
 ): Promise<void> {
   const startTime = Date.now();
-  let lastFedLength = 0;
+  let timedOut = false;
 
   // Poll until complete or timeout
   while (!completeRef.current && !cancelRef.current) {
-    // Feed new content to strategy (keeps it accumulating)
-    const content = contentRef.current;
-    if (content.length > lastFedLength) {
-      strategy.onContent(content.slice(lastFedLength));
-      lastFedLength = content.length;
-    }
-
     // Check timeout
     if (Date.now() - startTime > RESULT_TIMEOUT) {
-      strategy.flush();
+      timedOut = true;
       break;
     }
 
@@ -168,23 +161,17 @@ async function runWithResultHolding(
   if (cancelRef.current) return;
 
   // Signal result — this releases the held chunk
-  if (completeRef.current) {
-    // Feed any remaining content
-    const finalContent = contentRef.current;
-    if (finalContent.length > lastFedLength) {
-      strategy.onContent(finalContent.slice(lastFedLength));
-    }
-    strategy.onResult(finalContent);
+  if (completeRef.current || timedOut) {
+    strategy.onResult(contentRef.current);
   }
 
-  // Now reveal using the orchestrator with a pre-loaded adapter
-  // Since the strategy already has all content and result, the adapter's
-  // first feed() call will drain the complete chunk immediately.
-  // We use the revealController with a synthetic contentRef that has final content.
+  // Now reveal using the shared orchestrator with the strategy adapter as the
+  // parser. The first feed() call parses semantic chunks into the reveal queue.
   const revealProfile = getTimingProfile();
   const finalOptions: RevealOptions = {
     ...revealOptions,
     instantReveal: revealProfile.instantReveal || revealOptions.instantReveal,
+    parser: adapter,
   };
 
   await entry.revealController.run(

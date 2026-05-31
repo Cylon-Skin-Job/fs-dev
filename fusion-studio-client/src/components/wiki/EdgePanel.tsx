@@ -5,6 +5,8 @@
  */
 
 import { useWikiStore } from '../../state/wikiStore';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 
 export function EdgePanel() {
   const activeArticle = useWikiStore((s) => s.activeArticle);
@@ -22,10 +24,9 @@ export function EdgePanel() {
   const groups = activeArticle ? (groupsByArticle[activeArticle] || []) : [];
 
   // Derive guide title from guide filename (e.g., Connectors_Guide.md → "Connectors Guide")
-  const guideTitle = article
-    ? (article.guide || `${article.id}_Guide.md`)
-        .replace(/\.md$/, '')
-        .replace(/_/g, ' ')
+  const guideFile = article ? (article.guide || `${article.id}_Guide.md`) : '';
+  const guideTitle = guideFile
+    ? guideFile.replace(/\.md$/, '').replace(/_/g, ' ')
     : 'Guide';
 
   const isGuideActive = activeArticleFile === '';
@@ -55,7 +56,23 @@ export function EdgePanel() {
         onClick={handleGuideClick}
       >
         <span className="material-symbols-outlined">chrome_reader_mode</span>
-        <span>{guideTitle}</span>
+        <span className="rv-wiki-edge-link-text">{guideTitle}</span>
+        {guideFile && activeSection && (
+          <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+            <CopyPathButton
+              panel="wiki-viewer"
+              relativePath={`${activeSection}/${article.folder}/${guideFile}`}
+              className="rv-file-page-action"
+              title="Copy guide path"
+            />
+            <SendToChatButton
+              panel="wiki-viewer"
+              relativePath={`${activeSection}/${article.folder}/${guideFile}`}
+              className="rv-file-page-action"
+              title="Send guide path to chat"
+            />
+          </div>
+        )}
       </button>
 
       {/* Groups */}
@@ -70,7 +87,23 @@ export function EdgePanel() {
                 className={`rv-wiki-edge-link ${isActive ? 'active' : ''}`}
                 onClick={() => handleArticleClick(ref.file)}
               >
-                {ref.title}
+                <span className="rv-wiki-edge-link-text">{ref.title}</span>
+                {activeSection && article && (
+                  <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+                    <CopyPathButton
+                      panel="wiki-viewer"
+                      relativePath={`${activeSection}/${article.folder}/${ref.file}`}
+                      className="rv-file-page-action"
+                      title="Copy article path"
+                    />
+                    <SendToChatButton
+                      panel="wiki-viewer"
+                      relativePath={`${activeSection}/${article.folder}/${ref.file}`}
+                      className="rv-file-page-action"
+                      title="Send article path to chat"
+                    />
+                  </div>
+                )}
               </button>
             );
           })}

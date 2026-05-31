@@ -22,12 +22,16 @@ export const grepRenderer: ToolRenderer = {
 
   showCursor: false,
 
-  formatContent: (content, _args) => {
+  formatContent: (content) => {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());
-    return lines.map(line =>
-      `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncatePath(line))}</div>`
-    ).join('');
+    return lines.map(line => {
+      const isMatchRow = line.startsWith('  ');
+      if (isMatchRow) {
+        return `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(line)}</div>`;
+      }
+      return `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncatePath(line))}</div>`;
+    }).join('');
   },
 
   shouldConsumeNext: (nextType) => nextType === 'grep',

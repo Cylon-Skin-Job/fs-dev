@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog, webFrameMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -8,6 +8,7 @@ const { createDocumentSubmodule } = require('./export/submodules/documents/index
 const htmlArtifactSubmodule = require('./export/submodules/html-artifacts/index.cjs');
 const spreadsheetSubmodule = require('./export/submodules/spreadsheets/index.cjs');
 const { registerCaptureHandlers } = require('./ipc/capture-handlers.cjs');
+const { registerScreenshotHandlers } = require('./ipc/screenshot-handlers.cjs');
 const { registerDocumentHandlers } = require('./ipc/document-handlers.cjs');
 const { spawnServer } = require('./server-spawn.cjs');
 const { writePort, clearPort } = require('./port-file.cjs');
@@ -118,8 +119,7 @@ function createWindow(port) {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
-      // Enable <webview> tag for browser-viewer panel
-      webviewTag: true,
+      
       // Keep WS/timers alive while minimized so restore doesn't look "dead".
       backgroundThrottling: false,
     },
@@ -146,6 +146,32 @@ function createWindow(port) {
   const wc = mainWindow.webContents;
   attachNavigationDiagnostics(wc);
 
+  // Allow any website to render inside iframes by stripping frame-blocking headers.
+  // This only affects <iframe> subframe requests, not the main app window.
+  wc.session.webRequest.onHeadersReceived(
+    { urls: ['<all_urls>'] },
+    (details, callback) => {
+      if (details.resourceType !== 'subFrame') {
+        callback({ responseHeaders: details.responseHeaders });
+        return;
+      }
+      const headers = { ...details.responseHeaders };
+      delete headers['X-Frame-Options'];
+      delete headers['x-frame-options'];
+      if (headers['Content-Security-Policy']) {
+        headers['Content-Security-Policy'] = headers['Content-Security-Policy'].map(
+          (policy) => policy.replace(/frame-ancestors[^;]*;?/gi, '').trim()
+        ).filter(Boolean);
+      }
+      if (headers['content-security-policy']) {
+        headers['content-security-policy'] = headers['content-security-policy'].map(
+          (policy) => policy.replace(/frame-ancestors[^;]*;?/gi, '').trim()
+        ).filter(Boolean);
+      }
+      callback({ responseHeaders: headers });
+    }
+  );
+
   wc.on('render-process-gone', (_event, details) => {
     logElectron('error', `render-process-gone reason=${details.reason} exitCode=${details.exitCode}`);
     if (mainWindow.isDestroyed()) return;
@@ -167,6 +193,29 @@ function createWindow(port) {
   const appUrl = `http://localhost:${port}`;
   logElectron('info', `loadURL ${appUrl}`);
   wc.loadURL(appUrl);
+
+  // Track browser iframe navigations so the address bar updates for cross-origin sites.
+  // The browser iframe is the only direct child frame of the main webContents.
+  function handleBrowserFrameNav(url, isMainFrame, frameProcessId, frameRoutingId) {
+    if (isMainFrame) return;
+    if (!url || url === 'about:blank') return;
+    try {
+      const frame = webFrameMain.fromId(frameProcessId, frameRoutingId);
+      if (frame && frame.parent === wc.mainFrame) {
+        wc.send('browser:url-changed', { url });
+      }
+    } catch {
+      // Frame may have been destroyed
+    }
+  }
+
+  wc.on('did-frame-navigate', (_event, url, _code, _text, isMainFrame, frameProcessId, frameRoutingId) => {
+    handleBrowserFrameNav(url, isMainFrame, frameProcessId, frameRoutingId);
+  });
+
+  wc.on('did-navigate-in-page', (_event, url, isMainFrame, frameProcessId, frameRoutingId) => {
+    handleBrowserFrameNav(url, isMainFrame, frameProcessId, frameRoutingId);
+  });
 
   // Open DevTools in development
   // wc.openDevTools();
@@ -319,6 +368,7 @@ function buildMenu() {
 }
 
 registerCaptureHandlers(ipcMain);
+registerScreenshotHandlers(ipcMain);
 
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 if (!gotSingleInstanceLock) {
@@ -337,14 +387,16 @@ if (!gotSingleInstanceLock) {
     const { port, process: proc } = await spawnServer({ onExit: handleServerExit });
     serverProcess = proc;
     writePort(port);
+    logElectron('info', `server ready port=${port}`);
 
     // 2. Register protocol request handler (scheme was registered before ready)
     registerHandler();
     ipcMain.on('workspace:set-root', (_, repoPath) => setWorkspaceRoot(repoPath));
 
-    // 3. Register IPC handlers (unchanged)
+    // 3. Register IPC handlers
     const documentHandlers = registerDocumentHandlers(ipcMain, { exportController });
 
+    
     exportController.register('document', createDocumentSubmodule({ getPandocPath: documentHandlers.getPandocPath }));
     exportController.register('html-artifact', htmlArtifactSubmodule);
     exportController.register('spreadsheet', spreadsheetSubmodule);

@@ -16,7 +16,7 @@ import { TopicList } from './TopicList';
 import { PageViewer } from './PageViewer';
 import { EdgePanel } from './EdgePanel';
 
-const ROOT_INDEX = 'content/index.json';
+const ROOT_INDEX = 'index.json';
 
 export function WikiExplorer() {
   useViewLayoutStyles('wiki-viewer');
@@ -36,31 +36,23 @@ export function WikiExplorer() {
   const setLoading = useWikiStore((s) => s.setLoading);
   const setError = useWikiStore((s) => s.setError);
 
-  // Track which section indices we've loaded
   const loadedSectionsRef = useRef<Set<string>>(new Set());
-  // Track which article group indices we've loaded
-  const loadedGroupsRef = useRef<Set<string>>(new Set());
 
   const onIndex = useCallback((content: string) => {
     try {
       const index = JSON.parse(content);
       const sections = index.sections || [];
-      setIndex(sections, {}); // articles loaded per-section below
+      setIndex(sections, {});
       loadedSectionsRef.current.clear();
-      loadedGroupsRef.current.clear();
     } catch {
       setError('Failed to parse wiki index');
     }
   }, [setIndex, setError]);
 
   const onFileContent = useCallback((path: string, content: string) => {
-    if (path === ROOT_INDEX) {
-      // Already handled by onIndex
-      return;
-    }
+    if (path === ROOT_INDEX) return;
 
-    // Section index: content/{section}/index.json
-    const sectionMatch = path.match(/^content\/([^/]+)\/index\.json$/);
+    const sectionMatch = path.match(/^([^/]+)\/index\.json$/);
     if (sectionMatch) {
       try {
         const idx = JSON.parse(content);
@@ -70,43 +62,45 @@ export function WikiExplorer() {
           articlesBySection: { ...state.articlesBySection, [sectionId]: articles },
         }));
         loadedSectionsRef.current.add(sectionId);
-      } catch {
-        /* ignore parse errors */
-      }
+      } catch {}
       return;
     }
 
-    // Article group index: content/{section}/{article}/index.json
-    const groupMatch = path.match(/^content\/([^/]+)\/([^/]+)\/index\.json$/);
+    const groupMatch = path.match(/^([^/]+)\/([^/]+)\/index\.json$/);
     if (groupMatch) {
       try {
         const idx = JSON.parse(content);
-        const articleId = groupMatch[2];
-        const groups = idx.groups || [];
-        setArticleGroups(articleId, groups);
-        loadedGroupsRef.current.add(articleId);
-      } catch {
-        /* ignore parse errors */
-      }
+        const sectionId = groupMatch[1];
+        const folderName = groupMatch[2];
+        // Read fresh from the store: this callback is memoized without
+        // articlesBySection in its deps, so the closure value is the empty
+        // initial state. Using it meant the lookup always failed and groups
+        // were keyed by folderName instead of the article id — which only
+        // broke articles whose folder name != id (e.g. Coding-CLIs).
+        const article = useWikiStore.getState().articlesBySection[sectionId]?.find(
+          (a) => a.folder === folderName || a.id === folderName
+        );
+        const articleId = article?.id || folderName;
+        setArticleGroups(articleId, idx.groups || []);
+      } catch {}
       return;
     }
 
-    // Markdown content: content/{section}/{article}/{file}.md
-    const mdMatch = path.match(/^content\/([^/]+)\/([^/]+)\/(.+\.md)$/);
+    const mdMatch = path.match(/^([^/]+)\/([^/]+)\/(.+\.md)$/);
     if (mdMatch) {
       const fileName = mdMatch[3];
       const article = useWikiStore.getState().activeArticle;
       const section = useWikiStore.getState().activeSection;
       const file = useWikiStore.getState().activeArticleFile;
 
-      // Only accept if this content matches current selection
-      if (mdMatch[1] !== section || mdMatch[2] !== article) return;
+      const articles = useWikiStore.getState().articlesBySection[section] || [];
+      const articleMeta = articles.find((a) => a.id === article);
+      const expectedFolder = articleMeta?.folder || article;
+      if (mdMatch[1] !== section || mdMatch[2] !== expectedFolder) return;
 
-      if (file === '' || file === fileName) {
-        // Guide file
+      if (file === '') {
         setGuideContent(content);
       } else if (file === fileName) {
-        // Specific article file
         setArticleContent(content);
       }
       return;
@@ -125,36 +119,31 @@ export function WikiExplorer() {
     onError,
   });
 
-  // Re-request root index when workspace switches
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     request(ROOT_INDEX);
   }, [activeWorkspaceId, ws, request]);
 
-  // Load section indices when sections are known
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     for (const section of sections) {
       if (loadedSectionsRef.current.has(section.id)) continue;
-      request(`content/${section.id}/index.json`);
+      request(`${section.id}/index.json`);
     }
   }, [sections, ws, request]);
 
-  // Load article groups when active article changes
   useEffect(() => {
     if (!activeArticle || !activeSection) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    if (loadedGroupsRef.current.has(activeArticle)) return;
 
     const article = articlesBySection[activeSection]?.find(
       (a) => a.id === activeArticle
     );
     if (!article) return;
 
-    request(`content/${activeSection}/${article.folder}/index.json`);
+    request(`${activeSection}/${article.folder}/index.json`);
   }, [activeArticle, activeSection, articlesBySection, ws, request]);
 
-  // Load markdown content when selection changes
   useEffect(() => {
     if (!activeArticle || !activeSection) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
@@ -167,12 +156,10 @@ export function WikiExplorer() {
     setLoading(true);
 
     if (showGuide || activeArticleFile === '') {
-      // Load guide file
       const guideFile = article.guide || `${article.id}_Guide.md`;
-      request(`content/${activeSection}/${article.folder}/${guideFile}`);
+      request(`${activeSection}/${article.folder}/${guideFile}`);
     } else {
-      // Load specific article file
-      request(`content/${activeSection}/${article.folder}/${activeArticleFile}`);
+      request(`${activeSection}/${article.folder}/${activeArticleFile}`);
     }
   }, [activeArticle, activeSection, activeArticleFile, showGuide, articlesBySection, ws, request, setLoading]);
 

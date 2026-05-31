@@ -12,6 +12,7 @@
  */
 
 const EventEmitter = require('events');
+const { runSafely } = require('./background-services/safety');
 
 const bus = new EventEmitter();
 bus.setMaxListeners(200);
@@ -66,11 +67,17 @@ function emit(type, data = {}) {
   currentTrigger = event;
   currentDepth++;
   try {
-    bus.emit(type, event);
-    bus.emit('*', event);
+    emitSafely(type, event);
+    emitSafely('*', event);
   } finally {
     currentDepth--;
     currentTrigger = previousTrigger;
+  }
+}
+
+function emitSafely(type, event) {
+  for (const listener of bus.listeners(type)) {
+    runSafely(`EventBus:${type}`, () => listener(event));
   }
 }
 

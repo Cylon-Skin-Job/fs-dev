@@ -71,11 +71,11 @@ export function InstantSegmentRenderer({ segments }: InstantSegmentRendererProps
           );
         }
 
+        const segment = group.segments[0];
         return (
-          <InstantToolBlock
-            key={group.segments[0].toolCallId || `seg-${gi}`}
-            segment={group.segments[0]}
-          />
+          <div key={segment.toolCallId || `seg-${gi}`}>
+            <InstantToolBlock segment={segment} />
+          </div>
         );
       })}
     </>
@@ -100,21 +100,22 @@ function InstantText({ content }: { content: string }) {
 function InstantToolBlock({ segment }: { segment: StreamSegment }) {
   const [expanded, setExpanded] = useState(false);
   const renderer = getToolRenderer(segment.type);
+  const renderedContent = renderer.formatContent(segment.content, segment.toolArgs, segment);
 
   return (
     <ToolCallBlock
       type={segment.type}
-      label={renderer.buildTitle(1, segment.toolArgs)}
+      label={renderer.buildTitle(segment.groupCount ?? 1, segment.toolArgs, segment)}
       toolArgs={segment.toolArgs}
       isError={segment.isError}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
     >
-      {segment.content && (
+      {renderedContent && (
         <div
           style={renderer.contentStyle}
           dangerouslySetInnerHTML={{
-            __html: renderer.formatContent(segment.content, segment.toolArgs),
+            __html: renderedContent,
           }}
         />
       )}
@@ -132,7 +133,7 @@ function InstantGroupedBlock({ segments }: { segments: StreamSegment[] }) {
   return (
     <ToolCallBlock
       type={type}
-      label={renderer.buildTitle(segments.length, segments[0].toolArgs)}
+      label={renderer.buildTitle(segments[0].groupCount ?? segments.length, segments[0].toolArgs, segments[0])}
       isError={segments.some(s => s.isError)}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
@@ -141,7 +142,7 @@ function InstantGroupedBlock({ segments }: { segments: StreamSegment[] }) {
         style={renderer.contentStyle}
         dangerouslySetInnerHTML={{
           __html: segments.map(seg =>
-            renderer.formatContent(seg.content, seg.toolArgs)
+            renderer.formatContent(seg.content, seg.toolArgs, seg)
           ).join(''),
         }}
       />

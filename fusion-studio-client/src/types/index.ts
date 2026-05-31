@@ -1,6 +1,39 @@
 // Panel Types — PanelId is now a string alias (panels are discovered dynamically)
 export type PanelId = string;
 
+// Todo types for the bottom drawer
+export type TodoItemStatus = 'pending' | 'in_progress' | 'completed';
+
+export interface TodoItem {
+  id: string;
+  content: string;
+  status: TodoItemStatus;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+export interface TodoDrawerState {
+  items: TodoItem[];
+  updatedAt: number;
+  open: boolean;
+}
+
+export interface UniversalDiffDisplay {
+  type: 'diff';
+  path: string;
+  oldText: string;
+  newText: string;
+  oldStart: number;
+  newStart: number;
+  removedLines: number;
+  addedLines: number;
+  isSummary?: boolean;
+}
+
+export type UniversalToolDisplay = UniversalDiffDisplay | {
+  type?: string;
+  [key: string]: unknown;
+};
+
 // All segment types that can appear in the ordered stream
 export type SegmentType =
   | 'think' | 'text'
@@ -16,8 +49,12 @@ export interface StreamSegment {
   label?: string;
   toolCallId?: string;
   toolArgs?: Record<string, unknown>;
-  toolDisplay?: unknown[];
+  toolDisplay?: UniversalToolDisplay[];
+  toolStatus?: string;
+  returnedDiff?: boolean;
   isError?: boolean;
+  /** Number of tool calls collapsed into this live grouped segment. */
+  groupCount?: number;
   /** True when the closing tag has arrived — content is final */
   complete?: boolean;
 }
@@ -58,6 +95,9 @@ export interface PanelState {
   /** Captured at finalize; used when adding to messages at turn_begin */
   lastReleasedSegmentCount: number;
 
+  /** Per-thread todo drawer state (TODO_DRAWER_SPEC) */
+  todoDrawer?: TodoDrawerState;
+
 }
 
 // WebSocket Message Types
@@ -73,7 +113,9 @@ export type WebSocketMessageType =
   | 'response'
   | 'error'
   | 'tool_call'
+  | 'tool_call_args'
   | 'tool_result'
+  | 'subagent_event'
   // Thread messages
   | 'thread:list'
   | 'thread:created'
@@ -147,7 +189,11 @@ export type WebSocketMessageType =
   | 'screenshot:missing'
   | 'screenshot:error'
   // Calendar messages
-  | 'calendar:sync_complete';
+  | 'calendar:sync_complete'
+  // Bookmarks messages
+  | 'bookmarks:list'
+  | 'bookmarks:updated'
+  | 'bookmarks:error';
 
 // Slider-only theme model — accent + 4 sliders.
 export interface ThemeEntry {
@@ -225,18 +271,26 @@ export interface WebSocketMessage {
   contextUsage?: number;
   tokenUsage?: number;
   requestType?: string;
-  payload?: any;
+  payload?: unknown;
   requestId?: string;
   id?: string;
-  result?: any;
-  error?: any;
+  result?: unknown;
+  error?: string;
   sessionId?: string;
   toolName?: string;
   toolCallId?: string;
   toolArgs?: Record<string, unknown>;
-  toolOutput?: string;
-  toolDisplay?: unknown[];
+  argsChunk?: string;
+  toolOutput?: unknown;
+  toolDisplay?: UniversalToolDisplay[];
+  toolStatus?: string;
+  returnedDiff?: boolean;
   isError?: boolean;
+  parentToolCallId?: string;
+  agentId?: string;
+  subagentType?: string;
+  subagentEventType?: string;
+  subagentPayload?: unknown;
   // Thread fields
   panel?: string;
   threadId?: string;
@@ -375,7 +429,10 @@ export interface ToolCallPart {
   arguments: Record<string, unknown>;
   result: {
     output?: string;
-    display?: unknown[];
+    statusMessage?: string;
+    display?: UniversalToolDisplay[];
+    returnedDiff?: boolean;
+    isError?: boolean;
     error?: string;
     files?: string[];
   };

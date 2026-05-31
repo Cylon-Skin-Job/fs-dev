@@ -11,7 +11,7 @@
   "updated": "2026-03-27T21:00:00Z",
   "frozen": false,
   "children": null,
-  "edges_out": ["Workspaces", "Workspace-Agent-Model", "Session-Scoping", "Workspace-Index"],
+  "edges_out": ["Workspaces", "Workspace-Agent-Model", "Chat-Thread-Lifecycle", "Workspace-Index"],
   "edges_in": ["Workspaces", "Workspace-Agent-Model"],
   "sources": [],
   "settings": {}

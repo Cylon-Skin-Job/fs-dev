@@ -1,0 +1,133 @@
+/* BrowserChrome — chrome bar for general web browser (always visible) */
+
+/* Chrome bar — sits below the tab strip */
+.rv-browser-chrome {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  padding: 0;
+  background: var(--browser-active-surface);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Chrome row — nav buttons + URL bar + action icons */
+.rv-browser-chrome-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--document-bg, #161616);
+  border: none;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+/* Nav group (back/forward/reload + URL input) */
+.rv-browser-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  margin-right: 200px;
+}
+
+/* Actions group (toggle) */
+.rv-browser-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Chrome buttons */
+.rv-browser-chrome-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.rv-browser-chrome-btn:hover:not(:disabled) {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-browser-chrome-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.rv-browser-chrome-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* URL input wrapper — holds input + star button */
+.rv-browser-url-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.rv-browser-url-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 32px 0 10px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: 6px;
+  background: var(--browser-active-surface);
+  background: color-mix(in srgb, var(--browser-active-surface), black 25%);
+  color: var(--text-primary, #e0e0e0);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.rv-browser-url-input:focus {
+  border-color: var(--color-primary, #00d4ff);
+}
+
+/* Star button — embedded at right edge of URL input */
+.rv-browser-star-btn {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.5));
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rv-browser-star-btn:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--color-primary, #00d4ff);
+}
+
+.rv-browser-star-btn .material-symbols-outlined {
+  font-size: 16px;
+}

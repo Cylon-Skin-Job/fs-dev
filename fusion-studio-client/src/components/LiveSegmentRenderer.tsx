@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect */
 /**
  * LiveSegmentRenderer — Two-phase rendering for live streaming turns.
  *
@@ -30,13 +31,36 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { StreamSegment } from '../types';
 import { getToolRenderer } from '../lib/tool-renderers';
-import { computeTimingProfile, type TimingProfile } from '../lib/pressure';
+import type { TimingProfile } from '../lib/pressure';
 import { animateTool } from '../lib/tool-animate';
 import { renderTextInstant } from '../lib/text';
 import { animateText } from '../lib/text/text-animate';
 import { sleep, injectCursor } from '../lib/animate-utils';
 import { ToolCallBlock } from './ToolCallBlock';
 import { Orb } from './Orb';
+import { HourglassFlow } from './chat/HourglassFlow';
+import './LiveSegmentRenderer.css';
+
+interface TimingProbe {
+  sendAt?: number;
+  orbEndAt?: number;
+  firstTokenAt?: number;
+}
+
+const STABLE_TIMING_PROFILE: TimingProfile = {
+  tier: 'normal',
+  shimmerTotal: 400,
+  interChunkPause: 80,
+  speedFast: 1,
+  speedSlow: 6,
+  batchSizeFast: 5,
+  postTypingPause: 500,
+  collapseDuration: 300,
+  interSegmentPause: 100,
+  instantReveal: false,
+  snapToFrontier: false,
+  snapKeepLive: 0,
+};
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MAIN COMPONENT
@@ -105,7 +129,7 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
   // onSegmentDone: ONLY bumps the counter. No completion logic here.
   // Stable callback — no deps, no stale closure risk. Every mounted
   // segment gets the same function reference.
-  const onSegmentDone = useCallback((_index: number) => {
+  const onSegmentDone = useCallback(() => {
     setRevealedCount(prev => prev + 1);
   }, []);
 
@@ -127,48 +151,26 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
     if (segments.length < prevLenRef.current) {
       setRevealedCount(0);
       finalizedRef.current = false;
-      skippedRef.current.clear();
     }
     prevLenRef.current = segments.length;
   }, [segments.length]);
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // Pressure gauge — backlog-aware timing attenuation
+  // Stable timing profile
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   //
-  // backlogRef updates every render with the current distance
-  // between the stream frontier and the reveal cursor.
-  // getTimingProfile() is a stable function that segments call
-  // at each animation pause point to get CURRENT timing values.
+  // Older builds used a segment-backlog pressure gauge here. That outer
+  // controller could enter instantReveal/snap modes while the newer chunk
+  // queues were already pacing by real lookahead, causing the cursor to pause
+  // and then dump the rest of a segment. Keep this layer stable; text and tool
+  // reveal speed now belongs to their chunk buffers.
   //
-  // See lib/pressure.ts for tier definitions and thresholds.
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  const backlogRef = useRef(0);
-  backlogRef.current = segments.length - revealedCount;
 
   /** Stable getter — segments call this at each decision point. */
   const getTimingProfile = useCallback((): TimingProfile => {
-    return computeTimingProfile(backlogRef.current);
+    return STABLE_TIMING_PROFILE;
   }, []);
-
-
-  // Snap-to-frontier: when backlog is hopeless, jump ahead.
-  // Skipped segments get skipAnimation=true and render instantly.
-  const skippedRef = useRef(new Set<number>());
-
-  useEffect(() => {
-    const profile = computeTimingProfile(segments.length - revealedCount);
-    if (profile.snapToFrontier && !finalizedRef.current) {
-      const target = Math.max(0, segments.length - profile.snapKeepLive);
-      if (target > revealedCount) {
-        for (let i = 0; i < target; i++) {
-          skippedRef.current.add(i);
-        }
-        setRevealedCount(target);
-      }
-    }
-  }, [segments.length, revealedCount]);
 
   // ── Render ──
 
@@ -187,28 +189,32 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
 
   return (
     <>
-      {segments.slice(0, visibleCount).map((seg, i) => (
-        seg.type === 'text' ? (
-          <LiveTextSegment
-            key={`text-${i}`}
-            segment={seg}
-            index={i}
-            skipAnimation={skippedRef.current.has(i)}
-            getTimingProfile={getTimingProfile}
-            onDone={onSegmentDone}
-          />
-        ) : (
-          <LiveToolSegment
-            key={seg.toolCallId || `seg-${i}`}
-            segment={seg}
-            index={i}
-            skipShimmer={i === 0}
-            skipAnimation={skippedRef.current.has(i)}
-            getTimingProfile={getTimingProfile}
-            onDone={onSegmentDone}
-          />
-        )
-      ))}
+      {segments.slice(0, visibleCount).map((seg, i) => {
+        if (seg.type === 'text') {
+          return (
+            <LiveTextSegment
+              key={`text-${i}`}
+              segment={seg}
+              index={i}
+              getTimingProfile={getTimingProfile}
+              onDone={onSegmentDone}
+            />
+          );
+        }
+
+        return (
+          <div key={seg.toolCallId || `seg-${i}`}>
+            <LiveToolSegment
+              segment={seg}
+              index={i}
+              skipShimmer={i === 0}
+              getTimingProfile={getTimingProfile}
+              onDone={onSegmentDone}
+            />
+            {seg.type === 'subagent' && !seg.complete && <SubagentWaitingSegment />}
+          </div>
+        );
+      })}
     </>
   );
 }
@@ -315,9 +321,26 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
   completeRef.current = segment.complete ?? false;
 
   useEffect(() => {
+    if (segment.type !== 'subagent') return;
+    setDisplayedContent(segment.content);
+    if (segment.complete) setExpanded(false);
+  }, [segment.type, segment.content, segment.complete]);
+
+  useEffect(() => {
     if (animatingRef.current) return;
     animatingRef.current = true;
     cancelRef.current = false;
+
+    // Subagents are live background ledgers. They must not block later
+    // assistant text from rendering, because Kimi can keep emitting
+    // SubagentEvent updates after the parent chat has moved on.
+    if (segment.type === 'subagent') {
+      setDisplayedContent(contentRef.current);
+      setPhase('done');
+      setExpanded(true);
+      setTimeout(() => onDone(index), 0);
+      return;
+    }
 
     // ── Skipped segments render instantly (snap-to-frontier) ──
     if (skipAnimation) {
@@ -329,7 +352,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
     }
 
     // ── TIMING: Log when this segment's animate() fires ──
-    const t = (window as any).__TIMING;
+    const t = (window as Window & { __TIMING?: TimingProbe }).__TIMING;
     const mountAt = performance.now();
     if (t) {
       const sinceSend = t.sendAt ? (mountAt - t.sendAt).toFixed(1) : '?';
@@ -389,11 +412,15 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
   }, []);
 
   const renderer = getToolRenderer(segment.type);
+  const formattedContent = renderer.formatContent(displayedContent, segment.toolArgs, segment);
+  const renderedContent = displayedContent && phase === 'revealing' && renderer.showCursor
+    ? injectCursor(formattedContent)
+    : formattedContent;
 
   return (
     <ToolCallBlock
       type={segment.type}
-      label={renderer.buildTitle(1, segment.toolArgs)}
+      label={renderer.buildTitle(segment.groupCount ?? 1, segment.toolArgs, segment)}
       toolArgs={segment.toolArgs}
       isError={segment.isError}
       expanded={expanded}
@@ -401,13 +428,11 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       shimmer={phase === 'shimmer' || phase === 'revealing'}
       collapseDuration={collapseMsRef.current}
     >
-      {displayedContent && (
+      {renderedContent && (
         <div
           style={renderer.contentStyle}
           dangerouslySetInnerHTML={{
-            __html: phase === 'revealing' && renderer.showCursor
-              ? injectCursor(renderer.formatContent(displayedContent, segment.toolArgs))
-              : renderer.formatContent(displayedContent, segment.toolArgs),
+            __html: renderedContent,
           }}
         />
       )}
@@ -415,3 +440,10 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
   );
 }
 
+function SubagentWaitingSegment() {
+  return (
+    <div className="rv-tool-fade-in rv-subagent-waiting-segment">
+      <HourglassFlow label="Waiting for results from sub-agent..." size="sm" />
+    </div>
+  );
+}

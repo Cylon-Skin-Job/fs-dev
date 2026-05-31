@@ -37,6 +37,10 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           const ws = store.ws;
           if (ws && ws.readyState === WebSocket.OPEN && mru.threadId) {
             console.log('[WS] Auto-opening MRU thread:', mru.threadId.slice(0, 8), 'scope=', scope);
+            // Multiple panels request the same project thread list during boot.
+            // Mark the MRU as active before the server responds so only the
+            // first list response sends thread:open-assistant.
+            store.setCurrentThreadId(scope, mru.threadId);
             ws.send(JSON.stringify({
               type: 'thread:open-assistant',
               scope,
@@ -180,7 +184,10 @@ function convertPartToSegment(part: AssistantPart): StreamSegment {
       icon: info?.icon,
       toolArgs: part.arguments,
       toolDisplay: part.result.display,
-      isError: !!part.result.error,
+      toolStatus: part.result.statusMessage,
+      returnedDiff: part.result.returnedDiff,
+      isError: !!part.result.error || !!part.result.isError,
+      complete: true,
     };
   }
 }

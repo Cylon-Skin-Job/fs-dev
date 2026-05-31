@@ -66,5 +66,5 @@ Full specification: `ai/workspaces/capture/specs/WORKSPACE-AGENT-SPEC.md` and `a
 
 - [Workspaces](Workspaces) — overview of all workspaces
 - [Model-Config](Model-Config) — api.json and hot-swapping details
-- [Session-Scoping](Session-Scoping) — how sessions stay isolated
+- [Chat Threads & Turn Lifecycle](Chat-Thread-Lifecycle) — current thread and turn lifecycle model
 - [Progressive-Disclosure](Progressive-Disclosure) — how agents load context
