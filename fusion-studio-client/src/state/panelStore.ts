@@ -68,6 +68,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
         wireReady: false,
         contextUsage: 0,
         panelConfigs: state.panelConfigs,
+        panelRoots: state.panelRoots,
         viewStates: state.viewStates,
       };
       nextWorkspaceState[oldId] = oldState;

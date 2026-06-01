@@ -20,6 +20,7 @@ import { webSearchRenderer } from './web-search';
 import { fetchRenderer } from './fetch';
 import { subagentRenderer } from './subagent';
 import { todoRenderer } from './todo';
+import { showToast } from '../toast';
 
 const REGISTRY: Record<string, ToolRenderer> = {
   think: thinkRenderer,
@@ -35,10 +36,19 @@ const REGISTRY: Record<string, ToolRenderer> = {
   todo: todoRenderer,
 };
 
-/** Fallback for unknown segment types — renders as plain monospace stream. */
+const reportedUnknownTypes = new Set<string>();
+
+function reportUnknownToolType(type: string): void {
+  if (reportedUnknownTypes.has(type)) return;
+  reportedUnknownTypes.add(type);
+  console.error('[ToolRenderer] Unknown tool segment type:', type);
+  showToast(`Unknown tool renderer: ${type}`);
+}
+
+/** Unknown segment types render plainly, but loudly. */
 const fallbackRenderer: ToolRenderer = {
   grouped: false,
-  buildTitle: () => 'tool',
+  buildTitle: () => 'Unknown tool',
   contentStyle: {
     whiteSpace: 'pre-wrap',
     fontFamily: 'monospace',
@@ -50,7 +60,10 @@ const fallbackRenderer: ToolRenderer = {
 };
 
 export function getToolRenderer(type: SegmentType | string): ToolRenderer {
-  return REGISTRY[type] || fallbackRenderer;
+  const renderer = REGISTRY[type];
+  if (renderer) return renderer;
+  reportUnknownToolType(type);
+  return fallbackRenderer;
 }
 
 export type { ToolRenderer, ContentStyle } from './types';
