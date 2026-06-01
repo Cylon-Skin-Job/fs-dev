@@ -8,6 +8,80 @@ This roadmap converts the violations identified in the 2026-05-18 audit into ord
 
 ---
 
+## 0A. 2026-05-31 Handoff Addendum
+
+This roadmap is now the follow-on roadmap from [Kimi Harness Legacy Removal Roadmap](./KIMI_HARNESS_LEGACY_REMOVAL_ROADMAP.md). Do not start large code-standards chunks until the Kimi roadmap is complete or explicitly paused by the project owner.
+
+Important context from the Kimi/render cleanup session:
+
+- The app is no longer a Kimi-only app. Standards cleanup must not preserve old Kimi-only routes, raw Kimi frontend aliases, or duplicate render paths just because they still work.
+- The frontend should consume canonical stream/tool events. If a future standards cleanup finds raw Kimi names, legacy `history` hydration, or inbound stream messages missing `scope`/`threadId`, treat that as a contract issue, not a styling/modularity issue.
+- Silent fallbacks are not acceptable for routing, vendor-name normalization, or saved-chat hydration. Unknown tool renderers may fall back visually only if they log and toast.
+- The user prefers a clear failure over partial legacy behavior that masks which path ran.
+- The live reveal behavior to preserve is chunk/queue based: thinking and subagent output reveal line-by-line; text reveals semantic markdown chunks; newline rhythm/line-end hold should remain. The visible typing cursor should be removed in the Kimi roadmap before visual polish proceeds.
+- The hourglass component and todo drawer were made more portable in recent commits. Keep their styles component-scoped, `rv-`-prefixed, and tokenized.
+- `stream-handlers.ts` is currently a known code-standards offender: it owns turn lifecycle, routing fallback, tool grouping, tool-result normalization, todo drawer updates, shell compaction, and subagent ledger updates. It should be split only after strict routing/fallback behavior is settled.
+- `LiveSegmentRenderer.tsx` is over 400 lines, but an earlier audit explicitly says **do not split** because completion detection is fragile. If it is touched, preserve the effect-based completion invariant: finalization happens only after both `turn_end` and reveal completion.
+- Runtime restarts can dirty workspace/theme state files such as `ai/system/state/state.json`, `ai/system/styles/themes.css`, `ai/system/styles/themes.json`, and `fusion-studio-server/data/workspace-cache.json`. Do not accidentally commit those unless the task is explicitly about persisted workspace/theme state.
+
+Current ordering dependency:
+
+1. Finish `docs/KIMI_HARNESS_LEGACY_REMOVAL_ROADMAP.md`.
+2. Then rebaseline this roadmap before executing chunks. Its original baseline `cf1982e` is stale relative to the current Kimi/render commits.
+3. Then run the code-standards chunks in this roadmap.
+
+Rebaseline checklist for the next session:
+
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev
+git status --short
+git log -1 --oneline
+git log --oneline -- docs/KIMI_HARNESS_LEGACY_REMOVAL_ROADMAP.md docs/CODE_STANDARDS_CLEANUP_ROADMAP.md
+```
+
+If the tree is dirty, classify every dirty file before editing:
+
+- Runtime state/theme/cache: usually leave uncommitted.
+- Roadmap/spec docs: inspect and commit if intentional.
+- Source files: inspect before touching; do not revert user/session work.
+
+Additional smoke tests to carry forward from the Kimi/render work:
+
+1. Send a plain Kimi chat and confirm text reveals by semantic chunks without a visible typing cursor.
+2. Trigger thinking and confirm line-by-line reveal with newline rhythm.
+3. Trigger shell, read, grep, glob, write, edit, web search, fetch, todo, and subagent tool calls.
+4. Confirm shell output uses theme tokens from first render through completion.
+5. Confirm write/edit diff dropdowns have boundaries and horizontal scroll after the Phase 10 visual polish work lands.
+6. Switch away from a persisted thread and back; background subagent hourglass must not reappear incorrectly.
+7. Reload Electron and rehydrate a SQLite-backed thread; hydration should use canonical exchanges, not partial legacy history fallback.
+8. Verify an unknown tool type produces a console error plus toast rather than silently pretending to be a normal tool.
+
+Commands that are known-good in this repo:
+
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client
+npm run build
+npx eslint src/components/LiveSegmentRenderer.tsx src/components/InstantSegmentRenderer.tsx src/lib/tool-animate.ts src/lib/reveal/orchestrator.ts src/lib/text/text-animate.ts src/lib/ws/stream-handlers.ts
+```
+
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server
+npm test -- --runInBand
+```
+
+```bash
+cd /Users/rccurtrightjr./projects/Fusion-Home
+./restart-fusion.sh
+```
+
+Known validation caveats:
+
+- Client build may warn about `gray-matter` eval and large Vite chunks. Those warnings are pre-existing and are not failures.
+- Server Jest may report an existing open-handle warning after completion. Treat actual failing tests differently from that warning.
+- Full client lint may still have unrelated repo-wide issues. For narrow changes, run targeted ESLint on touched files plus the render/router files above.
+
+---
+
 ## 0. Operating Procedure (applies to every chunk)
 
 Every chunk follows the same loop. **Do not skip steps; do not collapse two chunks into one.**
