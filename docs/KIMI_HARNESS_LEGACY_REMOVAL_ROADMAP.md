@@ -160,6 +160,38 @@ Text animation is currently separate:
 - `fusion-studio-client/src/lib/text/chunk-buffer.ts`
 - `fusion-studio-client/src/lib/text/speed-attenuator.ts`
 
+### Frontend Event-Bus Vestiges To Remove
+
+The frontend does not contain a full second render system from before the event bus, but it does still contain compatibility behavior from the older single-Kimi/single-current-thread era. These are important because they can hide backend contract violations and route inbound stream content by current UI state instead of by explicit event identity.
+
+Highest-risk vestiges:
+
+- `fusion-studio-client/src/lib/ws/stream-handlers.ts`
+  - Inbound stream messages can still resolve missing `scope` from `currentScope`, then default to `project`.
+  - Some inbound stream updates can still tolerate missing `threadId` through store helpers that fall back to the current project thread.
+  - This is the most dangerous frontend fallback because server-originated events should already know their `scope` and `threadId`. If those fields are absent, the correct behavior is to surface a contract problem, not guess from the selected UI state.
+- `fusion-studio-client/src/lib/ws/thread-handlers.ts`
+  - `thread:*` messages still coerce missing `scope` to `project`.
+  - `thread:opened` can hydrate from modern `exchanges`, but still falls back to older `history` format.
+  - `convertPartToSegment()` still maps persisted tool part names through frontend tool-name aliases.
+- `fusion-studio-client/src/lib/instructions.ts`
+  - `toolNameToSegmentType()` still recognizes raw Kimi-style names such as `ReadFile`, `WriteFile`, `EditFile`, `StrReplaceFile`, `SearchWeb`, `FetchURL`, `Agent`, `Task`, `SetTodoList`, and `TodoWrite`.
+  - These mappings are acceptable only as a temporary bridge while legacy backend routes can still leak vendor names. They should not become the permanent multi-harness contract.
+- `fusion-studio-client/src/lib/catalog.ts`
+  - Some lookup language and structures still refer to wire tags / tag lookup rather than purely canonical tool segment types.
+  - Keep active chunk strategy behavior, but remove Kimi/wire-tag compatibility once backend canonicalization is proven.
+- `StreamSegment.icon` and `SEGMENT_ICONS`
+  - Some history conversion still attaches icon metadata to segments even though current tool visuals are owned by `catalog-visual.ts` and `ToolCallBlock`.
+  - This may be older render metadata that can be removed after confirming no active renderer consumes it.
+
+Lower-risk cleanup targets:
+
+- `fusion-studio-client/src/lib/ws-client.ts`
+  - This is still the browser-side websocket dispatcher. That is not legacy by itself; the client still needs a message router after the server event bus broadcasts over websocket.
+  - It does still contain a broad switch over many message domains. Splitting that further can improve maintainability, but it should not be treated as a prerequisite for Kimi legacy removal.
+- `fusion-studio-client/src/config/harness.ts`
+  - Kimi appearing as the current/default provider is product configuration, not a frontend render fallback. Remove Kimi-specific behavior here only when additional harnesses are actually activated.
+
 ## Current Render Problem Context
 
 The user observed cursor stalls where tokens were still streaming, then the rest of the response dumped very quickly. This matches old pressure/backlog behavior.
@@ -473,16 +505,27 @@ Current issue:
 
 `fusion-studio-client/src/lib/instructions.ts` has aliases for raw Kimi names. Some were necessary because the legacy message-router still emits raw tool names.
 
+This phase should also remove frontend routing fallbacks that belong to the pre-event-bus/single-current-thread era.
+
 Actions after backend canonical path is proven:
 
 1. Remove raw Kimi aliases from `toolNameToSegmentType`.
 2. Keep canonical mappings only.
 3. If a future harness leaks raw names to the frontend, fix that harness interpreter instead of adding frontend aliases.
+4. In `stream-handlers.ts`, stop resolving inbound server stream events from `currentScope` or the current project thread.
+5. Require explicit `scope` and `threadId` for server-originated stream events. Missing routing metadata should warn/drop or fail loudly in development, not silently route to the active UI state.
+6. In `thread-handlers.ts`, stop defaulting missing `scope` to `project` once the server contract guarantees scoped thread messages.
+7. Remove the legacy `history` hydration fallback after confirming persisted/replayed chats always arrive as rich `exchanges`.
+8. Remove stale segment icon metadata if all live/history renderers get visuals from `catalog-visual.ts` and `ToolCallBlock`.
+9. Clean `catalog.ts` of wire-tag/vendor-tag lookup once canonical tool names are the only frontend-facing tool identity.
 
 Acceptance criteria:
 
 - Frontend `instructions.ts` maps canonical event names only.
 - Kimi tools still render correctly because backend emits canonical names.
+- Inbound stream events without explicit `scope` and `threadId` cannot be silently attached to the currently selected thread.
+- Thread hydration uses one rich exchange format; the old `history` route is gone or isolated behind a documented migration boundary.
+- Tool visual identity comes from the visual catalog, not duplicated `StreamSegment.icon` metadata.
 
 ## Phase 9: Documentation Update
 
