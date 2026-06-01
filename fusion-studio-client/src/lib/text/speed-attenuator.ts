@@ -28,9 +28,9 @@
  *   The chunk buffer delegates to this module:
  *     buffer.getSpeed() → computeSpeed(chunks, cursor, pendingBlock)
  *
- *   Future tool-specific queues can use the same function with their
- *   own chunk metadata. The attenuator doesn't know what a "paragraph"
- *   or "code fence" is — it only reads the flags.
+ *   Future queues can use the same function with their own chunk
+ *   metadata. The attenuator doesn't know what a "paragraph" or
+ *   "code fence" is — it only reads the flags.
  */
 
 export const SPEED_FAST = 1;  // ms per char
@@ -44,7 +44,7 @@ export interface QueueItem {
   isPartial?: boolean;
 }
 
-/** Options that customize the attenuator per tool type. */
+/** Options that customize how queued text metadata affects lookahead. */
 export interface AttenuatorOptions {
   /** Do complete code fences count as lookahead? Default true. */
   codeFenceAsLookahead?: boolean;
@@ -56,8 +56,8 @@ const FAST_THRESHOLD = 2;
 /**
  * Compute the speed decision for the current queue state.
  *
- * Generic — works for any tool type. The chunk strategy defines
- * what items are in the queue. The attenuator just counts them.
+ * Generic — works for any queued chunk metadata. The parser/queue
+ * producer defines the items. The attenuator just counts them.
  *
  * @param items   — The full queue array (consumed + upcoming).
  * @param cursor  — Index of the next item to consume.

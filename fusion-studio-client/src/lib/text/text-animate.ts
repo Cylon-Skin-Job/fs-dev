@@ -21,9 +21,10 @@
 import { parseTextChunks } from './index';
 import { createChunkBuffer } from './chunk-buffer';
 import { truncateHtmlToChars, getVisibleTextLength } from './html-utils';
-import { textStrategy } from '../chunk-strategies/text';
 import { sleep } from '../animate-utils';
 import type { TimingProfile } from '../timing';
+
+const CODE_FENCE_AS_LOOKAHEAD = true;
 
 // ── Public Interface ─────────────────────────────────────────────────
 
@@ -52,9 +53,9 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
     setDisplayedHtml, getTimingProfile, onDone,
   } = opts;
 
-  // Text strategy metadata determines buffer behavior (code fences as lookahead)
+  // Text queue metadata determines buffer behavior (code fences as lookahead)
   const buffer = createChunkBuffer({
-    codeFenceAsLookahead: textStrategy.codeFenceAsLookahead ?? true,
+    codeFenceAsLookahead: CODE_FENCE_AS_LOOKAHEAD,
   });
 
   let cursor = 0;                // byte position in raw content (only moves forward)
