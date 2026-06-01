@@ -18,7 +18,7 @@
  * │                                                             │
  * │ Segments animate one at a time:                             │
  * │ 1. ToolCallBlock appears (icon + label shimmer)             │
- * │ 2. Content typing blitz (speed from chunkBuffer)            │
+ *   │ 2. Content typing blitz (speed from queue lookahead)        │
  * │ 3. Post-typing pause                                        │
  * │ 4. Collapse animation                                       │
  * │ 5. Next segment starts                                      │
@@ -32,6 +32,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { StreamSegment } from '../types';
 import { getToolRenderer } from '../lib/tool-renderers';
 import type { TimingProfile } from '../lib/timing';
+import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
 import { animateTool } from '../lib/tool-animate';
 import { renderTextInstant } from '../lib/text';
 import { animateText } from '../lib/text/text-animate';
@@ -47,16 +48,7 @@ interface TimingProbe {
   firstTokenAt?: number;
 }
 
-const STABLE_TIMING_PROFILE: TimingProfile = {
-  shimmerTotal: 400,
-  interChunkPause: 80,
-  speedFast: 1,
-  speedSlow: 6,
-  batchSizeFast: 5,
-  postTypingPause: 500,
-  collapseDuration: 300,
-  interSegmentPause: 100,
-};
+
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MAIN COMPONENT
@@ -164,7 +156,7 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
 
   /** Stable getter — segments call this at each decision point. */
   const getTimingProfile = useCallback((): TimingProfile => {
-    return STABLE_TIMING_PROFILE;
+    return DEFAULT_TIMING_PROFILE;
   }, []);
 
   // ── Render ──
@@ -290,8 +282,8 @@ interface LiveToolSegmentProps {
  * LiveToolSegment — Phase controller for non-text segments.
  *
  * This is ONLY the phase state machine. It does NOT know how to
- * reveal content. It dispatches to a reveal sub-module based on
- * renderMode from the catalog.
+ * reveal content. It dispatches to the catalog strategy for
+ * strategy, transform, reveal, speed, and result-holding.
  *
  * Phases: shimmer → reveal → collapse → done
  *
@@ -307,7 +299,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
   const contentRef = useRef(segment.content);
   const completeRef = useRef(segment.complete ?? false);
   const cancelRef = useRef(false);
-  const collapseMsRef = useRef(300); // synced with ToolCallBlock CSS transition
+  const collapseMsRef = useRef(DEFAULT_TIMING_PROFILE.collapseDuration); // synced with CSS transition
 
   contentRef.current = segment.content;
   completeRef.current = segment.complete ?? false;
@@ -364,8 +356,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       }
 
       // Phase 2: Reveal — dispatched to tool-animate.ts (Level 2b controller).
-      // The catalog determines strategy, transform, renderer, speed, and
-      // whether to hold for tool result. See lib/catalog.ts.
+      // The catalog determines strategy, transform, reveal, speed, and
+      // result-holding. See lib/catalog.ts.
       setPhase('revealing');
       if (t) {
         const revealAt = performance.now();

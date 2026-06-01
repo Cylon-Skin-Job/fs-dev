@@ -14,7 +14,7 @@ import {
   getSegmentLabelColor,
   buildSegmentLabelWithError,
 } from '../lib/catalog-visual';
-import { COLLAPSE_DURATION } from '../lib/timing';
+import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
 
 interface ToolCallBlockProps {
   type: SegmentType;
@@ -43,7 +43,7 @@ export function ToolCallBlock({
   collapseDuration: collapseDurationOverride,
   children,
 }: ToolCallBlockProps) {
-  const effectiveCollapse = collapseDurationOverride ?? COLLAPSE_DURATION;
+  const effectiveCollapse = collapseDurationOverride ?? DEFAULT_TIMING_PROFILE.collapseDuration;
   const visual = getSegmentVisual(type);
   const icon = getSegmentIcon(type, isError);
   const iconColor = getSegmentIconColor(type, isError);

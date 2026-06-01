@@ -32,7 +32,7 @@
   vertical-align: middle;
   margin-left: 2px;
   transform: rotate(-90deg);
-  transition: transform var(--tool-collapse-ms, 250ms) ease;
+  transition: transform var(--tool-collapse-ms, 300ms) ease;
 }
 
 .rv-tool-header-btn[data-expanded="true"] .rv-tool-arrow-icon {
@@ -45,8 +45,8 @@
   max-height: 0;
   opacity: 0;
   transition:
-    max-height var(--tool-collapse-ms, 250ms) ease,
-    opacity var(--tool-collapse-ms, 250ms) ease;
+    max-height var(--tool-collapse-ms, 300ms) ease,
+    opacity var(--tool-collapse-ms, 300ms) ease;
   border-left: var(--tool-border-w, 0px) solid var(--tool-border-color, transparent);
   padding-left: var(--tool-border-pl, 0px);
 }

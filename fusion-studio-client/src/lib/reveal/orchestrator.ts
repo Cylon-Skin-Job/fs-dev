@@ -14,13 +14,13 @@
  * The parser is content-type-specific. The orchestrator is shared.
  */
 
-import { INTER_CHUNK_PAUSE } from '../timing';
 import type { ChunkParser, ParsedChunk, RevealOptions } from './types';
 
 // Defaults used when no RevealOptions are provided.
 const DEFAULT_SPEED_FAST = 1;  // ms per char
 const DEFAULT_SPEED_SLOW = 6;  // ms per char
 const DEFAULT_BATCH_SIZE_FAST = 5;  // chars per tick at fast speed
+const DEFAULT_INTER_CHUNK_PAUSE = 80;  // ms between typed chunks
 const POLL_INTERVAL = 30;   // ms to wait when buffer is empty
 const FLUSH_TIMEOUT = 150;  // ms before flushing partial content from parser
 const LINE_END_HOLD = 15;   // ms minimum speed for last 2 chars before \n (universal rhythm)
@@ -70,7 +70,7 @@ export async function orchestrateReveal(
   const speedFast = options?.speedFast ?? DEFAULT_SPEED_FAST;
   const speedSlow = options?.speedSlow ?? DEFAULT_SPEED_SLOW;
   const batchFast = options?.batchSizeFast ?? DEFAULT_BATCH_SIZE_FAST;
-  const chunkPause = options?.interChunkPause ?? INTER_CHUNK_PAUSE;
+  const chunkPause = options?.interChunkPause ?? DEFAULT_INTER_CHUNK_PAUSE;
 
   const buffer: ParsedChunk[] = [];
   let bufferCursor = 0;   // next chunk to render

@@ -2,8 +2,8 @@
  * Timing Constants — stable timing profile for reveal animations.
  *
  * Text and tool reveal speed is controlled by chunk queue lookahead
- * (real buffer depth), not segment backlog. This module provides the
- * stable timing contract used by all reveal controllers.
+ * (real buffer depth). This module provides the stable timing contract
+ * used by all reveal controllers.
  */
 
 /** Stable timing profile for all reveal phases */
@@ -31,8 +31,14 @@ export interface TimingProfile {
   interSegmentPause: number;
 }
 
-/** Pause between typing chunks within a reveal (fallback for reveal orchestrator) */
-export const INTER_CHUNK_PAUSE = 80;
-
-/** Duration of the maxHeight fold animation (fallback for ToolCallBlock) */
-export const COLLAPSE_DURATION = 300;
+/** Default timing profile used by all reveal controllers */
+export const DEFAULT_TIMING_PROFILE: TimingProfile = {
+  shimmerTotal: 400,
+  interChunkPause: 80,
+  speedFast: 1,
+  speedSlow: 6,
+  batchSizeFast: 5,
+  postTypingPause: 500,
+  collapseDuration: 300,
+  interSegmentPause: 100,
+};
