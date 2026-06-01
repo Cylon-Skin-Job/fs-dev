@@ -722,3 +722,9 @@ When a new session picks this up:
 Do not preserve duplicate Kimi-only machinery just because it still works. If a path exists only to keep the original Kimi-only app shape alive, it should be removed once the harness-neutral path is proven.
 
 Do not compensate for backend leaks by adding frontend Kimi aliases. The translator is responsible for vendor vocabulary. The frontend renderer is responsible for canonical segment behavior.
+
+## Next Roadmap
+
+After this roadmap is complete, hand off to:
+
+- [Code Standards Cleanup Roadmap](./CODE_STANDARDS_CLEANUP_ROADMAP.md)
