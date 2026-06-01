@@ -20,8 +20,6 @@ export const grepRenderer: ToolRenderer = {
     fontSize: '13px',
   },
 
-  showCursor: false,
-
   formatContent: (content) => {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());

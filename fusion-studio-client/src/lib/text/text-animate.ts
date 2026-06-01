@@ -38,8 +38,6 @@ export interface AnimateTextOptions {
   segmentType: string;
   /** Set the displayed HTML. Called on every typing frame. */
   setDisplayedHtml: (html: string) => void;
-  /** Set typing state (controls cursor visibility in the component) */
-  setTyping: (typing: boolean) => void;
   /** Returns current timing profile. Called at block boundaries only. */
   getTimingProfile: () => TimingProfile;
   /** Called when the animation is complete (segment done, ready for next) */
@@ -51,7 +49,7 @@ export interface AnimateTextOptions {
 export async function animateText(opts: AnimateTextOptions): Promise<void> {
   const {
     contentRef, completeRef, cancelRef,
-    setDisplayedHtml, setTyping, getTimingProfile, onDone,
+    setDisplayedHtml, getTimingProfile, onDone,
   } = opts;
 
   // Text strategy metadata determines buffer behavior (code fences as lookahead)
@@ -157,8 +155,6 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
     const finalHtml = finalBlocks.map(b => b.html).join('');
     setDisplayedHtml(finalHtml);
   }
-
-  setTyping(false);
 
   // Inter-segment pause — timing-aware gap before next segment
   if (!cancelRef.current) {

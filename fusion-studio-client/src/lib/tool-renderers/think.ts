@@ -17,6 +17,5 @@ export const thinkRenderer: ToolRenderer = {
     fontStyle: 'italic',
     color: 'var(--text-dim)',
   },
-  showCursor: true,
   formatContent: (content) => escapeHtml(content),
 };

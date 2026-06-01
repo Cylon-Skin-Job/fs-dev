@@ -15,6 +15,5 @@ export const subagentRenderer: ToolRenderer = {
     fontFamily: 'inherit',
     fontStyle: 'normal',
   },
-  showCursor: true,
   formatContent: (content) => formatSubagentContent(content),
 };

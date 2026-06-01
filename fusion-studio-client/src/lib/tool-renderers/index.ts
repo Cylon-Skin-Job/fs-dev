@@ -46,7 +46,6 @@ const fallbackRenderer: ToolRenderer = {
     fontStyle: 'normal',
     fontSize: '13px',
   },
-  showCursor: true,
   formatContent: (content) => content,
 };
 

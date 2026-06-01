@@ -15,6 +15,5 @@ export const todoRenderer: ToolRenderer = {
     fontFamily: 'inherit',
     fontStyle: 'normal',
   },
-  showCursor: false,
   formatContent: () => '',
 };

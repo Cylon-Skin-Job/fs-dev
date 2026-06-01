@@ -17,6 +17,5 @@ export const editRenderer: ToolRenderer = {
     fontSize: '13px',
   },
 
-  showCursor: false,
   formatContent: (content, _args, segment) => formatFileChangeContent(content, segment),
 };

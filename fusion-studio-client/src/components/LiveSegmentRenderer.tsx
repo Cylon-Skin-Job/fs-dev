@@ -236,7 +236,6 @@ interface LiveTextSegmentProps {
  */
 function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDone }: LiveTextSegmentProps) {
   const [displayedHtml, setDisplayedHtml] = useState('');
-  const [, setTyping] = useState(true);
   const animatingRef = useRef(false);
   const contentRef = useRef(segment.content);
   const completeRef = useRef(segment.complete ?? false);
@@ -251,7 +250,6 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
 
     if (skipAnimation) {
       setDisplayedHtml(renderTextInstant(contentRef.current));
-      setTyping(false);
       setTimeout(() => onDone(index), 0);
       return;
     }
@@ -261,7 +259,7 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
     animateText({
       contentRef, completeRef, cancelRef,
       segmentType: segment.type,
-      setDisplayedHtml, setTyping, getTimingProfile,
+      setDisplayedHtml, getTimingProfile,
       onDone: () => onDone(index),
     });
 
@@ -336,7 +334,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       return;
     }
 
-    // ── Skipped segments render instantly (snap-to-frontier) ──
+    // ── Skipped segments render instantly when animation is bypassed ──
     if (skipAnimation) {
       setDisplayedContent(contentRef.current);
       setPhase('done');

@@ -94,12 +94,6 @@
   color: var(--theme-primary);
 }
 
-/* Cursor blink (legacy - can be removed per Phase 7) */
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
 .rv-shimmer-text {
   background: linear-gradient(90deg,
     var(--icon-dim, var(--text-dim)) 0%,
@@ -111,18 +105,4 @@
   background-clip: text;
   color: transparent;
   animation: shimmer 1500ms linear infinite;
-}
-
-/* Typing cursor */
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.rv-typing-cursor {
-  animation: blink 800ms infinite;
-  color: var(--theme-primary);
-  font-size: 0.85em;
-  vertical-align: baseline;
-  margin-left: 1px;
 }

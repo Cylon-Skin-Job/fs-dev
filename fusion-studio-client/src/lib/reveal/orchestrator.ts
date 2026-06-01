@@ -17,7 +17,7 @@
 import { INTER_CHUNK_PAUSE } from '../timing';
 import type { ChunkParser, ParsedChunk, RevealOptions } from './types';
 
-// Defaults — used when no RevealOptions are provided (backlog normal).
+// Defaults used when no RevealOptions are provided.
 const DEFAULT_SPEED_FAST = 1;  // ms per char
 const DEFAULT_SPEED_SLOW = 6;  // ms per char
 const DEFAULT_BATCH_SIZE_FAST = 5;  // chars per tick at fast speed

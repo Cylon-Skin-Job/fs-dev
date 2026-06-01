@@ -35,9 +35,6 @@ export interface ToolRenderer {
   /** Content container styles — applied to the wrapper div inside ToolCallBlock. */
   contentStyle: ContentStyle;
 
-  /** Whether to show the typing cursor during reveal phase. */
-  showCursor: boolean;
-
   /**
    * Format content for display inside the tool block.
    * Returns an HTML string (safe — content is escaped internally).

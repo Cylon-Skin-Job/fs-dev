@@ -19,7 +19,6 @@ export const shellRenderer: ToolRenderer = {
     fontStyle: 'normal',
     fontSize: '13px',
   },
-  showCursor: true,
   formatContent: (content, args, segment) => {
     const command = getShellCommand(args);
     const status = segment?.isError ? segment.toolStatus : undefined;
