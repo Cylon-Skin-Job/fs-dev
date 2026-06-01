@@ -300,6 +300,14 @@
         }
       }
     ],
+    "panelRoots": {
+      "agents-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/agents-viewer/content",
+      "calendar-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/calendar-viewer/content",
+      "file-viewer": "/users/rccurtrightjr./projects/fusion-home",
+      "issues-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/issues-viewer/content",
+      "office-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/office-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/wiki-viewer/content"
+    },
     "viewStates": {
       "wiki-viewer": {
         "widths": {
@@ -462,11 +470,11 @@
         }
       }
     },
-    "_savedAt": 1780201756383
+    "_savedAt": 1780275380948
   },
   "fusion-home": {
     "projectRoot": null,
-    "currentPanel": "office-viewer",
+    "currentPanel": "wiki-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -772,6 +780,14 @@
         }
       }
     ],
+    "panelRoots": {
+      "agents-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/agents-viewer/content",
+      "calendar-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/calendar-viewer/content",
+      "file-viewer": "/users/rccurtrightjr./projects/fusion-home",
+      "issues-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/issues-viewer/content",
+      "office-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/office-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/wiki-viewer/content"
+    },
     "viewStates": {
       "file-viewer": {
         "widths": {
@@ -966,7 +982,7 @@
         }
       }
     },
-    "_savedAt": 1780201750514
+    "_savedAt": 1780275380280
   },
   "media-editor": {
     "projectRoot": null,
@@ -1170,6 +1186,14 @@
         }
       }
     ],
+    "panelRoots": {
+      "agents-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/agents-viewer/content",
+      "calendar-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/calendar-viewer/content",
+      "file-viewer": "/users/rccurtrightjr./projects/fusion-home",
+      "issues-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/issues-viewer/content",
+      "office-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/office-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/wiki-viewer/content"
+    },
     "viewStates": {
       "file-viewer": {
         "widths": {
@@ -1364,7 +1388,7 @@
         }
       }
     },
-    "_savedAt": 1780201770237
+    "_savedAt": 1780275379631
   },
   "solobooks": {
     "projectRoot": null,
@@ -1636,12 +1660,20 @@
         }
       }
     ],
+    "panelRoots": {
+      "agents-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/agents-viewer/content",
+      "calendar-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/calendar-viewer/content",
+      "file-viewer": "/users/rccurtrightjr./projects/fusion-home",
+      "issues-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/issues-viewer/content",
+      "office-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/office-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/wiki-viewer/content"
+    },
     "viewStates": {},
-    "_savedAt": 1780201768659
+    "_savedAt": 1780275379396
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "wiki-viewer",
+    "currentPanel": "file-viewer",
     "panels": {},
     "projectChats": {},
     "threads": {
@@ -1986,6 +2018,15 @@
         }
       }
     ],
+    "panelRoots": {
+      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content",
+      "browser-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/browser-viewer",
+      "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer",
+      "doc-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/doc-viewer/content",
+      "file-viewer": "/users/rccurtrightjr./projects/fs-dev",
+      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/issues-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/content"
+    },
     "viewStates": {
       "image-editor": {
         "widths": {
@@ -2022,12 +2063,12 @@
       "custom-viewer": {
         "widths": {
           "leftSidebar": 270.5859375,
-          "leftChat": 549.21484375,
+          "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2054,12 +2095,12 @@
       "doc-viewer": {
         "widths": {
           "leftSidebar": 270.5859375,
-          "leftChat": 549.21484375,
+          "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2086,12 +2127,12 @@
       "file-viewer": {
         "widths": {
           "leftSidebar": 270.5859375,
-          "leftChat": 549.21484375,
+          "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2120,7 +2161,7 @@
           "leftSidebar": 270.5859375,
           "leftChat": 300,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2152,7 +2193,7 @@
           "leftSidebar": 270.5859375,
           "leftChat": 403.17578125,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -2184,7 +2225,7 @@
           "leftSidebar": 270.5859375,
           "leftChat": 372.8046875,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -2214,12 +2255,12 @@
       "browser-viewer": {
         "widths": {
           "leftSidebar": 270.5859375,
-          "leftChat": 549.21484375,
+          "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
-          "rightCol": 514.49609375
+          "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2244,6 +2285,6 @@
         }
       }
     },
-    "_savedAt": 1780201767213
+    "_savedAt": 1780279667179
   }
 }

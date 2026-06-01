@@ -1,12 +1,12 @@
 {
   "widths": {
     "leftSidebar": 270.5859375,
-    "leftChat": 549.21484375,
+    "leftChat": 416.2578125,
     "rightSecondary": 425.51171875,
-    "rightCol": 514.49609375
+    "rightCol": 300.1015625
   },
   "collapsed": {
-    "leftSidebar": false,
+    "leftSidebar": true,
     "leftChat": false
   },
   "popup": {
