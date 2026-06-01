@@ -641,6 +641,53 @@ Acceptance criteria:
 - Hourglass placement is intentionally designed and does not reappear incorrectly in persisted history.
 - Visual tweaks do not change event routing, chunking, persistence, or tool semantics.
 
+## Phase 11: Warm Session Expiration Queue
+
+Goal: replace the current per-session idle kill timer with an explicit warm-session eviction policy.
+
+Current problem:
+
+- `SessionManager` treats the idle timer as a direct kill timer that starts when a wire opens.
+- That can kill a session in the middle of a turn if the timer expires while a tool call or streaming response is active.
+- The intended behavior is different: a session should stay warm after a completed chat exchange, and recent completed exchanges should protect the session from eviction.
+
+Desired model:
+
+- Maintain a per-workspace warm-session queue with a maximum of 10 warm sessions.
+- Queue ordering should be based on last completed chat exchange, not initial thread open.
+- A thread with an active turn is never eligible for eviction.
+- A completed turn starts or refreshes a 9-minute protection window.
+- The 9-minute window blocks eviction; it is not itself the direct kill mechanism.
+- When opening or warming a new chat would exceed the workspace warm-session limit, evict the oldest eligible session.
+- If the oldest session is still protected or active, skip it and evict the next eligible session.
+- When switching workspaces, close sessions from the previous workspace except active turns and sessions still inside their 9-minute protection window.
+
+Open design question:
+
+- Decide what user action warms a thread:
+  - Opening/clicking a thread may be too aggressive if the user is just browsing.
+  - Focusing the chat input may be a better signal.
+  - Programmatic insertion from send-to-chat buttons or paste into the input should probably warm the thread.
+  - Sending a message definitely warms the thread and refreshes protection after completion.
+
+Implementation notes:
+
+- Model session states explicitly: inactive, warming, warm, active-turn, protected, eviction-eligible.
+- Keep turn activity separate from warm-session eviction metadata.
+- Keep the queue per workspace so workspace switches can evict the correct sessions without crossing scopes.
+- Avoid duplicate spawn/resume paths; wire creation should still flow through the existing thread-open/resume machinery.
+- Add enough instrumentation to answer: why was this session kept, skipped, or evicted?
+
+Acceptance criteria:
+
+- A long-running tool call or streaming response is never killed by warm-session eviction.
+- A session whose last completed exchange was less than 9 minutes ago is skipped during FIFO eviction.
+- After the protection window expires, the oldest completed exchange is eligible before newer completed exchanges.
+- Opening many threads without sending messages does not displace protected active/recent chat sessions unless the chosen warm signal intentionally says it should.
+- Workspace switches evict only eligible sessions from the workspace being left.
+- The UI can recover from a missing/dead wire by resuming or showing a visible failure, never by leaving a pending user request stuck.
+- Focus/paste/send-to-chat warm behavior is documented before implementation.
+
 ## Manual Smoke Test Matrix
 
 Run these after each risky phase:

@@ -9,16 +9,12 @@ wire-debug.log*
 test-results/
 .gitlab_wikis.json
 kimi_wikis.json
-ai/workspaces/wiki/.wiki-repo/
-ai/system/*.db
-ai/system/*.db-journal
-ai/system/*.db-wal
+/ai/
 **/threads.json
 **/history.json
 # Runtime database and chat artifacts
 fusion-studio-server/data/*.db
 fusion-studio-server/data/*.db-journal
 fusion-studio-server/data/*.db-wal
-ai/views/chat/threads/
 # Large bundled binaries — download at build time, never commit
 fusion-studio-client/electron/resources/pandoc/
