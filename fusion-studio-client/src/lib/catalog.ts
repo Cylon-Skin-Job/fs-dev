@@ -2,8 +2,8 @@
  * Catalog — Unified Pipeline Registry
  *
  * One entry per tool type. Everything about how a segment flows through
- * the pipeline: chunking strategy, transform, content renderer, reveal
- * controller, speed override.
+ * the pipeline: chunking strategy, optional transforms, reveal
+ * controller, speed override, result-holding behavior.
  *
  * Visual identity (icons, colors, labels) lives in catalog-visual.ts.
  * This file is ONLY pipeline data.
@@ -11,13 +11,12 @@
  * Adding a new tool:
  *   1. Write a chunk strategy in chunk-strategies/active/
  *   2. Add one entry here
- *   3. Done. No controllers, renderers, or dispatch files change.
+ *   3. Done. No controllers or dispatch files change.
  */
 
 import type { SegmentType } from '../types';
 import type { TaggedChunk } from '../types/tagged-chunk';
 import type { ActiveChunkStrategy } from '../types/active-strategy';
-import type { SegmentContentRenderer } from './segment-renderers/types';
 import type { RevealController } from './reveal/types';
 
 // ── Strategy factories ──
@@ -26,12 +25,6 @@ import { createLineChunkStrategy } from './chunk-strategies/active/line-chunk';
 import { createMarkdownChunkStrategy } from './chunk-strategies/active/markdown-chunk';
 import { createWebSearchChunkStrategy } from './chunk-strategies/active/web-search-chunk';
 import { createFetchChunkStrategy } from './chunk-strategies/active/fetch-chunk';
-
-// ── Content renderers ──
-import { lineStreamRenderer } from './segment-renderers/line-stream';
-import { codeRenderer } from './segment-renderers/code';
-import { diffRenderer } from './segment-renderers/diff';
-// groupedSummaryRenderer available if needed for future tool types
 
 // ── Reveal controllers ──
 import { lineStreamReveal } from './reveal/line-stream';
@@ -57,9 +50,6 @@ export interface CatalogEntry {
   /** Optional data transform (e.g., path truncation). Null = pass-through. */
   transform?: (chunk: TaggedChunk, toolArgs?: Record<string, unknown>) => TaggedChunk;
 
-  /** Content renderer for producing HTML from chunks */
-  renderer: SegmentContentRenderer;
-
   /** Reveal controller for the typing/display loop */
   revealController: RevealController;
 
@@ -79,7 +69,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'text',
     tags: [],
     createStrategy: () => createMarkdownChunkStrategy(),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
   },
 
@@ -87,7 +76,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'think',
     tags: ['Thinking', 'thinking'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'think'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'slow',
   },
@@ -96,7 +84,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'shell',
     tags: ['Bash', 'bash'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'shell'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -107,7 +94,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     tags: ['Read', 'read'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'code'),
     transform: filePathTransform,
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
   },
@@ -117,7 +103,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     tags: ['Write', 'write'],
     createStrategy: (parent, args) => createSingleChunkStrategy(parent, 'code', langFromPath(args)),
     transform: filePathTransform,
-    renderer: codeRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -128,7 +113,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     tags: ['Edit', 'edit'],
     createStrategy: (parent, args) => createSingleChunkStrategy(parent, 'diff', langFromPath(args)),
     transform: filePathTransform,
-    renderer: diffRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -138,7 +122,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'glob',
     tags: ['Glob', 'glob'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'code'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -148,7 +131,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'grep',
     tags: ['Grep', 'grep'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'code'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -158,7 +140,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'web_search',
     tags: ['SearchWeb', 'WebSearch', 'web_search'],
     createStrategy: (parent) => createWebSearchChunkStrategy(parent),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -168,7 +149,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'fetch',
     tags: ['FetchURL', 'WebFetch', 'fetch'],
     createStrategy: (parent) => createFetchChunkStrategy(parent),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
     awaitsResult: true,
@@ -178,7 +158,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'subagent',
     tags: ['Agent', 'subagent'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'text'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
     speed: 'fast',
   },
@@ -187,7 +166,6 @@ const CATALOG: Record<SegmentType, CatalogEntry> = {
     type: 'todo',
     tags: ['TodoWrite', 'todo'],
     createStrategy: (parent) => createLineChunkStrategy(parent, 'text'),
-    renderer: lineStreamRenderer,
     revealController: lineStreamReveal,
   },
 };

@@ -4,7 +4,7 @@
  * Pure async function. No React. No DOM.
  * Parallel to text-animate.ts (Level 2a for text segments).
  *
- * Pipeline: catalog lookup → strategy → transform → render → reveal.
+ * Pipeline: catalog lookup → strategy → transform → reveal text.
  *
  * The strategy accumulates content and emits tagged chunks.
  * The adapter bridges ActiveChunkStrategy to the existing ChunkParser
@@ -78,7 +78,7 @@ export async function animateTool(opts: ToolAnimateOptions): Promise<void> {
  * Bridge between ActiveChunkStrategy and the existing ChunkParser interface
  * used by orchestrateReveal(). The adapter:
  * 1. Feeds only NEW content (delta) to the strategy
- * 2. Applies transform and renderer to each chunk from strategy.next()
+ * 2. Applies transform to each chunk from strategy.next()
  * 3. Returns display-ready ParsedChunks to the orchestrator
  */
 function createAdapter(
@@ -93,7 +93,7 @@ function createAdapter(
         strategy.onContent(content.slice(prevLength));
       }
 
-      // Drain all ready chunks, applying transform + render
+      // Drain all ready chunks, applying transform
       const result: ParsedChunk[] = [];
       let chunk = strategy.next();
       while (chunk) {
@@ -118,7 +118,9 @@ function createAdapter(
 }
 
 /**
- * Convert a tagged chunk to display text using the entry's renderer.
+ * Convert a tagged chunk to display text.
+ * Returns the chunk content directly; final presentation is handled by
+ * the active tool-renderers layer.
  */
 function renderChunkToText(chunk: TaggedChunk): string {
   // For line-by-line rendering, each chunk is one line
