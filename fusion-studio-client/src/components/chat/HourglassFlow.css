@@ -3,32 +3,47 @@
   --hourglass-color: var(--tool-icon-color, var(--accent-dim, var(--text-dim)));
   --hourglass-muted: var(--tool-label-color, var(--accent-dim, var(--text-dim)));
   --hourglass-bg: var(--chat-surface-bg, var(--panel-chrome-bg, #1a1a1a));
-  --hourglass-font-size-sm: 12px;
-  --hourglass-font-size-md: 13px;
-  --hourglass-font-size-lg: 14px;
+  --hourglass-font-size-sm: var(--font-size-xs, 12px);
+  --hourglass-font-size-md: var(--font-size-sm, 13px);
+  --hourglass-font-size-lg: var(--font-size-md, 14px);
+  --hourglass-line-height: var(--line-height-tight, 1.3);
+  --hourglass-size-sm: var(--icon-size-sm, 16px);
+  --hourglass-size-md: var(--icon-size-md, 18px);
+  --hourglass-size-lg: var(--icon-size-lg, 22px);
   --hourglass-z-bottom: var(--z-base, 1);
   --hourglass-z-overlay: var(--z-content, 2);
   --hourglass-z-top: var(--z-content, 1);
   --hourglass-z-stream: var(--z-popover, 4);
+  --hourglass-animation-duration: var(--hourglass-cycle-duration, 15s);
+  --hourglass-reduced-motion-duration: var(--transition-none, 1ms);
+  --hourglass-stream-top: 39%;
+  --hourglass-stream-width: max(1px, calc(var(--hourglass-size) * 0.07));
+  --hourglass-stream-height: calc(var(--hourglass-size) * 0.22);
+  --hourglass-stream-radius: var(--radius-pill, 999px);
+  --hourglass-stream-opacity: var(--opacity-strong, 0.85);
+  --hourglass-icon-fill: 1;
+  --hourglass-icon-weight: 400;
+  --hourglass-icon-grade: 0;
+  --hourglass-icon-optical-size: 24;
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm, 8px);
   color: var(--tool-label-color, var(--accent-dim, var(--text-dim)));
   font-size: var(--hourglass-font-size-md);
-  line-height: 1.3;
+  line-height: var(--hourglass-line-height);
 }
 
 .rv-hourglass-flow--sm {
-  --hourglass-size: 16px;
+  --hourglass-size: var(--hourglass-size-sm);
   font-size: var(--hourglass-font-size-sm);
 }
 
 .rv-hourglass-flow--md {
-  --hourglass-size: 18px;
+  --hourglass-size: var(--hourglass-size-md);
 }
 
 .rv-hourglass-flow--lg {
-  --hourglass-size: 22px;
+  --hourglass-size: var(--hourglass-size-lg);
   font-size: var(--hourglass-font-size-lg);
 }
 
@@ -42,7 +57,7 @@
   isolation: isolate;
   overflow: hidden;
   transform-origin: 50% 50%;
-  animation: rv-hourglass-flip 15s linear infinite;
+  animation: rv-hourglass-flip var(--hourglass-animation-duration) linear infinite;
 }
 
 .rv-hourglass-glyph {
@@ -51,10 +66,10 @@
   line-height: 1;
   color: var(--hourglass-color);
   font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
+    'FILL' var(--hourglass-icon-fill),
+    'wght' var(--hourglass-icon-weight),
+    'GRAD' var(--hourglass-icon-grade),
+    'opsz' var(--hourglass-icon-optical-size);
 }
 
 .rv-hourglass-bottom {
@@ -70,7 +85,7 @@
   width: var(--hourglass-size);
   height: var(--hourglass-size);
   clip-path: inset(0 0 0 0);
-  animation: rv-hourglass-top-layer-empty 15s linear infinite;
+  animation: rv-hourglass-top-layer-empty var(--hourglass-animation-duration) linear infinite;
 }
 
 .rv-hourglass-top-backing {
@@ -88,15 +103,15 @@
 .rv-hourglass-stream {
   position: absolute;
   z-index: var(--hourglass-z-stream);
-  top: 39%;
+  top: var(--hourglass-stream-top);
   left: 50%;
-  width: max(1px, calc(var(--hourglass-size) * 0.07));
-  height: calc(var(--hourglass-size) * 0.22);
-  border-radius: 999px;
+  width: var(--hourglass-stream-width);
+  height: var(--hourglass-stream-height);
+  border-radius: var(--hourglass-stream-radius);
   background: var(--hourglass-muted);
   transform: translateX(-50%);
   opacity: 0;
-  animation: rv-hourglass-stream 15s linear infinite;
+  animation: rv-hourglass-stream var(--hourglass-animation-duration) linear infinite;
 }
 
 .rv-hourglass-flow-label {
@@ -123,7 +138,7 @@
     opacity: 0;
   }
   9%, 78% {
-    opacity: 0.85;
+    opacity: var(--hourglass-stream-opacity);
   }
   80%, 100% {
     opacity: 0;
@@ -143,7 +158,7 @@
   .rv-hourglass-flow-icon,
   .rv-hourglass-top-layer,
   .rv-hourglass-stream {
-    animation-duration: 1ms;
+    animation-duration: var(--hourglass-reduced-motion-duration);
     animation-iteration-count: 1;
   }
 }

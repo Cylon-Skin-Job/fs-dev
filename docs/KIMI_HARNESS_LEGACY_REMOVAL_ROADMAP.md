@@ -170,6 +170,7 @@ Highest-risk vestiges:
   - Inbound stream messages can still resolve missing `scope` from `currentScope`, then default to `project`.
   - Some inbound stream updates can still tolerate missing `threadId` through store helpers that fall back to the current project thread.
   - This is the most dangerous frontend fallback because server-originated events should already know their `scope` and `threadId`. If those fields are absent, the correct behavior is to surface a contract problem, not guess from the selected UI state.
+  - This file is also over the code-standards size threshold and now owns too many jobs: stream lifecycle, tool grouping, tool-result normalization, todo drawer updates, shell compaction, and subagent ledger updates. Split only after the routing/fallback contract is clear, because this path is fragile.
 - `fusion-studio-client/src/lib/ws/thread-handlers.ts`
   - `thread:*` messages still coerce missing `scope` to `project`.
   - `thread:opened` can hydrate from modern `exchanges`, but still falls back to older `history` format.
@@ -525,6 +526,7 @@ Actions after backend canonical path is proven:
 7. Remove the legacy `history` hydration fallback after confirming persisted/replayed chats always arrive as rich `exchanges`. If a thread cannot hydrate, emit a clear frontend error/toast and fix the SQLite/server replay path rather than half-rendering old history.
 8. Remove stale segment icon metadata if all live/history renderers get visuals from `catalog-visual.ts` and `ToolCallBlock`.
 9. Clean `catalog.ts` of wire-tag/vendor-tag lookup once canonical tool names are the only frontend-facing tool identity.
+10. Split `stream-handlers.ts` into focused modules after strict routing is enforced. Suggested seams: routing guards, tool args/result normalization, grouped tool handling, subagent event handling, and turn lifecycle.
 
 Acceptance criteria:
 
@@ -534,6 +536,7 @@ Acceptance criteria:
 - Thread hydration uses one rich exchange format; the old `history` route is gone or isolated behind a documented migration boundary.
 - Saved-chat replay failures produce a clear diagnostic path instead of a partial legacy render.
 - Tool visual identity comes from the visual catalog, not duplicated `StreamSegment.icon` metadata.
+- `stream-handlers.ts` no longer violates the one-job-per-file standard.
 
 ## Phase 9: Documentation Update
 

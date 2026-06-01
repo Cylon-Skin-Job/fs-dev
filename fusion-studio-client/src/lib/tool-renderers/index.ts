@@ -20,7 +20,7 @@ import { webSearchRenderer } from './web-search';
 import { fetchRenderer } from './fetch';
 import { subagentRenderer } from './subagent';
 import { todoRenderer } from './todo';
-import { showToast } from '../toast';
+import { reportUnknownToolType } from './unknown-tool-reporter';
 
 const REGISTRY: Record<string, ToolRenderer> = {
   think: thinkRenderer,
@@ -35,15 +35,6 @@ const REGISTRY: Record<string, ToolRenderer> = {
   subagent: subagentRenderer,
   todo: todoRenderer,
 };
-
-const reportedUnknownTypes = new Set<string>();
-
-function reportUnknownToolType(type: string): void {
-  if (reportedUnknownTypes.has(type)) return;
-  reportedUnknownTypes.add(type);
-  console.error('[ToolRenderer] Unknown tool segment type:', type);
-  showToast(`Unknown tool renderer: ${type}`);
-}
 
 /** Unknown segment types render plainly, but loudly. */
 const fallbackRenderer: ToolRenderer = {

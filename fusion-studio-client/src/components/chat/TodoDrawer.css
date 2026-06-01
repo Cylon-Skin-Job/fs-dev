@@ -1,54 +1,80 @@
 /* ── Todo Drawer ─────────────────────────────────────────────────────────── */
 
 .rv-todo-drawer {
+  --rv-todo-drawer-bg: var(--chrome-surface, var(--bg-surface, #1a1a1a));
+  --rv-todo-drawer-border: var(--border-color, rgba(255, 255, 255, 0.08));
+  --rv-todo-drawer-hover-bg: var(--hover-bg, rgba(255, 255, 255, 0.04));
+  --rv-todo-drawer-scroll-thumb: var(--border-color, rgba(255, 255, 255, 0.12));
+  --rv-todo-drawer-text: var(--text-primary, rgba(255, 255, 255, 0.85));
+  --rv-todo-drawer-muted: var(--text-dim, rgba(255, 255, 255, 0.6));
+  --rv-todo-drawer-accent: var(--theme-primary, #00d4ff);
+  --rv-todo-drawer-z: var(--z-chat-drawer, 2);
+  --rv-todo-drawer-shadow: var(--shadow-raised, 0 -4px 12px rgba(0, 0, 0, 0.25));
+  --rv-todo-drawer-transition-max: var(--transition-md, 200ms ease);
+  --rv-todo-drawer-transition-opacity: var(--transition-sm, 150ms ease);
+  --rv-todo-drawer-transition-hover: var(--transition-fast, 100ms ease);
+  --rv-todo-drawer-collapsed-height: var(--chat-todo-collapsed-height, 28px);
+  --rv-todo-drawer-expanded-height: var(--chat-todo-expanded-height, 280px);
+  --rv-todo-drawer-handle-gap: var(--space-sm, 8px);
+  --rv-todo-drawer-handle-padding-y: var(--space-2xs, 4px);
+  --rv-todo-drawer-handle-padding-x: var(--space-md, 12px);
+  --rv-todo-drawer-list-padding-bottom: var(--space-sm, 6px);
+  --rv-todo-drawer-item-gap: var(--space-xs, 6px);
+  --rv-todo-drawer-item-padding-y: var(--space-3xs, 3px);
+  --rv-todo-drawer-font-size: var(--font-size-xs, 12px);
+  --rv-todo-drawer-line-height: var(--line-height-sm, 18px);
+  --rv-todo-drawer-handle-line-height: var(--line-height-md, 20px);
+  --rv-todo-drawer-icon-size: var(--icon-size-sm, 16px);
+  --rv-todo-drawer-scrollbar-width: var(--scrollbar-width-sm, 4px);
+  --rv-todo-drawer-scrollbar-radius: var(--radius-xs, 2px);
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--chrome-surface, var(--bg-surface, #1a1a1a));
-  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  background: var(--rv-todo-drawer-bg);
+  border-top: 1px solid var(--rv-todo-drawer-border);
   display: flex;
   flex-direction: column;
-  transition: max-height 200ms ease, opacity 150ms ease;
+  transition: max-height var(--rv-todo-drawer-transition-max), opacity var(--rv-todo-drawer-transition-opacity);
   overflow: hidden;
-  z-index: 2;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.25);
+  z-index: var(--rv-todo-drawer-z);
+  box-shadow: var(--rv-todo-drawer-shadow);
 }
 
 /* ── Collapsed ribbon ── */
 .rv-todo-drawer--collapsed {
-  max-height: 28px;
+  max-height: var(--rv-todo-drawer-collapsed-height);
 }
 
 /* ── Expanded overlay ── */
 .rv-todo-drawer--expanded {
-  max-height: 280px;
+  max-height: var(--rv-todo-drawer-expanded-height);
 }
 
 /* ── Handle ── */
 .rv-todo-drawer-handle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--rv-todo-drawer-handle-gap);
   width: 100%;
-  padding: 4px 12px;
+  padding: var(--rv-todo-drawer-handle-padding-y) var(--rv-todo-drawer-handle-padding-x);
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--text-dim, rgba(255, 255, 255, 0.6));
-  font-size: 12px;
-  line-height: 20px;
-  transition: background 100ms ease;
+  color: var(--rv-todo-drawer-muted);
+  font-size: var(--rv-todo-drawer-font-size);
+  line-height: var(--rv-todo-drawer-handle-line-height);
+  transition: background var(--rv-todo-drawer-transition-hover);
   flex-shrink: 0;
 }
 
 .rv-todo-drawer-handle:hover {
-  background: var(--hover-bg, rgba(255, 255, 255, 0.04));
+  background: var(--rv-todo-drawer-hover-bg);
 }
 
 .rv-todo-drawer-title {
   font-weight: 600;
-  color: var(--text-primary, rgba(255, 255, 255, 0.85));
+  color: var(--rv-todo-drawer-text);
   flex-shrink: 0;
 }
 
@@ -61,7 +87,7 @@
 }
 
 .rv-todo-drawer-arrow {
-  font-size: 16px;
+  font-size: var(--rv-todo-drawer-icon-size);
   flex-shrink: 0;
   color: var(--accent-dim, var(--text-dim));
 }
@@ -72,7 +98,7 @@
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
-  padding: 0 12px 6px;
+  padding: 0 var(--rv-todo-drawer-handle-padding-x) var(--rv-todo-drawer-list-padding-bottom);
   overflow-y: auto;
 }
 
@@ -80,16 +106,16 @@
 .rv-todo-drawer-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 0;
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--text-primary, rgba(255, 255, 255, 0.85));
+  gap: var(--rv-todo-drawer-item-gap);
+  padding: var(--rv-todo-drawer-item-padding-y) 0;
+  font-size: var(--rv-todo-drawer-font-size);
+  line-height: var(--rv-todo-drawer-line-height);
+  color: var(--rv-todo-drawer-text);
   white-space: nowrap;
 }
 
 .rv-todo-drawer-item-icon {
-  font-size: 16px;
+  font-size: var(--rv-todo-drawer-icon-size);
   color: var(--accent-dim, var(--text-dim));
   flex-shrink: 0;
 }
@@ -102,11 +128,11 @@
 
 /* In-progress emphasis */
 .rv-todo-drawer-item--in_progress {
-  color: var(--theme-primary, #00d4ff);
+  color: var(--rv-todo-drawer-accent);
 }
 
 .rv-todo-drawer-item--in_progress .rv-todo-drawer-item-icon {
-  color: var(--theme-primary, #00d4ff);
+  color: var(--rv-todo-drawer-accent);
 }
 
 /* Completed dimming */
@@ -120,7 +146,7 @@
 
 /* Scrollbar styling inside expanded drawer */
 .rv-todo-drawer--expanded .rv-todo-drawer-list::-webkit-scrollbar {
-  width: 4px;
+  width: var(--rv-todo-drawer-scrollbar-width);
 }
 
 .rv-todo-drawer--expanded .rv-todo-drawer-list::-webkit-scrollbar-track {
@@ -128,6 +154,6 @@
 }
 
 .rv-todo-drawer--expanded .rv-todo-drawer-list::-webkit-scrollbar-thumb {
-  background: var(--border-color, rgba(255, 255, 255, 0.12));
-  border-radius: 2px;
+  background: var(--rv-todo-drawer-scroll-thumb);
+  border-radius: var(--rv-todo-drawer-scrollbar-radius);
 }
