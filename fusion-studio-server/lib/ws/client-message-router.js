@@ -29,7 +29,7 @@ const { ThreadWebSocketHandler } = require('../thread');
 const { getWireForThread, sendToWire } = require('../wire/process-manager');
 const views = require('../views');
 const { redactWsMessage } = require('./redaction-map');
-const { createThreadWsHandlers } = require('./thread-ws-handlers');
+const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
 const { createHarnessWsHandlers } = require('./harness-ws-handlers');
 const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
 
@@ -222,12 +222,38 @@ function createClientMessageRouter({
 
         // Get wire from global registry using threadId from message
         const threadId = clientMsg.threadId;
-        const wire = threadId ? getWireForThread(threadId) : session.wire;
+        let wire = threadId ? getWireForThread(threadId) : session.wire;
 
         console.log('[WS] Thread:', threadId?.slice(0,8), 'Wire found:', !!wire);
 
+        // Dead-wire recovery: if a threadId is present but the wire is missing,
+        // attempt to reopen/resume the thread through the same thread:open-assistant
+        // path before giving up.
+        if (!wire && threadId) {
+          const threadState = ThreadWebSocketHandler.getState(ws);
+          const manager = threadState?.threadManagers?.[scope];
+          if (manager) {
+            const thread = await manager.getThread(threadId);
+            if (thread) {
+              console.log('[WS] Recovering dead wire for thread:', threadId.slice(0,8));
+              try {
+                wire = await spawnAndSetupWire({
+                  ws,
+                  session,
+                  wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+                  threadId,
+                  scope,
+                  projectRoot: session.projectRoot || projectRoot
+                });
+              } catch (err) {
+                console.error('[WS] Wire recovery failed:', err);
+              }
+            }
+          }
+        }
+
         if (!wire) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active wire for this thread. Please reopen the thread.' }));
+          ws.send(JSON.stringify({ type: 'error', message: 'No active wire for this thread. Please reopen the thread.', threadId, recoverable: false }));
           return;
         }
 

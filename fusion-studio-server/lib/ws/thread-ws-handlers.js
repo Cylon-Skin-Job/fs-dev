@@ -51,41 +51,7 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
         return;
       }
 
-      console.log(`[WS] Spawning wire for ${scope} thread:`, threadId);
-      session.currentThreadId = threadId;
-      session.currentScope = scope;  // SPEC-26b: track which scope owns the active wire
-      // CHAT_SCOPE_SPEC: populate scope fields so resolveScope() can build the
-      // structured workspace string for every chat:* event this wire emits.
-      session.currentViewId = (scope === 'view') ? (state?.panelId || state?.viewName || null) : null;
-      const scopeContext = {
-        workspaceId: session.currentWorkspaceId,
-        viewId: session.currentViewId,
-      };
-      const wire = spawnThreadWire(threadId, session.projectRoot, scopeContext);
-      session.wire = wire;
-      registerWire(threadId, wire, session.projectRoot, ws, scopeContext);
-
-      console.log('[WS] Wire spawned, awaiting harness ready...');
-      await awaitHarnessReady(wire);
-      console.log('[WS] Setting up handlers...');
-      setupWireHandlers(wire, threadId);
-      session.wire = wire;  // Re-assign in case exit handler cleared it
-      console.log('[WS] Initializing wire...');
-      initializeWire(wire);
-      console.log('[WS] Wire initialization complete');
-
-      // Fire wire_ready for BOTH create and resume — this harmonizes the two
-      // paths (previously only thread:create sent it, which was a latent bug
-      // in the resume flow: the connecting overlay would not clear).
-      ws.send(JSON.stringify({ type: 'wire_ready', threadId, scope }));
-
-      // Register with the scope-appropriate ThreadManager
-      const manager = state?.threadManagers?.[scope];
-      if (manager) {
-        console.log('[WS] Registering with ThreadManager...');
-        await manager.openSession(threadId, wire, ws);
-        console.log('[WS] ThreadManager registration complete');
-      }
+      await spawnAndSetupWire({ ws, session, wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers }, threadId, scope, projectRoot });
     },
 
     async 'thread:rename'(clientMsg) {
@@ -115,4 +81,61 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
   };
 }
 
-module.exports = { createThreadWsHandlers };
+/**
+ * Spawn and set up a wire for a thread. Extracted so the prompt recovery
+ * path in client-message-router.js can reuse the same wire-spawn sequence
+ * as thread:open-assistant without duplicating logic.
+ *
+ * @param {object} deps
+ * @param {import('ws').WebSocket} deps.ws
+ * @param {object} deps.session
+ * @param {{ awaitHarnessReady: Function, initializeWire: Function, setupWireHandlers: Function }} deps.wireLifecycle
+ * @param {string} deps.threadId
+ * @param {'project'|'view'} deps.scope
+ * @param {string} deps.projectRoot
+ * @returns {Promise<import('child_process').ChildProcess>}
+ */
+async function spawnAndSetupWire({ ws, session, wireLifecycle, threadId, scope, projectRoot }) {
+  const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
+
+  console.log(`[WS] Spawning wire for ${scope} thread:`, threadId);
+  session.currentThreadId = threadId;
+  session.currentScope = scope;  // SPEC-26b: track which scope owns the active wire
+  // CHAT_SCOPE_SPEC: populate scope fields so resolveScope() can build the
+  // structured workspace string for every chat:* event this wire emits.
+  const state = ThreadWebSocketHandler.getState(ws);
+  session.currentViewId = (scope === 'view') ? (state?.panelId || state?.viewName || null) : null;
+  const scopeContext = {
+    workspaceId: session.currentWorkspaceId,
+    viewId: session.currentViewId,
+  };
+  const wire = spawnThreadWire(threadId, projectRoot, scopeContext);
+  session.wire = wire;
+  registerWire(threadId, wire, projectRoot, ws, scopeContext);
+
+  console.log('[WS] Wire spawned, awaiting harness ready...');
+  await awaitHarnessReady(wire);
+  console.log('[WS] Setting up handlers...');
+  setupWireHandlers(wire, threadId);
+  session.wire = wire;  // Re-assign in case exit handler cleared it
+  console.log('[WS] Initializing wire...');
+  initializeWire(wire);
+  console.log('[WS] Wire initialization complete');
+
+  // Fire wire_ready for BOTH create and resume — this harmonizes the two
+  // paths (previously only thread:create sent it, which was a latent bug
+  // in the resume flow: the connecting overlay would not clear).
+  ws.send(JSON.stringify({ type: 'wire_ready', threadId, scope }));
+
+  // Register with the scope-appropriate ThreadManager
+  const manager = state?.threadManagers?.[scope];
+  if (manager) {
+    console.log('[WS] Registering with ThreadManager...');
+    await manager.openSession(threadId, wire, ws);
+    console.log('[WS] ThreadManager registration complete');
+  }
+
+  return wire;
+}
+
+module.exports = { createThreadWsHandlers, spawnAndSetupWire };

@@ -27,6 +27,7 @@
 const { v4: generateId } = require('uuid');
 const { resolveScope } = require('../chat-scope');
 const { normalizeKimiToolResult } = require('../harness/kimi/display-normalizer');
+const { ThreadWebSocketHandler } = require('../thread');
 
 /**
  * Create a per-connection wire message router.
@@ -40,6 +41,21 @@ const { normalizeKimiToolResult } = require('../harness/kimi/display-normalizer'
  * @returns {{ handleMessage: (msg: object) => void }}
  */
 function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, checkSettingsBounce }) {
+
+  /**
+   * Touch the session for the current thread to reset the idle timeout.
+   * Called on wire activity (TurnBegin, ContentPart, ToolCall, ToolResult, StatusUpdate)
+   * so in-flight turns are not killed by the session idle timer.
+   */
+  function touchThreadSession() {
+    const threadId = session.currentThreadId;
+    if (!threadId) return;
+    const scope = session.currentScope || 'view';
+    const manager = ThreadWebSocketHandler.getCurrentThreadManager(ws, scope);
+    if (manager) {
+      manager.touchSession(threadId);
+    }
+  }
 
   function handleMessage(msg) {
     console.log('[Wire] Message received:', msg.method, msg.id ? `(id:${msg.id})` : '(event)');
@@ -57,6 +73,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
 
       switch (eventType) {
         case 'TurnBegin':
+          touchThreadSession();
           // Ignore spurious startup turns (Gemini emits one on ACP session creation)
           if (!payload?.user_input && !session.pendingUserInput) {
             console.log('[Wire] Ignoring spurious TurnBegin (no user input)');
@@ -74,6 +91,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           break;
 
         case 'ContentPart':
+          touchThreadSession();
           if (payload?.type === 'text' && session.currentTurn) {
             session.currentTurn.text += payload.text;
 
@@ -105,6 +123,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           break;
 
         case 'ToolCall':
+          touchThreadSession();
           session.hasToolCalls = true;
           session.activeToolId = payload?.id || '';
           session.toolArgs[session.activeToolId] = '';
@@ -124,6 +143,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           break;
 
         case 'ToolCallPart':
+          touchThreadSession();
           if (session.activeToolId && payload?.arguments_part) {
             session.toolArgs[session.activeToolId] += payload.arguments_part;
             emit('chat:tool_call_args', {
@@ -137,6 +157,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           break;
 
         case 'ToolResult': {
+          touchThreadSession();
           const toolCallId = payload?.tool_call_id || '';
           const fullArgs = session.toolArgs[toolCallId] || '';
           let parsedArgs = {};
@@ -272,6 +293,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
           break;
 
         case 'StatusUpdate':
+          touchThreadSession();
           // Track latest context/token usage for persistence
           session.contextUsage = payload?.context_usage ?? null;
           session.tokenUsage = payload?.token_usage ?? null;

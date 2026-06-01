@@ -596,6 +596,7 @@ Known visual issues to include:
 
 - Some shell command/output text renders as plain white before later shell content uses the proper system theme.
 - Write/edit dropdown bodies need better boundaries.
+- Write file tool presentation should clearly show the filename or compact path being written.
 - Diff/code blocks inside write/edit dropdowns need reliable horizontal scroll.
 - All tool dropdowns should autosize to about 5 lines, then scroll internally.
 - Dropdown content should auto-scroll bottom-up before the next new line is rendered, so the newest revealed line stays visible without jumping the whole chat.
@@ -620,6 +621,7 @@ Known visual issues to include:
 - Flesh out subagent presentation for blocking vs background behavior:
   - Finish the hourglass behavior.
   - Consider an hourglass at the end of a chat exchange when the system is waiting on a subagent.
+  - Decide whether an hourglass belongs inline with the subagent row, at the bottom of the assistant turn, or in a separate waiting/status area.
   - For blocking subagents, consider a 60-second status interval that sends `Status` on behalf of the user.
   - Define how the frontend determines that a subagent block has not completed.
   - Define how chat should continue rendering while a background agent keeps running.
@@ -629,12 +631,14 @@ Known visual issues to include:
 Acceptance criteria:
 
 - Shell content consistently uses the active theme tokens from first render through completion.
+- Write file tool rows expose the filename or compact path without making the body verbose.
 - Write/edit diff blocks have visible boundaries and horizontal scroll without layout shift.
 - Tool dropdowns cap to about 5 visible lines and scroll internally while keeping the newest revealed line in view.
 - Tool blocks remain compact in narrow chat windows.
 - User-bubble chrome and assistant turn-complete chrome appear only at the right lifecycle points.
 - Time/day separators appear between chat pairs without adding clutter.
 - Subagent waiting/status behavior is specified before implementation, including blocking vs background semantics.
+- Hourglass placement is intentionally designed and does not reappear incorrectly in persisted history.
 - Visual tweaks do not change event routing, chunking, persistence, or tool semantics.
 
 ## Manual Smoke Test Matrix
