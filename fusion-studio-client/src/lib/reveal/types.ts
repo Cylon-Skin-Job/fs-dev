@@ -35,15 +35,14 @@ export interface ChunkParser {
 /**
  * Options for controlling reveal speed and behavior.
  * All fields are optional — when absent, the orchestrator uses its defaults.
- * Passed from the pressure gauge to attenuate animation under backlog.
+ * Passed from the timing profile to control animation speed based on chunk
+ * queue lookahead.
  */
 export interface RevealOptions {
   speedFast?: number;
   speedSlow?: number;
   batchSizeFast?: number;
   interChunkPause?: number;
-  /** Skip typing entirely — wait for content to be complete, then show at once. */
-  instantReveal?: boolean;
   /** Optional semantic parser supplied by a catalog strategy adapter. */
   parser?: ChunkParser;
 }

@@ -31,11 +31,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { StreamSegment } from '../types';
 import { getToolRenderer } from '../lib/tool-renderers';
-import type { TimingProfile } from '../lib/pressure';
+import type { TimingProfile } from '../lib/timing';
 import { animateTool } from '../lib/tool-animate';
 import { renderTextInstant } from '../lib/text';
 import { animateText } from '../lib/text/text-animate';
-import { sleep, injectCursor } from '../lib/animate-utils';
+import { sleep } from '../lib/animate-utils';
 import { ToolCallBlock } from './ToolCallBlock';
 import { Orb } from './Orb';
 import { HourglassFlow } from './chat/HourglassFlow';
@@ -48,7 +48,6 @@ interface TimingProbe {
 }
 
 const STABLE_TIMING_PROFILE: TimingProfile = {
-  tier: 'normal',
   shimmerTotal: 400,
   interChunkPause: 80,
   speedFast: 1,
@@ -57,9 +56,6 @@ const STABLE_TIMING_PROFILE: TimingProfile = {
   postTypingPause: 500,
   collapseDuration: 300,
   interSegmentPause: 100,
-  instantReveal: false,
-  snapToFrontier: false,
-  snapKeepLive: 0,
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -159,11 +155,10 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
   // Stable timing profile
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   //
-  // Older builds used a segment-backlog pressure gauge here. That outer
-  // controller could enter instantReveal/snap modes while the newer chunk
-  // queues were already pacing by real lookahead, causing the cursor to pause
-  // and then dump the rest of a segment. Keep this layer stable; text and tool
-  // reveal speed now belongs to their chunk buffers.
+  // This layer provides a stable timing contract. Text and tool reveal speed
+  // is controlled by chunk queue lookahead (real buffer depth), not segment
+  // backlog. The chunk buffers inside text-animate.ts and tool-animate.ts
+  // handle all speed attenuation based on actual queue state.
   //
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -302,10 +297,9 @@ interface LiveToolSegmentProps {
  *
  * Phases: shimmer → reveal → collapse → done
  *
- * Timing is dynamic — getTimingProfile() is called at each phase
- * boundary, returning pressure-adjusted values. If the renderer falls
- * behind the stream, pauses compress and reveals accelerate.
- * See lib/pressure.ts for tier definitions.
+ * Timing is stable — getTimingProfile() is called at each phase
+ * boundary, returning the stable timing profile. Reveal speed is
+ * controlled by chunk queue lookahead inside the reveal controllers.
  */
 function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
   const [phase, setPhase] = useState<'shimmer' | 'revealing' | 'collapsing' | 'done'>('shimmer');
@@ -362,7 +356,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
     }
 
     const animate = async () => {
-      // Phase 1: Shimmer — query pressure NOW
+      // Phase 1: Shimmer — query timing NOW
       if (!skipShimmer) {
         const p = getTimingProfile();
         if (p.shimmerTotal > 0) {
@@ -412,10 +406,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
   }, []);
 
   const renderer = getToolRenderer(segment.type);
-  const formattedContent = renderer.formatContent(displayedContent, segment.toolArgs, segment);
-  const renderedContent = displayedContent && phase === 'revealing' && renderer.showCursor
-    ? injectCursor(formattedContent)
-    : formattedContent;
+  const renderedContent = renderer.formatContent(displayedContent, segment.toolArgs, segment);
 
   return (
     <ToolCallBlock

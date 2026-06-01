@@ -27,7 +27,7 @@ interface ToolCallBlockProps {
   onToggle: () => void;
   /** Show shimmer animation on the header */
   shimmer?: boolean;
-  /** Override collapse animation duration (ms). Syncs CSS transition with JS sleep under pressure. */
+  /** Override collapse animation duration (ms). Syncs CSS transition with JS sleep. */
   collapseDuration?: number;
   children?: React.ReactNode;
 }

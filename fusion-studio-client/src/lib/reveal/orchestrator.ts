@@ -72,23 +72,6 @@ export async function orchestrateReveal(
   const batchFast = options?.batchSizeFast ?? DEFAULT_BATCH_SIZE_FAST;
   const chunkPause = options?.interChunkPause ?? INTER_CHUNK_PAUSE;
 
-  // ── Instant reveal shortcut ──
-  // Under heavy pressure, skip typing entirely. Wait for content to
-  // be complete, then show everything at once.
-  if (options?.instantReveal) {
-    while (!completeRef.current && !cancelRef.current) {
-      setDisplayed(contentRef.current);
-      await sleep(POLL_INTERVAL);
-    }
-    const finalContent = contentRef.current;
-    const chunks = [
-      ...parser.feed(finalContent, 0),
-      ...(parser.flush ? parser.flush(finalContent) : []),
-    ];
-    setDisplayed(chunks.length > 0 ? chunks.map(chunk => chunk.text).join('') : finalContent);
-    return;
-  }
-
   const buffer: ParsedChunk[] = [];
   let bufferCursor = 0;   // next chunk to render
   let displayed = '';     // parsed/render-ready content displayed so far

@@ -9,7 +9,7 @@
  *   2. Buffer blocks for speed tracking  → createChunkBuffer()
  *   3. Decide speed at block boundary    → buffer.getSpeedMs()
  *   4. Type inside pre-rendered HTML     → truncateHtmlToChars()
- *   5. Check pressure at block boundary  → getTimingProfile()
+ *   5. Get timing at block boundary      → getTimingProfile()
  *
  * Properties:
  *   - Cursor moves forward only. No re-parse of typed content.
@@ -22,8 +22,8 @@ import { parseTextChunks } from './index';
 import { createChunkBuffer } from './chunk-buffer';
 import { truncateHtmlToChars, getVisibleTextLength } from './html-utils';
 import { textStrategy } from '../chunk-strategies/text';
-import { sleep, CURSOR_HTML } from '../animate-utils';
-import type { TimingProfile } from '../pressure';
+import { sleep } from '../animate-utils';
+import type { TimingProfile } from '../timing';
 
 // ── Public Interface ─────────────────────────────────────────────────
 
@@ -40,7 +40,7 @@ export interface AnimateTextOptions {
   setDisplayedHtml: (html: string) => void;
   /** Set typing state (controls cursor visibility in the component) */
   setTyping: (typing: boolean) => void;
-  /** Returns current pressure profile. Called at block boundaries only. */
+  /** Returns current timing profile. Called at block boundaries only. */
   getTimingProfile: () => TimingProfile;
   /** Called when the animation is complete (segment done, ready for next) */
   onDone: () => void;
@@ -61,7 +61,6 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
 
   let cursor = 0;                // byte position in raw content (only moves forward)
   let accumulatedHtml = '';       // HTML for all fully-typed blocks
-  let instantBreak = false;       // set by pressure instantReveal
 
   while (!cancelRef.current) {
     const content = contentRef.current;
@@ -95,19 +94,12 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
 
     // ── Type each block ──
     let blockIndex = 0;
-    while (buffer.hasNext() && !cancelRef.current && !instantBreak) {
+    while (buffer.hasNext() && !cancelRef.current) {
       const bufferedChunk = buffer.next();
       if (!bufferedChunk) break;
 
       const block = blocks[blockIndex++];
       if (!block) break;
-
-      // ── BLOCK BOUNDARY: pressure check ──
-      const p = getTimingProfile();
-      if (p.instantReveal) {
-        instantBreak = true;
-        break;
-      }
 
       // ── BLOCK BOUNDARY: speed decision ──
       // Set once. Static for the entire block. No mid-block adjustment.
@@ -129,7 +121,7 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
       while (charCount < totalChars && !cancelRef.current) {
         charCount = Math.min(charCount + batchSize, totalChars);
         const partial = truncateHtmlToChars(html, charCount);
-        setDisplayedHtml(accumulatedHtml + partial + CURSOR_HTML);
+        setDisplayedHtml(accumulatedHtml + partial);
 
         if (charCount < totalChars) {
           await sleep(speedMs);
@@ -149,8 +141,6 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
       }
     }
 
-    if (instantBreak) break;
-
     // Update cursor to consumed position (covers any blocks that
     // were parsed but not typed due to cancellation)
     cursor = consumed;
@@ -158,7 +148,6 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
 
   // ── Finalize ──
   // Show all content as fully rendered HTML. Handles:
-  //   - instantReveal (pressure dumped everything)
   //   - Normal completion (all blocks typed)
   //   - Cancellation (show what we have)
   const finalContent = contentRef.current;
@@ -171,7 +160,7 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
 
   setTyping(false);
 
-  // Inter-segment pause — pressure-aware gap before next segment
+  // Inter-segment pause — timing-aware gap before next segment
   if (!cancelRef.current) {
     const segPause = getTimingProfile().interSegmentPause;
     if (segPause > 0) await sleep(segPause);

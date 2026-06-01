@@ -14,7 +14,7 @@
 import type { SegmentType } from '../types';
 import type { TaggedChunk } from '../types/tagged-chunk';
 import type { ActiveChunkStrategy } from '../types/active-strategy';
-import type { TimingProfile } from './pressure';
+import type { TimingProfile } from './timing';
 import type { ChunkParser, ParsedChunk, RevealOptions } from './reveal/types';
 import { lookup } from './catalog';
 import type { CatalogEntry } from './catalog';
@@ -50,7 +50,7 @@ export async function animateTool(opts: ToolAnimateOptions): Promise<void> {
   // ── Build adapter: ActiveChunkStrategy → ChunkParser ──
   const adapter = createAdapter(strategy, entry, toolArgs);
 
-  // ── Build reveal options from pressure + catalog speed ──
+  // ── Build reveal options from timing profile + catalog speed ──
   const revealOptions = buildRevealOptions(entry, getTimingProfile);
 
   // ── Handle awaitsResult: wait for content, then reveal through the adapter ──
@@ -58,7 +58,7 @@ export async function animateTool(opts: ToolAnimateOptions): Promise<void> {
     await runWithResultHolding(
       contentRef, completeRef, cancelRef,
       strategy, adapter, entry,
-      setDisplayedContent, getTimingProfile, revealOptions,
+      setDisplayedContent, revealOptions,
     );
   } else {
     // Non-awaiting tools: reveal directly (strategy emits as content arrives)
@@ -141,7 +141,6 @@ async function runWithResultHolding(
   adapter: ChunkParser,
   entry: CatalogEntry,
   setDisplayedContent: (html: string) => void,
-  getTimingProfile: () => TimingProfile,
   revealOptions: RevealOptions,
 ): Promise<void> {
   const startTime = Date.now();
@@ -167,10 +166,8 @@ async function runWithResultHolding(
 
   // Now reveal using the shared orchestrator with the strategy adapter as the
   // parser. The first feed() call parses semantic chunks into the reveal queue.
-  const revealProfile = getTimingProfile();
   const finalOptions: RevealOptions = {
     ...revealOptions,
-    instantReveal: revealProfile.instantReveal || revealOptions.instantReveal,
     parser: adapter,
   };
 
@@ -184,7 +181,7 @@ async function runWithResultHolding(
 // =============================================================================
 
 /**
- * Build RevealOptions from the catalog entry's speed override and current pressure.
+ * Build RevealOptions from the catalog entry's speed override and current timing profile.
  */
 function buildRevealOptions(entry: CatalogEntry, getTimingProfile: () => TimingProfile): RevealOptions {
   const profile = getTimingProfile();
@@ -195,7 +192,6 @@ function buildRevealOptions(entry: CatalogEntry, getTimingProfile: () => TimingP
       speedSlow: 1,
       batchSizeFast: 5,
       interChunkPause: profile.interChunkPause,
-      instantReveal: profile.instantReveal,
     };
   }
 
@@ -205,16 +201,14 @@ function buildRevealOptions(entry: CatalogEntry, getTimingProfile: () => TimingP
       speedSlow: profile.speedSlow,
       batchSizeFast: profile.batchSizeFast,
       interChunkPause: profile.interChunkPause,
-      instantReveal: profile.instantReveal,
     };
   }
 
-  // No override — use pressure defaults
+  // No override — use timing profile defaults
   return {
     speedFast: profile.speedFast,
     speedSlow: profile.speedSlow,
     batchSizeFast: profile.batchSizeFast,
     interChunkPause: profile.interChunkPause,
-    instantReveal: profile.instantReveal,
   };
 }
