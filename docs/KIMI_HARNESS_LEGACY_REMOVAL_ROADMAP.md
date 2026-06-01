@@ -586,6 +586,27 @@ Actions:
 3. Document how a new harness maps native events to canonical events.
 4. Document that frontend renderers operate on canonical `StreamSegment`s.
 
+## Phase 10: Chat Render Visual Polish
+
+Goal: after the system-breaking architecture issues are fixed, run a small design/visioning pass on chat render behavior and make the tool blocks feel more consistent and polished.
+
+Do this after the harness path, frontend fallbacks, pressure removal, cursor removal, and persistence hydration issues are resolved. This phase should not carry architecture fixes; it is for visual quality and interaction polish.
+
+Known visual issues to include:
+
+- Some shell command/output text renders as plain white before later shell content uses the proper system theme.
+- Write/edit dropdown bodies need better boundaries.
+- Diff/code blocks inside write/edit dropdowns need reliable horizontal scroll.
+- Tool dropdown content should have consistent spacing, borders, font treatment, and overflow behavior across shell, write, edit, fetch, search, read, grep, glob, todo, and subagent.
+- Run a brief design/visioning session before edits so the final behavior is intentional rather than a collection of one-off tweaks.
+
+Acceptance criteria:
+
+- Shell content consistently uses the active theme tokens from first render through completion.
+- Write/edit diff blocks have visible boundaries and horizontal scroll without layout shift.
+- Tool blocks remain compact in narrow chat windows.
+- Visual tweaks do not change event routing, chunking, persistence, or tool semantics.
+
 ## Manual Smoke Test Matrix
 
 Run these after each risky phase:
@@ -610,6 +631,7 @@ Run these after each risky phase:
 18. Switch away and back to a persisted thread; hourglass must not reappear incorrectly.
 19. Reload Electron and rehydrate history from SQLite.
 20. Confirm no visible typing cursor appears during text, thinking, shell, or subagent reveal.
+21. Visual polish pass: verify shell, write, and edit dropdowns use themed text, clear boundaries, and horizontal scroll where needed.
 
 ## Automated Validation Checklist
 
