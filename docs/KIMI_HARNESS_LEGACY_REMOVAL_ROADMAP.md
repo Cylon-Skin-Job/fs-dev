@@ -597,14 +597,44 @@ Known visual issues to include:
 - Some shell command/output text renders as plain white before later shell content uses the proper system theme.
 - Write/edit dropdown bodies need better boundaries.
 - Diff/code blocks inside write/edit dropdowns need reliable horizontal scroll.
+- All tool dropdowns should autosize to about 5 lines, then scroll internally.
+- Dropdown content should auto-scroll bottom-up before the next new line is rendered, so the newest revealed line stays visible without jumping the whole chat.
 - Tool dropdown content should have consistent spacing, borders, font treatment, and overflow behavior across shell, write, edit, fetch, search, read, grep, glob, todo, and subagent.
+- Improve vertical spacing between a user chat bubble and the assistant reply that follows it.
+- Add chrome beneath the user bubble:
+  - copy
+  - ellipsis menu
+  - chat ID link
+  - view markdown
+  - summarize and send
+- Render time/day separators between chat pairs.
+- Add turn-complete bottom chrome that fills in only after the assistant chat completes:
+  - flag/bookmark controls
+  - copy
+  - audio playback using Kokoro via Transformers.js
+  - ellipsis menu
+  - chat ID link
+  - view markdown
+  - summarize and send
+  - metadata
+- Flesh out subagent presentation for blocking vs background behavior:
+  - Finish the hourglass behavior.
+  - Consider an hourglass at the end of a chat exchange when the system is waiting on a subagent.
+  - For blocking subagents, consider a 60-second status interval that sends `Status` on behalf of the user.
+  - Define how the frontend determines that a subagent block has not completed.
+  - Define how chat should continue rendering while a background agent keeps running.
+  - Treat this as design plus orchestration work, not pure visual polish, because it affects turn lifecycle and possibly backend/user-message simulation.
 - Run a brief design/visioning session before edits so the final behavior is intentional rather than a collection of one-off tweaks.
 
 Acceptance criteria:
 
 - Shell content consistently uses the active theme tokens from first render through completion.
 - Write/edit diff blocks have visible boundaries and horizontal scroll without layout shift.
+- Tool dropdowns cap to about 5 visible lines and scroll internally while keeping the newest revealed line in view.
 - Tool blocks remain compact in narrow chat windows.
+- User-bubble chrome and assistant turn-complete chrome appear only at the right lifecycle points.
+- Time/day separators appear between chat pairs without adding clutter.
+- Subagent waiting/status behavior is specified before implementation, including blocking vs background semantics.
 - Visual tweaks do not change event routing, chunking, persistence, or tool semantics.
 
 ## Manual Smoke Test Matrix
@@ -632,6 +662,8 @@ Run these after each risky phase:
 19. Reload Electron and rehydrate history from SQLite.
 20. Confirm no visible typing cursor appears during text, thinking, shell, or subagent reveal.
 21. Visual polish pass: verify shell, write, and edit dropdowns use themed text, clear boundaries, and horizontal scroll where needed.
+22. Visual polish pass: verify dropdowns cap at 5 lines, auto-scroll newest content, and preserve compact chat layout.
+23. Visual polish pass: verify user bubble chrome, assistant completion chrome, time/day separators, and subagent waiting/status states.
 
 ## Automated Validation Checklist
 
