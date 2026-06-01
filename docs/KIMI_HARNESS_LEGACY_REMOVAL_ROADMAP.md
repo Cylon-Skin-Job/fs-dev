@@ -213,13 +213,34 @@ The legacy pressure system lives in:
 
 `LiveSegmentRenderer.tsx` currently uses a stable timing profile rather than calling `computeTimingProfile`, but the old pressure type and escape hatches are still wired through the system. They should be removed, not merely neutralized.
 
+The visible typing cursor should also be removed from the live render path. The user likes the line-by-line reveal, chunk pacing, and slight pause at newlines, but not the visual cursor block. The cursor is currently unreliable enough that it can appear lost or stuck, and it adds noise without improving the reveal. Remove the rendered cursor effect while preserving the queue/chunk timing and line rhythm.
+
+Known cursor-related paths to inspect:
+
+- `fusion-studio-client/src/lib/animate-utils.ts`
+  - `CURSOR_HTML`
+  - `injectCursor()`
+- `fusion-studio-client/src/lib/text/text-animate.ts`
+  - appends `CURSOR_HTML` during text reveal
+- `fusion-studio-client/src/components/LiveSegmentRenderer.tsx`
+  - imports `injectCursor()`
+  - injects cursor for tool renderers with `showCursor`
+- `fusion-studio-client/src/lib/tool-renderers/types.ts`
+  - `showCursor`
+- `fusion-studio-client/src/lib/tool-renderers/*`
+  - individual `showCursor` flags
+- `fusion-studio-client/src/styles/animations.css`
+  - `.rv-typing-cursor`
+
 ## Do Not Regress These Behaviors
 
 Keep these behaviors working through every cleanup phase:
 
 - Thinking reveals line-by-line.
+- Line-by-line reveal still has a slight pause/rhythm at newline boundaries.
 - Main text reveals by semantic markdown/text chunks.
 - Speed is based on real chunk queue lookahead, not segment backlog.
+- No visible typing cursor is rendered in text, thinking, shell, subagent, or any tool output.
 - `turn_end` does not finalize until the live renderer finishes revealing.
 - Tool completion remains tied to `tool_result`, not `turn_end`.
 - Grouped reads/globs/greps stay compact.
@@ -290,13 +311,20 @@ Actions:
 5. Remove the instant reveal branch from `reveal/orchestrator.ts`.
 6. Remove `instantBreak` handling from `text-animate.ts`.
 7. Rename comments from pressure/backlog language to queue/chunk language.
-8. Delete `pressure.ts` when imports are gone.
+8. Remove the visible typing cursor effect:
+   - Stop appending `CURSOR_HTML` in `text-animate.ts`.
+   - Stop calling `injectCursor()` in `LiveSegmentRenderer.tsx`.
+   - Remove `showCursor` from the tool renderer contract if it has no remaining purpose.
+   - Delete `CURSOR_HTML`, `injectCursor()`, and `.rv-typing-cursor` when imports are gone.
+9. Delete `pressure.ts` when imports are gone.
 
 Acceptance criteria:
 
 - No `rg -n "pressure|snapToFrontier|instantReveal|computeTimingProfile" fusion-studio-client/src` hits except changelog/docs.
-- Cursor never intentionally jumps to full reveal because of segment backlog.
+- No `rg -n "CURSOR_HTML|injectCursor|rv-typing-cursor|showCursor" fusion-studio-client/src` hits unless the word "cursor" refers to parser position rather than the visible typing cursor.
 - Chunk queue still controls fast/slow speed.
+- Thinking and subagent output still reveal line-by-line.
+- Newline rhythm/line-end hold remains intact.
 
 ## Phase 2: Consolidate Tool Animation Catalog
 
@@ -581,6 +609,7 @@ Run these after each risky phase:
 17. Background subagent with waiting hourglass.
 18. Switch away and back to a persisted thread; hourglass must not reappear incorrectly.
 19. Reload Electron and rehydrate history from SQLite.
+20. Confirm no visible typing cursor appears during text, thinking, shell, or subagent reveal.
 
 ## Automated Validation Checklist
 
