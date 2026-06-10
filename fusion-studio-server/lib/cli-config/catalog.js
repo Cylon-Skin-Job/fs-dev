@@ -1,5 +1,8 @@
 /**
- * Server-side mirror of the client's HARNESS_OPTIONS catalog.
+ * Server-side mirror of the client's HARNESS_OPTIONS metadata catalog.
+ *
+ * This is not the selectable harness policy. Workspace `cli.json` decides
+ * which catalog entries are allowed/displayed and which one is default.
  *
  * Keep in sync with `fusion-studio-client/src/config/harness.ts`. The `id`,
  * `name`, `materialIcon`, `accentColor`, and `enabled` triples must match.
@@ -70,6 +73,19 @@ const CATALOG = Object.freeze([
     details: Object.freeze({
       provider: 'openai',
       model: 'gpt-5.3-codex',
+      features: Object.freeze(['tools', 'streaming', 'thinking']),
+    }),
+    enabled: true,
+  }),
+  Object.freeze({
+    id: 'opencode',
+    name: 'OpenCode',
+    description: 'OpenCode CLI — provider-flexible coding agent with JSON streaming',
+    materialIcon: 'all_inclusive',
+    accentColor: '#10B981',
+    details: Object.freeze({
+      provider: 'opencode',
+      model: 'configured-default',
       features: Object.freeze(['tools', 'streaming', 'thinking']),
     }),
     enabled: true,

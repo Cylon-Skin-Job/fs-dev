@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "description": "Phrases that introduce replacement text for self-correction.",
+  "replacementIndicators": [
+    "I meant to say",
+    "I mean to say",
+    "I should have said",
+    "what I meant was",
+    "what I mean is",
+    "meant to say",
+    "I meant",
+    "I mean",
+    "change that to",
+    "change that",
+    "make that",
+    "replace that with",
+    "replace it with",
+    "should be",
+    "it should be"
+  ],
+  "xyPatterns": [
+    "replace {from} with {to}",
+    "replace that with {to}",
+    "replace it with {to}",
+    "I meant {to} instead of {from}",
+    "I meant {to}, not {from}",
+    "I meant {to} rather than {from}",
+    "{from}, not {to}",
+    "not {from}, but {to}",
+    "not {from}, rather {to}",
+    "not {from}, instead {to}",
+    "not {from}, {to}"
+  ]
+}

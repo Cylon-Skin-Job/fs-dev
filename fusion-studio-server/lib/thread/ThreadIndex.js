@@ -122,6 +122,9 @@ class ThreadIndex {
     if (updates.messageCount !== undefined) dbUpdates.message_count = updates.messageCount;
     if (updates.resumedAt !== undefined) dbUpdates.resumed_at = updates.resumedAt;
     if (updates.updatedAt !== undefined) dbUpdates.updated_at = updates.updatedAt;
+    if (updates.harnessConfig !== undefined) {
+      dbUpdates.harness_config = updates.harnessConfig ? JSON.stringify(updates.harnessConfig) : null;
+    }
 
     if (Object.keys(dbUpdates).length === 0) return this.get(threadId);
 

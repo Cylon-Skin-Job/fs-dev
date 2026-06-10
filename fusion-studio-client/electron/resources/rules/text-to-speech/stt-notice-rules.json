@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "description": "Rules for adding a speech-to-text caution notice when dictated text is sent with little review.",
+  "enabled": true,
+  "sourceFlag": "speech_to_text",
+  "editDistanceRatioThreshold": 0.2,
+  "omitNoticeWhenEditRatioAtLeast": 0.2,
+  "noticeXml": "<speech_to_text_notice>Dictated via speech-to-text. Confirm uncertain spelling, capitalization, file names, commands, and UI labels before relying on them.</speech_to_text_notice>",
+  "manualToggle": {
+    "enabled": true,
+    "label": "Include STT caution",
+    "defaultOnBelowThreshold": true,
+    "defaultOffAtOrAboveThreshold": true
+  },
+  "highRiskDetails": [
+    "spelling",
+    "capitalization",
+    "file names",
+    "commands",
+    "UI labels",
+    "feature names"
+  ]
+}

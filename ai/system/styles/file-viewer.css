@@ -39,6 +39,39 @@
   background: var(--sidebar-surface-bg, #161616);
 }
 
+.rv-file-tree-footer {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--sidebar-surface-bg, #161616) 10%,
+    var(--sidebar-surface-bg, #161616) 100%
+  );
+}
+
+.rv-file-hidden-toggle {
+  background: var(--sidebar-surface-bg, #161616);
+  border-color: var(--chrome-accent, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  color: var(--chrome-accent, var(--text-dim));
+}
+
+.rv-file-hidden-toggle:hover {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  border-color: var(--accent-dim, var(--chrome-accent));
+  color: var(--accent-dim, var(--text-white));
+}
+
+.rv-file-hidden-toggle[aria-pressed="true"] {
+  color: var(--chrome-accent, var(--text-dim));
+}
+
+.rv-file-hidden-toggle[aria-pressed="true"] .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1;
+}
+
+.rv-file-tree-item--hidden-folder::after {
+  background: color-mix(in srgb, var(--accent-dim, var(--theme-primary, #00d4ff)) 42%, transparent);
+}
+
 /* ── Open file: same surface as document code canvas ── */
 .rv-file-viewer {
   background: var(--document-bg, #161616);

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "description": "Numeric thresholds and long-list split settings for list cleanup.",
+  "enabled": true,
+  "modelPass": "list-boundary",
+  "lastItemLengthMultiplier": 2,
+  "compareAgainst": "max-prior-item",
+  "finalListItemSplit": {
+    "enabled": true,
+    "separators": [
+      "and the",
+      "and"
+    ],
+    "minWordsBeforeSeparator": 5,
+    "minTotalWords": 11,
+    "requireLongerThanAverage": true
+  }
+}

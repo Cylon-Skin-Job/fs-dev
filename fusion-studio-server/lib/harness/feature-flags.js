@@ -5,15 +5,15 @@
  * 1. Per-thread override (in-memory Map)
  * 2. Global session override
  * 3. Environment variable HARNESS_MODE
- * 4. Default: 'legacy'
+ * 4. Default: 'new'
  *
  * @see ../specs/PHASE-2-COMPATIBILITY-LAYER-SPEC.md
  */
 
-/** @typedef {'legacy' | 'new' | 'parallel'} HarnessMode */
+/** @typedef {'new'} HarnessMode */
 
 /** @type {HarnessMode[]} */
-const VALID_MODES = ['legacy', 'new', 'parallel'];
+const VALID_MODES = ['new'];
 
 /**
  * Available harness implementations
@@ -62,8 +62,8 @@ function getHarnessMode(threadId) {
     return envMode;
   }
 
-  // 4. Default to legacy for safety
-  return 'legacy';
+  // 4. Default to new (direct harness path)
+  return 'new';
 }
 
 /**
@@ -102,21 +102,22 @@ function setGlobalMode(mode) {
 
 /**
  * Check if we should use the new harness for a thread.
+ * Always true — legacy and parallel modes have been retired.
  * @param {string} [threadId]
  * @returns {boolean}
  */
 function shouldUseNewHarness(threadId) {
-  const mode = getHarnessMode(threadId);
-  return mode === 'new' || mode === 'parallel';
+  return true;
 }
 
 /**
  * Check if we're in parallel comparison mode.
+ * Always false — parallel mode has been retired.
  * @param {string} [threadId]
  * @returns {boolean}
  */
 function isParallelMode(threadId) {
-  return getHarnessMode(threadId) === 'parallel';
+  return false;
 }
 
 /**

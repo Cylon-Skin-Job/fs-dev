@@ -1,117 +1,98 @@
 /**
  * @module EdgePanel
- * @role Right column — guide header + groups/articles for active article
- * @reads wikiStore: groupsByArticle, activeArticle, activeArticleFile, articlesBySection, activeSection
+ * @role Right column — child nodes for the selected top-level article folder
+ * @reads wikiStore: root, selectedPath, viewedPath
  */
 
-import { useWikiStore } from '../../state/wikiStore';
+import { findWikiNodeByPath, useWikiStore, type WikiNode } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
+function NodeActions({ node, title }: { node: WikiNode; title: string }) {
+  return (
+    <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+      <CopyPathButton
+        panel="wiki-viewer"
+        relativePath={node.pagePath}
+        className="rv-file-page-action"
+        title={`Copy ${title} path`}
+      />
+      <SendToChatButton
+        panel="wiki-viewer"
+        relativePath={node.pagePath}
+        className="rv-file-page-action"
+        title={`Send ${title} path to chat`}
+      />
+    </div>
+  );
+}
+
 export function EdgePanel() {
-  const activeArticle = useWikiStore((s) => s.activeArticle);
-  const activeArticleFile = useWikiStore((s) => s.activeArticleFile);
-  const activeSection = useWikiStore((s) => s.activeSection);
-  const articlesBySection = useWikiStore((s) => s.articlesBySection);
-  const groupsByArticle = useWikiStore((s) => s.groupsByArticle);
-  const selectArticle = useWikiStore((s) => s.selectArticle);
-  const showArticleGuide = useWikiStore((s) => s.showArticleGuide);
+  const root = useWikiStore((s) => s.root);
+  const selectedPath = useWikiStore((s) => s.selectedPath);
+  const viewedPath = useWikiStore((s) => s.viewedPath);
+  const viewNode = useWikiStore((s) => s.viewNode);
 
-  const article = activeSection
-    ? (articlesBySection[activeSection] || []).find((a) => a.id === activeArticle)
-    : undefined;
+  const node = findWikiNodeByPath(root, selectedPath);
 
-  const groups = activeArticle ? (groupsByArticle[activeArticle] || []) : [];
-
-  // Derive guide title from guide filename (e.g., Connectors_Guide.md → "Connectors Guide")
-  const guideFile = article ? (article.guide || `${article.id}_Guide.md`) : '';
-  const guideTitle = guideFile
-    ? guideFile.replace(/\.md$/, '').replace(/_/g, ' ')
-    : 'Guide';
-
-  const isGuideActive = activeArticleFile === '';
-
-  const handleGuideClick = () => {
-    if (!isGuideActive) showArticleGuide();
-  };
-
-  const handleArticleClick = (file: string) => {
-    if (!activeSection || !activeArticle) return;
-    selectArticle(activeSection, activeArticle, file);
-  };
-
-  if (!article) {
+  if (!node || node.kind !== 'article') {
     return (
-      <div className="rv-wiki-edge-panel">
-        <div className="rv-wiki-edge-empty">Select an article</div>
-      </div>
+      <div className="rv-wiki-edge-panel" />
     );
   }
 
   return (
     <div className="rv-wiki-edge-panel">
-      {/* Guide header */}
       <button
-        className={`rv-wiki-edge-guide-header ${isGuideActive ? 'active' : ''}`}
-        onClick={handleGuideClick}
+        className={`rv-wiki-edge-guide-header ${viewedPath === node.path ? 'active' : ''}`}
+        onClick={() => viewNode(node)}
       >
         <span className="material-symbols-outlined">chrome_reader_mode</span>
-        <span className="rv-wiki-edge-link-text">{guideTitle}</span>
-        {guideFile && activeSection && (
-          <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
-            <CopyPathButton
-              panel="wiki-viewer"
-              relativePath={`${activeSection}/${article.folder}/${guideFile}`}
-              className="rv-file-page-action"
-              title="Copy guide path"
-            />
-            <SendToChatButton
-              panel="wiki-viewer"
-              relativePath={`${activeSection}/${article.folder}/${guideFile}`}
-              className="rv-file-page-action"
-              title="Send guide path to chat"
-            />
-          </div>
-        )}
+        <span className="rv-wiki-edge-link-text rv-wiki-edge-guide-title">{node.label}</span>
+        <NodeActions node={node} title="page" />
       </button>
 
-      {/* Groups */}
-      {groups.map((group) => (
-        <div key={group.id} className="rv-wiki-edge-section">
-          <div className="rv-wiki-edge-heading">{group.title}</div>
-          {group.articles.map((ref) => {
-            const isActive = activeArticleFile === ref.file;
-            return (
-              <button
-                key={ref.id}
-                className={`rv-wiki-edge-link ${isActive ? 'active' : ''}`}
-                onClick={() => handleArticleClick(ref.file)}
-              >
-                <span className="rv-wiki-edge-link-text">{ref.title}</span>
-                {activeSection && article && (
-                  <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
-                    <CopyPathButton
-                      panel="wiki-viewer"
-                      relativePath={`${activeSection}/${article.folder}/${ref.file}`}
-                      className="rv-file-page-action"
-                      title="Copy article path"
-                    />
-                    <SendToChatButton
-                      panel="wiki-viewer"
-                      relativePath={`${activeSection}/${article.folder}/${ref.file}`}
-                      className="rv-file-page-action"
-                      title="Send article path to chat"
-                    />
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      ))}
+      {node.children.map((child) => {
+        const hasNestedArticles = child.children.length > 0;
 
-      {groups.length === 0 && (
-        <div className="rv-wiki-edge-empty">No groups</div>
+        if (!hasNestedArticles) {
+          return (
+            <div key={child.path} className="rv-wiki-edge-section">
+              <button
+                className={`rv-wiki-edge-link ${viewedPath === child.path ? 'active' : ''}`}
+                onClick={() => viewNode(child)}
+              >
+                <span className="rv-wiki-edge-link-text">{child.label}</span>
+                <NodeActions node={child} title="page" />
+              </button>
+            </div>
+          );
+        }
+
+        return (
+          <div key={child.path} className="rv-wiki-edge-section">
+            <button
+              className={`rv-wiki-edge-heading rv-wiki-edge-heading-button ${viewedPath === child.path ? 'active' : ''}`}
+              onClick={() => viewNode(child)}
+            >
+              {child.label}
+            </button>
+            {child.children.map((nested) => (
+              <button
+                key={nested.path}
+                className={`rv-wiki-edge-link ${viewedPath === nested.path ? 'active' : ''}`}
+                onClick={() => viewNode(nested)}
+              >
+                <span className="rv-wiki-edge-link-text">{nested.label}</span>
+                <NodeActions node={nested} title="page" />
+              </button>
+            ))}
+          </div>
+        );
+      })}
+
+      {node.children.length === 0 && (
+        <div className="rv-wiki-edge-empty">No child pages loaded</div>
       )}
     </div>
   );

@@ -1,12 +1,12 @@
 {
   "widths": {
-    "leftSidebar": 270.5859375,
+    "leftSidebar": 333.96484375,
     "leftChat": 416.2578125,
     "rightSecondary": 425.51171875,
     "rightCol": 300.1015625
   },
   "collapsed": {
-    "leftSidebar": true,
+    "leftSidebar": false,
     "leftChat": false
   },
   "popup": {
@@ -17,6 +17,6 @@
     "height": 520,
     "threadId": null
   },
-  "currentThreadId": "2026-05-31T21-37-59-132",
+  "currentThreadId": "2026-06-07T22-48-30-704",
   "secondaryThreadId": null
 }

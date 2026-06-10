@@ -1,27 +1,39 @@
 /**
- * bootstrap-service — scaffold the minimum `ai/` tree for a new workspace.
+ * bootstrap-service — fill the minimum structure under an existing `ai/` tree.
  *
- * When a repo is added via `workspace:add_requested` and doesn't already have
- * the expected layout, we create the bare minimum so views render and chat
- * has somewhere to write threads. Idempotent — existing folders/files are
- * left alone. Pure filesystem, no events, no DB.
+ * Add Project requires the repo to already contain `/ai`; the controller
+ * enforces that before calling bootstrap(). This service may create missing
+ * internal folders/files under that existing tree so views render and chat has
+ * somewhere to write threads. Idempotent — existing folders/files are left
+ * alone. Pure filesystem, no events, no DB.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const DIRS = [
-  'ai',
   'ai/views',
   'ai/views/chat',
   'ai/views/chat/threads',
+  'ai/system/workspace',
 ];
 
 const FILES = {
-  'ai/views/index.json': JSON.stringify(
+  'ai/system/workspace/views.json': JSON.stringify(
     {
+      version: 1,
+      sort: 'ranked',
       views: [
-        { id: 'file-viewer', label: 'Code', icon: 'code', rank: 0 },
+        {
+          id: 'file-viewer',
+          baseViewId: 'file-viewer',
+          label: 'Code',
+          icon: 'code',
+          rank: 0,
+          enabled: true,
+          source: 'default',
+          viewPath: 'ai/views/file-viewer',
+        },
       ],
     },
     null,
@@ -30,12 +42,17 @@ const FILES = {
 };
 
 /**
- * Ensure the minimum ai/ structure exists at repoPath. Only creates what's
- * missing — safe to call repeatedly.
+ * Ensure the minimum structure exists under repoPath/ai. Only creates what's
+ * missing below an existing ai/ directory — safe to call repeatedly.
  *
  * @param {string} repoPath - absolute, canonicalized
  */
 function bootstrap(repoPath) {
+  const aiDir = path.join(repoPath, 'ai');
+  if (!fs.existsSync(aiDir) || !fs.statSync(aiDir).isDirectory()) {
+    throw new Error('Add Project requires an existing /ai directory');
+  }
+
   for (const dir of DIRS) {
     const full = path.join(repoPath, dir);
     if (!fs.existsSync(full)) {
@@ -58,7 +75,8 @@ function bootstrap(repoPath) {
  * @returns {boolean}
  */
 function isValidWorkspaceRoot(repoPath) {
-  return fs.existsSync(path.join(repoPath, 'ai', 'views', 'index.json'));
+  return fs.existsSync(path.join(repoPath, 'ai', 'system', 'workspace', 'views.json'))
+    || fs.existsSync(path.join(repoPath, 'ai', 'views', 'index.json'));
 }
 
 module.exports = { bootstrap, isValidWorkspaceRoot };

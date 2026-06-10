@@ -17,8 +17,18 @@ const { registerScheme, registerHandler, setWorkspaceRoot } = require('./protoco
 // MUST be called before app is ready — registers scheme privileges
 registerScheme();
 
+app.setName('Fusion Studio');
+
+if (process.env.FUSION_APP_USER_DATA) {
+  app.setPath('userData', path.resolve(process.env.FUSION_APP_USER_DATA));
+}
+
 let mainWindow;
 let serverProcess = null;
+let workspaceMenuState = {
+  workspaces: [],
+  activeWorkspaceId: null,
+};
 
 function cleanup() {
   clearPort();
@@ -96,7 +106,11 @@ function handleServerExit(code) {
 
   clearPort();
 
-  spawnServer({ onExit: handleServerExit })
+  spawnServer({
+    onExit: handleServerExit,
+    resourcesPath: getElectronResourcesRoot(),
+    userDataPath: getServerUserDataPath(),
+  })
     .then(({ port, process: proc }) => {
       serverProcess = proc;
       writePort(port);
@@ -106,6 +120,24 @@ function handleServerExit(code) {
     .catch((err) => {
       logElectron('error', `Server respawn failed: ${err.message}`);
     });
+}
+
+function getElectronResourcesRoot() {
+  if (app.isPackaged) {
+    return process.resourcesPath;
+  }
+  return path.join(__dirname, 'resources');
+}
+
+function getElectronUserDataPath() {
+  return app.getPath('userData');
+}
+
+function getServerUserDataPath() {
+  if (app.isPackaged || process.env.FUSION_APP_USER_DATA) {
+    return getElectronUserDataPath();
+  }
+  return null;
 }
 
 function createWindow(port) {
@@ -228,6 +260,110 @@ function sendMenuAction(payload) {
   }
 }
 
+function sanitizeWorkspaceMenuState(state) {
+  if (!state || typeof state !== 'object') {
+    return { workspaces: [], activeWorkspaceId: null };
+  }
+
+  const activeWorkspaceId = typeof state.activeWorkspaceId === 'string'
+    ? state.activeWorkspaceId
+    : null;
+  const workspaces = Array.isArray(state.workspaces)
+    ? state.workspaces
+        .map((workspace, index) => {
+          if (!workspace || typeof workspace !== 'object') return null;
+          if (typeof workspace.id !== 'string' || workspace.id.length === 0) return null;
+          const label = typeof workspace.label === 'string' && workspace.label.trim().length > 0
+            ? workspace.label
+            : workspace.id;
+          const ribbonSortOrder = typeof workspace.ribbonSortOrder === 'number'
+            ? workspace.ribbonSortOrder
+            : null;
+          const sortOrder = typeof workspace.sortOrder === 'number'
+            ? workspace.sortOrder
+            : index;
+          return {
+            id: workspace.id,
+            label,
+            ribbonVisible: workspace.ribbonVisible !== false,
+            ribbonSortOrder,
+            sortOrder,
+            index,
+          };
+        })
+        .filter(Boolean)
+    : [];
+
+  workspaces.sort((a, b) => {
+    const aOrder = a.ribbonSortOrder ?? a.sortOrder;
+    const bOrder = b.ribbonSortOrder ?? b.sortOrder;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return a.index - b.index;
+  });
+
+  return { workspaces, activeWorkspaceId };
+}
+
+function setWorkspaceMenuState(state) {
+  const nextState = sanitizeWorkspaceMenuState(state);
+  if (JSON.stringify(nextState) === JSON.stringify(workspaceMenuState)) return;
+  workspaceMenuState = nextState;
+  buildMenu();
+}
+
+function buildWorkspacesSubmenu() {
+  const workspaceItems = workspaceMenuState.workspaces.map((workspace) => ({
+    label: workspace.id === workspaceMenuState.activeWorkspaceId
+      ? `${workspace.label} ✓`
+      : workspace.label,
+    type: 'checkbox',
+    checked: workspace.ribbonVisible,
+    click: (menuItem) => {
+      if (workspace.ribbonVisible && menuItem.checked === false) {
+        sendMenuAction({
+          type: 'workspace-menu:set-ribbon-visible',
+          workspaceId: workspace.id,
+          visible: false,
+        });
+        return;
+      }
+
+      if (!workspace.ribbonVisible && menuItem.checked === true) {
+        sendMenuAction({
+          type: 'workspace-menu:set-ribbon-visible',
+          workspaceId: workspace.id,
+          visible: true,
+        });
+        return;
+      }
+
+      sendMenuAction({ type: 'workspace-menu:switch', workspaceId: workspace.id });
+    },
+  }));
+
+  return [
+    {
+      label: 'Show Workspace Ribbon',
+      click: () => sendMenuAction({ type: 'workspace-menu:show-ribbon' }),
+    },
+    { type: 'separator' },
+    ...(
+      workspaceItems.length > 0
+        ? workspaceItems
+        : [{ label: 'No registered workspaces', enabled: false }]
+    ),
+    { type: 'separator' },
+    {
+      label: 'Add Project...',
+      click: () => sendMenuAction({ type: 'workspace-menu:add-project' }),
+    },
+    {
+      label: 'Create New Project...',
+      click: () => sendMenuAction({ type: 'workspace-menu:create-project' }),
+    },
+  ];
+}
+
 function buildMenu() {
   const isMac = process.platform === 'darwin';
 
@@ -289,6 +425,11 @@ function buildMenu() {
         { type: 'separator' },
         { role: 'togglefullscreen' },
       ],
+    },
+
+    {
+      label: 'Workspaces',
+      submenu: buildWorkspacesSubmenu(),
     },
 
     {
@@ -384,7 +525,11 @@ if (!gotSingleInstanceLock) {
 
   app.whenReady().then(async () => {
     // 1. Spawn server — resolves when SERVER_READY received
-    const { port, process: proc } = await spawnServer({ onExit: handleServerExit });
+    const { port, process: proc } = await spawnServer({
+      onExit: handleServerExit,
+      resourcesPath: getElectronResourcesRoot(),
+      userDataPath: getServerUserDataPath(),
+    });
     serverProcess = proc;
     writePort(port);
     logElectron('info', `server ready port=${port}`);
@@ -392,8 +537,14 @@ if (!gotSingleInstanceLock) {
     // 2. Register protocol request handler (scheme was registered before ready)
     registerHandler();
     ipcMain.on('workspace:set-root', (_, repoPath) => setWorkspaceRoot(repoPath));
+    ipcMain.on('workspace-menu:set-state', (_, state) => setWorkspaceMenuState(state));
 
     // 3. Register IPC handlers
+    ipcMain.handle('show-emoji-panel', () => {
+      app.showEmojiPanel();
+      return { success: true };
+    });
+
     const documentHandlers = registerDocumentHandlers(ipcMain, { exportController });
 
     

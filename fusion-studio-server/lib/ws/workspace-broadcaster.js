@@ -68,6 +68,7 @@ async function readWorkspaceStyles(repoPath) {
  * @returns {{ started: boolean }}
  */
 function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) {
+  let workspaceSwitchBroadcastQueue = Promise.resolve();
 
   function broadcastAll(wireMessage) {
     const payload = JSON.stringify(wireMessage);
@@ -84,21 +85,7 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
     ws.send(JSON.stringify(wireMessage));
   }
 
-  // --- Broadcast subscriptions ---
-
-  on('workspace:added', (event) => {
-    broadcastAll({ type: 'workspace:added', workspace: event.workspace });
-  });
-
-  on('workspace:removed', (event) => {
-    broadcastAll({ type: 'workspace:removed', workspaceId: event.workspaceId });
-  });
-
-  on('workspace:registry_changed', (event) => {
-    broadcastAll({ type: 'workspace:registry_changed', workspaces: event.workspaces });
-  });
-
-  on('workspace:switched', async (event) => {
+  async function broadcastWorkspaceSwitched(event) {
     const target = event.to ? await registry.getById(event.to) : null;
     const baseMessage = {
       type: 'workspace:switched',
@@ -139,6 +126,45 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
     }
 
     broadcastAll(baseMessage);
+  }
+
+  function queueWorkspaceSwitchBroadcast(event) {
+    workspaceSwitchBroadcastQueue = workspaceSwitchBroadcastQueue
+      .catch(() => {})
+      .then(() => broadcastWorkspaceSwitched(event));
+    return workspaceSwitchBroadcastQueue;
+  }
+
+  // --- Broadcast subscriptions ---
+
+  on('workspace:added', (event) => {
+    broadcastAll({ type: 'workspace:added', workspace: event.workspace });
+  });
+
+  on('workspace:removed', (event) => {
+    broadcastAll({ type: 'workspace:removed', workspaceId: event.workspaceId });
+  });
+
+  on('workspace:ribbon_removed', (event) => {
+    return workspaceSwitchBroadcastQueue.then(() => {
+      broadcastAll({ type: 'workspace:ribbon_removed', workspaceId: event.workspaceId });
+    });
+  });
+
+  on('workspace:registry_changed', (event) => {
+    broadcastAll({ type: 'workspace:registry_changed', workspaces: event.workspaces });
+  });
+
+  on('workspace:created', (event) => {
+    if (!event.connectionId) return;
+    sendTargeted(event.connectionId, {
+      type: 'workspace:created',
+      workspace: event.workspace,
+    });
+  });
+
+  on('workspace:switched', (event) => {
+    return queueWorkspaceSwitchBroadcast(event);
   });
 
   on('workspace:culled_at_launch', (event) => {
@@ -166,6 +192,30 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
     sendTargeted(event.connectionId, {
       type: 'workspace:add_rejected_duplicate',
       existingWorkspace: event.existingWorkspace,
+    });
+  });
+
+  on('workspace:add_rejected_missing_ai', (event) => {
+    if (!event.connectionId) return;
+    sendTargeted(event.connectionId, {
+      type: 'workspace:add_rejected_missing_ai',
+      repoPath: event.repoPath,
+    });
+  });
+
+  on('workspace:create_rejected', (event) => {
+    if (!event.connectionId) return;
+    sendTargeted(event.connectionId, {
+      type: 'workspace:create_rejected',
+      message: event.message,
+    });
+  });
+
+  on('workspace:ribbon_reorder_rejected', (event) => {
+    if (!event.connectionId) return;
+    sendTargeted(event.connectionId, {
+      type: 'workspace:ribbon_reorder_rejected',
+      message: event.message,
     });
   });
 

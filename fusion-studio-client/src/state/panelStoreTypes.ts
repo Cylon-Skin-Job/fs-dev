@@ -18,6 +18,8 @@ import type {
   ResolvedCliEntry,
   CliEntryOverride,
   ThemeEntry,
+  WorkspaceHiddenView,
+  WorkspaceViewTemplate,
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 
@@ -57,6 +59,7 @@ export interface AppState {
   workspaceState: Record<string, WorkspacePanelState>;
   activateWorkspace: (workspaceId: string | null) => void;
   seedWorkspaceState: (workspaceId: string, state: Partial<WorkspacePanelState>) => void;
+  resetWorkspaceFocusState: (workspaceId: string) => void;
 
   _prefetchAbort: AbortController | null;
   setPrefetchAbort: (controller: AbortController | null) => void;
@@ -64,6 +67,19 @@ export interface AppState {
   panelConfigs: PanelConfig[];
   setPanelConfigs: (configs: PanelConfig[]) => void;
   getPanelConfig: (id: string) => PanelConfig | undefined;
+  viewRegistryUpdateError: string | null;
+  hiddenViews: WorkspaceHiddenView[];
+  availableViewTemplates: WorkspaceViewTemplate[];
+  setViewOptions: (hiddenViews: WorkspaceHiddenView[], availableTemplates: WorkspaceViewTemplate[]) => void;
+  requestViewOptions: () => void;
+  restoreView: (viewId: string) => void;
+  addView: (templateId: string) => void;
+  setViewRegistryUpdateError: (message: string | null) => void;
+  requestViewUpdate: (
+    viewId: string,
+    patch?: { label?: string; icon?: string; enabled?: boolean },
+    move?: 'up' | 'down'
+  ) => void;
 
   sharedStylesGeneration: number;
   bumpSharedStylesGeneration: () => void;
@@ -96,10 +112,11 @@ export interface AppState {
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
   sendMessage: (text: string, scope: Scope, threadId?: string | null) => void;
+  warmThread: (scope: Scope, threadId?: string | null) => void;
 
   // ── Project root ──
   projectRoot: string | null;
-  setProjectRoot: (root: string) => void;
+  setProjectRoot: (root: string | null) => void;
 
   panelRoots: Record<string, string>;
   setPanelRoots: (roots: Record<string, string>) => void;
@@ -177,6 +194,7 @@ export interface AppState {
   connectingHarnessId: string | null;
   setConnectingHarnessId: (id: string | null) => void;
   selectHarness: (harnessId: string, scope: Scope) => void;
+  createDefaultAssistantThread: (scope: Scope) => void;
 
   // ── Secondary chat (SECONDARY_CHAT_SPEC) ──
   secondary: SecondaryState | null;

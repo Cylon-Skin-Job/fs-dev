@@ -5,6 +5,7 @@ interface WorkspaceFileState {
   rootNodes: FileTreeNode[];
   expandedFolders: Set<string>;
   folderChildren: Map<string, FileTreeNode[]>;
+  showHiddenFolders: boolean;
 }
 
 function createEmptyWorkspaceFileState(): WorkspaceFileState {
@@ -12,6 +13,7 @@ function createEmptyWorkspaceFileState(): WorkspaceFileState {
     rootNodes: [],
     expandedFolders: new Set(),
     folderChildren: new Map(),
+    showHiddenFolders: false,
   };
 }
 
@@ -24,6 +26,7 @@ interface FileState {
   rootNodes: FileTreeNode[];
   expandedFolders: Set<string>;
   folderChildren: Map<string, FileTreeNode[]>;
+  showHiddenFolders: boolean;
 
   // Workspace-keyed cache (WORKSPACE_ISOLATION_SPEC)
   workspaceTrees: Record<string, WorkspaceFileState>;
@@ -34,6 +37,7 @@ interface FileState {
   error: string | null;
 
   setRootNodes: (nodes: FileTreeNode[]) => void;
+  toggleHiddenFolders: () => void;
   expandFolder: (path: string) => void;
   collapseFolder: (path: string) => void;
   toggleFolder: (path: string) => void;
@@ -68,6 +72,7 @@ export const useFileStore = create<FileState>((set, get) => ({
   rootNodes: [],
   expandedFolders: new Set(),
   folderChildren: new Map(),
+  showHiddenFolders: false,
   workspaceTrees: {},
   activeWorkspaceId: null,
 
@@ -81,6 +86,7 @@ export const useFileStore = create<FileState>((set, get) => ({
         rootNodes: state.rootNodes,
         expandedFolders: state.expandedFolders,
         folderChildren: state.folderChildren,
+        showHiddenFolders: state.showHiddenFolders,
       };
     }
 
@@ -94,6 +100,7 @@ export const useFileStore = create<FileState>((set, get) => ({
       rootNodes: loaded.rootNodes,
       expandedFolders: loaded.expandedFolders,
       folderChildren: loaded.folderChildren,
+      showHiddenFolders: loaded.showHiddenFolders,
       // Tabs remain global — spec says open files are NOT workspace-scoped yet
     });
   },
@@ -102,6 +109,12 @@ export const useFileStore = create<FileState>((set, get) => ({
   error: null,
 
   setRootNodes: (nodes) => set({ rootNodes: nodes }),
+
+  toggleHiddenFolders: () => set((state) => ({
+    showHiddenFolders: !state.showHiddenFolders,
+    rootNodes: [],
+    folderChildren: new Map(),
+  })),
 
   expandFolder: (path) => set((state) => {
     const next = new Set(state.expandedFolders);
@@ -247,6 +260,7 @@ export const useFileStore = create<FileState>((set, get) => ({
     rootNodes: [],
     expandedFolders: new Set(),
     folderChildren: new Map(),
+    showHiddenFolders: false,
     isLoading: false,
     error: null,
   }),

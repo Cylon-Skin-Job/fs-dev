@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "description": "Narrow local-model cleanup passes. These run only when deterministic conditions trigger them.",
+  "passes": [
+    {
+      "id": "self-correction",
+      "enabled": true,
+      "triggeredBy": "correction-flags.json",
+      "runOrder": 1,
+      "purpose": "Resolve a short snippet where the speaker may have corrected themselves while dictating.",
+      "instruction": "Correct speech-to-text self-corrections. Return only the final intended snippet. For 'actually', keep all words after 'actually'.\n\nInput: Refresh the browser, oh wait, reload the browser.\nOutput: Reload the browser.\n\nInput: Finish the Chrome extension, I mean finish the Safari extension.\nOutput: Finish the Safari extension.\n\nInput: Add a button, scratch that, add a dropdown.\nOutput: Add a dropdown.\n\nNow correct the transcript snippet.",
+      "examples": [
+        {
+          "input": "Refresh the browser, oh wait, reload the browser.",
+          "output": "Reload the browser."
+        },
+        {
+          "input": "Finish the Chrome extension, I mean finish the Safari extension.",
+          "output": "Finish the Safari extension."
+        },
+        {
+          "input": "Add a button, scratch that, add a dropdown.",
+          "output": "Add a dropdown."
+        }
+      ],
+      "highlightChange": true,
+      "allowRestoreOriginal": true
+    },
+    {
+      "id": "list-boundary",
+      "enabled": true,
+      "triggeredBy": "cleanup-thresholds.json#forgottenListEnd",
+      "runOrder": 2,
+      "purpose": "Repair possible cases where the speaker forgot to say an explicit list end marker.",
+      "instruction": "The transcript already has a numbered list. You are being called because the final list item is much longer than the earlier list items. That usually means the speaker continued into a new paragraph after finishing the list. Inspect only the final numbered item. If the final item contains 'and then', split immediately before 'and then'. End the list item with a period. Start a new paragraph with 'Then' followed by the words after 'and then'. If the final item contains 'after that', split immediately before 'after that'. Keep the earlier list items unchanged. Do not rewrite content. Do not add content. Return only the corrected transcript.",
+      "examples": [
+        {
+          "input": "1. Refresh the browser.\n2. Finish the Chrome extension after that we're going to test the install.",
+          "output": "1. Refresh the browser.\n2. Finish the Chrome extension.\n\nAfter that we're going to test the install."
+        },
+        {
+          "input": "Browser checks:\n1. Start the browser.\n2. Run the Chrome extension.\n3. Test in the dev channel.\n4. Push to prod and then we'll go on and work on the rest of the project.",
+          "output": "Browser checks:\n1. Start the browser.\n2. Run the Chrome extension.\n3. Test in the dev channel.\n4. Push to prod.\n\nThen we'll go on and work on the rest of the project."
+        }
+      ],
+      "highlightChange": true,
+      "allowRestoreOriginal": true
+    }
+  ]
+}

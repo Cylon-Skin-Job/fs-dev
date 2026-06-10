@@ -1,4 +1,4 @@
-/* Shared dropdown base — used by chat-header dropdowns, CLI picker, thread list */
+/* Shared dropdown base — used by chat-header dropdowns, harness picker, thread list */
 
 /* Menu-item icons (shared across rv-dropdown and rv-thread-menu-dropdown).
  * Default Material Symbols are 24px; size them down so they read inline

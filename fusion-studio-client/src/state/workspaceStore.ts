@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import type { Workspace } from '../types';
+import type { Workspace, WorkspaceCreateManifest } from '../types';
 import { usePanelStore } from './panelStore';
 
 /**
- * workspaceStore — multi-workspace registry and switcher UI state.
+ * workspaceStore — multi-workspace registry and ribbon UI state.
  *
  * Lives alongside panelStore but is a higher level: panels exist
  * within a workspace. Reads the WebSocket from panelStore to avoid
@@ -20,9 +20,12 @@ interface WorkspaceStoreState {
   homePath: string;
 
   // UI flags
-  isSwitcherOpen: boolean;
   isRibbonOpen: boolean;
   isAddModalOpen: boolean;
+  isCreateModalOpen: boolean;
+  createManifest: WorkspaceCreateManifest | null;
+  createError: string | null;
+  isCreatingWorkspace: boolean;
 
   // Setters
   setWorkspaces: (workspaces: Workspace[]) => void;
@@ -30,17 +33,24 @@ interface WorkspaceStoreState {
   setWorkspaceType: (type: 'code' | 'app') => void;
   setHomePath: (p: string) => void;
   markInit: () => void;
-  openSwitcher: () => void;
-  closeSwitcher: () => void;
   openRibbon: () => void;
   closeRibbon: () => void;
   openAddModal: () => void;
   closeAddModal: () => void;
+  openCreateModal: () => void;
+  closeCreateModal: () => void;
+  setCreateManifest: (manifest: WorkspaceCreateManifest) => void;
+  setCreateError: (message: string | null) => void;
 
   // Server request actions (WebSocket sends)
   requestAdd: (repoPath: string) => void;
   requestSwitch: (workspaceId: string) => void;
   requestRemove: (workspaceId: string) => void;
+  requestRemoveFromRibbon: (workspaceId: string) => void;
+  requestAddToRibbon: (workspaceId: string) => void;
+  requestRibbonReorder: (workspaceIds: string[]) => void;
+  requestCreateManifest: () => void;
+  requestCreateWorkspace: (projectPath: string, label: string, viewIds: string[]) => void;
 
   // Canonical navigation — one source of truth for cycling and toggling
   cycleWorkspace: (direction: 'left' | 'right') => void;
@@ -54,15 +64,39 @@ function sendWorkspaceMessage(message: Record<string, unknown>): void {
   }
 }
 
+export function toRibbonWorkspaces(workspaces: Workspace[]): Workspace[] {
+  return workspaces
+    .filter((workspace) => workspace.ribbonVisible !== false)
+    .sort((a, b) => {
+      const aOrder = a.ribbonSortOrder ?? a.sortOrder;
+      const bOrder = b.ribbonSortOrder ?? b.sortOrder;
+      return aOrder - bOrder;
+    });
+}
+
+export function toHiddenRibbonWorkspaces(workspaces: Workspace[]): Workspace[] {
+  return workspaces
+    .filter((workspace) => workspace.ribbonVisible === false)
+    .sort((a, b) => {
+      const aOrder = a.ribbonSortOrder ?? a.sortOrder;
+      const bOrder = b.ribbonSortOrder ?? b.sortOrder;
+      if (aOrder !== bOrder) return aOrder - bOrder;
+      return a.label.localeCompare(b.label);
+    });
+}
+
 export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   workspaces: [],
   activeWorkspaceId: null,
   workspaceType: 'code',
   hasReceivedInit: false,
   homePath: '/',
-  isSwitcherOpen: false,
   isRibbonOpen: false,
   isAddModalOpen: false,
+  isCreateModalOpen: false,
+  createManifest: null,
+  createError: null,
+  isCreatingWorkspace: false,
 
   setWorkspaces: (workspaces) => set({ workspaces }),
   setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
@@ -72,12 +106,14 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
     console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
     set({ hasReceivedInit: true });
   },
-  openSwitcher: () => set({ isSwitcherOpen: true }),
-  closeSwitcher: () => set({ isSwitcherOpen: false }),
   openRibbon: () => set({ isRibbonOpen: true }),
   closeRibbon: () => set({ isRibbonOpen: false }),
   openAddModal: () => set({ isAddModalOpen: true }),
   closeAddModal: () => set({ isAddModalOpen: false }),
+  openCreateModal: () => set({ isCreateModalOpen: true, createError: null }),
+  closeCreateModal: () => set({ isCreateModalOpen: false, createError: null, isCreatingWorkspace: false }),
+  setCreateManifest: (manifest) => set({ createManifest: manifest }),
+  setCreateError: (message) => set({ createError: message, isCreatingWorkspace: false }),
 
   requestAdd: (repoPath) => {
     sendWorkspaceMessage({ type: 'workspace:add_requested', repoPath });
@@ -88,13 +124,29 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   requestRemove: (workspaceId) => {
     sendWorkspaceMessage({ type: 'workspace:remove_requested', workspaceId });
   },
+  requestRemoveFromRibbon: (workspaceId) => {
+    sendWorkspaceMessage({ type: 'workspace:ribbon_remove_requested', workspaceId });
+  },
+  requestAddToRibbon: (workspaceId) => {
+    sendWorkspaceMessage({ type: 'workspace:ribbon_add_requested', workspaceId });
+  },
+  requestRibbonReorder: (workspaceIds) => {
+    sendWorkspaceMessage({ type: 'workspace:ribbon_reorder_requested', workspaceIds });
+  },
+  requestCreateManifest: () => {
+    sendWorkspaceMessage({ type: 'workspace:create_manifest_requested' });
+  },
+  requestCreateWorkspace: (projectPath, label, viewIds) => {
+    set({ createError: null, isCreatingWorkspace: true });
+    sendWorkspaceMessage({ type: 'workspace:create_requested', projectPath, label, viewIds });
+  },
 
   cycleWorkspace: (direction) => {
     const { workspaces, activeWorkspaceId } = get();
-    if (workspaces.length <= 1 || !activeWorkspaceId) return;
+    const ribbonWorkspaces = toRibbonWorkspaces(workspaces);
+    if (ribbonWorkspaces.length <= 1 || !activeWorkspaceId) return;
 
-    const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
-    const ids = sorted.map((w) => w.id);
+    const ids = ribbonWorkspaces.map((w) => w.id);
     const idx = ids.indexOf(activeWorkspaceId);
     if (idx < 0) return;
 

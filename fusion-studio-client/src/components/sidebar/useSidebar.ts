@@ -9,7 +9,7 @@ import { useFileStore } from '../../state/fileStore';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { showToast } from '../../lib/toast';
-import { useResolvedHarnessResolver } from '../../config/harness';
+import { useResolvedHarnessResolver, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import type { Scope } from '../../types';
 import { reorderWithSecondary } from './threadOrderUtils';
@@ -30,12 +30,15 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
   const openSecondary = usePanelStore((state) => state.openSecondary);
   const toggleCliPicker = usePanelStore((state) => state.toggleCliPicker);
   const selectHarness = usePanelStore((state) => state.selectHarness);
+  const createDefaultAssistantThread = usePanelStore((state) => state.createDefaultAssistantThread);
+  const setCurrentThreadId = usePanelStore((state) => state.setCurrentThreadId);
 
   const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
   const { setThreadRef } = useThreadAnimation(threads);
   const resolveCliAccent = useCliAccentResolver();
   const resolveHarness = useResolvedHarnessResolver();
   const harnessStatuses = useHarnessStatuses();
+  const selectableHarnesses = useSelectableHarnesses(harnessStatuses);
 
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState('');
@@ -115,16 +118,23 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
   }, [ws]);
 
   const handleCreateThread = useCallback(() => {
+    if (selectableHarnesses.length <= 1) {
+      createDefaultAssistantThread(scope);
+      return;
+    }
     toggleCliPicker(panel);
-  }, [toggleCliPicker, panel]);
+  }, [createDefaultAssistantThread, panel, scope, selectableHarnesses.length, toggleCliPicker]);
 
   const handleHarnessSelect = useCallback((harnessId: string) => {
     selectHarness(harnessId, scope);
   }, [selectHarness, scope]);
 
   const handleOpenThread = useCallback((threadId: string) => {
-    sendMessage({ type: 'thread:open-assistant', scope, threadId });
-  }, [sendMessage, scope]);
+    if (scope === 'view') {
+      setCurrentThreadId(scope, threadId);
+    }
+    sendMessage({ type: 'thread:open', scope, threadId });
+  }, [sendMessage, setCurrentThreadId, scope]);
 
   const handleRenameStart = useCallback((threadId: string, currentName: string) => {
     setRenamingId(threadId);
@@ -178,6 +188,7 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
     resolveCliAccent,
     resolveHarness,
     harnessStatuses,
+    showCliPicker: selectableHarnesses.length > 1,
     handleCreateThread,
     handleHarnessSelect,
     renamingId,

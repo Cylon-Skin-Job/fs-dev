@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "last_updated": "2026-05-22T14:30:00.000Z",
+  "last_updated": "2026-06-09T00:00:00.000Z",
   "tickets": {
     "RCC-0086": {
       "title": "Chunk E \u2014 Theme token bridge",
@@ -181,6 +181,15 @@
       "author": "rccurtrightjr",
       "state": "open",
       "body": "The Secrets Manager implementation has switched from macOS Keychain to Electron safeStorage. Update SECRETS_MANAGER_SPEC.md, AGENTS.md, wiki article, and lib/secrets.js to reflect the new backend."
+    },
+    "RCC-0094": {
+      "title": "Secrets Manager \u2014 evaluate Electron safeStorage backend",
+      "assignee": "rccurtrightjr",
+      "created": "2026-06-09T00:00:00.000Z",
+      "author": "rccurtrightjr",
+      "state": "open",
+      "priority": "medium",
+      "body": "Fusion Studio currently has a working Secrets Manager UI, but secret values are still stored through the server's macOS Keychain backend. Evaluate and design a migration to an Electron-owned safeStorage backend so Fusion Studio can become cross-platform and stop depending directly on macOS-only security CLI calls. Resolve IPC/backend ownership, encrypted blob storage, dev-mode behavior, Linux fallback, migration from the fusion-studio Keychain account, and safe agent/script retrieval patterns."
     }
   }
 }

@@ -1,8 +1,8 @@
 /**
  * @module panels
  * @role Shared panel discovery and config loading
- * @reads ai/views/index.json, ai/views/{id}/index.json, ai/views/{id}/content.json,
- *        ai/views/{id}/settings/layout.json
+ * @reads ai/system/workspace/views.json, ai/views/{id}/index.json,
+ *        ai/views/{id}/content.json, ai/views/{id}/settings/layout.json
  * Workspace CSS: fetchPanelWorkspaceFile / fetchViewsRootFile (__panels__ → ai/views/…).
  * Chat/thread styles: settings/views.css (see VIEWS_SETTINGS_STYLES_VIEWS).
  *
@@ -62,6 +62,19 @@ export interface PanelConfig {
   hasAppHtml?: boolean;
   /** Raw index.json settings for view-specific configuration */
   settings?: Record<string, any>;
+}
+
+interface WorkspaceViewRegistryEntry {
+  id: string;
+  label?: string;
+  icon?: string;
+  rank?: number;
+  enabled?: boolean;
+}
+
+interface RediscoverPanelsOptions {
+  preserveCurrent?: boolean;
+  chooseNearestIfMissing?: boolean;
 }
 
 // --- Helpers ---
@@ -156,6 +169,17 @@ export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): 
   });
 }
 
+async function fetchWorkspaceViewRegistry(ws: WebSocket): Promise<WorkspaceViewRegistryEntry[] | null> {
+  try {
+    const raw = await fetchPanelFile(ws, '__workspace__', 'views.json');
+    const json = JSON.parse(raw);
+    if (json?.version !== 1 || !Array.isArray(json.views)) return null;
+    return json.views.filter((view: WorkspaceViewRegistryEntry) => view?.id && view.enabled !== false);
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Load a JSON file from a panel, returning null on failure.
  */
@@ -174,11 +198,12 @@ async function fetchPanelJson(ws: WebSocket, panelId: string, filePath: string, 
 export async function loadPanelConfig(
   ws: WebSocket,
   panelId: string,
-  category: 'app' | 'tool' = 'tool'
+  category: 'app' | 'tool' = 'tool',
+  registryEntry: WorkspaceViewRegistryEntry | null = null
 ): Promise<PanelConfig | null> {
   try {
     const panelAlias = category === 'app' ? '__apps__' : '__panels__';
-    const json = await fetchPanelJson(ws, panelId, 'index.json', panelAlias);
+    const json = await fetchPanelJson(ws, panelId, 'index.json', panelAlias) || registryEntry;
     if (!json) return null;
 
     // Load content.json — declares display type and chat config
@@ -202,15 +227,15 @@ export async function loadPanelConfig(
 
     return {
       id: json.id || panelId,
-      name: json.label || panelId,
+      name: registryEntry?.label || json.label || panelId,
       description: json.description,
       type: contentConfig?.display || json.type || 'placeholder',
-      icon: json.icon || 'folder',
+      icon: registryEntry?.icon || json.icon || 'folder',
       hasChat,
       chatConfig,
       layoutConfig,
       contentConfig,
-      rank: json.rank,
+      rank: registryEntry?.rank ?? json.rank,
       category,
       hasUiFolder,
       hasAppHtml,
@@ -263,13 +288,17 @@ export function discoverPanels(ws: WebSocket, panelAlias: string): Promise<strin
  * Returns sorted by rank within each category.
  */
 export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {
+  const registryViews = await fetchWorkspaceViewRegistry(ws);
   const [toolIds, appIds] = await Promise.all([
-    discoverPanels(ws, '__panels__').catch(() => [] as string[]),
+    registryViews
+      ? Promise.resolve(registryViews.map((view) => view.id))
+      : discoverPanels(ws, '__panels__').catch(() => [] as string[]),
     discoverPanels(ws, '__apps__').catch(() => [] as string[]),
   ]);
+  const registryById = new Map((registryViews || []).map((view) => [view.id, view]));
 
   const toolConfigs = await Promise.all(
-    toolIds.map((id) => loadPanelConfig(ws, id, 'tool'))
+    toolIds.map((id) => loadPanelConfig(ws, id, 'tool', registryById.get(id) || null))
   );
   const appConfigs = await Promise.all(
     appIds.map((id) => loadPanelConfig(ws, id, 'app'))
@@ -294,16 +323,44 @@ export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {
  * Used by workspace-handlers on `workspace:switched`. Fire-and-forget:
  * callers should `.catch(console.error)`.
  */
-export async function rediscoverPanels(ws: WebSocket): Promise<void> {
-  usePanelStore.getState().setPanelConfigs([]);
+export async function rediscoverPanels(ws: WebSocket, options: RediscoverPanelsOptions = {}): Promise<void> {
+  const previousStore = usePanelStore.getState();
+  const previousPanel = previousStore.currentPanel;
+  const previousConfigs = previousStore.panelConfigs;
+  previousStore.setPanelConfigs([]);
   const configs = await loadAllPanels(ws);
   usePanelStore.getState().setPanelConfigs(configs);
-  if (configs.length > 0) {
-    const first = configs[0];
-    usePanelStore.getState().setCurrentPanel(first.id);
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'set_panel', panel: first.id }));
+
+  if (configs.length === 0) return;
+
+  if (options.preserveCurrent && configs.some((config) => config.id === previousPanel)) {
+    return;
+  }
+
+  let nextPanelId = configs[0].id;
+  if (options.chooseNearestIfMissing) {
+    const previousIndex = previousConfigs.findIndex((config) => config.id === previousPanel);
+    if (previousIndex !== -1) {
+      let foundNearest = false;
+      for (let index = previousIndex + 1; index < previousConfigs.length; index += 1) {
+        const candidate = previousConfigs[index];
+        if (configs.some((config) => config.id === candidate.id)) {
+          nextPanelId = candidate.id;
+          foundNearest = true;
+          break;
+        }
+      }
+      if (!foundNearest) {
+        for (let index = previousIndex - 1; index >= 0; index -= 1) {
+          const candidate = previousConfigs[index];
+          if (configs.some((config) => config.id === candidate.id)) {
+            nextPanelId = candidate.id;
+            break;
+          }
+        }
+      }
     }
   }
-}
 
+  usePanelStore.getState().setCurrentPanel(nextPanelId);
+}

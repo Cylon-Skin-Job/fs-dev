@@ -2,88 +2,102 @@
 
 ## 1. Overview
 
-The Office Viewer maintains a **local Git repository** inside `ai/views/office-viewer/content/` for lightweight, automatic document versioning. Commits are created transparently as the user works — no manual `git` interaction is required.
+The Office Viewer uses Fusion Studio's Universal Event Bus (UEB) and SQLite persistence to maintain recoverable document revision history, checkpoints, undo/redo fuel, and shareable workspace mirrors.
 
-This spec covers **local versioning only**. GitLab push/pull, ticket generation, and multi-user sync are explicitly out of scope; they may be layered on later via the existing trigger system or user-managed remotes.
+The previous local-Git approach is superseded. Git remains useful for the outer project repository, but document safety should not depend on hidden nested repositories or on the user's last Git checkpoint.
+
+The canonical Electron database is protected infrastructure. AI may search and read it through approved app surfaces, but AI does not write to it directly. Writes to canonical state happen through user-originated UI CRUD and server-owned handlers that emit UEB events.
+
+Repo-local mirror databases are different: they are work product. They are optional, disposable, user/AI accessible, customizable, and shareable through Git when the user chooses.
 
 ---
 
 ## 2. Goals
 
-- Preserve every meaningful editing session as a recoverable snapshot.
-- Avoid empty commits (no-change auto-saves do not create Git noise).
-- Keep the workspace root Git repo clean by auto-isolating the document store.
-- Require zero user configuration.
+- Preserve every meaningful editing session as recoverable revisions and checkpoints.
+- Support undo/redo and session review without relying on Git history.
+- Allow recovery after destructive AI edits, even when the outer Git checkpoint is stale.
+- Store versioning data in canonical SQLite tables derived from UEB document CRUD events.
+- Allow repo-local mirror SQLite databases to duplicate selected canonical workspace tables for sharing and review.
+- Keep mirror databases optional, disposable, configurable, and partitioned by user-machine folder to avoid Git conflicts.
 
 ## 3. Non-Goals
 
-- GitLab integration, CI hooks, or remote push/pull (user may add a remote manually).
-- Ticket / issue generation on version events.
+- Nested local Git repositories for document versioning.
+- Replacing the outer project Git repository.
+- AI direct-write access to the protected Electron database.
+- Treating repo mirror databases as canonical state.
 - Branching, pull requests, or merge workflows.
-- Visual diff or blame UI inside the Office Viewer.
+- Visual diff or blame UI inside the Office Viewer in the first implementation slice.
 
 ---
 
 ## 4. Architecture
 
-```
-Workspace Root (Fusion-Home/)
-├── .git/                        ← optional outer repo
-├── ai/
-│   └── views/
-│       └── office-viewer/
-│           └── content/         ← DOCUMENT REPO ROOT
-│               ├── .git/        ← inner git repo (this spec)
-│               ├── captures/
-│               ├── specs/
-│               │   └── roadmap.md
-│               └── todo/
-│
-└── .gitignore                   ← auto-injected: ai/views/office-viewer/content/
+```text
+Electron app data
+└── fusion.db                    ← canonical protected database
+    ├── event_log                ← UEB event index / append log
+    ├── documents                ← current document state/index
+    ├── document_versions        ← incremental revisions
+    └── document_checkpoints     ← restore-worthy milestones
+
+Project repo
+├── ai-data/
+│   └── <user-machine>/
+│       └── workspace.db         ← optional shareable mirror of selected canonical tables
+├── ai-chat/
+│   └── <user-machine>/threads/<thread-id>/CHAT.md
+├── ai-runs/
+│   └── <user-machine>/...
+├── ai-wiki/
+├── ai-issues/
+├── ai-skills/
+├── ai-agents/
+├── ai-system/
+└── ai-views/
 ```
 
 ### 4.1 Components
 
 | Component | Location | Role |
 |-----------|----------|------|
-| `versioning.js` | `server/lib/versioning.js` | Git operations: init, diff guard, commit, status |
-| `file-explorer.js` | `server/lib/file-explorer.js` | Calls versioning hooks inside `handleFileSaveRequest` |
-| `OfficeDocumentPage.tsx` | `client/src/components/office/OfficeDocumentPage.tsx` | Emits milestone reasons on export/share; tracks session state |
-| `fileDataStore.ts` | `client/src/state/fileDataStore.ts` | Carries `reason` on `file_save` WS messages |
+| `document-versioning` service | `fusion-studio-server/lib/versioning/` | Records revisions/checkpoints from document CRUD events |
+| UEB event log | canonical SQLite | Append/index document CRUD events and versioning events |
+| Document tables | canonical SQLite | Current document state plus revision/checkpoint history |
+| Mirror DB creator | server script/service | Creates optional repo-local `ai-data/<user-machine>/workspace.db` from canonical schema/template |
+| Mirror DB config table | mirror SQLite | Enables/disables mirrored modules and retention policy from inside the mirror DB |
+| Office editor UI | client | Emits user-originated save/checkpoint intents through normal server handlers |
 
 ---
 
-## 5. Commit Triggers
+## 5. Revision And Checkpoint Policy
 
-Commits are created server-side after the file has been written to disk. The client sends a `reason` with every `file_save` message.
+Revisions and checkpoints are recorded server-side after user-originated document CRUD passes through the UEB. The client may send a `reason` with save/checkpoint messages, but the server owns canonical version records.
 
-### 5.1 Trigger Types
+### 5.1 Version Reasons
 
-| Reason | When | Commit Message Example |
-|--------|------|------------------------|
-| `autosave` | 3-second debounce after typing stops | *(never commits — diff guard prevents no-op commits)* |
-| `manual` | `Ctrl+S` pressed | *(never commits)* |
-| `session_end` | User navigates away (back, sibling, Escape) | `session: roadmap.md` |
-| `checkpoint` | 30 minutes of active editing elapsed | `checkpoint: roadmap.md @ 2026-05-15T14:30:00Z` |
-| `milestone` | Export, print, or share action invoked | `milestone: export pdf — roadmap.md` |
+| Reason | When | Versioning Behavior |
+|--------|------|---------------------|
+| `autosave` | Debounced user edit save | Record incremental revision if content changed |
+| `manual` | User presses save | Record incremental revision if content changed; optional checkpoint is user decision |
+| `ai_edit` | AI-originated edit applied through user-approved UI path | Record revision and checkpoint |
+| `document_close` | User closes/navigates away from document | Record checkpoint if content changed in session |
+| `workspace_switch` | User switches workspace with dirty/recent document activity | Record checkpoint |
+| `interval_checkpoint` | Every 20 revisions if no other checkpoint occurred | Record checkpoint |
+| `milestone` | Export, print, share, or explicit user milestone | Record checkpoint |
 
-### 5.2 Active Editing Checkpoints
+### 5.2 Retention
 
-- A checkpoint timer resets after every successful `file_save` with dirty content.
-- If 30 minutes elapse **and** the document is still dirty, the next auto-save carries `reason: 'checkpoint'`.
-- If the user closes the document before 30 minutes, only the `session_end` commit is created.
+- Keep the last 30 non-checkpoint revisions per document.
+- FIFO old non-checkpoint revisions beyond the retention window.
+- Preserve checkpoints even when they overlap with the last 30 revisions.
+- Create an `interval_checkpoint` every 20 revisions if no other checkpoint has been created in that span.
+- Checkpoints are restore-worthy semantic boundaries; revisions are fine-grained undo/session-review fuel.
 
-### 5.3 Diff Guard
+### 5.3 Change Guard
 
-Before any commit, the server compares the file on disk against `HEAD`:
-
-```js
-const lastCommitted = await gitShow(contentRoot, `HEAD:${relativePath}`);
-const current = fs.readFileSync(absolutePath, 'utf8');
-if (lastCommitted === current) return; // skip empty commit
-```
-
-Files not yet in `HEAD` always pass the guard.
+The server should not record duplicate revisions when content hash, path, and relevant metadata are unchanged.
 
 ---
 
@@ -92,7 +106,7 @@ Files not yet in `HEAD` always pass the guard.
 ### 6.1 Client → Server
 
 ```ts
-type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milestone';
+type SaveReason = 'autosave' | 'manual' | 'ai_edit' | 'document_close' | 'workspace_switch' | 'interval_checkpoint' | 'milestone';
 
 // Existing file_save message, extended
 {
@@ -100,14 +114,14 @@ type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milest
   panel: 'office-viewer',
   path: 'specs/roadmap.md',
   content: '# Roadmap\n\n...',
-  reason?: SaveReason,        // NEW — default 'autosave'
-  milestone?: string          // NEW — e.g. 'export_pdf', only with reason: 'milestone'
+  reason?: SaveReason,
+  milestone?: string
 }
 ```
 
 ### 6.2 Server → Client
 
-No new response types. `file_save_response` remains unchanged. Versioning is silent; failures are logged server-side but do not block the save.
+`file_save_response` remains the save acknowledgement. Versioning failures should be logged and surfaced as non-fatal diagnostics; the user's save should not be lost because a revision/checkpoint write failed after the document write.
 
 ---
 
@@ -116,17 +130,16 @@ No new response types. `file_save_response` remains unchanged. Versioning is sil
 ### 7.1 `OfficeDocumentPage.tsx`
 
 1. **Track session start** when `markdownUpdated` fires for the first time after mount.
-2. **Checkpoint timer**: `setInterval` every 60 seconds checks `Date.now() - sessionStart >= 30 * 60 * 1000`. If true and `isDirty`, the next save carries `reason: 'checkpoint'` and `sessionStart` resets.
-3. **Navigation away**: `handleSaveAndLeave` calls `saveFile` with `reason: 'session_end'`.
-4. **Export/share handlers** (Export PDF, Export DOCX, etc.):
-   - If `isDirty`, save first with `reason: 'autosave'`.
-   - Then send `file_save` with `reason: 'milestone'`, `milestone: 'export_pdf'` (even if file is already saved — ensures commit hash matches exported artifact).
-   - Then proceed with export.
+2. **Incremental saves** send `reason: 'autosave'` or `reason: 'manual'` through the normal save path.
+3. **Navigation away** calls `saveFile` with `reason: 'document_close'`.
+4. **Workspace switch** sends or causes `reason: 'workspace_switch'` for dirty/recent document activity before switching context.
+5. **AI edit acceptance** must pass through a user-approved UI/server path that marks the save `reason: 'ai_edit'`.
+6. **Export/share handlers** send `reason: 'milestone'`, `milestone: 'export_pdf'` after saving dirty content.
 
 ### 7.2 `fileDataStore.ts`
 
 ```ts
-export type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milestone';
+export type SaveReason = 'autosave' | 'manual' | 'ai_edit' | 'document_close' | 'workspace_switch' | 'interval_checkpoint' | 'milestone';
 
 saveFile: (panel: string, path: string, content: string, reason?: SaveReason, milestone?: string) => void;
 ```
@@ -137,72 +150,107 @@ The `sendWs` payload includes `reason` and `milestone` when provided.
 
 ## 8. Server Behavior
 
-### 8.1 `lib/versioning.js`
+### 8.1 `lib/versioning/` Service
 
-```js
-async function ensureRepo(contentRoot);
-async function commitIfChanged(contentRoot, relativePath, message);
-async function shouldCommit(contentRoot, relativePath);
+The versioning service subscribes to or is called from the same server-owned document save path that emits UEB document CRUD events.
+
+Responsibilities:
+
+- Normalize document identity: workspace id, path, document type, content hash.
+- Record a `document_versions` row when content changed.
+- Record a `document_checkpoints` row for checkpoint-worthy reasons.
+- Maintain the last 30 non-checkpoint revisions per document with FIFO pruning.
+- Preserve checkpoints even when non-checkpoint revisions are pruned.
+- Emit/index versioning events so later mirror DBs can duplicate canonical rows.
+- Fail non-fatally after the document save has succeeded.
+
+### 8.2 Canonical Tables
+
+Exact column names should align with existing Electron DB conventions, but the schema needs these logical tables:
+
+```text
+documents
+  document_id
+  workspace_id
+  path
+  document_type
+  current_hash
+  current_version_id
+  created_at
+  updated_at
+
+document_versions
+  version_id
+  document_id
+  workspace_id
+  path
+  version_number
+  reason
+  content_hash
+  diff_kind
+  diff_payload_or_ref
+  snapshot_ref
+  ueb_event_id
+  created_at
+
+document_checkpoints
+  checkpoint_id
+  document_id
+  version_id
+  workspace_id
+  path
+  reason
+  label
+  ueb_event_id
+  created_at
+
+undo_stack
+  stack_id
+  document_id
+  version_id
+  position
+  created_at
 ```
 
-**`ensureRepo`**:
-- Checks for `contentRoot/.git`.
-- If missing, runs `git init`, sets `user.name = "Fusion Studio"`, `user.email = "fusion@localhost"`.
-- If the workspace root contains `.git`, appends `ai/views/office-viewer/content/` to workspace `.gitignore` (idempotent).
+### 8.3 Restore Behavior
 
-**`commitIfChanged`**:
-1. `git add <relativePath>`
-2. Run diff guard (`git diff --cached --quiet`)
-3. If changes exist, `git commit -m <message> --quiet`
+Restore should support:
 
-### 8.2 `lib/file-explorer.js`
-
-Inside `handleFileSaveRequest`, after the atomic rename succeeds:
-
-```js
-const reason = msg.reason || 'autosave';
-if (reason === 'session_end' || reason === 'checkpoint' || reason === 'milestone') {
-  const milestone = msg.milestone;
-  const fileName = path.basename(requestPath);
-  const message = reason === 'milestone'
-    ? `milestone: ${milestone} — ${fileName}`
-    : reason === 'checkpoint'
-      ? `checkpoint: ${fileName} @ ${new Date().toISOString()}`
-      : `session: ${fileName}`;
-
-  try {
-    await versioning.commitIfChanged(basePath, requestPath, message);
-  } catch (err) {
-    console.warn('[Versioning] Commit failed:', err.message);
-  }
-}
-```
-
-Failures are non-fatal. The file is already saved.
+- Restore whole document to a checkpoint.
+- Restore whole document to a revision.
+- Inspect revision history for a session.
+- Later: compare and merge another user's mirrored document revisions.
 
 ---
 
-## 9. Auto-Guard for Nested Repos
+## 9. Workspace Mirror Database
 
-If the workspace root is (or later becomes) a Git repository, the document store must not appear as an untracked directory or submodule.
+The repo-local mirror DB is optional work product, not canonical state.
 
-**`ensureRepo` handles this automatically:**
+Mirror path:
 
-```js
-const workspaceRoot = path.resolve(contentRoot, '..', '..', '..', '..');
-const gitignorePath = path.join(workspaceRoot, '.gitignore');
-const line = 'ai/views/office-viewer/content/';
-
-if (fs.existsSync(path.join(workspaceRoot, '.git'))) {
-  let contents = '';
-  try { contents = fs.readFileSync(gitignorePath, 'utf8'); } catch {}
-  if (!contents.includes(line)) {
-    fs.appendFileSync(gitignorePath, '\n# Fusion Studio document versions\n' + line + '\n');
-  }
-}
+```text
+ai-data/<user-machine>/workspace.db
 ```
 
-This guarantees the outer repo never sees the inner `.git` directory or document files.
+Rules:
+
+- Mirror DBs use the same canonical schema where practical.
+- Mirroring filters rows by workspace/module/retention instead of inventing a separate share schema.
+- A `config` table inside the mirror DB controls enabled modules and retention policy.
+- Default retention target is 120 days for share/review workflows.
+- A size warning/hard guard may be added to avoid GitHub/GitLab file-size rejection, but 120 days is the human policy.
+- User-machine partitioning avoids Git conflicts between collaborators.
+- AI and users may read, modify, delete, and regenerate mirror DBs because they are repo work product.
+
+Example mirror use:
+
+```text
+ai-data/Josh-HomePC/workspace.db
+ai-chat/Josh-HomePC/threads/<thread-id>/CHAT.md
+```
+
+A user can ask an assistant to inspect Josh's mirror DB, follow links to chat markdown, inspect document revisions, and compare snapshots against local state.
 
 ---
 
@@ -210,10 +258,12 @@ This guarantees the outer repo never sees the inner `.git` directory or document
 
 | File | Action | Change |
 |------|--------|--------|
-| `server/lib/versioning.js` | **Create** | `ensureRepo`, `commitIfChanged`, `shouldCommit`, auto-guard |
-| `server/lib/file-explorer.js` | **Modify** | Import versioning; commit hook after atomic rename in `handleFileSaveRequest` |
+| `fusion-studio-server/lib/versioning/` | **Create** | Versioning service, diff/snapshot helpers, retention logic |
+| SQLite migrations | **Create** | `documents`, `document_versions`, `document_checkpoints`, `undo_stack` |
+| Document save handlers | **Modify** | Emit/index UEB document CRUD events and call versioning service |
+| Mirror DB script/service | **Create** | Create `ai-data/<user-machine>/workspace.db` from canonical schema/template and copy selected rows |
 | `client/src/state/fileDataStore.ts` | **Modify** | Add `SaveReason` type; accept `reason` and `milestone` in `saveFile` |
-| `client/src/components/office/OfficeDocumentPage.tsx` | **Modify** | Track `sessionStart`; checkpoint timer; pass `reason` on nav-away and exports |
+| `client/src/components/office/OfficeDocumentPage.tsx` | **Modify** | Pass `reason` on close, workspace switch, AI edit acceptance, and exports |
 
 ---
 
@@ -226,12 +276,14 @@ The following may be built later but are **not part of this spec**:
 - Visual version history browser inside Office Viewer
 - Conflict resolution UI
 - Branching or merge workflows
-- `.versions/` fallback (this spec uses Git exclusively)
+- Binary artifact storage design beyond content hashes or external snapshot refs
 
 ---
 
 ## 12. Open Questions
 
-1. Should `manual` (`Ctrl+S`) ever commit? (Current answer: no — it is just a disk flush.)
-2. Should milestone commits also trigger a `file_changed` event for listeners? (Current answer: yes, reuse existing emit.)
-3. If a file is deleted, should a commit be created? (Current answer: out of scope — Office Viewer does not support file deletion yet.)
+1. Should `manual` save create only a revision, or should users be able to opt into manual checkpoints?
+2. Should revision diff payloads live inline in SQLite, as external refs, or hybrid by size/type?
+3. Should deleted files create tombstone versions/checkpoints?
+4. What exact tables/modules belong in the default workspace mirror template?
+5. Should mirror DB size guardrails be warnings only, hard stops, or both?

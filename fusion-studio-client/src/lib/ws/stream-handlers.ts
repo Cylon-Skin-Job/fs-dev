@@ -5,10 +5,8 @@
  * Extracted from ws-client.ts (spec 05a) so the most fragile part of the
  * message router is isolated and testable. Everything else stays in ws-client.
  *
- * SPEC-26c: stream messages route by scope. The wire is single-scope at any
- * given moment — whichever side (project or view) owns the live wire is the
- * one whose chat state receives the stream. Prefer msg.scope (set server-side
- * in 26b), fall back to store.currentScope.
+ * Live stream messages route only by explicit server scope + threadId.
+ * Missing route metadata is a contract violation and is dropped with a diagnostic.
  */
 
 import { usePanelStore } from '../../state/panelStore';
@@ -34,7 +32,7 @@ import {
   getSubagentTypeFromArgs,
 } from '../subagent-output';
 import { showToast } from '../toast';
-import type { WebSocketMessage, Scope } from '../../types';
+import type { WebSocketMessage, WebSocketMessageType, Scope } from '../../types';
 
 interface TimingProbe {
   firstTokenAt?: number;
@@ -45,6 +43,19 @@ interface TimingProbe {
 const toolArgBuffers = new Map<string, string>();
 const MAX_SHELL_OUTPUT_LINES = 12;
 const MAX_SHELL_OUTPUT_LINE_LENGTH = 180;
+
+const ROUTED_STREAM_TYPES = new Set<WebSocketMessageType>([
+  'turn_begin',
+  'content',
+  'thinking',
+  'tool_call',
+  'tool_call_args',
+  'tool_result',
+  'subagent_event',
+  'turn_end',
+  'status_update',
+  'auth_error',
+]);
 
 interface SubagentToolState {
   id: string;
@@ -61,30 +72,27 @@ interface SubagentStreamState {
 
 const subagentStreams = new Map<string, SubagentStreamState>();
 
-/**
- * Resolve the target scope for a stream message.
- *  - Prefer msg.scope (server-side wire tag, 26b+).
- *  - Fall back to store.currentScope (set by wire_ready / thread:opened).
- *  - Final fallback: 'project' — SECONDARY_CHAT_SPEC narrowed view-scope to
- *    agents-viewer only; everything else is project.
- */
-function resolveScope(msg: WebSocketMessage): Scope {
-  if (msg.scope === 'project' || msg.scope === 'view') return msg.scope;
-  const current = usePanelStore.getState().currentScope;
-  if (current) return current;
-  return 'project';
+function getStreamRoute(msg: WebSocketMessage): { scope: Scope; threadId: string } | null {
+  if (!ROUTED_STREAM_TYPES.has(msg.type)) return null;
+  if ((msg.scope !== 'project' && msg.scope !== 'view') || !msg.threadId) {
+    console.warn('[WS] Dropping stream message without explicit route metadata', {
+      type: msg.type,
+      scope: msg.scope,
+      threadId: msg.threadId,
+    });
+    return null;
+  }
+  return { scope: msg.scope, threadId: msg.threadId };
 }
 
 /**
  * Read the active chat state slot for a given scope + threadId.
  * PER_THREAD_CHAT_STATE: project slots are keyed by threadId.
  */
-function readChatState(scope: Scope, threadId: string | null) {
+function readChatState(scope: Scope, threadId: string) {
   const state = usePanelStore.getState();
   if (scope === 'view') return state.panels[state.currentPanel];
-  const tid = threadId ?? state.currentThreadIds.project;
-  if (!tid) return undefined;
-  return state.projectChats[tid];
+  return state.projectChats[threadId];
 }
 
 /**
@@ -97,11 +105,14 @@ function readChatState(scope: Scope, threadId: string | null) {
  */
 export function handleStreamMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
-  const scope = resolveScope(msg);
-  const threadId: string | null = msg.threadId ?? null;
+  const route = getStreamRoute(msg);
+  if (ROUTED_STREAM_TYPES.has(msg.type) && !route) return true;
+  const scope = route?.scope;
+  const threadId = route?.threadId;
 
   switch (msg.type) {
     case 'turn_begin': {
+      if (!scope || !threadId) return true;
       console.log('[WS] Turn begin scope=', scope, 'threadId=', threadId?.slice(0, 8));
       // Safety net: if the previous turn wasn't finalized (edge case —
       // finalizeTurn normally handles this), snapshot it now. In the
@@ -155,6 +166,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'content':
+      if (!scope || !threadId) return true;
       if (msg.text) {
         const t = (window as Window & { __TIMING?: TimingProbe }).__TIMING;
         if (t && !t.firstTokenAt) {
@@ -174,6 +186,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'thinking':
+      if (!scope || !threadId) return true;
       if (msg.text) {
         const t = (window as Window & { __TIMING?: TimingProbe }).__TIMING;
         if (t && !t.firstTokenAt) {
@@ -188,6 +201,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'tool_call': {
+      if (!scope || !threadId) return true;
       const segType = toolNameToSegmentType(msg.toolName || '');
       const toolCallId = msg.toolCallId || '';
       const segCount = readChatState(scope, threadId)?.segments.length ?? 0;
@@ -217,6 +231,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'tool_call_args': {
+      if (!scope || !threadId) return true;
       const toolCallId = msg.toolCallId || '';
       if (!toolCallId || !msg.argsChunk) return true;
 
@@ -230,8 +245,8 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         });
 
         // Update todo drawer immediately when todo args are parseable.
-        // Note: some harnesses (e.g. kimi SetTodoList) send empty arguments
-        // and put todo data in toolDisplay instead; that's handled on tool_result.
+        // Note: some harnesses send empty arguments and put todo data in
+        // toolDisplay instead; that's handled on tool_result.
         const segType = readChatState(scope, threadId)?.segments.find(
           (s) => s.toolCallId === toolCallId
         )?.type;
@@ -262,6 +277,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'tool_result': {
+      if (!scope || !threadId) return true;
       const toolCallId = msg.toolCallId || '';
       const groupLookup = getGroupForResult(toolCallId);
       const existingSegment = readChatState(scope, threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
@@ -358,17 +374,18 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'subagent_event':
+      if (!scope || !threadId) return true;
       handleSubagentEvent(msg, scope, threadId);
       return true;
 
     case 'turn_end': {
+      if (!scope || !threadId) return true;
       // turn_end signals that the API has finished producing content.
-      // All segments and their content have been delivered.
+      // Normal completion keeps the paced reveal gate: set pendingTurnEnd and
+      // let LiveSegmentRenderer finalize after it catches up.
       //
-      // We do NOT finalize the turn here. Instead we set pendingTurnEnd,
-      // which tells the renderer "whenever you finish revealing, call
-      // finalizeTurn." This decouples stream completion from render
-      // completion — the renderer might be far behind the stream.
+      // Interrupted/error terminal turns mimic CLI Escape: flush immediately
+      // into history so Stop does not sit behind typing/collapse delays.
       //
       // LIFECYCLE:
       //   turn_end arrives → setPendingTurnEnd(true)
@@ -387,21 +404,33 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       const currentTurn = readChatState(scope, threadId)?.currentTurn;
 
       if (currentTurn) {
+        const flushImmediately = msg.partial === true ||
+          msg.reason === 'interrupted' ||
+          msg.reason === 'error';
+
         // Mark last segment complete (closing tag) so reveal knows it's done
         const segs = readChatState(scope, threadId)?.segments || [];
         if (segs.length > 0) {
           const lastSeg = segs[segs.length - 1];
-          if (!lastSeg.complete && !lastSeg.toolCallId) {
+          if (!lastSeg.complete) {
             store.updateLastSegment(scope, threadId, { complete: true });
           }
         }
         store.setPendingTurnEnd(scope, threadId, true);
+        window.dispatchEvent(new CustomEvent('fusion:turn-ended', {
+          detail: { scope, threadId, reason: msg.reason, partial: msg.partial },
+        }));
+
+        if (flushImmediately) {
+          store.finalizeTurn(scope, threadId);
+        }
       }
 
       return true;
     }
 
     case 'status_update':
+      if (!scope || !threadId) return true;
       if (msg.contextUsage !== undefined) {
         store.setContextUsage(msg.contextUsage);
       }
@@ -412,11 +441,27 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'auth_error':
+      if (!scope || !threadId) return true;
+      window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
+        detail: { scope, threadId, message: msg.message || 'Authentication failed' },
+      }));
+      {
+        const chatState = readChatState(scope, threadId);
+        const currentTurn = chatState?.currentTurn;
+        if (currentTurn && !currentTurn.content && (chatState?.segments.length ?? 0) === 0) {
+          store.setCurrentTurn(scope, threadId, null);
+          store.setPendingTurnEnd(scope, threadId, false);
+          store.resetSegments(scope, threadId);
+        }
+      }
       showToast(msg.message || 'Authentication failed. Run `kimi login` in your terminal.');
       return true;
 
     case 'error':
       console.error('[WS] Wire error:', msg.error);
+      window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
+        detail: { scope: msg.scope, threadId: msg.threadId, message: msg.message || msg.error || 'Prompt failed' },
+      }));
       return true;
 
     default:
@@ -518,7 +563,7 @@ export function resetStreamState(): void {
   subagentStreams.clear();
 }
 
-function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: string | null): void {
+function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: string): void {
   const parentToolCallId = msg.parentToolCallId || '';
   if (!parentToolCallId) return;
 
@@ -596,7 +641,7 @@ function getSubagentStream(key: string): SubagentStreamState {
 
 function emitSubagentIntro(
   scope: Scope,
-  threadId: string | null,
+  threadId: string,
   parentToolCallId: string,
   stream: SubagentStreamState,
   agentId?: string,
@@ -609,7 +654,7 @@ function emitSubagentIntro(
 
 function emitSubagentToolIfReady(
   scope: Scope,
-  threadId: string | null,
+  threadId: string,
   parentToolCallId: string,
   toolState: SubagentToolState,
 ): void {
@@ -624,7 +669,7 @@ function emitSubagentToolIfReady(
   toolState.emitted = true;
 }
 
-function appendSubagentLine(scope: Scope, threadId: string | null, toolCallId: string, line: string): void {
+function appendSubagentLine(scope: Scope, threadId: string, toolCallId: string, line: string): void {
   const store = usePanelStore.getState();
   const segment = readChatState(scope, threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
   const prefix = segment?.content ? '\n' : '';

@@ -1,4 +1,5 @@
 const { spawn, execSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 
 // Resolve system node binary — Electron's process.execPath is the Electron
@@ -14,6 +15,16 @@ function resolveNodeBinary() {
 
 const NODE_BINARY = resolveNodeBinary();
 
+function resolveServerPath(resourcesPath) {
+  if (resourcesPath) {
+    const packagedServerPath = path.join(resourcesPath, 'fusion-studio-server', 'server.js');
+    if (fs.existsSync(packagedServerPath)) {
+      return packagedServerPath;
+    }
+  }
+  return path.join(__dirname, '..', '..', 'fusion-studio-server', 'server.js');
+}
+
 /**
  * Spawns fusion-studio-server/server.js as a child process.
  * Resolves with the port once the server emits SERVER_READY:{port} on stdout.
@@ -21,14 +32,24 @@ const NODE_BINARY = resolveNodeBinary();
  *
  * @param {object} opts
  * @param {Function} opts.onExit   — called when server process dies unexpectedly
+ * @param {string} opts.resourcesPath   — root containing models/prompts/pandoc
+ * @param {string} opts.userDataPath   — writable Electron userData directory
  * @returns {Promise<{ port: number, process: ChildProcess }>}
  */
-function spawnServer({ onExit }) {
+function spawnServer({ onExit, resourcesPath, userDataPath }) {
   return new Promise((resolve, reject) => {
-    const serverPath = path.join(__dirname, '..', '..', 'fusion-studio-server', 'server.js');
+    const serverPath = resolveServerPath(resourcesPath);
+    const env = {
+      ...process.env,
+      PORT: '0',
+    };
+    if (resourcesPath) env.FUSION_RESOURCES_PATH = resourcesPath;
+    if (userDataPath) env.FUSION_APP_USER_DATA = userDataPath;
+
+    console.log(`[Resources] root=${env.FUSION_RESOURCES_PATH || ''} userData=${env.FUSION_APP_USER_DATA || ''}`);
 
     const child = spawn(NODE_BINARY, [serverPath], {
-      env: { ...process.env, PORT: '0' },   // PORT=0 → OS assigns free port
+      env,   // PORT=0 → OS assigns free port
       stdio: ['ignore', 'pipe', 'pipe'],
     });
 

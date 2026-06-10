@@ -5,7 +5,7 @@
  * slides when the active workspace changes while the ribbon is open.
  */
 
-import { useWorkspaceStore } from '../state/workspaceStore';
+import { toRibbonWorkspaces, useWorkspaceStore } from '../state/workspaceStore';
 import { useScreenshotStore } from '../state/screenshotStore';
 import './WorkspaceCarousel.css';
 
@@ -17,7 +17,7 @@ export function WorkspaceCarousel() {
 
   if (!isRibbonOpen) return null;
 
-  const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
+  const sorted = toRibbonWorkspaces(workspaces);
   const activeIndex = sorted.findIndex((w) => w.id === activeId);
 
   return (

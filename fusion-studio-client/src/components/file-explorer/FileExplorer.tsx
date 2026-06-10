@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useFileStore } from '../../state/fileStore';
-import { useFileTreeListener, loadExpandedFolders } from '../../hooks/useFileTree';
+import { useFileTreeListener, loadExpandedFolders, loadRootTree } from '../../hooks/useFileTree';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { FileTree } from './FileTree';
 import { FileViewer } from './FileViewer';
@@ -13,6 +13,13 @@ export function FileExplorer() {
   const rootNodes = useFileStore((s) => s.rootNodes);
   const isLoading = useFileStore((s) => s.isLoading);
   const error = useFileStore((s) => s.error);
+  const showHiddenFolders = useFileStore((s) => s.showHiddenFolders);
+  const toggleHiddenFolders = useFileStore((s) => s.toggleHiddenFolders);
+
+  function handleToggleHiddenFolders() {
+    toggleHiddenFolders();
+    loadRootTree();
+  }
 
   // Single WebSocket listener for file operations
   useFileTreeListener();
@@ -56,6 +63,19 @@ export function FileExplorer() {
             <FileTree nodes={rootNodes} />
           </div>
         )}
+        <div className="rv-file-tree-footer" aria-hidden="false">
+          <button
+            type="button"
+            className="rv-file-hidden-toggle"
+            aria-label={showHiddenFolders ? 'Hide hidden folders' : 'Show hidden folders'}
+            aria-pressed={showHiddenFolders}
+            title={showHiddenFolders ? 'Hide hidden folders' : 'Show hidden folders'}
+          onClick={handleToggleHiddenFolders}
+        >
+          <span className="material-symbols-outlined">{showHiddenFolders ? 'folder_off' : 'folder_eye'}</span>
+          <span>Toggle Hidden</span>
+        </button>
+        </div>
       </div>
     </div>
   );

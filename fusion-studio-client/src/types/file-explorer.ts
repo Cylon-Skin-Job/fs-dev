@@ -39,6 +39,7 @@ export interface FileTreeRequest {
   type: 'file_tree_request';
   panel: string;
   path?: string;
+  includeHiddenFolders?: boolean;
 }
 
 export interface FileContentRequest {

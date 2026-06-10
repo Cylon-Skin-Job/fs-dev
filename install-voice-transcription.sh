@@ -6,7 +6,7 @@
 
 set -e
 
-echo "🎙️  Setting up Voice Transcription for kimi-claude"
+echo "🎙️  Setting up Voice Transcription for Fusion Studio"
 echo ""
 
 # Colors
@@ -16,13 +16,13 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Check if we're in the right directory
-if [ ! -d "kimi-ide-server" ] || [ ! -d "kimi-ide-client" ]; then
-    echo -e "${RED}Error: Run this from the kimi-claude project root${NC}"
+if [ ! -d "fusion-studio-server" ] || [ ! -d "fusion-studio-client" ]; then
+    echo -e "${RED}Error: Run this from the Fusion Studio project root${NC}"
     exit 1
 fi
 
 echo "Step 1/4: Installing server dependencies..."
-cd kimi-ide-server
+cd fusion-studio-server
 npm install
 if ! npm list nodejs-whisper >/dev/null 2>&1; then
     npm install nodejs-whisper multer
@@ -50,7 +50,7 @@ echo ""
 echo "Step 3/4: Downloading Whisper V3 Turbo model..."
 echo "   (This is ~1.5GB and will take a few minutes)"
 echo ""
-cd kimi-ide-server
+cd fusion-studio-server
 node lib/transcription/setup.js
 cd ..
 echo ""

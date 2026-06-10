@@ -33,11 +33,13 @@ export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
       >
         New Thread
       </button>
-      <CliPickerDropdown
-        panel={panel}
-        statuses={sidebar.harnessStatuses}
-        onSelect={sidebar.handleHarnessSelect}
-      />
+      {sidebar.showCliPicker && (
+        <CliPickerDropdown
+          panel={panel}
+          statuses={sidebar.harnessStatuses}
+          onSelect={sidebar.handleHarnessSelect}
+        />
+      )}
 
       <div className="rv-thread-list">
         <SidebarThreadList {...sidebar} />

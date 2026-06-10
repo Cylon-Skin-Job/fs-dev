@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "sort": "ranked",
+  "views": [
+    {
+      "id": "file-viewer",
+      "baseViewId": "file-viewer",
+      "label": "Files",
+      "icon": "code_blocks",
+      "rank": 1,
+      "enabled": true,
+      "source": "default",
+      "viewPath": "ai/views/file-viewer"
+    },
+    {
+      "id": "chat",
+      "baseViewId": "chat",
+      "label": "chat",
+      "icon": "folder",
+      "rank": 2,
+      "enabled": true,
+      "source": "custom",
+      "viewPath": "ai/views/chat"
+    },
+    {
+      "id": "issues-viewer",
+      "baseViewId": "issues-viewer",
+      "label": "Issues",
+      "icon": "business_messages",
+      "rank": 3,
+      "enabled": true,
+      "source": "default",
+      "viewPath": "ai/views/issues-viewer"
+    },
+    {
+      "id": "wiki-viewer",
+      "baseViewId": "wiki-viewer",
+      "label": "Wiki",
+      "icon": "full_coverage",
+      "rank": 4,
+      "enabled": true,
+      "source": "default",
+      "viewPath": "ai/views/wiki-viewer"
+    },
+    {
+      "id": "agents-viewer",
+      "baseViewId": "agents-viewer",
+      "label": "Agents",
+      "icon": "robot_2",
+      "rank": 5,
+      "enabled": true,
+      "source": "default",
+      "viewPath": "ai/views/agents-viewer"
+    },
+    {
+      "id": "system-viewer",
+      "baseViewId": "system-viewer",
+      "label": "System",
+      "icon": "manufacturing",
+      "rank": 5,
+      "enabled": true,
+      "source": "default",
+      "viewPath": "ai/views/system-viewer"
+    }
+  ]
+}

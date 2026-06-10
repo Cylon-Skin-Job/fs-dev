@@ -1,0 +1,266 @@
+const { EventEmitter } = require('events');
+const { PassThrough } = require('stream');
+const { spawn } = require('child_process');
+const { JsonLineParser } = require('./json-line-parser');
+const {
+  OpenCodeJsonEventTranslator,
+  mapOpenCodeToolName,
+  mapOpenCodeTokenUsage,
+} = require('./json-event-translator');
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function createProcessProxy() {
+  const proc = new EventEmitter();
+  proc.pid = null;
+  proc.stdin = new PassThrough();
+  proc.stdout = new PassThrough();
+  proc.stderr = new PassThrough();
+  proc.killed = false;
+  proc.kill = () => {
+    proc.killed = true;
+    return true;
+  };
+  return proc;
+}
+
+function buildRunArgs(config, projectRoot, openCodeSessionId, message) {
+  const args = ['run', '--format', 'json'];
+
+  if (projectRoot) {
+    args.push('--dir', projectRoot);
+  }
+
+  if (config.model) {
+    args.push('--model', config.model);
+  }
+
+  if (config.pure === true) {
+    args.push('--pure');
+  }
+
+  if (config.thinking === true) {
+    args.push('--thinking');
+  }
+
+  if (openCodeSessionId) {
+    args.push('--session', openCodeSessionId);
+  }
+
+  args.push(String(message || ''));
+  return args;
+}
+
+function makeExitError(code, signal, stderr) {
+  const suffix = stderr ? `: ${stderr}` : '';
+  return new Error(`OpenCode process exited before turn_end (code: ${code ?? 'unknown'}, signal: ${signal || 'none'})${suffix}`);
+}
+
+function getEventSessionId(event) {
+  return event?.sessionID || event?.part?.sessionID || null;
+}
+
+function isUsefulAssistantEvent(event) {
+  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
+    return true;
+  }
+  return event.type === 'thinking' && String(event.text || '').length > 0;
+}
+
+function createSyntheticTurnEnd(translator) {
+  const terminalState = translator.getTerminalState();
+  return {
+    type: 'turn_end',
+    timestamp: Date.now(),
+    reason: 'complete',
+    fullText: terminalState.fullText,
+    hasToolCalls: terminalState.hasToolCalls,
+    _meta: {
+      harnessId: 'opencode',
+      provider: 'opencode',
+      terminalSource: 'process_exit_missing_step_finish',
+    },
+  };
+}
+
+class OpenCodeHarness extends EventEmitter {
+  constructor() {
+    super();
+    this.id = 'opencode';
+    this.name = 'OpenCode';
+    this.provider = 'opencode';
+    this.cliName = 'opencode';
+    this.config = {};
+    this.sessions = new Map();
+  }
+
+  async initialize(config = {}) {
+    this.config = { ...this.config, ...config };
+  }
+
+  async startThread(threadId, projectRoot, scopeContext = {}, threadOptions = {}) {
+    const harness = this;
+    const storedSessionId = threadOptions.harnessConfig?.opencodeSessionId || null;
+    const updateHarnessConfig = threadOptions.updateHarnessConfig;
+    const session = {
+      threadId,
+      process: createProcessProxy(),
+      activeProcess: null,
+      openCodeSessionId: storedSessionId,
+      stopRequested: false,
+      projectRoot,
+      scopeContext,
+      async *sendMessage(message, options = {}) {
+        const translator = new OpenCodeJsonEventTranslator();
+        const events = [translator.beginTurn(message)];
+        const parser = new JsonLineParser();
+        const cliPath = harness.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
+        const args = buildRunArgs(harness.config, projectRoot, session.openCodeSessionId, message);
+        let done = false;
+        let sawTurnEnd = false;
+        let sawUsefulAssistantEvent = false;
+        let failure = null;
+        let stderr = '';
+        let persistSessionIdPromise = null;
+
+        const proc = spawn(cliPath, args, {
+          stdio: ['ignore', 'pipe', 'pipe'],
+          cwd: projectRoot || process.cwd(),
+          env: { ...process.env, TERM: 'xterm-256color' },
+        });
+
+        session.activeProcess = proc;
+        session.process = proc;
+        session.stopRequested = false;
+
+        parser.on('message', (openCodeEvent) => {
+          const openCodeSessionId = getEventSessionId(openCodeEvent);
+          if (!session.openCodeSessionId && openCodeSessionId) {
+            session.openCodeSessionId = openCodeSessionId;
+            if (typeof updateHarnessConfig === 'function' && !persistSessionIdPromise) {
+              persistSessionIdPromise = updateHarnessConfig({ opencodeSessionId: openCodeSessionId });
+            }
+          }
+
+          const translated = translator.translate(openCodeEvent);
+          for (const event of translated) {
+            events.push(event);
+            if (isUsefulAssistantEvent(event)) {
+              sawUsefulAssistantEvent = true;
+            }
+            if (event.type === 'turn_end') {
+              sawTurnEnd = true;
+            }
+          }
+        });
+
+        // Malformed lines are recoverable; valid surrounding JSON continues.
+        parser.on('parse_error', (line, err, lineNumber) => {
+          harness.emit('parse_error', { threadId, line, error: err, lineNumber });
+        });
+
+        proc.stdout.on('data', (data) => parser.feed(data.toString()));
+        proc.stderr.on('data', (data) => {
+          stderr += data.toString();
+        });
+        proc.on('error', (err) => {
+          if (!session.stopRequested) failure = err;
+          done = true;
+        });
+        proc.on('close', (code, signal) => {
+          parser.flush();
+          if (session.stopRequested) {
+            done = true;
+            return;
+          }
+          if (code !== 0) {
+            failure = makeExitError(code, signal, stderr.trim());
+          } else if (!sawTurnEnd && sawUsefulAssistantEvent) {
+            events.push(createSyntheticTurnEnd(translator));
+            sawTurnEnd = true;
+          } else if (!sawTurnEnd) {
+            failure = makeExitError(code, signal, stderr.trim());
+          }
+          done = true;
+        });
+        proc.on('exit', (code, signal) => {
+          if (!session.stopRequested && code !== 0 && !sawTurnEnd) {
+            failure = makeExitError(code, signal, stderr.trim());
+          }
+        });
+
+        try {
+          while (!done || events.length > 0) {
+            while (events.length > 0) yield events.shift();
+            if (failure) throw failure;
+            if (!done) await delay(options.pollIntervalMs || 10);
+          }
+          if (failure) throw failure;
+          if (!session.stopRequested && !session.openCodeSessionId) {
+            throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
+          }
+          if (persistSessionIdPromise) await persistSessionIdPromise;
+        } finally {
+          session.activeProcess = null;
+        }
+      },
+      async stop() {
+        session.stopRequested = true;
+        if (session.activeProcess && !session.activeProcess.killed) {
+          session.activeProcess.kill('SIGTERM');
+        }
+      },
+    };
+
+    this.sessions.set(threadId, session);
+    return session;
+  }
+
+  getSession(threadId) {
+    return this.sessions.get(threadId);
+  }
+
+  async dispose() {
+    for (const session of this.sessions.values()) {
+      await session.stop();
+    }
+    this.sessions.clear();
+  }
+
+  async isInstalled() {
+    return new Promise((resolve) => {
+      const cliPath = this.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
+      const proc = spawn(cliPath, ['--version'], { stdio: 'pipe' });
+      proc.on('error', () => resolve(false));
+      proc.on('close', (code) => resolve(code === 0));
+      proc.on('exit', (code) => resolve(code === 0));
+    });
+  }
+
+  async getVersion() {
+    return new Promise((resolve, reject) => {
+      const cliPath = this.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
+      const proc = spawn(cliPath, ['--version'], { stdio: 'pipe' });
+      let output = '';
+
+      proc.stdout.on('data', (data) => { output += data.toString(); });
+      proc.stderr.on('data', (data) => { output += data.toString(); });
+      proc.on('error', (err) => reject(new Error(`Failed to run ${cliPath}: ${err.message}`)));
+      proc.on('close', (code) => {
+        if (code === 0) {
+          resolve(output.trim());
+        } else {
+          reject(new Error(`${cliPath} --version exited with code ${code}`));
+        }
+      });
+    });
+  }
+}
+
+module.exports = {
+  OpenCodeHarness,
+  OpenCodeJsonEventTranslator,
+  JsonLineParser,
+  mapOpenCodeToolName,
+  mapOpenCodeTokenUsage,
+};

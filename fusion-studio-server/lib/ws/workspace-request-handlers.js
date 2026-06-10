@@ -7,7 +7,7 @@
  * Returns a handler map keyed by message type.
  *
  * Covers:
- *   workspace:add_requested / switch_requested / remove_requested
+ *   workspace:add_requested / switch_requested / remove_requested / ribbon_remove_requested / ribbon_add_requested / ribbon_reorder_requested
  *   folder:browse
  *   state:get / state:set
  *   file:move
@@ -18,6 +18,7 @@ const fsPromises = require('fs').promises;
 const { emit } = require('../event-bus');
 const { resolveViewState, writeViewStatePatch } = require('../view-state');
 const { moveFileWithArchive } = require('../file-ops');
+const createService = require('../workspace/create-service');
 
 /**
  * @param {object} deps
@@ -66,6 +67,92 @@ function createWorkspaceRequestHandlers({ ws, session }) {
       }
       emit('workspace:remove_requested', {
         workspaceId: clientMsg.workspaceId,
+        connectionId: session.connectionId,
+      });
+    },
+
+    'workspace:ribbon_remove_requested'(clientMsg) {
+      if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'workspace:ribbon_remove_requested requires workspaceId',
+        }));
+        return;
+      }
+      emit('workspace:ribbon_remove_requested', {
+        workspaceId: clientMsg.workspaceId,
+        connectionId: session.connectionId,
+      });
+    },
+
+    'workspace:ribbon_add_requested'(clientMsg) {
+      if (typeof clientMsg.workspaceId !== 'string' || clientMsg.workspaceId.trim() === '') {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'workspace:ribbon_add_requested requires workspaceId',
+        }));
+        return;
+      }
+      emit('workspace:ribbon_add_requested', {
+        workspaceId: clientMsg.workspaceId,
+        connectionId: session.connectionId,
+      });
+    },
+
+    'workspace:ribbon_reorder_requested'(clientMsg) {
+      if (!Array.isArray(clientMsg.workspaceIds) || clientMsg.workspaceIds.length === 0) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'workspace:ribbon_reorder_requested requires workspaceIds',
+        }));
+        return;
+      }
+      if (clientMsg.workspaceIds.some((workspaceId) => typeof workspaceId !== 'string' || workspaceId.trim() === '')) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'workspace:ribbon_reorder_requested workspaceIds must be strings',
+        }));
+        return;
+      }
+      emit('workspace:ribbon_reorder_requested', {
+        workspaceIds: clientMsg.workspaceIds,
+        connectionId: session.connectionId,
+      });
+    },
+
+    'workspace:create_manifest_requested'() {
+      try {
+        ws.send(JSON.stringify({
+          type: 'workspace:create_manifest',
+          manifest: createService.readManifest(),
+        }));
+      } catch (err) {
+        ws.send(JSON.stringify({
+          type: 'workspace:create_rejected',
+          message: 'Unable to load view templates: ' + err.message,
+        }));
+      }
+    },
+
+    'workspace:create_requested'(clientMsg) {
+      if (typeof clientMsg.projectPath !== 'string' || clientMsg.projectPath.trim() === '') {
+        ws.send(JSON.stringify({
+          type: 'workspace:create_rejected',
+          message: 'Create New requires a project path.',
+        }));
+        return;
+      }
+      if (!Array.isArray(clientMsg.viewIds) || clientMsg.viewIds.length === 0) {
+        ws.send(JSON.stringify({
+          type: 'workspace:create_rejected',
+          message: 'Select at least one view template.',
+        }));
+        return;
+      }
+      emit('workspace:create_requested', {
+        projectPath: clientMsg.projectPath,
+        label: typeof clientMsg.label === 'string' ? clientMsg.label : '',
+        viewIds: clientMsg.viewIds,
         connectionId: session.connectionId,
       });
     },

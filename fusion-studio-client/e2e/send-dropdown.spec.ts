@@ -47,7 +47,7 @@ test('send dropdown opens on click', async ({ page }) => {
   
   console.log('Modal info:', modalInfo);
   
-  await page.screenshot({ path: '/Users/rccurtrightjr./projects/kimi-claude/test-results/dropdown-open.png' });
+  await page.screenshot({ path: 'test-results/dropdown-open.png' });
   
   expect(modalInfo.modalExists).toBe(true);
   expect(modalInfo.itemCount).toBe(3);

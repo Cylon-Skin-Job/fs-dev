@@ -88,6 +88,8 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+app.use(express.json({ limit: '1mb' }));
+
 // Serve static files from the React client dist folder
 const clientDistPath = path.join(__dirname, '..', 'fusion-studio-client', 'dist');
 app.use(
@@ -107,6 +109,49 @@ app.use(
 
 // Workspace screenshot API
 app.use('/api/screenshot', require('./lib/screenshot/router').createRouter());
+
+app.post('/api/capabilities/warm', async (req, res) => {
+  const { warmCapability } = require('./lib/capabilities');
+  const capability = req.body?.capability;
+
+  if (!capability) {
+    return res.status(400).json({ success: false, error: 'Missing capability' });
+  }
+
+  try {
+    const result = await warmCapability(capability);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ success: false, capability, error: error.message });
+  }
+});
+
+app.get('/api/capabilities/prompts/stt', async (req, res) => {
+  const { loadPrompt } = require('./lib/capabilities/prompt-loader');
+
+  try {
+    const prompt = await loadPrompt('STT_PROMPT.md');
+    res.json({ success: true, prompt });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.put('/api/capabilities/prompts/stt', async (req, res) => {
+  const { savePrompt } = require('./lib/capabilities/prompt-loader');
+  const prompt = req.body?.prompt;
+
+  if (typeof prompt !== 'string') {
+    return res.status(400).json({ success: false, error: 'Missing prompt' });
+  }
+
+  try {
+    await savePrompt('STT_PROMPT.md', prompt);
+    res.json({ success: true, prompt });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 // Voice transcription API (Whisper V3)
 const transcription = require('./lib/transcription');
@@ -331,6 +376,14 @@ function getPanelPath(panel, ws) {
     return null;
   }
 
+  // __workspace__ pseudo-panel: resolves to ai/system/workspace/ for the
+  // live workspace view registry.
+  if (panel === '__workspace__') {
+    const workspaceRoot = path.join(projectRoot, 'ai', 'system', 'workspace');
+    if (fs.existsSync(workspaceRoot)) return workspaceRoot;
+    return null;
+  }
+
   // Delegate to the view resolver system.
   // Each display type has its own resolver module that knows where
   // the content root is for that view type.
@@ -425,7 +478,7 @@ wss.on('connection', async (ws) => {
   // Per-connection wire message router (extracted per SPEC-01d).
   // Emits chat:* events to the bus (wire-broadcaster handles client
   // delivery); sends non-chat events directly via ws.
-  const { handleMessage } = createWireMessageRouter({
+  const { handleMessage, handleCanonicalHarnessEvent } = createWireMessageRouter({
     session,
     ws,
     threadWebSocketHandler: ThreadWebSocketHandler,
@@ -469,6 +522,8 @@ wss.on('connection', async (ws) => {
     getScreenshotHandlers: () => screenshotHandlers,
     getRecentDocsHandlers: () => recentDocsHandlers,
     getBookmarksHandlers: () => bookmarksHandlers,
+    getEmojiRecentsHandlers: () => emojiRecentsHandlers,
+    handleCanonicalHarnessEvent,
   });
 
   ws.on('message', handleClientMessage);
@@ -578,6 +633,7 @@ let fusionHandlers = {};
 let clipboardHandlers = {};
 let recentDocsHandlers = {};
 let bookmarksHandlers = {};
+let emojiRecentsHandlers = {};
 let themeHandlers = {};
 let secretsHandlers = {};
 let screenshotHandlers = {};
@@ -592,6 +648,7 @@ startServer({
     clipboardHandlers = result.clipboardHandlers;
     recentDocsHandlers = result.recentDocsHandlers;
     bookmarksHandlers = result.bookmarksHandlers;
+    emojiRecentsHandlers = result.emojiRecentsHandlers;
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;
     screenshotHandlers = result.screenshotHandlers || {};

@@ -1,13 +1,36 @@
 /**
  * CLI-config file loaders (CLI_CONFIG_SPEC §7b).
  *
- * Reads `ai/system/config/cli.json` (workspace) and
- * `ai/views/<viewId>/settings/cli.json` (per-view). Returns `{}` on missing
- * or malformed. Logs a warning on parse failure. Never throws.
+ * Reads `ai/system/config/cli.json` (workspace policy) and
+ * `ai/views/<viewId>/settings/cli.json` (per-view display overrides).
+ * Missing or malformed files return `{}`; the resolver maps empty workspace
+ * policy to OpenCode-only.
  */
 
 const path = require('path');
 const fs = require('fs').promises;
+
+const OPENCODE_ONLY_CONFIG = Object.freeze({
+  defaultHarness: 'opencode',
+  harnesses: Object.freeze({
+    opencode: Object.freeze({
+      enabled: true,
+      name: 'OpenCode',
+      materialIcon: 'all_inclusive',
+      accentColor: '#10B981',
+      order: 0,
+    }),
+  }),
+});
+
+function defaultWorkspaceConfig() {
+  return {
+    defaultHarness: OPENCODE_ONLY_CONFIG.defaultHarness,
+    harnesses: {
+      opencode: { ...OPENCODE_ONLY_CONFIG.harnesses.opencode },
+    },
+  };
+}
 
 function workspacePath(projectRoot) {
   return path.join(projectRoot, 'ai', 'system', 'config', 'cli.json');
@@ -47,7 +70,7 @@ async function ensureWorkspaceFile(projectRoot) {
   } catch {
     await fs.mkdir(path.dirname(file), { recursive: true });
     const tmp = file + '.tmp';
-    await fs.writeFile(tmp, '{}\n');
+    await fs.writeFile(tmp, `${JSON.stringify(defaultWorkspaceConfig(), null, 2)}\n`);
     await fs.rename(tmp, file);
   }
 }
@@ -58,4 +81,5 @@ module.exports = {
   loadWorkspaceConfig,
   loadViewConfig,
   ensureWorkspaceFile,
+  defaultWorkspaceConfig,
 };

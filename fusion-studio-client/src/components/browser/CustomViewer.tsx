@@ -31,8 +31,26 @@ function readSettings(config: PanelConfig): ViewerSettings {
 
 function normalizeInitialUrl(raw: string | undefined): string {
   if (!raw) return 'about:blank';
-  const result = validateUrl(raw);
+  const result = validateCustomViewerUrl(raw);
   return result.valid && result.normalizedUrl ? result.normalizedUrl : 'about:blank';
+}
+
+function isLocalServerUrl(url: string): boolean {
+  try {
+    const { hostname } = new URL(url);
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+  } catch {
+    return false;
+  }
+}
+
+function validateCustomViewerUrl(input: string) {
+  const result = validateUrl(input);
+  if (!result.valid || !result.normalizedUrl) return result;
+  if (!isLocalServerUrl(result.normalizedUrl)) {
+    return { valid: false, reason: 'Custom viewer only supports local server URLs' };
+  }
+  return result;
 }
 
 export const CustomViewer: React.FC<CustomViewerProps> = ({ config }) => {
@@ -55,7 +73,7 @@ export const CustomViewer: React.FC<CustomViewerProps> = ({ config }) => {
 
   // Navigate to a new URL
   const navigateTo = useCallback((url: string) => {
-    const result = validateUrl(url);
+    const result = validateCustomViewerUrl(url);
     if (!result.valid || !result.normalizedUrl) {
       console.warn('[CustomViewer] Blocked navigation:', result.reason);
       return;

@@ -3,11 +3,11 @@
   "id": "custom-viewer",
   "folderName": "custom-viewer",
   "label": "Custom Viewer",
-  "description": "App container for user-built Node servers",
+  "description": "Local iframe display for user-built custom views",
   "type": "custom",
   "icon": "app_registration",
   "rank": 99,
-  "url": "https://example.com",
+  "url": "http://localhost:3000",
   "mode": "app",
   "hasChat": true,
   "chrome": {

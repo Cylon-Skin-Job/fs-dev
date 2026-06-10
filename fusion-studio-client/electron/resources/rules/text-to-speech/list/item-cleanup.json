@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "description": "List item cleanup rules for scaffolds, dangling endings, and gerund rewrites.",
+  "listItemScaffoldPrefixes": [
+    "is to",
+    "is",
+    "to",
+    "move on to",
+    "move onto",
+    "go on to",
+    "continue on with",
+    "contiune on with",
+    "continue with",
+    "start on",
+    "begin with",
+    "get started on",
+    "work on"
+  ],
+  "listItemDanglingEndings": [
+    "and i hope"
+  ],
+  "listItemGerundRewrites": {
+    "building": "build",
+    "checking": "check",
+    "completing": "complete",
+    "continuing": "continue",
+    "creating": "create",
+    "deploying": "deploy",
+    "editing": "edit",
+    "finishing": "finish",
+    "fixing": "fix",
+    "moving": "move",
+    "pushing": "push",
+    "rewriting": "rewrite",
+    "setting": "set",
+    "testing": "test",
+    "tidying": "tidy",
+    "updating": "update",
+    "verifying": "verify",
+    "wrapping": "wrap"
+  }
+}

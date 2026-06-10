@@ -39,8 +39,6 @@ const {
   setThreadMode,
   clearThreadMode,
   setGlobalMode,
-  shouldUseNewHarness,
-  isParallelMode,
   getFlagStatus,
   resetOverrides,
   HARNESS_OPTIONS
@@ -53,11 +51,7 @@ const {
 const {
   spawnThreadWire,
   sendToThread,
-  getModeStatus,
-  emergencyRollback,
-  isNewHarnessEnabled,
-  getParallelResults,
-  clearParallelResults
+  getModeStatus
 } = require('./compat');
 
 // ============================================================================
@@ -95,8 +89,6 @@ module.exports = {
   setThreadMode,
   clearThreadMode,
   setGlobalMode,
-  shouldUseNewHarness,
-  isParallelMode,
   getFlagStatus,
   resetOverrides,
   HARNESS_OPTIONS,
@@ -105,10 +97,6 @@ module.exports = {
   spawnThreadWire,
   sendToThread,
   getModeStatus,
-  emergencyRollback,
-  isNewHarnessEnabled,
-  getParallelResults,
-  clearParallelResults,
 
   // Harness implementations
   KimiHarness,

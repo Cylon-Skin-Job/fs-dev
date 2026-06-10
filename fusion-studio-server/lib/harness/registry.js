@@ -3,6 +3,7 @@ const { CodexHarness } = require('./clis/codex');
 const { GeminiHarness } = require('./clis/gemini');
 const { QwenHarness } = require('./clis/qwen');
 const { ClaudeCodeHarness } = require('./clis/claude-code');
+const { OpenCodeHarness } = require('./opencode');
 
 /**
  * @typedef {import('./types').AIHarness} AIHarness
@@ -68,6 +69,12 @@ class HarnessRegistry {
       builtIn: false,
       description: 'Claude Code CLI from Anthropic',
       installCommand: 'npm install -g @anthropic-ai/claude-code'
+    });
+
+    this.register('opencode', new OpenCodeHarness(), {
+      builtIn: false,
+      description: 'OpenCode CLI',
+      installCommand: 'npm install -g opencode-ai'
     });
   }
 

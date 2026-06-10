@@ -63,6 +63,22 @@ exports.up = async function (knex) {
     SELECT id, label, icon, description, repo_path, sort_order, created_at FROM workspaces_old
   `);
 
+  await knex.schema.createTable('workspace_themes_new', (t) => {
+    t.text('workspace_id').primary().references('id').inTable('workspaces');
+    t.text('primary_color').defaultTo('#4fc3f7');
+    t.text('primary_rgb').defaultTo('79, 195, 247');
+    t.text('theme_css');
+    t.text('updated_at').defaultTo(knex.fn.now());
+  });
+
+  await knex.raw(`
+    INSERT INTO workspace_themes_new (workspace_id, primary_color, primary_rgb, theme_css, updated_at)
+    SELECT workspace_id, primary_color, primary_rgb, theme_css, updated_at FROM workspace_themes
+  `);
+
+  await knex.schema.dropTable('workspace_themes');
+  await knex.raw('ALTER TABLE workspace_themes_new RENAME TO workspace_themes');
+
   await knex.raw('DROP TABLE workspaces_old');
 
   // 4. Seed the dev-time workspace pointing at the fs-dev project root.
@@ -75,9 +91,9 @@ exports.up = async function (knex) {
 
   await knex('workspaces').insert({
     id: 'fs-dev',
-    label: 'Open Robin',
+    label: 'Fusion Studio',
     icon: 'code',
-    description: 'Open Robin development workspace',
+    description: 'Fusion Studio development workspace',
     repo_path: projectRoot,
     sort_order: 0,
   });

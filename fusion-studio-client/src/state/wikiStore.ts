@@ -1,93 +1,111 @@
 /**
  * @module wikiStore
- * @role State management for the wiki-viewer panel
- * @reads content/index.json, content/{section}/index.json, content/{section}/{article}/{file}.md
- *
- * Folder-driven structure:
- *   content/index.json → sections
- *   content/{section}/index.json → articles
- *   content/{section}/{article}/index.json → groups (right sidebar)
- *   content/{section}/{article}/{Name}_Guide.md → guide markdown
- *   content/{section}/{article}/{group}/{file}.md → article markdown
+ * @role State management for the wiki-viewer folder-tree model
+ * @reads ai/views/wiki-viewer/Wiki/PAGE.md and child folder PAGE.md files
  */
 
 import { create } from 'zustand';
 
-export interface Section {
-  id: string;
-  title: string;
-}
+export type WikiNodeKind =
+  | 'root'
+  | 'section'
+  | 'article'
+  | 'sidebar-section'
+  | 'sidebar-article';
 
-export interface Article {
+export interface WikiNode {
   id: string;
-  title: string;
-  folder: string;
-  guide?: string;
-}
-
-export interface ArticleRef {
-  id: string;
-  title: string;
-  file: string;
-}
-
-export interface ArticleGroup {
-  id: string;
-  title: string;
-  articles: ArticleRef[];
+  name: string;
+  label: string;
+  path: string;
+  pagePath: string;
+  kind: WikiNodeKind;
+  depth: number;
+  children: WikiNode[];
 }
 
 interface WikiState {
-  // Index data
-  sections: Section[];
-  articlesBySection: Record<string, Article[]>;
-  groupsByArticle: Record<string, ArticleGroup[]>;
-
-  // Navigation
-  activeSection: string;
-  activeArticle: string;
-  activeArticleFile: string; // '' = show guide
-  showGuide: boolean;
-
-  // Content
-  guideContent: string;
-  articleContent: string;
+  root: WikiNode | null;
+  selectedPath: string;
+  viewedPath: string;
+  viewedPagePath: string;
+  selectedContent: string;
   loading: boolean;
   error: string | null;
-
-  // History (back/forward through articles)
-  history: { sectionId: string; articleId: string; file: string }[];
+  history: string[];
   historyIndex: number;
 }
 
 type WikiActions = {
-  setIndex: (sections: Section[], articlesBySection: Record<string, Article[]>) => void;
-  setArticleGroups: (articleId: string, groups: ArticleGroup[]) => void;
-  selectArticle: (sectionId: string, articleId: string, file?: string) => void;
-  showArticleGuide: () => void;
-  goBack: () => void;
-  goForward: () => void;
-  setGuideContent: (content: string) => void;
-  setArticleContent: (content: string) => void;
+  setRoot: (root: WikiNode | null) => void;
+  selectNode: (node: WikiNode) => void;
+  viewNode: (node: WikiNode) => void;
+  setSelectedContent: (content: string) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  goBack: () => void;
+  goForward: () => void;
   activateWorkspace: (workspaceId: string | null) => void;
   reset: () => void;
 };
 
 type FullWikiState = WikiState & WikiActions;
 
+export function wikiFolderNameToLabel(name: string): string {
+  return name.replace(/^\d{3,}-/, '').replace(/_/g, ' ');
+}
+
+export function createWikiRootNode(children: WikiNode[] = []): WikiNode {
+  return {
+    id: 'root',
+    name: 'Wiki',
+    label: 'Wiki Guide',
+    path: '',
+    pagePath: 'PAGE.md',
+    kind: 'root',
+    depth: 0,
+    children,
+  };
+}
+
+export function createWikiNode(params: {
+  name: string;
+  path: string;
+  kind: WikiNodeKind;
+  depth: number;
+  children?: WikiNode[];
+}): WikiNode {
+  return {
+    id: params.path || 'root',
+    name: params.name,
+    label: wikiFolderNameToLabel(params.name),
+    path: params.path,
+    pagePath: params.path ? `${params.path}/PAGE.md` : 'PAGE.md',
+    kind: params.kind,
+    depth: params.depth,
+    children: params.children || [],
+  };
+}
+
+export function findWikiNodeByPath(node: WikiNode | null, path: string): WikiNode | null {
+  if (!node) return null;
+  if (node.path === path) return node;
+
+  for (const child of node.children) {
+    const found = findWikiNodeByPath(child, path);
+    if (found) return found;
+  }
+
+  return null;
+}
+
 function createEmptyState(): WikiState {
   return {
-    sections: [],
-    articlesBySection: {},
-    groupsByArticle: {},
-    activeSection: '',
-    activeArticle: '',
-    activeArticleFile: '',
-    showGuide: true,
-    guideContent: '',
-    articleContent: '',
+    root: null,
+    selectedPath: '',
+    viewedPath: '',
+    viewedPagePath: '',
+    selectedContent: '',
     loading: false,
     error: null,
     history: [],
@@ -95,94 +113,95 @@ function createEmptyState(): WikiState {
   };
 }
 
+function selectionForNode(node: WikiNode) {
+  return {
+    selectedPath: node.path,
+    viewedPath: node.path,
+    viewedPagePath: node.pagePath,
+  };
+}
+
+function viewForNode(node: WikiNode) {
+  return {
+    viewedPath: node.path,
+    viewedPagePath: node.pagePath,
+  };
+}
+
 export const useWikiStore = create<FullWikiState>((set, get) => ({
   ...createEmptyState(),
 
-  setIndex: (sections, articlesBySection) => {
-    const firstWithArticles = sections.find(
-      (s) => (articlesBySection[s.id] || []).length > 0
-    );
-    const defaultSection = firstWithArticles?.id || sections[0]?.id || '';
-    const defaultArticle = defaultSection
-      ? (articlesBySection[defaultSection] || [])[0]?.id || ''
-      : '';
+  setRoot: (root) => {
+    const selectedNode = root ? findWikiNodeByPath(root, get().selectedPath) || root : null;
+    const viewedNode = root && get().viewedPath ? findWikiNodeByPath(root, get().viewedPath) : selectedNode;
 
     set({
-      sections,
-      articlesBySection,
-      activeSection: defaultSection,
-      activeArticle: defaultArticle,
-      activeArticleFile: '',
-      showGuide: true,
-      guideContent: '',
-      articleContent: '',
+      root,
+      ...(selectedNode ? { selectedPath: selectedNode.path } : { selectedPath: '' }),
+      ...(viewedNode ? viewForNode(viewedNode) : { viewedPath: '', viewedPagePath: '' }),
+      selectedContent: '',
       loading: false,
       error: null,
-      history: defaultArticle
-        ? [{ sectionId: defaultSection, articleId: defaultArticle, file: '' }]
-        : [],
-      historyIndex: defaultArticle ? 0 : -1,
+      history: viewedNode ? [viewedNode.path] : [],
+      historyIndex: viewedNode ? 0 : -1,
     });
   },
 
-  setArticleGroups: (articleId, groups) =>
-    set((state) => ({
-      groupsByArticle: { ...state.groupsByArticle, [articleId]: groups },
-    })),
-
-  selectArticle: (sectionId, articleId, file = '') => {
+  selectNode: (node) => {
     const state = get();
-    const newEntry = { sectionId, articleId, file };
-    const newHistory = state.history.slice(0, state.historyIndex + 1);
-    newHistory.push(newEntry);
+    const nextHistory = state.history.slice(0, state.historyIndex + 1);
+
+    if (nextHistory[nextHistory.length - 1] !== node.path) {
+      nextHistory.push(node.path);
+    }
 
     set({
-      activeSection: sectionId,
-      activeArticle: articleId,
-      activeArticleFile: file,
-      showGuide: file === '',
-      guideContent: file === '' ? '' : state.guideContent,
-      articleContent: '',
+      ...selectionForNode(node),
+      selectedContent: '',
       loading: true,
       error: null,
-      history: newHistory,
-      historyIndex: newHistory.length - 1,
+      history: nextHistory,
+      historyIndex: nextHistory.length - 1,
     });
   },
 
-  showArticleGuide: () => {
+  viewNode: (node) => {
     const state = get();
-    if (state.activeArticleFile === '') return;
-    const newEntry = {
-      sectionId: state.activeSection,
-      articleId: state.activeArticle,
-      file: '',
-    };
-    const newHistory = state.history.slice(0, state.historyIndex + 1);
-    newHistory.push(newEntry);
+    const nextHistory = state.history.slice(0, state.historyIndex + 1);
+
+    if (nextHistory[nextHistory.length - 1] !== node.path) {
+      nextHistory.push(node.path);
+    }
 
     set({
-      activeArticleFile: '',
-      showGuide: true,
-      articleContent: '',
+      ...viewForNode(node),
+      selectedContent: '',
       loading: true,
       error: null,
-      history: newHistory,
-      historyIndex: newHistory.length - 1,
+      history: nextHistory,
+      historyIndex: nextHistory.length - 1,
     });
   },
+
+  setSelectedContent: (content) =>
+    set({ selectedContent: content, loading: false, error: null }),
+
+  setLoading: (loading) => set({ loading }),
+
+  setError: (error) => set({ error, loading: false }),
 
   goBack: () => {
     const state = get();
     if (state.historyIndex <= 0) return;
-    const newIndex = state.historyIndex - 1;
-    const entry = state.history[newIndex];
+
+    const nextIndex = state.historyIndex - 1;
+    const node = findWikiNodeByPath(state.root, state.history[nextIndex]);
+    if (!node) return;
+
     set({
-      historyIndex: newIndex,
-      activeSection: entry.sectionId,
-      activeArticle: entry.articleId,
-      activeArticleFile: entry.file,
-      showGuide: entry.file === '',
+      historyIndex: nextIndex,
+      ...viewForNode(node),
+      selectedContent: '',
       loading: true,
       error: null,
     });
@@ -191,32 +210,21 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
   goForward: () => {
     const state = get();
     if (state.historyIndex >= state.history.length - 1) return;
-    const newIndex = state.historyIndex + 1;
-    const entry = state.history[newIndex];
+
+    const nextIndex = state.historyIndex + 1;
+    const node = findWikiNodeByPath(state.root, state.history[nextIndex]);
+    if (!node) return;
+
     set({
-      historyIndex: newIndex,
-      activeSection: entry.sectionId,
-      activeArticle: entry.articleId,
-      activeArticleFile: entry.file,
-      showGuide: entry.file === '',
+      historyIndex: nextIndex,
+      ...viewForNode(node),
+      selectedContent: '',
       loading: true,
       error: null,
     });
   },
 
-  setGuideContent: (content) =>
-    set({ guideContent: content, loading: false, error: null }),
-
-  setArticleContent: (content) =>
-    set({ articleContent: content, loading: false, error: null }),
-
-  setLoading: (loading) => set({ loading }),
-
-  setError: (error) => set({ error, loading: false }),
-
   activateWorkspace: () => {
-    // Reset wiki state on workspace switch. Content will be reloaded
-    // via usePanelData when the wiki-viewer panel is rendered.
     set(createEmptyState());
   },
 

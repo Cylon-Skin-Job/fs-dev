@@ -1,7 +1,7 @@
 ---
 title: View Spec — Chat
 created: 2026-03-28
-updated: 2026-03-28
+updated: 2026-06-03
 status: active
 parent: MASTER_SYSTEM_SPEC.md
 absorbs: SPEC.md (thread management), thread-system-README.md, RICH_STORAGE_FORMAT.md, chat-renderer-rebuild.md, CHAT_RENDER_SPEC.md
@@ -104,10 +104,11 @@ Configured in SESSION.md via `thread-model` field. Strategy modules in `lib/thre
 ### Thread Lifecycle
 
 ```
-Create -> Active (CLI process spawned)
-  -> 9min idle -> Suspended (SIGTERM, graceful)
-  -> User clicks thread -> Resumed (CLI restored with --session {threadId})
-  -> FIFO eviction at warm pool cap -> Evicted (DOM dropped, re-renders instant on next visit)
+Create/select thread -> Cold (durable history only)
+  -> send intent / automation intent -> Warming
+  -> runtime ready -> Ready
+  -> prompt sent -> In flight
+  -> turn_end / interrupt -> Ready or Cold
 ```
 
 **What's built:**
@@ -116,6 +117,263 @@ Create -> Active (CLI process spawned)
 - [x] ThreadIndex (threads.json) with MRU ordering
 - [x] Idle timeout (9min default, configurable via SESSION.md)
 - [x] Wire process spawn with `--session {threadId}` for resume
+
+The built FIFO/idle-timeout behavior is an implementation detail from the older
+warm-session model. The required lifecycle is now intent-based: in-flight turns
+are protected, idle threads may go cold, and warm retention/FIFO are optional
+future optimizations if cold-start measurements justify them.
+
+### Background Thread Runtime and Reconnectable UI
+
+The live thread runtime is the source of truth for streaming progress. React
+state is only a projection of that runtime. A visible chat component may mount,
+unmount, hide, or switch to another thread without pausing, killing, retargeting,
+or slowing the running harness turn.
+
+Required behavior:
+
+- A user can browse other threads while a thread is streaming. The original
+  stream continues in the background.
+- Returning to a streaming thread shows the latest known state, not the last
+  token that happened to be visible before the user navigated away.
+- If the turn completed while the user was away, returning to that thread shows
+  a completed turn immediately.
+- Switching workspaces unsubscribes the UI from the visible stream, but does not
+  kill an in-flight autonomous process. A user may return after 30 minutes and
+  inspect what happened during that time.
+- In-flight turns are never eligible for idle cleanup. They stay running until
+  completion, user interrupt, harness failure, or explicit application shutdown.
+- Idle threads may go cold after completion. Warm idle retention is an
+  optimization, not a required lifecycle policy.
+
+This requires separating four concepts that older code paths often conflate:
+
+| Concept | Meaning |
+|---|---|
+| Selected thread | The thread the UI is currently showing. |
+| Hydrated history | Completed exchanges loaded from durable storage. |
+| Active harness thread | The thread with a live CLI/runtime session. |
+| Live turn route | The pinned `workspace + scope + threadId + turnId` for an in-flight assistant response. |
+
+`thread:open` is a browse/hydrate operation. It must not spawn, kill, close, or
+retarget a harness runtime. Harness activation happens when the user sends a
+prompt or explicitly warms a session.
+
+Cold threads do not warm merely because the user selected or browsed them.
+Warm-up requires send intent:
+
+- the user focuses/clicks into the chat input,
+- the user inserts text through one of the composer helper buttons,
+- or the user presses send while the thread is still cold.
+
+If the user presses send against a cold thread, the UI should enter a connecting
+state, warm/resume the harness session, then show the message as sent and start
+the orb once the runtime is ready. The send button must not imply that a prompt
+has reached the harness until the session is warm enough to accept it.
+
+When a prompt starts, the server captures the live turn route. Every content,
+thinking, tool, status, subagent, and turn-end event for that assistant response
+uses the captured route until completion. Event routing and assistant-message
+persistence must not read mutable "currently selected thread" state while a turn
+is in flight.
+
+### Live Snapshot Model
+
+Completed exchanges live in durable storage. Active or recently completed turns
+live in a server-side live snapshot layer until they are safely persisted and
+the client has had a chance to reconcile.
+
+Opening a thread should return completed history plus any live overlay:
+
+```ts
+{
+  threadId: string;
+  exchanges: Exchange[];
+  liveTurn: LiveTurnSnapshot | null;
+  streamSeq: number;
+}
+```
+
+The client hydrates completed exchanges first, then overlays `liveTurn` if
+present. `turnId`, `messageId`, or another stable exchange key must prevent
+duplicate display when a turn completes while the client is away and is then
+loaded from durable history.
+
+The server should retain enough live event/snapshot state for reconnecting
+clients to fast-forward to the current point in the stream. The client should not
+depend on hidden React components continuing to animate.
+
+### Interrupt / Stop Semantics
+
+The stop button is a user interrupt, equivalent to pressing Escape in an
+interactive CLI. It is not a client-only render shortcut and it must not discard
+the current exchange.
+
+Required stop behavior:
+
+- Stop immediately ends the active assistant turn from the user's perspective.
+- Whatever assistant content, thinking, and completed tool results have already
+  been produced becomes a real assistant response.
+- The partial assistant response is persisted to durable history with explicit
+  interruption metadata.
+- The UI fast-renders everything already received, clears the active spinner/orb
+  state, and allows the user to send the next prompt.
+- Refreshing after stop shows the interrupted assistant response between the
+  user prompt and the next user prompt. It must not collapse into two adjacent
+  user bubbles with no assistant exchange.
+- The harness/runtime must be left in a known state. If the underlying CLI
+  supports cooperative interrupt, use that. If it only supports process
+  termination, terminate and respawn/resume deliberately before accepting the
+  next prompt.
+
+Stopping a turn should produce a terminal event with an explicit reason, for
+example:
+
+```ts
+{
+  type: "turn_end";
+  reason: "interrupted";
+  partial: true;
+  threadId: string;
+  turnId: string;
+  fullText: string;
+  parts: AssistantPart[];
+}
+```
+
+The server-side live turn snapshot owns this operation because it has the
+authoritative accumulated assistant parts. Client-side `finalizeTurn()` may
+complete local rendering, but it is not sufficient for persistence or harness
+state management.
+
+After an interrupt, the next prompt must start from a coherent history:
+
+```text
+User prompt A
+Assistant partial response A (interrupted)
+User prompt B
+Assistant response B
+```
+
+The system must not persist only the user side of an interrupted exchange while
+the harness retains private memory of the partial assistant side. That creates a
+split-brain history where the CLI context and SQLite history disagree.
+
+### Intent-Based Cold/Warm Lifecycle
+
+The required lifecycle model does not depend on a warm-retention countdown.
+Threads can safely go cold when they are idle, as long as resume is reliable and
+send intent warms the runtime before prompt delivery.
+
+Default policy:
+
+- In-flight turns stay running and are never cleaned up merely because the user
+  navigated away.
+- Passive thread browsing does not warm a cold thread.
+- Send intent warms or resumes the thread.
+- If the user presses send while the thread is cold, the UI shows a connecting
+  state, warms the harness session, then delivers the prompt.
+- Ticket/status automation warms the target thread before injecting a `Status`
+  prompt.
+- A future warm pool, FIFO policy, or countdown may be added only if measured
+  cold-start latency or automated orchestration load proves it is needed.
+
+The runtime should still emit lifecycle events so future UI, orchestration, and
+diagnostics can observe state without coupling to harness internals. Possible
+event vocabulary:
+
+```ts
+thread:warming
+thread:ready
+thread:cold
+thread:in_flight
+thread:interrupted
+thread:state_changed
+```
+
+If a warm-retention countdown is added later, it is only a projection of runtime
+lifecycle state. It should not become the mechanism that preserves or kills a
+session.
+
+### Orchestration And Background Agent Requirements
+
+The chat/runtime model must support future orchestrated background work where a
+primary orchestrator delegates slices through the ticketing system to narrower
+agents such as worker, validator, and reviewer.
+
+Expected future workflow:
+
+1. The orchestrator creates or updates an issue ticket with a slice handoff for a
+   worker profile.
+2. The worker completes the slice and returns a result report.
+3. The orchestrator files follow-up validation work for a validator profile with
+   clean context and narrowed acceptance checks.
+4. The validator report feeds a reviewer profile that applies code standards,
+   brittleness checks, and broader implementation heuristics.
+5. The orchestrator receives each result and decides whether to repair, accept,
+   or create the next slice.
+
+Ticket status automation can inject a `Status` prompt into the orchestrator chat:
+
+- automatically after 15 minutes of no ticket completion,
+- immediately when the ticket completes,
+- and potentially on explicit user request.
+
+This requirement depends on the background runtime model: orchestrator and worker
+threads may need to continue running without being visible. Idle orchestration
+threads can go cold as long as ticket/status automation warms them before sending
+the next prompt.
+
+### Implementation Direction
+
+Start with a narrow server-owned `ThreadRuntimeManager` foundation rather than a
+tactical patch on the current WebSocket-owned session model.
+
+The first implementation slice should establish ownership and fix the visible
+runtime bugs without attempting the full orchestration system.
+
+Initial server scope:
+
+- Add a focused thread runtime manager keyed by `workspaceId + scope + threadId`.
+- Move prompt delivery through the runtime manager.
+- Let the runtime own the live turn snapshot.
+- Pin live turn route identity at prompt acceptance.
+- Emit chat events from the runtime with explicit route identity.
+- Handle stop as a server-owned interrupt that emits `chat:turn_end` with
+  `reason: "interrupted"` and `partial: true`.
+- Make browse-only `thread:open` select/hydrate without spawning, killing,
+  warming, closing, or retargeting harness runtimes.
+
+Initial client scope:
+
+- Use browse-only thread opens for passive navigation.
+- Use intent-based warm-up from input focus, composer insert, send, and
+  automation send.
+- Show a distinct clockwise spoke/wheel connecting loader over the send button
+  while cold-send warm-up is in progress.
+- Disable/freeze the send button during warm-up to prevent duplicate sends.
+- Commit the user bubble only after the server accepts the prompt.
+- Send stop/interrupt to the server instead of relying on client-only
+  `finalizeTurn()`.
+- Hydrate completed history plus live snapshot overlay when opening a thread.
+
+Initial validation scope:
+
+- Switching threads does not kill, pause, cool, or retarget an in-flight turn.
+- Returning to an in-flight thread fast-forwards to the latest live snapshot.
+- Stop mid-stream persists a partial assistant exchange.
+- Refresh after stop shows user prompt, interrupted assistant response, and the
+  next user prompt in order.
+- Cold send shows the connecting loader, accepts once warm, then starts the orb.
+
+Implementation must follow the code standards:
+
+- Keep one job per file; split if a file cannot be described in one sentence
+  without "and".
+- Avoid pushing more runtime logic into WebSocket handlers.
+- Keep services, controllers, state, and presentation concerns separated.
+- Do not add warm-pool/FIFO orchestration until measured cold-start behavior
+  proves it is needed.
 
 ---
 
@@ -225,7 +483,16 @@ Segments animate one at a time: shimmer -> typing blitz -> collapse -> next.
 - Chunk boundaries: paragraphs, headers, code fences, list items
 
 ### Instant Render (history / thread switch)
-Everything renders collapsed immediately. Same visual identity from catalog. No animation. Active threads keep DOM alive (`display: none` when not visible).
+Completed history renders collapsed immediately. Same visual identity from
+catalog. No animation.
+
+Active or recently active turns reconnect through the live snapshot model:
+
+- Missed completed chunks fast-render immediately.
+- The visible renderer animates only the live tail after the client catches up.
+- If the turn ended while the user was away, the completed assistant turn renders
+  as complete rather than replaying the whole response token-by-token.
+- Hidden React DOM is not responsible for background progress.
 
 ### Key Modules
 ```
@@ -264,6 +531,12 @@ Server -> Client:
   turn_begin, content, thinking, tool_call, tool_result, turn_end
   message:sent
 ```
+
+`thread:opened` must be able to carry durable history plus live-turn overlay
+state. Stream messages must carry explicit route identity (`scope`, `threadId`,
+and enough workspace identity to route across workspaces). The client must treat
+missing route identity as a protocol violation, not infer it from the currently
+selected UI thread.
 
 See STREAMING_RENDER_SPEC.md for wire protocol details.
 
@@ -328,3 +601,15 @@ The migration is: redirect HistoryFile and ThreadIndex to read/write SQLite inst
 - [ ] Thread search (full-text via SQLite)
 - [ ] Thread import/export
 - [ ] Cross-thread citations
+- [ ] Server-owned live turn runtime and reconnectable live snapshots
+- [ ] Browse-only `thread:open` that does not activate or kill harness sessions
+- [ ] Pinned live turn route for event emission and assistant persistence
+- [ ] Client hydration merge that fast-forwards missed live chunks
+- [ ] Workspace/background session policy that preserves in-flight turns
+- [ ] Server-owned stop/interrupt command that persists partial assistant turns
+- [ ] Durable interruption metadata and coherent resume after stop
+- [ ] Intent-based warm-up: input focus, composer insert, or send, not thread browse
+- [ ] Cold-send connecting state that warms the session before prompt delivery
+- [ ] In-flight protection without requiring a warm-retention timer
+- [ ] Optional warm pool/FIFO only if measured cold-start latency requires it
+- [ ] Ticket/orchestrator status automation hooks for background agent workflows

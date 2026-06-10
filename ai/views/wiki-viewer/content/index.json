@@ -1,8 +1,0 @@
-{
-  "version": "1.0",
-  "sections": [
-    { "id": "project", "title": "Project" },
-    { "id": "system-tools", "title": "System Tools" },
-    { "id": "enforcement", "title": "Enforcement" }
-  ]
-}

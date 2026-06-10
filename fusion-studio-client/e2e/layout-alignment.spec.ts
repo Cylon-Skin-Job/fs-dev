@@ -22,7 +22,7 @@ test('capture full composer layout', async ({ page }) => {
   
   // Take screenshot of the entire page
   await page.screenshot({ 
-    path: '/Users/rccurtrightjr./projects/kimi-claude/test-results/full-page.png',
+    path: 'test-results/full-page.png',
     fullPage: false
   });
   
@@ -42,7 +42,7 @@ test('capture full composer layout', async ({ page }) => {
   if (composerRect.composer) {
     const rect = composerRect.composer;
     await page.screenshot({ 
-      path: '/Users/rccurtrightjr./projects/kimi-claude/test-results/composer-area.png',
+      path: 'test-results/composer-area.png',
       clip: { 
         x: Math.max(0, rect.left - 50), 
         y: Math.max(0, rect.top - 20), 
@@ -56,7 +56,7 @@ test('capture full composer layout', async ({ page }) => {
   if (composerRect.metaRow) {
     const rect = composerRect.metaRow;
     await page.screenshot({ 
-      path: '/Users/rccurtrightjr./projects/kimi-claude/test-results/meta-row.png',
+      path: 'test-results/meta-row.png',
       clip: { 
         x: Math.max(0, rect.left - 20), 
         y: Math.max(0, rect.top - 10), 

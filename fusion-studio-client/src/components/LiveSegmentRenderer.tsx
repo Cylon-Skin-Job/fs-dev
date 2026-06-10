@@ -126,7 +126,6 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
   useEffect(() => {
     if (finalizedRef.current) return;
     if (!onRevealComplete) return;           // turn_end hasn't arrived yet
-    if (segments.length === 0) return;       // no segments to reveal
     if (revealedCount < segments.length) return; // still revealing
 
     // Both conditions met: all revealed AND turn_end received.

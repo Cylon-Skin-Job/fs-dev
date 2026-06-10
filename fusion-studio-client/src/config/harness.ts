@@ -1,14 +1,15 @@
 /**
- * Harness configuration for AI backend selection
+ * Harness metadata and default policy fallback for AI backend selection.
  *
- * Defines available harness options and their properties.
- * Used by the CliPickerDropdown component.
+ * `ai/system/config/cli.json` is the server-authoritative allow-list/default
+ * policy. This file keeps client-side metadata and the OpenCode-only fallback
+ * used before `workspace:init` hydrates policy from the server.
  */
 
 import { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import type { ResolvedCliEntry } from '../types';
+import type { HarnessStatus, ResolvedCliEntry } from '../types';
 
 export interface HarnessDetails {
   provider: 'kimi' | 'byok' | 'ollama' | string;
@@ -99,11 +100,24 @@ export const HARNESS_OPTIONS: HarnessOption[] = [
       features: ['tools', 'streaming', 'thinking']
     },
     enabled: true
+  },
+  {
+    id: 'opencode',
+    name: 'OpenCode',
+    description: 'OpenCode CLI — provider-flexible coding agent with JSON streaming',
+    materialIcon: 'all_inclusive',
+    accentColor: '#10B981',
+    details: {
+      provider: 'opencode',
+      model: 'configured-default',
+      features: ['tools', 'streaming', 'thinking']
+    },
+    enabled: true
   }
 ];
 
-// Default harness - KIMI is the primary experience
-export const DEFAULT_HARNESS = 'kimi';
+// OpenCode-only fallback used until workspace policy is hydrated.
+export const DEFAULT_HARNESS = 'opencode';
 
 // Helper to get harness option by ID
 export function getHarnessOption(id: string): HarnessOption | undefined {
@@ -159,13 +173,14 @@ export function cliAccentStyle(
   _harnessId: string | null | undefined,
   _overrides: Record<string, string> = {},
 ): CSSProperties | undefined {
+  void _overrides;
   // Per-CLI accent disabled — IDE icons/titles unify on the chosen theme accent.
   // Function preserved so existing call sites keep working.
   return undefined;
 }
 
-// CLI_CONFIG_SPEC §8b: build a factory-shaped ResolvedCliEntry from a
-// HarnessOption. Used as fallback until `workspace:init` hydrates cliConfig.
+// Build a resolved entry from catalog metadata. The fallback policy below uses
+// only OpenCode; multi-harness display comes from hydrated `cli.json` policy.
 function factoryResolved(option: HarnessOption, idx: number): ResolvedCliEntry {
   return {
     id:           option.id,
@@ -185,6 +200,11 @@ function factoryResolved(option: HarnessOption, idx: number): ResolvedCliEntry {
   };
 }
 
+function defaultResolvedList(): ResolvedCliEntry[] {
+  const idx = HARNESS_OPTIONS.findIndex((o) => o.id === DEFAULT_HARNESS);
+  return idx === -1 ? [] : [factoryResolved(HARNESS_OPTIONS[idx], 0)];
+}
+
 function applyDelta(
   entry: ResolvedCliEntry,
   delta: Partial<ResolvedCliEntry> | undefined,
@@ -202,8 +222,8 @@ function applyDelta(
 
 /**
  * Reactive hook: returns the effective `ResolvedCliEntry` for a harness id
- * in the current view. Falls back to the hardcoded factory catalog if
- * `workspace:init` has not yet hydrated the store.
+ * in the current view. Falls back to catalog metadata for historical threads
+ * whose stored harness id is not in the current `cli.json` allow-list.
  */
 export function useResolvedHarness(
   harnessId: string | null | undefined,
@@ -250,9 +270,9 @@ export function useResolvedHarnessResolver(): (
 }
 
 /**
- * Reactive hook: returns the full resolved CLI catalog for the current view,
- * sorted by `order`. Consumers iterating (pickers, sidebars) should use this
- * and `.filter(e => e.enabled)`.
+ * Reactive hook: returns the resolved workspace harness policy for the current
+ * view, sorted by `order`. Before hydration, this is OpenCode-only. Advanced
+ * multi-harness configs can list additional enabled harnesses in `cli.json`.
  */
 export function useResolvedCliList(): ResolvedCliEntry[] {
   const cliConfig    = usePanelStore((s) => s.cliConfig);
@@ -261,9 +281,28 @@ export function useResolvedCliList(): ResolvedCliEntry[] {
   return useMemo(() => {
     const base = Object.keys(cliConfig).length
       ? Object.values(cliConfig)
-      : HARNESS_OPTIONS.map(factoryResolved);
+      : defaultResolvedList();
     const delta = viewDeltas[currentPanel] || {};
     const merged = base.map((e) => applyDelta(e, delta[e.id]));
     return merged.sort((a, b) => a.order - b.order);
   }, [cliConfig, viewDeltas, currentPanel]);
+}
+
+export function getSelectableHarnesses(
+  entries: ResolvedCliEntry[],
+  statuses: Record<string, HarnessStatus>,
+): ResolvedCliEntry[] {
+  return entries.filter((entry) => {
+    if (!entry.enabled) return false;
+    const status = statuses[entry.id];
+    if (!status) return true;
+    return status.installed || status.builtIn;
+  });
+}
+
+export function useSelectableHarnesses(
+  statuses: Record<string, HarnessStatus>,
+): ResolvedCliEntry[] {
+  const resolvedList = useResolvedCliList();
+  return useMemo(() => getSelectableHarnesses(resolvedList, statuses), [resolvedList, statuses]);
 }

@@ -1,13 +1,15 @@
 /**
  * CLI-config resolver (CLI_CONFIG_SPEC §6).
  *
- * Effective config = factory catalog ← workspace cli.json ← per-view cli.json.
- * Returns a map keyed by CLI id with every factory field populated plus
- * `order` defaulted from the catalog index.
+ * Effective config = workspace cli.json harness policy over catalog metadata,
+ * optionally decorated by per-view cli.json display overrides.
+ *
+ * Workspace `cli.json` is the allow-list/default policy. Missing, empty, or
+ * malformed policy resolves to OpenCode-only.
  */
 
-const { CATALOG, CATALOG_BY_ID } = require('./catalog');
-const { loadWorkspaceConfig, loadViewConfig } = require('./loader');
+const { CATALOG_BY_ID } = require('./catalog');
+const { loadWorkspaceConfig, loadViewConfig, defaultWorkspaceConfig } = require('./loader');
 
 const ALLOWED_KEYS = new Set(['enabled', 'name', 'materialIcon', 'accentColor', 'order']);
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
@@ -82,6 +84,45 @@ function sanitizeOverrides(raw, label) {
   return out;
 }
 
+function isPolicyShape(raw) {
+  return raw
+    && typeof raw === 'object'
+    && !Array.isArray(raw)
+    && (Object.prototype.hasOwnProperty.call(raw, 'harnesses')
+      || Object.prototype.hasOwnProperty.call(raw, 'defaultHarness'));
+}
+
+function normalizeWorkspacePolicy(raw, label) {
+  const source = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  const policy = isPolicyShape(source)
+    ? source
+    : {
+      defaultHarness: 'opencode',
+      harnesses: source,
+    };
+  const harnesses = policy.harnesses && typeof policy.harnesses === 'object' && !Array.isArray(policy.harnesses)
+    ? policy.harnesses
+    : {};
+  const clean = sanitizeOverrides(harnesses, label);
+  const enabledIds = Object.keys(clean).filter((id) => clean[id].enabled !== false);
+
+  if (enabledIds.length === 0) {
+    return normalizeWorkspacePolicy(defaultWorkspaceConfig(), `${label} fallback`);
+  }
+
+  let defaultHarness = typeof policy.defaultHarness === 'string'
+    ? policy.defaultHarness
+    : 'opencode';
+  if (!clean[defaultHarness] || clean[defaultHarness].enabled === false) {
+    if (defaultHarness !== 'opencode') {
+      console.warn(`[cli-config] ${label}: defaultHarness '${defaultHarness}' is not listed and enabled — using '${enabledIds[0]}'`);
+    }
+    defaultHarness = enabledIds.includes('opencode') ? 'opencode' : enabledIds[0];
+  }
+
+  return { defaultHarness, harnesses: clean };
+}
+
 function applyOverride(entry, override) {
   if (!override) return entry;
   for (const key of Object.keys(override)) {
@@ -92,26 +133,52 @@ function applyOverride(entry, override) {
 
 function buildResolved(workspaceClean, viewClean) {
   const out = {};
-  CATALOG.forEach((factory, idx) => {
+  Object.keys(workspaceClean.harnesses).forEach((id, idx) => {
+    const factory = CATALOG_BY_ID[id];
+    if (!factory) return;
+    const override = workspaceClean.harnesses[id];
+    if (override.enabled === false) return;
     const entry = cloneEntry(factory);
     entry.order = idx;
-    applyOverride(entry, workspaceClean[factory.id]);
-    applyOverride(entry, viewClean[factory.id]);
-    out[factory.id] = entry;
+    applyOverride(entry, override);
+    applyOverride(entry, viewClean[id]);
+    if (entry.enabled !== false) out[id] = entry;
   });
   return out;
 }
 
 /**
  * Resolve the effective CLI config for a view (or workspace-wide if viewId
- * is null). Deep-merges factory catalog → workspace cli.json → per-view.
+ * is null). Only workspace-listed enabled harnesses are returned; per-view
+ * config may decorate those entries for display.
  */
 async function resolveCliConfig(projectRoot, viewId = null) {
   const workspaceRaw = await loadWorkspaceConfig(projectRoot);
   const viewRaw      = viewId ? await loadViewConfig(projectRoot, viewId) : {};
-  const workspaceClean = sanitizeOverrides(workspaceRaw, 'workspace cli.json');
+  const workspaceClean = normalizeWorkspacePolicy(workspaceRaw, 'workspace cli.json');
   const viewClean      = sanitizeOverrides(viewRaw,      `per-view cli.json (${viewId})`);
   return buildResolved(workspaceClean, viewClean);
+}
+
+async function resolveCliPolicy(projectRoot) {
+  const workspaceRaw = await loadWorkspaceConfig(projectRoot);
+  const policy = normalizeWorkspacePolicy(workspaceRaw, 'workspace cli.json');
+  const config = buildResolved(policy, {});
+  const enabledIds = Object.keys(config);
+  const defaultHarness = config[policy.defaultHarness]
+    ? policy.defaultHarness
+    : (enabledIds.includes('opencode') ? 'opencode' : enabledIds[0]);
+  return { defaultHarness, allowedHarnesses: enabledIds, config };
+}
+
+async function resolveDefaultHarness(projectRoot) {
+  const policy = await resolveCliPolicy(projectRoot);
+  return policy.defaultHarness;
+}
+
+async function isHarnessAllowed(projectRoot, harnessId) {
+  const policy = await resolveCliPolicy(projectRoot);
+  return policy.allowedHarnesses.includes(harnessId);
 }
 
 /**
@@ -121,11 +188,16 @@ async function resolveCliConfig(projectRoot, viewId = null) {
 async function resolveViewDelta(projectRoot, viewId) {
   if (!viewId) return {};
   const raw = await loadViewConfig(projectRoot, viewId);
-  return sanitizeOverrides(raw, `per-view cli.json (${viewId})`);
+  const source = isPolicyShape(raw) ? raw.harnesses : raw;
+  return sanitizeOverrides(source, `per-view cli.json (${viewId})`);
 }
 
 module.exports = {
   resolveCliConfig,
+  resolveCliPolicy,
+  resolveDefaultHarness,
+  isHarnessAllowed,
   resolveViewDelta,
   sanitizeOverrides,
+  normalizeWorkspacePolicy,
 };

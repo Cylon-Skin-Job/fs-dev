@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "description": "User-editable deterministic filler-word cleanup rules for speech-to-text output.",
+  "removeAlways": [
+    "um",
+    "uh",
+    "umm",
+    "uhh",
+    "erm",
+    "er"
+  ],
+  "contextual": [
+    {
+      "id": "like-filler",
+      "match": "like",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "defaultAction": "remove",
+      "preserveWhenPrecededBy": [
+        "I",
+        "you",
+        "we",
+        "they",
+        "he",
+        "she",
+        "it",
+        "word"
+      ],
+      "preserveWhenFollowedBy": [
+        "in",
+        "when",
+        "this",
+        "that",
+        "a",
+        "an",
+        "the",
+        "to",
+        "it's",
+        "it is"
+      ],
+      "preserveWhenInQuotedPhrase": true,
+      "notes": "Remove filler 'like' unless local context suggests the speaker means the verb, comparison, example marker, or the word itself."
+    }
+  ]
+}

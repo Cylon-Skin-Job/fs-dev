@@ -78,12 +78,22 @@
   line-height: 1;
 }
 
+.rv-wiki-topic-guide-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
 .rv-wiki-topic-name {
   flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.rv-wiki-topic-guide-title {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .rv-wiki-collection-group {
@@ -277,6 +287,58 @@
 
 /* Prose for rendered markdown lives in src/styles/document.css (.rv-wiki-page-content) */
 
+.rv-wiki-page-frontmatter-header {
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-wiki-page-frontmatter-header h1 {
+  margin: 0 0 12px;
+}
+
+.rv-wiki-page-frontmatter-header p {
+  margin: 0;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.72));
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.rv-wiki-page-metadata-footer {
+  padding-top: 20px;
+  margin-top: 28px;
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-wiki-page-metadata-footer section {
+  margin: 0 0 16px;
+}
+
+.rv-wiki-page-metadata-footer h2 {
+  margin: 0 0 8px;
+  color: var(--accent-dim, var(--text-primary, #eee));
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rv-wiki-page-metadata-footer ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.rv-wiki-page-metadata-footer li {
+  color: var(--text-secondary, rgba(255, 255, 255, 0.72));
+  font-size: 0.875rem;
+}
+
+.rv-wiki-page-metadata-footer p {
+  margin: 0;
+  color: var(--text-subtle, rgba(255, 255, 255, 0.45));
+  font-size: 0.875rem;
+}
+
 .rv-wiki-page-error {
   display: flex;
   align-items: center;
@@ -325,11 +387,16 @@
 
 .rv-wiki-edge-guide-header.active {
   background: var(--accent-dim, rgba(0, 212, 255, 0.1));
-  color: var(--accent-dim, var(--theme-primary, #ec4899));
+  color: var(--bg-primary, #111);
 }
 
 .rv-wiki-edge-guide-header .material-symbols-outlined {
   font-size: 20px;
+}
+
+.rv-wiki-edge-guide-title {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .rv-wiki-edge-section {
@@ -346,6 +413,25 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 6px;
+}
+
+.rv-wiki-edge-heading-button {
+  width: 100%;
+  padding: 0 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.rv-wiki-edge-heading-button:hover {
+  color: var(--text-primary, #eee);
+}
+
+.rv-wiki-edge-heading-button.active {
+  background: var(--accent-dim, rgba(0, 212, 255, 0.1));
+  color: var(--bg-primary, #111);
+  border-radius: 3px;
 }
 
 .rv-wiki-edge-link {
@@ -370,7 +456,7 @@
 
 .rv-wiki-edge-link.active {
   background: var(--accent-dim, rgba(0, 212, 255, 0.1));
-  color: var(--accent-dim, var(--theme-primary, #ec4899));
+  color: var(--bg-primary, #111);
 }
 
 .rv-wiki-edge-link-text {

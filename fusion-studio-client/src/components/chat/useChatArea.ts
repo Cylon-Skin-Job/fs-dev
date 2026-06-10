@@ -5,13 +5,21 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
-import { useResolvedHarness } from '../../config/harness';
+import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import type { ChatInputRef } from '../ChatInput';
 import type { Scope } from '../../types';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
+
+interface PendingPromptTarget {
+  scope: Scope;
+  threadId: string;
+  text: string;
+}
+
+type ChatTarget = Pick<PendingPromptTarget, 'scope' | 'threadId'>;
 
 export interface UseChatAreaOptions {
   panel: string;
@@ -31,29 +39,20 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<ChatInputRef>(null);
   const justSentRef = useRef(false);
-  const [isSending, setIsSending] = useState(false);
+  const [sendingTarget, setSendingTarget] = useState<ChatTarget | null>(null);
+  const [isAcceptancePending, setIsAcceptancePending] = useState(false);
+  const pendingPromptRef = useRef<PendingPromptTarget | null>(null);
   const connectingHarnessId = usePanelStore((s) => s.connectingHarnessId);
   const setConnectingHarnessId = usePanelStore((s) => s.setConnectingHarnessId);
   const selectHarness = usePanelStore((s) => s.selectHarness);
+  const createDefaultAssistantThread = usePanelStore((s) => s.createDefaultAssistantThread);
   const harnessStatuses = useHarnessStatuses();
+  const selectableHarnesses = useSelectableHarnesses(harnessStatuses);
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
-
-  const handleInsertText = useCallback((text: string) => {
-    chatInputRef.current?.insertText(text);
-  }, []);
-
-  useEffect(() => {
-    if (threadIdOverride) return;
-    const handler = (e: Event) => {
-      const text = (e as CustomEvent<string>).detail;
-      if (typeof text === 'string') handleInsertText(text);
-    };
-    window.addEventListener('fusion:chat-insert', handler);
-    return () => window.removeEventListener('fusion:chat-insert', handler);
-  }, [threadIdOverride, handleInsertText]);
 
   const primaryThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
   const currentThreadId = threadIdOverride ?? primaryThreadId;
+  const isSendingForCurrentThread = sendingTarget?.scope === scope && sendingTarget.threadId === currentThreadId;
   const selector = selectChatState(scope, panel, currentThreadId);
   const messages = usePanelStore((state) => selector(state)?.messages ?? EMPTY_MESSAGES);
   const currentTurn = usePanelStore((state) => selector(state)?.currentTurn ?? null);
@@ -71,16 +70,45 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   const resolveCliAccent = useCliAccentResolver();
   const setWireReady = usePanelStore((state) => state.setWireReady);
 
-  const addMessage = usePanelStore((state) => state.addMessage);
   const sendMessage = usePanelStore((state) => state.sendMessage);
+  const warmThread = usePanelStore((state) => state.warmThread);
   const finalizeTurn = usePanelStore((state) => state.finalizeTurn);
 
   const noThread = !currentThreadId;
   const isActive = currentScope === scope;
 
+  const warmCurrentThread = useCallback(() => {
+    const tid = currentThreadId;
+    if (!tid || !isActive || pendingPromptRef.current) return;
+    warmThread(scope, tid);
+  }, [currentThreadId, isActive, scope, warmThread]);
+
+  const handleInsertText = useCallback((text: string) => {
+    warmCurrentThread();
+    chatInputRef.current?.insertText(text);
+  }, [warmCurrentThread]);
+
+  useEffect(() => {
+    if (threadIdOverride) return;
+    const handler = (e: Event) => {
+      const text = (e as CustomEvent<string>).detail;
+      if (typeof text === 'string') handleInsertText(text);
+    };
+    window.addEventListener('fusion:chat-insert', handler);
+    return () => window.removeEventListener('fusion:chat-insert', handler);
+  }, [threadIdOverride, handleInsertText]);
+
   const handleHarnessSelect = useCallback((harnessId: string) => {
     selectHarness(harnessId, scope);
   }, [selectHarness, scope]);
+
+  const handleCreateThread = useCallback(() => {
+    if (selectableHarnesses.length <= 1) {
+      createDefaultAssistantThread(scope);
+      return;
+    }
+    toggleCliPicker(panel);
+  }, [createDefaultAssistantThread, panel, scope, selectableHarnesses.length, toggleCliPicker]);
 
   useEffect(() => {
     if (!cliPickerOpen && !threadDropdownOpen && !moreMenuOpen) return;
@@ -170,19 +198,80 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   }, [messages.length]);
 
   useEffect(() => {
-    if (segments.length > 0) {
-      setIsSending(false);
+    if (segments.length > 0 && isSendingForCurrentThread) {
+      const id = window.setTimeout(() => setSendingTarget(null), 0);
+      return () => window.clearTimeout(id);
     }
-  }, [segments.length]);
+  }, [segments.length, isSendingForCurrentThread]);
 
-  const showOrb = (isSending || currentTurn?.status === 'streaming') && segments.length === 0;
-  const isTurnActive = !!currentTurn || isSending;
+  useEffect(() => {
+    const handleAccepted = (e: Event) => {
+      const detail = (e as CustomEvent<{ scope: Scope; threadId: string; content: string }>).detail;
+      const pending = pendingPromptRef.current;
+      if (!pending || !detail) return;
+      if (detail.scope !== pending.scope || detail.threadId !== pending.threadId) return;
+      if (typeof detail.content === 'string' && detail.content !== pending.text) return;
+      pendingPromptRef.current = null;
+      setIsAcceptancePending(false);
+      setSendingTarget({ scope: pending.scope, threadId: pending.threadId });
+      justSentRef.current = true;
+      chatInputRef.current?.clearText();
+    };
+    const handleFailed = (e: Event) => {
+      const detail = (e as CustomEvent<{ scope?: Scope; threadId?: string }>).detail;
+      const pending = pendingPromptRef.current;
+      if (!pending) {
+        if (detail?.scope && detail?.threadId) {
+          setSendingTarget((target) => {
+            if (!target) return null;
+            if (target.scope !== detail.scope || target.threadId !== detail.threadId) return target;
+            return null;
+          });
+        }
+        return;
+      }
+      if (detail?.scope && detail.scope !== pending.scope) return;
+      if (detail?.threadId && detail.threadId !== pending.threadId) return;
+      pendingPromptRef.current = null;
+      setIsAcceptancePending(false);
+      setSendingTarget((target) => {
+        if (!target) return null;
+        if (target.scope !== pending.scope || target.threadId !== pending.threadId) return target;
+        return null;
+      });
+    };
+    const handleTurnEnded = (e: Event) => {
+      const detail = (e as CustomEvent<{ scope?: Scope; threadId?: string }>).detail;
+      if (!detail?.scope || !detail.threadId) return;
+      setSendingTarget((target) => {
+        if (!target) return null;
+        if (target.scope !== detail.scope || target.threadId !== detail.threadId) return target;
+        return null;
+      });
+    };
+    window.addEventListener('fusion:prompt-accepted', handleAccepted);
+    window.addEventListener('fusion:prompt-acceptance-failed', handleFailed);
+    window.addEventListener('fusion:turn-ended', handleTurnEnded);
+    return () => {
+      window.removeEventListener('fusion:prompt-accepted', handleAccepted);
+      window.removeEventListener('fusion:prompt-acceptance-failed', handleFailed);
+      window.removeEventListener('fusion:turn-ended', handleTurnEnded);
+    };
+  }, []);
+
+  const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0;
+  const isTurnActive = !!currentTurn || isSendingForCurrentThread;
 
   const handleSend = useCallback((text: string) => {
-    setIsSending(true);
+    if (pendingPromptRef.current) return;
+
+    const tid = currentThreadId;
+    if (!tid) return;
+
+    pendingPromptRef.current = { scope, threadId: tid, text };
+    setIsAcceptancePending(true);
 
     const state = usePanelStore.getState();
-    const tid = scope === 'project' ? currentThreadId : null;
     const cs = scope === 'project'
       ? (tid ? state.projectChats[tid] : undefined)
       : state.panels[panel];
@@ -190,28 +279,18 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
       finalizeTurn(scope, tid);
     }
 
-    justSentRef.current = true;
-    addMessage(scope, tid, {
-      id: Date.now().toString(),
-      type: 'user',
-      content: text,
-      timestamp: Date.now(),
-    });
-
     sendMessage(text, scope, tid);
-  }, [scope, panel, currentThreadId, finalizeTurn, addMessage, sendMessage]);
+  }, [scope, panel, currentThreadId, finalizeTurn, sendMessage]);
 
   const handleStop = useCallback(() => {
     const state = usePanelStore.getState();
-    const tid = scope === 'project' ? currentThreadId : null;
-    const cs = scope === 'project'
-      ? (tid ? state.projectChats[tid] : undefined)
-      : state.panels[panel];
+    const tid = currentThreadId;
+    if (!tid || !state.ws || state.ws.readyState !== WebSocket.OPEN) return;
+    const cs = scope === 'project' ? state.projectChats[tid] : state.panels[panel];
     if (cs?.currentTurn) {
-      finalizeTurn(scope, tid);
+      state.ws.send(JSON.stringify({ type: 'turn:stop', scope, threadId: tid }));
     }
-    setIsSending(false);
-  }, [scope, panel, currentThreadId, finalizeTurn]);
+  }, [scope, panel, currentThreadId]);
 
   const inputPlaceholder = noThread
     ? ''
@@ -232,6 +311,7 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
     chatContainerRef,
     chatInputRef,
     harnessStatuses,
+    showCliPicker: selectableHarnesses.length > 1,
     moreMenuOpen,
     setMoreMenuOpen,
     handleInsertText,
@@ -248,6 +328,7 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
     noThread,
     isActive,
     handleHarnessSelect,
+    handleCreateThread,
     handleToggleThreads,
     handleCopyLink,
     handleRename,
@@ -256,6 +337,8 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
     isTurnActive,
     handleSend,
     handleStop,
+    warmCurrentThread,
+    isAcceptancePending,
     inputPlaceholder,
   };
 }

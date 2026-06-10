@@ -11,7 +11,14 @@
  *   workspace:switched             — active workspace changed
  *   workspace:added                — new workspace joined the registry
  *   workspace:removed              — workspace removed from registry
+ *   workspace:ribbon_removed       — workspace hidden from ribbon; reset focus cache
  *   workspace:add_rejected_duplicate — duplicate path (show modal)
+ *   workspace:add_rejected_missing_ai — missing /ai folder (show modal)
+ *   workspace:create_manifest         — view template catalog for Create New
+ *   workspace:create_rejected         — create failed (show inline error)
+ *   workspace:created                 — new workspace created (close modal)
+ *   workspace:view_registry_updated   — active workspace views changed
+ *   workspace:view_update_rejected    — view registry update failed
  *   workspace:culled_at_launch     — workspace removed due to missing path (silent)
  *   thread:state_changed           — future use (silent)
  *
@@ -83,9 +90,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       // Keep Electron protocol handler's workspace root in sync
       const activeWs = workspaces.find((w: any) => w.id === msg.activeWorkspaceId);
       const activeRepoPath = (msg as any).activeRepoPath ?? activeWs?.repoPath ?? null;
-      if (activeRepoPath) {
-        window.electronAPI?.setWorkspaceRoot(activeRepoPath);
-      }
+      window.electronAPI?.setWorkspaceRoot(activeRepoPath);
 
       store.markInit();
       // Request existing screenshots so the ribbon can show thumbnails immediately
@@ -111,12 +116,10 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const workspaceId = msg.to ?? null;
       store.setActiveWorkspaceId(workspaceId);
       store.setWorkspaceType((msg as any).workspaceType ?? 'code');
-      store.closeSwitcher();
+      store.closeRibbon();
 
       // Keep Electron protocol handler's workspace root in sync
-      if ((msg as any).repoPath) {
-        window.electronAPI?.setWorkspaceRoot((msg as any).repoPath);
-      }
+      window.electronAPI?.setWorkspaceRoot((msg as any).repoPath ?? null);
 
       // WORKSPACE_ISOLATION_SPEC: swap to cached workspace state (or empty)
       usePanelStore.getState().activateWorkspace(workspaceId);
@@ -188,13 +191,18 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
 
     case 'workspace:added':
       // Registry will update via workspace:registry_changed, which arrives
-      // immediately after. Just close the add/switcher UI.
+      // immediately after. Just close the add UI.
       store.closeAddModal();
-      store.closeSwitcher();
       return true;
 
     case 'workspace:removed':
       // Registry will update via workspace:registry_changed.
+      return true;
+
+    case 'workspace:ribbon_removed':
+      if (msg.workspaceId) {
+        usePanelStore.getState().resetWorkspaceFocusState(msg.workspaceId);
+      }
       return true;
 
     case 'workspace:add_rejected_duplicate': {
@@ -219,6 +227,65 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
           message: `This repo is already registered as "${label}". Switch to it?`,
         },
       });
+      return true;
+    }
+
+    case 'workspace:add_rejected_missing_ai': {
+      store.closeAddModal();
+      showModal({
+        modalType: 'alert',
+        config: { type: 'alert' },
+        styles: '',
+        data: {
+          title: 'Project requires /ai',
+          message: 'This folder cannot be added because it does not contain an /ai folder. Choose a project that already has /ai, or create the project through the future Create New flow.',
+        },
+      });
+      return true;
+    }
+
+    case 'workspace:create_manifest': {
+      if (msg.manifest) {
+        store.setCreateManifest(msg.manifest);
+      }
+      return true;
+    }
+
+    case 'workspace:create_rejected': {
+      store.setCreateError(msg.message || 'Unable to create project.');
+      return true;
+    }
+
+    case 'workspace:ribbon_reorder_rejected': {
+      console.warn('[workspace] ribbon reorder rejected:', msg.message || 'unknown reason');
+      return true;
+    }
+
+    case 'workspace:created': {
+      store.closeCreateModal();
+      return true;
+    }
+
+    case 'workspace:view_options': {
+      usePanelStore.getState().setViewOptions(msg.hiddenViews ?? [], msg.availableTemplates ?? []);
+      return true;
+    }
+
+    case 'workspace:view_registry_updated': {
+      const panelStore = usePanelStore.getState();
+      panelStore.setViewRegistryUpdateError(null);
+      const ws = panelStore.ws;
+      if (ws) {
+        rediscoverPanels(ws, { preserveCurrent: true, chooseNearestIfMissing: true }).catch((err) => {
+          console.error('[workspace] view registry rediscover failed:', err);
+          usePanelStore.getState().setViewRegistryUpdateError('View registry updated, but the rail did not refresh.');
+        });
+      }
+      return true;
+    }
+
+    case 'workspace:view_update_rejected': {
+      usePanelStore.getState().setViewRegistryUpdateError(msg.message || 'Unable to update view.');
       return true;
     }
 

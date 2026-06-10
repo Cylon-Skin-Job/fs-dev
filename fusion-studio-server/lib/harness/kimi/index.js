@@ -4,8 +4,8 @@ const { EventEmitter } = require('events');
 const { WireParser } = require('./wire-parser');
 const { EventTranslator } = require('./event-translator');
 const { KimiSessionState } = require('./session-state');
-const { emit } = require('../../event-bus');
-const { normalizeTokenUsage } = require('../model-catalog');
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // CHAT_SCOPE_SPEC: build the structured `workspace:` string from spawn-time
 // context. Matches lib/chat-scope.js::resolveScope but without a session —
@@ -14,6 +14,14 @@ const { normalizeTokenUsage } = require('../model-catalog');
 function buildScopeString(workspaceId, viewId) {
   if (!workspaceId) return 'workspace:unknown';
   return viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`;
+}
+
+function makeWireError(error) {
+  const err = new Error(error.message || 'Wire error');
+  if (error.code !== undefined) {
+    err.code = error.code;
+  }
+  return err;
 }
 
 /**
@@ -28,7 +36,7 @@ function buildScopeString(workspaceId, viewId) {
 
 /**
  * KIMI CLI harness implementation.
- * 
+ *
  * Wraps `kimi --wire --yolo` and translates JSON-RPC protocol
  * to canonical events.
  */
@@ -38,7 +46,7 @@ class KimiHarness extends EventEmitter {
     this.id = 'kimi';
     this.name = 'KIMI CLI';
     this.provider = 'kimi';
-    
+
     /** @type {import('../types').HarnessConfig} */
     this.config = {};
     /** @type {Map<string, RobinSession>} */
@@ -64,7 +72,7 @@ class KimiHarness extends EventEmitter {
     const scopeString = buildScopeString(workspaceId, viewId);
     const robinPath = this.config.cliPath || process.env.KIMI_PATH || 'kimi';
     const args = ['--wire', '--yolo', '--session', threadId];
-    
+
     if (projectRoot) {
       args.push('--work-dir', projectRoot);
     }
@@ -77,9 +85,14 @@ class KimiHarness extends EventEmitter {
     // Log spawn for debugging
     console.log(`[KimiHarness] Spawned ${robinPath} ${args.join(' ')} (pid: ${proc.pid})`);
 
+    const harness = this;
     const state = new KimiSessionState();
     const parser = new WireParser();
     const translator = new EventTranslator(state);
+
+    /** @type {Set<string>} */
+    const initializedSessions = new Set();
+    let nextRequestId = 1;
 
     const session = {
       threadId,
@@ -87,14 +100,70 @@ class KimiHarness extends EventEmitter {
       state,
       parser,
       scopeString,
-      async *sendMessage(message, options) {
-        // Send initialize handshake if needed
-        // Send prompt
-        // Yield events as they arrive
-        // This will be implemented when we switch to the new harness
-        throw new Error('sendMessage not yet implemented - use legacy flow');
+      stopRequested: false,
+      async *sendMessage(message, options = {}) {
+        const events = [];
+        let done = false;
+        let failure = null;
+
+        const onEvent = ({ threadId: tid, event }) => {
+          if (tid !== threadId) return;
+          events.push(event);
+          if (event.type === 'turn_end') done = true;
+        };
+
+        const onError = ({ threadId: tid, id, error }) => {
+          if (tid !== threadId) return;
+          failure = makeWireError(error);
+          done = true;
+        };
+
+        const onExit = ({ threadId: tid, code }) => {
+          if (tid !== threadId) return;
+          if (!session.stopRequested) {
+            failure = new Error(`Kimi process exited during active send (code: ${code ?? 'unknown'})`);
+          }
+          done = true;
+        };
+
+        harness.on('event', onEvent);
+        harness.on('response_error', onError);
+        harness.on('exit', onExit);
+
+        try {
+          // Send initialize once per session
+          if (!initializedSessions.has(threadId)) {
+            const initId = String(nextRequestId++);
+            harness.sendToThread(threadId, 'initialize', {
+              protocol_version: '1.4',
+              client: { name: 'fusion-studio', version: '0.1.0' },
+              capabilities: { supports_question: true }
+            }, initId);
+            initializedSessions.add(threadId);
+          }
+
+          // Send prompt
+          const promptId = String(nextRequestId++);
+          const params = { user_input: message };
+          if (options.system !== undefined) {
+            params.system = options.system;
+          }
+          harness.sendToThread(threadId, 'prompt', params, promptId);
+
+          while (!done || events.length > 0) {
+            while (events.length > 0) yield events.shift();
+            if (failure) throw failure;
+            if (!done) await delay(25);
+          }
+          if (failure) throw failure;
+        } finally {
+          harness.off('event', onEvent);
+          harness.off('response_error', onError);
+          harness.off('exit', onExit);
+        }
       },
       async stop() {
+        session.stopRequested = true;
         if (!proc.killed) {
           proc.kill('SIGTERM');
         }
@@ -114,13 +183,24 @@ class KimiHarness extends EventEmitter {
 
     // Handle wire messages
     parser.on('message', (msg) => {
-      const events = translator.translate(msg);
-      if (events) {
-        const eventArray = Array.isArray(events) ? events : [events];
-        for (const event of eventArray) {
-          this.emit('event', { threadId, event });
-          this.bridgeToEventBus(threadId, event, state);
+      if (msg.method === 'event') {
+        const events = translator.translate(msg);
+        if (events) {
+          const eventArray = Array.isArray(events) ? events : [events];
+          for (const event of eventArray) {
+            this.emit('event', { threadId, event });
+          }
         }
+        return;
+      }
+
+      if (msg.id !== undefined && msg.error) {
+        this.emit('response_error', { threadId, id: msg.id, error: msg.error });
+        return;
+      }
+
+      if (msg.id !== undefined && msg.result !== undefined) {
+        this.emit('response_result', { threadId, id: msg.id, result: msg.result });
       }
     });
 
@@ -142,38 +222,6 @@ class KimiHarness extends EventEmitter {
 
     this.sessions.set(threadId, session);
     return session;
-  }
-
-  /**
-   * Bridge canonical events to the shared event bus for audit persistence.
-   * @private
-   */
-  bridgeToEventBus(threadId, event, state) {
-    if (event.type === 'turn_end') {
-      const meta = event._meta || {};
-      const normalized = normalizeTokenUsage(
-        'kimi', meta.model, meta.tokenUsage, meta.contextUsage
-      );
-
-      emit('chat:status_update', {
-        threadId,
-        messageId: meta.messageId,
-        planMode: meta.planMode,
-        contextUsage: meta.contextUsage ?? null,
-        tokenUsage: normalized,
-      });
-
-      const scopeString = this.sessions.get(threadId)?.scopeString || 'workspace:unknown';
-      emit('chat:turn_end', {
-        workspace: scopeString,
-        threadId,
-        turnId: event.turnId,
-        userInput: state.currentTurn?.userInput || '',
-        parts: [...state.assistantParts],
-        fullText: event.fullText,
-        hasToolCalls: event.hasToolCalls,
-      });
-    }
   }
 
   async dispose() {

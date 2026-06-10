@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "description": "Rules for visual/UI feature text. The system should warn or ask for confirmation rather than aggressively rewrite risky visual labels.",
+  "strategy": "warn-not-rewrite",
+  "noticeHandledBy": "stt-notice-rules.json",
+  "visualContexts": [
+    "click",
+    "clicks",
+    "clicked",
+    "press",
+    "tap",
+    "select",
+    "choose",
+    "open",
+    "go to",
+    "button",
+    "menu",
+    "panel",
+    "modal",
+    "overlay",
+    "tab",
+    "view",
+    "screen",
+    "dialog",
+    "header",
+    "label",
+    "feature"
+  ],
+  "doNotRewriteInside": [
+    "file paths",
+    "file names",
+    "code identifiers",
+    "commands",
+    "URLs",
+    "quoted filenames"
+  ],
+  "examplesThatShouldBeConfirmed": [
+    "View Details",
+    "Edit Prompt",
+    "New Chat",
+    "Tools Panel",
+    "Workspace Ribbon"
+  ]
+}

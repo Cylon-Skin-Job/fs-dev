@@ -1,5 +1,9 @@
 /**
- * @typedef {'turn_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'turn_end'} CanonicalEventType
+ * Canonical event types emitted by harness translators and consumed by the
+ * event bus / websocket broadcaster. All harnesses (Kimi, Claude, Codex, etc.)
+ * must translate their wire protocol into these events.
+ *
+ * @typedef {'turn_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event' | 'status_update' | 'turn_end'} CanonicalEventType
  */
 
 /**
@@ -58,10 +62,19 @@
  * @property {string} toolCallId
  * @property {string} toolName
  * @property {string} output
+ * @property {string} [statusMessage] - Human-readable status from the tool
  * @property {unknown[]} display
+ * @property {boolean} returnedDiff
  * @property {boolean} isError
  * @property {string[]} [files]
  * @property {string} [turnId]
+ *
+ * NOTE: Field name mismatch between layers:
+ *   - Translator events use: output, statusMessage, display, returnedDiff, isError, files
+ *   - Current legacy bus/websocket events use: toolOutput, toolStatus, toolDisplay, returnedDiff, isError
+ *   RECOMMENDATION (Slice G): Keep the canonical event applier on this field shape,
+ *   then adapt explicitly at the websocket boundary if the client message contract
+ *   still needs tool-prefixed names.
  */
 
 /**
@@ -91,6 +104,29 @@
  * @property {string} fullText
  * @property {boolean} hasToolCalls
  * @property {TurnEndEventMeta} [_meta]
+ */
+
+/**
+ * @typedef {Object} StatusUpdateEvent
+ * @property {'status_update'} type
+ * @property {number} timestamp
+ * @property {number} [contextUsage]
+ * @property {TokenUsage} [tokenUsage]
+ * @property {string} [messageId]
+ * @property {boolean} [planMode]
+ * @property {string} [turnId]
+ */
+
+/**
+ * @typedef {Object} SubagentEvent
+ * @property {'subagent_event'} type
+ * @property {number} timestamp
+ * @property {string} parentToolCallId
+ * @property {string} agentId
+ * @property {string} subagentType
+ * @property {string} subagentEventType
+ * @property {Object} subagentPayload
+ * @property {string} [turnId]
  */
 
 /**

@@ -87,6 +87,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
   async function handleFileTreeRequest(ws, msg) {
     const panel = msg.panel || 'file-viewer';
     const requestPath = msg.path || '';
+    const includeHiddenFolders = msg.includeHiddenFolders === true;
     const panelPath = getPanelPath(panel, ws);
 
     if (panelPath === null) {
@@ -135,7 +136,6 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
       const files = [];
 
       for (const entry of entries) {
-        if (entry.name.startsWith('.')) continue;
         if (entry.name === 'node_modules') continue;
 
         const entryPath = requestPath ? `${requestPath}/${entry.name}` : entry.name;
@@ -167,11 +167,17 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
           }
         }
 
+        if (entry.name.startsWith('.') && (!includeHiddenFolders || !isDir)) continue;
+
         if (isDir) {
           let hasChildren = false;
           try {
-            const children = await fsPromises.readdir(fullEntryPath);
-            hasChildren = children.length > 0;
+            const children = await fsPromises.readdir(fullEntryPath, { withFileTypes: true });
+            hasChildren = children.some((child) => {
+              if (child.name === 'node_modules') return false;
+              if (!child.name.startsWith('.')) return true;
+              return includeHiddenFolders && child.isDirectory();
+            });
           } catch (_) {}
           folders.push({
             name: entry.name,
@@ -211,45 +217,6 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         code: mapFileErrorCode(err),
       }));
     }
-  }
-
-  async function buildWikiGroups(basePath, requestPath) {
-    // requestPath is like "project/Coding-CLIs/index.json"
-    const articleDir = path.dirname(requestPath);
-    const fullDir = path.join(basePath, articleDir);
-    const groups = [];
-
-    try {
-      const entries = await fsPromises.readdir(fullDir, { withFileTypes: true });
-      const subfolders = entries
-        .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      for (const folder of subfolders) {
-        const folderPath = path.join(fullDir, folder.name);
-        const files = await fsPromises.readdir(folderPath);
-        const articles = files
-          .filter((f) => f.endsWith('.md'))
-          .sort((a, b) => a.localeCompare(b))
-          .map((fileName) => ({
-            id: fileName.replace(/\.md$/, ''),
-            title: fileName.replace(/\.md$/, '').replace(/_/g, ' '),
-            file: `${folder.name}/${fileName}`,
-          }));
-
-        if (articles.length > 0) {
-          groups.push({
-            id: folder.name,
-            title: folder.name.replace(/_/g, ' '),
-            articles,
-          });
-        }
-      }
-    } catch {
-      // ignore
-    }
-
-    return groups;
   }
 
   async function handleFileContentRequest(ws, msg) {
@@ -317,32 +284,6 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         } catch {}
       }
 
-      // Wiki fallback: synthesize groups when article index.json lacks them
-      if (panel === 'wiki-viewer' && /[^/]+\/[^/]+\/index\.json$/.test(requestPath)) {
-        let needsSynthesis = false;
-        let idx = {};
-        try {
-          const trimmed = content.trim();
-          if (!trimmed || trimmed === '{}' || trimmed === '[]') {
-            needsSynthesis = true;
-          } else {
-            idx = JSON.parse(content);
-            if (!idx.groups || idx.groups.length === 0) {
-              needsSynthesis = true;
-            }
-          }
-        } catch {
-          needsSynthesis = true;
-        }
-
-        if (needsSynthesis) {
-          const synthetic = await buildWikiGroups(basePath, requestPath);
-          if (synthetic.length > 0) {
-            content = JSON.stringify({ ...idx, version: idx.version || '1.0', groups: synthetic }, null, 2);
-          }
-        }
-      }
-
       ws.send(JSON.stringify({
         type: 'file_content_response',
         panel,
@@ -353,22 +294,6 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         lastModified: stat.mtimeMs,
       }));
     } catch (err) {
-      // If wiki article index.json is missing, synthesize it from folder structure
-      if (panel === 'wiki-viewer' && err.code === 'ENOENT' && /[^/]+\/[^/]+\/index\.json$/.test(requestPath)) {
-        const synthetic = await buildWikiGroups(basePath, requestPath);
-        const content = JSON.stringify({ version: '1.0', groups: synthetic }, null, 2);
-        ws.send(JSON.stringify({
-          type: 'file_content_response',
-          panel,
-          path: requestPath,
-          success: true,
-          content,
-          size: content.length,
-          lastModified: Date.now(),
-        }));
-        return;
-      }
-
       ws.send(JSON.stringify({
         type: 'file_content_response',
         panel,

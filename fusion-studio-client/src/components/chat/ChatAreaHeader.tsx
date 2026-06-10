@@ -20,10 +20,11 @@ type ChatAreaHeaderProps = Pick<
   | 'threadDropdownOpen'
   | 'moreMenuOpen'
   | 'setMoreMenuOpen'
-  | 'toggleCliPicker'
   | 'toggleThreadDropdown'
   | 'harnessStatuses'
+  | 'showCliPicker'
   | 'handleHarnessSelect'
+  | 'handleCreateThread'
   | 'handleToggleThreads'
   | 'handleRename'
   | 'handleCopyLink'
@@ -43,10 +44,11 @@ export function ChatAreaHeader({
   threadDropdownOpen,
   moreMenuOpen,
   setMoreMenuOpen,
-  toggleCliPicker,
   toggleThreadDropdown,
   harnessStatuses,
+  showCliPicker,
   handleHarnessSelect,
+  handleCreateThread,
   handleToggleThreads,
   handleRename,
   handleCopyLink,
@@ -68,10 +70,10 @@ export function ChatAreaHeader({
           <>
             <button
               className="rv-chat-header-btn"
-              onClick={() => toggleCliPicker(panel)}
-              aria-haspopup="menu"
-              aria-expanded={cliPickerOpen}
-              aria-controls={`cli-picker-${panel}`}
+              onClick={handleCreateThread}
+              aria-haspopup={showCliPicker ? 'menu' : undefined}
+              aria-expanded={showCliPicker ? cliPickerOpen : undefined}
+              aria-controls={showCliPicker ? `cli-picker-${panel}` : undefined}
               aria-label="New chat"
               title="New chat"
             >
@@ -104,11 +106,13 @@ export function ChatAreaHeader({
       </div>
       {sidebarCollapsed && (
         <>
-          <CliPickerDropdown
-            panel={panel}
-            statuses={harnessStatuses}
-            onSelect={handleHarnessSelect}
-          />
+          {showCliPicker && (
+            <CliPickerDropdown
+              panel={panel}
+              statuses={harnessStatuses}
+              onSelect={handleHarnessSelect}
+            />
+          )}
           <ThreadJumpDropdown panel={panel} scope={scope} />
         </>
       )}

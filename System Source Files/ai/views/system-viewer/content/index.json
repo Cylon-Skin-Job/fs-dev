@@ -54,6 +54,12 @@
       ]
     },
     {
+      "id": "secrets",
+      "title": "Secrets Manager",
+      "description": "Token and API key templates for apps that need credentials.",
+      "wiki": "user.md"
+    },
+    {
       "id": "skills",
       "title": "Skills",
       "description": "Reusable capabilities that extend Fusion Studio and CLI agents.",

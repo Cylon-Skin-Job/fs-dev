@@ -8,7 +8,7 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { useWorkspaceStore } from '../state/workspaceStore';
+import { toRibbonWorkspaces, useWorkspaceStore } from '../state/workspaceStore';
 
 function isTypingContext(): boolean {
   const el = document.activeElement as HTMLElement | null;
@@ -24,10 +24,10 @@ export function useWorkspaceKeyboard() {
     const cycle = (direction: 'left' | 'right') => {
       const s = useWorkspaceStore.getState();
       const { workspaces, activeWorkspaceId } = s;
-      if (workspaces.length <= 1 || !activeWorkspaceId) return;
+      const ribbonWorkspaces = toRibbonWorkspaces(workspaces);
+      if (ribbonWorkspaces.length <= 1 || !activeWorkspaceId) return;
 
-      const sorted = [...workspaces].sort((a, b) => a.sortOrder - b.sortOrder);
-      const ids = sorted.map((w) => w.id);
+      const ids = ribbonWorkspaces.map((w) => w.id);
       const idx = ids.indexOf(activeWorkspaceId);
       if (idx < 0) return;
 

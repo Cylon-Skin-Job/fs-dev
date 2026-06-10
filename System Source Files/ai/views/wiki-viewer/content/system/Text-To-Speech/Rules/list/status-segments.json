@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "description": "Status/completion phrases that can turn comma-separated example segments into list items when multiple matching segments are present.",
+  "introMarkers": [
+    "for example",
+    "for instance"
+  ],
+  "statusPhrases": [
+    "are incomplete",
+    "are not complete",
+    "are not completed",
+    "are not done",
+    "are not finished",
+    "are only half finished",
+    "are still incomplete",
+    "are still unfinished",
+    "are unfinished",
+    "is incomplete",
+    "is not complete",
+    "is not completed",
+    "is not done",
+    "is not finished",
+    "is only half finished",
+    "is still incomplete",
+    "is still unfinished",
+    "is unfinished",
+    "needs work",
+    "need work"
+  ],
+  "minimumSegments": 2
+}

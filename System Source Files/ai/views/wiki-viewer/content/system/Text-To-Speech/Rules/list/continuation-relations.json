@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "description": "Relation words after list triggers that keep continuation text in the list intro.",
+  "relations": [
+    "of",
+    "with",
+    "containing",
+    "including",
+    "that includes",
+    "that include",
+    "for",
+    "about",
+    "around",
+    "covering",
+    "related to",
+    "made up of",
+    "composed of",
+    "consisting of",
+    "comprising",
+    "focused on"
+  ]
+}

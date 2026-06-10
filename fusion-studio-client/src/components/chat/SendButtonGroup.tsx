@@ -14,9 +14,11 @@ import type { ChatInputRef } from '../ChatInput';
 interface SendButtonGroupProps {
   chatInputRef: React.RefObject<ChatInputRef | null>;
   onSend: (text: string) => void;
+  disabled?: boolean;
+  warming?: boolean;
 }
 
-export function SendButtonGroup({ chatInputRef, onSend }: SendButtonGroupProps) {
+export function SendButtonGroup({ chatInputRef, onSend, disabled = false, warming = false }: SendButtonGroupProps) {
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
 
   const {
@@ -45,10 +47,10 @@ export function SendButtonGroup({ chatInputRef, onSend }: SendButtonGroupProps) 
   }, [isOpen, triggerRef]);
 
   const handleSendClick = () => {
+    if (disabled) return;
     const text = chatInputRef.current?.getText();
     if (text?.trim()) {
       onSend(text.trim());
-      chatInputRef.current?.clearText();
     }
   };
 
@@ -58,15 +60,17 @@ export function SendButtonGroup({ chatInputRef, onSend }: SendButtonGroupProps) 
         <button
           className="rv-send-btn-main"
           onClick={handleSendClick}
-          title="Send message"
+          disabled={disabled}
+          title={warming ? 'Connecting thread runtime' : 'Send message'}
         >
-          Send
+          {warming ? <span className="rv-send-warming-wheel" aria-label="Connecting" /> : 'Send'}
         </button>
         <div className="rv-send-btn-divider" />
         <button
           ref={triggerRef}
           className="rv-send-btn-secondary"
           title="More options"
+          disabled={disabled}
           {...triggerProps}
         >
           <span className="material-symbols-outlined rv-icon-md">

@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "groups": [
+    {
+      "id": "main",
+      "title": "Text-To-Speech",
+      "articles": [
+        { "id": "overview", "title": "Overview", "file": "Text-To-Speech.md" }
+      ]
+    },
+    {
+      "id": "inputs-flows",
+      "title": "Inputs & Flows",
+      "articles": [
+        { "id": "mic-integration", "title": "Mic Integration", "file": "Inputs_&_Flows/Mic_Integration.md" },
+        { "id": "clean-up", "title": "Clean Up", "file": "Inputs_&_Flows/Clean_Up.md" }
+      ]
+    }
+  ]
+}

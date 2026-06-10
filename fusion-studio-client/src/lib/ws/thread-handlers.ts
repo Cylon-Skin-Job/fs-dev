@@ -9,10 +9,10 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
-import { toolNameToSegmentType, SEGMENT_ICONS } from '../instructions';
 import { loadRootTree } from '../file-tree';
 import { secondaryTracker } from '../secondary-tracker';
-import type { WebSocketMessage, ExchangeData, AssistantPart, StreamSegment, Scope } from '../../types';
+import { convertPartToSegment } from './assistant-parts';
+import type { WebSocketMessage, ExchangeData, Scope, LiveTurnSnapshot } from '../../types';
 
 /**
  * Handle thread-related WebSocket messages.
@@ -39,10 +39,10 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
             console.log('[WS] Auto-opening MRU thread:', mru.threadId.slice(0, 8), 'scope=', scope);
             // Multiple panels request the same project thread list during boot.
             // Mark the MRU as active before the server responds so only the
-            // first list response sends thread:open-assistant.
+            // first list response sends thread:open.
             store.setCurrentThreadId(scope, mru.threadId);
             ws.send(JSON.stringify({
-              type: 'thread:open-assistant',
+              type: 'thread:open',
               scope,
               threadId: mru.threadId,
             }));
@@ -87,6 +87,12 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           } else if (msg.history && msg.history.length > 0) {
             convertHistoryToMessages(scope, msg.threadId, msg.history);
           }
+          overlayLiveTurn(scope, msg.threadId, msg.liveTurn, msg.exchanges);
+          return true;
+        }
+
+        if (scope === 'view' && store.currentThreadIds.view !== msg.threadId) {
+          console.log('[WS] Ignoring stale view thread:opened:', msg.threadId.slice(0, 8));
           return true;
         }
 
@@ -102,6 +108,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           console.log('[WS] Loading', msg.history.length, 'messages (legacy format)');
           convertHistoryToMessages(scope, msg.threadId, msg.history);
         }
+        overlayLiveTurn(scope, msg.threadId, msg.liveTurn, msg.exchanges);
 
         // Restore context usage from last exchange if available
         if (msg.contextUsage !== undefined && msg.contextUsage !== null) {
@@ -133,7 +140,18 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'message:sent':
-      console.log('[WS] Message saved to thread');
+      console.log('[WS] Message accepted and saved to thread');
+      if (msg.threadId && typeof msg.content === 'string') {
+        store.addMessage(scope, msg.threadId, {
+          id: `user-${Date.now()}`,
+          type: 'user',
+          content: msg.content,
+          timestamp: Date.now(),
+        });
+        window.dispatchEvent(new CustomEvent('fusion:prompt-accepted', {
+          detail: { scope, threadId: msg.threadId, content: msg.content },
+        }));
+      }
       return true;
 
     default:
@@ -169,29 +187,6 @@ function convertExchangesToMessages(scope: Scope, threadId: string, exchanges: E
   });
 }
 
-function convertPartToSegment(part: AssistantPart): StreamSegment {
-  if (part.type === 'text') {
-    return { type: 'text', content: part.content };
-  } else if (part.type === 'think') {
-    return { type: 'think', content: part.content };
-  } else {
-    const segType = toolNameToSegmentType(part.name);
-    const info = SEGMENT_ICONS[segType];
-    return {
-      type: segType,
-      content: part.result.output || '',
-      toolCallId: part.toolCallId,
-      icon: info?.icon,
-      toolArgs: part.arguments,
-      toolDisplay: part.result.display,
-      toolStatus: part.result.statusMessage,
-      returnedDiff: part.result.returnedDiff,
-      isError: !!part.result.error || !!part.result.isError,
-      complete: true,
-    };
-  }
-}
-
 function convertHistoryToMessages(
   scope: Scope,
   threadId: string,
@@ -206,4 +201,61 @@ function convertHistoryToMessages(
       timestamp: Date.now() - (history.length - idx) * 1000,
     });
   });
+}
+
+function overlayLiveTurn(
+  scope: Scope,
+  threadId: string,
+  liveTurn: LiveTurnSnapshot | null | undefined,
+  exchanges: ExchangeData[] | undefined,
+) {
+  if (!liveTurn || liveTurn.threadId !== threadId) return;
+  if (isLiveTurnDurable(liveTurn, exchanges)) return;
+
+  const store = usePanelStore.getState();
+  const chatState = scope === 'project'
+    ? store.projectChats[threadId]
+    : store.panels[store.currentPanel];
+  const hasUserBubble = chatState?.messages.some(
+    message => message.type === 'user' && message.content === liveTurn.userInput,
+  );
+
+  if (!hasUserBubble) {
+    store.addMessage(scope, threadId, {
+      id: `live-${liveTurn.turnId}-user`,
+      type: 'user',
+      content: liveTurn.userInput,
+      timestamp: liveTurn.updatedAt,
+    });
+  }
+
+  store.resetSegments(scope, threadId);
+  const isTerminal = liveTurn.status !== 'in_flight';
+  liveTurn.parts.map((part, index) => convertPartToSegment(part, {
+    isTerminal,
+    isLastPart: index === liveTurn.parts.length - 1,
+  })).forEach(segment => {
+    store.pushSegment(scope, threadId, segment);
+  });
+  store.setCurrentTurn(scope, threadId, {
+    id: liveTurn.turnId,
+    content: liveTurn.fullText,
+    status: isTerminal ? 'complete' : 'streaming',
+    hasThinking: liveTurn.parts.some(part => part.type === 'think'),
+    thinkingContent: liveTurn.parts
+      .filter((part): part is { type: 'think'; content: string } => part.type === 'think')
+      .map(part => part.content)
+      .join(''),
+  });
+  store.setPendingTurnEnd(scope, threadId, isTerminal);
+}
+
+function isLiveTurnDurable(liveTurn: LiveTurnSnapshot, exchanges: ExchangeData[] | undefined): boolean {
+  return Boolean(exchanges?.some(exchange => {
+    const assistantText = exchange.assistant.parts
+      .filter((part): part is { type: 'text'; content: string } => part.type === 'text')
+      .map(part => part.content)
+      .join('');
+    return exchange.user === liveTurn.userInput && assistantText === liveTurn.fullText;
+  }));
 }

@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   exportDocument: (payload) => ipcRenderer.invoke('export-document', payload),
   sendDocumentEmail: (payload) => ipcRenderer.invoke('send-document-email', payload),
   printDocument: (payload) => ipcRenderer.invoke('print-document', payload),
+  showEmojiPanel: () => ipcRenderer.invoke('show-emoji-panel'),
   onMenuAction: (callback) => {
     const listener = (_event, payload) => callback(payload);
     ipcRenderer.on('menu-action', listener);
@@ -17,6 +18,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('browser:url-changed', listener);
   },
   setWorkspaceRoot: (repoPath) => ipcRenderer.send('workspace:set-root', repoPath),
+  setWorkspaceMenuState: (state) => ipcRenderer.send('workspace-menu:set-state', state),
   listScreenshots: () => ipcRenderer.invoke('screenshots:list'),
   readScreenshot: (filename) => ipcRenderer.invoke('screenshots:read', filename),
 });

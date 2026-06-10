@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+release/
 *.local
 
 # Editor directories and files
@@ -25,3 +26,6 @@ dist-ssr
 
 # Bundled Pandoc binary (276MB, install via: brew install pandoc + copy to electron/resources/)
 electron/resources/pandoc/
+
+# Large model binaries are downloaded/prepared locally, not committed.
+electron/resources/models/

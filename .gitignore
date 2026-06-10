@@ -18,3 +18,4 @@ fusion-studio-server/data/*.db-journal
 fusion-studio-server/data/*.db-wal
 # Large bundled binaries — download at build time, never commit
 fusion-studio-client/electron/resources/pandoc/
+fusion-studio-client/electron/resources/models/

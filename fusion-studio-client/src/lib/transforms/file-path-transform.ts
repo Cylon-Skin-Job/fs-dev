@@ -6,7 +6,7 @@
  *
  * Three levels of progressive disclosure:
  *   Label (visible):   .../renderers/paragraph.ts
- *   Tooltip (hover):   kimi-ide-client/src/lib/text/renderers/paragraph.ts
+ *   Tooltip (hover):   fusion-studio-client/src/lib/text/renderers/paragraph.ts
  *   Copy (clipboard):  /Users/.../paragraph.ts (absolute)
  */
 

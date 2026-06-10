@@ -25,7 +25,7 @@
 const path = require('path');
 const { v4: generateId } = require('uuid');
 
-const { ThreadWebSocketHandler } = require('../thread');
+const { ThreadWebSocketHandler, threadRuntimeController } = require('../thread');
 const { getWireForThread, sendToWire } = require('../wire/process-manager');
 const views = require('../views');
 const { redactWsMessage } = require('./redaction-map');
@@ -51,9 +51,11 @@ const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
  * @param {() => object} deps.getRecentDocsHandlers - getter closure over server.js let recentDocsHandlers
  * @param {() => object} deps.getBookmarksHandlers - getter closure over server.js let bookmarksHandlers
+ * @param {() => object} deps.getEmojiRecentsHandlers - getter closure over server.js let emojiRecentsHandlers
  * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
  * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
  * @param {() => object} deps.getScreenshotHandlers - getter closure over server.js let screenshotHandlers
+ * @param {Function} [deps.handleCanonicalHarnessEvent] - handler for direct canonical harness events
  * @returns {{ handleClientMessage: Function, handleClientClose: Function }}
  */
 function createClientMessageRouter({
@@ -71,9 +73,11 @@ function createClientMessageRouter({
   getClipboardHandlers,
   getRecentDocsHandlers,
   getBookmarksHandlers,
+  getEmojiRecentsHandlers,
   getThemeHandlers,
   getSecretsHandlers,
   getScreenshotHandlers,
+  handleCanonicalHarnessEvent,
 }) {
 
   // Per-connection sub-factories for larger handler groups
@@ -137,6 +141,71 @@ function createClientMessageRouter({
       if (clientMsg.type === 'workspace:cache_push') {
         const stateCache = require('../workspace/state-cache');
         stateCache.save(clientMsg.workspaceId, clientMsg.state);
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_update_requested') {
+        try {
+          const registry = views.updateWorkspaceViewRegistry(session.projectRoot, clientMsg);
+          ws.send(JSON.stringify({
+            type: 'workspace:view_registry_updated',
+            registry,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'workspace:view_update_rejected',
+            message: err.message,
+          }));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_options_requested') {
+        try {
+          const options = views.getWorkspaceViewOptions(session.projectRoot);
+          ws.send(JSON.stringify({
+            type: 'workspace:view_options',
+            hiddenViews: options.hiddenViews,
+            availableTemplates: options.availableTemplates,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'workspace:view_update_rejected',
+            message: err.message,
+          }));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_restore_requested') {
+        try {
+          const registry = views.restoreWorkspaceView(session.projectRoot, clientMsg.viewId);
+          ws.send(JSON.stringify({
+            type: 'workspace:view_registry_updated',
+            registry,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'workspace:view_update_rejected',
+            message: err.message,
+          }));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_add_requested') {
+        try {
+          const registry = views.addWorkspaceView(session.projectRoot, clientMsg.templateId);
+          ws.send(JSON.stringify({
+            type: 'workspace:view_registry_updated',
+            registry,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'workspace:view_update_rejected',
+            message: err.message,
+          }));
+        }
         return;
       }
 
@@ -214,88 +283,39 @@ function createClientMessageRouter({
         return;
       }
 
-      // Prompt - look up wire from global registry
+      // Prompt - route through server-owned thread runtime acceptance
       if (clientMsg.type === 'prompt') {
-        // SPEC-26b: scope comes from clientMsg or the session's active scope.
-        const scope = clientMsg.scope === 'project' ? 'project' : (session.currentScope || 'view');
-        console.log('[WS] PROMPT received:', clientMsg.user_input?.slice(0, 50), 'threadId:', clientMsg.threadId?.slice(0,8), 'scope:', scope);
-
-        // Get wire from global registry using threadId from message
-        const threadId = clientMsg.threadId;
-        let wire = threadId ? getWireForThread(threadId) : session.wire;
-
-        console.log('[WS] Thread:', threadId?.slice(0,8), 'Wire found:', !!wire);
-
-        // Dead-wire recovery: if a threadId is present but the wire is missing,
-        // attempt to reopen/resume the thread through the same thread:open-assistant
-        // path before giving up.
-        if (!wire && threadId) {
-          const threadState = ThreadWebSocketHandler.getState(ws);
-          const manager = threadState?.threadManagers?.[scope];
-          if (manager) {
-            const thread = await manager.getThread(threadId);
-            if (thread) {
-              console.log('[WS] Recovering dead wire for thread:', threadId.slice(0,8));
-              try {
-                wire = await spawnAndSetupWire({
-                  ws,
-                  session,
-                  wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
-                  threadId,
-                  scope,
-                  projectRoot: session.projectRoot || projectRoot
-                });
-              } catch (err) {
-                console.error('[WS] Wire recovery failed:', err);
-              }
-            }
-          }
-        }
-
-        if (!wire) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active wire for this thread. Please reopen the thread.', threadId, recoverable: false }));
-          return;
-        }
-
-        // Track message in thread (need to ensure thread is "open" for this ws)
-        const threadState = ThreadWebSocketHandler.getState(ws);
-        if (threadState && threadId && !threadState.threadIds?.[scope]) {
-          // This connection doesn't have this thread open for this scope - set it
-          console.log(`[WS] Setting ${scope} thread for this connection:`, threadId.slice(0,8));
-          threadState.threadIds[scope] = threadId;
-        }
-
-        await ThreadWebSocketHandler.handleMessageSend(ws, {
-          content: clientMsg.user_input,
-          scope
+        await threadRuntimeController.acceptPromptThroughRuntime({
+          ws,
+          session,
+          clientMsg,
+          wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+          projectRoot: session.projectRoot || projectRoot,
+          spawnAndSetupWire,
+          handleCanonicalHarnessEvent,
         });
-        console.log('[WS] Message tracked in thread');
+        return;
+      }
 
-        // Send to wire — new harness wires use ACP sendMessage, legacy uses Kimi-wire format
-        session.pendingUserInput = clientMsg.user_input;
-        if (wire._sendMessage) {
-          console.log('[WS] Sending via harness ACP sendMessage');
-          (async () => {
-            try {
-              for await (const _ of wire._sendMessage(clientMsg.user_input, {})) {
-                // Events flow via compatibleStdout → setupWireHandlers; just drain the iterator
-              }
-            } catch (err) {
-              console.error('[WS] Harness sendMessage failed:', err);
-            }
-          })();
-        } else {
-          const id = generateId();
-          const promptParams = { user_input: clientMsg.user_input };
-          if (session.pendingSystemContext) {
-            promptParams.system = session.pendingSystemContext;
-            session.pendingSystemContext = null;
-            console.log('[WS] Injecting system context on first prompt');
-          }
-          console.log('[WS] Sending to wire with id:', id);
-          sendToWire(wire, 'prompt', promptParams, id);
-          console.log('[WS] Prompt sent to wire');
-        }
+      if (clientMsg.type === 'thread:warm') {
+        await threadRuntimeController.warmRuntimeForIntent({
+          ws,
+          session,
+          clientMsg,
+          wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+          projectRoot: session.projectRoot || projectRoot,
+          spawnAndSetupWire,
+        });
+        return;
+      }
+
+      if (clientMsg.type === 'turn:stop') {
+        await threadRuntimeController.stopRuntimeTurn({
+          ws,
+          session,
+          clientMsg,
+          handleCanonicalHarnessEvent,
+        });
         return;
       }
 
@@ -345,6 +365,16 @@ function createClientMessageRouter({
 
       if (clientMsg.type.startsWith('bookmarks:')) {
         const handler = getBookmarksHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Emoji recents manager ----
+
+      if (clientMsg.type.startsWith('emoji_recents:')) {
+        const handler = getEmojiRecentsHandlers()[clientMsg.type];
         if (handler) {
           await handler(ws, clientMsg);
           return;

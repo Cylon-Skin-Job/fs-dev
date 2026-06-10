@@ -14,7 +14,7 @@
     "gitlabProjectId": null,
     "gitlabNamespace": null,
     "repoDir": ".wiki-repo",
-    "contentDir": "ai/views/wiki-viewer/content/project",
-    "systemWikiDir": "ai/views/wiki-viewer/content/system"
+    "contentDir": "ai/views/wiki-viewer/Wiki",
+    "systemWikiDir": "ai/views/wiki-viewer/Wiki"
   }
 }

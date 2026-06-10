@@ -68,8 +68,20 @@
   padding: var(--space-sm, 8px) var(--space-xs, 4px);
   border-radius: var(--radius-lg, 8px);
   cursor: pointer;
-  transition: background 120ms ease;
+  transition: background 120ms ease, opacity 120ms ease, transform 120ms ease;
   gap: var(--space-xs, 4px);
+}
+
+.rv-workspace-ribbon-item.is-dragging {
+  opacity: 0.34;
+  transform: scale(0.96);
+  outline: 1px dashed rgba(var(--theme-primary-rgb, 0, 212, 255), 0.42);
+  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+}
+
+.rv-workspace-ribbon-item.is-drop-target {
+  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.16);
+  outline: 1px solid rgba(var(--theme-primary-rgb, 0, 212, 255), 0.36);
 }
 
 .rv-workspace-ribbon-item:hover {
@@ -146,6 +158,12 @@
   font-size: 14px;
 }
 
+.rv-workspace-ribbon-add-wrap {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .rv-workspace-ribbon-add {
   display: flex;
   flex-direction: column;
@@ -153,7 +171,6 @@
   justify-content: flex-start;
   width: 80px;
   padding: var(--space-sm, 8px) var(--space-xs, 4px);
-  margin-left: auto;
   background: transparent;
   border: 1px dashed var(--neutral-chrome-border, rgba(255, 255, 255, 0.2));
   border-radius: var(--radius-lg, 8px);
@@ -161,7 +178,6 @@
   cursor: pointer;
   transition: border-color 120ms ease, background 120ms ease;
   gap: var(--space-xs, 4px);
-  flex-shrink: 0;
 }
 
 .rv-workspace-ribbon-add:hover {
@@ -182,4 +198,120 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+.rv-workspace-ribbon-add-menu {
+  position: absolute;
+  top: calc(100% + var(--space-sm, 8px));
+  right: 0;
+  width: min(300px, calc(100vw - var(--space-xl, 24px) - var(--space-xl, 24px)));
+  max-height: min(420px, calc(100vh - var(--header-height, 60px) - var(--space-xl, 24px) - var(--space-xl, 24px)));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-surface, rgba(18, 22, 28, 0.96));
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-xl, 12px);
+  box-shadow: var(--shadow-xl, 0 18px 48px rgba(0, 0, 0, 0.45));
+  z-index: calc(var(--z-overlay, 1000) + 2);
+}
+
+.rv-workspace-ribbon-add-menu-section {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-workspace-ribbon-add-menu-title {
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  font-size: var(--font-xs, 11px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-workspace-ribbon-add-menu-list {
+  min-height: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: var(--space-xs, 4px);
+}
+
+.rv-workspace-ribbon-add-menu-item,
+.rv-workspace-ribbon-add-menu-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-md, 6px);
+  color: var(--text-primary, rgba(255, 255, 255, 0.9));
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-workspace-ribbon-add-menu-item:hover,
+.rv-workspace-ribbon-add-menu-action:hover:not(:disabled) {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+}
+
+.rv-workspace-ribbon-add-menu-item-icon,
+.rv-workspace-ribbon-add-menu-action .material-symbols-outlined {
+  flex: 0 0 auto;
+  color: var(--chrome-accent, var(--text-dim, rgba(255, 255, 255, 0.55)));
+  font-size: 20px;
+}
+
+.rv-workspace-ribbon-add-menu-item-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-workspace-ribbon-add-menu-empty {
+  padding: var(--space-md, 12px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  font-size: var(--font-sm, 13px);
+  text-align: center;
+}
+
+.rv-workspace-ribbon-add-menu-actions {
+  padding: var(--space-xs, 4px);
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-workspace-ribbon-add-menu-action:disabled {
+  color: var(--text-disabled, rgba(255, 255, 255, 0.32));
+  cursor: not-allowed;
+}
+
+.rv-workspace-ribbon-add-menu-action:disabled .material-symbols-outlined {
+  color: var(--text-disabled, rgba(255, 255, 255, 0.32));
+}
+
+.rv-workspace-ribbon-add-menu-badge {
+  margin-left: auto;
+  padding: 2px var(--space-xs, 4px);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  font-size: var(--font-xxs, 10px);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .rv-workspace-ribbon-grid {
+    gap: var(--space-sm, 8px);
+  }
+
+  .rv-workspace-ribbon-add-menu {
+    right: calc(0px - var(--space-xs, 4px));
+    width: min(280px, calc(100vw - var(--space-md, 12px) - var(--space-md, 12px)));
+  }
 }

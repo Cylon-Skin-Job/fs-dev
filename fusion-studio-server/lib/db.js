@@ -11,7 +11,9 @@ const fs = require('fs');
 // Resolved at module-load time so consumers (e.g. lib/startup.js) can read
 // the canonical DB path before initDb() runs. Single source of truth.
 // See docs/DB_RELOCATION_SPEC.md §3a.
-const DATA_DIR = path.join(__dirname, '..', 'data');
+const DATA_DIR = process.env.FUSION_APP_USER_DATA
+  ? path.join(path.resolve(process.env.FUSION_APP_USER_DATA), 'server-data')
+  : path.join(__dirname, '..', 'data');
 const DB_PATH = path.join(DATA_DIR, 'fusion.db');
 
 let instance = null;

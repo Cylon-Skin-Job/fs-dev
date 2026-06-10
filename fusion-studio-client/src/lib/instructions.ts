@@ -14,24 +14,25 @@ const SEGMENT_ICONS: Record<string, { icon: string; label: string }> = {
   todo:       { icon: 'list_alt_check', label: 'Update ToDo List' },
 };
 
-/** Map wire tool name to our segment type */
+const CANONICAL_TOOL_SEGMENTS: Record<string, SegmentType> = {
+  shell: 'shell',
+  read: 'read',
+  write: 'write',
+  edit: 'edit',
+  glob: 'glob',
+  grep: 'grep',
+  web_search: 'web_search',
+  fetch: 'fetch',
+  subagent: 'subagent',
+  todo: 'todo',
+};
+
+/** Map canonical tool name to our segment type */
 export function toolNameToSegmentType(toolName: string): SegmentType {
-  const map: Record<string, SegmentType> = {
-    Shell: 'shell',
-    ReadFile: 'read',
-    WriteFile: 'write',
-    EditFile: 'edit',
-    StrReplaceFile: 'edit',
-    Glob: 'glob',
-    Grep: 'grep',
-    SearchWeb: 'web_search',
-    FetchURL: 'fetch',
-    Agent: 'subagent',
-    Task: 'subagent',
-    SetTodoList: 'todo',
-    TodoWrite: 'todo',
-  };
-  return map[toolName] || 'read';
+  const segType = CANONICAL_TOOL_SEGMENTS[toolName];
+  if (segType) return segType;
+  console.warn(`[toolNameToSegmentType] Unknown canonical tool name: "${toolName}"`);
+  return 'read';
 }
 
 export { SEGMENT_ICONS };

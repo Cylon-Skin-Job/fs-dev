@@ -58,9 +58,9 @@
   font-size: 20px;
 }
 
-/* When the CLI picker dropdown is triggered from the sidebar's "New Thread"
-   button, center it under the button. 16px sidebar padding + ~40px button
-   height + 4px gap puts the top at ~60px. */
+/* In multi-harness configs, center the picker under the sidebar's New Thread
+   button. 16px sidebar padding + ~40px button height + 4px gap puts the top
+   at ~60px. */
 .rv-sidebar .rv-cli-picker-dropdown {
   top: 60px;
   left: 50%;

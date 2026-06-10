@@ -39,6 +39,21 @@
   background: var(--sidebar-surface-bg, #161616);
 }
 
+.rv-file-hidden-toggle {
+  background: var(--sidebar-surface-bg, #161616);
+  border-color: var(--file-viewer-chrome-border, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  color: var(--text-dim, #9ca3af);
+}
+
+.rv-file-hidden-toggle:hover,
+.rv-file-hidden-toggle[aria-pressed="true"] {
+  color: var(--text-white, #ffffff);
+}
+
+.rv-file-hidden-toggle[aria-pressed="true"] .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1;
+}
+
 /* ── Open file: same surface as document code canvas ── */
 .rv-file-viewer {
   background: var(--document-bg, #161616);

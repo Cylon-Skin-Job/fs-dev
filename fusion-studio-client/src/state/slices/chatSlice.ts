@@ -70,7 +70,7 @@ function writeChatState(
  * for no-op-checking. Returns null if scope='project' and no thread is active.
  */
 function resolveThreadId(state: AppState, scope: Scope, threadId: string | null): string | null {
-  if (scope === 'view') return null;
+  if (scope === 'view') return threadId ?? state.currentThreadIds.view;
   return threadId ?? state.currentThreadIds.project;
 }
 
@@ -241,6 +241,20 @@ export function createChatSlice(set: Set, get: Get) {
         scope,
         threadId,
         user_input: text,
+      }));
+    },
+
+    warmThread: (scope: Scope, threadIdOpt?: string | null) => {
+      const state = get();
+      const socket = state.ws;
+      if (!socket || socket.readyState !== WebSocket.OPEN) return;
+      if (state.currentScope !== scope) return;
+      const threadId = resolveThreadId(state, scope, threadIdOpt ?? null);
+      if (!threadId) return;
+      socket.send(JSON.stringify({
+        type: 'thread:warm',
+        scope,
+        threadId,
       }));
     },
   };

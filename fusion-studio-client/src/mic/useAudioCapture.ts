@@ -21,7 +21,7 @@ interface UseAudioCaptureReturn {
   maxDuration: number;
 }
 
-const DEFAULT_MAX_DURATION = 30;
+const DEFAULT_MAX_DURATION = 60;
 
 /**
  * Find the best microphone device - prefers built-in Mac microphone over Continuity (iPhone)
@@ -133,6 +133,17 @@ export function useAudioCapture({
   const sendForTranscription = useCallback(async (audioBlob: Blob) => {
     setRecorderState('processing');
 
+    // Defensive: reject empty or near-empty recordings client-side so the
+    // user gets a clear message instead of a cryptic server error.
+    if (audioBlob.size < 1024) {
+      console.warn('[VoiceRecorder] Audio blob too small:', audioBlob.size, 'bytes');
+      setRecorderState('permission_denied');
+      setErrorMessage('Recording appears to be silent or too short. Please try again.');
+      return;
+    }
+
+    console.log('[VoiceRecorder] Sending audio for transcription:', audioBlob.size, 'bytes');
+
     try {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.webm');
@@ -145,7 +156,8 @@ export function useAudioCapture({
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        const errText = await response.text().catch(() => `HTTP ${response.status}`);
+        throw new Error(errText);
       }
 
       const result = await response.json();
@@ -199,7 +211,7 @@ export function useAudioCapture({
         analyserRef.current.getByteFrequencyData(dataArray);
         const voiceBins = dataArray.slice(0, 20);
         const average = voiceBins.reduce((a, b) => a + b) / voiceBins.length;
-        const normalizedLevel = Math.min(average / 235, 1);
+        const normalizedLevel = Math.min(average / 80, 1);
         setAudioLevel(normalizedLevel);
         animationRef.current = requestAnimationFrame(updateLevel);
       };

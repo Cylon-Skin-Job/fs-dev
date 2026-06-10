@@ -1,6 +1,7 @@
 {
   "version": "1.0",
   "articles": [
-    { "id": "connectors", "title": "Connectors", "folder": "connectors", "guide": "Connectors_Guide.md" }
+    { "id": "connectors", "title": "Connectors", "folder": "connectors", "guide": "Connectors_Guide.md" },
+    { "id": "text-to-speech", "title": "Text-To-Speech", "folder": "Text-To-Speech", "guide": "Text-To-Speech.md" }
   ]
 }

@@ -48,14 +48,71 @@
   flex-shrink: 0;
   /* No border-left — the absolutely-positioned .rv-resize-handle[data-pane="rightCol"]
    * overlays this edge and provides the visible divider (and stays draggable). */
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
 }
 
 .rv-file-explorer {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 3rem;
   height: 100%;
   overflow-y: auto;
+}
+
+.rv-file-tree-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.rv-file-hidden-toggle {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.rv-file-hidden-toggle .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-file-tree-item--hidden-folder {
+  position: relative;
+  overflow: hidden;
+}
+
+.rv-file-tree-item--hidden-folder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  animation: rv-hidden-folder-flash 1800ms ease-in-out 600ms 1;
+}
+
+@keyframes rv-hidden-folder-flash {
+  0% { opacity: 0; }
+  33.333% { opacity: 1; }
+  66.666% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .rv-file-explorer-loading,

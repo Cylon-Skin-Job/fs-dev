@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "description": "Verbs used to scope implicit replacement tails and preserve following actions.",
+  "replacementBoundaryVerbs": [
+    "complete",
+    "deploy",
+    "file",
+    "finish",
+    "open",
+    "push",
+    "review",
+    "run",
+    "submit",
+    "test"
+  ]
+}

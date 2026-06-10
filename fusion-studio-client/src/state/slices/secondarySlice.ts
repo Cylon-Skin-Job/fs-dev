@@ -40,7 +40,7 @@ export function createSecondarySlice(set: Set, get: Get) {
       });
       const ws = state.ws;
       if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'thread:open-assistant', scope: 'project', threadId }));
+        ws.send(JSON.stringify({ type: 'thread:open', scope: 'project', threadId }));
       }
       // STATE_OVERRIDE_SPEC: persist popup open + thread id.
       get()._persistViewPatch(state.currentPanel, {

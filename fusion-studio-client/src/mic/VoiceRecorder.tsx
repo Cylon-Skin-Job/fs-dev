@@ -1,6 +1,6 @@
 /**
  * @module VoiceRecorder
- * @role Voice recording interface with permission handling, 30s timer and audio visualization
+ * @role Voice recording interface with permission handling, 60s timer and audio visualization
  *
  * FLOW:
  * 1. First time: Show "Grant Permission" button → click → permission granted → immediately start recording

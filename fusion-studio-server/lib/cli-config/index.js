@@ -10,7 +10,13 @@ const {
   loadViewConfig,
   ensureWorkspaceFile,
 } = require('./loader');
-const { resolveCliConfig, resolveViewDelta } = require('./resolver');
+const {
+  resolveCliConfig,
+  resolveCliPolicy,
+  resolveDefaultHarness,
+  isHarnessAllowed,
+  resolveViewDelta,
+} = require('./resolver');
 
 module.exports = {
   CATALOG,
@@ -21,5 +27,8 @@ module.exports = {
   loadViewConfig,
   ensureWorkspaceFile,
   resolveCliConfig,
+  resolveCliPolicy,
+  resolveDefaultHarness,
+  isHarnessAllowed,
   resolveViewDelta,
 };

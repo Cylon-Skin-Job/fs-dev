@@ -1,0 +1,156 @@
+{
+  "version": "1.0",
+  "description": "User-editable deterministic speech-to-text replacement rules. Longer matches should run before shorter matches.",
+  "rules": [
+    {
+      "id": "github-lowercase",
+      "match": "github",
+      "replace": "GitHub",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "gitlab-lowercase",
+      "match": "gitlab",
+      "replace": "GitLab",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "github-get-hub",
+      "match": "get hub",
+      "replace": "GitHub",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "github-git-hub",
+      "match": "git hub",
+      "replace": "GitHub",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "gitlab-get-lab",
+      "match": "get lab",
+      "replace": "GitLab",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "gitlab-git-lab",
+      "match": "git lab",
+      "replace": "GitLab",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "claude-code-clod-co",
+      "match": "clod co",
+      "replace": "Claude Code",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "claude-code-claude-co",
+      "match": "Claude Co",
+      "replace": "Claude Code",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "claude-clod",
+      "match": "clod",
+      "replace": "Claude",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "unlessPrecededBy": [
+        "dirt"
+      ],
+      "unlessFollowedBy": [
+        "stomping"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "kimi-kimmy-kay-too",
+      "match": "Kimmy Kay Too",
+      "replace": "KIMI 2",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "kimi-kimmy",
+      "match": "Kimmy",
+      "replace": "KIMI",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "qwen-gwen",
+      "match": "gwen",
+      "replace": "Qwen",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "fusion-studio",
+      "match": "fusion studio",
+      "replace": "Fusion Studio",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "webgpu",
+      "match": "web gpu",
+      "replace": "WebGPU",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "transformers-js",
+      "match": "transformers js",
+      "replace": "Transformers.js",
+      "caseSensitive": false,
+      "wholePhrase": true,
+      "enabled": true
+    },
+    {
+      "id": "finish-fisnish",
+      "match": "fisnish",
+      "replace": "finish",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "chrome",
+      "match": "chrome",
+      "replace": "Chrome",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    },
+    {
+      "id": "smol",
+      "match": "smol",
+      "replace": "Smol",
+      "caseSensitive": false,
+      "wholeWord": true,
+      "enabled": true
+    }
+  ]
+}

@@ -154,6 +154,19 @@ class ThreadManager {
   }
 
   /**
+   * Merge and persist per-thread harness configuration.
+   * @param {string} threadId
+   * @param {object} patch
+   */
+  async updateHarnessConfig(threadId, patch) {
+    const entry = await this.index.get(threadId);
+    if (!entry) return null;
+
+    const harnessConfig = { ...(entry.harnessConfig || {}), ...patch };
+    return this.index.update(threadId, { harnessConfig });
+  }
+
+  /**
    * List all threads (MRU order)
    * @returns {Promise<Array<{threadId: string, entry: import('./types').ThreadEntry}>>}
    */

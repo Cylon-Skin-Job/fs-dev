@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "description": "Strong reset/removal phrases for self-correction.",
+  "removalIndicators": [
+    "remove",
+    "delete",
+    "drop",
+    "I didn't mean",
+    "I don't mean",
+    "not"
+  ],
+  "strongResetIndicators": [
+    "scratch that",
+    "strike that",
+    "delete that",
+    "ignore that",
+    "forget that",
+    "no scratch that"
+  ]
+}

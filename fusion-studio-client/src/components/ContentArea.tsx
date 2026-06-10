@@ -57,7 +57,7 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
     );
   }
 
-  // Track 2: app container — user-built Node servers, origin-locked, collapsible chrome
+  // Track 2: local custom iframe — user-built local servers, origin-locked, collapsible chrome
   if (config?.type === 'custom') {
     return (
       <main className="rv-content-area">

@@ -1,52 +1,84 @@
 /**
  * @module PageViewer
- * @role Center column — renders guide or article markdown
- * @reads wikiStore: guideContent, articleContent, loading, activeArticle, activeArticleFile, showGuide
+ * @role Center column — renders the selected wiki PAGE.md
+ * @reads wikiStore: root, viewedPath, viewedPagePath, selectedContent, loading
  *
- * No tabs, no breadcrumbs. Header shows article name + back/forward nav.
+ * No tabs, no breadcrumbs. Header shows node name + back/forward nav.
  */
 
 import { useCallback, useMemo } from 'react';
 import { markdownToHtml } from '../../lib/transforms';
-import { useWikiStore } from '../../state/wikiStore';
+import { parseWikiPage, type WikiFrontmatter } from '../../lib/wiki-frontmatter';
+import { findWikiNodeByPath, useWikiStore } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
+const METADATA_SECTIONS: Array<{ key: string; label: string }> = [
+  { key: 'incoming-edges', label: 'Incoming Edges' },
+  { key: 'outgoing-edges', label: 'Outgoing Edges' },
+  { key: 'source-files', label: 'Source Files' },
+  { key: 'connected-skills', label: 'Connected Skills' },
+  { key: 'related-trigger-files', label: 'Related Trigger Files' },
+];
+
+function WikiPageHeader({ frontmatter }: { frontmatter: WikiFrontmatter | null }) {
+  if (!frontmatter?.name && !frontmatter?.description) return null;
+
+  return (
+    <div className="rv-wiki-page-frontmatter-header">
+      {frontmatter.name && <h1>{frontmatter.name}</h1>}
+      {frontmatter.description && <p>{frontmatter.description}</p>}
+    </div>
+  );
+}
+
+function WikiMetadataFooter({ frontmatter }: { frontmatter: WikiFrontmatter | null }) {
+  if (!frontmatter) return null;
+
+  const sections = METADATA_SECTIONS.map((section) => ({
+    ...section,
+    items: frontmatter.metadata[section.key] || [],
+  }));
+
+  return (
+    <div className="rv-wiki-page-metadata-footer">
+      {sections.map((section) => (
+        <section key={section.key}>
+          <h2>{section.label}</h2>
+          {section.items.length > 0 ? (
+            <ul>
+              {section.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>None</p>
+          )}
+        </section>
+      ))}
+    </div>
+  );
+}
+
 export function PageViewer() {
-  const activeArticle = useWikiStore((s) => s.activeArticle);
-  const activeArticleFile = useWikiStore((s) => s.activeArticleFile);
-  const showGuide = useWikiStore((s) => s.showGuide);
-  const guideContent = useWikiStore((s) => s.guideContent);
-  const articleContent = useWikiStore((s) => s.articleContent);
+  const root = useWikiStore((s) => s.root);
+  const viewedPath = useWikiStore((s) => s.viewedPath);
+  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
+  const selectedContent = useWikiStore((s) => s.selectedContent);
   const loading = useWikiStore((s) => s.loading);
   const error = useWikiStore((s) => s.error);
   const historyIndex = useWikiStore((s) => s.historyIndex);
   const history = useWikiStore((s) => s.history);
   const goBack = useWikiStore((s) => s.goBack);
   const goForward = useWikiStore((s) => s.goForward);
-  const articlesBySection = useWikiStore((s) => s.articlesBySection);
-  const activeSection = useWikiStore((s) => s.activeSection);
 
-  const getArticleTitle = useCallback(() => {
-    const articles = articlesBySection[activeSection] || [];
-    const article = articles.find((a) => a.id === activeArticle);
-    if (!article) return activeArticle;
-    if (activeArticleFile === '' || showGuide) return article.title;
-    // Derive title from filename for specific files
-    const name = activeArticleFile.replace(/\.md$/, '').replace(/_/g, ' ');
-    return name;
-  }, [articlesBySection, activeSection, activeArticle, activeArticleFile, showGuide]);
+  const selectedNode = useMemo(
+    () => findWikiNodeByPath(root, viewedPath),
+    [root, viewedPath]
+  );
 
-  // Build the filesystem-relative path for the current article/guide
-  const relativePath = useMemo(() => {
-    const articles = articlesBySection[activeSection] || [];
-    const article = articles.find((a) => a.id === activeArticle);
-    if (!article) return '';
-    const fileName = showGuide || activeArticleFile === ''
-      ? (article.guide || `${article.id}_Guide.md`)
-      : activeArticleFile;
-    return `${activeSection}/${article.folder}/${fileName}`;
-  }, [articlesBySection, activeSection, activeArticle, showGuide, activeArticleFile]);
+  const title = selectedNode?.label || 'Wiki';
+  const relativePath = viewedPagePath;
 
   // Intercept wiki-internal links
   const handleContentClick = useCallback((e: React.MouseEvent) => {
@@ -62,20 +94,19 @@ export function PageViewer() {
     // For now, let them behave as normal links
   }, []);
 
-  if (!activeArticle) {
+  if (!selectedNode) {
     return (
       <div className="rv-wiki-page-viewer">
         <div className="rv-wiki-page-empty">
           <span className="material-symbols-outlined">full_coverage</span>
-          <p>Select an article to view</p>
+          <p>Select a wiki page to view</p>
         </div>
       </div>
     );
   }
 
-  const rendered = showGuide || activeArticleFile === ''
-    ? markdownToHtml(guideContent)
-    : markdownToHtml(articleContent);
+  const parsedPage = useMemo(() => parseWikiPage(selectedContent), [selectedContent]);
+  const rendered = markdownToHtml(parsedPage.body);
 
   return (
     <div className="rv-wiki-page-viewer" onClick={handleContentClick}>
@@ -97,7 +128,7 @@ export function PageViewer() {
         >
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
-        <span className="rv-wiki-breadcrumb">{getArticleTitle()}</span>
+        <span className="rv-wiki-breadcrumb">{title}</span>
         <div className="rv-wiki-nav-actions">
           {relativePath && (
             <>
@@ -130,10 +161,11 @@ export function PageViewer() {
         <div className="rv-wiki-page-loading">Loading...</div>
       )}
 
-      <div
-        className="rv-wiki-page-content rv-document-surface"
-        dangerouslySetInnerHTML={{ __html: rendered as string }}
-      />
+      <div className="rv-wiki-page-content rv-document-surface">
+        <WikiPageHeader frontmatter={parsedPage.frontmatter} />
+        <div dangerouslySetInnerHTML={{ __html: rendered as string }} />
+        <WikiMetadataFooter frontmatter={parsedPage.frontmatter} />
+      </div>
     </div>
   );
 }

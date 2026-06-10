@@ -1,0 +1,186 @@
+.rv-create-modal-scrim {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg, 24px);
+  background: var(--overlay-md, rgba(0, 0, 0, 0.55));
+  z-index: var(--z-modal, 1200);
+}
+
+.rv-create-modal {
+  width: min(560px, 100%);
+  max-height: min(720px, calc(100vh - var(--space-xl, 48px)));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-surface, rgba(18, 22, 28, 0.98));
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.16));
+  border-radius: var(--radius-xl, 14px);
+  box-shadow: var(--shadow-xl, 0 20px 60px rgba(0, 0, 0, 0.5));
+  color: var(--text-primary, rgba(255, 255, 255, 0.92));
+}
+
+.rv-create-modal-header,
+.rv-create-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md, 12px);
+  padding: var(--space-md, 16px);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-create-modal-footer {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-bottom: 0;
+  justify-content: flex-end;
+}
+
+.rv-create-modal-header h2 {
+  margin: 0;
+  font-size: var(--font-lg, 18px);
+}
+
+.rv-create-modal-header p {
+  margin: var(--space-xs, 4px) 0 0;
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-sm, 13px);
+}
+
+.rv-create-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-md, 6px);
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  cursor: pointer;
+}
+
+.rv-create-modal-close:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, rgba(255, 255, 255, 0.92));
+}
+
+.rv-create-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 14px);
+  overflow-y: auto;
+  padding: var(--space-md, 16px);
+}
+
+.rv-create-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 6px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.72));
+  font-size: var(--font-sm, 13px);
+}
+
+.rv-create-modal-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-sm, 9px) var(--space-md, 12px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.16));
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg-base, rgba(8, 10, 14, 0.8));
+  color: var(--text-primary, rgba(255, 255, 255, 0.92));
+  font: inherit;
+}
+
+.rv-create-modal-section-title {
+  margin-bottom: var(--space-xs, 6px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-xs, 11px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rv-create-modal-loading {
+  padding: var(--space-md, 12px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+}
+
+.rv-create-modal-view-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs, 6px);
+}
+
+.rv-create-modal-view-option {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-xs, 6px);
+  padding: var(--space-sm, 8px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 6px);
+  background: var(--glass-xs, rgba(255, 255, 255, 0.03));
+  cursor: pointer;
+}
+
+.rv-create-modal-view-option .material-symbols-outlined {
+  color: var(--chrome-accent, rgba(255, 255, 255, 0.62));
+  font-size: 20px;
+}
+
+.rv-create-modal-view-label,
+.rv-create-modal-view-meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-create-modal-view-meta {
+  grid-column: 3;
+  color: var(--text-dim, rgba(255, 255, 255, 0.5));
+  font-size: var(--font-xxs, 11px);
+}
+
+.rv-create-modal-error {
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  border: 1px solid var(--danger-border, rgba(255, 92, 92, 0.35));
+  border-radius: var(--radius-md, 6px);
+  background: var(--danger-bg, rgba(255, 92, 92, 0.12));
+  color: var(--danger-text, #ffb4b4);
+  font-size: var(--font-sm, 13px);
+}
+
+.rv-create-modal-secondary,
+.rv-create-modal-primary {
+  padding: var(--space-sm, 8px) var(--space-md, 14px);
+  border-radius: var(--radius-md, 6px);
+  font: inherit;
+  cursor: pointer;
+}
+
+.rv-create-modal-secondary {
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.16));
+  background: transparent;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.72));
+}
+
+.rv-create-modal-primary {
+  border: 1px solid var(--theme-primary, rgba(82, 200, 255, 0.9));
+  background: var(--theme-primary, rgba(82, 200, 255, 0.2));
+  color: var(--text-primary, rgba(255, 255, 255, 0.92));
+}
+
+.rv-create-modal-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 560px) {
+  .rv-create-modal-view-list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -15,6 +15,7 @@ interface FolderNodeProps {
 export function FolderNode({ node, depth }: FolderNodeProps) {
   const expandedFolders = useFileStore((s) => s.expandedFolders);
   const folderChildren = useFileStore((s) => s.folderChildren);
+  const showHiddenFolders = useFileStore((s) => s.showHiddenFolders);
   const isLoading = useFileStore((s) => s.isLoading);
   const ws = usePanelStore((s) => s.ws);
   const wsRef = useRef(ws);
@@ -30,6 +31,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
   const isExpanded = expandedFolders.has(node.path);
   const children = folderChildren.get(node.path);
   const hasChildrenLoaded = children !== undefined;
+  const isHiddenFolder = node.name.startsWith('.');
   const paddingLeft = `${0.75 + depth * 1.25}rem`;
 
   // Auto-fetch children when:
@@ -64,6 +66,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
               type: 'file_tree_request',
               panel: 'file-viewer',
               path: node.path,
+              includeHiddenFolders: showHiddenFolders,
             }));
             // Timeout after 5 seconds
             setTimeout(() => {
@@ -84,13 +87,16 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
     }
     // Intentionally exclude 'ws' from deps - use wsRef to avoid re-triggering
      
-  }, [isExpanded, hasChildrenLoaded, node.path, node.hasChildren]);
+  }, [isExpanded, hasChildrenLoaded, node.path, node.hasChildren, showHiddenFolders]);
 
   // Icon logic per spec
   let icon: string;
   let iconClass: string;
   if (node.isSymlink) {
     icon = 'folder_special';
+    iconClass = 'rv-tree-icon';
+  } else if (isHiddenFolder) {
+    icon = 'folder_eye';
     iconClass = 'rv-tree-icon';
   } else if (isExpanded) {
     icon = 'folder_open';
@@ -120,7 +126,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
   return (
     <div className="folder-node">
       <div
-        className={`rv-file-tree-item${showLoading ? ' disabled' : ''}`}
+        className={`rv-file-tree-item${showLoading ? ' disabled' : ''}${isHiddenFolder ? ' rv-file-tree-item--hidden-folder' : ''}`}
         style={{ '--tree-indent': paddingLeft } as React.CSSProperties}
         onClick={handleClick}
       >

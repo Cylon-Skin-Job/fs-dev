@@ -1,33 +1,26 @@
 /**
  * Wire Message Router — per-connection router for wire protocol messages.
  *
- * Extracted from server.js per SPEC-01d. Handles the 10-case event switch
- * (TurnBegin, ContentPart, ToolCall, ToolCallPart, ToolResult, TurnEnd,
- * StepBegin, StatusUpdate, SubagentEvent, default), plus the four non-event fallthroughs
- * (request, response result, response error, unknown).
+ * Extracted from server.js per SPEC-01d.
  *
- * Chat events (turn_begin, content, thinking, tool_call, tool_result,
- * turn_end, status_update) are emitted to the event bus only — the
- * wire-broadcaster in lib/wire/wire-broadcaster.js subscribes and handles
+ * Chat events are handled through the canonical harness event bridge
+ * (handleCanonicalHarnessEvent) for direct canonical event delivery.
+ * The wire-broadcaster in lib/wire/wire-broadcaster.js subscribes and handles
  * client fan-out via threadId routing through wireRegistry.
  *
- * Non-chat events (step_begin, request, response, error, unknown) are
- * sent directly to the injected ws. They are per-connection transport
- * messages and do not flow through the bus.
+ * Non-chat events (request, response, error) are sent directly to the
+ * injected ws. They are per-connection transport messages and do not
+ * flow through the bus.
  *
  * Created once per WebSocket connection inside wss.on('connection').
  * Closes over the per-connection session and ws.
- *
- * SECURITY: checkSettingsBounce runs atomically inside the ToolResult
- * case. The bounce path now emits chat:tool_result (with isError: true)
- * so the broadcaster handles bounced tools uniformly — no more inline
- * ws.send in the bounce path.
  */
 
 const { v4: generateId } = require('uuid');
 const { resolveScope } = require('../chat-scope');
-const { normalizeKimiToolResult } = require('../harness/kimi/display-normalizer');
 const { ThreadWebSocketHandler } = require('../thread');
+const { createCanonicalChatEventApplier } = require('./canonical-chat-event-applier');
+const { createCanonicalHarnessEventBridge } = require('./canonical-harness-event-bridge');
 
 /**
  * Create a per-connection wire message router.
@@ -44,8 +37,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
 
   /**
    * Touch the session for the current thread to reset the idle timeout.
-   * Called on wire activity (TurnBegin, ContentPart, ToolCall, ToolResult, StatusUpdate)
-   * so in-flight turns are not killed by the session idle timer.
+   * Called on wire activity so in-flight turns are not killed by the session idle timer.
    */
   function touchThreadSession() {
     const threadId = session.currentThreadId;
@@ -57,6 +49,29 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
     }
   }
 
+  /**
+   * Persist assistant message after turn end.
+   * Runtime-1R: accepts explicit threadId so persistence uses the in-flight
+   * turn's identity, not the currently selected/browsed thread.
+   */
+  async function persistAssistantMessage(wsRef, content, hasToolCalls, metadata, scope, explicitThreadId) {
+    await threadWebSocketHandler.addAssistantMessage(wsRef, content, hasToolCalls, metadata, scope, explicitThreadId);
+  }
+
+  const applier = createCanonicalChatEventApplier({
+    session,
+    emit,
+    resolveWorkspace: resolveScope,
+    touchThreadSession,
+    persistAssistantMessage,
+    checkSettingsBounce,
+    generateTurnId: () => generateId()
+  });
+
+  const bridge = createCanonicalHarnessEventBridge({
+    applyChatEvent: applier.applyChatEvent,
+  });
+
   function handleMessage(msg) {
     console.log('[Wire] Message received:', msg.method, msg.id ? `(id:${msg.id})` : '(event)');
 
@@ -66,249 +81,18 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
       return;
     }
 
-    // Event notifications
+    // Event notifications — raw Kimi chat event parsing has been retired.
+    // Chat events now flow through handleCanonicalHarnessEvent (direct canonical
+    // event delivery) only. This path handles truly generic non-chat transport
+    // messages or visible errors.
     if (msg.method === 'event' && msg.params) {
       const { type: eventType, payload } = msg.params;
       console.log('[Wire] Event:', eventType);
 
       switch (eventType) {
-        case 'TurnBegin':
-          touchThreadSession();
-          // Ignore spurious startup turns (Gemini emits one on ACP session creation)
-          if (!payload?.user_input && !session.pendingUserInput) {
-            console.log('[Wire] Ignoring spurious TurnBegin (no user input)');
-            break;
-          }
-          session.currentTurn = {
-            id: generateId(),
-            text: '',
-            userInput: payload?.user_input || session.pendingUserInput || ''
-          };
-          session.pendingUserInput = null;
-          session.hasToolCalls = false;
-          session.assistantParts = [];  // Reset parts for new exchange
-          emit('chat:turn_begin', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn.id, userInput: session.currentTurn.userInput });
-          break;
-
-        case 'ContentPart':
-          touchThreadSession();
-          if (payload?.type === 'text' && session.currentTurn) {
-            session.currentTurn.text += payload.text;
-
-            // Combine consecutive text parts
-            const lastPart = session.assistantParts[session.assistantParts.length - 1];
-            if (lastPart && lastPart.type === 'text') {
-              lastPart.content += payload.text;
-            } else {
-              session.assistantParts.push({
-                type: 'text',
-                content: payload.text
-              });
-            }
-
-            emit('chat:content', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn.id, text: payload.text });
-          } else if (payload?.type === 'think') {
-            // Track thinking separately (not combined with text)
-            const lastPart = session.assistantParts[session.assistantParts.length - 1];
-            if (lastPart && lastPart.type === 'think') {
-              lastPart.content += payload.think || '';
-            } else {
-              session.assistantParts.push({
-                type: 'think',
-                content: payload.think || ''
-              });
-            }
-            emit('chat:thinking', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn?.id, text: payload.think || '' });
-          }
-          break;
-
-        case 'ToolCall':
-          touchThreadSession();
-          session.hasToolCalls = true;
-          session.activeToolId = payload?.id || '';
-          session.toolArgs[session.activeToolId] = '';
-          // Start tracking tool call for history.json
-          session.assistantParts.push({
-            type: 'tool_call',
-            toolCallId: session.activeToolId,  // Include ID for matching
-            name: payload?.function?.name || 'unknown',
-            arguments: {},
-            result: {
-              output: '',
-              display: [],
-              isError: false
-            }
-          });
-          emit('chat:tool_call', { workspace: resolveScope(session), threadId: session.currentThreadId, turnId: session.currentTurn?.id, toolName: payload?.function?.name || 'unknown', toolCallId: session.activeToolId });
-          break;
-
-        case 'ToolCallPart':
-          touchThreadSession();
-          if (session.activeToolId && payload?.arguments_part) {
-            session.toolArgs[session.activeToolId] += payload.arguments_part;
-            emit('chat:tool_call_args', {
-              workspace: resolveScope(session),
-              threadId: session.currentThreadId,
-              turnId: session.currentTurn?.id,
-              toolCallId: session.activeToolId,
-              argsChunk: payload.arguments_part
-            });
-          }
-          break;
-
-        case 'ToolResult': {
-          touchThreadSession();
-          const toolCallId = payload?.tool_call_id || '';
-          const fullArgs = session.toolArgs[toolCallId] || '';
-          let parsedArgs = {};
-          try { parsedArgs = JSON.parse(fullArgs); } catch (_) {}
-          delete session.toolArgs[toolCallId];
-
-          // --- Hardwired enforcement: settings/ folder write-lock ---
-          const toolNameForBounce = payload?.function?.name || '';
-          const bounce = checkSettingsBounce(toolNameForBounce, parsedArgs);
-          if (bounce) {
-            emit('system:tool_bounced', {
-              workspace: resolveScope(session),
-              threadId: session.currentThreadId,
-              toolName: toolNameForBounce,
-              filePath: parsedArgs.file_path,
-              reason: bounce.message
-            });
-            // Emit chat:tool_result for bounced tools so the broadcaster
-            // handles delivery uniformly. Same shape as a normal tool_result
-            // but with isError=true and the bounce message as output.
-            emit('chat:tool_result', {
-              workspace: resolveScope(session),
-              threadId: session.currentThreadId,
-              turnId: session.currentTurn?.id,
-              toolCallId,
-              toolName: toolNameForBounce,
-              toolArgs: parsedArgs,
-              toolOutput: bounce.message,
-              toolStatus: bounce.message,
-              toolDisplay: [],
-              returnedDiff: false,
-              isError: true
-            });
-            break;
-          }
-          // --- End enforcement ---
-
-          const normalizedResult = normalizeKimiToolResult(payload?.return_value || {});
-
-          // Find and update the corresponding tool_call part
-          const toolCallPart = session.assistantParts.find(
-            p => p.type === 'tool_call' && p.toolCallId === toolCallId
-          );
-          if (toolCallPart) {
-            toolCallPart.arguments = parsedArgs;
-            toolCallPart.result = {
-              output: normalizedResult.output,
-              statusMessage: normalizedResult.statusMessage,
-              display: normalizedResult.display,
-              returnedDiff: normalizedResult.returnedDiff,
-              isError: normalizedResult.isError,
-              error: normalizedResult.isError
-                ? (normalizedResult.output || normalizedResult.statusMessage || 'Tool failed')
-                : undefined,
-              files: normalizedResult.files
-            };
-          }
-
-          emit('chat:tool_result', {
-            workspace: resolveScope(session),
-            threadId: session.currentThreadId,
-            turnId: session.currentTurn?.id,
-            toolCallId,
-            toolName: payload?.function?.name,
-            toolArgs: parsedArgs,
-            toolOutput: normalizedResult.output,
-            toolStatus: normalizedResult.statusMessage,
-            toolDisplay: normalizedResult.display,
-            returnedDiff: normalizedResult.returnedDiff,
-            isError: normalizedResult.isError
-          });
-          break;
-        }
-
-        case 'SubagentEvent':
-          emit('chat:subagent_event', {
-            workspace: resolveScope(session),
-            threadId: session.currentThreadId,
-            turnId: session.currentTurn?.id,
-            parentToolCallId: payload?.parent_tool_call_id || '',
-            agentId: payload?.agent_id || '',
-            subagentType: payload?.subagent_type || '',
-            eventType: payload?.event?.type || '',
-            eventPayload: payload?.event?.payload || {},
-          });
-          break;
-
-        case 'TurnEnd':
-          if (session.currentTurn) {
-            // Build metadata from tracked context/token usage
-            const metadata = {
-              contextUsage: session.contextUsage,
-              tokenUsage: session.tokenUsage,
-              messageId: session.messageId,
-              planMode: session.planMode,
-              capturedAt: Date.now()
-            };
-
-            // Save assistant message to CHAT.md (with metadata)
-            // Note: SQLite persistence is handled by audit-subscriber listening to chat:turn_end
-            // SPEC-26b: forward session.currentScope so the assistant message lands on the right scope's thread.
-            threadWebSocketHandler.addAssistantMessage(
-              ws,
-              session.currentTurn.text,
-              session.hasToolCalls,
-              metadata,
-              session.currentScope || 'view'
-            );
-
-            emit('chat:turn_end', {
-              workspace: resolveScope(session),
-              threadId: session.currentThreadId,
-              turnId: session.currentTurn.id,
-              fullText: session.currentTurn.text,
-              hasToolCalls: session.hasToolCalls,
-              userInput: session.currentTurn.userInput,
-              parts: session.assistantParts
-            });
-
-            // Reset turn tracking
-            session.currentTurn = null;
-            session.assistantParts = [];
-            session.contextUsage = null;
-            session.tokenUsage = null;
-            session.messageId = null;
-            session.planMode = false;
-          }
-          break;
-
         case 'StepBegin':
           // Non-chat event — direct ws.send, not routed through the bus
           ws.send(JSON.stringify({ type: 'step_begin', stepNumber: payload?.n }));
-          break;
-
-        case 'StatusUpdate':
-          touchThreadSession();
-          // Track latest context/token usage for persistence
-          session.contextUsage = payload?.context_usage ?? null;
-          session.tokenUsage = payload?.token_usage ?? null;
-          session.messageId = payload?.message_id ?? null;
-          session.planMode = payload?.plan_mode ?? false;
-
-          // Flow audit metadata through event bus (subscriber will filter/persist)
-          emit('chat:status_update', {
-            workspace: resolveScope(session),
-            threadId: session.currentThreadId,
-            contextUsage: payload?.context_usage,
-            tokenUsage: payload?.token_usage,
-            messageId: payload?.message_id,
-            planMode: payload?.plan_mode
-          });
           break;
 
         default:
@@ -334,6 +118,18 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
 
     // Non-chat: errors
     else if (msg.id !== undefined && msg.error !== undefined) {
+      const errorMessage = msg.error?.message || '';
+      if (msg.error?.code === -32004 || /Authentication failed/i.test(errorMessage)) {
+        ws.send(JSON.stringify({
+          type: 'auth_error',
+          id: msg.id,
+          scope: session.currentScope || 'view',
+          threadId: session.currentThreadId,
+          message: errorMessage || 'Authentication failed. Run `kimi login` in your terminal.',
+          error: msg.error
+        }));
+        return;
+      }
       ws.send(JSON.stringify({ type: 'error', id: msg.id, error: msg.error }));
     }
 
@@ -343,7 +139,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
     }
   }
 
-  return { handleMessage };
+  return { handleMessage, handleCanonicalHarnessEvent: bridge.applyHarnessEvent };
 }
 
 module.exports = { createWireMessageRouter };

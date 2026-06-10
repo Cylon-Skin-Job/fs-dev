@@ -148,3 +148,164 @@
 .rv-tool-btn--tool {
   height: 48px;
 }
+
+.rv-view-context-menu {
+  position: fixed;
+  z-index: var(--z-popover, 320);
+  width: min(240px, calc(100vw - var(--space-lg, 24px)));
+  padding: var(--space-sm, 8px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-chrome-bg, #1a1a1a);
+  box-shadow: var(--shadow-medium, 0 12px 32px rgba(0, 0, 0, 0.42));
+  color: var(--text-primary, #ffffff);
+}
+
+.rv-view-context-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) var(--space-xs, 4px) var(--space-sm, 8px);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  margin-bottom: var(--space-xs, 4px);
+}
+
+.rv-view-context-icon {
+  color: var(--chrome-accent, var(--theme-primary));
+  font-size: var(--icon-size-md, 22px);
+}
+
+.rv-view-context-title-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rv-view-context-title,
+.rv-view-context-id {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-view-context-title {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--text-primary, #ffffff);
+}
+
+.rv-view-context-id {
+  font-size: var(--font-size-xs, 11px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+}
+
+.rv-view-context-action,
+.rv-view-context-save {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm, 7px);
+  background: transparent;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+  text-align: left;
+}
+
+.rv-view-context-action {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+}
+
+.rv-view-context-action--with-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+}
+
+.rv-view-context-action-icon {
+  color: var(--chrome-accent, var(--theme-primary));
+  font-size: var(--icon-size-sm, 18px);
+}
+
+.rv-view-context-action:hover:not(:disabled),
+.rv-view-context-save:hover:not(:disabled) {
+  background: rgba(var(--theme-primary-rgb), 0.12);
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-view-context-action:disabled,
+.rv-view-context-save:disabled {
+  cursor: not-allowed;
+  color: var(--text-muted, rgba(255, 255, 255, 0.32));
+}
+
+.rv-view-context-action--danger:not(:disabled) {
+  color: var(--error, #ef4444);
+}
+
+.rv-view-context-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 4px);
+  padding: var(--space-sm, 8px) var(--space-xs, 4px);
+}
+
+.rv-view-context-label {
+  font-size: var(--font-size-xs, 11px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+}
+
+.rv-view-context-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-sm, 7px);
+  background: var(--bg-surface, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #ffffff);
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+}
+
+.rv-view-context-input:focus {
+  outline: none;
+  border-color: var(--theme-primary, currentColor);
+}
+
+.rv-view-context-save {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  background: rgba(var(--theme-primary-rgb), 0.08);
+}
+
+.rv-view-context-section {
+  padding: var(--space-xs, 4px) 0;
+}
+
+.rv-view-context-section + .rv-view-context-section {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  margin-top: var(--space-xs, 4px);
+  padding-top: var(--space-sm, 8px);
+}
+
+.rv-view-context-section-title {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-xs, 11px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rv-view-context-empty {
+  padding: var(--space-sm, 8px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-view-context-error {
+  margin-top: var(--space-xs, 4px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  border-radius: var(--radius-sm, 7px);
+  background: var(--error-bg, rgba(239, 68, 68, 0.12));
+  color: var(--error, #ef4444);
+  font-size: var(--font-size-xs, 11px);
+}

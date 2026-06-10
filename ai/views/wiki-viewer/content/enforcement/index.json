@@ -1,7 +1,0 @@
-{
-  "version": "1.0",
-  "articles": [
-    { "id": "code-standards", "title": "Code Standards", "folder": "code-standards", "guide": "PAGE.md" },
-    { "id": "themes-and-state", "title": "Themes and State", "folder": "themes-and-state", "guide": "PAGE.md" }
-  ]
-}

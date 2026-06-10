@@ -13,7 +13,20 @@ export function WorkspaceTitle() {
     s.workspaces.find((w) => w.id === s.activeWorkspaceId) ?? null
   );
 
-  if (!activeWorkspace) return null;
+  if (!activeWorkspace) {
+    return (
+      <div className="rv-header-center">
+        <button
+          className="rv-header-center-title"
+          onClick={() => useWorkspaceStore.getState().toggleRibbon()}
+          type="button"
+          title="Open workspace ribbon"
+        >
+          <span className="rv-workspace-name">No workspace selected</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="rv-header-center">

@@ -1,7 +1,7 @@
 /**
  * @module viewSlice
  * @role Per-view UI state (sidebar collapse, pane widths, surface tints) and
- *       chat-header dropdown (CLI picker, thread jump) transient state.
+ *       chat-header dropdown (multi-harness picker, thread jump) transient state.
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
 import type { AppState, TintPath } from '../panelStoreTypes';

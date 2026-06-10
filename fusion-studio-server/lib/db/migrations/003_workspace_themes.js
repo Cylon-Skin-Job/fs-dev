@@ -118,11 +118,11 @@ exports.up = async function (knex) {
     title: 'Customization',
     content: `## How theming works
 
-Open Robin uses a simple approach: pick one accent color and one brightness level, and the entire interface updates to match. Every button, border, badge, and background derives from these two choices.
+Fusion Studio uses a simple approach: pick one accent color and one brightness level, and the entire interface updates to match. Every button, border, badge, and background derives from these two choices.
 
 ## System theme vs workspace themes
 
-The system theme is the baseline. It applies to the Robin system panel itself and to every workspace that hasn't been customized. Think of it as the default look.
+The system theme is the baseline. It applies to the Fusion Studio system panel itself and to every workspace that hasn't been customized. Think of it as the default look.
 
 Each workspace can optionally override the system theme with its own accent color. When a workspace inherits the system theme, changing the system color changes that workspace too. When a workspace has a custom theme, it keeps its own color regardless of system changes.
 
@@ -156,7 +156,7 @@ The full cascade is: **System → Workspace → View**. Each level only override
 
 ## What stays consistent
 
-The Robin system panel always uses the system theme. It never inherits workspace colors. This keeps the "control room" visually stable regardless of which workspace you're in.`,
+The Fusion Studio system panel always uses the system theme. It never inherits workspace colors. This keeps the "control room" visually stable regardless of which workspace you're in.`,
     context: 'Theme system: one accent color + one brightness preset = full visual identity. System theme stored in SQLite (system_theme table). Per-workspace overrides stored in workspace_themes table. Filesystem CSS at ai/views/settings/themes.css is a propagated copy, not source of truth. Three states per workspace: inheriting (matches system), custom (matches workspace_themes), diverged (hand-edited, matches neither). Apply button absorbs hand-edited CSS back into SQLite. Toggle preserves custom CSS in SQLite even when set to inherit.',
     tab: 'customization',
     description: 'Theme system, color picker, workspace overrides, and hand-editing CSS',

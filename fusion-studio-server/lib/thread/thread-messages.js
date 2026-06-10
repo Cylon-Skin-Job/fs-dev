@@ -24,7 +24,7 @@ function createMessageHandlers({ wsState }) {
     const state = wsState.get(ws);
     if (!state) {
       ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
-      return;
+      return false;
     }
 
     // SPEC-26b: scope comes from the message; default 'view' for backward
@@ -33,7 +33,7 @@ function createMessageHandlers({ wsState }) {
     const threadId = state.threadIds?.[scope];
     if (!threadId) {
       ws.send(JSON.stringify({ type: 'error', message: `No active ${scope} thread` }));
-      return;
+      return false;
     }
 
     const manager = state.threadManagers[scope];
@@ -56,27 +56,33 @@ function createMessageHandlers({ wsState }) {
         scope,
         content
       }));
+      return true;
 
     } catch (err) {
       console.error('[ThreadWS] Send message failed:', err);
       ws.send(JSON.stringify({ type: 'error', message: err.message }));
+      return false;
     }
   }
 
   /**
    * Add assistant message to thread (called after streaming completes).
    * SPEC-26b: scope-aware; caller passes scope from session.currentScope.
+   * Runtime-1R: if explicit threadId is provided, use it directly instead of
+   * resolving from mutable selection state. This prevents a passive browse
+   * from retargeting persistence of an in-flight turn.
    * @param {import('ws').WebSocket} ws
    * @param {string} content
    * @param {boolean} hasToolCalls
    * @param {object} [metadata] - Optional metadata (contextUsage, tokenUsage, etc.)
    * @param {'project'|'view'} [scope='view']
+   * @param {string} [explicitThreadId] - Optional explicit target thread ID
    */
-  async function addAssistantMessage(ws, content, hasToolCalls = false, metadata = null, scope = 'view') {
+  async function addAssistantMessage(ws, content, hasToolCalls = false, metadata = null, scope = 'view', explicitThreadId = null) {
     const state = wsState.get(ws);
     if (!state) return;
 
-    const threadId = state.threadIds?.[scope];
+    const threadId = explicitThreadId || state.threadIds?.[scope];
     if (!threadId) return;
 
     const manager = state.threadManagers[scope];

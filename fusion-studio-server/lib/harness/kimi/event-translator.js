@@ -50,8 +50,11 @@ class EventTranslator {
         return this.handleTurnEnd(timestamp);
       
       case 'StatusUpdate':
-        return this.handleStatusUpdate(payload);
-      
+        return this.handleStatusUpdate(payload, timestamp);
+
+      case 'SubagentEvent':
+        return this.handleSubagentEvent(payload, timestamp);
+
       default:
         return null;
     }
@@ -221,16 +224,49 @@ class EventTranslator {
 
   /**
    * @param {Record<string, unknown> | undefined} payload
-   * @returns {null}
+   * @param {number} timestamp
+   * @returns {import('../types').SubagentEvent}
    */
-  handleStatusUpdate(payload) {
-    // StatusUpdate doesn't emit a canonical event directly
-    // Instead, it updates state for the next TurnEnd
+  handleSubagentEvent(payload, timestamp) {
+    const parentToolCallId = String(payload?.parent_tool_call_id || '');
+    const agentId = String(payload?.agent_id || '');
+    const subagentType = String(payload?.subagent_type || '');
+    const subagentEventType = String(payload?.event?.type || '');
+    const rawPayload = payload?.event?.payload;
+    const subagentPayload = rawPayload && typeof rawPayload === 'object'
+      ? JSON.parse(JSON.stringify(rawPayload))
+      : {};
+
+    return {
+      type: 'subagent_event',
+      timestamp,
+      parentToolCallId,
+      agentId,
+      subagentType,
+      subagentEventType,
+      subagentPayload
+    };
+  }
+
+  /**
+   * @param {Record<string, unknown> | undefined} payload
+   * @param {number} timestamp
+   * @returns {import('../types').StatusUpdateEvent}
+   */
+  handleStatusUpdate(payload, timestamp) {
     this.state.contextUsage = payload?.context_usage ?? null;
     this.state.tokenUsage = payload?.token_usage ?? null;
     this.state.messageId = String(payload?.message_id || '');
     this.state.planMode = Boolean(payload?.plan_mode);
-    return null;
+
+    return {
+      type: 'status_update',
+      timestamp,
+      contextUsage: this.state.contextUsage,
+      tokenUsage: this.state.tokenUsage,
+      messageId: this.state.messageId,
+      planMode: this.state.planMode
+    };
   }
 }
 

@@ -25,6 +25,20 @@
  * @param {number} deps.REORDER_DELAY_MS - Delay for thread list refresh
  */
 const { search: searchExchanges } = require('./chat-search');
+const { threadRuntimeManager } = require('./thread-runtime-manager');
+const { resolveCliPolicy } = require('../cli-config');
+
+function getRuntimeKey(manager, scope, threadId) {
+  const key = {
+    workspaceId: manager.workspaceId,
+    scope,
+    threadId,
+  };
+  if (scope === 'view') {
+    key.viewId = manager.viewId;
+  }
+  return key;
+}
 
 function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReorderTimers, REORDER_DELAY_MS }) {
 
@@ -85,19 +99,19 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     // sortable. See generateThreadId() above for format.
     const threadId = generateThreadId();
     const name = msg.name || null;
-    const harnessId = msg.harnessId || 'kimi';
 
     try {
+      const policy = await resolveCliPolicy(manager.projectRoot);
+      if (msg.harnessId && !policy.allowedHarnesses.includes(msg.harnessId)) {
+        throw new Error(`Harness '${msg.harnessId}' is not allowed by ai/system/config/cli.json`);
+      }
+      const harnessId = msg.harnessId || policy.defaultHarness;
+
       // Create thread with harness selection
       const { threadId: createdId, entry } = await manager.createThread(threadId, name, {
         harnessId,
         harnessConfig: msg.harnessConfig
       });
-
-      // Set the harness mode for this thread
-      const { setThreadMode } = require('../harness/feature-flags');
-      const mode = harnessId === 'kimi' ? 'legacy' : 'new';
-      setThreadMode(threadId, mode);
 
       ws.send(JSON.stringify({
         type: 'thread:created',
@@ -111,7 +125,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       await sendThreadList(ws, scope);
 
       // Automatically open the new thread
-      await handleThreadOpen(ws, { threadId: createdId }, scope);
+      await handleThreadOpen(ws, { threadId: createdId }, scope, { closePrevious: true });
 
     } catch (err) {
       console.error('[ThreadWS] Create failed:', err);
@@ -126,8 +140,10 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {object} msg
    * @param {string} msg.threadId
    * @param {'project'|'view'} [scope='view']
+   * @param {object} [options]
+   * @param {boolean} [options.closePrevious=false]
    */
-  async function handleThreadOpen(ws, msg, scope = 'view') {
+  async function handleThreadOpen(ws, msg, scope = 'view', options = {}) {
     const state = wsState.get(ws);
     if (!state) {
       ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
@@ -148,10 +164,9 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    // Close currently active thread of THE SAME SCOPE if switching threads.
-    // The other scope's thread stays alive — this is the "two parallel
-    // chats" model.
-    if (state.threadIds[scope] && state.threadIds[scope] !== threadId) {
+    // Activation opens preserve the old same-scope close behavior. Browse opens
+    // only select/hydrate and must not kill, cool, warm, or retarget runtimes.
+    if (options.closePrevious && state.threadIds[scope] && state.threadIds[scope] !== threadId) {
       await closeThread(ws, scope);
     }
 
@@ -159,12 +174,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     // But only one wire process per thread (managed by ThreadManager)
 
     state.threadIds[scope] = threadId;
-
-    // Set harness mode based on thread's stored preference
-    const { setThreadMode } = require('../harness/feature-flags');
-    const harnessId = thread.entry?.harnessId || 'kimi';
-    const mode = harnessId === 'kimi' ? 'legacy' : 'new';
-    setThreadMode(threadId, mode);
+    threadRuntimeManager.ensureRuntime(getRuntimeKey(manager, scope, threadId));
 
     // Mark as resumed in index
     await manager.index.markResumed(threadId);
@@ -177,6 +187,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     const exchanges = richHistory?.exchanges || [];
     const lastExchange = exchanges.length > 0 ? exchanges[exchanges.length - 1] : null;
     const contextUsage = lastExchange?.metadata?.contextUsage ?? null;
+    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(manager, scope, threadId));
 
     console.log(`[ThreadWS] Opening ${scope} thread ${threadId.slice(0,8)}, exchanges: ${exchanges.length}, lastExchange metadata:`, lastExchange?.metadata);
     console.log(`[ThreadWS] Sending contextUsage:`, contextUsage);
@@ -189,6 +200,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       thread: thread.entry,
       history: history?.messages || [],  // Legacy format
       exchanges: exchanges,  // Rich format with tool calls
+      liveTurn,
       contextUsage  // Restore context usage from last exchange
     }));
 
@@ -211,7 +223,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
 
     pendingReorderTimers.set(ws, timer);
 
-    console.log(`[ThreadWS] Opened ${scope} thread ${threadId} (panel: ${state.panelId}, harness: ${harnessId}) - reorder in ${REORDER_DELAY_MS}ms`);
+    console.log(`[ThreadWS] Opened ${scope} thread ${threadId} (panel: ${state.panelId}, harness: ${thread.entry?.harnessId || 'unknown'}) - reorder in ${REORDER_DELAY_MS}ms`);
   }
 
   /**
@@ -257,7 +269,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     if (msg.threadId) {
       const existing = await manager.getThread(msg.threadId);
       if (existing) {
-        return handleThreadOpen(ws, msg, scope);
+        return handleThreadOpen(ws, msg, scope, { closePrevious: true });
       }
       // threadId provided but thread doesn't exist — fall through to create.
       // This handles the race where a client tries to resume a freshly-deleted
@@ -482,6 +494,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
   }
 
   return {
+    handleThreadOpen,
     handleThreadOpenAssistant,
     handleThreadRename,
     handleThreadDelete,

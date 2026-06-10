@@ -48,13 +48,11 @@ function createHarnessWsHandlers({ ws }) {
     },
 
     'harness:rollback'(_clientMsg) {
-      const { emergencyRollback } = require('../harness/compat');
-      emergencyRollback();
       ws.send(JSON.stringify({
-        type: 'harness:rollback_complete',
-        message: 'Emergency rollback triggered. All threads now use legacy mode.',
+        type: 'harness:mode_error',
+        message: 'Legacy runtime rollback has been retired. Use git checkpoint if you need to revert.',
       }));
-      console.log('[Harness] Emergency rollback triggered via WebSocket');
+      console.log('[Harness] Rollback requested but legacy mode has been retired');
     },
 
     async 'harness:list'(_clientMsg) {

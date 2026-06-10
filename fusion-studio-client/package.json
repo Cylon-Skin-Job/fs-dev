@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +11,72 @@
     "preview": "vite preview",
     "electron": "electron electron/main.cjs",
     "electron:dev": "npm run build && electron electron/main.cjs",
-    "download-pandoc": "node scripts/download-pandoc.cjs"
+    "download-pandoc": "node scripts/download-pandoc.cjs",
+    "download-gwen-model": "node scripts/download-gwen-model.cjs",
+    "download-whisper-model": "node scripts/download-whisper-model.cjs",
+    "generate-action-verbs": "node scripts/generate-action-verbs.cjs",
+    "prepare-ai-resources": "node scripts/prepare-ai-resources.cjs",
+    "electron:prepare": "npm run build && npm run prepare-ai-resources && npm run download-pandoc",
+    "electron:pack": "npm run electron:prepare && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --dir",
+    "electron:dist": "npm run electron:prepare && electron-builder"
+  },
+  "build": {
+    "appId": "com.fusionstudio.app",
+    "productName": "Fusion Studio",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "!electron/resources/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/resources",
+        "to": ".",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "../fusion-studio-server",
+        "to": "fusion-studio-server",
+        "filter": [
+          "server.js",
+          "config.js",
+          "package.json",
+          "lib/**/*",
+          "!data/**/*",
+          "!server-live.log",
+          "!test/**/*",
+          "!**/__tests__/**/*"
+        ]
+      },
+      {
+        "from": "../fusion-studio-server/node_modules",
+        "to": "fusion-studio-server/node_modules",
+        "filter": [
+          "**/*",
+          "!nodejs-whisper/cpp/whisper.cpp/models/*.bin"
+        ]
+      },
+      {
+        "from": "dist",
+        "to": "fusion-studio-client/dist",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "asarUnpack": [
+      "electron/resources/**/*"
+    ],
+    "mac": {
+      "identity": null,
+      "target": "dir"
+    }
   },
   "dependencies": {
     "@milkdown/crepe": "^7.20.0",
@@ -34,12 +100,14 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "electron": "^42.0.1",
+    "electron-builder": "^26.8.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wordnet-db": "^3.1.14"
   }
 }

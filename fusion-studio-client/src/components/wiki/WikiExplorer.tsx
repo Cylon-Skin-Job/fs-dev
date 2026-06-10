@@ -1,171 +1,172 @@
 /**
  * @module WikiExplorer
  * @role Top-level wiki-viewer panel component — three-column layout
- * @reads wikiStore: sections, articlesBySection, activeSection, activeArticle
+ * @reads wikiStore: root, viewedPagePath
  *
  * Renders: TopicList (left) | PageViewer (center) | EdgePanel (right)
- * Loads folder-driven structure: content/index.json → sections → articles → groups
+ * Discovers folders under ai/views/wiki-viewer/Wiki and loads each selected PAGE.md.
  */
 
 import { useCallback, useEffect, useRef } from 'react';
-import { usePanelData } from '../../hooks/usePanelData';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { usePanelStore } from '../../state/panelStore';
-import { useWikiStore } from '../../state/wikiStore';
+import { createWikiNode, createWikiRootNode, useWikiStore, type WikiNode, type WikiNodeKind } from '../../state/wikiStore';
+import type { FileTreeNode } from '../../types/file-explorer';
 import { TopicList } from './TopicList';
 import { PageViewer } from './PageViewer';
 import { EdgePanel } from './EdgePanel';
 
-const ROOT_INDEX = 'index.json';
+const MAX_WIKI_DEPTH = 4;
+
+function getDepthForPath(path: string): number {
+  if (!path) return 0;
+  return path.split('/').filter(Boolean).length;
+}
+
+function kindForDepth(depth: number): WikiNodeKind {
+  if (depth === 1) return 'section';
+  if (depth === 2) return 'article';
+  if (depth === 3) return 'sidebar-section';
+  return 'sidebar-article';
+}
+
+function foldersOnly(nodes: FileTreeNode[]): FileTreeNode[] {
+  return nodes
+    .filter((node) => node.type === 'folder')
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function buildNodeTree(path: string, folderMap: Map<string, FileTreeNode[]>): WikiNode[] {
+  const folders = folderMap.get(path) || [];
+
+  return folders.map((folder) => {
+    const depth = getDepthForPath(folder.path);
+    return createWikiNode({
+      name: folder.name,
+      path: folder.path,
+      kind: kindForDepth(depth),
+      depth,
+      children: depth < MAX_WIKI_DEPTH ? buildNodeTree(folder.path, folderMap) : [],
+    });
+  });
+}
 
 export function WikiExplorer() {
   useViewLayoutStyles('wiki-viewer');
   const ws = usePanelStore((s) => s.ws);
   const activeWorkspaceId = usePanelStore((s) => s.activeWorkspaceId);
+  const pendingTreePathsRef = useRef<Set<string>>(new Set());
+  const folderMapRef = useRef<Map<string, FileTreeNode[]>>(new Map());
 
-  const sections = useWikiStore((s) => s.sections);
-  const articlesBySection = useWikiStore((s) => s.articlesBySection);
-  const activeSection = useWikiStore((s) => s.activeSection);
-  const activeArticle = useWikiStore((s) => s.activeArticle);
-  const activeArticleFile = useWikiStore((s) => s.activeArticleFile);
-  const showGuide = useWikiStore((s) => s.showGuide);
-  const setIndex = useWikiStore((s) => s.setIndex);
-  const setArticleGroups = useWikiStore((s) => s.setArticleGroups);
-  const setGuideContent = useWikiStore((s) => s.setGuideContent);
-  const setArticleContent = useWikiStore((s) => s.setArticleContent);
+  const root = useWikiStore((s) => s.root);
+  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
+  const setRoot = useWikiStore((s) => s.setRoot);
+  const setSelectedContent = useWikiStore((s) => s.setSelectedContent);
   const setLoading = useWikiStore((s) => s.setLoading);
   const setError = useWikiStore((s) => s.setError);
 
-  const loadedSectionsRef = useRef<Set<string>>(new Set());
+  const sendTreeRequest = useCallback((path: string) => {
+    const socket = usePanelStore.getState().ws;
+    if (!socket || socket.readyState !== WebSocket.OPEN) return;
+    pendingTreePathsRef.current.add(path);
+    socket.send(JSON.stringify({
+      type: 'file_tree_request',
+      panel: 'wiki-viewer',
+      path,
+    }));
+  }, []);
 
-  const onIndex = useCallback((content: string) => {
-    try {
-      const index = JSON.parse(content);
-      const sections = index.sections || [];
-      setIndex(sections, {});
-      loadedSectionsRef.current.clear();
-    } catch {
-      setError('Failed to parse wiki index');
-    }
-  }, [setIndex, setError]);
+  const sendContentRequest = useCallback((path: string) => {
+    const socket = usePanelStore.getState().ws;
+    if (!socket || socket.readyState !== WebSocket.OPEN) return;
+    socket.send(JSON.stringify({
+      type: 'file_content_request',
+      panel: 'wiki-viewer',
+      path,
+    }));
+  }, []);
 
-  const onFileContent = useCallback((path: string, content: string) => {
-    if (path === ROOT_INDEX) return;
+  const publishTreeIfReady = useCallback(() => {
+    if (pendingTreePathsRef.current.size > 0) return;
+    const children = buildNodeTree('', folderMapRef.current);
+    setRoot(createWikiRootNode(children));
+  }, [setRoot]);
 
-    const sectionMatch = path.match(/^([^/]+)\/index\.json$/);
-    if (sectionMatch) {
+  useEffect(() => {
+    if (!ws) return;
+
+    function handleMessage(event: MessageEvent) {
       try {
-        const idx = JSON.parse(content);
-        const sectionId = sectionMatch[1];
-        const articles = idx.articles || [];
-        useWikiStore.setState((state) => ({
-          articlesBySection: { ...state.articlesBySection, [sectionId]: articles },
-        }));
-        loadedSectionsRef.current.add(sectionId);
-      } catch {}
-      return;
-    }
+        const msg = JSON.parse(event.data);
+        if (msg.panel !== 'wiki-viewer') return;
 
-    const groupMatch = path.match(/^([^/]+)\/([^/]+)\/index\.json$/);
-    if (groupMatch) {
-      try {
-        const idx = JSON.parse(content);
-        const sectionId = groupMatch[1];
-        const folderName = groupMatch[2];
-        // Read fresh from the store: this callback is memoized without
-        // articlesBySection in its deps, so the closure value is the empty
-        // initial state. Using it meant the lookup always failed and groups
-        // were keyed by folderName instead of the article id — which only
-        // broke articles whose folder name != id (e.g. Coding-CLIs).
-        const article = useWikiStore.getState().articlesBySection[sectionId]?.find(
-          (a) => a.folder === folderName || a.id === folderName
-        );
-        const articleId = article?.id || folderName;
-        setArticleGroups(articleId, idx.groups || []);
-      } catch {}
-      return;
-    }
+        if (msg.type === 'file_tree_response') {
+          const path = msg.path || '';
+          if (!pendingTreePathsRef.current.has(path)) return;
 
-    const mdMatch = path.match(/^([^/]+)\/([^/]+)\/(.+\.md)$/);
-    if (mdMatch) {
-      const fileName = mdMatch[3];
-      const article = useWikiStore.getState().activeArticle;
-      const section = useWikiStore.getState().activeSection;
-      const file = useWikiStore.getState().activeArticleFile;
+          pendingTreePathsRef.current.delete(path);
 
-      const articles = useWikiStore.getState().articlesBySection[section] || [];
-      const articleMeta = articles.find((a) => a.id === article);
-      const expectedFolder = articleMeta?.folder || article;
-      if (mdMatch[1] !== section || mdMatch[2] !== expectedFolder) return;
+          if (!msg.success) {
+            setError(msg.error || `Failed to load wiki folder: ${path || 'Wiki'}`);
+            publishTreeIfReady();
+            return;
+          }
 
-      if (file === '') {
-        setGuideContent(content);
-      } else if (file === fileName) {
-        setArticleContent(content);
+          const folders = foldersOnly(msg.nodes || []);
+          folderMapRef.current.set(path, folders);
+
+          const depth = getDepthForPath(path);
+          if (depth < MAX_WIKI_DEPTH) {
+            folders.forEach((folder) => {
+              if (!folderMapRef.current.has(folder.path)) {
+                sendTreeRequest(folder.path);
+              }
+            });
+          }
+
+          publishTreeIfReady();
+          return;
+        }
+
+        if (msg.type === 'file_content_response') {
+          if (msg.path !== useWikiStore.getState().viewedPagePath) return;
+
+          if (!msg.success) {
+            setError(`Missing wiki page: ${msg.path}`);
+            return;
+          }
+
+          setSelectedContent(msg.content || '');
+        }
+      } catch {
+        // Ignore non-JSON WebSocket messages.
       }
-      return;
     }
-  }, [setArticleGroups, setGuideContent, setArticleContent]);
 
-  const onError = useCallback((error: string) => {
-    setError(error);
-  }, [setError]);
-
-  const { request } = usePanelData({
-    panel: 'wiki-viewer',
-    indexPath: ROOT_INDEX,
-    onIndex,
-    onFileContent,
-    onError,
-  });
+    ws.addEventListener('message', handleMessage);
+    return () => ws.removeEventListener('message', handleMessage);
+  }, [publishTreeIfReady, sendTreeRequest, setError, setSelectedContent, ws]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    request(ROOT_INDEX);
-  }, [activeWorkspaceId, ws, request]);
+
+    pendingTreePathsRef.current = new Set();
+    folderMapRef.current = new Map();
+    setRoot(null);
+    setSelectedContent('');
+    setError(null);
+    sendTreeRequest('');
+  }, [activeWorkspaceId, ws, sendTreeRequest, setError, setRoot, setSelectedContent]);
 
   useEffect(() => {
+    if (!viewedPagePath) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    for (const section of sections) {
-      if (loadedSectionsRef.current.has(section.id)) continue;
-      request(`${section.id}/index.json`);
-    }
-  }, [sections, ws, request]);
-
-  useEffect(() => {
-    if (!activeArticle || !activeSection) return;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-
-    const article = articlesBySection[activeSection]?.find(
-      (a) => a.id === activeArticle
-    );
-    if (!article) return;
-
-    request(`${activeSection}/${article.folder}/index.json`);
-  }, [activeArticle, activeSection, articlesBySection, ws, request]);
-
-  useEffect(() => {
-    if (!activeArticle || !activeSection) return;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-
-    const article = articlesBySection[activeSection]?.find(
-      (a) => a.id === activeArticle
-    );
-    if (!article) return;
 
     setLoading(true);
+    sendContentRequest(viewedPagePath);
+  }, [viewedPagePath, ws, sendContentRequest, setLoading]);
 
-    if (showGuide || activeArticleFile === '') {
-      const guideFile = article.guide || `${article.id}_Guide.md`;
-      request(`${activeSection}/${article.folder}/${guideFile}`);
-    } else {
-      request(`${activeSection}/${article.folder}/${activeArticleFile}`);
-    }
-  }, [activeArticle, activeSection, activeArticleFile, showGuide, articlesBySection, ws, request, setLoading]);
-
-  const indexLoaded = sections.length > 0;
-
-  if (!indexLoaded) {
+  if (!root) {
     return (
       <div className="rv-wiki-explorer">
         <div className="rv-wiki-loading">

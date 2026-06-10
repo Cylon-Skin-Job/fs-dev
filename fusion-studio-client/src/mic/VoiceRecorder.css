@@ -12,6 +12,11 @@
   min-width: 200px;
 }
 
+.rv-mic-trigger-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
 /* Header */
 .rv-voice-recorder__header {
   display: flex;
@@ -227,4 +232,212 @@
   border-radius: 3px;
   font-family: var(--font-mono, monospace);
   font-size: var(--font-2xs, 10px);
+}
+
+.rv-mic-context-menu {
+  position: fixed;
+  z-index: var(--z-popover, 320);
+  width: min(210px, calc(100vw - var(--space-lg, 24px)));
+  padding: var(--space-xs, 4px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-chrome-bg, #1a1a1a);
+  box-shadow: var(--shadow-medium, 0 12px 32px rgba(0, 0, 0, 0.42));
+  color: var(--text-primary, #ffffff);
+}
+
+.rv-mic-context-action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  width: 100%;
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  border: none;
+  border-radius: var(--radius-sm, 7px);
+  background: transparent;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+  text-align: left;
+}
+
+.rv-mic-context-action:hover {
+  background: rgba(var(--theme-primary-rgb), 0.12);
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-mic-context-action .material-symbols-outlined {
+  color: var(--chrome-accent, var(--theme-primary));
+  font-size: var(--icon-size-sm, 18px);
+}
+
+.rv-mic-prompt-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl, 32px);
+  background: var(--overlay-lg, rgba(0, 0, 0, 0.72));
+}
+
+.rv-mic-prompt-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(50vw, 760px);
+  max-width: calc(100vw - var(--space-2xl, 64px));
+  max-height: calc(100vh - var(--space-2xl, 64px));
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-lg, 14px);
+  background: var(--panel-chrome-bg, #151515);
+  box-shadow: var(--shadow-strong, 0 24px 80px rgba(0, 0, 0, 0.62));
+  color: var(--text-primary, #ffffff);
+  overflow: hidden;
+}
+
+.rv-mic-prompt-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md, 12px);
+  padding: var(--space-lg, 18px) var(--space-xl, 24px);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-mic-prompt-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  margin-left: auto;
+}
+
+.rv-mic-prompt-action {
+  min-height: 32px;
+  padding: 0 var(--space-md, 12px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-sm, 8px);
+  background: transparent;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.78));
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-mic-prompt-action:hover:not(:disabled) {
+  background: rgba(var(--theme-primary-rgb), 0.12);
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-mic-prompt-action:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.rv-mic-prompt-action--primary {
+  border-color: var(--theme-primary, rgba(255, 255, 255, 0.25));
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-mic-prompt-saved {
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-mic-prompt-header h2,
+.rv-mic-prompt-header p {
+  margin: 0;
+}
+
+.rv-mic-prompt-header h2 {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+}
+
+.rv-mic-prompt-header p {
+  margin-top: var(--space-xs, 4px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-mic-prompt-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-sm, 8px);
+  background: transparent;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.78));
+  cursor: pointer;
+}
+
+.rv-mic-prompt-close:hover {
+  background: rgba(var(--theme-primary-rgb), 0.12);
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-mic-prompt-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.rv-mic-prompt-editor {
+  flex: 1;
+  min-height: 360px;
+  max-height: calc(100vh - 210px);
+}
+
+.rv-mic-prompt-gutter {
+  overflow: hidden;
+}
+
+.rv-mic-prompt-textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: var(--document-bg, #161616);
+  color: var(--hljs-base, var(--text-primary, #e0e0e0));
+  font: inherit;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+}
+
+.rv-mic-prompt-status,
+.rv-mic-prompt-error {
+  padding: var(--space-md, 12px) var(--space-lg, 16px);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  color: var(--text-secondary, rgba(255, 255, 255, 0.78));
+  font-size: var(--font-size-md, 14px);
+}
+
+.rv-mic-prompt-error {
+  color: var(--text-error, #ff6666);
+}
+
+@media (max-width: 760px) {
+  .rv-mic-prompt-dialog {
+    width: calc(100vw - var(--space-xl, 32px));
+    max-width: calc(100vw - var(--space-xl, 32px));
+  }
+
+  .rv-mic-prompt-header {
+    flex-wrap: wrap;
+  }
+
+  .rv-mic-prompt-actions {
+    order: 3;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

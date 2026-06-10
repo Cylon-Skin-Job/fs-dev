@@ -147,6 +147,10 @@ export type WebSocketMessageType =
   | 'clipboard:clear'
   | 'clipboard:state'
   | 'clipboard:error'
+  // Emoji recents messages
+  | 'emoji_recents:list'
+  | 'emoji_recents:record'
+  | 'emoji_recents:error'
   // Recent docs messages
   | 'recent_docs:list'
   | 'recent_docs:record'
@@ -167,7 +171,20 @@ export type WebSocketMessageType =
   | 'workspace:switched'
   | 'workspace:added'
   | 'workspace:removed'
+  | 'workspace:ribbon_removed'
   | 'workspace:add_rejected_duplicate'
+  | 'workspace:add_rejected_missing_ai'
+  | 'workspace:create_manifest'
+  | 'workspace:create_rejected'
+  | 'workspace:ribbon_reorder_rejected'
+  | 'workspace:created'
+  | 'workspace:view_options_requested'
+  | 'workspace:view_options'
+  | 'workspace:view_update_requested'
+  | 'workspace:view_restore_requested'
+  | 'workspace:view_add_requested'
+  | 'workspace:view_registry_updated'
+  | 'workspace:view_update_rejected'
   | 'workspace:culled_at_launch'
   | 'thread:state_changed'
   // Harness install-status cache (HARNESS_STATUS_CACHE_SPEC)
@@ -239,6 +256,30 @@ export interface Workspace {
   description: string | null;
   repoPath: string;
   sortOrder: number;
+  type?: 'code' | 'app';
+  ribbonVisible?: boolean;
+  ribbonSortOrder?: number | null;
+}
+
+export interface WorkspaceViewTemplate {
+  id: string;
+  label: string;
+  group: 'default' | 'optional';
+  status: 'ready' | 'active-development' | 'stub';
+  icon?: string;
+  templatePath: string;
+}
+
+export interface WorkspaceCreateManifest {
+  version: number;
+  views: WorkspaceViewTemplate[];
+}
+
+export interface WorkspaceHiddenView {
+  id: string;
+  baseViewId: string;
+  label: string;
+  icon: string;
 }
 
 // CLI_CONFIG_SPEC §6: resolved CLI catalog entry (factory + workspace + view).
@@ -267,6 +308,7 @@ export interface WebSocketMessage {
   text?: string;
   userInput?: string;
   fullText?: string;
+  partial?: boolean;
   stepNumber?: number;
   contextUsage?: number;
   tokenUsage?: number;
@@ -298,12 +340,23 @@ export interface WebSocketMessage {
   threads?: Thread[];
   history?: { role: 'user' | 'assistant'; content: string; hasToolCalls?: boolean }[];
   exchanges?: ExchangeData[];  // Rich format with tool calls
+  liveTurn?: LiveTurnSnapshot | null;
   name?: string;
   content?: string;
   message?: string;
   // SPEC-26b: every thread:* response and wire_ready carries scope
   scope?: Scope;
   viewId?: string | null;
+  templateId?: string;
+  patch?: {
+    label?: string;
+    icon?: string;
+    enabled?: boolean;
+  };
+  move?: 'up' | 'down';
+  registry?: unknown;
+  hiddenViews?: WorkspaceHiddenView[];
+  availableTemplates?: WorkspaceViewTemplate[];
   // Workspace fields (WORKSPACE_CLIENT_UI_SPEC)
   workspaces?: Workspace[];
   workspace?: Workspace;
@@ -314,6 +367,7 @@ export interface WebSocketMessage {
   repoPath?: string | null;
   homePath?: string;
   existingWorkspace?: Workspace;
+  manifest?: WorkspaceCreateManifest;
   reason?: string;
   // Harness status-change fields (HARNESS_STATUS_CACHE_SPEC)
   installed?: boolean;
@@ -450,6 +504,20 @@ export interface ThinkPart {
 }
 
 export type AssistantPart = TextPart | ThinkPart | ToolCallPart;
+
+export interface LiveTurnSnapshot {
+  workspaceId: string;
+  scope: Scope;
+  viewId?: string | null;
+  threadId: string;
+  turnId: string;
+  userInput: string;
+  status: 'in_flight' | 'complete' | 'interrupted' | 'error';
+  fullText: string;
+  parts: AssistantPart[];
+  streamSeq: number;
+  updatedAt: number;
+}
 
 export interface ExchangeData {
   seq: number;

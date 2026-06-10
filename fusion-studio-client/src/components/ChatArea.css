@@ -142,6 +142,50 @@
   margin-bottom: -15px;
 }
 
+.rv-chat-input-wrapper {
+  position: relative;
+}
+
+.rv-chat-emoji-recents {
+  position: absolute;
+  left: var(--space-sm, 8px);
+  right: var(--space-sm, 8px);
+  bottom: calc(100% + var(--space-xs, 4px));
+  z-index: var(--z-popup, 300);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-surface, rgba(12, 16, 24, 0.96));
+  box-shadow: var(--shadow-medium, 0 8px 24px rgba(0, 0, 0, 0.32));
+}
+
+.rv-chat-emoji-recent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs, 4px);
+  background: transparent;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.rv-chat-emoji-recent:hover,
+.rv-chat-emoji-recent:focus-visible {
+  background: var(--hover-modal-row-hover-bg, rgba(255, 255, 255, 0.08));
+  outline: none;
+}
+
 /* Scroll sentinel — gives the last user bubble room to scroll to the top
  * of the viewport. Invisible; only present when a thread is active. */
 .rv-chat-scroll-sentinel {
@@ -200,6 +244,33 @@
 .rv-send-btn-main:hover {
   background: color-mix(in srgb, var(--chrome-accent-fg, #fff) 5%, transparent);
   color: color-mix(in srgb, var(--chrome-accent-fg, #fff) 70%, transparent);
+}
+
+.rv-send-btn-main:disabled,
+.rv-send-btn-secondary:disabled {
+  cursor: wait;
+}
+
+.rv-send-warming-wheel {
+  width: var(--space-md, 16px);
+  height: var(--space-md, 16px);
+  border-radius: 999px;
+  background: conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--chrome-accent-fg, #fff) 90%, transparent) 0 12deg,
+    transparent 12deg 45deg,
+    color-mix(in srgb, var(--chrome-accent-fg, #fff) 65%, transparent) 45deg 57deg,
+    transparent 57deg 90deg,
+    color-mix(in srgb, var(--chrome-accent-fg, #fff) 45%, transparent) 90deg 102deg,
+    transparent 102deg 135deg,
+    color-mix(in srgb, var(--chrome-accent-fg, #fff) 30%, transparent) 135deg 147deg,
+    transparent 147deg 360deg
+  );
+  animation: rv-send-warming-spin var(--transition-slow, 900ms) linear infinite;
+}
+
+@keyframes rv-send-warming-spin {
+  to { transform: rotate(360deg); }
 }
 
 .rv-send-btn-divider {

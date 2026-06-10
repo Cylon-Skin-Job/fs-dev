@@ -1,7 +1,0 @@
-{
-  "version": "1.0",
-  "articles": [
-    { "id": "custom-theme-css", "title": "Custom Theme CSS", "folder": "custom-theme-css", "guide": "PAGE.md" },
-    { "id": "secrets-manager", "title": "Secrets Manager", "folder": "secrets-manager", "guide": "PAGE.md" }
-  ]
-}

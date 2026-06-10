@@ -27,9 +27,26 @@
 }
 
 .rv-add-modal-title {
+  margin: 0;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.rv-add-modal-message,
+.rv-add-modal-support {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.rv-add-modal-message {
+  color: var(--text-primary, #f5f5f5);
+  font-size: 14px;
+}
+
+.rv-add-modal-support {
+  color: var(--text-secondary, rgba(255, 255, 255, 0.68));
+  font-size: 12px;
 }
 
 .rv-add-modal-close {

@@ -1,7 +1,7 @@
 /**
  * @module TopicList
- * @role Left sidebar — lists wiki sections and articles, highlights active
- * @reads wikiStore: sections, articlesBySection, activeSection, activeArticle
+ * @role Left sidebar — lists wiki folder-tree nodes and highlights active
+ * @reads wikiStore: root, selectedPath
  */
 
 import { useWikiStore } from '../../state/wikiStore';
@@ -9,62 +9,74 @@ import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
 export function TopicList() {
-  const sections = useWikiStore((s) => s.sections);
-  const articlesBySection = useWikiStore((s) => s.articlesBySection);
-  const activeSection = useWikiStore((s) => s.activeSection);
-  const activeArticle = useWikiStore((s) => s.activeArticle);
-  const selectArticle = useWikiStore((s) => s.selectArticle);
+  const root = useWikiStore((s) => s.root);
+  const selectedPath = useWikiStore((s) => s.selectedPath);
+  const selectNode = useWikiStore((s) => s.selectNode);
 
-  const handleSectionClick = (sectionId: string) => {
-    const articles = articlesBySection[sectionId] || [];
-    if (articles.length > 0 && activeSection !== sectionId) {
-      selectArticle(sectionId, articles[0].id);
-    }
-  };
-
-  const handleArticleClick = (sectionId: string, articleId: string) => {
-    selectArticle(sectionId, articleId);
-  };
+  if (!root) return null;
 
   return (
     <div className="rv-wiki-topic-list">
       <div className="rv-wiki-topic-list-items">
-        {sections.map((section) => {
-          const articles = articlesBySection[section.id] || [];
-          const isActiveSection = section.id === activeSection;
+        <div className="rv-wiki-collection-group">
+          <button
+            className={`rv-wiki-topic-item ${selectedPath === root.path ? 'active' : ''}`}
+            onClick={() => selectNode(root)}
+          >
+            <span className="material-symbols-outlined rv-wiki-topic-guide-icon">
+              menu_book
+            </span>
+            <span className="rv-wiki-topic-name rv-wiki-topic-guide-title">{root.label}</span>
+            <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+              <CopyPathButton
+                panel="wiki-viewer"
+                relativePath={root.pagePath}
+                className="rv-file-page-action"
+                title="Copy wiki guide path"
+              />
+              <SendToChatButton
+                panel="wiki-viewer"
+                relativePath={root.pagePath}
+                className="rv-file-page-action"
+                title="Send wiki guide path to chat"
+              />
+            </div>
+          </button>
+        </div>
+
+        {root.children.map((section) => {
+          const isActiveSection = selectedPath === section.path || selectedPath.startsWith(`${section.path}/`);
 
           return (
-            <div key={section.id} className="rv-wiki-collection-group">
+            <div key={section.path} className="rv-wiki-collection-group">
               <div
                 className={`rv-wiki-collection-header ${isActiveSection ? 'active' : ''}`}
-                onClick={() => handleSectionClick(section.id)}
-                style={{ cursor: articles.length > 0 ? 'pointer' : 'default' }}
+                onClick={() => selectNode(section)}
               >
-                {section.title}
+                {section.label}
               </div>
-              {articles.map((article) => {
-                const isActive = isActiveSection && article.id === activeArticle;
-                const relativePath = `${section.id}/${article.folder}/${article.guide || `${article.id}_Guide.md`}`;
+              {section.children.map((article) => {
+                const isActive = selectedPath === article.path;
                 return (
                   <button
-                    key={article.id}
+                    key={article.path}
                     className={`rv-wiki-topic-item ${isActive ? 'active' : ''}`}
-                    onClick={() => handleArticleClick(section.id, article.id)}
+                    onClick={() => selectNode(article)}
                   >
                     <span className="rv-wiki-topic-indicator">
                       {isActive ? '\u25C9' : '\u25CB'}
                     </span>
-                    <span className="rv-wiki-topic-name">{article.title}</span>
+                    <span className="rv-wiki-topic-name">{article.label}</span>
                     <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
                       <CopyPathButton
                         panel="wiki-viewer"
-                        relativePath={relativePath}
+                        relativePath={article.pagePath}
                         className="rv-file-page-action"
                         title="Copy article path"
                       />
                       <SendToChatButton
                         panel="wiki-viewer"
-                        relativePath={relativePath}
+                        relativePath={article.pagePath}
                         className="rv-file-page-action"
                         title="Send article path to chat"
                       />

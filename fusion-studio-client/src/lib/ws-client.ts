@@ -212,6 +212,12 @@ function handleMessage(msg: WebSocketMessage) {
       emitFusion(msg.type, msg);
       break;
 
+    case 'emoji_recents:list':
+    case 'emoji_recents:record':
+    case 'emoji_recents:error':
+      emitFusion(msg.type, msg);
+      break;
+
     case 'secrets:api-keys:state': {
       const m = msg as any;
       useSecretsStore.getState().setApiKeys(m.items);
@@ -231,4 +237,3 @@ function handleMessage(msg: WebSocketMessage) {
       break;
   }
 }
-

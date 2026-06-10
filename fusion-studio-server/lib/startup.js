@@ -28,6 +28,7 @@ const createFusionHandlers = require('./fusion/ws-handlers');
 const createClipboardHandlers = require('./secrets/clipboard/handlers');
 const createRecentDocsHandlers = require('./recent-docs/handlers');
 const createBookmarksHandlers = require('./bookmarks/handlers');
+const createEmojiRecentsHandlers = require('./emoji-recents/handlers');
 const createThemeHandlers = require('./ws/theme-handlers');
 const { createHandlers: createSecretsHandlers } = require('./secrets/index');
 const createScreenshotHandlers = require('./screenshot/ws-handlers');
@@ -63,6 +64,11 @@ async function start({ server, sessions, getProjectRoot }) {
 
   // 3. Audit subscriber — listens to event bus, persists exchange metadata
   startAuditSubscriber();
+
+  // 3.1. Transcription history subscriber — listens to transcription:* via bus,
+  // persists raw/corrected text, and prunes to the latest 100 rows.
+  const transcriptionHistory = require('./transcription/history-subscriber');
+  transcriptionHistory.register();
 
   // 3.5. Wire broadcaster — must subscribe before listen() so chat events
   // from the first connection are delivered.
@@ -120,6 +126,7 @@ async function start({ server, sessions, getProjectRoot }) {
   const clipboardHandlers = createClipboardHandlers({ getAllClients });
   const recentDocsHandlers = createRecentDocsHandlers({ getAllClients });
   const bookmarksHandlers = createBookmarksHandlers({ getAllClients });
+  const emojiRecentsHandlers = createEmojiRecentsHandlers();
   const screenshotHandlers = createScreenshotHandlers({ getAllClients });
 
   // 3.7f. Calendar adapters — start after DB init so migrations have run
@@ -187,7 +194,7 @@ async function start({ server, sessions, getProjectRoot }) {
   process.on('SIGTERM', _handleShutdown);
   process.on('SIGINT', _handleShutdown);
 
-  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, recentDocsHandlers, bookmarksHandlers };
+  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, recentDocsHandlers, bookmarksHandlers, emojiRecentsHandlers };
 }
 
 /**

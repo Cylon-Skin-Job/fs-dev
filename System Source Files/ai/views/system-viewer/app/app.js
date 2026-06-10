@@ -166,6 +166,44 @@ The Google Tasks connector will use OAuth to access your Google account. You wil
 The Slack connector will use OAuth to connect to your Slack workspace. Once connected, Fusion Studio workspaces can post updates, receive commands, or alert you when something needs attention.`,
       },
     ],
+    secrets: [
+      {
+        id: 'github',
+        name: 'GitHub',
+        icon: 'code',
+        description: 'Personal access token for GitHub API access.',
+        section: 'Inactive',
+        detail: `# GitHub
+
+**Setup style:** Manual API token or future OAuth
+
+GitHub can use either a personal access token or an OAuth app flow. A manual token template is simpler for local scripts and agent tools.
+
+Possible secret name:
+
+- \`GITHUB_TOKEN\`
+
+Use least-privilege scopes for the specific task.`,
+      },
+      {
+        id: 'gitlab',
+        name: 'GitLab',
+        icon: 'merge',
+        description: 'Personal access token for GitLab wiki, issues, and API calls.',
+        section: 'Inactive',
+        detail: `# GitLab
+
+**Setup style:** Manual API token
+
+GitLab already follows the Secrets Manager pattern for local API access.
+
+Expected secret name:
+
+- \`GITLAB_TOKEN\`
+
+The app stores the token value securely and exposes only the name/fingerprint in UI metadata.`,
+      },
+    ],
     skills: [
       { id: 'skill-1', name: 'Code Review', icon: 'rate_review', description: 'Review code changes with inline comments.', section: '', detail: '## Code Review\n\nAnalyzes diffs and provides structured feedback.' },
       { id: 'skill-2', name: 'Documentation', icon: 'menu_book', description: 'Generate and update docs from source.', section: '', detail: '## Documentation\n\nReads code and writes markdown docs.' },
@@ -188,6 +226,7 @@ The Slack connector will use OAuth to connect to your Slack workspace. Once conn
 
   const ICON_MAP = {
     connectors: 'linked_services',
+    secrets: 'key',
     skills: 'psychology',
     triggers: 'bolt',
     scripts: 'code',
@@ -305,6 +344,7 @@ The Slack connector will use OAuth to connect to your Slack workspace. Once conn
     if (sections.length === 0) {
       SECTIONS = [
         { id: 'connectors', title: 'Connectors', description: 'Manage MacOS system integrations.' },
+        { id: 'secrets', title: 'Secrets Manager', description: 'Token and API key templates.' },
         { id: 'skills', title: 'Skills', description: 'Reusable capabilities.' },
         { id: 'triggers', title: 'Triggers', description: 'Event-driven automations.' },
         { id: 'scripts', title: 'Scripts', description: 'Runnable automation scripts.' },
@@ -320,7 +360,7 @@ The Slack connector will use OAuth to connect to your Slack workspace. Once conn
         icon: ICON_MAP[s.id] || 'folder',
         label: s.title,
         description: s.description,
-        sections: s.id === 'connectors' ? ['MacOS Connectors'] : [],
+        sections: s.id === 'secrets' ? ['In-Use', 'Inactive'] : [],
         items: HARDCODED_ITEMS[s.id] || [],
         groups: s.groups || [],
       };
@@ -376,7 +416,9 @@ The Slack connector will use OAuth to connect to your Slack workspace. Once conn
 
     // Items
     const items = tab.items || [];
-    const sections = [...new Set(items.map(i => i.section).filter(Boolean))];
+    const sections = tab.sections?.length
+      ? tab.sections
+      : [...new Set(items.map(i => i.section).filter(Boolean))];
 
     if (sections.length > 0) {
       sections.forEach(section => {
@@ -385,7 +427,15 @@ The Slack connector will use OAuth to connect to your Slack workspace. Once conn
         divider.textContent = section;
         settingsList.appendChild(divider);
 
-        items.filter(i => i.section === section).forEach(item => {
+        const sectionItems = items.filter(i => i.section === section);
+        if (sectionItems.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'tools-settings-section-empty';
+          empty.textContent = 'None';
+          settingsList.appendChild(empty);
+        }
+
+        sectionItems.forEach(item => {
           settingsList.appendChild(renderItem(item));
         });
       });

@@ -1,6 +1,6 @@
 /**
  * Remove the `secrets` row from `system_tabs`, retiring the Secrets tab
- * from the Robin overlay. Per SECRETS_MANAGER_SPEC §13.
+ * from the Fusion Studio overlay. Per SECRETS_MANAGER_SPEC §13.
  *
  * The down() path is best-effort. The literal row data lives in
  * lib/db/migrations/002_system_panel.js if reverse-migration is needed.

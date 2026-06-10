@@ -18,6 +18,7 @@ export function loadRootTree() {
   ws.send(JSON.stringify({
     type: 'file_tree_request',
     panel: 'file-viewer',
+    includeHiddenFolders: useFileStore.getState().showHiddenFolders,
   }));
 }
 
@@ -55,6 +56,7 @@ export function loadFolderChildren(folderPath: string): Promise<FileTreeNode[]> 
       type: 'file_tree_request',
       panel: 'file-viewer',
       path: folderPath,
+      includeHiddenFolders: useFileStore.getState().showHiddenFolders,
     }));
 
     setTimeout(() => {

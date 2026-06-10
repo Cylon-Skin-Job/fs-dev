@@ -12,18 +12,15 @@
  * thread-crud.js (CRUD handlers) and thread-messages.js (message handlers).
  */
 
-const path = require('path');
-const { ThreadManager } = require('./ThreadManager');
 const { createCrudHandlers } = require('./thread-crud');
 const { createMessageHandlers } = require('./thread-messages');
 const { search: searchExchanges } = require('./chat-search');
-
-// Global registries — one per scope (SPEC-26b).
-// Project managers are keyed by workspaceId. View managers
-// are keyed by `${workspaceId}:${viewId}` to handle the workspace
-// switcher (multi-project) without collisions.
-const projectThreadManagers = new Map(); // key: workspaceId
-const viewThreadManagers = new Map();    // key: `${workspaceId}:${viewId}`
+const {
+  getProjectThreadManager,
+  getViewThreadManager,
+  _getProjectThreadManagers,
+  _getViewThreadManagers,
+} = require('./thread-manager-registry');
 
 // Per-WS state. SPEC-26b: dual-scope shape.
 //   ws -> {
@@ -40,50 +37,6 @@ const wsState = new Map();
 // Pending reorder timers: ws -> timeoutId (for delayed thread list refresh)
 const pendingReorderTimers = new Map();
 const REORDER_DELAY_MS = 3000;
-
-/**
- * Get or create the project-scoped ThreadManager for a workspace.
- * Project managers are stable across panel switches (one per workspace per
- * server process). SPEC-26b.
- *
- * @param {string} projectRoot
- * @param {string} [workspaceId] - Workspace identifier; falls back to basename(projectRoot)
- * @returns {ThreadManager}
- */
-function getProjectThreadManager(projectRoot, workspaceId) {
-  const key = workspaceId || path.basename(projectRoot);
-  let mgr = projectThreadManagers.get(key);
-  if (!mgr) {
-    mgr = new ThreadManager({ scope: 'project', projectRoot, workspaceId });
-    projectThreadManagers.set(key, mgr);
-    mgr.init().catch(err => {
-      console.error(`[ProjectThreadManager] Failed to init ${key}:`, err);
-    });
-  }
-  return mgr;
-}
-
-/**
- * Get or create the view-scoped ThreadManager for a (workspaceId, viewId)
- * pair. View managers swap as the user switches panels. SPEC-26b.
- *
- * @param {string} viewId
- * @param {string} projectRoot
- * @param {string} [workspaceId] - Workspace identifier; falls back to basename(projectRoot)
- * @returns {ThreadManager}
- */
-function getViewThreadManager(viewId, projectRoot, workspaceId) {
-  const key = `${workspaceId || path.basename(projectRoot)}:${viewId}`;
-  let mgr = viewThreadManagers.get(key);
-  if (!mgr) {
-    mgr = new ThreadManager({ scope: 'view', viewId, projectRoot, workspaceId });
-    viewThreadManagers.set(key, mgr);
-    mgr.init().catch(err => {
-      console.error(`[ViewThreadManager] Failed to init ${key}:`, err);
-    });
-  }
-  return mgr;
-}
 
 /**
  * Set panel for a WebSocket connection.
@@ -265,7 +218,7 @@ module.exports = {
   getCurrentThreadManager,
 
   // For testing (SPEC-26b split)
-  _getProjectThreadManagers: () => projectThreadManagers,
-  _getViewThreadManagers: () => viewThreadManagers,
+  _getProjectThreadManagers,
+  _getViewThreadManagers,
   _getWsState: () => wsState
 };

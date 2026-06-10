@@ -21,6 +21,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
   const openSecondary = usePanelStore((s) => s.openSecondary);
   const ws = usePanelStore((s) => s.ws);
   const closeThreadDropdown = usePanelStore((s) => s.closeThreadDropdown);
+  const setCurrentThreadId = usePanelStore((s) => s.setCurrentThreadId);
 
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
 
@@ -49,7 +50,10 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
 
   const handleSelect = (threadId: string) => {
     if (threadId !== currentThreadId && ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope, threadId }));
+      if (scope === 'view') {
+        setCurrentThreadId(scope, threadId);
+      }
+      ws.send(JSON.stringify({ type: 'thread:open', scope, threadId }));
     }
     closeThreadDropdown(panel);
   };

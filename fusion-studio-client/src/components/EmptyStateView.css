@@ -1,6 +1,6 @@
 .rv-empty-state {
   position: fixed;
-  inset: 0;
+  inset: var(--header-height, 60px) 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,4 +36,12 @@
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.02em;
+}
+
+.rv-empty-state-copy {
+  max-width: 360px;
+  color: var(--text-muted, rgba(255, 255, 255, 0.62));
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
 }

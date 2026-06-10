@@ -11,7 +11,7 @@
  * touch/search/list.
  */
 
-const { ThreadWebSocketHandler } = require('../thread');
+const { ThreadWebSocketHandler, threadRuntimeManager } = require('../thread');
 const { spawnThreadWire } = require('../harness/compat');
 const { registerWire } = require('../wire/process-manager');
 
@@ -27,6 +27,11 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
 
   return {
+    async 'thread:open'(clientMsg) {
+      const scope = clientMsg.scope === 'project' ? 'project' : 'view';
+      await ThreadWebSocketHandler.handleThreadOpen(ws, clientMsg, scope);
+    },
+
     async 'thread:open-assistant'(clientMsg) {
       const scope = clientMsg.scope === 'project' ? 'project' : 'view';
       console.log('[WS] thread:open-assistant received, threadId:', clientMsg.threadId?.slice(0, 8) || '(new)', 'scope:', scope);
@@ -132,6 +137,15 @@ async function spawnAndSetupWire({ ws, session, wireLifecycle, threadId, scope, 
   if (manager) {
     console.log('[WS] Registering with ThreadManager...');
     await manager.openSession(threadId, wire, ws);
+    const runtimeKey = {
+      workspaceId: manager.workspaceId,
+      scope,
+      threadId,
+    };
+    if (scope === 'view') {
+      runtimeKey.viewId = manager.viewId;
+    }
+    threadRuntimeManager.markReady(runtimeKey);
     console.log('[WS] ThreadManager registration complete');
   }
 

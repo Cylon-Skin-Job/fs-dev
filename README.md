@@ -1,62 +1,72 @@
-# Open Robin
-Web-based IDE for AI CLI harnesses
+# Fusion Studio
+
+Fusion Studio is a desktop workspace application built with Electron, React, and Node.js. It manages project workspaces, file/wiki/document views, chat threads, and AI harness integration around local or configured assistant runtimes.
+
+AI inference is handled by configured harnesses. Fusion Studio owns the shell, routing, persistence, rendering, workspace state, and local app integration.
 
 ## Project Structure
 
 ```
-open-robin/
-├── open-robin-client/        ← ✅ ACTIVE: React + TypeScript + Vite
-│   ├── src/components/       ← UI components (the "pulsating thing" is here)
-│   ├── src/styles/           ← CSS and animations
-│   └── src/state/            ← Zustand state management
-│
-├── open-robin-server/        ← WebSocket bridge server
-│   ├── server.js             ← Main server file
-│   ├── archive/              ← ❌ DEAD CODE (reference only)
-│   │   └── legacy-vanilla-client.html
-│   └── README.md
-│
-└── .cursor/
-    └── rules/
-        └── active-codebase.mdc  ← AI rule: always applies
+fs-dev/
+├── fusion-studio-client/       # Electron app + React/Vite renderer
+│   ├── electron/               # Main process, preload, protocol, server spawn
+│   └── src/                    # UI components, stores, WebSocket client, view mounting
+├── fusion-studio-server/       # Node/Express/WebSocket backend
+│   ├── server.js               # Server entry point
+│   ├── lib/                    # db, workspace, thread, wire, harness, wiki, resources
+│   └── data/                   # Runtime dev data, including fusion.db
+├── ai/                         # Development workspace content and project wiki
+├── System Source Files/        # Bundled/default system workspace source files
+└── docs/                       # Specs, handoffs, architecture notes
 ```
 
-## ⚠️ CRITICAL: Which Code Is Active?
+## Architecture
 
-**ONLY edit files in `kimi-ide-client/` for UI changes.**
+| Layer | Path | Responsibilities |
+|------|------|------------------|
+| Electron main | `fusion-studio-client/electron/` | Native app lifecycle, server process, custom protocol |
+| Renderer | `fusion-studio-client/src/` | React UI, Zustand state, WebSocket client, view mounting |
+| Server | `fusion-studio-server/` | Persistence, workspace services, thread runtime, harness routing |
 
-The server no longer serves files from `public/` - it serves the React client from `kimi-ide-client/dist/` after you build it.
+The current chat/thread model is documented in:
 
-### Old code (preserved but NOT served):
-- `kimi-ide-server/archive/legacy-vanilla-client.html` - Original vanilla JS implementation
-
-### Looking for "that pulsating thing"?
-- `kimi-ide-client/src/components/PulseSymbol.tsx` ← Current implementation
-- `kimi-ide-client/src/components/TransitionPulse.tsx` ← Lifecycle version
-- NOT the vanilla JS functions in archive/
-
-## Documentation
-
-- **[docs/RENDER_ENGINE_ARCHITECTURE.md](docs/RENDER_ENGINE_ARCHITECTURE.md)** — Pulse-driven render engine: job queue, state machine, separation of concerns. **Read before touching orchestration.**
-- **[docs/TYPESCRIPT_REACT_SPEC.md](docs/TYPESCRIPT_REACT_SPEC.md)** — Code spec: modularization, forbidden patterns, validation rules. **Read before writing components.**
-- **[docs/STREAMING_CONTENT.md](docs/STREAMING_CONTENT.md)** — Wire streaming: think vs text, chunk granularity, thought block boundaries.
-- [docs/WIRE_PROTOCOL.md](docs/WIRE_PROTOCOL.md) — Full wire protocol reference
-- [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) — Visual patterns, workspace themes
-- [docs/VISION_CLONE_PIPELINE.md](docs/VISION_CLONE_PIPELINE.md) — Future: multi-agent clone spawning, war room UI
-- [docs/VISION_RESEARCH_ASSISTANT.md](docs/VISION_RESEARCH_ASSISTANT.md) — Future: overnight research pipeline, preflight system, Karen's use case
-
-To capture fresh wire output: `node scripts/capture-wire-output.js` → `docs/wire-output-sample.jsonl`
+`ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md`
 
 ## Development
 
-```bash
-# Client (React)
-cd kimi-ide-client
-npm install
-npm run dev        # Dev server on :5173
-npm run build      # Build to dist/
+### Client / Electron
 
-# Server (WebSocket bridge)
-cd kimi-ide-server
-node server.js     # Server on :3001
+```bash
+cd fusion-studio-client
+npm install
+npm run build
+npm run electron:dev
 ```
+
+### Server
+
+```bash
+cd fusion-studio-server
+npm install
+node server.js
+npm test
+```
+
+## Database
+
+The active SQLite database is `fusion.db`, managed by `fusion-studio-server/lib/db.js`.
+
+- Dev path: `fusion-studio-server/data/fusion.db`
+- Packaged/user-data path: `${FUSION_APP_USER_DATA}/server-data/fusion.db`
+- Migrations: `fusion-studio-server/lib/db/migrations/`
+
+## Key References
+
+- `AGENTS.md` - agent-facing project guidance
+- `docs/FUSION_STUDIO_OVERVIEW.md` - broad application overview
+- `docs/FUSION_STUDIO_ARCHITECTURE_OUTLINE.md` - architecture outline
+- `ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md` - current chat/harness/thread model
+
+## Historical Naming
+
+This project previously used other product and directory names. Active code now lives under `fusion-studio-client/` and `fusion-studio-server/`, and the product name is Fusion Studio.

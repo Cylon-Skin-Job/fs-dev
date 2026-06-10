@@ -1,7 +1,7 @@
 import '../styles/dropdown.css';
 import './CliPickerDropdown.css';
 import { usePanelStore } from '../state/panelStore';
-import { useResolvedCliList } from '../config/harness';
+import { getSelectableHarnesses, useResolvedCliList } from '../config/harness';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 import type { HarnessStatus, ResolvedCliEntry } from '../types';
 
@@ -38,7 +38,7 @@ export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdo
 
   // CLI_CONFIG_SPEC §8c: filter hidden entries; list is already sorted by order.
   const visible = resolvedList.filter((e) => e.enabled);
-  const anySelectable = visible.some((e) => isSelectable(e, statuses));
+  const anySelectable = getSelectableHarnesses(visible, statuses).length > 0;
 
   return (
     <div

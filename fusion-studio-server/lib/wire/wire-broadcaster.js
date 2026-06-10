@@ -41,12 +41,12 @@ function createWireBroadcaster({ getClientForThread }) {
     ws.send(JSON.stringify(wireMessage));
   }
 
-  // Every outbound wire message carries threadId so the client can route
-  // streams to the right per-thread chat slot when primary + secondary
-  // are both open (SECONDARY_CHAT_SPEC / PER_THREAD_CHAT_STATE).
+  // Every outbound live stream message carries scope and threadId so the
+  // client routes by explicit server identity, not selected UI state.
   on('chat:turn_begin', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_begin',
+      scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
       userInput: event.userInput,
@@ -56,6 +56,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:content', (event) => {
     sendToThread(event.threadId, {
       type: 'content',
+      scope: event.scope,
       threadId: event.threadId,
       text: event.text,
       turnId: event.turnId,
@@ -65,6 +66,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:thinking', (event) => {
     sendToThread(event.threadId, {
       type: 'thinking',
+      scope: event.scope,
       threadId: event.threadId,
       text: event.text,
       turnId: event.turnId,
@@ -74,6 +76,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:tool_call', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_call',
+      scope: event.scope,
       threadId: event.threadId,
       toolName: event.toolName,
       toolCallId: event.toolCallId,
@@ -84,6 +87,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:tool_call_args', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_call_args',
+      scope: event.scope,
       threadId: event.threadId,
       toolCallId: event.toolCallId,
       argsChunk: event.argsChunk,
@@ -94,6 +98,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:tool_result', (event) => {
     sendToThread(event.threadId, {
       type: 'tool_result',
+      scope: event.scope,
       threadId: event.threadId,
       toolCallId: event.toolCallId,
       toolArgs: event.toolArgs,
@@ -109,6 +114,7 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:subagent_event', (event) => {
     sendToThread(event.threadId, {
       type: 'subagent_event',
+      scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
       parentToolCallId: event.parentToolCallId,
@@ -122,16 +128,22 @@ function createWireBroadcaster({ getClientForThread }) {
   on('chat:turn_end', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_end',
+      scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
       fullText: event.fullText,
       hasToolCalls: event.hasToolCalls,
+      userInput: event.userInput,
+      parts: event.parts,
+      reason: event.reason,
+      partial: event.partial,
     });
   });
 
   on('chat:status_update', (event) => {
     sendToThread(event.threadId, {
       type: 'status_update',
+      scope: event.scope,
       threadId: event.threadId,
       contextUsage: event.contextUsage,
       tokenUsage: event.tokenUsage,

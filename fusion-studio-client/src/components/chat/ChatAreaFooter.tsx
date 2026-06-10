@@ -22,7 +22,9 @@ type ChatAreaFooterProps = Pick<
   | 'isActive'
   | 'inputPlaceholder'
   | 'isTurnActive'
+  | 'isAcceptancePending'
   | 'handleInsertText'
+  | 'warmCurrentThread'
   | 'contextUsage'
 >;
 
@@ -35,7 +37,9 @@ export function ChatAreaFooter({
   isActive,
   inputPlaceholder,
   isTurnActive,
+  isAcceptancePending,
   handleInsertText,
+  warmCurrentThread,
   contextUsage,
 }: ChatAreaFooterProps) {
   return (
@@ -44,10 +48,11 @@ export function ChatAreaFooter({
         ref={chatInputRef}
         onSend={handleSend}
         onStop={handleStop}
-        disabled={noThread || !isActive}
+        disabled={noThread || !isActive || isAcceptancePending}
         placeholder={inputPlaceholder}
         panel={panel}
         isTurnActive={isTurnActive}
+        onWarmIntent={warmCurrentThread}
       />
       <div className="rv-chat-composer-meta-row">
         <div>
@@ -71,6 +76,8 @@ export function ChatAreaFooter({
           <SendButtonGroup
             chatInputRef={chatInputRef}
             onSend={handleSend}
+            disabled={isAcceptancePending}
+            warming={isAcceptancePending}
           />
         )}
       </div>

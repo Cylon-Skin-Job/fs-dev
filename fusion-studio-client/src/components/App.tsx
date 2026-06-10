@@ -19,12 +19,12 @@ import { FusionOverlay } from './Fusion/FusionOverlay';
 import { SecondaryChat, SecondaryChatSticky } from './SecondaryChat';
 import { SecondaryDockButton } from './SecondaryDockButton';
 import { EmptyStateView } from './EmptyStateView';
-import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { WorkspaceRibbon } from './WorkspaceRibbon';
 import { WorkspaceCarousel } from './WorkspaceCarousel';
 
 import { WorkspaceTitle } from './WorkspaceTitle';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
+import { WorkspaceCreateModal } from './WorkspaceCreateModal';
 import { ThemePickerModal } from './ThemePickerModal';
 import { SecretsManagerModal } from './secrets/SecretsManagerModal';
 import { ConnectorsDropdown } from './ConnectorsDropdown';
@@ -160,6 +160,7 @@ function App() {
   const connectorsRef = useRef<HTMLDivElement>(null);
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
+  const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
 
   const loading = configs.length === 0;
 
@@ -238,8 +239,8 @@ function App() {
   }
 
   // No active workspace — render the empty-state tile, but keep the
-  // switcher and add-modal mounted so the user can add one.
-  if (hasReceivedWorkspaceInit && useWorkspaceStore.getState().activeWorkspaceId === null) {
+  // ribbon and add/create modals mounted so the user can restore or add one.
+  if (hasReceivedWorkspaceInit && activeWorkspaceId === null) {
     return (
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
@@ -256,9 +257,9 @@ function App() {
           </div>
         </header>
         <EmptyStateView />
-        <WorkspaceSwitcher />
         <WorkspaceRibbon />
         <WorkspaceAddModal />
+        <WorkspaceCreateModal />
         <ModalOverlay />
       </div>
     );
@@ -283,9 +284,9 @@ function App() {
         <div className="rv-panel-container rv-panel-container--loading">
           Discovering panels...
         </div>
-        <WorkspaceSwitcher />
         <WorkspaceRibbon />
         <WorkspaceAddModal />
+        <WorkspaceCreateModal />
       </div>
     );
   }
@@ -348,11 +349,11 @@ function App() {
       <FusionOverlay open={fusionOpen} onClose={() => setFusionOpen(false)} />
       <SecondaryChat />
       <SecondaryDockButton />
-      <WorkspaceSwitcher />
       <WorkspaceRibbon />
       <WorkspaceCarousel />
 
       <WorkspaceAddModal />
+      <WorkspaceCreateModal />
       <ThemePickerModal />
       <SecretsManagerModal />
     </div>
