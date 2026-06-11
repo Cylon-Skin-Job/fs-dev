@@ -1,7 +1,8 @@
 /**
  * Background service config.
  *
- * Defaults are fail-closed. Users can opt in through data/config.json:
+ * Defaults are fail-closed. Users can opt in through data/config.json
+ * (server-root data/, alongside fusion.db):
  *
  * {
  *   "settings": {
@@ -18,9 +19,31 @@
  * troubleshooting:
  *   FUSION_CALENDAR_APPLE_ENABLED=1
  *   FUSION_CALENDAR_GOOGLE_ENABLED=1
+ *
+ * The data/config.json loader lives here because this module is its only
+ * consumer. It is the last living job of the legacy root config.js
+ * persistence layer — settings, project registry, panel state, and chat
+ * history all moved to SQLite, view-state, and the thread system.
  */
 
-const { getConfig } = require('../../config');
+const fs = require('fs');
+const path = require('path');
+
+const CONFIG_PATH = path.join(__dirname, '..', '..', 'data', 'config.json');
+
+let cachedConfig = null;
+
+function getConfig() {
+  if (!cachedConfig) {
+    try {
+      cachedConfig = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+    } catch {
+      // Missing or unparseable file → fail closed (all services disabled)
+      cachedConfig = {};
+    }
+  }
+  return cachedConfig;
+}
 
 const ENV_KEYS = {
   'calendar.apple': 'FUSION_CALENDAR_APPLE_ENABLED',
