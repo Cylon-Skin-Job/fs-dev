@@ -32,6 +32,7 @@ interface FileState {
   workspaceTrees: Record<string, WorkspaceFileState>;
   activeWorkspaceId: string | null;
   activateWorkspace: (workspaceId: string | null) => void;
+  evictWorkspaceTree: (workspaceId: string) => void;
 
   isLoading: boolean;
   error: string | null;
@@ -103,6 +104,31 @@ export const useFileStore = create<FileState>((set, get) => ({
       showHiddenFolders: loaded.showHiddenFolders,
       // Tabs remain global — spec says open files are NOT workspace-scoped yet
     });
+  },
+
+  evictWorkspaceTree: (workspaceId) => {
+    const state = get();
+    if (!state.workspaceTrees[workspaceId] && state.activeWorkspaceId !== workspaceId) {
+      return;
+    }
+
+    const nextWorkspaceTrees = { ...state.workspaceTrees };
+    delete nextWorkspaceTrees[workspaceId];
+
+    if (state.activeWorkspaceId === workspaceId) {
+      const emptyState = createEmptyWorkspaceFileState();
+      set({
+        workspaceTrees: nextWorkspaceTrees,
+        rootNodes: emptyState.rootNodes,
+        expandedFolders: emptyState.expandedFolders,
+        folderChildren: emptyState.folderChildren,
+        showHiddenFolders: emptyState.showHiddenFolders,
+        isLoading: false,
+        error: null,
+      });
+    } else {
+      set({ workspaceTrees: nextWorkspaceTrees });
+    }
   },
 
   isLoading: false,

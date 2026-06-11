@@ -6,6 +6,7 @@
  */
 
 const screenshotService = require('../workspace/screenshot-service');
+const stateCache = require('../workspace/state-cache');
 
 function createScreenshotHandlers({ getAllClients }) {
   return {
@@ -42,10 +43,12 @@ function createScreenshotHandlers({ getAllClients }) {
       }
 
       const row = await screenshotService.get(workspaceId);
+      const cached = stateCache.get(workspaceId);
       if (!row || !row.screenshot_png) {
         ws.send(JSON.stringify({
           type: 'screenshot:missing',
           workspaceId,
+          activePanelId: cached ? cached.currentPanel : null,
         }));
         return;
       }
@@ -55,6 +58,7 @@ function createScreenshotHandlers({ getAllClients }) {
         type: 'screenshot:data',
         workspaceId,
         panelId: row.panel_id,
+        activePanelId: cached?.currentPanel || row.panel_id || null,
         dataUrl,
         capturedAt: row.captured_at,
       }));
@@ -62,12 +66,18 @@ function createScreenshotHandlers({ getAllClients }) {
 
     'screenshot:list': async (ws, _msg) => {
       const rows = await screenshotService.list();
+      const cachedStates = stateCache.loadAll();
       ws.send(JSON.stringify({
         type: 'screenshot:list',
         screenshots: rows.map((r) => ({
           workspaceId: r.workspace_id,
           panelId: r.panel_id,
+          activePanelId: cachedStates[r.workspace_id]?.currentPanel || r.panel_id || null,
           capturedAt: r.captured_at,
+        })),
+        activePanels: Object.entries(cachedStates).map(([workspaceId, state]) => ({
+          workspaceId,
+          activePanelId: state.currentPanel || null,
         })),
       }));
     },

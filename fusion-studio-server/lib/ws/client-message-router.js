@@ -28,6 +28,7 @@ const { v4: generateId } = require('uuid');
 const { ThreadWebSocketHandler, threadRuntimeController } = require('../thread');
 const { getWireForThread, sendToWire } = require('../wire/process-manager');
 const views = require('../views');
+const registry = require('../workspace/registry-service');
 const { redactWsMessage } = require('./redaction-map');
 const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
 const { createHarnessWsHandlers } = require('./harness-ws-handlers');
@@ -140,6 +141,10 @@ function createClientMessageRouter({
 
       if (clientMsg.type === 'workspace:cache_push') {
         const stateCache = require('../workspace/state-cache');
+        const workspace = await registry.getById(clientMsg.workspaceId);
+        if (!workspace || workspace.ribbonVisible === false) {
+          return;
+        }
         stateCache.save(clientMsg.workspaceId, clientMsg.state);
         return;
       }

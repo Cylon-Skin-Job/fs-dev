@@ -50,24 +50,39 @@ export function useScreenshotCapture() {
   }, [isRibbonOpen]);
 }
 
+function canCaptureWorkspace(workspaceId: string): boolean {
+  const workspace = useWorkspaceStore.getState();
+  return workspace.activeWorkspaceId === workspaceId
+    && !workspace.isRibbonOpen
+    && !workspace.isWorkspacePreviewOpen
+    && !workspace.previewWorkspaceId
+    && !workspace.previewCommitWorkspaceId;
+}
+
 async function _doElectronCapture(workspaceId: string) {
   if (!window.electronAPI?.captureRect) return;
-  const el = document.querySelector('.rv-panel.active') as HTMLElement | null;
-  if (!el) return;
+  if (!canCaptureWorkspace(workspaceId)) return;
 
-  const rect = el.getBoundingClientRect();
+  const app = document.querySelector('.rv-app-container') as HTMLElement | null;
+  if (!app) return;
+
+  const appRect = app.getBoundingClientRect();
+  const header = document.querySelector('.rv-header') as HTMLElement | null;
+  const headerHeight = header?.getBoundingClientRect().height ?? 60;
   try {
     const base64 = await window.electronAPI.captureRect({
-      x: Math.round(rect.x),
-      y: Math.round(rect.y),
-      width: Math.round(rect.width),
-      height: Math.round(rect.height),
+      x: Math.round(appRect.x),
+      y: Math.round(appRect.y + headerHeight),
+      width: Math.round(appRect.width),
+      height: Math.round(appRect.height - headerHeight),
     });
     if (!base64) return;
+    if (!canCaptureWorkspace(workspaceId)) return;
 
     sendScreenshotMessage({
       type: 'screenshot:capture',
       workspaceId,
+      panelId: usePanelStore.getState().currentPanel,
       dataUrl: `data:image/png;base64,${base64}`,
     });
   } catch (_err) {

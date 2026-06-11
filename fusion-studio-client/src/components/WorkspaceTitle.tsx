@@ -7,6 +7,7 @@
  */
 
 import { useWorkspaceStore } from '../state/workspaceStore';
+import './WorkspaceTitle.css';
 
 export function WorkspaceTitle() {
   const activeWorkspace = useWorkspaceStore((s) =>

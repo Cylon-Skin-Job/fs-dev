@@ -11,23 +11,35 @@ import './WorkspaceCarousel.css';
 
 export function WorkspaceCarousel() {
   const isRibbonOpen = useWorkspaceStore((s) => s.isRibbonOpen);
+  const isPreviewOpen = useWorkspaceStore((s) => s.isWorkspacePreviewOpen);
   const workspaces = useWorkspaceStore((s) => s.workspaces);
   const activeId = useWorkspaceStore((s) => s.activeWorkspaceId);
+  const previewId = useWorkspaceStore((s) => s.previewWorkspaceId);
   const screenshots = useScreenshotStore((s) => s.screenshots);
 
-  if (!isRibbonOpen) return null;
+  if (!isRibbonOpen && !isPreviewOpen) return null;
 
   const sorted = toRibbonWorkspaces(workspaces);
-  const activeIndex = sorted.findIndex((w) => w.id === activeId);
+  const displayId = previewId || activeId;
+  const activeIndex = Math.max(0, sorted.findIndex((w) => w.id === displayId));
+  const slideCount = Math.max(1, sorted.length);
+  const slideWidth = 100 / slideCount;
 
   return (
     <div className="rv-workspace-carousel">
       <div
         className="rv-workspace-carousel-track"
-        style={{ '--carousel-offset': `${-activeIndex * 100}vw` } as React.CSSProperties}
+        style={{
+          width: `${slideCount * 100}%`,
+          transform: `translateX(${-activeIndex * slideWidth}%)`,
+        } as React.CSSProperties}
       >
         {sorted.map((w) => (
-          <div key={w.id} className="rv-workspace-carousel-slide">
+          <div
+            key={w.id}
+            className="rv-workspace-carousel-slide"
+            style={{ flexBasis: `${slideWidth}%` }}
+          >
             {screenshots[w.id] ? (
               <img
                 src={screenshots[w.id]}

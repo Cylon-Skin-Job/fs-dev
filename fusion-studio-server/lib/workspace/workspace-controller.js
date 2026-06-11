@@ -31,6 +31,7 @@ const pathService = require('./path-service');
 const registry = require('./registry-service');
 const bootstrap = require('./bootstrap-service');
 const createService = require('./create-service');
+const stateCache = require('./state-cache');
 
 let activeWorkspaceId = null;
 let activeWorkspace = null; // cached registry row, kept in lockstep with activeWorkspaceId so sync callers (HTTP routes, file-explorer symlink check, boot pipeline) can resolve repo_path without awaiting a DB query
@@ -246,6 +247,7 @@ async function handleRibbonRemoveRequested(event) {
   emit('workspace:registry_changed', { workspaces: await registry.list() });
 
   if (!wasActive) {
+    stateCache.invalidate(workspaceId);
     emit('workspace:ribbon_removed', { workspaceId });
     return;
   }
@@ -259,6 +261,7 @@ async function handleRibbonRemoveRequested(event) {
     to: nextId,
     repoPath: next ? next.repo_path : null,
   });
+  stateCache.invalidate(workspaceId);
   emit('workspace:ribbon_removed', { workspaceId });
 }
 

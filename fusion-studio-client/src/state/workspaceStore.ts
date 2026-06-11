@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { Workspace, WorkspaceCreateManifest } from '../types';
 import { usePanelStore } from './panelStore';
+import { createWorkspacePreviewActions } from './workspacePreview';
 
 /**
  * workspaceStore — multi-workspace registry and ribbon UI state.
@@ -21,6 +22,11 @@ interface WorkspaceStoreState {
 
   // UI flags
   isRibbonOpen: boolean;
+  isWorkspacePreviewOpen: boolean;
+  previewWorkspaceId: string | null;
+  previewCommitWorkspaceId: string | null;
+  previewOriginWorkspaceId: string | null;
+  previewRenderedWorkspaceId: string | null;
   isAddModalOpen: boolean;
   isCreateModalOpen: boolean;
   createManifest: WorkspaceCreateManifest | null;
@@ -35,6 +41,11 @@ interface WorkspaceStoreState {
   markInit: () => void;
   openRibbon: () => void;
   closeRibbon: () => void;
+  beginWorkspacePreview: (showRibbon?: boolean) => void;
+  previewCycleWorkspace: (direction: 'left' | 'right') => string | null;
+  commitWorkspacePreview: () => string | null;
+  completeWorkspacePreviewSwitch: (workspaceId: string | null) => void;
+  cancelWorkspacePreview: () => void;
   openAddModal: () => void;
   closeAddModal: () => void;
   openCreateModal: () => void;
@@ -92,6 +103,11 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   hasReceivedInit: false,
   homePath: '/',
   isRibbonOpen: false,
+  isWorkspacePreviewOpen: false,
+  previewWorkspaceId: null,
+  previewCommitWorkspaceId: null,
+  previewOriginWorkspaceId: null,
+  previewRenderedWorkspaceId: null,
   isAddModalOpen: false,
   isCreateModalOpen: false,
   createManifest: null,
@@ -107,7 +123,21 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
     set({ hasReceivedInit: true });
   },
   openRibbon: () => set({ isRibbonOpen: true }),
-  closeRibbon: () => set({ isRibbonOpen: false }),
+  closeRibbon: () => {
+    const { previewCommitWorkspaceId } = get();
+    if (previewCommitWorkspaceId) {
+      set({ isRibbonOpen: false });
+      return;
+    }
+    set({
+      isRibbonOpen: false,
+      isWorkspacePreviewOpen: false,
+      previewWorkspaceId: null,
+      previewOriginWorkspaceId: null,
+      previewRenderedWorkspaceId: null,
+    });
+  },
+  ...createWorkspacePreviewActions({ get, set, sendWorkspaceMessage, toRibbonWorkspaces }),
   openAddModal: () => set({ isAddModalOpen: true }),
   closeAddModal: () => set({ isAddModalOpen: false }),
   openCreateModal: () => set({ isCreateModalOpen: true, createError: null }),
@@ -139,23 +169,6 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   requestCreateWorkspace: (projectPath, label, viewIds) => {
     set({ createError: null, isCreatingWorkspace: true });
     sendWorkspaceMessage({ type: 'workspace:create_requested', projectPath, label, viewIds });
-  },
-
-  cycleWorkspace: (direction) => {
-    const { workspaces, activeWorkspaceId } = get();
-    const ribbonWorkspaces = toRibbonWorkspaces(workspaces);
-    if (ribbonWorkspaces.length <= 1 || !activeWorkspaceId) return;
-
-    const ids = ribbonWorkspaces.map((w) => w.id);
-    const idx = ids.indexOf(activeWorkspaceId);
-    if (idx < 0) return;
-
-    const nextIdx =
-      direction === 'right'
-        ? (idx + 1) % ids.length
-        : (idx - 1 + ids.length) % ids.length;
-
-    get().requestSwitch(ids[nextIdx]);
   },
 
   toggleRibbon: () => {

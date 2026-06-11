@@ -8,7 +8,7 @@ import { create } from 'zustand';
 import type { Thread, Scope } from '../types';
 import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
 import { createChatSlice, createInitialPanelState } from './slices/chatSlice';
-import { createViewSlice, clampPaneWidth, DEFAULT_VIEW_UI_STATE } from './slices/viewSlice';
+import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createSecondarySlice } from './slices/secondarySlice';
 
 // Re-export for consumers that import clampPaneWidth from this module (e.g. ResizeHandle.tsx).
@@ -29,42 +29,6 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
     panelConfigs: [],
     panelRoots: {},
     viewStates: {},
-  };
-}
-
-function resetViewFocusState(viewStates: WorkspacePanelState['viewStates']): WorkspacePanelState['viewStates'] {
-  return Object.fromEntries(
-    Object.entries(viewStates).map(([view, current]) => [
-      view,
-      {
-        ...DEFAULT_VIEW_UI_STATE,
-        widths: current.widths ?? DEFAULT_VIEW_UI_STATE.widths,
-        collapsed: current.collapsed ?? DEFAULT_VIEW_UI_STATE.collapsed,
-        tints: current.tints ?? DEFAULT_VIEW_UI_STATE.tints,
-        popup: {
-          ...DEFAULT_VIEW_UI_STATE.popup,
-          x: current.popup?.x ?? DEFAULT_VIEW_UI_STATE.popup.x,
-          y: current.popup?.y ?? DEFAULT_VIEW_UI_STATE.popup.y,
-          width: current.popup?.width ?? DEFAULT_VIEW_UI_STATE.popup.width,
-          height: current.popup?.height ?? DEFAULT_VIEW_UI_STATE.popup.height,
-          open: false,
-          threadId: null,
-        },
-        currentThreadId: null,
-        secondaryThreadId: null,
-      },
-    ])
-  );
-}
-
-function resetWorkspacePanelStateFocus(state: WorkspacePanelState): WorkspacePanelState {
-  const currentPanel = state.panelConfigs[0]?.id ?? 'file-viewer';
-  return {
-    ...createEmptyWorkspaceState(),
-    panelConfigs: state.panelConfigs,
-    panelRoots: state.panelRoots,
-    viewStates: resetViewFocusState(state.viewStates),
-    currentPanel,
   };
 }
 
@@ -157,65 +121,37 @@ export const usePanelStore = create<AppState>((set, get) => ({
     });
   },
 
-  resetWorkspaceFocusState: (workspaceId) => {
+  evictWorkspaceRuntimeState: (workspaceId) => {
     const state = get();
-    const liveState: WorkspacePanelState = {
-      projectRoot: null,
-      currentPanel: state.currentPanel,
-      panels: {},
-      projectChats: {},
-      threads: { project: [], view: [] },
-      currentThreadIds: { project: null, view: null },
-      currentScope: null,
-      wireReady: false,
-      contextUsage: 0,
-      panelConfigs: state.panelConfigs,
-      panelRoots: state.panelRoots,
-      viewStates: state.viewStates,
-    };
-    const cachedState = state.workspaceState[workspaceId];
-    if (state.activeWorkspaceId !== workspaceId && !cachedState) {
+    if (!state.workspaceState[workspaceId] && state.activeWorkspaceId !== workspaceId) {
       return;
     }
 
-    const source = state.activeWorkspaceId === workspaceId
-      ? liveState
-      : cachedState;
-    const resetState = resetWorkspacePanelStateFocus(source);
-    const nextWorkspaceState = {
-      ...state.workspaceState,
-      [workspaceId]: resetState,
-    };
+    const nextWorkspaceState = { ...state.workspaceState };
+    delete nextWorkspaceState[workspaceId];
 
     if (state.activeWorkspaceId === workspaceId) {
+      const emptyState = createEmptyWorkspaceState();
       set({
         workspaceState: nextWorkspaceState,
-        currentPanel: resetState.currentPanel,
+        projectRoot: emptyState.projectRoot,
+        currentPanel: emptyState.currentPanel,
         panels: {},
         projectChats: {},
-        threads: { project: [], view: [] },
-        currentThreadIds: { project: null, view: null },
-        currentScope: null,
-        wireReady: false,
-        contextUsage: 0,
-        panelConfigs: resetState.panelConfigs,
-        panelRoots: resetState.panelRoots,
-        viewStates: resetState.viewStates,
+        threads: emptyState.threads,
+        currentThreadIds: emptyState.currentThreadIds,
+        currentScope: emptyState.currentScope,
+        wireReady: emptyState.wireReady,
+        contextUsage: emptyState.contextUsage,
+        panelConfigs: emptyState.panelConfigs,
+        panelRoots: emptyState.panelRoots,
+        viewStates: emptyState.viewStates,
         secondary: null,
         cliPickerOpen: {},
         threadDropdownOpen: {},
       });
     } else {
       set({ workspaceState: nextWorkspaceState });
-    }
-
-    const ws = state.ws;
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({
-        type: 'workspace:cache_push',
-        workspaceId,
-        state: resetState,
-      }));
     }
   },
 

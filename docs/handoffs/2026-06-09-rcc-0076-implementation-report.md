@@ -657,24 +657,42 @@ Suggested smoke path:
 
 ## Remaining Work
 
-### 24-Hour Grace Period
+### Runtime Cache Eviction On Ribbon Close
 
-Original ticket asks for:
+Decision update, 2026-06-09:
 
-- Workspace closed -> soft reset.
-- Reopen within 24 hours -> preserved collections remain.
-- Closed longer than 24 hours -> hard reset on next launch.
-- Timer stored in user data, originally suggested as:
-  - `~/Library/Application Support/Fusion Studio/workspace-close-times.json`
+The original 24-hour grace period is dropped. Ribbon membership is now the working-set boundary.
 
-This has not been implemented.
+Switching workspaces means “park this workspace for fast return”:
+
+- Keep lightweight runtime cache in `panelStore.workspaceState`.
+- Push lightweight cache to `fusion-studio-server/data/workspace-cache.json`.
+- Keep enough state to switch back quickly.
+
+Removing a workspace from the ribbon means “evict this workspace from active memory”:
+
+- Hide it from the ribbon.
+- If active, switch away or show zero-ribbon splash.
+- Evict client runtime cache for that workspace.
+- Invalidate server `workspace-cache.json` entry for that workspace.
+- Leave durable workspace files untouched.
+
+Durable state files remain the source for reload:
+
+```text
+ai/system/state/state.json
+ai/views/<view>/settings/state.json
+```
 
 Recommended next handoff:
 
-- Define storage location using Electron/server user-data path, not raw hardcoded macOS traversal.
-- Add close timestamp recording when `workspace:ribbon_removed` occurs.
-- Add startup cleanup that hard-resets expired closed workspace state.
-- Preserve current soft-reset semantics for <24h.
+- `/Users/rccurtrightjr./projects/fs-dev/docs/handoffs/2026-06-09-rcc-0076-ribbon-removal-runtime-cache-eviction.md`
+- Replace close-state reset/cache preservation with deterministic runtime cache eviction.
+- On `workspace:ribbon_removed`, remove `panelStore.workspaceState[workspaceId]`.
+- Invalidate `fusion-studio-server/data/workspace-cache.json[workspaceId]`.
+- Clear safe in-memory per-workspace file tree cache if available.
+- Do not modify workspace `state.json` files.
+- Do not add close timestamp files or grace-period timers.
 
 ### Screenshot / Render Transition Bug
 
@@ -684,6 +702,7 @@ This has not been investigated in the RCC-0076 implementation slices.
 
 Possible next steps:
 
+- Use `/Users/rccurtrightjr./projects/fs-dev/docs/handoffs/2026-06-10-rcc-0076-screenshot-render-transition.md`.
 - Capture live Electron screenshots during workspace switching.
 - Compare screenshot capture dimensions to live renderer dimensions.
 - Check color space/gamma behavior.
@@ -709,7 +728,7 @@ If desired, create a small follow-up to change the menu design, for example:
 - Electron main does not own workspace registry state. Renderer sends a sanitized menu snapshot to Electron.
 - Zero visible ribbon workspaces is a valid state.
 - Active workspace can be `null`.
-- Close-state reset is soft reset only; 24-hour hard reset remains future work.
+- Ribbon removal is runtime cache eviction. The original 24-hour grace period is intentionally dropped.
 
 ## Most Important Files To Review Later
 

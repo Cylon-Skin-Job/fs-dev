@@ -1,0 +1,72 @@
+/**
+ * WorkspaceTitle styles.
+ *
+ * Header-center workspace switcher and preview activation zone.
+ */
+
+.rv-header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 33.333vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-header-center-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  border-radius: var(--radius-md, 6px);
+  transition: background var(--transition-fast, 120ms) ease;
+  width: 180px;
+}
+
+.rv-header-center-title:hover {
+  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+}
+
+.rv-header-nav-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md, 6px);
+  color: var(--chrome-accent, var(--text-dim));
+  cursor: pointer;
+  transition:
+    background var(--transition-fast, 120ms) ease,
+    color var(--transition-fast, 120ms) ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.rv-header-nav-btn:hover {
+  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+  color: var(--theme-primary);
+}
+
+.rv-header-nav-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-workspace-name {
+  font-size: var(--font-lg, 16px);
+  font-weight: 500;
+  color: var(--accent-dim, var(--text-primary, #e0e0e0));
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 100%;
+}

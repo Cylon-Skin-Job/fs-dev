@@ -59,7 +59,7 @@ export interface AppState {
   workspaceState: Record<string, WorkspacePanelState>;
   activateWorkspace: (workspaceId: string | null) => void;
   seedWorkspaceState: (workspaceId: string, state: Partial<WorkspacePanelState>) => void;
-  resetWorkspaceFocusState: (workspaceId: string) => void;
+  evictWorkspaceRuntimeState: (workspaceId: string) => void;
 
   _prefetchAbort: AbortController | null;
   setPrefetchAbort: (controller: AbortController | null) => void;

@@ -11,7 +11,7 @@
  *   workspace:switched             — active workspace changed
  *   workspace:added                — new workspace joined the registry
  *   workspace:removed              — workspace removed from registry
- *   workspace:ribbon_removed       — workspace hidden from ribbon; reset focus cache
+ *   workspace:ribbon_removed       — workspace hidden from ribbon; evict runtime cache
  *   workspace:add_rejected_duplicate — duplicate path (show modal)
  *   workspace:add_rejected_missing_ai — missing /ai folder (show modal)
  *   workspace:create_manifest         — view template catalog for Create New
@@ -30,6 +30,7 @@ import { usePanelStore } from '../../state/panelStore';
 import { useFileStore } from '../../state/fileStore';
 import { useWikiStore } from '../../state/wikiStore';
 import { useFileDataStore } from '../../state/fileDataStore';
+import { useScreenshotStore } from '../../state/screenshotStore';
 import { preloadIcons } from '../icon-registry';
 import { rediscoverPanels } from '../panels';
 import { loadRootTree } from '../file-tree';
@@ -115,8 +116,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     case 'workspace:switched': {
       const workspaceId = msg.to ?? null;
       store.setActiveWorkspaceId(workspaceId);
+      store.completeWorkspacePreviewSwitch(workspaceId);
       store.setWorkspaceType((msg as any).workspaceType ?? 'code');
-      store.closeRibbon();
 
       // Keep Electron protocol handler's workspace root in sync
       window.electronAPI?.setWorkspaceRoot((msg as any).repoPath ?? null);
@@ -133,6 +134,10 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
 
       // Re-read stores AFTER activateWorkspace so we use the NEW workspace's state
       const panelStore = usePanelStore.getState();
+      const previewPanelId = workspaceId ? useScreenshotStore.getState().activePanels[workspaceId] : null;
+      if (previewPanelId && panelStore.panelConfigs.some((config) => config.id === previewPanelId)) {
+        panelStore.setCurrentPanel(previewPanelId);
+      }
 
       // Use repoPath from the switch message to seed projectRoot if the cache
       // is empty. panel_config will arrive shortly after with the canonical value.
@@ -201,7 +206,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
 
     case 'workspace:ribbon_removed':
       if (msg.workspaceId) {
-        usePanelStore.getState().resetWorkspaceFocusState(msg.workspaceId);
+        usePanelStore.getState().evictWorkspaceRuntimeState(msg.workspaceId);
+        useFileStore.getState().evictWorkspaceTree(msg.workspaceId);
       }
       return true;
 

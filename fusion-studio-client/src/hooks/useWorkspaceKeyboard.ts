@@ -8,38 +8,12 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { toRibbonWorkspaces, useWorkspaceStore } from '../state/workspaceStore';
-
-function isTypingContext(): boolean {
-  const el = document.activeElement as HTMLElement | null;
-  if (!el) return false;
-  const tag = el.tagName;
-  return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
-}
+import { useWorkspaceStore } from '../state/workspaceStore';
 
 export function useWorkspaceKeyboard() {
   const optionDown = useRef(false);
 
   useEffect(() => {
-    const cycle = (direction: 'left' | 'right') => {
-      const s = useWorkspaceStore.getState();
-      const { workspaces, activeWorkspaceId } = s;
-      const ribbonWorkspaces = toRibbonWorkspaces(workspaces);
-      if (ribbonWorkspaces.length <= 1 || !activeWorkspaceId) return;
-
-      const ids = ribbonWorkspaces.map((w) => w.id);
-      const idx = ids.indexOf(activeWorkspaceId);
-      if (idx < 0) return;
-
-      const nextIdx =
-        direction === 'right'
-          ? (idx + 1) % ids.length
-          : (idx - 1 + ids.length) % ids.length;
-
-      s.openRibbon();
-      s.requestSwitch(ids[nextIdx]);
-    };
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Alt') {
         optionDown.current = true;
@@ -48,22 +22,29 @@ export function useWorkspaceKeyboard() {
 
       if (!optionDown.current) return;
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      if (isTypingContext()) return;
 
       e.preventDefault();
-      cycle(e.key === 'ArrowRight' ? 'right' : 'left');
+      const store = useWorkspaceStore.getState();
+      store.beginWorkspacePreview();
+      store.previewCycleWorkspace(e.key === 'ArrowRight' ? 'right' : 'left');
     };
 
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'Alt' && optionDown.current) {
         optionDown.current = false;
-        useWorkspaceStore.getState().closeRibbon();
+        const store = useWorkspaceStore.getState();
+        if (!store.previewWorkspaceId) return;
+        store.commitWorkspacePreview();
+        window.setTimeout(() => {
+          useWorkspaceStore.getState().closeRibbon();
+        }, 360);
       }
     };
 
     const onBlur = () => {
       if (optionDown.current) {
         optionDown.current = false;
+        useWorkspaceStore.getState().cancelWorkspacePreview();
         useWorkspaceStore.getState().closeRibbon();
       }
     };

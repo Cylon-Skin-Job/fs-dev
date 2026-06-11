@@ -34,6 +34,7 @@ export function WorkspaceRibbon() {
   const isOpen = useWorkspaceStore((s) => s.isRibbonOpen);
   const workspaces = useWorkspaceStore((s) => s.workspaces);
   const activeId = useWorkspaceStore((s) => s.activeWorkspaceId);
+  const previewId = useWorkspaceStore((s) => s.previewWorkspaceId);
   const closeRibbon = useWorkspaceStore((s) => s.closeRibbon);
   const openAddModal = useWorkspaceStore((s) => s.openAddModal);
   const openCreateModal = useWorkspaceStore((s) => s.openCreateModal);
@@ -49,6 +50,7 @@ export function WorkspaceRibbon() {
   const previewItems = previewWorkspaceIds
     ? previewWorkspaceIds.map((id) => sortedById.get(id)).filter((workspace): workspace is Workspace => Boolean(workspace))
     : sorted;
+  const highlightedId = previewId || activeId;
 
   useEffect(() => {
     if (!isAddDropdownOpen) return;
@@ -274,7 +276,7 @@ export function WorkspaceRibbon() {
               <div
                 key={w.id}
                 data-workspace-id={w.id}
-                className={`rv-workspace-ribbon-item ${w.id === activeId ? 'is-active' : ''} ${w.id === draggingWorkspaceId ? 'is-dragging' : ''} ${w.id === dragOverWorkspaceId ? 'is-drop-target' : ''}`}
+                className={`rv-workspace-ribbon-item ${w.id === highlightedId ? 'is-active' : ''} ${w.id === draggingWorkspaceId ? 'is-dragging' : ''} ${w.id === dragOverWorkspaceId ? 'is-drop-target' : ''}`}
                 onClick={() => onItemClick(w)}
                 draggable
                 onDragStart={(event) => onItemDragStart(event, w)}
