@@ -213,8 +213,9 @@ Full audit completed 2026-04-06. 22 specs with dependencies, gotchas, and silent
   `ai/views/doc-viewer/content/todo/specs/10-qwen-harness-split.md`
   `ai/views/doc-viewer/content/todo/specs/14-gemini-harness-split.md`
 
-- [ ] **server.js decomposition** — 1752-line God file, do LAST
+- [x] **server.js decomposition** — DONE 2026-06-11: 1752 → 302-line glue file (SPEC-01a–01g)
   `ai/views/doc-viewer/content/todo/specs/01-server-js-decomposition.md`
+  `ai/views/doc-viewer/content/todo/specs/01g-server-js-remaining-extractions.md`
 
 ### Client Component Extraction
 
