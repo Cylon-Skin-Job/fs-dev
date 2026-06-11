@@ -1,8 +1,9 @@
 /**
  * Fusion Studio Server with Thread Management
- * 
- * This version includes persistent, named conversations with lifecycle management.
- * 
+ *
+ * Glue layer: wires the HTTP routes, WebSocket routers, and startup
+ * orchestrator together. All domain logic lives in lib/ (see SPEC-01a–01g).
+ *
  * @see lib/thread/README.md - Thread management documentation
  * @see ../ai/views/capture-viewer/specs/SPEC.md - Full specification
  */
@@ -12,12 +13,14 @@ const path = require('path');
 const WebSocket = require('ws');
 const http = require('http');
 const { v4: generateId } = require('uuid');
-const fs = require('fs');
-const fsPromises = require('fs').promises;
+
+// Console tee — install before anything below logs so startup lines
+// reach server-live.log.
+const { installLogTee } = require('./lib/logging');
+installLogTee(path.join(__dirname, 'server-live.log'));
 
 // Thread management
 const { ThreadWebSocketHandler } = require('./lib/thread');
-const { getDb } = require('./lib/db');
 
 // File explorer handlers
 const { createFileExplorerHandlers } = require('./lib/file-explorer');
@@ -50,18 +53,19 @@ const { createClientMessageRouter } = require('./lib/ws/client-message-router');
 // View discovery and resolution (filesystem-driven, no database)
 const views = require('./lib/views');
 
-// Logging
-const SERVER_LOG_FILE = path.join(__dirname, 'server-live.log');
+// Panel path resolution + shared session registries (extracted per SPEC-01g).
+// `sessions` is the single server-wide Map — startup.js and the connection
+// handler below must both use this instance.
+const {
+  sessions,
+  getProjectRoot,
+  setSessionRoot,
+  clearSessionRoot,
+  getPanelPath,
+} = require('./lib/views/panel-paths');
 
-// Override console.log to also write to file
-const originalLog = console.log;
-console.log = function(...args) {
-  originalLog.apply(console, args);
-  const timestamp = new Date().toISOString();
-  const line = `[${timestamp}] ${args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ')}
-`;
-  fs.appendFileSync(SERVER_LOG_FILE, line);
-};
+// Initial connection payload builders (extracted per SPEC-01g)
+const { buildWorkspaceInit, buildPanelConfig } = require('./lib/ws/connection-init');
 
 const app = express();
 const server = http.createServer(app);
@@ -86,189 +90,20 @@ app.use(
   })
 );
 
-// Workspace screenshot API
+// ============================================================================
+// HTTP API Routes
+// ============================================================================
+//
+// Mount order is load-bearing: static dist above, API routes here, SPA
+// fallback LAST or it swallows everything (SPEC-01 middleware gotcha).
+
 app.use('/api/screenshot', require('./lib/screenshot/router').createRouter());
-
-app.post('/api/capabilities/warm', async (req, res) => {
-  const { warmCapability } = require('./lib/capabilities');
-  const capability = req.body?.capability;
-
-  if (!capability) {
-    return res.status(400).json({ success: false, error: 'Missing capability' });
-  }
-
-  try {
-    const result = await warmCapability(capability);
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ success: false, capability, error: error.message });
-  }
-});
-
-app.get('/api/capabilities/prompts/stt', async (req, res) => {
-  const { loadPrompt } = require('./lib/capabilities/prompt-loader');
-
-  try {
-    const prompt = await loadPrompt('STT_PROMPT.md');
-    res.json({ success: true, prompt });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-app.put('/api/capabilities/prompts/stt', async (req, res) => {
-  const { savePrompt } = require('./lib/capabilities/prompt-loader');
-  const prompt = req.body?.prompt;
-
-  if (typeof prompt !== 'string') {
-    return res.status(400).json({ success: false, error: 'Missing prompt' });
-  }
-
-  try {
-    await savePrompt('STT_PROMPT.md', prompt);
-    res.json({ success: true, prompt });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// Voice transcription API (Whisper V3)
-const transcription = require('./lib/transcription');
-app.use('/api', transcription.createRouter());
-
-// Serve panel files (images, etc.) via HTTP
-// Uses fuzzy filename matching to handle macOS Unicode spaces in screenshot names
-app.get('/api/panel-file/:panel/*splat', (req, res) => {
-  const panel = req.params.panel;
-  // Express 5: *splat is an array of path segments; Express 4 used a string.
-  const splat = req.params.splat;
-  const filePath = Array.isArray(splat) ? splat.join('/') : String(splat ?? '');
-  const root = getProjectRoot();
-  if (!root) return res.status(503).send('No active workspace');
-  // Resolve via the same view resolver the file-tree WS handler uses, so
-  // tiled-rows views (doc-viewer / agents-viewer) correctly point at
-  // ai/views/{panel}/content/ instead of the bare ai/views/{panel}/.
-  const panelPath = getPanelPath(panel);
-  const baseDir = panelPath || path.join(root, 'ai', 'views', panel);
-  const dirPath = path.join(baseDir, path.dirname(filePath));
-  const fileName = path.basename(filePath);
-
-  try {
-    const realDir = fs.realpathSync(dirPath);
-    // Try direct match first
-    const directPath = path.join(realDir, fileName);
-    if (fs.existsSync(directPath)) {
-      return res.sendFile(directPath);
-    }
-
-    // Fuzzy match: normalize Unicode spaces for macOS screenshot filenames
-    const entries = fs.readdirSync(realDir);
-    const normalizedTarget = fileName.replace(/[\s\u00a0\u202f\u2009]/g, ' ');
-    const match = entries.find(e => e.replace(/[\s\u00a0\u202f\u2009]/g, ' ') === normalizedTarget);
-
-    if (match) {
-      return res.sendFile(path.join(realDir, match));
-    }
-
-    res.status(404).send('Not found');
-  } catch {
-    res.status(404).send('Not found');
-  }
-});
-
-// ---- External CLI harnesses API (Phase 3) ----
-
-app.get('/api/harnesses', async (req, res) => {
-  const service = require('./lib/harness/harness-status-service');
-  try {
-    const harnesses = await service.getAll();
-    res.json(harnesses);
-    // Fire-and-forget revalidation so repeated hits stay sub-ms while
-    // the cache converges on real state. Debounced internally.
-    service.revalidateAll().catch(() => {});
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/harnesses/:id/status', async (req, res) => {
-  const { registry } = require('./lib/harness');
-  try {
-    const status = await registry.getHarnessStatus(req.params.id);
-    if (!status) {
-      return res.status(404).json({ error: 'Harness not found' });
-    }
-    res.json(status);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/view-config', async (req, res) => {
-  try {
-    const projectRoot = getProjectRoot();
-    const viewName = req.query.panel;
-    if (!viewName) {
-      return res.status(400).json({ error: 'Missing panel query param' });
-    }
-    if (!projectRoot) {
-      return res.status(503).json({ error: 'No active workspace' });
-    }
-
-    let globalCss = '';
-    try {
-      const globalCssPath = path.join(projectRoot, 'ai', 'system', 'styles', 'themes.css');
-      globalCss = await fsPromises.readFile(globalCssPath, 'utf8');
-    } catch {
-      globalCss = '';
-    }
-
-    let viewCss = '';
-    try {
-      const viewCssPath = path.join(projectRoot, 'ai', 'views', viewName, 'settings', 'themes.css');
-      viewCss = await fsPromises.readFile(viewCssPath, 'utf8');
-    } catch {
-      viewCss = '';
-    }
-
-    const viewStateService = require('./lib/view-state');
-    const layout = await viewStateService.resolveViewState(projectRoot, viewName);
-
-    res.json({ globalCss, viewCss, layout });
-  } catch (err) {
-    console.error('[ViewConfig] Error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Calendar API routes
-app.get('/api/calendar/calendars', async (req, res) => {
-  try {
-    const knex = require('./lib/db').getDb();
-    const rows = await knex('calendar_sources').orderBy('title');
-    res.json(rows);
-  } catch (err) {
-    console.error('[Calendar API] /calendars error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/calendar/events', async (req, res) => {
-  try {
-    const knex = require('./lib/db').getDb();
-    const { start, end, source } = req.query;
-    let q = knex('calendar_events')
-      .where('startDate', '<', Number(end))
-      .andWhere('endDate', '>', Number(start))
-      .orderBy('startDate');
-    if (source) q = q.andWhere('source', source);
-    const rows = await q;
-    res.json(rows);
-  } catch (err) {
-    console.error('[Calendar API] /events error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
+app.use('/api/capabilities', require('./lib/http/capabilities-routes').createRouter());
+app.use('/api', require('./lib/transcription').createRouter());
+app.use('/api/panel-file', require('./lib/http/panel-file-route').createRouter({ getProjectRoot, getPanelPath }));
+app.use('/api/harnesses', require('./lib/http/harness-routes').createRouter());
+app.use('/api/view-config', require('./lib/http/view-config-route').createRouter({ getProjectRoot }));
+app.use('/api/calendar', require('./lib/http/calendar-routes').createRouter());
 
 // Fallback to index.html for SPA routing
 // Exclude /api/* and /material-symbols/* so backend routes and static assets
@@ -276,103 +111,6 @@ app.get('/api/calendar/events', async (req, res) => {
 app.get(/^(?!\/api\/|\/material-symbols\/)/, (req, res) => {
   res.sendFile(path.join(clientDistPath, 'index.html'));
 });
-
-// Store active sessions (ws -> session state)
-const sessions = new Map();
-
-// ============================================================================
-// Project Root & Path Resolution
-// ============================================================================
-
-/**
- * Resolve the project root for a given connection, or the server-wide
- * active workspace root when no connection context is available.
- *
- * Returns null when no workspace is active (empty state). Callers must
- * handle null — boot pipeline skips, per-connection handlers send an error.
- *
- * @param {import('ws').WebSocket} [ws] - connection context (optional)
- * @returns {string|null}
- */
-function getProjectRoot(ws) {
-  if (ws) {
-    const session = sessions.get(ws);
-    if (session && session.projectRoot) return session.projectRoot;
-  }
-  const active = workspaceController.getActiveWorkspaceSync();
-  return active ? active.repo_path : null;
-}
-
-// ============================================================================
-// File Explorer Functions (unchanged from original)
-// ============================================================================
-
-const sessionRoots = new Map();
-
-function setSessionRoot(ws, panel, rootFolder) {
-  sessionRoots.set(ws, { panel, rootFolder });
-  console.log(`[Session] Panel '${panel}' root set to: ${rootFolder}`);
-}
-
-function getSessionRoot(ws, panel) {
-  const sessionRoot = sessionRoots.get(ws);
-  if (sessionRoot && sessionRoot.panel === panel && sessionRoot.rootFolder) {
-    return sessionRoot.rootFolder;
-  }
-  // Per-connection projectRoot is the only source of truth; null = empty state.
-  const connSession = sessions.get(ws);
-  return (connSession && connSession.projectRoot) || null;
-}
-
-function clearSessionRoot(ws) {
-  sessionRoots.delete(ws);
-}
-
-function getPanelPath(panel, ws) {
-  const projectRoot = getProjectRoot(ws);
-  if (!projectRoot) return null;
-
-  // __panels__ pseudo-panel: resolves to ai/views/ (for client discovery)
-  if (panel === '__panels__') {
-    const viewsRoot = views.getViewsRoot(projectRoot);
-    if (fs.existsSync(viewsRoot)) return viewsRoot;
-    return null;
-  }
-
-  // __apps__ pseudo-panel: resolves to ai/apps/ (for client app discovery)
-  if (panel === '__apps__') {
-    const appsRoot = path.join(projectRoot, 'ai', 'apps');
-    if (fs.existsSync(appsRoot)) return appsRoot;
-    return null;
-  }
-
-  // __settings__ pseudo-panel: resolves to ai/system/styles/ (for global theme/settings)
-  if (panel === '__settings__') {
-    const settingsRoot = path.join(projectRoot, 'ai', 'system', 'styles');
-    if (fs.existsSync(settingsRoot)) return settingsRoot;
-    return null;
-  }
-
-  // __workspace__ pseudo-panel: resolves to ai/system/workspace/ for the
-  // live workspace view registry.
-  if (panel === '__workspace__') {
-    const workspaceRoot = path.join(projectRoot, 'ai', 'system', 'workspace');
-    if (fs.existsSync(workspaceRoot)) return workspaceRoot;
-    return null;
-  }
-
-  // Delegate to the view resolver system.
-  // Each display type has its own resolver module that knows where
-  // the content root is for that view type.
-  const context = { sessionRoot: getSessionRoot(ws, panel) };
-  const resolved = views.resolveContentPath(projectRoot, panel, context);
-  if (resolved && fs.existsSync(resolved)) return resolved;
-
-  // Fallback: raw ai/views/{id}/ folder (for views not yet in the system)
-  const fallback = path.join(views.getViewsRoot(projectRoot), panel);
-  if (fs.existsSync(fallback)) return fallback;
-  return null;
-}
 
 const fileExplorer = createFileExplorerHandlers({
   getPanelPath,
@@ -423,7 +161,7 @@ wss.on('connection', async (ws) => {
     }
   });
   ws.on('close', unsubscribeWorkspaceSwitched);
-  
+
   // Set up a default panel so ThreadManager exists for wire spawning.
   // Don't send the thread list yet — wait for the client's set_panel message
   // to avoid cross-contamination (e.g., issues-viewer seeing code-viewer threads).
@@ -439,7 +177,7 @@ wss.on('connection', async (ws) => {
       });
     }
   }
-  
+
   // ==========================================================================
   // Wire Process Handlers
   // ==========================================================================
@@ -511,82 +249,17 @@ wss.on('connection', async (ws) => {
   // Send current workspace registry and active workspace so the client
   // can gate its UI (empty state, switcher) before panel discovery runs.
   try {
-    const workspaces = await workspaceController.listWorkspaces();
-    const activeWorkspaceId = workspaceController.getActiveWorkspaceId();
-    console.log('[WS] activeWorkspaceId:', activeWorkspaceId, 'workspaces count:', workspaces.length);
-    const { resolveCliConfig } = require('./lib/cli-config');
-    const activeRoot = getProjectRoot();
-    console.log('[WS] activeRoot:', activeRoot);
-    const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
-    let themes = [];
-    let activeThemeId = null;
-    let styles = {};
-    const stateCache = require('./lib/workspace/state-cache');
-    const cachedStates = stateCache.loadAll();
-    if (activeRoot) {
-      try {
-        const themesService = require('./lib/theme/themes-service');
-        themes = await themesService.list(activeRoot);
-        const active = themes.find(t => t.active);
-        activeThemeId = active ? active.id : null;
-      } catch (_) {}
-      // Pre-read shared CSS layers so the client can inject synchronously
-      const styleFiles = [
-        'variables.css', 'themes.css', 'components.css', 'views.css',
-        'file-viewer.css', 'doc-viewer.css', 'tints.css',
-      ];
-      const settingsDir = path.join(activeRoot, 'ai', 'system', 'styles');
-      await Promise.all(
-        styleFiles.map(async (file) => {
-          try {
-            const css = await fsPromises.readFile(path.join(settingsDir, file), 'utf8');
-            styles[file] = css;
-          } catch {
-            styles[file] = '';
-          }
-        })
-      );
-    }
-    const activeWs = workspaceController.getActiveWorkspaceSync();
-    const msg = {
-      type: 'workspace:init',
-      workspaces,
-      activeWorkspaceId,
-      activeRepoPath: activeWs ? activeWs.repo_path : null,
-      workspaceType: activeWs ? activeWs.type : 'code',
-      homePath: require('os').homedir(),
-      cliConfig,
-      themes,
-      activeThemeId,
-      styles,
-      cachedStates,
-    };
+    const msg = await buildWorkspaceInit(getProjectRoot);
     console.log('[WS] Sending workspace:init message');
     ws.send(JSON.stringify(msg));
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);
   }
 
-  // Compute panel roots once using the canonical resolver.
-  // The client needs these to build absolute paths for copy-to-clipboard.
-  const panelRoots = {};
-  if (projectRoot) {
-    const viewIds = views.listViews(projectRoot);
-    for (const viewId of viewIds) {
-      const root = views.resolveContentPath(projectRoot, viewId);
-      if (root) panelRoots[viewId] = root;
-    }
-  }
-
   // Send project root info without assuming a panel — the client will
   // send set_panel to identify itself. When no workspace is active,
   // projectRoot is null and the client renders the empty state.
-  ws.send(JSON.stringify({
-    type: 'panel_config',
-    projectRoot,
-    projectName: projectRoot ? path.basename(projectRoot) : null,
-    panelRoots
-  }));
+  ws.send(JSON.stringify(buildPanelConfig(projectRoot)));
 });
 
 
@@ -609,6 +282,7 @@ let screenshotHandlers = {};
 
 startServer({
   server,
+  app,
   sessions,
   getProjectRoot,
 })
@@ -621,27 +295,6 @@ startServer({
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;
     screenshotHandlers = result.screenshotHandlers || {};
-
-    // Serve Material Symbols from Fusion Home (runtime asset, not bundled).
-    // Looked up from DB so the path stays correct even if Fusion Home moves.
-    const db = getDb();
-    db('workspaces').where('id', 'fusion-home').first()
-      .then((workspace) => {
-        if (workspace && workspace.repo_path) {
-          const symbolsPath = path.join(workspace.repo_path, 'material-symbols');
-          if (fs.existsSync(symbolsPath)) {
-            app.use('/material-symbols', express.static(symbolsPath));
-            console.log(`[Server] Serving material symbols from ${symbolsPath}`);
-          } else {
-            console.warn('[Server] Fusion Home material-symbols not found at', symbolsPath);
-          }
-        } else {
-          console.warn('[Server] Fusion Home workspace not found — material symbols unavailable');
-        }
-      })
-      .catch((err) => {
-        console.error('[Server] Failed to resolve Fusion Home path:', err.message);
-      });
   })
   .catch(err => {
     console.error('[Server] Startup failed:', err);

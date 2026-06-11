@@ -11,6 +11,7 @@
  *   7. agent triggers + cron scheduler
  *   8. runner heartbeat monitor
  *   9. SIGTERM/SIGINT handlers for clean shutdown
+ *  10. material-symbols static mount (post-listen, DB-resolved path)
  *
  * Ordering is load-bearing. Do not reorder steps. See the gotchas in
  * SPEC-01b for the specific hard dependencies.
@@ -22,6 +23,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const express = require('express');
 
 const { initDb, getDb, closeDb, DB_PATH } = require('./db');
 const createFusionHandlers = require('./fusion/ws-handlers');
@@ -45,11 +47,12 @@ const PORT = parseInt(process.env.PORT ?? '3001', 10);
  *
  * @param {object} deps
  * @param {import('http').Server} deps.server
+ * @param {import('express').Express} deps.app
  * @param {Map} deps.sessions
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @returns {Promise<{ fusionHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
  */
-async function start({ server, sessions, getProjectRoot }) {
+async function start({ server, app, sessions, getProjectRoot }) {
   // 1. DB init — fusion.db lives at <server>/data/fusion.db (fixed,
   // workspace-independent). It is intentionally NOT tied to the active
   // workspace, because the workspace registry is *in* the DB —
@@ -193,6 +196,28 @@ async function start({ server, sessions, getProjectRoot }) {
   // 5. Signal handlers — register after successful startup
   process.on('SIGTERM', _handleShutdown);
   process.on('SIGINT', _handleShutdown);
+
+  // 6. Material Symbols — served from Fusion Home (runtime asset, not
+  // bundled). Looked up from DB so the path stays correct even if Fusion
+  // Home moves. Fire-and-forget after listen(); /material-symbols is
+  // excluded from the SPA fallback so late mounting is safe.
+  getDb()('workspaces').where('id', 'fusion-home').first()
+    .then((workspace) => {
+      if (workspace && workspace.repo_path) {
+        const symbolsPath = path.join(workspace.repo_path, 'material-symbols');
+        if (fs.existsSync(symbolsPath)) {
+          app.use('/material-symbols', express.static(symbolsPath));
+          console.log(`[Server] Serving material symbols from ${symbolsPath}`);
+        } else {
+          console.warn('[Server] Fusion Home material-symbols not found at', symbolsPath);
+        }
+      } else {
+        console.warn('[Server] Fusion Home workspace not found — material symbols unavailable');
+      }
+    })
+    .catch((err) => {
+      console.error('[Server] Failed to resolve Fusion Home path:', err.message);
+    });
 
   return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, recentDocsHandlers, bookmarksHandlers, emojiRecentsHandlers };
 }
