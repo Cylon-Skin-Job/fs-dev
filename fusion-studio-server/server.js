@@ -11,21 +11,13 @@ const express = require('express');
 const path = require('path');
 const WebSocket = require('ws');
 const http = require('http');
-const { spawn } = require('child_process');
-const { v4: uuidv4, v4: generateId } = require('uuid');
+const { v4: generateId } = require('uuid');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 
 // Thread management
 const { ThreadWebSocketHandler } = require('./lib/thread');
-const { initDb, getDb } = require('./lib/db');
-
-// Fusion system panel
-const createFusionHandlers = require('./lib/fusion/ws-handlers');
-
-// Clipboard manager
-const createClipboardHandlers = require('./lib/secrets/clipboard/handlers');
-const createRecentDocsHandlers = require('./lib/recent-docs/handlers');
+const { getDb } = require('./lib/db');
 
 // File explorer handlers
 const { createFileExplorerHandlers } = require('./lib/file-explorer');
@@ -35,7 +27,6 @@ const { emit, on } = require('./lib/event-bus');
 const workspaceController = require('./lib/workspace/workspace-controller');
 
 // Harness compatibility layer for external CLI harnesses
-const { spawnThreadWire } = require('./lib/harness/compat');
 const { getHarnessMode } = require('./lib/harness/feature-flags');
 
 // Log current harness mode on startup
@@ -47,26 +38,14 @@ const { checkSettingsBounce } = require('./lib/enforcement');
 // Server startup orchestrator (DB init, handlers, listen, watcher, triggers, shutdown)
 const { start: startServer } = require('./lib/startup');
 
-// Wire process manager — registry, marshalling, and per-connection lifecycle
-const {
-  createWireLifecycle,
-  sendToWire,
-  registerWire,
-  unregisterWire,
-  getWireForThread,
-} = require('./lib/wire/process-manager');
+// Wire process manager — per-connection lifecycle
+const { createWireLifecycle } = require('./lib/wire/process-manager');
 
 // Wire message router — per-connection event switch (extracted per SPEC-01d)
 const { createWireMessageRouter } = require('./lib/wire/message-router');
 
 // Client message router — per-connection dispatch factory (extracted per SPEC-01f).
 const { createClientMessageRouter } = require('./lib/ws/client-message-router');
-
-// File operations with archive support
-const { moveFileWithArchive } = require('./lib/file-ops');
-
-// Config system for persistence
-const config = require('./config');
 
 // View discovery and resolution (filesystem-driven, no database)
 const views = require('./lib/views');
@@ -224,8 +203,6 @@ app.get('/api/harnesses/:id/status', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-const layoutService = require('./lib/theme/layout-service');
 
 app.get('/api/view-config', async (req, res) => {
   try {
@@ -402,14 +379,6 @@ const fileExplorer = createFileExplorerHandlers({
   getProjectRoot,
   emit,
 });
-
-// ============================================================================
-// Wire Process Functions
-// ============================================================================
-
-// NOTE: spawnThreadWire is now imported from ./lib/harness/compat
-// The implementation has been moved to lib/harness/compat for external CLI harness support
-// NOTE: sendToWire is now imported from ./lib/wire/process-manager
 
 // ============================================================================
 // WebSocket Connection Handler with Thread Support
