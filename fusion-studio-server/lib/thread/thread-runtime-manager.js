@@ -23,18 +23,12 @@ class ThreadRuntimeManager {
       throw new Error('Thread runtime key requires workspaceId and threadId');
     }
 
-    if (key.scope === 'project') {
-      return `project:${key.workspaceId}:${key.threadId}`;
+    // RCC-0095: all threads are workspace-scoped ('project').
+    if (key.scope !== 'project') {
+      throw new Error(`Unsupported thread runtime scope: ${key.scope}`);
     }
 
-    if (key.scope === 'view') {
-      if (!key.viewId) {
-        throw new Error('View thread runtime key requires viewId');
-      }
-      return `view:${key.workspaceId}:${key.viewId}:${key.threadId}`;
-    }
-
-    throw new Error(`Unsupported thread runtime scope: ${key.scope}`);
+    return `project:${key.workspaceId}:${key.threadId}`;
   }
 
   ensureRuntime(key) {

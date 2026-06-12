@@ -1,9 +1,11 @@
 /**
  * @module chatSlice
  * @role Chat, segment, and turn state actions for the panel store.
- *       All message streaming, finalization, and project/view chat routing lives here.
+ *       All message streaming, finalization, and chat routing lives here.
+ *       RCC-0095: single workspace chat — chat state is keyed by threadId
+ *       in projectChats (the legacy per-view chat slots were removed).
  */
-import type { Scope, PanelState, Message, AssistantTurn, StreamSegment, TodoDrawerState } from '../../types';
+import type { PanelState, Message, AssistantTurn, StreamSegment, TodoDrawerState } from '../../types';
 import type { AppState } from '../panelStoreTypes';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
@@ -32,78 +34,67 @@ export function createInitialPanelState(): PanelState {
 }
 
 /**
- * PER_THREAD_CHAT_STATE helper: resolve the chat state slot.
- *  - 'view'    → state.panels[currentPanel]
- *  - 'project' + threadId → projectChats[threadId] (auto-init if missing)
- *  - 'project' + null threadId → fallback to currentThreadIds.project
+ * PER_THREAD_CHAT_STATE helper: resolve the chat state slot for a thread.
+ * Falls back to the current workspace thread when threadId is null.
  */
-function getChatState(state: AppState, scope: Scope, threadId: string | null): PanelState {
-  if (scope === 'view') {
-    return state.panels[state.currentPanel] || createInitialPanelState();
-  }
-  const tid = threadId ?? state.currentThreadIds.project;
+function getChatState(state: AppState, threadId: string | null): PanelState {
+  const tid = threadId ?? state.currentThreadId;
   if (!tid) return createInitialPanelState();
   return state.projectChats[tid] || createInitialPanelState();
 }
 
 /**
  * PER_THREAD_CHAT_STATE helper: build the partial state update to write a
- * new chat-state slot back to the store, correctly keyed by scope + threadId.
- * Returns {} (no-op) when scope is 'project' and no threadId can be resolved.
+ * chat-state slot back to the store, keyed by threadId.
+ * Returns {} (no-op) when no threadId can be resolved.
  */
 function writeChatState(
   state: AppState,
-  scope: Scope,
   threadId: string | null,
   next: PanelState,
 ): Partial<AppState> {
-  if (scope === 'view') {
-    return { panels: { ...state.panels, [state.currentPanel]: next } };
-  }
-  const tid = threadId ?? state.currentThreadIds.project;
+  const tid = threadId ?? state.currentThreadId;
   if (!tid) return {};
   return { projectChats: { ...state.projectChats, [tid]: next } };
 }
 
 /**
- * Resolve a threadId from its optional form to the concrete project thread
- * for no-op-checking. Returns null if scope='project' and no thread is active.
+ * Resolve a threadId from its optional form to the concrete active thread.
+ * Returns null when no thread is active.
  */
-function resolveThreadId(state: AppState, scope: Scope, threadId: string | null): string | null {
-  if (scope === 'view') return threadId ?? state.currentThreadIds.view;
-  return threadId ?? state.currentThreadIds.project;
+function resolveThreadId(state: AppState, threadId: string | null): string | null {
+  return threadId ?? state.currentThreadId;
 }
 
 // ── Slice factory ─────────────────────────────────────────────────────────────
 
 export function createChatSlice(set: Set, get: Get) {
   return {
-    panels: {} as Record<string, PanelState>,
     projectChats: {} as Record<string, PanelState>,
     contextUsage: 0,
     setContextUsage: (usage: number) => set({ contextUsage: usage }),
 
-    addMessage: (scope: Scope, threadId: string | null, message: Message) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, messages: [...cs.messages, message] });
+    addMessage: (threadId: string | null, message: Message) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, messages: [...cs.messages, message] });
     }),
 
-    setCurrentTurn: (scope: Scope, threadId: string | null, turn: AssistantTurn | null) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, currentTurn: turn });
+    setCurrentTurn: (threadId: string | null, turn: AssistantTurn | null) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, currentTurn: turn });
     }),
 
-    updateTurnContent: (scope: Scope, threadId: string | null, content: string) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    updateTurnContent: (threadId: string | null, content: string) => set((state) => {
+      const cs = getChatState(state, threadId);
       if (!cs.currentTurn) return state;
-      return writeChatState(state, scope, threadId, {
+      return writeChatState(state, threadId, {
         ...cs,
         currentTurn: { ...cs.currentTurn, content },
       });
     }),
 
-    appendSegment: (scope: Scope, threadId: string | null, segType: StreamSegment['type'], text: string) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    appendSegment: (threadId: string | null, segType: StreamSegment['type'], text: string) => set((state) => {
+      const cs = getChatState(state, threadId);
       const segments = [...cs.segments];
       const last = segments[segments.length - 1];
       if (last && last.type === segType) {
@@ -114,68 +105,68 @@ export function createChatSlice(set: Set, get: Get) {
         }
         segments.push({ type: segType, content: text });
       }
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    pushSegment: (scope: Scope, threadId: string | null, segment: StreamSegment) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    pushSegment: (threadId: string | null, segment: StreamSegment) => set((state) => {
+      const cs = getChatState(state, threadId);
       const segments = [...cs.segments];
       const last = segments[segments.length - 1];
       if (last && !last.complete && !last.toolCallId) {
         segments[segments.length - 1] = { ...last, complete: true };
       }
       segments.push(segment);
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    updateLastSegment: (scope: Scope, threadId: string | null, updates: Partial<StreamSegment>) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    updateLastSegment: (threadId: string | null, updates: Partial<StreamSegment>) => set((state) => {
+      const cs = getChatState(state, threadId);
       const segments = [...cs.segments];
       const last = segments[segments.length - 1];
       if (last) {
         segments[segments.length - 1] = { ...last, ...updates };
       }
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    updateSegmentByIndex: (scope: Scope, threadId: string | null, index: number, updates: Partial<StreamSegment>) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    updateSegmentByIndex: (threadId: string | null, index: number, updates: Partial<StreamSegment>) => set((state) => {
+      const cs = getChatState(state, threadId);
       if (index < 0 || index >= cs.segments.length) return state;
       const segments = [...cs.segments];
       segments[index] = { ...segments[index], ...updates };
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    updateSegmentByToolCallId: (scope: Scope, threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    updateSegmentByToolCallId: (threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => set((state) => {
+      const cs = getChatState(state, threadId);
       const idx = cs.segments.findIndex((s) => s.toolCallId === toolCallId);
       if (idx < 0) return state;
       const segments = [...cs.segments];
       segments[idx] = { ...segments[idx], ...updates };
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    appendSegmentContentByIndex: (scope: Scope, threadId: string | null, index: number, text: string) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
+    appendSegmentContentByIndex: (threadId: string | null, index: number, text: string) => set((state) => {
+      const cs = getChatState(state, threadId);
       if (index < 0 || index >= cs.segments.length) return state;
       const segments = [...cs.segments];
       segments[index] = { ...segments[index], content: segments[index].content + text };
-      return writeChatState(state, scope, threadId, { ...cs, segments });
+      return writeChatState(state, threadId, { ...cs, segments });
     }),
 
-    resetSegments: (scope: Scope, threadId: string | null) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, segments: [] });
+    resetSegments: (threadId: string | null) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, segments: [] });
     }),
 
-    setPendingTurnEnd: (scope: Scope, threadId: string | null, pending: boolean) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, pendingTurnEnd: pending });
+    setPendingTurnEnd: (threadId: string | null, pending: boolean) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, pendingTurnEnd: pending });
     }),
 
-    setPendingMessage: (scope: Scope, threadId: string | null, message: Message | null) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, pendingMessage: message });
+    setPendingMessage: (threadId: string | null, message: Message | null) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, pendingMessage: message });
     }),
 
     // TURN FINALIZATION — completes the full turn lifecycle in one atomic update.
@@ -187,9 +178,9 @@ export function createChatSlice(set: Set, get: Get) {
     // KNOWN PAST BUG (DO NOT REINTRODUCE):
     // The old finalizeTurn only set status='complete' but left the turn in
     // currentTurn, causing it to stay in limbo until the next turn_begin.
-    finalizeTurn: (scope: Scope, threadId: string | null) => {
+    finalizeTurn: (threadId: string | null) => {
       const state = get();
-      const cs = getChatState(state, scope, threadId);
+      const cs = getChatState(state, threadId);
       const turn = cs.currentTurn;
       if (turn) {
         const segments = cs.segments;
@@ -203,8 +194,8 @@ export function createChatSlice(set: Set, get: Get) {
             segments: segments.length > 0 ? [...segments] : undefined,
           },
         ];
-        set((s) => writeChatState(s, scope, threadId, {
-          ...getChatState(s, scope, threadId),
+        set((s) => writeChatState(s, threadId, {
+          ...getChatState(s, threadId),
           messages: newMessages,
           currentTurn: null,
           segments: [],
@@ -215,45 +206,43 @@ export function createChatSlice(set: Set, get: Get) {
       }
     },
 
-    setTodoDrawer: (scope: Scope, threadId: string | null, drawer: TodoDrawerState | undefined) => set((state) => {
-      const cs = getChatState(state, scope, threadId);
-      return writeChatState(state, scope, threadId, { ...cs, todoDrawer: drawer });
+    setTodoDrawer: (threadId: string | null, drawer: TodoDrawerState | undefined) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, todoDrawer: drawer });
     }),
 
-    clearChat: (scope: Scope, threadId: string | null) => set((state) =>
-      writeChatState(state, scope, threadId, createInitialPanelState())
+    clearChat: (threadId: string | null) => set((state) =>
+      writeChatState(state, threadId, createInitialPanelState())
     ),
 
-    sendMessage: (text: string, scope: Scope, threadIdOpt?: string | null) => {
+    sendMessage: (text: string, threadIdOpt?: string | null) => {
       const state = get();
       const socket = state.ws;
       if (!socket || socket.readyState !== WebSocket.OPEN) return;
-      const threadId = resolveThreadId(state, scope, threadIdOpt ?? null);
+      const threadId = resolveThreadId(state, threadIdOpt ?? null);
       if (!threadId) {
-        console.error(`[Store] sendMessage: no active thread in scope=${scope}`);
+        console.error('[Store] sendMessage: no active thread');
         return;
       }
       const now = performance.now();
       (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
-      console.log(`[TIMING] SEND at ${now.toFixed(1)}ms scope=${scope} threadId=${threadId.slice(0, 8)}`);
+      console.log(`[TIMING] SEND at ${now.toFixed(1)}ms threadId=${threadId.slice(0, 8)}`);
       socket.send(JSON.stringify({
         type: 'prompt',
-        scope,
         threadId,
         user_input: text,
       }));
     },
 
-    warmThread: (scope: Scope, threadIdOpt?: string | null) => {
+    warmThread: (threadIdOpt?: string | null) => {
       const state = get();
       const socket = state.ws;
       if (!socket || socket.readyState !== WebSocket.OPEN) return;
-      if (state.currentScope !== scope) return;
-      const threadId = resolveThreadId(state, scope, threadIdOpt ?? null);
+      if (!state.chatActive) return;
+      const threadId = resolveThreadId(state, threadIdOpt ?? null);
       if (!threadId) return;
       socket.send(JSON.stringify({
         type: 'thread:warm',
-        scope,
         threadId,
       }));
     },

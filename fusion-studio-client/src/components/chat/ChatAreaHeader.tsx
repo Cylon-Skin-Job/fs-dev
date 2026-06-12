@@ -10,7 +10,6 @@ import type { useChatArea } from './useChatArea';
 type ChatAreaHeaderProps = Pick<
   ReturnType<typeof useChatArea>,
   | 'panel'
-  | 'scope'
   | 'chatHeaderRef'
   | 'currentThreadId'
   | 'currentThread'
@@ -33,7 +32,6 @@ type ChatAreaHeaderProps = Pick<
 
 export function ChatAreaHeader({
   panel,
-  scope,
   chatHeaderRef,
   currentThreadId,
   currentThread,
@@ -113,7 +111,7 @@ export function ChatAreaHeader({
               onSelect={handleHarnessSelect}
             />
           )}
-          <ThreadJumpDropdown panel={panel} scope={scope} />
+          <ThreadJumpDropdown panel={panel} />
         </>
       )}
       <div

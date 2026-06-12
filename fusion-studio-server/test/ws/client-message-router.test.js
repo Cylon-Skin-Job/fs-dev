@@ -51,7 +51,6 @@ function makeRouter({ wire, handleCanonicalHarnessEvent = jest.fn() }) {
   const ws = { send: jest.fn() };
   const session = {
     connectionId: 'connection-1',
-    currentScope: 'view',
     currentThreadId: 'thread-1',
     wire,
   };
@@ -106,7 +105,6 @@ describe('createClientMessageRouter prompt harness routing', () => {
     await router.handleClientMessage(JSON.stringify({
       type: 'prompt',
       user_input: 'hello',
-      scope: 'view',
       threadId: 'thread-1',
     }));
     await flushAsyncWork();
@@ -135,7 +133,6 @@ describe('createClientMessageRouter prompt harness routing', () => {
     await router.handleClientMessage(JSON.stringify({
       type: 'prompt',
       user_input: 'hello',
-      scope: 'view',
       threadId: 'thread-1',
     }));
     await flushAsyncWork();
@@ -153,7 +150,6 @@ describe('createClientMessageRouter prompt harness routing', () => {
     await router.handleClientMessage(JSON.stringify({
       type: 'prompt',
       user_input: 'hello',
-      scope: 'view',
       threadId: 'thread-1',
     }));
     await flushAsyncWork();
@@ -176,7 +172,6 @@ describe('createClientMessageRouter prompt harness routing', () => {
     await router.handleClientMessage(JSON.stringify({
       type: 'prompt',
       user_input: 'hello',
-      scope: 'view',
       threadId: 'thread-1',
     }));
     await flushAsyncWork();
@@ -189,14 +184,13 @@ describe('createClientMessageRouter prompt harness routing', () => {
 
     await router.handleClientMessage(JSON.stringify({
       type: 'thread:warm',
-      scope: 'view',
       threadId: 'thread-1',
     }));
 
     expect(threadRuntimeController.warmRuntimeForIntent).toHaveBeenCalledWith(expect.objectContaining({
       ws,
       session,
-      clientMsg: expect.objectContaining({ type: 'thread:warm', scope: 'view', threadId: 'thread-1' }),
+      clientMsg: expect.objectContaining({ type: 'thread:warm', threadId: 'thread-1' }),
     }));
     expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
   });

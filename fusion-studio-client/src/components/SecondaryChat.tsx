@@ -8,7 +8,7 @@
  *
  * PER_THREAD_CHAT_STATE: each ChatArea reads a specific threadId via
  * threadIdOverride, so the secondary displays its own thread while the
- * primary stays on currentThreadIds.project.
+ * primary stays on the current workspace thread.
  *
  * Minimize/restore animations: both floating and sticky play a genie-style
  * shrink to the dock button (MINIMIZE_ANIMATION_MS). Restore plays the same
@@ -224,7 +224,7 @@ export function SecondaryChat() {
     >
       <SecondaryHeader onMinimize={handleMinimize} />
       <div className="rv-secondary-body">
-        <ChatArea panel={currentPanel} scope="project" threadIdOverride={secondary.threadId} />
+        <ChatArea panel={currentPanel} threadIdOverride={secondary.threadId} />
       </div>
       <div
         className="rv-secondary-resize-handle"
@@ -259,7 +259,7 @@ export function SecondaryChatSticky() {
       <RightSecondaryResize panel={currentPanel} />
       <SecondaryHeader onMinimize={handleMinimize} />
       <div className="rv-secondary-body">
-        <ChatArea panel={currentPanel} scope="project" threadIdOverride={secondary.threadId} />
+        <ChatArea panel={currentPanel} threadIdOverride={secondary.threadId} />
       </div>
     </aside>
   );

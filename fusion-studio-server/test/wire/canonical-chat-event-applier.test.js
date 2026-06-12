@@ -20,8 +20,6 @@ describe('CanonicalChatEventApplier', () => {
     return {
       currentThreadId: 'thread-1',
       currentWorkspaceId: 'code',
-      currentScope: 'view',
-      currentViewId: 'editor',
       pendingUserInput: null,
       currentTurn: null,
       hasToolCalls: false,
@@ -50,8 +48,8 @@ describe('CanonicalChatEventApplier', () => {
     touchCount++;
   }
 
-  async function persistAssistantMessage(ws, content, hasToolCalls, metadata, scope, explicitThreadId) {
-    persistCalls.push({ ws, content, hasToolCalls, metadata, scope, explicitThreadId });
+  async function persistAssistantMessage(ws, content, hasToolCalls, metadata, explicitThreadId) {
+    persistCalls.push({ ws, content, hasToolCalls, metadata, explicitThreadId });
   }
 
   function checkSettingsBounce(toolName, args) {
@@ -110,8 +108,8 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:turn_begin');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        workspace: 'workspace:code, editor',
-        scope: 'view',
+        workspace: 'workspace:code',
+        scope: 'project',
         threadId: 'thread-1',
         turnId: 'turn-1',
         userInput: 'Hello AI'
@@ -119,14 +117,12 @@ describe('CanonicalChatEventApplier', () => {
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn).toMatchObject({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
         turnId: 'turn-1',
         userInput: 'Hello AI',
@@ -180,14 +176,13 @@ describe('CanonicalChatEventApplier', () => {
 
       const events = emittedEvents.filter(e => e.type === 'chat:content');
       expect(events).toHaveLength(2);
-      expect(events[0].payload.scope).toBe('view');
+      expect(events[0].payload.scope).toBe('project');
       expect(events[0].payload.text).toBe('Hello ');
       expect(events[1].payload.text).toBe('world');
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.fullText).toBe('Hello world');
@@ -227,8 +222,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.parts).toEqual([
@@ -243,7 +237,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const event = emittedEvents.find(e => e.type === 'chat:thinking');
       expect(event).toBeDefined();
-      expect(event.payload.scope).toBe('view');
+      expect(event.payload.scope).toBe('project');
       expect(event.payload.text).toBe('Deep thought');
     });
   });
@@ -284,15 +278,14 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:tool_call');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        scope: 'view',
+        scope: 'project',
         toolName: 'Bash',
         toolCallId: 'tc-1'
       });
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.parts[0]).toMatchObject({
@@ -332,7 +325,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const events = emittedEvents.filter(e => e.type === 'chat:tool_call_args');
       expect(events).toHaveLength(2);
-      expect(events[0].payload.scope).toBe('view');
+      expect(events[0].payload.scope).toBe('project');
       expect(events[0].payload.argsChunk).toBe('{"cmd": "ls"}');
       expect(events[1].payload.argsChunk).toBe(' -la');
     });
@@ -387,7 +380,7 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:tool_result');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        scope: 'view',
+        scope: 'project',
         toolCallId: 'tc-1',
         toolName: 'Bash',
         toolArgs: { cmd: 'echo hello' },
@@ -400,8 +393,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.parts[0]).toMatchObject({
@@ -470,7 +462,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const toolResult = emittedEvents.find(e => e.type === 'chat:tool_result');
       expect(toolResult).toBeDefined();
-      expect(toolResult.payload.scope).toBe('view');
+      expect(toolResult.payload.scope).toBe('project');
       expect(toolResult.payload.isError).toBe(true);
       expect(toolResult.payload.toolOutput).toBe('Write to settings/ is not allowed');
       expect(toolResult.payload.returnedDiff).toBe(false);
@@ -495,7 +487,7 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:subagent_event');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        scope: 'view',
+        scope: 'project',
         parentToolCallId: 'tc-1',
         agentId: 'agent-1',
         subagentType: 'planner',
@@ -543,7 +535,7 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:status_update');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        scope: 'view',
+        scope: 'project',
         contextUsage: 42,
         tokenUsage: { input_other: 100, output: 50 },
         messageId: 'msg-1',
@@ -583,7 +575,7 @@ describe('CanonicalChatEventApplier', () => {
         ws: mockWs,
         content: 'Hello',
         hasToolCalls: false,
-        scope: 'view'
+        explicitThreadId: 'thread-1'
       });
       expect(persistCalls[0].metadata).toMatchObject({
         contextUsage: 10,
@@ -598,8 +590,8 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:turn_end');
       expect(event).toBeDefined();
       expect(event.payload).toMatchObject({
-        workspace: 'workspace:code, editor',
-        scope: 'view',
+        workspace: 'workspace:code',
+        scope: 'project',
         threadId: 'thread-1',
         turnId: 'turn-1',
         fullText: 'Hello',
@@ -621,8 +613,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.status).toBe('complete');
@@ -654,7 +645,7 @@ describe('CanonicalChatEventApplier', () => {
       const event = emittedEvents.find(e => e.type === 'chat:turn_end');
       expect(event.payload).toMatchObject({
         threadId: 'thread-1',
-        scope: 'view',
+        scope: 'project',
         userInput: 'Hi',
         fullText: 'Hello',
         reason: 'interrupted',
@@ -664,8 +655,7 @@ describe('CanonicalChatEventApplier', () => {
 
       const liveTurn = threadRuntimeManager.getLiveTurn({
         workspaceId: 'code',
-        scope: 'view',
-        viewId: 'editor',
+        scope: 'project',
         threadId: 'thread-1',
       });
       expect(liveTurn.status).toBe('interrupted');

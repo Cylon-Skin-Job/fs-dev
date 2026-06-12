@@ -3,29 +3,21 @@ import './Sidebar.css';
 import { CliPickerDropdown } from './CliPickerDropdown';
 import { SidebarThreadList } from './sidebar/SidebarThreadList';
 import { useSidebar } from './sidebar/useSidebar';
-import type { Scope } from '../types';
 
 interface SidebarProps {
   panel: string;
-  scope: Scope;
   collapsed?: boolean;
 }
 
-export function Sidebar({ panel, scope, collapsed }: SidebarProps) {
-  const sidebar = useSidebar({ panel, scope });
+export function Sidebar({ panel, collapsed }: SidebarProps) {
+  const sidebar = useSidebar({ panel });
 
   if (collapsed) {
     return <aside className="rv-sidebar rv-sidebar--collapsed" aria-hidden="true" />;
   }
 
   return (
-    <aside className={`rv-sidebar rv-sidebar--${scope}${sidebar.isActive ? ' rv-sidebar--active' : ''}`}>
-      {scope !== 'project' && (
-        <div className="rv-sidebar-header">
-          {sidebar.headerLabel}
-        </div>
-      )}
-
+    <aside className={`rv-sidebar rv-sidebar--project${sidebar.isActive ? ' rv-sidebar--active' : ''}`}>
       <button
         className="rv-new-chat-btn"
         onMouseDown={(e) => e.stopPropagation()}

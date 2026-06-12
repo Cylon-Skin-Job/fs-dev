@@ -9,11 +9,9 @@ import './TodoDrawer.css';
 import { useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import { selectChatState } from './chatAreaConstants';
-import type { Scope, TodoItem, TodoItemStatus } from '../../types';
+import type { TodoItem, TodoItemStatus } from '../../types';
 
 interface TodoDrawerProps {
-  scope: Scope;
-  panel: string;
   threadId: string | null;
 }
 
@@ -31,15 +29,15 @@ function getStatusIcon(status: TodoItemStatus): string {
   return status === 'completed' ? 'select_check_box' : 'check_box_outline_blank';
 }
 
-export function TodoDrawer({ scope, panel, threadId }: TodoDrawerProps) {
-  const selector = selectChatState(scope, panel, threadId);
+export function TodoDrawer({ threadId }: TodoDrawerProps) {
+  const selector = selectChatState(threadId);
   const drawer = usePanelStore((state) => selector(state)?.todoDrawer);
   const setTodoDrawer = usePanelStore((state) => state.setTodoDrawer);
 
   const handleToggle = useCallback(() => {
     if (!drawer || !threadId) return;
-    setTodoDrawer(scope, threadId, { ...drawer, open: !drawer.open });
-  }, [drawer, scope, threadId, setTodoDrawer]);
+    setTodoDrawer(threadId, { ...drawer, open: !drawer.open });
+  }, [drawer, threadId, setTodoDrawer]);
 
   if (!drawer || drawer.items.length === 0) return null;
 

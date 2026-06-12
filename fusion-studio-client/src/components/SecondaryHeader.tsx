@@ -15,7 +15,7 @@ export function SecondaryHeader({ onMinimize }: SecondaryHeaderProps = {}) {
   const undockSecondary = usePanelStore((s) => s.undockSecondary);
   const mode = usePanelStore((s) => s.secondary?.mode);
   const secondaryThreadId = usePanelStore((s) => s.secondary?.threadId);
-  const threads = usePanelStore((s) => s.threads.project);
+  const threads = usePanelStore((s) => s.threads);
   const secondaryThread = threads.find(t => t.threadId === secondaryThreadId);
   const resolvedHarness = useResolvedHarness(secondaryThread?.entry?.harnessId);
   const identity = resolvedHarness

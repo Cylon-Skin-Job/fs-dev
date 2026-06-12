@@ -6,7 +6,6 @@ const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manage
 function makeManager() {
   return {
     workspaceId: 'workspace-1',
-    viewId: 'view-1',
     getThread: jest.fn(() => Promise.resolve({ entry: { name: 'Thread 1' } })),
     getHistory: jest.fn(() => Promise.resolve({ messages: [] })),
     getRichHistory: jest.fn(() => Promise.resolve({ exchanges: [] })),
@@ -22,8 +21,8 @@ function makeHandlers(manager) {
   const wsState = new Map([[ws, {
     viewName: 'view-1',
     panelId: 'view-1',
-    threadIds: { view: null },
-    threadManagers: { view: manager },
+    threadId: null,
+    threadManager: manager,
   }]]);
   const pendingReorderTimers = new Map();
   const handlers = createCrudHandlers({
@@ -53,24 +52,22 @@ describe('thread CRUD live turn snapshots', () => {
     const { ws, handlers, pendingReorderTimers } = makeHandlers(manager);
     const key = {
       workspaceId: 'workspace-1',
-      scope: 'view',
-      viewId: 'view-1',
+      scope: 'project',
       threadId: 'thread-1',
     };
     threadRuntimeManager.beginLiveTurn(key, { turnId: 'turn-1', userInput: 'hello' });
     threadRuntimeManager.appendLiveContent(key, 'hi there');
 
-    await handlers.handleThreadOpen(ws, { threadId: 'thread-1' }, 'view');
+    await handlers.handleThreadOpen(ws, { threadId: 'thread-1' });
 
     const opened = JSON.parse(ws.send.mock.calls[0][0]);
     expect(opened).toMatchObject({
       type: 'thread:opened',
       threadId: 'thread-1',
-      scope: 'view',
+      scope: 'project',
       liveTurn: {
         workspaceId: 'workspace-1',
-        scope: 'view',
-        viewId: 'view-1',
+        scope: 'project',
         threadId: 'thread-1',
         turnId: 'turn-1',
         userInput: 'hello',
@@ -85,7 +82,7 @@ describe('thread CRUD live turn snapshots', () => {
     const manager = makeManager();
     const { ws, handlers, pendingReorderTimers } = makeHandlers(manager);
 
-    await handlers.handleThreadOpen(ws, { threadId: 'thread-1' }, 'view');
+    await handlers.handleThreadOpen(ws, { threadId: 'thread-1' });
 
     const opened = JSON.parse(ws.send.mock.calls[0][0]);
     expect(opened.type).toBe('thread:opened');

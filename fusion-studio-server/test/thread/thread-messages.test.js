@@ -22,8 +22,8 @@ describe('createMessageHandlers', () => {
 
     wsState = new Map();
     wsState.set(ws, {
-      threadIds: { view: 'thread-B' },
-      threadManagers: { view: mockManager },
+      threadId: 'thread-B',
+      threadManager: mockManager,
     });
 
     handlers = createMessageHandlers({ wsState });
@@ -38,7 +38,6 @@ describe('createMessageHandlers', () => {
         'Hello from A',
         false,
         null,
-        'view',
         'thread-A'
       );
 
@@ -50,8 +49,8 @@ describe('createMessageHandlers', () => {
       });
     });
 
-    test('falls back to state.threadIds when no explicit threadId given', async () => {
-      await handlers.addAssistantMessage(ws, 'Hello from B', false, null, 'view');
+    test('falls back to state.threadId when no explicit threadId given', async () => {
+      await handlers.addAssistantMessage(ws, 'Hello from B', false, null);
 
       expect(mockManager.addMessage).toHaveBeenCalledTimes(1);
       expect(mockManager.addMessage).toHaveBeenCalledWith('thread-B', {
@@ -63,18 +62,18 @@ describe('createMessageHandlers', () => {
 
     test('no-ops when neither explicit threadId nor state selection exists', async () => {
       wsState.set(ws, {
-        threadIds: {},
-        threadManagers: { view: mockManager },
+        threadId: null,
+        threadManager: mockManager,
       });
 
-      await handlers.addAssistantMessage(ws, 'Hello', false, null, 'view');
+      await handlers.addAssistantMessage(ws, 'Hello', false, null);
 
       expect(mockManager.addMessage).not.toHaveBeenCalled();
     });
 
     test('no-ops when ws has no state entry', async () => {
       wsState.delete(ws);
-      await handlers.addAssistantMessage(ws, 'Hello', false, null, 'view', 'thread-A');
+      await handlers.addAssistantMessage(ws, 'Hello', false, null, 'thread-A');
       expect(mockManager.addMessage).not.toHaveBeenCalled();
     });
 
@@ -85,7 +84,6 @@ describe('createMessageHandlers', () => {
         'Hello',
         true,
         metadata,
-        'view',
         'thread-A'
       );
 

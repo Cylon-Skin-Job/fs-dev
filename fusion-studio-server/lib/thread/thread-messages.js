@@ -4,6 +4,8 @@
  * Extracted from ThreadWebSocketHandler.js — handles user message sending
  * and assistant message recording.
  *
+ * RCC-0095: all threads are workspace-scoped (single workspace chat).
+ *
  * Uses a factory pattern so the coordinator can inject the shared wsState Map.
  */
 
@@ -14,11 +16,10 @@
 function createMessageHandlers({ wsState }) {
 
   /**
-   * Handle message:send - add user message to thread. SPEC-26b: scope-aware.
+   * Handle message:send - add user message to the active thread.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.content
-   * @param {'project'|'view'} [msg.scope]
    */
   async function handleMessageSend(ws, msg) {
     const state = wsState.get(ws);
@@ -27,16 +28,13 @@ function createMessageHandlers({ wsState }) {
       return false;
     }
 
-    // SPEC-26b: scope comes from the message; default 'view' for backward
-    // compat. The currently active thread for that scope is the target.
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const threadId = state.threadIds?.[scope];
+    const threadId = state.threadId;
     if (!threadId) {
-      ws.send(JSON.stringify({ type: 'error', message: `No active ${scope} thread` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No active thread' }));
       return false;
     }
 
-    const manager = state.threadManagers[scope];
+    const manager = state.threadManager;
     const { content } = msg;
 
     try {
@@ -53,7 +51,7 @@ function createMessageHandlers({ wsState }) {
       ws.send(JSON.stringify({
         type: 'message:sent',
         threadId,
-        scope,
+        scope: 'project',
         content
       }));
       return true;
@@ -67,7 +65,6 @@ function createMessageHandlers({ wsState }) {
 
   /**
    * Add assistant message to thread (called after streaming completes).
-   * SPEC-26b: scope-aware; caller passes scope from session.currentScope.
    * Runtime-1R: if explicit threadId is provided, use it directly instead of
    * resolving from mutable selection state. This prevents a passive browse
    * from retargeting persistence of an in-flight turn.
@@ -75,17 +72,16 @@ function createMessageHandlers({ wsState }) {
    * @param {string} content
    * @param {boolean} hasToolCalls
    * @param {object} [metadata] - Optional metadata (contextUsage, tokenUsage, etc.)
-   * @param {'project'|'view'} [scope='view']
    * @param {string} [explicitThreadId] - Optional explicit target thread ID
    */
-  async function addAssistantMessage(ws, content, hasToolCalls = false, metadata = null, scope = 'view', explicitThreadId = null) {
+  async function addAssistantMessage(ws, content, hasToolCalls = false, metadata = null, explicitThreadId = null) {
     const state = wsState.get(ws);
     if (!state) return;
 
-    const threadId = explicitThreadId || state.threadIds?.[scope];
+    const threadId = explicitThreadId || state.threadId;
     if (!threadId) return;
 
-    const manager = state.threadManagers[scope];
+    const manager = state.threadManager;
     const message = {
       role: 'assistant',
       content,

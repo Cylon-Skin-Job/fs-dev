@@ -10,6 +10,9 @@
  * exported — external callers must use the dispatcher so upsert semantics
  * are enforced.
  *
+ * RCC-0095: all threads are workspace-scoped (single workspace chat).
+ * Outbound messages still carry scope: 'project' for wire compatibility.
+ *
  * Uses a factory pattern so the coordinator can inject shared state (Maps)
  * and helper functions. All functions close over the same scope, which is
  * critical because handleThreadOpenAssistant calls handleThreadCreate /
@@ -19,8 +22,8 @@
 /**
  * @param {object} deps
  * @param {Map} deps.wsState - Per-WS state map (shared with coordinator)
- * @param {Function} deps.sendThreadList - Send thread list to client (scope-aware, SPEC-26b)
- * @param {Function} deps.closeThread - Close a scoped thread session (SPEC-26b)
+ * @param {Function} deps.sendThreadList - Send thread list to client
+ * @param {Function} deps.closeThread - Close the active thread session
  * @param {Map} deps.pendingReorderTimers - Pending reorder timers (shared with coordinator)
  * @param {number} deps.REORDER_DELAY_MS - Delay for thread list refresh
  */
@@ -28,16 +31,12 @@ const { search: searchExchanges } = require('./chat-search');
 const { threadRuntimeManager } = require('./thread-runtime-manager');
 const { resolveCliPolicy } = require('../cli-config');
 
-function getRuntimeKey(manager, scope, threadId) {
-  const key = {
+function getRuntimeKey(manager, threadId) {
+  return {
     workspaceId: manager.workspaceId,
-    scope,
+    scope: 'project',
     threadId,
   };
-  if (scope === 'view') {
-    key.viewId = manager.viewId;
-  }
-  return key;
 }
 
 function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReorderTimers, REORDER_DELAY_MS }) {
@@ -74,24 +73,23 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
   }
 
   /**
-   * Handle thread:create message. SPEC-26b: scope-aware.
+   * Handle thread:create message.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} [msg.name]
    * @param {string} [msg.harnessId] - Harness selection ('kimi' | 'claude-code' | 'gemini' | 'qwen' | 'codex')
    * @param {object} [msg.harnessConfig] - BYOK configuration
-   * @param {'project'|'view'} [scope='view']
    */
-  async function handleThreadCreate(ws, msg, scope = 'view') {
+  async function handleThreadCreate(ws, msg) {
     const state = wsState.get(ws);
     if (!state) {
       ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
       return;
     }
 
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
@@ -117,15 +115,15 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
         type: 'thread:created',
         threadId: createdId,
         panel: state.viewName,
-        scope, // echo so the client routes the response correctly (SPEC-26c)
+        scope: 'project',
         thread: entry
       }));
 
-      // Send updated list (scoped)
-      await sendThreadList(ws, scope);
+      // Send updated list
+      await sendThreadList(ws);
 
       // Automatically open the new thread
-      await handleThreadOpen(ws, { threadId: createdId }, scope, { closePrevious: true });
+      await handleThreadOpen(ws, { threadId: createdId }, { closePrevious: true });
 
     } catch (err) {
       console.error('[ThreadWS] Create failed:', err);
@@ -134,16 +132,14 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
   }
 
   /**
-   * Handle thread:open message. SPEC-26b: scope-aware.
-   * Opening a thread of one scope does NOT close the other scope's thread.
+   * Handle thread:open message.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.threadId
-   * @param {'project'|'view'} [scope='view']
    * @param {object} [options]
    * @param {boolean} [options.closePrevious=false]
    */
-  async function handleThreadOpen(ws, msg, scope = 'view', options = {}) {
+  async function handleThreadOpen(ws, msg, options = {}) {
     const state = wsState.get(ws);
     if (!state) {
       ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
@@ -151,9 +147,9 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     }
 
     const { threadId } = msg;
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
@@ -164,17 +160,17 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    // Activation opens preserve the old same-scope close behavior. Browse opens
+    // Activation opens preserve the old close behavior. Browse opens
     // only select/hydrate and must not kill, cool, warm, or retarget runtimes.
-    if (options.closePrevious && state.threadIds[scope] && state.threadIds[scope] !== threadId) {
-      await closeThread(ws, scope);
+    if (options.closePrevious && state.threadId && state.threadId !== threadId) {
+      await closeThread(ws);
     }
 
     // If this thread is already active elsewhere, that's fine (multiple tabs can view same thread)
     // But only one wire process per thread (managed by ThreadManager)
 
-    state.threadIds[scope] = threadId;
-    threadRuntimeManager.ensureRuntime(getRuntimeKey(manager, scope, threadId));
+    state.threadId = threadId;
+    threadRuntimeManager.ensureRuntime(getRuntimeKey(manager, threadId));
 
     // Mark as resumed in index
     await manager.index.markResumed(threadId);
@@ -187,16 +183,16 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     const exchanges = richHistory?.exchanges || [];
     const lastExchange = exchanges.length > 0 ? exchanges[exchanges.length - 1] : null;
     const contextUsage = lastExchange?.metadata?.contextUsage ?? null;
-    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(manager, scope, threadId));
+    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(manager, threadId));
 
-    console.log(`[ThreadWS] Opening ${scope} thread ${threadId.slice(0,8)}, exchanges: ${exchanges.length}, lastExchange metadata:`, lastExchange?.metadata);
+    console.log(`[ThreadWS] Opening thread ${threadId.slice(0,8)}, exchanges: ${exchanges.length}, lastExchange metadata:`, lastExchange?.metadata);
     console.log(`[ThreadWS] Sending contextUsage:`, contextUsage);
 
     ws.send(JSON.stringify({
       type: 'thread:opened',
       threadId,
       panel: state.viewName,
-      scope, // echo so the client routes the response correctly (SPEC-26c)
+      scope: 'project',
       thread: thread.entry,
       history: history?.messages || [],  // Legacy format
       exchanges: exchanges,  // Rich format with tool calls
@@ -216,14 +212,14 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
 
     const timer = setTimeout(() => {
       pendingReorderTimers.delete(ws);
-      sendThreadList(ws, scope).catch(err => {
+      sendThreadList(ws).catch(err => {
         console.error('[ThreadWS] Delayed sendThreadList failed:', err);
       });
     }, REORDER_DELAY_MS);
 
     pendingReorderTimers.set(ws, timer);
 
-    console.log(`[ThreadWS] Opened ${scope} thread ${threadId} (panel: ${state.panelId}, harness: ${thread.entry?.harnessId || 'unknown'}) - reorder in ${REORDER_DELAY_MS}ms`);
+    console.log(`[ThreadWS] Opened thread ${threadId} (panel: ${state.panelId}, harness: ${thread.entry?.harnessId || 'unknown'}) - reorder in ${REORDER_DELAY_MS}ms`);
   }
 
   /**
@@ -254,42 +250,37 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    // SPEC-26b: extract scope from msg, default to 'view' for backward compat
-    // with pre-26b clients that don't know about dual scopes. The defensive
-    // check rejects arbitrary strings — only 'project' or 'view' accepted.
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
-    // Upsert: if client supplied a threadId and it exists in this scope,
-    // resume it. Otherwise create a new thread in this scope.
+    // Upsert: if client supplied a threadId and it exists, resume it.
+    // Otherwise create a new thread.
     if (msg.threadId) {
       const existing = await manager.getThread(msg.threadId);
       if (existing) {
-        return handleThreadOpen(ws, msg, scope, { closePrevious: true });
+        return handleThreadOpen(ws, msg, { closePrevious: true });
       }
       // threadId provided but thread doesn't exist — fall through to create.
       // This handles the race where a client tries to resume a freshly-deleted
       // thread. Creating a new one is the least-surprising outcome.
       console.warn(
-        `[ThreadWS] thread:open-assistant with unknown threadId ${msg.threadId} (scope=${scope}) — creating new`
+        `[ThreadWS] thread:open-assistant with unknown threadId ${msg.threadId} — creating new`
       );
     }
 
     // No threadId, or threadId not found → create a new thread.
-    return handleThreadCreate(ws, msg, scope);
+    return handleThreadCreate(ws, msg);
   }
 
   /**
-   * Handle thread:rename message. SPEC-26b: scope-aware.
+   * Handle thread:rename message.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.threadId
    * @param {string} msg.name
-   * @param {'project'|'view'} [msg.scope]
    */
   async function handleThreadRename(ws, msg) {
     const state = wsState.get(ws);
@@ -298,10 +289,9 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
@@ -317,11 +307,11 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       ws.send(JSON.stringify({
         type: 'thread:renamed',
         threadId,
-        scope,
+        scope: 'project',
         name
       }));
 
-      await sendThreadList(ws, scope);
+      await sendThreadList(ws);
 
     } catch (err) {
       console.error('[ThreadWS] Rename failed:', err);
@@ -330,11 +320,10 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
   }
 
   /**
-   * Handle thread:delete message. SPEC-26b: scope-aware.
+   * Handle thread:delete message.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.threadId
-   * @param {'project'|'view'} [msg.scope]
    */
   async function handleThreadDelete(ws, msg) {
     const state = wsState.get(ws);
@@ -343,19 +332,18 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
     const { threadId } = msg;
 
-    // If deleting the currently-active thread for THIS scope, close it first.
-    if (state.threadIds[scope] === threadId) {
-      await closeThread(ws, scope);
-      state.threadIds[scope] = null;
+    // If deleting the currently-active thread, close it first.
+    if (state.threadId === threadId) {
+      await closeThread(ws);
+      state.threadId = null;
     }
 
     try {
@@ -368,10 +356,10 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       ws.send(JSON.stringify({
         type: 'thread:deleted',
         threadId,
-        scope
+        scope: 'project'
       }));
 
-      await sendThreadList(ws, scope);
+      await sendThreadList(ws);
 
     } catch (err) {
       console.error('[ThreadWS] Delete failed:', err);
@@ -380,11 +368,10 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
   }
 
   /**
-   * Handle thread:copyLink message. SPEC-26b: scope-aware.
+   * Handle thread:copyLink message.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.threadId
-   * @param {'project'|'view'} [msg.scope]
    */
   async function handleThreadCopyLink(ws, msg) {
     const state = wsState.get(ws);
@@ -393,10 +380,9 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: `No ${scope} ThreadManager` }));
+      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
@@ -412,7 +398,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       ws.send(JSON.stringify({
         type: 'thread:link',
         threadId,
-        scope,
+        scope: 'project',
         filePath: thread.filePath
       }));
 
@@ -430,17 +416,15 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.threadId
-   * @param {'project'|'view'} [msg.scope]
    */
   async function handleThreadTouch(ws, msg) {
     const state = wsState.get(ws);
     if (!state) return;
-    const scope = msg.scope === 'project' ? 'project' : 'view';
-    const manager = state.threadManagers?.[scope];
+    const manager = state.threadManager;
     if (!manager) return;
     try {
       await manager.index.touch(msg.threadId);
-      await sendThreadList(ws, scope);
+      await sendThreadList(ws);
     } catch (err) {
       console.error('[ThreadWS] Touch failed:', err);
     }
@@ -462,8 +446,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       // Default to current workspace if omitted
       if (workspaceId === undefined) {
         const state = wsState.get(ws);
-        const manager = state?.threadManagers?.project || state?.threadManagers?.view;
-        workspaceId = manager?.workspaceId ?? null;
+        workspaceId = state?.threadManager?.workspaceId ?? null;
       }
 
       const { total, results } = await searchExchanges({

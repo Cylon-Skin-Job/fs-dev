@@ -7,24 +7,20 @@ const ThreadWebSocketHandler = require('./ThreadWebSocketHandler');
 const { getWireForThread, unregisterWire } = require('../wire/process-manager');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 
-function getScope(clientMsg, session) {
-  return clientMsg.scope === 'project' ? 'project' : (session.currentScope || 'view');
-}
+// RCC-0095: all threads are workspace-scoped. The 'project' scope literal
+// is kept on runtime keys and outbound messages for wire compatibility.
+const SCOPE = 'project';
 
-function getRuntimeKey(manager, scope, threadId) {
-  const key = {
+function getRuntimeKey(manager, threadId) {
+  return {
     workspaceId: manager.workspaceId,
-    scope,
+    scope: SCOPE,
     threadId,
   };
-  if (scope === 'view') {
-    key.viewId = manager.viewId;
-  }
-  return key;
 }
 
-function sendRuntimeError(ws, message, scope, threadId, recoverable) {
-  ws.send(JSON.stringify({ type: 'error', message, scope, threadId, recoverable }));
+function sendRuntimeError(ws, message, threadId, recoverable) {
+  ws.send(JSON.stringify({ type: 'error', message, scope: SCOPE, threadId, recoverable }));
 }
 
 function markReadyIfRuntimeStillActive(runtimeKey) {
@@ -48,7 +44,7 @@ async function stopWire(wire, threadId) {
   }
 }
 
-async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spawnAndSetupWire, runtimeKey, threadId, scope, suppressBusyError = false }) {
+async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spawnAndSetupWire, runtimeKey, threadId, suppressBusyError = false }) {
   const state = threadRuntimeManager.getRuntimeState(runtimeKey);
 
   if (state === RUNTIME_STATES.READY) {
@@ -63,14 +59,14 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
       return warmedWire || getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
     } catch (err) {
       threadRuntimeManager.markCold(runtimeKey);
-      sendRuntimeError(ws, err?.message || 'Thread warm-up failed', scope, threadId, true);
+      sendRuntimeError(ws, err?.message || 'Thread warm-up failed', threadId, true);
       return null;
     }
   }
 
   if (state === RUNTIME_STATES.IN_FLIGHT || state === RUNTIME_STATES.STOPPING) {
     if (!suppressBusyError) {
-      sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', scope, threadId, true);
+      sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
     }
     return null;
   }
@@ -80,7 +76,6 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
     session,
     wireLifecycle,
     threadId,
-    scope,
     projectRoot,
   });
   threadRuntimeManager.markWarming(runtimeKey, warmPromise);
@@ -91,7 +86,7 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
     return wire;
   } catch (err) {
     threadRuntimeManager.markCold(runtimeKey);
-    sendRuntimeError(ws, err?.message || 'Thread warm-up failed', scope, threadId, true);
+    sendRuntimeError(ws, err?.message || 'Thread warm-up failed', threadId, true);
     return null;
   } finally {
     threadRuntimeManager.clearWarmPromise(runtimeKey);
@@ -106,22 +101,21 @@ async function warmRuntimeForIntent({
   projectRoot,
   spawnAndSetupWire,
 }) {
-  const scope = getScope(clientMsg, session);
   const threadId = clientMsg.threadId;
   const threadState = ThreadWebSocketHandler.getState(ws);
-  const manager = threadState?.threadManagers?.[scope];
+  const manager = threadState?.threadManager;
   if (!threadId || !manager) {
-    sendRuntimeError(ws, `No active ${scope} thread`, scope, threadId, false);
+    sendRuntimeError(ws, 'No active thread', threadId, false);
     return;
   }
 
   const thread = await manager.getThread(threadId);
   if (!thread) {
-    sendRuntimeError(ws, `Thread not found: ${threadId}`, scope, threadId, false);
+    sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
   }
 
-  const runtimeKey = getRuntimeKey(manager, scope, threadId);
+  const runtimeKey = getRuntimeKey(manager, threadId);
   await ensureReadyRuntime({
     ws,
     session,
@@ -130,7 +124,6 @@ async function warmRuntimeForIntent({
     spawnAndSetupWire,
     runtimeKey,
     threadId,
-    scope,
     suppressBusyError: true,
   });
 }
@@ -144,24 +137,23 @@ async function acceptPromptThroughRuntime({
   spawnAndSetupWire,
   handleCanonicalHarnessEvent,
 }) {
-  const scope = getScope(clientMsg, session);
   const threadId = clientMsg.threadId;
-  console.log('[WS] PROMPT received:', clientMsg.user_input?.slice(0, 50), 'threadId:', threadId?.slice(0, 8), 'scope:', scope);
+  console.log('[WS] PROMPT received:', clientMsg.user_input?.slice(0, 50), 'threadId:', threadId?.slice(0, 8));
 
   const threadState = ThreadWebSocketHandler.getState(ws);
-  const manager = threadState?.threadManagers?.[scope];
+  const manager = threadState?.threadManager;
   if (!threadId || !manager) {
-    sendRuntimeError(ws, `No active ${scope} thread`, scope, threadId, false);
+    sendRuntimeError(ws, 'No active thread', threadId, false);
     return;
   }
 
   const thread = await manager.getThread(threadId);
   if (!thread) {
-    sendRuntimeError(ws, `Thread not found: ${threadId}`, scope, threadId, false);
+    sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
   }
 
-  const runtimeKey = getRuntimeKey(manager, scope, threadId);
+  const runtimeKey = getRuntimeKey(manager, threadId);
   const wire = await ensureReadyRuntime({
     ws,
     session,
@@ -170,36 +162,32 @@ async function acceptPromptThroughRuntime({
     spawnAndSetupWire,
     runtimeKey,
     threadId,
-    scope,
   });
   if (!wire) return;
 
   session.currentThreadId = threadId;
-  session.currentScope = scope;
-  session.currentViewId = scope === 'view' ? (manager.viewId || threadState.panelId || threadState.viewName || null) : null;
-  if (threadState.threadIds) {
-    threadState.threadIds[scope] = threadId;
-  }
+  session.currentScope = SCOPE;
+  session.currentViewId = null;
+  threadState.threadId = threadId;
 
   if (!wire._sendMessage) {
-    sendRuntimeError(ws, 'Wire does not support ACP sendMessage. Legacy wire format has been retired.', scope, threadId, false);
+    sendRuntimeError(ws, 'Wire does not support ACP sendMessage. Legacy wire format has been retired.', threadId, false);
     return;
   }
 
   if (!wire._usesDirectCanonicalEvents || !handleCanonicalHarnessEvent) {
-    sendRuntimeError(ws, 'Wire does not support direct canonical event delivery. Legacy wire format has been retired.', scope, threadId, false);
+    sendRuntimeError(ws, 'Wire does not support direct canonical event delivery. Legacy wire format has been retired.', threadId, false);
     return;
   }
 
   if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
-    sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', scope, threadId, true);
+    sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
     return;
   }
 
   threadRuntimeManager.markInFlight(runtimeKey);
   const accepted = await ThreadWebSocketHandler.handleMessageSend(ws, {
     content: clientMsg.user_input,
-    scope,
   });
   if (!accepted) {
     threadRuntimeManager.markReady(runtimeKey);
@@ -222,39 +210,38 @@ async function acceptPromptThroughRuntime({
       if (err?.code === -32004 || /Authentication failed/i.test(errorMessage)) {
         ws.send(JSON.stringify({
           type: 'auth_error',
-          scope,
+          scope: SCOPE,
           threadId,
           message: errorMessage || 'Authentication failed. Run `kimi login` in your terminal.',
           error: err,
         }));
       } else {
-        sendRuntimeError(ws, errorMessage || 'Harness send failed', scope, threadId, true);
+        sendRuntimeError(ws, errorMessage || 'Harness send failed', threadId, true);
       }
     }
   })();
 }
 
 async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessEvent }) {
-  const scope = getScope(clientMsg, session);
   const threadId = clientMsg.threadId;
   const threadState = ThreadWebSocketHandler.getState(ws);
-  const manager = threadState?.threadManagers?.[scope];
+  const manager = threadState?.threadManager;
   if (!threadId || !manager) {
-    sendRuntimeError(ws, `No active ${scope} thread`, scope, threadId, false);
+    sendRuntimeError(ws, 'No active thread', threadId, false);
     return;
   }
 
-  const runtimeKey = getRuntimeKey(manager, scope, threadId);
+  const runtimeKey = getRuntimeKey(manager, threadId);
   const state = threadRuntimeManager.getRuntimeState(runtimeKey);
   if (state === RUNTIME_STATES.STOPPING) return;
   if (state !== RUNTIME_STATES.IN_FLIGHT) {
-    sendRuntimeError(ws, 'Thread runtime is not currently streaming.', scope, threadId, true);
+    sendRuntimeError(ws, 'Thread runtime is not currently streaming.', threadId, true);
     return;
   }
 
   const liveTurn = threadRuntimeManager.getLiveTurn(runtimeKey);
   if (!liveTurn) {
-    sendRuntimeError(ws, 'No live turn is available to stop.', scope, threadId, true);
+    sendRuntimeError(ws, 'No live turn is available to stop.', threadId, true);
     return;
   }
 
@@ -262,8 +249,8 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
   threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
   session.currentThreadId = threadId;
-  session.currentScope = scope;
-  session.currentViewId = scope === 'view' ? (manager.viewId || threadState.panelId || threadState.viewName || null) : null;
+  session.currentScope = SCOPE;
+  session.currentViewId = null;
   if (!session.currentTurn || session.currentTurn.id !== liveTurn.turnId) {
     session.currentTurn = {
       id: liveTurn.turnId,

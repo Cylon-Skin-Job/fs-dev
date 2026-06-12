@@ -222,24 +222,20 @@ function createClientMessageRouter({
             ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
             return;
           }
-          // CHAT_SCOPE_SPEC: track the current view name so view-bound chats
-          // can resolve the correct scope string. resolveScope() only reads
-          // this when session.currentScope === 'view', so setting it here
-          // unconditionally is safe for workspace-universal chats too.
-          session.currentViewId = panel;
           setSessionRoot(ws, panel, rootFolder || null);
 
-          // Check if this view has chat before setting up threads
-          const chatConfig = views.resolveChatConfig(projectRoot, panel);
+          // RCC-0095: chat is a workspace-level feature. Set up threads
+          // unconditionally — a missing or malformed view folder must not
+          // remove the workspace chat. resolveChatConfig() is only used
+          // below for the declarative chatType/chatPosition payload fields.
+          ThreadWebSocketHandler.setPanel(ws, panel, {
+            projectRoot,
+            viewName: panel,
+            workspaceId: session.currentWorkspaceId,
+          });
+          await ThreadWebSocketHandler.sendThreadList(ws);
 
-          if (chatConfig) {
-            ThreadWebSocketHandler.setPanel(ws, panel, {
-              projectRoot,
-              viewName: panel,
-              workspaceId: session.currentWorkspaceId,
-            });
-            await ThreadWebSocketHandler.sendThreadList(ws);
-          }
+          const chatConfig = views.resolveChatConfig(projectRoot, panel);
 
           // Send view config to client (includes content.json + layout.json)
           const viewConfig = views.loadView(projectRoot, panel);
@@ -325,10 +321,8 @@ function createClientMessageRouter({
       }
 
       if (clientMsg.type === 'response') {
-        // SPEC-26b: scope-aware lookup of active thread for wire routing.
-        const scope = session.currentScope || 'view';
         const threadState = ThreadWebSocketHandler.getState(ws);
-        const threadId = threadState?.threadIds?.[scope];
+        const threadId = threadState?.threadId;
         const wire = threadId ? getWireForThread(threadId) : session.wire;
         if (wire) {
           sendToWire(wire, 'response', clientMsg.payload, clientMsg.requestId);

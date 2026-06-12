@@ -5,9 +5,9 @@
  *       theme, and CLI config state inline.
  */
 import { create } from 'zustand';
-import type { Thread, Scope } from '../types';
+import type { Thread } from '../types';
 import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
-import { createChatSlice, createInitialPanelState } from './slices/chatSlice';
+import { createChatSlice } from './slices/chatSlice';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createSecondarySlice } from './slices/secondarySlice';
 
@@ -19,11 +19,10 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
   return {
     projectRoot: null,
     currentPanel: 'file-viewer',
-    panels: {},
     projectChats: {},
-    threads: { project: [], view: [] },
-    currentThreadIds: { project: null, view: null },
-    currentScope: null,
+    threads: [],
+    currentThreadId: null,
+    chatActive: false,
     wireReady: false,
     contextUsage: 0,
     panelConfigs: [],
@@ -60,11 +59,10 @@ export const usePanelStore = create<AppState>((set, get) => ({
       const oldState: WorkspacePanelState = {
         projectRoot: null,
         currentPanel: state.currentPanel,
-        panels: {},
         projectChats: {},
-        threads: { project: [], view: [] },
-        currentThreadIds: { project: null, view: null },
-        currentScope: null,
+        threads: [],
+        currentThreadId: null,
+        chatActive: false,
         wireReady: false,
         contextUsage: 0,
         panelConfigs: state.panelConfigs,
@@ -95,11 +93,10 @@ export const usePanelStore = create<AppState>((set, get) => ({
       workspaceState: nextWorkspaceState,
       projectRoot: null,
       currentPanel: validPanel,
-      panels: {},
       projectChats: {},
-      threads: { project: [], view: [] },
-      currentThreadIds: { project: null, view: null },
-      currentScope: null,
+      threads: [],
+      currentThreadId: null,
+      chatActive: false,
       wireReady: false,
       contextUsage: 0,
       panelConfigs: loaded.panelConfigs,
@@ -136,11 +133,10 @@ export const usePanelStore = create<AppState>((set, get) => ({
         workspaceState: nextWorkspaceState,
         projectRoot: emptyState.projectRoot,
         currentPanel: emptyState.currentPanel,
-        panels: {},
         projectChats: {},
         threads: emptyState.threads,
-        currentThreadIds: emptyState.currentThreadIds,
-        currentScope: emptyState.currentScope,
+        currentThreadId: emptyState.currentThreadId,
+        chatActive: emptyState.chatActive,
         wireReady: emptyState.wireReady,
         contextUsage: emptyState.contextUsage,
         panelConfigs: emptyState.panelConfigs,
@@ -157,16 +153,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
 
   // ── Panel configs ─────────────────────────────────────────────────────────
   panelConfigs: [],
-  setPanelConfigs: (configs) => {
-    const existing = get().panels;
-    const panels: AppState['panels'] = { ...existing };
-    for (const config of configs) {
-      if (!panels[config.id]) {
-        panels[config.id] = createInitialPanelState();
-      }
-    }
-    set({ panelConfigs: configs, panels });
-  },
+  setPanelConfigs: (configs) => set({ panelConfigs: configs }),
   getPanelConfig: (id) => get().panelConfigs.find((c) => c.id === id),
   viewRegistryUpdateError: null,
   hiddenViews: [],
@@ -227,22 +214,12 @@ export const usePanelStore = create<AppState>((set, get) => ({
   currentPanel: 'file-viewer',
   setCurrentPanel: (id) => {
     const state = get();
-    const base: Partial<AppState> = {
+    // RCC-0095: the workspace chat thread persists across panel switches.
+    set({
       currentPanel: id,
-      // SPEC-26c: view thread resets on panel switch (server kills the wire
-      // when panel changes); project thread persists across panels.
-      currentThreadIds: { ...state.currentThreadIds, view: null },
-      // Preserve 'project' scope across panel switches. Null only if the
-      // previous scope was 'view', which the server kills on panel change.
-      currentScope: state.currentScope === 'view' ? null : state.currentScope,
       cliPickerOpen: { ...state.cliPickerOpen, [state.currentPanel]: false },
       threadDropdownOpen: { ...state.threadDropdownOpen, [state.currentPanel]: false },
-    };
-    if (!state.panels[id]) {
-      set({ ...base, panels: { ...state.panels, [id]: createInitialPanelState() } });
-    } else {
-      set(base);
-    }
+    });
     const ws = state.ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'set_panel', panel: id }));
@@ -264,68 +241,53 @@ export const usePanelStore = create<AppState>((set, get) => ({
   panelRoots: {},
   setPanelRoots: (roots) => set({ panelRoots: roots }),
 
-  // ── Thread management (SPEC-26c: dual-scope) ──────────────────────────────
-  threads: { project: [], view: [] },
-  currentThreadIds: { project: null, view: null },
-  currentScope: null,
+  // ── Thread management (RCC-0095: single workspace chat) ───────────────────
+  threads: [],
+  currentThreadId: null,
+  chatActive: false,
   wireReady: false,
 
-  setThreads: (scope, threads) => set((state) => ({
-    threads: { ...state.threads, [scope]: threads },
-  })),
+  setThreads: (threads) => set({ threads }),
 
-  setCurrentThreadId: (scope, threadId) => {
+  setCurrentThreadId: (threadId) => {
     const state = get();
-    // STATE_OVERRIDE_SPEC: persist project-scope thread on the current view.
-    if (scope === 'project' && state.currentThreadIds.project !== threadId) {
+    // STATE_OVERRIDE_SPEC: persist the workspace thread on the current view.
+    if (state.currentThreadId !== threadId) {
       get()._persistViewPatch(state.currentPanel, { currentThreadId: threadId });
     }
     set((s) => {
-      const base: Partial<AppState> = {
-        currentThreadIds: { ...s.currentThreadIds, [scope]: threadId },
-      };
+      const base: Partial<AppState> = { currentThreadId: threadId };
       // SECONDARY_CHAT_SPEC §3c: if primary is being switched to secondary's
       // thread, secondary auto-closes (switch wins).
-      if (s.secondary && scope === 'project' && threadId === s.secondary.threadId) {
+      if (s.secondary && threadId === s.secondary.threadId) {
         base.secondary = null;
       }
       return base;
     });
   },
 
-  setCurrentScope: (scope) => set({ currentScope: scope }),
+  setChatActive: (active) => set({ chatActive: active }),
   setWireReady: (ready) => set({ wireReady: ready }),
 
-  addThread: (scope, thread) => set((state) => ({
-    threads: { ...state.threads, [scope]: [thread, ...state.threads[scope]] },
+  addThread: (thread) => set((state) => ({
+    threads: [thread, ...state.threads],
   })),
 
-  updateThread: (scope, threadId, updates) => set((state) => ({
-    threads: {
-      ...state.threads,
-      [scope]: state.threads[scope].map(t =>
-        t.threadId === threadId ? { ...t, entry: { ...t.entry, ...updates } } : t
-      ),
-    },
+  updateThread: (threadId, updates) => set((state) => ({
+    threads: state.threads.map(t =>
+      t.threadId === threadId ? { ...t, entry: { ...t.entry, ...updates } } : t
+    ),
   })),
 
-  removeThread: (scope, threadId) => set((state) => {
+  removeThread: (threadId) => set((state) => {
     // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
     const dropSecondary = state.secondary?.threadId === threadId;
     // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
     const nextProjectChats = { ...state.projectChats };
     delete nextProjectChats[threadId];
     return {
-      threads: {
-        ...state.threads,
-        [scope]: state.threads[scope].filter(t => t.threadId !== threadId),
-      },
-      currentThreadIds: {
-        ...state.currentThreadIds,
-        [scope]: state.currentThreadIds[scope] === threadId
-          ? null
-          : state.currentThreadIds[scope],
-      },
+      threads: state.threads.filter(t => t.threadId !== threadId),
+      currentThreadId: state.currentThreadId === threadId ? null : state.currentThreadId,
       projectChats: nextProjectChats,
       ...(dropSecondary ? { secondary: null } : {}),
     };
@@ -407,28 +369,28 @@ export const usePanelStore = create<AppState>((set, get) => ({
   // ── Harness connection state ───────────────────────────────────────────────
   connectingHarnessId: null,
   setConnectingHarnessId: (id) => set({ connectingHarnessId: id }),
-  selectHarness: (harnessId, scope) => {
+  selectHarness: (harnessId) => {
     const s = get();
     set({
       connectingHarnessId: harnessId,
       wireReady: false,
-      currentThreadIds: { ...s.currentThreadIds, [scope]: null },
+      currentThreadId: null,
     });
     const ws = s.ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope, harnessId }));
+      ws.send(JSON.stringify({ type: 'thread:open-assistant', harnessId }));
     }
   },
-  createDefaultAssistantThread: (scope) => {
+  createDefaultAssistantThread: () => {
     const s = get();
     set({
       connectingHarnessId: null,
       wireReady: false,
-      currentThreadIds: { ...s.currentThreadIds, [scope]: null },
+      currentThreadId: null,
     });
     const ws = s.ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant', scope }));
+      ws.send(JSON.stringify({ type: 'thread:open-assistant' }));
     }
   },
 }));
@@ -449,6 +411,6 @@ export function getCurrentPanel(state: AppState): string {
   return state.currentPanel;
 }
 
-export function getCurrentThreads(state: AppState, scope: Scope): Thread[] {
-  return state.threads[scope] ?? [];
+export function getCurrentThreads(state: AppState): Thread[] {
+  return state.threads ?? [];
 }

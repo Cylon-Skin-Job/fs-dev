@@ -38,26 +38,23 @@ function makeDeps(overrides = {}) {
   const ws = { send: jest.fn() };
   const session = {
     currentWorkspaceId: 'workspace-1',
-    currentScope: 'view',
-    currentViewId: 'view-1',
   };
   const manager = {
     workspaceId: 'workspace-1',
-    viewId: 'view-1',
     getThread: jest.fn(() => Promise.resolve({ entry: {} })),
   };
   ThreadWebSocketHandler.getState.mockReturnValue({
     panelId: 'view-1',
     viewName: 'view-1',
-    threadIds: { view: 'thread-1' },
-    threadManagers: { view: manager },
+    threadId: 'thread-1',
+    threadManager: manager,
   });
   ThreadWebSocketHandler.handleMessageSend.mockResolvedValue(true);
   return {
     ws,
     session,
     manager,
-    clientMsg: { type: 'prompt', scope: 'view', threadId: 'thread-1', user_input: 'hello' },
+    clientMsg: { type: 'prompt', threadId: 'thread-1', user_input: 'hello' },
     wireLifecycle: {},
     projectRoot: '/tmp/project',
     spawnAndSetupWire: jest.fn(() => Promise.resolve(makeHarness(overrides.events))),
@@ -82,7 +79,6 @@ describe('thread runtime prompt controller', () => {
     expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
     expect(ThreadWebSocketHandler.handleMessageSend).toHaveBeenCalledWith(deps.ws, {
       content: 'hello',
-      scope: 'view',
     });
     expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledWith({ type: 'turn_end' }, deps.ws);
   });
@@ -126,7 +122,7 @@ describe('thread runtime prompt controller', () => {
 
   test('in-flight runtime rejects another prompt without sending', async () => {
     const deps = makeDeps();
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     threadRuntimeManager.markInFlight(runtimeKey);
 
     await acceptPromptThroughRuntime(deps);
@@ -142,7 +138,7 @@ describe('thread runtime prompt controller', () => {
 
   test('warm failure returns runtime to cold and sends recoverable error', async () => {
     const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.reject(new Error('warm failed'))) });
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
 
     await acceptPromptThroughRuntime(deps);
 
@@ -157,12 +153,12 @@ describe('thread runtime prompt controller', () => {
 
   test('thread warm on cold runtime spawns once and marks ready', async () => {
     const deps = makeDeps();
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
 
     await warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -181,7 +177,7 @@ describe('thread runtime prompt controller', () => {
     const first = warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -189,7 +185,7 @@ describe('thread runtime prompt controller', () => {
     const second = warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -204,7 +200,7 @@ describe('thread runtime prompt controller', () => {
 
   test('thread warm while ready with registered wire does not spawn', async () => {
     const deps = makeDeps();
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     const wire = makeHarness([]);
     threadRuntimeManager.markReady(runtimeKey);
     getWireForThread.mockReturnValue(wire);
@@ -212,7 +208,7 @@ describe('thread runtime prompt controller', () => {
     await warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -224,13 +220,13 @@ describe('thread runtime prompt controller', () => {
 
   test('thread warm while busy does not stop, send, spawn, or scare user', async () => {
     const deps = makeDeps();
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     threadRuntimeManager.markInFlight(runtimeKey);
 
     await warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -243,13 +239,13 @@ describe('thread runtime prompt controller', () => {
 
   test('thread warm while stopping does not stop, send, spawn, or scare user', async () => {
     const deps = makeDeps();
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
     await warmRuntimeForIntent({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'thread:warm', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
       wireLifecycle: deps.wireLifecycle,
       projectRoot: deps.projectRoot,
       spawnAndSetupWire: deps.spawnAndSetupWire,
@@ -264,7 +260,7 @@ describe('thread runtime prompt controller', () => {
     const stop = jest.fn(() => Promise.resolve());
     const wire = { _stopSession: stop };
     const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     threadRuntimeManager.markInFlight(runtimeKey);
     threadRuntimeManager.beginLiveTurn(runtimeKey, {
       turnId: 'turn-live',
@@ -276,7 +272,7 @@ describe('thread runtime prompt controller', () => {
     await stopRuntimeTurn({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'turn:stop', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
       handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
     });
 
@@ -297,7 +293,7 @@ describe('thread runtime prompt controller', () => {
     await stopRuntimeTurn({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'turn:stop', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
       handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
     });
 
@@ -311,13 +307,13 @@ describe('thread runtime prompt controller', () => {
 
   test('duplicate stop while stopping does not emit duplicate terminal events', async () => {
     const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
-    const runtimeKey = getRuntimeKey(deps.manager, 'view', 'thread-1');
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
     threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
     await stopRuntimeTurn({
       ws: deps.ws,
       session: deps.session,
-      clientMsg: { type: 'turn:stop', scope: 'view', threadId: 'thread-1' },
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
       handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
     });
 

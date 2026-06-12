@@ -5,23 +5,20 @@ import { usePanelStore } from '../state/panelStore';
 import { threadLinkIntent } from '../lib/thread-link-intent';
 import { useResolvedHarnessResolver } from '../config/harness';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
-import type { Scope } from '../types';
 import { formatThreadDisplayName, reorderWithSecondary } from './sidebar/threadOrderUtils';
 
 interface ThreadJumpDropdownProps {
   panel: string;
-  scope: Scope;
 }
 
-export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
+export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
   const open = usePanelStore((s) => !!s.threadDropdownOpen[panel]);
-  const rawThreads = usePanelStore((s) => s.threads[scope]);
-  const currentThreadId = usePanelStore((s) => s.currentThreadIds[scope]);
+  const rawThreads = usePanelStore((s) => s.threads);
+  const currentThreadId = usePanelStore((s) => s.currentThreadId);
   const secondary = usePanelStore((s) => s.secondary);
   const openSecondary = usePanelStore((s) => s.openSecondary);
   const ws = usePanelStore((s) => s.ws);
   const closeThreadDropdown = usePanelStore((s) => s.closeThreadDropdown);
-  const setCurrentThreadId = usePanelStore((s) => s.setCurrentThreadId);
 
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
 
@@ -50,21 +47,18 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
 
   const handleSelect = (threadId: string) => {
     if (threadId !== currentThreadId && ws && ws.readyState === WebSocket.OPEN) {
-      if (scope === 'view') {
-        setCurrentThreadId(scope, threadId);
-      }
-      ws.send(JSON.stringify({ type: 'thread:open', scope, threadId }));
+      ws.send(JSON.stringify({ type: 'thread:open', threadId }));
     }
     closeThreadDropdown(panel);
   };
 
   const handleCopyLink = (threadId: string) => {
-    sendMessage({ type: 'thread:copyLink', scope, threadId });
+    sendMessage({ type: 'thread:copyLink', threadId });
   };
 
   const handleDelete = (threadId: string) => {
     if (confirm('Delete this conversation?')) {
-      sendMessage({ type: 'thread:delete', scope, threadId });
+      sendMessage({ type: 'thread:delete', threadId });
     }
   };
 
@@ -155,7 +149,7 @@ export function ThreadJumpDropdown({ panel, scope }: ThreadJumpDropdownProps) {
                     className="rv-dropdown-item"
                     onClick={() => {
                       threadLinkIntent.set('view');
-                      sendMessage({ type: 'thread:copyLink', scope, threadId: t.threadId });
+                      sendMessage({ type: 'thread:copyLink', threadId: t.threadId });
                       setMenuOpenId(null);
                     }}
                   >

@@ -10,20 +10,14 @@ const { getDb } = require('../db');
 class ThreadIndex {
   /**
    * @param {string} workspaceId - Workspace identifier (workspaces.id)
-   * @param {'project'|'view'} scope - Thread scope
-   * @param {string|null} viewId - View name when scope='view'; null when scope='project'
+   *
+   * All threads are workspace-scoped (RCC-0095). The `scope` column is
+   * still written as 'project' so reads keep excluding any legacy
+   * view-scoped rows that may remain in older databases.
    */
-  constructor(workspaceId, scope, viewId) {
+  constructor(workspaceId) {
     if (!workspaceId) throw new Error('ThreadIndex: workspaceId is required');
-    if (scope !== 'project' && scope !== 'view') {
-      throw new Error(`ThreadIndex: scope must be 'project' or 'view', got "${scope}"`);
-    }
-    if (scope === 'view' && !viewId) {
-      throw new Error('ThreadIndex: viewId is required when scope="view"');
-    }
     this.workspaceId = workspaceId;
-    this.scope = scope;
-    this.viewId = scope === 'view' ? viewId : null;
   }
 
   /**
@@ -37,15 +31,10 @@ class ThreadIndex {
    */
   async list() {
     const db = getDb();
-    const query = db('threads')
+    const rows = await db('threads')
       .where('workspace_id', this.workspaceId)
-      .where('scope', this.scope);
-
-    if (this.scope === 'view') {
-      query.where('view_id', this.viewId);
-    }
-
-    const rows = await query.orderBy('updated_at', 'desc');
+      .where('scope', 'project')
+      .orderBy('updated_at', 'desc');
 
     return rows.map((row) => ({
       threadId: row.thread_id,
@@ -85,8 +74,8 @@ class ThreadIndex {
       thread_id: threadId,
       workspace_id: this.workspaceId,
       project_id: options.projectId || null, // DEPRECATED: use workspace_id
-      scope: this.scope,
-      view_id: this.viewId,  // null when scope='project'
+      scope: 'project',
+      view_id: null,
       name,
       created_at: createdAt,
       message_count: 0,
@@ -102,8 +91,8 @@ class ThreadIndex {
       messageCount: 0,
       status: 'suspended',
       harnessId,
-      scope: this.scope,
-      viewId: this.viewId,
+      scope: 'project',
+      viewId: null,
     };
   }
 
@@ -205,15 +194,9 @@ class ThreadIndex {
    */
   async rebuild() {
     const db = getDb();
-    const query = db('threads')
+    const rows = await db('threads')
       .where('workspace_id', this.workspaceId)
-      .where('scope', this.scope);
-
-    if (this.scope === 'view') {
-      query.where('view_id', this.viewId);
-    }
-
-    const rows = await query;
+      .where('scope', 'project');
     return rows.length;
   }
 

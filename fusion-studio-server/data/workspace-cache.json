@@ -2,17 +2,10 @@
   "system-files": {
     "projectRoot": null,
     "currentPanel": "wiki-viewer",
-    "panels": {},
     "projectChats": {},
-    "threads": {
-      "project": [],
-      "view": []
-    },
-    "currentThreadIds": {
-      "project": null,
-      "view": null
-    },
-    "currentScope": null,
+    "threads": [],
+    "currentThreadId": null,
+    "chatActive": false,
     "wireReady": false,
     "contextUsage": 0,
     "panelConfigs": [
@@ -490,22 +483,15 @@
         }
       }
     },
-    "_savedAt": 1781164871713
+    "_savedAt": 1781240604757
   },
   "fusion-home": {
     "projectRoot": null,
     "currentPanel": "calendar-viewer",
-    "panels": {},
     "projectChats": {},
-    "threads": {
-      "project": [],
-      "view": []
-    },
-    "currentThreadIds": {
-      "project": null,
-      "view": null
-    },
-    "currentScope": null,
+    "threads": [],
+    "currentThreadId": null,
+    "chatActive": false,
     "wireReady": false,
     "contextUsage": 0,
     "panelConfigs": [
@@ -885,7 +871,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-05-29T14-59-42-886",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1027,22 +1013,15 @@
         }
       }
     },
-    "_savedAt": 1781164944103
+    "_savedAt": 1781239321566
   },
   "media-editor": {
     "projectRoot": null,
-    "currentPanel": "file-viewer",
-    "panels": {},
+    "currentPanel": "image-editor",
     "projectChats": {},
-    "threads": {
-      "project": [],
-      "view": []
-    },
-    "currentThreadIds": {
-      "project": null,
-      "view": null
-    },
-    "currentScope": null,
+    "threads": [],
+    "currentThreadId": null,
+    "chatActive": false,
     "wireReady": false,
     "contextUsage": 0,
     "panelConfigs": [
@@ -1162,6 +1141,30 @@
         }
       },
       {
+        "id": "chat",
+        "name": "chat",
+        "type": "placeholder",
+        "icon": "folder",
+        "hasChat": false,
+        "chatConfig": null,
+        "layoutConfig": null,
+        "contentConfig": null,
+        "rank": 2,
+        "category": "tool",
+        "hasUiFolder": false,
+        "hasAppHtml": false,
+        "settings": {
+          "id": "chat",
+          "baseViewId": "chat",
+          "label": "chat",
+          "icon": "folder",
+          "rank": 2,
+          "enabled": true,
+          "source": "custom",
+          "viewPath": "ai/views/chat"
+        }
+      },
+      {
         "id": "issues-viewer",
         "name": "Issues",
         "type": "issues",
@@ -1232,14 +1235,12 @@
       }
     ],
     "panelRoots": {
-      "doc-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/doc-viewer/content",
-      "file-viewer": "/users/rccurtrightjr./projects/fs-dev",
-      "chat": "/users/rccurtrightjr./projects/fs-dev/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/issues-viewer/content",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content",
-      "browser-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/browser-viewer",
-      "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer"
+      "file-viewer": "/users/rccurtrightjr./projects/media-editor",
+      "doc-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/doc-viewer",
+      "chat": "/users/rccurtrightjr./projects/media-editor/ai/views/chat",
+      "issues-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/issues-viewer",
+      "wiki-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/wiki-viewer/Wiki",
+      "agents-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/agents-viewer"
     },
     "viewStates": {
       "file-viewer": {
@@ -1261,7 +1262,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1325,7 +1326,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1357,7 +1358,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1389,7 +1390,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1421,7 +1422,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1467,22 +1468,15 @@
         }
       }
     },
-    "_savedAt": 1781164872340
+    "_savedAt": 1781239356863
   },
   "solobooks": {
     "projectRoot": null,
     "currentPanel": "wiki-viewer",
-    "panels": {},
     "projectChats": {},
-    "threads": {
-      "project": [],
-      "view": []
-    },
-    "currentThreadIds": {
-      "project": null,
-      "view": null
-    },
-    "currentScope": null,
+    "threads": [],
+    "currentThreadId": null,
+    "chatActive": false,
     "wireReady": false,
     "contextUsage": 0,
     "panelConfigs": [
@@ -1933,22 +1927,15 @@
         }
       }
     },
-    "_savedAt": 1781164872835
+    "_savedAt": 1781239322596
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "issues-viewer",
-    "panels": {},
+    "currentPanel": "file-viewer",
     "projectChats": {},
-    "threads": {
-      "project": [],
-      "view": []
-    },
-    "currentThreadIds": {
-      "project": null,
-      "view": null
-    },
-    "currentScope": null,
+    "threads": [],
+    "currentThreadId": null,
+    "chatActive": false,
     "wireReady": false,
     "contextUsage": 0,
     "panelConfigs": [
@@ -2176,55 +2163,6 @@
         }
       },
       {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "agent-tiles",
-        "icon": "robot_2",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "agents-viewer",
-          "folderName": "agents-viewer",
-          "label": "Agents",
-          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-          "type": "agent-tiles",
-          "icon": "robot_2",
-          "rank": 5,
-          "sort": "ranked",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "folders": {
-              "Background Workers": {
-                "description": "Default agents that ship with the app",
-                "reserved": true
-              }
-            }
-          }
-        }
-      },
-      {
         "id": "browser-viewer",
         "name": "Browser",
         "description": "Full browser for AI automation, testing, and general web navigation",
@@ -2242,7 +2180,7 @@
             "position": "right"
           }
         },
-        "rank": 6,
+        "rank": 5,
         "category": "tool",
         "hasUiFolder": false,
         "hasAppHtml": false,
@@ -2282,7 +2220,7 @@
             "position": "right"
           }
         },
-        "rank": 7,
+        "rank": 6,
         "category": "tool",
         "hasUiFolder": false,
         "hasAppHtml": false,
@@ -2304,6 +2242,55 @@
             "navButtons": false
           }
         }
+      },
+      {
+        "id": "agents-viewer",
+        "name": "Agents",
+        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
+        "type": "agent-tiles",
+        "icon": "robot_2",
+        "hasChat": true,
+        "chatConfig": {
+          "type": "rolling-daily",
+          "position": "right"
+        },
+        "layoutConfig": {
+          "chatPosition": "right",
+          "chatWidth": 400,
+          "threadListWidth": 250,
+          "threadListVisible": false,
+          "popup": null
+        },
+        "contentConfig": {
+          "chat": {
+            "type": "rolling-daily",
+            "position": "right"
+          }
+        },
+        "rank": 7,
+        "category": "tool",
+        "hasUiFolder": false,
+        "hasAppHtml": false,
+        "settings": {
+          "version": "1.0",
+          "id": "agents-viewer",
+          "folderName": "agents-viewer",
+          "label": "Agents",
+          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
+          "type": "agent-tiles",
+          "icon": "robot_2",
+          "rank": 5,
+          "sort": "ranked",
+          "created": "2026-03-20T20:00:00-07:00",
+          "settings": {
+            "folders": {
+              "Background Workers": {
+                "description": "Default agents that ship with the app",
+                "reserved": true
+              }
+            }
+          }
+        }
       }
     ],
     "panelRoots": {
@@ -2312,9 +2299,9 @@
       "chat": "/users/rccurtrightjr./projects/fs-dev/ai/views/chat",
       "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/Wiki",
       "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/issues-viewer/content",
-      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content",
       "browser-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/browser-viewer",
-      "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer"
+      "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer",
+      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content"
     },
     "viewStates": {
       "image-editor": {
@@ -2368,7 +2355,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2400,7 +2387,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2432,7 +2419,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2464,7 +2451,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2496,7 +2483,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2528,7 +2515,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2560,7 +2547,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2638,6 +2625,6 @@
         }
       }
     },
-    "_savedAt": 1781165290657
+    "_savedAt": 1781239347331
   }
 }

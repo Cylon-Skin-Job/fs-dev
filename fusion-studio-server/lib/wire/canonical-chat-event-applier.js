@@ -12,7 +12,7 @@
  *   - emit: event bus emitter
  *   - resolveWorkspace: function to resolve workspace string from session
  *   - touchThreadSession: function to reset idle timeout
- *   - persistAssistantMessage: async function(ws, content, hasToolCalls, metadata, scope)
+ *   - persistAssistantMessage: async function(ws, content, hasToolCalls, metadata, explicitThreadId)
  *   - checkSettingsBounce: function(toolName, args) -> {message}|null
  *   - generateTurnId: function() -> string
  */
@@ -38,7 +38,9 @@ function createCanonicalChatEventApplier({
   }
 
   function getScope() {
-    return session.currentScope || 'view';
+    // RCC-0095: all threads are workspace-scoped. The literal is kept on
+    // emitted chat:* events for wire compatibility.
+    return 'project';
   }
 
   function getTurnId() {
@@ -47,17 +49,11 @@ function createCanonicalChatEventApplier({
 
   function getRuntimeKey(threadId = getThreadId()) {
     if (!session.currentWorkspaceId || !threadId) return null;
-    const scope = getScope();
-    const key = {
+    return {
       workspaceId: session.currentWorkspaceId,
-      scope,
+      scope: getScope(),
       threadId,
     };
-    if (scope === 'view') {
-      key.viewId = session.currentViewId;
-      if (!key.viewId) return null;
-    }
-    return key;
   }
 
   /**
@@ -441,7 +437,6 @@ function createCanonicalChatEventApplier({
         session.currentTurn.text,
         session.hasToolCalls,
         metadata,
-        session.currentScope || 'view',
         threadId
       );
       if (maybePromise && typeof maybePromise.catch === 'function') {

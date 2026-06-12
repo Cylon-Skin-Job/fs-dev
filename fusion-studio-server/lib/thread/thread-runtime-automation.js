@@ -21,27 +21,22 @@ function normalizeTarget(target) {
   if (!target || !target.workspaceId || !target.projectRoot || !target.threadId) {
     throw new Error('Automation target requires workspaceId, projectRoot, and threadId');
   }
-  const scope = target.scope === 'project' ? 'project' : 'view';
-  if (scope === 'view' && !target.viewId) {
-    throw new Error('Automation view target requires viewId');
-  }
+  // RCC-0095: all threads are workspace-scoped ('project').
   return {
     workspaceId: target.workspaceId,
     projectRoot: target.projectRoot,
-    scope,
-    viewId: scope === 'view' ? target.viewId : null,
+    scope: 'project',
+    viewId: null,
     threadId: target.threadId,
   };
 }
 
 function getRuntimeKey(target) {
-  const key = {
+  return {
     workspaceId: target.workspaceId,
-    scope: target.scope,
+    scope: 'project',
     threadId: target.threadId,
   };
-  if (target.scope === 'view') key.viewId = target.viewId;
-  return key;
 }
 
 function getDeferReason(state) {
@@ -86,7 +81,7 @@ function createHeadlessSession(target) {
 }
 
 function createAutomationBridge(target, manager, session) {
-  async function persistAssistantMessage(_ws, content, hasToolCalls, metadata, _scope, explicitThreadId) {
+  async function persistAssistantMessage(_ws, content, hasToolCalls, metadata, explicitThreadId) {
     const threadId = explicitThreadId || target.threadId;
     const message = { role: 'assistant', content, hasToolCalls };
     if (metadata && Object.keys(metadata).length > 0) {

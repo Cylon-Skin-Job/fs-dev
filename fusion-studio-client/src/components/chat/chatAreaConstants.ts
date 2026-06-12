@@ -5,11 +5,8 @@ import type { Message, PanelState, StreamSegment } from '../../types';
 export const EMPTY_MESSAGES: Message[] = [];
 export const EMPTY_SEGMENTS: StreamSegment[] = [];
 
-export function selectChatState(scope: 'view' | 'project', panel: string, tid: string | null) {
+export function selectChatState(tid: string | null) {
   return (state: ReturnType<typeof usePanelStore.getState>): PanelState | undefined => {
-    if (scope === 'project') {
-      return tid ? state.projectChats[tid] : undefined;
-    }
-    return state.panels[panel];
+    return tid ? state.projectChats[tid] : undefined;
   };
 }

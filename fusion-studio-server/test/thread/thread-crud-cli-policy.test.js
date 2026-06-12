@@ -36,7 +36,7 @@ describe('thread CRUD CLI policy enforcement', () => {
     };
     const wsState = new Map([[ws, {
       viewName: 'file-viewer',
-      threadManagers: { project: manager, view: manager },
+      threadManager: manager,
     }]]);
     const handlers = createCrudHandlers({
       wsState,
@@ -46,7 +46,7 @@ describe('thread CRUD CLI policy enforcement', () => {
       REORDER_DELAY_MS: 1,
     });
 
-    await handlers.handleThreadOpenAssistant(ws, { scope: 'project', harnessId: 'kimi' });
+    await handlers.handleThreadOpenAssistant(ws, { harnessId: 'kimi' });
 
     expect(manager.createThread).not.toHaveBeenCalled();
     expect(ws.send).toHaveBeenCalledWith(expect.stringContaining("Harness 'kimi' is not allowed"));

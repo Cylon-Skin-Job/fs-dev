@@ -6,29 +6,27 @@ import { ChatAreaHeader } from './chat/ChatAreaHeader';
 import { ChatAreaFooter } from './chat/ChatAreaFooter';
 import { TodoDrawer } from './chat/TodoDrawer';
 import { useChatArea } from './chat/useChatArea';
-import type { Scope } from '../types';
 
 interface ChatAreaProps {
   panel: string;
-  scope: Scope;
   collapsed?: boolean;
   sidebarCollapsed?: boolean;
   /**
    * When set, ChatArea reads/writes chat state for this specific thread
-   * instead of currentThreadIds[scope]. Used by the secondary popup.
+   * instead of the current workspace thread. Used by the secondary popup.
    */
   threadIdOverride?: string | null;
 }
 
-export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOverride }: ChatAreaProps) {
-  const chat = useChatArea({ panel, scope, threadIdOverride });
+export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride }: ChatAreaProps) {
+  const chat = useChatArea({ panel, threadIdOverride });
 
-  const sectionClass = `rv-chat-area rv-chat-area--${scope}${chat.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${chat.noThread ? ' rv-chat-area--no-thread' : ''}`;
+  const sectionClass = `rv-chat-area rv-chat-area--project${chat.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${chat.noThread ? ' rv-chat-area--no-thread' : ''}`;
   const isSecondary = !!threadIdOverride;
 
   if (collapsed) {
     return (
-      <section className={`rv-chat-area rv-chat-area--${scope} rv-chat-area--collapsed`}>
+      <section className="rv-chat-area rv-chat-area--project rv-chat-area--collapsed">
         <button
           className="rv-collapse-rail-btn"
           onClick={() => chat.toggleCollapsed(panel, 'leftChat')}
@@ -58,8 +56,6 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
             </div>
           ) : (
             <MessageList
-              panel={panel}
-              scope={scope}
               threadId={chat.currentThreadId}
               messages={chat.messages}
               currentTurn={chat.currentTurn}
@@ -72,7 +68,7 @@ export function ChatArea({ panel, scope, collapsed, sidebarCollapsed, threadIdOv
           {!chat.noThread && <div className="rv-chat-scroll-sentinel" />}
         </div>
 
-        <TodoDrawer scope={scope} panel={panel} threadId={chat.currentThreadId} />
+        <TodoDrawer threadId={chat.currentThreadId} />
       </div>
 
       <ChatAreaFooter {...chat} />

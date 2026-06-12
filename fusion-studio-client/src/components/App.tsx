@@ -46,29 +46,26 @@ const DEFAULT_TINTS = {
  * NOT when currentPanel changes in the parent. This prevents all 7 panels
  * from re-rendering on every panel switch.
  *
- * SPEC-26c-2: right-side view chat removed (SPEC-26d will re-expose it as
- * a floating popup). Layout is now 3 content columns + 2 resize handles.
+ * RCC-0095: the single workspace chat renders unconditionally as part of
+ * the workspace shell. A missing or malformed view folder may degrade
+ * ContentArea, but never removes the chat column/sidebar.
  */
 interface PanelContentProps {
   panel: string;
-  hasChat: boolean;
   collapsedSidebar: boolean;
   collapsedChat: boolean;
   secondarySticky: boolean;
 }
-const PanelContent = memo(function PanelContent({ panel, hasChat, collapsedSidebar, collapsedChat, secondarySticky }: PanelContentProps) {
-  if (!hasChat) {
-    return <ContentArea panel={panel} />;
-  }
-  // SPEC-26c-2: [project sidebar][handle][project chat][handle][content]
+const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, secondarySticky }: PanelContentProps) {
+  // SPEC-26c-2: [workspace sidebar][handle][workspace chat][handle][content]
   // SECONDARY_CHAT_SPEC §7c: when secondary is sticky-right, it overlays
   // the view's right column via absolute positioning + z-index. Grid stays
   // at 5 tracks; sticky chat sits on top of the existing content.
   return (
     <>
-      <Sidebar panel={panel} scope="project" collapsed={collapsedSidebar} />
+      <Sidebar panel={panel} collapsed={collapsedSidebar} />
       <LeftSidebarResize panel={panel} />
-      <ChatArea panel={panel} scope="project" collapsed={collapsedChat} sidebarCollapsed={collapsedSidebar} />
+      <ChatArea panel={panel} collapsed={collapsedChat} sidebarCollapsed={collapsedSidebar} />
       <LeftChatResize panel={panel} />
       <ContentArea panel={panel} />
       {secondarySticky && <SecondaryChatSticky />}
@@ -81,10 +78,8 @@ const PanelContent = memo(function PanelContent({ panel, hasChat, collapsedSideb
  * inline CSS variables for the grid and pass collapsed props to children.
  * Extracted so each panel reads only its own slice.
  */
-function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
+function PanelWrapper({ panelId, isActive }: {
   panelId: string;
-  hasChat: boolean;
-  layoutClass: string;
   isActive: boolean;
 }) {
   const viewState = usePanelStore((s) => s.viewStates[panelId]);
@@ -107,15 +102,15 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
     ? (widths.rightSecondary ?? 300)
     : (widths.rightCol ?? 220);
 
-  const gridStyle: CSSProperties = hasChat ? {
+  const gridStyle: CSSProperties = {
     '--left-sidebar-w':   `${collapsed.leftSidebar ? 0 : widths.leftSidebar}px`,
     '--left-chat-w':      `${collapsed.leftChat    ? 40 : widths.leftChat   }px`,
     '--right-col-w':      `${rightColWidth}px`,
-  } as CSSProperties : {};
+  } as CSSProperties;
 
   const panelClasses = [
     'rv-panel',
-    layoutClass,
+    'rv-layout-dual-chat',
     isActive ? 'active' : '',
     secondarySticky ? 'rv-panel--secondary-sticky' : '',
   ].filter(Boolean).join(' ');
@@ -129,7 +124,6 @@ function PanelWrapper({ panelId, hasChat, layoutClass, isActive }: {
     >
       <PanelContent
         panel={panelId}
-        hasChat={hasChat}
         collapsedSidebar={collapsed.leftSidebar}
         collapsedChat={collapsed.leftChat}
         secondarySticky={secondarySticky}
@@ -329,20 +323,13 @@ function App() {
 
       {/* Panel Container */}
       <div className="rv-panel-container">
-        {configs.map((config) => {
-          const hasChat = !!config.hasChat;
-          const layoutClass = hasChat ? 'rv-layout-dual-chat' : 'rv-layout-full';
-
-          return (
-            <PanelWrapper
-              key={config.id}
-              panelId={config.id}
-              hasChat={hasChat}
-              layoutClass={layoutClass}
-              isActive={currentPanel === config.id}
-            />
-          );
-        })}
+        {configs.map((config) => (
+          <PanelWrapper
+            key={config.id}
+            panelId={config.id}
+            isActive={currentPanel === config.id}
+          />
+        ))}
       </div>
       <Toast />
       <ModalOverlay />

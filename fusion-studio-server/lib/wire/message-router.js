@@ -42,8 +42,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
   function touchThreadSession() {
     const threadId = session.currentThreadId;
     if (!threadId) return;
-    const scope = session.currentScope || 'view';
-    const manager = ThreadWebSocketHandler.getCurrentThreadManager(ws, scope);
+    const manager = ThreadWebSocketHandler.getCurrentThreadManager(ws);
     if (manager) {
       manager.touchSession(threadId);
     }
@@ -54,8 +53,8 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
    * Runtime-1R: accepts explicit threadId so persistence uses the in-flight
    * turn's identity, not the currently selected/browsed thread.
    */
-  async function persistAssistantMessage(wsRef, content, hasToolCalls, metadata, scope, explicitThreadId) {
-    await threadWebSocketHandler.addAssistantMessage(wsRef, content, hasToolCalls, metadata, scope, explicitThreadId);
+  async function persistAssistantMessage(wsRef, content, hasToolCalls, metadata, explicitThreadId) {
+    await threadWebSocketHandler.addAssistantMessage(wsRef, content, hasToolCalls, metadata, explicitThreadId);
   }
 
   const applier = createCanonicalChatEventApplier({
@@ -123,7 +122,7 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
         ws.send(JSON.stringify({
           type: 'auth_error',
           id: msg.id,
-          scope: session.currentScope || 'view',
+          scope: 'project',
           threadId: session.currentThreadId,
           message: errorMessage || 'Authentication failed. Run `kimi login` in your terminal.',
           error: msg.error

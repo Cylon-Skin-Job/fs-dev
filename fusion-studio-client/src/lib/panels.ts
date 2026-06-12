@@ -15,9 +15,10 @@ import { usePanelStore } from '../state/panelStore';
 
 // --- Types ---
 
-// SPEC-26c: PanelLayout type removed. Layout is now a binary derived from
-// hasChat in App.tsx — chat-enabled views render the 5-column dual-chat
-// layout, everything else is content-only.
+// SPEC-26c: PanelLayout type removed.
+// RCC-0095: the workspace chat renders unconditionally in App.tsx — the
+// hasChat flag below is declarative view metadata and no longer gates the
+// chat column/sidebar.
 
 export interface ChatConfig {
   type: 'threaded' | 'rolling-daily';

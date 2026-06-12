@@ -11,27 +11,23 @@ import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { showToast } from '../../lib/toast';
 import { useResolvedHarnessResolver, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
-import type { Scope } from '../../types';
 import { reorderWithSecondary } from './threadOrderUtils';
 import { useThreadAnimation } from './useThreadAnimation';
 
 export interface UseSidebarOptions {
   panel: string;
-  scope: Scope;
 }
 
-export function useSidebar({ panel, scope }: UseSidebarOptions) {
-  const config = usePanelStore((s) => s.getPanelConfig(panel));
+export function useSidebar({ panel }: UseSidebarOptions) {
   const ws = usePanelStore((state) => state.ws);
-  const rawThreads = usePanelStore((state) => state.threads[scope]);
-  const currentThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
-  const currentScope = usePanelStore((state) => state.currentScope);
+  const rawThreads = usePanelStore((state) => state.threads);
+  const currentThreadId = usePanelStore((state) => state.currentThreadId);
+  const chatActive = usePanelStore((state) => state.chatActive);
   const secondary = usePanelStore((state) => state.secondary);
   const openSecondary = usePanelStore((state) => state.openSecondary);
   const toggleCliPicker = usePanelStore((state) => state.toggleCliPicker);
   const selectHarness = usePanelStore((state) => state.selectHarness);
   const createDefaultAssistantThread = usePanelStore((state) => state.createDefaultAssistantThread);
-  const setCurrentThreadId = usePanelStore((state) => state.setCurrentThreadId);
 
   const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
   const { setThreadRef } = useThreadAnimation(threads);
@@ -58,9 +54,9 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
 
   useEffect(() => {
     if (ws?.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:list', scope }));
+      ws.send(JSON.stringify({ type: 'thread:list' }));
     }
-  }, [ws, panel, scope]);
+  }, [ws, panel]);
 
   useEffect(() => {
     if (!ws) return;
@@ -119,22 +115,19 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
 
   const handleCreateThread = useCallback(() => {
     if (selectableHarnesses.length <= 1) {
-      createDefaultAssistantThread(scope);
+      createDefaultAssistantThread();
       return;
     }
     toggleCliPicker(panel);
-  }, [createDefaultAssistantThread, panel, scope, selectableHarnesses.length, toggleCliPicker]);
+  }, [createDefaultAssistantThread, panel, selectableHarnesses.length, toggleCliPicker]);
 
   const handleHarnessSelect = useCallback((harnessId: string) => {
-    selectHarness(harnessId, scope);
-  }, [selectHarness, scope]);
+    selectHarness(harnessId);
+  }, [selectHarness]);
 
   const handleOpenThread = useCallback((threadId: string) => {
-    if (scope === 'view') {
-      setCurrentThreadId(scope, threadId);
-    }
-    sendMessage({ type: 'thread:open', scope, threadId });
-  }, [sendMessage, setCurrentThreadId, scope]);
+    sendMessage({ type: 'thread:open', threadId });
+  }, [sendMessage]);
 
   const handleRenameStart = useCallback((threadId: string, currentName: string) => {
     setRenamingId(threadId);
@@ -145,14 +138,13 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
     if (renameValue.trim()) {
       sendMessage({
         type: 'thread:rename',
-        scope,
         threadId,
         name: renameValue.trim(),
       });
     }
     setRenamingId(null);
     setRenameValue('');
-  }, [renameValue, sendMessage, scope]);
+  }, [renameValue, sendMessage]);
 
   const handleRenameCancel = useCallback(() => {
     setRenamingId(null);
@@ -161,25 +153,24 @@ export function useSidebar({ panel, scope }: UseSidebarOptions) {
 
   const handleDeleteThread = useCallback((threadId: string) => {
     if (confirm('Delete this conversation?')) {
-      sendMessage({ type: 'thread:delete', scope, threadId });
+      sendMessage({ type: 'thread:delete', threadId });
     }
-  }, [sendMessage, scope]);
+  }, [sendMessage]);
 
   const handleCopyLink = useCallback((threadId: string) => {
-    sendMessage({ type: 'thread:copyLink', scope, threadId });
-  }, [sendMessage, scope]);
+    sendMessage({ type: 'thread:copyLink', threadId });
+  }, [sendMessage]);
 
   const handleViewMarkdown = useCallback((threadId: string) => {
     threadLinkIntent.set('view');
-    sendMessage({ type: 'thread:copyLink', scope, threadId });
-  }, [sendMessage, scope]);
+    sendMessage({ type: 'thread:copyLink', threadId });
+  }, [sendMessage]);
 
-  const isActive = currentScope === scope;
-  const headerLabel = scope === 'project' ? 'Project' : (config?.name || panel);
+  const isActive = chatActive;
+  const headerLabel = 'Project';
 
   return {
     panel,
-    scope,
     threads,
     currentThreadId,
     secondary,

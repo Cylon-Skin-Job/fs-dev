@@ -39,8 +39,6 @@ function makeTarget(overrides = {}) {
   return {
     workspaceId: 'workspace-1',
     projectRoot: '/tmp/project',
-    scope: 'view',
-    viewId: 'file-viewer',
     threadId: 'thread-1',
     ...overrides,
   };
@@ -49,7 +47,6 @@ function makeTarget(overrides = {}) {
 function makeManager(overrides = {}) {
   return {
     workspaceId: 'workspace-1',
-    viewId: 'file-viewer',
     getThread: jest.fn(async () => ({ threadId: 'thread-1', entry: {} })),
     openSession: jest.fn(async () => ({})),
     touchSession: jest.fn(),
@@ -124,7 +121,7 @@ describe('thread runtime automation', () => {
       deferred: true,
       reason: 'in_flight',
       threadId: 'thread-1',
-      scope: 'view',
+      scope: 'project',
     });
     expect(wire._sendMessage).toBeDefined();
     expect(spawnThreadWire).not.toHaveBeenCalled();
@@ -157,7 +154,7 @@ describe('thread runtime automation', () => {
       deferred: true,
       reason,
       threadId: 'thread-1',
-      scope: 'view',
+      scope: 'project',
     });
     expect(spawnThreadWire).not.toHaveBeenCalled();
     expect(manager.addMessage).not.toHaveBeenCalled();
@@ -187,15 +184,15 @@ describe('thread runtime automation', () => {
       accepted: true,
       deferred: false,
       threadId: 'thread-1',
-      scope: 'view',
+      scope: 'project',
     });
     expect(spawnThreadWire).toHaveBeenCalledWith('thread-1', '/tmp/project', {
       workspaceId: 'workspace-1',
-      viewId: 'file-viewer',
+      viewId: null,
     });
     expect(registerWire).toHaveBeenCalledWith('thread-1', wire, '/tmp/project', null, {
       workspaceId: 'workspace-1',
-      viewId: 'file-viewer',
+      viewId: null,
     });
     expect(manager.openSession).toHaveBeenCalledWith('thread-1', wire, null);
     expect(sendOrder).toEqual([

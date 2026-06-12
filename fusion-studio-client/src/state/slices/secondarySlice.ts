@@ -24,7 +24,7 @@ export function createSecondarySlice(set: Set, get: Get) {
     openSecondary: (threadId: string) => {
       const state = get();
       if (state.secondary) return;
-      if (state.currentThreadIds.project === threadId) return;
+      if (state.currentThreadId === threadId) return;
       // Claim this threadId in the secondary tracker BEFORE sending the WS
       // message, so a late thread:opened response still routes to secondary
       // logic (preventing primary hijack if the user clicks red before the
@@ -40,7 +40,7 @@ export function createSecondarySlice(set: Set, get: Get) {
       });
       const ws = state.ws;
       if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'thread:open', scope: 'project', threadId }));
+        ws.send(JSON.stringify({ type: 'thread:open', threadId }));
       }
       // STATE_OVERRIDE_SPEC: persist popup open + thread id.
       get()._persistViewPatch(state.currentPanel, {
@@ -76,9 +76,9 @@ export function createSecondarySlice(set: Set, get: Get) {
       // Bump the primary's MRU on the server so the thread list re-sorts
       // with primary on top — opening the secondary had bumped *its* updated_at.
       const ws = s.ws;
-      const primaryId = s.currentThreadIds.project;
+      const primaryId = s.currentThreadId;
       if (primaryId && ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'thread:touch', scope: 'project', threadId: primaryId }));
+        ws.send(JSON.stringify({ type: 'thread:touch', threadId: primaryId }));
       }
     },
 

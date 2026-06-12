@@ -10,24 +10,21 @@ import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import type { ChatInputRef } from '../ChatInput';
-import type { Scope } from '../../types';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
 
 interface PendingPromptTarget {
-  scope: Scope;
   threadId: string;
   text: string;
 }
 
-type ChatTarget = Pick<PendingPromptTarget, 'scope' | 'threadId'>;
+type ChatTarget = Pick<PendingPromptTarget, 'threadId'>;
 
 export interface UseChatAreaOptions {
   panel: string;
-  scope: Scope;
   threadIdOverride?: string | null;
 }
 
-export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptions) {
+export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const toggleCollapsed = usePanelStore((s) => s.toggleCollapsed);
   const toggleCliPicker = usePanelStore((s) => s.toggleCliPicker);
   const toggleThreadDropdown = usePanelStore((s) => s.toggleThreadDropdown);
@@ -50,17 +47,17 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   const selectableHarnesses = useSelectableHarnesses(harnessStatuses);
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
 
-  const primaryThreadId = usePanelStore((state) => state.currentThreadIds[scope]);
+  const primaryThreadId = usePanelStore((state) => state.currentThreadId);
   const currentThreadId = threadIdOverride ?? primaryThreadId;
-  const isSendingForCurrentThread = sendingTarget?.scope === scope && sendingTarget.threadId === currentThreadId;
-  const selector = selectChatState(scope, panel, currentThreadId);
+  const isSendingForCurrentThread = sendingTarget?.threadId === currentThreadId;
+  const selector = selectChatState(currentThreadId);
   const messages = usePanelStore((state) => selector(state)?.messages ?? EMPTY_MESSAGES);
   const currentTurn = usePanelStore((state) => selector(state)?.currentTurn ?? null);
   const segments = usePanelStore((state) => selector(state)?.segments ?? EMPTY_SEGMENTS);
   const contextUsage = usePanelStore((state) => state.contextUsage);
-  const currentScope = usePanelStore((state) => state.currentScope);
+  const chatActive = usePanelStore((state) => state.chatActive);
   const wireReady = usePanelStore((state) => state.wireReady);
-  const threads = usePanelStore((state) => state.threads[scope]);
+  const threads = usePanelStore((state) => state.threads);
   const currentThread = threads.find((t) => t.threadId === currentThreadId);
   const resolvedHarness = useResolvedHarness(currentThread?.entry?.harnessId);
   const connectingHarness = useResolvedHarness(connectingHarnessId);
@@ -75,13 +72,13 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   const finalizeTurn = usePanelStore((state) => state.finalizeTurn);
 
   const noThread = !currentThreadId;
-  const isActive = currentScope === scope;
+  const isActive = chatActive;
 
   const warmCurrentThread = useCallback(() => {
     const tid = currentThreadId;
     if (!tid || !isActive || pendingPromptRef.current) return;
-    warmThread(scope, tid);
-  }, [currentThreadId, isActive, scope, warmThread]);
+    warmThread(tid);
+  }, [currentThreadId, isActive, warmThread]);
 
   const handleInsertText = useCallback((text: string) => {
     warmCurrentThread();
@@ -99,16 +96,16 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
   }, [threadIdOverride, handleInsertText]);
 
   const handleHarnessSelect = useCallback((harnessId: string) => {
-    selectHarness(harnessId, scope);
-  }, [selectHarness, scope]);
+    selectHarness(harnessId);
+  }, [selectHarness]);
 
   const handleCreateThread = useCallback(() => {
     if (selectableHarnesses.length <= 1) {
-      createDefaultAssistantThread(scope);
+      createDefaultAssistantThread();
       return;
     }
     toggleCliPicker(panel);
-  }, [createDefaultAssistantThread, panel, scope, selectableHarnesses.length, toggleCliPicker]);
+  }, [createDefaultAssistantThread, panel, selectableHarnesses.length, toggleCliPicker]);
 
   useEffect(() => {
     if (!cliPickerOpen && !threadDropdownOpen && !moreMenuOpen) return;
@@ -143,29 +140,28 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
 
   const handleCopyLink = useCallback(() => {
     const store = usePanelStore.getState();
-    const tid = store.currentThreadIds.project;
+    const tid = store.currentThreadId;
     const socket = store.ws;
     if (tid && socket && socket.readyState === WebSocket.OPEN) {
       threadLinkIntent.set('copy');
-      socket.send(JSON.stringify({ type: 'thread:copyLink', scope: 'project', threadId: tid }));
+      socket.send(JSON.stringify({ type: 'thread:copyLink', threadId: tid }));
     }
     setMoreMenuOpen(false);
   }, []);
 
   const handleRename = useCallback(() => {
     const store = usePanelStore.getState();
-    const tid = store.currentThreadIds.project;
+    const tid = store.currentThreadId;
     const socket = store.ws;
     setMoreMenuOpen(false);
     if (!tid || !socket || socket.readyState !== WebSocket.OPEN) return;
-    const current = store.threads.project.find((t) => t.threadId === tid);
+    const current = store.threads.find((t) => t.threadId === tid);
     const currentName = current?.entry?.name ?? '';
     const next = window.prompt('Rename thread:', currentName);
     const trimmed = next?.trim();
     if (trimmed && trimmed !== currentName) {
       socket.send(JSON.stringify({
         type: 'thread:rename',
-        scope: 'project',
         threadId: tid,
         name: trimmed,
       }));
@@ -174,11 +170,11 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
 
   const handleViewMarkdown = useCallback(() => {
     const store = usePanelStore.getState();
-    const tid = store.currentThreadIds.project;
+    const tid = store.currentThreadId;
     const socket = store.ws;
     if (tid && socket && socket.readyState === WebSocket.OPEN) {
       threadLinkIntent.set('view');
-      socket.send(JSON.stringify({ type: 'thread:copyLink', scope: 'project', threadId: tid }));
+      socket.send(JSON.stringify({ type: 'thread:copyLink', threadId: tid }));
     }
     setMoreMenuOpen(false);
   }, []);
@@ -206,46 +202,45 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
 
   useEffect(() => {
     const handleAccepted = (e: Event) => {
-      const detail = (e as CustomEvent<{ scope: Scope; threadId: string; content: string }>).detail;
+      const detail = (e as CustomEvent<{ threadId: string; content: string }>).detail;
       const pending = pendingPromptRef.current;
       if (!pending || !detail) return;
-      if (detail.scope !== pending.scope || detail.threadId !== pending.threadId) return;
+      if (detail.threadId !== pending.threadId) return;
       if (typeof detail.content === 'string' && detail.content !== pending.text) return;
       pendingPromptRef.current = null;
       setIsAcceptancePending(false);
-      setSendingTarget({ scope: pending.scope, threadId: pending.threadId });
+      setSendingTarget({ threadId: pending.threadId });
       justSentRef.current = true;
       chatInputRef.current?.clearText();
     };
     const handleFailed = (e: Event) => {
-      const detail = (e as CustomEvent<{ scope?: Scope; threadId?: string }>).detail;
+      const detail = (e as CustomEvent<{ threadId?: string }>).detail;
       const pending = pendingPromptRef.current;
       if (!pending) {
-        if (detail?.scope && detail?.threadId) {
+        if (detail?.threadId) {
           setSendingTarget((target) => {
             if (!target) return null;
-            if (target.scope !== detail.scope || target.threadId !== detail.threadId) return target;
+            if (target.threadId !== detail.threadId) return target;
             return null;
           });
         }
         return;
       }
-      if (detail?.scope && detail.scope !== pending.scope) return;
       if (detail?.threadId && detail.threadId !== pending.threadId) return;
       pendingPromptRef.current = null;
       setIsAcceptancePending(false);
       setSendingTarget((target) => {
         if (!target) return null;
-        if (target.scope !== pending.scope || target.threadId !== pending.threadId) return target;
+        if (target.threadId !== pending.threadId) return target;
         return null;
       });
     };
     const handleTurnEnded = (e: Event) => {
-      const detail = (e as CustomEvent<{ scope?: Scope; threadId?: string }>).detail;
-      if (!detail?.scope || !detail.threadId) return;
+      const detail = (e as CustomEvent<{ threadId?: string }>).detail;
+      if (!detail?.threadId) return;
       setSendingTarget((target) => {
         if (!target) return null;
-        if (target.scope !== detail.scope || target.threadId !== detail.threadId) return target;
+        if (target.threadId !== detail.threadId) return target;
         return null;
       });
     };
@@ -268,29 +263,27 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
     const tid = currentThreadId;
     if (!tid) return;
 
-    pendingPromptRef.current = { scope, threadId: tid, text };
+    pendingPromptRef.current = { threadId: tid, text };
     setIsAcceptancePending(true);
 
     const state = usePanelStore.getState();
-    const cs = scope === 'project'
-      ? (tid ? state.projectChats[tid] : undefined)
-      : state.panels[panel];
+    const cs = state.projectChats[tid];
     if (cs?.currentTurn) {
-      finalizeTurn(scope, tid);
+      finalizeTurn(tid);
     }
 
-    sendMessage(text, scope, tid);
-  }, [scope, panel, currentThreadId, finalizeTurn, sendMessage]);
+    sendMessage(text, tid);
+  }, [currentThreadId, finalizeTurn, sendMessage]);
 
   const handleStop = useCallback(() => {
     const state = usePanelStore.getState();
     const tid = currentThreadId;
     if (!tid || !state.ws || state.ws.readyState !== WebSocket.OPEN) return;
-    const cs = scope === 'project' ? state.projectChats[tid] : state.panels[panel];
+    const cs = state.projectChats[tid];
     if (cs?.currentTurn) {
-      state.ws.send(JSON.stringify({ type: 'turn:stop', scope, threadId: tid }));
+      state.ws.send(JSON.stringify({ type: 'turn:stop', threadId: tid }));
     }
-  }, [scope, panel, currentThreadId]);
+  }, [currentThreadId]);
 
   const inputPlaceholder = noThread
     ? ''
@@ -300,7 +293,6 @@ export function useChatArea({ panel, scope, threadIdOverride }: UseChatAreaOptio
 
   return {
     panel,
-    scope,
     toggleCollapsed,
     toggleCliPicker,
     toggleThreadDropdown,

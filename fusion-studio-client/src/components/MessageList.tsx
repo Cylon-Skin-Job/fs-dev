@@ -28,15 +28,13 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
-import type { Message, AssistantTurn, StreamSegment, Scope } from '../types';
+import type { Message, AssistantTurn, StreamSegment } from '../types';
 import { LiveSegmentRenderer } from './LiveSegmentRenderer';
 import { InstantSegmentRenderer } from './InstantSegmentRenderer';
 
 interface MessageListProps {
-  panel: string;
-  scope: Scope;
-  // PER_THREAD_CHAT_STATE: required for project scope; ignored for view.
-  // Primary passes currentThreadIds.project; secondary passes secondary.threadId.
+  // PER_THREAD_CHAT_STATE: primary passes the current workspace thread;
+  // secondary passes secondary.threadId.
   threadId: string | null;
   messages: Message[];
   currentTurn: AssistantTurn | null;
@@ -46,8 +44,6 @@ interface MessageListProps {
 }
 
 export function MessageList({
-  panel,
-  scope,
   threadId,
   messages,
   currentTurn,
@@ -55,19 +51,15 @@ export function MessageList({
   lastUserMsgRef,
   showOrb,
 }: MessageListProps) {
-  // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId for project;
-  // view still reads from panels[currentPanel].
-  const pendingTurnEnd = usePanelStore((s) => {
-    if (scope === 'project') {
-      return threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false;
-    }
-    return s.panels[panel]?.pendingTurnEnd ?? false;
-  });
+  // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId.
+  const pendingTurnEnd = usePanelStore((s) =>
+    threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false
+  );
   const finalizeTurn = usePanelStore((s) => s.finalizeTurn);
 
   // CRITICAL: undefined when not pending, NOT a no-op function.
   // LiveSegmentRenderer's completion effect checks `if (!onRevealComplete) return;`
-  const onRevealComplete = pendingTurnEnd ? () => finalizeTurn(scope, threadId) : undefined;
+  const onRevealComplete = pendingTurnEnd ? () => finalizeTurn(threadId) : undefined;
 
   // Find the last user rv-message index for scroll anchoring
   let lastUserIdx = -1;

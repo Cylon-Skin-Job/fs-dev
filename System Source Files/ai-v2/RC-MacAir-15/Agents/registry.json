@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "agents": {
+    "wiki-manager": {
+      "folder": "Background Workers/wiki-manager",
+      "status": "idle"
+    },
+    "code-manager": {
+      "folder": "Background Workers/code-manager",
+      "status": "idle"
+    },
+    "ops-manager": {
+      "folder": "Background Workers/ops-manager",
+      "status": "idle"
+    }
+  }
+}

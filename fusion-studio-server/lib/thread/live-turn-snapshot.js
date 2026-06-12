@@ -16,7 +16,6 @@ function beginLiveTurn(key, payload) {
   return {
     workspaceId: key.workspaceId,
     scope: key.scope,
-    viewId: key.scope === 'view' ? (key.viewId || null) : null,
     threadId: key.threadId,
     turnId: payload.turnId,
     userInput: payload.userInput || '',

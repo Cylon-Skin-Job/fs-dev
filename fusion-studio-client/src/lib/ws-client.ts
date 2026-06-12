@@ -155,9 +155,9 @@ function handleMessage(msg: WebSocketMessage) {
     if (
       view === store.currentPanel &&
       incoming?.currentThreadId &&
-      incoming.currentThreadId !== store.currentThreadIds.project
+      incoming.currentThreadId !== store.currentThreadId
     ) {
-      store.setCurrentThreadId('project', incoming.currentThreadId);
+      store.setCurrentThreadId(incoming.currentThreadId);
     }
     return;
   }

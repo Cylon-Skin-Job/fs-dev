@@ -344,8 +344,9 @@ export interface WebSocketMessage {
   name?: string;
   content?: string;
   message?: string;
-  // SPEC-26b: every thread:* response and wire_ready carries scope
-  scope?: Scope;
+  // RCC-0095: server still stamps scope: 'project' on thread/stream
+  // messages for wire compatibility; the client routes by threadId only.
+  scope?: string;
   viewId?: string | null;
   templateId?: string;
   patch?: {
@@ -439,10 +440,9 @@ export interface SecondaryState {
   justRestored?: boolean;
 }
 
-// SPEC-26: dual-chat paradigm. Every thread lives in one of two scopes.
-//  - 'project': follows the user across panel switches
-//  - 'view': bound to a specific view panel
-export type Scope = 'project' | 'view';
+// RCC-0095: single workspace chat. All threads are workspace-scoped and
+// follow the user across panel switches. (The legacy per-view scope has
+// been removed; the server still emits scope: 'project' on the wire.)
 
 // Thread Types
 export interface ThreadEntry {
@@ -453,8 +453,8 @@ export interface ThreadEntry {
   resumedAt?: string;
   messageCount: number;
   status: 'active' | 'suspended';
-  // SPEC-26a: server returns scope + viewId on every thread entry
-  scope?: Scope;
+  // RCC-0095: server returns scope: 'project' on every thread entry (wire compat)
+  scope?: string;
   viewId?: string | null;
   // CLI_IDENTITY_SPEC: which harness owns this thread
   harnessId?: string;
@@ -507,8 +507,7 @@ export type AssistantPart = TextPart | ThinkPart | ToolCallPart;
 
 export interface LiveTurnSnapshot {
   workspaceId: string;
-  scope: Scope;
-  viewId?: string | null;
+  scope: string;
   threadId: string;
   turnId: string;
   userInput: string;

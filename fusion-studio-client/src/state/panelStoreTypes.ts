@@ -9,7 +9,6 @@ import type {
   AssistantTurn,
   StreamSegment,
   Thread,
-  Scope,
   ViewUIState,
   Pane,
   CollapsablePane,
@@ -40,11 +39,10 @@ export interface ConnectorState {
 export interface WorkspacePanelState {
   projectRoot: string | null;
   currentPanel: string;
-  panels: Record<string, PanelState>;
   projectChats: Record<string, PanelState>;
-  threads: { project: Thread[]; view: Thread[] };
-  currentThreadIds: { project: string | null; view: string | null };
-  currentScope: Scope | null;
+  threads: Thread[];
+  currentThreadId: string | null;
+  chatActive: boolean;
   wireReady: boolean;
   contextUsage: number;
   panelConfigs: PanelConfig[];
@@ -88,31 +86,30 @@ export interface AppState {
   currentPanel: string;
   setCurrentPanel: (id: string) => void;
 
-  // ── Chat state (SPEC-26c) ──
-  panels: Record<string, PanelState>;
+  // ── Chat state (RCC-0095: single workspace chat, keyed by threadId) ──
   projectChats: Record<string, PanelState>;
 
-  addMessage: (scope: Scope, threadId: string | null, message: Message) => void;
-  setCurrentTurn: (scope: Scope, threadId: string | null, turn: AssistantTurn | null) => void;
-  updateTurnContent: (scope: Scope, threadId: string | null, content: string) => void;
-  appendSegment: (scope: Scope, threadId: string | null, segType: StreamSegment['type'], text: string) => void;
-  pushSegment: (scope: Scope, threadId: string | null, segment: StreamSegment) => void;
-  updateLastSegment: (scope: Scope, threadId: string | null, updates: Partial<StreamSegment>) => void;
-  updateSegmentByIndex: (scope: Scope, threadId: string | null, index: number, updates: Partial<StreamSegment>) => void;
-  updateSegmentByToolCallId: (scope: Scope, threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => void;
-  appendSegmentContentByIndex: (scope: Scope, threadId: string | null, index: number, text: string) => void;
-  resetSegments: (scope: Scope, threadId: string | null) => void;
-  setPendingTurnEnd: (scope: Scope, threadId: string | null, pending: boolean) => void;
-  setPendingMessage: (scope: Scope, threadId: string | null, message: Message | null) => void;
-  setTodoDrawer: (scope: Scope, threadId: string | null, drawer: PanelState['todoDrawer']) => void;
-  finalizeTurn: (scope: Scope, threadId: string | null) => void;
-  clearChat: (scope: Scope, threadId: string | null) => void;
+  addMessage: (threadId: string | null, message: Message) => void;
+  setCurrentTurn: (threadId: string | null, turn: AssistantTurn | null) => void;
+  updateTurnContent: (threadId: string | null, content: string) => void;
+  appendSegment: (threadId: string | null, segType: StreamSegment['type'], text: string) => void;
+  pushSegment: (threadId: string | null, segment: StreamSegment) => void;
+  updateLastSegment: (threadId: string | null, updates: Partial<StreamSegment>) => void;
+  updateSegmentByIndex: (threadId: string | null, index: number, updates: Partial<StreamSegment>) => void;
+  updateSegmentByToolCallId: (threadId: string | null, toolCallId: string, updates: Partial<StreamSegment>) => void;
+  appendSegmentContentByIndex: (threadId: string | null, index: number, text: string) => void;
+  resetSegments: (threadId: string | null) => void;
+  setPendingTurnEnd: (threadId: string | null, pending: boolean) => void;
+  setPendingMessage: (threadId: string | null, message: Message | null) => void;
+  setTodoDrawer: (threadId: string | null, drawer: PanelState['todoDrawer']) => void;
+  finalizeTurn: (threadId: string | null) => void;
+  clearChat: (threadId: string | null) => void;
 
   // ── WebSocket ──
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
-  sendMessage: (text: string, scope: Scope, threadId?: string | null) => void;
-  warmThread: (scope: Scope, threadId?: string | null) => void;
+  sendMessage: (text: string, threadId?: string | null) => void;
+  warmThread: (threadId?: string | null) => void;
 
   // ── Project root ──
   projectRoot: string | null;
@@ -125,19 +122,21 @@ export interface AppState {
   contextUsage: number;
   setContextUsage: (usage: number) => void;
 
-  // ── Thread management (SPEC-26c: dual-scope) ──
-  threads: { project: Thread[]; view: Thread[] };
-  currentThreadIds: { project: string | null; view: string | null };
-  currentScope: Scope | null;
+  // ── Thread management (RCC-0095: single workspace chat) ──
+  threads: Thread[];
+  currentThreadId: string | null;
+  // True once a thread's wire is ready/opened for this workspace; gates the
+  // active styling + input placeholder (was currentScope === 'project').
+  chatActive: boolean;
   wireReady: boolean;
 
-  setThreads: (scope: Scope, threads: Thread[]) => void;
-  setCurrentThreadId: (scope: Scope, threadId: string | null) => void;
-  setCurrentScope: (scope: Scope | null) => void;
+  setThreads: (threads: Thread[]) => void;
+  setCurrentThreadId: (threadId: string | null) => void;
+  setChatActive: (active: boolean) => void;
   setWireReady: (ready: boolean) => void;
-  addThread: (scope: Scope, thread: Thread) => void;
-  updateThread: (scope: Scope, threadId: string, updates: Partial<Thread['entry']>) => void;
-  removeThread: (scope: Scope, threadId: string) => void;
+  addThread: (thread: Thread) => void;
+  updateThread: (threadId: string, updates: Partial<Thread['entry']>) => void;
+  removeThread: (threadId: string) => void;
 
   // ── Per-view UI state (SPEC-26c-2) ──
   viewStates: Record<string, ViewUIState>;
@@ -193,8 +192,8 @@ export interface AppState {
   // ── Harness connection state ──
   connectingHarnessId: string | null;
   setConnectingHarnessId: (id: string | null) => void;
-  selectHarness: (harnessId: string, scope: Scope) => void;
-  createDefaultAssistantThread: (scope: Scope) => void;
+  selectHarness: (harnessId: string) => void;
+  createDefaultAssistantThread: () => void;
 
   // ── Secondary chat (SECONDARY_CHAT_SPEC) ──
   secondary: SecondaryState | null;

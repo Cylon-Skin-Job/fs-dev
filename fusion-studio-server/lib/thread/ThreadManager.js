@@ -1,11 +1,9 @@
 /**
- * ThreadManager - Single-scope thread orchestrator
+ * ThreadManager - Workspace thread orchestrator
  *
- * One ThreadManager instance is bound to one (workspaceId, scope, viewId)
- * tuple. Project-scoped managers handle threads shared across all views
- * in the workspace; view-scoped managers handle threads tied to a single
- * view. SPEC-26b. The WS coordinator (ThreadWebSocketHandler) holds two
- * managers per connection — one for each scope.
+ * One ThreadManager instance is bound to one workspace. All threads are
+ * workspace-scoped (the single project/workspace chat paradigm, RCC-0095);
+ * the legacy per-view thread scope has been removed.
  *
  * Combines ThreadIndex (SQLite metadata) and ChatFile (markdown
  * persistence) to provide full thread lifecycle management. Delegates
@@ -28,8 +26,6 @@ const DEFAULT_CONFIG = {
 class ThreadManager {
   /**
    * @param {object} config
-   * @param {'project'|'view'} config.scope - Thread scope (SPEC-26b)
-   * @param {string|null} [config.viewId] - View name when scope='view'; null for scope='project'
    * @param {string} config.projectRoot - Absolute project root path (required)
    * @param {string} [config.workspaceId] - Workspace identifier (workspaces.id); falls back to basename(projectRoot)
    * @param {number} [config.maxActiveSessions]
@@ -37,26 +33,16 @@ class ThreadManager {
    */
   constructor(config = {}) {
     if (!config.projectRoot) {
-      throw new Error('ThreadManager: projectRoot is required (SPEC-26b)');
-    }
-    if (config.scope !== 'project' && config.scope !== 'view') {
-      throw new Error(
-        `ThreadManager: scope must be 'project' or 'view', got "${config.scope}" (SPEC-26b)`
-      );
-    }
-    if (config.scope === 'view' && !config.viewId) {
-      throw new Error("ThreadManager: viewId is required when scope='view' (SPEC-26b)");
+      throw new Error('ThreadManager: projectRoot is required');
     }
 
-    this.scope = config.scope;
-    this.viewId = config.scope === 'view' ? config.viewId : null;
     this.projectRoot = config.projectRoot;
     this.projectId = path.basename(this.projectRoot);
     this.workspaceId = config.workspaceId || this.projectId;
     this.config = { ...DEFAULT_CONFIG, ...config };
 
     /** @type {ThreadIndex} */
-    this.index = new ThreadIndex(this.workspaceId, this.scope, this.viewId);
+    this.index = new ThreadIndex(this.workspaceId);
 
     /** @type {SessionManager} */
     this.sessionManager = new SessionManager(
@@ -69,21 +55,14 @@ class ThreadManager {
   }
 
   /**
-   * Build the scope-appropriate per-user chat directory.
-   *
-   * SPEC-26b: branches by scope.
-   *   - project scope → ai/views/chat/threads/<user>/  (the 24c unified location)
-   *   - view scope    → ai/views/<view>/chat/threads/<user>/  (per-view, restored from pre-24c)
+   * Build the per-user chat directory. Single unified location —
+   * ai/views/chat/threads/<user>/ — for all workspace threads.
+   * (RCC-0095: per-view storage at ai/views/<view>/chat/threads/ removed.)
    *
    * @returns {string}
    */
   _getViewsDir() {
-    const baseViews = path.join(this.projectRoot, 'ai', 'views');
-    if (this.scope === 'project') {
-      return path.join(baseViews, 'chat', 'threads', getUsername());
-    }
-    // scope === 'view'
-    return path.join(baseViews, this.viewId, 'chat', 'threads', getUsername());
+    return path.join(this.projectRoot, 'ai', 'views', 'chat', 'threads', getUsername());
   }
 
   /**
@@ -310,9 +289,9 @@ class ThreadManager {
     await this.index.activate(threadId);
     await this.index.markResumed(threadId);
 
-    // Delegate session state to SessionManager. viewId is null for project
-    // scope — SessionManager stores this as an inert field and never reads it.
-    const session = this.sessionManager.openSession(threadId, this.viewId, wireProcess, ws);
+    // Delegate session state to SessionManager. The second arg (legacy
+    // viewId) is an inert field SessionManager stores but never reads.
+    const session = this.sessionManager.openSession(threadId, null, wireProcess, ws);
 
     return session;
   }

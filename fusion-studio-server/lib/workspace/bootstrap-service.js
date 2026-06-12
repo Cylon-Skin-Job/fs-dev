@@ -3,18 +3,18 @@
  *
  * Add Project requires the repo to already contain `/ai`; the controller
  * enforces that before calling bootstrap(). This service may create missing
- * internal folders/files under that existing tree so views render and chat has
- * somewhere to write threads. Idempotent — existing folders/files are left
- * alone. Pure filesystem, no events, no DB.
+ * internal folders/files under that existing tree so views render. Chat does
+ * not need bootstrap structure (RCC-0095). Idempotent — existing
+ * folders/files are left alone. Pure filesystem, no events, no DB.
  */
 
 const fs = require('fs');
 const path = require('path');
 
+// RCC-0095: ai/views/chat/threads is no longer bootstrapped — ChatFile
+// creates the chat storage parents on demand at first thread write.
 const DIRS = [
   'ai/views',
-  'ai/views/chat',
-  'ai/views/chat/threads',
   'ai/system/workspace',
 ];
 

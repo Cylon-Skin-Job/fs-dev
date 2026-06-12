@@ -3,10 +3,14 @@
  *
  * Each WebSocket connection:
  * - Has a current panel
- * - Can switch between threads within that panel
+ * - Can switch between threads
  * - Manages one wire process at a time (per active thread)
  *
  * Multiple tabs = multiple WebSockets = independent sessions
+ *
+ * RCC-0095: single workspace chat. Threads are workspace-scoped and the
+ * active thread persists across panel switches (but not across workspace
+ * switches). The legacy per-view thread scope has been removed.
  *
  * Coordinator module: owns shared state (Maps) and delegates to
  * thread-crud.js (CRUD handlers) and thread-messages.js (message handlers).
@@ -14,24 +18,20 @@
 
 const { createCrudHandlers } = require('./thread-crud');
 const { createMessageHandlers } = require('./thread-messages');
-const { search: searchExchanges } = require('./chat-search');
 const {
   getProjectThreadManager,
-  getViewThreadManager,
   _getProjectThreadManagers,
-  _getViewThreadManagers,
 } = require('./thread-manager-registry');
 
-// Per-WS state. SPEC-26b: dual-scope shape.
+// Per-WS state:
 //   ws -> {
 //     panelId,
 //     viewName,
-//     threadIds: { project: string|null, view: string|null },
-//     threadManagers: { project: ThreadManager, view: ThreadManager }
+//     threadId: string|null,
+//     threadManager: ThreadManager
 //   }
-// The project manager persists across panel switches; the view manager is
-// swapped on every setPanel() call. Project threadId persists across panel
-// switches; view threadId resets on switch.
+// The manager and threadId persist across panel switches; both reset on
+// workspace switches.
 const wsState = new Map();
 
 // Pending reorder timers: ws -> timeoutId (for delayed thread list refresh)
@@ -41,10 +41,9 @@ const REORDER_DELAY_MS = 3000;
 /**
  * Set panel for a WebSocket connection.
  *
- * SPEC-26b: populates TWO ThreadManagers — one project-scoped (persistent
- * across panel switches) and one view-scoped (swapped on every panel
- * change). Project thread state persists across panel switches; view
- * thread state resets.
+ * The workspace ThreadManager persists across panel switches, as does the
+ * active thread. Switching workspaces closes the active thread and swaps
+ * the manager so queries target the correct workspace_id.
  *
  * @param {import('ws').WebSocket} ws
  * @param {string} panelId - Panel identifier (e.g., 'file-viewer', 'agent:bot-name')
@@ -55,45 +54,29 @@ const REORDER_DELAY_MS = 3000;
  */
 function setPanel(ws, panelId, config = {}) {
   if (!config.projectRoot) {
-    throw new Error('setPanel: config.projectRoot is required (SPEC-26b)');
+    throw new Error('setPanel: config.projectRoot is required');
   }
 
   const existing = wsState.get(ws);
-  const workspaceChanged = existing?.threadManagers?.project
-    && existing.threadManagers.project.workspaceId !== config.workspaceId;
+  const workspaceChanged = existing?.threadManager
+    && existing.threadManager.workspaceId !== config.workspaceId;
 
-  // Close currently open VIEW thread when switching panels — view threads
-  // are tied to a specific view. Project threads PERSIST across panel
-  // switches (that's the whole point of project scope), but NOT across
-  // workspace switches — a project thread in workspace A is meaningless
-  // in workspace B.
-  if (existing && existing.threadIds?.view) {
-    closeThread(ws, 'view');
-  }
-  if (workspaceChanged && existing?.threadIds?.project) {
-    closeThread(ws, 'project');
+  // The workspace thread PERSISTS across panel switches (that's the whole
+  // point of the single workspace chat), but NOT across workspace switches —
+  // a thread in workspace A is meaningless in workspace B.
+  if (workspaceChanged && existing?.threadId) {
+    closeThread(ws);
   }
 
-  // Project manager: stable across panel switches, but swapped when the
-  // workspace changes so queries target the correct workspace_id.
-  const projectMgr = (!existing?.threadManagers?.project || workspaceChanged)
+  const threadManager = (!existing?.threadManager || workspaceChanged)
     ? getProjectThreadManager(config.projectRoot, config.workspaceId)
-    : existing.threadManagers.project;
-
-  // View manager: always replace with the manager for the new panel.
-  const viewMgr = getViewThreadManager(panelId, config.projectRoot, config.workspaceId);
+    : existing.threadManager;
 
   wsState.set(ws, {
     panelId,
     viewName: config.viewName || panelId,
-    threadIds: {
-      project: workspaceChanged ? null : (existing?.threadIds?.project || null),
-      view: null,
-    },
-    threadManagers: {
-      project: projectMgr,
-      view: viewMgr,
-    },
+    threadId: workspaceChanged ? null : (existing?.threadId || null),
+    threadManager,
   });
 }
 
@@ -106,14 +89,13 @@ function getState(ws) {
 }
 
 /**
- * Clean up when WebSocket closes. SPEC-26b: closes both scopes' threads.
+ * Clean up when WebSocket closes.
  * @param {import('ws').WebSocket} ws
  */
 function cleanup(ws) {
   const state = wsState.get(ws);
-  if (state) {
-    if (state.threadIds?.view) closeThread(ws, 'view');
-    if (state.threadIds?.project) closeThread(ws, 'project');
+  if (state && state.threadId) {
+    closeThread(ws);
   }
   wsState.delete(ws);
 
@@ -126,49 +108,45 @@ function cleanup(ws) {
 }
 
 /**
- * Close the active thread session for a given scope. SPEC-26b.
+ * Close the active thread session.
  * @param {import('ws').WebSocket} ws
- * @param {'project'|'view'} scope
  */
-async function closeThread(ws, scope) {
+async function closeThread(ws) {
   const state = wsState.get(ws);
   if (!state) return;
 
-  const threadId = state.threadIds?.[scope];
+  const threadId = state.threadId;
   if (!threadId) return;
 
-  const manager = state.threadManagers[scope];
-  await manager.closeSession(threadId);
+  await state.threadManager.closeSession(threadId);
 
-  state.threadIds[scope] = null;
-  console.log(`[ThreadWS] Closed ${scope} thread ${threadId}`);
+  state.threadId = null;
+  console.log(`[ThreadWS] Closed thread ${threadId}`);
 }
 
 /**
- * Send thread list to client. SPEC-26b: scope-aware.
+ * Send thread list to client.
  * @param {import('ws').WebSocket} ws
- * @param {'project'|'view'} [scope='view'] - Default 'view' matches pre-26b behavior.
  */
-async function sendThreadList(ws, scope = 'view') {
-  console.log(`[ThreadWS] sendThreadList called scope=${scope}`);
+async function sendThreadList(ws) {
   const state = wsState.get(ws);
   if (!state) {
-    console.log('[ThreadWS] No state for ws, skipping');
+    console.log('[ThreadWS] No state for ws, skipping sendThreadList');
     return;
   }
 
-  const manager = state.threadManagers?.[scope];
+  const manager = state.threadManager;
   if (!manager) {
-    console.log(`[ThreadWS] No ${scope} manager for ws, skipping`);
+    console.log('[ThreadWS] No ThreadManager for ws, skipping sendThreadList');
     return;
   }
 
   const threads = await manager.listThreads();
-  console.log(`[ThreadWS] Sending ${threads.length} ${scope} threads`);
+  console.log(`[ThreadWS] Sending ${threads.length} threads`);
 
   ws.send(JSON.stringify({
     type: 'thread:list',
-    scope, // echo so the client knows which list to update (SPEC-26c)
+    scope: 'project', // protocol field kept for wire compatibility
     threads: threads.map(t => ({
       threadId: t.threadId,
       entry: t.entry
@@ -177,23 +155,21 @@ async function sendThreadList(ws, scope = 'view') {
 }
 
 /**
- * Get current thread ID for WebSocket (scope-aware). SPEC-26b.
+ * Get current thread ID for WebSocket.
  * @param {import('ws').WebSocket} ws
- * @param {'project'|'view'} [scope='view']
  * @returns {string|null}
  */
-function getCurrentThreadId(ws, scope = 'view') {
-  return wsState.get(ws)?.threadIds?.[scope] || null;
+function getCurrentThreadId(ws) {
+  return wsState.get(ws)?.threadId || null;
 }
 
 /**
- * Get current ThreadManager for WebSocket (scope-aware). SPEC-26b.
+ * Get current ThreadManager for WebSocket.
  * @param {import('ws').WebSocket} ws
- * @param {'project'|'view'} [scope='view']
  * @returns {ThreadManager|null}
  */
-function getCurrentThreadManager(ws, scope = 'view') {
-  return wsState.get(ws)?.threadManagers?.[scope] || null;
+function getCurrentThreadManager(ws) {
+  return wsState.get(ws)?.threadManager || null;
 }
 
 // Wire up extracted handlers with shared state
@@ -217,8 +193,7 @@ module.exports = {
   getCurrentThreadId,
   getCurrentThreadManager,
 
-  // For testing (SPEC-26b split)
+  // For testing
   _getProjectThreadManagers,
-  _getViewThreadManagers,
   _getWsState: () => wsState
 };

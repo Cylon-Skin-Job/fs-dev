@@ -5,7 +5,7 @@
  * Extracted from ws-client.ts (spec 05a) so the most fragile part of the
  * message router is isolated and testable. Everything else stays in ws-client.
  *
- * Live stream messages route only by explicit server scope + threadId.
+ * Live stream messages route only by explicit server threadId.
  * Missing route metadata is a contract violation and is dropped with a diagnostic.
  */
 
@@ -32,7 +32,7 @@ import {
   getSubagentTypeFromArgs,
 } from '../subagent-output';
 import { showToast } from '../toast';
-import type { WebSocketMessage, WebSocketMessageType, Scope } from '../../types';
+import type { WebSocketMessage, WebSocketMessageType } from '../../types';
 
 interface TimingProbe {
   firstTokenAt?: number;
@@ -72,26 +72,24 @@ interface SubagentStreamState {
 
 const subagentStreams = new Map<string, SubagentStreamState>();
 
-function getStreamRoute(msg: WebSocketMessage): { scope: Scope; threadId: string } | null {
+function getStreamRoute(msg: WebSocketMessage): { threadId: string } | null {
   if (!ROUTED_STREAM_TYPES.has(msg.type)) return null;
-  if ((msg.scope !== 'project' && msg.scope !== 'view') || !msg.threadId) {
+  if (!msg.threadId) {
     console.warn('[WS] Dropping stream message without explicit route metadata', {
       type: msg.type,
-      scope: msg.scope,
       threadId: msg.threadId,
     });
     return null;
   }
-  return { scope: msg.scope, threadId: msg.threadId };
+  return { threadId: msg.threadId };
 }
 
 /**
- * Read the active chat state slot for a given scope + threadId.
- * PER_THREAD_CHAT_STATE: project slots are keyed by threadId.
+ * Read the active chat state slot for a threadId.
+ * PER_THREAD_CHAT_STATE: chat slots are keyed by threadId.
  */
-function readChatState(scope: Scope, threadId: string) {
+function readChatState(threadId: string) {
   const state = usePanelStore.getState();
-  if (scope === 'view') return state.panels[state.currentPanel];
   return state.projectChats[threadId];
 }
 
@@ -107,25 +105,24 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
   const route = getStreamRoute(msg);
   if (ROUTED_STREAM_TYPES.has(msg.type) && !route) return true;
-  const scope = route?.scope;
   const threadId = route?.threadId;
 
   switch (msg.type) {
     case 'turn_begin': {
-      if (!scope || !threadId) return true;
-      console.log('[WS] Turn begin scope=', scope, 'threadId=', threadId?.slice(0, 8));
+      if (!threadId) return true;
+      console.log('[WS] Turn begin threadId=', threadId?.slice(0, 8));
       // Safety net: if the previous turn wasn't finalized (edge case —
       // finalizeTurn normally handles this), snapshot it now. In the
       // normal flow, currentTurn is already null by this point because
       // finalizeTurn cleared it.
-      const chatState = readChatState(scope, threadId);
+      const chatState = readChatState(threadId);
       if (chatState) {
         const prevTurn = chatState.currentTurn;
         const segments = chatState.segments;
 
         if (prevTurn) {
           console.warn('[WS] turn_begin: previous turn was not finalized — snapshotting now');
-          store.addMessage(scope, threadId, {
+          store.addMessage(threadId, {
             id: prevTurn.id,
             type: 'assistant',
             content: prevTurn.content,
@@ -135,7 +132,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         }
       }
 
-      store.resetSegments(scope, threadId);
+      store.resetSegments(threadId);
       resetGrouper();
       toolArgBuffers.clear();
       subagentStreams.clear();
@@ -152,9 +149,9 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       // Omitting this line caused new turns to finalize immediately
       // after their first segment, because the stale pendingTurnEnd
       // from the previous turn was still set.
-      store.setPendingTurnEnd(scope, threadId, false);
+      store.setPendingTurnEnd(threadId, false);
 
-      store.setCurrentTurn(scope, threadId, {
+      store.setCurrentTurn(threadId, {
         id: msg.turnId || '',
         content: '',
         status: 'streaming',
@@ -166,7 +163,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'content':
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       if (msg.text) {
         const t = (window as Window & { __TIMING?: TimingProbe }).__TIMING;
         if (t && !t.firstTokenAt) {
@@ -176,17 +173,17 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           console.log(`[TIMING] FIRST TOKEN (content) at ${t.firstTokenAt.toFixed(1)}ms — TTFT: ${ttft.toFixed(1)}ms`);
         }
         breakSequence();
-        store.appendSegment(scope, threadId, 'text', msg.text);
+        store.appendSegment(threadId, 'text', msg.text);
 
-        const turn = readChatState(scope, threadId)?.currentTurn;
+        const turn = readChatState(threadId)?.currentTurn;
         if (turn) {
-          store.updateTurnContent(scope, threadId, turn.content + msg.text);
+          store.updateTurnContent(threadId, turn.content + msg.text);
         }
       }
       return true;
 
     case 'thinking':
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       if (msg.text) {
         const t = (window as Window & { __TIMING?: TimingProbe }).__TIMING;
         if (t && !t.firstTokenAt) {
@@ -196,15 +193,15 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           console.log(`[TIMING] FIRST TOKEN (thinking) at ${t.firstTokenAt.toFixed(1)}ms — TTFT: ${ttft.toFixed(1)}ms`);
         }
         breakSequence();
-        store.appendSegment(scope, threadId, 'think', msg.text);
+        store.appendSegment(threadId, 'think', msg.text);
       }
       return true;
 
     case 'tool_call': {
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       const segType = toolNameToSegmentType(msg.toolName || '');
       const toolCallId = msg.toolCallId || '';
-      const segCount = readChatState(scope, threadId)?.segments.length ?? 0;
+      const segCount = readChatState(threadId)?.segments.length ?? 0;
       if (toolCallId) {
         toolArgBuffers.set(toolCallId, '');
       }
@@ -212,7 +209,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       const action = onToolCall(segType, toolCallId, segCount);
 
       if (action.action === 'new') {
-        store.pushSegment(scope, threadId, {
+        store.pushSegment(threadId, {
           type: segType,
           content: '',
           toolCallId,
@@ -220,7 +217,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           groupCount: action.groupCount,
         });
       } else if (action.segmentIndex !== undefined) {
-        store.updateSegmentByIndex(scope, threadId, action.segmentIndex, {
+        store.updateSegmentByIndex(threadId, action.segmentIndex, {
           groupCount: action.groupCount,
           complete: false,
         });
@@ -231,7 +228,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'tool_call_args': {
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       const toolCallId = msg.toolCallId || '';
       if (!toolCallId || !msg.argsChunk) return true;
 
@@ -240,22 +237,22 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
 
       const parsedArgs = parseToolArgs(nextBuffer);
       if (parsedArgs) {
-        store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
+        store.updateSegmentByToolCallId(threadId, toolCallId, {
           toolArgs: parsedArgs,
         });
 
         // Update todo drawer immediately when todo args are parseable.
         // Note: some harnesses send empty arguments and put todo data in
         // toolDisplay instead; that's handled on tool_result.
-        const segType = readChatState(scope, threadId)?.segments.find(
+        const segType = readChatState(threadId)?.segments.find(
           (s) => s.toolCallId === toolCallId
         )?.type;
         if (segType === 'subagent') {
-          const existingContent = readChatState(scope, threadId)?.segments.find(
+          const existingContent = readChatState(threadId)?.segments.find(
             (s) => s.toolCallId === toolCallId
           )?.content;
           if (!existingContent) {
-            store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
+            store.updateSegmentByToolCallId(threadId, toolCallId, {
               content: buildSubagentIntroLine(undefined, getSubagentTypeFromArgs(parsedArgs)),
             });
           }
@@ -263,8 +260,8 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         if (segType === 'todo') {
           const items = parseTodoArgs(parsedArgs);
           if (items.length > 0) {
-            const currentDrawer = readChatState(scope, threadId)?.todoDrawer;
-            store.setTodoDrawer(scope, threadId, {
+            const currentDrawer = readChatState(threadId)?.todoDrawer;
+            store.setTodoDrawer(threadId, {
               items,
               updatedAt: Date.now(),
               open: currentDrawer?.open ?? false,
@@ -277,10 +274,10 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'tool_result': {
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       const toolCallId = msg.toolCallId || '';
       const groupLookup = getGroupForResult(toolCallId);
-      const existingSegment = readChatState(scope, threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
+      const existingSegment = readChatState(threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
       const segType = existingSegment?.type ?? toolNameToSegmentType(msg.toolName || '');
       const resultArgs = msg.toolArgs
         ?? parseToolArgs(toolArgBuffers.get(toolCallId) || '')
@@ -300,13 +297,13 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
               : groupLookup.type === 'glob'
                 ? formatGlobResultSection(resultArgs, msg.toolOutput)
                 : formatGroupedSummaryLine(groupLookup.type, resultArgs, toolContent);
-        const existing = readChatState(scope, threadId)?.segments[groupLookup.segmentIndex]?.content;
+        const existing = readChatState(threadId)?.segments[groupLookup.segmentIndex]?.content;
         const prefix = existing ? '\n' : '';
-        store.appendSegmentContentByIndex(scope, threadId, groupLookup.segmentIndex, prefix + appendedContent);
+        store.appendSegmentContentByIndex(threadId, groupLookup.segmentIndex, prefix + appendedContent);
 
         const completion = recordGroupResult(toolCallId);
         if (completion) {
-          store.updateSegmentByIndex(scope, threadId, completion.segmentIndex, {
+          store.updateSegmentByIndex(threadId, completion.segmentIndex, {
             toolArgs: resultArgs,
             toolDisplay: msg.toolDisplay,
             toolStatus: normalizedResult.status,
@@ -327,9 +324,9 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           if (items.length === 0 && msg.toolDisplay) {
             items = parseTodoDisplay(msg.toolDisplay);
           }
-          const currentDrawer = readChatState(scope, threadId)?.todoDrawer;
+          const currentDrawer = readChatState(threadId)?.todoDrawer;
           if (items.length > 0) {
-            store.setTodoDrawer(scope, threadId, {
+            store.setTodoDrawer(threadId, {
               items,
               updatedAt: Date.now(),
               open: currentDrawer?.open ?? false,
@@ -347,7 +344,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
             ? appendUniqueLine(existingContent, completionLine)
             : buildSubagentResultFallbackLines(toolContent, resultArgs).join('\n');
 
-          store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
+          store.updateSegmentByToolCallId(threadId, toolCallId, {
             content,
             toolArgs: resultArgs,
             toolDisplay: msg.toolDisplay,
@@ -359,7 +356,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           return true;
         }
 
-        store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
+        store.updateSegmentByToolCallId(threadId, toolCallId, {
           content,
           toolArgs: resultArgs,
           toolDisplay: msg.toolDisplay,
@@ -374,12 +371,12 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'subagent_event':
-      if (!scope || !threadId) return true;
-      handleSubagentEvent(msg, scope, threadId);
+      if (!threadId) return true;
+      handleSubagentEvent(msg, threadId);
       return true;
 
     case 'turn_end': {
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       // turn_end signals that the API has finished producing content.
       // Normal completion keeps the paced reveal gate: set pendingTurnEnd and
       // let LiveSegmentRenderer finalize after it catches up.
@@ -401,7 +398,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       //
       // See LiveSegmentRenderer.tsx completion detection comments for the
       // full explanation of why this is an effect and not a callback.
-      const currentTurn = readChatState(scope, threadId)?.currentTurn;
+      const currentTurn = readChatState(threadId)?.currentTurn;
 
       if (currentTurn) {
         const flushImmediately = msg.partial === true ||
@@ -409,20 +406,20 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
           msg.reason === 'error';
 
         // Mark last segment complete (closing tag) so reveal knows it's done
-        const segs = readChatState(scope, threadId)?.segments || [];
+        const segs = readChatState(threadId)?.segments || [];
         if (segs.length > 0) {
           const lastSeg = segs[segs.length - 1];
           if (!lastSeg.complete) {
-            store.updateLastSegment(scope, threadId, { complete: true });
+            store.updateLastSegment(threadId, { complete: true });
           }
         }
-        store.setPendingTurnEnd(scope, threadId, true);
+        store.setPendingTurnEnd(threadId, true);
         window.dispatchEvent(new CustomEvent('fusion:turn-ended', {
-          detail: { scope, threadId, reason: msg.reason, partial: msg.partial },
+          detail: { threadId, reason: msg.reason, partial: msg.partial },
         }));
 
         if (flushImmediately) {
-          store.finalizeTurn(scope, threadId);
+          store.finalizeTurn(threadId);
         }
       }
 
@@ -430,7 +427,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'status_update':
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       if (msg.contextUsage !== undefined) {
         store.setContextUsage(msg.contextUsage);
       }
@@ -441,17 +438,17 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'auth_error':
-      if (!scope || !threadId) return true;
+      if (!threadId) return true;
       window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
-        detail: { scope, threadId, message: msg.message || 'Authentication failed' },
+        detail: { threadId, message: msg.message || 'Authentication failed' },
       }));
       {
-        const chatState = readChatState(scope, threadId);
+        const chatState = readChatState(threadId);
         const currentTurn = chatState?.currentTurn;
         if (currentTurn && !currentTurn.content && (chatState?.segments.length ?? 0) === 0) {
-          store.setCurrentTurn(scope, threadId, null);
-          store.setPendingTurnEnd(scope, threadId, false);
-          store.resetSegments(scope, threadId);
+          store.setCurrentTurn(threadId, null);
+          store.setPendingTurnEnd(threadId, false);
+          store.resetSegments(threadId);
         }
       }
       showToast(msg.message || 'Authentication failed. Run `kimi login` in your terminal.');
@@ -460,7 +457,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     case 'error':
       console.error('[WS] Wire error:', msg.error);
       window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
-        detail: { scope: msg.scope, threadId: msg.threadId, message: msg.message || msg.error || 'Prompt failed' },
+        detail: { threadId: msg.threadId, message: msg.message || msg.error || 'Prompt failed' },
       }));
       return true;
 
@@ -563,7 +560,7 @@ export function resetStreamState(): void {
   subagentStreams.clear();
 }
 
-function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: string): void {
+function handleSubagentEvent(msg: WebSocketMessage, threadId: string): void {
   const parentToolCallId = msg.parentToolCallId || '';
   if (!parentToolCallId) return;
 
@@ -573,12 +570,12 @@ function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: stri
   const payload = objectValue(msg.subagentPayload);
 
   if (eventType === 'TurnBegin') {
-    emitSubagentIntro(scope, threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
     return;
   }
 
   if (eventType === 'ToolCall') {
-    emitSubagentIntro(scope, threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
 
     const toolId = stringValue(payload.id) || `${streamKey}:tool:${stream.tools.size + 1}`;
     const toolName = stringValue(objectValue(payload.function).name) || 'Tool';
@@ -592,7 +589,7 @@ function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: stri
 
     stream.activeToolId = toolId;
     stream.tools.set(toolId, toolState);
-    emitSubagentToolIfReady(scope, threadId, parentToolCallId, toolState);
+    emitSubagentToolIfReady(threadId, parentToolCallId, toolState);
     return;
   }
 
@@ -602,7 +599,7 @@ function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: stri
     if (!activeTool || !argsPart) return;
 
     activeTool.argsRaw += argsPart;
-    emitSubagentToolIfReady(scope, threadId, parentToolCallId, activeTool);
+    emitSubagentToolIfReady(threadId, parentToolCallId, activeTool);
     return;
   }
 
@@ -611,7 +608,6 @@ function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: stri
     const toolState = toolId ? stream.tools.get(toolId) : undefined;
     if (toolState && !toolState.emitted) {
       appendSubagentLine(
-        scope,
         threadId,
         parentToolCallId,
         buildSubagentToolLine(toolState.name, parseToolArgs(toolState.argsRaw))
@@ -622,8 +618,8 @@ function handleSubagentEvent(msg: WebSocketMessage, scope: Scope, threadId: stri
   }
 
   if (eventType === 'TurnEnd') {
-    emitSubagentIntro(scope, threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
-    appendSubagentLine(scope, threadId, parentToolCallId, buildSubagentCompletedLine());
+    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+    appendSubagentLine(threadId, parentToolCallId, buildSubagentCompletedLine());
   }
 }
 
@@ -640,7 +636,6 @@ function getSubagentStream(key: string): SubagentStreamState {
 }
 
 function emitSubagentIntro(
-  scope: Scope,
   threadId: string,
   parentToolCallId: string,
   stream: SubagentStreamState,
@@ -648,12 +643,11 @@ function emitSubagentIntro(
   subagentType?: string,
 ): void {
   if (stream.introEmitted) return;
-  appendSubagentLine(scope, threadId, parentToolCallId, buildSubagentIntroLine(agentId, subagentType));
+  appendSubagentLine(threadId, parentToolCallId, buildSubagentIntroLine(agentId, subagentType));
   stream.introEmitted = true;
 }
 
 function emitSubagentToolIfReady(
-  scope: Scope,
   threadId: string,
   parentToolCallId: string,
   toolState: SubagentToolState,
@@ -665,15 +659,15 @@ function emitSubagentToolIfReady(
   const args = parseToolArgs(toolState.argsRaw);
   if (!args) return;
 
-  appendSubagentLine(scope, threadId, parentToolCallId, buildSubagentToolLine(toolState.name, args));
+  appendSubagentLine(threadId, parentToolCallId, buildSubagentToolLine(toolState.name, args));
   toolState.emitted = true;
 }
 
-function appendSubagentLine(scope: Scope, threadId: string, toolCallId: string, line: string): void {
+function appendSubagentLine(threadId: string, toolCallId: string, line: string): void {
   const store = usePanelStore.getState();
-  const segment = readChatState(scope, threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
+  const segment = readChatState(threadId)?.segments.find(seg => seg.toolCallId === toolCallId);
   const prefix = segment?.content ? '\n' : '';
-  store.updateSegmentByToolCallId(scope, threadId, toolCallId, {
+  store.updateSegmentByToolCallId(threadId, toolCallId, {
     content: `${segment?.content || ''}${prefix}${line}`,
   });
 }

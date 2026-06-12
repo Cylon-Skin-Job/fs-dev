@@ -51,7 +51,6 @@ const { createWireMessageRouter } = require('./lib/wire/message-router');
 const { createClientMessageRouter } = require('./lib/ws/client-message-router');
 
 // View discovery and resolution (filesystem-driven, no database)
-const views = require('./lib/views');
 
 // Panel path resolution + shared session registries (extracted per SPEC-01g).
 // `sessions` is the single server-wide Map — startup.js and the connection
@@ -146,7 +145,7 @@ wss.on('connection', async (ws) => {
     planMode: false,     // Whether turn was in plan mode
     projectRoot,         // Mutable per-connection root; updated on workspace:switched. null when no active workspace.
     currentWorkspaceId: activeWs ? activeWs.id : null,
-    currentViewId: null  // CHAT_SCOPE_SPEC: set when scope='view'
+    currentViewId: null  // CHAT_SCOPE_SPEC: reserved for view-bound scope strings (unused; single workspace chat)
   };
   sessions.set(ws, session);
 
@@ -163,19 +162,16 @@ wss.on('connection', async (ws) => {
   ws.on('close', unsubscribeWorkspaceSwitched);
 
   // Set up a default panel so ThreadManager exists for wire spawning.
-  // Don't send the thread list yet — wait for the client's set_panel message
-  // to avoid cross-contamination (e.g., issues-viewer seeing code-viewer threads).
-  // Only set up threads if the default view has chat (SPEC-24c: storage is
-  // unified at ai/views/chat/threads/<user>/, no panelPath needed).
+  // Don't send the thread list yet — wait for the client's set_panel message.
+  // RCC-0095: chat is a workspace-level feature — thread setup does not
+  // depend on any view's config or folders (storage is unified at
+  // ai/views/chat/threads/<user>/).
   if (projectRoot) {
-    const defaultChatConfig = views.resolveChatConfig(projectRoot, 'file-viewer');
-    if (defaultChatConfig) {
-      ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
-        projectRoot,
-        viewName: 'file-viewer',
-        workspaceId: activeWs ? activeWs.id : null,
-      });
-    }
+    ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
+      projectRoot,
+      viewName: 'file-viewer',
+      workspaceId: activeWs ? activeWs.id : null,
+    });
   }
 
   // ==========================================================================
