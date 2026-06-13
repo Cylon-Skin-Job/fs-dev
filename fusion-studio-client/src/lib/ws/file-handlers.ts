@@ -7,9 +7,43 @@
 
 import { usePanelStore } from '../../state/panelStore';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
-import { useFileDataStore } from '../../state/fileDataStore';
+import { useFileDataStore, type FileNode } from '../../state/fileDataStore';
 import { showToast } from '../toast';
 import type { WebSocketMessage } from '../../types';
+
+interface FileChangedMessage extends WebSocketMessage {
+  type: 'file_changed';
+  filePath?: string;
+  panel?: string;
+}
+
+interface FileTreeResponseMessage extends WebSocketMessage {
+  type: 'file_tree_response';
+  panel?: string;
+  path?: string;
+  nodes?: FileNode[];
+}
+
+interface FileContentResponseMessage extends WebSocketMessage {
+  type: 'file_content_response';
+  panel?: string;
+  path?: string;
+  success?: boolean;
+  content?: string;
+}
+
+interface FileSaveResponseMessage extends WebSocketMessage {
+  type: 'file_save_response';
+  panel?: string;
+  path?: string;
+  success?: boolean;
+  error?: string;
+}
+
+interface FileMoveErrorMessage extends WebSocketMessage {
+  type: 'file:move_error';
+  error?: string;
+}
 
 /**
  * Handle file-related WebSocket messages.
@@ -20,8 +54,9 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     case 'file_changed': {
       // Invalidate central cache — triggers re-fetch for affected entries
       const fileData = useFileDataStore.getState();
-      const changedPath = (msg as any).filePath || '';
-      const changedPanel = (msg as any).panel;
+      const m = msg as FileChangedMessage;
+      const changedPath = m.filePath || '';
+      const changedPanel = m.panel;
       if (changedPanel && changedPath) {
         fileData.invalidate(changedPanel, changedPath);
       }
@@ -44,7 +79,7 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
 
     // --- Central file data cache population ---
     case 'file_tree_response': {
-      const m = msg as any;
+      const m = msg as FileTreeResponseMessage;
       if (m.panel && m.path !== undefined) {
         useFileDataStore.getState().handleTreeResponse(m.panel, m.path, m.nodes || []);
       }
@@ -52,7 +87,7 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file_content_response': {
-      const m = msg as any;
+      const m = msg as FileContentResponseMessage;
       if (m.panel && m.path && m.success) {
         useFileDataStore.getState().handleContentResponse(m.panel, m.path, m.content || '');
       }
@@ -60,9 +95,9 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file_save_response': {
-      const m = msg as any;
+      const m = msg as FileSaveResponseMessage;
       if (m.panel && m.path) {
-        useFileDataStore.getState().handleSaveResponse(m.panel, m.path, m.success, m.error);
+        useFileDataStore.getState().handleSaveResponse(m.panel, m.path, Boolean(m.success), m.error);
       }
       return true;
     }
@@ -72,7 +107,7 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
       return true;
 
     case 'file:move_error':
-      showToast(`File move failed: ${(msg as any).error}`);
+      showToast(`File move failed: ${(msg as FileMoveErrorMessage).error}`);
       return true;
 
     default:

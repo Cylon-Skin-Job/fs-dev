@@ -36,10 +36,30 @@ import { rediscoverPanels } from '../panels';
 import { loadRootTree } from '../file-tree';
 import { showModal, onModalAction } from '../modal';
 import { resetSharedStyles, injectWorkspaceStyles } from '../../hooks/useSharedWorkspaceStyles';
-import type { WebSocketMessage } from '../../types';
+import type { ThemeEntry, WebSocketMessage } from '../../types';
+import type { WorkspacePanelState } from '../../state/panelStoreTypes';
+
+type WorkspaceType = 'code' | 'app';
+type CachedWorkspaceState = Partial<WorkspacePanelState> & { _savedAt?: unknown };
+
+interface WorkspaceWireMessage extends WebSocketMessage {
+  workspaceType?: WorkspaceType;
+  themes?: ThemeEntry[];
+  activeThemeId?: string | null;
+  styles?: Record<string, string>;
+  cachedStates?: Record<string, CachedWorkspaceState>;
+  activeRepoPath?: string | null;
+}
+
+function stripCachedStateMetadata(cached: CachedWorkspaceState): Partial<WorkspacePanelState> {
+  const state = { ...cached };
+  delete state._savedAt;
+  return state;
+}
 
 export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
   const store = useWorkspaceStore.getState();
+  const workspaceMsg = msg as WorkspaceWireMessage;
 
   switch (msg.type) {
     case 'workspace:init': {
@@ -47,22 +67,21 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const workspaces = msg.workspaces ?? [];
       store.setWorkspaces(workspaces);
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
-      store.setWorkspaceType((msg as any).workspaceType ?? 'code');
+      store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
       console.log('[workspace-handlers] activeWorkspaceId set to:', msg.activeWorkspaceId);
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
-      usePanelStore.getState().hydrateThemes((msg as any).themes ?? [], (msg as any).activeThemeId ?? null);
+      usePanelStore.getState().hydrateThemes(workspaceMsg.themes ?? [], workspaceMsg.activeThemeId ?? null);
       // INSTANT_THEME_SWITCH: inject pre-loaded CSS synchronously if available
-      if ((msg as any).styles) {
-        injectWorkspaceStyles((msg as any).styles);
+      if (workspaceMsg.styles) {
+        injectWorkspaceStyles(workspaceMsg.styles);
       }
       // WORKSPACE_CACHE_PERSISTENCE: hydrate cached workspace states from server
-      const cachedStates = (msg as any).cachedStates ?? {};
+      const cachedStates = workspaceMsg.cachedStates ?? {};
       for (const [wsId, cached] of Object.entries(cachedStates)) {
         if (typeof cached === 'object' && cached !== null) {
           // Strip internal server metadata before seeding
-          const { _savedAt, ...state } = cached as any;
-          usePanelStore.getState().seedWorkspaceState(wsId, state);
+          usePanelStore.getState().seedWorkspaceState(wsId, stripCachedStateMetadata(cached));
         }
       }
       // If there's an active workspace on init, activate it so the cached
@@ -83,14 +102,14 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       }
       // Preload workspace icon SVGs from Fusion Home so the ribbon
       // renders inline SVGs instead of font glyphs on first paint.
-      const iconNames = workspaces.map((w: any) => w.icon || 'folder').filter(Boolean);
+      const iconNames = workspaces.map((w) => w.icon || 'folder').filter(Boolean);
       if (iconNames.length > 0) {
         preloadIcons(iconNames).catch(() => {});
       }
 
       // Keep Electron protocol handler's workspace root in sync
-      const activeWs = workspaces.find((w: any) => w.id === msg.activeWorkspaceId);
-      const activeRepoPath = (msg as any).activeRepoPath ?? activeWs?.repoPath ?? null;
+      const activeWs = workspaces.find((w) => w.id === msg.activeWorkspaceId);
+      const activeRepoPath = workspaceMsg.activeRepoPath ?? activeWs?.repoPath ?? null;
       window.electronAPI?.setWorkspaceRoot(activeRepoPath);
 
       store.markInit();
@@ -106,7 +125,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const updatedWorkspaces = msg.workspaces ?? [];
       store.setWorkspaces(updatedWorkspaces);
       // Preload any newly added workspace icons
-      const updatedIcons = updatedWorkspaces.map((w: any) => w.icon || 'folder').filter(Boolean);
+      const updatedIcons = updatedWorkspaces.map((w) => w.icon || 'folder').filter(Boolean);
       if (updatedIcons.length > 0) {
         preloadIcons(updatedIcons).catch(() => {});
       }
@@ -117,10 +136,10 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const workspaceId = msg.to ?? null;
       store.setActiveWorkspaceId(workspaceId);
       store.completeWorkspacePreviewSwitch(workspaceId);
-      store.setWorkspaceType((msg as any).workspaceType ?? 'code');
+      store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
 
       // Keep Electron protocol handler's workspace root in sync
-      window.electronAPI?.setWorkspaceRoot((msg as any).repoPath ?? null);
+      window.electronAPI?.setWorkspaceRoot(msg.repoPath ?? null);
 
       // WORKSPACE_ISOLATION_SPEC: swap to cached workspace state (or empty)
       usePanelStore.getState().activateWorkspace(workspaceId);
@@ -147,8 +166,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
 
       // INSTANT_THEME_SWITCH: if the server sent pre-loaded CSS, inject it
       // synchronously instead of triggering 7 async WebSocket fetches.
-      if ((msg as any).styles) {
-        injectWorkspaceStyles((msg as any).styles);
+      if (workspaceMsg.styles) {
+        injectWorkspaceStyles(workspaceMsg.styles);
       } else {
         // Fallback for older servers: invalidate cache so the hook refetches
         resetSharedStyles();
@@ -157,8 +176,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       // Hydrate themes for the new workspace so the theme picker shows the
       // correct workspace's settings instead of stale data from the previous one.
       usePanelStore.getState().hydrateThemes(
-        (msg as any).themes ?? [],
-        (msg as any).activeThemeId ?? null,
+        workspaceMsg.themes ?? [],
+        workspaceMsg.activeThemeId ?? null,
       );
 
       // SECONDARY_CHAT_SPEC §7d: secondary chat is workspace-scoped — blanket close.

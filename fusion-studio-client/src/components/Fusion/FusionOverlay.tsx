@@ -25,6 +25,19 @@ interface FusionOverlayProps {
   onClose: () => void;
 }
 
+interface FusionTabsMessage {
+  tabs?: Tab[];
+}
+
+interface FusionItemsMessage {
+  tab?: string;
+  items?: (ConfigItem | CliItem)[];
+}
+
+type FusionWikiMessage = WikiPage & {
+  error?: string;
+};
+
 // --- Chat messages (placeholder until Fusion's wire is connected) ---
 
 const CHAT_MESSAGES = [
@@ -68,28 +81,31 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
   // Subscribe to fusion: messages
   useEffect(() => {
     const unsubs = [
-      onFusionMessage('fusion:tabs', (msg: any) => {
-        setTabs(msg.tabs || []);
+      onFusionMessage('fusion:tabs', (msg: FusionTabsMessage) => {
+        const nextTabs = msg.tabs || [];
+        setTabs(nextTabs);
         // On first load, activate the first tab
-        if (!initializedRef.current && msg.tabs?.length > 0) {
+        if (!initializedRef.current && nextTabs.length > 0) {
           initializedRef.current = true;
-          const firstTab = msg.tabs[0].id;
+          const firstTab = nextTabs[0].id;
           setActiveTab(firstTab);
           sendFusionMessage({ type: 'fusion:tab-items', tab: firstTab });
           sendFusionMessage({ type: 'fusion:wiki-page', slug: firstTab });
         }
       }),
-      onFusionMessage('fusion:items', (msg: any) => {
-        setItems(msg.items || []);
+      onFusionMessage('fusion:items', (msg: FusionItemsMessage) => {
+        const nextItems = msg.items || [];
+        setItems(nextItems);
         // For CLIs tab, separate installed from registry
         if (msg.tab === 'clis') {
-          const installed = (msg.items || []).filter((i: CliItem) => i.installed);
-          const notInstalled = (msg.items || []).filter((i: CliItem) => !i.installed);
+          const cliItems = nextItems.filter((item): item is CliItem => 'installed' in item);
+          const installed = cliItems.filter((item) => item.installed);
+          const notInstalled = cliItems.filter((item) => !item.installed);
           setItems(installed);
           setRegistryItems(notInstalled);
         }
       }),
-      onFusionMessage('fusion:wiki', (msg: any) => {
+      onFusionMessage('fusion:wiki', (msg: FusionWikiMessage) => {
         if (!msg.error) {
           setWikiPage(msg as WikiPage);
         }
@@ -115,7 +131,7 @@ export function FusionOverlay({ open, onClose }: FusionOverlayProps) {
   const currentTab = tabs.find(t => t.id === activeTab);
 
   // Determine right panel content
-  const selectedItem = items.find((s: any) => (s.key || s.id) === selectedItemId);
+  const selectedItem = items.find((item) => ('key' in item ? item.key : item.id) === selectedItemId);
 
   function switchTab(tabId: string) {
     setActiveTab(tabId);

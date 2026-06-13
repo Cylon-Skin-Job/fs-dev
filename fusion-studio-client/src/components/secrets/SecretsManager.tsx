@@ -12,10 +12,20 @@ interface Props { onClose: () => void; }
 export default function SecretsManager({ onClose }: Props) {
   return (
     <div className="rv-secrets-manager">
-      <div className="rv-secrets-manager-header">Secrets</div>
+      <div className="rv-secrets-manager-header">
+        <span>Secrets</span>
+        <button
+          type="button"
+          className="rv-secrets-manager-close"
+          aria-label="Close secrets manager"
+          onClick={onClose}
+        >
+          <span className="material-symbols-outlined">close</span>
+        </button>
+      </div>
       <div className="rv-secrets-manager-divider" />
       <div className="rv-secrets-manager-body">
-        <ApiKeysPanel onClose={onClose} />
+        <ApiKeysPanel />
       </div>
     </div>
   );

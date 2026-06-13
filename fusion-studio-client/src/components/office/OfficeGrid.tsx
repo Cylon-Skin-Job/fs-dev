@@ -46,7 +46,6 @@ export function OfficeGrid() {
 
   const [currentFolder, setCurrentFolder] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<FileWithContent | null>(null);
-  const [isLoadingFolders, setIsLoadingFolders] = useState(true);
 
   const trees = useFileDataStore((s) => s.trees);
   const requestTree = useFileDataStore((s) => s.requestTree);
@@ -59,11 +58,7 @@ export function OfficeGrid() {
     requestTree(PANEL, ROOT_PATH);
   }, [requestTree]);
 
-  useEffect(() => {
-    if (rootNodes !== undefined) {
-      setIsLoadingFolders(false);
-    }
-  }, [rootNodes]);
+  const isLoadingFolders = rootNodes === undefined;
 
   const folders: FolderInfo[] = useMemo(() => {
     if (!rootNodes) return [];

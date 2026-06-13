@@ -62,7 +62,16 @@ export interface PanelConfig {
   /** True if panel ships an app/index.html iframe entry point */
   hasAppHtml?: boolean;
   /** Raw index.json settings for view-specific configuration */
-  settings?: Record<string, any>;
+  settings?: Record<string, unknown>;
+}
+
+interface PanelIndexConfig extends Record<string, unknown> {
+  id?: string;
+  label?: string;
+  description?: string;
+  type?: string;
+  icon?: string;
+  rank?: number;
 }
 
 interface WorkspaceViewRegistryEntry {
@@ -184,10 +193,10 @@ async function fetchWorkspaceViewRegistry(ws: WebSocket): Promise<WorkspaceViewR
 /**
  * Load a JSON file from a panel, returning null on failure.
  */
-async function fetchPanelJson(ws: WebSocket, panelId: string, filePath: string, panelAlias = '__panels__'): Promise<any | null> {
+async function fetchPanelJson<T = unknown>(ws: WebSocket, panelId: string, filePath: string, panelAlias = '__panels__'): Promise<T | null> {
   try {
     const raw = await fetchPanelFile(ws, panelAlias, `${panelId}/${filePath}`);
-    return JSON.parse(raw);
+    return JSON.parse(raw) as T;
   } catch {
     return null;
   }
@@ -204,13 +213,21 @@ export async function loadPanelConfig(
 ): Promise<PanelConfig | null> {
   try {
     const panelAlias = category === 'app' ? '__apps__' : '__panels__';
-    const json = await fetchPanelJson(ws, panelId, 'index.json', panelAlias) || registryEntry;
+    const registryFallback: PanelIndexConfig | null = registryEntry
+      ? {
+          id: registryEntry.id,
+          label: registryEntry.label,
+          icon: registryEntry.icon,
+          rank: registryEntry.rank,
+        }
+      : null;
+    const json = await fetchPanelJson<PanelIndexConfig>(ws, panelId, 'index.json', panelAlias) || registryFallback;
     if (!json) return null;
 
     // Load content.json — declares display type and chat config
-    const contentConfig: ContentConfig | null = await fetchPanelJson(ws, panelId, 'content.json', panelAlias);
+    const contentConfig: ContentConfig | null = await fetchPanelJson<ContentConfig>(ws, panelId, 'content.json', panelAlias);
 
-    const layoutConfig: LayoutConfig | null = await fetchPanelJson(ws, panelId, 'settings/layout.json', panelAlias);
+    const layoutConfig: LayoutConfig | null = await fetchPanelJson<LayoutConfig>(ws, panelId, 'settings/layout.json', panelAlias);
 
     // Chat is determined by content.json, not by probing the filesystem
     const chatConfig = contentConfig?.chat || null;

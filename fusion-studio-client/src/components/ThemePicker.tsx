@@ -75,6 +75,30 @@ export default function ThemePicker({ onClose }: Props) {
 
   const [hexInput, setHexInput] = useState(activeTheme?.accent ?? '#00d4ff');
 
+  // Auto-save: 250ms debounce after the last slider/accent change.
+  const initialMountRef = useRef(true);
+  const pendingRef = useRef<{
+    accent: string; luminance: number; panelContrast: number;
+    bgTint: number; contentLuminance: number; contentContrast: number; contentTint: number; borderLuminance: number; borderTint: number; chromeLuminance: number; chromeTint: number; chatBubbleChrome: boolean; accentLuminance: number; accentTint: number; chatBorder: boolean; themeCode: boolean; mode: 'light' | 'dark';
+  } | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function flushPending() {
+    if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
+    const p = pendingRef.current;
+    if (!p) return;
+    pendingRef.current = null;
+    saveTheme({
+      id: ACTIVE_USER_THEME_ID,
+      label: 'Current',
+      accent: p.accent, luminance: p.luminance, panelContrast: p.panelContrast,
+      bgTint: p.bgTint, contentLuminance: p.contentLuminance, contentContrast: p.contentContrast, contentTint: p.contentTint, borderLuminance: p.borderLuminance, borderTint: p.borderTint, chromeLuminance: p.chromeLuminance, chromeTint: p.chromeTint, chatBubbleChrome: p.chatBubbleChrome, accentLuminance: p.accentLuminance, accentTint: p.accentTint, themeCode: p.themeCode, mode: p.mode,
+      tints: { borders: { chat: p.chatBorder } },
+      builtin: false, active: false,
+    });
+    activateTheme(ACTIVE_USER_THEME_ID);
+  }
+
   // Live preview — write derivations to document root on every slider/accent change.
   useEffect(() => {
     applyLivePreview(accent, luminance, panelContrast, bgTint, contentLuminance, contentContrast, contentTint, borderLuminance, borderTint, chromeLuminance, chromeTint, chatBubbleChrome, accentLuminance, accentTint, chatBorder, themeCode);
@@ -101,30 +125,6 @@ export default function ThemePicker({ onClose }: Props) {
     const v = e.target.value;
     setAccent(v);
     setHexInput(v);
-  }
-
-  // Auto-save: 250ms debounce after the last slider/accent change.
-  const initialMountRef = useRef(true);
-  const pendingRef = useRef<{
-    accent: string; luminance: number; panelContrast: number;
-    bgTint: number; contentLuminance: number; contentContrast: number; contentTint: number; borderLuminance: number; borderTint: number; chromeLuminance: number; chromeTint: number; chatBubbleChrome: boolean; accentLuminance: number; accentTint: number; chatBorder: boolean; themeCode: boolean; mode: 'light' | 'dark';
-  } | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  function flushPending() {
-    if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
-    const p = pendingRef.current;
-    if (!p) return;
-    pendingRef.current = null;
-    saveTheme({
-      id: ACTIVE_USER_THEME_ID,
-      label: 'Current',
-      accent: p.accent, luminance: p.luminance, panelContrast: p.panelContrast,
-      bgTint: p.bgTint, contentLuminance: p.contentLuminance, contentContrast: p.contentContrast, contentTint: p.contentTint, borderLuminance: p.borderLuminance, borderTint: p.borderTint, chromeLuminance: p.chromeLuminance, chromeTint: p.chromeTint, chatBubbleChrome: p.chatBubbleChrome, accentLuminance: p.accentLuminance, accentTint: p.accentTint, themeCode: p.themeCode, mode: p.mode,
-      tints: { borders: { chat: p.chatBorder } },
-      builtin: false, active: false,
-    });
-    activateTheme(ACTIVE_USER_THEME_ID);
   }
 
   useEffect(() => {

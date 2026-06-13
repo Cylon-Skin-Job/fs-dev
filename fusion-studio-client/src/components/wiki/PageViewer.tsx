@@ -79,6 +79,8 @@ export function PageViewer() {
 
   const title = selectedNode?.label || 'Wiki';
   const relativePath = viewedPagePath;
+  const parsedPage = useMemo(() => parseWikiPage(selectedContent), [selectedContent]);
+  const rendered = useMemo(() => markdownToHtml(parsedPage.body), [parsedPage.body]);
 
   // Intercept wiki-internal links
   const handleContentClick = useCallback((e: React.MouseEvent) => {
@@ -104,9 +106,6 @@ export function PageViewer() {
       </div>
     );
   }
-
-  const parsedPage = useMemo(() => parseWikiPage(selectedContent), [selectedContent]);
-  const rendered = markdownToHtml(parsedPage.body);
 
   return (
     <div className="rv-wiki-page-viewer" onClick={handleContentClick}>

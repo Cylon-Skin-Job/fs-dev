@@ -65,7 +65,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
     return () => {
       cancelled = true;
     };
-  }, [screenshots]);
+  }, [screenshots, imageUrls]);
 
   const handleOpen = useCallback(() => {
     if (screenshots.length === 0) {

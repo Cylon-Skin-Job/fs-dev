@@ -20,7 +20,7 @@ export function createLineBreakParser(): ChunkParser {
   let scanCursor = 0;
 
   return {
-    feed(content: string, _prevLength: number): ParsedChunk[] {
+    feed(content: string): ParsedChunk[] {
       const chunks: ParsedChunk[] = [];
 
       // Scan from where we left off for new line breaks

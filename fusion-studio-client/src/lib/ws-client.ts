@@ -21,7 +21,9 @@ import { handleCalendarMessage } from './ws/calendar-handlers';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
-import type { WebSocketMessage } from '../types';
+import type { ModalConfig } from '../lib/modal';
+import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
+import type { ViewUIState, WebSocketMessage } from '../types';
 
 // --- Module state ---
 
@@ -33,8 +35,44 @@ let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 // --- Fusion message listeners ---
 // Components subscribe to specific message types for fusion: responses.
 
-type FusionListener = (msg: any) => void;
+type FusionListener = (msg: unknown) => void;
+type FusionMessagePayload = WebSocketMessage & Record<string, unknown>;
 const fusionListeners: Map<string, Set<FusionListener>> = new Map();
+
+interface StateResultMessage extends WebSocketMessage {
+  type: 'state:result';
+  view?: string;
+  state?: ViewUIState;
+}
+
+interface StateErrorMessage extends WebSocketMessage {
+  type: 'state:error';
+  message?: string;
+}
+
+interface PanelConfigMessage extends WebSocketMessage {
+  type: 'panel_config';
+  projectRoot?: string | null;
+  panelRoots?: Record<string, string>;
+}
+
+interface ApiKeysStateMessage extends WebSocketMessage {
+  type: 'secrets:api-keys:state';
+  items?: ApiKeyIndexEntry[];
+}
+
+interface ApiKeysErrorMessage extends WebSocketMessage {
+  type: 'secrets:api-keys:error';
+  code?: ApiKeysErrorCode;
+  message?: string;
+}
+
+function isWebSocketMessage(value: unknown): value is WebSocketMessage {
+  return typeof value === 'object'
+    && value !== null
+    && 'type' in value
+    && typeof value.type === 'string';
+}
 
 export function sendFusionMessage(msg: Record<string, unknown>) {
   if (socket && socket.readyState === WebSocket.OPEN) {
@@ -42,13 +80,14 @@ export function sendFusionMessage(msg: Record<string, unknown>) {
   }
 }
 
-export function onFusionMessage(type: string, listener: FusionListener): () => void {
+export function onFusionMessage<T = FusionMessagePayload>(type: string, listener: (msg: T) => void): () => void {
   if (!fusionListeners.has(type)) fusionListeners.set(type, new Set());
-  fusionListeners.get(type)!.add(listener);
-  return () => { fusionListeners.get(type)?.delete(listener); };
+  const wrapped: FusionListener = (msg) => listener(msg as T);
+  fusionListeners.get(type)!.add(wrapped);
+  return () => { fusionListeners.get(type)?.delete(wrapped); };
 }
 
-function emitFusion(type: string, msg: any) {
+function emitFusion(type: string, msg: WebSocketMessage) {
   const listeners = fusionListeners.get(type);
   if (listeners) {
     for (const fn of listeners) fn(msg);
@@ -98,7 +137,11 @@ export function connectWs() {
 
   ws.onmessage = (event) => {
     try {
-      const msg: WebSocketMessage = JSON.parse(event.data);
+      const parsed: unknown = JSON.parse(event.data);
+      if (!isWebSocketMessage(parsed)) {
+        throw new Error('WebSocket message missing type');
+      }
+      const msg = parsed;
       console.log('[WS] Message received:', msg.type, msg);
       handleMessage(msg);
     } catch (err) {
@@ -146,8 +189,10 @@ function handleMessage(msg: WebSocketMessage) {
   // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {
     const store = usePanelStore.getState();
-    const view = (msg as any).view;
-    const incoming = (msg as any).state;
+    const stateMsg = msg as StateResultMessage;
+    const view = stateMsg.view;
+    const incoming = stateMsg.state;
+    if (!view || !incoming) return;
     store.setViewState(view, incoming);
     // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
     // live slot when loading the active view. Guarded equality check in
@@ -162,7 +207,8 @@ function handleMessage(msg: WebSocketMessage) {
     return;
   }
   if (msg.type === 'state:error') {
-    console.error('[state] error:', (msg as any).message);
+    const stateMsg = msg as StateErrorMessage;
+    console.error('[state] error:', stateMsg.message);
     return;
   }
 
@@ -174,17 +220,19 @@ function handleMessage(msg: WebSocketMessage) {
       break;
 
     case 'modal:show':
-      showModal(msg as unknown as import('../lib/modal').ModalConfig);
+      showModal(msg as unknown as ModalConfig);
       break;
 
-    case 'panel_config':
-      if ((msg as any).projectRoot) {
-        store.setProjectRoot((msg as any).projectRoot);
+    case 'panel_config': {
+      const panelMsg = msg as PanelConfigMessage;
+      if (panelMsg.projectRoot) {
+        store.setProjectRoot(panelMsg.projectRoot);
       }
-      if ((msg as any).panelRoots) {
-        store.setPanelRoots((msg as any).panelRoots);
+      if (panelMsg.panelRoots) {
+        store.setPanelRoots(panelMsg.panelRoots);
       }
       break;
+    }
 
     case 'panel_changed':
       // CLI_CONFIG_SPEC §7d: stash per-view overrides for render-time merge.
@@ -219,13 +267,13 @@ function handleMessage(msg: WebSocketMessage) {
       break;
 
     case 'secrets:api-keys:state': {
-      const m = msg as any;
-      useSecretsStore.getState().setApiKeys(m.items);
+      const m = msg as ApiKeysStateMessage;
+      useSecretsStore.getState().setApiKeys(m.items ?? []);
       break;
     }
 
     case 'secrets:api-keys:error': {
-      const m = msg as any;
+      const m = msg as ApiKeysErrorMessage;
       useSecretsStore.getState().setApiKeysError({
         code: m.code ?? 'UNKNOWN',
         message: m.message ?? '',

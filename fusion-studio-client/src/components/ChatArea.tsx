@@ -19,17 +19,92 @@ interface ChatAreaProps {
 }
 
 export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride }: ChatAreaProps) {
-  const chat = useChatArea({ panel, threadIdOverride });
+  const {
+    panel: chatPanel,
+    toggleCollapsed,
+    toggleThreadDropdown,
+    cliPickerOpen,
+    threadDropdownOpen,
+    chatHeaderRef,
+    lastUserMsgRef,
+    chatContainerRef,
+    chatInputRef,
+    harnessStatuses,
+    showCliPicker,
+    moreMenuOpen,
+    setMoreMenuOpen,
+    handleInsertText,
+    currentThreadId,
+    currentThread,
+    messages,
+    currentTurn,
+    segments,
+    contextUsage,
+    connectingHarnessId,
+    connectingHarness,
+    identity,
+    resolveCliAccent,
+    noThread,
+    isActive,
+    handleHarnessSelect,
+    handleCreateThread,
+    handleToggleThreads,
+    handleCopyLink,
+    handleRename,
+    handleViewMarkdown,
+    showOrb,
+    isTurnActive,
+    handleSend,
+    handleStop,
+    warmCurrentThread,
+    isAcceptancePending,
+    inputPlaceholder,
+  } = useChatArea({ panel, threadIdOverride });
 
-  const sectionClass = `rv-chat-area rv-chat-area--project${chat.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${chat.noThread ? ' rv-chat-area--no-thread' : ''}`;
+  const sectionClass = `rv-chat-area rv-chat-area--project${isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${noThread ? ' rv-chat-area--no-thread' : ''}`;
   const isSecondary = !!threadIdOverride;
+  const headerProps = {
+    panel: chatPanel,
+    chatHeaderRef,
+    currentThreadId,
+    currentThread,
+    identity,
+    resolveCliAccent,
+    cliPickerOpen,
+    threadDropdownOpen,
+    moreMenuOpen,
+    setMoreMenuOpen,
+    toggleThreadDropdown,
+    harnessStatuses,
+    showCliPicker,
+    handleHarnessSelect,
+    handleCreateThread,
+    handleToggleThreads,
+    handleRename,
+    handleCopyLink,
+    handleViewMarkdown,
+  };
+  const footerProps = {
+    panel: chatPanel,
+    chatInputRef,
+    handleSend,
+    handleStop,
+    noThread,
+    isActive,
+    inputPlaceholder,
+    isTurnActive,
+    isAcceptancePending,
+    handleInsertText,
+    warmCurrentThread,
+    contextUsage,
+  };
 
   if (collapsed) {
     return (
       <section className="rv-chat-area rv-chat-area--project rv-chat-area--collapsed">
         <button
           className="rv-collapse-rail-btn"
-          onClick={() => chat.toggleCollapsed(panel, 'leftChat')}
+          onClick={() => toggleCollapsed(panel, 'leftChat')}
           title="Expand chat"
         >
           <span className="material-symbols-outlined">chevron_right</span>
@@ -42,36 +117,36 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     <section className={sectionClass}>
       {!isSecondary && (
         <ChatAreaHeader
-          {...chat}
+          {...headerProps}
           sidebarCollapsed={sidebarCollapsed}
         />
       )}
       <div className="rv-chat-messages">
-        <div className="rv-chat-scroll-viewport" ref={chat.chatContainerRef}>
-          {chat.connectingHarnessId ? (
-            <ConnectingOverlay harnessName={chat.connectingHarness?.name} />
-          ) : chat.messages.length === 0 && !chat.currentTurn && !chat.showOrb ? (
+        <div className="rv-chat-scroll-viewport" ref={chatContainerRef}>
+          {connectingHarnessId ? (
+            <ConnectingOverlay harnessName={connectingHarness?.name} />
+          ) : messages.length === 0 && !currentTurn && !showOrb ? (
             <div className="rv-message rv-message-system">
-              {chat.noThread ? 'No thread selected' : 'Start a conversation'}
+              {noThread ? 'No thread selected' : 'Start a conversation'}
             </div>
           ) : (
             <MessageList
-              threadId={chat.currentThreadId}
-              messages={chat.messages}
-              currentTurn={chat.currentTurn}
-              segments={chat.segments}
-              lastUserMsgRef={chat.lastUserMsgRef}
-              showOrb={chat.showOrb}
+              threadId={currentThreadId}
+              messages={messages}
+              currentTurn={currentTurn}
+              segments={segments}
+              lastUserMsgRef={lastUserMsgRef}
+              showOrb={showOrb}
             />
           )}
 
-          {!chat.noThread && <div className="rv-chat-scroll-sentinel" />}
+          {!noThread && <div className="rv-chat-scroll-sentinel" />}
         </div>
 
-        <TodoDrawer threadId={chat.currentThreadId} />
+        <TodoDrawer threadId={currentThreadId} />
       </div>
 
-      <ChatAreaFooter {...chat} />
+      <ChatAreaFooter {...footerProps} />
     </section>
   );
 }

@@ -50,7 +50,7 @@ export function useFileTreeListener() {
             );
           }
         }
-      } catch (_) {
+      } catch {
         // Not our message or parse error
       }
     }

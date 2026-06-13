@@ -17,6 +17,16 @@ function folderNameFromPath(value: string): string {
 
 export function WorkspaceCreateModal() {
   const isOpen = useWorkspaceStore((s) => s.isCreateModalOpen);
+  if (!isOpen) return null;
+
+  return <WorkspaceCreateModalContent />;
+}
+
+function getDefaultViewIds(manifest: ReturnType<typeof useWorkspaceStore.getState>['createManifest']): string[] {
+  return manifest?.views.filter((view) => view.group === 'default').map((view) => view.id) ?? [];
+}
+
+function WorkspaceCreateModalContent() {
   const manifest = useWorkspaceStore((s) => s.createManifest);
   const createError = useWorkspaceStore((s) => s.createError);
   const isCreating = useWorkspaceStore((s) => s.isCreatingWorkspace);
@@ -27,32 +37,34 @@ export function WorkspaceCreateModal() {
 
   const [projectPath, setProjectPath] = useState('');
   const [label, setLabel] = useState('');
-  const [selectedViewIds, setSelectedViewIds] = useState<string[]>([]);
+  const [selectionState, setSelectionState] = useState(() => ({
+    manifest,
+    selectedViewIds: getDefaultViewIds(manifest),
+  }));
   const [localError, setLocalError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isOpen) return;
     requestCreateManifest();
-    setProjectPath('');
-    setLabel('');
-    setLocalError(null);
-  }, [isOpen, requestCreateManifest]);
+  }, [requestCreateManifest]);
 
-  useEffect(() => {
-    if (!isOpen || !manifest) return;
-    setSelectedViewIds(manifest.views.filter((view) => view.group === 'default').map((view) => view.id));
-  }, [isOpen, manifest]);
-
-  if (!isOpen) return null;
+  let selectedViewIds = selectionState.selectedViewIds;
+  if (selectionState.manifest !== manifest) {
+    selectedViewIds = getDefaultViewIds(manifest);
+    setSelectionState({ manifest, selectedViewIds });
+  }
 
   const toggleView = (viewId: string) => {
     setLocalError(null);
     setCreateError(null);
-    setSelectedViewIds((current) => (
-      current.includes(viewId)
-        ? current.filter((id) => id !== viewId)
-        : [...current, viewId]
-    ));
+    setSelectionState((current) => {
+      const currentIds = current.selectedViewIds;
+      return {
+        ...current,
+        selectedViewIds: currentIds.includes(viewId)
+          ? currentIds.filter((id) => id !== viewId)
+          : [...currentIds, viewId],
+      };
+    });
   };
 
   const onSubmit = () => {

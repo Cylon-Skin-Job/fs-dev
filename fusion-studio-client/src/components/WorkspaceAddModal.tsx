@@ -11,7 +11,7 @@
  */
 
 import { useWorkspaceStore } from '../state/workspaceStore';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FolderPicker } from './FolderPicker';
 import './WorkspaceAddModal.css';
 
@@ -19,21 +19,21 @@ type AddModalStep = 'requirement' | 'picker';
 
 export function WorkspaceAddModal() {
   const isOpen = useWorkspaceStore((s) => s.isAddModalOpen);
+  if (!isOpen) return null;
+
+  return <WorkspaceAddModalContent />;
+}
+
+function WorkspaceAddModalContent() {
+  const isOpen = useWorkspaceStore((s) => s.isAddModalOpen);
   const closeAddModal = useWorkspaceStore((s) => s.closeAddModal);
   const requestAdd = useWorkspaceStore((s) => s.requestAdd);
   const homePath = useWorkspaceStore((s) => s.homePath);
   const [step, setStep] = useState<AddModalStep>('requirement');
 
-  useEffect(() => {
-    if (isOpen) setStep('requirement');
-  }, [isOpen]);
-
   const closeAndReset = () => {
-    setStep('requirement');
     closeAddModal();
   };
-
-  if (!isOpen) return null;
 
   if (step === 'requirement') {
     return (

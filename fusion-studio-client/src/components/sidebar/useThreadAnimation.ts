@@ -83,7 +83,7 @@ export function useThreadAnimation(threads: { threadId: string }[]) {
         topMover.el.style.background = 'rgba(var(--theme-primary-rgb), 0.05)';
       }
 
-      document.body.offsetHeight;
+      void document.body.offsetHeight;
 
       requestAnimationFrame(() => {
         animations.forEach(({ el }) => {

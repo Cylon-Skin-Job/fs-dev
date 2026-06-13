@@ -24,7 +24,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 export const groupedSummaryReveal: RevealController = {
-  async run(contentRef, setDisplayed, cancelRef, completeRef, _options?) {
+  async run(contentRef, setDisplayed, cancelRef, completeRef) {
     // Show whatever we have immediately
     setDisplayed(contentRef.current);
 

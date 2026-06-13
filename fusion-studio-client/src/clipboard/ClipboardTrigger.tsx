@@ -20,7 +20,7 @@ import {
   HoverIconModalEmpty,
 } from '../components/hover-icon-modal';
 import { useClipboardStore } from './clipboard-store';
-import { listPage, useEntry, deleteEntry } from './clipboard-api';
+import { listPage, fetchEntryValue, deleteEntry } from './clipboard-api';
 import type { ClipboardEntry } from './types';
 import './Clipboard.css';
 
@@ -76,10 +76,10 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
       return;
     }
     try {
-      const value = await useEntry(entry.id);
+      const value = await fetchEntryValue(entry.id);
       onInsert(value);
     } catch (err) {
-      console.error('[Clipboard] useEntry failed:', err);
+      console.error('[Clipboard] fetchEntryValue failed:', err);
     }
   };
 

@@ -18,7 +18,7 @@ import { usePanelStore } from '../state/panelStore';
 export interface PanelModule {
   mount(el: HTMLElement, ctx: PanelContext): void;
   unmount(el: HTMLElement, ctx: PanelContext): void;
-  onData?(el: HTMLElement, ctx: PanelContext, msg: any): void;
+  onData?(el: HTMLElement, ctx: PanelContext, msg: unknown): void;
 }
 
 /** Tracks a loaded runtime module instance */
@@ -134,8 +134,8 @@ export async function loadAndMount(
 
   // If module has onData, wire it up as a listener
   if (typeof mod.onData === 'function') {
-    ctx.on('file_content_response', (msg: any) => {
-      if (msg.panel === config.id) {
+    ctx.on('file_content_response', (msg: unknown) => {
+      if (typeof msg === 'object' && msg !== null && 'panel' in msg && msg.panel === config.id) {
         try {
           mod.onData!(containerEl, ctx, msg);
         } catch (err) {

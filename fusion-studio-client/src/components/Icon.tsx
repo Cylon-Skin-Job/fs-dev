@@ -24,21 +24,27 @@ interface IconProps {
 }
 
 export function Icon({ name, className = '', style, filled = false, symbolStyle = 'outlined' }: IconProps) {
-  const [svg, setSvg] = useState<string | null>(() => getCachedIcon(name, symbolStyle, filled));
+  const iconKey = `${symbolStyle}:${name}:${filled ? 'filled' : 'outlined'}`;
+  const [iconState, setIconState] = useState(() => ({
+    key: iconKey,
+    svg: getCachedIcon(name, symbolStyle, filled),
+  }));
+
+  let svg = iconState.svg;
+  if (iconState.key !== iconKey) {
+    svg = getCachedIcon(name, symbolStyle, filled);
+    setIconState({ key: iconKey, svg });
+  }
 
   useEffect(() => {
-    const cached = getCachedIcon(name, symbolStyle, filled);
-    if (cached) {
-      setSvg(cached);
-      return;
-    }
+    if (getCachedIcon(name, symbolStyle, filled)) return;
 
     let mounted = true;
     loadIcon(name, symbolStyle, filled).then((loaded) => {
-      if (mounted && loaded) setSvg(loaded);
+      if (mounted && loaded) setIconState({ key: iconKey, svg: loaded });
     });
     return () => { mounted = false; };
-  }, [name, symbolStyle, filled]);
+  }, [name, symbolStyle, filled, iconKey]);
 
   if (svg) {
     return (

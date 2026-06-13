@@ -10,7 +10,7 @@
  * - Selection synced with hover
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type SetStateAction } from 'react';
 
 interface UseListNavigationOptions<T> {
   items: T[];
@@ -35,14 +35,52 @@ export function useListNavigation<T>({
   onClose,
   selectFromBottom = true,
 }: UseListNavigationOptions<T>): UseListNavigationReturn<T> {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const getInitialIndex = useCallback(() => (
+    selectFromBottom ? Math.max(items.length - 1, 0) : 0
+  ), [items.length, selectFromBottom]);
 
-  // Select starting item when modal opens
-  useEffect(() => {
-    if (isOpen && items.length > 0) {
-      setSelectedIndex(selectFromBottom ? items.length - 1 : 0);
-    }
-  }, [isOpen, items.length, selectFromBottom]);
+  const [navigationState, setNavigationState] = useState(() => ({
+    selectedIndex: getInitialIndex(),
+    isOpen,
+    itemCount: items.length,
+    selectFromBottom,
+  }));
+
+  const navigationContextChanged =
+    navigationState.isOpen !== isOpen ||
+    navigationState.itemCount !== items.length ||
+    navigationState.selectFromBottom !== selectFromBottom;
+
+  let selectedIndex = navigationState.selectedIndex;
+
+  if (navigationContextChanged) {
+    selectedIndex = isOpen ? getInitialIndex() : 0;
+    setNavigationState({
+      selectedIndex,
+      isOpen,
+      itemCount: items.length,
+      selectFromBottom,
+    });
+  } else if (items.length > 0 && selectedIndex > items.length - 1) {
+    selectedIndex = items.length - 1;
+    setNavigationState((prev) => ({ ...prev, selectedIndex }));
+  } else if (selectedIndex < 0) {
+    selectedIndex = 0;
+    setNavigationState((prev) => ({ ...prev, selectedIndex }));
+  }
+
+  const setSelectedIndex = useCallback((indexOrUpdater: SetStateAction<number>) => {
+    setNavigationState((prev) => {
+      const nextSelectedIndex = typeof indexOrUpdater === 'function'
+        ? indexOrUpdater(prev.selectedIndex)
+        : indexOrUpdater;
+      return { ...prev, selectedIndex: nextSelectedIndex };
+    });
+  }, []);
+
+  const setSelectedIndexForConsumer = useCallback((index: number) => {
+    setSelectedIndex(index);
+  }, [setSelectedIndex]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -69,7 +107,7 @@ export function useListNavigation<T>({
 
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
-  }, [isOpen, items, selectedIndex, onSelect, onClose]);
+  }, [isOpen, items, selectedIndex, onSelect, onClose, setSelectedIndex]);
 
   const handleItemClick = useCallback((item: T) => {
     onSelect(item);
@@ -78,11 +116,11 @@ export function useListNavigation<T>({
 
   const handleItemHover = useCallback((index: number) => {
     setSelectedIndex(index);
-  }, []);
+  }, [setSelectedIndex]);
 
   return {
     selectedIndex,
-    setSelectedIndex,
+    setSelectedIndex: setSelectedIndexForConsumer,
     handleItemClick,
     handleItemHover,
   };

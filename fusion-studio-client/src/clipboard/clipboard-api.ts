@@ -4,7 +4,7 @@
  *
  * Post-keychain-redesign: list/append/touch/state broadcasts carry metadata
  * only. The full value is fetched per-click via `clipboard:use`, which is
- * also the hook for the under-chat icon → click → insert into chat input
+ * also the path for the under-chat icon → click → insert into chat input
  * flow. The value is sent only to the requesting socket; broadcasts and
  * server-live.log never see it.
  */
@@ -49,10 +49,23 @@ export function unsubscribeClipboardBroadcasts(): void {
 
 // ── WS request helpers ───────────────────────────────────────
 
-function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 5000): Promise<T> {
+function request<T extends { error?: string }>(
+  type: string,
+  payload: Record<string, unknown>,
+  options: {
+    timeoutMs?: number;
+    matches?: (msg: T) => boolean;
+  } = {},
+): Promise<T> {
+  const timeoutMs = options.timeoutMs ?? 5000;
+  const matches = options.matches ?? (() => true);
+
   return new Promise((resolve, reject) => {
-    const unsubscribe = onFusionMessage(type, (msg: T & { error?: string }) => {
+    const unsubscribe = onFusionMessage(type, (msg: T) => {
+      if (!matches(msg)) return;
+
       unsubscribe();
+      clearTimeout(timeout);
       if (msg.error) {
         reject(new Error(msg.error));
       } else {
@@ -60,7 +73,7 @@ function request<T>(type: string, payload: Record<string, unknown>, timeoutMs = 
       }
     });
     sendFusionMessage({ type, ...payload });
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       unsubscribe();
       reject(new Error(`Timeout waiting for ${type}`));
     }, timeoutMs);
@@ -78,8 +91,10 @@ export async function listPage(offset = 0, limit = 50): Promise<ClipboardListRes
   return request<ClipboardListResponse>('clipboard:list', { offset, limit });
 }
 
-export async function useEntry(id: number): Promise<string> {
-  const msg = await request<ClipboardUseResponse>('clipboard:use', { id });
+export async function fetchEntryValue(id: number): Promise<string> {
+  const msg = await request<ClipboardUseResponse>('clipboard:use', { id }, {
+    matches: response => response.id === id,
+  });
   return msg.value;
 }
 
@@ -116,11 +131,11 @@ export async function writeAndRecord(text: string, source = 'user'): Promise<Cli
 /**
  * Fetch the value for an entry and write it to the system clipboard. Used
  * for system-clipboard paste-back paths (distinct from the chat-input
- * insertion path, which calls `useEntry` directly).
+ * insertion path, which calls `fetchEntryValue` directly).
  */
 export async function copyFromHistory(entry: ClipboardEntry): Promise<boolean> {
   try {
-    const value = await useEntry(entry.id);
+    const value = await fetchEntryValue(entry.id);
     await navigator.clipboard.writeText(value);
     showToast('Copied to clipboard');
     return true;

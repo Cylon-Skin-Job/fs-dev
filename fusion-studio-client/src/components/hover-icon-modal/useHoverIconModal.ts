@@ -6,7 +6,7 @@
  * No JSX. No CSS. Pure hook logic.
  */
 
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, useId } from 'react';
 
 // Timing constants (ms)
 const HOVER_DELAY = 200;
@@ -67,7 +67,8 @@ export function useHoverIconModal(options: UseHoverIconModalOptions = {}): UseHo
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isInTrigger = useRef(false);
   const isInPopover = useRef(false);
-  const instanceId = useRef(options.id || Math.random().toString(36).slice(2, 9));
+  const generatedId = useId();
+  const instanceId = useRef(options.id || generatedId);
   const triggerMode = options.triggerMode ?? 'hover';
   const stayOpenOnLeave = options.stayOpenOnLeave ?? false;
 

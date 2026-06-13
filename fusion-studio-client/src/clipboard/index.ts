@@ -9,7 +9,7 @@ export { useClipboardStore } from './clipboard-store';
 export {
   appendEntry,
   listPage,
-  useEntry,
+  fetchEntryValue,
   touchEntry,
   deleteEntry,
   clearHistory,

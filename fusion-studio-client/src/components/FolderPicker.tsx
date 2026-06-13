@@ -31,6 +31,18 @@ interface FolderPickerProps {
   initialPath?: string;
 }
 
+let nextSocketId = 1;
+const socketIds = new WeakMap<WebSocket, number>();
+
+function getSocketId(ws: WebSocket): number {
+  const existing = socketIds.get(ws);
+  if (existing) return existing;
+  const id = nextSocketId;
+  nextSocketId += 1;
+  socketIds.set(ws, id);
+  return id;
+}
+
 // ── Browse helper ──────────────────────────────────────────────────────
 
 function browsePath(ws: WebSocket, dirPath: string): Promise<BrowseFolder[]> {
@@ -150,45 +162,69 @@ function FolderRow({
 
 export function FolderPicker({ open, onSelect, onCancel, initialPath = '/' }: FolderPickerProps) {
   const ws = usePanelStore((s) => s.ws);
+  if (!open || !ws) return null;
+
+  return (
+    <FolderPickerDialog
+      key={`${initialPath}:${getSocketId(ws)}`}
+      ws={ws}
+      onSelect={onSelect}
+      onCancel={onCancel}
+      initialPath={initialPath}
+    />
+  );
+}
+
+interface FolderPickerDialogProps extends Omit<FolderPickerProps, 'open'> {
+  ws: WebSocket;
+}
+
+function FolderPickerDialog({
+  ws,
+  onSelect,
+  onCancel,
+  initialPath = '/',
+}: FolderPickerDialogProps) {
   const [rootFolders, setRootFolders] = useState<BrowseFolder[]>([]);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [childrenCache, setChildrenCache] = useState<Map<string, BrowseFolder[]>>(new Map());
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(ws.readyState === WebSocket.OPEN);
   const [error, setError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Reset and load initial path when opening
+  // Load initial path when opening. The wrapper remounts this dialog to reset local state.
   useEffect(() => {
-    if (!open || !ws || ws.readyState !== WebSocket.OPEN) return;
-    setExpanded(new Set());
-    setChildrenCache(new Map());
-    setSelectedPath(null);
-    setError(null);
-    setLoading(true);
+    if (ws.readyState !== WebSocket.OPEN) return;
+    let cancelled = false;
 
     browsePath(ws, initialPath)
       .then((folders) => {
+        if (cancelled) return;
         setRootFolders(folders);
         setLoading(false);
       })
       .catch((err) => {
+        if (cancelled) return;
         setError(err.message);
         setRootFolders([]);
         setLoading(false);
       });
-  }, [open, ws, initialPath]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [ws, initialPath]);
 
   // Escape / Enter
   useEffect(() => {
-    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onCancel();
       if (e.key === 'Enter' && selectedPath) onSelect(selectedPath);
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [open, onCancel, onSelect, selectedPath]);
+  }, [onCancel, onSelect, selectedPath]);
 
   const handleToggle = useCallback(async (folder: BrowseFolder) => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
@@ -227,8 +263,6 @@ export function FolderPicker({ open, onSelect, onCancel, initialPath = '/' }: Fo
         }
         return acc;
       }, []);
-
-  if (!open || !ws) return null;
 
   return (
     <div className="rv-fp-backdrop" onClick={onCancel}>

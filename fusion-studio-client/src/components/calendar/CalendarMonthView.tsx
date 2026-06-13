@@ -86,11 +86,6 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
     }
   };
 
-  const handleEventClick = (e: React.MouseEvent, event: CalendarEvent) => {
-    e.stopPropagation();
-    onEventClick(event);
-  };
-
   return (
     <div className="rv-calendar-month-view" ref={scrollRef} onScroll={handleScroll}>
       <div className="rv-calendar-weekday-headers">

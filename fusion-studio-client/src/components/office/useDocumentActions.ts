@@ -24,10 +24,8 @@ function getErrorMessage(error: unknown): string {
 interface UseDocumentActionsOptions {
   file: FileWithContent;
   isDirty: boolean;
-  isSaving: boolean;
   docSettings: DocumentSettings;
   crepeRef: React.RefObject<Crepe | null>;
-  checkpointDueRef: React.MutableRefObject<boolean>;
   getSerializedMarkdown: () => Promise<string>;
   saveFile: (panel: string, path: string, content: string, reason: SaveReason, milestone?: string) => void;
   setDirty: (panel: string, path: string, dirty: boolean) => void;
@@ -37,10 +35,8 @@ interface UseDocumentActionsOptions {
 export function useDocumentActions({
   file,
   isDirty,
-  isSaving: _isSaving,
   docSettings,
   crepeRef,
-  checkpointDueRef: _checkpointDueRef,
   getSerializedMarkdown,
   saveFile,
   setDirty,

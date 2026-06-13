@@ -8,7 +8,7 @@
  *       Auto-save (500ms debounce), manual save (Ctrl+S), dirty tracking.
  */
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo, type SetStateAction } from 'react';
 import { editorViewCtx, serializerCtx } from '@milkdown/kit/core';
 import { useFileDataStore } from '../../state/fileDataStore';
 import type { FileWithContent, SaveReason } from '../../state/fileDataStore';
@@ -20,7 +20,6 @@ import './OfficeDocumentPage.css';
 import {
   parseDocumentSettings,
   serializeDocumentSettings,
-  DEFAULT_SETTINGS,
   type DocumentSettings,
   getFontCss,
 } from '../../lib/front-matter';
@@ -46,7 +45,6 @@ interface OfficeDocumentPageProps {
 
 export function OfficeDocumentPage({
   file,
-  folder: _folder,
   folderName,
   onBack,
   onOpenFile,
@@ -56,7 +54,6 @@ export function OfficeDocumentPage({
   const [zoom, setZoom] = useState(1);
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const [sidePanel, setSidePanel] = useState<'none' | 'versions' | 'files'>('none');
-  const [docSettings, setDocSettings] = useState<DocumentSettings>(DEFAULT_SETTINGS);
   const [marginsMenuOpen, setMarginsMenuOpen] = useState(false);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const exportMenuRef = useRef<HTMLDivElement>(null);
@@ -79,11 +76,32 @@ export function OfficeDocumentPage({
   const workspaceId = usePanelStore((s) => s.activeWorkspaceId);
 
   const parsed = useMemo(() => parseDocumentSettings(file.content), [file.content]);
+  const [documentState, setDocumentState] = useState(() => ({
+    content: file.content,
+    settings: parsed.settings,
+  }));
+
+  let docSettings = documentState.settings;
+  if (documentState.content !== file.content) {
+    docSettings = parsed.settings;
+    setDocumentState({
+      content: file.content,
+      settings: parsed.settings,
+    });
+  }
+
+  const setDocSettings = useCallback((settingsAction: SetStateAction<DocumentSettings>) => {
+    setDocumentState((prev) => {
+      const settings = typeof settingsAction === 'function'
+        ? settingsAction(prev.settings)
+        : settingsAction;
+      return { ...prev, settings };
+    });
+  }, []);
 
   useEffect(() => {
-    setDocSettings(parsed.settings);
     bodyRef.current = parsed.body;
-  }, [parsed]);
+  }, [parsed.body]);
 
   const { crepeRef } = useCrepeEditor({
     containerRef,
@@ -155,10 +173,8 @@ export function OfficeDocumentPage({
   const { exportingFormat, handleExport, handlePrint, handleSendEmail } = useDocumentActions({
     file,
     isDirty,
-    isSaving,
     docSettings,
     crepeRef,
-    checkpointDueRef,
     getSerializedMarkdown,
     saveFile,
     setDirty,

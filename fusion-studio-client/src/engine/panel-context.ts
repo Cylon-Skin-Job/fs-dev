@@ -23,18 +23,18 @@ export interface PanelContext {
   /** Send an event to the WebSocket server */
   emit(type: string, data?: Record<string, unknown>): void;
   /** Listen for WebSocket messages by type. Returns unsubscribe function. */
-  on(type: string, handler: (msg: any) => void): () => void;
+  on(type: string, handler: (msg: unknown) => void): () => void;
   /** Remove a specific listener */
-  off(type: string, handler: (msg: any) => void): void;
+  off(type: string, handler: (msg: unknown) => void): void;
 
   /** Request a file from this panel. Returns content string. */
   request(path: string): Promise<string>;
 
   /** Panel-scoped state */
   state: {
-    get(key: string): any;
-    set(key: string, value: any): void;
-    subscribe(key: string, fn: (value: any) => void): () => void;
+    get(key: string): unknown;
+    set(key: string, value: unknown): void;
+    subscribe(key: string, fn: (value: unknown) => void): () => void;
   };
 
   /** Inject a scoped <style> tag. Deduped by id. */
@@ -46,10 +46,10 @@ export interface PanelContext {
 // --- Internal state per panel ---
 
 interface ContextState {
-  listeners: Map<string, Set<(msg: any) => void>>;
+  listeners: Map<string, Set<(msg: unknown) => void>>;
   wsHandler: ((event: MessageEvent) => void) | null;
-  stateData: Map<string, any>;
-  stateSubscribers: Map<string, Set<(value: any) => void>>;
+  stateData: Map<string, unknown>;
+  stateSubscribers: Map<string, Set<(value: unknown) => void>>;
   injectedStyleIds: Set<string>;
 }
 
@@ -70,6 +70,13 @@ function getContextState(panelId: string): ContextState {
   return state;
 }
 
+function isMessageWithType(value: unknown): value is { type: string } {
+  return typeof value === 'object'
+    && value !== null
+    && 'type' in value
+    && typeof value.type === 'string';
+}
+
 // --- Factory ---
 
 /**
@@ -84,8 +91,9 @@ export function createContext(config: PanelConfig): PanelContext {
   if (!ctxState.wsHandler) {
     ctxState.wsHandler = (event: MessageEvent) => {
       try {
-        const msg = JSON.parse(event.data);
-        const type = msg.type as string;
+        const msg: unknown = JSON.parse(event.data);
+        if (!isMessageWithType(msg)) return;
+        const type = msg.type;
         // Route to type-specific listeners
         const handlers = ctxState.listeners.get(type);
         if (handlers) {
@@ -118,7 +126,7 @@ export function createContext(config: PanelConfig): PanelContext {
       socket.send(JSON.stringify({ type, panel: config.id, ...data }));
     },
 
-    on(type: string, handler: (msg: any) => void): () => void {
+    on(type: string, handler: (msg: unknown) => void): () => void {
       if (!ctxState.listeners.has(type)) {
         ctxState.listeners.set(type, new Set());
       }
@@ -126,7 +134,7 @@ export function createContext(config: PanelConfig): PanelContext {
       return () => ctx.off(type, handler);
     },
 
-    off(type: string, handler: (msg: any) => void) {
+    off(type: string, handler: (msg: unknown) => void) {
       ctxState.listeners.get(type)?.delete(handler);
     },
 
@@ -139,11 +147,11 @@ export function createContext(config: PanelConfig): PanelContext {
     },
 
     state: {
-      get(key: string): any {
+      get(key: string): unknown {
         return ctxState.stateData.get(key);
       },
 
-      set(key: string, value: any) {
+      set(key: string, value: unknown) {
         ctxState.stateData.set(key, value);
         const subscribers = ctxState.stateSubscribers.get(key);
         if (subscribers) {
@@ -153,7 +161,7 @@ export function createContext(config: PanelConfig): PanelContext {
         }
       },
 
-      subscribe(key: string, fn: (value: any) => void): () => void {
+      subscribe(key: string, fn: (value: unknown) => void): () => void {
         if (!ctxState.stateSubscribers.has(key)) {
           ctxState.stateSubscribers.set(key, new Set());
         }

@@ -21,13 +21,23 @@ interface OrbProps {
   onDone: () => void;
 }
 
+interface TimingProbe {
+  sendAt?: number;
+  orbStartAt?: number;
+  orbEndAt?: number;
+}
+
+interface TimingWindow extends Window {
+  __TIMING?: TimingProbe;
+}
+
 export function Orb({ disposing, onDone }: OrbProps) {
   const disposeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasStartedDispose = useRef(false);
 
   // Timing instrumentation
   useEffect(() => {
-    const t = (window as any).__TIMING;
+    const t = (window as TimingWindow).__TIMING;
     if (t) {
       t.orbStartAt = performance.now();
       const sinceS = t.sendAt ? (performance.now() - t.sendAt).toFixed(1) : '?';
@@ -44,7 +54,7 @@ export function Orb({ disposing, onDone }: OrbProps) {
     if (!disposing || hasStartedDispose.current) return;
     hasStartedDispose.current = true;
 
-    const t = (window as any).__TIMING;
+    const t = (window as TimingWindow).__TIMING;
     if (t) {
       const now = performance.now();
       const sinceSend = t.sendAt ? (now - t.sendAt).toFixed(1) : '?';
@@ -52,7 +62,7 @@ export function Orb({ disposing, onDone }: OrbProps) {
     }
 
     disposeTimerRef.current = setTimeout(() => {
-      const t = (window as any).__TIMING;
+      const t = (window as TimingWindow).__TIMING;
       if (t) {
         t.orbEndAt = performance.now();
         const sinceSend = t.sendAt ? (performance.now() - t.sendAt).toFixed(1) : '?';

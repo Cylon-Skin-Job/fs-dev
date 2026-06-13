@@ -10,7 +10,9 @@ interface EmojiTriggerProps {
   onInsert?: (text: string) => void;
 }
 
-export function EmojiTrigger({ onInsert: _onInsert }: EmojiTriggerProps) {
+export function EmojiTrigger(props: EmojiTriggerProps) {
+  void props.onInsert;
+
   const keepComposerFocused = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }, []);

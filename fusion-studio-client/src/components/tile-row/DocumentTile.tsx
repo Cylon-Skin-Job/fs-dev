@@ -12,6 +12,7 @@
 import { useMemo } from 'react';
 import { CodeView } from '../CodeView';
 import { getPanelFileUrl } from '../../lib/panels';
+import { IMAGE_EXTENSIONS } from './documentTileUtils';
 
 interface DocumentTileProps {
   name: string;
@@ -38,13 +39,6 @@ const ICON_MAP: Record<string, string> = {
   svg: 'image',
   pdf: 'picture_as_pdf',
 };
-
-const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp']);
-
-export function isImageFile(name: string): boolean {
-  const ext = name.split('.').pop()?.toLowerCase() || '';
-  return IMAGE_EXTENSIONS.has(ext);
-}
 
 export function DocumentTile({ name, content, extension, panel, folderPath, onClick, active, size = 'default' }: DocumentTileProps) {
   const ext = extension || name.split('.').pop()?.toLowerCase() || '';

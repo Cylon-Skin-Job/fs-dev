@@ -307,12 +307,12 @@ export function useAudioCapture({
     if (permissionCheckedRef.current) return;
     permissionCheckedRef.current = true;
     checkExistingPermission();
-  }, []);
+  }, [checkExistingPermission]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => stopRecording(true);
-  }, []);
+  }, [stopRecording]);
 
   // Keyboard shortcut: Enter to stop recording and submit (capture phase)
   useEffect(() => {
@@ -325,7 +325,7 @@ export function useAudioCapture({
     };
     window.addEventListener('keydown', handleKeyDown, true);
     return () => window.removeEventListener('keydown', handleKeyDown, true);
-  }, [recorderState]);
+  }, [recorderState, stopRecording]);
 
   return {
     recorderState,

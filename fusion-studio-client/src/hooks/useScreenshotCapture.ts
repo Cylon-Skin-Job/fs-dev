@@ -85,7 +85,7 @@ async function _doElectronCapture(workspaceId: string) {
       panelId: usePanelStore.getState().currentPanel,
       dataUrl: `data:image/png;base64,${base64}`,
     });
-  } catch (_err) {
+  } catch {
     // Silent fail
   }
 }

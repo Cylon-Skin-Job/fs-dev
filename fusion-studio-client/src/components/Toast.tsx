@@ -10,9 +10,6 @@ import { useState, useEffect } from 'react';
 import { registerToastSetter, unregisterToastSetter } from '../lib/toast';
 import './Toast.css';
 
-// Re-export for existing consumers
-export { showToast } from '../lib/toast';
-
 export function Toast() {
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);

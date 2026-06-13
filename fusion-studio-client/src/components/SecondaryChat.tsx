@@ -53,9 +53,9 @@ function useGenieAnimation(rootRef: React.RefObject<HTMLElement | null>) {
   const justRestored = usePanelStore((s) => s.secondary?.justRestored ?? false);
 
   const [isMinimizing, setIsMinimizing] = useState(false);
-  const [isRestoring, setIsRestoring] = useState(false);
   const [deltas, setDeltas] = useState<{ dx: number; dy: number; sx: number; sy: number } | null>(null);
   const timerRef = useRef<number | null>(null);
+  const isRestoringRef = useRef(false);
 
   // Cleanup any pending timer on unmount.
   useEffect(() => {
@@ -84,7 +84,7 @@ function useGenieAnimation(rootRef: React.RefObject<HTMLElement | null>) {
   }, [rootRef]);
 
   const handleMinimize = useCallback(() => {
-    if (isMinimizing || isRestoring) return;
+    if (isMinimizing || isRestoringRef.current) return;
     const d = computeDeltas();
     if (d) setDeltas(d);
     setIsMinimizing(true);
@@ -95,28 +95,46 @@ function useGenieAnimation(rootRef: React.RefObject<HTMLElement | null>) {
       setDeltas(null);
       timerRef.current = null;
     }, MINIMIZE_ANIMATION_MS);
-  }, [isMinimizing, isRestoring, computeDeltas, minimizeSecondary]);
+  }, [isMinimizing, computeDeltas, minimizeSecondary]);
 
   // Restore: use useLayoutEffect so deltas + class are committed in the
   // SAME paint cycle as the popup's initial mount. Using useEffect or rAF
   // would let the browser paint one frame of the popup at full size before
   // the reverse animation takes hold — a visible flicker.
   useLayoutEffect(() => {
-    if (!justRestored || isRestoring) return;
+    if (!justRestored || isRestoringRef.current) return;
+    const el = rootRef.current;
+    if (!el) return;
+
     const d = computeDeltas();
-    if (d) setDeltas(d);
-    setIsRestoring(true);
+    if (d) {
+      el.style.setProperty('--minimize-dx', `${d.dx}px`);
+      el.style.setProperty('--minimize-dy', `${d.dy}px`);
+      el.style.setProperty('--minimize-scale-x', String(d.sx));
+      el.style.setProperty('--minimize-scale-y', String(d.sy));
+    }
+    const baseClass = el.classList.contains('rv-secondary-sticky')
+      ? 'rv-secondary-sticky'
+      : 'rv-secondary-popup';
+    const restoringClass = `${baseClass}--restoring`;
+    el.classList.add(restoringClass);
+    isRestoringRef.current = true;
+
     if (timerRef.current != null) window.clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
       clearJustRestored();
-      setIsRestoring(false);
-      setDeltas(null);
+      el.classList.remove(restoringClass);
+      el.style.removeProperty('--minimize-dx');
+      el.style.removeProperty('--minimize-dy');
+      el.style.removeProperty('--minimize-scale-x');
+      el.style.removeProperty('--minimize-scale-y');
+      isRestoringRef.current = false;
       timerRef.current = null;
     }, MINIMIZE_ANIMATION_MS);
-  }, [justRestored, isRestoring, computeDeltas, clearJustRestored]);
+  }, [justRestored, rootRef, computeDeltas, clearJustRestored]);
 
-  const animating = isMinimizing || isRestoring;
-  const modifier = isMinimizing ? '--minimizing' : isRestoring ? '--restoring' : '';
+  const animating = isMinimizing;
+  const modifier = isMinimizing ? '--minimizing' : '';
   const styleVars: CSSProperties & Record<string, string | number> = {};
   if (animating && deltas) {
     styleVars['--minimize-dx'] = `${deltas.dx}px`;

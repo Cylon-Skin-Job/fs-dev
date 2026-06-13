@@ -155,7 +155,8 @@ export const WebBrowser: React.FC<WebBrowserProps> = ({ config }) => {
     try {
       iframe.contentWindow?.location.reload();
     } catch {
-      iframe.src = iframe.src;
+      const currentSrc = iframe.getAttribute('src') || iframe.src;
+      iframe.setAttribute('src', currentSrc);
     }
   }, []);
 

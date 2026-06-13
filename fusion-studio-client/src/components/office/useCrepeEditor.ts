@@ -14,6 +14,7 @@ import {
   wrapInHeadingCommand,
 } from '@milkdown/kit/preset/commonmark';
 import { commandsCtx, editorViewCtx, serializerCtx } from '@milkdown/kit/core';
+import type { Ctx } from '@milkdown/kit/ctx';
 import {
   spanStyleMark,
   convertHtmlSpansToMarks,
@@ -63,14 +64,14 @@ export function useCrepeEditor({
     const materialIcon = (name: string) =>
       `<span class="material-symbols-outlined" style="font-size:18px">${name}</span>`;
 
-    const isHeading = (ctx: any, level: number) => {
+    const isHeading = (ctx: Ctx, level: number) => {
       const view = ctx.get(editorViewCtx);
       const { $from } = view.state.selection;
       const node = $from.parent;
       return node.type === headingSchema.type(ctx) && node.attrs.level === level;
     };
 
-    const toggleHeading = (ctx: any, level: number) => {
+    const toggleHeading = (ctx: Ctx, level: number) => {
       const commands = ctx.get(commandsCtx);
       if (isHeading(ctx, level)) {
         commands.call(wrapInHeadingCommand.key, 0);
@@ -89,22 +90,22 @@ export function useCrepeEditor({
         [Crepe.Feature.Toolbar]: {
           buildToolbar: (builder) => {
             const formatting = builder.getGroup('formatting');
-            formatting.group.items.forEach((item: any) => {
+            formatting.group.items.forEach((item) => {
               if (item.key === 'bold') item.icon = materialIcon('format_bold');
               if (item.key === 'italic') item.icon = materialIcon('format_italic');
               if (item.key === 'strikethrough') item.icon = materialIcon('format_strikethrough');
             });
             formatting.group.items.unshift(
-              { key: 'h1', icon: materialIcon('format_h1'), active: (ctx: any) => isHeading(ctx, 1), onRun: (ctx: any) => toggleHeading(ctx, 1) },
-              { key: 'h2', icon: materialIcon('format_h2'), active: (ctx: any) => isHeading(ctx, 2), onRun: (ctx: any) => toggleHeading(ctx, 2) },
-              { key: 'h3', icon: materialIcon('format_h3'), active: (ctx: any) => isHeading(ctx, 3), onRun: (ctx: any) => toggleHeading(ctx, 3) },
+              { key: 'h1', icon: materialIcon('format_h1'), active: (ctx: Ctx) => isHeading(ctx, 1), onRun: (ctx: Ctx) => toggleHeading(ctx, 1) },
+              { key: 'h2', icon: materialIcon('format_h2'), active: (ctx: Ctx) => isHeading(ctx, 2), onRun: (ctx: Ctx) => toggleHeading(ctx, 2) },
+              { key: 'h3', icon: materialIcon('format_h3'), active: (ctx: Ctx) => isHeading(ctx, 3), onRun: (ctx: Ctx) => toggleHeading(ctx, 3) },
             );
             formatting.group.items.push(
               {
                 key: 'spanStyleDec',
                 icon: '<span data-span-style="dec" class="material-symbols-outlined" style="font-size:18px">remove</span>',
                 active: () => false,
-                onRun: (ctx: any) => {
+                onRun: (ctx: Ctx) => {
                   const view = ctx.get(editorViewCtx);
                   createAdjustSpanStyleCommand(-0.1)(view.state, view.dispatch);
                 },
@@ -113,14 +114,14 @@ export function useCrepeEditor({
                 key: 'spanStyleInc',
                 icon: '<span data-span-style="inc" class="material-symbols-outlined" style="font-size:18px">add</span>',
                 active: () => false,
-                onRun: (ctx: any) => {
+                onRun: (ctx: Ctx) => {
                   const view = ctx.get(editorViewCtx);
                   createAdjustSpanStyleCommand(0.1)(view.state, view.dispatch);
                 },
               },
             );
             const func = builder.getGroup('function');
-            func.group.items.forEach((item: any) => {
+            func.group.items.forEach((item) => {
               if (item.key === 'code') item.icon = materialIcon('code');
               if (item.key === 'link') item.icon = materialIcon('link');
               if (item.key === 'latex') item.icon = materialIcon('functions');

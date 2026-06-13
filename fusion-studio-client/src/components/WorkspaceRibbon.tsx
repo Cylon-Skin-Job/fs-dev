@@ -52,6 +52,10 @@ export function WorkspaceRibbon() {
     : sorted;
   const highlightedId = previewId || activeId;
 
+  if (!isOpen && isAddDropdownOpen) {
+    setIsAddDropdownOpen(false);
+  }
+
   useEffect(() => {
     if (!isAddDropdownOpen) return;
 
@@ -77,12 +81,6 @@ export function WorkspaceRibbon() {
       document.removeEventListener('pointerdown', onPointerDown);
     };
   }, [isAddDropdownOpen]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setIsAddDropdownOpen(false);
-    }
-  }, [isOpen]);
 
   const onItemClick = (w: Workspace) => {
     if (didDragRef.current) {

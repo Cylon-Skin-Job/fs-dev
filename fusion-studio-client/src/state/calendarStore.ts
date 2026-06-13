@@ -27,17 +27,34 @@ function getMonthRange(date: Date): { start: Date; end: Date } {
   return { start, end };
 }
 
-function apiCalToStore(row: any): Calendar {
+interface CalendarApiRow {
+  uuid: string;
+  title: string;
+  color?: string;
+  source?: string;
+}
+
+interface CalendarEventApiRow {
+  uuid: string;
+  title?: string;
+  startDate: number;
+  endDate: number;
+  allDay?: number | boolean;
+  calendarUuid: string;
+  description?: string;
+}
+
+function apiCalToStore(row: CalendarApiRow): Calendar {
   return {
     id: row.uuid,
     name: row.title,
     color: row.color || '#888888',
-    account: row.source,
+    account: row.source || '',
     enabled: true,
   };
 }
 
-function apiEventToStore(row: any): CalendarEvent {
+function apiEventToStore(row: CalendarEventApiRow): CalendarEvent {
   return {
     uid: row.uuid,
     title: row.title || '(no title)',

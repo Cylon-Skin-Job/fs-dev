@@ -25,20 +25,33 @@ export const BookmarkDialog: React.FC<BookmarkDialogProps> = ({
   onSave,
   anchorRef,
 }) => {
+  if (!isOpen) return null;
+
+  return (
+    <BookmarkDialogContent
+      key={title || ''}
+      url={url}
+      title={title}
+      onClose={onClose}
+      onSave={onSave}
+      anchorRef={anchorRef}
+    />
+  );
+};
+
+const BookmarkDialogContent: React.FC<Omit<BookmarkDialogProps, 'isOpen'>> = ({
+  url,
+  title,
+  onClose,
+  onSave,
+  anchorRef,
+}) => {
   const [name, setName] = useState(title || '');
   const [folder, setFolder] = useState(FOLDER_OPTIONS[0]);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (isOpen) {
-      setName(title || '');
-      setFolder(FOLDER_OPTIONS[0]);
-    }
-  }, [isOpen, title]);
-
   // Close on outside click (ignore clicks on the anchor element)
   useEffect(() => {
-    if (!isOpen) return;
     const handleClick = (e: MouseEvent) => {
       const target = e.target as Node;
       if (dialogRef.current && dialogRef.current.contains(target)) return;
@@ -47,9 +60,7 @@ export const BookmarkDialog: React.FC<BookmarkDialogProps> = ({
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, [isOpen, onClose, anchorRef]);
-
-  if (!isOpen) return null;
+  }, [onClose, anchorRef]);
 
   const handleSave = () => {
     onSave(url, name.trim(), folder);

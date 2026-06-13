@@ -10,7 +10,7 @@
  */
 
 import { $mark, $prose } from '@milkdown/kit/utils';
-import type { Node as ProseNode, Schema, MarkType } from '@milkdown/prose/model';
+import type { Node as ProseNode, Schema, MarkType, Mark } from '@milkdown/prose/model';
 import { Fragment } from '@milkdown/prose/model';
 import type { Command, EditorState } from '@milkdown/prose/state';
 import { Plugin, PluginKey } from '@milkdown/prose/state';
@@ -101,7 +101,7 @@ function transformFragmentToMarks(fragment: Fragment, schema: Schema): Fragment 
   return Fragment.from(children);
 }
 
-function applyMarkToNodes(nodes: ProseNode[], mark: any, schema: Schema): ProseNode[] {
+function applyMarkToNodes(nodes: ProseNode[], mark: Mark, schema: Schema): ProseNode[] {
   return nodes.map((node) => {
     if (node.isText) {
       return schema.text(node.text!, [...node.marks, mark]);
@@ -113,7 +113,7 @@ function applyMarkToNodes(nodes: ProseNode[], mark: any, schema: Schema): ProseN
   });
 }
 
-function applyMarkToFragment(fragment: Fragment, mark: any, schema: Schema): Fragment {
+function applyMarkToFragment(fragment: Fragment, mark: Mark, schema: Schema): Fragment {
   const nodes: ProseNode[] = [];
   for (let i = 0; i < fragment.childCount; i++) {
     const child = fragment.child(i);

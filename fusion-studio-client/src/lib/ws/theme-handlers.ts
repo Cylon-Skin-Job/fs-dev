@@ -11,12 +11,23 @@
 import { usePanelStore } from '../../state/panelStore';
 import { reloadThemesLayer } from '../../hooks/useSharedWorkspaceStyles';
 import { showToast } from '../toast';
-import type { WebSocketMessage } from '../../types';
+import type { ThemeEntry, WebSocketMessage } from '../../types';
+
+interface ThemeStateMessage extends WebSocketMessage {
+  type: 'theme:state';
+  themes?: ThemeEntry[];
+  activeId?: string | null;
+}
+
+interface ThemeErrorMessage extends WebSocketMessage {
+  type: 'theme:error';
+  message?: string;
+}
 
 export function handleThemeMessage(msg: WebSocketMessage): boolean {
   switch (msg.type) {
     case 'theme:state': {
-      const m = msg as any;
+      const m = msg as ThemeStateMessage;
       const store = usePanelStore.getState();
       store.hydrateThemes(m.themes ?? [], m.activeId ?? null);
       // Targeted reload of just themes.css — avoids flashing chat/threads
@@ -28,7 +39,7 @@ export function handleThemeMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'theme:error': {
-      const m = msg as any;
+      const m = msg as ThemeErrorMessage;
       showToast(m.message ?? 'Theme error');
       return true;
     }

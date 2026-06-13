@@ -8,7 +8,7 @@
  * See SECRETS_MANAGER_SPEC.md §5c–§5e.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSecretsStore, type ApiKeyIndexEntry } from '../../../state/secretsStore';
 import { setApiKey, deleteApiKey } from './api-keys-api';
 
@@ -22,11 +22,7 @@ const EMPTY_COPY =
 const BACKEND_UNAVAILABLE_COPY =
   "Couldn't reach secrets storage. Try again, or restart Fusion Studio.";
 
-interface Props {
-  onClose: () => void;
-}
-
-export default function ApiKeysPanel({ onClose: _onClose }: Props) {
+export default function ApiKeysPanel() {
   const apiKeys = useSecretsStore(s => s.apiKeys);
   const lastError = useSecretsStore(s => s.lastError);
   const setApiKeysError = useSecretsStore(s => s.setApiKeysError);
@@ -41,28 +37,14 @@ export default function ApiKeysPanel({ onClose: _onClose }: Props) {
 
   const [pendingDeleteName, setPendingDeleteName] = useState<string | null>(null);
   const [duplicatePrompt, setDuplicatePrompt] = useState(false);
-  const [submittedName, setSubmittedName] = useState<string | null>(null);
-  const submittedUpdatedAt = useRef<number | null>(null);
+  const pendingSubmitUnsubscribe = useRef<(() => void) | null>(null);
 
   const nameValid = KEY_PATTERN.test(name);
   const valueValid = value.length >= 8;
   const descriptionTooLong = description.length > MAX_DESCRIPTION_LENGTH;
   const canSubmit = nameValid && valueValid && !descriptionTooLong;
 
-  // After a submit, watch for the server broadcast to land. Once the row
-  // exists with a refreshed updated_at, clear the form. Don't preemptively close.
-  useEffect(() => {
-    if (!submittedName) return;
-    const entry = apiKeys.find(k => k.name === submittedName);
-    if (!entry) return;
-    const baseline = submittedUpdatedAt.current;
-    if (baseline != null && entry.updated_at <= baseline) return;
-    resetForm();
-    setSubmittedName(null);
-    submittedUpdatedAt.current = null;
-  }, [apiKeys, submittedName]);
-
-  function resetForm() {
+  const resetForm = useCallback(() => {
     setName('');
     setValue('');
     setDescription('');
@@ -70,7 +52,14 @@ export default function ApiKeysPanel({ onClose: _onClose }: Props) {
     setValueTouched(false);
     setDuplicatePrompt(false);
     setFormOpen(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      pendingSubmitUnsubscribe.current?.();
+      pendingSubmitUnsubscribe.current = null;
+    };
+  }, []);
 
   function clearBannerOnEdit() {
     if (lastError) setApiKeysError(null);
@@ -87,7 +76,6 @@ export default function ApiKeysPanel({ onClose: _onClose }: Props) {
   }
 
   function sendSet(existingUpdatedAt: number | null) {
-    submittedUpdatedAt.current = existingUpdatedAt;
     const payload: Parameters<typeof setApiKey>[0] = {
       name,
       value,
@@ -97,8 +85,25 @@ export default function ApiKeysPanel({ onClose: _onClose }: Props) {
       const ts = Date.parse(expiresAtStr);
       if (!Number.isNaN(ts)) payload.expires_at = ts;
     }
+
+    pendingSubmitUnsubscribe.current?.();
+    pendingSubmitUnsubscribe.current = useSecretsStore.subscribe((state) => {
+      if (state.lastError) {
+        pendingSubmitUnsubscribe.current?.();
+        pendingSubmitUnsubscribe.current = null;
+        return;
+      }
+
+      const entry = state.apiKeys.find(k => k.name === payload.name);
+      if (!entry) return;
+      if (existingUpdatedAt != null && entry.updated_at <= existingUpdatedAt) return;
+
+      pendingSubmitUnsubscribe.current?.();
+      pendingSubmitUnsubscribe.current = null;
+      resetForm();
+    });
+
     setApiKey(payload);
-    setSubmittedName(name);
     setDuplicatePrompt(false);
   }
 

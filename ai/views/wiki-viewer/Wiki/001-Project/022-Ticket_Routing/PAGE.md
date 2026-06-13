@@ -1,178 +1,148 @@
-# Ticket Routing
-
-Three columns. One mechanism. The assignee determines everything.
-
-## The Three-Column Model
-
-```
-INBOX              OPEN                COMPLETED
-(assigned: human)  (assigned: bot)     (state: closed)
-```
-
-- **Assigned to a human** → INBOX. Human decides what to do.
-- **Assigned to a bot name** → OPEN. Server dispatches to agent. Agent runs.
-- **Closed** → COMPLETED. Done.
-
-No lifecycle labels. No routing tags. No status fields. The column is the assignee.
-
+---
+name: Ticketing System
+description: How the issues board works today and exactly how to create a ticket that displays. The board renders from content/tickets.json; the .md file is detail only. No dispatch, agents, or sync are active.
+metadata:
+  incoming-edges:
+    - Home
+    - Background Agents
+  outgoing-edges:
+    - Run Auditing
+  source-files:
+    - fusion-studio-client/src/components/tickets/TicketBoard.tsx
+    - ai/views/issues-viewer/content/tickets.json
+    - ai/views/issues-viewer/scripts/create-ticket.js
+  connected-skills: []
+  related-trigger-files: []
 ---
 
-## How Tickets Move
+The issues board is a static three-column display today. It reads a single JSON
+file and renders cards. There is no dispatch loop, no agents picking up tickets,
+no cron factories, and no GitLab sync. Those were earlier designs and are not
+wired up. This page documents what actually happens and how to add a ticket that
+shows up.
 
-```
-Ticket created (by you, a friend, a cron job, or another agent)
-  → assigned to you → sits in INBOX
-  → you decide it should run
-  → reassign to bot name (e.g., kimi-wiki)
-  → server sees bot-assigned ticket → dispatches to agent
-  → agent runs, produces a run folder with full audit trail
-  → agent finishes → ticket closed → COMPLETED
-  → sync pushes closed state to GitLab
-```
+## The One File That Renders The Board
 
-Or the fast path — a cron job or agent creates a ticket and assigns the bot directly:
+The board (`TicketBoard.tsx`) loads **`ai/views/issues-viewer/content/tickets.json`**
+and renders from it. Nothing else drives the display.
 
-```
-Cron: "Daily wiki freshness check" → assigned to kimi-wiki
-  → skips INBOX entirely
-  → goes straight to OPEN → agent runs → COMPLETED
-```
-
----
-
-## Dispatch Logic
-
-The server watches `issues/tickets/` via `fs.watch`. No polling. Dispatch is three conditions:
-
-```
-1. Is the ticket open?
-2. Is the assignee a known bot name?
-3. Is the bot available (not at max concurrent runs)?
-
-All yes → dispatch. Otherwise → skip.
+```json
+{
+  "version": "2.0",
+  "last_updated": "2026-06-09T00:00:00.000Z",
+  "tickets": {
+    "RCC-0086": {
+      "title": "Chunk E — Theme token bridge",
+      "assignee": "rccurtrightjr",
+      "created": "2026-05-22T11:50:00.000Z",
+      "author": "rccurtrightjr",
+      "state": "closed",
+      "body": "Short summary shown on the card."
+    }
+  }
+}
 ```
 
-The dispatch system doesn't read labels, tags, or metadata beyond the assignee field. The **agent folder is the routing** — it contains AGENT.md, WORKFLOW.md, and numbered prompts that define what the agent does. The assignee just points to the folder.
+`tickets` is an object keyed by ticket id. Each entry has exactly six fields:
+`title`, `assignee`, `created`, `author`, `state`, `body`. The `body` here is a
+short summary for the card — the full write-up lives in the `.md` file.
 
----
+> If a ticket is not in this file, it does not appear on the board — even if its
+> `.md` file exists on disk. This is the most common reason a ticket is
+> "missing."
 
-## Where Tickets Live
+## The Ticket .md File
 
-**Locally:** `ai/workspaces/issues/tickets/KIMI-NNNN.md`
-
-Each ticket is a markdown file with frontmatter:
+Each ticket also has a markdown file holding the full detail. It is the human-
+readable source, but it is **not** what renders the board.
 
 ```markdown
 ---
-id: KIMI-0014
-gitlab_iid: 23
-title: Update secrets page token expiry
-assignee: kimi-wiki
-created: 2026-03-21T10:00:00
-author: local
+id: RCC-0095
+title: 'AI Workspace Template V2 — canonical ai-template migration'
+assignee: rccurtrightjr
+created: 2026-06-09T00:00:00.000Z
+author: rccurtrightjr
 state: open
+priority: high
 ---
 
-The secrets page lists token expiry as 2026-03-22 but it was
-rotated to 2026-06-20. Update PAGE.md to reflect the new date.
+Full ticket body in markdown — context, steps, files, smoke tests.
 ```
 
-**On GitLab:** A normal issue. Synced bidirectionally. Labels and milestones are optional — for humans browsing the board, not for dispatch.
+The `.md` files live in folders under `ai/views/issues-viewer/`:
+`inbox/`, `open/`, `closed/`. **The folder does not determine the column.** The
+board ignores folder location entirely and decides placement from the fields in
+`tickets.json` (see below). The folders are just on-disk organization.
 
----
+The `.md` frontmatter may carry extra fields (such as `priority`); the board does
+not read them. Only the six fields copied into `tickets.json` affect display.
 
-## Workspace Ownership
+## How Columns Are Decided
 
-Each workspace owns its job. No workspace reaches into another's logic.
+Placement is computed from `state` and `assignee` in the `tickets.json` entry:
 
-| Workspace | Owns | Doesn't touch |
-|-----------|------|---------------|
-| **Cron** | Creating tickets, assigning bots | Routing, execution |
-| **Issues** | The board, GitLab sync, status | Agent logic, prompts |
-| **Agents** | Running work, wire protocol, prompts | Ticket creation, sync |
+| Column | Rule |
+|---|---|
+| **Inbox** | `state: open` and assignee is a person |
+| **Open** | `state: open` and assignee is a recognized background worker |
+| **Completed** | `state: closed` |
 
-The server is a thin relay between them.
+Today no background workers are configured, so the **Open column stays empty** and
+every open ticket lands in **Inbox**. Closed tickets go to **Completed**. That is
+the whole behavior.
 
----
+## How To Create A Ticket That Displays
 
-## GitLab Sync
+Follow these steps. The step that actually makes the ticket visible is step 3.
 
-Bidirectional. Issues workspace owns the sync script.
+1. **Pick the next id.** Ids are `RCC-NNNN`, zero-padded to four digits. Use the
+   highest existing id plus one. (Do not trust `content/sync.json`'s `next_id` —
+   it is stale.)
 
-**Push (local → GitLab):**
-- New local ticket → create GitLab issue, write `gitlab_iid` back
-- Assignee or state changed locally → update GitLab issue
-- Closed locally → close GitLab issue
+2. **Write the `.md` file** at `ai/views/issues-viewer/inbox/RCC-NNNN.md` with
+   frontmatter (`id`, `title`, `assignee`, `created`, `author`, `state`, and
+   optional `priority`) followed by the full markdown body. Use an ISO 8601
+   `created` timestamp. For a normal user ticket set `assignee` to the user and
+   `state: open`.
 
-**Pull (GitLab → local):**
-- New GitLab issue (friend created it) → create local ticket with `author: gitlab`
-- Assignee or state changed on GitLab → update local ticket
-- New comments → pull to local
+3. **Add the entry to `ai/views/issues-viewer/content/tickets.json`** under
+   `tickets["RCC-NNNN"]` with the six render fields. Keep `body` to a one- or
+   two-sentence summary (the card preview), not the full markdown:
 
----
+   ```json
+   "RCC-0098": {
+     "title": "Same title as the .md frontmatter",
+     "assignee": "rccurtrightjr",
+     "created": "2026-06-12T00:00:00.000Z",
+     "author": "rccurtrightjr",
+     "state": "open",
+     "body": "One- or two-sentence summary for the card."
+   }
+   ```
 
-## Collaboration
+4. **Bump `last_updated`** in `tickets.json` to the current timestamp.
 
-### You create work for a friend
+That is everything required for the ticket to appear (in Inbox, since it is open
+and assigned to a person). To close a ticket later, set `state: closed` in both
+the `.md` frontmatter and the `tickets.json` entry; it moves to Completed.
 
-You write a ticket, assign to their GitLab username. Sync pushes it. They see it on GitLab in the INBOX column. They work on it, close it. Next sync pulls the closure.
+## Known Limitations (As-Is)
 
-### Friend creates work for you
+These are current realities, not the intended end state:
 
-Friend opens a GitLab Issue. Assigns to you. Next sync pulls it locally. You see it in INBOX. You assign to a bot. Agent runs. Closes. Sync pushes result back. Friend sees the resolution on GitLab.
-
-### You + bot on the same ticket
-
-You're assigned. You add the bot as co-assignee (or reassign entirely). Bot runs, posts summaries as GitLab comments. You review, close when satisfied.
-
----
-
-## Child Tickets
-
-When an agent discovers downstream work during execution, it declares a child ticket:
-
-```
-Agent output: CHILD_TICKET: kimi-wiki "gitlab page references outdated token expiry"
-  → Runner creates new local ticket, assigns to named bot
-  → Syncs to GitLab
-  → Goes through the same dispatch loop
-  → Parent manifest records child ticket ID
-```
-
-The agent doesn't dispatch the child. It declares what needs to happen. The system handles the rest.
-
-### Preventing Loops
-
-- `max_depth` in agent.json — no children beyond this depth
-- Circuit breaker: if a child targets the same topic as an ancestor, stop
-- Manifest tracks full lineage
-
----
-
-## Cron Jobs — Ticket Factories
-
-Cron jobs create tickets and assign bots. That's their entire job. They don't know what the agents do.
-
-```bash
-# Daily wiki freshness — 9am
-0 9 * * * node ai/workspaces/issues/scripts/create-ticket.js \
-  --title "Daily wiki freshness check" \
-  --assignee kimi-wiki \
-  --body "Check all wiki topics for staleness."
-
-# Weekly code review — Monday 10am
-0 10 * * 1 node ai/workspaces/issues/scripts/create-ticket.js \
-  --title "Weekly code quality scan" \
-  --assignee kimi-review
-```
-
-The intelligence lives in the agent folder, not the cron job.
-
----
+- **`scripts/create-ticket.js` is broken.** It writes new tickets into the view's
+  `index.json` (the view manifest), not into `content/tickets.json`, so tickets it
+  creates never display. Do not rely on it; write `tickets.json` directly per the
+  steps above. (This is captured in ticket RCC-0097.)
+- **`content/sync.json`'s `next_id` is stale** and does not track the real highest
+  id. Compute the next id from existing tickets instead.
+- **Disk and index can drift.** Because nothing reconciles the `.md` folders with
+  `tickets.json`, a `.md` file can exist with no matching entry (invisible) or an
+  entry can outlive its file. Keep the two in sync by hand until the writer is
+  fixed.
 
 ## Related
 
-- [Background-Agents](Background-Agents) — the agent workspace that runs tickets
-- [Workspaces](Workspaces) — workspace ownership roles
-- [Run-Auditing](Run-Auditing) — inspecting completed runs
-- [Workspace-Agent-Model](Workspace-Agent-Model) — the file pattern agents follow
+- [Background Agents](../013-Background_Agents/PAGE.md) — the trigger-driven worker model (the future ticket producer/consumer)
+- [Run Auditing](../019-Run_Auditing/PAGE.md) — inspecting recorded runs

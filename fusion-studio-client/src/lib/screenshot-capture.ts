@@ -7,7 +7,8 @@
  * In browser: disabled. DOM-to-image libraries freeze on complex panels.
  */
 
-export async function captureElement(_el: HTMLElement | null): Promise<string | null> {
+export async function captureElement(el: HTMLElement | null): Promise<string | null> {
+  void el;
   // Browser capture is disabled to prevent freezes.
   // Electron mode uses IPC in useScreenshotCapture instead of this function.
   return null;

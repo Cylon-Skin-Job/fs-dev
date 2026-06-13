@@ -8,7 +8,7 @@
  * SHARED STATE: All instances coordinate so only one popover is open at a time.
  */
 
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState, useCallback, useId } from 'react';
 
 // Timing constants (ms)
 const HOVER_DELAY = 200;
@@ -63,9 +63,10 @@ export function useHoverPopover(options: UseHoverPopoverOptions = {}): UseHoverP
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isInTrigger = useRef(false);
   const isInPopover = useRef(false);
+  const generatedId = useId();
   
   // Unique ID for this instance
-  const instanceId = useRef(options.id || Math.random().toString(36).slice(2, 9));
+  const instanceId = useRef(options.id || generatedId);
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) {

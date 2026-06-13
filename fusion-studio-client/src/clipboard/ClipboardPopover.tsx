@@ -31,6 +31,12 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
   const listRef = useRef<HTMLDivElement>(null);
   const selectedRef = useRef<HTMLDivElement>(null);
 
+  // Handle item click
+  const handleItemClick = useCallback(async (entry: ClipboardEntry) => {
+    await copyFromHistory(entry);
+    close();
+  }, [close]);
+
   // Scroll selected into view
   useEffect(() => {
     if (selectedRef.current) {
@@ -58,14 +64,14 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
           break;
         case 'Escape':
           e.preventDefault();
-          close();
-          break;
+        close();
+        break;
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [items, selectedIndex, close]);
+  }, [items, selectedIndex, close, handleItemClick]);
 
   // Load more handler
   const handleLoadMore = useCallback(async () => {
@@ -79,12 +85,6 @@ export const ClipboardPopover = forwardRef<HTMLDivElement, ClipboardPopoverProps
       useClipboardStore.getState().setLoading(false);
     }
   }, [items]);
-
-  // Handle item click
-  const handleItemClick = useCallback(async (entry: ClipboardEntry) => {
-    await copyFromHistory(entry);
-    close();
-  }, [close]);
 
   // Handle clear
   const handleClear = useCallback(async () => {

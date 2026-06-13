@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import './CalendarViewer.css';
 
 export interface MiniCalendarProps {
@@ -43,27 +43,23 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({ selectedDate, onSele
   const firstDay = getFirstDayOfMonth(year, month);
   const prevMonthDays = getDaysInMonth(year, month - 1);
 
-  const days = useMemo(() => {
-    const result: { day: number; currentMonth: boolean }[] = [];
+  const days: { day: number; currentMonth: boolean }[] = [];
 
-    // Padding days from previous month
-    for (let i = firstDay - 1; i >= 0; i--) {
-      result.push({ day: prevMonthDays - i, currentMonth: false });
-    }
+  // Padding days from previous month
+  for (let i = firstDay - 1; i >= 0; i--) {
+    days.push({ day: prevMonthDays - i, currentMonth: false });
+  }
 
-    // Current month days
-    for (let d = 1; d <= daysInMonth; d++) {
-      result.push({ day: d, currentMonth: true });
-    }
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    days.push({ day: d, currentMonth: true });
+  }
 
-    // Padding days to fill remaining grid (up to 6 rows = 42 cells)
-    const remaining = 42 - result.length;
-    for (let d = 1; d <= remaining; d++) {
-      result.push({ day: d, currentMonth: false });
-    }
-
-    return result;
-  }, [daysInMonth, firstDay, prevMonthDays]);
+  // Padding days to fill remaining grid (up to 6 rows = 42 cells)
+  const remaining = 42 - days.length;
+  for (let d = 1; d <= remaining; d++) {
+    days.push({ day: d, currentMonth: false });
+  }
 
   const handlePrevMonth = () => {
     setViewDate(new Date(year, month - 1, 1));

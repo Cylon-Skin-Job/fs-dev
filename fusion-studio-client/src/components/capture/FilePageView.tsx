@@ -11,7 +11,8 @@
 
 import { useState, useEffect } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
-import { DocumentTile, isImageFile } from '../tile-row/DocumentTile';
+import { DocumentTile } from '../tile-row/DocumentTile';
+import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
@@ -47,7 +48,7 @@ export function FilePageView({
 
   useEffect(() => {
     setActiveResource(panel, file.path);
-  }, [panel, file.path]);
+  }, [panel, file.path, setActiveResource]);
 
   return (
     <div className="rv-file-page-view">

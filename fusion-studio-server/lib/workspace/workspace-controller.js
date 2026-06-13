@@ -32,9 +32,19 @@ const registry = require('./registry-service');
 const bootstrap = require('./bootstrap-service');
 const createService = require('./create-service');
 const stateCache = require('./state-cache');
+const { createWorkspaceRibbonHandlers } = require('./workspace-ribbon');
 
 let activeWorkspaceId = null;
 let activeWorkspace = null; // cached registry row, kept in lockstep with activeWorkspaceId so sync callers (HTTP routes, file-explorer symlink check, boot pipeline) can resolve repo_path without awaiting a DB query
+
+const ribbonHandlers = createWorkspaceRibbonHandlers({
+  registry,
+  stateCache,
+  emit,
+  getActiveWorkspaceId: () => activeWorkspaceId,
+  setActiveWorkspace,
+  writeLastActive,
+});
 
 async function start() {
   await validateRegistry();
@@ -43,9 +53,9 @@ async function start() {
   on('workspace:add_requested', handleAddRequested);
   on('workspace:switch_requested', handleSwitchRequested);
   on('workspace:remove_requested', handleRemoveRequested);
-  on('workspace:ribbon_remove_requested', handleRibbonRemoveRequested);
-  on('workspace:ribbon_add_requested', handleRibbonAddRequested);
-  on('workspace:ribbon_reorder_requested', handleRibbonReorderRequested);
+  on('workspace:ribbon_remove_requested', ribbonHandlers.handleRibbonRemoveRequested);
+  on('workspace:ribbon_add_requested', ribbonHandlers.handleRibbonAddRequested);
+  on('workspace:ribbon_reorder_requested', ribbonHandlers.handleRibbonReorderRequested);
   on('workspace:create_requested', handleCreateRequested);
 
   console.log('[WorkspaceController] Started (active: ' + (activeWorkspaceId || 'none') + ')');
@@ -116,6 +126,11 @@ async function writeLastActive(workspaceId) {
     })
     .onConflict('key')
     .merge(['value', 'updated_at']);
+}
+
+function setActiveWorkspace(workspaceId, workspace) {
+  activeWorkspaceId = workspaceId;
+  activeWorkspace = workspace;
 }
 
 async function handleAddRequested(event) {
@@ -225,115 +240,6 @@ async function handleRemoveRequested(event) {
   }
 }
 
-async function handleRibbonRemoveRequested(event) {
-  const { workspaceId } = event;
-  const target = await registry.getById(workspaceId);
-  if (!target) {
-    console.warn('[WorkspaceController] ribbon_remove_requested: unknown workspace (' + workspaceId + ')');
-    return;
-  }
-
-  const registered = await registry.list();
-  const ribbonWorkspaces = toRibbonWorkspaces(registered);
-  const wasActive = workspaceId === activeWorkspaceId;
-  const from = activeWorkspaceId;
-  let next = null;
-
-  if (wasActive) {
-    next = pickNextRibbonWorkspace(ribbonWorkspaces, workspaceId);
-  }
-
-  await registry.updateRibbonVisibility(workspaceId, false);
-  emit('workspace:registry_changed', { workspaces: await registry.list() });
-
-  if (!wasActive) {
-    stateCache.invalidate(workspaceId);
-    emit('workspace:ribbon_removed', { workspaceId });
-    return;
-  }
-
-  const nextId = next ? next.id : null;
-  activeWorkspaceId = nextId;
-  activeWorkspace = next;
-  await writeLastActive(nextId);
-  emit('workspace:switched', {
-    from,
-    to: nextId,
-    repoPath: next ? next.repo_path : null,
-  });
-  stateCache.invalidate(workspaceId);
-  emit('workspace:ribbon_removed', { workspaceId });
-}
-
-async function handleRibbonAddRequested(event) {
-  const { workspaceId } = event;
-  const target = await registry.getById(workspaceId);
-  if (!target) {
-    console.warn('[WorkspaceController] ribbon_add_requested: unknown workspace (' + workspaceId + ')');
-    return;
-  }
-
-  if (target.ribbonVisible !== false) {
-    return;
-  }
-
-  const nextRibbonSortOrder = (await registry.maxRibbonSortOrder()) + 1;
-  await registry.updateRibbonMembership(workspaceId, {
-    visible: true,
-    ribbonSortOrder: nextRibbonSortOrder,
-  });
-
-  const workspaces = await registry.list();
-  emit('workspace:registry_changed', { workspaces });
-
-  if (activeWorkspaceId !== null) {
-    return;
-  }
-
-  const restored =
-    workspaces.find((workspace) => workspace.id === workspaceId) ||
-    await registry.getById(workspaceId);
-  activeWorkspaceId = workspaceId;
-  activeWorkspace = restored;
-  await writeLastActive(workspaceId);
-  emit('workspace:switched', {
-    from: null,
-    to: workspaceId,
-    repoPath: restored ? restored.repo_path : null,
-  });
-}
-
-async function handleRibbonReorderRequested(event) {
-  const { workspaceIds, connectionId } = event;
-  if (!Array.isArray(workspaceIds) || workspaceIds.length === 0) {
-    rejectRibbonReorder(connectionId, 'Ribbon reorder requires workspaceIds.');
-    return;
-  }
-
-  const uniqueIds = new Set(workspaceIds);
-  if (uniqueIds.size !== workspaceIds.length || workspaceIds.some((id) => typeof id !== 'string' || id.trim() === '')) {
-    rejectRibbonReorder(connectionId, 'Ribbon reorder workspaceIds must be unique non-empty strings.');
-    return;
-  }
-
-  const registered = await registry.list();
-  const currentRibbonIds = toRibbonWorkspaces(registered).map((workspace) => workspace.id);
-  const currentRibbonIdSet = new Set(currentRibbonIds);
-
-  if (workspaceIds.length !== currentRibbonIds.length || workspaceIds.some((id) => !currentRibbonIdSet.has(id))) {
-    rejectRibbonReorder(connectionId, 'Ribbon reorder must include exactly the currently visible ribbon workspaces.');
-    return;
-  }
-
-  await registry.updateRibbonSortOrders(workspaceIds);
-  emit('workspace:registry_changed', { workspaces: await registry.list() });
-}
-
-function rejectRibbonReorder(connectionId, message) {
-  console.warn('[WorkspaceController] ribbon_reorder_requested rejected: ' + message);
-  emit('workspace:ribbon_reorder_rejected', { connectionId, message });
-}
-
 async function handleCreateRequested(event) {
   const { projectPath, label, viewIds, connectionId } = event;
   if (!projectPath || typeof projectPath !== 'string' || !path.isAbsolute(projectPath)) {
@@ -415,30 +321,6 @@ function rejectCreate(connectionId, message) {
 function isDirectoryEmpty(targetPath) {
   if (!isDirectory(targetPath)) return false;
   return fs.readdirSync(targetPath).length === 0;
-}
-
-function toRibbonWorkspaces(workspaces) {
-  return workspaces
-    .filter((workspace) => workspace.ribbonVisible !== false)
-    .sort((a, b) => {
-      const aOrder = a.ribbonSortOrder ?? a.sortOrder;
-      const bOrder = b.ribbonSortOrder ?? b.sortOrder;
-      return aOrder - bOrder;
-    });
-}
-
-function pickNextRibbonWorkspace(ribbonWorkspaces, workspaceId) {
-  const index = ribbonWorkspaces.findIndex((workspace) => workspace.id === workspaceId);
-  if (index === -1) return null;
-
-  const leftCount = index;
-  const rightCount = ribbonWorkspaces.length - index - 1;
-  if (leftCount === 0 && rightCount === 0) return null;
-
-  if (rightCount >= leftCount) {
-    return ribbonWorkspaces[index + 1] ?? null;
-  }
-  return ribbonWorkspaces[index - 1] ?? null;
 }
 
 async function generateUniqueId(canonicalPath) {

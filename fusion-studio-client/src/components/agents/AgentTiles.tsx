@@ -74,6 +74,49 @@ const FILE_ICONS: Record<string, string> = {
   'TRIGGERS.md': 'bolt',
 };
 
+interface FileTreeNode {
+  name: string;
+  type: string;
+}
+
+interface AgentFileTreeMessage {
+  type: 'file_tree_response';
+  panel: string;
+  path: string;
+  nodes?: FileTreeNode[];
+}
+
+interface AgentFileContentMessage {
+  type: 'file_content_response';
+  panel: string;
+  path: string;
+  success?: boolean;
+  content: string;
+}
+
+type AgentViewerMessage = AgentFileTreeMessage | AgentFileContentMessage;
+
+interface AgentIndexFolder {
+  rank?: number;
+  agents?: Record<string, Omit<Agent, 'id' | 'folder'>>;
+}
+
+interface AgentIndex {
+  folders?: Record<string, AgentIndexFolder>;
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function parseAgentViewerMessage(data: string): AgentViewerMessage | null {
+  const parsed: unknown = JSON.parse(data);
+  if (!isObject(parsed) || typeof parsed.type !== 'string' || typeof parsed.panel !== 'string' || typeof parsed.path !== 'string') {
+    return null;
+  }
+  return parsed as unknown as AgentViewerMessage;
+}
+
 function AgentDetail({ agent, request }: { agent: Agent; request: (path: string) => void }) {
   const setExpanded = useAgentStore((s) => s.setExpandedAgent);
   const configFiles = useAgentStore((s) => s.configFiles);
@@ -92,18 +135,19 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
     const handleMessage = (event: MessageEvent) => {
       if (!active) return;
       try {
-        const msg = JSON.parse(event.data);
+        const msg = parseAgentViewerMessage(event.data);
+        if (!msg) return;
         if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}`) {
           const files = (msg.nodes || [])
-            .filter((n: any) => n.type === 'file' && AGENT_CONFIG_FILES.includes(n.name))
-            .map((n: any) => n.name)
+            .filter((n) => n.type === 'file' && AGENT_CONFIG_FILES.includes(n.name))
+            .map((n) => n.name)
             .sort((a: string, b: string) => AGENT_CONFIG_FILES.indexOf(a) - AGENT_CONFIG_FILES.indexOf(b));
           useAgentStore.getState().setConfigFiles(files);
         }
         if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}/workflows`) {
           const folders = (msg.nodes || [])
-            .filter((n: any) => n.type === 'folder')
-            .map((n: any) => n.name)
+            .filter((n) => n.type === 'folder')
+            .map((n) => n.name)
             .sort();
           useAgentStore.getState().setWorkflows(folders);
         }
@@ -119,7 +163,9 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
             setFileCache(prev => ({ ...prev, [fileName]: stripFrontmatter(msg.content) }));
           }
         }
-      } catch {}
+      } catch {
+        return;
+      }
     };
 
     ws.addEventListener('message', handleMessage);
@@ -135,23 +181,14 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
     for (const f of configFiles) {
       if (!fileCache[f]) request(`${agent.folder}/${agent.id}/${f}`);
     }
-  }, [configFiles, ws, agent.id, agent.folder]);
+  }, [configFiles, fileCache, request, ws, agent.id, agent.folder]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     for (const wf of workflows) {
       if (!fileCache[wf]) request(`${agent.folder}/${agent.id}/workflows/${wf}/WORKFLOW.md`);
     }
-  }, [workflows, ws, agent.id, agent.folder]);
-
-  // Auto-select first item when switching tabs
-  useEffect(() => {
-    if (activeTab === 'workflows') {
-      if (workflows.length > 0 && !workflows.includes(activeFile || '')) setActiveFile(workflows[0]);
-    } else if (activeTab === 'settings') {
-      if (configFiles.length > 0 && !configFiles.includes(activeFile || '')) setActiveFile(configFiles[0]);
-    }
-  }, [activeTab, configFiles, workflows]);
+  }, [workflows, fileCache, request, ws, agent.id, agent.folder]);
 
   // Sidebar cards based on active tab
   let sidebarItems: { name: string; displayName: string; icon: string }[] = [];
@@ -162,8 +199,11 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
   }
 
   // Content for the selected file
-  const selectedContent = activeFile ? fileCache[activeFile] || null : null;
-  const isWorkflow = activeFile ? workflows.includes(activeFile) : false;
+  const effectiveActiveFile = sidebarItems.some((item) => item.name === activeFile)
+    ? activeFile
+    : sidebarItems[0]?.name ?? null;
+  const selectedContent = effectiveActiveFile ? fileCache[effectiveActiveFile] || null : null;
+  const isWorkflow = effectiveActiveFile ? workflows.includes(effectiveActiveFile) : false;
 
   return (
     <div className="rv-agent-detail-fullscreen">
@@ -219,7 +259,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
                 return (
                   <div
                     key={item.name}
-                    className={`rv-agent-detail-card-item${item.name === activeFile ? ' active' : ''}`}
+                    className={`rv-agent-detail-card-item${item.name === effectiveActiveFile ? ' active' : ''}`}
                     onClick={() => setActiveFile(item.name)}
                   >
                     <div className="rv-agent-card-item-icon">
@@ -245,7 +285,7 @@ function AgentDetail({ agent, request }: { agent: Agent; request: (path: string)
               {selectedContent ? (
                 <PromptCardView
                   content={selectedContent}
-                  fileName={isWorkflow ? (activeFile || '') : ''}
+                  fileName={isWorkflow ? (effectiveActiveFile || '') : ''}
                   agentColor={agent.color}
                 />
               ) : (
@@ -292,13 +332,13 @@ export function AgentTiles() {
 
   const onIndex = useCallback((content: string) => {
     try {
-      const index = JSON.parse(content);
-      const folderEntries = Object.entries(index.folders || {}) as [string, any][];
+      const index = JSON.parse(content) as AgentIndex;
+      const folderEntries = Object.entries(index.folders || {});
       const sortedFolders = folderEntries.sort((a, b) => (a[1].rank ?? 999) - (b[1].rank ?? 999));
 
       const agents: Agent[] = [];
       for (const [folderName, folderData] of sortedFolders) {
-        const agentEntries = Object.entries(folderData.agents || {}) as [string, any][];
+        const agentEntries = Object.entries(folderData.agents || {});
         for (const [agentId, agentData] of agentEntries) {
           agents.push({ id: agentId, folder: folderName, ...agentData });
         }

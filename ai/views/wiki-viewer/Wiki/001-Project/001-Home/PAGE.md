@@ -16,7 +16,7 @@ Living reference layer for architecture, decisions, and evolving knowledge.
 
 - [Workspace-Agent-Model](Workspace-Agent-Model) — The 5-file pattern every workspace follows
 - [Workspaces](Workspaces) — Overview of all 8 workspaces (readers, router, executor)
-- [Background-Agents](Background-Agents) — Agent folders, numbered prompts, wire protocol runner
+- [Background-Agents](Background-Agents) — Trigger-driven workers, TRIGGERS.md, workflows
 - [Progressive-Disclosure](Progressive-Disclosure) — How agents load context layer by layer
 - [Chat System](Chat_System) — Current project-thread chat, SQLite history, runtime, rendering, and UI model
 

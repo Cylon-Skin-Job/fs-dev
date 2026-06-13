@@ -34,7 +34,7 @@ class InteractionController {
   // Debug mode - set to true to enable console logging
   private debug = false;
   
-  private log(...args: any[]) {
+  private log(...args: unknown[]) {
     if (this.debug) {
       console.log('[Clipboard Controller]', ...args);
     }
