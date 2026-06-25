@@ -1,235 +1,222 @@
-# Theme System Refactor — Handoff
+# AI Workspace Template V2 — Handoff
 
-**Date:** 2026-04-25  
-**Status:** Content-layer complete. Ready for border + chrome expansion.  
-**Code standards ref:** `ai/views/wiki-viewer/content/enforcement/code-standards/PAGE.md`
-
----
-
-## What We Built (Summary by Chunk)
-
-| Chunk | What | Status |
-|-------|------|--------|
-| 1 | Extracted `color-math.js` + `.d.ts`. Fixed contrast spread (30/35 → 50/55). Reduced `ThemePicker.tsx` (474→392) and `themes-service.js` (459→328). | ✅ |
-| 2 | Segmented CSS generator into 8 modules. `themes-service.js` stripped to 113 lines (I/O only). Value-identical output for 45 properties. | ✅ |
-| 3 | Added override system: `layout-service.js`, `GET /api/view-config?panel=<id>`, watcher `theme-json-regenerator.js`, client `useSharedWorkspaceStyles.ts`. | ✅ |
-| 4 | Extracted `live-preview.ts` (147 lines) + `theme-api.ts` (18 lines). `ThemePicker.tsx` down to 206 lines. | ✅ |
-| 5 | Deprecated Robin theme system. Moved `theme-css.js` to `archive/`. Removed 5 theme handlers from `ws-handlers.js`, 4 queries from `queries.js`. Stripped theme code from `RobinOverlay.tsx`. | ✅ |
-| 6 | Renamed `--robin-*` CSS variables to generic tokens (`--card-bg`, `--card-hover`, `--input-bg`, `--chat-bg`, `--component-border`). Removed `--robin-primary`. | ✅ |
-| OKLCH | Rewrote `computeSyntaxPalette` in OKLCH space via `culori`. Added `computeContentSurfaces` helper. Content contrast slider now controls token distance from bg without moving the bg. Light mode gets extra contrast distance (`minDist=0.15`, `maxDist=0.42` vs dark `0.10/0.35`). | ✅ |
-| Luminance ranges | Changed slider ranges: dark 0–25 (was 0–40), light 75–100 (was 60–100). Snap offset updated from 60→75. | ✅ |
-| Pure white | Max content luminance (100) + tint=0 → `#ffffff`. Tint>0 at max lum → tinted color. Smooth gradient (99→`#fcfcfc`). | ✅ |
+**Date:** 2026-06-17
+**Current ticket:** AI workspace template V2 / workspace folder rearrangement
+**Scope reminder:** Stay focused on workspace template layout, Create New scaffolding, and server/client pickup. Do not continue ledger/startup/onboarding work unless explicitly requested.
 
 ---
 
-## Current Architecture
+## What We Accomplished
 
-### Server (`open-robin-server/lib/theme/`)
+### Canonical Template Layout
 
-| File | Lines | Job |
-|------|-------|-----|
-| `color-math.js` | 246 | Pure math: OKLCH palette generation, surface mixing, `computeContentSurfaces`, `computeSyntaxPalette`. Shared by server + client. |
-| `themes-service.js` | 113 | I/O + CRUD for `themes.json`. Orchestrates saves via serialized promise queue. |
-| `theme-css-generator.js` | 26 | Orchestrator: imports all segment modules, concatenates into `:root {}` block. |
-| `panel-css.js` | 52 | Surface + card variables (`--bg-*`, `--card-bg`, `--panel-bg`, etc.). |
-| `content-css.js` | 9 | Content surfaces (`--document-surface-bg`, `--document-code-bg`). Delegates to `computeContentSurfaces`. |
-| `text-css.js` | 28 | Text hierarchy (`--text-primary`, `--text-dim`, etc.). |
-| `border-css.js` | 18 | Border variables (`--border-color`, `--neutral-chrome-border`). |
-| `accent-css.js` | 26 | Accent + chrome (`--theme-primary`, `--chrome-accent`, `--cli-accent`, `--tile-color`). |
-| `workspace-css.js` | 38 | Workspace overrides (`--ws-sidebar-bg`, `--ws-content-bg`, `--ws-panel-border`). |
-| `syntax-css.js` | 20 | Syntax highlighting (`--hljs-*`). Calls `computeSyntaxPalette`. |
-| `layout-service.js` | 26 | Per-view layout overrides (`layout.json` I/O). |
+The AI template is now organized around the V2 structure:
 
-**Total server theme code:** ~672 lines across 11 files.
-
-### Client (`open-robin-client/src/`)
-
-| File | Lines | Job |
-|------|-------|-----|
-| `components/ThemePicker.tsx` | 206 | Popover UI: 6 sliders + color picker + mode toggle. Auto-saves to `user-current` theme (250ms debounce). |
-| `lib/theme/live-preview.ts` | 147 | Writes CSS variables to `document.documentElement.style` for instant preview. Imports `computeContentSurfaces` + `computeSyntaxPalette` from server `color-math.js`. |
-| `lib/theme/theme-api.ts` | 18 | Thin wrappers around panel store (`saveTheme`, `activateTheme`, `deleteTheme`, `fetchThemes`). |
-| `hooks/useSharedWorkspaceStyles.ts` | ~40 | Fetches `themes.css` via WebSocket, injects as `<style>` tag. Per-view CSS + layout via `GET /api/view-config?panel=<id>`. |
-
----
-
-## Key Patterns Established
-
-### Pattern 1: Segment Module
-Each CSS concern lives in its own file. One `render(entry)` function that returns a CSS fragment string. Orchestrator concatenates them.
-
-```js
-// panel-css.js
-function render(entry) {
-  const { accent, luminance } = entry;
-  // ... compute values
-  return `  --card-bg: ${hex};`;
-}
-module.exports = { render };
+```text
+System Source Files/ai-template/
+  templates/
+    view-templates/
+    workspace-templates/
+      new/
+      startup/
+        fusion-home/
+        media-studio/
+        invoicing-and-expenses/
+        system-source-files/
 ```
 
-### Pattern 2: Shared Pure Math (`color-math.js`)
-No I/O, no DOM. Used by both server (CSS generation) and client (live preview). CJS module with `.d.ts` types. Vite handles the cross-project import via `commonjsOptions.include`.
+Key decisions:
 
-### Pattern 3: Catalog for Mode-Specific Behavior
-When light/dark need different formulas, use a catalog object instead of inline `isLight ? a : b` spaghetti.
+- `templates/view-templates` is the canonical V2 source for view shells.
+- `templates/workspace-templates/new/profile.json` is the default Create New profile.
+- `templates/workspace-templates/startup/*/profile.json` contains shipped startup profiles.
+- Legacy/transitional roots are intentionally removed from the canonical template:
+  - `System Source Files/ai-template/Views`
+  - `System Source Files/ai-template/ai`
+  - `System Source Files/ai-template/templates/views`
+  - `System Source Files/ai-template/templates/workspaces`
 
-```js
-const CONTENT_SURFACE_CATALOG = {
-  dark:  { codeOffset: 8 },
-  light: { codeOffset: 0 },
-};
+### Server Create/Scaffold Flow
+
+Updated:
+
+- `fusion-studio-server/lib/workspace/create-service.js`
+- `fusion-studio-server/lib/workspace/workspace-controller.js`
+- `fusion-studio-server/lib/ws/workspace-request-handlers.js`
+
+Behavior now:
+
+- Create manifest exposes `workspaceTemplates`.
+- `workspace:create_requested` accepts optional `workspaceTemplateId`.
+- Missing `viewIds` is valid and defaults to the selected workspace profile.
+- `scaffoldProject({ workspaceTemplateId })` reads the profile and scaffolds the selected views.
+- Generated workspaces do not copy source-only `templates/`.
+
+### Client Create New UI
+
+Updated:
+
+- `fusion-studio-client/src/components/WorkspaceCreateModal.tsx`
+- `fusion-studio-client/src/components/WorkspaceCreateModal.css`
+- `fusion-studio-client/src/state/workspaceStore.ts`
+- `fusion-studio-client/src/types/index.ts`
+
+Behavior now:
+
+- Create New modal includes a `Workspace template` selector.
+- Selector lists:
+  - `New Workspace`
+  - `Fusion Home`
+  - `Invoicing and Expenses`
+  - `Media Studio`
+  - `System Source Files`
+- Selecting a workspace template resets checked views to that profile.
+- Submit sends `workspaceTemplateId`.
+
+### Smoke/Test Coverage
+
+Added/updated:
+
+- `fusion-studio-server/test/workspace/ai-template-v2.test.js`
+- `fusion-studio-server/test/workspace/workspace-create-template-smoke.test.js`
+
+Coverage includes:
+
+- Canonical V2 template roots exist and transitional roots do not.
+- Create manifest exposes workspace profiles.
+- Default `new` profile selects Files, Wiki, Issues, Agents.
+- `fusion-home` startup profile selects Office plus Files, Issues, Wiki, Agents.
+- Unknown profile IDs reject.
+- V2 view discovery resolves machine-specific `ai/<machine>/Views`.
+- Controller/request smoke verifies `workspaceTemplateId` reaches scaffold/register/switch flow.
+
+Browser smoke passed:
+
+- Modal lists all workspace profiles.
+- Default `new` checks only Files/Wiki/Issues/Agents.
+- Selecting `Fusion Home` adds Office and shows the profile description.
+
+Verification passed:
+
+```text
+npm run build                         # fusion-studio-client
+npm test -- --runInBand               # fusion-studio-server
+git diff --check
 ```
 
-**Current catalogs:**
-- `computeContentSurfaces`: `codeOffset` differs by `contentIsLight`
-- `computeSyntaxPalette`: `minDist`/`maxDist` differs by `isLight` (bgL-based)
+Latest full server result:
 
-### Pattern 4: Watcher Auto-Regeneration
-Programmatic filter `theme-json-regenerator.js` detects `themes.json` edits and regenerates `themes.css`. Manual CSS edits at `ai/views/<view>/settings/themes.css` are untouched.
-
-### Pattern 5: Serialized Promise Queue
-All file writes in `themes-service.js` go through a promise queue to prevent race conditions during rapid slider changes.
-
----
-
-## The Contrast Model (Document This Carefully)
-
-This is the mental model for how contrast works now. Replicate it for borders + chrome.
-
-**Current behavior:**
-1. `computeContentSurfaces` computes the actual bg hex (using `panelContrast`, NOT `contentContrast`).
-2. `computeSyntaxPalette` receives the bg hex as `codeBgHex`.
-3. `contentContrast` slider controls **distance from bg**, not the bg itself.
-   - `dist = minDist + (maxDist - minDist) * (contrast/100)`
-   - Light mode: `minDist=0.15`, `maxDist=0.42`
-   - Dark mode: `minDist=0.10`, `maxDist=0.35`
-4. Tokens sit at `bgL ± dist` depending on mode.
-5. `contentTint` scales chroma (`0→greyscale`, `30→vibrant`).
-
-**Why this works:** The bg stays fixed when contrast moves. Tokens sharpen/soften relative to it.
-
----
-
-## Next Work: Borders + Chrome
-
-**User's intention:** Apply the same luminance/tint/contrast heuristic to borders and chrome, with slightly different rules per layer.
-
-### Proposed Structure
-
-| Layer | Sliders | Behavior |
-|-------|---------|----------|
-| **Content** (done) | Luminance (75–100/0–25), Tint (0–30), Contrast (0–100) | Contrast = token distance from bg. Tint fades at max lum for pure white. |
-| **Borders** (next) | Luminance (0–100), Tint (0–100?) | Light→dark gradient. Tint overlays accent. **No contrast slider** — saturation is the tint itself. |
-| **Chrome** (next) | Luminance (0–100), Tint (0–100?) | Same as borders: light→dark base + tint overlay. |
-
-### Pattern to Replicate
-
-For borders and chrome, create new segment modules:
-
-```
-border-css.js     → already exists, currently uses `borders` slider
-chrome-css.js     → new module (or extend accent-css.js)
-```
-
-Each gets its own `compute*Surfaces` helper in `color-math.js` (or a generic parameterized helper).
-
-**Key insight from user:** Borders don't need a contrast slider. The tint IS the saturation control. Contrast on content makes sense because tokens need to differentiate from each other. Borders and chrome are single surfaces — they just need luminance + tint.
-
-### Catalog Expansion
-
-```js
-const SURFACE_CATALOG = {
-  content: { codeOffset: { dark: 8, light: 0 }, maxDist: { dark: 0.35, light: 0.42 } },
-  border:  { /* TBD */ },
-  chrome:  { /* TBD */ },
-};
+```text
+44 test suites passed
+500 tests passed
+1 skipped
 ```
 
 ---
 
-## Code Standards Compliance Audit
+## Current State
 
-### ✅ Compliant
+The local Fusion server was restarted during smoke testing and was left running on:
 
-| Rule | Status | Evidence |
-|------|--------|----------|
-| One job per file | ✅ | Each segment module has one `render()`. `color-math.js` = pure math only. |
-| Under 400 lines | ✅ | Largest file: `color-math.js` at 246 lines. `ThemePicker.tsx` at 206 lines. |
-| No God files | ✅ | `themes-service.js` stripped from 459→113. `theme-css-generator.js` is just an orchestrator. |
-| Delete, don't deprecate | ✅ | `theme-css.js` moved to `archive/`. Robin handlers removed, not commented out. |
-| CSS variables with fallbacks | ✅ | All generated CSS uses `var(--token)` format. |
-| No hardcoded colors in components | ✅ | `ThemePicker.tsx` uses CSS vars. |
-
-### ⚠️ Non-Compliant / Flagged for Future Work
-
-| Issue | Location | Why | Fix |
-|-------|----------|-----|-----|
-| **File over 400 lines (historical)** | `server.js` (1752 lines) | Pre-existing God file. Not touched by theme work. | Spec `01-server-js-decomposition.md` exists. Do LAST. |
-| **Panel-css.js duplication** | `panel-css.js` has its own `luminanceToHex` and `surface` helpers. | Pre-existed before extraction. `color-math.js` now has the canonical versions. | Migrate `panel-css.js` to import `luminanceToHex` and `mixHex` from `color-math.js`. Removes ~15 lines of duplication. |
-| **Inline styles in live preview** | `live-preview.ts` writes to `document.documentElement.style`. | Exception: theme picker needs instant preview. Clears on unmount so `themes.css` takes over. | Acceptable per "layer as little code as possible" rule. Not a component, it's a preview utility. |
-| **Missing `.rv-` prefix in some CSS** | `document.css` has legacy `.token-*` classes. | Pre-existing. Not touched by theme work. | Spec `18-rv-prefix-migration.md` exists. |
-| **Hardcoded colors in document.css** | `document.css` line 159: `.rv-file-icon-json { color: #f7df1e; }` | Intentionally not theme-controlled (JSON brand color). | User decision. Can be cataloged if desired. |
-
----
-
-## Dependency Map
-
-```
-server/
-  themes-service.js
-    └─ theme-css-generator.js
-         ├─ panel-css.js ── color-math.js (luminanceToHex, mixHex, clamp)
-         ├─ content-css.js ── color-math.js (computeContentSurfaces)
-         ├─ text-css.js
-         ├─ border-css.js
-         ├─ accent-css.js
-         ├─ workspace-css.js ── color-math.js (luminanceToHex, mixHex)
-         └─ syntax-css.js ── color-math.js (computeSyntaxPalette, computeContentSurfaces)
-
-client/
-  ThemePicker.tsx
-    ├─ live-preview.ts ── color-math.js (computeSyntaxPalette, computeContentSurfaces, mixHex, luminanceToHex)
-    └─ theme-api.ts ── panelStore
+```text
+http://127.0.0.1:3001/
 ```
 
-**Important:** `color-math.js` is the ONLY cross-project dependency. It lives in `open-robin-server/lib/theme/` but is imported by the client via relative path (`../../../../open-robin-server/lib/theme/color-math.js`). Vite config includes it in `commonjsOptions.include`.
+The temporary Vite preview server used during testing was stopped.
+
+The working tree is intentionally dirty. Do not revert unrelated changes. The user is actively using the ticket system in another session.
+
+Known unrelated/active dirty files include:
+
+- `ai/system/state/state.json`
+- `ai/views/issues-viewer/content/tickets.json`
+- `ai/views/issues-viewer/inbox/RCC-0090.md`
+- `fusion-studio-server/data/workspace-cache.json`
 
 ---
 
-## Gotchas & Silent Fails
+## Important Scope Notes
 
-1. **Server caches required modules.** Editing `color-math.js` does NOT affect the running server. Must restart after any `color-math.js` change.
-2. **Client build stale.** The browser loads hashed JS filenames from `dist/`. If `npm run build` hasn't been run after a `color-math.js` change, the live preview uses old math while the server uses new math → visual jump.
-3. **`themes.css` stale on server restart.** The server regenerates CSS on boot from the active theme in `themes.json`. If `themes.json` has old values, the regenerated CSS reflects old user settings.
-4. **WS broadcast race.** `saveTheme()` then `activateTheme()` sends two WS messages. Between them, the store briefly has stale `activeId`. Not user-visible in practice.
-5. **`computeContentSurfaces` uses `panelContrast` for bg spread.** If you change this back to `contentContrast`, the bg moves with the contrast slider again.
+### Ledger Work
+
+Ledger infrastructure was accidentally added outside the approved scope:
+
+- `fusion-studio-server/lib/db/migrations/029_event_ledger.js`
+- `fusion-studio-server/lib/ledger/`
+- `fusion-studio-server/scripts/query-event-ledger.js`
+- `fusion-studio-server/test/ledger/`
+- startup wiring in `fusion-studio-server/lib/startup.js`
+
+The user asked for this to be documented as non-canonical/unapproved on the other spec. A note was added to the ledger-related ticket/spec. Do not continue ledger work unless explicitly requested. It may require cleanup or modification later.
+
+### Machine Identity Work
+
+Manual machine identity work was done for forward progress only:
+
+- Script: `fusion-studio-server/scripts/machine-fingerprint.js`
+- Given name: `RC-MacAir-15`
+- Machine UUID: `8abd75a7-03c4-4019-9840-8fcd0be35767`
+- Stable fingerprint: `3605305a2ea5150ec671fcfb6b333e8a12be937e89716966c03d867ad771c49b`
+- Diagnostic fingerprint: `7cf9dcc53762b3fdc850dfe27c69620000d1f0d8ea106f4eceeafa1494e835ac`
+
+Startup/onboarding deterministic identity generation is not implemented yet and should remain out of this current template-ticket scope unless the user asks for it.
 
 ---
 
-## Files Touched in This Session
+## Next Recommended Slice
 
-### Server
-- `open-robin-server/lib/theme/color-math.js` — OKLCH rewrite, catalog pattern, pure white cap
-- `open-robin-server/lib/theme/color-math.d.ts` — New exports
-- `open-robin-server/lib/theme/content-css.js` — Simplified to use `computeContentSurfaces`
-- `open-robin-server/lib/theme/syntax-css.js` — Passes `documentCodeBg` to palette
-- `open-robin-server/lib/theme/panel-css.js` — `--robin-*` rename
-- `open-robin-server/lib/theme/accent-css.js` — Removed `--robin-primary`
-- `open-robin-server/package.json` — Added `culori`
+**Browser-level Create Submit smoke from the modal.**
 
-### Client
-- `open-robin-client/src/components/ThemePicker.tsx` — Luminance ranges, slider mins/maxs
-- `open-robin-client/src/lib/theme/live-preview.ts` — Uses `computeContentSurfaces`, passes bg to palette
-- `open-robin-client/src/components/Robin/robin.css` — `--robin-*` → generic names
-- `open-robin-client/vite.config.ts` — `commonjsOptions.include` (pre-existing, verify if still needed)
+Goal:
+
+1. Use the actual Create New modal in the browser.
+2. Enter a throwaway path under `/private/tmp`.
+3. Select `new`, submit, and verify the workspace is created/registered/switched.
+4. Repeat or follow up with `fusion-home` if needed.
+5. Verify generated filesystem:
+   - `new`: Files, Issues, Wiki, Agents only.
+   - `fusion-home`: Office plus Files, Issues, Wiki, Agents.
+6. Clean up throwaway workspace registration if the UI smoke registers it in the real DB.
+
+Be careful: browser-level submit will mutate the real running Fusion DB unless isolated. Prefer either:
+
+- a dedicated automated smoke with temp `FUSION_APP_USER_DATA`, or
+- explicit cleanup after registering temp workspaces through the real server.
 
 ---
 
-## Open Decisions
+## Useful Commands
 
-1. **Border/chrome slider ranges:** What are the min/max values? Same 0–100 for luminance? Different tint max?
-2. **Border/chrome catalog shape:** Do borders need a `contrast` slider at all? User says no — tint is saturation.
-3. **Panel-css.js cleanup:** Migrate its local `luminanceToHex` + `surface` helpers to use `color-math.js` exports?
-4. **`--bg-secondary` = `--document-surface-bg` redundancy:** These are aliased. Should one be removed?
-5. **Light mode contrast values:** Currently `minDist=0.15`, `maxDist=0.42`. User-approved but can be tuned.
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server
+npx jest test/workspace/ai-template-v2.test.js --runInBand
+npx jest test/workspace/workspace-create-template-smoke.test.js --runInBand
+npm test -- --runInBand
+```
+
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client
+npm run build
+```
+
+```bash
+cd /Users/rccurtrightjr./projects/fs-dev
+git diff --check
+lsof -i:3001
+```
+
+---
+
+## Files Most Relevant To Continue
+
+- `docs/AI_WORKSPACE_TEMPLATE_V2_SPEC.md`
+- `System Source Files/ai-template/templates/view-templates/`
+- `System Source Files/ai-template/templates/workspace-templates/`
+- `fusion-studio-server/lib/workspace/create-service.js`
+- `fusion-studio-server/lib/workspace/workspace-controller.js`
+- `fusion-studio-server/lib/ws/workspace-request-handlers.js`
+- `fusion-studio-server/test/workspace/ai-template-v2.test.js`
+- `fusion-studio-server/test/workspace/workspace-create-template-smoke.test.js`
+- `fusion-studio-client/src/components/WorkspaceCreateModal.tsx`
+- `fusion-studio-client/src/state/workspaceStore.ts`
+- `fusion-studio-client/src/types/index.ts`

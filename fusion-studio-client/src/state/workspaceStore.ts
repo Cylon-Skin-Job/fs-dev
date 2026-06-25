@@ -61,7 +61,7 @@ interface WorkspaceStoreState {
   requestAddToRibbon: (workspaceId: string) => void;
   requestRibbonReorder: (workspaceIds: string[]) => void;
   requestCreateManifest: () => void;
-  requestCreateWorkspace: (projectPath: string, label: string, viewIds: string[]) => void;
+  requestCreateWorkspace: (projectPath: string, label: string, viewIds: string[], workspaceTemplateId?: string) => void;
 
   // Canonical navigation — one source of truth for cycling and toggling
   cycleWorkspace: (direction: 'left' | 'right') => void;
@@ -166,9 +166,9 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   requestCreateManifest: () => {
     sendWorkspaceMessage({ type: 'workspace:create_manifest_requested' });
   },
-  requestCreateWorkspace: (projectPath, label, viewIds) => {
+  requestCreateWorkspace: (projectPath, label, viewIds, workspaceTemplateId) => {
     set({ createError: null, isCreatingWorkspace: true });
-    sendWorkspaceMessage({ type: 'workspace:create_requested', projectPath, label, viewIds });
+    sendWorkspaceMessage({ type: 'workspace:create_requested', projectPath, label, viewIds, workspaceTemplateId });
   },
 
   toggleRibbon: () => {

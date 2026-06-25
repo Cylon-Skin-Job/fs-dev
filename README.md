@@ -16,7 +16,7 @@ fs-dev/
 │   ├── lib/                    # db, workspace, thread, wire, harness, wiki, resources
 │   └── data/                   # Runtime dev data, including fusion.db
 ├── ai/                         # Development workspace content and project wiki
-├── System Source Files/        # Bundled/default system workspace source files
+├── System_Manager/             # Bundled/default system manager workspace files
 └── docs/                       # Specs, handoffs, architecture notes
 ```
 

@@ -5,10 +5,10 @@ const os = require('os');
 const SERVER_ROOT = path.resolve(__dirname, '..', '..');
 const REPO_ROOT = path.resolve(SERVER_ROOT, '..');
 const DEV_RESOURCES_ROOT = path.join(REPO_ROOT, 'fusion-studio-client', 'electron', 'resources');
-const REPO_PROMPTS_ROOT = path.join(REPO_ROOT, 'System Source Files', 'Prompts');
+const REPO_PROMPTS_ROOT = path.join(REPO_ROOT, 'System_Manager', 'Prompts');
 const REPO_TTS_RULES_ROOT = path.join(
   REPO_ROOT,
-  'System Source Files',
+  'System_Manager',
   'resources',
   'text-to-speech',
   'rules'
@@ -47,6 +47,10 @@ function getRepoPromptsRoot(promptSet) {
   }
 
   return path.join(REPO_PROMPTS_ROOT, promptSet);
+}
+
+function getSystemPromptsRoot() {
+  return REPO_PROMPTS_ROOT;
 }
 
 function getModelRoot(modelName) {
@@ -98,6 +102,7 @@ module.exports = {
   getResourcesRoot,
   getPromptsRoot,
   getRepoPromptsRoot,
+  getSystemPromptsRoot,
   getModelRoot,
   getWhisperModelPath,
   getWritableModelCacheRoot,

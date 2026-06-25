@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "invoicing-and-expenses",
+  "label": "Invoicing and Expenses",
+  "category": "startup",
+  "description": "Shipped invoicing and expense tracking workspace profile.",
+  "selectedViewIds": [
+    "office-viewer",
+    "file-viewer",
+    "issues-viewer",
+    "wiki-viewer",
+    "agents-viewer"
+  ]
+}

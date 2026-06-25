@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "views": [
+    {
+      "id": "file-viewer",
+      "label": "File Viewer",
+      "group": "default",
+      "status": "ready",
+      "icon": "code_blocks",
+      "templatePath": "view-templates/default/ai/system/views/file-viewer"
+    },
+    {
+      "id": "wiki-viewer",
+      "label": "Wiki Viewer",
+      "group": "default",
+      "status": "ready",
+      "icon": "full_coverage",
+      "templatePath": "view-templates/default/ai/system/views/wiki-viewer"
+    },
+    {
+      "id": "issues-viewer",
+      "label": "Issues Viewer",
+      "group": "default",
+      "status": "ready",
+      "icon": "business_messages",
+      "templatePath": "view-templates/default/ai/system/views/issues-viewer"
+    },
+    {
+      "id": "agents-viewer",
+      "label": "Agents Viewer",
+      "group": "default",
+      "status": "ready",
+      "icon": "robot_2",
+      "templatePath": "view-templates/default/ai/system/views/agents-viewer"
+    },
+    {
+      "id": "email",
+      "label": "Email",
+      "group": "optional",
+      "status": "active-development",
+      "icon": "mail",
+      "templatePath": "view-templates/optional/email/ai/system/views/email"
+    },
+    {
+      "id": "calendar",
+      "label": "Calendar",
+      "group": "optional",
+      "status": "active-development",
+      "icon": "calendar_month",
+      "templatePath": "view-templates/optional/calendar/ai/system/views/calendar"
+    },
+    {
+      "id": "todo",
+      "label": "To Do",
+      "group": "optional",
+      "status": "stub",
+      "icon": "checklist",
+      "templatePath": "view-templates/optional/todo/ai/system/views/todo"
+    },
+    {
+      "id": "doc-viewer",
+      "label": "Doc Viewer",
+      "group": "optional",
+      "status": "active-development",
+      "icon": "description",
+      "templatePath": "view-templates/optional/doc-viewer/ai/system/views/doc-viewer"
+    },
+    {
+      "id": "office-viewer",
+      "label": "Office Viewer",
+      "group": "optional",
+      "status": "ready",
+      "icon": "grid_view",
+      "templatePath": "view-templates/optional/office-viewer/ai/system/views/office-viewer"
+    },
+    {
+      "id": "library",
+      "label": "Library",
+      "group": "optional",
+      "status": "stub",
+      "icon": "local_library",
+      "templatePath": "view-templates/optional/library/ai/system/views/library"
+    },
+    {
+      "id": "media-editor",
+      "label": "Media Editor",
+      "group": "optional",
+      "status": "stub",
+      "icon": "movie",
+      "templatePath": "view-templates/optional/media-editor/ai/system/views/media-editor"
+    }
+  ]
+}

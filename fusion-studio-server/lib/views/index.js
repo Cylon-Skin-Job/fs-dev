@@ -12,6 +12,7 @@
 const path = require('path');
 const fs = require('fs');
 const registryWriter = require('./workspace-registry-writer');
+const aiPaths = require('../workspace/ai-paths');
 
 /**
  * Get the views root directory for a project.
@@ -19,7 +20,25 @@ const registryWriter = require('./workspace-registry-writer');
  * @returns {string}
  */
 function getViewsRoot(projectRoot) {
+  const v2Root = aiPaths.getMachineViewsRoot(projectRoot);
+  if (fs.existsSync(v2Root)) return v2Root;
   return path.join(projectRoot, 'ai', 'views');
+}
+
+function getLegacyViewsRoot(projectRoot) {
+  return path.join(projectRoot, 'ai', 'views');
+}
+
+function getMachineAiRoot(projectRoot) {
+  return aiPaths.getMachineAiRoot(projectRoot);
+}
+
+function hasV2Views(projectRoot) {
+  try {
+    return fs.lstatSync(aiPaths.getMachineViewsRoot(projectRoot)).isDirectory();
+  } catch {
+    return false;
+  }
 }
 
 function getWorkspaceRegistryPath(projectRoot) {
@@ -37,6 +56,8 @@ function loadWorkspaceRegistry(projectRoot) {
 }
 
 function listRegistryViews(projectRoot) {
+  if (hasV2Views(projectRoot)) return null;
+
   const registry = loadWorkspaceRegistry(projectRoot);
   if (!registry) return null;
 
@@ -64,10 +85,13 @@ function loadRegistryView(projectRoot, viewId) {
  * @returns {string[]}
  */
 function listViews(projectRoot) {
+  const v2Views = listV2Views(projectRoot);
+  if (v2Views) return v2Views.map(view => view.id);
+
   const registryViews = listRegistryViews(projectRoot);
   if (registryViews) return registryViews.map(view => view.id);
 
-  const viewsRoot = getViewsRoot(projectRoot);
+  const viewsRoot = getLegacyViewsRoot(projectRoot);
   if (!fs.existsSync(viewsRoot)) return [];
 
   return fs.readdirSync(viewsRoot, { withFileTypes: true })
@@ -82,6 +106,9 @@ function listViews(projectRoot) {
  * @returns {object|null}
  */
 function loadViewIndex(projectRoot, viewId) {
+  const v2View = loadV2ViewShell(projectRoot, viewId);
+  if (v2View) return v2View.index;
+
   const filePath = path.join(getViewsRoot(projectRoot), viewId, 'index.json');
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -97,6 +124,9 @@ function loadViewIndex(projectRoot, viewId) {
  * @returns {object|null}
  */
 function loadContentConfig(projectRoot, viewId) {
+  const v2View = loadV2ViewShell(projectRoot, viewId);
+  if (v2View) return v2View.content;
+
   const filePath = path.join(getViewsRoot(projectRoot), viewId, 'content.json');
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -112,6 +142,9 @@ function loadContentConfig(projectRoot, viewId) {
  * @returns {object|null}
  */
 function loadLayoutConfig(projectRoot, viewId) {
+  const v2View = loadV2ViewShell(projectRoot, viewId);
+  if (v2View) return v2View.layout;
+
   const filePath = path.join(getViewsRoot(projectRoot), viewId, 'settings', 'layout.json');
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -127,6 +160,9 @@ function loadLayoutConfig(projectRoot, viewId) {
  * @returns {object|null}
  */
 function loadView(projectRoot, viewId) {
+  const v2View = loadV2ViewShell(projectRoot, viewId);
+  if (v2View) return v2View;
+
   const registryView = loadRegistryView(projectRoot, viewId);
   const index = loadViewIndex(projectRoot, viewId) || (registryView ? {
     id: registryView.id,
@@ -190,6 +226,27 @@ function resolveContentPath(projectRoot, viewId, context = {}) {
     return context.sessionRoot || projectRoot;
   }
 
+  // system-viewer is a built-in system workspace browser. Like file-viewer,
+  // its behavior is resolved by server code instead of a view-local iframe app.
+  if (viewId === 'system-viewer') {
+    return projectRoot;
+  }
+
+  if (view.v2 === true) {
+    const machineRoot = getMachineAiRoot(projectRoot);
+    const dataSource = view.index?.metadata?.['data-source'];
+    const topLevelSources = new Set(['Wiki', 'Docs', 'Issues', 'Agents', 'Office']);
+    if (topLevelSources.has(dataSource)) {
+      return path.join(machineRoot, dataSource);
+    }
+    if (viewId === 'wiki-viewer') return path.join(machineRoot, 'Wiki');
+    if (viewId === 'doc-viewer') return path.join(machineRoot, 'Docs');
+    if (viewId === 'issues-viewer') return path.join(machineRoot, 'Issues');
+    if (viewId === 'agents-viewer') return path.join(machineRoot, 'Agents');
+    if (viewId === 'office-viewer') return path.join(machineRoot, 'Office');
+    return view.viewRoot;
+  }
+
   if (viewId === 'wiki-viewer') {
     const wikiPath = path.join(view.viewRoot, 'Wiki');
     if (fs.existsSync(wikiPath)) return wikiPath;
@@ -202,6 +259,132 @@ function resolveContentPath(projectRoot, viewId, context = {}) {
   if (fs.existsSync(contentPath)) return contentPath;
 
   return view.viewRoot;
+}
+
+function listV2Views(projectRoot) {
+  if (!hasV2Views(projectRoot)) return null;
+  return listV2ViewFolders(projectRoot)
+    .map((entry) => loadV2ViewShellFromEntry(projectRoot, entry))
+    .filter(Boolean)
+    .filter(view => view.index?.metadata?.enabled !== false);
+}
+
+function loadV2ViewShell(projectRoot, viewId) {
+  if (!hasV2Views(projectRoot)) return null;
+  const entry = listV2ViewFolders(projectRoot).find((candidate) => candidate.id === viewId);
+  if (!entry) return null;
+  return loadV2ViewShellFromEntry(projectRoot, entry);
+}
+
+function listV2ViewFolders(projectRoot) {
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  try {
+    return fs.readdirSync(viewsRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => {
+        const match = entry.name.match(/^(\d+)-(.+)$/);
+        const order = match ? Number(match[1]) : 999;
+        const fallbackId = match ? match[2] : entry.name;
+        const viewRoot = path.join(viewsRoot, entry.name);
+        const manifest = readFrontmatter(path.join(viewRoot, 'manifest.md'));
+        const id = manifest.metadata?.['view-id'] || fallbackId;
+        return {
+          id,
+          folderName: entry.name,
+          order,
+          viewRoot,
+          manifest,
+        };
+      })
+      .sort((a, b) => {
+        const orderDiff = a.order - b.order;
+        if (orderDiff !== 0) return orderDiff;
+        return a.folderName.localeCompare(b.folderName);
+      });
+  } catch {
+    return [];
+  }
+}
+
+function loadV2ViewShellFromEntry(projectRoot, entry) {
+  const icon = readFrontmatter(path.join(entry.viewRoot, 'styles', 'icon.md'));
+  const metadata = entry.manifest.metadata || {};
+  const id = metadata['view-id'] || entry.id;
+  return {
+    id,
+    index: {
+      id,
+      label: entry.manifest.name || displayLabelFromId(id),
+      icon: icon.metadata?.['icon-name'] || 'folder',
+      rank: entry.order,
+      type: metadata['view-type'] || 'placeholder',
+      metadata,
+    },
+    content: {
+      display: metadata['view-type'] || 'placeholder',
+      chat: null,
+      dataSource: metadata['data-source'] || null,
+    },
+    layout: {},
+    viewRoot: entry.viewRoot,
+    v2: true,
+  };
+}
+
+function readFrontmatter(filePath) {
+  let text = '';
+  try {
+    text = fs.readFileSync(filePath, 'utf8');
+  } catch {
+    return {};
+  }
+  const match = text.match(/^---\s*\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  return parseSimpleYaml(match[1]);
+}
+
+function parseSimpleYaml(yamlText) {
+  const result = {};
+  let currentObject = result;
+  for (const rawLine of yamlText.split(/\r?\n/)) {
+    if (!rawLine.trim() || rawLine.trim().startsWith('#')) continue;
+    const indent = rawLine.match(/^\s*/)[0].length;
+    const line = rawLine.trim();
+    const separator = line.indexOf(':');
+    if (separator === -1) continue;
+    const key = line.slice(0, separator).trim();
+    const rawValue = line.slice(separator + 1).trim();
+    if (indent === 0) {
+      if (rawValue === '') {
+        result[key] = {};
+        currentObject = result[key];
+      } else {
+        result[key] = parseYamlScalar(rawValue);
+        currentObject = result;
+      }
+      continue;
+    }
+    if (currentObject && typeof currentObject === 'object') {
+      currentObject[key] = parseYamlScalar(rawValue);
+    }
+  }
+  return result;
+}
+
+function parseYamlScalar(value) {
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (value === 'null') return null;
+  return value.replace(/^['"]|['"]$/g, '');
+}
+
+function displayLabelFromId(id) {
+  return String(id || '')
+    .replace(/-viewer$/, '')
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ') || 'View';
 }
 
 /**
@@ -228,7 +411,9 @@ function resolveChatConfig(projectRoot, viewId) {
 
 module.exports = {
   getViewsRoot,
+  getLegacyViewsRoot,
   getWorkspaceRegistryPath,
+  hasV2Views,
   loadWorkspaceRegistry,
   getWorkspaceViewOptions: registryWriter.getWorkspaceViewOptions,
   restoreWorkspaceView: registryWriter.restoreWorkspaceView,

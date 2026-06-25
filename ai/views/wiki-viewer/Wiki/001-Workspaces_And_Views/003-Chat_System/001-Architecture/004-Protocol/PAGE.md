@@ -16,6 +16,8 @@ metadata:
     - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
     - fusion-studio-client/src/lib/ws/thread-handlers.ts
     - fusion-studio-client/src/lib/ws/stream-handlers.ts
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -30,8 +32,29 @@ Message and event contracts used by the chat system.
 | `thread:open` | Passive browse/hydrate an existing thread |
 | `thread:open-assistant` | Activate/resume assistant thread or create new one |
 | `thread:warm` | Warm a cold runtime based on send intent |
-| `prompt` | Send user input to a specific thread |
+| `prompt` | Send user input and optional attachment metadata to a specific thread |
 | `turn:stop` | Interrupt an in-flight turn |
+
+Prompt payloads may include attachment metadata:
+
+```json
+{
+  "type": "prompt",
+  "threadId": "...",
+  "user_input": "Explain this startup flow.",
+  "attachments": [
+    {
+      "kind": "file",
+      "label": "file:server.js",
+      "path": "/repo/server.js",
+      "sourceName": "server.js"
+    }
+  ]
+}
+```
+
+The visible textarea remains plain user text. Attachment pills are separate UI
+state until send.
 
 ## Server To Client
 
@@ -41,6 +64,7 @@ Message and event contracts used by the chat system.
 | `thread:opened` | Thread history and optional live turn are hydrated |
 | `wire_ready` | Runtime is ready for prompt delivery |
 | `message:sent` | Server accepted/persisted user prompt |
+| `exchange_metadata` | Just-completed exchange metadata is available for RAM refresh |
 | `fusion:prompt-acceptance-failed` | Prompt was rejected before acceptance |
 | `fusion:turn-ended` | Terminal turn event reached client state |
 
@@ -63,6 +87,30 @@ turn_end
 
 The canonical bridge/applier owns mutation, event bus emission, persistence
 handoff, and live snapshot updates.
+
+## Exchange Metadata
+
+SQLite exchanges store structured metadata alongside user input and assistant
+parts. Current chat metadata fields include:
+
+```json
+{
+  "attachments": [],
+  "mentions": [],
+  "fileMutations": [],
+  "contextUsage": null,
+  "tokenUsage": null
+}
+```
+
+- `attachments` comes from `Send to chat` pills.
+- `mentions` contains repo-validated non-markdown file mentions from the just
+  completed user/assistant text.
+- `fileMutations` contains turn-local file changes captured from event bus file
+  change events.
+
+The harness receives a compact attached-reference block appended to the prompt,
+while SQLite keeps the structured metadata for UI and autocomplete hydration.
 
 ## Routing Rule
 

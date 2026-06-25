@@ -12,6 +12,7 @@
 
 import { useState, useRef, forwardRef, useImperativeHandle, useCallback, useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
+import { useFileAutocomplete } from '../hooks/useFileAutocomplete';
 import {
   getInsertedText,
   listEmojiRecents,
@@ -21,7 +22,9 @@ import {
 
 export interface ChatInputRef {
   insertText: (text: string) => void;
+  replaceText: (text: string) => void;
   getText: () => string;
+  focus: () => void;
   clearText: () => void;
 }
 
@@ -42,11 +45,32 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
   ref
 ) {
   const [text, setText] = useState('');
+  const [cursorIndex, setCursorIndex] = useState(0);
   const [emojiRecentsOpen, setEmojiRecentsOpen] = useState(false);
   const [emojiRecents, setEmojiRecents] = useState<EmojiRecentItem[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const recentsRef = useRef<HTMLDivElement>(null);
   const config = usePanelStore((s) => s.getPanelConfig(panel));
+  const autocomplete = useFileAutocomplete(text, cursorIndex);
+
+  const syncCursor = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    setCursorIndex(textarea.selectionStart);
+  }, []);
+
+  const setTextareaText = useCallback((nextText: string, nextCursor: number) => {
+    const textarea = textareaRef.current;
+    setText(nextText);
+    setCursorIndex(nextCursor);
+    window.setTimeout(() => {
+      if (!textarea) return;
+      textarea.focus();
+      textarea.setSelectionRange(nextCursor, nextCursor);
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 140) + 'px';
+    }, 0);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     insertText: (newText: string) => {
@@ -63,28 +87,26 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       const updatedText = before + newText + after;
       
       recordEmojiRecentsFromText(newText);
-      setText(updatedText);
+      setTextareaText(updatedText, start + newText.length);
       
-      // Set cursor position after inserted text
-      setTimeout(() => {
-        if (textarea) {
-          textarea.focus();
-          const newCursorPos = start + newText.length;
-          textarea.setSelectionRange(newCursorPos, newCursorPos);
-          // Adjust height
-          textarea.style.height = 'auto';
-          textarea.style.height = Math.min(textarea.scrollHeight, 140) + 'px';
-        }
-      }, 0);
+      // Cursor and height are restored by setTextareaText.
+    },
+    replaceText: (newText: string) => {
+      recordEmojiRecentsFromText(newText);
+      setTextareaText(newText, newText.length);
     },
     getText: () => text,
+    focus: () => {
+      textareaRef.current?.focus();
+    },
     clearText: () => {
       setText('');
+      setCursorIndex(0);
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }
     }
-  }));
+  }), [setTextareaText, text]);
 
   const handleSend = useCallback(() => {
     if (!text.trim() || disabled) return;
@@ -92,6 +114,13 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
   }, [text, disabled, onSend]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (autocomplete.match && (e.key === 'Tab' || e.key === ' ' || (e.key === 'Enter' && !e.shiftKey))) {
+      e.preventDefault();
+      const acceptedText = autocomplete.accept();
+      setTextareaText(acceptedText, autocomplete.match.tokenStart + autocomplete.match.replacement.length + 1);
+      return;
+    }
+
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (isTurnActive) {
@@ -115,6 +144,7 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     if (insertedText) recordEmojiRecentsFromText(insertedText);
     if (emojiRecentsOpen) setEmojiRecentsOpen(false);
     setText(nextText);
+    window.requestAnimationFrame(syncCursor);
   };
 
   const handleContextMenu = async (event: React.MouseEvent<HTMLTextAreaElement>) => {
@@ -148,16 +178,8 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     const updatedText = before + emoji + after;
 
     recordEmojiRecentsFromText(emoji);
-    setText(updatedText);
+    setTextareaText(updatedText, start + emoji.length);
     setEmojiRecentsOpen(false);
-
-    window.setTimeout(() => {
-      textarea.focus();
-      const nextCursor = start + emoji.length;
-      textarea.setSelectionRange(nextCursor, nextCursor);
-      textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 140) + 'px';
-    }, 0);
   };
 
   useEffect(() => {
@@ -199,12 +221,21 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
             ))}
           </div>
         )}
+        {autocomplete.match && (
+          <div className="rv-chat-autocomplete-ghost" aria-hidden="true">
+            <span className="rv-chat-autocomplete-ghost-prefix">{text}</span>
+            <span>{autocomplete.match.ghostSuffix}</span>
+          </div>
+        )}
         <textarea
           ref={textareaRef}
           className="rv-chat-input"
           placeholder={placeholder ?? `Ask about ${(config?.name || panel).toLowerCase()}...`}
           value={text}
           onFocus={onWarmIntent}
+          onClick={syncCursor}
+          onKeyUp={syncCursor}
+          onSelect={syncCursor}
           onPaste={onWarmIntent}
           onChange={(e) => handleChange(e.target.value)}
           onContextMenu={handleContextMenu}

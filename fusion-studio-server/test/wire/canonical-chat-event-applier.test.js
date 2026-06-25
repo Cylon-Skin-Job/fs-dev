@@ -99,7 +99,8 @@ describe('CanonicalChatEventApplier', () => {
       expect(session.currentTurn).toEqual({
         id: 'turn-1',
         text: '',
-        userInput: 'Hello AI'
+        userInput: 'Hello AI',
+        attachments: [],
       });
       expect(session.pendingUserInput).toBeNull();
       expect(session.hasToolCalls).toBe(false);

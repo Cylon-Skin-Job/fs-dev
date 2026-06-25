@@ -241,13 +241,9 @@ async function handleRemoveRequested(event) {
 }
 
 async function handleCreateRequested(event) {
-  const { projectPath, label, viewIds, connectionId } = event;
+  const { projectPath, label, viewIds, workspaceTemplateId, connectionId } = event;
   if (!projectPath || typeof projectPath !== 'string' || !path.isAbsolute(projectPath)) {
     rejectCreate(connectionId, 'Create New requires an absolute project path.');
-    return;
-  }
-  if (!Array.isArray(viewIds) || viewIds.length === 0) {
-    rejectCreate(connectionId, 'Select at least one view template.');
     return;
   }
 
@@ -268,8 +264,10 @@ async function handleCreateRequested(event) {
     return;
   }
 
-  const uniqueViewIds = Array.from(new Set(viewIds.filter((viewId) => typeof viewId === 'string' && viewId.trim() !== '')));
-  if (uniqueViewIds.length === 0) {
+  const uniqueViewIds = Array.isArray(viewIds)
+    ? Array.from(new Set(viewIds.filter((viewId) => typeof viewId === 'string' && viewId.trim() !== '')))
+    : [];
+  if (Array.isArray(viewIds) && viewIds.length > 0 && uniqueViewIds.length === 0) {
     rejectCreate(connectionId, 'Select at least one view template.');
     return;
   }
@@ -279,6 +277,7 @@ async function handleCreateRequested(event) {
     selectedViews = createService.scaffoldProject({
       projectPath: canonical,
       viewIds: uniqueViewIds,
+      workspaceTemplateId,
     }).selectedViews;
   } catch (err) {
     rejectCreate(connectionId, err.message);

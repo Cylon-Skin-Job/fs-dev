@@ -19,8 +19,10 @@ import type {
   ThemeEntry,
   WorkspaceHiddenView,
   WorkspaceViewTemplate,
+  MessageExchangeSavedPayload,
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
+import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
 
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 export type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
@@ -100,15 +102,26 @@ export interface AppState {
   appendSegmentContentByIndex: (threadId: string | null, index: number, text: string) => void;
   resetSegments: (threadId: string | null) => void;
   setPendingTurnEnd: (threadId: string | null, pending: boolean) => void;
+  setPendingExchangeSave: (threadId: string | null, turnId: string | null) => void;
   setPendingMessage: (threadId: string | null, message: Message | null) => void;
   setTodoDrawer: (threadId: string | null, drawer: PanelState['todoDrawer']) => void;
+  setMessageExchangeSaved: (
+    threadId: string,
+    turnId: string,
+    payload: MessageExchangeSavedPayload
+  ) => void;
+  updateMessageMetadata: (
+    threadId: string,
+    exchangeId: number,
+    metadata: Record<string, unknown>
+  ) => void;
   finalizeTurn: (threadId: string | null) => void;
   clearChat: (threadId: string | null) => void;
 
   // ── WebSocket ──
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
-  sendMessage: (text: string, threadId?: string | null) => void;
+  sendMessage: (text: string, threadId?: string | null, attachments?: ChatLinkAttachment[]) => void;
   warmThread: (threadId?: string | null) => void;
 
   // ── Project root ──

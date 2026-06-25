@@ -33,6 +33,38 @@ describe('redactWsMessage', () => {
     expect(out.key).toBe('GITLAB_TOKEN');
   });
 
+  test('chat-turn:metadata:update redacts inbound note patch body', () => {
+    const input = {
+      type: 'chat-turn:metadata:update',
+      threadId: 'thread-1',
+      exchangeId: 12,
+      patch: {
+        bookmark: { type: 'flag' },
+        note: { body: 'private note text' },
+      },
+    };
+    const out = redactWsMessage(input);
+    expect(out.patch.note.body).toBe('[redacted]');
+    expect(out.patch.bookmark.type).toBe('flag');
+    expect(out.exchangeId).toBe(12);
+  });
+
+  test('chat-turn:metadata:updated redacts outbound metadata note body', () => {
+    const input = {
+      type: 'chat-turn:metadata:updated',
+      threadId: 'thread-1',
+      exchangeId: 12,
+      metadata: {
+        note: { body: 'private note text', createdAt: 1, updatedAt: 2 },
+        attachments: [{ path: 'docs/spec.md' }],
+      },
+    };
+    const out = redactWsMessage(input);
+    expect(out.metadata.note.body).toBe('[redacted]');
+    expect(out.metadata.note.createdAt).toBe(1);
+    expect(out.metadata.attachments).toEqual([{ path: 'docs/spec.md' }]);
+  });
+
   test('unknown message type passes through unchanged (identity)', () => {
     const input = { type: 'thread:create', title: 'hi', payload: { value: 'not-a-secret' } };
     const out = redactWsMessage(input);

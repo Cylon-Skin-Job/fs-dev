@@ -11,6 +11,7 @@ metadata:
     - Wiki View
     - Browser
     - Custom Iframe
+    - System Manager
     - File View
     - Agent View
     - Issues View
@@ -30,6 +31,7 @@ Use this section for product/workspace/view architecture and user-facing surface
 - [Wiki View](004-Wiki_View/PAGE.md) - folder-first wiki architecture, interface, frontmatter, and terminal access.
 - [Browser](005-Browser/PAGE.md) - general internet-capable browser surface for web navigation, testing, and automation.
 - [Custom Iframe](006-Custom_Iframe/PAGE.md) - local-server iframe display for user-created custom views; not for internet browsing.
+- [System Manager](011-System_Manager/PAGE.md) - protected system-level view/workspace surface for prompts, triggers, skills, tools, and delegated changes.
 - `007-File_View/` - file browsing and file-viewer behavior.
 - `008-Agent_View/` - planned/underdeveloped agent surface.
 - `009-Issues_View/` - planned/partial ticketing surface.

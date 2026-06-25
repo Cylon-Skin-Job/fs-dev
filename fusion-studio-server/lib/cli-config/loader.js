@@ -9,6 +9,7 @@
 
 const path = require('path');
 const fs = require('fs').promises;
+const aiPaths = require('../workspace/ai-paths');
 
 const OPENCODE_ONLY_CONFIG = Object.freeze({
   defaultHarness: 'opencode',
@@ -33,7 +34,7 @@ function defaultWorkspaceConfig() {
 }
 
 function workspacePath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'system', 'config', 'cli.json');
+  return path.join(aiPaths.getSystemConfigRoot(projectRoot), 'cli.json');
 }
 
 function viewPath(projectRoot, viewId) {

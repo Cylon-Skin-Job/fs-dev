@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "fusion-home",
+  "label": "Fusion Home",
+  "category": "startup",
+  "description": "Shipped home workspace profile.",
+  "selectedViewIds": [
+    "office-viewer",
+    "file-viewer",
+    "issues-viewer",
+    "wiki-viewer",
+    "agents-viewer"
+  ]
+}

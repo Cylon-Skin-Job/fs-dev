@@ -2,13 +2,15 @@
  * @module SendToChatButton
  * @role Reusable "send path to chat" action button
  *
- * Resolves a panel-relative path to an absolute path and dispatches it into
- * the active chat composer via the `fusion:chat-insert` window event.
+ * Resolves a panel-relative path to an attachment pill payload and dispatches
+ * it into the active chat composer via the chat action bridge.
  *
  * Used by: FilePageView, OfficeDocumentTopbar, Wiki page nav, TicketBoard, etc.
  */
 
 import { resolveAbsolutePath } from '../lib/resource-path';
+import { dispatchChatAction } from '../lib/chat-action';
+import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import { showToast } from '../lib/toast';
 
 interface SendToChatButtonProps {
@@ -27,8 +29,12 @@ export function SendToChatButton({
   const handleClick = () => {
     const absPath = resolveAbsolutePath(panel, relativePath);
     if (absPath) {
-      window.dispatchEvent(new CustomEvent('fusion:chat-insert', { detail: absPath }));
-      showToast('Path sent to chat');
+      dispatchChatAction({
+        attachment: createSendToChatAttachment({ panel, relativePath, absolutePath: absPath }),
+        target: 'current',
+        delivery: 'insert',
+      });
+      showToast('Link attached to chat');
     } else {
       showToast('Path not available');
     }

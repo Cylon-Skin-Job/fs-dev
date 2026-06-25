@@ -15,6 +15,18 @@ metadata:
 
 Dated architecture changes that matter for future work.
 
+## 2026-06-20
+
+- `Send to chat` changed from raw path insertion to removable link attachment
+  pills above the composer.
+- Filename autocomplete was added as plain text completion from RAM-only
+  non-`.md` file candidates.
+- Prompt payloads gained optional attachment metadata.
+- Turn metadata gained collector-backed `attachments`, `mentions`, and
+  `fileMutations` fields in SQLite exchange metadata.
+- `exchange_metadata` broadcasts refresh client autocomplete candidates after
+  turn-end persistence.
+
 ## 2026-06-07
 
 - `cli.json` became the single harness policy.

@@ -31,6 +31,11 @@ import { usePanelStore } from '../state/panelStore';
 import type { Message, AssistantTurn, StreamSegment } from '../types';
 import { LiveSegmentRenderer } from './LiveSegmentRenderer';
 import { InstantSegmentRenderer } from './InstantSegmentRenderer';
+import { extractAssistantReplyText } from '../lib/chat/reply-text';
+import { AssistantReplyChrome } from './chat/AssistantReplyChrome';
+import { AssistantReplyBookmarkModal } from './chat/AssistantReplyBookmarkModal';
+import { AssistantReplyNoteModal } from './chat/AssistantReplyNoteModal';
+import { useAssistantReplyChromeController } from './chat/useAssistantReplyChromeController';
 
 interface MessageListProps {
   // PER_THREAD_CHAT_STATE: primary passes the current workspace thread;
@@ -41,6 +46,54 @@ interface MessageListProps {
   segments: StreamSegment[];
   lastUserMsgRef?: React.RefObject<HTMLDivElement | null>;
   showOrb?: boolean;
+}
+
+function CompletedAssistantReplyChrome({
+  threadId,
+  message,
+}: {
+  threadId: string;
+  message: Message;
+}) {
+  const source = {
+    threadId,
+    messageId: message.id,
+    exchangeSeq: message.exchangeSeq,
+    exchangeId: message.exchangeId,
+  };
+  const payload = extractAssistantReplyText(message.segments);
+  const disabled = !message.exchangeId;
+  const {
+    metadata,
+    bookmarkModalProps,
+    noteModalProps,
+    handleCopyChatId,
+    handleCopyReply,
+    openBookmarkEditor,
+    openNoteEditor,
+  } = useAssistantReplyChromeController({
+    source,
+    payload,
+    metadata: message.metadata,
+    disabled,
+  });
+
+  return (
+    <div className="rv-assistant-reply-shell">
+      <AssistantReplyChrome
+        source={source}
+        payload={payload}
+        metadata={metadata}
+        disabled={disabled}
+        onCopyReply={handleCopyReply}
+        onOpenBookmark={openBookmarkEditor}
+        onCopyChatId={handleCopyChatId}
+        onOpenNotes={openNoteEditor}
+      />
+      <AssistantReplyBookmarkModal {...bookmarkModalProps} />
+      <AssistantReplyNoteModal {...noteModalProps} />
+    </div>
+  );
 }
 
 export function MessageList({
@@ -77,6 +130,11 @@ export function MessageList({
         >
           {msg.type === 'user' ? (
             <div className="rv-message-user-content">{msg.content}</div>
+          ) : msg.type === 'assistant' && threadId ? (
+            <>
+              <InstantSegmentRenderer segments={msg.segments} />
+              <CompletedAssistantReplyChrome threadId={threadId} message={msg} />
+            </>
           ) : (
             <InstantSegmentRenderer segments={msg.segments} />
           )}

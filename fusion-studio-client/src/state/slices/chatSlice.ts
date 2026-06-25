@@ -5,8 +5,16 @@
  *       RCC-0095: single workspace chat — chat state is keyed by threadId
  *       in projectChats (the legacy per-view chat slots were removed).
  */
-import type { PanelState, Message, AssistantTurn, StreamSegment, TodoDrawerState } from '../../types';
+import type {
+  PanelState,
+  Message,
+  AssistantTurn,
+  StreamSegment,
+  TodoDrawerState,
+  MessageExchangeSavedPayload,
+} from '../../types';
 import type { AppState } from '../panelStoreTypes';
+import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
@@ -30,6 +38,8 @@ export function createInitialPanelState(): PanelState {
     segments: [],
     lastReleasedSegmentCount: 0,
     todoDrawer: undefined,
+    pendingSavedExchanges: {},
+    pendingExchangeSaveTurnId: null,
   };
 }
 
@@ -64,6 +74,20 @@ function writeChatState(
  */
 function resolveThreadId(state: AppState, threadId: string | null): string | null {
   return threadId ?? state.currentThreadId;
+}
+
+function applySavedExchangePayload(
+  message: Message,
+  payload: MessageExchangeSavedPayload | undefined,
+): Message {
+  if (!payload) return message;
+  return {
+    ...message,
+    ...(payload.exchangeId !== undefined ? { exchangeId: payload.exchangeId } : {}),
+    ...(payload.seq !== undefined ? { exchangeSeq: payload.seq } : {}),
+    ...(payload.ts !== undefined ? { timestamp: payload.ts } : {}),
+    ...(payload.metadata !== undefined ? { metadata: payload.metadata } : {}),
+  };
 }
 
 // ── Slice factory ─────────────────────────────────────────────────────────────
@@ -164,6 +188,11 @@ export function createChatSlice(set: Set, get: Get) {
       return writeChatState(state, threadId, { ...cs, pendingTurnEnd: pending });
     }),
 
+    setPendingExchangeSave: (threadId: string | null, turnId: string | null) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, pendingExchangeSaveTurnId: turnId });
+    }),
+
     setPendingMessage: (threadId: string | null, message: Message | null) => set((state) => {
       const cs = getChatState(state, threadId);
       return writeChatState(state, threadId, { ...cs, pendingMessage: message });
@@ -184,15 +213,19 @@ export function createChatSlice(set: Set, get: Get) {
       const turn = cs.currentTurn;
       if (turn) {
         const segments = cs.segments;
+        const savedPayload = cs.pendingSavedExchanges?.[turn.id];
+        const pendingSavedExchanges = { ...(cs.pendingSavedExchanges || {}) };
+        delete pendingSavedExchanges[turn.id];
+        const assistantMessage = applySavedExchangePayload({
+          id: turn.id || `turn-${Date.now()}`,
+          type: 'assistant' as const,
+          content: turn.content,
+          timestamp: Date.now(),
+          segments: segments.length > 0 ? [...segments] : undefined,
+        }, savedPayload);
         const newMessages = [
           ...cs.messages,
-          {
-            id: turn.id || `turn-${Date.now()}`,
-            type: 'assistant' as const,
-            content: turn.content,
-            timestamp: Date.now(),
-            segments: segments.length > 0 ? [...segments] : undefined,
-          },
+          assistantMessage,
         ];
         set((s) => writeChatState(s, threadId, {
           ...getChatState(s, threadId),
@@ -202,6 +235,7 @@ export function createChatSlice(set: Set, get: Get) {
           pendingTurnEnd: false,
           pendingMessage: null,
           lastReleasedSegmentCount: 0,
+          pendingSavedExchanges,
         }));
       }
     },
@@ -211,11 +245,72 @@ export function createChatSlice(set: Set, get: Get) {
       return writeChatState(state, threadId, { ...cs, todoDrawer: drawer });
     }),
 
+    setMessageExchangeSaved: (threadId: string, turnId: string, payload: MessageExchangeSavedPayload) => set((state) => {
+      const cs = state.projectChats[threadId] || createInitialPanelState();
+      const messageIndex = cs.messages.findIndex((message) =>
+        message.type === 'assistant' && message.id === turnId
+      );
+      if (messageIndex < 0) {
+        if (cs.currentTurn?.id !== turnId) return state;
+        const pendingExchangeSaveTurnId = cs.pendingExchangeSaveTurnId === turnId
+          ? null
+          : cs.pendingExchangeSaveTurnId;
+        return writeChatState(state, threadId, {
+          ...cs,
+          pendingSavedExchanges: {
+            ...(cs.pendingSavedExchanges || {}),
+            [turnId]: payload,
+          },
+          pendingExchangeSaveTurnId,
+        });
+      }
+
+      const messages = [...cs.messages];
+      messages[messageIndex] = applySavedExchangePayload(messages[messageIndex], payload);
+      const pendingSavedExchanges = { ...(cs.pendingSavedExchanges || {}) };
+      delete pendingSavedExchanges[turnId];
+      const pendingExchangeSaveTurnId = cs.pendingExchangeSaveTurnId === turnId
+        ? null
+        : cs.pendingExchangeSaveTurnId;
+
+      return writeChatState(state, threadId, {
+        ...cs,
+        messages,
+        pendingSavedExchanges,
+        pendingExchangeSaveTurnId,
+      });
+    }),
+
+    updateMessageMetadata: (
+      threadId: string,
+      exchangeId: number,
+      metadata: Record<string, unknown>,
+    ) => set((state) => {
+      const cs = state.projectChats[threadId];
+      if (!cs) return state;
+
+      const messageIndex = cs.messages.findIndex((message) =>
+        message.type === 'assistant' && message.exchangeId === exchangeId
+      );
+      if (messageIndex < 0) return state;
+
+      const messages = [...cs.messages];
+      messages[messageIndex] = {
+        ...messages[messageIndex],
+        metadata,
+      };
+
+      return writeChatState(state, threadId, {
+        ...cs,
+        messages,
+      });
+    }),
+
     clearChat: (threadId: string | null) => set((state) =>
       writeChatState(state, threadId, createInitialPanelState())
     ),
 
-    sendMessage: (text: string, threadIdOpt?: string | null) => {
+    sendMessage: (text: string, threadIdOpt?: string | null, attachments?: ChatLinkAttachment[]) => {
       const state = get();
       const socket = state.ws;
       if (!socket || socket.readyState !== WebSocket.OPEN) return;
@@ -231,6 +326,7 @@ export function createChatSlice(set: Set, get: Get) {
         type: 'prompt',
         threadId,
         user_input: text,
+        ...(attachments?.length ? { attachments } : {}),
       }));
     },
 

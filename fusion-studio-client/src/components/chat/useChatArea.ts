@@ -5,10 +5,12 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
+import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
+import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';
 import type { ChatInputRef } from '../ChatInput';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
 
@@ -54,6 +56,8 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const messages = usePanelStore((state) => selector(state)?.messages ?? EMPTY_MESSAGES);
   const currentTurn = usePanelStore((state) => selector(state)?.currentTurn ?? null);
   const segments = usePanelStore((state) => selector(state)?.segments ?? EMPTY_SEGMENTS);
+  const pendingTurnEnd = usePanelStore((state) => selector(state)?.pendingTurnEnd ?? false);
+  const pendingExchangeSaveTurnId = usePanelStore((state) => selector(state)?.pendingExchangeSaveTurnId ?? null);
   const contextUsage = usePanelStore((state) => state.contextUsage);
   const chatActive = usePanelStore((state) => state.chatActive);
   const wireReady = usePanelStore((state) => state.wireReady);
@@ -70,6 +74,8 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const sendMessage = usePanelStore((state) => state.sendMessage);
   const warmThread = usePanelStore((state) => state.warmThread);
   const finalizeTurn = usePanelStore((state) => state.finalizeTurn);
+  const addPendingAttachment = useChatFileLinkStore((state) => state.addPendingAttachment);
+  const clearPendingAttachments = useChatFileLinkStore((state) => state.clearPendingAttachments);
 
   const noThread = !currentThreadId;
   const isActive = chatActive;
@@ -83,6 +89,11 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const handleInsertText = useCallback((text: string) => {
     warmCurrentThread();
     chatInputRef.current?.insertText(text);
+  }, [warmCurrentThread]);
+
+  const handleReplaceText = useCallback((text: string) => {
+    warmCurrentThread();
+    chatInputRef.current?.replaceText(text);
   }, [warmCurrentThread]);
 
   useEffect(() => {
@@ -212,6 +223,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
       setSendingTarget({ threadId: pending.threadId });
       justSentRef.current = true;
       chatInputRef.current?.clearText();
+      clearPendingAttachments();
     };
     const handleFailed = (e: Event) => {
       const detail = (e as CustomEvent<{ threadId?: string }>).detail;
@@ -252,28 +264,126 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
       window.removeEventListener('fusion:prompt-acceptance-failed', handleFailed);
       window.removeEventListener('fusion:turn-ended', handleTurnEnded);
     };
-  }, []);
+  }, [clearPendingAttachments]);
 
-  const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0;
-  const isTurnActive = !!currentTurn || isSendingForCurrentThread;
+  const isTurnFinalizing = Boolean(pendingTurnEnd || pendingExchangeSaveTurnId);
+  const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0 && !isTurnFinalizing;
+  const isTurnActive = (!!currentTurn || isSendingForCurrentThread) && !isTurnFinalizing;
 
-  const handleSend = useCallback((text: string) => {
+  const sendToThread = useCallback((threadId: string, text: string) => {
     if (pendingPromptRef.current) return;
 
-    const tid = currentThreadId;
-    if (!tid) return;
-
-    pendingPromptRef.current = { threadId: tid, text };
+    pendingPromptRef.current = { threadId, text };
     setIsAcceptancePending(true);
 
     const state = usePanelStore.getState();
-    const cs = state.projectChats[tid];
+    const cs = state.projectChats[threadId];
     if (cs?.currentTurn) {
-      finalizeTurn(tid);
+      finalizeTurn(threadId);
     }
 
-    sendMessage(text, tid);
-  }, [currentThreadId, finalizeTurn, sendMessage]);
+    const attachments = useChatFileLinkStore.getState().pendingAttachments;
+    sendMessage(text, threadId, attachments);
+  }, [finalizeTurn, sendMessage]);
+
+  const handleSend = useCallback((text: string) => {
+    const tid = currentThreadId;
+    if (!tid) return;
+    sendToThread(tid, text);
+  }, [currentThreadId, sendToThread]);
+
+  useEffect(() => {
+    if (threadIdOverride) return;
+
+    const applyChatAction = (action: ChatActionPayload, content: string) => {
+      if (action.target === 'current') {
+        if (action.delivery === 'send') {
+          const tid = usePanelStore.getState().currentThreadId;
+          if (tid) sendToThread(tid, content);
+        } else {
+          handleInsertText(content);
+        }
+        return;
+      }
+
+      if (action.target !== 'new') return;
+
+      const socket = usePanelStore.getState().ws;
+      if (!socket || socket.readyState !== WebSocket.OPEN) return;
+
+      const handleThreadOpened = (messageEvent: MessageEvent) => {
+        try {
+          const msg = JSON.parse(messageEvent.data);
+          if (msg.type !== 'thread:opened' || !msg.threadId) return;
+
+          socket.removeEventListener('message', handleThreadOpened);
+          if (action.delivery === 'send') {
+            sendToThread(msg.threadId, content);
+          } else {
+            handleReplaceText(content);
+          }
+        } catch {
+          // Ignore non-JSON socket messages.
+        }
+      };
+
+      socket.addEventListener('message', handleThreadOpened);
+      socket.send(JSON.stringify({
+        type: 'thread:open-assistant',
+        ...(action.threadName ? { name: action.threadName } : {}),
+      }));
+    };
+
+    const handleChatAction = (event: Event) => {
+      const action = (event as CustomEvent<ChatActionPayload>).detail;
+      if (!action) return;
+
+      if (action.attachment) {
+        if (action.target !== 'current') return;
+        warmCurrentThread();
+        addPendingAttachment(action.attachment);
+        chatInputRef.current?.focus();
+        return;
+      }
+
+      if (typeof action.content === 'string') {
+        applyChatAction(action, action.content);
+        return;
+      }
+
+      if (typeof action.promptId !== 'string') return;
+
+      const socket = usePanelStore.getState().ws;
+      if (!socket || socket.readyState !== WebSocket.OPEN) return;
+      const requestId = `prompt-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      const handlePromptResolved = (messageEvent: MessageEvent) => {
+        try {
+          const msg = JSON.parse(messageEvent.data);
+          if (msg.requestId !== requestId) return;
+          if (msg.type !== 'prompt:resolved' && msg.type !== 'prompt:resolve_error') return;
+
+          socket.removeEventListener('message', handlePromptResolved);
+          if (msg.type === 'prompt:resolved' && typeof msg.content === 'string') {
+            applyChatAction(action, msg.content);
+          }
+        } catch {
+          // Ignore non-JSON socket messages.
+        }
+      };
+
+      socket.addEventListener('message', handlePromptResolved);
+      socket.send(JSON.stringify({
+        type: 'prompt:resolve',
+        requestId,
+        promptId: action.promptId,
+        variables: action.variables || {},
+      }));
+    };
+
+    window.addEventListener(CHAT_ACTION_EVENT, handleChatAction);
+    return () => window.removeEventListener(CHAT_ACTION_EVENT, handleChatAction);
+  }, [threadIdOverride, handleInsertText, handleReplaceText, sendToThread, warmCurrentThread, addPendingAttachment]);
 
   const handleStop = useCallback(() => {
     const state = usePanelStore.getState();
@@ -281,6 +391,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     if (!tid || !state.ws || state.ws.readyState !== WebSocket.OPEN) return;
     const cs = state.projectChats[tid];
     if (cs?.currentTurn) {
+      state.setPendingExchangeSave(tid, cs.currentTurn.id);
       state.ws.send(JSON.stringify({ type: 'turn:stop', threadId: tid }));
     }
   }, [currentThreadId]);
@@ -327,6 +438,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     handleViewMarkdown,
     showOrb,
     isTurnActive,
+    isTurnFinalizing,
     handleSend,
     handleStop,
     warmCurrentThread,

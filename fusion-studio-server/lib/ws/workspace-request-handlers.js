@@ -142,17 +142,18 @@ function createWorkspaceRequestHandlers({ ws, session }) {
         }));
         return;
       }
-      if (!Array.isArray(clientMsg.viewIds) || clientMsg.viewIds.length === 0) {
+      if (clientMsg.viewIds !== undefined && !Array.isArray(clientMsg.viewIds)) {
         ws.send(JSON.stringify({
           type: 'workspace:create_rejected',
-          message: 'Select at least one view template.',
+          message: 'workspace:create_requested viewIds must be an array when provided.',
         }));
         return;
       }
       emit('workspace:create_requested', {
         projectPath: clientMsg.projectPath,
         label: typeof clientMsg.label === 'string' ? clientMsg.label : '',
-        viewIds: clientMsg.viewIds,
+        viewIds: Array.isArray(clientMsg.viewIds) ? clientMsg.viewIds : undefined,
+        workspaceTemplateId: typeof clientMsg.workspaceTemplateId === 'string' ? clientMsg.workspaceTemplateId : undefined,
         connectionId: session.connectionId,
       });
     },

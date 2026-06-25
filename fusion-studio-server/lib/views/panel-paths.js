@@ -20,6 +20,7 @@ const fs = require('fs');
 
 const workspaceController = require('../workspace/workspace-controller');
 const views = require('./index');
+const aiPaths = require('../workspace/ai-paths');
 
 // Store active sessions (ws -> session state)
 const sessions = new Map();
@@ -84,7 +85,7 @@ function getPanelPath(panel, ws) {
 
   // __settings__ pseudo-panel: resolves to ai/system/styles/ (for global theme/settings)
   if (panel === '__settings__') {
-    const settingsRoot = path.join(projectRoot, 'ai', 'system', 'styles');
+    const settingsRoot = aiPaths.getSystemStylesRoot(projectRoot);
     if (fs.existsSync(settingsRoot)) return settingsRoot;
     return null;
   }
@@ -92,7 +93,7 @@ function getPanelPath(panel, ws) {
   // __workspace__ pseudo-panel: resolves to ai/system/workspace/ for the
   // live workspace view registry.
   if (panel === '__workspace__') {
-    const workspaceRoot = path.join(projectRoot, 'ai', 'system', 'workspace');
+    const workspaceRoot = path.join(aiPaths.getSystemRoot(projectRoot), 'workspace');
     if (fs.existsSync(workspaceRoot)) return workspaceRoot;
     return null;
   }

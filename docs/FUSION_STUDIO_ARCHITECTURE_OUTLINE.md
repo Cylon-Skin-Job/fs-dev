@@ -285,11 +285,10 @@ Recommended: try `fs.accessSync` on the Mail Envelope Index. `EPERM`/`EACCES` = 
 - `fusion-studio-client/src/components/ThemePicker.tsx`
 
 ### For Connectors / System Viewer
-- `System Files/ai/views/system-viewer/app/index.html`
-- `System Files/ai/views/system-viewer/app/style.css`
-- `System Files/ai/views/system-viewer/app/app.js`
-- `System Files/ai/views/system-viewer/index.json`
-- `System Files/ai/views/system-viewer/content.json`
+- `fusion-studio-server/lib/views/index.js`
+- `fusion-studio-client/src/components/SystemViewer.tsx`
+- `System Source Files/ai/views/system-viewer/index.json`
+- `System Source Files/ai/views/system-viewer/content.json`
 
 ---
 
@@ -298,9 +297,9 @@ Recommended: try `fs.accessSync` on the Mail Envelope Index. `EPERM`/`EACCES` = 
 | Decision | Status |
 |----------|--------|
 | System Viewer renamed from `tools` → `system-viewer` | ✅ Done |
-| System Viewer uses iframe (`app/index.html`) not React component | ✅ Done |
+| System Viewer uses the built-in React/server-resolved view paradigm, not a view-local iframe app | ✅ Done |
 | Workspace chat enabled for System Viewer | ✅ Done |
-| No Robin chat / no system wiki integration in System Viewer | ✅ Done (static only) |
+| No Robin chat / no system wiki integration in System Viewer | ✅ Done |
 | Connectors architecture: SQLite/EventKit/AppleScript (not SPEC-compliant) | ✅ Researched (RCC-0092 ticket filed) |
 | Connector toggle persistence | ❌ Not built |
 | Overlay mode for System Viewer | ❌ Not built |

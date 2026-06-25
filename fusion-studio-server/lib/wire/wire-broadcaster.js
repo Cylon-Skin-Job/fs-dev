@@ -150,6 +150,33 @@ function createWireBroadcaster({ getClientForThread }) {
     });
   });
 
+  on('chat:exchange_metadata', (event) => {
+    sendToThread(event.threadId, {
+      type: 'exchange_metadata',
+      scope: event.scope,
+      threadId: event.threadId,
+      turnId: event.turnId,
+      ts: event.ts,
+      userInput: event.userInput,
+      metadata: event.metadata,
+    });
+  });
+
+  on('chat-turn:saved', (event) => {
+    sendToThread(event.threadId, {
+      type: 'chat-turn:saved',
+      scope: event.scope,
+      threadId: event.threadId,
+      turnId: event.turnId,
+      exchangeId: event.exchangeId,
+      seq: event.seq,
+      ts: event.ts,
+      partial: event.partial,
+      reason: event.reason,
+      metadata: event.metadata,
+    });
+  });
+
   console.log('[WireBroadcaster] Started');
   return { started: true };
 }

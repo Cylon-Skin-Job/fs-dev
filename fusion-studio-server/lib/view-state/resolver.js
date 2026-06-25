@@ -9,6 +9,8 @@
 
 const path = require('path');
 const fs = require('fs').promises;
+const fsSync = require('fs');
+const aiPaths = require('../workspace/ai-paths');
 
 const HARDCODED_DEFAULTS = Object.freeze({
   widths: {
@@ -45,11 +47,26 @@ const HARDCODED_DEFAULTS = Object.freeze({
 });
 
 function workspacePath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'system', 'state', 'state.json');
+  return path.join(aiPaths.getSystemStateRoot(projectRoot), 'state.json');
 }
 
 function viewOverridePath(projectRoot, viewId) {
+  const v2Folder = findV2ViewFolder(projectRoot, viewId);
+  if (v2Folder) return path.join(v2Folder, 'state', 'state.json');
   return path.join(projectRoot, 'ai', 'views', viewId, 'settings', 'state.json');
+}
+
+function findV2ViewFolder(projectRoot, viewId) {
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  try {
+    const entries = fsSync.readdirSync(viewsRoot, { withFileTypes: true });
+    const match = entries.find((entry) => entry.isDirectory() && (
+      entry.name === viewId || entry.name.endsWith(`-${viewId}`)
+    ));
+    return match ? path.join(viewsRoot, match.name) : null;
+  } catch {
+    return null;
+  }
 }
 
 function clampNum(n, min, max) {

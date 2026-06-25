@@ -10,6 +10,8 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import { useFileStore } from '../../state/fileStore';
 import { toolNameToSegmentType } from '../instructions';
 import { parseTodoArgs, parseTodoDisplay } from '../todo-output';
 import {
@@ -56,6 +58,9 @@ const ROUTED_STREAM_TYPES = new Set<WebSocketMessageType>([
   'tool_result',
   'subagent_event',
   'turn_end',
+  'exchange_metadata',
+  'chat-turn:saved',
+  'chat-turn:metadata:updated',
   'status_update',
   'auth_error',
 ]);
@@ -318,6 +323,36 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     case 'turn_end': {
       if (!threadId) return true;
       handleTurnEnd(msg, threadId);
+      return true;
+    }
+
+    case 'exchange_metadata': {
+      if (!threadId) return true;
+      const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
+      useChatFileLinkStore.getState().mergeExchangeAutocompleteCandidates({
+        seq: 0,
+        ts: typeof msg.ts === 'number' ? msg.ts : Date.now(),
+        user: msg.userInput || '',
+        assistant: { parts: [] },
+        metadata: msg.metadata || {},
+      }, openTabPaths);
+      return true;
+    }
+
+    case 'chat-turn:saved': {
+      if (!threadId || !msg.turnId) return true;
+      store.setMessageExchangeSaved(threadId, msg.turnId, {
+        exchangeId: msg.exchangeId,
+        seq: msg.seq,
+        ts: msg.ts,
+        metadata: msg.metadata,
+      });
+      return true;
+    }
+
+    case 'chat-turn:metadata:updated': {
+      if (!threadId || typeof msg.exchangeId !== 'number') return true;
+      store.updateMessageMetadata(threadId, msg.exchangeId, msg.metadata || {});
       return true;
     }
 

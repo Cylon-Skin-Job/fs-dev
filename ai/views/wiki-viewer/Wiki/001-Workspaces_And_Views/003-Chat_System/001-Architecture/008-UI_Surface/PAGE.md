@@ -13,7 +13,10 @@ metadata:
     - fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
     - fusion-studio-client/src/components/chat/ChatAreaHeader.tsx
     - fusion-studio-client/src/components/chat/SendButtonGroup.tsx
+    - fusion-studio-client/src/components/chat/ChatLinkAttachments.tsx
     - fusion-studio-client/src/components/chat/useChatArea.ts
+    - fusion-studio-client/src/components/ChatInput.tsx
+    - fusion-studio-client/src/hooks/useFileAutocomplete.ts
     - fusion-studio-client/src/components/Sidebar.tsx
     - fusion-studio-client/src/components/ToolCallBlock.tsx
   connected-skills: []
@@ -52,6 +55,36 @@ Cold threads warm on intent to send:
 
 The send button should freeze while acceptance is pending. The warm/connecting
 indicator should be visually distinct from the in-flight turn orb.
+
+## Composer Context Row
+
+The composer has a compact row above the textarea:
+
+- left: context usage block fixed at `120px`
+- right: attachment strip, right-justified and allowed to use remaining width
+
+Attachment pills come from `Send to chat` actions. They use:
+
+- `link_2` icon
+- compact labels such as `file:server.js` or `wiki:chat:architecture`
+- clipped single-line text with a right-side fade
+- hover-only circular `X` removal control
+
+Attachment pills are not inserted into textarea text. Removing a pill before
+send removes its metadata.
+
+## Filename Autocomplete
+
+Filename autocomplete is narrow and plain text only.
+
+- Candidate sources are RAM-only open file tabs and metadata-hydrated files.
+- Candidates must have an extension and must not end in `.md`.
+- Ghost text can complete the current filename token.
+- `Tab`, `Space`, or `Enter` accepts the active suggestion and inserts a
+  trailing space.
+
+Do not add inline `@` behavior, picker modals, wiki/doc/ticket suggestions, or
+structured metadata from typed autocomplete.
 
 ## Orb And Turn State
 

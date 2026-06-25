@@ -69,6 +69,23 @@ export interface Message {
   segments?: StreamSegment[];
   /** Queue position when added to history; used for consistent render */
   releasedSegmentCount?: number;
+  exchangeId?: number;
+  exchangeSeq?: number;
+  metadata?: Record<string, unknown>;
+}
+
+export interface MessageExchangeSavedPayload {
+  exchangeId?: number;
+  seq?: number;
+  ts?: number;
+  metadata?: Record<string, unknown>;
+}
+
+export type ChatTurnBookmarkType = 'flag' | 'star' | 'heart';
+
+export interface ChatTurnMetadataPatch {
+  bookmark?: { type: ChatTurnBookmarkType } | null;
+  note?: { body: string } | null;
 }
 
 export interface AssistantTurn {
@@ -98,6 +115,12 @@ export interface PanelState {
   /** Per-thread todo drawer state (TODO_DRAWER_SPEC) */
   todoDrawer?: TodoDrawerState;
 
+  /** Saved-exchange acks that arrived before live reveal finalization. */
+  pendingSavedExchanges?: Record<string, MessageExchangeSavedPayload>;
+
+  /** Current turn waiting for SQLite saved-exchange acknowledgement. */
+  pendingExchangeSaveTurnId?: string | null;
+
 }
 
 // WebSocket Message Types
@@ -109,6 +132,11 @@ export type WebSocketMessageType =
   | 'turn_end'
   | 'step_begin'
   | 'status_update'
+  | 'exchange_metadata'
+  | 'chat-turn:saved'
+  | 'chat-turn:metadata:update'
+  | 'chat-turn:metadata:updated'
+  | 'chat-turn:metadata:error'
   | 'request'
   | 'response'
   | 'error'
@@ -270,9 +298,20 @@ export interface WorkspaceViewTemplate {
   templatePath: string;
 }
 
+export interface WorkspaceTemplateProfile {
+  schemaVersion: number;
+  id: string;
+  label: string;
+  category: 'new' | 'startup' | string;
+  description?: string;
+  selectedViewIds: string[];
+  profilePath?: string | null;
+}
+
 export interface WorkspaceCreateManifest {
   version: number;
   views: WorkspaceViewTemplate[];
+  workspaceTemplates?: WorkspaceTemplateProfile[];
 }
 
 export interface WorkspaceHiddenView {
@@ -305,6 +344,7 @@ export type CliEntryOverride = Partial<Pick<ResolvedCliEntry, 'enabled' | 'name'
 export interface WebSocketMessage {
   type: WebSocketMessageType;
   turnId?: string;
+  ts?: number;
   text?: string;
   userInput?: string;
   fullText?: string;
@@ -343,6 +383,9 @@ export interface WebSocketMessage {
   liveTurn?: LiveTurnSnapshot | null;
   name?: string;
   content?: string;
+  metadata?: Record<string, unknown>;
+  exchangeId?: number;
+  seq?: number;
   message?: string;
   // RCC-0095: server still stamps scope: 'project' on thread/stream
   // messages for wire compatibility; the client routes by threadId only.
@@ -353,6 +396,8 @@ export interface WebSocketMessage {
     label?: string;
     icon?: string;
     enabled?: boolean;
+    bookmark?: { type: ChatTurnBookmarkType } | null;
+    note?: { body: string } | null;
   };
   move?: 'up' | 'down';
   registry?: unknown;
@@ -519,13 +564,14 @@ export interface LiveTurnSnapshot {
 }
 
 export interface ExchangeData {
+  exchangeId?: number;
   seq: number;
   ts: number;
   user: string;
   assistant: {
     parts: AssistantPart[];
   };
-  metadata?: unknown[];
+  metadata?: Record<string, unknown>;
 }
 
 // Timing Constants

@@ -32,7 +32,9 @@ const registry = require('../workspace/registry-service');
 const { redactWsMessage } = require('./redaction-map');
 const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
 const { createHarnessWsHandlers } = require('./harness-ws-handlers');
+const { createChatTurnMetadataHandlers } = require('./chat-turn-metadata-handlers');
 const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
+const { resolvePrompt } = require('../prompts/prompt-registry');
 
 /**
  * Create a per-connection client message router.
@@ -84,6 +86,7 @@ function createClientMessageRouter({
   // Per-connection sub-factories for larger handler groups
   const threadHandlers = createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot });
   const harnessHandlers = createHarnessWsHandlers({ ws });
+  const chatTurnMetadataHandlers = createChatTurnMetadataHandlers({ ws });
   const workspaceRequestHandlers = createWorkspaceRequestHandlers({ ws, session });
 
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
@@ -113,6 +116,11 @@ function createClientMessageRouter({
         if (handler) { await handler(clientMsg); return; }
       }
 
+      if (clientMsg.type.startsWith('chat-turn:')) {
+        const handler = chatTurnMetadataHandlers[clientMsg.type];
+        if (handler) { await handler(clientMsg); return; }
+      }
+
       // File Explorer Messages
       // --------------------------------------------------
 
@@ -128,6 +136,29 @@ function createClientMessageRouter({
 
       if (clientMsg.type === 'recent_files_request') {
         await fileExplorer.handleRecentFilesRequest(ws, clientMsg);
+        return;
+      }
+
+      if (clientMsg.type === 'prompt:resolve') {
+        try {
+          const resolved = resolvePrompt(clientMsg.promptId, clientMsg.variables || {});
+          ws.send(JSON.stringify({
+            type: 'prompt:resolved',
+            requestId: clientMsg.requestId || null,
+            promptId: resolved.promptId,
+            content: resolved.content,
+            metadata: resolved.metadata,
+            frontmatter: resolved.frontmatter,
+            path: resolved.path,
+          }));
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'prompt:resolve_error',
+            requestId: clientMsg.requestId || null,
+            promptId: clientMsg.promptId || null,
+            message: err.message,
+          }));
+        }
         return;
       }
 

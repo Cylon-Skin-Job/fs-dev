@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "schema": "2.0",
+  "themes": [
+    {
+      "id": "default",
+      "label": "Default",
+      "builtin": true,
+      "active": false,
+      "mode": "dark",
+      "luminance": 0,
+      "accent": "#4fc3f7",
+      "bgPrimary": "#0a0a0f",
+      "textPrimary": "#e0e0e0",
+      "textDim": "rgba(224,224,224,0.6)",
+      "borders": 0,
+      "cards": 0,
+      "chromeTint": 18,
+      "contentTint": 18
+    },
+    {
+      "id": "user-current",
+      "label": "Current",
+      "accent": "#0e71a0",
+      "luminance": 8,
+      "panelContrast": 69,
+      "bgTint": 17,
+      "contentLuminance": 18,
+      "contentContrast": 58,
+      "contentTint": 27,
+      "borderLuminance": 40,
+      "borderTint": 50,
+      "chromeLuminance": 45,
+      "chromeTint": 18,
+      "chatBubbleChrome": false,
+      "accentLuminance": 94,
+      "accentTint": 75,
+      "themeCode": false,
+      "mode": "dark",
+      "tints": {
+        "borders": {
+          "chat": true
+        }
+      },
+      "builtin": false,
+      "active": true
+    }
+  ]
+}

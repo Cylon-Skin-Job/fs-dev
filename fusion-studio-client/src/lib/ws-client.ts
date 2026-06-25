@@ -74,6 +74,40 @@ function isWebSocketMessage(value: unknown): value is WebSocketMessage {
     && typeof value.type === 'string';
 }
 
+function redactNoteBody(value: unknown): unknown {
+  if (!value || typeof value !== 'object') return value;
+  const clone = { ...(value as Record<string, unknown>) };
+  if (typeof clone.body === 'string') {
+    clone.body = '[redacted]';
+  }
+  const note = clone.note;
+  if (note && typeof note === 'object' && 'body' in note) {
+    clone.note = { ...(note as Record<string, unknown>), body: '[redacted]' };
+  }
+  return clone;
+}
+
+function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {
+  if (
+    msg.type !== 'chat-turn:metadata:update' &&
+    msg.type !== 'chat-turn:metadata:updated' &&
+    msg.type !== 'chat-turn:metadata:error'
+  ) {
+    return msg;
+  }
+
+  return {
+    ...msg,
+    metadata: redactNoteBody(msg.metadata) as Record<string, unknown> | undefined,
+    patch: msg.patch
+      ? {
+        ...msg.patch,
+        note: redactNoteBody(msg.patch.note) as { body: string } | null | undefined,
+      }
+      : msg.patch,
+  };
+}
+
 export function sendFusionMessage(msg: Record<string, unknown>) {
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify(msg));
@@ -142,7 +176,7 @@ export function connectWs() {
         throw new Error('WebSocket message missing type');
       }
       const msg = parsed;
-      console.log('[WS] Message received:', msg.type, msg);
+      console.log('[WS] Message received:', msg.type, redactMessageForLog(msg));
       handleMessage(msg);
     } catch (err) {
       console.error('[WS] Parse error:', err);
@@ -175,6 +209,10 @@ export function disconnectWs() {
 // Every store read uses getState() — always fresh, no stale closures.
 
 function handleMessage(msg: WebSocketMessage) {
+  if (msg.type === 'chat-turn:metadata:updated' || msg.type === 'chat-turn:metadata:error') {
+    emitFusion(msg.type, msg);
+  }
+
   if (handleStreamMessage(msg)) return;
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;

@@ -61,12 +61,17 @@ async function start({ server, app, sessions, getProjectRoot }) {
   await initDb();
   process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] fusion.db initialized');
+  const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
+  const localMachineName = await initializeLocalMachineIdentity();
+  console.log('[Workspace] local machine identity: ' + localMachineName);
 
   // 2. Handlers — depend on DB being ready
   const fusionHandlers = createFusionHandlers({ getDb, sessions, getProjectRoot });
 
   // 3. Audit subscriber — listens to event bus, persists exchange metadata
   startAuditSubscriber();
+  const { startEventLedgerSubscriber } = require('./ledger/event-ledger-subscriber');
+  startEventLedgerSubscriber();
 
   // 3.1. Transcription history subscriber — listens to transcription:* via bus,
   // persists raw/corrected text, and prunes to the latest 100 rows.

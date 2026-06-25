@@ -9,8 +9,9 @@
  *   2. chat:turn_end → correlate by threadId, persist with audit metadata
  */
 
-const { on } = require('../event-bus');
+const { on, emit } = require('../event-bus');
 const { HistoryFile } = require('../thread/HistoryFile');
+const { aggregateExchangeMetadata } = require('../chat-metadata/exchange-metadata-aggregator');
 
 // Pending audit data keyed by threadId
 // Map<threadId, { messageId, planMode, contextUsage, tokenUsage, timestamp }>
@@ -73,7 +74,7 @@ async function handleTurnEnd(event) {
   const auditData = pendingAuditData.get(event.threadId);
 
   // Build metadata object (works even if no status_update was received)
-  const metadata = {
+  const auditMetadata = {
     messageId: auditData?.messageId ?? null,
     planMode: auditData?.planMode ?? false,
     contextUsage: auditData?.contextUsage ?? null,
@@ -85,13 +86,50 @@ async function handleTurnEnd(event) {
   // Persist to SQLite via HistoryFile
   if (event.userInput && event.parts) {
     try {
+      const metadata = await aggregateExchangeMetadata({
+        threadId: event.threadId,
+        turnId: event.turnId,
+        workspace: event.workspace,
+        workspaceId: event.workspaceId,
+        projectRoot: event.projectRoot,
+        userInput: event.userInput,
+        assistantParts: event.parts,
+        attachments: event.attachments || [],
+        existingMetadata: auditMetadata,
+      });
       const historyFile = new HistoryFile(event.threadId);
-      await historyFile.addExchange(
+      const savedExchange = await historyFile.addExchange(
         event.threadId,
         event.userInput,
         event.parts,
         metadata
       );
+      if (!savedExchange?.exchangeId) {
+        throw new Error(`Saved exchange missing exchangeId for thread ${event.threadId}`);
+      }
+      emit('chat:exchange_metadata', {
+        workspace: event.workspace,
+        workspaceId: event.workspaceId,
+        scope: event.scope || 'project',
+        threadId: event.threadId,
+        turnId: event.turnId,
+        ts: Date.now(),
+        userInput: event.userInput,
+        metadata,
+      });
+      emit('chat-turn:saved', {
+        workspace: event.workspace,
+        workspaceId: event.workspaceId,
+        scope: event.scope || 'project',
+        threadId: event.threadId,
+        turnId: event.turnId,
+        exchangeId: savedExchange.exchangeId,
+        seq: savedExchange.seq,
+        ts: savedExchange.ts,
+        partial: event.partial,
+        reason: event.reason,
+        metadata,
+      });
     } catch (err) {
       console.error('[AuditSubscriber] Failed to save exchange:', err);
       // Fire-and-forget: don't block the event bus

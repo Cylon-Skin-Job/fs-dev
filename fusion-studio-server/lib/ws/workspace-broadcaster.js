@@ -26,6 +26,7 @@ const path = require('path');
 const fsPromises = require('fs').promises;
 const registry = require('../workspace/registry-service');
 const themesService = require('../theme/themes-service');
+const aiPaths = require('../workspace/ai-paths');
 
 const STYLE_FILES = [
   'variables.css',
@@ -39,7 +40,7 @@ const STYLE_FILES = [
 
 async function readWorkspaceStyles(repoPath) {
   if (!repoPath) return {};
-  const settingsDir = path.join(repoPath, 'ai', 'system', 'styles');
+  const settingsDir = aiPaths.getSystemStylesRoot(repoPath);
   const styles = {};
   await Promise.all(
     STYLE_FILES.map(async (file) => {

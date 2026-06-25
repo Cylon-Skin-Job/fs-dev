@@ -1,0 +1,78 @@
+Git Skill Create/Update Notes
+
+Purpose
+
+Check this file before editing `SKILL.md` in this folder.
+
+`SKILL.md` is the short routing layer for the git skill. This file explains what the git skill should cover and which supporting docs should hold deeper detail.
+
+When editing SKILL.md
+
+- Keep `SKILL.md` concise.
+- Update `SKILL.md` only when the high-level trigger, purpose, or behavior changes.
+- Put provider-specific auth, command examples, and edge cases in sibling docs.
+- Never store secrets, token values, or copied credentials in this folder.
+- Ask about user preferences when behavior is not obvious.
+
+Setup behavior the skill should offer
+
+- Check whether the project folder is inside a git worktree.
+- If it is not git tracked, offer to initialize git for the user.
+- Offer to walk the user through GitHub setup.
+- Offer to walk the user through GitLab setup.
+- Detect whether GitHub auth, GitLab auth, or both are already available.
+- Detect whether remotes already point to GitHub, GitLab, or both.
+- Explain push/pull options based on actual local state, remotes, and available auth.
+
+Secrets and auth
+
+Reference `secrets-and-auth` in this folder for auth setup details.
+
+Supported auth paths:
+
+- Secrets Manager can store GitHub and GitLab tokens.
+- Provider CLIs can sign in through browser-based auth flows.
+- Scripts should detect available auth before asking the user to configure anything new.
+
+User preferences to ask about
+
+- Should this workspace be backed up to GitHub, GitLab, both, or neither?
+- Should this workspace collaborate with other people or stay local/private?
+- Should `ai/` be committed for collaboration/backup or ignored as local agent state?
+- Should `.claude/skills/` be committed as shared workspace behavior or ignored as local agent preference?
+- Should `CLAUDE.md` and `AGENTS.md` be committed as project instructions or kept local?
+- Should generated logs, run evidence, cache files, screenshots, and secrets-related files be ignored?
+
+Need to find out before git actions
+
+- Is this folder inside a git worktree?
+- What branch is checked out?
+- Are there uncommitted changes?
+- Which files are staged?
+- Which remotes exist?
+- Do remotes point to GitHub, GitLab, both, or another provider?
+- Is the local branch ahead, behind, diverged, or untracked?
+- Is authenticated CLI/API access available for GitHub, GitLab, or both?
+- Are tokens available through Secrets Manager?
+- Are there project-specific gitignore rules for `ai/`, `.claude/`, `CLAUDE.md`, `AGENTS.md`, tools, scripts, run evidence, or generated state?
+
+Gitignore and workspace structure
+
+Before recommending gitignore rules, inspect the workspace structure and user intent.
+
+Reference the system/workspace view docs or skills that describe the `ai/` folder structure before deciding whether to ignore or sync workspace files. Some workspaces should share `ai/` for collaboration; others should keep agent state local.
+
+Recommended sibling files
+
+- `secrets-and-auth` for Secrets Manager, GitHub auth, GitLab auth, and CLI sign-in choices.
+- `remote-detection.md` for classifying remotes as GitHub, GitLab, both, or other.
+- `sync-procedures.md` for safe pull, push, and multi-remote flows.
+- `commit-policy.md` for commit message, staging, and review rules.
+- `gitignore-policy.md` for workspace-specific ignore recommendations.
+
+Update rules
+
+- Keep examples safe by default: inspect first, mutate only after state is known.
+- Do not assume a provider from repository name alone.
+- Do not initialize git, add remotes, push, pull, or write gitignore rules without user approval.
+- Preserve unrelated user or agent changes.

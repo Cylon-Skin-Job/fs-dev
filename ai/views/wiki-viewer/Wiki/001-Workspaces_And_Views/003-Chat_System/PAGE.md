@@ -26,6 +26,8 @@ metadata:
     - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
     - fusion-studio-client/src/components/chat/useChatArea.ts
     - fusion-studio-client/src/lib/ws/stream-handlers.ts
+    - fusion-studio-client/src/state/chatFileLinkStore.ts
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -53,6 +55,11 @@ and renders live turns through a separate live overlay path.
   is revisited.
 - Stop is server-owned. Interrupted turns persist as partial assistant
   exchanges instead of disappearing.
+- `Send to chat` creates metadata-backed link attachment pills above the
+  composer instead of inserting raw file paths into the textarea.
+- Filename autocomplete is plain text only. It uses a narrow RAM candidate set
+  from open non-`.md` file tabs and exchange metadata; it does not create
+  structured attachments.
 
 ## Architecture Map
 

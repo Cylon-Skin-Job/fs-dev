@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import type { FileTreeNode, FileInfo, EditorTab } from '../types/file-explorer';
+import { basename, isAutocompleteFilePath } from '../lib/chat-file-links/file-link-filter';
+import { useChatFileLinkStore } from './chatFileLinkStore';
 
 interface WorkspaceFileState {
   rootNodes: FileTreeNode[];
@@ -64,6 +66,19 @@ function pickActiveAfterClose(newTabs: EditorTab[], closedIdx: number): string {
   const left = newTabs[closedIdx - 1];
   if (left) return left.file.path;
   return newTabs[closedIdx]!.file.path;
+}
+
+function upsertOpenTabAutocompleteCandidate(path: string) {
+  if (!isAutocompleteFilePath(path)) return;
+  const name = basename(path);
+  useChatFileLinkStore.getState().upsertAutocompleteCandidate({
+    id: `open-tab:${path}`,
+    label: name,
+    path,
+    basename: name,
+    source: 'open-tab',
+    openedAt: Date.now(),
+  });
 }
 
 export const useFileStore = create<FileState>((set, get) => ({
@@ -180,6 +195,7 @@ export const useFileStore = create<FileState>((set, get) => ({
       const tabs = [...state.tabs];
       const [tab] = tabs.splice(existingIdx, 1);
       tabs.unshift(tab);
+      upsertOpenTabAutocompleteCandidate(path);
       set({
         tabs,
         activeTabPath: path,
@@ -195,6 +211,7 @@ export const useFileStore = create<FileState>((set, get) => ({
       size: 0,
       loading: true,
     };
+    upsertOpenTabAutocompleteCandidate(path);
     set({
       tabs: [...state.tabs, newTab],
       activeTabPath: path,

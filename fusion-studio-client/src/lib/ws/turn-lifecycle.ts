@@ -54,6 +54,7 @@ export function handleTurnBegin(
   // after their first segment, because the stale pendingTurnEnd
   // from the previous turn was still set.
   store.setPendingTurnEnd(threadId, false);
+  store.setPendingExchangeSave(threadId, null);
 
   store.setCurrentTurn(threadId, {
     id: msg.turnId || '',
@@ -103,6 +104,7 @@ export function handleTurnEnd(msg: WebSocketMessage, threadId: string): void {
       }
     }
     store.setPendingTurnEnd(threadId, true);
+    store.setPendingExchangeSave(threadId, msg.turnId || currentTurn.id);
     window.dispatchEvent(new CustomEvent('fusion:turn-ended', {
       detail: { threadId, reason: msg.reason, partial: msg.partial },
     }));

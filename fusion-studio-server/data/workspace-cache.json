@@ -1,7 +1,7 @@
 {
   "system-files": {
     "projectRoot": null,
-    "currentPanel": "wiki-viewer",
+    "currentPanel": "issues-viewer",
     "projectChats": {},
     "threads": [],
     "currentThreadId": null,
@@ -75,13 +75,9 @@
         "hasAppHtml": false,
         "settings": {
           "id": "chat",
-          "baseViewId": "chat",
           "label": "chat",
           "icon": "folder",
-          "rank": 2,
-          "enabled": true,
-          "source": "custom",
-          "viewPath": "ai/views/chat"
+          "rank": 2
         }
       },
       {
@@ -251,7 +247,7 @@
         "rank": 5,
         "category": "tool",
         "hasUiFolder": false,
-        "hasAppHtml": true,
+        "hasAppHtml": false,
         "settings": {
           "version": "1.0",
           "id": "system-viewer",
@@ -314,12 +310,12 @@
       }
     ],
     "panelRoots": {
-      "file-viewer": "/users/rccurtrightjr./projects/fs-dev/System Source Files",
-      "chat": "/users/rccurtrightjr./projects/fs-dev/System Source Files/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/System Source Files/ai/views/issues-viewer",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/System Source Files/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/System Source Files/ai/views/agents-viewer",
-      "system-viewer": "/users/rccurtrightjr./projects/fs-dev/System Source Files/ai/views/system-viewer/content"
+      "file-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager",
+      "chat": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/chat",
+      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/issues-viewer",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/wiki-viewer/Wiki",
+      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/agents-viewer",
+      "system-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager"
     },
     "viewStates": {
       "wiki-viewer": {
@@ -327,7 +323,7 @@
           "leftSidebar": 220,
           "leftChat": 431.890625,
           "rightSecondary": 360,
-          "rightCol": 291.05078125
+          "rightCol": 348.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -341,7 +337,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-21T10-02-35-038",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -359,7 +355,7 @@
           "leftSidebar": 220,
           "leftChat": 431.890625,
           "rightSecondary": 360,
-          "rightCol": 291.05078125
+          "rightCol": 348.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -373,7 +369,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-21T10-02-35-038",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -391,7 +387,7 @@
           "leftSidebar": 220,
           "leftChat": 431.890625,
           "rightSecondary": 360,
-          "rightCol": 291.05078125
+          "rightCol": 348.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -405,7 +401,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-21T10-02-35-038",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -423,7 +419,7 @@
           "leftSidebar": 220,
           "leftChat": 431.890625,
           "rightSecondary": 360,
-          "rightCol": 291.05078125
+          "rightCol": 348.1015625
         },
         "collapsed": {
           "leftSidebar": false,
@@ -437,7 +433,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-06-21T10-02-35-038",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -455,10 +451,10 @@
           "leftSidebar": 220,
           "leftChat": 431.890625,
           "rightSecondary": 360,
-          "rightCol": 291.05078125
+          "rightCol": 348.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -483,11 +479,11 @@
         }
       }
     },
-    "_savedAt": 1781240604757
+    "_savedAt": 1782146680661
   },
   "fusion-home": {
     "projectRoot": null,
-    "currentPanel": "calendar-viewer",
+    "currentPanel": "file-viewer",
     "projectChats": {},
     "threads": [],
     "currentThreadId": null,
@@ -839,7 +835,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-05-29T14-59-42-886",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -903,7 +899,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-05-29T14-59-42-886",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -935,7 +931,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-05-29T14-59-42-886",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -967,7 +963,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T16-13-14-415",
+        "currentThreadId": "2026-05-29T14-59-42-886",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1013,7 +1009,7 @@
         }
       }
     },
-    "_savedAt": 1781239321566
+    "_savedAt": 1782146683173
   },
   "media-editor": {
     "projectRoot": null,
@@ -1294,7 +1290,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-05-18T19-12-39-646",
+        "currentThreadId": "2026-06-03T02-19-02-349",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -1468,7 +1464,7 @@
         }
       }
     },
-    "_savedAt": 1781239356863
+    "_savedAt": 1782146681577
   },
   "solobooks": {
     "projectRoot": null,
@@ -1927,11 +1923,11 @@
         }
       }
     },
-    "_savedAt": 1781239322596
+    "_savedAt": 1782146682289
   },
   "fs-dev": {
     "projectRoot": null,
-    "currentPanel": "file-viewer",
+    "currentPanel": "wiki-viewer",
     "projectChats": {},
     "threads": [],
     "currentThreadId": null,
@@ -2057,13 +2053,9 @@
         "hasAppHtml": false,
         "settings": {
           "id": "chat",
-          "baseViewId": "chat",
           "label": "chat",
           "icon": "folder",
-          "rank": 2,
-          "enabled": true,
-          "source": "custom",
-          "viewPath": "ai/views/chat"
+          "rank": 2
         }
       },
       {
@@ -2355,7 +2347,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2387,7 +2379,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2419,7 +2411,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2451,7 +2443,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2483,7 +2475,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2515,7 +2507,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2547,7 +2539,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-03T02-19-02-349",
+        "currentThreadId": "2026-06-24T15-41-04-958",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2625,6 +2617,6 @@
         }
       }
     },
-    "_savedAt": 1781239347331
+    "_savedAt": 1782351129980
   }
 }

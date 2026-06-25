@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DEFAULT_WORKSPACE_ROOTS = [
-  '/Users/rccurtrightjr./projects/fs-dev/System Source Files',
+  '/Users/rccurtrightjr./projects/fs-dev/System_Manager',
   '/Users/rccurtrightjr./projects/Fusion-Home',
   '/Users/rccurtrightjr./projects/Fusion-Home/workspace-templates/fusion-home',
   '/Users/rccurtrightjr./projects/Fusion-Home/workspace-templates/project-repo',

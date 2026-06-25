@@ -138,6 +138,7 @@ wss.on('connection', async (ws) => {
     activeToolId: null,
     hasToolCalls: false,
     currentThreadId: null,
+    pendingAttachments: [],
     assistantParts: [],  // For exchange tracking (SQLite)
     contextUsage: null,  // Latest context usage from wire (0-1 decimal)
     tokenUsage: null,    // Latest token usage from wire

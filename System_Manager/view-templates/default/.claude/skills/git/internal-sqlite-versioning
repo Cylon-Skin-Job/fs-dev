@@ -1,0 +1,65 @@
+Internal SQLite Versioning
+
+Purpose
+
+Placeholder for the git skill's internal versioning guidance. Fill this in when the SQLite versioning and rollback system is implemented.
+
+Current status
+
+- Spec exists: `docs/OFFICE_DOCUMENT_VERSIONING_SPEC.md`.
+- Event ledger skeleton exists in server code:
+  - `fusion-studio-server/lib/db/migrations/029_event_ledger.js`
+  - `fusion-studio-server/lib/ledger/event-ledger.js`
+- Full document/workspace versioning and user rollback flows are not yet built.
+
+Intended model
+
+- Git protects the outer project repository.
+- Canonical app state lives in protected SQLite, normally `fusion.db`.
+- Document/workspace version history should be recorded through server-owned handlers, not direct AI writes to the canonical DB.
+- Meaningful saves create revisions.
+- Important moments create checkpoints.
+- User-requested rollback restores from a selected checkpoint or revision through approved app/server paths.
+
+Expected versioning tables
+
+The spec describes logical tables such as:
+
+- `documents`
+- `document_versions`
+- `document_checkpoints`
+- `undo_stack`
+- `event_log`
+- `event_resource_edges`
+- `event_tags`
+
+Rollback behavior to document later
+
+- How to list available revisions/checkpoints for a file or workspace resource.
+- How to preview a rollback target before applying it.
+- How to restore a whole document to a checkpoint.
+- How to restore a whole document to a revision.
+- How to record the rollback itself as a new event/version.
+- How to recover if rollback fails partway through.
+
+Important boundaries
+
+- Do not hand-edit `fusion.db`.
+- Do not use git as the only rollback mechanism for internal app state.
+- Do not let AI write directly to protected canonical SQLite tables.
+- Repo-local mirror DBs are work product and may be regenerated, edited, or shared; canonical app DBs are protected infrastructure.
+
+Reference specs and files
+
+- `docs/OFFICE_DOCUMENT_VERSIONING_SPEC.md`
+- `fusion-studio-server/lib/db/migrations/029_event_ledger.js`
+- `fusion-studio-server/lib/ledger/event-ledger.js`
+- Future: `fusion-studio-server/lib/versioning/`
+
+Open questions to resolve when built
+
+- Which resources beyond Office documents participate in versioning?
+- What UI asks the user to confirm rollback?
+- Should rollback create an automatic checkpoint before changing current state?
+- How are binary files or large snapshots stored?
+- Which versioning data is mirrored into workspace-local shareable SQLite databases?

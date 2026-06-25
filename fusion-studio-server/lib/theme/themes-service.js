@@ -14,13 +14,14 @@
 const path = require('path');
 const fs   = require('fs').promises;
 const themeCssGenerator = require('./theme-css-generator');
+const aiPaths = require('../workspace/ai-paths');
 
 function themesPath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'system', 'styles', 'themes.json');
+  return path.join(aiPaths.getSystemStylesRoot(projectRoot), 'themes.json');
 }
 
 function cssPath(projectRoot) {
-  return path.join(projectRoot, 'ai', 'system', 'styles', 'themes.css');
+  return path.join(aiPaths.getSystemStylesRoot(projectRoot), 'themes.css');
 }
 async function readThemesJson(projectRoot) {
   const file = themesPath(projectRoot);

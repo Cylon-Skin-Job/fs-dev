@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { useWorkspaceStore } from '../state/workspaceStore';
+import type { WorkspaceCreateManifest, WorkspaceTemplateProfile } from '../types';
 import './WorkspaceCreateModal.css';
 
 function isAbsolutePath(value: string): boolean {
@@ -22,8 +23,28 @@ export function WorkspaceCreateModal() {
   return <WorkspaceCreateModalContent />;
 }
 
-function getDefaultViewIds(manifest: ReturnType<typeof useWorkspaceStore.getState>['createManifest']): string[] {
+function getDefaultViewIds(manifest: WorkspaceCreateManifest | null): string[] {
   return manifest?.views.filter((view) => view.group === 'default').map((view) => view.id) ?? [];
+}
+
+function getWorkspaceTemplates(manifest: WorkspaceCreateManifest | null): WorkspaceTemplateProfile[] {
+  if (manifest?.workspaceTemplates?.length) return manifest.workspaceTemplates;
+  return [{
+    schemaVersion: 1,
+    id: 'new',
+    label: 'New Workspace',
+    category: 'new',
+    selectedViewIds: getDefaultViewIds(manifest),
+  }];
+}
+
+function getDefaultTemplateId(manifest: WorkspaceCreateManifest | null): string {
+  return getWorkspaceTemplates(manifest)[0]?.id ?? 'new';
+}
+
+function getTemplateViewIds(manifest: WorkspaceCreateManifest | null, templateId: string): string[] {
+  const profile = getWorkspaceTemplates(manifest).find((template) => template.id === templateId);
+  return profile?.selectedViewIds?.length ? profile.selectedViewIds : getDefaultViewIds(manifest);
 }
 
 function WorkspaceCreateModalContent() {
@@ -39,7 +60,8 @@ function WorkspaceCreateModalContent() {
   const [label, setLabel] = useState('');
   const [selectionState, setSelectionState] = useState(() => ({
     manifest,
-    selectedViewIds: getDefaultViewIds(manifest),
+    workspaceTemplateId: getDefaultTemplateId(manifest),
+    selectedViewIds: getTemplateViewIds(manifest, getDefaultTemplateId(manifest)),
   }));
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -48,10 +70,14 @@ function WorkspaceCreateModalContent() {
   }, [requestCreateManifest]);
 
   let selectedViewIds = selectionState.selectedViewIds;
+  let selectedWorkspaceTemplateId = selectionState.workspaceTemplateId;
   if (selectionState.manifest !== manifest) {
-    selectedViewIds = getDefaultViewIds(manifest);
-    setSelectionState({ manifest, selectedViewIds });
+    selectedWorkspaceTemplateId = getDefaultTemplateId(manifest);
+    selectedViewIds = getTemplateViewIds(manifest, selectedWorkspaceTemplateId);
+    setSelectionState({ manifest, workspaceTemplateId: selectedWorkspaceTemplateId, selectedViewIds });
   }
+  const workspaceTemplates = getWorkspaceTemplates(manifest);
+  const selectedWorkspaceTemplate = workspaceTemplates.find((template) => template.id === selectedWorkspaceTemplateId);
 
   const toggleView = (viewId: string) => {
     setLocalError(null);
@@ -67,6 +93,16 @@ function WorkspaceCreateModalContent() {
     });
   };
 
+  const selectWorkspaceTemplate = (workspaceTemplateId: string) => {
+    setLocalError(null);
+    setCreateError(null);
+    setSelectionState((current) => ({
+      ...current,
+      workspaceTemplateId,
+      selectedViewIds: getTemplateViewIds(manifest, workspaceTemplateId),
+    }));
+  };
+
   const onSubmit = () => {
     const trimmedPath = projectPath.trim();
     if (!trimmedPath || !isAbsolutePath(trimmedPath)) {
@@ -79,7 +115,12 @@ function WorkspaceCreateModalContent() {
     }
     setLocalError(null);
     setCreateError(null);
-    requestCreateWorkspace(trimmedPath, label.trim() || folderNameFromPath(trimmedPath), selectedViewIds);
+    requestCreateWorkspace(
+      trimmedPath,
+      label.trim() || folderNameFromPath(trimmedPath),
+      selectedViewIds,
+      selectedWorkspaceTemplateId
+    );
   };
 
   const error = localError || createError;
@@ -119,6 +160,26 @@ function WorkspaceCreateModalContent() {
           </label>
 
           <div className="rv-create-modal-views">
+            <label className="rv-create-modal-field">
+              <span>Workspace template</span>
+              <select
+                value={selectedWorkspaceTemplateId}
+                onChange={(event) => selectWorkspaceTemplate(event.target.value)}
+                disabled={!manifest}
+              >
+                {workspaceTemplates.map((template) => (
+                  <option key={template.id} value={template.id}>
+                    {template.label}
+                  </option>
+                ))}
+              </select>
+              {selectedWorkspaceTemplate?.description && (
+                <span className="rv-create-modal-template-description">
+                  {selectedWorkspaceTemplate.description}
+                </span>
+              )}
+            </label>
+
             <div className="rv-create-modal-section-title">View templates</div>
             {!manifest ? (
               <div className="rv-create-modal-loading">Loading templates...</div>

@@ -71,7 +71,7 @@ class HistoryFile {
     const ts = Date.now();
     const assistant = JSON.stringify({ parts: parts.map((p) => ({ ...p })) });
 
-    await db('exchanges').insert({
+    const inserted = await db('exchanges').insert({
       thread_id: threadId,
       seq,
       ts,
@@ -79,8 +79,10 @@ class HistoryFile {
       assistant,
       metadata: JSON.stringify(metadata || {}),
     });
+    const exchangeId = Array.isArray(inserted) ? inserted[0] : inserted;
 
     return {
+      exchangeId,
       seq,
       ts,
       user: userInput,
@@ -146,6 +148,7 @@ class HistoryFile {
     }
 
     return {
+      exchangeId: row.id,
       seq: row.seq,
       ts: row.ts,
       user: row.user_input,

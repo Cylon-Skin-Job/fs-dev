@@ -11,6 +11,27 @@ const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manag
 // is kept on runtime keys and outbound messages for wire compatibility.
 const SCOPE = 'project';
 
+function normalizeAttachments(attachments) {
+  if (!Array.isArray(attachments)) return [];
+  return attachments
+    .filter((item) => item && typeof item === 'object')
+    .map((item) => ({
+      kind: typeof item.kind === 'string' ? item.kind : 'file',
+      label: typeof item.label === 'string' ? item.label : 'attachment',
+      path: typeof item.path === 'string' ? item.path : '',
+      sourceName: typeof item.sourceName === 'string' ? item.sourceName : (typeof item.label === 'string' ? item.label : 'attachment'),
+      ...(typeof item.panel === 'string' ? { panel: item.panel } : {}),
+      ...(typeof item.relativePath === 'string' ? { relativePath: item.relativePath } : {}),
+    }))
+    .filter((item) => item.path);
+}
+
+function serializeAttachmentsForHarness(userInput, attachments) {
+  if (!attachments.length) return userInput;
+  const lines = attachments.map((attachment) => `- ${attachment.label}: ${attachment.path}`);
+  return `${userInput}\n\nAttached references:\n${lines.join('\n')}`;
+}
+
 function getRuntimeKey(manager, threadId) {
   return {
     workspaceId: manager.workspaceId,
@@ -186,6 +207,8 @@ async function acceptPromptThroughRuntime({
   }
 
   threadRuntimeManager.markInFlight(runtimeKey);
+  const attachments = normalizeAttachments(clientMsg.attachments);
+  const harnessInput = serializeAttachmentsForHarness(clientMsg.user_input, attachments);
   const accepted = await ThreadWebSocketHandler.handleMessageSend(ws, {
     content: clientMsg.user_input,
   });
@@ -196,10 +219,11 @@ async function acceptPromptThroughRuntime({
   console.log('[WS] Message accepted by runtime and tracked in thread');
 
   session.pendingUserInput = clientMsg.user_input;
+  session.pendingAttachments = attachments;
 
   (async () => {
     try {
-      for await (const event of wire._sendMessage(clientMsg.user_input, {})) {
+      for await (const event of wire._sendMessage(harnessInput, {})) {
         handleCanonicalHarnessEvent(event, ws);
       }
       markReadyIfRuntimeStillActive(runtimeKey);

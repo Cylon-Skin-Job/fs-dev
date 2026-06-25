@@ -15,6 +15,7 @@ const fsPromises = require('fs').promises;
 
 const workspaceController = require('../workspace/workspace-controller');
 const views = require('../views');
+const aiPaths = require('../workspace/ai-paths');
 
 /**
  * Build the workspace:init message: registry, active workspace, CLI
@@ -48,7 +49,7 @@ async function buildWorkspaceInit(getProjectRoot) {
       'variables.css', 'themes.css', 'components.css', 'views.css',
       'file-viewer.css', 'doc-viewer.css', 'tints.css',
     ];
-    const settingsDir = path.join(activeRoot, 'ai', 'system', 'styles');
+    const settingsDir = aiPaths.getSystemStylesRoot(activeRoot);
     await Promise.all(
       styleFiles.map(async (file) => {
         try {

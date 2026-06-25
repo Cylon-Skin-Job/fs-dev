@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "system-source-files",
+  "label": "System Source Files",
+  "category": "startup",
+  "description": "Shipped system source workspace profile.",
+  "selectedViewIds": [
+    "office-viewer",
+    "file-viewer",
+    "issues-viewer",
+    "wiki-viewer",
+    "agents-viewer"
+  ]
+}

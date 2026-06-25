@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "name": "Fusion Studio System Manager",
+  "description": "Reference templates, prompts, skills, hooks, scripts, and triggers shipped with Fusion Studio.",
+  "workspace": {
+    "id": "system-files",
+    "label": "System_Manager",
+    "icon": "folder_open",
+    "preloaded": true,
+    "special": true,
+    "globalTools": true
+  },
+  "templates": {
+    "views": [
+      "file-viewer",
+      "doc-viewer",
+      "office-viewer",
+      "calendar",
+      "email",
+      "library",
+      "spending",
+      "wiki",
+      "tools",
+      "issues"
+    ],
+    "agents": [],
+    "skills": [],
+    "hooks": [],
+    "scripts": [],
+    "triggers": []
+  }
+}

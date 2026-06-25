@@ -109,12 +109,18 @@ function createCanonicalChatEventApplier({
       return;
     }
 
+    const pendingAttachments = Array.isArray(session.pendingAttachments)
+      ? session.pendingAttachments
+      : [];
+
     session.currentTurn = {
       id: generateTurnId(),
       text: '',
-      userInput: payload?.userInput || session.pendingUserInput || ''
+      userInput: session.pendingUserInput || payload?.userInput || '',
+      attachments: pendingAttachments,
     };
     session.pendingUserInput = null;
+    session.pendingAttachments = [];
     session.hasToolCalls = false;
     session.assistantParts = [];  // Reset parts for new exchange
 
@@ -128,10 +134,13 @@ function createCanonicalChatEventApplier({
 
     emit('chat:turn_begin', {
       workspace: getWorkspace(),
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: session.projectRoot,
       scope: getScope(),
       threadId: getThreadId(),
       turnId: session.currentTurn.id,
-      userInput: session.currentTurn.userInput
+      userInput: session.currentTurn.userInput,
+      attachments: session.currentTurn.attachments,
     });
   }
 
@@ -450,6 +459,8 @@ function createCanonicalChatEventApplier({
 
     emit('chat:turn_end', {
       workspace: getWorkspace(),
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: session.projectRoot,
       scope: getScope(),
       threadId,
       turnId: session.currentTurn.id,
@@ -457,6 +468,7 @@ function createCanonicalChatEventApplier({
       hasToolCalls: session.hasToolCalls,
       userInput: session.currentTurn.userInput,
       parts: session.assistantParts,
+      attachments: session.currentTurn.attachments || [],
       reason: payload?.reason || 'complete',
       partial: Boolean(payload?.partial),
     });

@@ -14,6 +14,8 @@ metadata:
     - fusion-studio-server/lib/cli-config/resolver.js
     - fusion-studio-server/lib/thread/thread-runtime-controller.js
     - fusion-studio-server/lib/harness/opencode/index.js
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
+    - fusion-studio-client/src/state/chatFileLinkStore.ts
   connected-skills: []
   related-trigger-files: []
 ---
@@ -40,6 +42,29 @@ assistant activation and new thread creation.
 
 The server accepts a prompt through runtime readiness and emits `message:sent`.
 The client commits the user bubble after acceptance.
+
+## `Send to chat` Is Attachment Metadata
+
+`Send to chat` creates removable link attachment pills, not raw textarea path
+text. The prompt can carry structured attachment metadata, and the harness sees
+a compact attached-reference block.
+
+Copy path/link controls remain separate and continue to copy paths.
+
+## Filename Autocomplete Is Plain Text
+
+Filename autocomplete inserts plain filename text only. It never creates an
+attachment, mention object, or hidden metadata.
+
+Autocomplete candidates are RAM-only and limited to files with extensions that
+do not end in `.md`.
+
+## Exchange Metadata Is Collector-Based
+
+`exchanges.metadata` stores turn metadata such as `attachments`, `mentions`, and
+`fileMutations`. New extraction work should be added as a chat metadata
+collector instead of growing runtime, audit, or persistence modules into a
+monolith.
 
 ## Server Owns Stop
 

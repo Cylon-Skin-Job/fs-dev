@@ -83,7 +83,8 @@
   font-size: var(--font-sm, 13px);
 }
 
-.rv-create-modal-field input {
+.rv-create-modal-field input,
+.rv-create-modal-field select {
   width: 100%;
   box-sizing: border-box;
   padding: var(--space-sm, 9px) var(--space-md, 12px);
@@ -92,6 +93,16 @@
   background: var(--bg-base, rgba(8, 10, 14, 0.8));
   color: var(--text-primary, rgba(255, 255, 255, 0.92));
   font: inherit;
+}
+
+.rv-create-modal-field select {
+  appearance: none;
+}
+
+.rv-create-modal-template-description {
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-xs, 12px);
+  line-height: 1.35;
 }
 
 .rv-create-modal-section-title {

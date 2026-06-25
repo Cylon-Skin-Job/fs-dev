@@ -8,6 +8,8 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import { useFileStore } from '../../state/fileStore';
 import { loadRootTree } from '../file-tree';
 import { secondaryTracker } from '../secondary-tracker';
 import { convertPartToSegment } from './assistant-parts';
@@ -19,6 +21,10 @@ import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../typ
  */
 export function handleThreadMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
+  const hydrateThreadCandidates = (exchanges: ExchangeData[] | undefined) => {
+    const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
+    useChatFileLinkStore.getState().hydrateThreadAutocompleteCandidates(exchanges || [], openTabPaths);
+  };
 
   switch (msg.type) {
     case 'thread:list':
@@ -54,6 +60,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         store.setChatActive(true);
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
         store.clearChat(msg.threadId);
+        hydrateThreadCandidates([]);
         loadRootTree();
       } else {
         console.error('[WS] thread:created missing data:', msg);
@@ -90,6 +97,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         store.setChatActive(true);
         // PER_THREAD_CHAT_STATE: clear then hydrate this thread's slot.
         store.clearChat(msg.threadId);
+        hydrateThreadCandidates(msg.exchanges || []);
 
         if (msg.exchanges && msg.exchanges.length > 0) {
           console.log('[WS] Loading', msg.exchanges.length, 'exchanges (rich format)');
@@ -167,11 +175,14 @@ function convertExchangesToMessages(threadId: string, exchanges: ExchangeData[])
       .join('');
 
     store.addMessage(threadId, {
-      id: `ex-${idx}-assistant`,
+      id: exchange.exchangeId ? `exchange-${exchange.exchangeId}-assistant` : `ex-${idx}-assistant`,
       type: 'assistant',
       content: assistantContent,
       timestamp: exchange.ts,
       segments: segments.length > 0 ? segments : undefined,
+      exchangeId: exchange.exchangeId,
+      exchangeSeq: exchange.seq,
+      metadata: exchange.metadata,
     });
   });
 }

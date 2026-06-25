@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "media-studio",
+  "label": "Media Studio",
+  "category": "startup",
+  "description": "Shipped media workspace profile.",
+  "selectedViewIds": [
+    "office-viewer",
+    "file-viewer",
+    "issues-viewer",
+    "wiki-viewer",
+    "agents-viewer"
+  ]
+}

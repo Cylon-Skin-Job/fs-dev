@@ -43,6 +43,12 @@ module.exports = {
     activatesEventBus: false,
   },
 
+  prompt: {
+    description: 'Prompt-backed assistant workflow files under System_Manager/Prompts/**/PROMPT.md.',
+    fields: [],
+    activatesEventBus: false,
+  },
+
   chat: {
     description: '(STUB — wired up in SPEC-24b.) Chat thread display metadata. Filename is the thread ID; frontmatter holds the display name only.',
     fields: ['name'],

@@ -1,6 +1,6 @@
 /**
  * @module ScreenshotsTrigger
- * @role Icon button showing screenshots from System Source Files/Screenshots/
+ * @role Icon button showing screenshots from System_Manager/Screenshots/
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
@@ -196,7 +196,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
           <HoverIconModalEmpty
             icon="image_not_supported"
             message="No screenshots found"
-            hint="System Source Files/Screenshots/"
+            hint="System_Manager/Screenshots/"
           />
         ) : (
           <>

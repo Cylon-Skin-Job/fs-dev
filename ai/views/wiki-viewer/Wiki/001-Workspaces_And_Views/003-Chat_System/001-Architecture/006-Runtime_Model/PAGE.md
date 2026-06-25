@@ -17,6 +17,10 @@ metadata:
     - fusion-studio-server/lib/thread/live-turn-snapshot.js
     - fusion-studio-server/lib/thread/HistoryFile.js
     - fusion-studio-server/lib/thread/ThreadIndex.js
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
+    - fusion-studio-server/lib/chat-metadata/collectors/attachments.js
+    - fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js
+    - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -109,15 +113,38 @@ Prompt sending goes through `threadRuntimeController.acceptPromptThroughRuntime`
 
 Current flow:
 
-1. Client sends prompt with `scope`, `threadId`, and `user_input`.
+1. Client sends prompt with `scope`, `threadId`, `user_input`, and optional
+   `attachments`.
 2. Server checks/warm runtime readiness.
 3. Server rejects in-flight/stopping conflicts.
 4. Server persists/accepts the user message.
 5. Server emits `message:sent`.
 6. Client commits the user bubble and clears accepted input.
-7. Harness events stream through the canonical path.
+7. Server serializes a compact attached-reference block for the harness when
+   attachment metadata is present.
+8. Harness events stream through the canonical path.
 
 The client no longer commits the user bubble optimistically on click.
+
+## Turn Metadata
+
+Completed turns persist structured metadata in `exchanges.metadata`.
+
+Metadata assembly is modular:
+
+- runtime emits prompt and turn events with attachment context
+- file systems continue to emit file change events on the universal event bus
+- `chat-metadata` collectors contribute focused metadata slices
+- the exchange metadata aggregator merges collector output with audit metadata
+
+Do not add new extraction rules directly to runtime, canonical chat applier,
+`HistoryFile`, or the audit subscriber. Add a collector instead.
+
+Current collector fields:
+
+- `attachments` from pending `Send to chat` pills
+- `mentions` from repo-validated non-`.md` file mentions in user/assistant text
+- `fileMutations` from turn-correlated file change events
 
 ## Live Turns
 

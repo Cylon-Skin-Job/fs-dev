@@ -27,10 +27,22 @@
 
 const REDACTED = '[redacted]';
 
+const CHAT_TURN_NOTE_REDACTION_PATHS = [
+  'note.body',
+  'patch.note.body',
+  'metadata.note.body',
+  'payload.note.body',
+  'payload.patch.note.body',
+  'payload.metadata.note.body',
+];
+
 const RULES = {
   'clipboard:append': { redactPaths: ['text', 'value', 'item.text', 'item.value'] },
   'clipboard:use':    { redactPaths: ['text', 'value', 'item.text', 'item.value'] },
   'secrets:api-keys:set': { redactPaths: ['value'] },
+  'chat-turn:metadata:update': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
+  'chat-turn:metadata:updated': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
+  'chat-turn:metadata:error': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
 };
 
 function setAtPath(obj, path, value) {

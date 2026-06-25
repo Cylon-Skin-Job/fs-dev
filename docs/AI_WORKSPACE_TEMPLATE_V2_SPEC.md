@@ -546,10 +546,14 @@ Template source layout:
 
 ```text
 templates/
-  views/
-  workspaces/
-    startup/
+  view-templates/
+  workspace-templates/
     new/
+    startup/
+      fusion-home/
+      media-studio/
+      invoicing-and-expenses/
+      system-source-files/
   tools/
     global/
     view-scoped/
@@ -563,10 +567,12 @@ templates/
 
 Rules:
 
-- `templates/views/` preloads default view shells that ship with Fusion Studio.
-- `templates/workspaces/new/` is the default new workspace profile.
+- `templates/view-templates/` is the canonical reusable v2 view-shell library. It is the perfected mirror of the `ai-v2` view shell shape and is the source used when adding or selecting views.
+- `templates/workspace-templates/new/` is the default new workspace profile.
 - The `new` profile defaults to `file-viewer`, `issues-viewer`, `wiki-viewer`, and `agents-viewer` selected.
-- `templates/workspaces/startup/` is reserved for startup/system workspace profiles.
+- `templates/workspace-templates/startup/` is reserved for startup/shipped workspace profiles.
+- Startup profiles currently include `fusion-home`, `media-studio`, `invoicing-and-expenses`, and `system-source-files`.
+- Startup profiles can include their own selected views, data folders, documentation, onboarding tickets, and starter assets.
 - Global tools, skills, and scripts install into all new workspaces.
 - View-scoped tools, skills, and scripts install automatically when matching views are selected.
 - View onboarding tickets under `*-viewer/onboarding/` can preload when that view is selected.
@@ -658,7 +664,8 @@ System Source Files/ai-template/
 The canonical template should include:
 
 - Machine-scoped folder instantiated from the database-registered local machine name.
-- Default `Views/` folders for shipped views.
+- Default view-shell folders for shipped views under `templates/view-templates/`.
+- Workspace template profiles under `templates/workspace-templates/`.
 - Default `manifest.md`, `styles/layout.css`, and `styles/icon.md` per view.
 - Default empty or starter `state/state.json` per view.
 - Default `Wiki/` starter content.

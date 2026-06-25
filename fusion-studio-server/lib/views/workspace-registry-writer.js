@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const createService = require('../workspace/create-service');
+const aiPaths = require('../workspace/ai-paths');
 
 function getWorkspaceRegistryPath(projectRoot) {
   return path.join(projectRoot, 'ai', 'system', 'workspace', 'views.json');
@@ -25,6 +26,10 @@ function assertWorkspaceRegistry(projectRoot) {
 function updateWorkspaceViewRegistry(projectRoot, request) {
   if (!projectRoot) {
     throw new Error('No active workspace');
+  }
+
+  if (hasV2Views(projectRoot)) {
+    return updateV2WorkspaceViews(projectRoot, request);
   }
 
   const viewId = typeof request?.viewId === 'string' ? request.viewId.trim() : '';
@@ -119,8 +124,15 @@ function getInstalledBaseViewIds(registry) {
 function isTemplateFolderAvailable(template) {
   if (!template || typeof template.templatePath !== 'string') return false;
   const source = path.resolve(createService.getSystemSourceRoot(), template.templatePath);
-  const relative = path.relative(createService.getTemplateRoot(), source);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) return false;
+  const allowedRoots = [createService.getTemplateRoot()];
+  if (typeof createService.getAiTemplateViewsRoot === 'function') {
+    allowedRoots.push(createService.getAiTemplateViewsRoot());
+  }
+  const isAllowed = allowedRoots.some((root) => {
+    const relative = path.relative(root, source);
+    return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+  });
+  if (!isAllowed) return false;
   try {
     return fs.lstatSync(source).isDirectory();
   } catch {
@@ -131,6 +143,17 @@ function isTemplateFolderAvailable(template) {
 function getWorkspaceViewOptions(projectRoot) {
   if (!projectRoot) {
     throw new Error('No active workspace');
+  }
+
+  if (hasV2Views(projectRoot)) {
+    const installedBaseViewIds = new Set(listV2ViewFolders(projectRoot).map((view) => view.id));
+    const manifest = createService.readManifest();
+    return {
+      hiddenViews: [],
+      availableTemplates: manifest.views
+        .filter(template => template && !installedBaseViewIds.has(template.baseViewId || template.id))
+        .filter(isTemplateFolderAvailable),
+    };
   }
 
   const { registry } = assertWorkspaceRegistry(projectRoot);
@@ -157,6 +180,10 @@ function restoreWorkspaceView(projectRoot, viewId) {
     throw new Error('No active workspace');
   }
 
+  if (hasV2Views(projectRoot)) {
+    return addWorkspaceView(projectRoot, viewId);
+  }
+
   const id = typeof viewId === 'string' ? viewId.trim() : '';
   if (!id) {
     throw new Error('View id is required');
@@ -176,6 +203,10 @@ function restoreWorkspaceView(projectRoot, viewId) {
 function addWorkspaceView(projectRoot, templateId) {
   if (!projectRoot) {
     throw new Error('No active workspace');
+  }
+
+  if (hasV2Views(projectRoot)) {
+    return addV2WorkspaceView(projectRoot, templateId);
   }
 
   const id = typeof templateId === 'string' ? templateId.trim() : '';
@@ -240,6 +271,190 @@ function addWorkspaceView(projectRoot, templateId) {
 
   writeWorkspaceRegistry(registryPath, registry);
   return registry;
+}
+
+function hasV2Views(projectRoot) {
+  try {
+    return fs.lstatSync(aiPaths.getMachineViewsRoot(projectRoot)).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function updateV2WorkspaceViews(projectRoot, request) {
+  const viewId = typeof request?.viewId === 'string' ? request.viewId.trim() : '';
+  if (!viewId) {
+    throw new Error('View id is required');
+  }
+
+  const patch = request.patch || null;
+  const move = request.move || null;
+
+  if (patch !== null) {
+    if (typeof patch !== 'object' || Array.isArray(patch)) {
+      throw new Error('View patch must be an object');
+    }
+    const allowedPatchFields = new Set(['enabled']);
+    for (const field of Object.keys(patch)) {
+      if (!allowedPatchFields.has(field)) {
+        throw new Error(`Cannot update v2 view field: ${field}`);
+      }
+    }
+    if ('enabled' in patch && typeof patch.enabled !== 'boolean') {
+      throw new Error('View enabled must be a boolean');
+    }
+  }
+
+  if (move !== null && move !== 'up' && move !== 'down') {
+    throw new Error('View move must be up or down');
+  }
+
+  const entries = listV2ViewFolders(projectRoot);
+  const targetIndex = entries.findIndex((entry) => entry.id === viewId);
+  if (targetIndex === -1) {
+    throw new Error('View not found');
+  }
+
+  if (patch && patch.enabled === false) {
+    if (entries.length <= 1) {
+      throw new Error('At least one view must remain visible');
+    }
+    fs.rmSync(entries[targetIndex].folderPath, { recursive: true, force: true });
+    return compactV2ViewFolders(projectRoot);
+  }
+
+  if (patch && patch.enabled === true) {
+    return toV2Registry(projectRoot);
+  }
+
+  if (move) {
+    const neighborIndex = move === 'up' ? targetIndex - 1 : targetIndex + 1;
+    if (neighborIndex < 0 || neighborIndex >= entries.length) {
+      return toV2Registry(projectRoot);
+    }
+    const reordered = [...entries];
+    [reordered[targetIndex], reordered[neighborIndex]] = [reordered[neighborIndex], reordered[targetIndex]];
+    return rewriteV2ViewFolderOrder(projectRoot, reordered);
+  }
+
+  return toV2Registry(projectRoot);
+}
+
+function addV2WorkspaceView(projectRoot, templateId) {
+  const id = typeof templateId === 'string' ? templateId.trim() : '';
+  if (!id) {
+    throw new Error('Template id is required');
+  }
+
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  const installedIds = new Set(listV2ViewFolders(projectRoot).map((entry) => entry.id));
+  if (installedIds.has(id)) {
+    throw new Error('View template is already installed');
+  }
+
+  const manifest = createService.readManifest();
+  const template = manifest.views.find((view) => view && view.id === id);
+  if (!template) {
+    throw new Error('Unknown view template');
+  }
+  if (!isTemplateFolderAvailable(template)) {
+    throw new Error('Template source is missing');
+  }
+
+  const source = path.resolve(createService.getSystemSourceRoot(), template.templatePath);
+  const sourceRelative = path.relative(createService.getAiTemplateViewsRoot(), source);
+  if (sourceRelative.startsWith('..') || path.isAbsolute(sourceRelative)) {
+    throw new Error('Template path escapes ai-template/Views');
+  }
+
+  const nextIndex = listV2ViewFolders(projectRoot).length + 1;
+  const destination = path.join(viewsRoot, `${String(nextIndex).padStart(3, '0')}-${id}`);
+  const destinationRelative = path.relative(viewsRoot, destination);
+  if (destinationRelative.startsWith('..') || path.isAbsolute(destinationRelative)) {
+    throw new Error('Destination path escapes machine Views');
+  }
+  if (fs.existsSync(destination)) {
+    throw new Error('View destination already exists');
+  }
+
+  try {
+    createService.copyTemplateDirectory(source, destination);
+  } catch (err) {
+    if (fs.existsSync(destination)) {
+      fs.rmSync(destination, { recursive: true, force: true });
+    }
+    throw err;
+  }
+
+  return toV2Registry(projectRoot);
+}
+
+function compactV2ViewFolders(projectRoot) {
+  return rewriteV2ViewFolderOrder(projectRoot, listV2ViewFolders(projectRoot));
+}
+
+function rewriteV2ViewFolderOrder(projectRoot, orderedEntries) {
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  const stamp = `${process.pid}-${Date.now()}`;
+  const tempEntries = orderedEntries.map((entry, index) => {
+    const tempName = `.reorder-${stamp}-${index}-${entry.id}`;
+    const tempPath = path.join(viewsRoot, tempName);
+    fs.renameSync(entry.folderPath, tempPath);
+    return { ...entry, tempPath };
+  });
+
+  tempEntries.forEach((entry, index) => {
+    const finalPath = path.join(viewsRoot, `${String(index + 1).padStart(3, '0')}-${entry.id}`);
+    fs.renameSync(entry.tempPath, finalPath);
+  });
+
+  return toV2Registry(projectRoot);
+}
+
+function listV2ViewFolders(projectRoot) {
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  try {
+    return fs.readdirSync(viewsRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+      .map((entry) => {
+        const match = entry.name.match(/^(\d+)-(.+)$/);
+        return {
+          folderName: entry.name,
+          folderPath: path.join(viewsRoot, entry.name),
+          order: match ? Number(match[1]) : 999,
+          id: match ? match[2] : entry.name,
+        };
+      })
+      .sort((a, b) => {
+        const orderDiff = a.order - b.order;
+        if (orderDiff !== 0) return orderDiff;
+        return a.folderName.localeCompare(b.folderName);
+      });
+  } catch {
+    return [];
+  }
+}
+
+function toV2Registry(projectRoot) {
+  const manifest = createService.readManifest();
+  const templatesById = new Map(manifest.views.map((view) => [view.id, view]));
+  return {
+    version: 2,
+    sort: 'filesystem-prefix',
+    views: listV2ViewFolders(projectRoot).map((entry, index) => {
+      const template = templatesById.get(entry.id) || {};
+      return {
+        id: entry.id,
+        baseViewId: entry.id,
+        label: template.label || entry.id,
+        icon: template.icon || 'folder',
+        rank: index + 1,
+        enabled: true,
+        source: template.group === 'default' ? 'default' : 'optional',
+        viewPath: path.join('ai', aiPaths.getLocalMachineName(), 'Views', `${String(index + 1).padStart(3, '0')}-${entry.id}`),
+      };
+    }),
+  };
 }
 
 module.exports = {

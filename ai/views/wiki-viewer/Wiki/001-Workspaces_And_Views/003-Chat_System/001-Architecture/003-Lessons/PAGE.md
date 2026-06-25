@@ -14,6 +14,8 @@ metadata:
     - fusion-studio-server/lib/harness/opencode/index.js
     - fusion-studio-client/src/components/LiveSegmentRenderer.tsx
     - fusion-studio-client/src/lib/ws/stream-handlers.ts
+    - fusion-studio-client/src/hooks/useFileAutocomplete.ts
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -61,3 +63,20 @@ allow follow-up. It should not lose the assistant half of the exchange.
 
 The visible typing cursor and cursor injection utilities were removed. Do not
 bring them back while repairing reveal behavior.
+
+## Do Not Rebuild Broad Mentions
+
+Filename autocomplete is intentionally not an `@` mention system. Do not add a
+modal picker, wiki/doc/ticket autocomplete, or broad repo search under this
+feature.
+
+## Keep Metadata Extraction Modular
+
+Runtime, canonical chat application, audit persistence, and `HistoryFile` should
+not own every metadata extraction rule. Add focused chat metadata collectors for
+new fields such as entities, RAG keywords, symbols, or citations.
+
+## Markdown Is Not A Filename Candidate
+
+Autocomplete excludes `.md` files even when markdown resources are valid
+send-to-chat attachments. This keeps filename completion focused on code/files.
