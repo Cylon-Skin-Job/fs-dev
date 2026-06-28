@@ -21,7 +21,8 @@ export function normalizeToolResultForSegment(
       .filter(part => part.kind === 'system')
       .map(part => stripSystemTag(part.text).trim())
       .filter(Boolean)
-      .join('\n');
+      .join('\n')
+      || (typeof toolStatus === 'string' ? toolStatus.trim() : '');
 
     return {
       content: content || (isError ? status : ''),

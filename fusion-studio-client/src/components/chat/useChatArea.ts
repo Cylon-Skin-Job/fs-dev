@@ -13,6 +13,7 @@ import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';
 import type { ChatInputRef } from '../ChatInput';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
+import { useComposerForkAction } from './useComposerForkAction';
 
 interface PendingPromptTarget {
   threadId: string;
@@ -269,6 +270,16 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const isTurnFinalizing = Boolean(pendingTurnEnd || pendingExchangeSaveTurnId);
   const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0 && !isTurnFinalizing;
   const isTurnActive = (!!currentTurn || isSendingForCurrentThread) && !isTurnFinalizing;
+  const { isForkThreadDisabled, handleForkThread } = useComposerForkAction({
+    currentThreadId,
+    currentThread,
+    isActive,
+    noThread,
+    isAcceptancePending,
+    isTurnActive,
+    isTurnFinalizing,
+    messageCount: messages.length,
+  });
 
   const sendToThread = useCallback((threadId: string, text: string) => {
     if (pendingPromptRef.current) return;
@@ -443,6 +454,8 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     handleStop,
     warmCurrentThread,
     isAcceptancePending,
+    isForkThreadDisabled,
+    handleForkThread,
     inputPlaceholder,
   };
 }

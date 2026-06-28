@@ -19,21 +19,18 @@ export const shellRenderer: ToolRenderer = {
     fontStyle: 'normal',
     fontSize: '13px',
   },
-  formatContent: (content, args, segment) => {
+  formatContent: (content, args) => {
     const command = getShellCommand(args);
-    const status = segment?.isError ? segment.toolStatus : undefined;
+    const output = content ? compactShellOutput(content) : '';
     const pieces: string[] = [];
 
     if (command) {
       pieces.push(`<span class="rv-shell-command">$ ${escapeHtml(command)}</span>`);
-      if (content || status) pieces.push('\n\n');
+      if (output) pieces.push('\n\n');
     }
 
-    if (content) pieces.push(escapeHtml(compactShellOutput(content)));
-
-    if (status) {
-      if (content && !content.endsWith('\n')) pieces.push('\n');
-      pieces.push(`<span class="rv-shell-status">${escapeHtml(status)}</span>`);
+    if (output) {
+      pieces.push(`<span class="rv-shell-output">${escapeHtml(output)}</span>`);
     }
 
     return pieces.join('');

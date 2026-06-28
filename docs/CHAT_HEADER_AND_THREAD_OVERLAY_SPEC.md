@@ -60,9 +60,8 @@ Clicking `playlist_add` opens a dropdown anchored below the button. Contents are
 - Dropdown closes on: selection, Escape, outside click, panel switch, workspace switch, sidebar expand.
 
 **Future work (not in this spec):**
-- Empty-thread cleanup: if the user clicks `playlist_add` while the currently-active thread has zero messages, delete the empty thread and replace it with the new one.
-- Same cleanup on thread switch: leaving an empty/unused thread deletes it.
-- There may be prior thread-cleanup logic that got removed; reinstate if needed. Track as a follow-up spec.
+- Pending chat intent: New Chat and Fork should create RAM-only pending intent,
+  not empty durable rows. See `PENDING_CHAT_INTENT_SPEC.md`.
 
 ### 3e. Thread-jump dropdown
 
@@ -222,7 +221,8 @@ Update `setPaneWidth` to call `clampPaneWidth(pane, width)`. Also update the cli
 ### 6b. New-chat flow
 - Click `playlist_add` → CLI picker opens (thread dropdown closes if open).
 - Click CLI → creates new thread, switches to it, closes dropdown.
-- Future: empty-thread cleanup on create/switch (tracked as follow-up).
+- Future: RAM-only pending chat intent on create/fork before first stream-gated
+  commit. See `PENDING_CHAT_INTENT_SPEC.md`.
 
 ### 6c. Thread jump
 - Click `subject` → thread-jump opens (CLI picker closes if open).
@@ -285,5 +285,7 @@ Each step is independently testable.
 
 ## 11. Follow-up work (not in this spec)
 
-- **Empty-thread cleanup.** If the active thread has zero messages, deleting it on new-chat or on thread-switch. Check for prior cleanup logic that may have been removed (SPEC-24 series had `delete legacy strategies`); reinstate or rewrite.
+- **Pending chat intent.** New Chat and Fork should be RAM-only until first
+  stream-gated commit, replacing the older empty-thread cleanup idea. See
+  `PENDING_CHAT_INTENT_SPEC.md`.
 - Chat header will host additional controls over time (TBD).

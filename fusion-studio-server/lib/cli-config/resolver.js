@@ -11,7 +11,7 @@
 const { CATALOG_BY_ID } = require('./catalog');
 const { loadWorkspaceConfig, loadViewConfig, defaultWorkspaceConfig } = require('./loader');
 
-const ALLOWED_KEYS = new Set(['enabled', 'name', 'materialIcon', 'accentColor', 'order']);
+const ALLOWED_KEYS = new Set(['enabled', 'name', 'materialIcon', 'accentColor', 'order', 'model', 'thinking', 'pure']);
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
 function cloneEntry(entry) {
@@ -26,6 +26,7 @@ function cloneEntry(entry) {
       model:    entry.details.model,
       features: [...entry.details.features],
     },
+    runtime:     {},
     enabled:     entry.enabled,
     comingSoon:  entry.comingSoon,
     recommended: entry.recommended,
@@ -46,6 +47,23 @@ function validateOverrideEntry(id, override, label) {
     const val = override[key];
     if (val === null) {
       clean[key] = null;
+      continue;
+    }
+    if (key === 'model') {
+      if (typeof val !== 'string' || val.trim() === '') {
+        console.warn(`[cli-config] ${label}: '${id}.model' must be non-empty string — ignored`);
+        continue;
+      }
+      clean.details = { ...(clean.details || {}), model: val };
+      clean.runtime = { ...(clean.runtime || {}), model: val };
+      continue;
+    }
+    if ((key === 'thinking' || key === 'pure') && typeof val !== 'boolean') {
+      console.warn(`[cli-config] ${label}: '${id}.${key}' must be boolean — ignored`);
+      continue;
+    }
+    if (key === 'thinking' || key === 'pure') {
+      clean.runtime = { ...(clean.runtime || {}), [key]: val };
       continue;
     }
     if (key === 'enabled' && typeof val !== 'boolean') {
@@ -126,6 +144,14 @@ function normalizeWorkspacePolicy(raw, label) {
 function applyOverride(entry, override) {
   if (!override) return entry;
   for (const key of Object.keys(override)) {
+    if (key === 'details' && override.details) {
+      entry.details = { ...entry.details, ...override.details };
+      continue;
+    }
+    if (key === 'runtime' && override.runtime) {
+      entry.runtime = { ...(entry.runtime || {}), ...override.runtime };
+      continue;
+    }
     entry[key] = override[key]; // null replaces (spec §3)
   }
   return entry;

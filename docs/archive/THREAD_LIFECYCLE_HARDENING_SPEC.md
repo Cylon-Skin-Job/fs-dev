@@ -1,9 +1,18 @@
 # Thread Lifecycle Hardening — Spec
 
+**Archived:** This is a historical empty-thread cleanup and MRU guard plan. Do
+not use it as the active source of truth for New Chat or Fork. Current behavior
+is defined in `../PENDING_CHAT_INTENT_SPEC.md`.
+
 **Status:** Draft — ready for review.
 **Owner:** Open Robin core.
 **Related:** `CHAT_HEADER_AND_THREAD_OVERLAY_SPEC.md` §11 (empty-thread cleanup follow-up), `project_harness_migration_state.md` (memory).
 **Scope:** Both `project` and `view` scopes (see §3 below for per-scope nuance).
+
+**Supersession note:** Part A's empty-thread cleanup approach is superseded by
+`PENDING_CHAT_INTENT_SPEC.md` for New Chat and Fork. Those flows should no
+longer create empty durable rows that need later cleanup. Part B remains
+historical context unless separately reaffirmed.
 
 ---
 

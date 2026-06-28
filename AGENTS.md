@@ -33,7 +33,7 @@ fs-dev/
 | Electron main/preload | `fusion-studio-client/electron/` |
 | Server | `fusion-studio-server/` |
 | Server libraries | `fusion-studio-server/lib/` |
-| Current Chat architecture source of truth | `ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md` |
+| Current Chat architecture source of truth | `ai/views/wiki-viewer/Wiki/007-Chat_System/PAGE.md` |
 | Project overview | `docs/FUSION_STUDIO_OVERVIEW.md` |
 | Architecture outline | `docs/FUSION_STUDIO_ARCHITECTURE_OUTLINE.md` |
 
@@ -75,7 +75,7 @@ The server owns persistence and orchestration. The renderer presents state and s
 
 ## Chat And Harness Model
 
-Read `ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
+Read `ai/views/wiki-viewer/Wiki/007-Chat_System/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
 
 Current rules:
 
@@ -110,7 +110,7 @@ Views are moving toward self-contained iframe apps served through the `fusion-st
 - Prefer the smallest correct change.
 - Preserve existing user/worker changes in the dirty worktree.
 - Do not rewrite generated/cache/runtime files unless the task specifically targets them.
-- For chat/thread/harness work, start from the Chat wiki tree under `ai/views/wiki-viewer/Wiki/001-Project/002-Chat/`.
+- For chat/thread/harness work, start from the Chat wiki tree under `ai/views/wiki-viewer/Wiki/007-Chat_System/`.
 - For database work, use migrations and query modules; do not hand-edit `fusion.db`.
 - For frontend UI work, preserve the current visual language unless explicitly asked to redesign.
 

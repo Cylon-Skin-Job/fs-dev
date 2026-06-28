@@ -146,15 +146,25 @@
   position: relative;
 }
 
+.rv-chat-input-text-stack {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
 .rv-chat-autocomplete-ghost {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 2;
-  padding: 2px;
+  padding: 0;
   color: color-mix(in srgb, var(--text-dim, rgba(255, 255, 255, 0.45)) 70%, transparent);
-  font: inherit;
-  line-height: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
   overflow: hidden;
   pointer-events: none;
 }
@@ -166,6 +176,8 @@
 .rv-chat-input {
   position: relative;
   z-index: 1;
+  display: block;
+  width: 100%;
 }
 
 .rv-chat-emoji-recents {
@@ -490,6 +502,15 @@
 .rv-chat-composer-meta-row .rv-chat-footer-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.rv-chat-composer-fork-btn:disabled {
+  opacity: var(--composer-disabled-opacity, 0.5);
+  cursor: not-allowed;
+}
+
+.rv-chat-composer-fork-btn:disabled:hover {
+  background: var(--composer-fork-disabled-hover-bg, transparent);
 }
 
 /* Chat footer disabled state — when no thread is active. */

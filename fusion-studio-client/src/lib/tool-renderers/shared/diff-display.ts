@@ -14,11 +14,7 @@ export function buildFileChangeTitle(
   return `${action} ${basename(filePath)}${counts}`;
 }
 
-export function formatFileChangeContent(content: string, segment?: StreamSegment): string {
-  if (segment?.isError) {
-    return formatErrorContent(content, segment.toolStatus);
-  }
-
+export function formatFileChangeContent(_content: string, segment?: StreamSegment): string {
   const diffs = diffDisplays(segment?.toolDisplay);
   if (!segment?.returnedDiff || diffs.length === 0) return '';
 
@@ -41,11 +37,6 @@ function formatDiffBlock(diff: UniversalDiffDisplay): string {
   }).join('');
 
   return `<pre style="margin:0;overflow-x:auto"><code>${htmlRows}</code></pre>`;
-}
-
-function formatErrorContent(content: string, status?: string): string {
-  const text = [status, content].filter(Boolean).join('\n');
-  return text ? escapeHtml(text) : '';
 }
 
 function diffDisplays(display?: UniversalToolDisplay[]): UniversalDiffDisplay[] {

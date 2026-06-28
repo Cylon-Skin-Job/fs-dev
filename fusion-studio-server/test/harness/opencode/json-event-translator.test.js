@@ -109,6 +109,64 @@ describe('OpenCodeJsonEventTranslator', () => {
     expect(events[2]).toMatchObject({ type: 'tool_result', isError: true, output: 'failed' });
   });
 
+  it('suppresses shell status when OpenCode title duplicates the command', () => {
+    const translator = new OpenCodeJsonEventTranslator();
+
+    const events = translator.translate({
+      type: 'tool_use',
+      timestamp: 10,
+      part: {
+        type: 'tool',
+        tool: 'bash',
+        callID: 'call_git_status',
+        state: {
+          status: 'completed',
+          input: { command: 'git status' },
+          output: 'fatal: not a git repository (or any of the parent directories): .git\n',
+          metadata: { exit: 128 },
+          title: 'git status',
+        },
+      },
+    });
+
+    expect(events[2]).toMatchObject({
+      type: 'tool_result',
+      toolName: 'shell',
+      isError: true,
+      output: 'fatal: not a git repository (or any of the parent directories): .git\n',
+    });
+    expect(events[2].statusMessage).toBeUndefined();
+  });
+
+  it('emits an exit diagnostic for failed shell calls without output', () => {
+    const translator = new OpenCodeJsonEventTranslator();
+
+    const events = translator.translate({
+      type: 'tool_use',
+      timestamp: 10,
+      part: {
+        type: 'tool',
+        tool: 'bash',
+        callID: 'call_empty_failure',
+        state: {
+          status: 'completed',
+          input: { command: 'false' },
+          output: '',
+          metadata: { exit: 1 },
+          title: 'false',
+        },
+      },
+    });
+
+    expect(events[2]).toMatchObject({
+      type: 'tool_result',
+      toolName: 'shell',
+      isError: true,
+      output: '',
+      statusMessage: 'Command failed with exit code 1',
+    });
+  });
+
   it('defers tool result for incomplete tool states', () => {
     const translator = new OpenCodeJsonEventTranslator();
 

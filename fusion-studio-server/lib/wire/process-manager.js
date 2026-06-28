@@ -3,13 +3,13 @@
  *
  * Extracted from server.js. Owns:
  *   - The global wireRegistry Map (threadId → { wire, projectRoot })
- *   - registerWire / unregisterWire / getWireForThread
+ *   - registerWire / attachClientToWire / unregisterWire / getWireForThread
  *   - sendToWire (JSON-RPC 2.0 marshalling to wire stdin)
  *   - createWireLifecycle factory (per-connection awaitHarnessReady /
  *     initializeWire / setupWireHandlers)
  *
- * The registry Map is module-private. All access goes through the three
- * exported helper functions.
+ * The registry Map is module-private. All access goes through the exported
+ * helper functions.
  *
  * Does NOT own:
  *   - agentWireSessions (per-agent persona wires) — still in server.js,
@@ -41,6 +41,35 @@ function registerWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
   const viewId = scopeContext.viewId || null;
   wireRegistry.set(threadId, { wire, projectRoot, ws, workspaceId, viewId });
   console.log(`[WireRegistry] Registered wire for thread ${threadId.slice(0,8)}, pid: ${wire?.pid}, scope: ${viewId ? `${workspaceId}/${viewId}` : workspaceId}`);
+}
+
+function attachClientToWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
+  const existing = wireRegistry.get(threadId);
+  const nextWire = wire || existing?.wire || null;
+  const nextProjectRoot = projectRoot || existing?.projectRoot || null;
+
+  if (!nextWire || !nextProjectRoot) {
+    return false;
+  }
+
+  const workspaceId = scopeContext.workspaceId || existing?.workspaceId || path.basename(nextProjectRoot);
+  const viewId = Object.prototype.hasOwnProperty.call(scopeContext, 'viewId')
+    ? scopeContext.viewId
+    : (existing?.viewId || null);
+
+  wireRegistry.set(threadId, {
+    wire: nextWire,
+    projectRoot: nextProjectRoot,
+    ws,
+    workspaceId,
+    viewId,
+  });
+
+  if (existing?.ws !== ws) {
+    console.log(`[WireRegistry] Attached client for thread ${threadId.slice(0,8)}`);
+  }
+
+  return true;
 }
 
 function unregisterWire(threadId) {
@@ -174,6 +203,7 @@ module.exports = {
   getWireForThread,
   getClientForThread,
   registerWire,
+  attachClientToWire,
   unregisterWire,
   getScopeForThread,
   // Marshalling

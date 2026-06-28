@@ -1,5 +1,3 @@
-import type { FormEvent } from 'react';
-
 interface AssistantReplyNoteEditorProps {
   noteDraft: string;
   noteChanged: boolean;
@@ -8,13 +6,6 @@ interface AssistantReplyNoteEditorProps {
   onCopyNote: () => void | Promise<unknown>;
   onClearNote: () => void;
   onRevertNote: () => void;
-}
-
-export interface AssistantReplyNoteModalProps extends AssistantReplyNoteEditorProps {
-  open: boolean;
-  saving?: boolean;
-  onCancel: () => void;
-  onSave: () => void | Promise<unknown>;
 }
 
 export function AssistantReplyNoteEditor({
@@ -73,65 +64,5 @@ export function AssistantReplyNoteEditor({
         ) : null}
       </div>
     </div>
-  );
-}
-
-export function AssistantReplyNoteModal({
-  open,
-  noteDraft,
-  noteChanged,
-  saving = false,
-  disabled = false,
-  onNoteDraftChange,
-  onCopyNote,
-  onClearNote,
-  onRevertNote,
-  onCancel,
-  onSave,
-}: AssistantReplyNoteModalProps) {
-  if (!open) return null;
-
-  const controlsDisabled = disabled || saving;
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    if (!controlsDisabled) onSave();
-  };
-
-  return (
-    <form className="rv-assistant-reply-editor" onSubmit={handleSubmit}>
-      <div className="rv-assistant-reply-editor-header">
-        <span className="rv-assistant-reply-editor-title">Note</span>
-      </div>
-      <AssistantReplyNoteEditor
-        noteDraft={noteDraft}
-        noteChanged={noteChanged}
-        disabled={controlsDisabled}
-        onNoteDraftChange={onNoteDraftChange}
-        onCopyNote={onCopyNote}
-        onClearNote={onClearNote}
-        onRevertNote={onRevertNote}
-      />
-      <div className="rv-assistant-reply-editor-footer">
-        <button
-          type="button"
-          className="rv-assistant-reply-editor-button"
-          onClick={onCancel}
-          disabled={controlsDisabled}
-          aria-label="Cancel note"
-          title="Cancel note"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rv-assistant-reply-editor-button rv-assistant-reply-editor-button--primary"
-          disabled={controlsDisabled}
-          aria-label="Save note"
-          title="Save note"
-        >
-          Save
-        </button>
-      </div>
-    </form>
   );
 }

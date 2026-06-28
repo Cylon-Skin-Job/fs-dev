@@ -68,24 +68,11 @@ export interface SegmentBehavior {
   summaryField?: string;
 }
 
-/** Error state — visual overrides when isError=true */
-export interface SegmentErrorStyle {
-  /** Override icon name */
-  icon?: string;
-  /** Override icon color */
-  iconColor?: string;
-  /** Override label color */
-  labelColor?: string;
-  /** Suffix to append to label */
-  labelSuffix?: string;
-}
-
 /** Complete segment definition */
 export interface SegmentDefinition {
   type: SegmentType;
   visual: SegmentVisualStyle;
   behavior: SegmentBehavior;
-  errorStyle: SegmentErrorStyle;
   /** Build label text from tool args */
   buildLabel: (args?: Record<string, unknown>) => string;
 }
@@ -205,7 +192,7 @@ const BEHAVIOR_OVERRIDES: Record<SegmentType, Partial<SegmentBehavior>> = {
     contentFormat: 'code',
     renderMode: 'grouped-summary',
     groupable: true,
-    // Wire protocol: ReadFile tool uses 'path', not 'file_path'
+    // Read summary formatting handles path/file_path/filePath aliases.
     summaryField: 'path',
     syntaxHighlight: true,
     languageDetection: 'from-path',
@@ -264,70 +251,6 @@ const BEHAVIOR_OVERRIDES: Record<SegmentType, Partial<SegmentBehavior>> = {
   },
 };
 
-/** Error style overrides per segment type */
-const ERROR_OVERRIDES: Record<SegmentType, SegmentErrorStyle> = {
-  // Text has no error state
-  text: {},
-
-  // Thinking has no error state
-  think: {},
-
-  // Shell shows as failed
-  shell: {
-    icon: 'error',
-    iconColor: 'var(--error, #ef4444)',
-    labelColor: 'var(--error, #ef4444)',
-    labelSuffix: ' (failed)',
-  },
-
-  // File operations show error icon
-  read: {
-    icon: 'error',
-    iconColor: 'var(--error, #ef4444)',
-    labelColor: 'var(--error, #ef4444)',
-    labelSuffix: ' (error)',
-  },
-
-  write: {
-    icon: 'error',
-    iconColor: 'var(--error, #ef4444)',
-    labelColor: 'var(--error, #ef4444)',
-    labelSuffix: ' (error)',
-  },
-
-  edit: {
-    icon: 'error',
-    iconColor: 'var(--error, #ef4444)',
-    labelColor: 'var(--error, #ef4444)',
-    labelSuffix: ' (error)',
-  },
-
-  // Search/inline tools just get label suffix
-  glob: {
-    labelSuffix: ' (error)',
-  },
-
-  grep: {
-    labelSuffix: ' (error)',
-  },
-
-  web_search: {
-    labelSuffix: ' (error)',
-  },
-
-  fetch: {
-    labelSuffix: ' (error)',
-  },
-
-  subagent: {
-    labelSuffix: ' (error)',
-  },
-
-  todo: {
-    labelSuffix: ' (error)',
-  },
-};
-
 // =============================================================================
 // LABEL BUILDERS
 // =============================================================================
@@ -367,7 +290,6 @@ function buildSegmentDefinition(type: SegmentType): SegmentDefinition {
     type,
     visual: merge(DEFAULT_VISUAL_STYLE, VISUAL_OVERRIDES[type]),
     behavior: merge(DEFAULT_BEHAVIOR, BEHAVIOR_OVERRIDES[type]),
-    errorStyle: ERROR_OVERRIDES[type],
     buildLabel: LABEL_BUILDERS[type],
   };
 }
@@ -404,21 +326,17 @@ export function getSegmentVisual(type: SegmentType): SegmentVisualStyle {
 }
 
 /**
- * Build the label for a segment type, applying error state styling if isError=true
+ * Build the neutral chrome label for a segment type.
+ *
+ * Tool error details render inside the expanded body, not in the collapsed
+ * icon/label chrome.
  */
-export function buildSegmentLabelWithError(
+export function buildSegmentLabel(
   type: SegmentType,
   args?: Record<string, unknown>,
-  isError?: boolean
 ): string {
   const def = SEGMENT_CATALOG[type];
-  let label = def.buildLabel(args);
-
-  if (isError && def.errorStyle.labelSuffix) {
-    label += def.errorStyle.labelSuffix;
-  }
-
-  return label;
+  return def.buildLabel(args);
 }
 
 /**
@@ -429,44 +347,26 @@ export function isGroupable(type: SegmentType): boolean {
 }
 
 /**
- * Get the icon name for a segment type, with optional error override
+ * Get the neutral chrome icon name for a segment type.
  */
-export function getSegmentIcon(type: SegmentType, isError?: boolean): string {
+export function getSegmentIcon(type: SegmentType): string {
   const visual = SEGMENT_CATALOG[type].visual;
-  const errorStyle = SEGMENT_CATALOG[type].errorStyle;
-
-  if (isError && errorStyle.icon) {
-    return errorStyle.icon;
-  }
-
   return visual.icon;
 }
 
 /**
- * Get the icon color for a segment type, with optional error override
+ * Get the neutral chrome icon color for a segment type.
  */
-export function getSegmentIconColor(type: SegmentType, isError?: boolean): string {
+export function getSegmentIconColor(type: SegmentType): string {
   const visual = SEGMENT_CATALOG[type].visual;
-  const errorStyle = SEGMENT_CATALOG[type].errorStyle;
-
-  if (isError && errorStyle.iconColor) {
-    return errorStyle.iconColor;
-  }
-
   return visual.iconColor;
 }
 
 /**
- * Get the label color for a segment type, with optional error override
+ * Get the neutral chrome label color for a segment type.
  */
-export function getSegmentLabelColor(type: SegmentType, isError?: boolean): string {
+export function getSegmentLabelColor(type: SegmentType): string {
   const visual = SEGMENT_CATALOG[type].visual;
-  const errorStyle = SEGMENT_CATALOG[type].errorStyle;
-
-  if (isError && errorStyle.labelColor) {
-    return errorStyle.labelColor;
-  }
-
   return visual.labelColor;
 }
 

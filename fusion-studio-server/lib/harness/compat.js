@@ -19,6 +19,7 @@ const { PassThrough } = require('stream');
 const { KimiHarness } = require('./kimi');
 const { registry } = require('./registry');
 const { getDb } = require('../db');
+const { resolveCliPolicy } = require('../cli-config');
 
 // Singleton harness instance (lazy-loaded)
 /** @type {KimiHarness | null} */
@@ -97,6 +98,29 @@ async function updateThreadHarnessConfig(threadId, patch) {
   return harnessConfig;
 }
 
+function defaultRuntimeConfigForHarness(harnessId) {
+  if (harnessId === 'opencode') {
+    return {
+      model: null,
+      thinking: false,
+      pure: false,
+    };
+  }
+  return {};
+}
+
+async function resolveRuntimeConfigForHarness(projectRoot, harnessId) {
+  const defaults = defaultRuntimeConfigForHarness(harnessId);
+  try {
+    const policy = await resolveCliPolicy(projectRoot);
+    const runtime = policy.config?.[harnessId]?.runtime || {};
+    return { ...defaults, ...runtime };
+  } catch (err) {
+    console.warn(`[Compat] Failed to resolve runtime config for ${harnessId}: ${err.message}`);
+    return defaults;
+  }
+}
+
 // ============================================================================
 // DIRECT HARNESS IMPLEMENTATION
 // ============================================================================
@@ -167,7 +191,8 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
       throw new Error(`Harness not found: ${harnessId}`);
     }
 
-    await harness.initialize({});
+    const runtimeConfig = await resolveRuntimeConfigForHarness(projectRoot, harnessId);
+    await harness.initialize(runtimeConfig);
     return await harness.startThread(threadId, projectRoot, resolvedScope, {
       harnessConfig,
       updateHarnessConfig: (patch) => updateThreadHarnessConfig(threadId, patch),

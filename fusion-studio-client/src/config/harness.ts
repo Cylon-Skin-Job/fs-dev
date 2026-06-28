@@ -9,7 +9,7 @@
 import { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import type { HarnessStatus, ResolvedCliEntry } from '../types';
+import type { CliEntryOverride, HarnessStatus, ResolvedCliEntry } from '../types';
 
 export interface HarnessDetails {
   provider: 'kimi' | 'byok' | 'ollama' | string;
@@ -193,6 +193,7 @@ function factoryResolved(option: HarnessOption, idx: number): ResolvedCliEntry {
       model:    option.details.model,
       features: [...option.details.features],
     },
+    runtime:     {},
     enabled:     option.enabled,
     comingSoon:  option.comingSoon,
     recommended: option.recommended,
@@ -207,13 +208,21 @@ function defaultResolvedList(): ResolvedCliEntry[] {
 
 function applyDelta(
   entry: ResolvedCliEntry,
-  delta: Partial<ResolvedCliEntry> | undefined,
+  delta: CliEntryOverride | undefined,
 ): ResolvedCliEntry {
   if (!delta) return entry;
   const out = { ...entry };
-  for (const key of Object.keys(delta) as Array<keyof ResolvedCliEntry>) {
+  for (const key of Object.keys(delta) as Array<keyof CliEntryOverride>) {
     const v = delta[key];
     if (v === undefined) continue;
+    if (key === 'details' && v) {
+      out.details = { ...out.details, ...(v as Partial<ResolvedCliEntry['details']>) };
+      continue;
+    }
+    if (key === 'runtime' && v) {
+      out.runtime = { ...(out.runtime || {}), ...(v as ResolvedCliEntry['runtime']) };
+      continue;
+    }
     // @ts-expect-error — narrow-key assignment across union
     out[key] = v;
   }

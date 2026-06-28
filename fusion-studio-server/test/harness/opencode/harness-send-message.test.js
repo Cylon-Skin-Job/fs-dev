@@ -163,6 +163,173 @@ describe('OpenCodeHarness', () => {
     expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_stored', 'after cold start']);
   });
 
+  it('starts a pending fork from the source OpenCode session without making it active', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const pendingFork = {
+      type: 'opencode-current-head',
+      status: 'pending',
+      sourceThreadId: 'thread-source',
+      sourceOpenCodeSessionId: 'ses_source',
+    };
+    const session = await harness.startThread('thread-fork', '/project', {}, {
+      harnessConfig: { pendingFork },
+    });
+
+    const eventsPromise = collect(session.sendMessage('fork prompt'));
+    expect(session.openCodeSessionId).toBeNull();
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_forked'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_source', '--fork', 'fork prompt']);
+    expect(session.openCodeSessionId).toBe('ses_forked');
+    expect(session.openCodeSessionId).not.toBe('ses_source');
+  });
+
+  it('persists the returned fork OpenCode session id and clears pendingFork', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const updateHarnessConfig = jest.fn(async () => {});
+    const harness = new OpenCodeHarness();
+    const pendingFork = {
+      type: 'opencode-current-head',
+      status: 'pending',
+      sourceThreadId: 'thread-source',
+      sourceThreadName: 'Source thread',
+      sourceExchangeId: 42,
+      sourceOpenCodeSessionId: 'ses_source',
+      requestedAt: '2026-06-25T12:00:00.000Z',
+    };
+    const session = await harness.startThread('thread-fork', '/project', {}, {
+      harnessConfig: {
+        pendingFork,
+        forkProvenance: {
+          ...pendingFork,
+          forkThreadId: 'thread-fork',
+        },
+      },
+      updateHarnessConfig,
+    });
+
+    const eventsPromise = collect(session.sendMessage('fork prompt'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_forked'));
+    await eventsPromise;
+
+    expect(updateHarnessConfig).toHaveBeenCalledTimes(1);
+    expect(updateHarnessConfig).toHaveBeenCalledWith({
+      opencodeSessionId: 'ses_forked',
+      pendingFork: null,
+      forkProvenance: expect.objectContaining({
+        ...pendingFork,
+        forkThreadId: 'thread-fork',
+        status: 'created',
+        createdOpenCodeSessionId: 'ses_forked',
+        createdAt: expect.any(String),
+      }),
+    });
+    expect(session.pendingFork).toBeNull();
+    expect(session.pendingForkConsumed).toBe(true);
+  });
+
+  it('leaves pendingFork untouched when OpenCode fails before returning a session id', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const updateHarnessConfig = jest.fn(async () => {});
+    const harness = new OpenCodeHarness();
+    const pendingFork = {
+      type: 'opencode-current-head',
+      status: 'pending',
+      sourceThreadId: 'thread-source',
+      sourceOpenCodeSessionId: 'ses_source',
+    };
+    const session = await harness.startThread('thread-fork', '/project', {}, {
+      harnessConfig: { pendingFork },
+      updateHarnessConfig,
+    });
+
+    const eventsPromise = collect(session.sendMessage('fork prompt'));
+    setImmediate(() => {
+      proc.stderr.emit('data', 'fork failed');
+      proc.emit('close', 1, null);
+    });
+
+    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_source', '--fork', 'fork prompt']);
+    expect(updateHarnessConfig).not.toHaveBeenCalled();
+    expect(session.openCodeSessionId).toBeNull();
+    expect(session.pendingFork).toEqual(pendingFork);
+    expect(session.pendingForkConsumed).toBe(false);
+  });
+
+  it('keeps the returned fork session id when a later stream failure occurs', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const updateHarnessConfig = jest.fn(async () => {});
+    const harness = new OpenCodeHarness();
+    const pendingFork = {
+      type: 'opencode-current-head',
+      status: 'pending',
+      sourceThreadId: 'thread-source',
+      sourceOpenCodeSessionId: 'ses_source',
+    };
+    const session = await harness.startThread('thread-fork', '/project', {}, {
+      harnessConfig: { pendingFork },
+      updateHarnessConfig,
+    });
+
+    const eventsPromise = collect(session.sendMessage('fork prompt'));
+    setImmediate(() => {
+      proc.stdout.emit('data', '{"type":"text","timestamp":1780703411893,"sessionID":"ses_forked","part":{"type":"text","text":"partial"}}\n');
+      proc.stderr.emit('data', 'stream failed');
+      proc.emit('close', 1, null);
+    });
+
+    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    expect(updateHarnessConfig).toHaveBeenCalledWith(expect.objectContaining({
+      opencodeSessionId: 'ses_forked',
+      pendingFork: null,
+      forkProvenance: expect.objectContaining({
+        status: 'created',
+        createdOpenCodeSessionId: 'ses_forked',
+      }),
+    }));
+    expect(session.openCodeSessionId).toBe('ses_forked');
+    expect(session.pendingFork).toBeNull();
+    expect(session.pendingForkConsumed).toBe(true);
+  });
+
+  it('leaves pendingFork untouched when persisting the returned fork session id fails', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const updateHarnessConfig = jest.fn(async () => {
+      throw new Error('db write failed');
+    });
+    const harness = new OpenCodeHarness();
+    const pendingFork = {
+      type: 'opencode-current-head',
+      status: 'pending',
+      sourceThreadId: 'thread-source',
+      sourceOpenCodeSessionId: 'ses_source',
+    };
+    const session = await harness.startThread('thread-fork', '/project', {}, {
+      harnessConfig: { pendingFork },
+      updateHarnessConfig,
+    });
+
+    const eventsPromise = collect(session.sendMessage('fork prompt'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_forked'));
+
+    await expect(eventsPromise).rejects.toThrow('db write failed');
+    expect(updateHarnessConfig).toHaveBeenCalledWith(expect.objectContaining({
+      opencodeSessionId: 'ses_forked',
+      pendingFork: null,
+    }));
+    expect(session.openCodeSessionId).toBeNull();
+    expect(session.pendingFork).toEqual(pendingFork);
+    expect(session.pendingForkConsumed).toBe(false);
+  });
+
   it('persists the first captured OpenCode session id once', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
@@ -296,6 +463,20 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--thinking', 'hello']);
+  });
+
+  it('configures Kimi Code 2.7 visible thinking through OpenCode flags', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    await harness.initialize({ model: 'kimi-for-coding/k2p7', thinking: true });
+    const session = await harness.startThread('thread-1', '/project');
+
+    const eventsPromise = collect(session.sendMessage('hello'));
+    setImmediate(() => emitSuccessfulTextRun(proc));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--model', 'kimi-for-coding/k2p7', '--thinking', 'hello']);
   });
 
   it('config.pure adds --pure while preserving session reuse', async () => {

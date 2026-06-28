@@ -38,8 +38,7 @@
 }
 
 .rv-assistant-reply-action:hover:not(:disabled),
-.rv-assistant-reply-action:focus-visible:not(:disabled),
-.rv-assistant-reply-action[aria-expanded="true"] {
+.rv-assistant-reply-action:focus-visible:not(:disabled) {
   border-color: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   background: var(--glass-sm, rgba(255, 255, 255, 0.06));
   color: var(--accent-dim, var(--theme-primary, currentColor));
@@ -58,58 +57,6 @@
 
 .rv-assistant-reply-action--filled .material-symbols-outlined {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
-}
-
-.rv-assistant-reply-more {
-  position: relative;
-  display: inline-flex;
-}
-
-.rv-assistant-reply-menu {
-  position: absolute;
-  top: calc(100% + var(--space-2xs, 2px));
-  left: 0;
-  z-index: var(--z-overlay, 1000);
-  width: var(--reply-chrome-menu-width, 180px);
-  padding: var(--space-2xs, 2px) 0;
-  overflow: hidden;
-  border: var(--reply-chrome-menu-border-width, 1px) solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  border-radius: var(--radius-md, 4px);
-  background: var(--sidebar-surface-bg, #161616);
-  box-shadow: var(--shadow-medium, 0 4px 16px rgba(0, 0, 0, 0.4));
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-fast, 150ms) var(--transition-ease, ease);
-}
-
-.rv-assistant-reply-menu[data-open="true"] {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.rv-assistant-reply-menu-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm, 8px);
-  width: 100%;
-  padding: var(--space-sm, 8px) var(--space-md, 12px);
-  border: none;
-  background: transparent;
-  color: var(--chrome-accent, var(--text-dim, currentColor));
-  font-size: var(--font-sm, 12px);
-  text-align: left;
-  white-space: nowrap;
-  cursor: default;
-}
-
-.rv-assistant-reply-menu-item .material-symbols-outlined {
-  flex-shrink: 0;
-  font-size: var(--reply-chrome-menu-icon-size, 18px);
-  opacity: var(--reply-chrome-menu-icon-opacity, 0.85);
-}
-
-.rv-assistant-reply-menu-item:disabled {
-  color: var(--chrome-accent, var(--text-dim, currentColor));
 }
 
 .rv-assistant-reply-editor {
@@ -182,7 +129,7 @@
 }
 
 .rv-assistant-reply-bookmark-option .material-symbols-outlined {
-  font-size: var(--reply-chrome-menu-icon-size, 18px);
+  font-size: var(--reply-chrome-editor-icon-size, 18px);
   line-height: var(--line-height-tight, 1);
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
 }
@@ -247,7 +194,7 @@
 }
 
 .rv-assistant-reply-editor-icon-button .material-symbols-outlined {
-  font-size: var(--reply-chrome-menu-icon-size, 18px);
+  font-size: var(--reply-chrome-editor-icon-size, 18px);
   line-height: var(--line-height-tight, 1);
 }
 

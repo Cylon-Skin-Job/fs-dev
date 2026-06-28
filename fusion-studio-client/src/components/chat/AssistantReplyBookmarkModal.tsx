@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react';
 import type { ChatTurnBookmarkType } from '../../types';
-import { AssistantReplyNoteEditor } from './AssistantReplyNoteModal';
+import { AssistantReplyNoteEditor } from './AssistantReplyNoteEditor';
 
 interface BookmarkChoice {
   type: ChatTurnBookmarkType;

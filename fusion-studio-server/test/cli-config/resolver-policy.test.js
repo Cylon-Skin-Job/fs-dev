@@ -66,4 +66,25 @@ describe('cli-config policy resolver', () => {
     expect(policy.defaultHarness).toBe('opencode');
     expect(policy.allowedHarnesses).toEqual(['opencode']);
   });
+
+  it('keeps OpenCode model and thinking as runtime policy', async () => {
+    await writeCliConfig(projectRoot, {
+      defaultHarness: 'opencode',
+      harnesses: {
+        opencode: {
+          enabled: true,
+          model: 'kimi-for-coding/k2p7',
+          thinking: true,
+        },
+      },
+    });
+
+    const policy = await resolveCliPolicy(projectRoot);
+
+    expect(policy.config.opencode.details.model).toBe('kimi-for-coding/k2p7');
+    expect(policy.config.opencode.runtime).toEqual({
+      model: 'kimi-for-coding/k2p7',
+      thinking: true,
+    });
+  });
 });

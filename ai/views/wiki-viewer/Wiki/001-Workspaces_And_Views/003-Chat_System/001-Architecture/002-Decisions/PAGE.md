@@ -1,92 +1,18 @@
 ---
-name: Chat System Decisions
-description: Durable decisions for Fusion Studio chat. Use this page before changing harness policy, runtime ownership, prompt acceptance, stop behavior, or thinking display.
+name: Chat System Decisions Compatibility Pointer
+description: Compatibility pointer for the old Chat System decisions page. Durable decision content now lives in the top-level Chat System domain.
 metadata:
   incoming-edges:
-    - Chat System Overview
-    - Chat System Architecture
+    - Chat System Architecture Compatibility Pointer
   outgoing-edges:
-    - Chat System Runtime Model
-    - Chat System Protocol
-    - Chat System Lessons
-  source-files:
-    - ai/system/config/cli.json
-    - fusion-studio-server/lib/cli-config/resolver.js
-    - fusion-studio-server/lib/thread/thread-runtime-controller.js
-    - fusion-studio-server/lib/harness/opencode/index.js
-    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
-    - fusion-studio-client/src/state/chatFileLinkStore.ts
+    - Chat Decisions
+  source-files: []
   connected-skills: []
   related-trigger-files: []
 ---
 
-Durable architectural decisions for chat.
+Chat decisions have moved to:
 
-## `cli.json` Is Harness Policy
+- [Chat Decisions](../../../../007-Chat_System/009-Decisions/PAGE.md)
 
-`ai/system/config/cli.json` controls default, allowed, and displayed harnesses.
-Do not add a separate `harness-policy.json`.
-
-## OpenCode Is The Current Normal-User Harness
-
-The current config is OpenCode-only. New Thread creates OpenCode directly. Kimi
-remains as implementation/plugin reference, but it is not displayed or allowed
-for new thread creation unless `cli.json` is changed.
-
-## Passive Browse Is Separate From Activation
-
-Use `thread:open` for passive hydration. Use `thread:open-assistant` for
-assistant activation and new thread creation.
-
-## Server Owns Prompt Acceptance
-
-The server accepts a prompt through runtime readiness and emits `message:sent`.
-The client commits the user bubble after acceptance.
-
-## `Send to chat` Is Attachment Metadata
-
-`Send to chat` creates removable link attachment pills, not raw textarea path
-text. The prompt can carry structured attachment metadata, and the harness sees
-a compact attached-reference block.
-
-Copy path/link controls remain separate and continue to copy paths.
-
-## Filename Autocomplete Is Plain Text
-
-Filename autocomplete inserts plain filename text only. It never creates an
-attachment, mention object, or hidden metadata.
-
-Autocomplete candidates are RAM-only and limited to files with extensions that
-do not end in `.md`.
-
-## Exchange Metadata Is Collector-Based
-
-`exchanges.metadata` stores turn metadata such as `attachments`, `mentions`, and
-`fileMutations`. New extraction work should be added as a chat metadata
-collector instead of growing runtime, audit, or persistence modules into a
-monolith.
-
-## Server Owns Stop
-
-Stop emits a synthetic interrupted terminal event server-side and persists the
-partial assistant turn through the normal persistence path.
-
-## Live Snapshot Bridges Active Turns
-
-Switching threads or workspaces should not stall a live turn. The server keeps
-an in-memory `liveTurn` snapshot that the client overlays on durable history.
-
-## Do Not Fake Thinking
-
-Visible thinking requires actual thinking text. `tokens.reasoning` is usage
-metadata, not a thought trace.
-
-## OpenCode Clean Exit Can Synthesize Completion
-
-If OpenCode exits code `0` after useful output but without `step_finish`, the
-harness synthesizes `turn_end` and marks `terminalSource`.
-
-## Existing Threads Are Not Migrated By Policy
-
-Changing `cli.json` affects new thread creation and UI selection. It does not
-rewrite existing `harness_id` values.
+Do not add new decisions under this compatibility folder.

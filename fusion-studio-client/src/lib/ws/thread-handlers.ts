@@ -67,6 +67,27 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       }
       return true;
 
+    case 'thread:forked':
+      console.log('[WS] thread:forked received:', msg.threadId, 'exchanges:', msg.exchanges?.length);
+      if (msg.thread && msg.threadId) {
+        upsertThreadAtTop(msg.threadId, msg.thread);
+        store.setCurrentThreadId(msg.threadId);
+        store.setChatActive(true);
+        store.clearChat(msg.threadId);
+        hydrateThreadCandidates(msg.exchanges || []);
+
+        if (msg.exchanges && msg.exchanges.length > 0) {
+          convertExchangesToMessages(msg.threadId, msg.exchanges);
+        } else if (msg.history && msg.history.length > 0) {
+          convertHistoryToMessages(msg.threadId, msg.history);
+        }
+        overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
+        restoreContextUsage(msg.exchanges);
+      } else {
+        console.error('[WS] thread:forked missing data:', msg);
+      }
+      return true;
+
     case 'thread:opened': {
       console.log('[WS] thread:opened:', msg.threadId?.slice(0, 8), 'exchanges:', msg.exchanges?.length, 'history:', msg.history?.length, 'contextUsage:', msg.contextUsage);
       if (msg.threadId && msg.thread) {
@@ -158,6 +179,14 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
 
 // --- History conversion helpers (private to this module) ---
 
+function upsertThreadAtTop(threadId: string, entry: NonNullable<WebSocketMessage['thread']>) {
+  const store = usePanelStore.getState();
+  store.setThreads([
+    { threadId, entry },
+    ...store.threads.filter((thread) => thread.threadId !== threadId),
+  ]);
+}
+
 function convertExchangesToMessages(threadId: string, exchanges: ExchangeData[]) {
   const store = usePanelStore.getState();
   exchanges.forEach((exchange, idx) => {
@@ -200,6 +229,15 @@ function convertHistoryToMessages(
       timestamp: Date.now() - (history.length - idx) * 1000,
     });
   });
+}
+
+function restoreContextUsage(exchanges: ExchangeData[] | undefined) {
+  if (!exchanges || exchanges.length === 0) return;
+  const lastExchange = exchanges[exchanges.length - 1];
+  const contextUsage = lastExchange.metadata?.contextUsage;
+  if (typeof contextUsage === 'number') {
+    usePanelStore.getState().setContextUsage(contextUsage);
+  }
 }
 
 function overlayLiveTurn(

@@ -66,9 +66,34 @@
   color: var(--text-white, currentColor);
 }
 
-.rv-shell-status {
+.rv-tool-error {
+  display: grid;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-tool-error-title {
   color: var(--error, #ef4444);
-  opacity: 0.85;
+  font-weight: 600;
+}
+
+.rv-tool-error-context {
+  color: var(--text-dim, currentColor);
+}
+
+.rv-tool-error-context-label {
+  color: var(--text-muted, var(--text-dim, currentColor));
+}
+
+.rv-tool-error-status,
+.rv-tool-error-output {
+  color: var(--error, #ef4444);
+  opacity: 0.88;
+}
+
+.rv-tool-error-output {
+  margin: 0;
+  white-space: pre-wrap;
+  font: inherit;
 }
 
 /* ── ToolsPanel — left-rail workspace/tool switcher ─────────────────────── */

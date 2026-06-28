@@ -742,8 +742,16 @@
   box-shadow: none;
 }
 
+.rv-chat-input-text-stack {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
 .rv-chat-input {
   flex: 1;
+  display: block;
+  width: 100%;
   background: transparent;
   border: none;
   color: var(--text-white);

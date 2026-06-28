@@ -62,7 +62,9 @@
  * @property {string} toolCallId
  * @property {string} toolName
  * @property {string} output
- * @property {string} [statusMessage] - Human-readable status from the tool
+ * @property {string} [statusMessage] - Optional displayable diagnostic/status
+ *   text. Harness adapters should omit non-diagnostic titles, command labels,
+ *   and text already present in output.
  * @property {unknown[]} display
  * @property {boolean} returnedDiff
  * @property {boolean} isError

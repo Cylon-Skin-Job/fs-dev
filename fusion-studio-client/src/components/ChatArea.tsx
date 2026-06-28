@@ -59,6 +59,8 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     handleStop,
     warmCurrentThread,
     isAcceptancePending,
+    isForkThreadDisabled,
+    handleForkThread,
     inputPlaceholder,
   } = useChatArea({ panel, threadIdOverride });
 
@@ -96,6 +98,8 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     isTurnActive,
     isTurnFinalizing,
     isAcceptancePending,
+    isForkThreadDisabled,
+    handleForkThread,
     handleInsertText,
     warmCurrentThread,
     contextUsage,

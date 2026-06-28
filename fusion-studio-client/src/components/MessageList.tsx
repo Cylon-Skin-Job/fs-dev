@@ -34,7 +34,6 @@ import { InstantSegmentRenderer } from './InstantSegmentRenderer';
 import { extractAssistantReplyText } from '../lib/chat/reply-text';
 import { AssistantReplyChrome } from './chat/AssistantReplyChrome';
 import { AssistantReplyBookmarkModal } from './chat/AssistantReplyBookmarkModal';
-import { AssistantReplyNoteModal } from './chat/AssistantReplyNoteModal';
 import { useAssistantReplyChromeController } from './chat/useAssistantReplyChromeController';
 
 interface MessageListProps {
@@ -66,11 +65,9 @@ function CompletedAssistantReplyChrome({
   const {
     metadata,
     bookmarkModalProps,
-    noteModalProps,
     handleCopyChatId,
     handleCopyReply,
     openBookmarkEditor,
-    openNoteEditor,
   } = useAssistantReplyChromeController({
     source,
     payload,
@@ -88,10 +85,8 @@ function CompletedAssistantReplyChrome({
         onCopyReply={handleCopyReply}
         onOpenBookmark={openBookmarkEditor}
         onCopyChatId={handleCopyChatId}
-        onOpenNotes={openNoteEditor}
       />
       <AssistantReplyBookmarkModal {...bookmarkModalProps} />
-      <AssistantReplyNoteModal {...noteModalProps} />
     </div>
   );
 }
@@ -142,8 +137,12 @@ export function MessageList({
       ))}
 
       {(currentTurn || showOrb) && (
-        <div className="rv-message rv-message-assistant">
+        <div
+          key={currentTurn?.id ?? 'pending-assistant-turn'}
+          className="rv-message rv-message-assistant"
+        >
           <LiveSegmentRenderer
+            turnId={currentTurn?.id}
             segments={segments}
             onRevealComplete={onRevealComplete}
           />

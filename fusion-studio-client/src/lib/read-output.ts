@@ -52,7 +52,7 @@ export function formatReadFileSummary(args?: Record<string, unknown>): string {
 }
 
 function readPathFromArgs(args?: Record<string, unknown>): string {
-  const path = args?.path ?? args?.file_path;
+  const path = args?.path ?? args?.file_path ?? args?.filePath;
   return typeof path === 'string' && path.trim() ? path : 'Read file';
 }
 

@@ -55,23 +55,38 @@ interface TimingProbe {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 interface LiveSegmentRendererProps {
+  turnId?: string;
   segments: StreamSegment[];
   onRevealComplete?: () => void;
 }
 
-export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentRendererProps) {
+export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: LiveSegmentRendererProps) {
   const [orbDone, setOrbDone] = useState(false);
   const [orbDisposing, setOrbDisposing] = useState(false);
   const [revealedCount, setRevealedCount] = useState(0);
   const prevLenRef = useRef(0);
   const hasTokenRef = useRef(false);
+  const finalizedRef = useRef(false);
+
+  useEffect(() => {
+    setOrbDone(false);
+    setOrbDisposing(false);
+    setRevealedCount(0);
+    prevLenRef.current = 0;
+    hasTokenRef.current = false;
+    finalizedRef.current = false;
+  }, [turnId]);
 
   // ── Phase 1: Watch for first token → trigger orb disposal ──
   useEffect(() => {
     if (hasTokenRef.current || orbDone) return;
 
-    const hasContent = segments.length > 0 && segments[0].content.length > 0;
-    if (hasContent) {
+    const firstSegment = segments[0];
+    const hasRenderableSegment = Boolean(firstSegment) && (
+      firstSegment.type !== 'text' ||
+      firstSegment.content.length > 0
+    );
+    if (hasRenderableSegment) {
       hasTokenRef.current = true;
       setOrbDisposing(true);
     }
@@ -111,8 +126,6 @@ export function LiveSegmentRenderer({ segments, onRevealComplete }: LiveSegmentR
   // at that point, nobody re-triggers the check, turn hangs forever.
   // The effect-based approach re-evaluates on EVERY change to any input.
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  const finalizedRef = useRef(false);
 
   // onSegmentDone: ONLY bumps the counter. No completion logic here.
   // Stable callback — no deps, no stale closure risk. Every mounted
@@ -402,7 +415,6 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       type={segment.type}
       label={renderer.buildTitle(segment.groupCount ?? 1, segment.toolArgs, segment)}
       toolArgs={segment.toolArgs}
-      isError={segment.isError}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
       shimmer={phase === 'shimmer' || phase === 'revealing'}

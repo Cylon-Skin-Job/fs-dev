@@ -1,143 +1,18 @@
 ---
-name: Chat System Protocol
-description: WebSocket and canonical event contracts for Fusion Studio chat. Use this page when changing client/server messages, canonical harness events, or stream routing.
+name: Chat System Protocol Compatibility Pointer
+description: Compatibility pointer for the old Chat System protocol page. Durable protocol content now lives in the top-level Chat System domain.
 metadata:
   incoming-edges:
-    - Chat System Overview
-    - Chat System Architecture
+    - Chat System Architecture Compatibility Pointer
   outgoing-edges:
-    - Chat System Runtime Model
-    - Chat System Rendering Model
-    - Chat System Decisions
-  source-files:
-    - fusion-studio-server/lib/ws/client-message-router.js
-    - fusion-studio-server/lib/ws/thread-ws-handlers.js
-    - fusion-studio-server/lib/wire/canonical-harness-event-bridge.js
-    - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
-    - fusion-studio-client/src/lib/ws/thread-handlers.ts
-    - fusion-studio-client/src/lib/ws/stream-handlers.ts
-    - fusion-studio-client/src/lib/chat-action.ts
-    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
+    - Chat WebSocket Protocol
+  source-files: []
   connected-skills: []
   related-trigger-files: []
 ---
 
-Message and event contracts used by the chat system.
+Chat protocol content has moved to:
 
-## Client To Server
+- [Chat WebSocket Protocol](../../../../007-Chat_System/003-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md)
 
-| Message | Purpose |
-|---|---|
-| `thread:list` | Request MRU thread list for a scope |
-| `thread:open` | Passive browse/hydrate an existing thread |
-| `thread:open-assistant` | Activate/resume assistant thread or create new one |
-| `thread:warm` | Warm a cold runtime based on send intent |
-| `prompt` | Send user input and optional attachment metadata to a specific thread |
-| `turn:stop` | Interrupt an in-flight turn |
-
-Prompt payloads may include attachment metadata:
-
-```json
-{
-  "type": "prompt",
-  "threadId": "...",
-  "user_input": "Explain this startup flow.",
-  "attachments": [
-    {
-      "kind": "file",
-      "label": "file:server.js",
-      "path": "/repo/server.js",
-      "sourceName": "server.js"
-    }
-  ]
-}
-```
-
-The visible textarea remains plain user text. Attachment pills are separate UI
-state until send.
-
-## Server To Client
-
-| Message | Purpose |
-|---|---|
-| `thread:created` | New thread metadata was created |
-| `thread:opened` | Thread history and optional live turn are hydrated |
-| `wire_ready` | Runtime is ready for prompt delivery |
-| `message:sent` | Server accepted/persisted user prompt |
-| `exchange_metadata` | Just-completed exchange metadata is available for RAM refresh |
-| `fusion:prompt-acceptance-failed` | Prompt was rejected before acceptance |
-| `fusion:turn-ended` | Terminal turn event reached client state |
-
-## Canonical Harness Events
-
-Harness-specific output is translated into canonical events before chat
-application:
-
-```text
-turn_begin
-content
-thinking
-tool_call
-tool_call_args
-tool_result
-subagent_event
-status_update
-turn_end
-```
-
-The canonical bridge/applier owns mutation, event bus emission, persistence
-handoff, and live snapshot updates.
-
-## Exchange Metadata
-
-SQLite exchanges store structured metadata alongside user input and assistant
-parts. Current chat metadata fields include:
-
-```json
-{
-  "attachments": [],
-  "mentions": [],
-  "fileMutations": [],
-  "contextUsage": null,
-  "tokenUsage": null
-}
-```
-
-- `attachments` comes from `Send to chat` pills.
-- `mentions` contains repo-validated non-markdown file mentions from the just
-  completed user/assistant text.
-- `fileMutations` contains turn-local file changes captured from event bus file
-  change events.
-
-The harness receives a compact attached-reference block appended to the prompt,
-while SQLite keeps the structured metadata for UI and autocomplete hydration.
-
-## Routing Rule
-
-Chat streams route by `threadId` first. Scope, workspace, and view context are
-metadata for ownership and storage. They are not the primary live-stream routing
-key.
-
-## Harness Policy
-
-New-thread harness selection is constrained by `ai/system/config/cli.json`.
-Manual WebSocket attempts to create a disabled or absent harness thread should be
-rejected server-side.
-
-Existing historical threads use their stored `harness_id` when resumed; do not
-migrate them by changing policy.
-
-## Terminal Events
-
-`turn_end` means the stream is done producing content. It does not mean the UI
-has finished revealing all content.
-
-OpenCode-specific repair: if OpenCode exits code `0` after useful output but
-without `step_finish`, Fusion synthesizes canonical `turn_end` and marks:
-
-```text
-terminalSource: "process_exit_missing_step_finish"
-```
-
-Exit code `0` itself is not `turn_end`; the harness repair converts a known
-clean-exit contract gap into canonical completion.
+Do not add new protocol guidance under this compatibility folder.

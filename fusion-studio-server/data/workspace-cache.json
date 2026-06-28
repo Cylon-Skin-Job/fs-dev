@@ -479,7 +479,7 @@
         }
       }
     },
-    "_savedAt": 1782146680661
+    "_savedAt": 1782486800946
   },
   "fusion-home": {
     "projectRoot": null,
@@ -648,13 +648,9 @@
         "hasAppHtml": false,
         "settings": {
           "id": "chat",
-          "baseViewId": "chat",
           "label": "chat",
           "icon": "folder",
-          "rank": 3,
-          "enabled": true,
-          "source": "custom",
-          "viewPath": "ai/views/chat"
+          "rank": 3
         }
       },
       {
@@ -824,7 +820,7 @@
           "rightCol": 405.59765625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -856,7 +852,7 @@
           "rightCol": 405.59765625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -1009,7 +1005,7 @@
         }
       }
     },
-    "_savedAt": 1782146683173
+    "_savedAt": 1782520147999
   },
   "media-editor": {
     "projectRoot": null,
@@ -1464,7 +1460,7 @@
         }
       }
     },
-    "_savedAt": 1782146681577
+    "_savedAt": 1782486801733
   },
   "solobooks": {
     "projectRoot": null,
@@ -1923,7 +1919,7 @@
         }
       }
     },
-    "_savedAt": 1782146682289
+    "_savedAt": 1782486802498
   },
   "fs-dev": {
     "projectRoot": null,
@@ -2330,13 +2326,13 @@
       },
       "custom-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2362,13 +2358,13 @@
       },
       "doc-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2394,13 +2390,13 @@
       },
       "file-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2426,8 +2422,8 @@
       },
       "issues-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
-          "leftChat": 300,
+          "leftSidebar": 277.30859375,
+          "leftChat": 600,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
@@ -2458,13 +2454,13 @@
       },
       "wiki-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 403.17578125,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "popup": {
@@ -2490,7 +2486,7 @@
       },
       "agents-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 372.8046875,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
@@ -2522,13 +2518,13 @@
       },
       "browser-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
+          "leftSidebar": 277.30859375,
           "leftChat": 416.2578125,
           "rightSecondary": 425.51171875,
           "rightCol": 300.1015625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2617,6 +2613,6 @@
         }
       }
     },
-    "_savedAt": 1782351129980
+    "_savedAt": 1782577503677
   }
 }

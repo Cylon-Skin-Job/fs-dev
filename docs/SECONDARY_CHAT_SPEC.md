@@ -195,11 +195,16 @@ Primary's chat-header behavior is unchanged. Three amendments:
 2. Both the sidebar kebab and the dropdown kebab gain the **"Open as Secondary"** row per §5.
 3. **Thread list reordering** (§4) applies everywhere the list is rendered: expanded sidebar, thread-jump dropdown. The `subdirectory_arrow_right` prefix appears in both.
 
-### 8c. `THREAD_LIFECYCLE_HARDENING_SPEC.md`
+### 8c. `archive/THREAD_LIFECYCLE_HARDENING_SPEC.md`
 
-- **Part A (empty-thread cleanup):** unaffected. Secondary never hosts "new chat" (§6a — no `playlist_add`), so secondary never creates empty threads. Cleanup fires only from primary's triggers.
-- **Part B (MRU auto-open guard):** unaffected.
-- The cleanup spec's §6c (floating-popup cleanup) can be deleted — the popup no longer has an MRU-default model.
+This is a historical reference only.
+
+- **Part A (empty-thread cleanup):** superseded for New Chat/Fork by
+  `PENDING_CHAT_INTENT_SPEC.md`. Secondary never hosts "new chat" (§6a - no
+  `playlist_add`), so secondary never creates empty pending-intent rows.
+- **Part B (MRU auto-open guard):** unaffected as historical context.
+- The archived cleanup spec's §6c (floating-popup cleanup) can be ignored - the
+  popup no longer has an MRU-default model.
 
 ### 8d. `SPEC-26c-2` dual-chat routing
 

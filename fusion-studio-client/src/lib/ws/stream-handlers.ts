@@ -242,18 +242,22 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
               : groupLookup.type === 'glob'
                 ? formatGlobResultSection(resultArgs, msg.toolOutput)
                 : formatGroupedSummaryLine(groupLookup.type, resultArgs, toolContent);
-        const existing = readChatState(threadId)?.segments[groupLookup.segmentIndex]?.content;
+        const groupedSegment = readChatState(threadId)?.segments[groupLookup.segmentIndex];
+        const existing = groupedSegment?.content;
         const prefix = existing ? '\n' : '';
         store.appendSegmentContentByIndex(threadId, groupLookup.segmentIndex, prefix + appendedContent);
 
         const completion = recordGroupResult(toolCallId);
         if (completion) {
+          const mergedStatus = normalizedResult.status
+            ? appendOptionalLine(groupedSegment?.toolStatus, normalizedResult.status)
+            : groupedSegment?.toolStatus;
           store.updateSegmentByIndex(threadId, completion.segmentIndex, {
             toolArgs: resultArgs,
             toolDisplay: msg.toolDisplay,
-            toolStatus: normalizedResult.status,
+            toolStatus: mergedStatus,
             returnedDiff: msg.returnedDiff,
-            isError: msg.isError,
+            isError: Boolean(groupedSegment?.isError || msg.isError),
             groupCount: completion.expected,
             complete: completion.complete,
           });
@@ -394,6 +398,10 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     default:
       return false;
   }
+}
+
+function appendOptionalLine(content: string | undefined, line: string): string {
+  return content ? appendUniqueLine(content, line) : line;
 }
 
 /**

@@ -114,7 +114,7 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
   }, [text, disabled, onSend]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (autocomplete.match && (e.key === 'Tab' || e.key === ' ' || (e.key === 'Enter' && !e.shiftKey))) {
+    if (autocomplete.match && (e.key === 'Tab' || (e.key === 'Enter' && !e.shiftKey))) {
       e.preventDefault();
       const acceptedText = autocomplete.accept();
       setTextareaText(acceptedText, autocomplete.match.tokenStart + autocomplete.match.replacement.length + 1);
@@ -221,29 +221,31 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
             ))}
           </div>
         )}
-        {autocomplete.match && (
-          <div className="rv-chat-autocomplete-ghost" aria-hidden="true">
-            <span className="rv-chat-autocomplete-ghost-prefix">{text}</span>
-            <span>{autocomplete.match.ghostSuffix}</span>
-          </div>
-        )}
-        <textarea
-          ref={textareaRef}
-          className="rv-chat-input"
-          placeholder={placeholder ?? `Ask about ${(config?.name || panel).toLowerCase()}...`}
-          value={text}
-          onFocus={onWarmIntent}
-          onClick={syncCursor}
-          onKeyUp={syncCursor}
-          onSelect={syncCursor}
-          onPaste={onWarmIntent}
-          onChange={(e) => handleChange(e.target.value)}
-          onContextMenu={handleContextMenu}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          disabled={disabled}
-          rows={5}
-        />
+        <div className="rv-chat-input-text-stack">
+          {autocomplete.match && (
+            <div className="rv-chat-autocomplete-ghost" aria-hidden="true">
+              <span className="rv-chat-autocomplete-ghost-prefix">{text}</span>
+              <span>{autocomplete.match.ghostSuffix}</span>
+            </div>
+          )}
+          <textarea
+            ref={textareaRef}
+            className="rv-chat-input"
+            placeholder={placeholder ?? `Ask about ${(config?.name || panel).toLowerCase()}...`}
+            value={text}
+            onFocus={onWarmIntent}
+            onClick={syncCursor}
+            onKeyUp={syncCursor}
+            onSelect={syncCursor}
+            onPaste={onWarmIntent}
+            onChange={(e) => handleChange(e.target.value)}
+            onContextMenu={handleContextMenu}
+            onKeyDown={handleKeyDown}
+            onInput={handleInput}
+            disabled={disabled}
+            rows={5}
+          />
+        </div>
 
       </div>
     </div>

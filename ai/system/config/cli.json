@@ -6,7 +6,9 @@
       "name": "OpenCode",
       "materialIcon": "all_inclusive",
       "accentColor": "#10B981",
-      "order": 0
+      "order": 0,
+      "model": "kimi-for-coding/k2p7",
+      "thinking": true
     },
     "kimi": {
       "enabled": false

@@ -25,6 +25,63 @@ function mapOpenCodeTokenUsage(tokens = {}) {
   };
 }
 
+function stringValue(value) {
+  return typeof value === 'string' && value.trim().length > 0 ? value.trim() : undefined;
+}
+
+function normalizeComparableText(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function getShellCommand(state = {}) {
+  return stringValue(state.input?.command);
+}
+
+function isShellCommandLabel(candidate, command) {
+  const status = normalizeComparableText(candidate).replace(/^\$\s*/, '');
+  const normalizedCommand = normalizeComparableText(command);
+  if (!status || !normalizedCommand) return false;
+  return status === normalizedCommand
+    || status === `run ${normalizedCommand}`
+    || status === `running ${normalizedCommand}`;
+}
+
+function shouldSuppressStatusMessage(toolName, candidate, state, output) {
+  const status = normalizeComparableText(candidate);
+  if (!status) return true;
+  if (status === normalizeComparableText(output)) return true;
+
+  if (toolName === 'shell') {
+    const command = getShellCommand(state);
+    if (command && isShellCommandLabel(candidate, command)) return true;
+    if (status === 'completed') return true;
+    if (status === 'error' && normalizeComparableText(output)) return true;
+  }
+
+  return false;
+}
+
+function normalizeStatusMessage(toolName, state, output, isError) {
+  const candidates = [
+    stringValue(state.title),
+    stringValue(state.metadata?.description),
+    stringValue(state.status),
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    if (!shouldSuppressStatusMessage(toolName, candidate, state, output)) {
+      return candidate;
+    }
+  }
+
+  const exit = state.metadata?.exit;
+  if (toolName === 'shell' && isError && typeof exit === 'number' && !normalizeComparableText(output)) {
+    return `Command failed with exit code ${exit}`;
+  }
+
+  return undefined;
+}
+
 class OpenCodeJsonEventTranslator {
   constructor() {
     this.fullText = '';
@@ -112,14 +169,16 @@ class OpenCodeJsonEventTranslator {
 
     const exit = state.metadata?.exit;
     const isError = typeof exit === 'number' ? exit !== 0 : state.status === 'error';
+    const output = String(state.output || state.metadata?.output || '');
+    const statusMessage = normalizeStatusMessage(toolName, state, output, isError);
 
     events.push({
       type: 'tool_result',
       timestamp,
       toolCallId,
       toolName,
-      output: String(state.output || state.metadata?.output || ''),
-      statusMessage: state.title || state.metadata?.description || state.status,
+      output,
+      statusMessage,
       display: [],
       returnedDiff: false,
       isError,

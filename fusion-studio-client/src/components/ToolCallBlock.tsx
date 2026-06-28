@@ -12,7 +12,7 @@ import {
   getSegmentIcon,
   getSegmentIconColor,
   getSegmentLabelColor,
-  buildSegmentLabelWithError,
+  buildSegmentLabel,
 } from '../lib/catalog-visual';
 import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
 
@@ -22,7 +22,6 @@ interface ToolCallBlockProps {
   label?: string;
   /** Tool arguments for label building */
   toolArgs?: Record<string, unknown>;
-  isError?: boolean;
   expanded: boolean;
   onToggle: () => void;
   /** Show shimmer animation on the header */
@@ -36,7 +35,6 @@ export function ToolCallBlock({
   type,
   label: labelOverride,
   toolArgs,
-  isError,
   expanded,
   onToggle,
   shimmer,
@@ -45,10 +43,10 @@ export function ToolCallBlock({
 }: ToolCallBlockProps) {
   const effectiveCollapse = collapseDurationOverride ?? DEFAULT_TIMING_PROFILE.collapseDuration;
   const visual = getSegmentVisual(type);
-  const icon = getSegmentIcon(type, isError);
-  const iconColor = getSegmentIconColor(type, isError);
-  const labelColor = getSegmentLabelColor(type, isError);
-  const label = labelOverride || buildSegmentLabelWithError(type, toolArgs, isError);
+  const icon = getSegmentIcon(type);
+  const iconColor = getSegmentIconColor(type);
+  const labelColor = getSegmentLabelColor(type);
+  const label = labelOverride || buildSegmentLabel(type, toolArgs);
 
   const hasContent = !!children;
 

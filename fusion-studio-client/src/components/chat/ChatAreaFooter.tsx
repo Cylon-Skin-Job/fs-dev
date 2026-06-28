@@ -25,7 +25,9 @@ type ChatAreaFooterProps = Pick<
   | 'isTurnActive'
   | 'isTurnFinalizing'
   | 'isAcceptancePending'
+  | 'isForkThreadDisabled'
   | 'handleInsertText'
+  | 'handleForkThread'
   | 'warmCurrentThread'
   | 'contextUsage'
 >;
@@ -41,7 +43,9 @@ export function ChatAreaFooter({
   isTurnActive,
   isTurnFinalizing,
   isAcceptancePending,
+  isForkThreadDisabled,
   handleInsertText,
+  handleForkThread,
   warmCurrentThread,
   contextUsage,
 }: ChatAreaFooterProps) {
@@ -80,6 +84,16 @@ export function ChatAreaFooter({
           <ScreenshotsTrigger onInsert={handleInsertText} />
           <RecentFilesTrigger onInsert={handleInsertText} />
           <EmojiTrigger onInsert={handleInsertText} />
+          <button
+            type="button"
+            className="rv-hover-icon-trigger rv-chat-composer-fork-btn"
+            title="Fork thread"
+            aria-label="Fork thread"
+            onClick={isForkThreadDisabled ? undefined : handleForkThread}
+            disabled={isForkThreadDisabled}
+          >
+            <span className="material-symbols-outlined">fork_right</span>
+          </button>
           <MicTrigger onInsert={handleInsertText} />
         </div>
         {isTurnFinalizing ? (

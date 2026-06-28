@@ -14,6 +14,7 @@
 const { ThreadWebSocketHandler, threadRuntimeManager } = require('../thread');
 const { spawnThreadWire } = require('../harness/compat');
 const { registerWire } = require('../wire/process-manager');
+const { createPendingForkThread } = require('../thread/thread-fork-service');
 
 /**
  * @param {object} deps
@@ -66,6 +67,52 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
 
     async 'thread:copyLink'(clientMsg) {
       await ThreadWebSocketHandler.handleThreadCopyLink(ws, clientMsg);
+    },
+
+    async 'thread:fork'(clientMsg) {
+      const state = ThreadWebSocketHandler.getState(ws);
+      const manager = state?.threadManager;
+      if (!state || !manager) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'No ThreadManager',
+          scope: 'project',
+          recoverable: false,
+        }));
+        return;
+      }
+
+      try {
+        const result = await createPendingForkThread({
+          manager,
+          sourceThreadId: clientMsg.sourceThreadId || clientMsg.threadId,
+          sourceExchangeId: clientMsg.sourceExchangeId ?? null,
+          requestedFrom: clientMsg.requestedFrom || 'composer-fork-button',
+        });
+
+        ws.send(JSON.stringify({
+          type: 'thread:forked',
+          threadId: result.threadId,
+          panel: state.viewName,
+          scope: 'project',
+          thread: result.thread,
+          exchanges: result.exchanges,
+          fork: result.fork,
+        }));
+
+        await ThreadWebSocketHandler.sendThreadList(ws);
+      } catch (err) {
+        const message = err?.message || 'Thread fork failed';
+        console.error('[ThreadWS] Fork failed:', message);
+        ws.send(JSON.stringify({
+          type: 'error',
+          message,
+          code: err?.code || 'THREAD_FORK_FAILED',
+          scope: 'project',
+          threadId: clientMsg.sourceThreadId || clientMsg.threadId || null,
+          recoverable: err?.recoverable !== false,
+        }));
+      }
     },
 
     async 'thread:touch'(clientMsg) {

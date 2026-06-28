@@ -30,6 +30,15 @@ describe('compat harness config binding', () => {
     jest.doMock('../../lib/harness/registry', () => ({
       registry: { get: jest.fn(() => harness) },
     }));
+    jest.doMock('../../lib/cli-config', () => ({
+      resolveCliPolicy: jest.fn(async () => ({
+        config: {
+          opencode: {
+            runtime: {},
+          },
+        },
+      })),
+    }));
     jest.doMock('../../lib/db', () => ({
       getDb: () => () => ({
         where: () => ({
@@ -51,5 +60,102 @@ describe('compat harness config binding', () => {
       harnessConfig: { opencodeSessionId: 'ses_stored' },
       updateHarnessConfig: expect.any(Function),
     }));
+  });
+
+  it('passes workspace OpenCode runtime policy to initialize', async () => {
+    const processProxy = createProcessProxy();
+    const startThread = jest.fn(async () => ({
+      threadId: 'thread-1',
+      process: processProxy,
+      sendMessage: jest.fn(),
+      stop: jest.fn(),
+    }));
+    const initialize = jest.fn(async () => {});
+    const harness = { initialize, startThread };
+
+    jest.doMock('../../lib/harness/registry', () => ({
+      registry: { get: jest.fn(() => harness) },
+    }));
+    jest.doMock('../../lib/cli-config', () => ({
+      resolveCliPolicy: jest.fn(async () => ({
+        config: {
+          opencode: {
+            runtime: {
+              model: 'kimi-for-coding/k2p7',
+              thinking: true,
+            },
+          },
+        },
+      })),
+    }));
+    jest.doMock('../../lib/db', () => ({
+      getDb: () => () => ({
+        where: () => ({
+          select: () => ({
+            first: async () => ({
+              harness_id: 'opencode',
+              harness_config: '{}',
+            }),
+          }),
+        }),
+      }),
+    }));
+
+    const { spawnThreadWire } = require('../../lib/harness/compat');
+    const wire = spawnThreadWire('thread-1', '/project', { workspaceId: 'workspace-1', viewId: null });
+    await wire._harnessPromise;
+
+    expect(initialize).toHaveBeenCalledWith({
+      model: 'kimi-for-coding/k2p7',
+      thinking: true,
+      pure: false,
+    });
+  });
+
+  it('clears stale OpenCode singleton runtime options when policy is empty', async () => {
+    const processProxy = createProcessProxy();
+    const startThread = jest.fn(async () => ({
+      threadId: 'thread-1',
+      process: processProxy,
+      sendMessage: jest.fn(),
+      stop: jest.fn(),
+    }));
+    const initialize = jest.fn(async () => {});
+    const harness = { initialize, startThread };
+
+    jest.doMock('../../lib/harness/registry', () => ({
+      registry: { get: jest.fn(() => harness) },
+    }));
+    jest.doMock('../../lib/cli-config', () => ({
+      resolveCliPolicy: jest.fn(async () => ({
+        config: {
+          opencode: {
+            runtime: {},
+          },
+        },
+      })),
+    }));
+    jest.doMock('../../lib/db', () => ({
+      getDb: () => () => ({
+        where: () => ({
+          select: () => ({
+            first: async () => ({
+              harness_id: 'opencode',
+              harness_config: '{}',
+            }),
+          }),
+        }),
+      }),
+    }));
+
+    const { spawnThreadWire } = require('../../lib/harness/compat');
+    const wire = spawnThreadWire('thread-1', '/project', { workspaceId: 'workspace-1', viewId: null });
+    await wire._harnessPromise;
+
+    expect(initialize).toHaveBeenCalledWith({
+      model: null,
+      thinking: false,
+      pure: false,
+    });
   });
 });

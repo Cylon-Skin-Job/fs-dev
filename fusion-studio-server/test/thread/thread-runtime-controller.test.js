@@ -6,12 +6,13 @@ jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
 }));
 
 jest.mock('../../lib/wire/process-manager', () => ({
+  attachClientToWire: jest.fn(),
   getWireForThread: jest.fn(),
   unregisterWire: jest.fn(),
 }));
 
 const ThreadWebSocketHandler = require('../../lib/thread/ThreadWebSocketHandler');
-const { getWireForThread, unregisterWire } = require('../../lib/wire/process-manager');
+const { attachClientToWire, getWireForThread, unregisterWire } = require('../../lib/wire/process-manager');
 const { RUNTIME_STATES, threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
 const {
   acceptPromptThroughRuntime,
@@ -67,6 +68,7 @@ describe('thread runtime prompt controller', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
     getWireForThread.mockReturnValue(null);
     unregisterWire.mockReturnValue(undefined);
   });
@@ -81,6 +83,41 @@ describe('thread runtime prompt controller', () => {
       content: 'hello',
     });
     expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledWith({ type: 'turn_end' }, deps.ws);
+  });
+
+  test('reattaches a ready runtime to the current websocket before draining live events', async () => {
+    const order = [];
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(),
+    });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        order.push('send');
+        yield { type: 'turn_end' };
+      },
+    };
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markReady(runtimeKey);
+    getWireForThread.mockReturnValue(wire);
+    ThreadWebSocketHandler.handleMessageSend.mockImplementation(async () => {
+      order.push('persist');
+      return true;
+    });
+    attachClientToWire.mockImplementation(() => {
+      order.push('attach');
+      return true;
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(attachClientToWire).toHaveBeenCalledWith('thread-1', wire, '/tmp/project', deps.ws, {
+      workspaceId: 'workspace-1',
+      viewId: null,
+    });
+    expect(order).toEqual(['persist', 'attach', 'send']);
   });
 
   test('persists user acceptance before draining _sendMessage events', async () => {

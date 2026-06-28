@@ -3,7 +3,6 @@ import { copyChatId, copyNoteDraft, copyReplyText, guardAssistantReplySource } f
 import { updateReplyMetadata } from '../../lib/chat/reply-metadata-api';
 import { showToast } from '../../lib/toast';
 import type { AssistantReplyBookmarkModalProps } from './AssistantReplyBookmarkModal';
-import type { AssistantReplyNoteModalProps } from './AssistantReplyNoteModal';
 import type { ChatTurnBookmarkType, ChatTurnMetadataPatch } from '../../types';
 import type {
   AssistantReplySourceRef,
@@ -47,7 +46,7 @@ export function useAssistantReplyChromeController({
   disabled = false,
 }: UseAssistantReplyChromeControllerOptions) {
   const [effectiveMetadata, setEffectiveMetadata] = useState<Record<string, unknown> | undefined>(metadata);
-  const [activeEditor, setActiveEditor] = useState<'bookmark' | 'note' | null>(null);
+  const [activeEditor, setActiveEditor] = useState<'bookmark' | null>(null);
   const [bookmarkDraft, setBookmarkDraft] = useState<ChatTurnBookmarkType | null>(null);
   const [initialNoteDraft, setInitialNoteDraft] = useState('');
   const [noteDraft, setNoteDraft] = useState('');
@@ -77,15 +76,6 @@ export function useAssistantReplyChromeController({
     setInitialNoteDraft(noteBody);
     setNoteDraft(noteBody);
     setActiveEditor('bookmark');
-  }, [disabled, effectiveMetadata, source]);
-
-  const openNoteEditor = useCallback(() => {
-    if (disabled) return;
-    if (!guardAssistantReplySource(source, { requireExchangeId: true })) return;
-    const noteBody = getNoteBody(effectiveMetadata);
-    setInitialNoteDraft(noteBody);
-    setNoteDraft(noteBody);
-    setActiveEditor('note');
   }, [disabled, effectiveMetadata, source]);
 
   const closeEditor = useCallback(() => {
@@ -130,12 +120,6 @@ export function useAssistantReplyChromeController({
     });
   }, [bookmarkDraft, noteDraft, saveMetadata]);
 
-  const saveNoteEditor = useCallback(() => {
-    return saveMetadata({
-      note: noteDraft.trim() ? { body: noteDraft } : null,
-    });
-  }, [noteDraft, saveMetadata]);
-
   const bookmarkModalProps = useMemo<AssistantReplyBookmarkModalProps>(() => ({
     open: activeEditor === 'bookmark',
     bookmarkType: bookmarkDraft,
@@ -164,38 +148,11 @@ export function useAssistantReplyChromeController({
     saving,
   ]);
 
-  const noteModalProps = useMemo<AssistantReplyNoteModalProps>(() => ({
-    open: activeEditor === 'note',
-    noteDraft,
-    noteChanged,
-    saving,
-    disabled,
-    onNoteDraftChange: setNoteDraft,
-    onCopyNote: handleCopyNote,
-    onClearNote: clearNote,
-    onRevertNote: revertNote,
-    onCancel: closeEditor,
-    onSave: saveNoteEditor,
-  }), [
-    activeEditor,
-    clearNote,
-    closeEditor,
-    disabled,
-    handleCopyNote,
-    noteChanged,
-    noteDraft,
-    revertNote,
-    saveNoteEditor,
-    saving,
-  ]);
-
   return {
     metadata: effectiveMetadata,
     bookmarkModalProps,
-    noteModalProps,
     handleCopyReply,
     handleCopyChatId,
     openBookmarkEditor,
-    openNoteEditor,
   };
 }

@@ -4,7 +4,7 @@
  */
 
 const ThreadWebSocketHandler = require('./ThreadWebSocketHandler');
-const { getWireForThread, unregisterWire } = require('../wire/process-manager');
+const { attachClientToWire, getWireForThread, unregisterWire } = require('../wire/process-manager');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 
 // RCC-0095: all threads are workspace-scoped. The 'project' scope literal
@@ -217,6 +217,11 @@ async function acceptPromptThroughRuntime({
     return;
   }
   console.log('[WS] Message accepted by runtime and tracked in thread');
+
+  attachClientToWire(threadId, wire, projectRoot, ws, {
+    workspaceId: session.currentWorkspaceId,
+    viewId: null,
+  });
 
   session.pendingUserInput = clientMsg.user_input;
   session.pendingAttachments = attachments;

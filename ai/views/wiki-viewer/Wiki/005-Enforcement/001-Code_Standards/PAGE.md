@@ -5,6 +5,14 @@ metadata:
   incoming-edges:
     - Enforcement
   outgoing-edges:
+    - Architecture Routing
+    - Frontend UI Standards
+    - State Management Standards
+    - WebSocket Protocol Standards
+    - Universal Event Bus Standards
+    - Harness Adapter Standards
+    - Persistence And Metadata Standards
+    - Testing And Smoke Slices
     - Themes and State
   source-files: []
   connected-skills:
@@ -16,6 +24,36 @@ metadata:
 # Code Standards
 
 Modularity expectations, file structure rules, and architecture principles. Reference this page during planning phases before writing or modifying code.
+
+---
+
+## Standards Map
+
+Before changing code, identify the change category and read the relevant
+subpage. The front page is the shared rulebook; subpages are the detailed
+standards for specific code surfaces.
+
+| Change Type | Read |
+|---|---|
+| New route, handler, service, dispatcher, action, or adapter path | [Architecture Routing](001-Architecture_Routing/PAGE.md) |
+| React components, buttons, composer chrome, reply chrome, user workflows | [Frontend UI Standards](002-Frontend_UI/PAGE.md) |
+| Store state, hydration, disabled state, runtime state mirrors | [State Management Standards](003-State_Management/PAGE.md) |
+| WebSocket message types, client/server protocol, message handlers | [WebSocket Protocol Standards](004-WebSocket_Protocol/PAGE.md) |
+| Event emission, subscribers, audit/fan-out, automation facts | [Universal Event Bus Standards](005-Universal_Event_Bus/PAGE.md) |
+| CLI/service harness adapters, provider commands, canonical events | [Harness Adapter Standards](006-Harness_Adapters/PAGE.md) |
+| SQLite, migrations, exchange metadata, thread mirrors, durable state | [Persistence And Metadata Standards](007-Persistence_And_Metadata/PAGE.md) |
+| Vertical slices, smoke tests, route-level verification | [Testing And Smoke Slices](008-Testing_And_Smoke_Slices/PAGE.md) |
+
+## Hard Routing Rule
+
+Do not add a new user action, WebSocket message, backend handler, service,
+event, or harness method until the existing owner for that category of work has
+been identified.
+
+If the existing route cannot support the change, document why before creating a
+new route. Frontend code sends canonical product intent. Backend code owns
+validation and routing. Adapters translate canonical intent into provider or
+external-system syntax.
 
 ---
 
@@ -158,6 +196,8 @@ Classes:   .rv-component, .rv-component-part
 | Add features beyond what was asked | Do what was asked, nothing more |
 | Add error handling for impossible scenarios | Trust internal code and framework guarantees |
 | Create helpers for one-time operations | Inline it |
+| Add a one-off route because it is faster | Use the existing dispatcher/interpreter or document why it cannot fit |
+| Put provider syntax in frontend or product protocol | Send canonical product intent and translate in the adapter |
 
 ---
 
@@ -168,6 +208,11 @@ Before writing code, verify the plan against these standards:
 - [ ] Each new file has one job (describable in one sentence without "and")
 - [ ] No file will exceed 400 lines
 - [ ] Imports don't cross layer boundaries
+- [ ] Existing dispatcher/interpreter owner has been identified
+- [ ] New routes or modules have a written reason the existing path cannot fit
+- [ ] Frontend emits canonical product intent, not provider-specific syntax
+- [ ] Backend owns validation, state checks, routing, and capability errors
+- [ ] Provider or external syntax is contained in the adapter layer
 - [ ] CSS values use variables with fallbacks
 - [ ] Components are portable (no app-state, no services, no network)
 - [ ] No premature abstractions (is there actually a second consumer?)

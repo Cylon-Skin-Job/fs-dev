@@ -5,6 +5,7 @@ metadata:
   incoming-edges: []
   outgoing-edges:
     - Workspaces And Views
+    - Chat System
     - Server And Runtime
     - Automation And Agents
     - Integrations And Tools
@@ -21,7 +22,8 @@ The wiki is being reorganized from the older `Project`, `System Tools`, and `Enf
 
 ## Top-Level Domains
 
-- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, chat, wiki, browser, file, agent, and issues surfaces.
+- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, wiki, browser, file, agent, and issues surfaces.
+- [Chat System](007-Chat_System/PAGE.md) - thread identity, persistence, harness/event flow, rendering lifecycle, chat UI, user metadata, text payloads, and test operations.
 - [Server And Runtime](002-Server_And_Runtime/PAGE.md) - backend ownership, runtime state, persistence, WebSockets, filesystem resolution, and service behavior.
 - [Automation And Agents](003-Automation_And_Agents/PAGE.md) - background agents, ticket routing, orchestration, run auditing, and automation loops.
 - [Integrations And Tools](004-Integrations_And_Tools/PAGE.md) - external systems, local tools, setup-adjacent integrations, hooks, screenshots, secrets, and theme tooling.

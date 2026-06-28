@@ -21,8 +21,9 @@ import { fetchRenderer } from './fetch';
 import { subagentRenderer } from './subagent';
 import { todoRenderer } from './todo';
 import { reportUnknownToolType } from './unknown-tool-reporter';
+import { withUniversalToolErrorPresentation } from './shared/error-display';
 
-const REGISTRY: Record<string, ToolRenderer> = {
+const BASE_REGISTRY: Record<string, ToolRenderer> = {
   think: thinkRenderer,
   shell: shellRenderer,
   read: readRenderer,
@@ -36,8 +37,15 @@ const REGISTRY: Record<string, ToolRenderer> = {
   todo: todoRenderer,
 };
 
+const REGISTRY: Record<string, ToolRenderer> = Object.fromEntries(
+  Object.entries(BASE_REGISTRY).map(([type, renderer]) => [
+    type,
+    withUniversalToolErrorPresentation(type, renderer),
+  ]),
+) as Record<string, ToolRenderer>;
+
 /** Unknown segment types render plainly, but loudly. */
-const fallbackRenderer: ToolRenderer = {
+const fallbackRenderer: ToolRenderer = withUniversalToolErrorPresentation('unknown', {
   grouped: false,
   buildTitle: () => 'Unknown tool',
   contentStyle: {
@@ -47,7 +55,7 @@ const fallbackRenderer: ToolRenderer = {
     fontSize: '13px',
   },
   formatContent: (content) => content,
-};
+});
 
 export function getToolRenderer(type: SegmentType | string): ToolRenderer {
   const renderer = REGISTRY[type];

@@ -107,7 +107,6 @@ function InstantToolBlock({ segment }: { segment: StreamSegment }) {
       type={segment.type}
       label={renderer.buildTitle(segment.groupCount ?? 1, segment.toolArgs, segment)}
       toolArgs={segment.toolArgs}
-      isError={segment.isError}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
     >
@@ -134,7 +133,6 @@ function InstantGroupedBlock({ segments }: { segments: StreamSegment[] }) {
     <ToolCallBlock
       type={type}
       label={renderer.buildTitle(segments[0].groupCount ?? segments.length, segments[0].toolArgs, segments[0])}
-      isError={segments.some(s => s.isError)}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
     >

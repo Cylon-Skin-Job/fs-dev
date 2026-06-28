@@ -7,7 +7,6 @@ metadata:
   outgoing-edges:
     - Workspace Paradigm
     - View Architecture
-    - Chat System
     - Wiki View
     - Browser
     - Custom Iframe
@@ -27,7 +26,7 @@ Use this section for product/workspace/view architecture and user-facing surface
 
 - [Workspace Paradigm](001-Workspace_Paradigm/PAGE.md) - conceptual rulebook for workspace identity, ownership, activation, and boundaries.
 - [View Architecture](002-View_Architecture/PAGE.md) - how views are discovered, mounted, served, and related to workspace content roots.
-- [Chat System](003-Chat_System/PAGE.md) - chat runtime from the user's perspective, rendering model, protocol references, and lessons.
+- [Chat System](../007-Chat_System/PAGE.md) - top-level chat system domain. The old local page remains as a compatibility pointer.
 - [Wiki View](004-Wiki_View/PAGE.md) - folder-first wiki architecture, interface, frontmatter, and terminal access.
 - [Browser](005-Browser/PAGE.md) - general internet-capable browser surface for web navigation, testing, and automation.
 - [Custom Iframe](006-Custom_Iframe/PAGE.md) - local-server iframe display for user-created custom views; not for internet browsing.
@@ -39,7 +38,7 @@ Use this section for product/workspace/view architecture and user-facing surface
 
 ## Migration Sources
 
-- [Chat System](003-Chat_System/PAGE.md)
+- [Chat System](../007-Chat_System/PAGE.md)
 - [Wiki View](004-Wiki_View/PAGE.md)
 - Legacy Browser Views content was split into [Browser](005-Browser/PAGE.md) and [Custom Iframe](006-Custom_Iframe/PAGE.md).
 

@@ -147,6 +147,7 @@ export type WebSocketMessageType =
   // Thread messages
   | 'thread:list'
   | 'thread:created'
+  | 'thread:forked'
   | 'thread:opened'
   | 'thread:renamed'
   | 'thread:deleted'
@@ -333,13 +334,21 @@ export interface ResolvedCliEntry {
     model: string;
     features: string[];
   };
+  runtime?: {
+    model?: string | null;
+    thinking?: boolean;
+    pure?: boolean;
+  };
   enabled: boolean;
   comingSoon?: boolean;
   recommended?: boolean;
   order: number;
 }
 
-export type CliEntryOverride = Partial<Pick<ResolvedCliEntry, 'enabled' | 'name' | 'materialIcon' | 'accentColor' | 'order'>>;
+export type CliEntryOverride = Partial<Pick<ResolvedCliEntry, 'enabled' | 'name' | 'materialIcon' | 'accentColor' | 'order'>> & {
+  details?: Partial<ResolvedCliEntry['details']>;
+  runtime?: ResolvedCliEntry['runtime'];
+};
 
 export interface WebSocketMessage {
   type: WebSocketMessageType;
@@ -384,6 +393,7 @@ export interface WebSocketMessage {
   name?: string;
   content?: string;
   metadata?: Record<string, unknown>;
+  fork?: ThreadForkMetadata | null;
   exchangeId?: number;
   seq?: number;
   message?: string;
@@ -503,6 +513,27 @@ export interface ThreadEntry {
   viewId?: string | null;
   // CLI_IDENTITY_SPEC: which harness owns this thread
   harnessId?: string;
+  harnessConfig?: ThreadHarnessConfig | null;
+}
+
+export interface ThreadForkMetadata {
+  type?: string;
+  status?: string;
+  sourceThreadId?: string;
+  sourceThreadName?: string;
+  sourceExchangeId?: number | null;
+  sourceExchangeSeq?: number | null;
+  sourceOpenCodeSessionId?: string;
+  createdOpenCodeSessionId?: string;
+  createdAt?: string;
+  [key: string]: unknown;
+}
+
+export interface ThreadHarnessConfig {
+  opencodeSessionId?: string;
+  pendingFork?: ThreadForkMetadata | null;
+  forkProvenance?: ThreadForkMetadata | null;
+  [key: string]: unknown;
 }
 
 // Moved from ChatHarnessPicker — harness installation status
