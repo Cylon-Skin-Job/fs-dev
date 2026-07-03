@@ -157,6 +157,10 @@ export type WebSocketMessageType =
   | 'modal:show'
   | 'file:moved'
   | 'file:move_error'
+  | 'file:renamed'
+  | 'file:rename_error'
+  | 'file:deleted'
+  | 'file:delete_error'
   | 'panel_config'
   | 'panel_changed'
   | 'file_changed'
@@ -234,6 +238,10 @@ export type WebSocketMessageType =
   | 'screenshot:updated'
   | 'screenshot:missing'
   | 'screenshot:error'
+  | 'screenshot:file-capture'
+  | 'screenshot:file-captured'
+  | 'screenshot:refresh-source'
+  | 'screenshot:source-refreshed'
   // Calendar messages
   | 'calendar:sync_complete'
   // Bookmarks messages
@@ -468,6 +476,14 @@ export interface ViewUIState {
   secondaryThreadId: string | null;
   // TINTS_SPEC §4: per-surface tint toggles. All default false (neutral).
   tints: ViewStateTints;
+  // Doc viewer persisted UI state.
+  docViewerMode?: 'active' | 'archive';
+  docViewerActiveSelectedPath?: string | null;
+  docViewerArchiveSelectedPath?: string | null;
+  docViewerActiveGridScroll?: number;
+  docViewerArchiveGridScroll?: number;
+  docViewerActiveDocScroll?: number;
+  docViewerArchiveDocScroll?: number;
 }
 
 export interface ViewStateTints {

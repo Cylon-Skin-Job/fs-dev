@@ -1,39 +1,16 @@
 ---
-name: Workspace and View Panel Structure
-description: Explains how Fusion Studio workspaces contain view panels, configuration, state, prompts, skills, and tools managed through System Manager workflows.
+name: Workspaces & Views
+description: Table of contents for Workspaces & Views.
 metadata:
-  incoming-edges:
-    - System Manager
-  outgoing-edges:
-    - Workspace Configuration
-    - State and Theme
-    - View Customization
-    - Agent Prompts
-    - Skills and Tools
+  incoming-edges: []
+  outgoing-edges: []
   source-files: []
   connected-skills: []
   related-trigger-files: []
 ---
 
-Workspaces are the primary organizing unit in Fusion Studio. A workspace owns its local files, its `ai/` structure, and the view panels that make those resources usable.
-
-Views are a subset of workspace behavior. They are not separate projects. A view is a panel or surface that reads from, renders, or configures part of the workspace.
-
-System Manager workflows help users create, configure, rename, delist, and customize workspaces and views without requiring the UI button itself to mutate system state.
-
-## Children
-
-- [Workspace Configuration](001-Workspace_Configuration/PAGE.md) - create, register, rename, delist, and manage workspaces.
-- [State and Theme](002-State_And_Theme/PAGE.md) - state files, theme choices, and visual configuration.
-- [View Customization](003-View_Customization/PAGE.md) - adding, removing, and editing view panels.
-- [Agent Prompts](004-Agent_Prompts/PAGE.md) - prompts that guide workspace and system agents.
-- [Skills and Tools](005-Skills_And_Tools/PAGE.md) - skill matching, tool access, and System Manager delegation.
-
-## Related Prompt Folders
-
-```text
-System_Manager/Prompts/Workspace Manager/Workspace Creation/PROMPT.md
-System_Manager/Prompts/Workspace Manager/Workspace Rename-Delist/PROMPT.md
-System_Manager/Prompts/Workspace Manager/Edit Views/PROMPT.md
-System_Manager/Prompts/Workspace Manager/Customize CSS/PROMPT.md
-```
+- [Workspace Configuration](001-Workspace_Configuration/PAGE.md) - System Manager guidance for creating, registering, renaming, hiding, delisting, or otherwise configuring Fusion Studio workspaces.
+- [State And Theme](002-State_And_Theme/PAGE.md) - System Manager guidance for workspace state, theme selection, visual configuration, and user-facing appearance settings.
+- [View Customization](003-View_Customization/PAGE.md) - System Manager guidance for adding, removing, configuring, and explaining workspace view panels.
+- [Agent Prompts](004-Agent_Prompts/PAGE.md) - System Manager guidance for prompt-backed assistant workflows, prompt metadata, and workspace-agent delegation rules.
+- [Skills And Tools](005-Skills_And_Tools/PAGE.md) - System Manager guidance for skill matching, prompt injection, governed tools, and delegation from normal workspace agents.

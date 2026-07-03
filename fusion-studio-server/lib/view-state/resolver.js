@@ -44,6 +44,13 @@ const HARDCODED_DEFAULTS = Object.freeze({
       chat:    false,
     },
   },
+  docViewerMode: 'active',
+  docViewerActiveSelectedPath: null,
+  docViewerArchiveSelectedPath: null,
+  docViewerActiveGridScroll: 0,
+  docViewerArchiveGridScroll: 0,
+  docViewerActiveDocScroll: 0,
+  docViewerArchiveDocScroll: 0,
 });
 
 function workspacePath(projectRoot) {
@@ -93,7 +100,7 @@ function deepMerge(base, patch) {
 
 async function atomicWriteJson(filePath, obj) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  const tmp = filePath + '.tmp';
+  const tmp = `${filePath}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`;
   await fs.writeFile(tmp, JSON.stringify(obj, null, 2));
   await fs.rename(tmp, filePath);
 }

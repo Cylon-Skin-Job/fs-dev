@@ -5,8 +5,32 @@
  * Returns a map keyed by message type for delegation from client-message-router.
  */
 
+const fs = require('fs');
+const path = require('path');
 const screenshotService = require('../workspace/screenshot-service');
 const stateCache = require('../workspace/state-cache');
+const workspaceController = require('../workspace/workspace-controller');
+const sourceFolderService = require('./source-folder-service');
+const hotkeyScreenshotWatcher = require('./hotkey-screenshot-watcher');
+
+async function saveFileScreenshot(workspaceId, dataUrl) {
+  const activeWorkspace = workspaceController.getActiveWorkspaceSync();
+  if (!activeWorkspace || activeWorkspace.id !== workspaceId || !activeWorkspace.repo_path) {
+    throw new Error('Workspace mismatch or no active workspace');
+  }
+
+  const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
+  const buffer = Buffer.from(base64, 'base64');
+
+  const targetDir = path.join(activeWorkspace.repo_path, 'ai', 'data');
+  await fs.promises.mkdir(targetDir, { recursive: true });
+
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const targetPath = path.join(targetDir, `fusion-capture-${timestamp}.png`);
+  await fs.promises.writeFile(targetPath, buffer);
+
+  return targetPath;
+}
 
 function createScreenshotHandlers({ getAllClients }) {
   return {
@@ -80,6 +104,52 @@ function createScreenshotHandlers({ getAllClients }) {
           activePanelId: state.currentPanel || null,
         })),
       }));
+    },
+
+    'screenshot:file-capture': async (ws, msg) => {
+      const { workspaceId, dataUrl } = msg;
+      if (!workspaceId || typeof dataUrl !== 'string') {
+        ws.send(JSON.stringify({
+          type: 'screenshot:error',
+          message: 'screenshot:file-capture requires workspaceId and dataUrl',
+        }));
+        return;
+      }
+
+      try {
+        await sourceFolderService.refresh();
+        await hotkeyScreenshotWatcher.refresh();
+        const savedPath = await saveFileScreenshot(workspaceId, dataUrl);
+        ws.send(JSON.stringify({
+          type: 'screenshot:file-captured',
+          workspaceId,
+          savedPath,
+          capturedAt: Date.now(),
+        }));
+      } catch (err) {
+        console.error('[ScreenshotHandler] file-capture failed:', err.message);
+        ws.send(JSON.stringify({
+          type: 'screenshot:error',
+          message: err.message,
+        }));
+      }
+    },
+
+    'screenshot:refresh-source': async (ws, _msg) => {
+      try {
+        const sourcePath = await sourceFolderService.refresh();
+        await hotkeyScreenshotWatcher.refresh();
+        ws.send(JSON.stringify({
+          type: 'screenshot:source-refreshed',
+          sourcePath,
+        }));
+      } catch (err) {
+        console.error('[ScreenshotHandler] refresh-source failed:', err.message);
+        ws.send(JSON.stringify({
+          type: 'screenshot:error',
+          message: err.message,
+        }));
+      }
     },
   };
 }

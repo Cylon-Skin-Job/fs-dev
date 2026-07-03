@@ -21,6 +21,7 @@ interface DocumentTileProps {
   panel?: string;
   folderPath?: string;
   onClick?: () => void;
+  onContextMenu?: (e: React.MouseEvent) => void;
   active?: boolean;
   size?: 'default' | 'small';
 }
@@ -40,7 +41,7 @@ const ICON_MAP: Record<string, string> = {
   pdf: 'picture_as_pdf',
 };
 
-export function DocumentTile({ name, content, extension, panel, folderPath, onClick, active, size = 'default' }: DocumentTileProps) {
+export function DocumentTile({ name, content, extension, panel, folderPath, onClick, onContextMenu, active, size = 'default' }: DocumentTileProps) {
   const ext = extension || name.split('.').pop()?.toLowerCase() || '';
   const icon = ICON_MAP[ext] || 'draft';
   const isImage = IMAGE_EXTENSIONS.has(ext);
@@ -60,7 +61,7 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
   }, [content, isImage]);
 
   return (
-    <div className={classes.join(' ')} onClick={onClick} title={name}>
+    <div className={classes.join(' ')} onClick={onClick} onContextMenu={onContextMenu} title={name}>
       <div className="rv-doc-tile-preview">
         {isImage ? (
           <img

@@ -154,7 +154,7 @@ export interface AppState {
   // ── Per-view UI state (SPEC-26c-2) ──
   viewStates: Record<string, ViewUIState>;
   loadViewState: (view: string) => void;
-  setViewState: (view: string, state: ViewUIState) => void;
+  setViewState: (view: string, state: Partial<ViewUIState>) => void;
   _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => void;
   toggleCollapsed: (view: string, pane: CollapsablePane) => void;
   setPaneWidth: (view: string, pane: Pane, width: number) => void;

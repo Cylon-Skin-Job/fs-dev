@@ -79,5 +79,5 @@ Do not document `api.json` hot-swapping as current workspace behavior unless cur
 ## Related Pages
 
 - [View Architecture](../002-View_Architecture/PAGE.md) - view folders, content roots, and loading behavior.
-- [Chat System](../003-Chat_System/PAGE.md) - current thread-centered chat model.
-- [Wiki View](../004-Wiki_View/PAGE.md) - folder-first wiki model.
+- [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md) - current thread-centered chat model.
+- [Wiki View](../004-Wiki_View/000-Wiki_View/PAGE.md) - folder-first wiki model.

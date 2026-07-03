@@ -1,0 +1,116 @@
+.rv-doc-viewer-chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  height: 44px;
+  padding: 0 var(--space-lg, 16px);
+  background: var(--sidebar-surface-bg, #161616);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+.rv-doc-viewer-chrome-left,
+.rv-doc-viewer-chrome-center,
+.rv-doc-viewer-chrome-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  min-width: 0;
+}
+
+.rv-doc-viewer-chrome-left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.rv-doc-viewer-chrome-center {
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+.rv-doc-viewer-chrome-right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.rv-doc-viewer-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  color: var(--accent-dim, var(--theme-primary));
+  cursor: pointer;
+  border-radius: var(--radius-md, 4px);
+  padding: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.rv-doc-viewer-back:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #eee);
+}
+
+.rv-doc-viewer-back .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+.rv-doc-viewer-title {
+  margin: 0 0 0 var(--space-sm, 8px);
+  color: var(--accent-dim, var(--text-primary, #eee));
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-doc-viewer-restore {
+  margin-left: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) var(--space-md, 12px);
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 4px);
+  background: var(--sidebar-surface-bg, #161616);
+  color: var(--accent-dim, var(--theme-primary));
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.rv-doc-viewer-restore:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #eee);
+}
+
+.rv-doc-viewer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-doc-viewer-actions .rv-file-page-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: var(--radius-md, 4px);
+  color: var(--accent-dim, var(--theme-primary));
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.rv-doc-viewer-actions .rv-file-page-action:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #eee);
+}
+
+.rv-doc-viewer-actions .rv-file-page-action .material-symbols-outlined {
+  font-size: 1.125rem;
+}

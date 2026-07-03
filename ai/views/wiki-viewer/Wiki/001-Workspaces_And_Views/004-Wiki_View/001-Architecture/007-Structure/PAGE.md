@@ -39,6 +39,6 @@ metadata:
 
 ## Content Files
 
-- `ai/views/wiki-viewer/Wiki/PAGE.md` is the root wiki guide.
+- `ai/views/wiki-viewer/Wiki/000-Wiki_Guidance/PAGE.md` is the root front page (the root's `000-` heading article); there is no folder-level `Wiki/PAGE.md`.
 - `ai/views/wiki-viewer/Wiki/**/PAGE.md` are navigable pages.
 - `ai/views/wiki-viewer/settings/layout.css` styles wiki layout, sidebars, frontmatter headers, and metadata footers.

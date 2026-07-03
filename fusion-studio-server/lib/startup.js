@@ -152,6 +152,13 @@ async function start({ server, app, sessions, getProjectRoot }) {
   const workspaceController = require('./workspace/workspace-controller');
   await workspaceController.start();
 
+  // 3.8a. Start watching the macOS screenshot folder for hotkey captures.
+  // Started after workspaceController so the active workspace repo_path is known.
+  const hotkeyScreenshotWatcher = require('./screenshot/hotkey-screenshot-watcher');
+  hotkeyScreenshotWatcher.start().catch((err) => {
+    console.error('[Startup] Failed to start hotkey screenshot watcher:', err.message);
+  });
+
   // 3.8b. Themes CSS — re-derive themes.css from the active slug in themes.json
   // on every boot so the CSS is never stale after a hand-edit (THEME_PICKER_SPEC §5c).
   const projectRootForThemes = getProjectRoot();

@@ -1,7 +1,7 @@
 /**
  * @module wikiStore
  * @role State management for the wiki-viewer folder-tree model
- * @reads ai/views/wiki-viewer/Wiki/PAGE.md and child folder PAGE.md files
+ * @reads ai/views/wiki-viewer/Wiki folder-tree PAGE.md files; a folder's 000- child is its heading article
  */
 
 import { create } from 'zustand';
@@ -87,6 +87,16 @@ export function createWikiNode(params: {
   };
 }
 
+const HEADING_ARTICLE_PREFIX = '000-';
+
+/**
+ * A section heading's article is its 000- child folder, and only 000- —
+ * a section with no 000- child has no article and is not clickable.
+ */
+export function findHeadingArticle(section: WikiNode): WikiNode | null {
+  return section.children.find((child) => child.name.startsWith(HEADING_ARTICLE_PREFIX)) || null;
+}
+
 export function findWikiNodeByPath(node: WikiNode | null, path: string): WikiNode | null {
   if (!node) return null;
   if (node.path === path) return node;
@@ -132,8 +142,12 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
   ...createEmptyState(),
 
   setRoot: (root) => {
-    const selectedNode = root ? findWikiNodeByPath(root, get().selectedPath) || root : null;
-    const viewedNode = root && get().viewedPath ? findWikiNodeByPath(root, get().viewedPath) : selectedNode;
+    // The root delegates to its 000- heading article when one exists, both
+    // as the default selection and as the "Wiki Guide" button target.
+    const rootDefault = root ? findHeadingArticle(root) || root : null;
+    const storedSelected = root ? findWikiNodeByPath(root, get().selectedPath) : null;
+    const selectedNode = storedSelected && storedSelected !== root ? storedSelected : rootDefault;
+    const viewedNode = root && get().viewedPath ? findWikiNodeByPath(root, get().viewedPath) || selectedNode : selectedNode;
 
     set({
       root,
@@ -155,6 +169,18 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
       nextHistory.push(node.path);
     }
 
+    // Re-selecting the viewed page must not clear its content: the content
+    // request effect only fires on path change, so a clear here would strand
+    // the viewer on the loading screen.
+    if (node.path === state.viewedPath) {
+      set({
+        selectedPath: node.path,
+        history: nextHistory,
+        historyIndex: nextHistory.length - 1,
+      });
+      return;
+    }
+
     set({
       ...selectionForNode(node),
       selectedContent: '',
@@ -167,6 +193,8 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
 
   viewNode: (node) => {
     const state = get();
+    if (node.path === state.viewedPath) return;
+
     const nextHistory = state.history.slice(0, state.historyIndex + 1);
 
     if (nextHistory[nextHistory.length - 1] !== node.path) {

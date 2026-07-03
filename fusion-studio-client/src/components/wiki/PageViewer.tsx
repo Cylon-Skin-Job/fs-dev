@@ -71,6 +71,7 @@ export function PageViewer() {
   const history = useWikiStore((s) => s.history);
   const goBack = useWikiStore((s) => s.goBack);
   const goForward = useWikiStore((s) => s.goForward);
+  const viewNode = useWikiStore((s) => s.viewNode);
 
   const selectedNode = useMemo(
     () => findWikiNodeByPath(root, viewedPath),
@@ -82,19 +83,30 @@ export function PageViewer() {
   const parsedPage = useMemo(() => parseWikiPage(selectedContent), [selectedContent]);
   const rendered = useMemo(() => markdownToHtml(parsedPage.body), [parsedPage.body]);
 
-  // Intercept wiki-internal links
+  // Intercept wiki-internal links and navigate within the wiki viewer
   const handleContentClick = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     const anchor = target.closest('a');
     if (!anchor) return;
 
     const href = anchor.getAttribute('href') || '';
-    // Only handle relative markdown links
     if (href.startsWith('http') || href.startsWith('#') || href.startsWith('/')) return;
 
-    // TODO: resolve internal wiki links to article navigation
-    // For now, let them behave as normal links
-  }, []);
+    const combined = viewedPath ? `${viewedPath}/${href}` : href;
+    const parts = combined.split('/');
+    const resolved: string[] = [];
+    for (const part of parts) {
+      if (part === '..') resolved.pop();
+      else if (part !== '.' && part !== '') resolved.push(part);
+    }
+    if (resolved[resolved.length - 1] === 'PAGE.md') resolved.pop();
+
+    const node = findWikiNodeByPath(root, resolved.join('/'));
+    if (node) {
+      e.preventDefault();
+      viewNode(node);
+    }
+  }, [root, viewNode, viewedPath]);
 
   if (!selectedNode) {
     return (

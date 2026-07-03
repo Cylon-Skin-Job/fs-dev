@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "electron": "electron electron/main.cjs",
     "electron:dev": "npm run build && electron electron/main.cjs",
+    "restart": "./scripts/restart.sh",
     "download-pandoc": "node scripts/download-pandoc.cjs",
     "download-gwen-model": "node scripts/download-gwen-model.cjs",
     "download-whisper-model": "node scripts/download-whisper-model.cjs",

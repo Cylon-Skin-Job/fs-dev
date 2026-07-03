@@ -33,7 +33,7 @@ fs-dev/
 | Electron main/preload | `fusion-studio-client/electron/` |
 | Server | `fusion-studio-server/` |
 | Server libraries | `fusion-studio-server/lib/` |
-| Current Chat architecture source of truth | `ai/views/wiki-viewer/Wiki/007-Chat_System/PAGE.md` |
+| Current Chat architecture source of truth | `ai/views/wiki-viewer/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` |
 | Project overview | `docs/FUSION_STUDIO_OVERVIEW.md` |
 | Architecture outline | `docs/FUSION_STUDIO_ARCHITECTURE_OUTLINE.md` |
 
@@ -75,7 +75,7 @@ The server owns persistence and orchestration. The renderer presents state and s
 
 ## Chat And Harness Model
 
-Read `ai/views/wiki-viewer/Wiki/007-Chat_System/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
+Read `ai/views/wiki-viewer/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
 
 Current rules:
 

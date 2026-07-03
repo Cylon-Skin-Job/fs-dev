@@ -10,6 +10,7 @@ const spreadsheetSubmodule = require('./export/submodules/spreadsheets/index.cjs
 const { registerCaptureHandlers } = require('./ipc/capture-handlers.cjs');
 const { registerScreenshotHandlers } = require('./ipc/screenshot-handlers.cjs');
 const { registerDocumentHandlers } = require('./ipc/document-handlers.cjs');
+const focusState = require('./focus-state.cjs');
 const { spawnServer } = require('./server-spawn.cjs');
 const { writePort, clearPort } = require('./port-file.cjs');
 const { registerScheme, registerHandler, setWorkspaceRoot } = require('./protocol-handler.cjs');
@@ -156,6 +157,8 @@ function createWindow(port) {
       backgroundThrottling: false,
     },
   });
+
+  focusState.trackWindow(mainWindow);
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
@@ -529,6 +532,7 @@ if (!gotSingleInstanceLock) {
       onExit: handleServerExit,
       resourcesPath: getElectronResourcesRoot(),
       userDataPath: getServerUserDataPath(),
+      focusStatePath: focusState.getStateFilePath(),
     });
     serverProcess = proc;
     writePort(port);

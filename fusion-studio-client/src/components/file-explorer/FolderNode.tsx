@@ -49,7 +49,7 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
             const handleMessage = (event: MessageEvent) => {
               try {
                 const msg = JSON.parse(event.data);
-                if (msg.type === 'file_tree_response' && msg.path === node.path) {
+                if (msg.type === 'file_tree_response' && msg.panel === 'file-viewer' && msg.path === node.path) {
                   currentWs.removeEventListener('message', handleMessage);
                   if (msg.success) {
                     resolve(msg.nodes);

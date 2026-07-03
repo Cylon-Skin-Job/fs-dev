@@ -1,41 +1,16 @@
 ---
-name: Voice Input Architecture
-description: Architecture map for Fusion Studio microphone input, transcription, deterministic cleanup, and rule resources.
+name: Architecture
+description: Table of contents for Architecture.
 metadata:
-  incoming-edges:
-    - Voice Input Overview
-  outgoing-edges:
-    - Voice Input Decisions
-    - Voice Input Lessons
-    - Voice Input Rule System
-    - Voice Input Transcription Flow
-    - Voice Input Structure
-  source-files:
-    - fusion-studio-client/src/mic
-    - fusion-studio-server/lib/transcription
-    - fusion-studio-client/scripts/prepare-ai-resources.cjs
+  incoming-edges: []
+  outgoing-edges: []
+  source-files: []
   connected-skills: []
   related-trigger-files: []
 ---
 
-Voice input is a user-facing input surface with server-side transcription and
-cleanup ownership.
-
-## Layers
-
-1. Client mic UI captures audio and controls recorder state.
-2. Server transcription receives audio and invokes Whisper.
-3. Deterministic cleanup applies first-pass correction, list formatting, and final polish.
-4. Corrected text returns to the client for chat input use.
-5. Raw/corrected transcript history is retained for debugging edge cases.
-
-## Cleanup Passes
-
-- First pass: sentence cleanup, filler removal, replacements, self-correction.
-- List pass: list detection, list item creation, transition cleanup, status/example lists.
-- Final pass: closing paragraph splits, long item splits, final punctuation.
-
-## Boundary
-
-Voice input prepares text. Chat System owns thread runtime, prompt acceptance,
-streaming, persistence, and assistant output rendering.
+- [Decisions](002-Decisions/PAGE.md) - Durable decisions for Fusion Studio voice input and deterministic STT cleanup.
+- [Lessons](003-Lessons/PAGE.md) - Recurring traps and learned constraints for voice transcription cleanup work.
+- [Rule System](004-Rule_System/PAGE.md) - Map of editable STT cleanup rule files, generated verb candidates, and runtime rule assembly.
+- [Transcription Flow](005-Transcription_Flow/PAGE.md) - Step-by-step path from microphone capture through Whisper, deterministic cleanup, and chat-ready text.
+- [Structure](006-Structure/PAGE.md) - File and module map for voice input, transcription cleanup, rule resources, packaging, and generated verb candidates.

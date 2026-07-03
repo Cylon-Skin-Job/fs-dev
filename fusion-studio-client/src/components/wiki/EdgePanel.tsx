@@ -35,7 +35,11 @@ export function EdgePanel() {
 
   const node = findWikiNodeByPath(root, selectedPath);
 
-  if (!node || node.kind !== 'article') {
+  // Heading articles (000- folders) get the sidebar at any depth, including
+  // the root's own heading article, whose kind is 'section'.
+  const isHeadingArticle = Boolean(node && node.name.startsWith('000-'));
+
+  if (!node || (node.kind !== 'article' && !isHeadingArticle)) {
     return (
       <div className="rv-wiki-edge-panel" />
     );

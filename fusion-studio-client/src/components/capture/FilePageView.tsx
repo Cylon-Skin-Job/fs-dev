@@ -1,15 +1,13 @@
 /**
  * @module FilePageView
- * @role Full-content file viewer for the Capture workspace
+ * @role Full-content file viewer for the doc-viewer panel
  *
- * Displays a single file at readable size filling the content area.
- * Back arrow top-left, sibling files in a ribbon at the bottom.
- *
- * Content rendering is intentionally basic — the inner renderer
- * will be replaced by a unified content module later.
+ * Pure presentation. Displays a single file at readable size, with a back
+ * button, filename, chrome actions, mode toggle, and a bottom ribbon of
+ * sibling tiles.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { DocumentTile } from '../tile-row/DocumentTile';
 import { isImageFile } from '../tile-row/documentTileUtils';
@@ -18,7 +16,10 @@ import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 import { getPanelFileUrl } from '../../lib/panels';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
+import { DocViewerChrome } from './DocViewerChrome';
 import './FilePageView.css';
+import './DocViewerHeader.css';
+import './DocViewerChrome.css';
 
 interface FilePageViewProps {
   file: FileWithContent;
@@ -27,6 +28,10 @@ interface FilePageViewProps {
   folder: string;
   folderName?: string;
   showRibbon?: boolean;
+  docScroll?: number;
+  onDocScroll?: (scrollTop: number) => void;
+  onRestore?: () => void;
+  onArchive?: () => void;
   onBack: () => void;
   onSelectSibling?: (file: FileWithContent) => void;
 }
@@ -38,50 +43,91 @@ export function FilePageView({
   folder,
   folderName,
   showRibbon = true,
+  docScroll = 0,
+  onDocScroll,
+  onRestore,
+  onArchive,
   onBack,
   onSelectSibling,
 }: FilePageViewProps) {
   const isImage = isImageFile(file.name);
   const isMarkdown = file.extension === 'md' || file.name.endsWith('.md');
+  const isArchiveDoc = folder.includes('/Archive');
+  const titleLabel = isArchiveDoc
+    ? `ARCHIVE: ${file.name}`
+    : folderName
+      ? `${folderName} / ${file.name}`
+      : file.name;
   const [viewMode, setViewMode] = useState<'code' | 'markdown'>('code');
   const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveResource(panel, file.path);
   }, [panel, file.path, setActiveResource]);
 
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el || docScroll <= 0) return;
+    if (el.scrollHeight > el.clientHeight) {
+      el.scrollTop = Math.min(docScroll, el.scrollHeight - el.clientHeight);
+    }
+  }, [docScroll, file.path, file.content, viewMode]);
+
   return (
     <div className="rv-file-page-view">
-      {/* Top bar — back arrow + filename + toggle */}
-      <div className="rv-file-page-topbar">
-        <button className="rv-file-page-back" onClick={onBack} title="Back to tiles">
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <span className="rv-file-page-filename">
-          {folderName ? `${folderName} / ${file.name}` : file.name}
-        </span>
-        <div className="rv-file-page-actions">
-          <CopyPathButton panel={panel} relativePath={file.path} title="Copy file path" />
-          <SendToChatButton panel={panel} relativePath={file.path} title="Send file path to chat" />
-          {isMarkdown && (
-            <button
-              className="rv-file-page-action"
-              onClick={() => setViewMode(viewMode === 'code' ? 'markdown' : 'code')}
-              title={viewMode === 'code' ? 'Switch to document view' : 'Switch to code view'}
-            >
-              <span className="material-symbols-outlined">
-                {viewMode === 'code' ? 'toggle_off' : 'toggle_on'}
-              </span>
+      <DocViewerChrome
+        left={
+          <>
+            <button className="rv-doc-viewer-back" onClick={onBack} title="Back to tiles">
+              <span className="material-symbols-outlined">arrow_back</span>
             </button>
-          )}
-        </div>
-      </div>
+            <span className="rv-doc-viewer-title">{titleLabel}</span>
+            {isArchiveDoc && onRestore && (
+              <button
+                type="button"
+                className="rv-doc-viewer-restore"
+                onClick={onRestore}
+                title="Restore to active folder"
+              >
+                Restore
+              </button>
+            )}
+          </>
+        }
+        right={
+          <div className="rv-doc-viewer-actions">
+            {!isArchiveDoc && onArchive && (
+              <button
+                type="button"
+                className="rv-file-page-action"
+                onClick={onArchive}
+                title="Archive this file"
+              >
+                <span className="material-symbols-outlined">archive</span>
+              </button>
+            )}
+            <CopyPathButton panel={panel} relativePath={file.path} title="Copy file path" />
+            <SendToChatButton panel={panel} relativePath={file.path} title="Send file path to chat" />
+            {isMarkdown && (
+              <button
+                className="rv-file-page-action"
+                onClick={() => setViewMode(viewMode === 'code' ? 'markdown' : 'code')}
+                title={viewMode === 'code' ? 'Switch to document view' : 'Switch to code view'}
+              >
+                <span className="material-symbols-outlined">
+                  {viewMode === 'code' ? 'toggle_off' : 'toggle_on'}
+                </span>
+              </button>
+            )}
+          </div>
+        }
+      />
 
-      {/* Content area — fills remaining space. Owns its own padding/scroll/
-          box-sizing so it no longer reuses the wiki/file-explorer
-          .rv-document-surface paradigm. */}
       <div
+        ref={contentRef}
         className={`rv-file-page-content${!isImage && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
+        onScroll={(e) => onDocScroll?.(e.currentTarget.scrollTop)}
       >
         {isImage ? (
           <img
@@ -94,7 +140,6 @@ export function FilePageView({
         )}
       </div>
 
-      {/* Bottom ribbon — sibling tiles */}
       {showRibbon && siblings && siblings.length > 0 && onSelectSibling && (
         <div className="rv-file-page-ribbon">
           <div className="rv-file-page-ribbon-scroll">

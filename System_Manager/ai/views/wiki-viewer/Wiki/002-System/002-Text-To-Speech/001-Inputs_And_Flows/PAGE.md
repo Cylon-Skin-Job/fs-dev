@@ -1,8 +1,13 @@
-# Inputs And Flows
+---
+name: Inputs And Flows
+description: Table of contents for Inputs And Flows.
+metadata:
+  incoming-edges: []
+  outgoing-edges: []
+  source-files: []
+  connected-skills: []
+  related-trigger-files: []
+---
 
-Input and flow pages describe how audio moves from the user interface through transcription, deterministic cleanup, and review.
-
-## Articles
-
-- Mic Integration
-- Clean Up
+- [Mic Integration](001-Mic_Integration/PAGE.md)
+- [Clean Up](002-Clean_Up/PAGE.md)

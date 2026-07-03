@@ -4,7 +4,7 @@
  * @reads wikiStore: root, selectedPath
  */
 
-import { useWikiStore } from '../../state/wikiStore';
+import { findHeadingArticle, useWikiStore } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
@@ -15,13 +15,15 @@ export function TopicList() {
 
   if (!root) return null;
 
+  const guideNode = findHeadingArticle(root) || root;
+
   return (
     <div className="rv-wiki-topic-list">
       <div className="rv-wiki-topic-list-items">
         <div className="rv-wiki-collection-group">
           <button
-            className={`rv-wiki-topic-item ${selectedPath === root.path ? 'active' : ''}`}
-            onClick={() => selectNode(root)}
+            className={`rv-wiki-topic-item ${selectedPath === guideNode.path ? 'active' : ''}`}
+            onClick={() => selectNode(guideNode)}
           >
             <span className="material-symbols-outlined rv-wiki-topic-guide-icon">
               menu_book
@@ -30,13 +32,13 @@ export function TopicList() {
             <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
               <CopyPathButton
                 panel="wiki-viewer"
-                relativePath={root.pagePath}
+                relativePath={guideNode.pagePath}
                 className="rv-file-page-action"
                 title="Copy wiki guide path"
               />
               <SendToChatButton
                 panel="wiki-viewer"
-                relativePath={root.pagePath}
+                relativePath={guideNode.pagePath}
                 className="rv-file-page-action"
                 title="Send wiki guide path to chat"
               />
@@ -44,18 +46,20 @@ export function TopicList() {
           </button>
         </div>
 
-        {root.children.map((section) => {
+        {root.children.filter((section) => section !== guideNode).map((section) => {
           const isActiveSection = selectedPath === section.path || selectedPath.startsWith(`${section.path}/`);
+          const headingArticle = findHeadingArticle(section);
+          const isHeadingViewed = headingArticle !== null && selectedPath === headingArticle.path;
 
           return (
             <div key={section.path} className="rv-wiki-collection-group">
               <div
-                className={`rv-wiki-collection-header ${isActiveSection ? 'active' : ''}`}
-                onClick={() => selectNode(section)}
+                className={`rv-wiki-collection-header ${isActiveSection ? 'active' : ''} ${isHeadingViewed ? 'is-selected' : ''} ${headingArticle ? '' : 'is-static'}`}
+                onClick={headingArticle ? () => selectNode(headingArticle) : undefined}
               >
                 {section.label}
               </div>
-              {section.children.map((article) => {
+              {section.children.filter((article) => article !== headingArticle).map((article) => {
                 const isActive = selectedPath === article.path;
                 return (
                   <button

@@ -35,8 +35,8 @@ Use this section for backend ownership, runtime state, persistence, WebSockets, 
 
 ## Migration Sources
 
-- [Chat System > Runtime Model](../001-Workspaces_And_Views/003-Chat_System/001-Architecture/006-Runtime_Model/PAGE.md)
-- [Chat System > Protocol](../001-Workspaces_And_Views/003-Chat_System/001-Architecture/004-Protocol/PAGE.md)
+- [Chat System > Runtime Model](../007-Chat_System/000-Overview_and_References/006-Runtime_Model/PAGE.md)
+- [Chat System > Protocol](../007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md)
 - [Project > Path Resolution](../001-Project/004-Path_Resolution/PAGE.md)
 - [Project > Background Services Audit](../001-Project/014-Background_Services_Audit/PAGE.md)
 - [Project > Hooks](../001-Project/018-Hooks/PAGE.md)

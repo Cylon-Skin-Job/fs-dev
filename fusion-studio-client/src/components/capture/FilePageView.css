@@ -8,55 +8,6 @@
   overflow: hidden;
 }
 
-/* Top bar */
-.rv-file-page-topbar {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  flex-shrink: 0;
-}
-
-.rv-file-page-back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--accent-dim);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-
-.rv-file-page-back:hover {
-  background: var(--surface-hover);
-}
-
-.rv-file-page-back .material-symbols-outlined {
-  font-size: 20px;
-}
-
-.rv-file-page-filename {
-  flex: 1 1 auto;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--chrome-accent);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rv-file-page-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
 .rv-file-page-action {
   display: inline-flex;
   align-items: center;

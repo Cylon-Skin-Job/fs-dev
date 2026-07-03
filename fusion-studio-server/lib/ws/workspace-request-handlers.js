@@ -14,18 +14,37 @@
  */
 
 const path = require('path');
+const fs = require('fs');
 const fsPromises = require('fs').promises;
 const { emit } = require('../event-bus');
 const { resolveViewState, writeViewStatePatch } = require('../view-state');
 const { moveFileWithArchive } = require('../file-ops');
 const createService = require('../workspace/create-service');
+const { getPanelPath } = require('../views/panel-paths');
 
 /**
  * @param {object} deps
  * @param {import('ws').WebSocket} deps.ws
  * @param {object} deps.session
+ * @param {() => import('ws').WebSocket[]} deps.getAllClients
  */
-function createWorkspaceRequestHandlers({ ws, session }) {
+function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
+  function broadcastFileChanged(filePath) {
+    const clients = getAllClients ? getAllClients() : [];
+    if (!clients.length) return;
+    const payload = JSON.stringify({ type: 'file_changed', panel: 'doc-viewer', filePath });
+    for (const client of clients) {
+      if (client.readyState === 1) client.send(payload);
+    }
+  }
+
+  function relativeToDocViewer(absPath) {
+    const panelRoot = getPanelPath('doc-viewer', ws);
+    if (!panelRoot) return null;
+    const rel = path.relative(panelRoot, absPath);
+    if (rel.startsWith('..')) return null;
+    return rel.split(path.sep).join('/');
+  }
   return {
     // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
 
@@ -260,6 +279,10 @@ function createWorkspaceRequestHandlers({ ws, session }) {
           archived: result.archived,
           moved: result.moved,
         });
+        const sourceRel = relativeToDocViewer(source);
+        const targetRel = relativeToDocViewer(result.moved);
+        if (sourceRel) broadcastFileChanged(sourceRel);
+        if (targetRel) broadcastFileChanged(targetRel);
         ws.send(JSON.stringify({
           type: 'file:moved',
           ...result,
@@ -270,6 +293,69 @@ function createWorkspaceRequestHandlers({ ws, session }) {
           type: 'file:move_error',
           error: err.message,
         }));
+      }
+    },
+
+    async 'file:rename'(clientMsg) {
+      try {
+        const { source, newName } = clientMsg;
+        if (typeof source !== 'string' || typeof newName !== 'string' || !newName.trim()) {
+          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source and newName are required' }));
+          return;
+        }
+        const projectRoot = session.projectRoot;
+        if (!projectRoot) {
+          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          return;
+        }
+        const resolvedSource = path.resolve(source);
+        const resolvedRoot = path.resolve(projectRoot);
+        if (!resolvedSource.startsWith(resolvedRoot)) {
+          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source path outside project root' }));
+          return;
+        }
+        const target = path.join(path.dirname(resolvedSource), newName.trim());
+        if (fs.existsSync(target)) {
+          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'A file with that name already exists' }));
+          return;
+        }
+        await fsPromises.rename(resolvedSource, target);
+        const sourceRel = relativeToDocViewer(resolvedSource);
+        const targetRel = relativeToDocViewer(target);
+        if (sourceRel) broadcastFileChanged(sourceRel);
+        if (targetRel) broadcastFileChanged(targetRel);
+        ws.send(JSON.stringify({ type: 'file:renamed', source, target, newName }));
+      } catch (err) {
+        console.error(`[FileRename] ${err.message}`);
+        ws.send(JSON.stringify({ type: 'file:rename_error', error: err.message }));
+      }
+    },
+
+    async 'file:delete'(clientMsg) {
+      try {
+        const { source } = clientMsg;
+        if (typeof source !== 'string') {
+          ws.send(JSON.stringify({ type: 'file:delete_error', error: 'Source is required' }));
+          return;
+        }
+        const projectRoot = session.projectRoot;
+        if (!projectRoot) {
+          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          return;
+        }
+        const resolvedSource = path.resolve(source);
+        const resolvedRoot = path.resolve(projectRoot);
+        if (!resolvedSource.startsWith(resolvedRoot)) {
+          ws.send(JSON.stringify({ type: 'file:delete_error', error: 'Source path outside project root' }));
+          return;
+        }
+        await fsPromises.unlink(resolvedSource);
+        const sourceRel = relativeToDocViewer(resolvedSource);
+        if (sourceRel) broadcastFileChanged(sourceRel);
+        ws.send(JSON.stringify({ type: 'file:deleted', source }));
+      } catch (err) {
+        console.error(`[FileDelete] ${err.message}`);
+        ws.send(JSON.stringify({ type: 'file:delete_error', error: err.message }));
       }
     },
   };

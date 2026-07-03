@@ -12,6 +12,10 @@ function setWorkspaceRoot(repoPath) {
   activeWorkspacePath = repoPath || null;
 }
 
+function getWorkspaceRoot() {
+  return activeWorkspacePath;
+}
+
 /**
  * Register scheme privileges. MUST be called before app is ready — call this
  * at the module level of main.cjs, before app.whenReady().
@@ -63,4 +67,4 @@ function registerHandler() {
   });
 }
 
-module.exports = { registerScheme, registerHandler, setWorkspaceRoot };
+module.exports = { registerScheme, registerHandler, setWorkspaceRoot, getWorkspaceRoot };

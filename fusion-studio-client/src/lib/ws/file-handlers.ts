@@ -45,6 +45,21 @@ interface FileMoveErrorMessage extends WebSocketMessage {
   error?: string;
 }
 
+interface FileRenamedMessage extends WebSocketMessage {
+  type: 'file:renamed';
+  newName?: string;
+}
+
+interface FileRenameErrorMessage extends WebSocketMessage {
+  type: 'file:rename_error';
+  error?: string;
+}
+
+interface FileDeleteErrorMessage extends WebSocketMessage {
+  type: 'file:delete_error';
+  error?: string;
+}
+
 /**
  * Handle file-related WebSocket messages.
  * Returns true if the message was handled, false if not recognized.
@@ -108,6 +123,22 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
 
     case 'file:move_error':
       showToast(`File move failed: ${(msg as FileMoveErrorMessage).error}`);
+      return true;
+
+    case 'file:renamed':
+      showToast(`Renamed to ${(msg as FileRenamedMessage).newName || 'file'}`);
+      return true;
+
+    case 'file:rename_error':
+      showToast(`Rename failed: ${(msg as FileRenameErrorMessage).error}`);
+      return true;
+
+    case 'file:deleted':
+      showToast('File deleted');
+      return true;
+
+    case 'file:delete_error':
+      showToast(`Delete failed: ${(msg as FileDeleteErrorMessage).error}`);
       return true;
 
     default:

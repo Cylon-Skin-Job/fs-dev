@@ -24,7 +24,7 @@ export function useFileTreeListener() {
         const msg = JSON.parse(event.data);
 
         // Handle file tree response (root or subfolder)
-        if (msg.type === 'file_tree_response') {
+        if (msg.type === 'file_tree_response' && msg.panel === 'file-viewer') {
           useFileStore.getState().setLoading(false);
           if (msg.success) {
             const path = msg.path || '';

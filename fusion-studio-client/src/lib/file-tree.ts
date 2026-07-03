@@ -37,7 +37,7 @@ export function loadFolderChildren(folderPath: string): Promise<FileTreeNode[]> 
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'file_tree_response' && msg.path === folderPath) {
+        if (msg.type === 'file_tree_response' && msg.panel === 'file-viewer' && msg.path === folderPath) {
           ws.removeEventListener('message', handleMessage);
           if (msg.success) {
             useFileStore.getState().setFolderChildren(folderPath, msg.nodes);

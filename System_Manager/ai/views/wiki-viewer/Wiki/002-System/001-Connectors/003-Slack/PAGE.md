@@ -1,7 +1,12 @@
-# Slack
+---
+name: Slack
+description: Table of contents for Slack.
+metadata:
+  incoming-edges: []
+  outgoing-edges: []
+  source-files: []
+  connected-skills: []
+  related-trigger-files: []
+---
 
-Slack connector pages document the Slack integration surface and its current planned behavior.
-
-## Articles
-
-- Slack
+- [Slack](001-Slack/PAGE.md) - Send messages and receive notifications through Slack.

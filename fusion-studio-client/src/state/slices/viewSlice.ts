@@ -30,6 +30,13 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
     cards:         false,
     borders: { threads: false, chat: false },
   },
+  docViewerMode: 'active',
+  docViewerActiveSelectedPath: null,
+  docViewerArchiveSelectedPath: null,
+  docViewerActiveGridScroll: 0,
+  docViewerArchiveGridScroll: 0,
+  docViewerActiveDocScroll: 0,
+  docViewerArchiveDocScroll: 0,
 };
 
 export function clampPaneWidth(pane: Pane, n: number): number {
@@ -68,7 +75,7 @@ export function createViewSlice(set: Set, get: Get) {
       ws.send(JSON.stringify({ type: 'state:set', view, state: patch }));
     },
 
-    setViewState: (view: string, state: ViewUIState) => set((s) => ({
+    setViewState: (view: string, state: Partial<ViewUIState>) => set((s) => ({
       viewStates: { ...s.viewStates, [view]: { ...s.viewStates[view], ...state } },
     })),
 

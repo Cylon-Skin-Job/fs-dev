@@ -28,6 +28,8 @@ import { WorkspaceCreateModal } from './WorkspaceCreateModal';
 import { ThemePickerModal } from './ThemePickerModal';
 import { SecretsManagerModal } from './secrets/SecretsManagerModal';
 import { ConnectorsDropdown } from './ConnectorsDropdown';
+import { ScreenshotFlashOverlay } from '../screenshots';
+import { showToast } from '../lib/toast';
 import './App.css';
 
 // SPEC-26c-2: defaults for the 3-column layout
@@ -152,9 +154,32 @@ function App() {
 
   const [fusionOpen, setFusionOpen] = useState(false);
   const connectorsRef = useRef<HTMLDivElement>(null);
+  const [screenshotFlashImage, setScreenshotFlashImage] = useState<string | null>(null);
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
   const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
+
+  const handleControlCamera = useCallback(async () => {
+    if (!activeWorkspaceId || !ws || ws.readyState !== WebSocket.OPEN) return;
+    const api = window.electronAPI;
+    if (!api?.capturePage) return;
+
+    try {
+      const base64 = await api.capturePage();
+      if (!base64) return;
+
+      const dataUrl = `data:image/png;base64,${base64}`;
+      setScreenshotFlashImage(dataUrl);
+
+      ws.send(JSON.stringify({
+        type: 'screenshot:file-capture',
+        workspaceId: activeWorkspaceId,
+        dataUrl,
+      }));
+    } catch (err) {
+      console.error('[App] control_camera capture failed:', err);
+    }
+  }, [activeWorkspaceId, ws]);
 
   const loading = configs.length === 0;
 
@@ -239,6 +264,14 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
+            <button
+              className="rv-fusion-icon-btn"
+              title="Control camera"
+              aria-label="Control camera"
+              onClick={handleControlCamera}
+            >
+              <span className="material-symbols-outlined">control_camera</span>
+            </button>
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
@@ -264,6 +297,14 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
+            <button
+              className="rv-fusion-icon-btn"
+              title="Control camera"
+              aria-label="Control camera"
+              onClick={handleControlCamera}
+            >
+              <span className="material-symbols-outlined">control_camera</span>
+            </button>
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
@@ -290,6 +331,14 @@ function App() {
       {/* Header */}
       <header className="rv-header">
         <div className="rv-header-left">
+          <button
+            className="rv-fusion-icon-btn"
+            title="Control camera"
+            aria-label="Control camera"
+            onClick={handleControlCamera}
+          >
+            <span className="material-symbols-outlined">control_camera</span>
+          </button>
           <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
             {isConnected ? 'Connected' : 'Disconnected'}
           </div>
@@ -343,6 +392,13 @@ function App() {
       <WorkspaceCreateModal />
       <ThemePickerModal />
       <SecretsManagerModal />
+      <ScreenshotFlashOverlay
+        imageDataUrl={screenshotFlashImage}
+        onComplete={() => {
+          setScreenshotFlashImage(null);
+          showToast('Screenshot saved to ai/data/screenshots');
+        }}
+      />
     </div>
   );
 }

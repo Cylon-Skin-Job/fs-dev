@@ -1,7 +1,7 @@
 {
   "system-files": {
     "projectRoot": null,
-    "currentPanel": "issues-viewer",
+    "currentPanel": "wiki-viewer",
     "projectChats": {},
     "threads": [],
     "currentThreadId": null,
@@ -479,11 +479,11 @@
         }
       }
     },
-    "_savedAt": 1782486800946
+    "_savedAt": 1782717532903
   },
   "fusion-home": {
     "projectRoot": null,
-    "currentPanel": "file-viewer",
+    "currentPanel": "wiki-viewer",
     "projectChats": {},
     "threads": [],
     "currentThreadId": null,
@@ -874,7 +874,14 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0
       },
       "issues-viewer": {
         "widths": {
@@ -970,7 +977,14 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0
       },
       "calendar-viewer": {
         "widths": {
@@ -980,7 +994,7 @@
           "rightCol": 405.59765625
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -1005,7 +1019,7 @@
         }
       }
     },
-    "_savedAt": 1782520147999
+    "_savedAt": 1782902416578
   },
   "media-editor": {
     "projectRoot": null,
@@ -1460,7 +1474,7 @@
         }
       }
     },
-    "_savedAt": 1782486801733
+    "_savedAt": 1782717533606
   },
   "solobooks": {
     "projectRoot": null,
@@ -1919,7 +1933,7 @@
         }
       }
     },
-    "_savedAt": 1782486802498
+    "_savedAt": 1782717534188
   },
   "fs-dev": {
     "projectRoot": null,
@@ -2055,6 +2069,48 @@
         }
       },
       {
+        "id": "issues-viewer",
+        "name": "Issues",
+        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
+        "type": "ticket-board",
+        "icon": "business_messages",
+        "hasChat": true,
+        "chatConfig": {
+          "type": "rolling-daily",
+          "position": "right"
+        },
+        "layoutConfig": {
+          "chatPosition": "right",
+          "chatWidth": 400,
+          "threadListWidth": 250,
+          "threadListVisible": false,
+          "popup": null
+        },
+        "contentConfig": {
+          "chat": {
+            "type": "rolling-daily",
+            "position": "right"
+          }
+        },
+        "rank": 3,
+        "category": "tool",
+        "hasUiFolder": false,
+        "hasAppHtml": false,
+        "settings": {
+          "version": "1.0",
+          "id": "issues-viewer",
+          "folderName": "issues-viewer",
+          "label": "Issues",
+          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
+          "type": "ticket-board",
+          "icon": "business_messages",
+          "rank": 3,
+          "sort": "created",
+          "created": "2026-03-20T20:00:00-07:00",
+          "settings": {}
+        }
+      },
+      {
         "id": "wiki-viewer",
         "name": "Wiki",
         "description": "Living reference layer — browse topics, read pages, create update tickets",
@@ -2083,7 +2139,7 @@
             "position": "popup"
           }
         },
-        "rank": 3,
+        "rank": 4,
         "category": "tool",
         "hasUiFolder": false,
         "hasAppHtml": false,
@@ -2106,48 +2162,6 @@
             "contentDir": "ai/views/wiki-viewer/Wiki",
             "systemWikiDir": "ai/views/wiki-viewer/Wiki"
           }
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-        "type": "ticket-board",
-        "icon": "business_messages",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "issues-viewer",
-          "folderName": "issues-viewer",
-          "label": "Issues",
-          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-          "type": "ticket-board",
-          "icon": "business_messages",
-          "rank": 3,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {}
         }
       },
       {
@@ -2285,8 +2299,8 @@
       "doc-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/doc-viewer/content",
       "file-viewer": "/users/rccurtrightjr./projects/fs-dev",
       "chat": "/users/rccurtrightjr./projects/fs-dev/ai/views/chat",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/Wiki",
       "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/issues-viewer/content",
+      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/Wiki",
       "browser-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/browser-viewer",
       "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer",
       "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content"
@@ -2327,9 +2341,9 @@
       "custom-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftChat": 413.48046875,
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2343,7 +2357,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2354,14 +2368,21 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "doc-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftChat": 413.48046875,
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2375,7 +2396,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2386,14 +2407,21 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "file-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftChat": 413.48046875,
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2407,7 +2435,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2418,17 +2446,24 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "issues-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
-          "leftChat": 600,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftChat": 414.06640625,
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "popup": {
@@ -2439,7 +2474,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2450,17 +2485,24 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "wiki-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
           "leftChat": 403.17578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
-          "leftSidebar": false,
+          "leftSidebar": true,
           "leftChat": false
         },
         "popup": {
@@ -2471,7 +2513,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2482,14 +2524,21 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "agents-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
           "leftChat": 372.8046875,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
           "leftSidebar": false,
@@ -2503,7 +2552,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2514,14 +2563,21 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "browser-viewer": {
         "widths": {
           "leftSidebar": 277.30859375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftChat": 413.48046875,
+          "rightSecondary": 413.44921875,
+          "rightCol": 285.0078125
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2535,7 +2591,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T15-41-04-958",
+        "currentThreadId": "2026-06-24T18-48-00-211",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2546,7 +2602,14 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 10,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 1512.5,
+        "docViewerArchiveDocScroll": 65
       },
       "chat": {
         "widths": {
@@ -2613,6 +2676,6 @@
         }
       }
     },
-    "_savedAt": 1782577503677
+    "_savedAt": 1783047733761
   }
 }

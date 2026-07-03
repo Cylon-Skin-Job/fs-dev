@@ -1,12 +1,12 @@
 {
   "widths": {
     "leftSidebar": 277.30859375,
-    "leftChat": 416.2578125,
-    "rightSecondary": 425.51171875,
-    "rightCol": 300.1015625
+    "leftChat": 413.48046875,
+    "rightSecondary": 413.44921875,
+    "rightCol": 285.0078125
   },
   "collapsed": {
-    "leftSidebar": false,
+    "leftSidebar": true,
     "leftChat": false
   },
   "popup": {
@@ -17,6 +17,13 @@
     "height": 520,
     "threadId": null
   },
-  "currentThreadId": "2026-06-24T15-41-04-958",
-  "secondaryThreadId": null
+  "currentThreadId": "2026-06-24T18-48-00-211",
+  "secondaryThreadId": null,
+  "docViewerMode": "active",
+  "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+  "docViewerArchiveSelectedPath": null,
+  "docViewerActiveGridScroll": 10,
+  "docViewerArchiveGridScroll": 0,
+  "docViewerActiveDocScroll": 144,
+  "docViewerArchiveDocScroll": 65
 }

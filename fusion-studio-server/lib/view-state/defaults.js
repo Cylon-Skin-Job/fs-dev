@@ -15,6 +15,10 @@ const aiPaths = require('../workspace/ai-paths');
 const HARDCODED_DEFAULTS = {
   collapsed: { leftSidebar: false, leftChat: false },
   widths:    { leftSidebar: 220,   leftChat: 320   },
+  docViewerMode: 'active',
+  docViewerSelectedPath: null,
+  docViewerGridScroll: 0,
+  docViewerDocScroll: 0,
 };
 
 function getDefaults(projectRoot, viewId) {
@@ -40,6 +44,10 @@ function getDefaults(projectRoot, viewId) {
       leftSidebar: typeof layout.threadListWidth === 'number' ? layout.threadListWidth : HARDCODED_DEFAULTS.widths.leftSidebar,
       leftChat:    typeof layout.chatWidth       === 'number' ? layout.chatWidth       : HARDCODED_DEFAULTS.widths.leftChat,
     },
+    docViewerMode: HARDCODED_DEFAULTS.docViewerMode,
+    docViewerSelectedPath: HARDCODED_DEFAULTS.docViewerSelectedPath,
+    docViewerGridScroll: HARDCODED_DEFAULTS.docViewerGridScroll,
+    docViewerDocScroll: HARDCODED_DEFAULTS.docViewerDocScroll,
   };
 }
 

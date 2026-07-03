@@ -34,9 +34,10 @@ function resolveServerPath(resourcesPath) {
  * @param {Function} opts.onExit   — called when server process dies unexpectedly
  * @param {string} opts.resourcesPath   — root containing models/prompts/pandoc
  * @param {string} opts.userDataPath   — writable Electron userData directory
+ * @param {string} opts.focusStatePath   — path to the focus-state JSON snapshot
  * @returns {Promise<{ port: number, process: ChildProcess }>}
  */
-function spawnServer({ onExit, resourcesPath, userDataPath }) {
+function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
   return new Promise((resolve, reject) => {
     const serverPath = resolveServerPath(resourcesPath);
     const env = {
@@ -45,6 +46,7 @@ function spawnServer({ onExit, resourcesPath, userDataPath }) {
     };
     if (resourcesPath) env.FUSION_RESOURCES_PATH = resourcesPath;
     if (userDataPath) env.FUSION_APP_USER_DATA = userDataPath;
+    if (focusStatePath) env.FUSION_FOCUS_STATE_PATH = focusStatePath;
 
     console.log(`[Resources] root=${env.FUSION_RESOURCES_PATH || ''} userData=${env.FUSION_APP_USER_DATA || ''}`);
 

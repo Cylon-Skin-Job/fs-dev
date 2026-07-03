@@ -3,12 +3,13 @@
  * @role Generic horizontal row of document tiles for a folder
  *
  * Reads from the central fileDataStore via useFolderFiles hook.
- * No WebSocket logic — the store handles fetching and caching.
- *
- * Reusable across any panel — Capture, Agents, etc.
+ * Supports right-click context menu for rename, archive/restore, and delete.
  */
 
+import { useCallback, useEffect, useRef } from 'react';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
+import { useTileFileActions } from '../../hooks/useTileFileActions';
+import { showContextMenu } from '../../lib/contextMenu';
 import { DocumentTile } from './DocumentTile';
 import type { FileWithContent } from '../../state/fileDataStore';
 
@@ -32,6 +33,42 @@ export interface FileEntry {
 
 export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: TileRowProps) {
   const { files, loading } = useFolderFiles(panel, folder);
+  const { isArchive, renameFile, archiveOrRestoreFile, deleteFile } = useTileFileActions({
+    panel,
+    folder,
+  });
+  const closeMenuRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    return () => {
+      closeMenuRef.current?.();
+    };
+  }, []);
+
+  const handleContextMenu = useCallback(
+    (file: FileWithContent) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      closeMenuRef.current?.();
+
+      const items = [
+        { label: 'Rename', action: () => renameFile(file) },
+        {
+          label: isArchive ? 'Restore' : 'Archive',
+          action: () => archiveOrRestoreFile(file),
+        },
+        { label: 'Delete', danger: true, action: () => deleteFile(file) },
+      ];
+
+      closeMenuRef.current = showContextMenu({
+        x: e.clientX,
+        y: e.clientY,
+        items,
+      });
+    },
+    [isArchive, renameFile, archiveOrRestoreFile, deleteFile]
+  );
 
   return (
     <div className="rv-tile-row">
@@ -60,12 +97,11 @@ export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: Til
                   onFileClick?.(file.path);
                   onFileSelect?.(file, files);
                 }}
+                onContextMenu={handleContextMenu(file)}
               />
             ))}
             {files.length > 30 && (
-              <div className="rv-tile-row-more">
-                +{files.length - 30} more
-              </div>
+              <div className="rv-tile-row-more">+{files.length - 30} more</div>
             )}
           </>
         )}

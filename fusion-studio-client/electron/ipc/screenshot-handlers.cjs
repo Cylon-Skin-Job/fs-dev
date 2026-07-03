@@ -1,10 +1,18 @@
 const fs = require('fs');
 const path = require('path');
+const { getWorkspaceRoot } = require('../protocol-handler.cjs');
 
-const screenshotsDir = path.join(__dirname, '..', '..', 'System Source Files', 'Screenshots');
+function getScreenshotsDir() {
+  const workspaceRoot = getWorkspaceRoot();
+  if (!workspaceRoot) return null;
+  return path.join(workspaceRoot, 'ai', 'data');
+}
 
 function registerScreenshotHandlers(ipcMain) {
   ipcMain.handle('screenshots:list', async () => {
+    const screenshotsDir = getScreenshotsDir();
+    if (!screenshotsDir) return [];
+
     try {
       const entries = await fs.promises.readdir(screenshotsDir, { withFileTypes: true });
       return entries
@@ -16,6 +24,11 @@ function registerScreenshotHandlers(ipcMain) {
   });
 
   ipcMain.handle('screenshots:read', async (_event, filename) => {
+    const screenshotsDir = getScreenshotsDir();
+    if (!screenshotsDir) {
+      throw new Error('No active workspace');
+    }
+
     const filePath = path.join(screenshotsDir, filename);
     const resolvedFile = path.resolve(filePath);
     const resolvedDir = path.resolve(screenshotsDir);

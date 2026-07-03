@@ -62,6 +62,6 @@ Keep the lesson, not the outdated rule: each view should have one clear loading 
 ## Related Pages
 
 - [Workspace Paradigm](../001-Workspace_Paradigm/PAGE.md) - ownership and activation rules.
-- [Wiki View](../004-Wiki_View/PAGE.md) - wiki-specific interface and system docs.
+- [Wiki View](../004-Wiki_View/000-Wiki_View/PAGE.md) - wiki-specific interface and system docs.
 - [Browser](../005-Browser/PAGE.md) - internet-capable browsing behavior.
 - [Custom Iframe](../006-Custom_Iframe/PAGE.md) - local custom view iframe behavior.

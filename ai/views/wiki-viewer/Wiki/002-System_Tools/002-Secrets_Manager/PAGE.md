@@ -4,10 +4,9 @@ A capabilities index for credentials. This page is the recipe for an AI
 agent that needs to read and use a stored API key, token, or password —
 without ever exposing the value to the chat transcript.
 
-> **Scope:** runtime use of credentials the user has already stored. For
-> changes to *how* secrets are stored, encrypted, or migrated across
-> platforms, see the master spec at `docs/SECRETS_MANAGER_SPEC.md`. That
-> document constrains the code; this page describes an agent workflow.
+> **Scope:** runtime use of credentials the user has already stored. How
+> secrets are stored, encrypted, or migrated across platforms is out of
+> scope here; this page describes an agent workflow.
 
 ---
 

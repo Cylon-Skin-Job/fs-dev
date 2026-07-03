@@ -109,6 +109,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  cursor: pointer;
 }
 
 .rv-wiki-collection-group:first-child .rv-wiki-collection-header {
@@ -130,6 +131,19 @@
 
 .rv-wiki-collection-header.active {
   color: var(--accent-dim, var(--theme-primary, #ec4899));
+}
+
+/* Heading whose own 000- article is the viewed page — match the active
+   article-row highlight. Must follow .active so it wins when both apply. */
+.rv-wiki-collection-header.is-selected {
+  background: var(--accent-dim);
+  color: var(--chrome-accent-fg, var(--text-white));
+  border-radius: 4px;
+}
+
+/* Headings with no 000- article folder are plain labels, not links. */
+.rv-wiki-collection-header.is-static {
+  cursor: default;
 }
 
 /* --- Page Viewer (center) --- */
