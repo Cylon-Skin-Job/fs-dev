@@ -63,4 +63,11 @@ describe('workspace registry service', () => {
       db('workspace_screenshots').where({ workspace_id: 'stale-workspace' }).first()
     ).resolves.toBeUndefined();
   });
+
+  test('migrations preserve the exact realpath spelling for the seeded workspace', async () => {
+    const row = await modules.db.getDb()('workspaces').where({ id: 'fs-dev' }).first();
+    const expectedRoot = fs.realpathSync(path.resolve(__dirname, '..', '..', '..'));
+
+    expect(row.repo_path).toBe(expectedRoot);
+  });
 });

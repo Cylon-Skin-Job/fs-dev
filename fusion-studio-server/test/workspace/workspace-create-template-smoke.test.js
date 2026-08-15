@@ -86,22 +86,23 @@ describe('workspace create template profile smoke', () => {
     const created = await Promise.race([createdPromise, rejectedPromise]);
     rejected.cancel();
     const switched = await switchedPromise;
-    const workspace = await modules.registry.getByRepoPath(projectPath);
+    const exactProjectPath = fs.realpathSync(projectPath);
+    const workspace = await modules.registry.getByRepoPath(exactProjectPath);
     const machineRoot = path.join(projectPath, 'ai', 'Smoke-Machine');
 
     expect(created.connectionId).toBe('smoke-new');
     expect(created.workspace).toMatchObject({
       id: 'new-profile-created',
       label: 'New Profile Smoke',
-      repoPath: projectPath,
+      repoPath: exactProjectPath,
       icon: 'open_run',
     });
     expect(switched).toMatchObject({
       from: 'fs-dev',
       to: 'new-profile-created',
-      repoPath: projectPath,
+      repoPath: exactProjectPath,
     });
-    expect(workspace).toMatchObject({ id: 'new-profile-created', repoPath: projectPath });
+    expect(workspace).toMatchObject({ id: 'new-profile-created', repoPath: exactProjectPath });
     expect(modules.views.listViews(projectPath)).toEqual([
       'capture-viewer',
       'file-viewer',
@@ -141,22 +142,23 @@ describe('workspace create template profile smoke', () => {
     const created = await Promise.race([createdPromise, rejectedPromise]);
     rejected.cancel();
     const switched = await switchedPromise;
-    const workspace = await modules.registry.getByRepoPath(projectPath);
+    const exactProjectPath = fs.realpathSync(projectPath);
+    const workspace = await modules.registry.getByRepoPath(exactProjectPath);
     const machineRoot = path.join(projectPath, 'ai', 'Smoke-Machine');
 
     expect(created.connectionId).toBe('smoke-template-id-ignored');
     expect(created.workspace).toMatchObject({
       id: 'template-id-ignored',
       label: 'Template Id Ignored Smoke',
-      repoPath: projectPath,
+      repoPath: exactProjectPath,
       icon: 'open_run',
     });
     expect(switched).toMatchObject({
       from: 'fs-dev',
       to: 'template-id-ignored',
-      repoPath: projectPath,
+      repoPath: exactProjectPath,
     });
-    expect(workspace).toMatchObject({ id: 'template-id-ignored', repoPath: projectPath });
+    expect(workspace).toMatchObject({ id: 'template-id-ignored', repoPath: exactProjectPath });
     expect(modules.views.listViews(projectPath)).toEqual([
       'capture-viewer',
       'file-viewer',

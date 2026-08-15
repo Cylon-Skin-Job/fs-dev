@@ -160,6 +160,14 @@ function setActiveWorkspace(workspaceId, workspace) {
   activeWorkspace = workspace;
 }
 
+async function findRegisteredWorkspaceByPath(repoPath) {
+  const targetKey = pathService.comparisonKey(repoPath);
+  const workspaces = await registry.list();
+  return workspaces.find((workspace) => (
+    pathService.comparisonKey(workspace.repoPath || workspace.repo_path) === targetKey
+  )) || null;
+}
+
 async function handleAddRequested(event) {
   const { repoPath, connectionId } = event;
 
@@ -176,7 +184,7 @@ async function handleAddRequested(event) {
     return;
   }
 
-  const existing = await registry.getByRepoPath(canonical);
+  const existing = await findRegisteredWorkspaceByPath(canonical);
   if (existing) {
     emit('workspace:add_rejected_duplicate', {
       existingWorkspace: existing,
@@ -274,18 +282,20 @@ async function handleCreateRequested(event) {
     return;
   }
 
-  const canonical = path.resolve(projectPath);
-  const parent = path.dirname(canonical);
+  const requestedPath = path.resolve(projectPath);
+  const parent = path.dirname(requestedPath);
   if (!isDirectory(parent)) {
     rejectCreate(connectionId, 'Parent directory does not exist.');
     return;
   }
-  if (fs.existsSync(canonical) && !isDirectoryEmpty(canonical)) {
+  const exactParent = pathService.canonicalize(parent);
+  const targetPath = path.join(exactParent, path.basename(requestedPath));
+  if (fs.existsSync(targetPath) && !isDirectoryEmpty(targetPath)) {
     rejectCreate(connectionId, 'Project path already exists and is not empty.');
     return;
   }
 
-  const existing = await registry.getByRepoPath(canonical);
+  const existing = await findRegisteredWorkspaceByPath(targetPath);
   if (existing) {
     rejectCreate(connectionId, 'Project is already registered.');
     return;
@@ -294,13 +304,14 @@ async function handleCreateRequested(event) {
   let selectedViews;
   try {
     selectedViews = createService.scaffoldProject({
-      projectPath: canonical,
+      projectPath: targetPath,
     }).selectedViews;
   } catch (err) {
     rejectCreate(connectionId, err.message);
     return;
   }
 
+  const canonical = pathService.canonicalize(targetPath);
   const id = await generateUniqueId(canonical);
   const workspaceLabel = String(label || '').trim() || toTitleCase(path.basename(canonical));
   const nextSortOrder = (await registry.maxSortOrder()) + 1;
