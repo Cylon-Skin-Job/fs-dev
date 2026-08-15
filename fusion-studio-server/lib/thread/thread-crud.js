@@ -30,6 +30,7 @@
 const { search: searchExchanges } = require('./chat-search');
 const { threadRuntimeManager } = require('./thread-runtime-manager');
 const { resolveCliPolicy } = require('../cli-config');
+const { reclaimClientForWire } = require('../wire/process-manager');
 
 function getRuntimeKey(manager, threadId) {
   return {
@@ -184,6 +185,14 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     const lastExchange = exchanges.length > 0 ? exchanges[exchanges.length - 1] : null;
     const contextUsage = lastExchange?.metadata?.contextUsage ?? null;
     const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(manager, threadId));
+
+    // Passive open must not touch the harness lifecycle. It may only reclaim
+    // outbound routing when the active wire has lost its owning client.
+    // Keep this synchronous with thread:opened so the hydrated snapshot is
+    // queued before any subsequently delivered live events.
+    if (!options.closePrevious) {
+      reclaimClientForWire(threadId, ws);
+    }
 
     console.log(`[ThreadWS] Opening thread ${threadId.slice(0,8)}, exchanges: ${exchanges.length}, lastExchange metadata:`, lastExchange?.metadata);
     console.log(`[ThreadWS] Sending contextUsage:`, contextUsage);

@@ -27,8 +27,7 @@ npm install
 if ! npm list nodejs-whisper >/dev/null 2>&1; then
     npm install nodejs-whisper multer
 fi
-cd ..
-echo -e "${GREEN}✓ Dependencies installed${NC}"
+cd ..Noecho -e "${GREEN}✓ Dependencies installed${NC}"
 echo ""
 
 echo "Step 2/4: Checking for FFmpeg..."

@@ -37,8 +37,29 @@ function createWireBroadcaster({ getClientForThread }) {
 
   function sendToThread(threadId, wireMessage) {
     const ws = getClientForThread(threadId);
-    if (!ws || ws.readyState !== 1) return;
-    ws.send(JSON.stringify(wireMessage));
+    const messageType = wireMessage?.type || 'unknown';
+    const threadLabel = String(threadId || 'unknown');
+
+    if (!ws) {
+      console.warn(`[WireBroadcaster] Dropped ${messageType} for thread ${threadLabel}: no registered client`);
+      return false;
+    }
+    if (ws.readyState !== 1) {
+      console.warn(
+        `[WireBroadcaster] Dropped ${messageType} for thread ${threadLabel}: client readyState=${ws.readyState}`
+      );
+      return false;
+    }
+
+    try {
+      ws.send(JSON.stringify(wireMessage));
+      return true;
+    } catch (err) {
+      console.warn(
+        `[WireBroadcaster] Dropped ${messageType} for thread ${threadLabel}: send failed (${err?.message || 'unknown error'})`
+      );
+      return false;
+    }
   }
 
   // Every outbound live stream message carries scope and threadId so the

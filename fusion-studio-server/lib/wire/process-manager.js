@@ -19,7 +19,7 @@
  */
 
 const path = require('path');
-const { v4: generateId } = require('uuid');
+const { randomUUID: generateId } = require('crypto');
 const { logWire } = require('./wire-log');
 
 // ── Registry ────────────────────────────────────────────────────────────────
@@ -34,6 +34,41 @@ function getWireForThread(threadId) {
 
 function getClientForThread(threadId) {
   return wireRegistry.get(threadId)?.ws || null;
+}
+
+/**
+ * Rebind an existing wire's outbound delivery to a replacement client, but
+ * only when the registered owner is absent or no longer open. The check and
+ * Map replacement are synchronous so another passive viewer cannot take the
+ * wire from a healthy owner between them.
+ *
+ * This changes client routing only. It does not start, stop, or otherwise
+ * mutate the harness runtime.
+ *
+ * @param {string} threadId
+ * @param {import('ws').WebSocket} ws
+ * @returns {boolean} true when delivery ownership was reclaimed
+ */
+function reclaimClientForWire(threadId, ws) {
+  const existing = wireRegistry.get(threadId);
+  if (!existing?.wire) return false;
+
+  const currentClient = existing.ws;
+  if (currentClient?.readyState === 1) return false;
+
+  if (!ws || ws.readyState !== 1) {
+    console.warn(
+      `[WireRegistry] Cannot reclaim live delivery for thread ${threadId}: replacement client is not open`
+    );
+    return false;
+  }
+
+  wireRegistry.set(threadId, { ...existing, ws });
+  const previousState = currentClient ? `readyState=${currentClient.readyState}` : 'absent';
+  console.warn(
+    `[WireRegistry] Reclaimed live delivery for thread ${threadId} from ${previousState}`
+  );
+  return true;
 }
 
 function registerWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
@@ -202,6 +237,7 @@ module.exports = {
   // Registry
   getWireForThread,
   getClientForThread,
+  reclaimClientForWire,
   registerWire,
   attachClientToWire,
   unregisterWire,
