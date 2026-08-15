@@ -38,6 +38,7 @@ const { startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 const views = require('./views');
+const { createShutdownHandler } = require('./shutdown');
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
 
@@ -205,8 +206,17 @@ async function start({ server, app, sessions, getProjectRoot }) {
   });
 
   // 5. Signal handlers — register after successful startup
-  process.on('SIGTERM', _handleShutdown);
-  process.on('SIGINT', _handleShutdown);
+  const requestShutdown = createShutdownHandler({
+    server,
+    sessions,
+    closeWatchers: () => {
+      const { abandonAll } = require('./watch/core');
+      abandonAll();
+    },
+    closeDatabase: closeDb,
+  });
+  process.on('SIGTERM', () => { void requestShutdown('SIGTERM'); });
+  process.on('SIGINT', () => { void requestShutdown('SIGINT'); });
 
   // 6. Material Symbols — served from Fusion Home (runtime asset, not
   // bundled). Looked up from DB so the path stays correct even if Fusion
@@ -359,13 +369,6 @@ function _startPipeline({ sessions, getProjectRoot }) {
   // Start runner heartbeat monitor
   const { checkHeartbeats } = require('./runner');
   checkHeartbeats(projectRoot);
-}
-
-async function _handleShutdown() {
-  const { closeAll } = require('./watch/core');
-  closeAll();
-  await closeDb();
-  process.exit(0);
 }
 
 module.exports = { start };

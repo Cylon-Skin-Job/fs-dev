@@ -12,6 +12,7 @@ const { registerScreenshotHandlers } = require('./ipc/screenshot-handlers.cjs');
 const { registerDocumentHandlers } = require('./ipc/document-handlers.cjs');
 const focusState = require('./focus-state.cjs');
 const { spawnServer } = require('./server-spawn.cjs');
+const { stopChildProcess } = require('./process-shutdown.cjs');
 const { writePort, clearPort } = require('./port-file.cjs');
 const { registerScheme, registerHandler, setWorkspaceRoot } = require('./protocol-handler.cjs');
 const { createRendererConsoleLogger } = require('./renderer-console-logging.cjs');
@@ -28,21 +29,41 @@ if (process.env.FUSION_APP_USER_DATA) {
 let mainWindow;
 let serverProcess = null;
 let documentHandlers = null;
+let cleanupPromise = null;
+let quitCleanupComplete = false;
+let isQuitting = false;
 let workspaceMenuState = {
   workspaces: [],
   activeWorkspaceId: null,
 };
 
 function cleanup() {
-  try { documentHandlers?.cleanup(); } catch (error) {
-    logElectron('error', `document output cleanup failed: ${error.message}`);
-  }
-  clearPort();
-  if (serverProcess) serverProcess.kill();
+  if (cleanupPromise) return cleanupPromise;
+
+  cleanupPromise = (async () => {
+    try { documentHandlers?.cleanup(); } catch (error) {
+      logElectron('error', `document output cleanup failed: ${error.message}`);
+    }
+    clearPort();
+
+    const processToStop = serverProcess;
+    serverProcess = null;
+    const result = await stopChildProcess(processToStop, {
+      log: (message) => logElectron('error', message),
+    });
+    logElectron('info', `server shutdown status=${result.status}`);
+  })();
+
+  return cleanupPromise;
 }
 
-process.on('SIGTERM', () => { cleanup(); process.exit(0); });
-process.on('SIGINT',  () => { cleanup(); process.exit(0); });
+async function cleanupAndExit() {
+  await cleanup();
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => { void cleanupAndExit(); });
+process.on('SIGINT',  () => { void cleanupAndExit(); });
 
 const RENDERER_LOG = path.join(os.tmpdir(), 'electron-renderer.log');
 const ELECTRON_DIAG_LOG = path.join(os.tmpdir(), 'fusion-electron.log');
@@ -103,6 +124,7 @@ function nudgeRendererRepaint(win) {
 }
 
 function handleServerExit(code) {
+  if (isQuitting) return;
   // Called on unexpected crash after ready signal
   const win = BrowserWindow.getFocusedWindow() || mainWindow;
   if (!win || win.isDestroyed()) return;
@@ -122,7 +144,13 @@ function handleServerExit(code) {
     resourcesPath: getElectronResourcesRoot(),
     userDataPath: getServerUserDataPath(),
   })
-    .then(({ port, process: proc }) => {
+    .then(async ({ port, process: proc }) => {
+      if (isQuitting) {
+        await stopChildProcess(proc, {
+          log: (message) => logElectron('error', message),
+        });
+        return;
+      }
       serverProcess = proc;
       writePort(port);
       win.webContents.loadURL(`http://localhost:${port}`);
@@ -540,6 +568,12 @@ if (!gotSingleInstanceLock) {
       userDataPath: getServerUserDataPath(),
       focusStatePath: focusState.getStateFilePath(),
     });
+    if (isQuitting) {
+      await stopChildProcess(proc, {
+        log: (message) => logElectron('error', message),
+      });
+      return;
+    }
     serverProcess = proc;
     writePort(port);
     logElectron('info', `server ready port=${port}`);
@@ -581,7 +615,17 @@ if (!gotSingleInstanceLock) {
     }
   });
 
-  // will-quit fires for all quit paths including Cmd+Q and app.quit().
-  // SIGTERM/SIGINT are handled by process.on() above. SIGKILL: unhandleable.
-  app.on('will-quit', cleanup);
+  // Electron does not await async will-quit listeners. Hold the first quit,
+  // supervise the server child, then issue a second quit after cleanup.
+  app.on('before-quit', (event) => {
+    if (quitCleanupComplete) return;
+    event.preventDefault();
+    if (isQuitting) return;
+
+    isQuitting = true;
+    void cleanup().finally(() => {
+      quitCleanupComplete = true;
+      app.quit();
+    });
+  });
 }
