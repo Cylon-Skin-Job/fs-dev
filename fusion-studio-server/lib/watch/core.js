@@ -119,4 +119,16 @@ function closeAll() {
   subscriberPaths.clear();
 }
 
-module.exports = { subscribe, unsubscribe, closeAll };
+/**
+ * Process-shutdown path. On macOS, chokidar.close() can block synchronously
+ * while FSEvents drains a large workspace. The operating system releases the
+ * descriptors when this process exits, so shutdown clears only local state.
+ */
+function abandonAll() {
+  const count = instances.size;
+  instances.clear();
+  subscriberPaths.clear();
+  console.log(`[WatchCore] Released ${count} watcher(s) for process shutdown`);
+}
+
+module.exports = { subscribe, unsubscribe, closeAll, abandonAll };

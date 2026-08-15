@@ -181,6 +181,7 @@ function resolveServerPath(resourcesPath) {
  */
 function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
   return new Promise((resolve, reject) => {
+    let ready = false;
     const packaged = Boolean(resourcesPath && fs.existsSync(
       path.join(resourcesPath, 'fusion-studio-server', 'server.js'),
     ));
@@ -205,13 +206,20 @@ function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
     pipeServerOutput(child, {
       onStdout(text) {
         const match = text.match(/SERVER_READY:(\d+)/);
-        if (match) resolve({ port: parseInt(match[1], 10), process: child });
+        if (match) {
+          ready = true;
+          resolve({ port: parseInt(match[1], 10), process: child });
+        }
       },
     });
 
-    child.on('exit', (code) => {
-      // If we already resolved, this is an unexpected crash
-      onExit(code);
+    child.on('exit', (code, signal) => {
+      // child.killed means Electron intentionally signalled this child.
+      if (child.killed) return;
+      if (ready) {
+        onExit(code, signal);
+        return;
+      }
       reject(new Error(`Server exited with code ${code} before signalling ready`));
     });
   });
