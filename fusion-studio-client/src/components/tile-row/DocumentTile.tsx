@@ -22,7 +22,9 @@ interface DocumentTileProps {
   folderPath?: string;
   onClick?: () => void;
   onContextMenu?: (e: React.MouseEvent) => void;
+  onMoreClick?: (e: React.MouseEvent) => void;
   active?: boolean;
+  starred?: boolean;
   size?: 'default' | 'small';
 }
 
@@ -41,7 +43,7 @@ const ICON_MAP: Record<string, string> = {
   pdf: 'picture_as_pdf',
 };
 
-export function DocumentTile({ name, content, extension, panel, folderPath, onClick, onContextMenu, active, size = 'default' }: DocumentTileProps) {
+export function DocumentTile({ name, content, extension, panel, folderPath, onClick, onContextMenu, onMoreClick, active, starred, size = 'default' }: DocumentTileProps) {
   const ext = extension || name.split('.').pop()?.toLowerCase() || '';
   const icon = ICON_MAP[ext] || 'draft';
   const isImage = IMAGE_EXTENSIONS.has(ext);
@@ -62,6 +64,9 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
 
   return (
     <div className={classes.join(' ')} onClick={onClick} onContextMenu={onContextMenu} title={name}>
+      {starred ? (
+        <span className="material-symbols-outlined rv-doc-tile-star" aria-hidden="true">kid_star</span>
+      ) : null}
       <div className="rv-doc-tile-preview">
         {isImage ? (
           <img
@@ -75,6 +80,19 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
         )}
       </div>
       <div className="rv-doc-tile-footer">
+        {onMoreClick ? (
+          <button
+            type="button"
+            className="rv-doc-tile-more"
+            aria-label={`More actions for ${name}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              onMoreClick(event);
+            }}
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">more_vert</span>
+          </button>
+        ) : null}
         <span className="material-symbols-outlined rv-doc-tile-icon">{icon}</span>
         <span className="rv-doc-tile-name">{name}</span>
       </div>

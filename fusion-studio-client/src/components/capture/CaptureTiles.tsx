@@ -1,31 +1,79 @@
 /**
  * @module CaptureTiles
- * @role Grid / document orchestration view for the doc-viewer panel
+ * @role Grid / document orchestration view for the capture-viewer panel
  *
  * Renders either the tile grid or the file detail view. All state is owned by
  * useDocViewerState; this component only wires presentation to that state.
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
-import { useDocViewerState } from '../../hooks/useDocViewerState';
+import { DOC_VIEWER_ARCHIVE_FOLDER, type DocViewerMode, useDocViewerState } from '../../hooks/useDocViewerState';
+import { useFolderFiles } from '../../hooks/useFolderFiles';
+import { useFileTileMenu } from '../../hooks/useFileTileMenu';
 import { TileRow } from '../tile-row/TileRow';
 import type { FileWithContent } from '../tile-row/TileRow';
+import { DocumentTile } from '../tile-row/DocumentTile';
+import { Pinwheel } from '../Pinwheel';
 import { FilePageView } from './FilePageView';
 import { DocViewerHeader } from './DocViewerHeader';
+import { useFileDataStore } from '../../state/fileDataStore';
+import { usePanelStore } from '../../state/panelStore';
+import { useCaptureViewerSearch } from './useCaptureViewerSearch';
+import { normalizeViewCollections } from '../../lib/viewCollections';
+import { activityId, groupActivityByDate, normalizeViewActivity } from '../../lib/viewActivity';
+import './CaptureTiles.css';
 
-const ROWS = [
-  { label: 'Captures', folder: 'captures' },
-  { label: 'Specs', folder: 'specs' },
-  { label: 'TODO', folder: 'todo' },
-  { label: 'Playground', folder: 'playground' },
-  { label: 'Assets', folder: 'assets' },
-  { label: 'Screenshots', folder: 'screenshots' },
-];
+const ORDERED_DOCS_FOLDER = /^\d{3}-(.+)$/;
+const DOC_VIEWER_PANEL = 'capture-viewer';
+
+function isDocsFolder(node: { name: string; type: string }): boolean {
+  return (
+    (node.type === 'folder' || node.type === 'directory') &&
+    node.name !== DOC_VIEWER_ARCHIVE_FOLDER &&
+    ORDERED_DOCS_FOLDER.test(node.name)
+  );
+}
+
+function docsFolderLabel(folderName: string): string {
+  const match = folderName.match(ORDERED_DOCS_FOLDER);
+  const label = match ? match[1] : folderName;
+  return label.replace(/[-_]+/g, ' ');
+}
 
 export function CaptureTiles() {
-  useViewLayoutStyles('doc-viewer');
+  useViewLayoutStyles(DOC_VIEWER_PANEL);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const suppressGridScrollPersistRef = useRef(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [submittedSearchQuery, setSubmittedSearchQuery] = useState('');
+  const rootNodes = useFileDataStore((s) => s.trees[`${DOC_VIEWER_PANEL}:`]);
+  const fileDataGeneration = useFileDataStore((s) => s.generation);
+  const requestTree = useFileDataStore((s) => s.requestTree);
+  const contents = useFileDataStore((s) => s.contents);
+  const contentErrors = useFileDataStore((s) => s.contentErrors);
+  const requestContent = useFileDataStore((s) => s.requestContent);
+  const rawDocActivity = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.activity);
+  const rawDocCollections = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.collections);
+  const docActivity = useMemo(
+    () => normalizeViewActivity(rawDocActivity),
+    [rawDocActivity]
+  );
+  const docCollections = useMemo(
+    () => normalizeViewCollections(rawDocCollections),
+    [rawDocCollections]
+  );
+  const docStarredIds = useMemo(
+    () => new Set(docCollections.starred.map((item) => item.id)),
+    [docCollections.starred]
+  );
+  const isDocFileStarred = (path: string) => docStarredIds.has(activityId(DOC_VIEWER_PANEL, path));
+  const recentGroups = useMemo(
+    () => groupActivityByDate(docActivity.recents),
+    [docActivity.recents]
+  );
   const {
     mode,
     selected,
@@ -38,8 +86,32 @@ export function CaptureTiles() {
     restoreSelectedFile,
     archiveSelectedFile,
     persistGridScroll,
+    resetGridScroll,
     persistDocScroll,
   } = useDocViewerState();
+  const { getFileContextMenuHandler, getFileMoreClickHandler } = useFileTileMenu({
+    panel: DOC_VIEWER_PANEL,
+    folder: '',
+  });
+  const { files: archiveFiles, loading: archiveLoading } = useFolderFiles(
+    DOC_VIEWER_PANEL,
+    DOC_VIEWER_ARCHIVE_FOLDER,
+    { enabled: mode === 'archive' }
+  );
+
+  useEffect(() => {
+    requestTree(DOC_VIEWER_PANEL, '');
+  }, [fileDataGeneration, requestTree]);
+
+  useEffect(() => {
+    for (const item of [...docActivity.recents, ...docCollections.starred]) {
+      if (!(item.panel === DOC_VIEWER_PANEL)) continue;
+      const key = `${DOC_VIEWER_PANEL}:${item.path}`;
+      if (!(key in contents) && !(key in contentErrors)) {
+        requestContent(DOC_VIEWER_PANEL, item.path);
+      }
+    }
+  }, [contentErrors, contents, docActivity.recents, docCollections.starred, requestContent]);
 
   useEffect(() => {
     if (selected || !scrollRef.current || gridScroll <= 0) return;
@@ -53,22 +125,84 @@ export function CaptureTiles() {
     selectFile(folder, file);
   };
 
-  const visibleRows = ROWS.map((row) => ({
-    ...row,
-    label: mode === 'archive' ? `Archive: ${row.label}` : row.label,
-    folder: mode === 'archive' ? `${row.folder}/Archive` : row.folder,
-  }));
+  const rows = useMemo(
+    () => (rootNodes ?? [])
+      .filter(isDocsFolder)
+      .map((node) => ({
+        label: docsFolderLabel(node.name),
+        folder: node.name,
+      })),
+    [rootNodes]
+  );
+
+  const searchFolders = useMemo(() => {
+    const folders = rows.map((row) => ({ folder: row.folder, label: row.label }));
+    if (!folders.some((row) => row.folder === DOC_VIEWER_ARCHIVE_FOLDER)) {
+      folders.push({ folder: DOC_VIEWER_ARCHIVE_FOLDER, label: 'Archive' });
+    }
+    return folders;
+  }, [rows]);
+
+  const {
+    fileItems: searchItems,
+    rankedFileItems: rankedSearchItems,
+    loading: searchFilesLoading,
+  } = useCaptureViewerSearch(
+    searchFolders,
+    isSearchSubmitted && rootNodes !== undefined,
+    submittedSearchQuery
+  );
+
+  const searchLoading = isSearchSubmitted && (rootNodes === undefined || searchFilesLoading);
+
+  const handleSearchOpenChange = (nextIsOpen: boolean) => {
+    setIsSearchOpen(nextIsOpen);
+    if (!nextIsOpen) {
+      setIsSearchSubmitted(false);
+      setSubmittedSearchQuery('');
+    }
+  };
+
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const setVisibleGridScrollTop = () => {
+    if (scrollRef.current) {
+      suppressGridScrollPersistRef.current = true;
+      scrollRef.current.scrollTop = 0;
+      window.setTimeout(() => {
+        suppressGridScrollPersistRef.current = false;
+      }, 150);
+    }
+  };
+
+  const scrollGridToTop = (targetMode: DocViewerMode = mode) => {
+    setVisibleGridScrollTop();
+    resetGridScroll(targetMode);
+  };
+
+  const handleModeChange = (nextMode: DocViewerMode) => {
+    setVisibleGridScrollTop();
+    setMode(nextMode);
+  };
+
+  const handleSearchSubmit = () => {
+    scrollGridToTop();
+    setSubmittedSearchQuery(searchQuery);
+    setIsSearchSubmitted(true);
+  };
 
   if (selected) {
     return (
       <FilePageView
         file={selected.file}
         siblings={selected.siblings}
-        panel="doc-viewer"
+        panel={DOC_VIEWER_PANEL}
         folder={selected.folder}
         docScroll={docScroll}
         onDocScroll={persistDocScroll}
-        onRestore={restoreSelectedFile}
+        onRestore={selected.folder === DOC_VIEWER_ARCHIVE_FOLDER ? undefined : restoreSelectedFile}
         onArchive={archiveSelectedFile}
         onBack={clearSelection}
         onSelectSibling={selectSibling}
@@ -77,18 +211,160 @@ export function CaptureTiles() {
   }
 
   return (
-    <div className="rv-tile-grid rv-doc-viewer-grid">
-      <DocViewerHeader mode={mode} onModeChange={setMode} />
+    <div className="rv-tile-grid rv-capture-viewer-grid">
+      <DocViewerHeader
+        mode={mode}
+        onModeChange={handleModeChange}
+        isSearchOpen={isSearchOpen}
+        isSearchSubmitted={isSearchSubmitted}
+        searchQuery={searchQuery}
+        onSearchOpenChange={handleSearchOpenChange}
+        onSearchQueryChange={handleSearchQueryChange}
+        onSearchSubmit={handleSearchSubmit}
+      />
       <div
         ref={scrollRef}
-        className="rv-doc-viewer-grid-scroll"
-        onScroll={(e) => persistGridScroll(e.currentTarget.scrollTop)}
+        className="rv-capture-viewer-grid-scroll"
+        onScroll={(e) => {
+          if (suppressGridScrollPersistRef.current && e.currentTarget.scrollTop === 0) return;
+          persistGridScroll(e.currentTarget.scrollTop);
+        }}
       >
-        {visibleRows.map((row) => (
+        {isSearchSubmitted ? (
+          searchLoading ? (
+            <div className="rv-capture-viewer-searching" role="status" aria-live="polite">
+              <div className="rv-capture-viewer-searching-text">Searching</div>
+              <Pinwheel
+                className="rv-capture-viewer-searching-pinwheel"
+                size="8rem"
+                color="var(--accent-dim, var(--theme-primary, #39628e))"
+              />
+            </div>
+          ) : searchItems.length === 0 ? (
+            <div className="rv-tile-row-empty">Empty</div>
+          ) : rankedSearchItems.length === 0 ? (
+            <div className="rv-tile-row-empty">No matches</div>
+          ) : (
+            <div className="rv-capture-viewer-archive-grid rv-capture-viewer-search-grid">
+              {rankedSearchItems.map(({ folder, file }) => (
+                <DocumentTile
+                  key={`${folder}/${file.path}`}
+                  name={file.name}
+                  content={file.content}
+                  extension={file.extension}
+                  panel={DOC_VIEWER_PANEL}
+                  folderPath={folder}
+                  starred={isDocFileStarred(file.path)}
+                  onClick={() => selectFile(folder, file)}
+                  onContextMenu={getFileContextMenuHandler(file, folder)}
+                  onMoreClick={getFileMoreClickHandler(file, folder)}
+                />
+              ))}
+            </div>
+          )
+        ) : mode === 'recent' ? (
+          recentGroups.length === 0 ? (
+            <div className="rv-tile-row-empty">No recent documents</div>
+          ) : (
+            <div className="rv-capture-viewer-recent-results">
+              {recentGroups.map((group) => (
+                <div className="rv-capture-viewer-recent-section" key={group.label}>
+                  <div className="rv-capture-viewer-recent-section-title">{group.label}</div>
+                  <div className="rv-capture-viewer-archive-grid">
+                    {group.items.map((item) => {
+                      const folder = item.folder ?? '';
+                      const file: FileWithContent = {
+                        name: item.title,
+                        path: item.path,
+                        type: 'file',
+                        extension: item.extension ?? item.title.split('.').pop()?.toLowerCase(),
+                        content: contents[`${DOC_VIEWER_PANEL}:${item.path}`] ?? '',
+                      };
+                      return (
+                        <DocumentTile
+                          key={item.id}
+                          name={file.name}
+                          content={file.content}
+                          extension={file.extension}
+                          panel={DOC_VIEWER_PANEL}
+                          folderPath={folder}
+                          starred={isDocFileStarred(file.path)}
+                          onClick={() => selectFile(folder, file)}
+                          onContextMenu={getFileContextMenuHandler(file, folder)}
+                          onMoreClick={getFileMoreClickHandler(file, folder)}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+        ) : mode === 'starred' ? (
+          docCollections.starred.length === 0 ? (
+            <div className="rv-tile-row-empty">No starred documents</div>
+          ) : (
+            <div className="rv-capture-viewer-archive-grid">
+              {docCollections.starred
+                .filter((item) => item.panel === DOC_VIEWER_PANEL)
+                .map((item) => {
+                  const folder = item.folder ?? item.path.split('/').slice(0, -1).join('/');
+                  const file: FileWithContent = {
+                    name: item.title,
+                    path: item.path,
+                    type: 'file',
+                    extension: item.extension ?? item.title.split('.').pop()?.toLowerCase(),
+                    content: contents[`${DOC_VIEWER_PANEL}:${item.path}`] ?? '',
+                  };
+                  return (
+                    <DocumentTile
+                      key={item.id}
+                      name={file.name}
+                      content={file.content}
+                      extension={file.extension}
+                      panel={DOC_VIEWER_PANEL}
+                      folderPath={folder}
+                      starred={true}
+                      onClick={() => selectFile(folder, file)}
+                      onContextMenu={getFileContextMenuHandler(file, folder)}
+                      onMoreClick={getFileMoreClickHandler(file, folder)}
+                    />
+                  );
+                })}
+            </div>
+          )
+        ) : mode === 'archive' ? (
+          archiveLoading ? (
+            <div className="rv-tile-row-empty">Loading...</div>
+          ) : archiveFiles.length === 0 ? (
+            <div className="rv-tile-row-empty">Empty</div>
+          ) : (
+            <div className="rv-capture-viewer-archive-grid">
+              {archiveFiles.map((file) => (
+                <DocumentTile
+                  key={file.path}
+                  name={file.name}
+                  content={file.content}
+                  extension={file.extension}
+                  panel={DOC_VIEWER_PANEL}
+                  folderPath={DOC_VIEWER_ARCHIVE_FOLDER}
+                  starred={isDocFileStarred(file.path)}
+                  onClick={() => selectFile(DOC_VIEWER_ARCHIVE_FOLDER, file)}
+                  onContextMenu={getFileContextMenuHandler(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                  onMoreClick={getFileMoreClickHandler(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                />
+              ))}
+            </div>
+          )
+        ) : rootNodes === undefined ? (
+          <div className="rv-tile-row-empty">Loading...</div>
+        ) : rows.length === 0 ? (
+          <div className="rv-tile-row-empty">Empty</div>
+        ) : rows.map((row) => (
           <TileRow
             key={row.folder}
             label={row.label}
-            panel="doc-viewer"
+            panel={DOC_VIEWER_PANEL}
             folder={row.folder}
             onFileSelect={handleFileSelect(row.folder)}
           />

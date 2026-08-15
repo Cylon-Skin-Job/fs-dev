@@ -51,7 +51,6 @@ function makeManager(overrides = {}) {
     openSession: jest.fn(async () => ({})),
     touchSession: jest.fn(),
     addMessage: jest.fn(async () => ({})),
-    addMessageWithMetadata: jest.fn(async () => ({})),
     index: { touch: jest.fn(async () => ({})) },
     ...overrides,
   };
@@ -200,11 +199,6 @@ describe('thread runtime automation', () => {
       ['send', 'hello'],
     ]);
     expect(manager.index.touch).toHaveBeenCalledWith('thread-1');
-    expect(manager.addMessageWithMetadata).toHaveBeenCalledWith(
-      'thread-1',
-      { role: 'assistant', content: 'answer', hasToolCalls: false },
-      expect.objectContaining({ reason: 'complete' })
-    );
     expect(emit).toHaveBeenCalledWith('chat:turn_end', expect.objectContaining({
       threadId: 'thread-1',
       fullText: 'answer',

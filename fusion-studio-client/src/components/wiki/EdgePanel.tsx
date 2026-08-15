@@ -4,7 +4,13 @@
  * @reads wikiStore: root, selectedPath, viewedPath
  */
 
-import { findWikiNodeByPath, useWikiStore, type WikiNode } from '../../state/wikiStore';
+import {
+  findWikiNodeByPath,
+  isWikiHeadingArticle,
+  isWikiRightNavContext,
+  useWikiStore,
+  type WikiNode,
+} from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
@@ -35,11 +41,8 @@ export function EdgePanel() {
 
   const node = findWikiNodeByPath(root, selectedPath);
 
-  // Heading articles (000- folders) get the sidebar at any depth, including
-  // the root's own heading article, whose kind is 'section'.
-  const isHeadingArticle = Boolean(node && node.name.startsWith('000-'));
-
-  if (!node || (node.kind !== 'article' && !isHeadingArticle)) {
+  // Only non-heading top-level article folders get contextual child navigation.
+  if (!isWikiRightNavContext(node)) {
     return (
       <div className="rv-wiki-edge-panel" />
     );
@@ -56,8 +59,9 @@ export function EdgePanel() {
         <NodeActions node={node} title="page" />
       </button>
 
-      {node.children.map((child) => {
-        const hasNestedArticles = child.children.length > 0;
+      {node.children.filter((child) => !isWikiHeadingArticle(child)).map((child) => {
+        const nestedArticles = child.children.filter((nested) => !isWikiHeadingArticle(nested));
+        const hasNestedArticles = nestedArticles.length > 0;
 
         if (!hasNestedArticles) {
           return (
@@ -66,6 +70,9 @@ export function EdgePanel() {
                 className={`rv-wiki-edge-link ${viewedPath === child.path ? 'active' : ''}`}
                 onClick={() => viewNode(child)}
               >
+                <span className="rv-wiki-topic-indicator">
+                  {viewedPath === child.path ? '\u25C9' : '\u25CB'}
+                </span>
                 <span className="rv-wiki-edge-link-text">{child.label}</span>
                 <NodeActions node={child} title="page" />
               </button>
@@ -81,12 +88,15 @@ export function EdgePanel() {
             >
               {child.label}
             </button>
-            {child.children.map((nested) => (
+            {nestedArticles.map((nested) => (
               <button
                 key={nested.path}
                 className={`rv-wiki-edge-link ${viewedPath === nested.path ? 'active' : ''}`}
                 onClick={() => viewNode(nested)}
               >
+                <span className="rv-wiki-topic-indicator">
+                  {viewedPath === nested.path ? '\u25C9' : '\u25CB'}
+                </span>
                 <span className="rv-wiki-edge-link-text">{nested.label}</span>
                 <NodeActions node={nested} title="page" />
               </button>

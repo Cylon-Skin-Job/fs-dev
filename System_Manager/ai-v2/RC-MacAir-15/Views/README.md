@@ -7,6 +7,7 @@ Canonical shape:
 ```text
 001-browser-viewer/
   manifest.md
+  content.json
   state/
     state.json
   styles/
@@ -18,15 +19,15 @@ Ordering and identity:
 
 - Numeric prefixes such as `001-` control left-nav order.
 - Prefixes are not displayed.
-- The semantic view id is the folder name after the prefix, such as `doc-viewer`.
+- The semantic view id is the folder name after the prefix, such as `capture-viewer`.
 
-Content belongs in top-level data folders such as `Docs/`, `Wiki/`, `Issues/`, and `Chat/`.
+Content belongs in top-level data folders such as `Captures/`, `Wiki/`, `Issues/`, `Agents/`, and `Office/` by default. Each capsule's `content.json` points at its content root and may be edited to use a repo-shared folder.
 
 Canonical default order:
 
 ```text
 001-browser-viewer
-002-doc-viewer
+002-capture-viewer
 003-office-viewer
 004-library-viewer
 005-media-viewer

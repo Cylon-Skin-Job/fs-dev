@@ -48,14 +48,10 @@ function makeHarness(initialWorkspaces, initialActiveId = null) {
     }),
   };
 
-  const stateCache = {
-    invalidate: jest.fn(),
-  };
   const writeLastActive = jest.fn(async () => {});
 
   const handlers = createWorkspaceRibbonHandlers({
     registry,
-    stateCache,
     emit: (type, payload) => emitted.push({ type, payload }),
     getActiveWorkspaceId: () => activeWorkspaceId,
     setActiveWorkspace: (id, workspace) => {
@@ -68,7 +64,6 @@ function makeHarness(initialWorkspaces, initialActiveId = null) {
   return {
     handlers,
     registry,
-    stateCache,
     writeLastActive,
     emitted,
     getActiveWorkspaceId: () => activeWorkspaceId,
@@ -87,7 +82,7 @@ describe('workspace ribbon handlers', () => {
     warnSpy.mockRestore();
   });
 
-  test('removes a non-active workspace from the ribbon and invalidates its state cache', async () => {
+  test('removes a non-active workspace from the ribbon', async () => {
     const alpha = makeWorkspace('alpha', { sortOrder: 0 });
     const beta = makeWorkspace('beta', { sortOrder: 1 });
     const harness = makeHarness([alpha, beta], 'alpha');
@@ -97,7 +92,6 @@ describe('workspace ribbon handlers', () => {
     expect(harness.registry.updateRibbonVisibility).toHaveBeenCalledWith('beta', false);
     expect(harness.getActiveWorkspaceId()).toBe('alpha');
     expect(harness.writeLastActive).not.toHaveBeenCalled();
-    expect(harness.stateCache.invalidate).toHaveBeenCalledWith('beta');
     expect(harness.emitted.map(event => event.type)).toEqual([
       'workspace:registry_changed',
       'workspace:ribbon_removed',
@@ -115,7 +109,6 @@ describe('workspace ribbon handlers', () => {
     expect(harness.getActiveWorkspaceId()).toBe('gamma');
     expect(harness.getActiveWorkspace()).toMatchObject({ id: 'gamma' });
     expect(harness.writeLastActive).toHaveBeenCalledWith('gamma');
-    expect(harness.stateCache.invalidate).toHaveBeenCalledWith('beta');
     expect(harness.emitted).toEqual(expect.arrayContaining([
       expect.objectContaining({
         type: 'workspace:switched',

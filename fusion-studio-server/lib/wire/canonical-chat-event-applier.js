@@ -12,8 +12,7 @@
  *   - emit: event bus emitter
  *   - resolveWorkspace: function to resolve workspace string from session
  *   - touchThreadSession: function to reset idle timeout
- *   - persistAssistantMessage: async function(ws, content, hasToolCalls, metadata, explicitThreadId)
- *   - checkSettingsBounce: function(toolName, args) -> {message}|null
+ *   - checkSettingsBounce: function(toolName, args, workspaceRoot) -> {message}|null
  *   - generateTurnId: function() -> string
  */
 
@@ -24,7 +23,6 @@ function createCanonicalChatEventApplier({
   emit,
   resolveWorkspace,
   touchThreadSession,
-  persistAssistantMessage,
   checkSettingsBounce,
   generateTurnId,
 }) {
@@ -211,7 +209,10 @@ function createCanonicalChatEventApplier({
     touchThreadSession();
     session.hasToolCalls = true;
     session.activeToolId = payload?.toolCallId || '';
+    session.activeToolName = payload?.toolName || '';
     session.toolArgs[session.activeToolId] = '';
+    session.toolNamesById = session.toolNamesById || {};
+    session.toolNamesById[session.activeToolId] = session.activeToolName;
 
     // Start tracking tool call for history
     session.assistantParts.push({
@@ -251,6 +252,7 @@ function createCanonicalChatEventApplier({
 
     if (toolCallId && argsChunk) {
       session.toolArgs[toolCallId] = (session.toolArgs[toolCallId] || '') + argsChunk;
+      const toolName = payload?.toolName || session.toolNamesById?.[toolCallId] || session.activeToolName || '';
       const runtimeKey = getRuntimeKey();
       if (runtimeKey) {
         threadRuntimeManager.appendLiveToolArgs(runtimeKey, toolCallId, argsChunk);
@@ -263,7 +265,98 @@ function createCanonicalChatEventApplier({
         toolCallId,
         argsChunk
       });
+
+      try {
+        const parsedArgs = JSON.parse(session.toolArgs[toolCallId]);
+        const bounced = applySettingsBounce(toolCallId, toolName, parsedArgs, true);
+        if (bounced) {
+          stopWireAfterPreExecutionBounce();
+        }
+      } catch (_) {
+        // Tool args may stream in chunks; enforce once a complete JSON object exists.
+      }
     }
+  }
+
+  function getBouncedToolCalls() {
+    if (!session.bouncedToolCalls) {
+      session.bouncedToolCalls = new Set();
+    }
+    return session.bouncedToolCalls;
+  }
+
+  function stopWireAfterPreExecutionBounce() {
+    if (session.wire && typeof session.wire.kill === 'function' && !session.wire.killed) {
+      session.wire.kill('SIGTERM');
+    }
+  }
+
+  function applySettingsBounce(toolCallId, toolName, parsedArgs, preExecution = false) {
+    const bouncedToolCalls = getBouncedToolCalls();
+    if (toolCallId && bouncedToolCalls.has(toolCallId)) return true;
+
+    const bounce = checkSettingsBounce(toolName, parsedArgs, session.projectRoot || null);
+    if (!bounce) return false;
+
+    if (toolCallId) bouncedToolCalls.add(toolCallId);
+    delete session.toolArgs[toolCallId];
+
+    const runtimeKey = getRuntimeKey();
+    if (runtimeKey) {
+      threadRuntimeManager.applyLiveToolResult(runtimeKey, {
+        toolCallId,
+        toolArgs: parsedArgs,
+        output: bounce.message,
+        statusMessage: bounce.message,
+        display: [],
+        returnedDiff: false,
+        isError: true,
+        files: [],
+      });
+    }
+
+    const toolCallPart = session.assistantParts.find(
+      p => p.type === 'tool_call' && p.toolCallId === toolCallId
+    );
+    if (toolCallPart) {
+      toolCallPart.arguments = parsedArgs;
+      toolCallPart.result = {
+        output: bounce.message,
+        statusMessage: bounce.message,
+        display: [],
+        returnedDiff: false,
+        isError: true,
+        files: [],
+        enforcementPhase: preExecution ? 'tool_args' : 'tool_result',
+      };
+    }
+
+    emit('system:tool_bounced', {
+      workspace: getWorkspace(),
+      threadId: getThreadId(),
+      toolName,
+      filePath: parsedArgs.file_path || parsedArgs.filePath || parsedArgs.path,
+      reason: bounce.message,
+      phase: preExecution ? 'tool_args' : 'tool_result',
+    });
+
+    emit('chat:tool_result', {
+      workspace: getWorkspace(),
+      scope: getScope(),
+      threadId: getThreadId(),
+      turnId: getTurnId(),
+      toolCallId,
+      toolName,
+      toolArgs: parsedArgs,
+      toolOutput: bounce.message,
+      toolStatus: bounce.message,
+      toolDisplay: [],
+      returnedDiff: false,
+      isError: true,
+      enforcementPhase: preExecution ? 'tool_args' : 'tool_result',
+    });
+
+    return true;
   }
 
   function applyToolOutcome(payload) {
@@ -276,48 +369,12 @@ function createCanonicalChatEventApplier({
     try { parsedArgs = JSON.parse(fullArgs); } catch (_) {}
     delete session.toolArgs[toolCallId];
 
+    if (toolCallId && session.bouncedToolCalls?.has(toolCallId)) {
+      return;
+    }
+
     // --- Hardwired enforcement: settings/ folder write-lock ---
-    const bounce = checkSettingsBounce(toolName, parsedArgs);
-    if (bounce) {
-      const runtimeKey = getRuntimeKey();
-      if (runtimeKey) {
-        threadRuntimeManager.applyLiveToolResult(runtimeKey, {
-          toolCallId,
-          toolArgs: parsedArgs,
-          output: bounce.message,
-          statusMessage: bounce.message,
-          display: [],
-          returnedDiff: false,
-          isError: true,
-          files: [],
-        });
-      }
-
-      emit('system:tool_bounced', {
-        workspace: getWorkspace(),
-        threadId: getThreadId(),
-        toolName,
-        filePath: parsedArgs.file_path,
-        reason: bounce.message
-      });
-
-      // Emit chat:tool_result for bounced tools so the broadcaster
-      // handles delivery uniformly. Same shape as a normal tool_result
-      // but with isError=true and the bounce message as output.
-      emit('chat:tool_result', {
-        workspace: getWorkspace(),
-        scope: getScope(),
-        threadId: getThreadId(),
-        turnId: getTurnId(),
-        toolCallId,
-        toolName,
-        toolArgs: parsedArgs,
-        toolOutput: bounce.message,
-        toolStatus: bounce.message,
-        toolDisplay: [],
-        returnedDiff: false,
-        isError: true
-      });
+    if (applySettingsBounce(toolCallId, toolName, parsedArgs, false)) {
       return;
     }
     // --- End enforcement ---
@@ -425,37 +482,6 @@ function createCanonicalChatEventApplier({
     // changed it while this turn was in flight.
     const threadId = getThreadId();
     const runtimeKey = getRuntimeKey(threadId);
-
-    // Build metadata from tracked context/token usage
-    const metadata = {
-      contextUsage: session.contextUsage,
-      tokenUsage: session.tokenUsage,
-      messageId: session.messageId,
-      planMode: session.planMode,
-      reason: payload?.reason || 'complete',
-      partial: Boolean(payload?.partial),
-      capturedAt: Date.now()
-    };
-
-    // Save assistant message to CHAT.md. Preserve the legacy router behavior:
-    // persistence is a handoff and must not block chat:turn_end emission/reset.
-    // Note: SQLite persistence is handled by audit-subscriber listening to chat:turn_end
-    try {
-      const maybePromise = persistAssistantMessage(
-        ws,
-        session.currentTurn.text,
-        session.hasToolCalls,
-        metadata,
-        threadId
-      );
-      if (maybePromise && typeof maybePromise.catch === 'function') {
-        maybePromise.catch((err) => {
-          console.error('[CanonicalApplier] Failed to persist assistant message:', err);
-        });
-      }
-    } catch (err) {
-      console.error('[CanonicalApplier] Failed to persist assistant message:', err);
-    }
 
     emit('chat:turn_end', {
       workspace: getWorkspace(),

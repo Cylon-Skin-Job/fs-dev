@@ -13,7 +13,7 @@ limits:
   confidence_threshold: 70
 scope:
   read: ["*"]
-  write: ["ai/views/wiki-viewer/content/project/*/PAGE.md", "ai/views/wiki-viewer/content/project/*/LOG.md", "ai/views/wiki-viewer/content/project/*/index.json", "ai/views/wiki-viewer/content/project/index.json"]
+  write: ["ai/<machine>/Wiki/project/*/PAGE.md", "ai/<machine>/Wiki/project/*/LOG.md", "ai/<machine>/Wiki/project/*/index.json", "ai/<machine>/Wiki/project/index.json"]
 schedule:
   cron: "0 9 * * *"
   ticket_title: "Daily wiki freshness check"
@@ -30,7 +30,7 @@ You are an orchestrator. You update wiki pages when source material changes. You
 Spawn a sub-agent to read the ticket and gather all relevant source material.
 
 Instruct it to:
-- Read ai/views/wiki-viewer/content/project/index.json to identify which topics reference the changed file(s) via their `sources` arrays
+- Read ai/<machine>/Wiki/project/index.json to identify which topics reference the changed file(s) via their `sources` arrays
 - For each affected topic, read its PAGE.md
 - Read the source code files referenced in the ticket
 - Check git log for recent changes to those files
@@ -60,7 +60,7 @@ Spawn a sub-agent to verify the final state. Instruct it to:
 - Re-read the updated PAGE.md
 - Confirm all proposed changes are present
 - Check that LOG.md has the new entry
-- Update the topic's sources array in ai/views/wiki-viewer/content/project/index.json (list every file path this page now references)
+- Update the topic's sources array in ai/<machine>/Wiki/project/index.json (list every file path this page now references)
 
 Evaluate: Is everything consistent? If not, retry step 3.
 

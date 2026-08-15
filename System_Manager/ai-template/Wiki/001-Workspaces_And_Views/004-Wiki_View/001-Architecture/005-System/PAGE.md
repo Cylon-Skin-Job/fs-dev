@@ -22,24 +22,31 @@ The wiki system is local-first and folder-first.
 ## Current Contract
 
 ```text
-ai/views/wiki-viewer/
-  Wiki/
+ai/<machine>/Views/<wiki-view-folder>/
+  manifest.md
+  content.json
+  styles/
+
+ai/<machine>/Wiki/
+  000-Wiki_Guidance/
     PAGE.md
-    001-Workspaces_And_Views/
+  001-Workspaces_And_Views/
+    PAGE.md
+    004-Wiki_View/
       PAGE.md
-      004-Wiki_View/
+      001-Architecture/
         PAGE.md
-        001-Architecture/
-          PAGE.md
 ```
 
 ## Runtime Resolution
 
-- `wiki-viewer` resolves to `viewRoot/Wiki` when the `Wiki/` folder exists.
-- Copy/send-to-chat paths use `ai/views/wiki-viewer/Wiki`.
+- `wiki-viewer` resolves through its capsule `content.json`.
+- The default wiki content root is `ai/${machine}/Wiki`.
+- Wiki content is not nested under the numbered `Views/<wiki-view-folder>/` capsule.
+- Copy/send-to-chat paths use `ai/<machine>/Wiki`.
 - The client discovers folders using `file_tree_request`.
 - The client loads pages using `file_content_request` for `PAGE.md`.
-- The terminal query path uses `fusion-studio-server/lib/wiki/wiki-tree.js`.
+- The terminal query path uses `fusion-studio-server/lib/wiki/wiki-tree.js`; outside server startup it can discover the machine-scoped V2 wiki capsule under `ai/*/Views` before scanning the resolved wiki root.
 
 ## Terminal Access
 
@@ -52,3 +59,5 @@ node scripts/query-wiki.js --workspace "/Users/rccurtrightjr./projects/fs-dev" -
 ## Maintenance Rule
 
 Keep the folder tree as the source of truth. If terminal access, search, or sync tooling is added, it should read from the canonical `Wiki/**/PAGE.md` tree.
+
+Do not nest wiki content inside the view capsule or reintroduce a generated `content/` mirror as the runtime source of truth.

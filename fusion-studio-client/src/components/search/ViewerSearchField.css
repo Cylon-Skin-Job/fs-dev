@@ -1,0 +1,73 @@
+.rv-viewer-search-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: clamp(220px, 48vw, 420px);
+  height: 25px;
+  padding: 0 4px 0 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 4px);
+  background: color-mix(in srgb, var(--document-surface-bg, #0d0d0d) 76%, transparent);
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  box-sizing: border-box;
+}
+
+.rv-viewer-search-field--no-icon {
+  padding-left: 12px;
+}
+
+.rv-viewer-search-field:focus-within {
+  border-color: var(--border-focus, var(--accent-dim, var(--theme-primary, #39628e)));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-focus, var(--accent-dim, #39628e)) 55%, transparent);
+}
+
+.rv-viewer-search-field-icon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+.rv-viewer-search-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary, #eee);
+  font: inherit;
+  font-size: 0.8125rem;
+}
+
+.rv-viewer-search-field input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.rv-viewer-search-field input::placeholder {
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  opacity: 1;
+}
+
+.rv-viewer-search-dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 23px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm, 3px);
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  cursor: pointer;
+}
+
+.rv-viewer-search-dismiss:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--chrome-accent, #e0e0e0);
+}
+
+.rv-viewer-search-dismiss .material-symbols-outlined {
+  font-size: 1rem;
+}

@@ -3,12 +3,14 @@
    ============================================ */
 
 .rv-office-document-page {
+  --rv-office-paper-mute-alpha: 0;
+  --rv-office-paper-mute-rgb: 8, 10, 14;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
   animation: rv-office-view-enter 0.18s ease-out;
   position: relative;
 }
@@ -146,15 +148,15 @@
 .rv-office-margins-dropdown {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
   z-index: var(--z-dropdown, 200);
-  min-width: 160px;
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--radius-md, 10px);
   background: var(--surface-elevated, #202020);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   animation: rv-office-view-enter 0.12s ease-out;
+  left: 0;
+  min-width: 160px;
 }
 
 .rv-office-margins-row {
@@ -223,6 +225,33 @@
   font-size: 18px;
 }
 
+.rv-office-document-sidepanel-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.rv-office-document-sidepanel-header--open {
+  box-sizing: border-box;
+  width: calc(200px - var(--space-lg));
+  padding-left: calc(var(--space-sm) + 15px);
+  justify-content: space-between;
+}
+
+.rv-office-document-sidepanel-heading {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  color: var(--accent-dim);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .rv-office-document-spacer {
   flex: 1;
 }
@@ -238,7 +267,7 @@
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-lg);
   border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
   flex-shrink: 0;
 }
 
@@ -356,6 +385,7 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
 }
 
 /* Workspace — editor + side panel side by side */
@@ -364,6 +394,7 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
 }
 
 .rv-office-document-workspace.rv-office-workspace--drawer-open .rv-office-document-editor {
@@ -376,13 +407,14 @@
   min-height: 0;
   overflow: auto;
   padding: var(--space-xl) var(--space-lg);
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
 }
 
 /* FIXED: Document page surface (#faf9f6, #1c1c1c) — light paper aesthetic,
    not theme-adjustable. rgba(0,0,0,0.55) is a dark overlay on the light surface. */
 /* Crepe page — letter-like sheet with shadow and margins */
 .rv-office-document-editor .milkdown {
+  position: relative;
   max-width: 816px;
   margin: 0 auto;
   padding: 0;
@@ -395,6 +427,21 @@
   min-height: 800px;
   zoom: var(--editor-zoom, 1);
   font-family: var(--doc-font-family, Georgia, "Times New Roman", serif);
+  isolation: isolate;
+}
+
+.rv-office-document-editor .milkdown::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(var(--rv-office-paper-mute-rgb), var(--rv-office-paper-mute-alpha, 0));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.rv-office-document-editor .milkdown.rv-office-paper-filter-capture-clean::after {
+  display: none;
 }
 
 .rv-office-document-editor .milkdown .editor {
@@ -407,6 +454,709 @@
   font-size: var(--doc-font-size, 16px);
   text-align: var(--doc-alignment, left);
   padding: var(--doc-margin-top, 72px) var(--doc-margin-right, 90px) var(--doc-margin-bottom, 72px) var(--doc-margin-left, 90px);
+  /* Set the virtual-caret color on the same element Crepe targets
+     (.ProseMirror-focused), at higher specificity, so the dark theme's light
+     caret can't win and vanish against the fixed-light paper. */
+  --prosemirror-virtual-cursor-color: #1c1c1c;
+}
+
+.rv-office-document-editor .rv-office-table-wrapper {
+  overflow-x: auto;
+}
+
+.rv-office-document-editor .rv-office-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='left'] {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='center'] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='right'] {
+  margin-inline-start: auto;
+  margin-inline-end: 0;
+}
+
+.rv-office-table[data-rv-table-overflow] {
+  table-layout: fixed;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] :is(th, td),
+.rv-office-table[data-rv-table-overflow='truncate'] :is(th, td) {
+  overflow: hidden;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] :is(th, td) > p {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.rv-office-table[data-rv-table-overflow='truncate'] :is(th, td) > p {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-office-table[data-rv-table-overflow='newline'] :is(th, td),
+.rv-office-table[data-rv-table-overflow='newline'] :is(th, td) > p {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] [data-rv-hardbreak='explicit'] > br,
+.rv-office-table[data-rv-table-overflow='truncate'] [data-rv-hardbreak='explicit'] > br {
+  display: none;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] [data-rv-hardbreak='explicit']::after,
+.rv-office-table[data-rv-table-overflow='truncate'] [data-rv-hardbreak='explicit']::after {
+  content: ' ';
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table th,
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table td {
+  position: relative;
+  box-sizing: border-box;
+  min-width: var(--rv-office-table-cell-min-width, 32px);
+  height: var(--rv-office-table-cell-min-height, auto);
+  padding-block: 9px 11px;
+  padding-inline: 0.25ch;
+  border: 0;
+  box-shadow: none;
+  vertical-align: top;
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table :is(th, td)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  border: 0;
+  border-block-start: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+  border-inline-start: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+  pointer-events: none;
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table :is(th, td):last-child::after {
+  border-inline-end: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table tr:last-child > :is(th, td)::after {
+  border-block-end: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+}
+
+.rv-office-table[data-rv-table-border-style='solid'] {
+  --rv-office-table-border-style: solid;
+}
+
+.rv-office-table[data-rv-table-border-style='dotted'] {
+  --rv-office-table-border-style: dotted;
+}
+
+@media print {
+  .rv-office-table[data-rv-table-border-color='none'] {
+    --rv-office-table-border-width: 0px !important;
+  }
+}
+
+.rv-office-document-editor .milkdown .editor .rv-office-table th > p,
+.rv-office-document-editor .milkdown .editor .rv-office-table td > p {
+  margin-block: 0;
+  padding-block: 0;
+  line-height: inherit;
+}
+
+/* ── Column resize overlay ────────────────────────────────────────────────
+   Lives on <body>, positioned in viewport coordinates. Grab bars sit ABOVE
+   the table (in non-editable space); a dashed guide previews the new border.
+   Dragging never touches ProseMirror — the real width is written on release. */
+.rv-office-table-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dropdown, 200);
+  pointer-events: none;
+}
+
+/* Full-height grab strip sitting on a column line. The strip itself is
+   invisible but carries the ↔ cursor and the pointer target; a dashed guide
+   (::after) lights up on the line while hovering or dragging. */
+.rv-office-col-grab {
+  position: fixed;
+  width: 13px;
+  transform: translateX(-50%);
+  cursor: col-resize;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+}
+
+.rv-office-col-grab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 1.5px dashed rgba(36, 92, 140, 0.85);
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.rv-office-col-grab:hover::after,
+.rv-office-col-grab[data-active="true"]::after {
+  opacity: 1;
+}
+
+body.rv-office-col-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+/* ── Table background color picker ────────────────────────────────────── */
+.rv-office-color-popover {
+  position: fixed;
+  z-index: 10001;
+  width: 236px;
+  padding: 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
+  border-radius: 8px;
+  background: var(--rv-office-content-fill, #1c2a36);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+}
+
+.rv-office-color-popover[data-custom-open="true"] {
+  width: 252px;
+}
+
+.rv-office-color-default-section {
+  position: relative;
+}
+
+.rv-office-color-popover[data-custom-open="true"] .rv-office-color-default-section {
+  margin-bottom: 0;
+}
+
+.rv-office-color-popover[data-custom-open="true"] > .rv-office-color-divider,
+.rv-office-color-popover[data-custom-open="true"] > .rv-office-color-row {
+  display: none;
+  pointer-events: none;
+}
+
+.rv-office-color-none {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-color-none:hover,
+.rv-office-color-none[data-active="true"] {
+  background: rgba(154, 176, 200, 0.14);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-none .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-color-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+
+.rv-office-color-swatch {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  background: var(--swatch, #000);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+
+.rv-office-color-swatch:hover {
+  transform: scale(1.18);
+}
+
+.rv-office-color-swatch[data-active="true"] {
+  outline: 2px solid var(--accent, #9ab0c8);
+  outline-offset: 1px;
+}
+
+.rv-office-color-divider {
+  height: 1px;
+  margin: 8px 2px;
+  background: var(--neutral-chrome-border, rgba(154, 176, 200, 0.22));
+}
+
+.rv-office-color-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-office-color-sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 5px 6px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-color-sync:hover:not(:disabled) {
+  background: rgba(154, 176, 200, 0.14);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-sync:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.rv-office-color-sync .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.rv-office-color-custom {
+  display: grid;
+  grid-template-columns: repeat(10, 18px);
+  grid-auto-rows: 18px;
+}
+
+.rv-office-color-remove-menu {
+  position: fixed;
+  z-index: 10002;
+  min-width: 96px;
+  padding: 4px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.28));
+  border-radius: 6px;
+  background: var(--bg-surface, #1e1e1e);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
+}
+
+.rv-office-color-remove-menu button {
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-primary, #dce7f1);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-color-remove-menu button:hover,
+.rv-office-color-remove-menu button:focus-visible {
+  outline: none;
+  background: rgba(154, 176, 200, 0.14);
+}
+
+.rv-office-color-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-add:hover {
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-add .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-color-custom-editor {
+  display: none;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.rv-office-color-custom-editor[data-open="true"] {
+  display: grid;
+}
+
+.rv-office-color-picker {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.rv-office-color-plane {
+  position: relative;
+  width: 100%;
+  height: 132px;
+  padding: 0;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 5px;
+  background:
+    linear-gradient(to top, #000000, rgba(0, 0, 0, 0)),
+    linear-gradient(to right, #ffffff, hsl(var(--hue, 216), 100%, 50%));
+  cursor: crosshair;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.rv-office-color-plane-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.62);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.rv-office-color-hue-row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-office-color-preview {
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 50%;
+  background: var(--custom-color, #4a86e8);
+}
+
+.rv-office-color-hue {
+  min-width: 0;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--accent, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-hex {
+  min-width: 0;
+  height: 26px;
+  padding: 3px 7px;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 5px;
+  background: rgba(8, 13, 18, 0.24);
+  color: var(--text-primary, #dce7f1);
+  font: inherit;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.rv-office-color-hex:focus {
+  border-color: var(--accent, #9ab0c8);
+  outline: none;
+}
+
+.rv-office-color-commit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: rgba(154, 176, 200, 0.12);
+  color: var(--text-secondary, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-commit:hover:not(:disabled) {
+  background: rgba(154, 176, 200, 0.2);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-commit:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rv-office-color-commit .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-document-editor .rv-office-table-block .handle,
+.rv-office-document-editor .rv-office-table-block .drag-preview {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.rv-office-table-grid-popover {
+  position: fixed;
+  z-index: 10000;
+  min-width: 156px;
+  padding: 10px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
+  border-radius: 6px;
+  background: var(--rv-office-content-fill, #1c2a36);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+.rv-office-table-grid-cells {
+  display: grid;
+  grid-template-columns: repeat(8, 14px);
+  gap: 4px;
+}
+
+.rv-office-table-grid-cell {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 2px;
+  background: rgba(154, 176, 200, 0.08);
+  cursor: pointer;
+}
+
+.rv-office-table-grid-cell[data-active="true"] {
+  border-color: var(--accent, #9ab0c8);
+  background: rgba(154, 176, 200, 0.28);
+}
+
+.rv-office-table-grid-label {
+  margin-top: 9px;
+  color: var(--text-secondary, #9ab0c8);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.rv-office-insert-context-menu,
+.rv-office-table-context-menu {
+  position: fixed;
+  z-index: 10000;
+  min-width: 218px;
+  max-height: calc(100vh - 16px);
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
+  border-radius: 6px;
+  background: var(--rv-office-content-fill, #1c2a36);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+.rv-office-insert-context-menu {
+  min-width: 184px;
+}
+
+.rv-office-insert-context-item,
+.rv-office-table-context-item {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+  min-height: 30px;
+  column-gap: 8px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-table-context-submenu {
+  z-index: 10001;
+}
+
+.rv-office-table-context-nested-submenu {
+  z-index: 10002;
+}
+
+.rv-office-table-context-submenu-trigger {
+  grid-template-columns: 22px minmax(0, 1fr) 18px;
+}
+
+.rv-office-table-context-overflow-trigger {
+  grid-template-columns: 22px minmax(0, 1fr) auto 18px;
+}
+
+.rv-office-table-context-alignment {
+  grid-template-columns: 22px minmax(0, 1fr) 18px;
+}
+
+.rv-office-table-context-radio-check {
+  justify-self: end;
+}
+
+.rv-office-table-context-current {
+  color: var(--text-muted, #7890a8);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.rv-office-table-context-chevron {
+  justify-self: end;
+}
+
+.rv-office-table-context-destructive {
+  color: var(--error, #ff8a8a);
+}
+
+.rv-office-insert-context-item:hover,
+.rv-office-table-context-item:hover,
+.rv-office-table-context-item:focus-visible {
+  outline: none;
+  background: rgba(154, 176, 200, 0.12);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-table-context-item:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.rv-office-table-context-item:disabled:hover {
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+}
+
+.rv-office-insert-context-item .material-symbols-outlined,
+.rv-office-table-context-item .material-symbols-outlined {
+  font-size: 18px;
+  color: currentColor;
+}
+
+.rv-office-insert-context-divider,
+.rv-office-table-context-divider {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--neutral-chrome-border, rgba(154, 176, 200, 0.28));
+}
+
+.rv-office-table-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg, 24px);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.rv-office-table-confirm-dialog {
+  width: min(420px, 100%);
+  padding: var(--space-xl, 24px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-lg, 14px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-table-confirm-dialog h2 {
+  margin: 0 0 var(--space-sm, 8px);
+  color: var(--chrome-accent, #f5f5f5);
+  font-size: 1rem;
+}
+
+.rv-office-table-confirm-dialog p {
+  margin: 0 0 var(--space-lg, 20px);
+  color: var(--text-dim, #a8a8a8);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.rv-office-table-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm, 8px);
+}
+
+.rv-office-table-confirm-button {
+  min-height: 34px;
+  padding: 0 var(--space-md, 12px);
+  border-radius: var(--radius-sm, 6px);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rv-office-table-confirm-cancel {
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-table-confirm-remove {
+  border: 1px solid rgba(255, 138, 138, 0.55);
+  background: rgba(255, 138, 138, 0.16);
+  color: var(--error, #ff8a8a);
+}
+
+.rv-office-table-confirm-button:hover,
+.rv-office-table-confirm-button:focus-visible {
+  outline: 2px solid var(--accent, #9ab0c8);
+  outline-offset: 2px;
 }
 
 /* All body text scales with the base font-size via em */
@@ -470,7 +1220,7 @@
   padding: 110px var(--space-sm) var(--space-md);
   overflow-y: auto;
   overflow-x: hidden;
-  background: var(--sidebar-surface-bg, #161616);
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
   z-index: 1;
   transform: translateX(100%);
   opacity: 0;
@@ -492,17 +1242,10 @@
 
 .rv-office-document-action--active {
   color: var(--accent-dim);
-  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  background: transparent;
 }
 
-/* Versions panel placeholder */
-.rv-office-versions-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.rv-office-versions-empty {
+.rv-office-document-sidepanel-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -512,12 +1255,12 @@
   text-align: center;
 }
 
-.rv-office-versions-empty .material-symbols-outlined {
+.rv-office-document-sidepanel-empty .material-symbols-outlined {
   font-size: 32px;
   opacity: 0.5;
 }
 
-.rv-office-versions-empty p {
+.rv-office-document-sidepanel-empty p {
   margin: 0;
   font-size: 0.8125rem;
 }

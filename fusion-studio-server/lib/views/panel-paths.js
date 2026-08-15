@@ -27,6 +27,77 @@ const sessions = new Map();
 
 const sessionRoots = new Map();
 
+function isDirectory(targetPath) {
+  try {
+    return fs.statSync(targetPath).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function readJson(filePath) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function getLegacyViewsRoot(projectRoot) {
+  return path.join(projectRoot, 'ai', 'views');
+}
+
+function getLegacySystemRoot(projectRoot) {
+  return path.join(projectRoot, 'ai', 'system');
+}
+
+function getLegacyWorkspaceRoot(projectRoot) {
+  return path.join(getLegacySystemRoot(projectRoot), 'workspace');
+}
+
+function getLegacySettingsRoot(projectRoot) {
+  return path.join(getLegacySystemRoot(projectRoot), 'styles');
+}
+
+function resolveLegacyRelativePath(projectRoot, relativePath) {
+  if (!relativePath || path.isAbsolute(relativePath)) return null;
+  const resolved = path.resolve(projectRoot, relativePath);
+  const relative = path.relative(path.resolve(projectRoot), resolved);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
+  return resolved;
+}
+
+function resolveLegacyPanelContentPath(projectRoot, panel, context = {}) {
+  if (views.hasV2Views(projectRoot)) return null;
+
+  const legacyViewRoot = path.join(getLegacyViewsRoot(projectRoot), panel);
+  if (!isDirectory(legacyViewRoot)) return null;
+
+  const contentConfig = readJson(path.join(legacyViewRoot, 'content.json')) || {};
+  const indexConfig = readJson(path.join(legacyViewRoot, 'index.json')) || {};
+  const display = contentConfig.display || indexConfig.type;
+
+  if (panel === 'file-viewer' || display === 'file-explorer') {
+    return context.sessionRoot || projectRoot;
+  }
+
+  const declaredRoot = contentConfig.root || indexConfig.settings?.contentDir || indexConfig.settings?.systemWikiDir;
+  if (typeof declaredRoot === 'string') {
+    const resolved = resolveLegacyRelativePath(projectRoot, declaredRoot);
+    if (resolved && isDirectory(resolved)) return resolved;
+  }
+
+  const wikiRoot = path.join(legacyViewRoot, 'Wiki');
+  if ((panel === 'wiki-viewer' || display === 'wiki' || display === 'navigation') && isDirectory(wikiRoot)) {
+    return wikiRoot;
+  }
+
+  const contentRoot = path.join(legacyViewRoot, 'content');
+  if (isDirectory(contentRoot)) return contentRoot;
+
+  return legacyViewRoot;
+}
+
 /**
  * Resolve the project root for a given connection, or the server-wide
  * active workspace root when no connection context is available.
@@ -69,10 +140,12 @@ function getPanelPath(panel, ws) {
   const projectRoot = getProjectRoot(ws);
   if (!projectRoot) return null;
 
-  // __panels__ pseudo-panel: resolves to ai/views/ (for client discovery)
+  // __panels__ pseudo-panel: resolves to ai/<machine>/Views/ (for client discovery)
   if (panel === '__panels__') {
     const viewsRoot = views.getViewsRoot(projectRoot);
-    if (fs.existsSync(viewsRoot)) return viewsRoot;
+    if (isDirectory(viewsRoot)) return viewsRoot;
+    const legacyViewsRoot = getLegacyViewsRoot(projectRoot);
+    if (isDirectory(legacyViewsRoot)) return legacyViewsRoot;
     return null;
   }
 
@@ -83,18 +156,22 @@ function getPanelPath(panel, ws) {
     return null;
   }
 
-  // __settings__ pseudo-panel: resolves to ai/system/styles/ (for global theme/settings)
+  // __settings__ pseudo-panel: resolves to ai/<machine>/System/styles/ (for global theme/settings)
   if (panel === '__settings__') {
     const settingsRoot = aiPaths.getSystemStylesRoot(projectRoot);
-    if (fs.existsSync(settingsRoot)) return settingsRoot;
+    if (isDirectory(settingsRoot)) return settingsRoot;
+    const legacySettingsRoot = getLegacySettingsRoot(projectRoot);
+    if (isDirectory(legacySettingsRoot)) return legacySettingsRoot;
     return null;
   }
 
-  // __workspace__ pseudo-panel: resolves to ai/system/workspace/ for the
-  // live workspace view registry.
+  // __workspace__ pseudo-panel is virtual for V2 view metadata; this fallback
+  // only exists for non-view workspace files under System/workspace.
   if (panel === '__workspace__') {
     const workspaceRoot = path.join(aiPaths.getSystemRoot(projectRoot), 'workspace');
-    if (fs.existsSync(workspaceRoot)) return workspaceRoot;
+    if (isDirectory(workspaceRoot)) return workspaceRoot;
+    const legacyWorkspaceRoot = getLegacyWorkspaceRoot(projectRoot);
+    if (isDirectory(legacyWorkspaceRoot)) return legacyWorkspaceRoot;
     return null;
   }
 
@@ -104,10 +181,9 @@ function getPanelPath(panel, ws) {
   const context = { sessionRoot: getSessionRoot(ws, panel) };
   const resolved = views.resolveContentPath(projectRoot, panel, context);
   if (resolved && fs.existsSync(resolved)) return resolved;
+  const legacyResolved = resolveLegacyPanelContentPath(projectRoot, panel, context);
+  if (legacyResolved && fs.existsSync(legacyResolved)) return legacyResolved;
 
-  // Fallback: raw ai/views/{id}/ folder (for views not yet in the system)
-  const fallback = path.join(views.getViewsRoot(projectRoot), panel);
-  if (fs.existsSync(fallback)) return fallback;
   return null;
 }
 

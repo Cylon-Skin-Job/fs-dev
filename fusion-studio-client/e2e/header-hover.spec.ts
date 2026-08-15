@@ -6,7 +6,7 @@ test('header hover screenshot', async ({ page }) => {
   await page.waitForTimeout(1500);
 
   // Hover the menu button
-  await page.locator('.rv-menu-btn').hover();
+  await page.locator('button[title="Switch workspace"]').hover();
   await page.waitForTimeout(200);
   await page.screenshot({ path: 'e2e/screenshots/header-hover-menu.png', clip: { x: 0, y: 0, width: 900, height: 120 } });
 

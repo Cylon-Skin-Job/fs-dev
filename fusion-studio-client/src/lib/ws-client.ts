@@ -15,12 +15,23 @@ import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
 import { handleScreenshotMessage } from './ws/screenshot-handlers';
-import { handleRecentDocsMessage } from './ws/recent-docs-handlers';
 import { handleBookmarksMessage } from './ws/bookmarks-handlers';
 import { handleCalendarMessage } from './ws/calendar-handlers';
+import {
+  handleOfficePaletteMessage,
+  handleOfficePaletteSocketClose,
+  handleOfficePaletteSocketOpen,
+  handleOfficePaletteWorkspaceChanged,
+} from './ws/office-palette-handlers';
+import { useWorkspaceStore } from '../state/workspaceStore';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
+import {
+  getLatestViewStateMutationId,
+  hasPendingViewStateMutation,
+  settleViewStateMutation,
+} from './viewStateMutationTracker';
 import type { ModalConfig } from '../lib/modal';
 import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
 import type { ViewUIState, WebSocketMessage } from '../types';
@@ -31,6 +42,17 @@ const WS_URL = `ws://${window.location.host}`;
 
 let socket: WebSocket | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+let officePaletteWorkspaceSubscriptionStarted = false;
+
+function ensureOfficePaletteWorkspaceSubscription(): void {
+  if (officePaletteWorkspaceSubscriptionStarted) return;
+  officePaletteWorkspaceSubscriptionStarted = true;
+  useWorkspaceStore.subscribe((current, previous) => {
+    if (current.activeWorkspaceId !== previous.activeWorkspaceId) {
+      handleOfficePaletteWorkspaceChanged(current.activeWorkspaceId);
+    }
+  });
+}
 
 // --- Fusion message listeners ---
 // Components subscribe to specific message types for fusion: responses.
@@ -43,11 +65,14 @@ interface StateResultMessage extends WebSocketMessage {
   type: 'state:result';
   view?: string;
   state?: ViewUIState;
+  clientMutationId?: number;
 }
 
 interface StateErrorMessage extends WebSocketMessage {
   type: 'state:error';
   message?: string;
+  view?: string;
+  clientMutationId?: number;
 }
 
 interface PanelConfigMessage extends WebSocketMessage {
@@ -131,6 +156,7 @@ function emitFusion(type: string, msg: WebSocketMessage) {
 // --- Public API ---
 
 export function connectWs() {
+  ensureOfficePaletteWorkspaceSubscription();
   // Guard against double-connect (HMR, React Strict Mode)
   if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
     return;
@@ -151,7 +177,7 @@ export function connectWs() {
     store.setWs(ws);
     setLoggerWs(ws);
     captureConsoleLogs();
-    ws.send(JSON.stringify({ type: 'initialize' }));
+    handleOfficePaletteSocketOpen(ws);
 
     // Tell server which panel we're using
     const currentPanel = store.currentPanel;
@@ -185,6 +211,7 @@ export function connectWs() {
 
   ws.onclose = () => {
     console.log('[WS] Disconnected');
+    handleOfficePaletteSocketClose(ws);
     usePanelStore.getState().setWs(null);
     reconnectTimer = setTimeout(connectWs, 3000);
   };
@@ -209,7 +236,11 @@ export function disconnectWs() {
 // Every store read uses getState() — always fresh, no stale closures.
 
 function handleMessage(msg: WebSocketMessage) {
-  if (msg.type === 'chat-turn:metadata:updated' || msg.type === 'chat-turn:metadata:error') {
+  if (
+    msg.type === 'chat-turn:metadata:updated' ||
+    msg.type === 'chat-turn:metadata:error' ||
+    msg.type === 'document_create_response'
+  ) {
     emitFusion(msg.type, msg);
   }
 
@@ -220,9 +251,9 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleHarnessMessage(msg)) return;
   if (handleThemeMessage(msg)) return;
   if (handleScreenshotMessage(msg)) return;
-  if (handleRecentDocsMessage(msg)) return;
   if (handleBookmarksMessage(msg)) return;
   if (handleCalendarMessage(msg)) return;
+  if (handleOfficePaletteMessage(msg)) return;
 
   // SPEC-26c-2 / STATE_OVERRIDE_SPEC: view UI state responses.
   if (msg.type === 'state:result') {
@@ -231,7 +262,24 @@ function handleMessage(msg: WebSocketMessage) {
     const view = stateMsg.view;
     const incoming = stateMsg.state;
     if (!view || !incoming) return;
-    store.setViewState(view, incoming);
+    const clientMutationId = typeof stateMsg.clientMutationId === 'number'
+      ? stateMsg.clientMutationId
+      : null;
+    const latestMutationId = getLatestViewStateMutationId(view);
+    if (clientMutationId !== null && clientMutationId < latestMutationId) {
+      return;
+    }
+
+    const current = store.viewStates[view];
+    const hasPendingMutation = current && hasPendingViewStateMutation(view);
+    // state:set responses contain a full server state. When multiple patches
+    // are in flight, a later echo can be based on an older disk snapshot, so
+    // keep the optimistic local state until the pending mutation settles.
+    const stateToApply = hasPendingMutation ? { ...incoming, ...current } : incoming;
+    store.setViewState(view, stateToApply);
+    if (clientMutationId !== null) {
+      settleViewStateMutation(view, clientMutationId);
+    }
     // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
     // live slot when loading the active view. Guarded equality check in
     // setCurrentThreadId prevents a persist-echo loop.
@@ -246,6 +294,9 @@ function handleMessage(msg: WebSocketMessage) {
   }
   if (msg.type === 'state:error') {
     const stateMsg = msg as StateErrorMessage;
+    if (stateMsg.view && typeof stateMsg.clientMutationId === 'number') {
+      settleViewStateMutation(stateMsg.view, stateMsg.clientMutationId);
+    }
     console.error('[state] error:', stateMsg.message);
     return;
   }

@@ -58,7 +58,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: var(--accent-dim, #00d4ff);
+  background: var(--accent-dim, #39628e);
   color: var(--bg-solid, #000);
   border-radius: 50%;
 }
@@ -127,13 +127,13 @@
 }
 
 .rv-calendar-mini-day--selected {
-  background: var(--accent-dim, #00d4ff);
+  background: var(--accent-dim, #39628e);
   color: var(--bg-solid, #000);
 }
 
 .rv-calendar-mini-day--today {
   font-weight: 700;
-  color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #39628e);
 }
 
 /* Empty states */
@@ -386,7 +386,7 @@
 
 .rv-calendar-header-dropdown-item:hover:not(:disabled) {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #39628e);
 }
 
 .rv-calendar-header-dropdown-item:disabled {
@@ -418,7 +418,7 @@
 
 .rv-calendar-header-nav-btn:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #39628e);
 }
 
 .rv-calendar-header-today {
@@ -435,8 +435,8 @@
 
 .rv-calendar-header-today:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  border-color: var(--accent-dim, #00d4ff);
-  color: var(--accent-dim, #00d4ff);
+  border-color: var(--accent-dim, #39628e);
+  color: var(--accent-dim, #39628e);
 }
 
 /* Actions */
@@ -464,11 +464,11 @@
 
 .rv-calendar-header-action:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #39628e);
 }
 
 .rv-calendar-header-action--active {
-  color: var(--accent-dim, #00d4ff);
+  color: var(--accent-dim, #39628e);
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
 }
 
@@ -622,7 +622,7 @@
 .rv-calendar-modal-field select:focus,
 .rv-calendar-modal-field textarea:focus {
   outline: none;
-  border-color: var(--accent-dim, #00d4ff);
+  border-color: var(--accent-dim, #39628e);
 }
 
 .rv-calendar-modal-row {
@@ -687,8 +687,8 @@
 }
 
 .rv-calendar-modal-btn--primary {
-  border: 1px solid var(--accent-dim, #00d4ff);
-  background: var(--accent-dim, #00d4ff);
+  border: 1px solid var(--accent-dim, #39628e);
+  background: var(--accent-dim, #39628e);
   color: var(--bg-solid, #000);
 }
 

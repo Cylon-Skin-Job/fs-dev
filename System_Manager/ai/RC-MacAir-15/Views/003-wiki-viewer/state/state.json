@@ -1,0 +1,197 @@
+{
+  "widths": {
+    "leftSidebar": 220,
+    "leftChat": 413.54296875,
+    "rightSecondary": 400,
+    "rightCol": 220
+  },
+  "collapsed": {
+    "leftSidebar": true,
+    "leftChat": false
+  },
+  "popup": {
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
+    "height": 520,
+    "threadId": null
+  },
+  "tints": {
+    "leftPanel": false,
+    "rightPanel": false,
+    "cards": false,
+    "contentPanels": false,
+    "borders": {
+      "threads": false,
+      "chat": false
+    }
+  },
+  "activity": {
+    "recents": [
+      {
+        "id": "wiki-viewer:002-System/002-Text-To-Speech",
+        "panel": "wiki-viewer",
+        "path": "002-System/002-Text-To-Speech",
+        "title": "Text-To-Speech",
+        "kind": "page",
+        "openedAt": 1783834324519,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System/002-Text-To-Speech/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:006-System_Manager/000-System_Manager",
+        "panel": "wiki-viewer",
+        "path": "006-System_Manager/000-System_Manager",
+        "title": "System Manager",
+        "kind": "page",
+        "openedAt": 1783591376795,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "006-System_Manager/000-System_Manager/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:003-Enforcement/000-Enforcement",
+        "panel": "wiki-viewer",
+        "path": "003-Enforcement/000-Enforcement",
+        "title": "Enforcement",
+        "kind": "page",
+        "openedAt": 1783591375679,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "003-Enforcement/000-Enforcement/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System/001-Connectors",
+        "panel": "wiki-viewer",
+        "path": "002-System/001-Connectors",
+        "title": "Connectors",
+        "kind": "page",
+        "openedAt": 1783591374862,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System/001-Connectors/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System/000-System",
+        "panel": "wiki-viewer",
+        "path": "002-System/000-System",
+        "title": "System",
+        "kind": "page",
+        "openedAt": 1783591373662,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System/000-System/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:000-Wiki_Guide",
+        "panel": "wiki-viewer",
+        "path": "000-Wiki_Guide",
+        "title": "Wiki Guide",
+        "kind": "page",
+        "openedAt": 1783591371512,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "000-Wiki_Guide/PAGE.md",
+          "kind": "section"
+        }
+      }
+    ],
+    "navigation": {
+      "stack": [
+        {
+          "id": "wiki-viewer:000-Wiki_Guide",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guide",
+          "title": "Wiki Guide",
+          "kind": "page",
+          "openedAt": 1783591371512,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guide/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System/000-System",
+          "panel": "wiki-viewer",
+          "path": "002-System/000-System",
+          "title": "System",
+          "kind": "page",
+          "openedAt": 1783591373662,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System/000-System/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System/001-Connectors",
+          "panel": "wiki-viewer",
+          "path": "002-System/001-Connectors",
+          "title": "Connectors",
+          "kind": "page",
+          "openedAt": 1783591374862,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System/001-Connectors/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:003-Enforcement/000-Enforcement",
+          "panel": "wiki-viewer",
+          "path": "003-Enforcement/000-Enforcement",
+          "title": "Enforcement",
+          "kind": "page",
+          "openedAt": 1783591375679,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "003-Enforcement/000-Enforcement/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:006-System_Manager/000-System_Manager",
+          "panel": "wiki-viewer",
+          "path": "006-System_Manager/000-System_Manager",
+          "title": "System Manager",
+          "kind": "page",
+          "openedAt": 1783591376795,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "006-System_Manager/000-System_Manager/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System/002-Text-To-Speech",
+          "panel": "wiki-viewer",
+          "path": "002-System/002-Text-To-Speech",
+          "title": "Text-To-Speech",
+          "kind": "page",
+          "openedAt": 1783834324519,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System/002-Text-To-Speech/PAGE.md",
+            "kind": "article"
+          }
+        }
+      ],
+      "index": 5
+    },
+    "tabs": [],
+    "activeTabId": null
+  }
+}

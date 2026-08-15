@@ -46,7 +46,7 @@ Current file/module map for voice input work.
 
 | Path | Role |
 |---|---|
-| `System Source Files/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules/` | editable source rules |
+| `System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules/` | editable source rules |
 | `fusion-studio-client/electron/resources/rules/text-to-speech/` | copied runtime/package rules |
 | `fusion-studio-client/scripts/prepare-ai-resources.cjs` | copies prompts and nested rule resources |
 | `fusion-studio-client/scripts/generate-action-verbs.cjs` | generates WordNet verb candidates |

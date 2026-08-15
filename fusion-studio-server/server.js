@@ -5,7 +5,6 @@
  * orchestrator together. All domain logic lives in lib/ (see SPEC-01a–01g).
  *
  * @see lib/thread/README.md - Thread management documentation
- * @see ../ai/views/capture-viewer/specs/SPEC.md - Full specification
  */
 
 const express = require('express');
@@ -49,6 +48,7 @@ const { createWireMessageRouter } = require('./lib/wire/message-router');
 
 // Client message router — per-connection dispatch factory (extracted per SPEC-01f).
 const { createClientMessageRouter } = require('./lib/ws/client-message-router');
+const { createOfficePaletteDispatch } = require('./lib/ws/office-palette-dispatch');
 
 // View discovery and resolution (filesystem-driven, no database)
 
@@ -65,6 +65,7 @@ const {
 
 // Initial connection payload builders (extracted per SPEC-01g)
 const { buildWorkspaceInit, buildPanelConfig } = require('./lib/ws/connection-init');
+const { applyWorkspaceSwitchToSession } = require('./lib/ws/workspace-session');
 
 const app = express();
 const server = http.createServer(app);
@@ -114,7 +115,6 @@ app.get(/^(?!\/api\/|\/material-symbols\/)/, (req, res) => {
 const fileExplorer = createFileExplorerHandlers({
   getPanelPath,
   getProjectRoot,
-  emit,
 });
 
 // ============================================================================
@@ -155,10 +155,7 @@ wss.on('connection', async (ws) => {
   // session so subsequent router/file/thread operations resolve against
   // the new root. One-active-workspace-server-wide model (see plan §1).
   const unsubscribeWorkspaceSwitched = on('workspace:switched', (event) => {
-    if (event && event.repoPath) {
-      session.projectRoot = event.repoPath;
-      session.currentWorkspaceId = event.to;
-    }
+    applyWorkspaceSwitchToSession(session, event);
   });
   ws.on('close', unsubscribeWorkspaceSwitched);
 
@@ -166,7 +163,7 @@ wss.on('connection', async (ws) => {
   // Don't send the thread list yet — wait for the client's set_panel message.
   // RCC-0095: chat is a workspace-level feature — thread setup does not
   // depend on any view's config or folders (storage is unified at
-  // ai/views/chat/threads/<user>/).
+  // ai/<machine>/Data/Chatlogs/threads/).
   if (projectRoot) {
     ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
       projectRoot,
@@ -224,13 +221,12 @@ wss.on('connection', async (ws) => {
     getThemeHandlers: () => themeHandlers,
     getSecretsHandlers: () => secretsHandlers,
     getScreenshotHandlers: () => screenshotHandlers,
-    getRecentDocsHandlers: () => recentDocsHandlers,
     getBookmarksHandlers: () => bookmarksHandlers,
     getEmojiRecentsHandlers: () => emojiRecentsHandlers,
     handleCanonicalHarnessEvent,
   });
 
-  ws.on('message', handleClientMessage);
+  ws.on('message', createOfficePaletteDispatch({ ws, session, handleNext: handleClientMessage }));
   ws.on('close', handleClientClose);
 
   // ==========================================================================
@@ -270,7 +266,6 @@ wss.on('connection', async (ws) => {
 // createClientMessageRouter. See SPEC-01b for the mutable-reference rationale.
 let fusionHandlers = {};
 let clipboardHandlers = {};
-let recentDocsHandlers = {};
 let bookmarksHandlers = {};
 let emojiRecentsHandlers = {};
 let themeHandlers = {};
@@ -286,7 +281,6 @@ startServer({
   .then(result => {
     fusionHandlers = result.fusionHandlers;
     clipboardHandlers = result.clipboardHandlers;
-    recentDocsHandlers = result.recentDocsHandlers;
     bookmarksHandlers = result.bookmarksHandlers;
     emojiRecentsHandlers = result.emojiRecentsHandlers;
     themeHandlers = result.themeHandlers;

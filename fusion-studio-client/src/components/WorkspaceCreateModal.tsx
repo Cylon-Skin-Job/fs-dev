@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { useWorkspaceStore } from '../state/workspaceStore';
-import type { WorkspaceCreateManifest, WorkspaceTemplateProfile } from '../types';
+import type { WorkspaceCreateManifest } from '../types';
 import './WorkspaceCreateModal.css';
 
 function isAbsolutePath(value: string): boolean {
@@ -27,24 +27,22 @@ function getDefaultViewIds(manifest: WorkspaceCreateManifest | null): string[] {
   return manifest?.views.filter((view) => view.group === 'default').map((view) => view.id) ?? [];
 }
 
-function getWorkspaceTemplates(manifest: WorkspaceCreateManifest | null): WorkspaceTemplateProfile[] {
-  if (manifest?.workspaceTemplates?.length) return manifest.workspaceTemplates;
-  return [{
-    schemaVersion: 1,
-    id: 'new',
-    label: 'New Workspace',
-    category: 'new',
-    selectedViewIds: getDefaultViewIds(manifest),
-  }];
+function getNewWorkspaceTemplate(manifest: WorkspaceCreateManifest | null) {
+  return manifest?.workspaceTemplates?.find((template) => template.id === 'new')
+    || manifest?.workspaceTemplates?.find((template) => template.category === 'new')
+    || null;
 }
 
-function getDefaultTemplateId(manifest: WorkspaceCreateManifest | null): string {
-  return getWorkspaceTemplates(manifest)[0]?.id ?? 'new';
+function getIncludedViewIds(manifest: WorkspaceCreateManifest | null): string[] {
+  const template = getNewWorkspaceTemplate(manifest);
+  return template?.selectedViewIds?.length ? template.selectedViewIds : getDefaultViewIds(manifest);
 }
 
-function getTemplateViewIds(manifest: WorkspaceCreateManifest | null, templateId: string): string[] {
-  const profile = getWorkspaceTemplates(manifest).find((template) => template.id === templateId);
-  return profile?.selectedViewIds?.length ? profile.selectedViewIds : getDefaultViewIds(manifest);
+function getIncludedViews(manifest: WorkspaceCreateManifest | null) {
+  const viewsById = new Map(manifest?.views.map((view) => [view.id, view]) ?? []);
+  return getIncludedViewIds(manifest)
+    .map((viewId) => viewsById.get(viewId))
+    .filter((view): view is NonNullable<typeof view> => Boolean(view));
 }
 
 function WorkspaceCreateModalContent() {
@@ -58,50 +56,14 @@ function WorkspaceCreateModalContent() {
 
   const [projectPath, setProjectPath] = useState('');
   const [label, setLabel] = useState('');
-  const [selectionState, setSelectionState] = useState(() => ({
-    manifest,
-    workspaceTemplateId: getDefaultTemplateId(manifest),
-    selectedViewIds: getTemplateViewIds(manifest, getDefaultTemplateId(manifest)),
-  }));
   const [localError, setLocalError] = useState<string | null>(null);
 
   useEffect(() => {
     requestCreateManifest();
   }, [requestCreateManifest]);
 
-  let selectedViewIds = selectionState.selectedViewIds;
-  let selectedWorkspaceTemplateId = selectionState.workspaceTemplateId;
-  if (selectionState.manifest !== manifest) {
-    selectedWorkspaceTemplateId = getDefaultTemplateId(manifest);
-    selectedViewIds = getTemplateViewIds(manifest, selectedWorkspaceTemplateId);
-    setSelectionState({ manifest, workspaceTemplateId: selectedWorkspaceTemplateId, selectedViewIds });
-  }
-  const workspaceTemplates = getWorkspaceTemplates(manifest);
-  const selectedWorkspaceTemplate = workspaceTemplates.find((template) => template.id === selectedWorkspaceTemplateId);
-
-  const toggleView = (viewId: string) => {
-    setLocalError(null);
-    setCreateError(null);
-    setSelectionState((current) => {
-      const currentIds = current.selectedViewIds;
-      return {
-        ...current,
-        selectedViewIds: currentIds.includes(viewId)
-          ? currentIds.filter((id) => id !== viewId)
-          : [...currentIds, viewId],
-      };
-    });
-  };
-
-  const selectWorkspaceTemplate = (workspaceTemplateId: string) => {
-    setLocalError(null);
-    setCreateError(null);
-    setSelectionState((current) => ({
-      ...current,
-      workspaceTemplateId,
-      selectedViewIds: getTemplateViewIds(manifest, workspaceTemplateId),
-    }));
-  };
+  const includedViews = getIncludedViews(manifest);
+  const selectedWorkspaceTemplate = getNewWorkspaceTemplate(manifest);
 
   const onSubmit = () => {
     const trimmedPath = projectPath.trim();
@@ -109,17 +71,15 @@ function WorkspaceCreateModalContent() {
       setLocalError('Enter an absolute project path.');
       return;
     }
-    if (selectedViewIds.length === 0) {
-      setLocalError('Select at least one view template.');
+    if (!manifest) {
+      setLocalError('Workspace templates are still loading.');
       return;
     }
     setLocalError(null);
     setCreateError(null);
     requestCreateWorkspace(
       trimmedPath,
-      label.trim() || folderNameFromPath(trimmedPath),
-      selectedViewIds,
-      selectedWorkspaceTemplateId
+      label.trim() || folderNameFromPath(trimmedPath)
     );
   };
 
@@ -131,7 +91,7 @@ function WorkspaceCreateModalContent() {
         <header className="rv-create-modal-header">
           <div>
             <h2 id="workspace-create-title">Create New Project</h2>
-            <p>Scaffold a project with an /ai tree and selected views.</p>
+            <p>Scaffold a project with the core workspace views.</p>
           </div>
           <button className="rv-create-modal-close" type="button" onClick={closeCreateModal} aria-label="Cancel create project">
             <span className="material-symbols-outlined">close</span>
@@ -160,42 +120,22 @@ function WorkspaceCreateModalContent() {
           </label>
 
           <div className="rv-create-modal-views">
-            <label className="rv-create-modal-field">
-              <span>Workspace template</span>
-              <select
-                value={selectedWorkspaceTemplateId}
-                onChange={(event) => selectWorkspaceTemplate(event.target.value)}
-                disabled={!manifest}
-              >
-                {workspaceTemplates.map((template) => (
-                  <option key={template.id} value={template.id}>
-                    {template.label}
-                  </option>
-                ))}
-              </select>
-              {selectedWorkspaceTemplate?.description && (
-                <span className="rv-create-modal-template-description">
-                  {selectedWorkspaceTemplate.description}
-                </span>
-              )}
-            </label>
-
-            <div className="rv-create-modal-section-title">View templates</div>
+            <div className="rv-create-modal-section-title">Included views</div>
+            {selectedWorkspaceTemplate?.description && (
+              <span className="rv-create-modal-template-description">
+                {selectedWorkspaceTemplate.description}
+              </span>
+            )}
             {!manifest ? (
               <div className="rv-create-modal-loading">Loading templates...</div>
             ) : (
               <div className="rv-create-modal-view-list">
-                {manifest.views.map((view) => (
-                  <label key={view.id} className="rv-create-modal-view-option">
-                    <input
-                      type="checkbox"
-                      checked={selectedViewIds.includes(view.id)}
-                      onChange={() => toggleView(view.id)}
-                    />
+                {includedViews.map((view) => (
+                  <div key={view.id} className="rv-create-modal-view-option">
                     <span className="material-symbols-outlined">{view.icon || 'widgets'}</span>
                     <span className="rv-create-modal-view-label">{view.label}</span>
-                    <span className="rv-create-modal-view-meta">{view.group} / {view.status}</span>
-                  </label>
+                    <span className="rv-create-modal-view-meta">{view.status}</span>
+                  </div>
                 ))}
               </div>
             )}

@@ -5,7 +5,6 @@
   "label": "Issues",
   "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
   "type": "ticket-board",
-  "icon": "business_messages",
   "rank": 3,
   "sort": "created",
   "created": "2026-03-20T20:00:00-07:00",

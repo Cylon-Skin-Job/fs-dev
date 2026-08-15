@@ -20,10 +20,17 @@ export interface FileNode {
   path: string;
   type: 'file' | 'folder';
   extension?: string;
+  isSymlink?: boolean;
+  symlinkTarget?: string;
 }
 
 export interface FileWithContent extends FileNode {
   content: string;
+}
+
+export interface FileResourceMetadata {
+  isSymlink?: boolean;
+  symlinkTarget?: string;
 }
 
 export type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 'milestone';
@@ -31,22 +38,43 @@ export type SaveReason = 'autosave' | 'manual' | 'session_end' | 'checkpoint' | 
 // --- Store ---
 
 interface FileDataState {
+  /** Active workspace data generation. Advanced on every settled workspace change. */
+  generation: number;
+  workspaceId: string | null;
   /** Cached file tree listings: key = "panel:folder" */
   trees: Record<string, FileNode[]>;
   /** Cached file content: key = "panel:path" */
   contents: Record<string, string>;
+  /** Metadata for fetched tree roots and file content: key = "panel:path" */
+  treeMetadata: Record<string, FileResourceMetadata>;
+  contentMetadata: Record<string, FileResourceMetadata>;
   /** In-flight tree requests (prevents duplicate sends) */
-  pendingTrees: Set<string>;
+  pendingTrees: Map<string, FileRequestCorrelation>;
   /** In-flight content requests (prevents duplicate sends) */
-  pendingContents: Set<string>;
+  pendingContents: Map<string, FileRequestCorrelation>;
+  /** Matching request failures, cleared by a later request/generation. */
+  treeErrors: Record<string, string>;
+  contentErrors: Record<string, string>;
   /** Dirty flags: key = "panel:path" -> true if unsaved */
   dirtyFlags: Record<string, boolean>;
   /** In-flight save requests (prevents duplicate sends) */
   pendingSaves: Set<string>;
 
   // --- Actions called by ws-client ---
-  handleTreeResponse: (panel: string, path: string, nodes: FileNode[]) => void;
-  handleContentResponse: (panel: string, path: string, content: string) => void;
+  handleTreeResponse: (
+    panel: string,
+    path: string,
+    nodes: FileNode[],
+    metadata?: FileResourceMetadata,
+    response?: FileResponseCorrelation,
+  ) => boolean;
+  handleContentResponse: (
+    panel: string,
+    path: string,
+    content: string,
+    metadata?: FileResourceMetadata,
+    response?: FileResponseCorrelation,
+  ) => boolean;
   handleSaveResponse: (panel: string, path: string, success: boolean, error?: string) => void;
 
   // --- Actions called by components ---
@@ -57,52 +85,153 @@ interface FileDataState {
 
   // --- Invalidation (called by file_changed handler) ---
   invalidate: (panel: string, filePath: string) => void;
+  invalidateTree: (panel: string, folder: string) => void;
+
+  // --- Workspace generation lifecycle ---
+  beginWorkspaceGeneration: (workspaceId: string | null) => void;
 
   // --- Full reset (e.g. on reconnect) ---
   clearAll: () => void;
+}
+
+export interface FileRequestCorrelation {
+  requestId: string;
+  workspaceId: string | null;
+  generation: number;
+}
+
+export interface FileResponseCorrelation extends FileRequestCorrelation {
+  success: boolean;
+  error?: string;
 }
 
 function cacheKey(panel: string, path: string): string {
   return `${panel}:${path}`;
 }
 
-function sendWs(msg: Record<string, unknown>) {
+function parentFolder(filePath: string): string {
+  return filePath.split('/').filter(Boolean).slice(0, -1).join('/');
+}
+
+let nextFileRequestId = 0;
+
+function createRequestCorrelation(state: FileDataState): FileRequestCorrelation {
+  nextFileRequestId += 1;
+  return {
+    requestId: `file-${state.generation}-${nextFileRequestId}`,
+    workspaceId: state.workspaceId,
+    generation: state.generation,
+  };
+}
+
+function correlationsMatch(
+  pending: FileRequestCorrelation | undefined,
+  response: FileResponseCorrelation,
+  state: FileDataState,
+): boolean {
+  return Boolean(
+    pending
+    && pending.requestId === response.requestId
+    && pending.workspaceId === response.workspaceId
+    && pending.generation === response.generation
+    && response.workspaceId === state.workspaceId
+    && response.generation === state.generation
+  );
+}
+
+function sendWs(msg: Record<string, unknown>): boolean {
   const ws = usePanelStore.getState().ws;
   if (ws && ws.readyState === WebSocket.OPEN) {
     ws.send(JSON.stringify(msg));
+    return true;
   }
+  return false;
 }
 
 export const useFileDataStore = create<FileDataState>((set, get) => ({
+  generation: 0,
+  workspaceId: null,
   trees: {},
   contents: {},
-  pendingTrees: new Set(),
-  pendingContents: new Set(),
+  treeMetadata: {},
+  contentMetadata: {},
+  pendingTrees: new Map(),
+  pendingContents: new Map(),
+  treeErrors: {},
+  contentErrors: {},
   dirtyFlags: {},
   pendingSaves: new Set(),
 
-  handleTreeResponse: (panel, path, nodes) => {
+  handleTreeResponse: (panel, path, nodes, metadata, response) => {
     const key = cacheKey(panel, path);
+    if (response) {
+      const state = get();
+      if (!correlationsMatch(state.pendingTrees.get(key), response, state)) return false;
+    }
     set((s) => {
-      const pending = new Set(s.pendingTrees);
+      const pending = new Map(s.pendingTrees);
       pending.delete(key);
+      const treeErrors = { ...s.treeErrors };
+      const treeMetadata = { ...s.treeMetadata };
+      if (response && !response.success) {
+        treeErrors[key] = response.error || 'Unable to load folder';
+        delete treeMetadata[key];
+      } else if (metadata?.isSymlink === true) {
+        delete treeErrors[key];
+        treeMetadata[key] = {
+          isSymlink: true,
+          symlinkTarget: metadata.symlinkTarget,
+        };
+      } else {
+        delete treeErrors[key];
+        delete treeMetadata[key];
+      }
       return {
         trees: { ...s.trees, [key]: nodes },
+        treeMetadata,
         pendingTrees: pending,
+        treeErrors,
       };
     });
+    return true;
   },
 
-  handleContentResponse: (panel, path, content) => {
+  handleContentResponse: (panel, path, content, metadata, response) => {
     const key = cacheKey(panel, path);
+    if (response) {
+      const state = get();
+      if (!correlationsMatch(state.pendingContents.get(key), response, state)) return false;
+    }
     set((s) => {
-      const pending = new Set(s.pendingContents);
+      const pending = new Map(s.pendingContents);
       pending.delete(key);
+      const contents = { ...s.contents };
+      const contentErrors = { ...s.contentErrors };
+      const contentMetadata = { ...s.contentMetadata };
+      if (response && !response.success) {
+        delete contents[key];
+        contentErrors[key] = response.error || 'Unable to load file';
+        delete contentMetadata[key];
+      } else if (metadata?.isSymlink === true) {
+        contents[key] = content;
+        delete contentErrors[key];
+        contentMetadata[key] = {
+          isSymlink: true,
+          symlinkTarget: metadata.symlinkTarget,
+        };
+      } else {
+        contents[key] = content;
+        delete contentErrors[key];
+        delete contentMetadata[key];
+      }
       return {
-        contents: { ...s.contents, [key]: content },
+        contents,
+        contentMetadata,
         pendingContents: pending,
+        contentErrors,
       };
     });
+    return true;
   },
 
   handleSaveResponse: (panel, path, success, error) => {
@@ -148,37 +277,63 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
     const state = get();
     // Already cached or in-flight — skip
     if (state.trees[key] || state.pendingTrees.has(key)) return;
+    const correlation = createRequestCorrelation(state);
     set((s) => {
-      const pending = new Set(s.pendingTrees);
-      pending.add(key);
-      return { pendingTrees: pending };
+      const pending = new Map(s.pendingTrees);
+      const treeErrors = { ...s.treeErrors };
+      pending.set(key, correlation);
+      delete treeErrors[key];
+      return { pendingTrees: pending, treeErrors };
     });
-    sendWs({ type: 'file_tree_request', panel, path: folder });
+    if (!sendWs({ type: 'file_tree_request', panel, path: folder, ...correlation })) {
+      set((s) => {
+        if (s.pendingTrees.get(key)?.requestId !== correlation.requestId) return {};
+        const pending = new Map(s.pendingTrees);
+        pending.delete(key);
+        return { pendingTrees: pending };
+      });
+    }
   },
 
   requestContent: (panel, path) => {
     const key = cacheKey(panel, path);
     const state = get();
     if (state.contents[key] !== undefined || state.pendingContents.has(key)) return;
+    const correlation = createRequestCorrelation(state);
     set((s) => {
-      const pending = new Set(s.pendingContents);
-      pending.add(key);
-      return { pendingContents: pending };
+      const pending = new Map(s.pendingContents);
+      const contentErrors = { ...s.contentErrors };
+      pending.set(key, correlation);
+      delete contentErrors[key];
+      return { pendingContents: pending, contentErrors };
     });
-    sendWs({ type: 'file_content_request', panel, path });
+    if (!sendWs({ type: 'file_content_request', panel, path, ...correlation })) {
+      set((s) => {
+        if (s.pendingContents.get(key)?.requestId !== correlation.requestId) return {};
+        const pending = new Map(s.pendingContents);
+        pending.delete(key);
+        return { pendingContents: pending };
+      });
+    }
   },
 
   invalidate: (panel, filePath) => {
     const state = get();
     const contentKey = cacheKey(panel, filePath);
+    const parent = parentFolder(filePath);
     const treesToInvalidate: string[] = [];
 
-    // Find which tree folders contain this file
+    // Find cached folders that contain this path, are the path itself, or are
+    // descendants of a mutated folder.
     for (const key of Object.keys(state.trees)) {
       if (!key.startsWith(`${panel}:`)) continue;
       const folder = key.slice(panel.length + 1);
-      // If the file is in this folder, invalidate the tree
-      if (filePath.startsWith(folder + '/') || filePath === folder) {
+      if (
+        folder === parent ||
+        filePath === folder ||
+        (folder !== '' && filePath.startsWith(`${folder}/`)) ||
+        (filePath !== '' && folder.startsWith(`${filePath}/`))
+      ) {
         treesToInvalidate.push(key);
       }
     }
@@ -186,11 +341,19 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
     set((s) => {
       const trees = { ...s.trees };
       const contents = { ...s.contents };
+      const treeMetadata = { ...s.treeMetadata };
+      const contentMetadata = { ...s.contentMetadata };
+      const treeErrors = { ...s.treeErrors };
+      const contentErrors = { ...s.contentErrors };
       for (const key of treesToInvalidate) {
         delete trees[key];
+        delete treeMetadata[key];
+        delete treeErrors[key];
       }
       delete contents[contentKey];
-      return { trees, contents };
+      delete contentMetadata[contentKey];
+      delete contentErrors[contentKey];
+      return { trees, contents, treeMetadata, contentMetadata, treeErrors, contentErrors };
     });
 
     // Re-fetch invalidated trees
@@ -205,11 +368,44 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
     }
   },
 
+  invalidateTree: (panel, folder) => {
+    const key = cacheKey(panel, folder);
+    set((s) => {
+      const trees = { ...s.trees };
+      const treeMetadata = { ...s.treeMetadata };
+      const treeErrors = { ...s.treeErrors };
+      delete trees[key];
+      delete treeMetadata[key];
+      delete treeErrors[key];
+      return { trees, treeMetadata, treeErrors };
+    });
+    get().requestTree(panel, folder);
+  },
+
+  beginWorkspaceGeneration: (workspaceId) => set((s) => ({
+    generation: s.generation + 1,
+    workspaceId,
+    trees: {},
+    contents: {},
+    treeMetadata: {},
+    contentMetadata: {},
+    pendingTrees: new Map(),
+    pendingContents: new Map(),
+    treeErrors: {},
+    contentErrors: {},
+    dirtyFlags: {},
+    pendingSaves: new Set(),
+  })),
+
   clearAll: () => set({
     trees: {},
     contents: {},
-    pendingTrees: new Set(),
-    pendingContents: new Set(),
+    treeMetadata: {},
+    contentMetadata: {},
+    pendingTrees: new Map(),
+    pendingContents: new Map(),
+    treeErrors: {},
+    contentErrors: {},
     dirtyFlags: {},
     pendingSaves: new Set(),
   }),

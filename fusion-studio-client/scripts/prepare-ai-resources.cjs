@@ -9,11 +9,11 @@ const path = require('path');
 
 const CLIENT_ROOT = path.join(__dirname, '..');
 const REPO_ROOT = path.join(CLIENT_ROOT, '..');
-const PROMPT_SOURCE_DIR = path.join(REPO_ROOT, 'System Source Files', 'Prompts', 'Gwen-0-8B');
+const SYSTEM_MANAGER_ROOT = path.join(REPO_ROOT, 'System_Manager');
+const PROMPT_SOURCE_DIR = path.join(SYSTEM_MANAGER_ROOT, 'Prompts', 'Gwen-0-8B');
 const PROMPT_TARGET_DIR = path.join(CLIENT_ROOT, 'electron', 'resources', 'prompts', 'Gwen-0-8B');
 const WIKI_RULE_SOURCE_DIR = path.join(
-  REPO_ROOT,
-  'System Source Files',
+  SYSTEM_MANAGER_ROOT,
   'ai',
   'views',
   'wiki-viewer',
@@ -23,8 +23,7 @@ const WIKI_RULE_SOURCE_DIR = path.join(
   'Rules'
 );
 const RESOURCE_RULE_SOURCE_DIR = path.join(
-  REPO_ROOT,
-  'System Source Files',
+  SYSTEM_MANAGER_ROOT,
   'resources',
   'text-to-speech',
   'rules'

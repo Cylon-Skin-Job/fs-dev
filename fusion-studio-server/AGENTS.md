@@ -23,7 +23,7 @@ The server is not Kimi-specific. Harness-specific protocol details live behind a
 | Workspace services | `lib/workspace/` |
 | Wiki services | `lib/wiki/` |
 | Resource services | `lib/resources/` |
-| Current chat reference | `../ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md` |
+| Current chat reference | `../ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` |
 
 ## Runtime Model
 
@@ -37,7 +37,7 @@ The server is not Kimi-specific. Harness-specific protocol details live behind a
 
 Before changing chat, thread, harness, prompt, live stream, or stop logic, read:
 
-`../ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md`
+`../ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md`
 
 Current model:
 

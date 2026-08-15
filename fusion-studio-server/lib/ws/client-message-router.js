@@ -52,7 +52,6 @@ const { resolvePrompt } = require('../prompts/prompt-registry');
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @param {() => object} deps.getFusionHandlers - getter closure over server.js let fusionHandlers
  * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
- * @param {() => object} deps.getRecentDocsHandlers - getter closure over server.js let recentDocsHandlers
  * @param {() => object} deps.getBookmarksHandlers - getter closure over server.js let bookmarksHandlers
  * @param {() => object} deps.getEmojiRecentsHandlers - getter closure over server.js let emojiRecentsHandlers
  * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
@@ -74,7 +73,6 @@ function createClientMessageRouter({
   getProjectRoot,
   getFusionHandlers,
   getClipboardHandlers,
-  getRecentDocsHandlers,
   getBookmarksHandlers,
   getEmojiRecentsHandlers,
   getThemeHandlers,
@@ -169,16 +167,28 @@ function createClientMessageRouter({
         return;
       }
 
+      if (clientMsg.type === 'folder_create') {
+        await fileExplorer.handleFolderCreateRequest(ws, clientMsg);
+        return;
+      }
+
+      if (clientMsg.type === 'document_create') {
+        await fileExplorer.handleDocumentCreateRequest(ws, clientMsg);
+        return;
+      }
+
       // Panel Management
       // --------------------------------------------------
 
-      if (clientMsg.type === 'workspace:cache_push') {
-        const stateCache = require('../workspace/state-cache');
+      if (clientMsg.type === 'workspace:state_push') {
+        const workspaceState = require('../workspace/workspace-state');
         const workspace = await registry.getById(clientMsg.workspaceId);
         if (!workspace || workspace.ribbonVisible === false) {
           return;
         }
-        stateCache.save(clientMsg.workspaceId, clientMsg.state);
+        const repoPath = workspace.repoPath || workspace.repo_path;
+        const allowedViewIds = repoPath ? views.listViews(repoPath) : [];
+        workspaceState.save(clientMsg.workspaceId, clientMsg.state, { repoPath, allowedViewIds });
         return;
       }
 
@@ -377,16 +387,6 @@ function createClientMessageRouter({
 
       if (clientMsg.type.startsWith('clipboard:')) {
         const handler = getClipboardHandlers()[clientMsg.type];
-        if (handler) {
-          await handler(ws, clientMsg);
-          return;
-        }
-      }
-
-      // ---- Recent docs manager ----
-
-      if (clientMsg.type.startsWith('recent_docs:')) {
-        const handler = getRecentDocsHandlers()[clientMsg.type];
         if (handler) {
           await handler(ws, clientMsg);
           return;

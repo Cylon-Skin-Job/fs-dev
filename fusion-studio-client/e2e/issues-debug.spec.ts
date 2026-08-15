@@ -10,20 +10,20 @@ test('issues workspace debug', async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Click issues tab
-  await page.locator('.tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'business_messages' }) }).click();
+  await page.locator('.rv-tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'business_messages' }) }).click();
   await page.waitForTimeout(4000);
 
   // Check what rendered
-  const ticketBoard = page.locator('.ticket-board');
-  const ticketLoading = page.locator('.ticket-board-loading');
-  const contentArea = page.locator('.content-area');
+  const ticketBoard = page.locator('.rv-ticket-board');
+  const ticketLoading = page.locator('.rv-ticket-board-loading');
+  const contentArea = page.locator('.rv-content-area');
 
   process.stdout.write(`content-area count: ${await contentArea.count()}\n`);
   process.stdout.write(`ticket-board visible: ${await ticketBoard.isVisible().catch(() => false)}\n`);
   process.stdout.write(`ticket-board-loading visible: ${await ticketLoading.isVisible().catch(() => false)}\n`);
 
   // Check for ticket cards
-  const cards = page.locator('.ticket-card');
+  const cards = page.locator('.rv-ticket-card');
   process.stdout.write(`ticket cards: ${await cards.count()}\n`);
 
   // Check columns

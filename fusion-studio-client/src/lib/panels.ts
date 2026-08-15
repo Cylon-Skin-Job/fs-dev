@@ -1,10 +1,8 @@
 /**
  * @module panels
  * @role Shared panel discovery and config loading
- * @reads ai/system/workspace/views.json, ai/views/{id}/index.json,
- *        ai/views/{id}/content.json, ai/views/{id}/settings/layout.json
- * Workspace CSS: fetchPanelWorkspaceFile / fetchViewsRootFile (__panels__ → ai/views/…).
- * Chat/thread styles: settings/views.css (see VIEWS_SETTINGS_STYLES_VIEWS).
+ * @reads generated V2 view metadata from ai/<machine>/Views/{prefix}-{id}/
+ * Workspace CSS: fetchPanelWorkspaceFile (__panels__ → ai/<machine>/Views/…).
  *
  * Loads panel definitions from the repo filesystem via WebSocket.
  * Knows nothing about any specific panel type — content.json declares
@@ -59,7 +57,7 @@ export interface PanelConfig {
   category: 'app' | 'tool';
   /** True if panel has a ui/ folder with module.js (runtime-loaded plugin) */
   hasUiFolder?: boolean;
-  /** True if panel ships an app/index.html iframe entry point */
+  /** True if a non-built-in panel ships an app/index.html iframe entry point */
   hasAppHtml?: boolean;
   /** Raw index.json settings for view-specific configuration */
   settings?: Record<string, unknown>;
@@ -89,31 +87,36 @@ interface RediscoverPanelsOptions {
 
 // --- Helpers ---
 
+function parseIconNameMarkdown(raw: string): string | null {
+  const match = raw.match(/^\s*icon-name:\s*(.+?)\s*$/m);
+  if (!match) return null;
+  const icon = match[1].trim().replace(/^['"]|['"]$/g, '');
+  return icon || null;
+}
+
+function displayLabelFromId(id: string): string {
+  return id
+    .replace(/-viewer$/, '')
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ') || 'View';
+}
+
 /**
  * Request a file from a panel via WebSocket.
  * Returns a promise that resolves with the file content or rejects on error.
  */
-/** Legacy paths under ai/views/settings/ — kept for backward compatibility. */
-export const VIEWS_SETTINGS_STYLES_THEMES     = 'settings/themes.css' as const;
-export const VIEWS_SETTINGS_STYLES_COMPONENTS = 'settings/components.css' as const;
-/** Chat + thread list + composer. */
-export const VIEWS_SETTINGS_STYLES_VIEWS      = 'settings/views.css' as const;
-
-// --- ai/system/styles/ constants (via __settings__ pseudo-panel) ---
+// --- ai/<machine>/System/styles/ constants (via __settings__ pseudo-panel) ---
 export const SETTINGS_STYLES_THEMES      = 'themes.css' as const;
 export const SETTINGS_STYLES_COMPONENTS  = 'components.css' as const;
 export const SETTINGS_STYLES_VIEWS       = 'views.css' as const;
 export const SETTINGS_STYLES_FILE_VIEWER = 'file-viewer.css' as const;
-export const SETTINGS_STYLES_DOC_VIEWER  = 'doc-viewer.css' as const;
+export const SETTINGS_STYLES_DOC_VIEWER  = 'capture-viewer.css' as const;
 export const SETTINGS_STYLES_TINTS       = 'tints.css' as const;
 export const SETTINGS_STYLES_VARIABLES   = 'variables.css' as const;
 
-/** Fetch a file under ai/views/ (same mechanism as panel discovery). */
-export function fetchViewsRootFile(ws: WebSocket, pathUnderViews: string): Promise<string> {
-  return fetchPanelFile(ws, '__panels__', pathUnderViews);
-}
-
-/** Fetch a file under ai/system/styles/ via the __settings__ pseudo-panel. */
+/** Fetch a file under ai/<machine>/System/styles/ via the __settings__ pseudo-panel. */
 export function fetchSettingsFile(ws: WebSocket, pathUnderSettings: string): Promise<string> {
   return fetchPanelFile(ws, '__settings__', pathUnderSettings);
 }
@@ -124,10 +127,10 @@ export function fetchSettingsFile(ws: WebSocket, pathUnderSettings: string): Pro
  * URL that points at panel content — keeps the format in one place.
  *
  * The path is relative to the panel's content root (the same root the
- * file_tree_request WebSocket handler uses), e.g. for the doc-viewer
+ * file_tree_request WebSocket handler uses), e.g. for the capture-viewer
  * (tiled-rows) the content root resolves server-side to
- * `ai/views/doc-viewer/content/`. Pass `screenshots/foo.png`, NOT
- * `content/screenshots/foo.png`.
+   * `ai/<machine>/Captures/`. Pass `006-Screenshots/foo.png`, NOT
+   * `content/006-Screenshots/foo.png`.
  */
 export function getPanelFileUrl(panel: string, pathUnderContent: string): string {
   const segments = pathUnderContent
@@ -138,8 +141,8 @@ export function getPanelFileUrl(panel: string, pathUnderContent: string): string
 }
 
 /**
- * Read a file from under ai/views/{panelId}/ regardless of display type.
- * Use this for index.json, settings/themes.css, etc. (Not for browsing project files on file-viewer.)
+ * Read a file from under ai/<machine>/Views/{prefix}-{panelId}/ regardless of display type.
+ * Use this for generated view metadata, styles/themes.css, etc. (Not for browsing project files on file-viewer.)
  */
 export function fetchPanelWorkspaceFile(
   ws: WebSocket,
@@ -183,7 +186,7 @@ async function fetchWorkspaceViewRegistry(ws: WebSocket): Promise<WorkspaceViewR
   try {
     const raw = await fetchPanelFile(ws, '__workspace__', 'views.json');
     const json = JSON.parse(raw);
-    if (json?.version !== 1 || !Array.isArray(json.views)) return null;
+    if ((json?.version !== 1 && json?.version !== 2) || !Array.isArray(json.views)) return null;
     return json.views.filter((view: WorkspaceViewRegistryEntry) => view?.id && view.enabled !== false);
   } catch {
     return null;
@@ -222,12 +225,17 @@ export async function loadPanelConfig(
         }
       : null;
     const json = await fetchPanelJson<PanelIndexConfig>(ws, panelId, 'index.json', panelAlias) || registryFallback;
-    if (!json) return null;
 
     // Load content.json — declares display type and chat config
     const contentConfig: ContentConfig | null = await fetchPanelJson<ContentConfig>(ws, panelId, 'content.json', panelAlias);
 
-    const layoutConfig: LayoutConfig | null = await fetchPanelJson<LayoutConfig>(ws, panelId, 'settings/layout.json', panelAlias);
+    const layoutConfig: LayoutConfig | null = await fetchPanelJson<LayoutConfig>(ws, panelId, 'styles/layout.json', panelAlias);
+
+    const iconName = await fetchPanelFile(ws, panelAlias, `${panelId}/styles/icon.md`)
+      .then(parseIconNameMarkdown)
+      .catch(() => null);
+
+    if (!json && !contentConfig && !iconName) return null;
 
     // Chat is determined by content.json, not by probing the filesystem
     const chatConfig = contentConfig?.chat || null;
@@ -244,20 +252,20 @@ export async function loadPanelConfig(
       .catch(() => false);
 
     return {
-      id: json.id || panelId,
-      name: registryEntry?.label || json.label || panelId,
-      description: json.description,
-      type: contentConfig?.display || json.type || 'placeholder',
-      icon: registryEntry?.icon || json.icon || 'folder',
+      id: json?.id || panelId,
+      name: registryEntry?.label || json?.label || displayLabelFromId(panelId),
+      description: json?.description,
+      type: contentConfig?.display || json?.type || 'placeholder',
+      icon: iconName || registryEntry?.icon || json?.icon || 'folder',
       hasChat,
       chatConfig,
       layoutConfig,
       contentConfig,
-      rank: registryEntry?.rank ?? json.rank,
+      rank: registryEntry?.rank ?? json?.rank,
       category,
       hasUiFolder,
       hasAppHtml,
-      settings: json,
+      settings: json || {},
     };
   } catch {
     return null;
@@ -302,7 +310,7 @@ export function discoverPanels(ws: WebSocket, panelAlias: string): Promise<strin
 }
 
 /**
- * Load all panel configs from both ai/views/ (tools) and ai/apps/ (apps).
+ * Load all panel configs from machine-scoped Views (tools) and ai/apps/ (apps).
  * Returns sorted by rank within each category.
  */
 export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {

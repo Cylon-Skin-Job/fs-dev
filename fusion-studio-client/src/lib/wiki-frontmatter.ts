@@ -1,9 +1,11 @@
 /**
  * @module wiki-frontmatter
- * @role Parse wiki PAGE.md frontmatter for display and future graph tooling
+ * @role Normalize wiki PAGE.md frontmatter for display and graph tooling.
+ *       Low-level YAML parsing comes from the system-wide markdown
+ *       frontmatter helper.
  */
 
-import matter from 'gray-matter';
+import { parseMarkdownFrontmatter } from './front-matter';
 
 export interface WikiFrontmatter {
   name: string;
@@ -56,19 +58,17 @@ function normalizeMetadata(raw: unknown): Record<string, string[]> {
 }
 
 export function parseWikiPage(content: string): { body: string; frontmatter: WikiFrontmatter | null } {
-  try {
-    const parsed = matter(content || '');
-    const name = typeof parsed.data?.name === 'string' ? parsed.data.name.trim() : '';
-    const description = typeof parsed.data?.description === 'string' ? parsed.data.description.trim() : '';
-    const metadata = normalizeMetadata(parsed.data?.metadata);
+  const parsed = parseMarkdownFrontmatter(content);
+  const name = typeof parsed.frontmatter.name === 'string' ? parsed.frontmatter.name.trim() : '';
+  const description = typeof parsed.frontmatter.description === 'string'
+    ? parsed.frontmatter.description.trim()
+    : '';
+  const metadata = normalizeMetadata(parsed.frontmatter.metadata);
 
-    return {
-      body: parsed.content,
-      frontmatter: name || description || Object.values(metadata).some((items) => items.length > 0)
-        ? { name, description, metadata }
-        : null,
-    };
-  } catch {
-    return { body: content || '', frontmatter: null };
-  }
+  return {
+    body: parsed.body,
+    frontmatter: name || description || Object.values(metadata).some((items) => items.length > 0)
+      ? { name, description, metadata }
+      : null,
+  };
 }

@@ -226,7 +226,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
 
         {hasHiddenViews && (
           <div className="rv-view-context-section">
-            <div className="rv-view-context-section-title">Restore View</div>
+            <div className="rv-view-context-section-title">Show View</div>
             {hiddenViews.map((view) => (
               <button
                 key={view.id}
@@ -238,7 +238,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
                 }}
               >
                 <span className="material-symbols-outlined rv-view-context-action-icon">{view.icon}</span>
-                <span>{view.label || view.id}</span>
+                <span>Show {view.label || view.id}</span>
               </button>
             ))}
           </div>
@@ -258,7 +258,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
                 }}
               >
                 <span className="material-symbols-outlined rv-view-context-action-icon">{template.icon || 'folder'}</span>
-                <span>{template.label || template.id}</span>
+                <span>Add {template.label || template.id}</span>
               </button>
             ))}
           </div>

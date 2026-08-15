@@ -1,25 +1,11 @@
 /**
- * Migration 021 — Recently opened documents tracker
+ * Migration 021 — Deprecated recent-docs compatibility marker
  *
- * Adds: recent_docs table for office-viewer document history.
- * FIFO 20 per workspace, enforced in application code (index-table.js).
+ * The old DB-backed Office recents feature was replaced by per-view activity
+ * state. Keep this migration file so existing databases with migration 021 in
+ * knex_migrations do not fail migration validation.
  */
 
-exports.up = async function (knex) {
-  await knex.schema.createTable('recent_docs', (t) => {
-    t.increments('id').primary();
-    t.text('workspace_id').notNullable();
-    t.text('file_path').notNullable();
-    t.text('folder').notNullable();
-    t.text('name').notNullable();
-    t.text('panel').notNullable();
-    t.integer('opened_at').notNullable();
+exports.up = async function () {};
 
-    t.index(['workspace_id', 'opened_at']);
-    t.unique(['workspace_id', 'file_path']);
-  });
-};
-
-exports.down = async function (knex) {
-  await knex.schema.dropTableIfExists('recent_docs');
-};
+exports.down = async function () {};

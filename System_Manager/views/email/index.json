@@ -2,7 +2,6 @@
   "version": "1.0",
   "id": "email",
   "label": "Email",
-  "icon": "mail",
   "rank": 1,
   "type": "list",
   "settings": {

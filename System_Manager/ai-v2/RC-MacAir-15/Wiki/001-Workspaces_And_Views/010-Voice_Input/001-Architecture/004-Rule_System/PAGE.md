@@ -9,7 +9,7 @@ metadata:
   outgoing-edges:
     - Voice Input Structure
   source-files:
-    - System Source Files/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules
+    - System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules
     - fusion-studio-server/lib/transcription/deterministic-cleanup.js
     - fusion-studio-client/scripts/prepare-ai-resources.cjs
     - fusion-studio-client/scripts/generate-action-verbs.cjs
@@ -23,7 +23,7 @@ The voice cleanup rule system is JSON-first.
 
 Rules live under:
 
-`System Source Files/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules/`
+`System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules/`
 
 Important split folders:
 

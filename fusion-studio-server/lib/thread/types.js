@@ -2,7 +2,7 @@
  * Thread Management Types
  * 
  * Based on SPEC.md - Thread Management Specification
- * @see ../../../ai/views/doc-viewer/specs/SPEC.md
+ * @see ../../../ai/<machine>/Captures/002-SPECs/SPEC.md
  */
 
 /**
@@ -42,7 +42,7 @@
  * @typedef {Object} ThreadManagerConfig
  * @property {number} maxActiveSessions - Max active sessions before FIFO eviction (default: 10)
  * @property {number} idleTimeoutMinutes - Minutes before idle session is killed (default: 9)
- * @property {string} aiPanelsPath - Path to ai/views directory
+ * @property {string} aiPanelsPath - Path to ai/<machine>/Views directory
  */
 
 /**

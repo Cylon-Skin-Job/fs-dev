@@ -5,7 +5,7 @@
  * Drops down from beneath the header when the user clicks the centered
  * workspace title. Shows workspace icons centered with names beneath.
  *
- * Visual language borrows from the doc-viewer bottom ribbon:
+ * Visual language borrows from the capture-viewer bottom ribbon:
  * diagonal white-alpha gradient, blurred backdrop, thin border.
  */
 

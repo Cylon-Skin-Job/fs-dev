@@ -9,8 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadTicket, loadAllTickets } = require('../tickets/loader');
 const { gitlabGet } = require('./request');
-
-const ISSUES_REL = path.join('ai', 'views', 'issues-viewer');
+const views = require('../views');
 
 /**
  * Pull issues updated since last sync.
@@ -19,9 +18,9 @@ const ISSUES_REL = path.join('ai', 'views', 'issues-viewer');
  * @returns {Promise<{ updated: number, created: number, errors: string[] }>}
  */
 async function pull(projectRoot) {
-  const issuesDir = path.join(projectRoot, ISSUES_REL);
-  const syncPath = path.join(issuesDir, 'sync.json');
-  const indexPath = path.join(issuesDir, 'tickets.json');
+  const issuesDir = resolveIssuesRoot(projectRoot);
+  const syncPath = resolveIssuesFilePath(issuesDir, 'sync.json');
+  const indexPath = resolveIssuesFilePath(issuesDir, 'tickets.json');
 
   const sync = JSON.parse(fs.readFileSync(syncPath, 'utf8'));
   const result = { updated: 0, created: 0, errors: [] };
@@ -123,6 +122,16 @@ async function pull(projectRoot) {
   fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n', 'utf8');
 
   return result;
+}
+
+function resolveIssuesRoot(projectRoot) {
+  return views.resolveOperationalViewRoot(projectRoot, 'issues-viewer');
+}
+
+function resolveIssuesFilePath(issuesDir, fileName) {
+  const rootPath = path.join(issuesDir, fileName);
+  if (fs.existsSync(rootPath)) return rootPath;
+  return path.join(issuesDir, 'content', fileName);
 }
 
 /**

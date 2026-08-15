@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Provenance Flow Sketch</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5d6876;
+      --line: #6d7f96;
+      --ui: #e8f3ff;
+      --server: #eef8f0;
+      --event: #fff2d8;
+      --ledger: #f4ecff;
+      --watch: #ffeceb;
+      --border: #cbd4df;
+      --shadow: 0 8px 24px rgba(23, 32, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      width: min(860px, calc(100vw - 28px));
+      margin: 32px auto 48px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 720;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .diagram-shell {
+      position: relative;
+      display: grid;
+      gap: 0;
+      padding: 58px 22px 28px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: visible;
+    }
+
+    .rail-label {
+      position: absolute;
+      left: 24px;
+      top: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .module {
+      width: 100%;
+      min-height: 0;
+      padding: 14px 15px 13px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(23, 32, 42, 0.06);
+    }
+
+    .module h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .module p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .ui { background: var(--ui); }
+    .server { background: var(--server); }
+    .event { background: var(--event); }
+    .ledger { background: var(--ledger); }
+    .watch { background: var(--watch); }
+
+    .note {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px dashed #aab7c5;
+      background: #fbfcfe;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .note strong {
+      color: var(--ink);
+    }
+
+    .flow-label {
+      justify-self: center;
+      padding: 5px 8px;
+      border: 1px solid #d6dee8;
+      background: #fff;
+      border-radius: 999px;
+      color: #405166;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      margin: 0 auto;
+      width: min(640px, 100%);
+    }
+
+    .split-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+
+    .connector {
+      display: grid;
+      place-items: center;
+      min-height: 62px;
+      position: relative;
+    }
+
+    .connector::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-50%);
+      background: var(--line);
+    }
+
+    .connector::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      transform: translateX(-50%) rotate(45deg);
+      background: transparent;
+    }
+
+    .connector.dashed::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--line) 0,
+        var(--line) 8px,
+        transparent 8px,
+        transparent 15px
+      );
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .swatch {
+      width: 18px;
+      height: 14px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      flex: 0 0 auto;
+    }
+
+    .prose {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .prose section {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .prose h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .prose p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      color: #27384a;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        width: calc(100vw - 24px);
+        margin-top: 18px;
+      }
+
+      .diagram-shell {
+        padding: 58px 12px 20px;
+      }
+
+      .split-row {
+        grid-template-columns: 1fr;
+      }
+
+      .legend,
+      .prose {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Provenance Flow Sketch</h1>
+    <p class="subtitle">
+      Draft diagram for how UI actions, harness events, resource mutations, render sync, and ledger/versioning should share one provenance model without treating provider-specific OpenCode IDs as canonical.
+    </p>
+
+    <div class="diagram-shell" aria-label="Provenance flow diagram">
+      <div class="rail-label">Canonical Event Flow</div>
+
+      <div class="flow-row">
+        <div class="module ui">
+          <h2>Renderer UI Action Module</h2>
+          <p>When Wiki Viewer or File Viewer is active and at least one provenance-valid pending resource attachment exists, captures best-effort non-ID context and optional <code>clientCommandId</code> only when <code>chat.send_with_resource</code> is actually sent. Attachments may originate in any panel. Provenance-invalid entries are diagnosed/omitted only from canonical subjects; the separately validated operational prompt attachment list and order never change. Navigation, selection, and attachment staging emit nothing.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">command envelope</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module server">
+          <h2>First Accepting Server Handler</h2>
+          <p>Accepts and starts the source command independently, then uses only the fixed-schema nonrecursive bounded extractor to copy recognized own-data seed fields. Deep/wide/over-cap input is ignored without retaining the original object or affecting the prompt. The admission executor later generates <code>uiActionId</code> and canonical fields.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">ui.action candidate</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module server">
+          <h2>UI Validation + UEB Admission</h2>
+          <p><strong>Blocked on UEB-D01:</strong> a nullable private owner cell makes command completion/cancel/throw win atomically over late provenance installation. After the operational command path starts, extraction separates the transient workspace token from an already-frozen token-free queued envelope; binding/target preflight drops the wrapper/token before slot allocation and performs no second envelope copy. Nullable slot failure or install-after-close offers nothing. The fixed offer receives a successfully installed slot only synchronously; the supervised admission task's data plane owns only the token-free envelope, targets, and bound context, while its queued control plane owns one private, accounted <code>AcceptedRefSlotTaskLink</code> with atomic setup/admission-or-finalization and exactly-one settlement. D01 must first approve exact bounded capacity, concurrency/fairness, overload, retention, cancellation, shutdown/restart, and diagnostics for admission and listener delivery. UEB then accepts only a privately prepared candidate, clones/freezes the event, binds its identity to an opaque ref, freezes one <code>{ acceptedRef }</code> context, and offers exact <code>listener(frozenEvent, deliveryContext)</code> tasks under that contract. The command never awaits, retries, or receives backpressure from this work.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">independent eventual provenance; operation already running</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module server">
+          <h2>Successful Command / Mutation</h2>
+          <p>The operational command starts before provenance submission and runs independently of its outcome. A <code>resource.*</code> candidate exists only after the owning mutation succeeds; failed mutations produce no resource fact or invalidation. A downstream producer binds only an already-available ref. Missing, stale, forged, mismatched, or wrong-workspace proof atomically omits its relationship group with fixed code-only diagnostics while the independently safe fact continues.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">accepted UI reference when available; command continues</div>
+      </div>
+
+      <div class="split-row">
+        <div class="module watch">
+          <h2>Watcher / External Change</h2>
+          <p>Chokidar observes filesystem facts. If no direct initiator is known, provenance remains external, unknown, correlated, or inferred.</p>
+        </div>
+        <div class="module ui">
+          <h2>Harness / Tool Event (Later, Blocked)</h2>
+          <p><strong>Future contract:</strong> preparatory harness identity is not canonical publication authority. Harness/started activation is blocked on <code>TOOL-D02</code>; tool args/results also require <code>TOOL-D01</code> and SPEC-40b2b registration.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Independent operational trigger fork:</strong><br>
+        An established workspace-watcher observation reaches the one operational file-trigger matcher exactly once without awaiting canonical construction or admission; mutation handlers do not invoke a second matcher. The minimal resource observation is scheduled independently before optional watcher stats/tokenization. Rejected or failed provenance can omit correlation, but cannot suppress or duplicate trigger execution.
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">normalize bounded fact core; copy already-available metadata only</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module server">
+          <h2>Resource Event Producer</h2>
+          <p>Server file APIs and watchers construct bounded <code>resource.*</code> candidates. Automation-origin canonical identity is later and blocked on <code>AUT-D03</code>, the applicable SPEC-40b2c registration, and accepted-only propagation; operational automation continues without it. No enrichment lookup, I/O, directory scan, or tokenization precedes admission or renderer invalidation.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">candidate canonical event</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module server">
+          <h2>Resource Validation + UEB Admission</h2>
+          <p>The publisher validates the post-fact resource candidate. UEB clones/freezes/binds it, freezes one <code>deliveryContext</code>, and, after UEB-D01 closes, offers exact <code>listener(frozenEvent, deliveryContext)</code> tasks to the bounded executor. Each admitted delivery uses that ABI; saturation skips/finalizes only the affected delivery. Rejection/suppression returns no ref and invokes freshness recovery.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Post-mutation / watcher-observation failure branch:</strong><br>
+        Pre-admission validation/publication failure exposes no ref or canonical delivery. Post-admission render-projection failure preserves the accepted ref and delivery for other subscribers; only that projection fails. Both preserve the mutation/observed fact, diagnose, and send non-canonical <code>resource:refresh_required</code>. Clean entries refetch; dirty/optimistic state uses the conflict shadow.
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">published canonical event + accepted reference</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module event">
+          <h2>Resource UEB Subscriber Fanout</h2>
+          <p>This is bounded queued fanout under UEB-D01, not a second admission. Every admitted subscriber delivery receives the same frozen event and frozen delivery-context object; a saturated delivery is independently skipped/finalized. <code>eventId</code> is identity and dotted <code>eventType</code> is classification.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">fan out to subscribers</div>
+      </div>
+
+      <div class="split-row">
+        <div class="module ledger">
+          <h2>Ledger (Later, Blocked)</h2>
+          <p><strong>No first-package ledger write:</strong> after <code>LED-D01</code> settles hashing and <code>LED-D04</code> settles idempotency, transactions, and bounded retry/terminal behavior, SPEC-35b may store an ordinary validated safe payload with its approved hash, the exact admitted registered UI failure-safe-core with null hash, or a restricted defensive fallback with fixed <code>ledger_defensive_fallback</code>. SPEC-40c later permits historical capability only for the hashed ordinary branch; every null-hash row is ineligible. Resource redaction failure branches before UEB; row keys remain storage-only.</p>
+        </div>
+        <div class="module ui">
+          <h2>Resource Sync</h2>
+          <p>Derives cache invalidation and renderer updates. It is not the canonical event.</p>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="flow-label">same UEB event also feeds future subscribers</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module event">
+          <h2>Validated Resource Event</h2>
+          <p>The same UEB event carries <code>ids</code>, <code>actor</code>, <code>provenance</code>, <code>context</code>, <code>resources[]</code>, and <code>resourceMutation</code>.</p>
+        </div>
+      </div>
+
+      <div class="connector dashed">
+        <div class="flow-label">future subscriber</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="module ledger">
+          <h2>Versioning Subscriber (Later, Blocked)</h2>
+          <p>Consumes accepted resource events only after its storage gates. Individual metadata/hash-only rows require <code>ULV-D03</code>, <code>ULV-D05</code>, <code>ULV-D10</code>, the non-batch event-contract decision <code>ULV-D12</code>, accepted SPEC-35b, and active <code>40b2d1</code>. Snapshots, diffs, and blobs additionally require <code>ULV-D02</code> and active <code>40b2d2</code>. Storm batches require <code>ULV-D03</code>, <code>ULV-D04</code>, <code>ULV-D05</code>, <code>ULV-D10</code>, accepted SPEC-35b, and active <code>40b2d3</code>; storm snapshot/diff references additionally require <code>ULV-D02</code>/<code>40b2d2</code>. Edges require accepted SPEC-35d; compaction/drop requires accepted SPEC-35f. Any <code>caused_by</code> edge additionally requires the exact owner-approved <code>LED-D03</code> matrix.</p>
+        </div>
+      </div>
+
+      <div class="connector dashed">
+        <div class="flow-label">audit traversal</div>
+      </div>
+
+      <div class="split-row">
+        <div class="note">
+          <strong>Trust boundary:</strong><br>
+          The renderer supplies context/path inputs but no relationship IDs. The server creates the canonical <code>ui.action</code>; only admitted references can become downstream causes.
+        </div>
+        <div class="note">
+          <strong>Provider-specific IDs stay native.</strong><br>
+          After <code>TOOL-D02</code>, provider IDs may be normalized and redacted into their own harness/tool candidate's <code>nativeRefs</code> before admission. Its accepted ref can prove only registered downstream relationships or projections; it is not the source of its own current-record native metadata. Rejected candidates expose no downstream IDs.
+        </div>
+      </div>
+
+      <div class="connector dashed">
+        <div class="flow-label">query path</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="note">
+          <strong>Ledger query path:</strong><br>
+          Later audits traverse from file version to resource event to UI action, tool call, harness run/event, or automation cause.
+        </div>
+      </div>
+    </div>
+
+    <div class="legend" aria-label="Legend">
+      <div class="legend-item"><span class="swatch" style="background:var(--ui)"></span>Renderer / UI / harness inputs</div>
+      <div class="legend-item"><span class="swatch" style="background:var(--server)"></span>Server materialization</div>
+      <div class="legend-item"><span class="swatch" style="background:var(--event)"></span>Canonical events</div>
+      <div class="legend-item"><span class="swatch" style="background:var(--ledger)"></span>Ledger and versioning</div>
+      <div class="legend-item"><span class="swatch" style="background:var(--watch)"></span>Watcher/external observations</div>
+    </div>
+
+    <div class="prose">
+      <section>
+        <h2>UI-Origin Path</h2>
+        <p>The first adapter pair is Wiki Viewer and File Viewer. The first durable action requires one of those panels to be active plus at least one valid pending attachment from any panel when <code>chat.send_with_resource</code> is actually sent; unsupported panels or no-valid-attachment sends stay on the legacy path. Navigation, selection, and staging do not emit. Renderer capture is pure and capped at 32 subjects, 512 steps, and 16,384 seed bytes; overflow sends the unchanged baseline. Workspace token entropy is detached and notifications never await it; token allocation/transport remains blocked on <code>RSC-D17</code>'s exact bounded executor, binding-retention, cancellation, saturation, and shutdown contract. After operational validation starts the command, the server schedules provenance outside the command/response chain. Optional enrichment is omitted unless already available, and downstream relationships bind only an already-available accepted ref. First-package legacy <code>chat:*</code> facts receive no UI ID until <code>CHAT-D01</code> closes and SPEC-40b2a registers their exact canonical contract.</p>
+      </section>
+      <section>
+        <h2>Harness Path</h2>
+        <p>Harness attribution stays provider-neutral through <code>harnessId</code>, <code>harnessRunId</code>, and <code>harnessEventId</code>. OpenCode IDs are kept as native references.</p>
+      </section>
+      <section>
+        <h2>Render Path</h2>
+        <p>React/Zustand normally refreshes from resource-sync projections. Pre-admission failure has no canonical event/ref. Projection failure occurs after admission, keeps the frozen canonical event/ref valid for other subscribers, and uses <code>resource:refresh_required</code> for renderer freshness.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

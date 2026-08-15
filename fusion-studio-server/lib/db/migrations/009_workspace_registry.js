@@ -147,7 +147,7 @@ exports.down = async function (knex) {
     .insert([
       { id: 'system',         label: 'System',          icon: 'settings',        description: 'System-level theme baseline',          sort_order: 0 },
       { id: 'chat',           label: 'Chat',            icon: 'chat',            description: 'Conversational workspace',              sort_order: 1 },
-      { id: 'home-office',    label: 'Home Office',     icon: 'home',            description: 'Docs, sheets, email, calendar',         sort_order: 2 },
+      { id: 'home-office',    label: 'Home Office',     icon: 'home',            description: 'Documents, sheets, email, calendar',    sort_order: 2 },
       { id: 'bookkeeping',    label: 'Bookkeeping App', icon: 'account_balance', description: 'Financial tracking and reporting',      sort_order: 3 },
       { id: 'media-center',   label: 'Media Center',    icon: 'play_circle',     description: 'Media library and playback',            sort_order: 4 },
       { id: 'code-editor',    label: 'Code Editor',     icon: 'code',            description: 'Development environment',               sort_order: 5 },

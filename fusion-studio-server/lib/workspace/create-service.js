@@ -1,9 +1,9 @@
 /**
  * create-service — filesystem scaffolding for newly created workspaces.
  *
- * Reads the fixed System_Manager view manifest, validates selected view
- * templates, copies them into a new project's ai/views tree, and writes the
- * workspace view registry. Pure filesystem, no events, no DB.
+ * Reads System_Manager/ai-template, validates selected V2 view templates, and
+ * copies them into a new project's ai/<machine>/Views tree. Pure filesystem,
+ * no events, no DB.
  */
 
 const fs = require('fs');
@@ -13,89 +13,20 @@ const { getLocalMachineName, sanitizeMachineName } = require('./ai-paths');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const SYSTEM_SOURCE_ROOT = path.join(REPO_ROOT, 'System_Manager');
-const MANIFEST_PATH = path.join(SYSTEM_SOURCE_ROOT, 'views.manifest.json');
-const TEMPLATE_ROOT = path.join(SYSTEM_SOURCE_ROOT, 'view-templates');
 const AI_TEMPLATE_ROOT = path.join(SYSTEM_SOURCE_ROOT, 'ai-template');
 const AI_TEMPLATE_VIEW_TEMPLATES_ROOT = path.join(AI_TEMPLATE_ROOT, 'templates', 'view-templates');
 const AI_TEMPLATE_WORKSPACE_TEMPLATES_ROOT = path.join(AI_TEMPLATE_ROOT, 'templates', 'workspace-templates');
 const DEFAULT_WORKSPACE_TEMPLATE_ID = 'new';
-const DEFAULT_SELECTED_VIEW_IDS = new Set(['file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer']);
+const DEFAULT_SELECTED_VIEW_IDS = new Set(['capture-viewer', 'file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer']);
+const VIEW_DATA_ROOTS = new Set(['Captures', 'Wiki', 'Issues', 'Agents', 'Office']);
+const ALWAYS_COPY_V2_ROOTS = new Set(['System']);
 
 function readManifest() {
-  if (hasV2Template()) {
-    return readV2Manifest();
-  }
-  return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+  return readV2Manifest();
 }
 
 function scaffoldProject({ projectPath, viewIds, workspaceTemplateId, machineName = getLocalMachineName() }) {
-  if (hasV2Template()) {
-    return scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineName });
-  }
-
-  const manifest = readManifest();
-  const viewsById = new Map(manifest.views.map((view) => [view.id, view]));
-  const selectedViews = viewIds.map((viewId) => viewsById.get(viewId));
-  const unknownViewId = viewIds.find((viewId, index) => !selectedViews[index]);
-  if (unknownViewId) {
-    throw new Error('Unknown view template: ' + unknownViewId);
-  }
-
-  const targetExisted = fs.existsSync(projectPath);
-  if (!targetExisted) {
-    fs.mkdirSync(projectPath, { recursive: false });
-  }
-
-  try {
-    const aiViewsPath = path.join(projectPath, 'ai', 'views');
-    fs.mkdirSync(aiViewsPath, { recursive: true });
-    fs.mkdirSync(path.join(projectPath, 'ai', 'system', 'workspace'), { recursive: true });
-    fs.mkdirSync(path.join(projectPath, 'ai', 'system', 'state'), { recursive: true });
-
-    selectedViews.forEach((view) => {
-      const source = path.resolve(SYSTEM_SOURCE_ROOT, view.templatePath);
-      const destination = path.resolve(aiViewsPath, view.id);
-      assertUnder(source, TEMPLATE_ROOT, 'Template path escapes view-templates');
-      assertUnder(destination, aiViewsPath, 'Destination path escapes ai/views');
-      copyTemplateDirectory(source, destination);
-    });
-
-    const registry = {
-      version: 1,
-      sort: 'ranked',
-      views: selectedViews.map((view, index) => ({
-        id: view.id,
-        baseViewId: view.id,
-        label: view.label,
-        icon: view.icon || 'folder',
-        rank: index + 1,
-        enabled: true,
-        source: view.group === 'default' ? 'default' : 'optional',
-        viewPath: 'ai/views/' + view.id,
-      })),
-    };
-    fs.writeFileSync(
-      path.join(projectPath, 'ai', 'system', 'workspace', 'views.json'),
-      JSON.stringify(registry, null, 2) + '\n',
-      'utf8'
-    );
-
-    const index = {
-      views: selectedViews.map((view, index) => ({
-        id: view.id,
-        label: view.label,
-        icon: view.icon || 'folder',
-        rank: index + 1,
-      })),
-    };
-    fs.writeFileSync(path.join(aiViewsPath, 'index.json'), JSON.stringify(index, null, 2) + '\n', 'utf8');
-    return { manifest, selectedViews };
-  } catch (err) {
-    if (!targetExisted) {
-      fs.rmSync(projectPath, { recursive: true, force: true });
-    }
-    throw err;
-  }
+  return scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineName });
 }
 
 function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineName }) {
@@ -111,8 +42,7 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
     throw new Error('Unknown view template: ' + unknownViewId);
   }
 
-  const requestedSet = new Set(requestedIds);
-  const selectedViews = manifest.views.filter((view) => requestedSet.has(view.id));
+  const selectedViews = requestedIds.map((viewId) => viewsById.get(viewId));
   const safeMachineName = sanitizeMachineName(machineName);
   const targetExisted = fs.existsSync(projectPath);
   if (!targetExisted) {
@@ -124,11 +54,10 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
     const machineRoot = path.join(aiRoot, safeMachineName);
     fs.mkdirSync(machineRoot, { recursive: true });
 
+    const rootsToCopy = getV2TemplateRootsForViews(selectedViews);
     for (const entry of fs.readdirSync(AI_TEMPLATE_ROOT, { withFileTypes: true })) {
       if (entry.name.startsWith('.')) continue;
-      if (entry.name === 'Views') continue;
-      if (entry.name === 'ai') continue; // legacy nested scaffold retained only for fallback/history.
-      if (entry.name === 'templates') continue; // source-only profiles/view shells are not copied into workspaces.
+      if (!rootsToCopy.has(entry.name)) continue;
 
       const sourcePath = path.join(AI_TEMPLATE_ROOT, entry.name);
       const destinationPath = path.join(machineRoot, entry.name);
@@ -165,6 +94,16 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
     }
     throw err;
   }
+}
+
+function getV2TemplateRootsForViews(selectedViews) {
+  const roots = new Set(ALWAYS_COPY_V2_ROOTS);
+  for (const view of selectedViews) {
+    if (VIEW_DATA_ROOTS.has(view.dataSource)) {
+      roots.add(view.dataSource);
+    }
+  }
+  return roots;
 }
 
 function createWorkspaceMirrorDatabase(machineRoot) {
@@ -269,24 +208,12 @@ function getSystemSourceRoot() {
   return SYSTEM_SOURCE_ROOT;
 }
 
-function getTemplateRoot() {
-  return TEMPLATE_ROOT;
-}
-
 function getAiTemplateRoot() {
   return AI_TEMPLATE_ROOT;
 }
 
 function getAiTemplateViewsRoot() {
   return AI_TEMPLATE_VIEW_TEMPLATES_ROOT;
-}
-
-function hasV2Template() {
-  try {
-    return fs.lstatSync(getAiTemplateViewsRoot()).isDirectory();
-  } catch {
-    return false;
-  }
 }
 
 function readV2Manifest() {
@@ -331,6 +258,7 @@ function readV2Manifest() {
         order: entry.order,
         enabled,
         availability: manifest.metadata?.availability || 'stable',
+        dataSource: manifest.metadata?.['data-source'] || null,
       };
     }),
   };
@@ -480,8 +408,6 @@ module.exports = {
   getAiTemplateRoot,
   getAiTemplateViewsRoot,
   getSystemSourceRoot,
-  getTemplateRoot,
-  hasV2Template,
   listWorkspaceTemplates,
   readManifest,
   readWorkspaceTemplate,

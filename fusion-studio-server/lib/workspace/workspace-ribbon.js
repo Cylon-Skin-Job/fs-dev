@@ -8,7 +8,6 @@
 
 function createWorkspaceRibbonHandlers({
   registry,
-  stateCache,
   emit,
   getActiveWorkspaceId,
   setActiveWorkspace,
@@ -37,7 +36,6 @@ function createWorkspaceRibbonHandlers({
     emit('workspace:registry_changed', { workspaces: await registry.list() });
 
     if (!wasActive) {
-      stateCache.invalidate(workspaceId);
       emit('workspace:ribbon_removed', { workspaceId });
       return;
     }
@@ -50,7 +48,6 @@ function createWorkspaceRibbonHandlers({
       to: nextId,
       repoPath: next ? next.repo_path : null,
     });
-    stateCache.invalidate(workspaceId);
     emit('workspace:ribbon_removed', { workspaceId });
   }
 

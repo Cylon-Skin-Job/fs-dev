@@ -5,6 +5,8 @@
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
 import type { AppState, TintPath } from '../panelStoreTypes';
+import { nextViewStateMutationId } from '../../lib/viewStateMutationTracker';
+import { OFFICE_PAPER_BRIGHTNESS_DEFAULT } from '../../lib/officePaperBrightness';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
@@ -37,6 +39,29 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
   docViewerArchiveDocScroll: 0,
+  officeViewerMode: 'home',
+  officeViewerCurrentFolder: null,
+  officeViewerSelectedPath: null,
+  officeDocumentSidePanel: 'none',
+  officePaperBrightness: OFFICE_PAPER_BRIGHTNESS_DEFAULT,
+  emailViewerMode: 'inbox',
+  emailViewerCurrentFolder: null,
+  emailViewerSelectedPath: null,
+  emailDocumentSidePanel: 'none',
+  emailPaperBrightness: OFFICE_PAPER_BRIGHTNESS_DEFAULT,
+  activity: {
+    recents: [],
+    navigation: {
+      stack: [],
+      index: -1,
+    },
+    tabs: [],
+    activeTabId: null,
+  },
+  collections: {
+    starred: [],
+    pinnedFolders: [],
+  },
 };
 
 export function clampPaneWidth(pane: Pane, n: number): number {
@@ -72,7 +97,8 @@ export function createViewSlice(set: Set, get: Get) {
     _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => {
       const ws = get().ws;
       if (!ws || ws.readyState !== WebSocket.OPEN) return;
-      ws.send(JSON.stringify({ type: 'state:set', view, state: patch }));
+      const clientMutationId = nextViewStateMutationId(view);
+      ws.send(JSON.stringify({ type: 'state:set', view, state: patch, clientMutationId }));
     },
 
     setViewState: (view: string, state: Partial<ViewUIState>) => set((s) => ({

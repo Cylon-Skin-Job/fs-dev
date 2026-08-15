@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "setup-transcription": "node lib/transcription/setup.js",
-    "wiki": "node scripts/query-wiki.js",
+    "wiki": "node scripts/wiki.js query",
+    "wiki:audit": "node scripts/wiki.js audit",
     "test": "jest"
   },
   "keywords": [],

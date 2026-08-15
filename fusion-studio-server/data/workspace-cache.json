@@ -1,2352 +1,15 @@
 {
-  "system-files": {
-    "projectRoot": null,
-    "currentPanel": "wiki-viewer",
-    "projectChats": {},
-    "threads": [],
-    "currentThreadId": null,
-    "chatActive": false,
-    "wireReady": false,
-    "contextUsage": 0,
-    "panelConfigs": [
-      {
-        "id": "file-viewer",
-        "name": "Files",
-        "description": "Primary coding assistant — write, edit, and explore source files",
-        "type": "file-explorer",
-        "icon": "code_blocks",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatWidth": 400
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "file-viewer",
-          "folderName": "file-viewer",
-          "label": "Files",
-          "description": "Primary coding assistant — write, edit, and explore source files",
-          "type": "file-explorer",
-          "icon": "code_blocks",
-          "rank": 1,
-          "sort": "updated",
-          "created": "2026-03-12T18:17:00-07:00",
-          "settings": {
-            "maxActiveSessions": 5,
-            "gracePeriodSeconds": 60,
-            "evictionPolicy": "lru",
-            "autoSuspendAfterMinutes": 30,
-            "enableCheckpoints": true,
-            "checkpointIntervalMinutes": 5,
-            "threadDefaults": {
-              "preserveHistory": true,
-              "enableWarmup": true,
-              "warmupType": "summary",
-              "maxHistoryMessages": 200
-            }
-          }
-        }
-      },
-      {
-        "id": "chat",
-        "name": "chat",
-        "type": "placeholder",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": null,
-        "rank": 2,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "chat",
-          "label": "chat",
-          "icon": "folder",
-          "rank": 2
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-        "type": "ticket-board",
-        "icon": "business_messages",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "issues-viewer",
-          "folderName": "issues-viewer",
-          "label": "Issues",
-          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-          "type": "ticket-board",
-          "icon": "business_messages",
-          "rank": 3,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {}
-        }
-      },
-      {
-        "id": "wiki-viewer",
-        "name": "Wiki",
-        "description": "Living reference layer — browse topics, read pages, create update tickets",
-        "type": "wiki-viewer",
-        "icon": "full_coverage",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "popup"
-        },
-        "layoutConfig": {
-          "chatPosition": "popup",
-          "chatWidth": null,
-          "threadListWidth": null,
-          "threadListVisible": false,
-          "popup": {
-            "x": null,
-            "y": null,
-            "width": 380,
-            "height": 500
-          }
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "popup"
-          }
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "wiki-viewer",
-          "folderName": "wiki-viewer",
-          "label": "Wiki",
-          "description": "Living reference layer — browse topics, read pages, create update tickets",
-          "type": "wiki-viewer",
-          "icon": "full_coverage",
-          "rank": 4,
-          "sort": "ranked",
-          "created": "2026-03-20T14:00:00-07:00",
-          "settings": {
-            "syncTarget": "gitlab",
-            "gitlabProjectId": null,
-            "gitlabNamespace": null,
-            "repoDir": ".wiki-repo",
-            "contentDir": "ai/views/wiki-viewer/Wiki",
-            "systemWikiDir": "ai/views/wiki-viewer/Wiki"
-          }
-        }
-      },
-      {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "agent-tiles",
-        "icon": "robot_2",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "agents-viewer",
-          "folderName": "agents-viewer",
-          "label": "Agents",
-          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-          "type": "agent-tiles",
-          "icon": "robot_2",
-          "rank": 5,
-          "sort": "ranked",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "folders": {
-              "Background Workers": {
-                "description": "Default agents that ship with the app",
-                "reserved": true
-              }
-            }
-          }
-        }
-      },
-      {
-        "id": "system-viewer",
-        "name": "System",
-        "description": "System integrations — connectors, skills, triggers, scripts, and CLI hooks",
-        "type": "tabbed",
-        "icon": "manufacturing",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": null,
-        "contentConfig": {
-          "version": "1.0",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "system-viewer",
-          "folderName": "system-viewer",
-          "label": "System",
-          "description": "System integrations — connectors, skills, triggers, scripts, and CLI hooks",
-          "type": "tabbed",
-          "icon": "manufacturing",
-          "rank": 5,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "systemFilesView": true,
-            "targetPaths": {
-              "skills": "skills/",
-              "hooks": "hooks/",
-              "scripts": "scripts/",
-              "triggers": "triggers/"
-            }
-          },
-          "tools": [
-            {
-              "name": "toggle_skill",
-              "description": "Activate or deactivate a skill",
-              "parameters": {
-                "skillId": {
-                  "type": "string"
-                },
-                "active": {
-                  "type": "boolean"
-                }
-              }
-            },
-            {
-              "name": "run_script",
-              "description": "Execute an automation script",
-              "parameters": {
-                "scriptId": {
-                  "type": "string"
-                }
-              }
-            },
-            {
-              "name": "relink_cli",
-              "description": "Re-establish symlink between Fusion Studio skills and a CLI",
-              "parameters": {
-                "cliName": {
-                  "type": "string",
-                  "enum": [
-                    "claude",
-                    "kimi",
-                    "codex",
-                    "antigravity"
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      }
-    ],
-    "panelRoots": {
-      "file-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager",
-      "chat": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/issues-viewer",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager/ai/views/agents-viewer",
-      "system-viewer": "/users/rccurtrightjr./projects/fs-dev/System_Manager"
-    },
-    "viewStates": {
-      "wiki-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 348.1015625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-21T10-02-35-038",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "file-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 348.1015625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-21T10-02-35-038",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "issues-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 348.1015625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-21T10-02-35-038",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "agents-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 348.1015625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-21T10-02-35-038",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "system-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 348.1015625
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-24T16-26-11-790",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      }
-    },
-    "_savedAt": 1782717532903
-  },
-  "fusion-home": {
-    "projectRoot": null,
-    "currentPanel": "wiki-viewer",
-    "projectChats": {},
-    "threads": [],
-    "currentThreadId": null,
-    "chatActive": false,
-    "wireReady": false,
-    "contextUsage": 0,
-    "panelConfigs": [
-      {
-        "id": "office-viewer",
-        "name": "Office Viewer",
-        "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-        "type": "tiled-rows",
-        "icon": "clarify",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": true,
-          "popup": null
-        },
-        "contentConfig": {
-          "display": "tiled-rows",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 0,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "office-viewer",
-          "folderName": "office-viewer",
-          "label": "Office Viewer",
-          "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-          "type": "file-explorer",
-          "icon": "clarify",
-          "rank": 0,
-          "sort": "created",
-          "created": "2026-03-23T12:00:00-07:00",
-          "settings": {
-            "wikiExempt": true,
-            "folders": {
-              "captures": "Raw ideas, observations, and fragments caught during conversation",
-              "specs": "Drafted specifications before they move to a domain or project file",
-              "todo": "Tasks and action items that need to happen but don't have tickets yet",
-              "playground": "HTML mockups, visual designs, and UI experiments",
-              "assets": "Reusable files — icons, fonts, color palettes, shared resources",
-              "screenshots": "Visual references, UI snapshots, design inspiration"
-            }
-          }
-        }
-      },
-      {
-        "id": "calendar-viewer",
-        "name": "Calendar",
-        "description": "Schedule and event management — track dates, meetings, and deadlines",
-        "type": "tiled-rows",
-        "icon": "calendar_month",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "tiled-rows",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "calendar-viewer",
-          "folderName": "calendar-viewer",
-          "label": "Calendar",
-          "description": "Schedule and event management — track dates, meetings, and deadlines",
-          "type": "calendar-viewer",
-          "icon": "calendar_month",
-          "rank": 1,
-          "sort": "created",
-          "created": "2026-05-17T00:57:00-07:00",
-          "settings": {}
-        }
-      },
-      {
-        "id": "file-viewer",
-        "name": "Files",
-        "description": "Primary coding assistant — write, edit, and explore source files",
-        "type": "file-explorer",
-        "icon": "code_blocks",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatWidth": 400
-        },
-        "contentConfig": {
-          "display": "file-explorer",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "file-viewer",
-          "folderName": "file-viewer",
-          "label": "Files",
-          "description": "Primary coding assistant — write, edit, and explore source files",
-          "type": "file-explorer",
-          "icon": "code_blocks",
-          "rank": 1,
-          "sort": "updated",
-          "created": "2026-03-12T18:17:00-07:00",
-          "settings": {
-            "maxActiveSessions": 5,
-            "gracePeriodSeconds": 60,
-            "evictionPolicy": "lru",
-            "autoSuspendAfterMinutes": 30,
-            "enableCheckpoints": true,
-            "checkpointIntervalMinutes": 5,
-            "threadDefaults": {
-              "preserveHistory": true,
-              "enableWarmup": true,
-              "warmupType": "summary",
-              "maxHistoryMessages": 200
-            }
-          }
-        }
-      },
-      {
-        "id": "chat",
-        "name": "chat",
-        "type": "placeholder",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": null,
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "chat",
-          "label": "chat",
-          "icon": "folder",
-          "rank": 3
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-        "type": "tabbed",
-        "icon": "business_messages",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "display": "tabbed",
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "issues-viewer",
-          "folderName": "issues-viewer",
-          "label": "Issues",
-          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-          "type": "ticket-board",
-          "icon": "business_messages",
-          "rank": 3,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {}
-        }
-      },
-      {
-        "id": "wiki-viewer",
-        "name": "Wiki",
-        "description": "Living reference layer — browse topics, read pages, create update tickets",
-        "type": "navigation",
-        "icon": "full_coverage",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "popup"
-        },
-        "layoutConfig": {
-          "chatPosition": "popup",
-          "chatWidth": null,
-          "threadListWidth": null,
-          "threadListVisible": false,
-          "popup": {
-            "x": null,
-            "y": null,
-            "width": 380,
-            "height": 500
-          }
-        },
-        "contentConfig": {
-          "display": "navigation",
-          "chat": {
-            "type": "rolling-daily",
-            "position": "popup"
-          }
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "wiki-viewer",
-          "folderName": "wiki-viewer",
-          "label": "Wiki",
-          "description": "Living reference layer — browse topics, read pages, create update tickets",
-          "type": "wiki-viewer",
-          "icon": "full_coverage",
-          "rank": 4,
-          "sort": "ranked",
-          "created": "2026-03-20T14:00:00-07:00",
-          "settings": {
-            "syncTarget": "gitlab",
-            "gitlabProjectId": 80453361,
-            "gitlabNamespace": "Cylon-Skin-Job/kimi-claude",
-            "repoDir": ".wiki-repo",
-            "contentDir": "ai/views/wiki-viewer/Wiki",
-            "systemWikiDir": "ai/views/wiki-viewer/Wiki"
-          }
-        }
-      },
-      {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "tiled-rows",
-        "icon": "smart_toy",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "display": "tiled-rows",
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "agents-viewer",
-          "folderName": "agents-viewer",
-          "label": "Agents",
-          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-          "type": "agent-tiles",
-          "icon": "smart_toy",
-          "rank": 5,
-          "sort": "ranked",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "folders": {
-              "System": {
-                "description": "Default agents that ship with the app",
-                "reserved": true
-              }
-            }
-          }
-        }
-      }
-    ],
-    "panelRoots": {
-      "office-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/office-viewer/content",
-      "calendar-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/calendar-viewer/content",
-      "file-viewer": "/users/rccurtrightjr./projects/fusion-home",
-      "chat": "/users/rccurtrightjr./projects/fusion-home/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/issues-viewer/content",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/fusion-home/ai/views/agents-viewer/content"
-    },
-    "viewStates": {
-      "file-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 454.16796875,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "office-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 454.16796875,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        },
-        "docViewerMode": "active",
-        "docViewerActiveSelectedPath": null,
-        "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 0,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 0,
-        "docViewerArchiveDocScroll": 0
-      },
-      "issues-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 461.09765625,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "agents-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 372.8046875,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "wiki-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 386.5625,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": 1092,
-          "y": 143,
-          "width": 486,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        },
-        "docViewerMode": "active",
-        "docViewerActiveSelectedPath": null,
-        "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 0,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 0,
-        "docViewerArchiveDocScroll": 0
-      },
-      "calendar-viewer": {
-        "widths": {
-          "leftSidebar": 294.3046875,
-          "leftChat": 454.16796875,
-          "rightSecondary": 425.51171875,
-          "rightCol": 405.59765625
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-29T14-59-42-886",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      }
-    },
-    "_savedAt": 1782902416578
-  },
-  "media-editor": {
-    "projectRoot": null,
-    "currentPanel": "image-editor",
-    "projectChats": {},
-    "threads": [],
-    "currentThreadId": null,
-    "chatActive": false,
-    "wireReady": false,
-    "contextUsage": 0,
-    "panelConfigs": [
-      {
-        "id": "image-editor",
-        "name": "Image",
-        "type": "placeholder",
-        "icon": "image",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "placeholder",
-          "hasChat": false
-        },
-        "rank": 0,
-        "category": "app",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "image-editor",
-          "label": "Image",
-          "icon": "image",
-          "rank": 0
-        }
-      },
-      {
-        "id": "video-editor",
-        "name": "Video",
-        "type": "placeholder",
-        "icon": "movie",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "placeholder",
-          "hasChat": false
-        },
-        "rank": 1,
-        "category": "app",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "video-editor",
-          "label": "Video",
-          "icon": "movie",
-          "rank": 1
-        }
-      },
-      {
-        "id": "asset-library",
-        "name": "Assets",
-        "type": "placeholder",
-        "icon": "folder_open",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "placeholder",
-          "hasChat": false
-        },
-        "rank": 2,
-        "category": "app",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "asset-library",
-          "label": "Assets",
-          "icon": "folder_open",
-          "rank": 2
-        }
-      },
-      {
-        "id": "file-viewer",
-        "name": "Files",
-        "type": "file-tree",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "file-tree",
-          "hasChat": false
-        },
-        "rank": 0,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "file-viewer",
-          "label": "Files",
-          "icon": "folder",
-          "rank": 0
-        }
-      },
-      {
-        "id": "doc-viewer",
-        "name": "Docs",
-        "type": "doc",
-        "icon": "description",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "doc",
-          "hasChat": false
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "doc-viewer",
-          "label": "Docs",
-          "icon": "description",
-          "rank": 1
-        }
-      },
-      {
-        "id": "chat",
-        "name": "chat",
-        "type": "placeholder",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": null,
-        "rank": 2,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "chat",
-          "baseViewId": "chat",
-          "label": "chat",
-          "icon": "folder",
-          "rank": 2,
-          "enabled": true,
-          "source": "custom",
-          "viewPath": "ai/views/chat"
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "type": "issues",
-        "icon": "bug_report",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "issues",
-          "hasChat": false
-        },
-        "rank": 2,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "issues-viewer",
-          "label": "Issues",
-          "icon": "bug_report",
-          "rank": 2
-        }
-      },
-      {
-        "id": "wiki-viewer",
-        "name": "Wiki",
-        "type": "wiki",
-        "icon": "menu_book",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "wiki",
-          "hasChat": false
-        },
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "wiki-viewer",
-          "label": "Wiki",
-          "icon": "menu_book",
-          "rank": 3
-        }
-      },
-      {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "type": "agents",
-        "icon": "smart_toy",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": {
-          "display": "agents",
-          "hasChat": false
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "agents-viewer",
-          "label": "Agents",
-          "icon": "smart_toy",
-          "rank": 4
-        }
-      }
-    ],
-    "panelRoots": {
-      "file-viewer": "/users/rccurtrightjr./projects/media-editor",
-      "doc-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/doc-viewer",
-      "chat": "/users/rccurtrightjr./projects/media-editor/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/issues-viewer",
-      "wiki-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/media-editor/ai/views/agents-viewer"
-    },
-    "viewStates": {
-      "file-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "image-editor": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "doc-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "issues-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "wiki-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "agents-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-03T02-19-02-349",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "calendar-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-07T16-13-14-415",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      }
-    },
-    "_savedAt": 1782717533606
-  },
-  "solobooks": {
-    "projectRoot": null,
-    "currentPanel": "wiki-viewer",
-    "projectChats": {},
-    "threads": [],
-    "currentThreadId": null,
-    "chatActive": false,
-    "wireReady": false,
-    "contextUsage": 0,
-    "panelConfigs": [
-      {
-        "id": "office-viewer",
-        "name": "Office Viewer",
-        "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-        "type": "tiled-rows",
-        "icon": "clarify",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": true,
-          "popup": null
-        },
-        "contentConfig": {
-          "display": "tiled-rows",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 0,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "office-viewer",
-          "folderName": "office-viewer",
-          "label": "Office Viewer",
-          "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-          "type": "file-explorer",
-          "icon": "clarify",
-          "rank": 0,
-          "sort": "created",
-          "created": "2026-03-23T12:00:00-07:00",
-          "settings": {
-            "wikiExempt": true,
-            "folders": {
-              "captures": "Raw ideas, observations, and fragments caught during conversation",
-              "specs": "Drafted specifications before they move to a domain or project file",
-              "todo": "Tasks and action items that need to happen but don't have tickets yet",
-              "playground": "HTML mockups, visual designs, and UI experiments",
-              "assets": "Reusable files — icons, fonts, color palettes, shared resources",
-              "screenshots": "Visual references, UI snapshots, design inspiration"
-            }
-          }
-        }
-      },
-      {
-        "id": "file-viewer",
-        "name": "Files",
-        "description": "Primary coding assistant — write, edit, and explore source files",
-        "type": "file-explorer",
-        "icon": "code_blocks",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatWidth": 400
-        },
-        "contentConfig": {
-          "display": "file-explorer",
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "file-viewer",
-          "folderName": "file-viewer",
-          "label": "Files",
-          "description": "Primary coding assistant — write, edit, and explore source files",
-          "type": "file-explorer",
-          "icon": "code_blocks",
-          "rank": 1,
-          "sort": "updated",
-          "created": "2026-03-12T18:17:00-07:00",
-          "settings": {
-            "maxActiveSessions": 5,
-            "gracePeriodSeconds": 60,
-            "evictionPolicy": "lru",
-            "autoSuspendAfterMinutes": 30,
-            "enableCheckpoints": true,
-            "checkpointIntervalMinutes": 5,
-            "threadDefaults": {
-              "preserveHistory": true,
-              "enableWarmup": true,
-              "warmupType": "summary",
-              "maxHistoryMessages": 200
-            }
-          }
-        }
-      },
-      {
-        "id": "chat",
-        "name": "chat",
-        "type": "placeholder",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": null,
-        "rank": 2,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "chat",
-          "baseViewId": "chat",
-          "label": "chat",
-          "icon": "folder",
-          "rank": 2,
-          "enabled": true,
-          "source": "custom",
-          "viewPath": "ai/views/chat"
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-        "type": "tabbed",
-        "icon": "business_messages",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "display": "tabbed",
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "issues-viewer",
-          "folderName": "issues-viewer",
-          "label": "Issues",
-          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-          "type": "ticket-board",
-          "icon": "business_messages",
-          "rank": 3,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {}
-        }
-      },
-      {
-        "id": "wiki-viewer",
-        "name": "Wiki",
-        "description": "Living reference layer — browse topics, read pages, create update tickets",
-        "type": "navigation",
-        "icon": "full_coverage",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "popup"
-        },
-        "layoutConfig": {
-          "chatPosition": "popup",
-          "chatWidth": null,
-          "threadListWidth": null,
-          "threadListVisible": false,
-          "popup": {
-            "x": null,
-            "y": null,
-            "width": 380,
-            "height": 500
-          }
-        },
-        "contentConfig": {
-          "display": "navigation",
-          "chat": {
-            "type": "rolling-daily",
-            "position": "popup"
-          }
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "wiki-viewer",
-          "folderName": "wiki-viewer",
-          "label": "Wiki",
-          "description": "Living reference layer — browse topics, read pages, create update tickets",
-          "type": "wiki-viewer",
-          "icon": "full_coverage",
-          "rank": 4,
-          "sort": "ranked",
-          "created": "2026-03-20T14:00:00-07:00",
-          "settings": {
-            "syncTarget": "gitlab",
-            "gitlabProjectId": 80453361,
-            "gitlabNamespace": "Cylon-Skin-Job/kimi-claude",
-            "repoDir": ".wiki-repo",
-            "contentDir": "ai/views/wiki-viewer/Wiki",
-            "systemWikiDir": "ai/views/wiki-viewer/Wiki"
-          }
-        }
-      },
-      {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "agent-tiles",
-        "icon": "robot_2",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "agents-viewer",
-          "folderName": "agents-viewer",
-          "label": "Agents",
-          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-          "type": "agent-tiles",
-          "icon": "robot_2",
-          "rank": 5,
-          "sort": "ranked",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "folders": {
-              "Background Workers": {
-                "description": "Default agents that ship with the app",
-                "reserved": true
-              }
-            }
-          }
-        }
-      }
-    ],
-    "panelRoots": {
-      "office-viewer": "/users/rccurtrightjr./projects/solobooks/ai/views/office-viewer/content",
-      "file-viewer": "/users/rccurtrightjr./projects/solobooks",
-      "chat": "/users/rccurtrightjr./projects/solobooks/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/solobooks/ai/views/issues-viewer/content",
-      "wiki-viewer": "/users/rccurtrightjr./projects/solobooks/ai/views/wiki-viewer/Wiki",
-      "agents-viewer": "/users/rccurtrightjr./projects/solobooks/ai/views/agents-viewer/content"
-    },
-    "viewStates": {
-      "file-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-18T19-12-39-646",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "agents-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 291.05078125
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-24T16-26-11-790",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "issues-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 291.05078125
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-24T16-26-11-790",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "wiki-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 291.05078125
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-24T16-26-11-790",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
-      "office-viewer": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 431.890625,
-          "rightSecondary": 360,
-          "rightCol": 291.05078125
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-24T16-26-11-790",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      }
-    },
-    "_savedAt": 1782717534188
-  },
   "fs-dev": {
-    "projectRoot": null,
-    "currentPanel": "wiki-viewer",
-    "projectChats": {},
-    "threads": [],
-    "currentThreadId": null,
-    "chatActive": false,
-    "wireReady": false,
-    "contextUsage": 0,
-    "panelConfigs": [
-      {
-        "id": "doc-viewer",
-        "name": "Docs",
-        "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-        "type": "file-explorer",
-        "icon": "open_run",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": true,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 0,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "doc-viewer",
-          "folderName": "doc-viewer",
-          "label": "Docs",
-          "description": "Scratch space for ideas, mockups, specs, and todos that emerge from conversation",
-          "type": "file-explorer",
-          "icon": "open_run",
-          "rank": 0,
-          "sort": "created",
-          "created": "2026-03-23T12:00:00-07:00",
-          "settings": {
-            "wikiExempt": true,
-            "folders": {
-              "captures": "Raw ideas, observations, and fragments caught during conversation",
-              "specs": "Drafted specifications before they move to a domain or project file",
-              "todo": "Tasks and action items that need to happen but don't have tickets yet",
-              "playground": "HTML mockups, visual designs, and UI experiments",
-              "assets": "Reusable files — icons, fonts, color palettes, shared resources",
-              "screenshots": "Visual references, UI snapshots, design inspiration"
-            }
-          }
-        }
-      },
-      {
-        "id": "file-viewer",
-        "name": "Files",
-        "description": "Primary coding assistant — write, edit, and explore source files",
-        "type": "file-explorer",
-        "icon": "code_blocks",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatWidth": 400
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 1,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "file-viewer",
-          "folderName": "file-viewer",
-          "label": "Files",
-          "description": "Primary coding assistant — write, edit, and explore source files",
-          "type": "file-explorer",
-          "icon": "code_blocks",
-          "rank": 1,
-          "sort": "updated",
-          "created": "2026-03-12T18:17:00-07:00",
-          "settings": {
-            "maxActiveSessions": 5,
-            "gracePeriodSeconds": 60,
-            "evictionPolicy": "lru",
-            "autoSuspendAfterMinutes": 30,
-            "enableCheckpoints": true,
-            "checkpointIntervalMinutes": 5,
-            "threadDefaults": {
-              "preserveHistory": true,
-              "enableWarmup": true,
-              "warmupType": "summary",
-              "maxHistoryMessages": 200
-            }
-          }
-        }
-      },
-      {
-        "id": "chat",
-        "name": "chat",
-        "type": "placeholder",
-        "icon": "folder",
-        "hasChat": false,
-        "chatConfig": null,
-        "layoutConfig": null,
-        "contentConfig": null,
-        "rank": 2,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "id": "chat",
-          "label": "chat",
-          "icon": "folder",
-          "rank": 2
-        }
-      },
-      {
-        "id": "issues-viewer",
-        "name": "Issues",
-        "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-        "type": "ticket-board",
-        "icon": "business_messages",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 3,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "issues-viewer",
-          "folderName": "issues-viewer",
-          "label": "Issues",
-          "description": "Ticket router — receives tickets from all panels, routes to agents by type and domain",
-          "type": "ticket-board",
-          "icon": "business_messages",
-          "rank": 3,
-          "sort": "created",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {}
-        }
-      },
-      {
-        "id": "wiki-viewer",
-        "name": "Wiki",
-        "description": "Living reference layer — browse topics, read pages, create update tickets",
-        "type": "wiki-viewer",
-        "icon": "full_coverage",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "popup"
-        },
-        "layoutConfig": {
-          "chatPosition": "popup",
-          "chatWidth": null,
-          "threadListWidth": null,
-          "threadListVisible": false,
-          "popup": {
-            "x": null,
-            "y": null,
-            "width": 380,
-            "height": 500
-          }
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "popup"
-          }
-        },
-        "rank": 4,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "wiki-viewer",
-          "folderName": "wiki-viewer",
-          "label": "Wiki",
-          "description": "Living reference layer — browse topics, read pages, create update tickets",
-          "type": "wiki-viewer",
-          "icon": "full_coverage",
-          "rank": 4,
-          "sort": "ranked",
-          "created": "2026-03-20T14:00:00-07:00",
-          "settings": {
-            "syncTarget": "gitlab",
-            "gitlabProjectId": 80453361,
-            "gitlabNamespace": "Cylon-Skin-Job/fs-dev",
-            "repoDir": ".wiki-repo",
-            "contentDir": "ai/views/wiki-viewer/Wiki",
-            "systemWikiDir": "ai/views/wiki-viewer/Wiki"
-          }
-        }
-      },
-      {
-        "id": "browser-viewer",
-        "name": "Browser",
-        "description": "Full browser for AI automation, testing, and general web navigation",
-        "type": "browser",
-        "icon": "public",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": null,
-        "contentConfig": {
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 5,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "browser-viewer",
-          "folderName": "browser-viewer",
-          "label": "Browser",
-          "description": "Full browser for AI automation, testing, and general web navigation",
-          "type": "browser",
-          "icon": "public",
-          "hasChat": true,
-          "rank": 5,
-          "url": "https://example.com",
-          "mode": "browser",
-          "chrome": {
-            "urlBar": true,
-            "navButtons": true
-          }
-        }
-      },
-      {
-        "id": "custom-viewer",
-        "name": "Custom Viewer",
-        "description": "Local iframe display for user-built custom views",
-        "type": "custom",
-        "icon": "app_registration",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "threaded",
-          "position": "right"
-        },
-        "layoutConfig": null,
-        "contentConfig": {
-          "chat": {
-            "type": "threaded",
-            "position": "right"
-          }
-        },
-        "rank": 6,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "custom-viewer",
-          "folderName": "custom-viewer",
-          "label": "Custom Viewer",
-          "description": "Local iframe display for user-built custom views",
-          "type": "custom",
-          "icon": "app_registration",
-          "rank": 99,
-          "url": "http://localhost:3000",
-          "mode": "app",
-          "hasChat": true,
-          "chrome": {
-            "urlBar": true,
-            "tabs": false,
-            "navButtons": false
-          }
-        }
-      },
-      {
-        "id": "agents-viewer",
-        "name": "Agents",
-        "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-        "type": "agent-tiles",
-        "icon": "robot_2",
-        "hasChat": true,
-        "chatConfig": {
-          "type": "rolling-daily",
-          "position": "right"
-        },
-        "layoutConfig": {
-          "chatPosition": "right",
-          "chatWidth": 400,
-          "threadListWidth": 250,
-          "threadListVisible": false,
-          "popup": null
-        },
-        "contentConfig": {
-          "chat": {
-            "type": "rolling-daily",
-            "position": "right"
-          }
-        },
-        "rank": 7,
-        "category": "tool",
-        "hasUiFolder": false,
-        "hasAppHtml": false,
-        "settings": {
-          "version": "1.0",
-          "id": "agents-viewer",
-          "folderName": "agents-viewer",
-          "label": "Agents",
-          "description": "Agent command center — tiles UI for all background agents, their status, runs, and pending tickets",
-          "type": "agent-tiles",
-          "icon": "robot_2",
-          "rank": 5,
-          "sort": "ranked",
-          "created": "2026-03-20T20:00:00-07:00",
-          "settings": {
-            "folders": {
-              "Background Workers": {
-                "description": "Default agents that ship with the app",
-                "reserved": true
-              }
-            }
-          }
-        }
-      }
-    ],
-    "panelRoots": {
-      "doc-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/doc-viewer/content",
-      "file-viewer": "/users/rccurtrightjr./projects/fs-dev",
-      "chat": "/users/rccurtrightjr./projects/fs-dev/ai/views/chat",
-      "issues-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/issues-viewer/content",
-      "wiki-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/wiki-viewer/Wiki",
-      "browser-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/browser-viewer",
-      "custom-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/custom-viewer",
-      "agents-viewer": "/users/rccurtrightjr./projects/fs-dev/ai/views/agents-viewer/content"
-    },
     "viewStates": {
-      "image-editor": {
-        "widths": {
-          "leftSidebar": 220,
-          "leftChat": 320,
-          "rightSecondary": 400,
-          "rightCol": 220
-        },
-        "collapsed": {
-          "leftSidebar": false,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-05-18T19-12-39-646",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        }
-      },
       "custom-viewer": {
         "widths": {
-          "leftSidebar": 277.30859375,
-          "leftChat": 413.48046875,
-          "rightSecondary": 413.44921875,
-          "rightCol": 285.0078125
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
         },
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "popup": {
@@ -2357,7 +20,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-03T18-55-09-263",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2370,22 +33,39 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": null,
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveGridScroll": 35,
+        "docViewerArchiveGridScroll": 164,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
-      "doc-viewer": {
+      "capture-viewer": {
         "widths": {
-          "leftSidebar": 277.30859375,
-          "leftChat": 413.48046875,
-          "rightSecondary": 413.44921875,
-          "rightCol": 285.0078125
+          "leftSidebar": 220,
+          "leftChat": 422.6875,
+          "rightSecondary": 400,
+          "rightCol": 220
         },
         "collapsed": {
-          "leftSidebar": true,
+          "leftSidebar": false,
           "leftChat": false
         },
         "popup": {
@@ -2396,7 +76,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-04T00-34-07-053",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2409,19 +89,158 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": "001-Captures/wiki-audit-decisions.md",
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
+        "docViewerActiveGridScroll": 0,
         "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveDocScroll": 20,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1783251898201,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/workspace-as-distributable.md",
+              "title": "workspace-as-distributable.md",
+              "kind": "document",
+              "openedAt": 1783244195435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1783244189435,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/templates-repo-architecture.md",
+              "title": "templates-repo-architecture.md",
+              "kind": "document",
+              "openedAt": 1783244182469,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1783239352271,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1783239256187,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1783239254971,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1783239254453,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/opencode-harness-integration.md",
+              "title": "opencode-harness-integration.md",
+              "kind": "document",
+              "openedAt": 1783239253887,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/system-manager-hub.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/system-manager-hub.md",
+              "title": "system-manager-hub.md",
+              "kind": "document",
+              "openedAt": 1783239252704,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/view-onboarding-front-pages.md",
+              "title": "view-onboarding-front-pages.md",
+              "kind": "document",
+              "openedAt": 1783239250453,
+              "folder": "001-Captures",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [
+            {
+              "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/workspace-as-distributable.md",
+              "title": "workspace-as-distributable.md",
+              "kind": "document",
+              "savedAt": 1783246475933,
+              "folder": "001-Captures",
+              "extension": "md"
+            }
+          ],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
       "file-viewer": {
         "widths": {
-          "leftSidebar": 277.30859375,
-          "leftChat": 413.48046875,
-          "rightSecondary": 413.44921875,
-          "rightCol": 285.0078125
+          "leftSidebar": 220,
+          "leftChat": 399.29296875,
+          "rightSecondary": 400,
+          "rightCol": 220
         },
         "collapsed": {
           "leftSidebar": true,
@@ -2435,7 +254,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-04T00-34-07-053",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2448,12 +267,60 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": "001-Captures/wiki-audit-decisions.md",
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
+        "docViewerActiveGridScroll": 0,
         "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveDocScroll": 20,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [
+            {
+              "id": "file-viewer:HANDOFF.md",
+              "panel": "file-viewer",
+              "path": "HANDOFF.md",
+              "title": "HANDOFF.md",
+              "kind": "file",
+              "openedAt": 1783240925910,
+              "extension": "md",
+              "tabIndex": 0
+            },
+            {
+              "id": "file-viewer:install-voice-transcription.sh",
+              "panel": "file-viewer",
+              "path": "install-voice-transcription.sh",
+              "title": "install-voice-transcription.sh",
+              "kind": "file",
+              "openedAt": 1783240925910,
+              "extension": "sh",
+              "tabIndex": 1
+            },
+            {
+              "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
+              "panel": "file-viewer",
+              "path": "MESSAGE_ID_AUDIT_SPEC.md",
+              "title": "MESSAGE_ID_AUDIT_SPEC.md",
+              "kind": "file",
+              "openedAt": 1783240925910,
+              "extension": "md",
+              "tabIndex": 2
+            }
+          ],
+          "activeTabId": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md"
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
       "issues-viewer": {
         "widths": {
@@ -2474,7 +341,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-03T18-55-09-263",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2487,12 +354,29 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": null,
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveGridScroll": 35,
+        "docViewerArchiveGridScroll": 164,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
       "wiki-viewer": {
         "widths": {
@@ -2513,7 +397,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-04T00-34-07-053",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2526,12 +410,109 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": null,
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
+        "docViewerActiveGridScroll": 0,
         "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveDocScroll": 20,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [
+            {
+              "id": "wiki-viewer:001-Workspaces_And_Views/012-Viewer_Search",
+              "panel": "wiki-viewer",
+              "path": "001-Workspaces_And_Views/012-Viewer_Search",
+              "title": "Viewer Search",
+              "kind": "page",
+              "openedAt": 1783250697842,
+              "extension": "md",
+              "metadata": {
+                "pagePath": "001-Workspaces_And_Views/012-Viewer_Search/PAGE.md",
+                "kind": "article"
+              }
+            },
+            {
+              "id": "wiki-viewer:005-Enforcement/001-Code_Standards/000-Code_Standards",
+              "panel": "wiki-viewer",
+              "path": "005-Enforcement/001-Code_Standards/000-Code_Standards",
+              "title": "Code Standards",
+              "kind": "page",
+              "openedAt": 1783244446886,
+              "extension": "md",
+              "metadata": {
+                "pagePath": "005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+                "kind": "sidebar-section"
+              }
+            },
+            {
+              "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+              "panel": "wiki-viewer",
+              "path": "005-Enforcement/001-Code_Standards",
+              "title": "Code Standards",
+              "kind": "page",
+              "openedAt": 1783244445520,
+              "extension": "md",
+              "metadata": {
+                "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+                "kind": "article"
+              }
+            }
+          ],
+          "navigation": {
+            "stack": [
+              {
+                "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+                "panel": "wiki-viewer",
+                "path": "005-Enforcement/001-Code_Standards",
+                "title": "Code Standards",
+                "kind": "page",
+                "openedAt": 1783244445520,
+                "extension": "md",
+                "metadata": {
+                  "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+                  "kind": "article"
+                }
+              },
+              {
+                "id": "wiki-viewer:005-Enforcement/001-Code_Standards/000-Code_Standards",
+                "panel": "wiki-viewer",
+                "path": "005-Enforcement/001-Code_Standards/000-Code_Standards",
+                "title": "Code Standards",
+                "kind": "page",
+                "openedAt": 1783244446886,
+                "extension": "md",
+                "metadata": {
+                  "pagePath": "005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+                  "kind": "sidebar-section"
+                }
+              },
+              {
+                "id": "wiki-viewer:001-Workspaces_And_Views/012-Viewer_Search",
+                "panel": "wiki-viewer",
+                "path": "001-Workspaces_And_Views/012-Viewer_Search",
+                "title": "Viewer Search",
+                "kind": "page",
+                "openedAt": 1783250697842,
+                "extension": "md",
+                "metadata": {
+                  "pagePath": "001-Workspaces_And_Views/012-Viewer_Search/PAGE.md",
+                  "kind": "article"
+                }
+              }
+            ],
+            "index": 2
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
       "agents-viewer": {
         "widths": {
@@ -2552,7 +533,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-24T18-48-00-211",
+        "currentThreadId": "2026-07-03T18-55-09-263",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2565,58 +546,36 @@
           }
         },
         "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
+        "docViewerActiveSelectedPath": null,
         "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
+        "docViewerActiveGridScroll": 35,
+        "docViewerArchiveGridScroll": 164,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
       },
       "browser-viewer": {
         "widths": {
-          "leftSidebar": 277.30859375,
-          "leftChat": 413.48046875,
-          "rightSecondary": 413.44921875,
-          "rightCol": 285.0078125
-        },
-        "collapsed": {
-          "leftSidebar": true,
-          "leftChat": false
-        },
-        "popup": {
-          "open": false,
-          "x": -1,
-          "y": -1,
-          "width": 420,
-          "height": 520,
-          "threadId": null
-        },
-        "currentThreadId": "2026-06-24T18-48-00-211",
-        "secondaryThreadId": null,
-        "tints": {
-          "leftPanel": false,
-          "rightPanel": false,
-          "cards": false,
-          "contentPanels": false,
-          "borders": {
-            "threads": false,
-            "chat": false
-          }
-        },
-        "docViewerMode": "active",
-        "docViewerActiveSelectedPath": "captures/wiki-audit-decisions.md",
-        "docViewerArchiveSelectedPath": null,
-        "docViewerActiveGridScroll": 10,
-        "docViewerArchiveGridScroll": 0,
-        "docViewerActiveDocScroll": 1512.5,
-        "docViewerArchiveDocScroll": 65
-      },
-      "chat": {
-        "widths": {
-          "leftSidebar": 333.96484375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
         },
         "collapsed": {
           "leftSidebar": false,
@@ -2630,7 +589,7 @@
           "height": 520,
           "threadId": null
         },
-        "currentThreadId": "2026-06-07T22-48-30-704",
+        "currentThreadId": "2026-07-03T18-55-09-263",
         "secondaryThreadId": null,
         "tints": {
           "leftPanel": false,
@@ -2641,14 +600,254 @@
             "threads": false,
             "chat": false
           }
-        }
-      },
-      "calendar-viewer": {
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 35,
+        "docViewerArchiveGridScroll": 164,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 65,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
+      }
+    },
+    "currentPanel": "file-viewer",
+    "_savedAt": 1783253355026
+  },
+  "fusion-home": {
+    "viewStates": {
+      "office-viewer": {
         "widths": {
-          "leftSidebar": 333.96484375,
-          "leftChat": 416.2578125,
-          "rightSecondary": 425.51171875,
-          "rightCol": 300.1015625
+          "leftSidebar": 186.74609375,
+          "leftChat": 363.11328125,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": true,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-07-04T03-50-35-884",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0,
+        "activity": {
+          "recents": [
+            {
+              "id": "office-viewer:Test.md",
+              "panel": "office-viewer",
+              "path": "Test.md",
+              "title": "Test.md",
+              "kind": "document",
+              "openedAt": 1783252157700,
+              "folder": "",
+              "extension": "md"
+            },
+            {
+              "id": "office-viewer:todo/README.md",
+              "panel": "office-viewer",
+              "path": "todo/README.md",
+              "title": "README.md",
+              "kind": "document",
+              "openedAt": 1783251887401,
+              "folder": "todo",
+              "extension": "md"
+            },
+            {
+              "id": "office-viewer:captures/README.md",
+              "panel": "office-viewer",
+              "path": "captures/README.md",
+              "title": "README.md",
+              "kind": "document",
+              "openedAt": 1783237239998,
+              "folder": "captures",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "files",
+        "collections": {
+          "starred": [
+            {
+              "id": "office-viewer:Test.md",
+              "panel": "office-viewer",
+              "path": "Test.md",
+              "title": "Test.md",
+              "kind": "document",
+              "savedAt": 1783247527843,
+              "folder": "",
+              "extension": "md"
+            }
+          ],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": "Test.md"
+      },
+      "file-viewer": {
+        "widths": {
+          "leftSidebar": 260.9375,
+          "leftChat": 365.91015625,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-07-04T03-50-35-884",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
+      },
+      "issues-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 300,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": true,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-29T14-59-42-886",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
+      },
+      "agents-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 372.8046875,
+          "rightSecondary": 400,
+          "rightCol": 220
         },
         "collapsed": {
           "leftSidebar": false,
@@ -2673,9 +872,129 @@
             "threads": false,
             "chat": false
           }
-        }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
+      },
+      "wiki-viewer": {
+        "widths": {
+          "leftSidebar": 220,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": true,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-05-29T14-59-42-886",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0,
+        "activity": {
+          "recents": [],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        },
+        "officeDocumentSidePanel": "none",
+        "collections": {
+          "starred": [],
+          "pinnedFolders": []
+        },
+        "officeViewerMode": "home",
+        "officeViewerCurrentFolder": null,
+        "officeViewerSelectedPath": null
+      },
+      "calendar-viewer": {
+        "widths": {
+          "leftSidebar": 270.625,
+          "leftChat": 320,
+          "rightSecondary": 400,
+          "rightCol": 220
+        },
+        "collapsed": {
+          "leftSidebar": false,
+          "leftChat": false
+        },
+        "popup": {
+          "open": false,
+          "x": -1,
+          "y": -1,
+          "width": 420,
+          "height": 520,
+          "threadId": null
+        },
+        "currentThreadId": "2026-07-04T03-50-35-884",
+        "secondaryThreadId": null,
+        "tints": {
+          "leftPanel": false,
+          "rightPanel": false,
+          "cards": false,
+          "contentPanels": false,
+          "borders": {
+            "threads": false,
+            "chat": false
+          }
+        },
+        "docViewerMode": "active",
+        "docViewerActiveSelectedPath": null,
+        "docViewerArchiveSelectedPath": null,
+        "docViewerActiveGridScroll": 0,
+        "docViewerArchiveGridScroll": 0,
+        "docViewerActiveDocScroll": 0,
+        "docViewerArchiveDocScroll": 0
       }
     },
-    "_savedAt": 1783047733761
+    "currentPanel": "office-viewer",
+    "_savedAt": 1783253355033
   }
 }

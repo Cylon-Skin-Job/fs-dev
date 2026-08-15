@@ -11,6 +11,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const aiPaths = require('../workspace/ai-paths');
+const { classifyEntrySync } = require('../fs/dirents');
 
 const HARDCODED_DEFAULTS = Object.freeze({
   widths: {
@@ -51,6 +52,24 @@ const HARDCODED_DEFAULTS = Object.freeze({
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
   docViewerArchiveDocScroll: 0,
+  officeViewerMode: 'home',
+  officeViewerCurrentFolder: null,
+  officeViewerSelectedPath: null,
+  officeDocumentSidePanel: 'none',
+  officePaperBrightness: 100,
+  activity: {
+    recents: [],
+    navigation: {
+      stack: [],
+      index: -1,
+    },
+    tabs: [],
+    activeTabId: null,
+  },
+  collections: {
+    starred: [],
+    pinnedFolders: [],
+  },
 });
 
 function workspacePath(projectRoot) {
@@ -60,14 +79,14 @@ function workspacePath(projectRoot) {
 function viewOverridePath(projectRoot, viewId) {
   const v2Folder = findV2ViewFolder(projectRoot, viewId);
   if (v2Folder) return path.join(v2Folder, 'state', 'state.json');
-  return path.join(projectRoot, 'ai', 'views', viewId, 'settings', 'state.json');
+  return path.join(aiPaths.getMachineViewsRoot(projectRoot), viewId, 'state', 'state.json');
 }
 
 function findV2ViewFolder(projectRoot, viewId) {
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
   try {
     const entries = fsSync.readdirSync(viewsRoot, { withFileTypes: true });
-    const match = entries.find((entry) => entry.isDirectory() && (
+    const match = entries.find((entry) => classifyEntrySync(viewsRoot, entry).isDir && (
       entry.name === viewId || entry.name.endsWith(`-${viewId}`)
     ));
     return match ? path.join(viewsRoot, match.name) : null;
@@ -143,6 +162,12 @@ function normalize(state) {
   out.widths.rightCol       = clampNum(out.widths.rightCol,       120, 600);
   out.popup.width  = clampNum(out.popup.width,  280, 1200);
   out.popup.height = clampNum(out.popup.height, 240, 1200);
+  const paperBrightness = typeof out.officePaperBrightness === 'number'
+    ? out.officePaperBrightness
+    : Number(out.officePaperBrightness);
+  out.officePaperBrightness = Number.isFinite(paperBrightness)
+    ? clampNum(paperBrightness, 0, 100)
+    : HARDCODED_DEFAULTS.officePaperBrightness;
   return out;
 }
 

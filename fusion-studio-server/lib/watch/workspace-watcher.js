@@ -15,9 +15,10 @@ const RENAME_WINDOW_MS = 2000;
 const DEFAULT_EXCLUDES = [
   'node_modules', 'dist', '.git', '.kimi',
   'fusion-studio-server/data',
-  'ai/views/*/threads',
-  'ai/views/*/runs',
-  'ai/views/issues-viewer/done',
+  'ai/*/Data/Chatlogs',
+  'ai/*/Data/Runs',
+  'ai/*/Data/File-Viewer',
+  'ai/*/Issues/done',
   '*.log', 'CHAT.md', 'history.json',
   'wire-debug.log', 'server-live.log',
 ];

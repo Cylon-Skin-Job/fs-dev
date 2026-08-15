@@ -42,7 +42,7 @@ export function CLIDetail({ cli }: { cli: CliItem }) {
 
       {cli.docs_url && (
         <div className="rv-fusion-detail-meta-item rv-fusion-detail-meta-item--tight">
-          <span className="rv-fusion-detail-meta-label">Docs</span>
+          <span className="rv-fusion-detail-meta-label">Documentation</span>
           <a href={cli.docs_url} target="_blank" rel="noopener noreferrer" className="rv-fusion-detail-meta-value highlight">
             Documentation →
           </a>

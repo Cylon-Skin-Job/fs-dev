@@ -7,7 +7,7 @@
   --rv-todo-drawer-scroll-thumb: var(--border-color, rgba(255, 255, 255, 0.12));
   --rv-todo-drawer-text: var(--text-primary, rgba(255, 255, 255, 0.85));
   --rv-todo-drawer-muted: var(--text-dim, rgba(255, 255, 255, 0.6));
-  --rv-todo-drawer-accent: var(--theme-primary, #00d4ff);
+  --rv-todo-drawer-accent: var(--theme-primary, #39628e);
   --rv-todo-drawer-z: var(--z-chat-drawer, 2);
   --rv-todo-drawer-shadow: var(--shadow-raised, 0 -4px 12px rgba(0, 0, 0, 0.25));
   --rv-todo-drawer-transition-max: var(--transition-md, 200ms ease);

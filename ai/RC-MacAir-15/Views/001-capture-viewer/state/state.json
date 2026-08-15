@@ -1,0 +1,355 @@
+{
+  "widths": {
+    "leftSidebar": 220,
+    "leftChat": 421.62109375,
+    "rightSecondary": 400,
+    "rightCol": 220
+  },
+  "collapsed": {
+    "leftSidebar": true,
+    "leftChat": false
+  },
+  "popup": {
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
+    "height": 520,
+    "threadId": null
+  },
+  "tints": {
+    "leftPanel": false,
+    "rightPanel": false,
+    "cards": false,
+    "contentPanels": false,
+    "borders": {
+      "threads": false,
+      "chat": false
+    }
+  },
+  "activity": {
+    "recents": [
+      {
+        "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/CAPTURE.md",
+        "title": "CAPTURE.md",
+        "kind": "document",
+        "openedAt": 1786345383040,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/BULLETIN.md",
+        "title": "BULLETIN.md",
+        "kind": "document",
+        "openedAt": 1786345381742,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+        "title": "SYSTEM_MANAGER.md",
+        "kind": "document",
+        "openedAt": 1786345214776,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+        "panel": "capture-viewer",
+        "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+        "title": "system-manager-oracle-and-pattern-library.md",
+        "kind": "document",
+        "openedAt": 1786264616387,
+        "folder": "019-System_Manager",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/wiki-audit-decisions.md",
+        "title": "wiki-audit-decisions.md",
+        "kind": "document",
+        "openedAt": 1785665896648,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/workspace-as-distributable.md",
+        "title": "workspace-as-distributable.md",
+        "kind": "document",
+        "openedAt": 1785665888597,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+        "panel": "capture-viewer",
+        "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+        "title": "adversarial-document-convergence.md",
+        "kind": "document",
+        "openedAt": 1783990444939,
+        "folder": "013-Convergence_Loops",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+        "title": "TRANSCRIPT.md",
+        "kind": "document",
+        "openedAt": 1783851478239,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:005-Assets/menu-mockup.txt",
+        "panel": "capture-viewer",
+        "path": "005-Assets/menu-mockup.txt",
+        "title": "menu-mockup.txt",
+        "kind": "document",
+        "openedAt": 1783850555159,
+        "folder": "005-Assets",
+        "extension": "txt"
+      },
+      {
+        "id": "capture-viewer:005-Assets/menu-mockup.html",
+        "panel": "capture-viewer",
+        "path": "005-Assets/menu-mockup.html",
+        "title": "menu-mockup.html",
+        "kind": "document",
+        "openedAt": 1783850551859,
+        "folder": "005-Assets",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:005-Assets/modal-mockup.html",
+        "panel": "capture-viewer",
+        "path": "005-Assets/modal-mockup.html",
+        "title": "modal-mockup.html",
+        "kind": "document",
+        "openedAt": 1783850523126,
+        "folder": "005-Assets",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:005-Assets/sketch.txt",
+        "panel": "capture-viewer",
+        "path": "005-Assets/sketch.txt",
+        "title": "sketch.txt",
+        "kind": "document",
+        "openedAt": 1783850493493,
+        "folder": "005-Assets",
+        "extension": "txt"
+      },
+      {
+        "id": "capture-viewer:004-Playground/theme-studio.html",
+        "panel": "capture-viewer",
+        "path": "004-Playground/theme-studio.html",
+        "title": "theme-studio.html",
+        "kind": "document",
+        "openedAt": 1783843884743,
+        "folder": "004-Playground",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+        "panel": "capture-viewer",
+        "path": "010-ModularizeDB-Temp/CAPTURE.md",
+        "title": "CAPTURE.md",
+        "kind": "document",
+        "openedAt": 1783820497397,
+        "folder": "010-ModularizeDB-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+        "panel": "capture-viewer",
+        "path": "008-Provenance-Temp/provenance-flow.html",
+        "title": "provenance-flow.html",
+        "kind": "document",
+        "openedAt": 1783820117984,
+        "folder": "008-Provenance-Temp",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/CAPTURE.md",
+        "title": "CAPTURE.md",
+        "kind": "document",
+        "openedAt": 1783747732657,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+        "title": "CHECKPOINT_PROMPT.md",
+        "kind": "document",
+        "openedAt": 1783747730457,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+        "title": "CHECKPOINTS.md",
+        "kind": "document",
+        "openedAt": 1783747725807,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/DECISIONS.md",
+        "title": "DECISIONS.md",
+        "kind": "document",
+        "openedAt": 1783747724274,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+        "panel": "capture-viewer",
+        "path": "009-Office-Editor-Temp/ISSUES.md",
+        "title": "ISSUES.md",
+        "kind": "document",
+        "openedAt": 1783747719225,
+        "folder": "009-Office-Editor-Temp",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/VIEW-TABLE.md",
+        "title": "VIEW-TABLE.md",
+        "kind": "document",
+        "openedAt": 1783643697459,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+        "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+        "kind": "document",
+        "openedAt": 1783244189435,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/templates-repo-architecture.md",
+        "title": "templates-repo-architecture.md",
+        "kind": "document",
+        "openedAt": 1783244182469,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/discovery-gated-ceilings.md",
+        "title": "discovery-gated-ceilings.md",
+        "kind": "document",
+        "openedAt": 1783239352271,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/codebase-exploration-report.md",
+        "title": "codebase-exploration-report.md",
+        "kind": "document",
+        "openedAt": 1783239256187,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/file-mutation-injection.md",
+        "title": "file-mutation-injection.md",
+        "kind": "document",
+        "openedAt": 1783239254971,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/full-permissions-safety-architecture.md",
+        "title": "full-permissions-safety-architecture.md",
+        "kind": "document",
+        "openedAt": 1783239254453,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/opencode-harness-integration.md",
+        "title": "opencode-harness-integration.md",
+        "kind": "document",
+        "openedAt": 1783239253887,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/system-manager-hub.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/system-manager-hub.md",
+        "title": "system-manager-hub.md",
+        "kind": "document",
+        "openedAt": 1783239252704,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/view-onboarding-front-pages.md",
+        "title": "view-onboarding-front-pages.md",
+        "kind": "document",
+        "openedAt": 1783239250453,
+        "folder": "001-Captures",
+        "extension": "md"
+      }
+    ],
+    "navigation": {
+      "stack": [],
+      "index": -1
+    },
+    "tabs": [],
+    "activeTabId": null
+  },
+  "collections": {
+    "starred": [
+      {
+        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/workspace-as-distributable.md",
+        "title": "workspace-as-distributable.md",
+        "kind": "document",
+        "savedAt": 1783246475933,
+        "folder": "001-Captures",
+        "extension": "md"
+      }
+    ],
+    "pinnedFolders": []
+  }
+}

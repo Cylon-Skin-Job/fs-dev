@@ -3,18 +3,31 @@ const path = require('path');
 
 const { parseFrontmatter } = require('../frontmatter');
 const { getSystemPromptsRoot } = require('../resources/resolver');
+const { createCycleGuard } = require('../fs/cycle-guard');
+const { classifyEntrySync } = require('../fs/dirents');
 
-function listPromptFiles(root) {
+function realpathOrNull(targetPath) {
+  try {
+    return fs.realpathSync(targetPath);
+  } catch {
+    return null;
+  }
+}
+
+function listPromptFiles(root, cycleGuard = createCycleGuard()) {
   if (!fs.existsSync(root)) return [];
+  const rootRealPath = realpathOrNull(root);
+  if (!cycleGuard.shouldEnter(rootRealPath)) return [];
 
   const files = [];
   const entries = fs.readdirSync(root, { withFileTypes: true });
   for (const entry of entries) {
     if (entry.name.startsWith('.')) continue;
     const fullPath = path.join(root, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...listPromptFiles(fullPath));
-    } else if (entry.isFile() && entry.name === 'PROMPT.md') {
+    const classified = classifyEntrySync(root, entry);
+    if (classified.isDir) {
+      files.push(...listPromptFiles(fullPath, cycleGuard));
+    } else if (classified.isFile && entry.name === 'PROMPT.md') {
       files.push(fullPath);
     }
   }

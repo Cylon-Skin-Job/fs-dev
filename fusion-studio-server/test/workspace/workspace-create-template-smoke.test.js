@@ -94,7 +94,7 @@ describe('workspace create template profile smoke', () => {
       id: 'new-profile-created',
       label: 'New Profile Smoke',
       repoPath: projectPath,
-      icon: 'code_blocks',
+      icon: 'open_run',
     });
     expect(switched).toMatchObject({
       from: 'fs-dev',
@@ -103,24 +103,26 @@ describe('workspace create template profile smoke', () => {
     });
     expect(workspace).toMatchObject({ id: 'new-profile-created', repoPath: projectPath });
     expect(modules.views.listViews(projectPath)).toEqual([
+      'capture-viewer',
       'file-viewer',
-      'issues-viewer',
       'wiki-viewer',
+      'issues-viewer',
       'agents-viewer',
     ]);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-file-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-issues-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-capture-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-file-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '003-wiki-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-agents-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '005-office-viewer'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '005-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.readdirSync(path.join(machineRoot, 'Views')).some((name) => name.endsWith('-office-viewer'))).toBe(false);
     expect(fs.existsSync(path.join(machineRoot, 'templates'))).toBe(false);
   });
 
-  test('request handler passes startup workspaceTemplateId through to scaffolded views', async () => {
-    const projectPath = path.join(tempRoot, 'fusion-home-created');
+  test('request handler creates the fixed new profile even if a template id is sent', async () => {
+    const projectPath = path.join(tempRoot, 'template-id-ignored');
     const handlers = modules.requestHandlers.createWorkspaceRequestHandlers({
       ws: { send: jest.fn() },
-      session: { connectionId: 'smoke-fusion-home' },
+      session: { connectionId: 'smoke-template-id-ignored' },
     });
     const createdPromise = waitForEvent(modules.eventBus.on, 'workspace:created');
     const switchedPromise = waitForEvent(modules.eventBus.on, 'workspace:switched');
@@ -132,7 +134,7 @@ describe('workspace create template profile smoke', () => {
     handlers['workspace:create_requested']({
       type: 'workspace:create_requested',
       projectPath,
-      label: 'Fusion Home Smoke',
+      label: 'Template Id Ignored Smoke',
       workspaceTemplateId: 'fusion-home',
     });
 
@@ -142,31 +144,32 @@ describe('workspace create template profile smoke', () => {
     const workspace = await modules.registry.getByRepoPath(projectPath);
     const machineRoot = path.join(projectPath, 'ai', 'Smoke-Machine');
 
-    expect(created.connectionId).toBe('smoke-fusion-home');
+    expect(created.connectionId).toBe('smoke-template-id-ignored');
     expect(created.workspace).toMatchObject({
-      id: 'fusion-home-created',
-      label: 'Fusion Home Smoke',
+      id: 'template-id-ignored',
+      label: 'Template Id Ignored Smoke',
       repoPath: projectPath,
-      icon: 'description',
+      icon: 'open_run',
     });
     expect(switched).toMatchObject({
       from: 'fs-dev',
-      to: 'fusion-home-created',
+      to: 'template-id-ignored',
       repoPath: projectPath,
     });
-    expect(workspace).toMatchObject({ id: 'fusion-home-created', repoPath: projectPath });
+    expect(workspace).toMatchObject({ id: 'template-id-ignored', repoPath: projectPath });
     expect(modules.views.listViews(projectPath)).toEqual([
-      'office-viewer',
+      'capture-viewer',
       'file-viewer',
-      'issues-viewer',
       'wiki-viewer',
+      'issues-viewer',
       'agents-viewer',
     ]);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-office-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-capture-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '002-file-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '003-issues-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-wiki-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '003-wiki-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '005-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Office'))).toBe(false);
     expect(fs.existsSync(path.join(machineRoot, 'templates'))).toBe(false);
   });
 });

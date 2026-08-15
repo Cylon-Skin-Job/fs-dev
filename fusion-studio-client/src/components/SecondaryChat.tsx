@@ -15,8 +15,9 @@
  * keyframe in reverse, triggered by secondary.justRestored set by the store.
  */
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { usePanelStore } from '../state/panelStore';
+import { useFloatingWindow, type FloatGeometry } from '../hooks/useFloatingWindow';
 import { ChatArea } from './ChatArea';
 import { SecondaryHeader } from './SecondaryHeader';
 import { RightSecondaryResize } from './ResizeHandle';
@@ -151,8 +152,6 @@ export function SecondaryChat() {
   const currentPanel = usePanelStore((s) => s.currentPanel);
   const setSecondaryFloat = usePanelStore((s) => s.setSecondaryFloat);
 
-  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
-  const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const { handleMinimize, modifier, styleVars } = useGenieAnimation(popupRef);
@@ -167,53 +166,31 @@ export function SecondaryChat() {
     posY = window.innerHeight - popupHeight - DEFAULT_PADDING;
   }
 
+  const committedGeometry = useMemo<FloatGeometry>(
+    () => ({ x: posX, y: posY, width: popupWidth, height: popupHeight }),
+    [posX, posY, popupWidth, popupHeight]
+  );
+
+  // Live geometry updates locally during a gesture; the store (and its
+  // state:set persistence) is written once, on mouse-up.
+  const commitFloat = useCallback((g: FloatGeometry) => {
+    setSecondaryFloat(g.x, g.y, g.width, g.height);
+  }, [setSecondaryFloat]);
+
+  const { live, startDrag, startResize } = useFloatingWindow({
+    geometry: committedGeometry,
+    onCommit: commitFloat,
+    minWidth: MIN_W,
+    minHeight: MIN_H,
+    maxWidth: MAX_W,
+    maxHeight: MAX_H,
+  });
+
   const handleDragMouseDown = useCallback((e: React.MouseEvent) => {
     // Drag starts only from the dedicated grab zone inside the header.
     if (!(e.target as HTMLElement).closest('.rv-secondary-drag-zone')) return;
-    e.preventDefault();
-    dragRef.current = { startX: e.clientX, startY: e.clientY, origX: posX, origY: posY };
-
-    const handleMove = (ev: MouseEvent) => {
-      const d = dragRef.current;
-      if (!d) return;
-      setSecondaryFloat(
-        d.origX + (ev.clientX - d.startX),
-        d.origY + (ev.clientY - d.startY),
-        popupWidth,
-        popupHeight,
-      );
-    };
-    const handleUp = () => {
-      dragRef.current = null;
-      document.removeEventListener('mousemove', handleMove);
-      document.removeEventListener('mouseup', handleUp);
-    };
-    document.addEventListener('mousemove', handleMove);
-    document.addEventListener('mouseup', handleUp);
-  }, [posX, posY, popupWidth, popupHeight, setSecondaryFloat]);
-
-  const handleResizeMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    resizeRef.current = { startX: e.clientX, startY: e.clientY, origW: popupWidth, origH: popupHeight };
-    document.body.style.userSelect = 'none';
-
-    const handleMove = (ev: MouseEvent) => {
-      const r = resizeRef.current;
-      if (!r) return;
-      const newW = Math.max(MIN_W, Math.min(MAX_W, r.origW + (ev.clientX - r.startX)));
-      const newH = Math.max(MIN_H, Math.min(MAX_H, r.origH + (ev.clientY - r.startY)));
-      setSecondaryFloat(posX, posY, newW, newH);
-    };
-    const handleUp = () => {
-      resizeRef.current = null;
-      document.body.style.userSelect = '';
-      document.removeEventListener('mousemove', handleMove);
-      document.removeEventListener('mouseup', handleUp);
-    };
-    document.addEventListener('mousemove', handleMove);
-    document.addEventListener('mouseup', handleUp);
-  }, [posX, posY, popupWidth, popupHeight, setSecondaryFloat]);
+    startDrag(e);
+  }, [startDrag]);
 
   if (!secondary) return null;
   if (secondary.mode === 'minimized') return null;
@@ -226,10 +203,10 @@ export function SecondaryChat() {
   }
 
   const popupStyle: CSSProperties & Record<string, string | number> = {
-    left: `${posX}px`,
-    top: `${posY}px`,
-    width: `${popupWidth}px`,
-    height: `${popupHeight}px`,
+    left: `${live.x}px`,
+    top: `${live.y}px`,
+    width: `${live.width}px`,
+    height: `${live.height}px`,
     ...styleVars,
   };
 
@@ -246,7 +223,7 @@ export function SecondaryChat() {
       </div>
       <div
         className="rv-secondary-resize-handle"
-        onMouseDown={handleResizeMouseDown}
+        onMouseDown={startResize}
         aria-hidden="true"
       />
     </div>

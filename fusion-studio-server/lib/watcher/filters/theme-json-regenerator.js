@@ -32,7 +32,7 @@ module.exports = {
 
   shouldWatch(filePath, ctx) {
     if (ctx.basename.startsWith('themes.json.tmp')) return false;
-    return filePath.includes('ai/system/styles/') && ctx.basename.includes('themes.json');
+    return /\/ai\/[^/]+\/System\/styles\//.test(filePath) && ctx.basename.includes('themes.json');
   },
 
   onModify: regenerateThemesCss,

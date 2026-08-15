@@ -51,9 +51,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
       state._prefetchAbort.abort();
     }
 
-    // Save only lightweight, safe-to-cache state (panelConfigs + viewStates).
-    // projectRoot/currentPanel are NOT cached — they come from panel_config
-    // on every switch to avoid path-rotation bugs.
+    // Keep full runtime state in memory for same-session workspace switches,
+    // but persist only view UI state plus the active view id. Panel configs
+    // and panel roots are filesystem-derived from ai/<machine>/Views.
     const nextWorkspaceState = { ...state.workspaceState };
     if (oldId) {
       const oldState: WorkspacePanelState = {
@@ -73,20 +73,32 @@ export const usePanelStore = create<AppState>((set, get) => ({
 
       if (state.ws && state.ws.readyState === WebSocket.OPEN) {
         state.ws.send(JSON.stringify({
-          type: 'workspace:cache_push',
+          type: 'workspace:state_push',
           workspaceId: oldId,
-          state: oldState,
+          state: {
+            currentPanel: state.currentPanel,
+          },
         }));
       }
     }
 
     const cached = workspaceId ? nextWorkspaceState[workspaceId] : null;
     const loaded = cached ? { ...cached } : createEmptyWorkspaceState();
+    const preserveInitialDiscovery =
+      !oldId && loaded.panelConfigs.length === 0 && state.panelConfigs.length > 0;
+    const panelConfigs = preserveInitialDiscovery ? state.panelConfigs : loaded.panelConfigs;
+    const panelRoots = preserveInitialDiscovery ? state.panelRoots : loaded.panelRoots;
+    const currentPanelCandidate = preserveInitialDiscovery ? state.currentPanel : loaded.currentPanel;
 
-    // Validate currentPanel against cached panelConfigs; reset to first or default if stale.
-    const validPanel = loaded.panelConfigs.find((c) => c.id === loaded.currentPanel)
-      ? loaded.currentPanel
-      : (loaded.panelConfigs[0]?.id ?? 'file-viewer');
+    // Validate currentPanel against discovered panelConfigs when available.
+    // During initial workspace hydration, discovery can still be in flight; keep
+    // the saved panel until configs arrive, then App's validation effect handles
+    // genuinely stale values.
+    const validPanel = panelConfigs.length === 0
+      ? (currentPanelCandidate || 'file-viewer')
+      : (panelConfigs.find((c) => c.id === currentPanelCandidate)
+        ? currentPanelCandidate
+        : (panelConfigs[0]?.id ?? 'file-viewer'));
 
     set({
       activeWorkspaceId: workspaceId,
@@ -99,14 +111,18 @@ export const usePanelStore = create<AppState>((set, get) => ({
       chatActive: false,
       wireReady: false,
       contextUsage: 0,
-      panelConfigs: loaded.panelConfigs,
-      panelRoots: loaded.panelRoots,
+      panelConfigs,
+      panelRoots,
       viewStates: loaded.viewStates,
       _prefetchAbort: null,
     });
+
+    if (validPanel && state.ws && state.ws.readyState === WebSocket.OPEN && !loaded.viewStates[validPanel]) {
+      get().loadViewState(validPanel);
+    }
   },
 
-  // Seed workspace state from server cache (on workspace:init) without activating.
+  // Seed workspace shell state from workspace:init without activating.
   seedWorkspaceState: (workspaceId, partial) => {
     set((s) => {
       if (s.workspaceState[workspaceId]) return s;
@@ -223,6 +239,15 @@ export const usePanelStore = create<AppState>((set, get) => ({
     const ws = state.ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'set_panel', panel: id }));
+      if (state.activeWorkspaceId) {
+        ws.send(JSON.stringify({
+          type: 'workspace:state_push',
+          workspaceId: state.activeWorkspaceId,
+          state: {
+            currentPanel: id,
+          },
+        }));
+      }
     }
     // SPEC-26c-2: load view state if not yet cached.
     if (!get().viewStates[id]) {

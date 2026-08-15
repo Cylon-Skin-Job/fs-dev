@@ -12,6 +12,7 @@ const path = require('path');
 const { subscribe, unsubscribe } = require('../watch/core');
 const sourceFolderService = require('./source-folder-service');
 const workspaceController = require('../workspace/workspace-controller');
+const aiPaths = require('../workspace/ai-paths');
 
 const SUBSCRIBER_ID = 'macos-screenshots';
 const SCREENSHOT_NAME_REGEX = /^Screenshot .*\.(png|jpg|jpeg)$/i;
@@ -37,7 +38,7 @@ function readAppFocused() {
 function getWorkspaceScreenshotsDir() {
   const activeWorkspace = workspaceController.getActiveWorkspaceSync();
   if (!activeWorkspace || !activeWorkspace.repo_path) return null;
-  return path.join(activeWorkspace.repo_path, 'ai', 'data');
+  return path.join(aiPaths.getMachineAiRoot(activeWorkspace.repo_path), 'Data', 'Screenshots');
 }
 
 async function ensureDir(dir) {

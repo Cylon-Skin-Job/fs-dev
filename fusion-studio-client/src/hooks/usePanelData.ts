@@ -12,14 +12,14 @@ import { useEffect, useRef, useCallback } from 'react';
 import { usePanelStore } from '../state/panelStore';
 
 interface UsePanelDataOptions {
-  /** Panel ID (folder name in ai/views/) */
+  /** Panel ID (view-id from ai/<machine>/Views/) */
   panel: string;
   /** Path to the index file to load on connect (default: 'index.json') */
   indexPath?: string;
   /** Called when index file content arrives */
   onIndex?: (content: string) => void;
   /** Called when any file_content_response arrives for this panel */
-  onFileContent?: (path: string, content: string) => void;
+  onFileContent?: (path: string, content: string, metadata?: { isSymlink?: boolean; symlinkTarget?: string }) => void;
   /** Called on error responses */
   onError?: (error: string, path: string) => void;
 }
@@ -40,6 +40,7 @@ export function usePanelData({
 }: UsePanelDataOptions) {
   const ws = usePanelStore((state) => state.ws);
   const lastWsRef = useRef<WebSocket | null>(null);
+  const lastRequestKeyRef = useRef<string | null>(null);
 
   // Listen for file_content_response messages for this panel
   useEffect(() => {
@@ -62,7 +63,10 @@ export function usePanelData({
         }
 
         // Any other file response
-        onFileContent?.(msg.path, msg.content);
+        onFileContent?.(msg.path, msg.content, {
+          isSymlink: msg.isSymlink,
+          symlinkTarget: msg.symlinkTarget,
+        });
       } catch { /* ignore parse errors */ }
     }
 
@@ -70,20 +74,33 @@ export function usePanelData({
     return () => ws.removeEventListener('message', handleMessage);
   }, [ws, panel, indexPath, onIndex, onFileContent, onError]);
 
-  // Load index on first connect and after reconnect.
-  // Reset lastWsRef on cleanup so strict-mode remount re-sends the request.
+  // Load index on first connect and after reconnect. If the component mounts
+  // while the socket is still CONNECTING, wait for the socket's open event.
   useEffect(() => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    if (ws === lastWsRef.current) return;
-    lastWsRef.current = ws;
-    ws.send(JSON.stringify({
-      type: 'file_content_request',
-      panel,
-      path: indexPath,
-    }));
+    if (!ws) return;
+
+    const requestKey = `${panel}:${indexPath}`;
+    const sendIndexRequest = () => {
+      if (ws.readyState !== WebSocket.OPEN) return;
+      if (ws === lastWsRef.current && lastRequestKeyRef.current === requestKey) return;
+      lastWsRef.current = ws;
+      lastRequestKeyRef.current = requestKey;
+      ws.send(JSON.stringify({
+        type: 'file_content_request',
+        panel,
+        path: indexPath,
+      }));
+    };
+
+    sendIndexRequest();
+    ws.addEventListener('open', sendIndexRequest);
 
     return () => {
-      lastWsRef.current = null;
+      ws.removeEventListener('open', sendIndexRequest);
+      if (lastWsRef.current === ws && lastRequestKeyRef.current === requestKey) {
+        lastWsRef.current = null;
+        lastRequestKeyRef.current = null;
+      }
     };
   }, [ws, panel, indexPath]);
 

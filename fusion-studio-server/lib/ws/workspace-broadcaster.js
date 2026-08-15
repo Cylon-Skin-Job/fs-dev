@@ -27,6 +27,7 @@ const fsPromises = require('fs').promises;
 const registry = require('../workspace/registry-service');
 const themesService = require('../theme/themes-service');
 const aiPaths = require('../workspace/ai-paths');
+const { buildPanelConfig } = require('./connection-init');
 
 const STYLE_FILES = [
   'variables.css',
@@ -34,7 +35,7 @@ const STYLE_FILES = [
   'components.css',
   'views.css',
   'file-viewer.css',
-  'doc-viewer.css',
+  'capture-viewer.css',
   'tints.css',
 ];
 
@@ -58,8 +59,8 @@ async function readWorkspaceStyles(repoPath) {
 
 /**
  * Initialize the workspace broadcaster. Call once at server startup,
- * BEFORE server.listen() opens the port so boot-time events (e.g.
- * workspace:culled_at_launch) reach subscribers.
+ * BEFORE server.listen() opens the port so boot-time workspace availability
+ * events reach subscribers.
  *
  * @param {object} deps
  * @param {() => import('ws').WebSocket[]} deps.getAllClients
@@ -117,16 +118,17 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
         baseMessage.themes = [];
         baseMessage.activeThemeId = null;
       }
-
-      // Also send panel_config so clients update projectRoot immediately
-      broadcastAll({
-        type: 'panel_config',
-        projectRoot: event.repoPath,
-        projectName: path.basename(event.repoPath),
-      });
     }
 
     broadcastAll(baseMessage);
+
+    if (event.repoPath) {
+      // Send panel_config after workspace:switched. The client activates the
+      // new workspace on that message, which clears old per-workspace roots.
+      // Link/copy/send-to-chat actions consume these resolved content roots
+      // through the shared resource-path module.
+      broadcastAll(buildPanelConfig(event.repoPath));
+    }
   }
 
   function queueWorkspaceSwitchBroadcast(event) {
@@ -168,9 +170,9 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
     return queueWorkspaceSwitchBroadcast(event);
   });
 
-  on('workspace:culled_at_launch', (event) => {
+  on('workspace:unavailable_at_launch', (event) => {
     broadcastAll({
-      type: 'workspace:culled_at_launch',
+      type: 'workspace:unavailable_at_launch',
       workspaceId: event.workspaceId,
       reason: event.reason,
     });

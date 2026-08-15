@@ -28,7 +28,6 @@ const express = require('express');
 const { initDb, getDb, closeDb, DB_PATH } = require('./db');
 const createFusionHandlers = require('./fusion/ws-handlers');
 const createClipboardHandlers = require('./secrets/clipboard/handlers');
-const createRecentDocsHandlers = require('./recent-docs/handlers');
 const createBookmarksHandlers = require('./bookmarks/handlers');
 const createEmojiRecentsHandlers = require('./emoji-recents/handlers');
 const createThemeHandlers = require('./ws/theme-handlers');
@@ -38,6 +37,7 @@ const themesService = require('./theme/themes-service');
 const { startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
+const views = require('./views');
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
 
@@ -63,7 +63,7 @@ async function start({ server, app, sessions, getProjectRoot }) {
   console.log('[DB] fusion.db initialized');
   const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
   const localMachineName = await initializeLocalMachineIdentity();
-  console.log('[Workspace] local machine identity: ' + localMachineName);
+  console.log('[Workspace] local machine name: ' + localMachineName);
 
   // 2. Handlers — depend on DB being ready
   const fusionHandlers = createFusionHandlers({ getDb, sessions, getProjectRoot });
@@ -90,8 +90,8 @@ async function start({ server, app, sessions, getProjectRoot }) {
   startThreadLifecycle({ idleTimeoutMinutes: 45 });
 
   // 3.7. Workspace broadcaster — bus → WebSocket fan-out for workspace
-  // and thread lifecycle events. Must subscribe before listen() so events
-  // from boot (e.g. workspace:culled_at_launch) are delivered.
+  // and thread lifecycle events. Must subscribe before listen() so boot-time
+  // workspace availability events are delivered.
   const getAllClients = () => {
     const clients = [];
     for (const [ws] of sessions) {
@@ -132,7 +132,6 @@ async function start({ server, app, sessions, getProjectRoot }) {
   // 3.7e. Clipboard handlers — keychain-backed; depends on getAllClients for
   // broadcast on append/use/touch/delete/clear.
   const clipboardHandlers = createClipboardHandlers({ getAllClients });
-  const recentDocsHandlers = createRecentDocsHandlers({ getAllClients });
   const bookmarksHandlers = createBookmarksHandlers({ getAllClients });
   const emojiRecentsHandlers = createEmojiRecentsHandlers();
   const screenshotHandlers = createScreenshotHandlers({ getAllClients });
@@ -173,7 +172,7 @@ async function start({ server, app, sessions, getProjectRoot }) {
     });
   }
 
-  // 3.8c. CLI-config workspace file — ensure ai/system/config/cli.json
+  // 3.8c. CLI-config workspace file — ensure ai/<machine>/System/config/cli.json
   // exists so discovery is trivial (CLI_CONFIG_SPEC §7e). Runs after
   // workspaceController.start() so getProjectRoot() resolves to the active
   // workspace root; otherwise bootstrap silently no-ops.
@@ -231,7 +230,7 @@ async function start({ server, app, sessions, getProjectRoot }) {
       console.error('[Server] Failed to resolve Fusion Home path:', err.message);
     });
 
-  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, recentDocsHandlers, bookmarksHandlers, emojiRecentsHandlers };
+  return { fusionHandlers, clipboardHandlers, themeHandlers, secretsHandlers, screenshotHandlers, bookmarksHandlers, emojiRecentsHandlers };
 }
 
 /**
@@ -250,26 +249,34 @@ function _startPipeline({ sessions, getProjectRoot }) {
     console.log('[Server] No active workspace — pipeline skipped');
     return;
   }
-  const viewsPath = path.join(projectRoot, 'ai', 'views');
-  console.log(`[Server] Thread storage: ${viewsPath}`);
-
   // Start project-wide file watcher
   const { createWatcher } = require('./watch/workspace-watcher');
   const { loadFilters } = require('./watcher/filter-loader');
   const { createActionHandlers } = require('./watcher/actions');
 
   // Issues/tickets — optional, not every workspace has an issues-viewer
-  const createTicketPath = path.join(viewsPath, 'issues-viewer', 'scripts', 'create-ticket.js');
+  const issuesViewRoot = views.resolveViewRoot(projectRoot, 'issues-viewer', { includeHidden: true });
+  const issuesDir = views.resolveOperationalViewRoot(projectRoot, 'issues-viewer');
+  const createTicketCandidates = [
+    issuesViewRoot && path.join(issuesViewRoot, 'scripts', 'create-ticket.js'),
+    path.join(issuesDir, 'scripts', 'create-ticket.js'),
+  ].filter(Boolean);
   let createTicket = () => { console.warn('[Server] createTicket unavailable — issues-viewer not in this workspace'); return null; };
-  if (fs.existsSync(createTicketPath)) {
-    createTicket = require(createTicketPath);
+  const createTicketPath = createTicketCandidates.find((candidate) => fs.existsSync(candidate));
+  if (createTicketPath) {
+    const loadedCreateTicket = require(createTicketPath);
+    createTicket = typeof loadedCreateTicket === 'function'
+      ? loadedCreateTicket
+      : loadedCreateTicket.createTicket;
+    if (typeof createTicket !== 'function') {
+      createTicket = () => { console.warn('[Server] createTicket export is invalid'); return null; };
+    }
   } else {
     console.log('[Server] issues-viewer/scripts/create-ticket not found — ticket creation disabled');
   }
 
   // Create hold registry for auto-block timers
   const { createHoldRegistry } = require('./triggers/hold-registry');
-  const issuesDir = path.join(viewsPath, 'issues-viewer');
   const holdRegistry = global.__holdRegistry = createHoldRegistry(issuesDir);
 
   // Wrap createTicket to hook trigger-created tickets into the hold registry
@@ -329,7 +336,7 @@ function _startPipeline({ sessions, getProjectRoot }) {
   const { createCronScheduler } = require('./triggers/cron-scheduler');
   const { evaluateCondition } = require('./watcher/filter-loader');
 
-  const agentsBasePath = path.join(viewsPath, 'agents-viewer');
+  const agentsBasePath = views.resolveOperationalViewRoot(projectRoot, 'agents-viewer');
   try {
     const registry = JSON.parse(fs.readFileSync(path.join(agentsBasePath, 'registry.json'), 'utf8'));
     const { filters: triggerFilters, cronTriggers } = loadTriggers(

@@ -1,0 +1,563 @@
+{
+  "schema_version": 2,
+  "name": "Project Vision",
+  "description": "Static routing and record-schema metadata for the Robin, personal-memory, Routines, privacy, and Fusion Studio system-management vision.",
+  "repository_root": "../../../..",
+  "wiki_root": "../../Wiki",
+  "workflow": [
+    "capture",
+    "resume_open_threads",
+    "clarify_intent",
+    "research_and_verify",
+    "shape_domain_models",
+    "resolve_owner_decisions",
+    "bound_change_surface",
+    "roadmap_when_authorized"
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Folder-local Launchpad, Second Brain, authority, sensitive-data, schema, and verification contract."
+    },
+    {
+      "path": "index.json",
+      "description": "Static routing metadata and record schemas; never a live status or lock ledger."
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Volatile coordination with no content, consent, data-access, or implementation authority.",
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["B"],
+        "required_fields": ["Type", "Status", "Owner/chat", "Target", "Source", "Summary", "Next", "Outcome"],
+        "field_values": {
+          "Type": ["assignment", "handoff", "conflict", "question", "observation", "completion"],
+          "Status": ["open", "claimed", "blocked", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Defines the bulletin's bounded coordination role and lack of authority."
+        },
+        {
+          "key": "protocol",
+          "heading": "Protocol",
+          "description": "Defines stable records, posting thresholds, ownership, and safety rules."
+        },
+        {
+          "key": "entries",
+          "heading": "Entries",
+          "description": "Holds durable coordination records and their outcomes."
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "path": "CAPTURE.md",
+      "kind": "conversational_memory",
+      "authority": "context",
+      "description": "Readable synthesis, active user threads, decision prompts, routed outcomes, and re-entry history for the Project Vision blurt.",
+      "lifecycle": "curate_resume_promote_compact_and_preserve_provenance",
+      "read_before": [],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["CAP"],
+        "required_fields": ["Origin", "Type", "Status", "Source", "Summary", "Related"],
+        "field_values": {
+          "Origin": ["user", "assistant", "mixed"],
+          "Type": ["thread", "idea", "question", "decision_prompt", "observation"],
+          "Status": ["open", "parked", "routed", "closed"]
+        }
+      },
+      "sections": [
+        {
+          "key": "working-synthesis",
+          "heading": "Working Synthesis",
+          "description": "Restores the full realization without requiring the original conversation."
+        },
+        {
+          "key": "user-threads",
+          "heading": "User Threads to Resume",
+          "description": "Holds user-originated open loops that need future shaping, research, or decisions."
+        },
+        {
+          "key": "assistant-possibilities",
+          "heading": "Assistant Possibilities",
+          "description": "Holds explicitly unendorsed assistant-originated adjacent ideas."
+        },
+        {
+          "key": "decision-queue",
+          "heading": "Decision Queue",
+          "description": "Holds bounded owner choices awaiting explicit disposition."
+        },
+        {
+          "key": "routed-outcomes",
+          "heading": "Routed Outcomes",
+          "description": "Preserves compact backlinks after memory responsibility moves to authoritative documents."
+        },
+        {
+          "key": "capture-history",
+          "heading": "Capture History",
+          "description": "Records meaningful conversational checkpoints."
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "owner_intent",
+      "authority": "owner",
+      "description": "Purpose, desired outcomes, enduring goals, success conditions, constraints, and non-goals for the Project Vision.",
+      "lifecycle": "refine_with_explicit_owner_direction",
+      "read_before": ["CAPTURE.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Explains why this vision exists."
+        },
+        {
+          "key": "desired-outcomes",
+          "heading": "Desired Outcomes",
+          "description": "Defines the current product end states being sought."
+        },
+        {
+          "key": "enduring-goals",
+          "heading": "Enduring Goals",
+          "description": "Defines the long-range trajectory without approving implementation."
+        },
+        {
+          "key": "success-conditions",
+          "heading": "Success Conditions",
+          "description": "Defines observable evidence that the intent is being fulfilled."
+        },
+        {
+          "key": "constraints",
+          "heading": "Constraints",
+          "description": "Defines privacy, authority, product, and data boundaries."
+        },
+        {
+          "key": "non-goals",
+          "heading": "Non-goals",
+          "description": "Prevents accidental scope, surveillance, and implementation expansion."
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "owner_decisions",
+      "authority": "owner",
+      "description": "Sole durable register of RC's settled product, architecture, privacy, data, and process choices.",
+      "lifecycle": "append_and_supersede_never_delete",
+      "read_before": ["CAPTURE.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["D"],
+        "required_fields": ["Date", "Category", "Status", "Source"],
+        "field_values": {
+          "Category": ["product", "architecture", "privacy", "data", "process"],
+          "Status": ["active", "superseded", "revoked"]
+        }
+      },
+      "sections": [
+        {
+          "key": "product-identity-placement",
+          "heading": "Product Identity and Placement",
+          "description": "Owner choices about Robin, Raven, and system-level placement."
+        },
+        {
+          "key": "privacy-data",
+          "heading": "Privacy and Data",
+          "description": "Owner choices about sensitive storage and consent boundaries."
+        },
+        {
+          "key": "process-governance",
+          "heading": "Process and Governance",
+          "description": "Owner choices about reviewability and the pre-implementation workflow."
+        }
+      ]
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "verified_issues",
+      "authority": "evidence",
+      "description": "Actionable risks, gaps, and architectural inconsistencies identified from owner experience and current direction.",
+      "lifecycle": "verify_track_resolve_or_supersede",
+      "read_before": ["DECISIONS.md", "INTENT.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["I"],
+        "required_fields": ["Category", "Type", "Severity", "Status", "Source", "Related"],
+        "field_values": {
+          "Category": ["trust", "consent", "privacy", "memory", "schema", "performance", "architecture"],
+          "Type": ["risk", "gap", "inconsistency", "debt"],
+          "Severity": ["high", "medium", "low"],
+          "Status": ["open", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "trust-consent-privacy",
+          "heading": "Trust, Consent, and Privacy",
+          "description": "Covers creepiness, explainability, leakage, and sensitive inference."
+        },
+        {
+          "key": "information-memory",
+          "heading": "Information and Memory Architecture",
+          "description": "Covers taxonomy, modular schema, enrichment, and grounding."
+        },
+        {
+          "key": "product-runtime",
+          "heading": "Product and Runtime Architecture",
+          "description": "Covers latency, System Manager migration, manuals, and events."
+        }
+      ]
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "candidate_actions",
+      "authority": "proposal",
+      "description": "Candidate consent, memory, retrieval, coordination, System Manager, Routines, and modularity mechanisms.",
+      "lifecycle": "propose_decide_link_or_supersede",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["P"],
+        "required_fields": ["Category", "Status", "Source", "Addresses"],
+        "field_values": {
+          "Category": ["consent", "memory", "retrieval", "system_manager", "coordination", "modularity", "workflow", "interaction", "app", "agent"],
+          "Status": ["proposed", "approved", "rejected", "deferred", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "consent-trust",
+          "heading": "Consent and Trust",
+          "description": "Candidate consent escalation and transparent enrichment mechanisms."
+        },
+        {
+          "key": "memory-retrieval",
+          "heading": "Memory and Retrieval",
+          "description": "Candidate hierarchy, graph, salience, metadata, lookup, and background-context mechanisms."
+        },
+        {
+          "key": "system-manager-coordination",
+          "heading": "System Manager and Coordination",
+          "description": "Candidate Robin notifications, review, and profile surfaces."
+        },
+        {
+          "key": "modular-product",
+          "heading": "Modular Product Structure",
+          "description": "Candidate module, schema, migration, and capability contracts."
+        },
+        {
+          "key": "workflow-ticketing",
+          "heading": "Workflow and Ticketing",
+          "description": "Candidate containerized Wiki, fronting-agent, AFK, interactive, and validation workflows."
+        },
+        {
+          "key": "apps-surfaces",
+          "heading": "Apps and Surfaces",
+          "description": "Candidate portable host contracts, graph and recurring apps, and shared-data capabilities."
+        },
+        {
+          "key": "agent-ecosystem",
+          "heading": "Agent Ecosystem",
+          "description": "Candidate active, inactive, downloadable, and user-editable worker templates."
+        },
+        {
+          "key": "routines",
+          "heading": "Routines",
+          "description": "Candidate conversational execution, semantic invocation, data projection, background refinement, learning, and automation mechanisms."
+        }
+      ]
+    },
+    {
+      "path": "PRIVACY_AND_DATA.md",
+      "kind": "privacy_data_model",
+      "authority": "analysis",
+      "description": "Analytical map of trust, consent, storage, transparency, and sensitive-inference boundaries.",
+      "lifecycle": "elaborate_owner_boundaries_verify_enforcement_and_surface_open_questions",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md"],
+      "sections": [
+        {
+          "key": "trust-problem",
+          "heading": "Trust Problem",
+          "description": "Explains why access and invisible inference create surveillance-shaped risk."
+        },
+        {
+          "key": "consent-model",
+          "heading": "Consent Model",
+          "description": "Defines the desired qualities of contextual, bounded, reversible consent."
+        },
+        {
+          "key": "storage-boundary",
+          "heading": "Storage Boundary",
+          "description": "Maps data classes to database, filesystem, and repository behavior."
+        },
+        {
+          "key": "transparency-review",
+          "heading": "Transparency and Review",
+          "description": "Defines what background processing should disclose and preserve."
+        },
+        {
+          "key": "sensitive-inference",
+          "heading": "Sensitive Inference",
+          "description": "Surfaces risks and controls for entity, relationship, and personal facts."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved privacy, consent, retention, provider, and enforcement questions."
+        }
+      ]
+    },
+    {
+      "path": "MEMORY_MODEL.md",
+      "kind": "personal_memory_model",
+      "authority": "analysis",
+      "description": "Working model of cognitive scope, memory layers, hierarchy, graph, retrieval, enrichment, and grounded narrative.",
+      "lifecycle": "derive_compare_verify_and_refine_without_creating_decision_authority",
+      "read_before": ["DECISIONS.md", "INTENT.md", "PRIVACY_AND_DATA.md"],
+      "sections": [
+        {
+          "key": "cognitive-scope",
+          "heading": "Cognitive Scope",
+          "description": "Defines present, enduring, and retrievable awareness."
+        },
+        {
+          "key": "memory-layers",
+          "heading": "Memory Layers",
+          "description": "Separates sources, facts, summaries, semantics, entities, timelines, narrative, and fast recall."
+        },
+        {
+          "key": "hierarchy-graph",
+          "heading": "Hierarchy and Graph",
+          "description": "Combines shallow navigation with typed associative edges."
+        },
+        {
+          "key": "retrieval-promotion",
+          "heading": "Retrieval and Promotion",
+          "description": "Defines staged lookup and conversational salience promotion."
+        },
+        {
+          "key": "enrichment-pipeline",
+          "heading": "Enrichment Pipeline",
+          "description": "Maps catch-up and incremental extraction, classification, linking, and review."
+        },
+        {
+          "key": "source-narrative",
+          "heading": "Source Grounding and Narrative",
+          "description": "Connects imported history to factual and personal narrative."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved schema, salience, retrieval, model, and audit questions."
+        }
+      ]
+    },
+    {
+      "path": "SYSTEM_MANAGER.md",
+      "kind": "system_manager_concept",
+      "authority": "analysis",
+      "description": "Working concept for Robin's identity, system-level placement, manual, intake, notifications, and background context.",
+      "lifecycle": "elaborate_against_owner_decisions_and_current_system_sources",
+      "read_before": ["DECISIONS.md", "INTENT.md", "PRIVACY_AND_DATA.md", "MEMORY_MODEL.md"],
+      "sections": [
+        {
+          "key": "identity-placement",
+          "heading": "Identity and Placement",
+          "description": "Defines Robin, Raven, the bird icon, and the above-workspace surface."
+        },
+        {
+          "key": "manual-grounding",
+          "heading": "System Manual and Grounding",
+          "description": "Defines SQLite-backed system orientation and source-aware answers."
+        },
+        {
+          "key": "cross-workspace-intake",
+          "heading": "Cross-Workspace Intake",
+          "description": "Maps tickets, events, review items, and provenance requirements."
+        },
+        {
+          "key": "notifications-review",
+          "heading": "Notifications and Review",
+          "description": "Defines badge, grouping, silence, acknowledgement, and safety boundaries."
+        },
+        {
+          "key": "conversation-background",
+          "heading": "Conversation and Background Context",
+          "description": "Defines responsive conversation plus bounded context assembly."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved manual, event, notification, persona, and migration questions."
+        }
+      ]
+    },
+    {
+      "path": "INTERACTION_MODEL.md",
+      "kind": "surface_interaction_model",
+      "authority": "analysis",
+      "description": "Working model of Launchpad, workspace harness chat, Robin, portable apps and views, navigation handoffs, and shared capability boundaries.",
+      "lifecycle": "derive_compare_and_refine_cross_surface_contracts",
+      "read_before": ["DECISIONS.md", "INTENT.md", "PRIVACY_AND_DATA.md", "SYSTEM_MANAGER.md"],
+      "sections": [
+        {
+          "key": "chat-surface-roles",
+          "heading": "Chat Surface Roles",
+          "description": "Separates Launchpad, workspace harness chat, and Robin global chat."
+        },
+        {
+          "key": "system-manager-app-shell",
+          "heading": "System Manager App Shell",
+          "description": "Defines Robin's app button, drawer, default chat, and web interaction paradigm."
+        },
+        {
+          "key": "workspace-view-shell",
+          "heading": "Workspace View Shell",
+          "description": "Preserves the VS Code-like desktop workspace with attached chat and selectable views."
+        },
+        {
+          "key": "responsive-presentation-contract",
+          "heading": "Responsive Presentation Contract",
+          "description": "Maps one capability across web, mobile, Robin overlay, and desktop workspace view surfaces."
+        },
+        {
+          "key": "navigation-content-handoffs",
+          "heading": "Navigation and Content Handoffs",
+          "description": "Defines transitions between conversation references and full app or view content."
+        },
+        {
+          "key": "shared-components-data",
+          "heading": "Shared Components and Data",
+          "description": "Defines reusable components and explicit data, command, event, and permission contracts."
+        },
+        {
+          "key": "example-apps",
+          "heading": "Example Apps",
+          "description": "Preserves Personal Inventory, Weekly Review, and Routines as illustrative app and interaction examples."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved surface, navigation, responsive, and capability questions."
+        }
+      ]
+    },
+    {
+      "path": "WORKFLOW_MODEL.md",
+      "kind": "ticket_workflow_model",
+      "authority": "analysis",
+      "description": "Working model of folder-shaped tickets, Wiki updates, fronting-agent delegation, AFK and interactive execution, validation, workers, and recurring apps.",
+      "lifecycle": "derive_validate_and_refine_containerized_agent_workflows",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md", "PRIVACY_AND_DATA.md", "INTERACTION_MODEL.md"],
+      "sections": [
+        {
+          "key": "containerized-ticket-work",
+          "heading": "Containerized Ticket Work",
+          "description": "Defines folder-shaped work containers, evidence, local schemas, and specialist handoffs."
+        },
+        {
+          "key": "wiki-update-lifecycle",
+          "heading": "Wiki Update Lifecycle",
+          "description": "Maps merge-triggered documentation work from hydration through editing, validation, and closure."
+        },
+        {
+          "key": "fronting-agent-delegation",
+          "heading": "Fronting Agent Delegation",
+          "description": "Defines ticket proposals, bounded delegation, conversational checkpoints, and authority limits."
+        },
+        {
+          "key": "afk-loop-modes",
+          "heading": "AFK and In-the-Loop Modes",
+          "description": "Defines shared-state autonomous and interactive execution modes."
+        },
+        {
+          "key": "validation-owner-checkpoints",
+          "heading": "Validation and Owner Checkpoints",
+          "description": "Defines bounded repair loops and escalation of the smallest unresolved owner set."
+        },
+        {
+          "key": "background-worker-library",
+          "heading": "Background Worker Library",
+          "description": "Defines active, inactive, downloadable, and user-editable worker templates."
+        },
+        {
+          "key": "recurring-apps-scripts",
+          "heading": "Recurring Apps and Scripts",
+          "description": "Defines script-backed recurring apps, executable routine attachments, and their shared run identities."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved container, lease, validation, worker, permission, and recurring-run questions."
+        }
+      ]
+    },
+    {
+      "path": "ROUTINES_MODEL.md",
+      "kind": "stateful_routine_model",
+      "authority": "analysis",
+      "description": "Working model of Routines as conversational executable extensions attached to database-backed memory nodes.",
+      "lifecycle": "derive_refine_and_validate_stateful_routine_contracts",
+      "read_before": ["DECISIONS.md", "INTENT.md", "MEMORY_MODEL.md", "PRIVACY_AND_DATA.md", "INTERACTION_MODEL.md", "WORKFLOW_MODEL.md"],
+      "sections": [
+        {
+          "key": "role-scope",
+          "heading": "Role and Scope",
+          "description": "Defines Routines as the bridge from maintained memory to conversational action."
+        },
+        {
+          "key": "routine-nodes",
+          "heading": "Routine Nodes",
+          "description": "Defines routines as executable memory-node extensions with durable Launchpad-style state and attachments."
+        },
+        {
+          "key": "conversational-execution",
+          "heading": "Conversational Execution",
+          "description": "Defines companion-style step guidance, acknowledgement, branching, pause, and resume behavior."
+        },
+        {
+          "key": "semantic-invocation",
+          "heading": "Semantic Invocation",
+          "description": "Defines alias resolution, context loading, background receipts, and reconciliation."
+        },
+        {
+          "key": "state-evidence",
+          "heading": "State and Evidence",
+          "description": "Separates routine definitions, run identities, evidence types, history, and resumable state."
+        },
+        {
+          "key": "apps-tools-scripts",
+          "heading": "Apps, Tools, and Scripts",
+          "description": "Defines routine orchestration, domain ownership, explicit capabilities, API operations, and custom scripts."
+        },
+        {
+          "key": "background-refinement",
+          "heading": "Background Refinement",
+          "description": "Defines bounded review of conversation and run history for issues, suggestions, and maintained context."
+        },
+        {
+          "key": "automation-control",
+          "heading": "Automation and Control",
+          "description": "Separates refresh, modification, preparation, invocation, and autonomous action permissions."
+        },
+        {
+          "key": "example-routines",
+          "heading": "Example Routines",
+          "description": "Preserves household, vitamin, Status, flashcard, hydration, and calendar examples without approving implementation details."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Design Questions",
+          "description": "Holds unresolved schema, invocation, receipt, projection, capability, automation, and sensitive-data questions."
+        }
+      ]
+    }
+  ]
+}

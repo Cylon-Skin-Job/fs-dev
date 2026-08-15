@@ -27,11 +27,11 @@ metadata:
 
 Start here when working on the Fusion Studio wiki.
 
-The wiki is a folder-first documentation system. The persistent contract is `ai/views/wiki-viewer/Wiki/**/PAGE.md`. The UI discovers folders, renders `PAGE.md`, keeps the left sidebar as the primary outline, and uses the right sidebar only for child navigation under top-level article folders.
+The wiki is a folder-first documentation system. The persistent contract is `ai/<machine>/Wiki/**/PAGE.md`. The UI discovers folders, renders `PAGE.md`, keeps the left sidebar as the primary outline, and uses the right sidebar only for child navigation under top-level article folders.
 
 ## Current Model
 
-- The wiki root is `ai/views/wiki-viewer/Wiki/`.
+- The wiki root is `ai/<machine>/Wiki/`.
 - Every navigable page is represented by a folder containing `PAGE.md`.
 - Numeric folder prefixes control ordering.
 - Folder labels strip numeric prefixes and convert `_` to spaces.

@@ -30,7 +30,7 @@ fs-dev/
 
 The current chat/thread model is documented in:
 
-`ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md`
+`ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md`
 
 ## Development
 
@@ -65,7 +65,7 @@ The active SQLite database is `fusion.db`, managed by `fusion-studio-server/lib/
 - `AGENTS.md` - agent-facing project guidance
 - `docs/FUSION_STUDIO_OVERVIEW.md` - broad application overview
 - `docs/FUSION_STUDIO_ARCHITECTURE_OUTLINE.md` - architecture outline
-- `ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md` - current chat/harness/thread model
+- `ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` - current chat/harness/thread model
 
 ## Historical Naming
 

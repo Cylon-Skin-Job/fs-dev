@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "dataSource": "selected-folder",
+  "root": {
+    "type": "selected-folder",
+    "path": null
+  }
+}

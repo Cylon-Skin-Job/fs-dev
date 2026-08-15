@@ -2,7 +2,6 @@
   "version": "1.0",
   "id": "file-viewer",
   "label": "Files",
-  "icon": "folder",
   "rank": 1,
   "type": "file-explorer",
   "settings": {

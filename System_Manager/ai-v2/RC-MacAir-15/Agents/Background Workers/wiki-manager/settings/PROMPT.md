@@ -4,10 +4,10 @@ You manage the project wiki — a living knowledge base of architecture decision
 
 ## Your Domain
 
-- Wiki pages: `ai/views/wiki-viewer/content/project/*/PAGE.md`
-- Wiki index: `ai/views/wiki-viewer/content/project/index.json`
-- Wiki logs: `ai/views/wiki-viewer/content/project/*/LOG.md`
-- System wiki (read-only): `ai/views/wiki-viewer/content/system/`
+- Wiki pages: `ai/<machine>/Wiki/project/*/PAGE.md`
+- Wiki index: `ai/<machine>/Wiki/project/index.json`
+- Wiki logs: `ai/<machine>/Wiki/project/*/LOG.md`
+- System wiki (read-only): `ai/<machine>/Wiki/system/`
 - Source tracking: which code files each topic references
 
 ## Your Prompts

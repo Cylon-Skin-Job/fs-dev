@@ -41,7 +41,6 @@ function captureFileChange(event) {
 }
 
 on('file:changed', captureFileChange);
-on('file_changed', captureFileChange);
 
 registerCollector({
   id: 'file-mutations',

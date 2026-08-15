@@ -1,0 +1,120 @@
+{
+  "widths": {
+    "leftSidebar": 220,
+    "leftChat": 399.29296875,
+    "rightSecondary": 400,
+    "rightCol": 225.234375
+  },
+  "collapsed": {
+    "leftSidebar": true,
+    "leftChat": false
+  },
+  "popup": {
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
+    "height": 520,
+    "threadId": null
+  },
+  "tints": {
+    "leftPanel": false,
+    "rightPanel": false,
+    "cards": false,
+    "contentPanels": false,
+    "borders": {
+      "threads": false,
+      "chat": false
+    }
+  },
+  "activity": {
+    "recents": [],
+    "navigation": {
+      "stack": [],
+      "index": -1
+    },
+    "tabs": [
+      {
+        "id": "file-viewer:install-voice-transcription.sh",
+        "panel": "file-viewer",
+        "path": "install-voice-transcription.sh",
+        "title": "install-voice-transcription.sh",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "sh",
+        "tabIndex": 0
+      },
+      {
+        "id": "file-viewer:HANDOFF.md",
+        "panel": "file-viewer",
+        "path": "HANDOFF.md",
+        "title": "HANDOFF.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 1
+      },
+      {
+        "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
+        "panel": "file-viewer",
+        "path": "MESSAGE_ID_AUDIT_SPEC.md",
+        "title": "MESSAGE_ID_AUDIT_SPEC.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 2
+      },
+      {
+        "id": "file-viewer:CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
+        "panel": "file-viewer",
+        "path": "CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
+        "title": "CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 3
+      },
+      {
+        "id": "file-viewer:wiki-fallback-debug-report.md",
+        "panel": "file-viewer",
+        "path": "wiki-fallback-debug-report.md",
+        "title": "wiki-fallback-debug-report.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 4
+      },
+      {
+        "id": "file-viewer:claude-convo-artifacts/LESSONS.md",
+        "panel": "file-viewer",
+        "path": "claude-convo-artifacts/LESSONS.md",
+        "title": "LESSONS.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 5
+      },
+      {
+        "id": "file-viewer:ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+        "panel": "file-viewer",
+        "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+        "title": "PAGE.md",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "md",
+        "tabIndex": 6
+      },
+      {
+        "id": "file-viewer:ai/RC-MacAir-15/Views/001-capture-viewer/content.json",
+        "panel": "file-viewer",
+        "path": "ai/RC-MacAir-15/Views/001-capture-viewer/content.json",
+        "title": "content.json",
+        "kind": "file",
+        "openedAt": 1786352240594,
+        "extension": "json",
+        "tabIndex": 7
+      }
+    ],
+    "activeTabId": "file-viewer:ai/RC-MacAir-15/Views/001-capture-viewer/content.json"
+  }
+}

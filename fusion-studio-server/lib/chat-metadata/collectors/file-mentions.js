@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const { registerCollector } = require('../exchange-metadata-registry');
+const { createCycleGuard } = require('../../fs/cycle-guard');
+const { classifyEntrySync } = require('../../fs/dirents');
 
 const MAX_BASENAME_SEARCH_FILES = 3000;
 const IGNORED_DIRS = new Set(['.git', 'node_modules', 'dist', 'release']);
@@ -46,6 +48,14 @@ function validateDirectPath(projectRoot, candidate) {
 
 function findBasename(projectRoot, basename) {
   let visited = 0;
+  const cycleGuard = createCycleGuard();
+  let rootRealPath;
+  try {
+    rootRealPath = fs.realpathSync(projectRoot);
+  } catch {
+    return null;
+  }
+  if (!cycleGuard.shouldEnter(rootRealPath)) return null;
   const stack = [projectRoot];
 
   while (stack.length > 0 && visited < MAX_BASENAME_SEARCH_FILES) {
@@ -58,20 +68,35 @@ function findBasename(projectRoot, basename) {
     }
 
     for (const entry of entries) {
-      if (entry.isDirectory()) {
-        if (!IGNORED_DIRS.has(entry.name)) stack.push(path.join(dir, entry.name));
+      const fullPath = path.join(dir, entry.name);
+      const classified = classifyEntrySync(dir, entry);
+      if (classified.isDir) {
+        if (!IGNORED_DIRS.has(entry.name)) {
+          const realPath = classified.realPath || safeRealpath(fullPath);
+          if (cycleGuard.shouldEnter(realPath)) {
+            stack.push(fullPath);
+          }
+        }
         continue;
       }
-      if (!entry.isFile()) continue;
+      if (!classified.isFile) continue;
       visited++;
       if (entry.name === basename) {
-        return toRepoRelative(projectRoot, path.join(dir, entry.name));
+        return toRepoRelative(projectRoot, fullPath);
       }
       if (visited >= MAX_BASENAME_SEARCH_FILES) break;
     }
   }
 
   return null;
+}
+
+function safeRealpath(targetPath) {
+  try {
+    return fs.realpathSync(targetPath);
+  } catch {
+    return null;
+  }
 }
 
 function validateMention(projectRoot, candidate) {

@@ -4,7 +4,7 @@ test('debug - click target identification', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
 
   // Get info about the trigger element
   const triggerInfo = await trigger.evaluate(el => ({

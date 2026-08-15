@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const { parseFrontmatter } = require('../frontmatter');
+const { classifyEntrySync } = require('../fs/dirents');
 
 const cache = {
   modals: new Map(),
@@ -34,7 +35,8 @@ function loadComponents(componentsDir) {
 
   const entries = fs.readdirSync(modalsDir, { withFileTypes: true });
   for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
+    const classified = classifyEntrySync(modalsDir, entry);
+    if (!classified.isDir) continue;
     if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
 
     const subtype = entry.name;

@@ -12,8 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadTicket, loadAllTickets } = require('../tickets/loader');
 const { gitlabPost, gitlabPut } = require('./request');
-
-const ISSUES_REL = path.join('ai', 'views', 'issues-viewer');
+const views = require('../views');
 
 /**
  * Push local tickets to GitLab.
@@ -23,8 +22,8 @@ const ISSUES_REL = path.join('ai', 'views', 'issues-viewer');
  * @returns {Promise<{ pushed: number, created: number, errors: string[] }>}
  */
 async function push(projectRoot, ticketId) {
-  const issuesDir = path.join(projectRoot, ISSUES_REL);
-  const syncPath = path.join(issuesDir, 'sync.json');
+  const issuesDir = resolveIssuesRoot(projectRoot);
+  const syncPath = resolveIssuesFilePath(issuesDir, 'sync.json');
   const result = { pushed: 0, created: 0, errors: [] };
 
   const sync = JSON.parse(fs.readFileSync(syncPath, 'utf8'));
@@ -109,6 +108,16 @@ async function push(projectRoot, ticketId) {
   }
 
   return result;
+}
+
+function resolveIssuesRoot(projectRoot) {
+  return views.resolveOperationalViewRoot(projectRoot, 'issues-viewer');
+}
+
+function resolveIssuesFilePath(issuesDir, fileName) {
+  const rootPath = path.join(issuesDir, fileName);
+  if (fs.existsSync(rootPath)) return rootPath;
+  return path.join(issuesDir, 'content', fileName);
 }
 
 /**

@@ -3,19 +3,76 @@
  *
  * One ThreadManager instance is bound to one workspace. All threads are
  * workspace-scoped (the single project/workspace chat paradigm, RCC-0095);
- * the legacy per-view thread scope has been removed.
+ * the previous per-view thread scope has been removed.
  *
- * Combines ThreadIndex (SQLite metadata) and ChatFile (markdown
- * persistence) to provide full thread lifecycle management. Delegates
- * session management to SessionManager. Handles session lifecycle:
+ * Combines ThreadIndex (SQLite metadata) and ChatFile (generated markdown
+ * mirrors) to provide full thread lifecycle management. Delegates session
+ * management to SessionManager. Handles session lifecycle:
  * active → grace-period → suspended.
  */
 
 const path = require('path');
 const { ThreadIndex } = require('./ThreadIndex');
-const { ChatFile, getUsername } = require('./ChatFile');
+const { ChatFile } = require('./ChatFile');
 const { HistoryFile } = require('./HistoryFile');
 const { SessionManager } = require('./session-manager');
+const aiPaths = require('../workspace/ai-paths');
+
+function asPlainObject(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return value;
+}
+
+function assistantTextFromParts(parts) {
+  if (!Array.isArray(parts)) return '';
+  return parts
+    .filter((part) => part?.type === 'text' && typeof part.content === 'string')
+    .map((part) => part.content)
+    .join('');
+}
+
+function hasToolCallsFromParts(parts) {
+  return Array.isArray(parts) && parts.some((part) => part?.type === 'tool_call');
+}
+
+function withChatMirrorMetadata(threadId, exchange) {
+  const metadata = { ...asPlainObject(exchange.metadata) };
+  const existingMirror = asPlainObject(metadata.chatMirror);
+  const turnId = metadata.turnId || existingMirror.turnId || null;
+
+  if (turnId && metadata.turnId === undefined) {
+    metadata.turnId = turnId;
+  }
+
+  metadata.chatMirror = {
+    ...existingMirror,
+    threadId,
+    exchangeId: exchange.exchangeId,
+    seq: exchange.seq,
+    turnId,
+  };
+
+  return metadata;
+}
+
+function buildChatlogMessagesFromExchanges(threadId, exchanges) {
+  return exchanges.flatMap((exchange) => {
+    const parts = Array.isArray(exchange.assistant?.parts) ? exchange.assistant.parts : [];
+    return [
+      {
+        role: 'user',
+        content: exchange.user || '',
+        hasToolCalls: false,
+      },
+      {
+        role: 'assistant',
+        content: assistantTextFromParts(parts),
+        hasToolCalls: hasToolCallsFromParts(parts),
+        metadata: withChatMirrorMetadata(threadId, exchange),
+      },
+    ];
+  });
+}
 
 // Default configuration
 const DEFAULT_CONFIG = {
@@ -55,25 +112,26 @@ class ThreadManager {
   }
 
   /**
-   * Build the per-user chat directory. Single unified location —
-   * ai/views/chat/threads/<user>/ — for all workspace threads.
-   * (RCC-0095: per-view storage at ai/views/<view>/chat/threads/ removed.)
+   * Build the machine-scoped chatlog mirror directory. SQLite is durable chat
+   * storage; these markdown files are repo-local audit/export mirrors.
    *
    * @returns {string}
    */
-  _getViewsDir() {
-    return path.join(this.projectRoot, 'ai', 'views', 'chat', 'threads', getUsername());
+  _getChatlogThreadsDir() {
+    return path.join(aiPaths.getMachineAiRoot(this.projectRoot), 'Data', 'Chatlogs', 'threads');
   }
 
   /**
-   * Create a ChatFile for the given thread. _getViewsDir() is now
+   * Create a ChatFile for the given thread. _getChatlogThreadsDir() is now
    * guaranteed non-null by the constructor's projectRoot check.
    * @param {string} threadId
    * @returns {ChatFile}
    */
   _createChatFile(threadId) {
-    const viewsDir = this._getViewsDir();
-    return new ChatFile({ viewsDir, threadId });
+    return new ChatFile({
+      chatlogDir: this._getChatlogThreadsDir(),
+      threadId,
+    });
   }
 
   /**
@@ -206,41 +264,18 @@ class ThreadManager {
   }
 
   /**
-   * Add a message to a thread
+   * Record visible message activity for a thread.
+   *
+   * SQLite exchanges are the durable history. Markdown mirrors are generated
+   * from SQLite after completed turns; this method only maintains thread
+   * metadata used by lists and live UI state.
+   *
    * @param {string} threadId
    * @param {import('./types').ChatMessage} message
    */
   async addMessage(threadId, message) {
     const entry = await this.index.get(threadId);
     if (!entry) throw new Error(`Thread not found: ${threadId}`);
-
-    // Append to chat markdown
-    const chatFile = this._createChatFile(threadId);
-    await chatFile.appendMessage(entry.name, message);
-
-    // Update message count
-    await this.index.incrementMessageCount(threadId);
-
-    // Move to front of MRU
-    await this.index.touch(threadId);
-
-    return { threadId, messageCount: entry.messageCount + 1 };
-  }
-
-  /**
-   * Add a message to a thread with metadata
-   * @param {string} threadId
-   * @param {import('./types').ChatMessage} message
-   * @param {object} [metadata] - Optional metadata (contextUsage, tokenUsage, etc.)
-   */
-  async addMessageWithMetadata(threadId, message, metadata = null) {
-    const entry = await this.index.get(threadId);
-    if (!entry) throw new Error(`Thread not found: ${threadId}`);
-
-    // Append to chat markdown (with metadata)
-    const chatFile = this._createChatFile(threadId);
-    const messageWithMetadata = metadata ? { ...message, metadata } : message;
-    await chatFile.appendMessage(entry.name, messageWithMetadata);
 
     // Update message count
     await this.index.incrementMessageCount(threadId);
@@ -273,6 +308,48 @@ class ThreadManager {
     return historyFile.read();
   }
 
+  /**
+   * Regenerate the markdown mirror from SQLite exchange history.
+   *
+   * The mirror is a disposable export/audit artifact. SQLite exchanges are the
+   * authority; this method overwrites the primary machine-scoped markdown file
+   * from SQLite.
+   *
+   * @param {string} threadId
+   * @returns {Promise<{updated: boolean, written: number, reason: string}>}
+   */
+  async syncChatlogMirrorFromHistory(threadId) {
+    const entry = await this.index.get(threadId);
+    if (!entry) {
+      return { updated: false, written: 0, reason: 'thread-not-found' };
+    }
+
+    const history = await this.getRichHistory(threadId);
+    const exchanges = Array.isArray(history?.exchanges) ? history.exchanges : [];
+    const expectedMessages = buildChatlogMessagesFromExchanges(threadId, exchanges);
+    const chatFile = this._createChatFile(threadId);
+    await chatFile.write(entry.name, expectedMessages);
+    return {
+      updated: true,
+      written: expectedMessages.length,
+      reason: exchanges.length > 0 ? 'rewritten-from-sqlite' : 'empty',
+    };
+  }
+
+  /**
+   * Correct thread metadata after a durable exchange save.
+   * @param {string} threadId
+   * @param {number} seq
+   */
+  async recordSavedExchange(threadId, seq) {
+    const messageCount = Math.max(0, Number(seq) || 0) * 2;
+    await this.index.update(threadId, {
+      messageCount,
+      updatedAt: Date.now(),
+    });
+    return { threadId, messageCount };
+  }
+
   // ── Session delegation (preserves public API) ──
 
   /**
@@ -289,8 +366,8 @@ class ThreadManager {
     await this.index.activate(threadId);
     await this.index.markResumed(threadId);
 
-    // Delegate session state to SessionManager. The second arg (legacy
-    // viewId) is an inert field SessionManager stores but never reads.
+    // Delegate session state to SessionManager. The second arg is the retired
+    // viewId slot; SessionManager stores it but never reads it.
     const session = this.sessionManager.openSession(threadId, null, wireProcess, ws);
 
     return session;

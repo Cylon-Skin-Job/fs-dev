@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "dataSource": "sqlite",
+  "root": {
+    "type": "sqlite"
+  }
+}

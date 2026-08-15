@@ -1,14 +1,14 @@
 /**
  * @module useThemeTokenBridge
  * @role Observe theme CSS in the DOM and broadcast computed tokens to all
- *       warm view iframes via postMessage.
+ *       warm custom/local app iframes via postMessage.
  *
  * Three triggers:
  *   1. Mount — sends current tokens to all existing .rv-view-iframe elements.
  *   2. Theme CSS change — MutationObserver on the ws-shared-styles-themes
  *      style tag fires when reloadThemesLayer swaps the CSS.
  *   3. New iframe added — MutationObserver on document.body catches
- *      dynamically-created panels (workspace switch, add-view).
+ *      dynamically-created custom/local app panels (workspace switch, add-view).
  *
  * View contract:
  *   window.addEventListener('message', (event) => {

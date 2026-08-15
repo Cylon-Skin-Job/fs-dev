@@ -22,7 +22,7 @@ Fires when a new topic folder appears with a `PAGE.md` inside it.
 6. Create a follow-up ticket if the new page needs review or cross-page updates
 
 **What triggers it:**
-- `fs.watch` on the `ai/views/wiki-viewer/Wiki/` directory for new folders
+- `fs.watch` on the `ai/<machine>/Wiki/` directory for new folders
 - The server detects a new subfolder containing `PAGE.md`
 
 **Edge discovery on create:**

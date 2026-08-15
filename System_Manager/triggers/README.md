@@ -1,11 +1,43 @@
-# Trigger Definitions
+# System Triggers
 
-Event trigger templates that ship with Fusion Studio.
+Machine-scoped automation runtime artifacts live here.
 
-Triggers define automated actions that run in response to workspace events (file save, AI completion, checkpoint created, etc.).
+The current trigger GUI/spec capture lives in
+`ai/RC-MacAir-15/Captures/001-Captures/TRIGGERS.md`.
 
-Each trigger should include:
-- `trigger.yaml` — Front matter: name, summary (paragraph max), function explanations, event conditions
-- `action/` — Script or command to execute when triggered
+The current model is intentionally small:
 
-**Front matter standard:** Triggers use YAML front matter with name + summary for discoverability and AI searchability.
+1. Name & Description
+2. Trigger
+3. Script
+4. Permissions
+
+The GUI edits the trigger contract. Scripts provide the expressive behavior.
+Permissions are the enforceable boundary between the AI-written implementation
+and system authority.
+
+## Layout
+
+```text
+Automations/
+  Triggers/
+    Automation_Name/
+      TRIGGERS.md
+  Scripts/
+    Automation_Name/
+      some-script.js
+```
+
+`TRIGGERS.md` files are locked from AI writes. AI may edit the matching script
+folder. The server owns contract writes, permission discovery, and user-approved
+permission toggles.
+
+## Runtime Notes
+
+- Test run asks the server to inspect the script and list requested permissions.
+- Newly discovered permissions default to `false`.
+- Script comments may explain permission requests for display in the GUI.
+- Trigger hooks still need CRUD endpoints, test-run plumbing, and system event
+  wiring.
+
+See `TRIGGERS.md` for the full contract.

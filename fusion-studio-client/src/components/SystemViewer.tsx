@@ -35,6 +35,8 @@ export const SystemViewer: React.FC = () => {
   const ws = usePanelStore((state) => state.ws);
   const trees = useFileDataStore((state) => state.trees);
   const contents = useFileDataStore((state) => state.contents);
+  const treeErrors = useFileDataStore((state) => state.treeErrors);
+  const fileDataGeneration = useFileDataStore((state) => state.generation);
   const requestTree = useFileDataStore((state) => state.requestTree);
   const requestContent = useFileDataStore((state) => state.requestContent);
   const workspaces = useWorkspaceStore((state) => state.workspaces);
@@ -85,15 +87,21 @@ export const SystemViewer: React.FC = () => {
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     requestTree(PANEL, '');
-  }, [requestTree, ws]);
+  }, [fileDataGeneration, requestTree, ws]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN || !activePath) return;
     requestTree(PANEL, activePath);
-  }, [activePath, requestTree, ws]);
+  }, [activePath, fileDataGeneration, requestTree, ws]);
+
+  useEffect(() => {
+    if (!ws || ws.readyState !== WebSocket.OPEN || !activeFile) return;
+    requestContent(PANEL, activeFile);
+  }, [activeFile, fileDataGeneration, requestContent, ws]);
 
   const rootNodes = trees[treeKey('')] || [];
   const sectionNodes = activePath ? trees[treeKey(activePath)] || [] : rootNodes;
+  const sectionTreeError = treeErrors[treeKey(activePath)];
   const activeContent = activeFile ? contents[treeKey(activeFile)] : '';
 
   function openSection(path: string) {
@@ -194,7 +202,9 @@ export const SystemViewer: React.FC = () => {
         ) : (
           <div className="rv-system-grid">
             {sectionNodes.length === 0 ? (
-              <div className="rv-system-empty">Loading system files...</div>
+              <div className="rv-system-empty">
+                {sectionTreeError ? 'Unable to load system files.' : 'Loading system files...'}
+              </div>
             ) : sectionNodes.map((node) => (
               <button
                 key={node.path}

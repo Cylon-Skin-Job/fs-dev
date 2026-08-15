@@ -48,9 +48,10 @@ async function ensureRepo(contentRoot) {
   }
 
   // Auto-guard: keep outer repo clean if one exists
-  const workspaceRoot = path.resolve(contentRoot, '..', '..', '..', '..');
+  const workspaceRoot = findWorkspaceRoot(contentRoot);
+  if (!workspaceRoot) return;
   const gitignorePath = path.join(workspaceRoot, '.gitignore');
-  const line = 'ai/views/office-viewer/content/';
+  const line = path.relative(workspaceRoot, contentRoot).split(path.sep).join('/') + '/';
 
   if (fs.existsSync(path.join(workspaceRoot, '.git'))) {
     let contents = '';
@@ -68,12 +69,21 @@ async function ensureRepo(contentRoot) {
   }
 }
 
+function findWorkspaceRoot(startPath) {
+  let current = path.resolve(startPath);
+  while (current && current !== path.dirname(current)) {
+    if (fs.existsSync(path.join(current, '.git'))) return current;
+    current = path.dirname(current);
+  }
+  return null;
+}
+
 /**
  * Stage a file and commit it if there are changes compared to HEAD.
  * Silently skipped if the file has no changes.
  *
  * @param {string} contentRoot — absolute path to office-viewer/content/
- * @param {string} relativePath — path relative to contentRoot, e.g. "specs/roadmap.md"
+ * @param {string} relativePath — path relative to contentRoot, e.g. "002-SPECs/roadmap.md"
  * @param {string} message — commit message
  */
 async function commitIfChanged(contentRoot, relativePath, message) {

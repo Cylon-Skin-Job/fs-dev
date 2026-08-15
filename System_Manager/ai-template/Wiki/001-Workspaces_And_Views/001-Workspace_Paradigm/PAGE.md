@@ -6,6 +6,7 @@ metadata:
     - Workspaces And Views
   outgoing-edges:
     - View Architecture
+    - Adding Workspaces
     - Chat System Overview
     - Wiki View
     - Ticketing
@@ -15,6 +16,8 @@ metadata:
     - fusion-studio-client/src/state/viewSlice.ts
     - fusion-studio-server/lib/workspace/registry-service.js
     - fusion-studio-server/lib/workspace/workspace-controller.js
+    - fusion-studio-server/lib/workspace/bootstrap-service.js
+    - fusion-studio-server/lib/workspace/create-service.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -52,6 +55,14 @@ Opening or browsing a workspace/view should be cheap. It may hydrate visible sta
 
 Activation is explicit. For chat, that distinction is visible in the thread runtime: passive browsing opens a thread without warming a harness, while assistant activation or a new thread can start the assistant path.
 
+## Adding, Creating, And Registration
+
+Workspace registration is server-owned. The client may request Add Project, Create New, switch, hide-from-ribbon, add-to-ribbon, or reorder-ribbon operations, but `workspace-controller.js` validates paths, writes registry rows, persists the active workspace, and emits the resulting lifecycle events.
+
+Add Project and Create New are different operations. Add Project requires an existing `/ai` folder and only bootstraps minimum V2 folders under that existing tree. Create New scaffolds a project from `System_Manager/ai-template`, registers it, and switches to it. Ribbon hide/show changes `ribbon_visible`; it does not delete the workspace registration.
+
+For the step-by-step flow and exact code owners, see [Adding Workspaces](../003-Adding_Workspaces/PAGE.md).
+
 ## Context Loading
 
 Fusion Studio uses progressive disclosure instead of preloading every document into every agent or view.
@@ -73,11 +84,12 @@ Do not document `api.json` hot-swapping as current workspace behavior unless cur
 
 - Do not make wiki rendering depend on ticketing internals.
 - Do not make issues routing depend on background agent implementation details.
-- Do not make view mounting depend on a single React-only or iframe-only assumption without checking the current loader.
+- Do not revive the old built-in iframe assumption. Built-ins should stay React unless product direction changes; browser and custom user views may use iframes.
 - Do not duplicate chat runtime ownership rules outside the Chat System and Server And Runtime sections.
 
 ## Related Pages
 
 - [View Architecture](../002-View_Architecture/PAGE.md) - view folders, content roots, and loading behavior.
+- [Adding Workspaces](../003-Adding_Workspaces/PAGE.md) - registry, ribbon, Add Project, and Create New behavior.
 - [Chat System](../003-Chat_System/PAGE.md) - current thread-centered chat model.
 - [Wiki View](../004-Wiki_View/PAGE.md) - folder-first wiki model.

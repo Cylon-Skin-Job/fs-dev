@@ -5,7 +5,7 @@ name: source-file-change
 type: file-change
 events: [modify, create, delete]
 match: "open-robin-server/lib/**/*.js"
-exclude: ["ai/views/doc-viewer/**"]
+exclude: ["ai/<machine>/Views/*-capture-viewer/**"]
 prompt: PROMPT_01.md
 message: |
   Source file changed: {{filePath}} ({{event}})
@@ -16,7 +16,7 @@ message: |
 name: wiki-page-changed
 type: file-change
 events: [modify]
-match: "ai/views/wiki-viewer/content/project/**/PAGE.md"
+match: "ai/<machine>/Wiki/project/**/PAGE.md"
 prompt: PROMPT_03.md
 message: |
   Wiki page changed: {{filePath}}

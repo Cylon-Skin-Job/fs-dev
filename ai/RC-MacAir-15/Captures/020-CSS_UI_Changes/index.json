@@ -1,0 +1,388 @@
+{
+  "schema_version": 2,
+  "name": "CSS UI Changes Second Brain",
+  "description": "Static routing and record-schema metadata for focused side chats maintaining the CSS/UI conformance documents.",
+  "repository_root": "../../../..",
+  "wiki_root": "../../Wiki",
+  "workflow": [
+    "capture",
+    "resume_open_threads",
+    "promote_or_close_capture_outcomes",
+    "clarify_intent",
+    "verify_issues",
+    "propose",
+    "decide",
+    "plan",
+    "specify",
+    "roadmap_if_needed",
+    "implement_when_authorized"
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Folder-local role, claim-specific authority, document boundaries, record conventions, concurrency rules, and verification protocol."
+    },
+    {
+      "path": "index.json",
+      "description": "Static routing and record-schema map; never a live status, content, or locking ledger."
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Volatile Second Brain curator-side-chat coordination with no content or implementation authority.",
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["B"],
+        "required_fields": ["Type", "Status", "Owner/chat", "Target", "Source", "Summary", "Next", "Outcome"],
+        "field_values": {
+          "Type": ["assignment", "handoff", "conflict", "question", "observation", "completion"],
+          "Status": ["open", "claimed", "blocked", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Defines the bulletin's coordination role and lack of content or implementation authority."
+        },
+        {
+          "key": "protocol",
+          "heading": "Protocol",
+          "description": "Specifies record identifiers, fields, ownership, posting thresholds, and update rules."
+        },
+        {
+          "key": "entries",
+          "heading": "Entries",
+          "description": "Holds stable coordination records and their outcomes."
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "path": "CAPTURE.md",
+      "kind": "conversational_memory",
+      "authority": "context",
+      "lifecycle": "curate_resume_promote_compact_and_preserve_provenance",
+      "description": "Readable conversational synthesis, active open loops, decision prompts, and compact backlinks to promoted outcomes.",
+      "read_before": [],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["CAP"],
+        "required_fields": ["Origin", "Type", "Status", "Source", "Summary", "Related"],
+        "field_values": {
+          "Origin": ["user", "assistant", "mixed"],
+          "Type": ["thread", "idea", "question", "decision_prompt", "observation"],
+          "Status": ["open", "parked", "routed", "closed"]
+        }
+      },
+      "sections": [
+        {
+          "key": "working-synthesis",
+          "heading": "Working Synthesis",
+          "description": "Readable account of what prompted the discussion, what was explored, and where the thinking currently stands."
+        },
+        {
+          "key": "user-threads",
+          "heading": "User Threads to Resume",
+          "description": "User-originated or mixed open loops displaced before they were fully explored."
+        },
+        {
+          "key": "assistant-possibilities",
+          "heading": "Assistant Possibilities",
+          "description": "Explicitly unendorsed adjacent ideas introduced by the assistant."
+        },
+        {
+          "key": "decision-queue",
+          "heading": "Decision Queue",
+          "description": "Choices awaiting an explicit owner disposition and therefore not yet eligible for DECISIONS.md."
+        },
+        {
+          "key": "routed-outcomes",
+          "heading": "Routed Outcomes",
+          "description": "Compact backlinks for records promoted to authoritative documents or closed with an explicit reason."
+        },
+        {
+          "key": "capture-history",
+          "heading": "Capture History",
+          "description": "Lightweight chronological checkpoints showing how the conversational memory evolved."
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "owner_intent",
+      "authority": "owner",
+      "lifecycle": "refine_current_outcomes_and_enduring_goals_with_owner_direction",
+      "description": "Owner-directed purpose, current desired outcomes, optional enduring goals, success conditions, constraints, and non-goals.",
+      "read_before": ["CAPTURE.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Why this body of work exists now."
+        },
+        {
+          "key": "desired-outcomes",
+          "heading": "Desired Outcomes",
+          "description": "The current end states sought by this body of work."
+        },
+        {
+          "key": "enduring-goals",
+          "heading": "Enduring Goals",
+          "description": "Longer-term owner direction that this effort should reinforce without creating implementation scope."
+        },
+        {
+          "key": "success-conditions",
+          "heading": "Success Conditions",
+          "description": "Observable conditions indicating the intent has been fulfilled."
+        },
+        {
+          "key": "constraints",
+          "heading": "Constraints",
+          "description": "Boundaries and conditions the work must respect."
+        },
+        {
+          "key": "non-goals",
+          "heading": "Non-goals",
+          "description": "Explicit exclusions preventing accidental scope expansion."
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "owner_decisions",
+      "authority": "owner",
+      "lifecycle": "append_and_supersede_never_delete",
+      "description": "Durable owner decisions; the sole content document that establishes approval and direction authority.",
+      "read_before": ["CAPTURE.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["D"],
+        "required_fields": ["Date", "Category", "Status", "Source"],
+        "field_values": {
+          "Category": ["process", "schema", "scope", "product"],
+          "Status": ["active", "superseded", "revoked"]
+        }
+      },
+      "sections": [
+        {
+          "key": "process-schema",
+          "heading": "Process and Schema",
+          "description": "Owner decisions governing workflow, documentation roles, and the Second Brain system."
+        },
+        {
+          "key": "product-scope",
+          "heading": "Product and Scope",
+          "description": "Owner decisions governing CSS/UI behavior and active product boundaries."
+        }
+      ]
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "verified_issues",
+      "authority": "evidence",
+      "lifecycle": "verify_track_resolve",
+      "description": "Verified actionable problems routed by stable subject category, with type, severity, and status stored as separate fields.",
+      "read_before": ["DECISIONS.md", "INTENT.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["I"],
+        "required_fields": ["Category", "Type", "Severity", "Status", "Source", "Related"],
+        "field_values": {
+          "Category": ["policy", "architecture", "component", "surface", "tooling", "maintenance"],
+          "Type": ["defect", "inconsistency", "contradiction", "gap", "risk", "debt"],
+          "Severity": ["high", "medium", "low"],
+          "Status": ["open", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "architecture-theme-runtime",
+          "heading": "Architecture and Theme Runtime",
+          "description": "Token contracts, mode behavior, native-control integration, and semantic-color problems."
+        },
+        {
+          "key": "product-surfaces",
+          "heading": "Product Surfaces",
+          "description": "Office, Email, Crepe, and other surface-specific conformance problems."
+        },
+        {
+          "key": "components-interaction",
+          "heading": "Components and Interaction",
+          "description": "Shared-control fragmentation and accessibility defects."
+        },
+        {
+          "key": "maintenance",
+          "heading": "Maintenance and Migration",
+          "description": "Dead layers, obsolete tokens, and isolated cleanup findings."
+        }
+      ]
+    },
+    {
+      "path": "CHANGE_SURFACE.md",
+      "kind": "change_surface",
+      "authority": "analysis",
+      "lifecycle": "discover_bound_reconcile_for_plan_and_spec",
+      "description": "Bounded map of current code, consumers, supporting contracts, and verification needed for the approved Office-reference paper behavior.",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the change-surface map's analysis role and authority boundary."
+        },
+        {
+          "key": "shared-paper-contract",
+          "heading": "Shared Paper Contract",
+          "description": "Maps the canonical Office behavior and the shared technical boundary to be designed."
+        },
+        {
+          "key": "consumer-map",
+          "heading": "Consumer Map",
+          "description": "Maps Office, Email, thumbnails, and future paper-like consumers and their current entry points."
+        },
+        {
+          "key": "supporting-theme-and-style-dependencies",
+          "heading": "Supporting Theme and Style Dependencies",
+          "description": "Maps theme, brightness, muting, editor, and style-transport dependencies."
+        },
+        {
+          "key": "verification-and-acceptance",
+          "heading": "Verification and Acceptance",
+          "description": "Defines the evidence and smallest acceptance matrix for the shared paper behavior."
+        },
+        {
+          "key": "open-boundaries",
+          "heading": "Open Boundaries",
+          "description": "Keeps unresolved technical choices, deferred cleanup, and owner questions visible."
+        }
+      ]
+    },
+    {
+      "path": "IMPLEMENTATION.md",
+      "kind": "implementation_notes",
+      "authority": "analysis",
+      "lifecycle": "draft_reconcile_for_roadmap_or_spec",
+      "description": "Pre-roadmap implementation draft for separately approved theme-foundation, pane-resize accessibility, Office-reference paper, and Office-token packages, including sequencing and verification without authorizing code changes.",
+      "read_before": ["CHANGE_SURFACE.md", "DECISIONS.md", "INTENT.md", "ISSUES.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the draft's pre-roadmap role and lack of implementation authority."
+        },
+        {
+          "key": "theme-foundation-package",
+          "heading": "Theme Foundation Package",
+          "description": "Required behavior, likely sequencing, verification, and boundaries for the D-21 shared theme package."
+        },
+        {
+          "key": "pane-resize-accessibility-package",
+          "heading": "Pane Resize Accessibility Package",
+          "description": "Required behavior, likely sequencing, verification, and boundaries for accessible shared pane dividers under D-25."
+        },
+        {
+          "key": "paper-package",
+          "heading": "Paper Package",
+          "description": "Required behavior, likely sequencing, verification, and boundaries for the approved Office-reference paper package."
+        },
+        {
+          "key": "office-token-package",
+          "heading": "Office Token Package",
+          "description": "Required behavior, likely sequencing, verification, and boundaries for replacing Office’s historical steel-blue fallbacks with Theme Foundation tokens."
+        }
+      ]
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "candidate_actions",
+      "authority": "proposal",
+      "lifecycle": "propose_decide_link_or_supersede",
+      "description": "Candidate responses with explicit lifecycle state; approval links to an owner decision rather than creating competing authority.",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["P"],
+        "required_fields": ["Category", "Status", "Source", "Addresses"],
+        "field_values": {
+          "Category": ["theme_contract", "component", "accessibility", "surface", "maintenance"],
+          "Status": ["proposed", "approved", "rejected", "deferred", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "theme-contracts",
+          "heading": "Theme Contracts and Tokens",
+          "description": "Candidate changes to mode, token, and semantic-color contracts."
+        },
+        {
+          "key": "components-accessibility",
+          "heading": "Shared Components and Accessibility",
+          "description": "Candidate shared controls, interaction systems, and accessibility changes."
+        },
+        {
+          "key": "surface-integration",
+          "heading": "Surface Integration",
+          "description": "Candidate Office, Email, Crepe, and paper-behavior changes."
+        },
+        {
+          "key": "maintenance",
+          "heading": "Maintenance",
+          "description": "Candidate cleanup of dead or obsolete styling artifacts."
+        }
+      ]
+    },
+    {
+      "path": "WIKI_IMPACT.md",
+      "kind": "wiki_impact_map",
+      "authority": "analysis",
+      "lifecycle": "verify_propose_defer_and_reconcile",
+      "description": "Wiki coverage, verified findings, candidate changes, and deferred work organized by stable documentation subject category.",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["C", "W"],
+        "required_fields": ["Category", "Type", "Status"],
+        "field_values": {
+          "Category": ["policy", "architecture", "component", "surface", "tooling", "maintenance"],
+          "Type": ["finding", "change"],
+          "Status": ["verified", "candidate", "deferred", "resolved", "superseded"],
+          "Action": ["create", "consolidate", "move_and_update", "update", "retire_or_rewrite", "retire_or_reframe", "rewrite", "retire", "update_after_decision"],
+          "Scope": ["current_css_ui", "adjacent", "wiki_maintenance"]
+        }
+      },
+      "sections": [
+        {
+          "key": "policy-governance",
+          "heading": "Policy and Governance",
+          "description": "Normative standards, parity rules, and token-governance findings and changes."
+        },
+        {
+          "key": "architecture-runtime",
+          "heading": "Architecture and Runtime",
+          "description": "Theme generation, token transport, cascade, and runtime documentation findings and changes."
+        },
+        {
+          "key": "components-interaction",
+          "heading": "Components and Interaction",
+          "description": "Cross-surface component and interaction-system documentation."
+        },
+        {
+          "key": "product-surfaces",
+          "heading": "Product Surfaces",
+          "description": "Office, Email, Crepe, paper, and other surface-specific documentation."
+        },
+        {
+          "key": "tooling-enforcement",
+          "heading": "Tooling and Enforcement",
+          "description": "Skills, build enforcement, Wiki tooling, and workflow documentation."
+        },
+        {
+          "key": "maintenance-migration",
+          "heading": "Maintenance and Migration",
+          "description": "Legacy naming, stale links, redirects, source paths, and migration debt."
+        }
+      ]
+    }
+  ]
+}

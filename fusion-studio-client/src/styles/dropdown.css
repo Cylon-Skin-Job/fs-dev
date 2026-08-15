@@ -53,8 +53,8 @@
 }
 
 .rv-dropdown-item[aria-current="true"] {
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.12);
-  color: var(--theme-primary, #00d4ff);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.12);
+  color: var(--theme-primary, #39628e);
 }
 
 /* Disabled menu items keep the same color as enabled — only the action and

@@ -5,15 +5,15 @@ status: inbox
 type: onboarding
 created-from: default-view-template
 priority: normal
-related-docs:
-  - ai/docs/001-Captures/
-  - ai/docs/003-SPECs/
-  - ai/docs/004-ToDo/
-  - ai/docs/007-Workflows/
+related-captures:
+  - ai/Captures/001-Captures/
+  - ai/Captures/003-SPECs/
+  - ai/Captures/004-ToDo/
+  - ai/Captures/007-Workflows/
 related-skills:
   - clarify
   - curiosity
-  - capture-docs
+  - captures
   - spec
   - pre-flight
 ---
@@ -30,7 +30,7 @@ Help the user shape the workspace without assuming they want implementation work
 
 - What is this workspace for?
 - Is this mostly private, collaborative, code-focused, research-focused, or mixed?
-- Should ideas be captured as docs, to-do lists, specs, or issues?
+- Should ideas be captured as captures, to-do lists, specs, or issues?
 - Should `ai/` be local-only, partially synced, or committed for collaboration?
 - Should GitHub, GitLab, both, or neither be connected?
 - Should a SQLite mirror be used when that system is available?
@@ -39,7 +39,7 @@ Help the user shape the workspace without assuming they want implementation work
 
 - A short workspace purpose note.
 - A setup preference note for git/sync/privacy.
-- Any immediate capture docs or to-do lists the user wants.
+- Any immediate captures or to-do lists the user wants.
 - A spec only if the user clearly wants to build something.
 
 ## Pass Conditions

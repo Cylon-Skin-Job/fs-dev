@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "dataSource": "Office",
+  "root": {
+    "type": "workspace-relative",
+    "path": "ai/${machine}/Office"
+  }
+}

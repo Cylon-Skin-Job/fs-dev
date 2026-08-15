@@ -37,7 +37,9 @@ export interface ConnectorState {
   lastSync: string | null;
 }
 
-// Lightweight, safe-to-cache per-workspace state shape.
+// Per-workspace runtime state. currentPanel is persisted as workspace shell
+// state; viewStates are loaded through the view-state resolver. panelConfigs
+// and panelRoots are discovered from Views/.
 export interface WorkspacePanelState {
   projectRoot: string | null;
   currentPanel: string;

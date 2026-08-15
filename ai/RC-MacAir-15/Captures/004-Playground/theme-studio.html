@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024">
+  <title>Theme Studio — Pinwheel Playground</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 1024px;
+      height: 1204px;
+      background: #ffffff;
+    }
+    body {
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+    }
+
+    :root {
+      --spoke-color: #2d9bf5;
+      --spin-duration: 0.6s;
+    }
+
+    .pinwheel {
+      --pinwheel-size: 25rem;          /* 400px at default 16px rem */
+      --spoke-count: 12;
+      --spoke-width: calc(var(--pinwheel-size) * 0.0275);
+      --spoke-height: calc(var(--pinwheel-size) * 0.075);
+      --spoke-radius: calc(var(--pinwheel-size) * 0.335);
+
+      position: relative;
+      width: var(--pinwheel-size);
+      height: var(--pinwheel-size);
+    }
+
+    .spoke {
+      position: absolute;
+      inset: 0;
+      transform: rotate(calc(360deg / var(--spoke-count) * var(--i)));
+    }
+
+    .spoke::before {
+      content: '';
+      display: block;
+      margin: 0 auto;
+      width: var(--spoke-width);
+      height: var(--spoke-height);
+      border-radius: 999px;
+      background: var(--spoke-color);
+      transform: translateY(var(--spoke-radius));
+      opacity: var(--spoke-opacity);
+      transition: opacity 80ms linear;
+    }
+  </style>
+</head>
+<body>
+  <div class="pinwheel" id="pinwheel"></div>
+
+  <script>
+    const pinwheel = document.getElementById('pinwheel');
+    const count = 12;
+    const stepMs = 50;
+    let opacities = [1.00, 0.94, 0.89, 0.83, 0.77, 0.72, 0.66, 0.52, 0.40, 0.30, 0.22, 0.16];
+    const spokes = [];
+
+    for (let i = 0; i < count; i++) {
+      const spoke = document.createElement('div');
+      spoke.className = 'spoke';
+      spoke.style.setProperty('--i', i);
+      pinwheel.appendChild(spoke);
+      spokes.push(spoke);
+    }
+
+    function applyOpacities() {
+      spokes.forEach((spoke, i) => {
+        spoke.style.setProperty('--spoke-opacity', opacities[i]);
+      });
+    }
+
+    function shiftClockwise() {
+      // Each spoke inherits the value from its counter-clockwise neighbor,
+      // so the gradient appears to rotate clockwise.
+      opacities = opacities.map((_, i) => opacities[(i - 1 + count) % count]);
+      applyOpacities();
+    }
+
+    applyOpacities();
+    setInterval(shiftClockwise, stepMs);
+  </script>
+</body>
+</html>

@@ -101,7 +101,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     try {
       const policy = await resolveCliPolicy(manager.projectRoot);
       if (msg.harnessId && !policy.allowedHarnesses.includes(msg.harnessId)) {
-        throw new Error(`Harness '${msg.harnessId}' is not allowed by ai/system/config/cli.json`);
+        throw new Error(`Harness '${msg.harnessId}' is not allowed by ai/<machine>/System/config/cli.json`);
       }
       const harnessId = msg.harnessId || policy.defaultHarness;
 
@@ -233,7 +233,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * This is the single entry point for opening any assistant thread —
    * it replaces the old split create/open/open-daily/open-agent protocol.
    * The "assistant" suffix matches the Chat Assistants vs Background
-   * Workers taxonomy in ai/views/agents-viewer/ — background workers
+   * Workers taxonomy in ai/<machine>/Agents/ — background workers
    * use the runner path (lib/runner/) and never touch thread:* messages.
    *
    * @param {import('ws').WebSocket} ws

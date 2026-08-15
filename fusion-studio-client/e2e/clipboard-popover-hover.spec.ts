@@ -4,7 +4,7 @@ test('popover stays open when hovered', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
   const popover = page.locator('.rv-hover-icon-modal').first();
 
   // Step 1: Hover trigger to open popover

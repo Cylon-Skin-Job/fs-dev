@@ -1,8 +1,8 @@
 /**
  * @module useDocViewerState
- * @role Controller hook for the doc-viewer panel
+ * @role Controller hook for the capture-viewer panel
  *
- * Owns mode, selected file, and scroll persistence for the doc-viewer view.
+ * Owns mode, selected file, and scroll persistence for the capture-viewer view.
  * Active and archive modes each keep their own selected file and scroll state.
  * Reads from / writes to the workspace view-state layer.
  */
@@ -13,8 +13,14 @@ import { useFileDataStore } from '../state/fileDataStore';
 import { showToast } from '../lib/toast';
 import type { FileWithContent } from '../components/tile-row/TileRow';
 import type { ViewUIState } from '../types';
+import { recordViewRecent } from '../lib/viewActivity';
+import { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 
-export type DocViewerMode = 'active' | 'archive';
+export { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
+
+const DOC_VIEWER_PANEL = 'capture-viewer';
+
+export type DocViewerMode = 'active' | 'recent' | 'starred' | 'archive';
 
 export interface DocViewerSelection {
   file: FileWithContent;
@@ -34,6 +40,7 @@ export interface UseDocViewerStateResult {
   restoreSelectedFile: () => void;
   archiveSelectedFile: () => void;
   persistGridScroll: (scrollTop: number) => void;
+  resetGridScroll: (mode?: DocViewerMode) => void;
   persistDocScroll: (scrollTop: number) => void;
 }
 
@@ -60,22 +67,23 @@ function parseSelectedPath(selectedPath: string): { folder: string; name: string
 
 function persistViewPatch(patch: Partial<ViewUIState>) {
   const state = usePanelStore.getState();
-  state.setViewState('doc-viewer', patch);
-  state._persistViewPatch('doc-viewer', patch);
+  state.setViewState(DOC_VIEWER_PANEL, patch);
+  state._persistViewPatch(DOC_VIEWER_PANEL, patch);
 }
 
 export function useDocViewerState(): UseDocViewerStateResult {
-  const mode = usePanelStore((s) => s.viewStates['doc-viewer']?.docViewerMode ?? 'active');
+  const fileDataGeneration = useFileDataStore((s) => s.generation);
+  const mode = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerMode ?? 'active');
   const selectedPath = usePanelStore((s) => {
-    const vs = s.viewStates['doc-viewer'];
+    const vs = s.viewStates[DOC_VIEWER_PANEL];
     return mode === 'archive' ? (vs?.docViewerArchiveSelectedPath ?? null) : (vs?.docViewerActiveSelectedPath ?? null);
   });
   const gridScroll = usePanelStore((s) => {
-    const vs = s.viewStates['doc-viewer'];
+    const vs = s.viewStates[DOC_VIEWER_PANEL];
     return mode === 'archive' ? (vs?.docViewerArchiveGridScroll ?? 0) : (vs?.docViewerActiveGridScroll ?? 0);
   });
   const docScroll = usePanelStore((s) => {
-    const vs = s.viewStates['doc-viewer'];
+    const vs = s.viewStates[DOC_VIEWER_PANEL];
     return mode === 'archive' ? (vs?.docViewerArchiveDocScroll ?? 0) : (vs?.docViewerActiveDocScroll ?? 0);
   });
 
@@ -85,18 +93,21 @@ export function useDocViewerState(): UseDocViewerStateResult {
   );
 
   const tree = useFileDataStore((s) =>
-    parsedPath ? s.trees[`doc-viewer:${parsedPath.folder}`] : undefined
+    parsedPath ? s.trees[`${DOC_VIEWER_PANEL}:${parsedPath.folder}`] : undefined
   );
   const content = useFileDataStore((s) =>
-    selectedPath ? s.contents[`doc-viewer:${selectedPath}`] : undefined
+    selectedPath ? s.contents[`${DOC_VIEWER_PANEL}:${selectedPath}`] : undefined
+  );
+  const contentMetadata = useFileDataStore((s) =>
+    selectedPath ? s.contentMetadata[`${DOC_VIEWER_PANEL}:${selectedPath}`] : undefined
   );
 
   useEffect(() => {
     if (!parsedPath || !selectedPath) return;
     const store = useFileDataStore.getState();
-    store.requestTree('doc-viewer', parsedPath.folder);
-    store.requestContent('doc-viewer', selectedPath);
-  }, [parsedPath, selectedPath]);
+    store.requestTree(DOC_VIEWER_PANEL, parsedPath.folder);
+    store.requestContent(DOC_VIEWER_PANEL, selectedPath);
+  }, [fileDataGeneration, parsedPath, selectedPath]);
 
   const selected: DocViewerSelection | null = useMemo(() => {
     if (!parsedPath || !selectedPath || !tree || content === undefined) return null;
@@ -105,20 +116,39 @@ export function useDocViewerState(): UseDocViewerStateResult {
     const siblings = tree
       .filter((n) => n.type === 'file')
       .map((n) => ({ ...n, content: n.name === parsedPath.name ? content : '' }) as FileWithContent);
-    return { file: { ...fileNode, content }, siblings, folder: parsedPath.folder };
-  }, [parsedPath, selectedPath, tree, content]);
+    return { file: { ...fileNode, ...contentMetadata, content }, siblings, folder: parsedPath.folder };
+  }, [parsedPath, selectedPath, tree, content, contentMetadata]);
 
   const setMode = useCallback((nextMode: DocViewerMode) => {
-    persistViewPatch({ docViewerMode: nextMode });
+    persistViewPatch({
+      docViewerMode: nextMode,
+      [gridScrollKey(nextMode)]: 0,
+    } as Partial<ViewUIState>);
   }, []);
 
   const selectFile = useCallback((folder: string, file: FileWithContent) => {
     persistViewPatch({ [selectedPathKey(mode)]: `${folder}/${file.name}` } as Partial<ViewUIState>);
+    recordViewRecent(DOC_VIEWER_PANEL, {
+      panel: DOC_VIEWER_PANEL,
+      path: file.path,
+      title: file.name,
+      kind: 'document',
+      folder,
+      extension: file.extension ?? file.name.split('.').pop()?.toLowerCase(),
+    });
   }, [mode]);
 
   const selectSibling = useCallback((sib: FileWithContent) => {
     if (!selected) return;
     persistViewPatch({ [selectedPathKey(mode)]: `${selected.folder}/${sib.name}` } as Partial<ViewUIState>);
+    recordViewRecent(DOC_VIEWER_PANEL, {
+      panel: DOC_VIEWER_PANEL,
+      path: sib.path,
+      title: sib.name,
+      kind: 'document',
+      folder: selected.folder,
+      extension: sib.extension ?? sib.name.split('.').pop()?.toLowerCase(),
+    });
   }, [selected, mode]);
 
   const clearSelection = useCallback(() => {
@@ -133,6 +163,11 @@ export function useDocViewerState(): UseDocViewerStateResult {
     persistViewPatch({ [gridScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
   }, [mode]);
 
+  const resetGridScroll = useCallback((targetMode: DocViewerMode = mode) => {
+    gridScrollThrottleRef.current = 0;
+    persistViewPatch({ [gridScrollKey(targetMode)]: 0 } as Partial<ViewUIState>);
+  }, [mode]);
+
   const docScrollThrottleRef = useRef<number>(0);
   const persistDocScroll = useCallback((scrollTop: number) => {
     const now = Date.now();
@@ -143,43 +178,24 @@ export function useDocViewerState(): UseDocViewerStateResult {
 
   const restoreSelectedFile = useCallback(() => {
     if (!selected) return;
-    const state = usePanelStore.getState();
-    const panelRoot = state.panelRoots['doc-viewer'];
-    const ws = state.ws;
-    if (!panelRoot) {
-      showToast('Cannot restore: doc-viewer root not loaded');
-      return;
-    }
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
-      showToast('Cannot restore: not connected');
-      return;
-    }
-    const activeFolder = selected.folder.replace(/\/Archive$/, '');
-    const source = `${panelRoot}/${selected.folder}/${selected.file.name}`;
-    const target = `${panelRoot}/${activeFolder}`;
-    ws.send(JSON.stringify({ type: 'file:move', source, target }));
-    persistViewPatch({
-      docViewerArchiveSelectedPath: null,
-    });
-    showToast('Restored to active folder');
+    showToast('Restore from the flat archive is not available');
   }, [selected]);
 
   const archiveSelectedFile = useCallback(() => {
     if (!selected) return;
     const state = usePanelStore.getState();
-    const panelRoot = state.panelRoots['doc-viewer'];
+    const panelRoot = state.panelRoots[DOC_VIEWER_PANEL];
     const ws = state.ws;
     if (!panelRoot) {
-      showToast('Cannot archive: doc-viewer root not loaded');
+      showToast('Cannot archive: capture-viewer root not loaded');
       return;
     }
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       showToast('Cannot archive: not connected');
       return;
     }
-    const archiveFolder = `${selected.folder}/Archive`;
     const source = `${panelRoot}/${selected.folder}/${selected.file.name}`;
-    const target = `${panelRoot}/${archiveFolder}`;
+    const target = `${panelRoot}/${DOC_VIEWER_ARCHIVE_FOLDER}`;
     ws.send(JSON.stringify({ type: 'file:move', source, target }));
     persistViewPatch({
       docViewerActiveSelectedPath: null,
@@ -199,6 +215,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
     restoreSelectedFile,
     archiveSelectedFile,
     persistGridScroll,
+    resetGridScroll,
     persistDocScroll,
   };
 }

@@ -11,6 +11,7 @@
 
 const { on, emit } = require('../event-bus');
 const { HistoryFile } = require('../thread/HistoryFile');
+const { getProjectThreadManager, awaitThreadManagerReady } = require('../thread/thread-manager-registry');
 const { aggregateExchangeMetadata } = require('../chat-metadata/exchange-metadata-aggregator');
 
 // Pending audit data keyed by threadId
@@ -19,22 +20,40 @@ const pendingAuditData = new Map();
 
 // TTL for pending data (5 minutes) — prevents memory leaks
 const PENDING_TTL_MS = 5 * 60 * 1000;
+let cleanupTimer = null;
+let unsubscribeFns = [];
 
 /**
  * Start the audit subscriber.
  * Call this once during server initialization.
  */
 function startAuditSubscriber() {
+  if (cleanupTimer) return stopAuditSubscriber;
+
   // Listen for status updates — capture audit metadata
-  on('chat:status_update', handleStatusUpdate);
+  unsubscribeFns.push(on('chat:status_update', handleStatusUpdate));
 
   // Listen for turn end — persist exchange with audit metadata
-  on('chat:turn_end', handleTurnEnd);
+  unsubscribeFns.push(on('chat:turn_end', handleTurnEnd));
 
   // Periodic cleanup of stale pending data
-  setInterval(cleanupStalePendingData, 60000);
+  cleanupTimer = setInterval(cleanupStalePendingData, 60000);
+  if (typeof cleanupTimer.unref === 'function') cleanupTimer.unref();
 
   console.log('[AuditSubscriber] Started');
+  return stopAuditSubscriber;
+}
+
+function stopAuditSubscriber() {
+  for (const unsubscribe of unsubscribeFns) {
+    unsubscribe();
+  }
+  unsubscribeFns = [];
+  if (cleanupTimer) {
+    clearInterval(cleanupTimer);
+    cleanupTimer = null;
+  }
+  pendingAuditData.clear();
 }
 
 /**
@@ -79,6 +98,9 @@ async function handleTurnEnd(event) {
     planMode: auditData?.planMode ?? false,
     contextUsage: auditData?.contextUsage ?? null,
     tokenUsage: auditData?.tokenUsage ?? null,
+    turnId: event.turnId ?? null,
+    reason: event.reason || 'complete',
+    partial: Boolean(event.partial),
     capturedAt: auditData?.timestamp ?? Date.now(),
     savedAt: Date.now(),
   };
@@ -130,6 +152,7 @@ async function handleTurnEnd(event) {
         reason: event.reason,
         metadata,
       });
+      await finalizeSavedExchange(event, savedExchange);
     } catch (err) {
       console.error('[AuditSubscriber] Failed to save exchange:', err);
       // Fire-and-forget: don't block the event bus
@@ -138,6 +161,19 @@ async function handleTurnEnd(event) {
 
   // Clean up pending data for this thread
   pendingAuditData.delete(event.threadId);
+}
+
+async function finalizeSavedExchange(event, savedExchange) {
+  if (!event.projectRoot || !event.threadId) return;
+
+  try {
+    const manager = getProjectThreadManager(event.projectRoot, event.workspaceId);
+    await awaitThreadManagerReady(manager);
+    await manager.recordSavedExchange(event.threadId, savedExchange.seq);
+    await manager.syncChatlogMirrorFromHistory(event.threadId);
+  } catch (err) {
+    console.error('[AuditSubscriber] Failed to finalize saved exchange:', err);
+  }
 }
 
 /**
@@ -171,6 +207,7 @@ function getPendingForThread(threadId) {
 
 module.exports = {
   startAuditSubscriber,
+  stopAuditSubscriber,
   getPendingCount,
   getPendingForThread,
 };

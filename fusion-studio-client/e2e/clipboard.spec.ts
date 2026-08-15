@@ -4,7 +4,7 @@ test('clipboard trigger styling verification', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
   const popover = page.locator('.rv-hover-icon-modal').first();
 
   // ========== DEFAULT STATE ==========
@@ -122,7 +122,7 @@ test('clipboard controller state transitions', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
 
   // Click to open
   await trigger.click();

@@ -20,6 +20,7 @@ import { CONTENT_LUMINANCE_CATALOG } from '../../../fusion-studio-server/lib/the
 
 // Single fixed id we overwrite on every auto-save so themes.json doesn't bloat.
 const ACTIVE_USER_THEME_ID = 'user-current';
+const DEFAULT_THEME_ACCENT = '#39628e';
 
 interface Props {
   onClose: () => void;
@@ -32,7 +33,7 @@ export default function ThemePicker({ onClose }: Props) {
   const activeTheme = themes.find(t => t.id === activeThemeId) ?? themes.find(t => t.active);
 
   // Slider state — session only, not committed until Apply
-  const [accent, setAccent] = useState(activeTheme?.accent ?? '#00d4ff');
+  const [accent, setAccent] = useState(activeTheme?.accent ?? DEFAULT_THEME_ACCENT);
   const inferredMode: 'light' | 'dark' =
     (activeTheme?.mode === 'light' || activeTheme?.mode === 'dark')
       ? activeTheme.mode
@@ -73,7 +74,7 @@ export default function ThemePicker({ onClose }: Props) {
   const [chatBorder, setChatBorder] = useState(activeTheme?.tints?.borders?.chat ?? false);
   const [themeCode, setThemeCode] = useState(activeTheme?.themeCode ?? false);
 
-  const [hexInput, setHexInput] = useState(activeTheme?.accent ?? '#00d4ff');
+  const [hexInput, setHexInput] = useState(activeTheme?.accent ?? DEFAULT_THEME_ACCENT);
 
   // Auto-save: 250ms debounce after the last slider/accent change.
   const initialMountRef = useRef(true);

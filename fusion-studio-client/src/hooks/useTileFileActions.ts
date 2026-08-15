@@ -1,23 +1,46 @@
 /**
  * @module useTileFileActions
- * @role Controller hook for tile-level file actions
+ * @role Controller hook for tile-level filesystem entry actions
  *
- * Orchestrates rename, archive/restore, and delete actions for files shown
- * in a tile row. Keeps presentation components free of WebSocket details.
+ * Orchestrates rename, archive/restore, and delete actions for files and
+ * folders shown in tile grids. Keeps presentation components free of
+ * WebSocket details.
  */
 
 import { useCallback } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { showToast } from '../lib/toast';
-import type { FileWithContent } from '../state/fileDataStore';
+import { getPanelArchiveFolder, isViewerArchivePath } from '../lib/viewFolders';
+import type { FileNode } from '../state/fileDataStore';
 
 interface UseTileFileActionsOptions {
   panel: string;
   folder: string;
 }
 
+type FileActionEntry = Pick<FileNode, 'name' | 'path' | 'type' | 'extension'>;
+
+function joinPanelPath(panelRoot: string, relativePath: string): string {
+  return [panelRoot.replace(/\/+$/, ''), relativePath]
+    .filter(Boolean)
+    .join('/');
+}
+
+function entryRelativePath(entry: FileActionEntry, folder: string): string {
+  return entry.path || [folder, entry.name].filter(Boolean).join('/');
+}
+
+function entryKind(entry: FileActionEntry): 'file' | 'folder' {
+  return entry.type === 'folder' ? 'folder' : 'file';
+}
+
 export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions) {
-  const isArchive = folder.includes('/Archive');
+  const archiveFolder = getPanelArchiveFolder(panel);
+  const isArchiveFolder = useCallback(
+    (folderOverride = folder) => Boolean(archiveFolder && isViewerArchivePath(folderOverride, archiveFolder)),
+    [archiveFolder, folder]
+  );
+  const isArchive = isArchiveFolder(folder);
 
   const getWs = useCallback(() => {
     const state = usePanelStore.getState();
@@ -34,40 +57,53 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
     return { panelRoot, ws };
   }, [panel]);
 
+  const isArchiveEntry = useCallback(
+    (entry: FileActionEntry, folderOverride = folder) => Boolean(
+      archiveFolder && isViewerArchivePath(entryRelativePath(entry, folderOverride), archiveFolder)
+    ),
+    [archiveFolder, folder]
+  );
+
   const archiveOrRestoreFile = useCallback(
-    (file: FileWithContent) => {
+    (entry: FileActionEntry, folderOverride = folder) => {
       const conn = getWs();
       if (!conn) return;
+      if (!archiveFolder) {
+        showToast('Archive is not supported for this view');
+        return;
+      }
+      if (isArchiveEntry(entry, folderOverride)) {
+        showToast('Restore from the flat archive is not available');
+        return;
+      }
       const { panelRoot, ws } = conn;
-      const source = `${panelRoot}/${folder}/${file.name}`;
-      const target = isArchive
-        ? `${panelRoot}/${folder.replace(/\/Archive$/, '')}`
-        : `${panelRoot}/${folder}/Archive`;
+      const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
+      const target = `${panelRoot.replace(/\/+$/, '')}/${archiveFolder}`;
       ws.send(JSON.stringify({ type: 'file:move', source, target }));
     },
-    [folder, isArchive, getWs]
+    [archiveFolder, folder, getWs, isArchiveEntry]
   );
 
   const renameFile = useCallback(
-    (file: FileWithContent) => {
+    (entry: FileActionEntry, folderOverride = folder) => {
       const conn = getWs();
       if (!conn) return;
       const { panelRoot, ws } = conn;
-      const source = `${panelRoot}/${folder}/${file.name}`;
-      const newName = window.prompt('Rename file', file.name);
-      if (!newName || newName === file.name) return;
+      const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
+      const newName = window.prompt(`Rename ${entryKind(entry)}`, entry.name);
+      if (!newName || newName === entry.name) return;
       ws.send(JSON.stringify({ type: 'file:rename', source, newName }));
     },
     [folder, getWs]
   );
 
   const deleteFile = useCallback(
-    (file: FileWithContent) => {
+    (entry: FileActionEntry, folderOverride = folder) => {
       const conn = getWs();
       if (!conn) return;
       const { panelRoot, ws } = conn;
-      const source = `${panelRoot}/${folder}/${file.name}`;
-      if (!window.confirm(`Delete ${file.name}?`)) return;
+      const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
+      if (!window.confirm(`Delete ${entry.name}?`)) return;
       ws.send(JSON.stringify({ type: 'file:delete', source }));
     },
     [folder, getWs]
@@ -75,6 +111,8 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
 
   return {
     isArchive,
+    isArchiveFolder,
+    isArchiveEntry,
     archiveOrRestoreFile,
     renameFile,
     deleteFile,

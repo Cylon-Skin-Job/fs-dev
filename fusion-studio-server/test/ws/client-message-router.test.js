@@ -72,7 +72,6 @@ function makeRouter({ wire, handleCanonicalHarnessEvent = jest.fn() }) {
     getProjectRoot: jest.fn(() => '/tmp/project'),
     getFusionHandlers: () => ({}),
     getClipboardHandlers: () => ({}),
-    getRecentDocsHandlers: () => ({}),
     getBookmarksHandlers: () => ({}),
     getThemeHandlers: () => ({}),
     getSecretsHandlers: () => ({}),

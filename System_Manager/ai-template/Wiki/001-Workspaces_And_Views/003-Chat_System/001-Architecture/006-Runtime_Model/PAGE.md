@@ -72,7 +72,7 @@ New chat uses `thread:open-assistant` without a `threadId`:
 { "type": "thread:open-assistant", "scope": "project" }
 ```
 
-The server resolves the default harness from `ai/system/config/cli.json`. In the
+The server resolves the default harness from `ai/<machine>/System/config/cli.json`. In the
 current OpenCode-only config, no explicit `harnessId` is needed.
 
 `thread:open-assistant` is the assistant activation/create path:

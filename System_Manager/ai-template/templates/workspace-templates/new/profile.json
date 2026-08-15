@@ -3,8 +3,9 @@
   "id": "new",
   "label": "New Workspace",
   "category": "new",
-  "description": "Default new workspace profile with the core four views only.",
+  "description": "Default new workspace profile with the core five views only.",
   "selectedViewIds": [
+    "capture-viewer",
     "file-viewer",
     "wiki-viewer",
     "issues-viewer",

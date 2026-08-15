@@ -43,7 +43,7 @@
 }
 
 .rv-bookmark-dialog-name:focus {
-  border-color: var(--color-primary, #00d4ff);
+  border-color: var(--color-primary, #39628e);
 }
 
 .rv-bookmark-dialog-folder {
@@ -90,11 +90,11 @@
 }
 
 .rv-bookmark-dialog-btn--primary {
-  background: var(--color-primary, #00d4ff);
+  background: var(--color-primary, #39628e);
   color: #000;
-  border-color: var(--color-primary, #00d4ff);
+  border-color: var(--color-primary, #39628e);
 }
 
 .rv-bookmark-dialog-btn--primary:hover {
-  background: color-mix(in srgb, var(--color-primary, #00d4ff), white 15%);
+  background: color-mix(in srgb, var(--color-primary, #39628e), white 15%);
 }

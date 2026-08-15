@@ -1,18 +1,15 @@
 #!/usr/bin/env node
 /**
- * One-shot migration — STATE_OVERRIDE_SPEC §10.
+ * Legacy V1-only one-shot migration — STATE_OVERRIDE_SPEC §10.
  *
- * Moves legacy per-view state files to the new workspace-default +
- * per-view override layout.
+ * Moves pre-V2 per-view user state files to the former workspace-default
+ * plus per-view override layout. Current V2 workspaces use machine-scoped
+ * view capsules and keep per-view state in each capsule's `state/state.json`.
  *
- *   Before:  ai/views/<view>/state/<username>.json        (per-user, per-view)
- *   After:   ai/views/settings/state.json                 (workspace default)
- *            ai/views/<view>/settings/state.json          (override, only if diverges)
- *
- * Algorithm:
+ * Legacy algorithm:
  *   1. Load every legacy file.
  *   2. Pick `code-viewer` as the seed; merge into full §5 shape.
- *   3. Write workspace file.
+ *   3. Write the former workspace-default state file.
  *   4. For every other view, diff against seed → write override only if non-empty.
  *   5. Delete legacy <view>/state/ directories.
  *

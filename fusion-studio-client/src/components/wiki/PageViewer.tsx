@@ -11,6 +11,7 @@ import { markdownToHtml } from '../../lib/transforms';
 import { parseWikiPage, type WikiFrontmatter } from '../../lib/wiki-frontmatter';
 import { findWikiNodeByPath, useWikiStore } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
+import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { SendToChatButton } from '../SendToChatButton';
 
 const METADATA_SECTIONS: Array<{ key: string; label: string }> = [
@@ -65,6 +66,7 @@ export function PageViewer() {
   const viewedPath = useWikiStore((s) => s.viewedPath);
   const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
   const selectedContent = useWikiStore((s) => s.selectedContent);
+  const selectedSymlinkTarget = useWikiStore((s) => s.selectedSymlinkTarget);
   const loading = useWikiStore((s) => s.loading);
   const error = useWikiStore((s) => s.error);
   const historyIndex = useWikiStore((s) => s.historyIndex);
@@ -143,6 +145,12 @@ export function PageViewer() {
         <div className="rv-wiki-nav-actions">
           {relativePath && (
             <>
+              {selectedSymlinkTarget ? (
+                <LinkedResourceIndicator
+                  symlinkTarget={selectedSymlinkTarget}
+                  className="rv-file-page-action"
+                />
+              ) : null}
               <CopyPathButton
                 panel="wiki-viewer"
                 relativePath={relativePath}

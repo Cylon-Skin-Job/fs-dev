@@ -2,146 +2,474 @@
    OfficeGrid — folder card grid + file tile grid
    ============================================ */
 
+.rv-office-shell {
+  --rv-office-item-min-width: 220px;
+  --rv-office-grid-gap: var(--space-md);
+  --rv-office-card-fill: var(--sidebar-surface-bg, var(--ws-sidebar-bg, var(--panel-chrome-bg, var(--surface-elevated, #1a1a1a))));
+  --rv-office-card-hover-fill: color-mix(in srgb, var(--rv-office-card-fill) 88%, var(--chrome-accent, #ffffff) 12%);
+  --rv-office-content-fill: var(--bg-solid, var(--ws-content-bg, #000000));
+  --rv-office-paper-mute-alpha: 0;
+  --rv-office-paper-mute-rgb: 8, 10, 14;
+  display: grid;
+  grid-template-columns: 182px minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rv-office-shell--no-sidebar {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .rv-office-grid {
   width: 100%;
   height: 100%;
-  padding: var(--space-xl);
+  min-width: 0;
+  min-height: 0;
+  padding: 0 var(--space-xl);
   overflow-y: auto;
   box-sizing: border-box;
+  background: var(--rv-office-card-fill);
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-office-detail-main {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rv-office-card-fill);
+}
+
+.rv-office-shell .rv-file-page-content {
+  position: relative;
+}
+
+.rv-office-shell .rv-file-page-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(var(--rv-office-paper-mute-rgb), var(--rv-office-paper-mute-alpha, 0));
+  pointer-events: none;
 }
 
 .rv-office-view-transition {
   animation: rv-office-view-enter 0.18s ease-out;
 }
 
-/* Header */
-.rv-office-header {
-  margin-bottom: var(--space-xl);
+.rv-office-sidebar {
+  min-width: 0;
+  min-height: 0;
+  padding: var(--space-md) var(--space-xs) var(--space-md) calc(var(--space-sm) + 10px);
+  box-sizing: border-box;
+  background: var(--rv-office-card-fill);
+  border: none;
 }
 
-.rv-office-title {
+.rv-office-sidebar-title {
+  min-width: 0;
+  margin: 0 0 var(--space-sm);
+  color: var(--chrome-accent);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--chrome-accent);
-  margin: 0;
-}
-
-/* Folder grid (root view) */
-.rv-office-folder-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-sm);
-}
-
-.rv-office-folder-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-xs);
-  padding: var(--space-sm);
-  background: var(--surface-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease,
-    transform 0.1s ease;
-  min-height: 140px;
-}
-
-.rv-office-folder-card:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-focus);
-  transform: translateY(-2px);
-}
-
-.rv-office-folder-card:active {
-  transform: translateY(0);
-}
-
-.rv-office-folder-icon {
-  width: 80px;
-  height: 80px;
-  color: var(--chrome-accent);
-}
-
-.rv-office-folder-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-}
-
-.rv-office-folder-name {
-  font-size: 12pt;
-  font-weight: 500;
-  color: var(--chrome-accent);
-  text-align: center;
-  word-break: break-word;
-  max-width: 100%;
-}
-
-/* Folder view — matches FilePageView header paradigm */
-.rv-office-folder-view {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.rv-office-topbar {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  flex-shrink: 0;
-}
-
-.rv-office-topbar-back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--accent-dim);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-
-.rv-office-topbar-back:hover {
-  background: var(--surface-hover);
-}
-
-.rv-office-topbar-back .material-symbols-outlined {
-  font-size: 20px;
-}
-
-.rv-office-topbar-title {
-  flex: 1 1 auto;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--chrome-accent);
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.rv-office-topbar-actions {
+.rv-office-new-menu {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: calc(var(--space-md) + 10px);
+}
+
+.rv-office-new-btn.rv-office-sidebar-new-btn {
+  width: 100%;
+  margin: 0;
+}
+
+.rv-office-new-dropdown {
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  min-width: 172px;
+  max-height: none;
+  overflow: visible;
+  background: var(--rv-office-card-fill);
+}
+
+.rv-office-new-menu-item {
+  min-height: 40px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.rv-office-new-menu-item:hover:not([disabled]) {
+  color: var(--accent-dim, var(--chrome-accent));
+}
+
+.rv-office-new-menu-separator {
+  height: 1px;
+  margin: var(--space-xs) var(--space-sm);
+  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-office-create-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1003);
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: var(--overlay-md, rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(4px);
+}
+
+.rv-office-create-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: min(360px, 100%);
+  padding: var(--space-lg);
+  box-sizing: border-box;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: 10px;
+  background: var(--rv-office-card-fill);
+  color: var(--chrome-accent);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+}
+
+.rv-office-create-modal-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--chrome-accent);
+}
+
+.rv-office-create-modal-input {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.16));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--rv-office-content-fill);
+  color: var(--text-primary, #f2f2f2);
+  font: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rv-office-create-modal-input:focus {
+  border-color: var(--accent-dim, var(--chrome-accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-dim, var(--chrome-accent)) 18%, transparent);
+}
+
+.rv-office-create-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.rv-office-create-modal-btn {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.16));
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--chrome-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.rv-office-create-modal-btn:hover:not(:disabled) {
+  background: var(--rv-office-card-hover-fill);
+  border-color: var(--accent-dim, var(--chrome-accent));
+}
+
+.rv-office-create-modal-btn:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.rv-office-create-modal-btn--primary {
+  background: color-mix(in srgb, var(--accent-dim, var(--chrome-accent)) 18%, transparent);
+}
+
+.rv-office-create-modal-btn--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-dim, var(--chrome-accent)) 26%, transparent);
+}
+
+.rv-office-sidebar-nav {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
 }
 
-.rv-office-topbar-action {
+.rv-office-sidebar-separator {
+  height: 1px;
+  margin: var(--space-xs) 10px;
+  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-office-sidebar-section-label {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: var(--chrome-accent);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.78;
+}
+
+.rv-office-sidebar-section-label .material-symbols-outlined {
+  font-size: 21px;
+}
+
+.rv-office-sidebar-section-label span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-office-sidebar-item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--chrome-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-office-sidebar-item:hover,
+.rv-office-sidebar-item:focus-visible {
+  outline: none;
+  background: var(--rv-office-card-hover-fill);
+  color: var(--accent-dim, var(--chrome-accent));
+}
+
+.rv-office-sidebar-item.active {
+  background: color-mix(in srgb, var(--accent-dim, var(--chrome-accent)) 14%, transparent);
+  color: var(--accent-dim, var(--chrome-accent));
+}
+
+.rv-office-sidebar-item .material-symbols-outlined {
+  font-size: 21px;
+}
+
+.rv-office-sidebar-item--pinned {
+  padding-left: 20px;
+}
+
+.rv-office-sidebar-item span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header */
+.rv-office-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-bottom: 0;
+  background: transparent;
+}
+
+.rv-office-header-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-height: 36px;
+  padding: var(--space-xl) var(--space-xl) 0 0;
+  box-sizing: border-box;
+  column-gap: var(--space-sm);
+  background: transparent;
+}
+
+.rv-office-content-panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background: var(--rv-office-content-fill);
+  overflow: hidden;
+}
+
+.rv-office-search-field {
+  justify-self: start;
+  width: min(430px, 100%);
+  height: 50px;
+  padding: 0 12px 0 18px;
+  border-radius: 25px;
+  background: var(--surface-base);
+}
+
+.rv-office-search-field .rv-viewer-search-dismiss {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.rv-office-title-row {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-width: 0;
+  padding: 20px var(--space-xl) 0;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.rv-office-title {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--chrome-accent);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-office-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.rv-office-breadcrumb-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rv-office-breadcrumb-separator {
+  color: var(--text-dim);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(2px);
+}
+
+.rv-office-breadcrumb-link {
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.rv-office-breadcrumb-link:hover {
+  color: var(--accent-dim);
+}
+
+.rv-office-breadcrumb-current {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-office-search-grid {
+  animation: rv-office-view-enter 0.18s ease-out;
+}
+
+.rv-office-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rv-office-search-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.rv-office-search-section--files {
+  margin-top: var(--space-md);
+}
+
+.rv-office-search-section-title {
+  color: var(--text-dim, rgba(255, 255, 255, 0.62));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rv-office-search-folder-grid {
+  animation: rv-office-view-enter 0.18s ease-out;
+}
+
+.rv-office-search-filter-row {
+  min-height: 26px;
+  padding: 0 var(--space-xl);
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.rv-office-folder-filter-row {
+  min-height: 26px;
+  padding: 0 var(--space-xl);
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.rv-office-folder-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: 10px;
+}
+
+.rv-office-header-action,
+.rv-office-new-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
   height: 32px;
   padding: 0;
   background: transparent;
@@ -152,27 +480,127 @@
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.rv-office-topbar-action:hover {
+.rv-office-header-action {
+  width: 32px;
+}
+
+.rv-office-header-action:hover,
+.rv-office-new-btn:hover {
   background: var(--surface-hover);
   color: var(--accent-dim);
 }
 
-.rv-office-topbar-action .material-symbols-outlined {
+.rv-office-header-action .material-symbols-outlined {
   font-size: 18px;
 }
 
-.rv-office-folder-content {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding: var(--space-xl);
+.rv-office-new-btn {
+  width: auto;
+  min-width: 58px;
+  padding: 0 12px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-color: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  color: var(--chrome-accent);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
-/* File grid (folder view) */
+/* Folder grid (root view) */
+.rv-office-folder-grid,
 .rv-office-file-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fill, minmax(var(--rv-office-item-min-width), 1fr));
+  gap: var(--rv-office-grid-gap);
+  align-items: start;
+  align-content: start;
+}
+
+.rv-office-folder-card {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 8px 0 12px;
+  box-sizing: border-box;
+  background: var(--rv-office-card-fill);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.rv-office-folder-card:hover {
+  background: var(--rv-office-card-hover-fill);
+  transform: translateY(-2px);
+}
+
+.rv-office-folder-card:active {
+  transform: translateY(0);
+}
+
+.rv-office-folder-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--chrome-accent);
+}
+
+.rv-office-folder-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.rv-office-folder-name {
+  min-width: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: currentColor;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: normal;
+  max-width: 100%;
+}
+
+.rv-office-folder-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: currentColor;
+  cursor: pointer;
+  font: inherit;
+}
+
+.rv-office-folder-more:hover,
+.rv-office-folder-more:focus-visible {
+  outline: none;
+  background: var(--rv-office-card-hover-fill);
+}
+
+.rv-office-folder-more .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-content-panel > .rv-office-loading,
+.rv-office-content-panel > .rv-office-empty {
+  padding: var(--space-xl);
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  background: transparent;
 }
 
 /* Loading & Empty states */
@@ -186,6 +614,13 @@
   min-height: 200px;
   color: var(--text-dim);
   font-size: 0.875rem;
+}
+
+.rv-office-loading--inline {
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 64px;
+  padding: var(--space-sm) 0;
 }
 
 .rv-office-empty-icon {

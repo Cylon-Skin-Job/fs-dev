@@ -72,7 +72,7 @@ key.
 
 ## Harness Policy
 
-New-thread harness selection is constrained by `ai/system/config/cli.json`.
+New-thread harness selection is constrained by `ai/<machine>/System/config/cli.json`.
 Manual WebSocket attempts to create a disabled or absent harness thread should be
 rejected server-side.
 

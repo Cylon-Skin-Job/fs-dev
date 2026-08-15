@@ -1,0 +1,12 @@
+{
+  "defaultHarness": "opencode",
+  "harnesses": {
+    "opencode": {
+      "enabled": true,
+      "name": "OpenCode",
+      "materialIcon": "all_inclusive",
+      "accentColor": "#10B981",
+      "order": 0
+    }
+  }
+}

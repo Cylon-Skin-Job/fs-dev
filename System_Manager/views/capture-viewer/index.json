@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "id": "capture-viewer",
+  "label": "Capture Viewer",
+  "rank": 1,
+  "type": "doc",
+  "settings": {
+    "theme": {
+      "primary": "#00d4ff"
+    }
+  }
+}

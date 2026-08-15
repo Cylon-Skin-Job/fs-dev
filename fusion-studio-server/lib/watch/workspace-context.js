@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { classifyEntrySync } = require('../fs/dirents');
 
 /**
  * Check whether a relative file path matches any exclusion pattern.
@@ -34,8 +35,9 @@ function statDir(absoluteDir) {
     const entries = fs.readdirSync(absoluteDir, { withFileTypes: true });
     let files = 0, folders = 0;
     for (const e of entries) {
-      if (e.isDirectory()) folders++;
-      else files++;
+      const classified = classifyEntrySync(absoluteDir, e);
+      if (classified.isDir) folders++;
+      else if (classified.isFile) files++;
     }
     return { files, folders };
   } catch {

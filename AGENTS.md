@@ -33,7 +33,7 @@ fs-dev/
 | Electron main/preload | `fusion-studio-client/electron/` |
 | Server | `fusion-studio-server/` |
 | Server libraries | `fusion-studio-server/lib/` |
-| Current Chat architecture source of truth | `ai/views/wiki-viewer/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` |
+| Current Chat architecture source of truth | `ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` |
 | Project overview | `docs/FUSION_STUDIO_OVERVIEW.md` |
 | Architecture outline | `docs/FUSION_STUDIO_ARCHITECTURE_OUTLINE.md` |
 
@@ -68,14 +68,14 @@ Fusion Studio has three primary runtime layers:
 | Layer | Path | Responsibilities |
 |------|------|------------------|
 | Electron main | `fusion-studio-client/electron/` | Window lifecycle, native APIs, custom protocol, server child process |
-| Renderer | `fusion-studio-client/src/` | React UI, Zustand stores, WebSocket client, iframe view mounting |
+| Renderer | `fusion-studio-client/src/` | React UI, Zustand stores, WebSocket client, built-in view mounting, custom/browser iframe surfaces |
 | Server | `fusion-studio-server/` | Business logic, SQLite, workspace registry, chat/thread routing, harness adapters, file/wiki/resource APIs |
 
 The server owns persistence and orchestration. The renderer presents state and sends user intents. Electron provides local app integration and packages the client/server together.
 
 ## Chat And Harness Model
 
-Read `ai/views/wiki-viewer/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
+Read `ai/<machine>/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md` before changing chat, threads, harness routing, prompt acceptance, live stream rendering, or stop/interrupt behavior.
 
 Current rules:
 
@@ -101,16 +101,23 @@ Do not describe the current system as using any older database filename. The act
 
 ## Workspace And Views
 
-Each workspace is a folder on disk with an `ai/` subtree. Fusion Studio reads workspace config, views, wiki content, styles, and state from that folder.
+Each workspace is a folder on disk with an `ai/<machine>/` subtree. Fusion Studio reads workspace config, views, wiki content, styles, and state from that machine-scoped folder.
 
-Views are moving toward self-contained iframe apps served through the `fusion-studio://` custom protocol. Existing React-backed views still exist during migration. Do not assume all views are React components or all views are iframes; check the current loader and view files.
+Built-in Fusion Studio views are React components mounted by the renderer. Iframes are for custom user-created HTML views, local embedded apps, and browser-style surfaces. Do not infer a migration from React built-ins to iframe built-ins unless current code and product direction both say so.
+
+The V2 workspace layout is:
+
+- `ai/<machine>/Views/<prefix>-<view-id>/` for view capsules, including `manifest.md`, `content.json`, `state/state.json`, and `styles/icon.md`.
+- `ai/<machine>/Wiki`, `Captures`, `Issues`, and `Agents` for top-level product content.
+- `ai/<machine>/System/{config,state,styles}` for workspace policy, state, and shared CSS.
+- `ai/<machine>/Data` for generated/local runtime data such as chatlog mirrors and screenshots.
 
 ## Editing Guidance
 
 - Prefer the smallest correct change.
 - Preserve existing user/worker changes in the dirty worktree.
 - Do not rewrite generated/cache/runtime files unless the task specifically targets them.
-- For chat/thread/harness work, start from the Chat wiki tree under `ai/views/wiki-viewer/Wiki/007-Chat_System/`.
+- For chat/thread/harness work, start from the Chat wiki tree under `ai/<machine>/Wiki/007-Chat_System/`.
 - For database work, use migrations and query modules; do not hand-edit `fusion.db`.
 - For frontend UI work, preserve the current visual language unless explicitly asked to redesign.
 

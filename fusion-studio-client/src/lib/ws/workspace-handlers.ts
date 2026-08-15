@@ -19,7 +19,7 @@
  *   workspace:created                 — new workspace created (close modal)
  *   workspace:view_registry_updated   — active workspace views changed
  *   workspace:view_update_rejected    — view registry update failed
- *   workspace:culled_at_launch     — workspace removed due to missing path (silent)
+ *   workspace:unavailable_at_launch — registered workspace path/structure unavailable (silent)
  *   thread:state_changed           — future use (silent)
  *
  * See docs/WORKSPACE_CLIENT_UI_SPEC.md §3.
@@ -40,21 +40,21 @@ import type { ThemeEntry, WebSocketMessage } from '../../types';
 import type { WorkspacePanelState } from '../../state/panelStoreTypes';
 
 type WorkspaceType = 'code' | 'app';
-type CachedWorkspaceState = Partial<WorkspacePanelState> & { _savedAt?: unknown };
+type WorkspaceStateSnapshot = Pick<Partial<WorkspacePanelState>, 'currentPanel'>;
 
 interface WorkspaceWireMessage extends WebSocketMessage {
   workspaceType?: WorkspaceType;
   themes?: ThemeEntry[];
   activeThemeId?: string | null;
   styles?: Record<string, string>;
-  cachedStates?: Record<string, CachedWorkspaceState>;
+  workspaceStates?: Record<string, WorkspaceStateSnapshot>;
   activeRepoPath?: string | null;
 }
 
-function stripCachedStateMetadata(cached: CachedWorkspaceState): Partial<WorkspacePanelState> {
-  const state = { ...cached };
-  delete state._savedAt;
-  return state;
+function toWorkspacePanelStateSnapshot(snapshot: WorkspaceStateSnapshot): Partial<WorkspacePanelState> {
+  return {
+    currentPanel: typeof snapshot.currentPanel === 'string' ? snapshot.currentPanel : undefined,
+  };
 }
 
 export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
@@ -67,6 +67,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const workspaces = msg.workspaces ?? [];
       store.setWorkspaces(workspaces);
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
+      useFileDataStore.getState().beginWorkspaceGeneration(msg.activeWorkspaceId ?? null);
       store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
       console.log('[workspace-handlers] activeWorkspaceId set to:', msg.activeWorkspaceId);
       if (msg.homePath) store.setHomePath(msg.homePath);
@@ -76,15 +77,14 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       if (workspaceMsg.styles) {
         injectWorkspaceStyles(workspaceMsg.styles);
       }
-      // WORKSPACE_CACHE_PERSISTENCE: hydrate cached workspace states from server
-      const cachedStates = workspaceMsg.cachedStates ?? {};
-      for (const [wsId, cached] of Object.entries(cachedStates)) {
-        if (typeof cached === 'object' && cached !== null) {
-          // Strip internal server metadata before seeding
-          usePanelStore.getState().seedWorkspaceState(wsId, stripCachedStateMetadata(cached));
+      // Hydrate workspace shell state from ai/<machine>/System/state/state.json.
+      const workspaceStates = workspaceMsg.workspaceStates ?? {};
+      for (const [wsId, snapshot] of Object.entries(workspaceStates)) {
+        if (typeof snapshot === 'object' && snapshot !== null) {
+          usePanelStore.getState().seedWorkspaceState(wsId, toWorkspacePanelStateSnapshot(snapshot));
         }
       }
-      // If there's an active workspace on init, activate it so the cached
+      // If there's an active workspace on init, activate it so workspace shell
       // state loads immediately (avoids a blank-first-load after refresh).
       const activeId = msg.activeWorkspaceId ?? null;
       const panelBefore = usePanelStore.getState().currentPanel;
@@ -93,7 +93,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
         useFileStore.getState().activateWorkspace(activeId);
         useWikiStore.getState().activateWorkspace(activeId);
       }
-      // Sync panel with server if the cached panel differs from the default
+      // Sync panel with server if the restored panel differs from the default
       // that was already sent in ws.onopen (set_panel is idempotent-ish).
       const panelStore = usePanelStore.getState();
       const wsConn = panelStore.ws;
@@ -135,21 +135,17 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     case 'workspace:switched': {
       const workspaceId = msg.to ?? null;
       store.setActiveWorkspaceId(workspaceId);
+      useFileDataStore.getState().beginWorkspaceGeneration(workspaceId);
       store.completeWorkspacePreviewSwitch(workspaceId);
       store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
 
       // Keep Electron protocol handler's workspace root in sync
       window.electronAPI?.setWorkspaceRoot(msg.repoPath ?? null);
 
-      // WORKSPACE_ISOLATION_SPEC: swap to cached workspace state (or empty)
+      // WORKSPACE_ISOLATION_SPEC: swap to seeded workspace state (or empty)
       usePanelStore.getState().activateWorkspace(workspaceId);
       useFileStore.getState().activateWorkspace(workspaceId);
       useWikiStore.getState().activateWorkspace(workspaceId);
-
-      // Clear the global file data cache so we don't show stale trees/content
-      // from a different workspace. fileDataStore keys are panel:path, not
-      // workspace-scoped, so cross-workspace pollution is possible.
-      useFileDataStore.getState().clearAll();
 
       // Re-read stores AFTER activateWorkspace so we use the NEW workspace's state
       const panelStore = usePanelStore.getState();
@@ -314,7 +310,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       return true;
     }
 
-    case 'workspace:culled_at_launch':
+    case 'workspace:unavailable_at_launch':
       // Silent — logged server-side.
       return true;
 

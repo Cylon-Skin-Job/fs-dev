@@ -9,14 +9,18 @@ wire-debug.log*
 test-results/
 .gitlab_wikis.json
 kimi_wikis.json
-# ai/ is runtime/workspace data — ignored, EXCEPT the wiki (knowledge layer, backed up to GitHub).
+# ai/ is workspace data. Runtime/generated data stays ignored, but the active
+# V2 workspace definition and knowledge/content layers are tracked.
 # Negation chain required: git cannot re-include inside an excluded directory.
 /ai/*
-!/ai/views/
-/ai/views/*
-!/ai/views/wiki-viewer/
-/ai/views/wiki-viewer/*
-!/ai/views/wiki-viewer/Wiki/
+!/ai/RC-MacAir-15/
+/ai/RC-MacAir-15/Data/
+!/ai/RC-MacAir-15/Views/
+!/ai/RC-MacAir-15/Wiki/
+!/ai/RC-MacAir-15/Captures/
+!/ai/RC-MacAir-15/Issues/
+!/ai/RC-MacAir-15/Agents/
+!/ai/RC-MacAir-15/System/
 **/threads.json
 **/history.json
 # Runtime database and chat artifacts

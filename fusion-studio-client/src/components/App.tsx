@@ -184,8 +184,8 @@ function App() {
   const loading = configs.length === 0;
 
   // Per-panel runtime theming was retired: theme tokens now live in
-  // ai/system/styles/themes.css (workspace) with optional overrides at
-  // ai/views/<view>/settings/themes.css. No JS setProperty.
+  // ai/<machine>/System/styles/themes.css (workspace) with optional overrides at
+  // ai/<machine>/Views/<view>/styles/themes.css. No JS setProperty.
 
   // Once discovery completes, set currentPanel to first available if current isn't valid
   useEffect(() => {
@@ -396,7 +396,7 @@ function App() {
         imageDataUrl={screenshotFlashImage}
         onComplete={() => {
           setScreenshotFlashImage(null);
-          showToast('Screenshot saved to ai/data/screenshots');
+          showToast('Screenshot saved to ai/<machine>/Data/Screenshots');
         }}
       />
     </div>

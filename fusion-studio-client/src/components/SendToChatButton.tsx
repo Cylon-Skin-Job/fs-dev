@@ -2,15 +2,14 @@
  * @module SendToChatButton
  * @role Reusable "send path to chat" action button
  *
- * Resolves a panel-relative path to an attachment pill payload and dispatches
- * it into the active chat composer via the chat action bridge.
+ * Delegates panel-relative path resolution to resource-path so view content
+ * roots stay server/config-driven for every consumer.
  *
  * Used by: FilePageView, OfficeDocumentTopbar, Wiki page nav, TicketBoard, etc.
  */
 
-import { resolveAbsolutePath } from '../lib/resource-path';
+import { createResourceChatAttachment } from '../lib/resource-path';
 import { dispatchChatAction } from '../lib/chat-action';
-import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import { showToast } from '../lib/toast';
 
 interface SendToChatButtonProps {
@@ -27,10 +26,10 @@ export function SendToChatButton({
   title = 'Send path to chat',
 }: SendToChatButtonProps) {
   const handleClick = () => {
-    const absPath = resolveAbsolutePath(panel, relativePath);
-    if (absPath) {
+    const attachment = createResourceChatAttachment(panel, relativePath);
+    if (attachment) {
       dispatchChatAction({
-        attachment: createSendToChatAttachment({ panel, relativePath, absolutePath: absPath }),
+        attachment,
         target: 'current',
         delivery: 'insert',
       });

@@ -21,7 +21,7 @@ This location is intentionally portable: Claude-compatible tools and OpenCode ca
 
 - `clarify` - ask one question at a time until intent and decisions are explicit.
 - `curiosity` - explore ideas without rushing into implementation.
-- `capture-docs` - save loose ideas or lightweight to-do items for later.
+- `captures` - save loose ideas or lightweight to-do items for later.
 - `wiki` - read, update, and cross-link workspace wiki pages.
 - `issues-ticketing` - manage local issues and reusable ticket templates.
 - `spec` - shape implementation intent into specs and vertical slices.
@@ -37,7 +37,7 @@ Use skills to choose the right posture:
 
 - Exploring? Use `curiosity`.
 - Unsure? Use `clarify`.
-- Saving loose ideas? Use `capture-docs`.
+- Saving loose ideas? Use `captures`.
 - Planning implementation? Use `spec`, then `pre-flight`.
 - Reviewing? Use `review`.
 - Touching protected system behavior? Use `system`.

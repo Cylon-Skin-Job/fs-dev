@@ -8,6 +8,8 @@
 const express = require('express');
 const path = require('path');
 const fsPromises = require('fs').promises;
+const aiPaths = require('../workspace/ai-paths');
+const views = require('../views');
 
 /**
  * @param {object} deps
@@ -29,7 +31,7 @@ function createRouter({ getProjectRoot }) {
 
       let globalCss = '';
       try {
-        const globalCssPath = path.join(projectRoot, 'ai', 'system', 'styles', 'themes.css');
+        const globalCssPath = path.join(aiPaths.getSystemStylesRoot(projectRoot), 'themes.css');
         globalCss = await fsPromises.readFile(globalCssPath, 'utf8');
       } catch {
         globalCss = '';
@@ -37,7 +39,9 @@ function createRouter({ getProjectRoot }) {
 
       let viewCss = '';
       try {
-        const viewCssPath = path.join(projectRoot, 'ai', 'views', viewName, 'settings', 'themes.css');
+        const viewRoot = views.resolveViewRoot(projectRoot, viewName, { includeHidden: true });
+        const viewCssPath = viewRoot ? path.join(viewRoot, 'styles', 'themes.css') : null;
+        if (!viewCssPath) throw new Error('View not found');
         viewCss = await fsPromises.readFile(viewCssPath, 'utf8');
       } catch {
         viewCss = '';

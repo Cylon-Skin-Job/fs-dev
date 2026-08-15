@@ -139,7 +139,7 @@
 .rv-tp-mode-btn--active {
   /* Selected mode: filled with Accent. Text picks up --chrome-accent-fg so
      it stays legible regardless of accent brightness. */
-  background: var(--accent-dim, var(--theme-primary, #00d4ff));
+  background: var(--accent-dim, var(--theme-primary, #39628e));
   color: var(--chrome-accent-fg, var(--bg-solid, #000));
 }
 

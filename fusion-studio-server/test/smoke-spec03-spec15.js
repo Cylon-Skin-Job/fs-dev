@@ -47,17 +47,18 @@ for (const [label, rel] of Object.entries(files)) {
   }
 }
 
-// Test 2: ThreadWebSocketHandler exports are unchanged
+// Test 2: ThreadWebSocketHandler export surface
 section('SPEC-03: Export surface');
 
 const EXPECTED_EXPORTS = [
   'setPanel', 'getState', 'cleanup',
   'sendThreadList',
-  'handleThreadOpenAssistant',
+  'handleThreadOpen', 'handleThreadOpenAssistant', 'handleThreadTouch',
   'handleThreadRename', 'handleThreadDelete', 'handleThreadCopyLink',
-  'handleMessageSend', 'addAssistantMessage',
+  'handleThreadSearch',
+  'handleMessageSend',
   'getCurrentThreadId', 'getCurrentThreadManager',
-  '_getProjectThreadManagers', '_getViewThreadManagers', '_getWsState'
+  '_getProjectThreadManagers', '_getWsState'
 ];
 
 try {
@@ -108,18 +109,12 @@ section('SPEC-03: Test exports');
 try {
   const TWH = require('../lib/thread/ThreadWebSocketHandler');
   const projectManagers = TWH._getProjectThreadManagers();
-  const viewManagers = TWH._getViewThreadManagers();
   const wsState = TWH._getWsState();
 
   if (projectManagers instanceof Map) {
     ok('_getProjectThreadManagers returns Map');
   } else {
     fail('_getProjectThreadManagers does not return Map', `got: ${typeof projectManagers}`);
-  }
-  if (viewManagers instanceof Map) {
-    ok('_getViewThreadManagers returns Map');
-  } else {
-    fail('_getViewThreadManagers does not return Map', `got: ${typeof viewManagers}`);
   }
   if (wsState instanceof Map) {
     ok('_getWsState returns Map');
@@ -203,16 +198,11 @@ if (!fs.existsSync(variablesPath)) {
 section('SPEC-15: Hardcoded z-index replaced');
 
 const zindexFiles = [
-  { file: 'styles/document.css', line: 135 },
-  { file: 'mic/VoiceRecorder.css', line: 73 },
-  { file: 'components/Robin/robin.css', line: 8 },
-  { file: 'components/Robin/robin.css', line: 1140 },
-  { file: 'index.css', line: 90 },
-  { file: 'components/HarnessSelector/HarnessSelector.css', line: 10 },
-  { file: 'components/hover-icon-modal/HoverIconModal.css', line: 69 },
-  { file: 'components/hover-icon-modal/HoverIconModal.css', line: 261 },
-  { file: 'components/ChatHarnessPicker/ChatHarnessPicker.css', line: 6 },
-  { file: 'components/ConnectingOverlay/ConnectingOverlay.css', line: 6 },
+  { file: 'styles/document.css' },
+  { file: 'mic/VoiceRecorder.css' },
+  { file: 'index.css' },
+  { file: 'components/hover-icon-modal/HoverIconModal.css' },
+  { file: 'components/ConnectingOverlay/ConnectingOverlay.css' },
 ];
 
 for (const { file } of zindexFiles) {
@@ -243,33 +233,20 @@ for (const { file } of zindexFiles) {
 // Test: Collision fixes
 section('SPEC-15: Collision fixes');
 
-// Check HarnessSelector is no longer 1000 (should be --z-modal level)
-const harnessCSS = path.join(clientRoot, 'components/HarnessSelector/HarnessSelector.css');
-if (fs.existsSync(harnessCSS)) {
-  const content = fs.readFileSync(harnessCSS, 'utf8');
-  if (content.includes('z-index: 1000')) {
-    fail('HarnessSelector still at z-index: 1000 (collision not fixed)');
-  } else if (content.includes('var(--z-')) {
-    ok('HarnessSelector uses z-index variable (collision fixed)');
-  } else {
-    fail('HarnessSelector z-index in unexpected state');
-  }
-}
-
-// Check ConnectingOverlay is different from ChatHarnessPicker
+// Check ConnectingOverlay is below modal/tooltip layers.
 const connectingCSS = path.join(clientRoot, 'components/ConnectingOverlay/ConnectingOverlay.css');
-const pickerCSS = path.join(clientRoot, 'components/ChatHarnessPicker/ChatHarnessPicker.css');
-if (fs.existsSync(connectingCSS) && fs.existsSync(pickerCSS)) {
+const hoverModalCSS = path.join(clientRoot, 'components/hover-icon-modal/HoverIconModal.css');
+if (fs.existsSync(connectingCSS) && fs.existsSync(hoverModalCSS)) {
   const connectingContent = fs.readFileSync(connectingCSS, 'utf8');
-  const pickerContent = fs.readFileSync(pickerCSS, 'utf8');
+  const hoverModalContent = fs.readFileSync(hoverModalCSS, 'utf8');
 
   const connectingZ = connectingContent.match(/z-index:\s*[^;]+;/)?.[0] || '';
-  const pickerZ = pickerContent.match(/z-index:\s*[^;]+;/)?.[0] || '';
+  const modalZ = hoverModalContent.match(/z-index:\s*[^;]+;/)?.[0] || '';
 
-  if (connectingZ !== pickerZ) {
-    ok(`collision fixed: ConnectingOverlay (${connectingZ.trim()}) != ChatHarnessPicker (${pickerZ.trim()})`);
+  if (connectingZ.includes('--z-content') && modalZ.includes('--z-modal')) {
+    ok(`collision fixed: ConnectingOverlay (${connectingZ.trim()}) stays below modal (${modalZ.trim()})`);
   } else {
-    fail(`collision persists: both use ${connectingZ.trim()}`);
+    fail(`unexpected z-index hierarchy: ConnectingOverlay ${connectingZ.trim()}, modal ${modalZ.trim()}`);
   }
 }
 

@@ -3,9 +3,10 @@ const path = require('path');
 const fs = require('fs').promises;
 
 const { resolveCliConfig, resolveCliPolicy } = require('../../lib/cli-config');
+const aiPaths = require('../../lib/workspace/ai-paths');
 
 async function writeCliConfig(projectRoot, config) {
-  const file = path.join(projectRoot, 'ai', 'system', 'config', 'cli.json');
+  const file = path.join(aiPaths.getSystemConfigRoot(projectRoot), 'cli.json');
   await fs.mkdir(path.dirname(file), { recursive: true });
   await fs.writeFile(file, `${JSON.stringify(config)}\n`);
 }

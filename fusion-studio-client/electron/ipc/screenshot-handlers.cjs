@@ -5,7 +5,37 @@ const { getWorkspaceRoot } = require('../protocol-handler.cjs');
 function getScreenshotsDir() {
   const workspaceRoot = getWorkspaceRoot();
   if (!workspaceRoot) return null;
-  return path.join(workspaceRoot, 'ai', 'data');
+  const machineRoot = getMachineAiRoot(workspaceRoot);
+  if (!machineRoot) return null;
+  return path.join(machineRoot, 'Data', 'Screenshots');
+}
+
+function getMachineAiRoot(workspaceRoot) {
+  const aiRoot = path.join(workspaceRoot, 'ai');
+  const envName = process.env.FUSION_LOCAL_MACHINE;
+  if (envName) {
+    const candidate = path.join(aiRoot, sanitizeMachineName(envName));
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  try {
+    const entries = fs.readdirSync(aiRoot, { withFileTypes: true });
+    const match = entries.find((entry) => {
+      if (!entry.isDirectory() || entry.name.startsWith('.')) return false;
+      return fs.existsSync(path.join(aiRoot, entry.name, 'Views'))
+        || fs.existsSync(path.join(aiRoot, entry.name, 'System'));
+    });
+    return match ? path.join(aiRoot, match.name) : null;
+  } catch {
+    return null;
+  }
+}
+
+function sanitizeMachineName(value) {
+  const sanitized = String(value || '')
+    .trim()
+    .replace(/[^A-Za-z0-9._-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return sanitized || 'local-machine';
 }
 
 function registerScreenshotHandlers(ipcMain) {

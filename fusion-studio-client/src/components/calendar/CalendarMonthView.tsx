@@ -105,9 +105,11 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
                 {week.days.map((day, dIdx) => (
                   <CalendarDayCell
                     key={dIdx}
-                    date={day.date}
+                    day={day.dayNumber}
+                    isPadding={day.isPadding}
                     isOtherMonth={day.isOtherMonth}
                     isToday={day.isToday}
+                    isLastDayOfMonth={day.isLastDayOfMonth}
                     events={day.events}
                     onDoubleClick={() => day.date && onDayDoubleClick(day.date)}
                     onEventClick={(uid) => {

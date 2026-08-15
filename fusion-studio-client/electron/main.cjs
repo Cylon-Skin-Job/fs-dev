@@ -14,6 +14,7 @@ const focusState = require('./focus-state.cjs');
 const { spawnServer } = require('./server-spawn.cjs');
 const { writePort, clearPort } = require('./port-file.cjs');
 const { registerScheme, registerHandler, setWorkspaceRoot } = require('./protocol-handler.cjs');
+const { createRendererConsoleLogger } = require('./renderer-console-logging.cjs');
 
 // MUST be called before app is ready — registers scheme privileges
 registerScheme();
@@ -26,12 +27,16 @@ if (process.env.FUSION_APP_USER_DATA) {
 
 let mainWindow;
 let serverProcess = null;
+let documentHandlers = null;
 let workspaceMenuState = {
   workspaces: [],
   activeWorkspaceId: null,
 };
 
 function cleanup() {
+  try { documentHandlers?.cleanup(); } catch (error) {
+    logElectron('error', `document output cleanup failed: ${error.message}`);
+  }
   clearPort();
   if (serverProcess) serverProcess.kill();
 }
@@ -43,6 +48,11 @@ const RENDERER_LOG = path.join(os.tmpdir(), 'electron-renderer.log');
 const ELECTRON_DIAG_LOG = path.join(os.tmpdir(), 'fusion-electron.log');
 // Clear on each launch so the log stays fresh
 try { fs.writeFileSync(RENDERER_LOG, `--- renderer log started ${new Date().toISOString()} ---\n`); } catch {}
+const rendererConsoleLogger = createRendererConsoleLogger({
+  appendFileSync: fs.appendFileSync,
+  rendererLog: RENDERER_LOG,
+  stdout: process.stdout,
+});
 
 function logElectron(level, message) {
   const entry = `[${new Date().toISOString()}] [Electron] ${message}\n`;
@@ -218,11 +228,7 @@ function createWindow(port) {
 
   // Pipe renderer console → log file so we can debug without opening DevTools
   wc.on('console-message', (_e, level, message, line, sourceId) => {
-    const LEVELS = ['verbose', 'info', 'warn', 'error'];
-    const tag = LEVELS[level] ?? 'log';
-    const entry = `[renderer:${tag}] ${message}  (${sourceId}:${line})\n`;
-    process.stdout.write(entry);
-    try { fs.appendFileSync(RENDERER_LOG, entry); } catch {}
+    rendererConsoleLogger.log(level, message, line, sourceId);
   });
 
   const appUrl = `http://localhost:${port}`;
@@ -549,7 +555,7 @@ if (!gotSingleInstanceLock) {
       return { success: true };
     });
 
-    const documentHandlers = registerDocumentHandlers(ipcMain, { exportController });
+    documentHandlers = registerDocumentHandlers(ipcMain, { exportController });
 
     
     exportController.register('document', createDocumentSubmodule({ getPandocPath: documentHandlers.getPandocPath }));

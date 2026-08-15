@@ -7,7 +7,7 @@
  * events that workspace-broadcaster fans out to clients.
  *
  * At `start()` time:
- *   1. validateRegistry() — cull rows whose repo_path is gone or invalid.
+ *   1. auditRegistryAvailability() — warn about unavailable registered rows.
  *   2. restoreLastActive() — read system_config.last_active_workspace_id
  *      and set module-level activeWorkspaceId.
  *   3. Subscribe request handlers.
@@ -31,7 +31,6 @@ const pathService = require('./path-service');
 const registry = require('./registry-service');
 const bootstrap = require('./bootstrap-service');
 const createService = require('./create-service');
-const stateCache = require('./state-cache');
 const { createWorkspaceRibbonHandlers } = require('./workspace-ribbon');
 
 let activeWorkspaceId = null;
@@ -39,7 +38,6 @@ let activeWorkspace = null; // cached registry row, kept in lockstep with active
 
 const ribbonHandlers = createWorkspaceRibbonHandlers({
   registry,
-  stateCache,
   emit,
   getActiveWorkspaceId: () => activeWorkspaceId,
   setActiveWorkspace,
@@ -47,7 +45,7 @@ const ribbonHandlers = createWorkspaceRibbonHandlers({
 });
 
 async function start() {
-  await validateRegistry();
+  await auditRegistryAvailability();
   await restoreLastActive();
 
   on('workspace:add_requested', handleAddRequested);
@@ -62,23 +60,41 @@ async function start() {
   emit('workspace:controller_ready');
 }
 
-async function validateRegistry() {
+function getLaunchStatus(workspace) {
+  const repoPath = workspace.repo_path || workspace.repoPath;
+  if (!isDirectory(repoPath)) {
+    return { available: false, reason: 'path_missing' };
+  }
+  if (!bootstrap.isValidWorkspaceRoot(repoPath)) {
+    return { available: false, reason: 'invalid_structure' };
+  }
+  return { available: true, reason: null };
+}
+
+async function auditRegistryAvailability() {
   const rows = await registry.list();
-  let culled = 0;
+  let unavailable = 0;
 
   for (const row of rows) {
-    const exists = fs.existsSync(row.repo_path);
-    const valid = exists && bootstrap.isValidWorkspaceRoot(row.repo_path);
-    if (valid) continue;
+    const status = getLaunchStatus(row);
+    if (status.available) continue;
 
-    const reason = !exists ? 'path_missing' : 'invalid_structure';
-    await registry.remove(row.id);
-    emit('workspace:culled_at_launch', { workspaceId: row.id, reason });
-    culled += 1;
+    console.warn(
+      '[WorkspaceController] Registered workspace unavailable at launch (' +
+        row.id +
+        '): ' +
+        status.reason
+    );
+    emit('workspace:unavailable_at_launch', { workspaceId: row.id, reason: status.reason });
+    unavailable += 1;
   }
 
   console.log(
-    '[WorkspaceController] Launch validator: ' + rows.length + ' workspaces, ' + culled + ' culled'
+    '[WorkspaceController] Launch registry audit: ' +
+      rows.length +
+      ' workspaces, ' +
+      unavailable +
+      ' unavailable'
   );
 }
 
@@ -88,11 +104,20 @@ async function restoreLastActive() {
 
   if (candidateId) {
     const existing = await registry.getById(candidateId);
-    if (existing) {
+    if (existing && getLaunchStatus(existing).available) {
       activeWorkspaceId = candidateId;
       activeWorkspace = existing;
       console.log('[WorkspaceController] Restored workspace: ' + candidateId);
       return;
+    }
+    if (existing) {
+      const status = getLaunchStatus(existing);
+      console.warn(
+        '[WorkspaceController] Last active workspace unavailable at launch (' +
+          candidateId +
+          '): ' +
+          status.reason
+      );
     }
   }
 
@@ -103,11 +128,13 @@ async function restoreLastActive() {
     return;
   }
 
-  // Candidate was culled or never set — fall back to the first row.
+  // Candidate is unavailable or was never set — fall back to the first
+  // launchable row without removing any registrations.
   const all = await registry.list();
-  if (all.length > 0) {
-    activeWorkspaceId = all[0].id;
-    activeWorkspace = all[0];
+  const fallback = all.find((workspace) => getLaunchStatus(workspace).available) || null;
+  if (fallback) {
+    activeWorkspaceId = fallback.id;
+    activeWorkspace = fallback;
     await writeLastActive(activeWorkspaceId);
     console.log('[WorkspaceController] Restored workspace: ' + activeWorkspaceId + ' (fallback)');
   } else {
@@ -241,7 +268,7 @@ async function handleRemoveRequested(event) {
 }
 
 async function handleCreateRequested(event) {
-  const { projectPath, label, viewIds, workspaceTemplateId, connectionId } = event;
+  const { projectPath, label, connectionId } = event;
   if (!projectPath || typeof projectPath !== 'string' || !path.isAbsolute(projectPath)) {
     rejectCreate(connectionId, 'Create New requires an absolute project path.');
     return;
@@ -264,20 +291,10 @@ async function handleCreateRequested(event) {
     return;
   }
 
-  const uniqueViewIds = Array.isArray(viewIds)
-    ? Array.from(new Set(viewIds.filter((viewId) => typeof viewId === 'string' && viewId.trim() !== '')))
-    : [];
-  if (Array.isArray(viewIds) && viewIds.length > 0 && uniqueViewIds.length === 0) {
-    rejectCreate(connectionId, 'Select at least one view template.');
-    return;
-  }
-
   let selectedViews;
   try {
     selectedViews = createService.scaffoldProject({
       projectPath: canonical,
-      viewIds: uniqueViewIds,
-      workspaceTemplateId,
     }).selectedViews;
   } catch (err) {
     rejectCreate(connectionId, err.message);

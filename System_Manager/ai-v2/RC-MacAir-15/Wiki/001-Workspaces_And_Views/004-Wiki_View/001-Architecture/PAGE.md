@@ -23,7 +23,7 @@ The wiki architecture is a filesystem-backed reader with deterministic navigatio
 
 ## Layers
 
-- **Filesystem contract:** `ai/views/wiki-viewer/Wiki/**/PAGE.md` is the canonical content layer.
+- **Filesystem contract:** `ai/<machine>/Wiki/**/PAGE.md` is the canonical content layer.
 - **Discovery:** `WikiExplorer` requests folder trees from the server and builds a `WikiNode` tree.
 - **State:** `wikiStore` tracks the left-selected context separately from the currently viewed page.
 - **Rendering:** `PageViewer` parses wiki frontmatter, renders the body Markdown, and displays metadata edges.
@@ -34,7 +34,7 @@ The wiki architecture is a filesystem-backed reader with deterministic navigatio
 
 1. The client loads `wiki-viewer`.
 2. `WikiExplorer` requests the root wiki folder.
-3. The server resolves `wiki-viewer` to `ai/views/wiki-viewer/Wiki/`.
+3. The server resolves `wiki-viewer` to `ai/<machine>/Wiki/`.
 4. Folder responses are converted into `WikiNode` objects.
 5. Selecting an item in the left sidebar sets the context node.
 6. Clicking a page in the right sidebar changes the viewed node only.

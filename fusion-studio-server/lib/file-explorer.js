@@ -8,74 +8,40 @@
  *
  * Uses a factory pattern so server.js can inject getPanelPath (which
  * depends on per-WS session roots and the views resolver) and
- * getProjectRoot (used by the symlink fallback branch of isPathAllowed
- * to permit cross-workspace symlinks within the active project root).
+ * getProjectRoot (used by virtual V2 content).
  */
 
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
 const { commitIfChanged } = require('./versioning');
+const views = require('./views');
+const { getPanelArchiveFolder, isPanelArchiveRoot } = require('./view-folders');
+const { classifyEntry, isInsidePath } = require('./fs/dirents');
+const { createCycleGuard } = require('./fs/cycle-guard');
+const { resolveSymlinkInfo } = require('./fs/symlinks');
 
 /**
  * @param {object} deps
  * @param {(panel: string, ws: import('ws').WebSocket) => string|null} deps.getPanelPath
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
- * @param {(type: string, data?: object) => void} [deps.emit]
  */
-function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
+function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
 
   function mapFileErrorCode(err) {
     if (err.code === 'ENOENT') return 'ENOENT';
     if (err.code === 'EACCES' || err.code === 'EPERM') return 'EACCES';
     if (err.code === 'ENOTDIR') return 'ENOTDIR';
     if (err.code === 'EISDIR') return 'EISDIR';
+    if (err.code === 'EEXIST') return 'EEXIST';
+    if (err.code === 'EINVAL') return 'EINVAL';
     return 'UNKNOWN';
   }
 
-  /**
-   * Two-pass path security check.
-   * Pass 1: Logical path (no symlink resolution) must stay within basePath.
-   *         This blocks ../../../etc/passwd style traversals.
-   * Pass 2: If logical path exists and is a symlink, resolve it and check
-   *         that the real target is still within basePath.
-   *         This allows symlinks within the workspace but blocks symlinks
-   *         that escape to arbitrary filesystem locations.
-   *
-   * To allow a symlink that points outside the workspace (e.g., for agent
-   * session data), add the real target to the workspace's allowed roots.
-   * See: wiki/path-resolution for details.
-   */
   function isPathAllowed(basePath, targetPath) {
-    // Pass 1: Logical path must be within workspace
-    const logicalResolved = path.resolve(targetPath);
-    if (!logicalResolved.startsWith(basePath)) {
-      return false;
-    }
-
-    // Pass 2: If target is a symlink, check where it actually points
-    try {
-      const lstat = fs.lstatSync(logicalResolved);
-      if (lstat.isSymbolicLink()) {
-        const realTarget = fs.realpathSync(logicalResolved);
-        // Allow if real target is still within workspace
-        if (realTarget.startsWith(basePath)) {
-          return true;
-        }
-        // Also allow if real target is within the active workspace's project root
-        // (covers cross-workspace symlinks within the same project)
-        const projectRoot = getProjectRoot();
-        if (projectRoot && realTarget.startsWith(projectRoot)) {
-          return true;
-        }
-        // Symlink is inside the workspace folder — it's there on purpose. Allow it.
-        return true;
-      }
-    } catch {
-      // Target doesn't exist yet (will fail later with ENOENT) — that's fine
-    }
-
-    return true;
+    // Policy: containment is checked against the logical panel path only.
+    // Runtime reads follow user-created symlinks, including external targets.
+    return isInsidePath(basePath, targetPath);
   }
 
   function parseExtension(filename) {
@@ -84,10 +50,146 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
     return filename.slice(lastDot + 1).toLowerCase();
   }
 
+  function yamlQuoted(value) {
+    return JSON.stringify(String(value || ''));
+  }
+
+  function createMarkdownDocumentContent(title) {
+    const displayName = String(title || 'Untitled').trim() || 'Untitled';
+    return [
+      '---',
+      `name: ${yamlQuoted(displayName)}`,
+      'description: ""',
+      'metadata:',
+      '  display:',
+      '    font:',
+      '      family: serif',
+      '      size: 16',
+      '    alignment: left',
+      '    margins:',
+      '      top: 72',
+      '      bottom: 72',
+      '      left: 90',
+      '      right: 90',
+      '  tables: []',
+      '---',
+      '',
+      `# ${displayName}`,
+      '',
+    ].join('\n');
+  }
+
+  function isHiddenPanelRootFolder(panel, requestPath, entryName) {
+    return isPanelArchiveRoot(panel, requestPath, entryName);
+  }
+
+  function requestCorrelation(msg) {
+    return {
+      ...(typeof msg.requestId === 'string' ? { requestId: msg.requestId } : {}),
+      ...(typeof msg.workspaceId === 'string' || msg.workspaceId === null
+        ? { workspaceId: msg.workspaceId }
+        : {}),
+      ...(Number.isSafeInteger(msg.generation) ? { generation: msg.generation } : {}),
+    };
+  }
+
+  function sendVirtualFileContent(ws, panel, requestPath, content, correlation) {
+    ws.send(JSON.stringify({
+      type: 'file_content_response',
+      panel,
+      path: requestPath,
+      ...correlation,
+      success: true,
+      content,
+      size: Buffer.byteLength(content),
+      lastModified: Date.now(),
+    }));
+  }
+
+  function sendVirtualFileNotFound(ws, panel, requestPath, correlation) {
+    ws.send(JSON.stringify({
+      type: 'file_content_response',
+      panel,
+      path: requestPath,
+      ...correlation,
+      success: false,
+      error: 'Not found',
+      code: 'ENOENT',
+    }));
+  }
+
+  function getVirtualV2FileContent(projectRoot, panel, requestPath) {
+    if (!projectRoot || !views.hasV2Views(projectRoot)) return undefined;
+
+    if (panel === '__workspace__' && requestPath === 'views.json') {
+      const registry = {
+        version: 2,
+        sort: 'filesystem-prefix',
+        views: views.loadAllViews(projectRoot).map((view, index) => ({
+          id: view.id,
+          baseViewId: view.id,
+          label: view.index?.label || view.id,
+          icon: view.index?.icon || 'folder',
+          rank: typeof view.index?.rank === 'number' ? view.index.rank : index + 1,
+          enabled: true,
+          source: 'default',
+          viewPath: path.relative(projectRoot, view.viewRoot),
+        })),
+      };
+      return JSON.stringify(registry, null, 2);
+    }
+
+    if (panel !== '__panels__') return undefined;
+
+    const match = String(requestPath || '').match(/^([^/]+)\/(.+)$/);
+    if (!match) return undefined;
+
+    const viewId = match[1];
+    const viewPath = match[2];
+    const view = views.loadView(projectRoot, viewId, { includeHidden: true });
+    if (!view || view.v2 !== true) return undefined;
+
+    if (viewPath === 'index.json') {
+      return JSON.stringify(view.index || {}, null, 2);
+    }
+    if (viewPath === 'content.json') {
+      return JSON.stringify(view.content || {}, null, 2);
+    }
+    if (viewPath === 'styles/layout.json') {
+      return JSON.stringify(view.layout || {}, null, 2);
+    }
+    if (viewPath === 'styles/icon.md') {
+      return readVirtualViewFile(view.viewRoot, 'styles/icon.md');
+    }
+    if (viewPath === 'styles/layout.css') {
+      return readVirtualViewFile(view.viewRoot, 'styles/layout.css');
+    }
+    if (viewPath === 'styles/themes.css') {
+      return readVirtualViewFile(view.viewRoot, 'styles/themes.css');
+    }
+
+    return readVirtualViewFile(view.viewRoot, viewPath);
+  }
+
+  function readVirtualViewFile(viewRoot, relativePath) {
+    const basePath = path.resolve(viewRoot);
+    const targetPath = path.resolve(basePath, relativePath);
+    const relative = path.relative(basePath, targetPath);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
+    if (!isPathAllowed(basePath, targetPath)) return null;
+
+    try {
+      return fs.readFileSync(targetPath, 'utf8');
+    } catch {
+      return null;
+    }
+  }
+
   async function handleFileTreeRequest(ws, msg) {
     const panel = msg.panel || 'file-viewer';
     const requestPath = msg.path || '';
     const includeHiddenFolders = msg.includeHiddenFolders === true;
+    const correlation = requestCorrelation(msg);
     const panelPath = getPanelPath(panel, ws);
 
     if (panelPath === null) {
@@ -95,6 +197,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_tree_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: `Panel "${panel}" is not filesystem-backed`,
         code: 'ENOTPANEL',
@@ -110,6 +213,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_tree_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: 'Invalid path',
         code: 'ENOENT',
@@ -119,12 +223,14 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
 
     try {
       const entries = await fsPromises.readdir(targetPath, { withFileTypes: true });
+      const directorySymlinkInfo = await resolveSymlinkInfo(basePath, targetPath);
 
       if (entries.length > 1000) {
         ws.send(JSON.stringify({
           type: 'file_tree_response',
           panel,
           path: requestPath,
+          ...correlation,
           success: false,
           error: `Folder has ${entries.length} items (max 1000). Use terminal to explore.`,
           code: 'ETOOLARGE',
@@ -137,62 +243,57 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
 
       for (const entry of entries) {
         if (entry.name === 'node_modules') continue;
+        if (isHiddenPanelRootFolder(panel, requestPath, entry.name)) continue;
 
         const entryPath = requestPath ? `${requestPath}/${entry.name}` : entry.name;
         const fullEntryPath = path.join(targetPath, entry.name);
+        const classified = await classifyEntry(targetPath, entry);
+        if (classified.isSymlink && classified.realPath === null) continue;
 
-        // Resolve symlinks/junctions to determine actual type
-        let isDir = entry.isDirectory();
-        let isFile = entry.isFile();
-        let isSymlink = entry.isSymbolicLink();
+        if (entry.name.startsWith('.') && (!includeHiddenFolders || !classified.isDir)) continue;
 
-        // On Windows, directory junctions may not report as symlinks via dirent.
-        // Compare lstat (no follow) vs stat (follow) to detect any linked entry.
-        if (!isSymlink && (isDir || isFile)) {
-          try {
-            const lstat = await fsPromises.lstat(fullEntryPath);
-            if (lstat.isSymbolicLink()) {
-              isSymlink = true;
-            }
-          } catch (_) {}
-        }
-
-        if (isSymlink) {
-          try {
-            const realStat = await fsPromises.stat(fullEntryPath);
-            isDir = realStat.isDirectory();
-            isFile = realStat.isFile();
-          } catch (_) {
-            continue; // broken symlink/junction — skip
-          }
-        }
-
-        if (entry.name.startsWith('.') && (!includeHiddenFolders || !isDir)) continue;
-
-        if (isDir) {
+        if (classified.isDir) {
+          const entrySymlinkInfo = classified.isSymlink
+            ? { isSymlink: true, symlinkTarget: classified.realPath }
+            : directorySymlinkInfo.isSymlink
+              ? await resolveSymlinkInfo(basePath, fullEntryPath)
+              : {};
           let hasChildren = false;
           try {
             const children = await fsPromises.readdir(fullEntryPath, { withFileTypes: true });
-            hasChildren = children.some((child) => {
-              if (child.name === 'node_modules') return false;
-              if (!child.name.startsWith('.')) return true;
-              return includeHiddenFolders && child.isDirectory();
-            });
+            for (const child of children) {
+              if (child.name === 'node_modules') continue;
+              const childClassified = await classifyEntry(fullEntryPath, child);
+              if (childClassified.isSymlink && childClassified.realPath === null) continue;
+              if (!child.name.startsWith('.')) {
+                hasChildren = true;
+                break;
+              }
+              if (includeHiddenFolders && childClassified.isDir) {
+                hasChildren = true;
+                break;
+              }
+            }
           } catch (_) {}
           folders.push({
             name: entry.name,
             path: entryPath,
             type: 'folder',
             hasChildren,
-            isSymlink,
+            ...entrySymlinkInfo,
           });
-        } else if (isFile) {
+        } else if (classified.isFile) {
+          const entrySymlinkInfo = classified.isSymlink
+            ? { isSymlink: true, symlinkTarget: classified.realPath }
+            : directorySymlinkInfo.isSymlink
+              ? await resolveSymlinkInfo(basePath, fullEntryPath)
+              : {};
           files.push({
             name: entry.name,
             path: entryPath,
             type: 'file',
             extension: parseExtension(entry.name),
-            isSymlink,
+            ...entrySymlinkInfo,
           });
         }
       }
@@ -204,14 +305,17 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_tree_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: true,
         nodes: [...folders, ...files],
+        ...directorySymlinkInfo,
       }));
     } catch (err) {
       ws.send(JSON.stringify({
         type: 'file_tree_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: err.message,
         code: mapFileErrorCode(err),
@@ -222,6 +326,17 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
   async function handleFileContentRequest(ws, msg) {
     const panel = msg.panel || 'file-viewer';
     const requestPath = msg.path || '';
+    const correlation = requestCorrelation(msg);
+    const virtualContent = getVirtualV2FileContent(getProjectRoot(ws), panel, requestPath);
+    if (virtualContent !== undefined) {
+      if (virtualContent === null) {
+        sendVirtualFileNotFound(ws, panel, requestPath, correlation);
+        return;
+      }
+      sendVirtualFileContent(ws, panel, requestPath, virtualContent, correlation);
+      return;
+    }
+
     const panelPath = getPanelPath(panel, ws);
 
     if (panelPath === null) {
@@ -229,6 +344,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_content_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: `Panel "${panel}" is not filesystem-backed`,
         code: 'ENOTPANEL',
@@ -244,6 +360,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_content_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: 'Invalid path',
         code: 'ENOENT',
@@ -259,6 +376,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
           type: 'file_content_response',
           panel,
           path: requestPath,
+          ...correlation,
           success: false,
           error: 'Expected file, got directory',
           code: 'EISDIR',
@@ -266,6 +384,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         return;
       }
 
+      const symlinkInfo = await resolveSymlinkInfo(basePath, targetPath);
       let content = await fsPromises.readFile(targetPath, 'utf-8');
 
       // Enrich agents dashboard with human-readable schedule labels
@@ -288,16 +407,19 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         type: 'file_content_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: true,
         content,
         size: stat.size,
         lastModified: stat.mtimeMs,
+        ...symlinkInfo,
       }));
     } catch (err) {
       ws.send(JSON.stringify({
         type: 'file_content_response',
         panel,
         path: requestPath,
+        ...correlation,
         success: false,
         error: err.message,
         code: mapFileErrorCode(err),
@@ -336,8 +458,12 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
 
     try {
       const files = [];
+      const cycleGuard = createCycleGuard();
 
       async function scanDir(dirPath, relativePath = '') {
+        const realDirPath = await fsPromises.realpath(dirPath);
+        if (!cycleGuard.shouldEnter(realDirPath)) return;
+
         const entries = await fsPromises.readdir(dirPath, { withFileTypes: true });
 
         for (const entry of entries) {
@@ -351,12 +477,19 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
             continue;
           }
 
-          if (entry.isDirectory()) {
+          if (entryRelativePath === getPanelArchiveFolder(panel)) {
+            continue;
+          }
+
+          const classified = await classifyEntry(dirPath, entry);
+          if (classified.isSymlink && classified.realPath === null) continue;
+
+          if (classified.isDir) {
             // Recurse into subdirectories (with depth limit)
             if (entryRelativePath.split('/').length < 5) {
               await scanDir(entryFullPath, entryRelativePath);
             }
-          } else if (entry.isFile()) {
+          } else if (classified.isFile) {
             try {
               const stat = await fsPromises.stat(entryFullPath);
               files.push({
@@ -431,7 +564,26 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
     }
 
     try {
-      const stat = await fsPromises.stat(targetPath).catch(() => null);
+      const lstat = await fsPromises.lstat(targetPath).catch(() => null);
+      let writePath = targetPath;
+
+      if (lstat?.isSymbolicLink()) {
+        try {
+          writePath = await fsPromises.realpath(targetPath);
+        } catch (err) {
+          ws.send(JSON.stringify({
+            type: 'file_save_response',
+            panel,
+            path: requestPath,
+            success: false,
+            error: err.message,
+            code: mapFileErrorCode(err),
+          }));
+          return;
+        }
+      }
+
+      const stat = await fsPromises.stat(writePath).catch(() => null);
       if (stat && stat.isDirectory()) {
         ws.send(JSON.stringify({
           type: 'file_save_response',
@@ -444,13 +596,9 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
         return;
       }
 
-      const tmpPath = targetPath + '.tmp';
+      const tmpPath = writePath + '.tmp';
       fs.writeFileSync(tmpPath, content, 'utf8');
-      fs.renameSync(tmpPath, targetPath);
-
-      if (emit) {
-        emit('file_changed', { panel, filePath: requestPath, change: 'modified', timestamp: Date.now() });
-      }
+      fs.renameSync(tmpPath, writePath);
 
       // Versioning: commit on session_end, checkpoint, or milestone
       const reason = msg.reason || 'autosave';
@@ -489,11 +637,196 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot, emit }) {
     }
   }
 
+  async function handleFolderCreateRequest(ws, msg) {
+    const panel = msg.panel || 'file-viewer';
+    const parentPath = msg.parentPath || '';
+    const rawName = String(msg.name || '').trim();
+    const panelPath = getPanelPath(panel, ws);
+
+    if (panelPath === null) {
+      ws.send(JSON.stringify({
+        type: 'folder_create_response',
+        panel,
+        parentPath,
+        success: false,
+        error: `Panel "${panel}" is not filesystem-backed`,
+        code: 'ENOTPANEL',
+      }));
+      return;
+    }
+
+    if (!rawName || rawName.includes('/') || rawName.includes('\\') || rawName === '.' || rawName === '..') {
+      ws.send(JSON.stringify({
+        type: 'folder_create_response',
+        panel,
+        parentPath,
+        success: false,
+        error: 'Invalid folder name',
+        code: 'EINVAL',
+      }));
+      return;
+    }
+
+    const basePath = path.resolve(panelPath);
+    const parentAbsolutePath = path.join(basePath, parentPath);
+    const targetPath = path.join(parentAbsolutePath, rawName);
+    const folderPath = parentPath ? `${parentPath}/${rawName}` : rawName;
+
+    if (!isPathAllowed(basePath, parentAbsolutePath) || !isPathAllowed(basePath, targetPath)) {
+      ws.send(JSON.stringify({
+        type: 'folder_create_response',
+        panel,
+        parentPath,
+        path: folderPath,
+        success: false,
+        error: 'Invalid path',
+        code: 'ENOENT',
+      }));
+      return;
+    }
+
+    try {
+      const parentStat = await fsPromises.stat(parentAbsolutePath);
+      if (!parentStat.isDirectory()) {
+        ws.send(JSON.stringify({
+          type: 'folder_create_response',
+          panel,
+          parentPath,
+          path: folderPath,
+          success: false,
+          error: 'Parent path is not a directory',
+          code: 'ENOTDIR',
+        }));
+        return;
+      }
+
+      await fsPromises.mkdir(targetPath);
+
+      ws.send(JSON.stringify({
+        type: 'folder_create_response',
+        panel,
+        parentPath,
+        path: folderPath,
+        success: true,
+      }));
+    } catch (err) {
+      ws.send(JSON.stringify({
+        type: 'folder_create_response',
+        panel,
+        parentPath,
+        path: folderPath,
+        success: false,
+        error: err.code === 'EEXIST' ? 'Folder already exists' : err.message,
+        code: mapFileErrorCode(err),
+      }));
+    }
+  }
+
+  async function handleDocumentCreateRequest(ws, msg) {
+    const panel = msg.panel || 'file-viewer';
+    const parentPath = msg.parentPath || '';
+    const rawName = String(msg.name || '').trim();
+    const panelPath = getPanelPath(panel, ws);
+
+    if (panelPath === null) {
+      ws.send(JSON.stringify({
+        type: 'document_create_response',
+        panel,
+        parentPath,
+        success: false,
+        error: `Panel "${panel}" is not filesystem-backed`,
+        code: 'ENOTPANEL',
+      }));
+      return;
+    }
+
+    if (!rawName || rawName.includes('/') || rawName.includes('\\') || rawName === '.' || rawName === '..') {
+      ws.send(JSON.stringify({
+        type: 'document_create_response',
+        panel,
+        parentPath,
+        success: false,
+        error: 'Invalid document name',
+        code: 'EINVAL',
+      }));
+      return;
+    }
+
+    const fileName = /\.(md|markdown)$/i.test(rawName) ? rawName : `${rawName}.md`;
+    const extension = parseExtension(fileName) || 'md';
+    const basePath = path.resolve(panelPath);
+    const parentAbsolutePath = path.join(basePath, parentPath);
+    const targetPath = path.join(parentAbsolutePath, fileName);
+    const documentPath = parentPath ? `${parentPath}/${fileName}` : fileName;
+
+    if (!isPathAllowed(basePath, parentAbsolutePath) || !isPathAllowed(basePath, targetPath)) {
+      ws.send(JSON.stringify({
+        type: 'document_create_response',
+        panel,
+        parentPath,
+        path: documentPath,
+        name: fileName,
+        extension,
+        success: false,
+        error: 'Invalid path',
+        code: 'ENOENT',
+      }));
+      return;
+    }
+
+    try {
+      const parentStat = await fsPromises.stat(parentAbsolutePath);
+      if (!parentStat.isDirectory()) {
+        ws.send(JSON.stringify({
+          type: 'document_create_response',
+          panel,
+          parentPath,
+          path: documentPath,
+          name: fileName,
+          extension,
+          success: false,
+          error: 'Parent path is not a directory',
+          code: 'ENOTDIR',
+        }));
+        return;
+      }
+
+      const title = fileName.replace(/\.(md|markdown)$/i, '') || 'Untitled';
+      const content = createMarkdownDocumentContent(title);
+      await fsPromises.writeFile(targetPath, content, { encoding: 'utf8', flag: 'wx' });
+
+      ws.send(JSON.stringify({
+        type: 'document_create_response',
+        panel,
+        parentPath,
+        path: documentPath,
+        name: fileName,
+        extension,
+        content,
+        success: true,
+      }));
+    } catch (err) {
+      ws.send(JSON.stringify({
+        type: 'document_create_response',
+        panel,
+        parentPath,
+        path: documentPath,
+        name: fileName,
+        extension,
+        success: false,
+        error: err.code === 'EEXIST' ? 'Document already exists' : err.message,
+        code: mapFileErrorCode(err),
+      }));
+    }
+  }
+
   return {
     handleFileTreeRequest,
     handleFileContentRequest,
     handleRecentFilesRequest,
     handleFileSaveRequest,
+    handleFolderCreateRequest,
+    handleDocumentCreateRequest,
   };
 }
 

@@ -54,4 +54,10 @@ module.exports = {
     fields: ['name'],
     activatesEventBus: false,
   },
+
+  'wiki-page': {
+    description: 'Wiki PAGE.md articles. Read by the wiki audit/query tooling (scripts/wiki.js) for name, description, and source-files.',
+    fields: [],  // authored contract: type, name, description, source-files (not enforced)
+    activatesEventBus: false,
+  },
 };

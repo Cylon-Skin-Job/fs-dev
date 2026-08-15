@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const views = require('../views');
 
 /**
  * Simple YAML frontmatter parser.
@@ -92,9 +93,7 @@ function parsePrompt(promptPath) {
  * @returns {{ systemContext: string, userMessage: string }}
  */
 function buildContext(projectRoot, agentFolder, runPath, ticket) {
-  const agentBase = path.join(
-    projectRoot, 'ai', 'views', 'agents-viewer', agentFolder
-  );
+  const agentBase = path.join(views.resolveOperationalViewRoot(projectRoot, 'agents-viewer'), agentFolder);
 
   // --- System context ---
   const parts = [];

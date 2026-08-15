@@ -1,22 +1,26 @@
 /* ============================================
-   OfficeDocumentTile — document thumbnail for .md files
+   OfficeDocumentTile — file thumbnail card for Office
    ============================================ */
 
 .rv-office-doc-tile {
+  --rv-office-thumbnail-paper: #faf9f6;
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   border-radius: var(--radius-md, 6px);
   overflow: hidden;
-  background: var(--surface-elevated, #1a1a1a);
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--rv-office-card-fill, var(--sidebar-surface-bg, var(--ws-sidebar-bg, var(--panel-chrome-bg, #1a1a1a))));
+  border: 1px solid transparent;
 }
 
 .rv-office-doc-tile:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
+  background: var(--rv-office-card-hover-fill, color-mix(in srgb, var(--sidebar-surface-bg, #1a1a1a) 88%, var(--chrome-accent, #ffffff) 12%));
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border-color: var(--border-focus, rgba(255, 255, 255, 0.2));
 }
 
 .rv-office-doc-tile:active {
@@ -42,7 +46,7 @@
   max-width: 140px;
 }
 
-.rv-office-doc-tile-small .rv-office-doc-tile-footer {
+.rv-office-doc-tile-small .rv-office-doc-tile-header {
   padding: var(--space-xs, 4px) var(--space-sm, 8px);
 }
 
@@ -50,24 +54,47 @@
   font-size: 0.75rem;
 }
 
-/* FIXED: Document preview surfaces use paper-white (#faf9f6) and near-black
-   text (#1c1c1c) unconditionally. These are not theme-adjustable; the tile
-   simulates a printed page. Link colors (#2563eb, #1d4ed8) are standard
-   web-blue, also fixed. rgba(0,0,0,...) borders are on a light surface. */
-/* Preview container — letter-like aspect ratio, light page like editor */
+.rv-office-doc-tile-small .rv-office-doc-tile-star {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  -webkit-text-stroke-width: 0.5px;
+}
+
+/* Preview container — square frame clipped from the top */
 .rv-office-doc-tile-preview {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 8.5 / 11;
-  background: #faf9f6;
-  border-radius: var(--radius-sm, 4px) var(--radius-sm, 4px) 0 0;
+  margin: 0 5px 5px;
+  aspect-ratio: 1 / 1;
+  background: var(--rv-office-thumbnail-paper);
+  border-radius: var(--radius-sm, 4px);
+  user-select: none;
+}
+
+.rv-office-doc-tile-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(var(--rv-office-paper-mute-rgb, 8, 10, 14), var(--rv-office-paper-mute-alpha, 0));
+  pointer-events: none;
+}
+
+.rv-office-doc-tile-click-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: transparent;
+  cursor: pointer;
 }
 
 .rv-office-doc-tile-open {
   position: absolute;
   top: var(--space-sm, 8px);
   right: var(--space-sm, 8px);
-  z-index: 1;
+  z-index: 5;
   padding: 4px 8px;
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.14));
   border-radius: 999px;
@@ -80,6 +107,7 @@
   text-transform: uppercase;
   transform: translateY(-4px);
   transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
 }
 
 .rv-office-doc-tile:hover .rv-office-doc-tile-open,
@@ -88,71 +116,36 @@
   transform: translateY(0);
 }
 
-/* Scaled document surface — light page matching Milkdown editor */
-.rv-office-doc-tile-document {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: top left;
-  padding: 24px;
-  width: 800px;
-  transform: scale(var(--tile-scale, 1));
-  background: #faf9f6;
-  color: #1c1c1c;
-  font-size: 14px;
-  line-height: 1.6;
+.rv-office-doc-tile-missing-thumbnail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm, 8px);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-md, 12px);
   box-sizing: border-box;
-  min-height: 100%;
+  color: color-mix(in srgb, var(--chrome-accent, #888) 82%, var(--rv-office-thumbnail-paper) 18%);
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
-/* Override wiki-page-content dark styles inside the preview */
-.rv-office-doc-tile-document.rv-wiki-page-content h1,
-.rv-office-doc-tile-document.rv-wiki-page-content h2,
-.rv-office-doc-tile-document.rv-wiki-page-content h3,
-.rv-office-doc-tile-document.rv-wiki-page-content h4,
-.rv-office-doc-tile-document.rv-wiki-page-content p,
-.rv-office-doc-tile-document.rv-wiki-page-content li,
-.rv-office-doc-tile-document.rv-wiki-page-content blockquote {
-  color: #1c1c1c !important;
+.rv-office-doc-tile-missing-thumbnail .material-symbols-outlined {
+  font-size: 34px;
+  line-height: 1;
 }
 
-.rv-office-doc-tile-document.rv-wiki-page-content a {
-  color: #2563eb;
-}
-
-.rv-office-doc-tile-document.rv-wiki-page-content a:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
-}
-
-.rv-office-doc-tile-document.rv-wiki-page-content code {
-  background: rgba(0, 0, 0, 0.06);
-  color: #1c1c1c;
-}
-
-.rv-office-doc-tile-document.rv-wiki-page-content pre {
-  background: #f0efe9;
-  border-color: rgba(0, 0, 0, 0.08);
-}
-
-.rv-office-doc-tile-document.rv-wiki-page-content pre code {
-  color: #1c1c1c;
-}
-
-.rv-office-doc-tile-document.rv-wiki-page-content th,
-.rv-office-doc-tile-document.rv-wiki-page-content td {
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-/* Footer */
-.rv-office-doc-tile-footer {
+/* Header */
+.rv-office-doc-tile-header {
   display: flex;
   align-items: center;
+  min-height: 44px;
   gap: var(--space-sm, 8px);
-  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  padding: 0 var(--space-sm, 8px) 0 var(--space-md, 12px);
   flex-shrink: 0;
-  background: var(--surface-elevated, #1a1a1a);
-  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: transparent;
 }
 
 .rv-office-doc-tile-icon {
@@ -162,10 +155,84 @@
 }
 
 .rv-office-doc-tile-name {
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-primary, #e0e0e0);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.rv-office-doc-tile-star {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0 -7px 0 0;
+  color: var(--chrome-accent, #888);
+  font-size: 20px;
+  line-height: 20px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+  -webkit-text-stroke: 0.7px var(--accent-dim, var(--theme-primary, var(--ws-primary, #39628e)));
+  text-shadow: 0 0 1px var(--accent-dim, var(--theme-primary, var(--ws-primary, #39628e)));
+  pointer-events: none;
+}
+
+.rv-office-doc-tile-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--chrome-accent, #888);
+  cursor: pointer;
+  margin-left: 0;
+  flex: 0 0 auto;
+}
+
+.rv-office-doc-tile-more:hover,
+.rv-office-doc-tile-more:focus-visible {
+  outline: none;
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--accent-dim, var(--chrome-accent, #aaa));
+}
+
+.rv-office-doc-tile-more .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-doc-tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.rv-office-doc-tile-thumbnail {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: initial;
+  object-position: top center;
+}
+
+.rv-office-doc-tile-preview .rv-code-editor {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rv-office-doc-tile-preview .rv-code-editor *,
+.rv-office-doc-tile-preview .rv-office-doc-tile-missing-thumbnail {
+  pointer-events: none;
+  user-select: none;
 }

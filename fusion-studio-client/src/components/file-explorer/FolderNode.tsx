@@ -89,13 +89,10 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
      
   }, [isExpanded, hasChildrenLoaded, node.path, node.hasChildren, showHiddenFolders]);
 
-  // Icon logic per spec
+  // Tree rows intentionally do not expose symlink chrome.
   let icon: string;
   let iconClass: string;
-  if (node.isSymlink) {
-    icon = 'folder_special';
-    iconClass = 'rv-tree-icon';
-  } else if (isHiddenFolder) {
+  if (isHiddenFolder) {
     icon = 'folder_eye';
     iconClass = 'rv-tree-icon';
   } else if (isExpanded) {

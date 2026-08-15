@@ -1,8 +1,9 @@
 /**
  * ChatFile - Parser and writer for thread markdown files
  *
- * Writes human-readable chat transcripts to per-user folders:
- *   ai/views/{workspace}/chat/threads/{username}/{threadId}.md
+ * Writes human-readable chat transcript mirrors to the workspace machine data
+ * folder:
+ *   ai/<machine>/Data/Chatlogs/threads/<threadId>.md
  *
  * Filenames are the timestamp thread ID (from SPEC-24a) and are IMMUTABLE
  * for the life of the file. Renaming a thread is a frontmatter rewrite,
@@ -12,49 +13,25 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const os = require('os');
 
 const TOOL_CALL_MARKER = '**TOOL CALL(S)**';
-
-/**
- * Get the current OS login username, cached per process.
- *
- * Uses os.userInfo().username (the computer login) as the source of truth.
- * Git config user.name was tried first but is too fragile — developers
- * often set it to personas, jokes, or project-specific names.
- *
- * Future: a system panel UI will let the user explicitly set their
- * username; this OS value will become the fallback when no override is set.
- *
- * @returns {string}
- */
-let _cachedUsername = null;
-function getUsername() {
-  if (_cachedUsername) return _cachedUsername;
-  try {
-    _cachedUsername = os.userInfo().username;
-  } catch {
-    _cachedUsername = 'local';
-  }
-  return _cachedUsername;
-}
 
 class ChatFile {
   /**
    * @param {object} opts
-   * @param {string} opts.viewsDir - Absolute path to the per-user threads directory
-   *   (e.g. ai/views/file-viewer/chat/threads/rccurtrightjr.).
+   * @param {string} opts.chatlogDir - Absolute path to the chatlog threads directory.
    * @param {string} opts.threadId - Timestamp thread ID (YYYY-MM-DDTHH-MM-SS-mmm)
    *   from SPEC-24a. Becomes the filename: ${threadId}.md — immutable for the
    *   life of the file. Rename is a frontmatter operation, not a filesystem one.
    */
-  constructor({ viewsDir, threadId } = {}) {
-    if (!viewsDir || !threadId) {
-      throw new Error('ChatFile: both viewsDir and threadId are required');
+  constructor(opts = {}) {
+    const { chatlogDir, threadId } = opts;
+    if (!chatlogDir || !threadId) {
+      throw new Error('ChatFile: both chatlogDir and threadId are required');
     }
-    this.viewsDir = viewsDir;
+    this.chatlogDir = chatlogDir;
     this.threadId = threadId;
-    this.filePath = path.join(viewsDir, `${threadId}.md`);
+    this.filePath = path.join(chatlogDir, `${threadId}.md`);
   }
 
   /**
@@ -179,6 +156,14 @@ class ChatFile {
   }
 
   /**
+   * Read the primary chatlog mirror file.
+   * @returns {Promise<{name: string|null, messages: Array}|null>}
+   */
+  async readPrimary() {
+    return this.read();
+  }
+
+  /**
    * Write messages to file
    * @param {string|null} name
    * @param {Array} messages
@@ -187,24 +172,6 @@ class ChatFile {
     await this.ensureDir();
     const content = this.serialize(name, messages);
     await fs.writeFile(this.filePath, content);
-  }
-
-  /**
-   * Append a single message to the file
-   * @param {string|null} name - Current thread display name
-   * @param {object} message
-   */
-  async appendMessage(name, message) {
-    await this.ensureDir();
-
-    let messages = [];
-    const existing = await this.read();
-    if (existing) {
-      messages = existing.messages;
-    }
-
-    messages.push(message);
-    await this.write(name, messages);
   }
 
   /**
@@ -231,4 +198,4 @@ class ChatFile {
 
 }
 
-module.exports = { ChatFile, TOOL_CALL_MARKER, getUsername };
+module.exports = { ChatFile, TOOL_CALL_MARKER };

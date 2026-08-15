@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test('debug block rendering', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('textarea.chat-input');
+  await page.waitForSelector('textarea.rv-chat-input');
   
   // Listen to console logs
   page.on('console', msg => console.log('CONSOLE:', msg.text()));
   
-  const textarea = page.locator('textarea.chat-input').first();
+  const textarea = page.locator('textarea.rv-chat-input').first();
   await textarea.fill('test');
   
   const sendButton = page.locator('.send-btn').first();

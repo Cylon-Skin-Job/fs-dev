@@ -11,7 +11,7 @@ metadata:
     - fusion-studio-client/src/components/browser/CustomViewer.tsx
     - fusion-studio-client/src/components/browser/AppChrome.tsx
     - fusion-studio-client/src/components/browser/urlValidator.ts
-    - ai/views/custom-viewer/index.json
+    - ai/<machine>/Views/<custom-view-folder>/manifest.md
   connected-skills: []
   related-trigger-files: []
 ---
@@ -26,7 +26,7 @@ Custom Iframe is not an internet browser. It should not be used for general brow
 
 ## Current Implementation
 
-- View config: `ai/views/custom-viewer/index.json`
+- View config: `ai/<machine>/Views/<custom-view-folder>/manifest.md`
 - View type: `custom`
 - Renderer component: `fusion-studio-client/src/components/browser/CustomViewer.tsx`
 - Default URL: `http://localhost:3000`

@@ -35,46 +35,9 @@ const FILE_ICONS: Record<string, string> = {
   gitignore: 'settings',
 };
 
-// File extension to language name mapping
-const LANGUAGE_NAMES: Record<string, string> = {
-  js: 'JavaScript',
-  jsx: 'JSX',
-  ts: 'TypeScript',
-  tsx: 'TSX',
-  json: 'JSON',
-  css: 'CSS',
-  scss: 'SCSS',
-  html: 'HTML',
-  htm: 'HTML',
-  py: 'Python',
-  rb: 'Ruby',
-  go: 'Go',
-  rs: 'Rust',
-  java: 'Java',
-  c: 'C',
-  cpp: 'C++',
-  h: 'C Header',
-  sh: 'Shell',
-  bash: 'Bash',
-  yml: 'YAML',
-  yaml: 'YAML',
-  toml: 'TOML',
-  xml: 'XML',
-  sql: 'SQL',
-  md: 'Markdown',
-  txt: 'Plain Text',
-  env: 'Environment',
-  gitignore: 'Git Ignore',
-};
-
 function getFileIcon(extension?: string): string {
   if (!extension) return 'description';
   return FILE_ICONS[extension] || 'description';
-}
-
-function getLanguageName(extension?: string): string {
-  if (!extension) return 'Plain Text';
-  return LANGUAGE_NAMES[extension] || extension.toUpperCase();
 }
 
 function formatFileSize(bytes: number): string {
@@ -148,9 +111,11 @@ export function FileViewer() {
   const isLoading = activeTab.loading;
   const fileSize = activeTab.size;
 
-  const languageName = getLanguageName(selectedFile.extension);
   const displaySize = fileSize ? formatFileSize(fileSize) : isLoading ? 'Loading...' : '—';
   const lineCount = fileContent.split('\n').length;
+  const symlinkTooltip = selectedFile.isSymlink && selectedFile.symlinkTarget
+    ? `This resource is linked. Source: ${selectedFile.symlinkTarget}. Edits here update the same underlying file.`
+    : null;
 
   const activeIdx = tabs.findIndex((t) => t.file.path === activeTabPath);
   const canGoPrev = tabs.length > 1 && activeIdx > 0;
@@ -208,10 +173,12 @@ export function FileViewer() {
         <div className="info-item">
           <span>{formatFilePath(selectedFile.path)}</span>
         </div>
-        <div className="info-item rv-file-viewer-info-spacer">
-          <span className="material-symbols-outlined">code</span>
-          <span>{languageName}</span>
-        </div>
+        {symlinkTooltip && (
+          <div className="info-item rv-file-viewer-info-spacer" title={symlinkTooltip}>
+            <span className="material-symbols-outlined">folder_match</span>
+            <span>Symlink</span>
+          </div>
+        )}
         <div className="info-item">
           <span className="material-symbols-outlined">straighten</span>
           <span>{displaySize}</span>

@@ -8,16 +8,16 @@ test('agents workspace debug', async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Click agents tab (robot_2 icon)
-  await page.locator('.tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'robot_2' }) }).click();
+  await page.locator('.rv-tool-btn', { has: page.locator('.material-symbols-outlined', { hasText: 'robot_2' }) }).click();
   await page.waitForTimeout(3000);
 
-  const tiles = page.locator('.agent-tile');
-  const loading = page.locator('.agent-tiles-loading');
+  const tiles = page.locator('.rv-agent-tile');
+  const loading = page.locator('.rv-agent-tiles-loading');
   process.stdout.write(`tiles: ${await tiles.count()}\n`);
   process.stdout.write(`loading visible: ${await loading.isVisible().catch(() => false)}\n`);
 
   // List tile names
-  const names = await page.locator('.agent-tile-name').allTextContents();
+  const names = await page.locator('.rv-agent-tile-name').allTextContents();
   process.stdout.write(`names: ${names.join(', ')}\n`);
 
   // Click first tile to test overlay
