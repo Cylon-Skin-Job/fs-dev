@@ -7,6 +7,15 @@
  */
 
 const fs = require('fs');
+const path = require('path');
+
+function resolveServerLogPath({ appUserData, serverDir }) {
+  const userDataPath = typeof appUserData === 'string' ? appUserData.trim() : '';
+  if (userDataPath) {
+    return path.join(path.resolve(userDataPath), 'server-live.log');
+  }
+  return path.join(serverDir, 'server-live.log');
+}
 
 function installLogTee(logFilePath) {
   const originalLog = console.log;
@@ -19,4 +28,4 @@ function installLogTee(logFilePath) {
   };
 }
 
-module.exports = { installLogTee };
+module.exports = { installLogTee, resolveServerLogPath };

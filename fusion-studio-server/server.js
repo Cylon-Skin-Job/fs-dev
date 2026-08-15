@@ -15,8 +15,11 @@ const { v4: generateId } = require('uuid');
 
 // Console tee — install before anything below logs so startup lines
 // reach server-live.log.
-const { installLogTee } = require('./lib/logging');
-installLogTee(path.join(__dirname, 'server-live.log'));
+const { installLogTee, resolveServerLogPath } = require('./lib/logging');
+installLogTee(resolveServerLogPath({
+  appUserData: process.env.FUSION_APP_USER_DATA,
+  serverDir: __dirname,
+}));
 
 // Thread management
 const { ThreadWebSocketHandler } = require('./lib/thread');
