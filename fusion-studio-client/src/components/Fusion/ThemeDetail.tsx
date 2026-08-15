@@ -167,7 +167,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
       <div className="rv-fusion-detail-body">
         <h2>Customizing by hand</h2>
         <p>
-          You can edit the workspace CSS directly at: <code>ai/system/styles/themes.css</code>
+          You can edit the workspace CSS directly at: <code>ai/&lt;machine&gt;/System/styles/themes.css</code>
         </p>
         <p>
           After editing, come back here and click Apply to save your changes to the system.
@@ -176,14 +176,13 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
         <h2>Per-view overrides</h2>
         <p>
           To give a single view its own accent color, add a <code>themes.css</code> to
-          that view's settings folder:
+          that view's styles folder:
         </p>
         <p>
-          <code>ai/views/&#123;viewer-name&#125;/settings/themes.css</code>
+          <code>ai/&lt;machine&gt;/Views/&#123;view-folder&#125;/styles/themes.css</code>
         </p>
         <p>
-          Each view folder has three siblings: <code>chat/</code>, <code>content/</code>,
-          and <code>settings/</code>. The theme override goes in <code>settings/</code>.
+          The theme override goes in the view capsule's <code>styles/</code> folder.
           Only include the variables you want to change — everything else flows down
           from the workspace, which flows from the system. Remove the file to go back
           to inherited.

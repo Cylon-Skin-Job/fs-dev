@@ -28,18 +28,18 @@ test('shared styles reload after reset (simulated switch)', async ({ page }) => 
   });
 
   // Use the UI
-  await page.click('.rv-menu-btn');
+  await page.click('button[title="Switch workspace"]');
   await page.waitForTimeout(400);
 
-  const workspaceItems = await page.locator('.rv-switcher-item').count();
+  const workspaceItems = await page.locator('.rv-workspace-ribbon-item').count();
   console.log('[WORKSPACE ITEMS]', workspaceItems);
 
   // Find the inactive workspace (one without the active class)
-  const inactiveCount = await page.locator('.rv-switcher-item:not(.is-active)').count();
+  const inactiveCount = await page.locator('.rv-workspace-ribbon-item:not(.is-active)').count();
   console.log('[INACTIVE ITEMS]', inactiveCount);
 
   if (inactiveCount > 0) {
-    await page.locator('.rv-switcher-item:not(.is-active)').first().click();
+    await page.locator('.rv-workspace-ribbon-item:not(.is-active)').first().click();
     await page.waitForTimeout(2000);
 
     // After switch
@@ -51,9 +51,9 @@ test('shared styles reload after reset (simulated switch)', async ({ page }) => 
     await page.screenshot({ path: 'e2e/screenshots/after-switch-1.png' });
 
     // Switch back
-    await page.click('.rv-menu-btn');
+    await page.click('button[title="Switch workspace"]');
     await page.waitForTimeout(400);
-    await page.locator('.rv-switcher-item:not(.is-active)').first().click();
+    await page.locator('.rv-workspace-ribbon-item:not(.is-active)').first().click();
     await page.waitForTimeout(2000);
 
     // After switching back

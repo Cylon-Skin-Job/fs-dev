@@ -1,7 +1,7 @@
 /**
  * Harness metadata and default policy fallback for AI backend selection.
  *
- * `ai/system/config/cli.json` is the server-authoritative allow-list/default
+ * `ai/<machine>/System/config/cli.json` is the server-authoritative allow-list/default
  * policy. This file keeps client-side metadata and the OpenCode-only fallback
  * used before `workspace:init` hydrates policy from the server.
  */

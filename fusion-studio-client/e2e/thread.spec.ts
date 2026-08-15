@@ -12,7 +12,7 @@ test.describe('Thread Management', () => {
     await page.waitForTimeout(3000);
     
     // Get sidebar
-    const sidebar = page.locator('.workspace.active .rv-sidebar');
+    const sidebar = page.locator('.rv-panel.active .rv-sidebar');
     const threadList = sidebar.locator('.rv-thread-list');
     
     // Get initial thread count
@@ -46,7 +46,7 @@ test.describe('Thread Management', () => {
     await page.waitForLoadState('networkidle');
     
     // Wait for the active workspace to be visible
-    const activeWorkspace = page.locator('.workspace.active');
+    const activeWorkspace = page.locator('.rv-panel.active');
     await expect(activeWorkspace).toBeVisible();
     
     // Find the sidebar in the active workspace

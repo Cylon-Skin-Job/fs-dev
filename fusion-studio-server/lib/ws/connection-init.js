@@ -19,7 +19,7 @@ const aiPaths = require('../workspace/ai-paths');
 
 /**
  * Build the workspace:init message: registry, active workspace, CLI
- * config, themes, pre-read shared CSS layers, and cached view states.
+ * config, themes, pre-read shared CSS layers, and workspace shell state.
  *
  * @param {(ws?: import('ws').WebSocket) => string|null} getProjectRoot
  * @returns {Promise<object>}
@@ -35,8 +35,16 @@ async function buildWorkspaceInit(getProjectRoot) {
   let themes = [];
   let activeThemeId = null;
   let styles = {};
-  const stateCache = require('../workspace/state-cache');
-  const cachedStates = stateCache.loadAll();
+  const workspaceState = require('../workspace/workspace-state');
+  const workspaceStates = {};
+  for (const workspace of workspaces) {
+    const repoPath = workspace.repoPath || workspace.repo_path;
+    const allowedViewIds = repoPath ? views.listViews(repoPath) : [];
+    const savedState = workspaceState.get(workspace.id, { repoPath, allowedViewIds });
+    if (savedState) {
+      workspaceStates[workspace.id] = savedState;
+    }
+  }
   if (activeRoot) {
     try {
       const themesService = require('../theme/themes-service');
@@ -47,7 +55,7 @@ async function buildWorkspaceInit(getProjectRoot) {
     // Pre-read shared CSS layers so the client can inject synchronously
     const styleFiles = [
       'variables.css', 'themes.css', 'components.css', 'views.css',
-      'file-viewer.css', 'doc-viewer.css', 'tints.css',
+      'file-viewer.css', 'capture-viewer.css', 'tints.css',
     ];
     const settingsDir = aiPaths.getSystemStylesRoot(activeRoot);
     await Promise.all(
@@ -73,7 +81,7 @@ async function buildWorkspaceInit(getProjectRoot) {
     themes,
     activeThemeId,
     styles,
-    cachedStates,
+    workspaceStates,
   };
 }
 

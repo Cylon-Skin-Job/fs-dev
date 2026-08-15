@@ -24,7 +24,7 @@ test('timing debug — measure render gap', async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Find visible chat input
-  const inputs = page.locator('textarea.chat-input');
+  const inputs = page.locator('textarea.rv-chat-input');
   let visibleInput = null;
   for (let i = 0; i < await inputs.count(); i++) {
     const inp = inputs.nth(i);

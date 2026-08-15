@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadTicket, loadAllTickets } = require('./loader');
 const { emit, on } = require('../event-bus');
+const views = require('../views');
 
 /**
  * Claim a ticket — write state: claimed to file + tickets.json.
@@ -38,7 +39,7 @@ function claimTicket(issuesDir, ticket) {
   fs.writeFileSync(filePath, updated, 'utf8');
 
   // Update tickets.json
-  const indexPath = path.join(issuesDir, 'tickets.json');
+  const indexPath = resolveIssueIndexPath(issuesDir);
   try {
     const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
     if (index.tickets[ticket.frontmatter.id]) {
@@ -65,7 +66,7 @@ function releaseClaim(issuesDir, ticket) {
   const updated = content.replace(/^state: claimed$/m, 'state: open');
   fs.writeFileSync(filePath, updated, 'utf8');
 
-  const indexPath = path.join(issuesDir, 'tickets.json');
+  const indexPath = resolveIssueIndexPath(issuesDir);
   try {
     const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
     if (index.tickets[ticket.frontmatter.id]) {
@@ -79,7 +80,7 @@ function releaseClaim(issuesDir, ticket) {
 }
 
 function loadRegistry(projectRoot) {
-  const registryPath = path.join(projectRoot, 'ai', 'views', 'agents-viewer', 'registry.json');
+  const registryPath = path.join(views.resolveOperationalViewRoot(projectRoot, 'agents-viewer'), 'registry.json');
   try {
     return JSON.parse(fs.readFileSync(registryPath, 'utf8'));
   } catch {
@@ -135,11 +136,10 @@ function shouldDispatch(ticket, registry, allTickets) {
   return true;
 }
 
-function dispatch(ticket, registry) {
+function dispatch(projectRoot, ticket, registry) {
   const { executeRun } = require('../runner');
   const assignee = ticket.frontmatter.assignee;
   const agent = registry.agents[assignee];
-  const projectRoot = path.resolve(path.join(__dirname, '..', '..', '..'));
 
   console.log(`\n🎫 DISPATCH → RUNNER ─────────────────────────`);
   console.log(`  Ticket:   ${ticket.frontmatter.id}`);
@@ -153,7 +153,7 @@ function dispatch(ticket, registry) {
 }
 
 function startDispatchWatcher(projectRoot) {
-  const issuesDir = path.join(projectRoot, 'ai', 'views', 'issues-viewer');
+  const issuesDir = views.resolveOperationalViewRoot(projectRoot, 'issues-viewer');
 
   if (!fs.existsSync(issuesDir)) {
     console.error(`Issues directory not found: ${issuesDir}`);
@@ -233,10 +233,10 @@ function startDispatchWatcher(projectRoot) {
           return;
         }
 
-        dispatch(freshTicket, freshRegistry);
+        dispatch(projectRoot, freshTicket, freshRegistry);
       } catch (err) {
         console.error(`[Dispatch] Sync failed, dispatching with claimed state:`, err.message);
-        dispatch(ticket, registry);
+        dispatch(projectRoot, ticket, registry);
       }
     } else {
       const assignee = ticket.frontmatter.assignee || '(none)';
@@ -253,6 +253,12 @@ function startDispatchWatcher(projectRoot) {
   });
 
   return { close: unsub };
+}
+
+function resolveIssueIndexPath(issuesDir) {
+  const rootIndex = path.join(issuesDir, 'tickets.json');
+  if (fs.existsSync(rootIndex)) return rootIndex;
+  return path.join(issuesDir, 'content', 'tickets.json');
 }
 
 // -- CLI entry point --

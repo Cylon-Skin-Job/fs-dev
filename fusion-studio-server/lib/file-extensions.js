@@ -33,7 +33,7 @@ const KNOWN_EXTENSIONS = [
   'sql',
   'lua', 'php', 'pl', 'r',
 
-  // Docs / text
+  // Documents / text
   'md', 'mdx', 'markdown',
   'txt', 'rtf',
   'pdf',

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "dataSource": "Agents",
+  "root": {
+    "type": "workspace-relative",
+    "path": "ai/${machine}/Agents"
+  },
+  "chat": {
+    "type": "rolling-daily",
+    "position": "right"
+  }
+}

@@ -13,7 +13,7 @@
   "templates": {
     "views": [
       "file-viewer",
-      "doc-viewer",
+      "capture-viewer",
       "office-viewer",
       "calendar",
       "email",

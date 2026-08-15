@@ -1,10 +1,76 @@
-.rv-doc-viewer-toggle {
+.rv-capture-viewer-main-header {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding-top: 10px;
+  background: var(--bg-solid, #000);
+  border-bottom: none;
+}
+
+.rv-capture-viewer-main-header .rv-capture-viewer-chrome {
+  height: 44px;
+  background: transparent;
+  border-bottom: none;
+}
+
+.rv-capture-viewer-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md, 4px);
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  cursor: pointer;
+}
+
+.rv-capture-viewer-search-icon:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--chrome-accent, #e0e0e0);
+}
+
+.rv-capture-viewer-search-icon .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+.rv-capture-viewer-title-row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0 0;
+  padding: 0 var(--space-lg, 16px) 14px;
+}
+
+.rv-capture-viewer-search-title-row {
+  padding-bottom: 8px;
+}
+
+.rv-capture-viewer-main-title {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--accent-dim, var(--text-primary, #eee));
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-capture-viewer-search-filter-row {
+  padding: 0 var(--space-lg, 16px) 14px;
+}
+
+.rv-capture-viewer-toggle {
   display: flex;
   gap: 0;
   flex-shrink: 0;
 }
 
-.rv-doc-viewer-toggle-btn {
+.rv-capture-viewer-toggle-btn {
   padding: var(--space-xs, 4px) var(--space-md, 12px);
   font-size: 11px;
   font-weight: 500;
@@ -15,36 +81,30 @@
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.rv-doc-viewer-toggle-btn:first-child {
+.rv-capture-viewer-toggle-btn:first-child {
   border-radius: var(--radius-md, 4px) 0 0 var(--radius-md, 4px);
 }
 
-.rv-doc-viewer-toggle-btn:last-child {
+.rv-capture-viewer-toggle-btn:last-child {
   border-radius: 0 var(--radius-md, 4px) var(--radius-md, 4px) 0;
 }
 
-.rv-doc-viewer-toggle-btn:not(:last-child) {
+.rv-capture-viewer-toggle-btn:not(:last-child) {
   border-right: none;
 }
 
-.rv-doc-viewer-toggle-btn--inactive {
+.rv-capture-viewer-toggle-btn--inactive {
   background: transparent;
   color: var(--text-dim, rgba(255, 255, 255, 0.5));
   opacity: 0.7;
 }
 
-.rv-doc-viewer-toggle-btn--stub:disabled,
-.rv-doc-viewer-toggle-btn--stub[aria-disabled="true"] {
-  cursor: default;
-  pointer-events: none;
-}
-
-.rv-doc-viewer-toggle-btn--active {
-  background: var(--accent-dim, var(--theme-primary, #00d4ff));
+.rv-capture-viewer-toggle-btn--active {
+  background: var(--accent-dim, var(--theme-primary, #39628e));
   color: var(--chrome-accent-fg, var(--bg-solid, #000));
 }
 
-.rv-doc-viewer-toggle-btn:not(.rv-doc-viewer-toggle-btn--active):not(:disabled):hover {
+.rv-capture-viewer-toggle-btn:not(.rv-capture-viewer-toggle-btn--active):not(:disabled):hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
   color: var(--chrome-accent, #e0e0e0);
 }

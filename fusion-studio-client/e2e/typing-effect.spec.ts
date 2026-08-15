@@ -4,7 +4,7 @@ test.describe('Typing Effect', () => {
 
   test('text block types characters progressively (not all at once)', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
 
     // Install MutationObserver BEFORE sending demo — catches every DOM change
     await page.evaluate(() => {
@@ -20,7 +20,7 @@ test.describe('Typing Effect', () => {
     });
 
     // Send /demo
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('/demo');
     await page.locator('.send-btn').first().click();
 
@@ -48,9 +48,9 @@ test.describe('Typing Effect', () => {
 
   test('text block markdown renders without flicker (bold tags stable)', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
 
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('/demo');
     await page.locator('.send-btn').first().click();
 
@@ -86,9 +86,9 @@ test.describe('Typing Effect', () => {
 
   test('code block types characters progressively', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
 
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('/demo');
     await page.locator('.send-btn').first().click();
 
@@ -115,9 +115,9 @@ test.describe('Typing Effect', () => {
 
   test('collapsible block types characters progressively', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
 
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('/demo');
     await page.locator('.send-btn').first().click();
 

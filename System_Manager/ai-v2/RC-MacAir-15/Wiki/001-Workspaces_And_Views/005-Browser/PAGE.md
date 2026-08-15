@@ -13,7 +13,7 @@ metadata:
     - fusion-studio-client/src/components/browser/BrowserTabs.tsx
     - fusion-studio-client/src/components/browser/urlValidator.ts
     - fusion-studio-client/electron/main.cjs
-    - ai/views/browser-viewer/index.json
+    - ai/<machine>/Views/<browser-view-folder>/manifest.md
   connected-skills: []
   related-trigger-files: []
 ---
@@ -28,7 +28,7 @@ Browser is not the same thing as Custom Iframe. Browser can navigate to general 
 
 ## Current Implementation
 
-- View config: `ai/views/browser-viewer/index.json`
+- View config: `ai/<machine>/Views/<browser-view-folder>/manifest.md`
 - View type: `browser`
 - Renderer component: `fusion-studio-client/src/components/browser/WebBrowser.tsx`
 - Chrome: always-visible URL bar and navigation buttons unless disabled by config.

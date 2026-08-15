@@ -1,6 +1,6 @@
 /**
  * @module DocViewerChrome
- * @role Shared chrome bar for doc-viewer grid and document views
+ * @role Shared chrome bar for capture-viewer grid and document views
  *
  * Mirrors the wiki header paradigm (.rv-wiki-page-nav):
  * 44px height, opaque rail background, bottom hairline.
@@ -17,10 +17,10 @@ interface DocViewerChromeProps {
 
 export function DocViewerChrome({ left, center, right }: DocViewerChromeProps) {
   return (
-    <div className="rv-doc-viewer-chrome">
-      <div className="rv-doc-viewer-chrome-left">{left}</div>
-      <div className="rv-doc-viewer-chrome-center">{center}</div>
-      <div className="rv-doc-viewer-chrome-right">{right}</div>
+    <div className="rv-capture-viewer-chrome">
+      <div className="rv-capture-viewer-chrome-left">{left}</div>
+      <div className="rv-capture-viewer-chrome-center">{center}</div>
+      <div className="rv-capture-viewer-chrome-right">{right}</div>
     </div>
   );
 }

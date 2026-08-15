@@ -180,7 +180,7 @@
     visibility 0s linear 0s;
 }
 
-/* Sidebar + chat column: ai/views/settings/views.css */
+/* Sidebar + chat column: ai/<machine>/System/styles/views.css */
 
 /* Content Area — flex column so the active panel (file explorer, wiki, etc.) can fill height */
 .rv-content-area {
@@ -192,9 +192,9 @@
   overflow: hidden;
 }
 
-/* When the doc-viewer's FilePageView is shown, the content-area's outer
+/* When the capture-viewer's FilePageView is shown, the content-area's outer
    24px --bg-solid frame would compete with the FilePageView's surface
-   (set in ai/settings/doc-viewer.css). Drop the frame here so the whole
+   (set by the capture-viewer styles). Drop the frame here so the whole
    panel becomes one continuous chrome surface. */
 .rv-content-area:has(> .rv-file-page-view) {
   background: transparent;

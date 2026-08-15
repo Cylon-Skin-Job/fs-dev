@@ -11,6 +11,15 @@ const cliConfig = require('../../lib/cli-config');
 const themesService = require('../../lib/theme/themes-service');
 const viewStateResolver = require('../../lib/view-state/resolver');
 
+function readJson(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+}
+
 describe('AI workspace template v2 smoke', () => {
   let tempRoot;
 
@@ -47,10 +56,13 @@ describe('AI workspace template v2 smoke', () => {
     expect(fs.existsSync(path.join(machineRoot, 'System'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Wiki'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Issues'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-file-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-issues-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '003-wiki-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Agents'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Captures'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Office'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-wiki-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-file-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '003-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '005-browser-viewer'))).toBe(false);
 
     const mirrorDbPath = path.join(machineRoot, 'Data', 'Workspace-db', 'workspace.db');
@@ -82,7 +94,7 @@ describe('AI workspace template v2 smoke', () => {
     const machineRoot = path.join(projectPath, 'ai', 'Default-Box');
     expect(result.workspaceTemplate).toMatchObject({
       id: 'new',
-      selectedViewIds: ['file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer'],
+      selectedViewIds: ['capture-viewer', 'file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer'],
     });
     expect(result.manifest.viewTemplatesRoot).toBe('System_Manager/ai-template/templates/view-templates');
     expect(views.listViews(projectPath)).toEqual([]);
@@ -90,20 +102,30 @@ describe('AI workspace template v2 smoke', () => {
     process.env.FUSION_LOCAL_MACHINE = 'Default Box';
     try {
       expect(views.listViews(projectPath)).toEqual([
+        'capture-viewer',
         'file-viewer',
-        'issues-viewer',
         'wiki-viewer',
+        'issues-viewer',
         'agents-viewer',
       ]);
     } finally {
       delete process.env.FUSION_LOCAL_MACHINE;
     }
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-file-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-issues-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Captures'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Wiki'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Issues'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Agents'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Office'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '001-capture-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '002-file-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '003-wiki-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-agents-viewer', 'manifest.md'))).toBe(true);
-    expect(fs.existsSync(path.join(machineRoot, 'Views', '005-office-viewer'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Views', '005-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.readdirSync(path.join(machineRoot, 'Views')).some((name) => name.endsWith('-office-viewer'))).toBe(false);
     expect(fs.existsSync(path.join(machineRoot, 'templates'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Prompts'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Scripts'))).toBe(false);
+    expect(fs.existsSync(path.join(machineRoot, 'Tools'))).toBe(false);
   });
 
   test('exposes workspace templates in the v2 create manifest', () => {
@@ -113,7 +135,7 @@ describe('AI workspace template v2 smoke', () => {
     expect(manifest.viewTemplatesRoot).toBe('System_Manager/ai-template/templates/view-templates');
     expect(templatesById.get('new')).toMatchObject({
       category: 'new',
-      selectedViewIds: ['file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer'],
+      selectedViewIds: ['capture-viewer', 'file-viewer', 'wiki-viewer', 'issues-viewer', 'agents-viewer'],
     });
     expect(templatesById.get('fusion-home')).toMatchObject({
       category: 'startup',
@@ -160,6 +182,8 @@ describe('AI workspace template v2 smoke', () => {
     expect(fs.existsSync(path.join(machineRoot, 'Views', '003-issues-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '004-wiki-viewer', 'manifest.md'))).toBe(true);
     expect(fs.existsSync(path.join(machineRoot, 'Views', '005-agents-viewer', 'manifest.md'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Office'))).toBe(true);
+    expect(fs.existsSync(path.join(machineRoot, 'Captures'))).toBe(false);
     expect(fs.existsSync(path.join(machineRoot, 'templates'))).toBe(false);
   });
 
@@ -182,10 +206,10 @@ describe('AI workspace template v2 smoke', () => {
     process.env.FUSION_LOCAL_MACHINE = 'SmokeBox';
     try {
       expect(views.listViews(projectPath)).toEqual([
-        'file-viewer',
-        'issues-viewer',
         'wiki-viewer',
+        'file-viewer',
         'agents-viewer',
+        'issues-viewer',
       ]);
       expect(views.loadView(projectPath, 'wiki-viewer')).toMatchObject({
         id: 'wiki-viewer',
@@ -196,8 +220,62 @@ describe('AI workspace template v2 smoke', () => {
         },
         v2: true,
       });
+      const machineRoot = path.join(projectPath, 'ai', 'SmokeBox');
+      expect(readJson(path.join(machineRoot, 'Views', '001-wiki-viewer', 'content.json'))).toMatchObject({
+        dataSource: 'Wiki',
+        root: {
+          type: 'workspace-relative',
+          path: 'ai/${machine}/Wiki',
+        },
+      });
+      expect(views.loadContentConfig(projectPath, 'wiki-viewer')).toMatchObject({
+        dataSource: 'Wiki',
+        root: {
+          type: 'workspace-relative',
+          path: 'ai/${machine}/Wiki',
+        },
+      });
       expect(views.resolveContentPath(projectPath, 'wiki-viewer')).toBe(path.join(projectPath, 'ai', 'SmokeBox', 'Wiki'));
       expect(views.resolveContentPath(projectPath, 'file-viewer')).toBe(projectPath);
+
+      fs.rmSync(path.join(machineRoot, 'Views', '001-wiki-viewer', 'content.json'));
+      expect(views.resolveContentPath(projectPath, 'wiki-viewer')).toBe(path.join(projectPath, 'ai', 'SmokeBox', 'Wiki'));
+    } finally {
+      delete process.env.FUSION_LOCAL_MACHINE;
+    }
+  });
+
+  test('resolves v2 content roots from editable capsule content.json', () => {
+    const projectPath = path.join(tempRoot, 'editable-content-root');
+    createService.scaffoldProject({
+      projectPath,
+      machineName: 'SharedWikiBox',
+      viewIds: ['wiki-viewer', 'file-viewer'],
+    });
+
+    process.env.FUSION_LOCAL_MACHINE = 'SharedWikiBox';
+    try {
+      const contentPath = path.join(projectPath, 'ai', 'SharedWikiBox', 'Views', '001-wiki-viewer', 'content.json');
+
+      writeJson(contentPath, {
+        version: 1,
+        dataSource: 'Wiki',
+        root: {
+          type: 'workspace-relative',
+          path: 'shared/wiki',
+        },
+      });
+      expect(views.resolveContentPath(projectPath, 'wiki-viewer')).toBe(path.join(projectPath, 'shared', 'wiki'));
+
+      writeJson(contentPath, {
+        version: 1,
+        dataSource: 'Wiki',
+        root: {
+          type: 'workspace-relative',
+          path: '../shared/wiki',
+        },
+      });
+      expect(() => views.resolveContentPath(projectPath, 'wiki-viewer')).toThrow('View content root escapes workspace for wiki-viewer');
     } finally {
       delete process.env.FUSION_LOCAL_MACHINE;
     }
@@ -214,25 +292,25 @@ describe('AI workspace template v2 smoke', () => {
     process.env.FUSION_LOCAL_MACHINE = 'MoveBox';
     try {
       views.updateWorkspaceViewRegistry(projectPath, {
-        viewId: 'wiki-viewer',
+        viewId: 'file-viewer',
         move: 'up',
       });
 
       expect(views.listViews(projectPath)).toEqual([
         'file-viewer',
         'wiki-viewer',
-        'issues-viewer',
         'agents-viewer',
+        'issues-viewer',
       ]);
       const viewsRoot = path.join(projectPath, 'ai', 'MoveBox', 'Views');
       expect(fs.existsSync(path.join(viewsRoot, '002-wiki-viewer', 'state', 'state.json'))).toBe(true);
-      expect(fs.existsSync(path.join(viewsRoot, '003-issues-viewer', 'state', 'state.json'))).toBe(true);
+      expect(fs.existsSync(path.join(viewsRoot, '003-agents-viewer', 'state', 'state.json'))).toBe(true);
     } finally {
       delete process.env.FUSION_LOCAL_MACHINE;
     }
   });
 
-  test('removes and re-adds v2 view shells without deleting top-level data folders', () => {
+  test('hides and restores v2 view shells without deleting folders', () => {
     const projectPath = path.join(tempRoot, 'demo');
     createService.scaffoldProject({
       projectPath,
@@ -249,21 +327,71 @@ describe('AI workspace template v2 smoke', () => {
 
       const machineRoot = path.join(projectPath, 'ai', 'AddBox');
       expect(views.listViews(projectPath)).toEqual([
-        'file-viewer',
         'wiki-viewer',
+        'file-viewer',
         'agents-viewer',
       ]);
       expect(fs.existsSync(path.join(machineRoot, 'Issues'))).toBe(true);
-      expect(fs.existsSync(path.join(machineRoot, 'Views', '002-issues-viewer'))).toBe(false);
+      expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer'))).toBe(true);
+      expect(readJson(path.join(machineRoot, 'Views', '004-issues-viewer', 'state', 'state.json'))).toMatchObject({
+        display: { hidden: true },
+      });
 
       views.addWorkspaceView(projectPath, 'issues-viewer');
       expect(views.listViews(projectPath)).toEqual([
-        'file-viewer',
         'wiki-viewer',
+        'file-viewer',
         'agents-viewer',
         'issues-viewer',
       ]);
       expect(fs.existsSync(path.join(machineRoot, 'Views', '004-issues-viewer', 'manifest.md'))).toBe(true);
+      expect(readJson(path.join(machineRoot, 'Views', '004-issues-viewer', 'state', 'state.json'))).toMatchObject({
+        display: { hidden: false },
+      });
+    } finally {
+      delete process.env.FUSION_LOCAL_MACHINE;
+    }
+  });
+
+  test('migrates legacy central hidden state into view capsule state on v2 hide/show writes', () => {
+    const projectPath = path.join(tempRoot, 'central-hidden-migration');
+    createService.scaffoldProject({
+      projectPath,
+      machineName: 'CentralHideBox',
+      viewIds: ['wiki-viewer', 'file-viewer', 'agents-viewer', 'issues-viewer'],
+    });
+
+    process.env.FUSION_LOCAL_MACHINE = 'CentralHideBox';
+    try {
+      const machineRoot = path.join(projectPath, 'ai', 'CentralHideBox');
+      const systemStatePath = path.join(machineRoot, 'System', 'state', 'state.json');
+      fs.mkdirSync(path.dirname(systemStatePath), { recursive: true });
+      fs.writeFileSync(systemStatePath, JSON.stringify({
+        views: {
+          hidden: {
+            'agents-viewer': true,
+          },
+        },
+      }, null, 2) + '\n');
+
+      expect(views.listViews(projectPath)).toEqual([
+        'wiki-viewer',
+        'file-viewer',
+        'issues-viewer',
+      ]);
+
+      views.updateWorkspaceViewRegistry(projectPath, {
+        viewId: 'issues-viewer',
+        patch: { enabled: false },
+      });
+
+      expect(readJson(path.join(machineRoot, 'Views', '003-agents-viewer', 'state', 'state.json'))).toMatchObject({
+        display: { hidden: true },
+      });
+      expect(readJson(path.join(machineRoot, 'Views', '004-issues-viewer', 'state', 'state.json'))).toMatchObject({
+        display: { hidden: true },
+      });
+      expect(readJson(systemStatePath).views).toBeUndefined();
     } finally {
       delete process.env.FUSION_LOCAL_MACHINE;
     }
@@ -304,7 +432,7 @@ describe('AI workspace template v2 smoke', () => {
         'ai',
         'PathBox',
         'Views',
-        '002-wiki-viewer',
+        '001-wiki-viewer',
         'state',
         'state.json'
       ));

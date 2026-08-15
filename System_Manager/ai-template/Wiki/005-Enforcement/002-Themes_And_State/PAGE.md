@@ -1,6 +1,6 @@
 ---
 name: Themes and State
-description: Boundary between workspace-wide theme styling and per-view layout state, including CSS loading, tint rules, and AI agent constraints.
+description: V2 boundary between workspace-wide theme styling and per-view layout state.
 metadata:
   incoming-edges:
     - Enforcement
@@ -8,9 +8,13 @@ metadata:
   outgoing-edges: []
   source-files:
     - fusion-studio-client/src/hooks/useSharedWorkspaceStyles.ts
-    - ai/settings/themes.json
-    - ai/settings/themes.css
-    - ai/settings/tints.css
+    - fusion-studio-client/src/lib/viewActivity.ts
+    - fusion-studio-client/src/lib/viewCollections.ts
+    - fusion-studio-server/lib/view-state/resolver.js
+    - fusion-studio-server/lib/view-state/writer.js
+    - fusion-studio-server/lib/workspace/workspace-state.js
+    - ai/<machine>/System/styles/themes.json
+    - ai/<machine>/System/styles/themes.css
   connected-skills:
     - css-conventions
   related-trigger-files: []
@@ -18,203 +22,84 @@ metadata:
 
 # Themes and State
 
-This page defines the boundary between **theme** (global, workspace-wide style) and **state** (per-view layout geometry). AI agents must respect this boundary. Humans may manually override per-view CSS, but programmatic tinting or state injection into views is not supported.
+This page defines the V2 filesystem boundary for styling and layout state. The short version: workspace-wide CSS lives in `System/styles`, per-view CSS and icons live in each view capsule's `styles` folder, and per-view UI state lives in each view capsule's `state` folder.
 
----
+## V2 Paths
 
-## Two Systems, One Rule
+| Concern | Path | Scope |
+|---------|------|-------|
+| Workspace theme source | `ai/<machine>/System/styles/themes.json` | Whole workspace |
+| Generated workspace theme CSS | `ai/<machine>/System/styles/themes.css` | Whole workspace |
+| Shared workspace CSS layers | `ai/<machine>/System/styles/*.css` | Whole workspace |
+| Workspace default state | `ai/<machine>/System/state/state.json` | Whole workspace fallback |
+| Workspace shell state | `ai/<machine>/System/state/state.json` under `workspace` | Whole workspace |
+| Per-view layout CSS | `ai/<machine>/Views/<view-folder>/styles/layout.css` | One view |
+| Per-view theme override | `ai/<machine>/Views/<view-folder>/styles/themes.css` | One view |
+| Sidebar icon | `ai/<machine>/Views/<view-folder>/styles/icon.md` | One view |
+| Per-view state override | `ai/<machine>/Views/<view-folder>/state/state.json` | One view |
+| CLI policy | `ai/<machine>/System/config/cli.json` | Whole workspace |
 
-| System | Stored In | Scope | What It Controls | Examples |
-|--------|-----------|-------|------------------|----------|
-| **Theme** | `ai/settings/themes.json` | Workspace-wide | Colors, surfaces, borders, typography, toggles | accent, luminance, panelContrast, bgTint, contentPanels, chatBorders, navAccent |
-| **State** | `ai/views/**-viewer/settings/state.json` | Per-view only | Layout geometry, open/closed, position, size | sidebar width, chat collapsed, popup x/y, currentThreadId |
+Do not use retired non-machine-scoped view, settings, or system paths. V2 is machine-scoped under `ai/<machine>/`.
 
-**The rule:** If it affects color or visual style, it is a **theme property** and applies to every view. If it affects position or visibility of a pane, it is **state** and stays inside the view where it was changed.
+## View Folder Contract
 
----
+The numbered view folder is the storage boundary for view-local metadata. The folder name `NNN-view-id` controls sidebar order through its numeric prefix, while `manifest.md` owns the durable `view-id`. Keep sidebar icons in the view's `styles/icon.md` file and view-specific UI state in the view's `state/state.json` file. Do not move either concern into global registries, workspace state, or retired `settings/` folders.
 
-## How CSS Reaches the Browser
+## CSS Loading
 
-The client loads CSS through two channels managed by `useSharedWorkspaceStyles.ts`:
+Global CSS is fetched from `ai/<machine>/System/styles/`. The client injects the shared layers in a stable order so defaults load before overrides:
 
-### 1. Global CSS (workspace-wide)
+1. `variables.css`
+2. `themes.css`
+3. `components.css`
+4. `views.css`
+5. `tints.css`
 
-Global CSS is fetched via `fetchSettingsFile(ws, path)` which resolves to `ai/settings/{path}` on the server through the `__settings__` pseudo-panel. The client loads five layers on every workspace switch:
+Per-view CSS is fetched from the active view capsule under `ai/<machine>/Views/<view-folder>/styles/`. `layout.css` is for geometry and structure. `themes.css` is an optional manual override for one view. Icon selection comes from `styles/icon.md`.
 
-| Layer | Client Path | Server Path | Content |
-|-------|-------------|-------------|---------|
-| Themes | `themes.css` | `ai/settings/themes.css` | Generated from `themes.json` — variables only |
-| Components | `components.css` | `ai/settings/components.css` | Global component styles |
-| Views | `views.css` | `ai/settings/views.css` | Global view chrome (chat, sidebar, thread list) |
-| Tints | `tints.css` | `ai/settings/tints.css` | Global tint selector catalog (`body[data-tint-*]`) |
-| Variables | `variables.css` | `ai/settings/variables.css` | CSS variable defaults (fallbacks) |
+## State Loading
 
-**Load order is load-bearing.** `variables.css` must be injected **before** `themes.css` (and before any layer that overrides `:root` variables). Both files target `:root`; the last one injected wins. If `variables.css` loads after `themes.css`, the user's saved theme is silently overwritten by fallback values on every refresh. The canonical order is: `variables` → `themes` → `components` → `views` → `tints`.
+State is resolved per view:
 
-**Server resolution:** The `__settings__` pseudo-panel in `server.js` resolves to `ai/settings/`. This is separate from `__panels__` which resolves to `ai/views/`.
+1. Load workspace defaults from `ai/<machine>/System/state/state.json`.
+2. Load the view override from `ai/<machine>/Views/<view-folder>/state/state.json` when it exists.
+3. Deep-merge workspace defaults with the view override.
 
-### 2. Per-View CSS (scoped to one view)
+Workspace shell state also lives in `ai/<machine>/System/state/state.json`. The `workspace.currentPanel` field stores the active view panel for that workspace, so switching away and back returns to the same built-in or custom view. Do not store this in server-global runtime files.
 
-Per-view CSS is fetched via `fetchPanelWorkspaceFile(ws, panelId, path)` which resolves to `ai/views/{panelId}/{path}` on the server through the `__panels__` pseudo-panel. Loaded when a view mounts:
+State files own geometry and UI placement such as pane widths, collapsed flags, popup dimensions, selected thread IDs, view modes, scroll positions, drawer state, activity, and collections. They do not own colors, backgrounds, borders, or icon names.
 
-| File | Server Path | Content |
-|------|-------------|---------|
-| `settings/layout.css` | `ai/views/{viewer}/settings/layout.css` | Layout only: widths, heights, flex/grid, visibility |
-| `settings/themes.css` | `ai/views/{viewer}/settings/themes.css` | Optional per-view theme override (manual only) |
+Shared per-view activity and collections also live in state:
 
-Per-view CSS is **scoped** to `[data-panel="{viewer}"]` so it never leaks to other views.
+- `activity.recents` stores recent files/pages/documents and is capped at 100 items/365 days.
+- `activity.navigation` stores back/forward stacks for views such as Wiki.
+- `activity.tabs` and `activity.activeTabId` store File Explorer open tabs.
+- `collections.starred` stores starred files for Capture and Office.
+- `collections.pinnedFolders` stores Office pinned folders.
+- `officeDocumentSidePanel` stores whether the Office document Recent drawer is open.
 
-**No CSS is embedded in the server.** The server reads plain CSS files from disk and serves them as text over WebSocket. The client injects them into `<style>` tags.
+Use `viewActivity.ts` and `viewCollections.ts` for these mutations. Do not create separate recent-doc, starred-doc, or pinned-folder state files.
 
----
+## Rules
 
-## Theme System (Global)
+- Built-in views are React surfaces. Do not add iframe theme-bridge requirements for built-in views.
+- Custom and browser-style iframe surfaces inherit the surrounding shell CSS but are not the storage model for built-in view styling.
+- Do not create or read retired per-view `settings/` files. V2 per-view files belong under `styles/` or `state/`.
+- Do not put view state in `styles/`; view state belongs in `state/state.json`.
+- Do not put icons in JSON registries; sidebar icons belong in `styles/icon.md`.
+- Do not put recents, starred files, pinned folders, or open tabs in SQLite or ad hoc JSON when they are view-local UI state. Use the per-view state helpers.
+- Do not programmatically create per-view CSS as a workaround for missing theme variables. Add shared variables to `System/styles` instead.
 
-The active theme in `ai/settings/themes.json` generates `ai/settings/themes.css`. This CSS is loaded once and applies to the entire workspace.
+## Quick Reference
 
-### Sliders (numeric)
-- `luminance` — base panel background lightness
-- `panelContrast` / `bgTint` — panel surface spread and accent blend
-- `contentLuminance` / `contentContrast` / `contentTint` — document/code surfaces
-- `borderLuminance` / `borderTint` — border color base
-- `chromeLuminance` / `chromeTint` — chrome accent (active rows, buttons, icons)
-- `accentLuminance` / `accentTint` — muted accent (inactive nav, dim icons)
-
-### Toggles (boolean)
-Toggles are theme properties, not state. They are saved to `themes.json` and regenerate `themes.css` on change.
-
-| Toggle | Theme Key | What It Tints |
-|--------|-----------|---------------|
-| Content Panels | `tints.contentPanels` | All content panel surfaces universally (ticket columns, capture grid, empty states) → `sidebar-surface-bg` |
-| Chat Border | `tints.borders.chat` | All chat chrome borders universally (messages, input, bubbles, buttons) → `border-color` |
-| Thread Border | `tints.borders.threads` | All thread and row borders universally |
-| Navigation | `navAccent` | All navigation elements universally (file trees, article lists, edge links, any future nav) → `accent-dim` |
-| Chat Bubble | `chatBubbleChrome` | All message bubble backgrounds universally → `chrome-accent` |
-| Cards | `tints.cards` | All card surfaces universally (tickets, wiki topics, etc.) → accent-tinted surfaces |
-| Left Panel | `tints.leftPanel` | Left sidebar background tint universally |
-| Right Panel | `tints.rightPanel` | Right column background tint universally |
-
-### Semantic Variable Reference
-
-Never use the raw theme color (`--theme-primary`) for UI chrome. The chrome sliders (`chromeLuminance`, `chromeTint`, `accentLuminance`, `accentTint`) exist so the user can adjust how the main color appears on interactive elements. Use the processed semantic variables instead:
-
-| Element type | Variable | What the slider controls |
-|--------------|----------|--------------------------|
-| Section titles, active labels, primary buttons, selected states | `--accent-dim` | `accentLuminance` / `accentTint` |
-| Inactive icons, secondary badges, dimmed chrome | `--chrome-accent` | `chromeLuminance` / `chromeTint` |
-| Body text, paragraphs, descriptions | `--text-primary`, `--text-secondary` | `luminance` (via global text contrast) |
-| Panel/card surfaces | `--surface-elevated`, `--surface-hover` | `panelContrast` / `bgTint` |
-| Document/code surfaces | `--document-surface-bg`, `--document-bg` | `contentLuminance` / `contentContrast` |
-| Borders, dividers, hairlines | `--border-subtle`, `--border-focus` | `borderLuminance` / `borderTint` |
-
-**The rule:** if the element is chrome (title, label, icon, button, badge, nav link), target `--chrome-accent` or `--accent-dim`. If it is body text, target `--text-*`. Only decorative accents that must match the raw brand color regardless of slider settings may use `--theme-primary`.
-
-**How it works:** The theme service reads the active theme, generates CSS variables, and the client sets `body[data-tint-*="true"]` attributes on `<body>`. Global CSS (`ai/settings/tints.css`) defines what changes under each attribute across the entire workspace. Per-view CSS does not participate in color, border, or surface changes.
-
----
-
-## State System (Per-View)
-
-State is resolved per-view. The system merges a **workspace default** with an optional **per-view override**.
-
-- Workspace default: `ai/settings/state.json`
-- Per-view override: `ai/views/{viewer}/settings/state.json`
-
-If a per-view override file exists and contains a key, that value wins. Otherwise, the workspace default is used. The writer never creates per-view override files — only humans do.
-
-### Persistent State (Survives workspace close/open indefinitely)
-- `widths.leftSidebar`, `widths.leftChat`, `widths.rightCol`, `widths.rightSecondary`
-- `collapsed.leftSidebar`, `collapsed.leftChat`
-- `popup.x`, `popup.y`, `popup.width`, `popup.height`
-- `collections.fileExplorerTabs` — open files as a working set
-- `filters.{viewId}` — per-view filter settings (decided per view during migration)
-- `sort.{viewId}` — per-view sort order (decided per view during migration)
-
-### Session State (Cleared on workspace close or nightly refresh)
-- `popup.open`, `popup.threadId`
-- `currentThreadId`, `secondaryThreadId`
-- `selectedItemId`, `scrollPosition`, `activeWorkflow`, `centeredDocument`
-- `activeViewId` — which view panel is focused
-
-Session state is ephemeral by design. It persists during normal workspace use (switching views, scrolling, selecting items) but is discarded when the workspace is closed from the ribbon or during the nightly cleanup. This prevents stale focus from accumulating.
-
-### What Does NOT Belong in State
-- Any tint boolean (see Theme Toggles above)
-- Any color, background, or border value
-- Any slider value
-
-If you find a tint, color, or slider in a per-view state file, it is a bug. Move it to `themes.json`.
-
----
-
-## CSS Architecture
-
-### Global CSS (`ai/settings/`)
-These files are loaded once per workspace switch and apply everywhere:
-
-- `ai/settings/themes.json` — canonical source of truth for all themes. The active theme has `"active": true`.
-- `ai/settings/themes.css` — generated from `themes.json`, never hand-edited. Contains `:root` CSS variables.
-- `ai/settings/tints.css` — static global tint rules (selector catalog), hand-edited. Defines all color, border, and background responses to `body[data-tint-*]` universally across every view.
-- `ai/settings/views.css` — global view chrome (chat, sidebar, thread list)
-- `ai/settings/components.css` — global component styles
-- `ai/settings/variables.css` — CSS variable defaults (fallbacks when themes.css hasn't loaded yet)
-- `ai/settings/cli.json` — CLI config (names, icons, accent colors, enabled/disabled)
-- `ai/settings/state.json` — workspace default state (widths, collapsed, popup, thread IDs)
-
-### Per-View CSS (`ai/views/{viewer}/settings/`)
-Each view folder may contain layout CSS for geometry-specific rules:
-- `ai/views/wiki-viewer/settings/layout.css`
-- `ai/views/issues-viewer/settings/layout.css`
-- `ai/views/agents-viewer/settings/layout.css`
-- `ai/views/doc-viewer/settings/layout.css`
-- `ai/views/file-viewer/settings/layout.css`
-
-These files handle layout only: widths, heights, flex/grid structure, visibility, and positioning. They never define colors, borders, backgrounds, or respond to `body[data-tint-*]` for styling changes. All color and surface styling flows from global CSS.
-
-### Per-View State (`ai/views/{viewer}/settings/state.json`)
-Optional per-view state overrides. If present, keys here win over the workspace default in `ai/settings/state.json`.
-
-### Manual Overrides
-A human may drop a CSS file into a view's `settings/` folder to override a specific element for that view only. This is manual, intentional, and never done by AI agents programmatically. Example: a user wants ticket cards in the agent view to use a different hover color — they edit `ai/views/agents-viewer/settings/custom.css`.
-
----
-
-## AI Agent Constraints
-
-1. **Never write tint values to per-view state.** Tints are theme properties.
-2. **Never generate per-view CSS programmatically.** Per-view CSS overrides are human-only.
-3. **When adding a new toggle, add it to `ThemeEntry` and `themes.json`.** It becomes a theme property, not a state property.
-4. **CSS rules for new toggles go in the global tint catalog** (`ai/settings/tints.css`), not scattered across view files.
-5. **Global CSS defines all tint targeting.** Per-view CSS never scopes rules to `body[data-tint-*]`.
-6. **Global files live in `ai/settings/`.** Per-view files live in `ai/views/{viewer}/settings/`. Never put global files in `ai/views/settings/` — that folder no longer exists.
-
----
-
-## Common Mistakes
-
-| Mistake | Why It's Wrong | Correct Approach |
-|---------|---------------|----------------|
-| Storing `contentPanels` in a per-view `state.json` | Tints are styles, not layout | Store in `themes.json` active theme |
-| Applying `data-tint-*` per `.rv-panel` | Toggles should be workspace-wide | Apply to `<body>` once |
-| Scoping tint CSS to `.rv-panel[data-tint-*]` | Breaks when switching views | Scope to `body[data-tint-*]` |
-| Creating a new slider and wiring it to `--bg-solid` | Sliders should target semantic variables | Target `--sidebar-surface-bg`, `--document-surface-bg`, etc. |
-| Using `contentContrast` to compute background spread | Content contrast is for syntax tokens only | Use `panelContrast` for background spread |
-| Using `--theme-primary` for UI chrome (titles, labels, icons, buttons) | Bypasses the chrome sliders; user loses control of tinting | Use `--accent-dim` for active/primary chrome, `--chrome-accent` for inactive/secondary chrome |
-| Putting color rules in `ai/views/{viewer}/settings/layout.css` | Per-view CSS is layout-only | Colors go in `ai/settings/tints.css` |
-| Hardcoding a path like `ai/views/settings/themes.css` in the server | Global settings belong at `ai/settings/` | Use `ai/settings/` for global files |
-| Referencing `ai/views/settings/` at all | That folder was deleted in the refactor | All global files are in `ai/settings/` |
-| Loading `variables.css` after `themes.css` | Fallbacks override the active theme on refresh | Inject `variables` → `themes` → `components` → `views` → `tints` |
-| Forgetting `contentPanels` in default tint objects | Toggle is `undefined` before state loads, causing missing attributes | Include `contentPanels: false` in both client and server defaults |
-
----
-
-## Quick Reference: Where to Put Things
-
-| Want to change... | File |
-|-------------------|------|
-| A color slider or toggle | `ai/settings/themes.json` → theme service regenerates `ai/settings/themes.css` |
-| What elements respond to a toggle | `ai/settings/tints.css` (global selector catalog) |
-| A pane width or collapse state | `ai/views/{viewer}/settings/state.json` (per-view) or `ai/settings/state.json` (workspace default) |
-| A layout specific to one view | `ai/views/{viewer}/settings/layout.css` |
-| A one-off override for one view | Manual CSS drop in that view's `settings/` folder |
-| CLI names, icons, or accent colors | `ai/settings/cli.json` |
+| Change | File |
+|--------|------|
+| Workspace colors or tint toggles | `ai/<machine>/System/styles/themes.json` |
+| Last active workspace view panel | `ai/<machine>/System/state/state.json` under `workspace.currentPanel` |
+| Generated theme CSS | `ai/<machine>/System/styles/themes.css` |
+| Shared chrome/component CSS | `ai/<machine>/System/styles/views.css` or `components.css` |
+| A view's layout CSS | `ai/<machine>/Views/<view-folder>/styles/layout.css` |
+| A view's sidebar icon | `ai/<machine>/Views/<view-folder>/styles/icon.md` |
+| A view's UI state override | `ai/<machine>/Views/<view-folder>/state/state.json` |
+| View recents, stars, pins, tabs | `ai/<machine>/Views/<view-folder>/state/state.json` |
+| Harness defaults and allow-list | `ai/<machine>/System/config/cli.json` |

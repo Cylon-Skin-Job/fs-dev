@@ -8,6 +8,18 @@
 
 const { BrowserWindow } = require('electron');
 
+const DEFAULT_STAGE_TIMEOUT_MS = 30_000;
+
+function withDeadline(operation, timeoutMs, stage) {
+  let timeout;
+  return Promise.race([
+    Promise.resolve(operation),
+    new Promise((_, reject) => {
+      timeout = setTimeout(() => reject(new Error(`PDF renderer ${stage} timed out`)), timeoutMs);
+    }),
+  ]).finally(() => clearTimeout(timeout));
+}
+
 /**
  * Convert HTML content to a PDF buffer.
  * @param {string} htmlContent
@@ -15,32 +27,56 @@ const { BrowserWindow } = require('electron');
  * @returns {Promise<Buffer>}
  */
 async function htmlToPdf(htmlContent, options = {}) {
+  const { stageTimeoutMs = DEFAULT_STAGE_TIMEOUT_MS, ...printOptions } = options;
+  if (!Number.isSafeInteger(stageTimeoutMs) || stageTimeoutMs <= 0) {
+    throw new TypeError('stageTimeoutMs must be a positive safe integer');
+  }
   const win = new BrowserWindow({
     show: false,
-    width: 1200,
-    height: 1600,
+    width: 720,
+    height: 1056,
     webPreferences: {
-      javascript: false,
+      javascript: true,
       webSecurity: false,
+      backgroundThrottling: false,
     },
   });
 
-  const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
-
-  await win.loadURL(dataUrl);
-
-  // Allow a brief tick for the renderer to settle (fonts, layout).
-  await new Promise((resolve) => setTimeout(resolve, 150));
-
-  const pdf = await win.webContents.printToPDF({
-    marginsType: 1, // no margins — we control them via @page CSS
-    printBackground: true,
-    pageSize: 'Letter',
-    ...options,
-  });
-
-  win.destroy();
-  return pdf;
+  try {
+    const inertHtml = htmlContent.includes('<head>')
+      ? htmlContent.replace('<head>', '<head><meta http-equiv="Content-Security-Policy" content="script-src \'none\'; object-src \'none\'">')
+      : `<meta http-equiv="Content-Security-Policy" content="script-src 'none'; object-src 'none'">${htmlContent}`;
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(inertHtml)}`;
+    await withDeadline(win.loadURL(dataUrl), stageTimeoutMs, 'load');
+    win.webContents.setZoomFactor(1);
+    win.webContents.debugger.attach('1.3');
+    await withDeadline(
+      win.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', { media: 'print' }),
+      stageTimeoutMs,
+      'print-media setup',
+    );
+    const readiness = await withDeadline(win.webContents.executeJavaScript(`(async () => {
+      try {
+        if (document.fonts) await document.fonts.ready;
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+        return { ok: true };
+      } catch (error) {
+        return { ok: false, message: String(error && error.message || error) };
+      }
+    })()`), stageTimeoutMs, 'readiness');
+    if (!readiness?.ok) throw new Error(`PDF renderer readiness failed: ${readiness?.message ?? 'unknown'}`);
+    return await withDeadline(win.webContents.printToPDF({
+      marginsType: 1, // no margins — @page CSS owns the printable box
+      printBackground: true,
+      pageSize: 'Letter',
+      preferCSSPageSize: true,
+      scale: 1,
+      ...printOptions,
+    }), stageTimeoutMs, 'print');
+  } finally {
+    if (win.webContents.debugger.isAttached()) win.webContents.debugger.detach();
+    if (!win.isDestroyed()) win.destroy();
+  }
 }
 
 module.exports = { htmlToPdf };

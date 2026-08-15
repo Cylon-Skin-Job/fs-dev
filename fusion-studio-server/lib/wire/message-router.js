@@ -28,12 +28,11 @@ const { createCanonicalHarnessEventBridge } = require('./canonical-harness-event
  * @param {object} deps
  * @param {object} deps.session - per-connection session state (mutated)
  * @param {import('ws').WebSocket} deps.ws - for non-chat direct sends
- * @param {object} deps.threadWebSocketHandler - for TurnEnd assistant-message persistence
  * @param {(type: string, payload: object) => void} deps.emit - event bus emit
- * @param {(toolName: string, args: object) => {message: string}|null} deps.checkSettingsBounce
+ * @param {(toolName: string, args: object, workspaceRoot?: string | null) => {message: string}|null} deps.checkSettingsBounce
  * @returns {{ handleMessage: (msg: object) => void }}
  */
-function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, checkSettingsBounce }) {
+function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
 
   /**
    * Touch the session for the current thread to reset the idle timeout.
@@ -48,21 +47,11 @@ function createWireMessageRouter({ session, ws, threadWebSocketHandler, emit, ch
     }
   }
 
-  /**
-   * Persist assistant message after turn end.
-   * Runtime-1R: accepts explicit threadId so persistence uses the in-flight
-   * turn's identity, not the currently selected/browsed thread.
-   */
-  async function persistAssistantMessage(wsRef, content, hasToolCalls, metadata, explicitThreadId) {
-    await threadWebSocketHandler.addAssistantMessage(wsRef, content, hasToolCalls, metadata, explicitThreadId);
-  }
-
   const applier = createCanonicalChatEventApplier({
     session,
     emit,
     resolveWorkspace: resolveScope,
     touchThreadSession,
-    persistAssistantMessage,
     checkSettingsBounce,
     generateTurnId: () => generateId()
   });

@@ -75,10 +75,7 @@ function hasMachineAiRoot(projectRoot, machineName = getLocalMachineName()) {
 }
 
 function getSystemRoot(projectRoot, machineName = getLocalMachineName()) {
-  if (hasMachineAiRoot(projectRoot, machineName)) {
-    return path.join(getMachineAiRoot(projectRoot, machineName), 'System');
-  }
-  return path.join(projectRoot, 'ai', 'system');
+  return path.join(getMachineAiRoot(projectRoot, machineName), 'System');
 }
 
 function getSystemConfigRoot(projectRoot, machineName = getLocalMachineName()) {

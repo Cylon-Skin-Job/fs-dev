@@ -8,8 +8,8 @@
  * Contract notes:
  *   - `add` assumes the caller has already canonicalized repoPath and
  *     resolved id collisions.
- *   - `remove` deletes the matching `workspace_themes` row first because
- *     the FK (migration 003) has no CASCADE.
+ *   - `remove` deletes workspace-owned rows first because those FKs have no
+ *     CASCADE.
  */
 
 const { getDb } = require('../db');
@@ -69,9 +69,14 @@ async function add({ id, label, icon, description, repoPath, sortOrder, type, ri
 
 async function remove(id) {
   const db = getDb();
-  // Themes first — FK has no CASCADE (migration 003).
-  await db('workspace_themes').where('workspace_id', id).del();
-  const deleted = await db('workspaces').where('id', id).del();
+  let deleted = 0;
+
+  await db.transaction(async (trx) => {
+    await trx('workspace_screenshots').where('workspace_id', id).del();
+    await trx('workspace_themes').where('workspace_id', id).del();
+    deleted = await trx('workspaces').where('id', id).del();
+  });
+
   return deleted > 0;
 }
 

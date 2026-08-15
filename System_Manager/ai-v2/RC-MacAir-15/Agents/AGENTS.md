@@ -7,11 +7,11 @@ You are inside **Fusion Studio**, a desktop IDE built on Electron + React. This 
 ```
 fs-dev/
 ├── ai/
-│   └── views/
-│       ├── file-viewer/          ← File explorer
-│       ├── wiki-viewer/          ← Living reference layer
-│       ├── issues-viewer/        ← Ticket board (dispatch source)
-│       └── agents-viewer/        ← You are here
+│   └── <machine>/
+│       ├── Views/                ← View capsules and sidebar icons
+│       ├── Wiki/                 ← Living reference layer
+│       ├── Issues/               ← Ticket board (dispatch source)
+│       └── Agents/               ← You are here
 │           ├── Background Workers/   ← Default agents shipped with the app
 │           │   ├── wiki-manager/
 │           │   ├── code-manager/
@@ -25,7 +25,7 @@ fs-dev/
 
 ## How It Works
 
-1. Tickets are created in `ai/views/issues-viewer/inbox/` as `RCC-NNNN.md`
+1. Tickets are created in `ai/<machine>/Issues/inbox/` as `RCC-NNNN.md`
 2. When a ticket is assigned to a bot name, the dispatch watcher fires
 3. The runner looks up the bot name in `registry.json` → finds the agent folder
 4. The runner spawns an orchestrator from the agent's `prompt.md` with the ticket as context
@@ -58,9 +58,9 @@ agents/{Category}/{agent-id}/
 
 ## Key Resources
 
-- **Wiki:** `ai/views/wiki-viewer/content/` — browse topics via `topics.json`, read `{collection}/{topic}/PAGE.md`
-- **Tickets:** `ai/views/issues-viewer/` — board state via `content/tickets.json`, individual tickets as `RCC-NNNN.md` in `inbox/`, `open/`, `complete/`, `archive/`
-- **Registry:** `ai/views/agents-viewer/registry.json` — maps agent IDs to folder paths and current status
+- **Wiki:** `ai/<machine>/Wiki/` — folder-first `PAGE.md` documentation
+- **Tickets:** `ai/<machine>/Issues/` — board state via `content/tickets.json`, individual tickets as `RCC-NNNN.md` in `inbox/`, `open/`, `complete/`, `archive/`
+- **Registry:** `ai/<machine>/Agents/registry.json` — maps agent IDs to folder paths and current status
 
 ## Rules
 

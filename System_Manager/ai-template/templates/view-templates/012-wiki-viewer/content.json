@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "dataSource": "Wiki",
+  "root": {
+    "type": "workspace-relative",
+    "path": "ai/${machine}/Wiki"
+  },
+  "chat": {
+    "type": "rolling-daily",
+    "position": "popup"
+  }
+}

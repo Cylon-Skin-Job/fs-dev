@@ -87,7 +87,7 @@
 }
 
 .rv-chat-header-btn:focus-visible {
-  outline: 2px solid var(--theme-primary, #00d4ff);
+  outline: 2px solid var(--theme-primary, #39628e);
   outline-offset: 1px;
 }
 
@@ -382,10 +382,10 @@
 .rv-context-usage-bar-standalone .rv-context-usage-fill {
   width: var(--ctx-fill, 0%);
   height: 100%;
-  background: var(--accent-dim, var(--theme-primary, #00d4ff));
+  background: var(--accent-dim, var(--theme-primary, #39628e));
   border-radius: 999px;
   transition: width 0.3s ease;
-  box-shadow: 0 0 6px rgba(var(--theme-primary-rgb, 0, 212, 255), 0.5);
+  box-shadow: 0 0 6px rgba(var(--theme-primary-rgb, 57, 98, 142), 0.5);
 }
 
 /* Context usage token/percentage text */

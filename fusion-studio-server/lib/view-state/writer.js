@@ -4,11 +4,16 @@
  * For each leaf key in the patch:
  *   - If the per-view override file exists AND already has that key path,
  *     update the override file (override stays pinned).
+ *   - If the key is per-view runtime activity, update/create the per-view
+ *     override file.
  *   - Otherwise, update the workspace file.
  *
- * Invariant: the writer NEVER creates a per-view override file. Users do.
+ * Invariant: the writer only creates a per-view override file for explicitly
+ * view-owned runtime keys. Users still control ordinary override files.
  * Writes are atomic (tmp + rename).
  */
+
+const path = require('path');
 
 const {
   resolveViewState,
@@ -19,6 +24,22 @@ const {
   deepMerge,
   isPlainObject,
 } = require('./resolver');
+
+const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
+  'activity',
+  'collections',
+  'officeViewerMode',
+  'officeViewerCurrentFolder',
+  'officeViewerSelectedPath',
+  'officeDocumentSidePanel',
+  'officePaperBrightness',
+]);
+
+const writeQueues = new Map();
+
+function writeQueueKey(projectRoot, viewId) {
+  return `${path.resolve(projectRoot)}\0${viewId}`;
+}
 
 function hasKeyPath(obj, pathArr) {
   let cur = obj;
@@ -57,7 +78,7 @@ function* leafEntries(patch, prefix = []) {
   }
 }
 
-async function writeViewStatePatch(projectRoot, viewId, patch) {
+async function writeViewStatePatchNow(projectRoot, viewId, patch) {
   const wsFile       = workspacePath(projectRoot);
   const overrideFile = viewOverridePath(projectRoot, viewId);
 
@@ -72,7 +93,10 @@ async function writeViewStatePatch(projectRoot, viewId, patch) {
   let overrideTouched = false;
 
   for (const [keyPath, value] of leafEntries(patch)) {
-    if (overrideExists && hasKeyPath(overrideBefore, keyPath)) {
+    if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0])) {
+      setKeyPath(overrideUpdates, keyPath, value);
+      overrideTouched = true;
+    } else if (overrideExists && hasKeyPath(overrideBefore, keyPath)) {
       setKeyPath(overrideUpdates, keyPath, value);
       overrideTouched = true;
     } else {
@@ -86,14 +110,33 @@ async function writeViewStatePatch(projectRoot, viewId, patch) {
     await atomicWriteJson(wsFile, nextWorkspace);
   }
 
-  // Apply override updates ONLY if the override file already existed.
-  // The writer never creates it.
-  if (overrideTouched && overrideExists) {
-    const nextOverride = deepMerge(overrideBefore, overrideUpdates);
+  // Apply override updates. Runtime activity is explicitly per-view state, so
+  // it can create the override file even when no user override existed yet.
+  if (overrideTouched) {
+    const nextOverride = deepMerge(overrideBefore || {}, overrideUpdates);
     await atomicWriteJson(overrideFile, nextOverride);
   }
 
   return resolveViewState(projectRoot, viewId);
+}
+
+function writeViewStatePatch(projectRoot, viewId, patch) {
+  const key = writeQueueKey(projectRoot, viewId);
+  const previous = writeQueues.get(key) || Promise.resolve();
+  const operation = previous
+    .catch(() => undefined)
+    .then(() => writeViewStatePatchNow(projectRoot, viewId, patch));
+
+  writeQueues.set(key, operation);
+  operation
+    .finally(() => {
+      if (writeQueues.get(key) === operation) {
+        writeQueues.delete(key);
+      }
+    })
+    .catch(() => undefined);
+
+  return operation;
 }
 
 module.exports = {

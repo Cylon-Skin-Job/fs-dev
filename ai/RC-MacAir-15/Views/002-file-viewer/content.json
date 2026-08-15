@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "dataSource": "project-root",
+  "root": {
+    "type": "project-root"
+  },
+  "chat": {
+    "type": "threaded",
+    "position": "right"
+  }
+}

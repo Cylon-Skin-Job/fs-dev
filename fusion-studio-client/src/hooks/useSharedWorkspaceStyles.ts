@@ -1,12 +1,12 @@
 /**
  * @module useSharedWorkspaceStyles
  * @role Load workspace shared CSS (themes + components + views) and optional
- *       per-view layout CSS from ai/views over WebSocket.
+ *       per-view layout CSS from machine-scoped Views over WebSocket.
  *
  * - useSharedWorkspaceStyles(): loads themes + components + views globally
  *   (unscoped, since chat chrome applies app-wide). Call once from App.
- * - useViewLayoutStyles(panelId): loads optional ai/views/{panelId}/settings/layout.css
- *   + optional ai/views/{panelId}/settings/themes.css (per-view theme override)
+ * - useViewLayoutStyles(panelId): loads optional Views/{prefix}-{panelId}/styles/layout.css
+ *   + optional Views/{prefix}-{panelId}/styles/themes.css (per-view theme override)
  *   scoped to [data-panel="{panelId}"]. Silently no-ops on ENOENT/timeout.
  * - resetSharedStyles(): clears the shared-load guard + style tags so the next
  *   render reloads from a newly-switched workspace.
@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import {
   fetchPanelWorkspaceFile,
-  fetchViewsRootFile,
   fetchSettingsFile,
   SETTINGS_STYLES_THEMES,
   SETTINGS_STYLES_COMPONENTS,
@@ -37,7 +36,7 @@ export function injectWorkspaceStyles(styles: Record<string, string>): void {
     'components.css',
     'views.css',
     'file-viewer.css',
-    'doc-viewer.css',
+    'capture-viewer.css',
     'tints.css',
   ];
   for (const file of files) {
@@ -54,17 +53,17 @@ export function injectWorkspaceStyles(styles: Record<string, string>): void {
 }
 const VIEW_LAYOUT_STYLE_PREFIX = 'ws-view-layout-';
 
-const SHARED_LAYERS: { id: string; path: string; fetcher: 'settings' | 'views' }[] = [
+const SHARED_LAYERS: { id: string; path: string }[] = [
   // Load fallback defaults FIRST so theme + tint layers override them
-  { id: 'variables',   path: SETTINGS_STYLES_VARIABLES,   fetcher: 'settings' },
-  { id: 'themes',      path: SETTINGS_STYLES_THEMES,      fetcher: 'settings' },
-  { id: 'components',  path: SETTINGS_STYLES_COMPONENTS,  fetcher: 'settings' },
-  { id: 'views',       path: SETTINGS_STYLES_VIEWS,       fetcher: 'settings' },
+  { id: 'variables',   path: SETTINGS_STYLES_VARIABLES },
+  { id: 'themes',      path: SETTINGS_STYLES_THEMES },
+  { id: 'components',  path: SETTINGS_STYLES_COMPONENTS },
+  { id: 'views',       path: SETTINGS_STYLES_VIEWS },
   // Per-view chrome layers — global selectors keyed to a single view's classes.
-  // Live in ai/system/styles/ so colors stay out of per-view layout.css files.
-  { id: 'file-viewer', path: SETTINGS_STYLES_FILE_VIEWER, fetcher: 'settings' },
-  { id: 'doc-viewer',  path: SETTINGS_STYLES_DOC_VIEWER,  fetcher: 'settings' },
-  { id: 'tints',       path: SETTINGS_STYLES_TINTS,       fetcher: 'settings' },
+  // Live in ai/<machine>/System/styles/ so colors stay out of per-view layout.css files.
+  { id: 'file-viewer', path: SETTINGS_STYLES_FILE_VIEWER },
+  { id: 'capture-viewer',  path: SETTINGS_STYLES_DOC_VIEWER },
+  { id: 'tints',       path: SETTINGS_STYLES_TINTS },
 ];
 
 // Guard against repeat loads from multiple consumers on the same WS connection.
@@ -74,10 +73,7 @@ let loadGeneration = 0;
 function fetchAndInject(ws: WebSocket, generation: number): void {
   Promise.all(
     SHARED_LAYERS.map((layer) => {
-      if (layer.fetcher === 'settings') {
-        return fetchSettingsFile(ws, layer.path);
-      }
-      return fetchViewsRootFile(ws, layer.path);
+      return fetchSettingsFile(ws, layer.path);
     })
   )
     .then((contents) => {
@@ -120,8 +116,8 @@ export function useViewLayoutStyles(panelId: string) {
     const layoutStyleId = `${VIEW_LAYOUT_STYLE_PREFIX}${panelId}`;
     const themeStyleId = `${VIEW_LAYOUT_STYLE_PREFIX}${panelId}-theme`;
 
-    // settings/layout.css — structural per-view chrome, scoped.
-    fetchPanelWorkspaceFile(ws, panelId, 'settings/layout.css')
+    // styles/layout.css — structural per-view chrome, scoped.
+    fetchPanelWorkspaceFile(ws, panelId, 'styles/layout.css')
       .then((css) => {
         if (cancelled) return;
         const trimmed = css?.trim();
@@ -136,10 +132,10 @@ export function useViewLayoutStyles(panelId: string) {
         /* ENOENT / timeout — no layout.css for this view, that's fine */
       });
 
-    // settings/themes.css — optional per-view theme override. Same filename
+    // styles/themes.css — optional per-view theme override. Same filename
     // as the workspace theme file; scoped to [data-panel="<id>"] so the
     // workspace cascade remains the default and only this view sees it.
-    fetchPanelWorkspaceFile(ws, panelId, 'settings/themes.css')
+    fetchPanelWorkspaceFile(ws, panelId, 'styles/themes.css')
       .then((css) => {
         if (cancelled) return;
         const trimmed = css?.trim();
@@ -176,7 +172,8 @@ export function useViewLayoutStyles(panelId: string) {
         if (layout && Object.keys(layout).length > 0) {
           const store = usePanelStore.getState();
           const current = store.viewStates[panelId];
-          store.setViewState(panelId, { ...current, ...layout });
+          // This fetch can resolve after a local view-state change, so local state wins.
+          store.setViewState(panelId, { ...layout, ...current });
         }
       })
       .catch((err) => {

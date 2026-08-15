@@ -196,7 +196,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
           <HoverIconModalEmpty
             icon="image_not_supported"
             message="No screenshots found"
-            hint="ai/data/"
+            hint="ai/<machine>/Data/Screenshots"
           />
         ) : (
           <>

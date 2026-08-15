@@ -1,7 +1,7 @@
 /**
- * Issues View — Self-contained ticket board
+ * Issues View — custom/local HTML ticket board template
  *
- * Loads tickets from workspace ai/views/issues-viewer/ via fusion-studio://
+ * Loads tickets from the instantiated view folder via fusion-studio://
  * Renders Kanban columns: Inbox | Open | Completed
  * Consumes theme tokens and file-change events from shell via postMessage
  */

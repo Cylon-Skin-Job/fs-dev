@@ -27,7 +27,7 @@ function isBot(assignee: string): boolean {
 }
 
 function ticketFolder(ticket: Ticket): string {
-  if (ticket.state === 'closed') return 'done';
+  if (ticket.state === 'closed') return 'closed';
   return isBot(ticket.assignee) ? 'open' : 'inbox';
 }
 
@@ -169,7 +169,7 @@ export function TicketBoard() {
 
   usePanelData({
     panel: 'issues-viewer',
-    indexPath: 'tickets.json',
+    indexPath: 'content/tickets.json',
     onIndex,
     onError,
   });

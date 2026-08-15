@@ -1,0 +1,32 @@
+{
+  "widths": {
+    "leftSidebar": 277.30859375,
+    "leftChat": 413.48046875,
+    "rightSecondary": 413.44921875,
+    "rightCol": 285.0078125
+  },
+  "collapsed": {
+    "leftSidebar": true,
+    "leftChat": false
+  },
+  "popup": {
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
+    "height": 520,
+    "threadId": null
+  },
+  "currentThreadId": "2026-07-20T04-35-32-567",
+  "secondaryThreadId": null,
+  "docViewerMode": "active",
+  "docViewerActiveSelectedPath": "021-Project_Vision/CAPTURE.md",
+  "docViewerArchiveSelectedPath": null,
+  "docViewerActiveGridScroll": 4097,
+  "docViewerArchiveGridScroll": 0,
+  "docViewerActiveDocScroll": 0,
+  "docViewerArchiveDocScroll": 65,
+  "workspace": {
+    "currentPanel": "capture-viewer"
+  }
+}

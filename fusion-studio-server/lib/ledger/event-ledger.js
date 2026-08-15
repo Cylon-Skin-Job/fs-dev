@@ -25,30 +25,11 @@ function isRecordedEventType(type) {
 }
 
 async function getMachineIdentity(db) {
-  const rows = await db('system_config')
-    .whereIn('key', ['local_machine_identity', 'local_machine_name']);
-  const byKey = new Map(rows.map((row) => [row.key, row.value]));
-  const machineName = byKey.get('local_machine_name') || null;
-  const rawIdentity = byKey.get('local_machine_identity');
-
-  if (rawIdentity) {
-    try {
-      const identity = JSON.parse(rawIdentity);
-      return {
-        machineId: identity.machineId || identity.machine_id || null,
-        machineName: identity.givenName || identity.machineName || identity.machine_name || machineName,
-      };
-    } catch {
-      return {
-        machineId: null,
-        machineName,
-      };
-    }
-  }
+  const row = await db('system_config').where('key', 'local_machine_name').first();
 
   return {
     machineId: null,
-    machineName,
+    machineName: row?.value || null,
   };
 }
 

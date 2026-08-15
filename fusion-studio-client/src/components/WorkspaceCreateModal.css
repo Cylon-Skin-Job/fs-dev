@@ -127,14 +127,13 @@
 
 .rv-create-modal-view-option {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: var(--space-xs, 6px);
   padding: var(--space-sm, 8px);
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--radius-md, 6px);
   background: var(--glass-xs, rgba(255, 255, 255, 0.03));
-  cursor: pointer;
 }
 
 .rv-create-modal-view-option .material-symbols-outlined {
@@ -151,7 +150,7 @@
 }
 
 .rv-create-modal-view-meta {
-  grid-column: 3;
+  grid-column: 2;
   color: var(--text-dim, rgba(255, 255, 255, 0.5));
   font-size: var(--font-xxs, 11px);
 }

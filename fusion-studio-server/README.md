@@ -32,7 +32,7 @@ Run commands from `fusion-studio-server/`.
 
 The current thread/harness system is documented in:
 
-`../ai/views/wiki-viewer/Wiki/001-Project/002-Chat/PAGE.md`
+`../ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md`
 
 Important current behavior:
 

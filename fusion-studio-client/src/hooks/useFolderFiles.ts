@@ -14,17 +14,25 @@ import { useFileDataStore, type FileNode, type FileWithContent } from '../state/
 
 const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp']);
 
+interface UseFolderFilesOptions {
+  enabled?: boolean;
+}
+
 function isImageFile(name: string): boolean {
   const ext = name.split('.').pop()?.toLowerCase() || '';
   return IMAGE_EXTENSIONS.has(ext);
 }
 
-export function useFolderFiles(panel: string, folder: string): {
+export function useFolderFiles(panel: string, folder: string, options: UseFolderFilesOptions = {}): {
   files: FileWithContent[];
   loading: boolean;
 } {
+  const enabled = options.enabled ?? true;
+  const generation = useFileDataStore((s) => s.generation);
   const trees = useFileDataStore((s) => s.trees);
   const contents = useFileDataStore((s) => s.contents);
+  const contentMetadata = useFileDataStore((s) => s.contentMetadata);
+  const contentErrors = useFileDataStore((s) => s.contentErrors);
   const requestTree = useFileDataStore((s) => s.requestTree);
   const requestContent = useFileDataStore((s) => s.requestContent);
 
@@ -33,21 +41,24 @@ export function useFolderFiles(panel: string, folder: string): {
 
   // Request tree if not cached
   useEffect(() => {
+    if (!enabled) return;
     requestTree(panel, folder);
-  }, [panel, folder, requestTree]);
+  }, [enabled, panel, folder, generation, requestTree]);
 
   // Once tree arrives, request content for text files
   useEffect(() => {
+    if (!enabled) return;
     if (!nodes) return;
     for (const node of nodes) {
       if (node.type !== 'file' || node.name.startsWith('.')) continue;
       if (isImageFile(node.name)) continue;
       requestContent(panel, node.path);
     }
-  }, [nodes, panel, requestContent]);
+  }, [enabled, nodes, panel, requestContent]);
 
   // Build the files array from cache
   return useMemo(() => {
+    if (!enabled) return { files: [], loading: false };
     if (!nodes) return { files: [], loading: true };
 
     const fileNodes = nodes.filter(
@@ -63,10 +74,10 @@ export function useFolderFiles(panel: string, folder: string): {
       } else {
         const key = `${panel}:${node.path}`;
         const content = contents[key];
-        if (content === undefined) {
+        if (content === undefined && contentErrors[key] === undefined) {
           allLoaded = false;
         } else {
-          files.push({ ...node, content });
+          files.push({ ...node, ...contentMetadata[key], content: content ?? '' });
         }
       }
     }
@@ -76,5 +87,5 @@ export function useFolderFiles(panel: string, folder: string): {
     files.sort((a, b) => b.name.localeCompare(a.name));
 
     return { files, loading: !allLoaded };
-  }, [nodes, contents, panel]);
+  }, [enabled, nodes, contents, contentErrors, contentMetadata, panel]);
 }

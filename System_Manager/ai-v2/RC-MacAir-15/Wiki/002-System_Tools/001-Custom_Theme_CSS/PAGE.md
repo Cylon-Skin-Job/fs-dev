@@ -15,7 +15,7 @@ brand alignment, or anything the sliders can't express.
 ## What the sliders actually do
 
 The picker exposes five slider groups. They all write to the active theme in
-`ai/settings/themes.json` and trigger a regeneration of `ai/settings/themes.css`
+`ai/<machine>/System/styles/themes.json` and trigger a regeneration of `ai/<machine>/System/styles/themes.css`
 on the server. The generator is in `open-robin-server/lib/theme/`.
 
 | Group (picker label) | Sliders / toggles | Variables emitted |
@@ -47,7 +47,7 @@ without waiting for the round trip.
 ## How CSS reaches the browser
 
 `useSharedWorkspaceStyles` in the client loads a fixed sequence of files
-from `ai/settings/` over WebSocket and injects them into `<head>`. Order is
+from `ai/<machine>/System/styles/` over WebSocket and injects them into `<head>`. Order is
 load-bearing — later layers can override earlier ones:
 
 1. `variables.css` — fallback defaults for every theme variable.
@@ -68,7 +68,7 @@ earlier files for the same selector + property.
 The user has a specific palette in mind. They don't want to fight the slider
 math. The clean workflow:
 
-### 1. Author a new CSS file under `ai/settings/`
+### 1. Author a new CSS file under `ai/<machine>/System/styles/`
 
 Name it after the intent — `custom-noir.css`, `user-warm.css`, etc. Two valid
 shapes, both supported:
@@ -77,7 +77,7 @@ shapes, both supported:
 existing `views.css`, `tints.css`, etc. consume your variables.
 
 ```css
-/* ai/settings/custom-noir.css — example */
+/* ai/<machine>/System/styles/custom-noir.css — example */
 :root {
   --bg-solid:           #0a0a0a;
   --bg-primary:         #0a0a0a;
@@ -130,7 +130,7 @@ place it BEFORE `tints.css` so tint toggles still apply on top.
 ### 3. Archive the file the user is replacing (manual step today)
 
 If the user is swapping in a custom theme to replace an existing one:
-move the prior file into an `ai/settings/_archive/` folder with a date
+move the prior file into an `ai/<machine>/System/styles/_archive/` folder with a date
 suffix. Example: `themes.css` (when replaced wholesale) becomes
 `_archive/themes.2026-05-03.css`. The loader doesn't load `_archive/`,
 so the file is preserved without affecting the cascade. **Today this is
@@ -152,7 +152,7 @@ Two things happen:
   `theme-handlers.ts` catches it and calls `reloadThemesLayer`, which atomically
   swaps just the `themes.css` `<style>` tag. Other layers (variables, components,
   views, file-viewer, doc-viewer, tints, anything you added) stay mounted.
-- **File drops in `ai/settings/`** are *not* watched today. The loader fetches
+- **File drops in `ai/<machine>/System/styles/`** are *not* watched today. The loader fetches
   each layer once per workspace switch. Adding a new file requires either
   registering it in `SHARED_LAYERS` (so it joins the next reload) and refreshing,
   or hot-swapping a file the loader already knows about (themes/variables/views/
@@ -166,7 +166,7 @@ These are open items relevant to this workflow. Wire them up when you get
 asked, or surface them when the user expresses pain that one of these would
 have prevented.
 
-- [ ] **Hot-reload on settings file drop.** Watch `ai/settings/` (server-side
+- [ ] **Hot-reload on settings file drop.** Watch `ai/<machine>/System/styles/` (server-side
       `chokidar` or fs.watch); on change, push a `settings:reloaded` WS message
       keyed to the changed file, and have the client re-fetch + atomically swap
       the corresponding `<style>` tag (mirror what `reloadThemesLayer` does for
@@ -174,7 +174,7 @@ have prevented.
       message and append a new layer dynamically.
 - [ ] **Auto-archive for replaced settings files.** When a settings file is
       written or replaced (whether by the slider system or a user/agent edit),
-      move the prior version to `ai/settings/_archive/<name>.<ISO-date>.css`.
+      move the prior version to `ai/<machine>/System/styles/_archive/<name>.<ISO-date>.css`.
       Simple versioning: keep last N versions per file (default N=5), oldest
       auto-pruned. Surface the archive in the UI as "previous theme files"
       so the user can roll back without touching the filesystem. The

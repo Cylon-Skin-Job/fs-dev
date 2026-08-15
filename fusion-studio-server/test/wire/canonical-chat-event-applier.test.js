@@ -11,7 +11,6 @@ describe('CanonicalChatEventApplier', () => {
   let session;
   let emittedEvents;
   let touchCount;
-  let persistCalls;
   let applier;
   let mockWs;
   let turnIdCounter;
@@ -30,6 +29,13 @@ describe('CanonicalChatEventApplier', () => {
       tokenUsage: null,
       messageId: null,
       planMode: false,
+      projectRoot: '/tmp/project',
+      wire: {
+        killed: false,
+        kill() {
+          this.killed = true;
+        },
+      },
     };
   }
 
@@ -48,12 +54,9 @@ describe('CanonicalChatEventApplier', () => {
     touchCount++;
   }
 
-  async function persistAssistantMessage(ws, content, hasToolCalls, metadata, explicitThreadId) {
-    persistCalls.push({ ws, content, hasToolCalls, metadata, explicitThreadId });
-  }
-
   function checkSettingsBounce(toolName, args) {
-    if (toolName === 'write' && args.file_path?.startsWith('settings/')) {
+    const filePath = args.file_path || args.filePath || args.path;
+    if (toolName === 'write' && filePath?.startsWith('settings/')) {
       return { message: 'Write to settings/ is not allowed' };
     }
     return null;
@@ -69,7 +72,6 @@ describe('CanonicalChatEventApplier', () => {
     session = makeSession();
     emittedEvents = [];
     touchCount = 0;
-    persistCalls = [];
     turnIdCounter = 0;
     mockWs = { readyState: 1 };
 
@@ -78,7 +80,6 @@ describe('CanonicalChatEventApplier', () => {
       emit,
       resolveWorkspace,
       touchThreadSession,
-      persistAssistantMessage,
       checkSettingsBounce,
       generateTurnId,
     });
@@ -429,7 +430,7 @@ describe('CanonicalChatEventApplier', () => {
       expect(event.payload.toolStatus).toBeUndefined();
     });
 
-    test('bounced tool_result emits system:tool_bounced and error chat:tool_result', () => {
+    test('bounced tool args emit system:tool_bounced and error chat:tool_result before tool_result', () => {
       // Re-setup with a settings write
       session.assistantParts = [];
       session.toolArgs = {};
@@ -441,12 +442,39 @@ describe('CanonicalChatEventApplier', () => {
         type: 'tool_call_args',
         payload: { toolCallId: 'tc-2', argsChunk: '{"file_path": "settings/config.json"}' }
       }, mockWs);
+
+      const bounced = emittedEvents.find(e => e.type === 'system:tool_bounced');
+      expect(bounced).toBeDefined();
+      expect(bounced.payload.reason).toBe('Write to settings/ is not allowed');
+      expect(bounced.payload.phase).toBe('tool_args');
+      expect(session.wire.killed).toBe(true);
+
+      const toolResult = emittedEvents.find(e => e.type === 'chat:tool_result');
+      expect(toolResult).toBeDefined();
+      expect(toolResult.payload.scope).toBe('project');
+      expect(toolResult.payload.isError).toBe(true);
+      expect(toolResult.payload.toolOutput).toBe('Write to settings/ is not allowed');
+      expect(toolResult.payload.returnedDiff).toBe(false);
+      expect(toolResult.payload.enforcementPhase).toBe('tool_args');
+    });
+
+    test('later tool_result is ignored after a pre-execution bounce', () => {
+      session.assistantParts = [];
+      session.toolArgs = {};
+      applier.applyChatEvent({
+        type: 'tool_call',
+        payload: { toolCallId: 'tc-3', toolName: 'write' }
+      }, mockWs);
+      applier.applyChatEvent({
+        type: 'tool_call_args',
+        payload: { toolCallId: 'tc-3', argsChunk: '{"file_path": "settings/config.json"}' }
+      }, mockWs);
       emittedEvents = [];
 
       applier.applyChatEvent({
         type: 'tool_result',
         payload: {
-          toolCallId: 'tc-2',
+          toolCallId: 'tc-3',
           toolName: 'write',
           result: {
             output: 'would write',
@@ -457,16 +485,27 @@ describe('CanonicalChatEventApplier', () => {
         }
       }, mockWs);
 
+      expect(emittedEvents).toHaveLength(0);
+    });
+
+    test('pre-execution bounce handles camelCase filePath args', () => {
+      session.assistantParts = [];
+      session.toolArgs = {};
+      applier.applyChatEvent({
+        type: 'tool_call',
+        payload: { toolCallId: 'tc-4', toolName: 'write' }
+      }, mockWs);
+      emittedEvents = [];
+
+      applier.applyChatEvent({
+        type: 'tool_call_args',
+        payload: { toolCallId: 'tc-4', argsChunk: '{"filePath": "settings/config.json"}' }
+      }, mockWs);
+
       const bounced = emittedEvents.find(e => e.type === 'system:tool_bounced');
       expect(bounced).toBeDefined();
-      expect(bounced.payload.reason).toBe('Write to settings/ is not allowed');
-
-      const toolResult = emittedEvents.find(e => e.type === 'chat:tool_result');
-      expect(toolResult).toBeDefined();
-      expect(toolResult.payload.scope).toBe('project');
-      expect(toolResult.payload.isError).toBe(true);
-      expect(toolResult.payload.toolOutput).toBe('Write to settings/ is not allowed');
-      expect(toolResult.payload.returnedDiff).toBe(false);
+      expect(bounced.payload.filePath).toBe('settings/config.json');
+      expect(session.wire.killed).toBe(true);
     });
   });
 
@@ -555,7 +594,7 @@ describe('CanonicalChatEventApplier', () => {
       emittedEvents = [];
     });
 
-    test('calls assistant-message persistence, emits chat:turn_end with parts, then resets turn state', async () => {
+    test('emits chat:turn_end with parts, then resets turn state', async () => {
       // Set some metadata via status_update
       applier.applyChatEvent({
         type: 'status_update',
@@ -569,23 +608,6 @@ describe('CanonicalChatEventApplier', () => {
       emittedEvents = [];
 
       await applier.applyChatEvent({ type: 'turn_end', payload: {} }, mockWs);
-
-      // Persistence called
-      expect(persistCalls).toHaveLength(1);
-      expect(persistCalls[0]).toMatchObject({
-        ws: mockWs,
-        content: 'Hello',
-        hasToolCalls: false,
-        explicitThreadId: 'thread-1'
-      });
-      expect(persistCalls[0].metadata).toMatchObject({
-        contextUsage: 10,
-        tokenUsage: { output: 5 },
-        messageId: 'msg-end',
-        planMode: false,
-        reason: 'complete',
-        partial: false
-      });
 
       // Event emitted
       const event = emittedEvents.find(e => e.type === 'chat:turn_end');
@@ -625,7 +647,6 @@ describe('CanonicalChatEventApplier', () => {
       session.currentTurn = null;
       await applier.applyChatEvent({ type: 'turn_end', payload: {} }, mockWs);
 
-      expect(persistCalls).toHaveLength(0);
       expect(emittedEvents.filter(e => e.type === 'chat:turn_end')).toHaveLength(0);
     });
 
@@ -634,14 +655,6 @@ describe('CanonicalChatEventApplier', () => {
         type: 'turn_end',
         payload: { reason: 'interrupted', partial: true },
       }, mockWs);
-
-      expect(persistCalls).toHaveLength(1);
-      expect(persistCalls[0].content).toBe('Hello');
-      expect(persistCalls[0].explicitThreadId).toBe('thread-1');
-      expect(persistCalls[0].metadata).toMatchObject({
-        reason: 'interrupted',
-        partial: true,
-      });
 
       const event = emittedEvents.find(e => e.type === 'chat:turn_end');
       expect(event.payload).toMatchObject({
@@ -662,7 +675,7 @@ describe('CanonicalChatEventApplier', () => {
       expect(liveTurn.status).toBe('interrupted');
     });
 
-    test('Runtime-1R: persists to session.currentThreadId even after passive browse changes selection state', async () => {
+    test('Runtime-1R: emits session.currentThreadId even after passive browse changes selection state', async () => {
       // Simulate: thread A is in flight
       session.currentThreadId = 'thread-A';
       applier.applyChatEvent({ type: 'turn_begin', payload: { userInput: 'Hello A' } }, mockWs);
@@ -671,14 +684,8 @@ describe('CanonicalChatEventApplier', () => {
 
       // Simulate passive browse to B: the wsState selection changes, but
       // session.currentThreadId (the wire's identity) stays A.
-      // In the old code, addAssistantMessage would read wsState and hit B.
-      // With the fix, handleTurnEnd captures session.currentThreadId explicitly.
+      // handleTurnEnd must emit the in-flight thread identity.
       await applier.applyChatEvent({ type: 'turn_end', payload: {} }, mockWs);
-
-      // Persistence must receive the in-flight thread identity explicitly
-      expect(persistCalls).toHaveLength(1);
-      expect(persistCalls[0].explicitThreadId).toBe('thread-A');
-      expect(persistCalls[0].content).toBe('Reply from A');
 
       // Emitted event must carry the same captured identity
       const event = emittedEvents.find(e => e.type === 'chat:turn_end');
@@ -686,27 +693,21 @@ describe('CanonicalChatEventApplier', () => {
       expect(event.payload.threadId).toBe('thread-A');
     });
 
-    test('emits turn_end and resets even when assistant-message persistence rejects', async () => {
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    test('emits turn_end and resets without an assistant-message persistence dependency', async () => {
       applier = createCanonicalChatEventApplier({
         session,
         emit,
         resolveWorkspace,
         touchThreadSession,
-        persistAssistantMessage: () => Promise.reject(new Error('persist failed')),
         checkSettingsBounce,
         generateTurnId,
       });
 
       applier.applyChatEvent({ type: 'turn_end', payload: {} }, mockWs);
-      await Promise.resolve();
 
       expect(emittedEvents.some(e => e.type === 'chat:turn_end')).toBe(true);
       expect(session.currentTurn).toBeNull();
       expect(session.assistantParts).toEqual([]);
-      expect(consoleSpy).toHaveBeenCalled();
-
-      consoleSpy.mockRestore();
     });
   });
 

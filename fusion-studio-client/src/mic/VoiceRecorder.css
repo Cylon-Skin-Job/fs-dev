@@ -62,7 +62,7 @@
 
 .rv-voice-recorder__ring-fill {
   fill: none;
-  stroke: var(--theme-primary, #00d4ff);
+  stroke: var(--theme-primary, #39628e);
   stroke-width: 4;
   stroke-linecap: round;
 }
@@ -80,7 +80,7 @@
 
 .rv-voice-recorder__kitt-bar {
   width: 8px;
-  background: var(--theme-primary, #00d4ff);
+  background: var(--theme-primary, #39628e);
   border-radius: var(--radius-sm, 2px);
   transition: height 0.05s ease-out;
   min-height: 4px;

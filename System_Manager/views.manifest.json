@@ -58,12 +58,12 @@
       "templatePath": "view-templates/optional/todo/ai/system/views/todo"
     },
     {
-      "id": "doc-viewer",
-      "label": "Doc Viewer",
+      "id": "capture-viewer",
+      "label": "Capture Viewer",
       "group": "optional",
       "status": "active-development",
       "icon": "description",
-      "templatePath": "view-templates/optional/doc-viewer/ai/system/views/doc-viewer"
+      "templatePath": "view-templates/optional/capture-viewer/ai/system/views/capture-viewer"
     },
     {
       "id": "office-viewer",

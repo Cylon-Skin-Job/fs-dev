@@ -1,8 +1,8 @@
 /**
  * CLI-config file loaders (CLI_CONFIG_SPEC §7b).
  *
- * Reads `ai/system/config/cli.json` (workspace policy) and
- * `ai/views/<viewId>/settings/cli.json` (per-view display overrides).
+ * Reads `ai/<machine>/System/config/cli.json` (workspace policy) and
+ * `ai/<machine>/Views/<prefix>-<viewId>/state/cli.json` (per-view display overrides).
  * Missing or malformed files return `{}`; the resolver maps empty workspace
  * policy to OpenCode-only.
  */
@@ -38,7 +38,21 @@ function workspacePath(projectRoot) {
 }
 
 function viewPath(projectRoot, viewId) {
-  return path.join(projectRoot, 'ai', 'views', viewId, 'settings', 'cli.json');
+  const viewFolder = findV2ViewFolder(projectRoot, viewId);
+  return path.join(viewFolder || aiPaths.getMachineViewsRoot(projectRoot), 'state', 'cli.json');
+}
+
+function findV2ViewFolder(projectRoot, viewId) {
+  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  try {
+    const entries = require('fs').readdirSync(viewsRoot, { withFileTypes: true });
+    const match = entries.find((entry) => entry.isDirectory() && (
+      entry.name === viewId || entry.name.endsWith(`-${viewId}`)
+    ));
+    return match ? path.join(viewsRoot, match.name) : null;
+  } catch {
+    return null;
+  }
 }
 
 async function readJsonOrEmpty(filePath, label) {

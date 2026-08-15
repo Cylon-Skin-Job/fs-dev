@@ -69,7 +69,7 @@ export const FILE_ICONS: Record<string, string> = {
   bat: 'terminal',
   cmd: 'terminal',
 
-  // Docs
+  // Documents
   md: 'description',
   mdx: 'description',
   txt: 'text_snippet',
@@ -155,4 +155,3 @@ export function getFileIcon(extension?: string, filename?: string): string {
 export function formatNodeName(name: string): string {
   return name;
 }
-

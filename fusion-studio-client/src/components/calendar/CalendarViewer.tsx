@@ -13,7 +13,7 @@ export const CalendarViewer: React.FC = () => {
   const selectedDate = useCalendarStore((s) => s.selectedDate);
   const permissionDenied = useCalendarStore((s) => s.permissionDenied);
   const error = useCalendarStore((s) => s.error);
-  const fetchCalendars = useCalendarStore((s) => s.fetchCalendars);
+  const loadDemoData = useCalendarStore((s) => s.loadDemoData);
   const setSelectedDate = useCalendarStore((s) => s.setSelectedDate);
   const toggleCalendarEnabled = useCalendarStore((s) => s.toggleCalendarEnabled);
   const createEvent = useCalendarStore((s) => s.createEvent);
@@ -26,7 +26,7 @@ export const CalendarViewer: React.FC = () => {
   const [modalDate, setModalDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
-    fetchCalendars();
+    loadDemoData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

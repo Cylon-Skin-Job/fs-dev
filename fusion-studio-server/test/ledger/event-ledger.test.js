@@ -31,15 +31,6 @@ async function setupDb() {
       value: 'RC-MacAir-15',
       updated_at: Date.now(),
     },
-    {
-      key: 'local_machine_identity',
-      value: JSON.stringify({
-        machineId: 'machine-test-1',
-        givenName: 'RC-MacAir-15',
-        slug: 'RC-MacAir-15',
-      }),
-      updated_at: Date.now(),
-    },
   ]);
   return db;
 }
@@ -78,7 +69,7 @@ describe('event ledger', () => {
     const row = await db('event_log').where({ event_id: result.eventId }).first();
     expect(row.event_type).toBe('workspace:switched');
     expect(row.workspace_id).toBe('new-workspace');
-    expect(row.machine_id).toBe('machine-test-1');
+    expect(row.machine_id).toBeNull();
     expect(row.machine_name).toBe('RC-MacAir-15');
     expect(row.summary).toBe('Workspace switched from old-workspace to new-workspace');
 
@@ -107,7 +98,7 @@ describe('event ledger', () => {
     expect(edge.resource_type).toBe('file');
     expect(edge.resource_id).toBe('docs/example.md');
     expect(edge.workspace_id).toBe('fs-dev');
-    expect(edge.machine_id).toBe('machine-test-1');
+    expect(edge.machine_id).toBeNull();
     expect(edge.path).toBe('docs/example.md');
 
     const row = await db('event_log').where({ event_id: result.eventId }).first();

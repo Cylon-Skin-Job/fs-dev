@@ -6,25 +6,70 @@ export type SendEmailResult =
   | { success: true }
   | { success: false; error: string };
 
+export interface OfficeTableOutputDescriptor {
+  markdownSha256: string;
+  tables: Array<{
+    tableIndex: number;
+    sourceSha256: string;
+    logicalWidth: number;
+    columns: number[] | null;
+    overflow: 'overflow' | 'truncate' | 'newline';
+    titleRow: boolean;
+    borderWidth: 1 | 2 | 3 | 4;
+    borderColor: `#${string}` | null | 'default';
+  }>;
+}
+
+export type OfficePresentationMode = {
+  presentationMode: 'office-tables';
+  tablePresentation: OfficeTableOutputDescriptor;
+};
+
+export type ExportDocumentPayload = {
+  sourceType: 'document' | 'html-artifact' | 'spreadsheet';
+  sourceFormat: 'markdown' | 'html' | 'csv';
+  format: 'docx' | 'pdf';
+  content: string;
+  filename: string;
+} | ({
+  sourceType: 'document';
+  sourceFormat: 'markdown';
+  format: 'docx' | 'pdf';
+  content: string;
+  filename: string;
+} & OfficePresentationMode);
+
+export type SendDocumentEmailPayload = {
+  format: 'docx' | 'pdf' | 'markdown';
+  content: string;
+  filename: string;
+} | ({
+  format: 'docx' | 'pdf';
+  content: string;
+  filename: string;
+} & OfficePresentationMode);
+
+export type PrintDocumentPayload = {
+  content: string;
+  filename: string;
+} | ({
+  content: string;
+  filename: string;
+} & OfficePresentationMode);
+
 export interface ElectronAPI {
   capturePage: () => Promise<string | null>;
-  captureRect: (rect: { x: number; y: number; width: number; height: number }) => Promise<string | null>;
-  exportDocument: (payload: {
-    sourceType: 'document' | 'html-artifact' | 'spreadsheet';
-    sourceFormat: 'markdown' | 'html' | 'csv';
-    format: 'docx' | 'pdf';
-    content: string;
-    filename: string;
-  }) => Promise<ExportDocumentResult>;
-  sendDocumentEmail: (payload: {
-    format: 'docx' | 'pdf' | 'markdown';
-    content: string;
-    filename: string;
-  }) => Promise<SendEmailResult>;
-  printDocument: (payload: {
-    content: string;
-    filename: string;
-  }) => Promise<{ success: boolean; error?: string }>;
+  captureRect: (rect: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    maxWidth?: number;
+    maxHeight?: number;
+  }) => Promise<string | null>;
+  exportDocument: (payload: ExportDocumentPayload) => Promise<ExportDocumentResult>;
+  sendDocumentEmail: (payload: SendDocumentEmailPayload) => Promise<SendEmailResult>;
+  printDocument: (payload: PrintDocumentPayload) => Promise<{ success: boolean; error?: string }>;
   showEmojiPanel: () => Promise<{ success: boolean; error?: string }>;
   listCalendars: () => Promise<{ success: boolean; calendars?: Array<{ id: string; name: string; color: string; account: string }>; error?: string }>;
   listEvents: (payload: { startDate: string; endDate: string }) => Promise<{ success: boolean; events?: Array<{ uid: string; title: string; startDate: string; endDate: string; allDay: boolean; calendar: string; location?: string; notes?: string }>; error?: string }>;

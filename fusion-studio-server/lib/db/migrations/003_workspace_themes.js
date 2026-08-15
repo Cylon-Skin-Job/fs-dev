@@ -94,7 +94,7 @@ exports.up = async function (knex) {
   await knex('workspaces').insert([
     { id: 'system',         label: 'System',          icon: 'settings',        description: 'System-level theme baseline',            sort_order: 0 },
     { id: 'chat',           label: 'Chat',            icon: 'chat',            description: 'Conversational workspace',                sort_order: 1 },
-    { id: 'home-office',    label: 'Home Office',     icon: 'home',            description: 'Docs, sheets, email, calendar',           sort_order: 2 },
+    { id: 'home-office',    label: 'Home Office',     icon: 'home',            description: 'Documents, sheets, email, calendar',      sort_order: 2 },
     { id: 'bookkeeping',    label: 'Bookkeeping App', icon: 'account_balance', description: 'Financial tracking and reporting',        sort_order: 3 },
     { id: 'media-center',   label: 'Media Center',    icon: 'play_circle',     description: 'Media library and playback',              sort_order: 4 },
     { id: 'code-editor',    label: 'Code Editor',     icon: 'code',            description: 'Development environment',                 sort_order: 5 },
@@ -134,7 +134,7 @@ Choose from eight curated accent colors, or type in any hex value. The system au
 
 For advanced customization beyond the color picker, you can edit the CSS file directly:
 
-\`ai/views/settings/themes.css\`
+\`ai/<machine>/System/styles/themes.css\`
 
 This gives you full control over every visual variable. After editing, come back to this panel and click Apply to save your changes. This ensures your edits are preserved in the system database and won't be lost if you switch themes later.
 
@@ -146,9 +146,9 @@ This gives you full control over every visual variable. After editing, come back
 
 ## Per-view overrides
 
-Individual views within a workspace can have their own accent color too. Each view folder has three siblings — \`chat/\`, \`content/\`, and \`settings/\`. Drop a \`themes.css\` file into the view's settings folder:
+Individual views within a workspace can have their own accent color too. Drop a \`themes.css\` file into the view capsule's styles folder:
 
-\`ai/views/{viewer-name}/settings/themes.css\`
+\`ai/<machine>/Views/{view-folder}/styles/themes.css\`
 
 This overrides the workspace theme for just that view. You only need to include the variables you want to change — everything else flows down from the workspace, which flows down from the system.
 
@@ -157,7 +157,7 @@ The full cascade is: **System → Workspace → View**. Each level only override
 ## What stays consistent
 
 The Fusion Studio system panel always uses the system theme. It never inherits workspace colors. This keeps the "control room" visually stable regardless of which workspace you're in.`,
-    context: 'Theme system: one accent color + one brightness preset = full visual identity. System theme stored in SQLite (system_theme table). Per-workspace overrides stored in workspace_themes table. Filesystem CSS at ai/views/settings/themes.css is a propagated copy, not source of truth. Three states per workspace: inheriting (matches system), custom (matches workspace_themes), diverged (hand-edited, matches neither). Apply button absorbs hand-edited CSS back into SQLite. Toggle preserves custom CSS in SQLite even when set to inherit.',
+    context: 'Theme system: one accent color + one brightness preset = full visual identity. System theme stored in SQLite (system_theme table). Per-workspace overrides stored in workspace_themes table. Filesystem CSS at ai/<machine>/System/styles/themes.css is a propagated copy, not source of truth. Three states per workspace: inheriting (matches system), custom (matches workspace_themes), diverged (hand-edited, matches neither). Apply button absorbs hand-edited CSS back into SQLite. Toggle preserves custom CSS in SQLite even when set to inherit.',
     tab: 'customization',
     description: 'Theme system, color picker, workspace overrides, and hand-editing CSS',
     surface_when: 'User asks about colors, themes, dark mode, customization, or visual appearance',

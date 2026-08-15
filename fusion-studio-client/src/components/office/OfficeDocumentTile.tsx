@@ -1,16 +1,18 @@
 /**
  * @module OfficeDocumentTile
- * @role Document thumbnail for markdown files in the office-viewer panel
+ * @role Document thumbnail card for files in the office-viewer panel
  *
- * Renders .md files as scaled-down document page previews using markdownToHtml.
- * Non-markdown files delegate to the shared DocumentTile (CodeView preview).
- *
- * This component is office-viewer specific; doc-viewer continues to use DocumentTile.
+ * Renders Office's Drive-style file card shell. Markdown uses saved
+ * screenshot thumbnails, images use their source preview, and other files use
+ * CodeView inside the same frame.
  */
 
-import { useMemo, useRef, useState, useEffect } from 'react';
-import { markdownToHtml } from '../../lib/transforms';
-import { DocumentTile } from '../tile-row/DocumentTile';
+import { useEffect, useMemo, useState } from 'react';
+import { getPanelFileUrl } from '../../lib/panels';
+import { officeDocumentPath, officeThumbnailPath, thumbnailCacheKey } from '../../lib/officeThumbnails';
+import { useOfficeThumbnailStore } from '../../state/officeThumbnailStore';
+import { CodeView } from '../CodeView';
+import { IMAGE_EXTENSIONS } from '../tile-row/documentTileUtils';
 import './OfficeDocumentTile.css';
 
 interface OfficeDocumentTileProps {
@@ -20,83 +22,138 @@ interface OfficeDocumentTileProps {
   panel?: string;
   folderPath?: string;
   onClick?: () => void;
+  onContextMenu?: (e: React.MouseEvent) => void;
+  onMoreClick?: (e: React.MouseEvent) => void;
   active?: boolean;
   highlighted?: boolean;
+  starred?: boolean;
   size?: 'default' | 'small';
 }
 
-const BASE_DOCUMENT_WIDTH = 800;
+const ICON_MAP: Record<string, string> = {
+  md: 'description',
+  markdown: 'description',
+  html: 'html',
+  json: 'data_object',
+  js: 'javascript',
+  ts: 'javascript',
+  css: 'css',
+  txt: 'text_snippet',
+  png: 'image',
+  jpg: 'image',
+  jpeg: 'image',
+  svg: 'image',
+  pdf: 'picture_as_pdf',
+};
 
 export function OfficeDocumentTile(props: OfficeDocumentTileProps) {
   const ext = props.extension || props.name.split('.').pop()?.toLowerCase() || '';
+  const icon = ICON_MAP[ext] || 'draft';
+  const isMarkdown = ext === 'md' || ext === 'markdown';
+  const isImage = IMAGE_EXTENSIONS.has(ext);
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
 
-  // Non-markdown files fall back to the existing code tile
-  if (ext !== 'md' && ext !== 'markdown') {
-    return <DocumentTile {...props} />;
-  }
-
-  return <MarkdownOfficeDocumentTile {...props} />;
-}
-
-function MarkdownOfficeDocumentTile(props: OfficeDocumentTileProps) {
-  const previewRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-
-  // Observe preview container size and compute scale factor
-  useEffect(() => {
-    const el = previewRef.current;
-    if (!el) return;
-
-    const updateScale = () => {
-      const width = el.clientWidth;
-      if (width > 0) {
-        setScale(width / BASE_DOCUMENT_WIDTH);
-      }
-    };
-
-    updateScale();
-
-    if (typeof ResizeObserver !== 'undefined') {
-      const ro = new ResizeObserver(() => updateScale());
-      ro.observe(el);
-      return () => ro.disconnect();
-    }
-
-    // Fallback: recompute on window resize
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, []);
-
-  // Truncate and convert markdown to HTML
-  const previewContent = useMemo(() => {
-    if (!props.content) return '';
+  const codePreview = useMemo(() => {
+    if (isMarkdown || isImage || !props.content) return '';
     const lines = props.content.split('\n');
-    const truncated = lines.length > 50 ? lines.slice(0, 50).join('\n') + '\n...' : props.content;
-    return markdownToHtml(truncated);
-  }, [props.content]);
+    return lines.length > 100 ? lines.slice(0, 100).join('\n') + '\n...' : props.content;
+  }, [isImage, isMarkdown, props.content]);
+
+  const relativePath = officeDocumentPath(props.folderPath, props.name);
+  const thumbnailVersion = useOfficeThumbnailStore((state) => state.versions[relativePath] ?? 0);
+  const thumbnailSrc = isMarkdown && props.panel
+    ? `${getPanelFileUrl(props.panel, officeThumbnailPath(relativePath))}?v=${thumbnailVersion || thumbnailCacheKey(props.content)}`
+    : '';
+
+  useEffect(() => {
+    setThumbnailFailed(false);
+  }, [thumbnailSrc]);
 
   const classes = ['rv-office-doc-tile'];
   if (props.size === 'small') classes.push('rv-office-doc-tile-small');
   if (props.active) classes.push('active');
   if (props.highlighted) classes.push('rv-office-doc-tile--highlighted');
 
+  const handleTileClick = () => {
+    props.onClick?.();
+  };
+
   return (
     <div
+      role={props.onClick ? 'button' : undefined}
+      tabIndex={props.onClick ? 0 : undefined}
       className={classes.join(' ')}
-      onClick={props.onClick}
+      onClick={handleTileClick}
+      onContextMenu={props.onContextMenu}
+      onKeyDown={(event) => {
+        if (!props.onClick) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          handleTileClick();
+        }
+      }}
       title={props.name}
     >
-      <div className="rv-office-doc-tile-preview" ref={previewRef}>
+      <div className="rv-office-doc-tile-header">
+        <span className="material-symbols-outlined rv-office-doc-tile-icon">{icon}</span>
+        <span className="rv-office-doc-tile-name">{props.name}</span>
+        {props.starred ? (
+          <span className="material-symbols-outlined rv-office-doc-tile-star" aria-hidden="true">kid_star</span>
+        ) : null}
+        <button
+          type="button"
+          className="rv-office-doc-tile-more"
+          aria-label={`More actions for ${props.name}`}
+          onClick={(event) => {
+            event.stopPropagation();
+            props.onMoreClick?.(event);
+          }}
+        >
+          <span className="material-symbols-outlined" aria-hidden="true">more_vert</span>
+        </button>
+      </div>
+      <div
+        className="rv-office-doc-tile-preview"
+        onClick={(event) => {
+          event.stopPropagation();
+          handleTileClick();
+        }}
+      >
         <div className="rv-office-doc-tile-open">Open</div>
         <div
-          className="rv-office-doc-tile-document rv-wiki-page-content"
-          style={{ '--tile-scale': scale } as React.CSSProperties}
-          dangerouslySetInnerHTML={{ __html: previewContent }}
+          className="rv-office-doc-tile-click-overlay"
+          aria-hidden="true"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleTileClick();
+          }}
         />
-      </div>
-      <div className="rv-office-doc-tile-footer">
-        <span className="material-symbols-outlined rv-office-doc-tile-icon">description</span>
-        <span className="rv-office-doc-tile-name">{props.name}</span>
+        {isImage ? (
+          <img
+            src={getPanelFileUrl(props.panel ?? '', relativePath)}
+            alt={props.name}
+            loading="lazy"
+            draggable={false}
+            className="rv-office-doc-tile-img"
+          />
+        ) : isMarkdown && thumbnailSrc && !thumbnailFailed ? (
+          <img
+            src={thumbnailSrc}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            draggable={false}
+            className="rv-office-doc-tile-img rv-office-doc-tile-thumbnail"
+            onError={() => setThumbnailFailed(true)}
+          />
+        ) : isMarkdown ? (
+          <div className="rv-office-doc-tile-missing-thumbnail" aria-label="Thumbnail missing">
+            <span className="material-symbols-outlined" aria-hidden="true">image_not_supported</span>
+            <span>Thumbnail missing</span>
+          </div>
+        ) : (
+          <CodeView content={codePreview} extension={ext} />
+        )}
       </div>
     </div>
   );

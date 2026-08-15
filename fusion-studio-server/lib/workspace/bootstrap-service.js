@@ -1,5 +1,5 @@
 /**
- * bootstrap-service — fill the minimum structure under an existing `ai/` tree.
+ * bootstrap-service — fill the minimum V2 structure under an existing `ai/` tree.
  *
  * Add Project requires the repo to already contain `/ai`; the controller
  * enforces that before calling bootstrap(). This service may create missing
@@ -11,35 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// RCC-0095: ai/views/chat/threads is no longer bootstrapped — ChatFile
-// creates the chat storage parents on demand at first thread write.
-const DIRS = [
-  'ai/views',
-  'ai/system/workspace',
-];
-
-const FILES = {
-  'ai/system/workspace/views.json': JSON.stringify(
-    {
-      version: 1,
-      sort: 'ranked',
-      views: [
-        {
-          id: 'file-viewer',
-          baseViewId: 'file-viewer',
-          label: 'Code',
-          icon: 'code',
-          rank: 0,
-          enabled: true,
-          source: 'default',
-          viewPath: 'ai/views/file-viewer',
-        },
-      ],
-    },
-    null,
-    2
-  ),
-};
+const aiPaths = require('./ai-paths');
 
 /**
  * Ensure the minimum structure exists under repoPath/ai. Only creates what's
@@ -53,30 +25,38 @@ function bootstrap(repoPath) {
     throw new Error('Add Project requires an existing /ai directory');
   }
 
-  for (const dir of DIRS) {
-    const full = path.join(repoPath, dir);
-    if (!fs.existsSync(full)) {
-      fs.mkdirSync(full, { recursive: true });
-    }
-  }
-  for (const [rel, content] of Object.entries(FILES)) {
-    const full = path.join(repoPath, rel);
-    if (!fs.existsSync(full)) {
-      fs.writeFileSync(full, content, 'utf8');
-    }
+  const machineRoot = aiPaths.getMachineAiRoot(repoPath);
+  for (const full of [
+    path.join(machineRoot, 'Views'),
+    path.join(machineRoot, 'System', 'config'),
+    path.join(machineRoot, 'System', 'state'),
+    path.join(machineRoot, 'System', 'styles'),
+    path.join(machineRoot, 'Data'),
+  ]) {
+    if (!fs.existsSync(full)) fs.mkdirSync(full, { recursive: true });
   }
 }
 
 /**
  * Does this repo have the minimum viable workspace structure? Used by the
- * launch validator to decide whether to cull a stored workspace.
+ * launch availability audit and active workspace restore path.
  *
  * @param {string} repoPath
  * @returns {boolean}
  */
 function isValidWorkspaceRoot(repoPath) {
-  return fs.existsSync(path.join(repoPath, 'ai', 'system', 'workspace', 'views.json'))
-    || fs.existsSync(path.join(repoPath, 'ai', 'views', 'index.json'));
+  const aiDir = path.join(repoPath, 'ai');
+  try {
+    const hasV2Views = fs.readdirSync(aiDir, { withFileTypes: true }).some((entry) => {
+      if (!entry.isDirectory() || entry.name.startsWith('.')) return false;
+      return fs.existsSync(path.join(aiDir, entry.name, 'Views'));
+    });
+    if (hasV2Views) return true;
+    return fs.existsSync(path.join(aiDir, 'views')) ||
+      fs.existsSync(path.join(aiDir, 'system', 'workspace', 'views.json'));
+  } catch {
+    return false;
+  }
 }
 
 module.exports = { bootstrap, isValidWorkspaceRoot };

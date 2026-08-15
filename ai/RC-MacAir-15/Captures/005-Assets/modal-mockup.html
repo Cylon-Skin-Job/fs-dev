@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Size Warning — Modal Mockup</title>
+  <style>
+    :root {
+      --bg-surface: #ffffff;
+      --bg-subtle: #f5f5f5;
+      --bg-hover: #e8e8e8;
+      --bg-backdrop: rgba(0, 0, 0, 0.4);
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border-default: #e0e0e0;
+      --border-subtle: #f0f0f0;
+      --palette-primary: #3b82f6;
+      --palette-primary-hover: #2563eb;
+      --palette-accent: #f59e0b;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --radius-sm: 4px;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --text-xs: 12px;
+      --text-sm: 13px;
+      --text-base: 14px;
+      --text-lg: 18px;
+      --text-xl: 20px;
+      --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --transition-fast: 150ms ease;
+      --z-modal: 500;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      background: white;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+    }
+
+    .rv-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-backdrop);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-modal);
+    }
+
+    .rv-modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      width: 520px;
+      box-shadow: var(--shadow-large);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rv-modal-header {
+      padding: var(--space-lg) var(--space-lg) var(--space-sm);
+    }
+
+    .rv-modal-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .rv-modal-body {
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .rv-warning-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-md);
+    }
+
+    .rv-warning-icon {
+      color: var(--palette-accent);
+      font-size: var(--text-lg);
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+
+    .rv-warning-text {
+      font-size: var(--text-sm);
+      color: #92400e;
+      line-height: 1.5;
+    }
+
+    .rv-warning-text strong {
+      font-weight: 600;
+    }
+
+    .rv-estimate-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) 0;
+    }
+
+    .rv-estimate-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .rv-estimate-value {
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+
+    .rv-estimate-value.over-limit {
+      color: #dc2626;
+    }
+
+    .rv-limit-note {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .rv-section-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .rv-radio-option {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+      position: relative;
+    }
+
+    .rv-radio-option:hover {
+      border-color: var(--palette-primary);
+      background: #f8faff;
+    }
+
+    .rv-radio-option.selected {
+      border-color: var(--palette-primary);
+      background: #f0f6ff;
+    }
+
+    .rv-radio-input {
+      margin-top: 3px;
+      accent-color: var(--palette-primary);
+    }
+
+    .rv-radio-content {
+      flex: 1;
+    }
+
+    .rv-radio-label {
+      font-size: var(--text-base);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .rv-radio-desc {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .rv-size-badge {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: var(--space-xs);
+    }
+
+    .rv-default-btn {
+      background: none;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 2px 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .rv-default-btn:hover {
+      border-color: var(--palette-accent);
+      color: var(--palette-accent);
+    }
+
+    .rv-default-btn.is-default {
+      border-color: var(--palette-accent);
+      color: var(--palette-accent);
+      background: #fffbeb;
+    }
+
+    .rv-recommend-tag {
+      font-size: 10px;
+      background: var(--palette-accent);
+      color: white;
+      padding: 1px 6px;
+      border-radius: 99px;
+      font-weight: 600;
+      margin-left: var(--space-xs);
+    }
+
+    .rv-modal-footer {
+      padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rv-footer-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .rv-remember-label {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      cursor: pointer;
+    }
+
+    .rv-remember-label input {
+      accent-color: var(--palette-primary);
+    }
+
+    .rv-footer-actions {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .rv-modal-btn {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      font-size: var(--text-base);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .rv-modal-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .rv-modal-btn:active {
+      transform: translateY(0);
+    }
+
+    .rv-modal-btn-cancel {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border-color: var(--border-default);
+    }
+
+    .rv-modal-btn-cancel:hover {
+      background: var(--bg-hover);
+    }
+
+    .rv-modal-btn-primary {
+      background: var(--palette-primary);
+      color: white;
+    }
+
+    .rv-modal-btn-primary:hover {
+      background: var(--palette-primary-hover);
+    }
+
+    .rv-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: var(--space-xs) 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="rv-modal-overlay">
+    <div class="rv-modal" role="dialog" aria-modal="true">
+      <div class="rv-modal-header">
+        <h3 class="rv-modal-title">File Size Warning</h3>
+      </div>
+
+      <div class="rv-modal-body">
+        <div class="rv-warning-banner">
+          <span class="rv-warning-icon">&#9888;</span>
+          <div class="rv-warning-text">
+            <strong>Estimated size: 38 MB</strong> &mdash; images are at full resolution.
+            Maximum email attachment size is <strong>25 MB</strong>.
+            <br><br>
+            You are exporting <strong>12 pages</strong> with images. Consider choosing
+            a compressed option below to stay within email limits.
+          </div>
+        </div>
+
+        <div class="rv-estimate-row">
+          <div>
+            <div class="rv-estimate-label">Estimated file size</div>
+            <div class="rv-limit-note">Max email attachment: 25 MB</div>
+          </div>
+          <div class="rv-estimate-value over-limit">38 MB</div>
+        </div>
+
+        <div class="rv-divider"></div>
+
+        <div class="rv-section-label">Image Quality</div>
+
+        <label class="rv-radio-option selected" id="opt-full">
+          <input type="radio" name="quality" value="full" class="rv-radio-input" checked>
+          <div class="rv-radio-content">
+            <div class="rv-radio-label">
+              Full Resolution
+              <span class="rv-size-badge">~38 MB</span>
+            </div>
+            <div class="rv-radio-desc">Original quality, largest file &mdash; best for editing or archiving.</div>
+          </div>
+          <button class="rv-default-btn is-default" title="Set as default">&#9733; Default</button>
+        </label>
+
+        <label class="rv-radio-option" id="opt-hirez">
+          <input type="radio" name="quality" value="hirez" class="rv-radio-input">
+          <div class="rv-radio-content">
+            <div class="rv-radio-label">
+              Hi Rez (Retina)
+              <span class="rv-size-badge">~8 MB</span>
+              <span class="rv-recommend-tag">Recommended</span>
+            </div>
+            <div class="rv-radio-desc">Looks perfect on any screen. Great for sharing or printing.</div>
+          </div>
+          <button class="rv-default-btn" title="Set as default">&#9734;</button>
+        </label>
+
+        <label class="rv-radio-option" id="opt-print">
+          <input type="radio" name="quality" value="print" class="rv-radio-input">
+          <div class="rv-radio-content">
+            <div class="rv-radio-label">
+              Print Quality
+              <span class="rv-size-badge">~3 MB</span>
+            </div>
+            <div class="rv-radio-desc">Email-friendly, crisp on screen, decent in print.</div>
+          </div>
+          <button class="rv-default-btn" title="Set as default">&#9734;</button>
+        </label>
+      </div>
+
+      <div class="rv-modal-footer">
+        <div class="rv-footer-left">
+          <label class="rv-remember-label">
+            <input type="checkbox" checked>
+            Remember my choice for this session
+          </label>
+        </div>
+        <div class="rv-footer-actions">
+          <button class="rv-modal-btn rv-modal-btn-cancel">Cancel</button>
+          <button class="rv-modal-btn rv-modal-btn-primary">Apply &amp; Export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.rv-radio-option').forEach(option => {
+      option.addEventListener('click', e => {
+        if (e.target.closest('.rv-default-btn')) return;
+        const radio = option.querySelector('.rv-radio-input');
+        radio.checked = true;
+        document.querySelectorAll('.rv-radio-option').forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+      });
+
+      const defaultBtn = option.querySelector('.rv-default-btn');
+      defaultBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        document.querySelectorAll('.rv-default-btn').forEach(b => {
+          b.classList.remove('is-default');
+          b.innerHTML = '&#9734;';
+        });
+        defaultBtn.classList.add('is-default');
+        defaultBtn.innerHTML = '&#9733; Default';
+      });
+    });
+  </script>
+</body>
+</html>

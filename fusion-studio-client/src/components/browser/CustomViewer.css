@@ -81,7 +81,7 @@
 }
 
 .rv-app-url-input:focus {
-  border-color: var(--color-primary, #00d4ff);
+  border-color: var(--color-primary, #39628e);
 }
 
 /* Toggle button */

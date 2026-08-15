@@ -161,6 +161,8 @@ export type WebSocketMessageType =
   | 'file:rename_error'
   | 'file:deleted'
   | 'file:delete_error'
+  | 'office:thumbnail_saved'
+  | 'office:thumbnail_error'
   | 'panel_config'
   | 'panel_changed'
   | 'file_changed'
@@ -168,6 +170,8 @@ export type WebSocketMessageType =
   | 'file_content_response'
   | 'file_save'
   | 'file_save_response'
+  | 'folder_create_response'
+  | 'document_create_response'
   | 'fusion:tabs'
   | 'fusion:items'
   | 'fusion:wiki'
@@ -184,13 +188,6 @@ export type WebSocketMessageType =
   | 'emoji_recents:list'
   | 'emoji_recents:record'
   | 'emoji_recents:error'
-  // Recent docs messages
-  | 'recent_docs:list'
-  | 'recent_docs:record'
-  | 'recent_docs:clear'
-  | 'recent_docs:updated'
-  | 'recent_docs:cleared'
-  | 'recent_docs:error'
   | 'wire_ready'
   | 'wire_disconnected'
   | 'parse_error'
@@ -218,7 +215,7 @@ export type WebSocketMessageType =
   | 'workspace:view_add_requested'
   | 'workspace:view_registry_updated'
   | 'workspace:view_update_rejected'
-  | 'workspace:culled_at_launch'
+  | 'workspace:unavailable_at_launch'
   | 'thread:state_changed'
   // Harness install-status cache (HARNESS_STATUS_CACHE_SPEC)
   | 'harness:status_changed'
@@ -247,7 +244,10 @@ export type WebSocketMessageType =
   // Bookmarks messages
   | 'bookmarks:list'
   | 'bookmarks:updated'
-  | 'bookmarks:error';
+  | 'bookmarks:error'
+  // Workspace palette projection and mutation protocol
+  | 'office:palette_state'
+  | 'office:palette_error';
 
 // Slider-only theme model — accent + 4 sliders.
 export interface ThemeEntry {
@@ -296,6 +296,50 @@ export interface Workspace {
   type?: 'code' | 'app';
   ribbonVisible?: boolean;
   ribbonSortOrder?: number | null;
+}
+
+export type OfficePaletteAvailability = 'ready' | 'unavailable';
+export type OfficePaletteSource = 'request' | 'error' | 'mutation';
+export type OfficePaletteOperation = 'get' | 'add' | 'remove' | 'set_sync';
+export type OfficePaletteSyncStatus = 'ok' | 'degraded';
+export type OfficePaletteErrorCode =
+  | 'INVALID_REQUEST'
+  | 'UNKNOWN_WORKSPACE'
+  | 'WORKSPACE_NOT_ACTIVE'
+  | 'PATH_REJECTED'
+  | 'SYMLINK_REJECTED'
+  | 'NOT_REGULAR_FILE'
+  | 'INVALID_SCHEMA'
+  | 'FILE_TOO_LARGE'
+  | 'READ_FAILED'
+  | 'PALETTE_LIMIT'
+  | 'DIRECTORY_CREATE_FAILED'
+  | 'READ_ONLY'
+  | 'WRITE_FAILED';
+
+export interface OfficePaletteProtocolState {
+  customColors: string[];
+  syncEnabled: boolean;
+  source: OfficePaletteSource;
+  availability: OfficePaletteAvailability;
+  syncStatus: OfficePaletteSyncStatus;
+}
+
+export interface OfficePaletteStateMessage extends OfficePaletteProtocolState {
+  type: 'office:palette_state';
+  requestId?: string;
+  workspaceId: string;
+  operation: OfficePaletteOperation;
+}
+
+export interface OfficePaletteErrorMessage {
+  type: 'office:palette_error';
+  requestId?: string;
+  workspaceId?: string;
+  operation: OfficePaletteOperation;
+  code: OfficePaletteErrorCode;
+  message: string;
+  state?: OfficePaletteProtocolState;
 }
 
 export interface WorkspaceViewTemplate {
@@ -452,6 +496,50 @@ export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary' | 'rightCol';
 // show/hide via traffic-light modes, not a collapse toggle.
 export type CollapsablePane = 'leftSidebar' | 'leftChat';
 
+export type ViewActivityKind = 'file' | 'folder' | 'document' | 'page' | 'view';
+
+export interface ViewActivityItem {
+  id: string;
+  panel: string;
+  path: string;
+  title: string;
+  kind: ViewActivityKind;
+  openedAt: number;
+  folder?: string;
+  extension?: string;
+  tabIndex?: number | null;
+  metadata?: Record<string, string | number | boolean | null>;
+}
+
+export interface ViewNavigationState {
+  stack: ViewActivityItem[];
+  index: number;
+}
+
+export interface ViewActivityState {
+  recents: ViewActivityItem[];
+  navigation: ViewNavigationState;
+  tabs: ViewActivityItem[];
+  activeTabId: string | null;
+}
+
+export interface ViewCollectionItem {
+  id: string;
+  panel: string;
+  path: string;
+  title: string;
+  kind: ViewActivityKind;
+  savedAt: number;
+  folder?: string;
+  extension?: string;
+  metadata?: Record<string, string | number | boolean | null>;
+}
+
+export interface ViewCollectionsState {
+  starred: ViewCollectionItem[];
+  pinnedFolders: ViewCollectionItem[];
+}
+
 export interface ViewUIState {
   collapsed: {
     leftSidebar: boolean;
@@ -477,13 +565,26 @@ export interface ViewUIState {
   // TINTS_SPEC §4: per-surface tint toggles. All default false (neutral).
   tints: ViewStateTints;
   // Doc viewer persisted UI state.
-  docViewerMode?: 'active' | 'archive';
+  docViewerMode?: 'active' | 'recent' | 'starred' | 'archive';
   docViewerActiveSelectedPath?: string | null;
   docViewerArchiveSelectedPath?: string | null;
   docViewerActiveGridScroll?: number;
   docViewerArchiveGridScroll?: number;
   docViewerActiveDocScroll?: number;
   docViewerArchiveDocScroll?: number;
+  officeViewerMode?: 'home' | 'recent' | 'starred' | 'archive';
+  officeViewerCurrentFolder?: string | null;
+  officeViewerSelectedPath?: string | null;
+  officeDocumentSidePanel?: 'none' | 'files';
+  officePaperBrightness?: number;
+  emailViewerMode?: 'home' | 'recent' | 'starred' | 'archive'
+    | 'inbox' | 'snoozed' | 'sent' | 'scheduled' | 'drafts' | 'spam' | 'trash';
+  emailViewerCurrentFolder?: string | null;
+  emailViewerSelectedPath?: string | null;
+  emailDocumentSidePanel?: 'none' | 'files';
+  emailPaperBrightness?: number;
+  activity: ViewActivityState;
+  collections: ViewCollectionsState;
 }
 
 export interface ViewStateTints {

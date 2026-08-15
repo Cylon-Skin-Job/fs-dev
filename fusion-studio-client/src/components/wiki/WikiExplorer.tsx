@@ -4,7 +4,7 @@
  * @reads wikiStore: root, viewedPagePath
  *
  * Renders: TopicList (left) | PageViewer (center) | EdgePanel (right)
- * Discovers folders under ai/views/wiki-viewer/Wiki and loads each selected PAGE.md.
+ * Discovers folders under ai/<machine>/Wiki and loads each selected PAGE.md.
  */
 
 import { useCallback, useEffect, useRef } from 'react';
@@ -136,7 +136,10 @@ export function WikiExplorer() {
             return;
           }
 
-          setSelectedContent(msg.content || '');
+          setSelectedContent(msg.content || '', {
+            isSymlink: msg.isSymlink,
+            symlinkTarget: msg.symlinkTarget,
+          });
         }
       } catch {
         // Ignore non-JSON WebSocket messages.

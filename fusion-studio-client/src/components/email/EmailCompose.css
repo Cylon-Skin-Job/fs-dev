@@ -1,0 +1,197 @@
+/* Compose windows: floating layer inside the email content panel. */
+
+.rv-email-compose-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* ── Window ───────────────────────────────────────────────────────────── */
+
+.rv-email-compose-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  background: var(--rv-email-paper-muted, none), var(--rv-email-paper, #e8e7e1);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.15));
+  border-radius: 10px 10px 0 0;
+  box-shadow: var(--shadow-medium, 0 4px 16px rgba(0, 0, 0, 0.4));
+  color: var(--rv-email-paper-ink, #1f1f1f);
+  overflow: hidden;
+}
+
+.rv-email-compose-window--expanded {
+  inset: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.rv-email-compose-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm, 8px);
+  padding: 8px 8px 8px 14px;
+  background: rgba(31, 31, 31, 0.07);
+  cursor: grab;
+  user-select: none;
+}
+
+.rv-email-compose-window--expanded .rv-email-compose-header {
+  cursor: default;
+}
+
+.rv-email-compose-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--rv-email-paper-ink, #1f1f1f);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.rv-email-compose-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rv-email-compose-ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms);
+}
+
+.rv-email-compose-ctrl-btn:hover {
+  background: rgba(31, 31, 31, 0.1);
+}
+
+/* Minimized tabs live on the dark panel chrome, not on paper. */
+.rv-email-compose-tab .rv-email-compose-ctrl-btn {
+  color: var(--chrome-accent);
+}
+
+.rv-email-compose-tab .rv-email-compose-ctrl-btn:hover {
+  background: var(--neutral-chrome-active, rgba(255, 255, 255, 0.12));
+}
+
+.rv-email-compose-ctrl-btn .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ── Fields ───────────────────────────────────────────────────────────── */
+
+.rv-email-compose-field {
+  flex: none;
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 1px solid var(--rv-email-paper-line, rgba(31, 31, 31, 0.12));
+  background: transparent;
+  color: var(--rv-email-paper-ink, #1f1f1f);
+  font: inherit;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.rv-email-compose-field::placeholder {
+  color: var(--rv-email-paper-ink, #1f1f1f);
+  opacity: 0.5;
+}
+
+.rv-email-compose-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 12px 14px;
+  border: none;
+  background: transparent;
+  color: var(--rv-email-paper-ink, #1f1f1f);
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+}
+
+.rv-email-compose-footer {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid var(--rv-email-paper-line, rgba(31, 31, 31, 0.12));
+}
+
+.rv-email-compose-send-btn {
+  padding: 6px 22px;
+  border: none;
+  border-radius: 16px;
+  background: var(--palette-accent, #4a7dff);
+  color: var(--text-on-accent, #ffffff);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter var(--transition-fast, 150ms);
+}
+
+.rv-email-compose-send-btn:hover {
+  filter: brightness(1.1);
+}
+
+.rv-email-compose-resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+}
+
+/* ── Minimized tabs (bottom of the panel, Gmail-style) ────────────────── */
+
+.rv-email-compose-tabs {
+  position: absolute;
+  right: 16px;
+  bottom: 0;
+  display: flex;
+  gap: var(--space-sm, 8px);
+  pointer-events: auto;
+}
+
+.rv-email-compose-tab {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 200px;
+  padding: 6px 6px 6px 12px;
+  background: var(--rv-email-content-fill, #202124);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.15));
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  box-shadow: var(--shadow-soft, 0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.rv-email-compose-tab-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--chrome-accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}

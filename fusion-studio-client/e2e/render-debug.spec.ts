@@ -15,7 +15,7 @@ test('render debug — fresh message', async ({ page }) => {
   await page.screenshot({ path: 'e2e/screenshots/00-initial.png', fullPage: true });
 
   // Find any visible chat input
-  const inputs = page.locator('textarea.chat-input');
+  const inputs = page.locator('textarea.rv-chat-input');
   const inputCount = await inputs.count();
   console.log(`[INIT] Found ${inputCount} chat inputs`);
 

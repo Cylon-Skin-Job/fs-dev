@@ -11,6 +11,7 @@
 const path = require('path');
 const fsSync = require('fs');
 const aiPaths = require('../workspace/ai-paths');
+const { classifyEntrySync } = require('../fs/dirents');
 
 const HARDCODED_DEFAULTS = {
   collapsed: { leftSidebar: false, leftChat: false },
@@ -19,6 +20,24 @@ const HARDCODED_DEFAULTS = {
   docViewerSelectedPath: null,
   docViewerGridScroll: 0,
   docViewerDocScroll: 0,
+  officeViewerMode: 'home',
+  officeViewerCurrentFolder: null,
+  officeViewerSelectedPath: null,
+  officeDocumentSidePanel: 'none',
+  officePaperBrightness: 100,
+  activity: {
+    recents: [],
+    navigation: {
+      stack: [],
+      index: -1,
+    },
+    tabs: [],
+    activeTabId: null,
+  },
+  collections: {
+    starred: [],
+    pinnedFolders: [],
+  },
 };
 
 function getDefaults(projectRoot, viewId) {
@@ -48,6 +67,13 @@ function getDefaults(projectRoot, viewId) {
     docViewerSelectedPath: HARDCODED_DEFAULTS.docViewerSelectedPath,
     docViewerGridScroll: HARDCODED_DEFAULTS.docViewerGridScroll,
     docViewerDocScroll: HARDCODED_DEFAULTS.docViewerDocScroll,
+    officeViewerMode: HARDCODED_DEFAULTS.officeViewerMode,
+    officeViewerCurrentFolder: HARDCODED_DEFAULTS.officeViewerCurrentFolder,
+    officeViewerSelectedPath: HARDCODED_DEFAULTS.officeViewerSelectedPath,
+    officeDocumentSidePanel: HARDCODED_DEFAULTS.officeDocumentSidePanel,
+    officePaperBrightness: HARDCODED_DEFAULTS.officePaperBrightness,
+    activity: HARDCODED_DEFAULTS.activity,
+    collections: HARDCODED_DEFAULTS.collections,
   };
 }
 
@@ -55,7 +81,7 @@ function findV2ViewFolder(projectRoot, viewId) {
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
   try {
     const entries = fsSync.readdirSync(viewsRoot, { withFileTypes: true });
-    const match = entries.find((entry) => entry.isDirectory() && (
+    const match = entries.find((entry) => classifyEntrySync(viewsRoot, entry).isDir && (
       entry.name === viewId || entry.name.endsWith(`-${viewId}`)
     ));
     return match ? path.join(viewsRoot, match.name) : null;

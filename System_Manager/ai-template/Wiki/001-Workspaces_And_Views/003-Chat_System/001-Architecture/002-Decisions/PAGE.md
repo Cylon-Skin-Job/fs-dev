@@ -10,7 +10,7 @@ metadata:
     - Chat System Protocol
     - Chat System Lessons
   source-files:
-    - ai/system/config/cli.json
+    - ai/<machine>/System/config/cli.json
     - fusion-studio-server/lib/cli-config/resolver.js
     - fusion-studio-server/lib/thread/thread-runtime-controller.js
     - fusion-studio-server/lib/harness/opencode/index.js
@@ -22,7 +22,7 @@ Durable architectural decisions for chat.
 
 ## `cli.json` Is Harness Policy
 
-`ai/system/config/cli.json` controls default, allowed, and displayed harnesses.
+`ai/<machine>/System/config/cli.json` controls default, allowed, and displayed harnesses.
 Do not add a separate `harness-policy.json`.
 
 ## OpenCode Is The Current Normal-User Harness

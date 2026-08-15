@@ -18,7 +18,7 @@ metadata:
 
 - **One selected path was not enough.** The UI needs a left-selected context and a separately viewed page. Otherwise clicking a right-sidebar child changes the context and makes the sidebar disappear.
 - **Active-state contrast matters.** Using the same accent color for background and text can make active labels disappear.
-- **Docs should describe the current system only.** This project is pre-release, so stale transitional explanations should be removed rather than preserved.
+- **Documentation should describe the current system only.** This project is pre-release, so stale transitional explanations should be removed rather than preserved.
 - **Folder structure is product behavior.** Moving a page changes navigation, sidebar behavior, and future query results.
 - **Path references must be searched before moving wiki pages.** Markdown links and docs may point to folder names even when code does not.
 - **Root pages need a different behavior than article pages.** The wiki guide and section roots can be useful without a populated right sidebar.

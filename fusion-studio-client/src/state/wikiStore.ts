@@ -1,10 +1,15 @@
 /**
  * @module wikiStore
  * @role State management for the wiki-viewer folder-tree model
- * @reads ai/views/wiki-viewer/Wiki folder-tree PAGE.md files; a folder's 000- child is its heading article
+ * @reads ai/<machine>/Wiki folder-tree PAGE.md files; a folder's 000- child is its heading article
  */
 
 import { create } from 'zustand';
+import {
+  getViewActivity,
+  pushViewNavigation,
+  setViewNavigationIndex,
+} from '../lib/viewActivity';
 
 export type WikiNodeKind =
   | 'root'
@@ -30,6 +35,7 @@ interface WikiState {
   viewedPath: string;
   viewedPagePath: string;
   selectedContent: string;
+  selectedSymlinkTarget: string | null;
   loading: boolean;
   error: string | null;
   history: string[];
@@ -40,7 +46,7 @@ type WikiActions = {
   setRoot: (root: WikiNode | null) => void;
   selectNode: (node: WikiNode) => void;
   viewNode: (node: WikiNode) => void;
-  setSelectedContent: (content: string) => void;
+  setSelectedContent: (content: string, metadata?: { isSymlink?: boolean; symlinkTarget?: string }) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   goBack: () => void;
@@ -88,6 +94,7 @@ export function createWikiNode(params: {
 }
 
 const HEADING_ARTICLE_PREFIX = '000-';
+const WIKI_PANEL = 'wiki-viewer';
 
 /**
  * A section heading's article is its 000- child folder, and only 000- —
@@ -95,6 +102,14 @@ const HEADING_ARTICLE_PREFIX = '000-';
  */
 export function findHeadingArticle(section: WikiNode): WikiNode | null {
   return section.children.find((child) => child.name.startsWith(HEADING_ARTICLE_PREFIX)) || null;
+}
+
+export function isWikiHeadingArticle(node: WikiNode): boolean {
+  return node.name.startsWith(HEADING_ARTICLE_PREFIX);
+}
+
+export function isWikiRightNavContext(node: WikiNode | null): node is WikiNode {
+  return Boolean(node && node.kind === 'article' && !isWikiHeadingArticle(node));
 }
 
 export function findWikiNodeByPath(node: WikiNode | null, path: string): WikiNode | null {
@@ -116,6 +131,7 @@ function createEmptyState(): WikiState {
     viewedPath: '',
     viewedPagePath: '',
     selectedContent: '',
+    selectedSymlinkTarget: null,
     loading: false,
     error: null,
     history: [],
@@ -138,6 +154,20 @@ function viewForNode(node: WikiNode) {
   };
 }
 
+function wikiActivityInput(node: WikiNode) {
+  return {
+    panel: WIKI_PANEL,
+    path: node.path,
+    title: node.label,
+    kind: 'page' as const,
+    extension: 'md',
+    metadata: {
+      pagePath: node.pagePath,
+      kind: node.kind,
+    },
+  };
+}
+
 export const useWikiStore = create<FullWikiState>((set, get) => ({
   ...createEmptyState(),
 
@@ -145,19 +175,36 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
     // The root delegates to its 000- heading article when one exists, both
     // as the default selection and as the "Wiki Guide" button target.
     const rootDefault = root ? findHeadingArticle(root) || root : null;
+    const activity = getViewActivity(WIKI_PANEL);
+    const persistedStack = root
+      ? activity.navigation.stack.filter((item) => findWikiNodeByPath(root, item.path))
+      : [];
+    const persistedIndex = persistedStack.length > 0
+      ? Math.max(0, Math.min(persistedStack.length - 1, activity.navigation.index))
+      : -1;
+    const persistedViewed = root && persistedIndex >= 0
+      ? findWikiNodeByPath(root, persistedStack[persistedIndex].path)
+      : null;
     const storedSelected = root ? findWikiNodeByPath(root, get().selectedPath) : null;
-    const selectedNode = storedSelected && storedSelected !== root ? storedSelected : rootDefault;
-    const viewedNode = root && get().viewedPath ? findWikiNodeByPath(root, get().viewedPath) || selectedNode : selectedNode;
+    const selectedNode = storedSelected && storedSelected !== root ? storedSelected : persistedViewed || rootDefault;
+    const viewedNode = persistedViewed || (root && get().viewedPath ? findWikiNodeByPath(root, get().viewedPath) || selectedNode : selectedNode);
+    const history = persistedStack.length > 0
+      ? persistedStack.map((item) => item.path)
+      : (viewedNode ? [viewedNode.path] : []);
+    const historyIndex = persistedStack.length > 0
+      ? persistedIndex
+      : (viewedNode ? 0 : -1);
 
     set({
       root,
       ...(selectedNode ? { selectedPath: selectedNode.path } : { selectedPath: '' }),
       ...(viewedNode ? viewForNode(viewedNode) : { viewedPath: '', viewedPagePath: '' }),
       selectedContent: '',
+      selectedSymlinkTarget: null,
       loading: false,
       error: null,
-      history: viewedNode ? [viewedNode.path] : [],
-      historyIndex: viewedNode ? 0 : -1,
+      history,
+      historyIndex,
     });
   },
 
@@ -168,6 +215,7 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
     if (nextHistory[nextHistory.length - 1] !== node.path) {
       nextHistory.push(node.path);
     }
+    pushViewNavigation(WIKI_PANEL, wikiActivityInput(node));
 
     // Re-selecting the viewed page must not clear its content: the content
     // request effect only fires on path change, so a clear here would strand
@@ -184,6 +232,7 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
     set({
       ...selectionForNode(node),
       selectedContent: '',
+      selectedSymlinkTarget: null,
       loading: true,
       error: null,
       history: nextHistory,
@@ -200,10 +249,12 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
     if (nextHistory[nextHistory.length - 1] !== node.path) {
       nextHistory.push(node.path);
     }
+    pushViewNavigation(WIKI_PANEL, wikiActivityInput(node));
 
     set({
       ...viewForNode(node),
       selectedContent: '',
+      selectedSymlinkTarget: null,
       loading: true,
       error: null,
       history: nextHistory,
@@ -211,8 +262,13 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
     });
   },
 
-  setSelectedContent: (content) =>
-    set({ selectedContent: content, loading: false, error: null }),
+  setSelectedContent: (content, metadata) =>
+    set({
+      selectedContent: content,
+      selectedSymlinkTarget: metadata?.isSymlink === true && metadata.symlinkTarget ? metadata.symlinkTarget : null,
+      loading: false,
+      error: null,
+    }),
 
   setLoading: (loading) => set({ loading }),
 
@@ -230,9 +286,11 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
       historyIndex: nextIndex,
       ...viewForNode(node),
       selectedContent: '',
+      selectedSymlinkTarget: null,
       loading: true,
       error: null,
     });
+    setViewNavigationIndex(WIKI_PANEL, nextIndex);
   },
 
   goForward: () => {
@@ -247,9 +305,11 @@ export const useWikiStore = create<FullWikiState>((set, get) => ({
       historyIndex: nextIndex,
       ...viewForNode(node),
       selectedContent: '',
+      selectedSymlinkTarget: null,
       loading: true,
       error: null,
     });
+    setViewNavigationIndex(WIKI_PANEL, nextIndex);
   },
 
   activateWorkspace: () => {

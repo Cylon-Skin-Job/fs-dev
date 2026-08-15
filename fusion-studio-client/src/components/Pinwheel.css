@@ -1,0 +1,38 @@
+/**
+ * Pinwheel — composable loading spinner.
+ *
+ * Size every spoke as a fraction of the container's --pinwheel-size so the
+ * whole thing scales proportionally. The gradient is created by mixing the
+ * base color with white, making it readable on any background.
+ */
+
+.pinwheel {
+  --spoke-count: 12;
+  --spoke-width: calc(var(--pinwheel-size) * 0.0275);
+  --spoke-height: calc(var(--pinwheel-size) * 0.075);
+  --spoke-radius: calc(var(--pinwheel-size) * 0.335);
+
+  position: relative;
+  width: var(--pinwheel-size);
+  height: var(--pinwheel-size);
+  flex-shrink: 0;
+}
+
+.pinwheel .spoke {
+  position: absolute;
+  inset: 0;
+  transform: rotate(calc(360deg / var(--spoke-count) * var(--i)));
+}
+
+.pinwheel .spoke::before {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: var(--spoke-width);
+  height: var(--spoke-height);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spoke-color) calc(var(--spoke-opacity) * 100%), white);
+  transform: translateY(var(--spoke-radius));
+  opacity: 1;
+  transition: background-color 80ms linear;
+}

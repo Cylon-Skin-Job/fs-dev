@@ -13,7 +13,7 @@ limits:
   confidence_threshold: 60
 scope:
   read: ["*"]
-  write: ["ai/views/wiki-viewer/content/project/*/PAGE.md", "ai/views/wiki-viewer/content/project/*/LOG.md", "ai/views/wiki-viewer/content/project/*/index.json", "ai/views/wiki-viewer/content/project/index.json"]
+  write: ["ai/<machine>/Wiki/project/*/PAGE.md", "ai/<machine>/Wiki/project/*/LOG.md", "ai/<machine>/Wiki/project/*/index.json", "ai/<machine>/Wiki/project/index.json"]
 schedule:
   cron: "0 2 * * *"
   ticket_title: "Nightly wiki audit"
@@ -32,7 +32,7 @@ You run after the daily updater has finished. Your job is to find what it missed
 Spawn a sub-agent to build a complete picture of the wiki's current state.
 
 Instruct it to:
-- Read ai/views/wiki-viewer/content/project/index.json for the full topic list
+- Read ai/<machine>/Wiki/project/index.json for the full topic list
 - For each topic, read PAGE.md and note: title, last updated date, sources referenced, key claims made
 - List any topic folders that exist on disk but are missing from index.json
 - List any index.json entries whose folders are missing
@@ -59,8 +59,8 @@ Spawn a sub-agent to check what happened today that the wiki might need to refle
 Instruct it to:
 - Run git log for today's date — what files changed?
 - Read ai/STATE.md for cross-panel activity
-- Check ai/views/issues-viewer/done/ for tickets closed today — what work was completed?
-- Check ai/views/file-viewer/chat/threads/ for today's chat sessions — were architectural decisions made?
+- Check ai/<machine>/Issues/done/ for tickets closed today — what work was completed?
+- Check ai/<machine>/Data/Chatlogs/threads/ for today's chat sessions — were architectural decisions made?
 - Cross-reference: for each significant change or decision, is there a wiki topic that should mention it?
 - Return: list of changes/decisions not yet reflected in the wiki
 

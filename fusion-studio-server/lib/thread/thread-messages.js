@@ -1,8 +1,8 @@
 /**
  * Thread Message Handlers
  *
- * Extracted from ThreadWebSocketHandler.js — handles user message sending
- * and assistant message recording.
+ * Extracted from ThreadWebSocketHandler.js — handles accepted user message
+ * activity. Durable chat exchanges are saved by the audit subscriber.
  *
  * RCC-0095: all threads are workspace-scoped (single workspace chat).
  *
@@ -63,39 +63,7 @@ function createMessageHandlers({ wsState }) {
     }
   }
 
-  /**
-   * Add assistant message to thread (called after streaming completes).
-   * Runtime-1R: if explicit threadId is provided, use it directly instead of
-   * resolving from mutable selection state. This prevents a passive browse
-   * from retargeting persistence of an in-flight turn.
-   * @param {import('ws').WebSocket} ws
-   * @param {string} content
-   * @param {boolean} hasToolCalls
-   * @param {object} [metadata] - Optional metadata (contextUsage, tokenUsage, etc.)
-   * @param {string} [explicitThreadId] - Optional explicit target thread ID
-   */
-  async function addAssistantMessage(ws, content, hasToolCalls = false, metadata = null, explicitThreadId = null) {
-    const state = wsState.get(ws);
-    if (!state) return;
-
-    const threadId = explicitThreadId || state.threadId;
-    if (!threadId) return;
-
-    const manager = state.threadManager;
-    const message = {
-      role: 'assistant',
-      content,
-      hasToolCalls
-    };
-
-    if (metadata && Object.keys(metadata).length > 0) {
-      await manager.addMessageWithMetadata(threadId, message, metadata);
-    } else {
-      await manager.addMessage(threadId, message);
-    }
-  }
-
-  return { handleMessageSend, addAssistantMessage };
+  return { handleMessageSend };
 }
 
 module.exports = { createMessageHandlers };

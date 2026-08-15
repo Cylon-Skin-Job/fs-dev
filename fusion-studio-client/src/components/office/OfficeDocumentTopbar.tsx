@@ -14,12 +14,12 @@ interface OfficeDocumentTopbarProps {
   file: FileWithContent;
   folderName?: string;
   isDirty: boolean;
-  sidePanel: 'none' | 'versions' | 'files';
-  setSidePanel: React.Dispatch<React.SetStateAction<'none' | 'versions' | 'files'>>;
+  sidePanel: 'none' | 'files';
+  onToggleRecentPanel: () => void;
   exportMenuRef: React.RefObject<HTMLDivElement | null>;
   exportMenuOpen: boolean;
   setExportMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  exportingFormat: 'docx' | 'pdf' | null;
+  exportingFormat: 'docx' | 'pdf' | 'markdown' | null;
   onBack: () => void;
   onExport: (format: 'docx' | 'pdf') => void;
   onPrint: () => void;
@@ -31,7 +31,7 @@ export function OfficeDocumentTopbar({
   folderName,
   isDirty,
   sidePanel,
-  setSidePanel,
+  onToggleRecentPanel,
   exportMenuRef,
   exportMenuOpen,
   setExportMenuOpen,
@@ -123,10 +123,19 @@ export function OfficeDocumentTopbar({
                   </button>
                 </div>
               </div>
+              <button
+                className="rv-office-export-option"
+                onClick={() => { setExportMenuOpen(false); onSendEmail('markdown'); }}
+                disabled={exportingFormat !== null}
+              >
+                <span className="material-symbols-outlined">markdown</span>
+                Email Markdown
+              </button>
               <div className="rv-office-export-divider" />
               <button
                 className="rv-office-export-option"
                 onClick={() => { setExportMenuOpen(false); onPrint(); }}
+                disabled={exportingFormat !== null}
               >
                 <span className="material-symbols-outlined">print</span>
                 Preview PDF
@@ -138,20 +147,18 @@ export function OfficeDocumentTopbar({
 
       <div className="rv-office-document-spacer" />
 
-      <button
-        className={`rv-office-document-action${sidePanel === 'versions' ? ' rv-office-document-action--active' : ''}${sidePanel !== 'none' ? ' rv-office-document-action--floating' : ''}`}
-        onClick={() => setSidePanel((p) => p === 'versions' ? 'none' : 'versions')}
-        title="Version history"
-      >
-        <span className="material-symbols-outlined">browse_gallery</span>
-      </button>
-      <button
-        className={`rv-office-document-action${sidePanel === 'files' ? ' rv-office-document-action--active' : ''}${sidePanel !== 'none' ? ' rv-office-document-action--floating' : ''}`}
-        onClick={() => setSidePanel((p) => p === 'files' ? 'none' : 'files')}
-        title="Recent documents"
-      >
-        <span className="material-symbols-outlined">filter_none</span>
-      </button>
+      <div className={`rv-office-document-sidepanel-header${sidePanel === 'files' ? ' rv-office-document-sidepanel-header--open' : ''}`}>
+        {sidePanel === 'files' ? (
+          <span className="rv-office-document-sidepanel-heading">Recent</span>
+        ) : null}
+        <button
+          className={`rv-office-document-action${sidePanel === 'files' ? ' rv-office-document-action--active' : ''}${sidePanel !== 'none' ? ' rv-office-document-action--floating' : ''}`}
+          onClick={onToggleRecentPanel}
+          title="Recent documents"
+        >
+          <span className="material-symbols-outlined">browse_gallery</span>
+        </button>
+      </div>
     </div>
   );
 }

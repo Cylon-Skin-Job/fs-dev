@@ -42,7 +42,10 @@ export function useFileTreeListener() {
 
         if (msg.type === 'file_content_response' && msg.panel === 'file-viewer') {
           if (msg.success) {
-            useFileStore.getState().applyFileContent(msg.path, msg.content, msg.size);
+            useFileStore.getState().applyFileContent(msg.path, msg.content, msg.size, {
+              isSymlink: msg.isSymlink,
+              symlinkTarget: msg.symlinkTarget,
+            });
           } else {
             useFileStore.getState().removeTabAfterError(
               msg.path,

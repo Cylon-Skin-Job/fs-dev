@@ -9,7 +9,7 @@ test('wiki floating chat', async ({ page }) => {
   await page.waitForTimeout(1000);
 
   // Click Home topic so we have content
-  await page.locator('.wiki-topic-item', { hasText: 'Home' }).click();
+  await page.locator('.rv-wiki-topic-item', { hasText: 'Home' }).click();
   await page.waitForTimeout(2000);
 
   await page.screenshot({ path: 'e2e/screenshots/01-wiki-with-fab.png', fullPage: true });

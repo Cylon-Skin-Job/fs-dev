@@ -101,7 +101,7 @@
 }
 
 .rv-browser-url-input:focus {
-  border-color: var(--color-primary, #00d4ff);
+  border-color: var(--color-primary, #39628e);
 }
 
 /* Star button — embedded at right edge of URL input */
@@ -125,7 +125,7 @@
 
 .rv-browser-star-btn:hover {
   background: var(--glass-md, rgba(255, 255, 255, 0.08));
-  color: var(--color-primary, #00d4ff);
+  color: var(--color-primary, #39628e);
 }
 
 .rv-browser-star-btn .material-symbols-outlined {

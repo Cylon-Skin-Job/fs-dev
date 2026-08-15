@@ -9,6 +9,7 @@ import { editorViewCtx } from '@milkdown/kit/core';
 import { undo, redo } from '@milkdown/prose/history';
 import type { FileWithContent } from '../../state/fileDataStore';
 import type { DocumentSettings } from '../../lib/front-matter';
+import { PaperBrightnessControl } from '../PaperBrightnessControl';
 
 const PANEL = 'office-viewer';
 
@@ -16,6 +17,7 @@ interface OfficeDocumentToolbarProps {
   file: FileWithContent;
   docSettings: DocumentSettings;
   setDocSettings: React.Dispatch<React.SetStateAction<DocumentSettings>>;
+  onAlignmentChange: (alignment: DocumentSettings['alignment']) => void;
   zoom: number;
   setZoom: React.Dispatch<React.SetStateAction<number>>;
   crepeRef: React.RefObject<Crepe | null>;
@@ -24,12 +26,17 @@ interface OfficeDocumentToolbarProps {
   marginsMenuRef: React.RefObject<HTMLDivElement | null>;
   marginsMenuOpen: boolean;
   setMarginsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  brightnessMenuOpen: boolean;
+  setBrightnessMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  paperBrightness: number;
+  onPaperBrightnessChange: (value: number) => void;
 }
 
 export function OfficeDocumentToolbar({
   file,
   docSettings,
   setDocSettings,
+  onAlignmentChange,
   zoom,
   setZoom,
   crepeRef,
@@ -38,6 +45,10 @@ export function OfficeDocumentToolbar({
   marginsMenuRef,
   marginsMenuOpen,
   setMarginsMenuOpen,
+  brightnessMenuOpen,
+  setBrightnessMenuOpen,
+  paperBrightness,
+  onPaperBrightnessChange,
 }: OfficeDocumentToolbarProps) {
   const markDirty = () => {
     setIsDirty(true);
@@ -47,6 +58,15 @@ export function OfficeDocumentToolbar({
   return (
     <div className="rv-office-document-toolbar">
       <button
+        type="button"
+        className="rv-office-document-toolbar-btn"
+        title="Version history"
+        aria-label="Version history"
+      >
+        <span className="material-symbols-outlined">history</span>
+      </button>
+      <button
+        type="button"
         className="rv-office-document-toolbar-btn"
         onClick={() => crepeRef.current?.editor.action((ctx) => {
           const view = ctx.get(editorViewCtx);
@@ -57,6 +77,7 @@ export function OfficeDocumentToolbar({
         <span className="material-symbols-outlined">undo</span>
       </button>
       <button
+        type="button"
         className="rv-office-document-toolbar-btn"
         onClick={() => crepeRef.current?.editor.action((ctx) => {
           const view = ctx.get(editorViewCtx);
@@ -110,7 +131,7 @@ export function OfficeDocumentToolbar({
         <button
           key={align}
           className={`rv-office-document-toolbar-btn${docSettings.alignment === align ? ' rv-office-toolbar-btn--active' : ''}`}
-          onClick={() => { setDocSettings((s) => ({ ...s, alignment: align })); markDirty(); }}
+          onClick={() => onAlignmentChange(align)}
           title={`Align ${align}`}
         >
           <span className="material-symbols-outlined">
@@ -127,7 +148,10 @@ export function OfficeDocumentToolbar({
       <div className="rv-office-margins-menu" ref={marginsMenuRef}>
         <button
           className={`rv-office-document-toolbar-btn${marginsMenuOpen ? ' rv-office-toolbar-btn--active' : ''}`}
-          onClick={() => setMarginsMenuOpen((v) => !v)}
+          onClick={() => {
+            setBrightnessMenuOpen(false);
+            setMarginsMenuOpen((v) => !v);
+          }}
           title="Page margins"
         >
           <span className="material-symbols-outlined">border_outer</span>
@@ -171,6 +195,21 @@ export function OfficeDocumentToolbar({
       >
         <span className="material-symbols-outlined">zoom_in</span>
       </button>
+
+      <div className="rv-office-document-toolbar-divider" />
+
+      <PaperBrightnessControl
+        value={paperBrightness}
+        onChange={onPaperBrightnessChange}
+        ariaLabel="Document brightness"
+        open={brightnessMenuOpen}
+        onOpenChange={(nextOpen) => {
+          if (nextOpen) setMarginsMenuOpen(false);
+          setBrightnessMenuOpen(nextOpen);
+        }}
+        buttonClassName="rv-office-document-toolbar-btn"
+        buttonActiveClassName="rv-office-toolbar-btn--active"
+      />
     </div>
   );
 }

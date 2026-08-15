@@ -58,7 +58,7 @@ describe('ai path helpers', () => {
     expect(aiPaths.sanitizeMachineName('')).toBe('local-machine');
   });
 
-  test('initializes and caches local machine identity from system_config', async () => {
+  test('initializes and caches local machine name from system_config', async () => {
     delete process.env.FUSION_LOCAL_MACHINE;
     const db = createFakeConfigDb({
       [aiPaths.LOCAL_MACHINE_CONFIG_KEY]: 'Studio Machine',

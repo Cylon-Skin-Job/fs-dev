@@ -5,7 +5,6 @@
   "label": "Files",
   "description": "Primary coding assistant — write, edit, and explore source files",
   "type": "file-explorer",
-  "icon": "code_blocks",
   "rank": 1,
   "sort": "updated",
   "created": "2026-03-12T18:17:00-07:00",

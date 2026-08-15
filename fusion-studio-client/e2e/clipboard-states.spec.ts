@@ -4,7 +4,7 @@ test('clipboard states - hover and inactive only, no color highlight', async ({ 
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
 
   // Default state
   const defaultStyles = await trigger.evaluate(el => {

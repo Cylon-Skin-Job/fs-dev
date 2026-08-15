@@ -1,13 +1,13 @@
 /**
  * @module FilePageView
- * @role Full-content file viewer for the doc-viewer panel
+ * @role Full-content file viewer for the capture-viewer panel
  *
  * Pure presentation. Displays a single file at readable size, with a back
  * button, filename, chrome actions, mode toggle, and a bottom ribbon of
  * sibling tiles.
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { DocumentTile } from '../tile-row/DocumentTile';
 import { isImageFile } from '../tile-row/documentTileUtils';
@@ -16,6 +16,12 @@ import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 import { getPanelFileUrl } from '../../lib/panels';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
+import { usePanelStore } from '../../state/panelStore';
+import { DOC_VIEWER_ARCHIVE_FOLDER } from '../../hooks/useDocViewerState';
+import { activityId } from '../../lib/viewActivity';
+import { normalizeViewCollections } from '../../lib/viewCollections';
+import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
+import { IframeSurface, useCacheBusterUrl } from '../iframe';
 import { DocViewerChrome } from './DocViewerChrome';
 import './FilePageView.css';
 import './DocViewerHeader.css';
@@ -51,8 +57,10 @@ export function FilePageView({
   onSelectSibling,
 }: FilePageViewProps) {
   const isImage = isImageFile(file.name);
-  const isMarkdown = file.extension === 'md' || file.name.endsWith('.md');
-  const isArchiveDoc = folder.includes('/Archive');
+  const extension = file.extension || file.name.split('.').pop()?.toLowerCase() || '';
+  const isMarkdown = extension === 'md' || extension === 'markdown';
+  const isHtml = extension === 'html' || extension === 'htm';
+  const isArchiveDoc = folder === DOC_VIEWER_ARCHIVE_FOLDER;
   const titleLabel = isArchiveDoc
     ? `ARCHIVE: ${file.name}`
     : folderName
@@ -60,6 +68,11 @@ export function FilePageView({
       : file.name;
   const [viewMode, setViewMode] = useState<'code' | 'markdown'>('code');
   const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
+  const rawCollections = usePanelStore((s) => s.viewStates[panel]?.collections);
+  const starredIds = useMemo(
+    () => new Set(normalizeViewCollections(rawCollections).starred.map((item) => item.id)),
+    [rawCollections]
+  );
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,14 +92,14 @@ export function FilePageView({
       <DocViewerChrome
         left={
           <>
-            <button className="rv-doc-viewer-back" onClick={onBack} title="Back to tiles">
+            <button className="rv-capture-viewer-back" onClick={onBack} title="Back to tiles">
               <span className="material-symbols-outlined">arrow_back</span>
             </button>
-            <span className="rv-doc-viewer-title">{titleLabel}</span>
+            <span className="rv-capture-viewer-title">{titleLabel}</span>
             {isArchiveDoc && onRestore && (
               <button
                 type="button"
-                className="rv-doc-viewer-restore"
+                className="rv-capture-viewer-restore"
                 onClick={onRestore}
                 title="Restore to active folder"
               >
@@ -96,7 +109,13 @@ export function FilePageView({
           </>
         }
         right={
-          <div className="rv-doc-viewer-actions">
+          <div className="rv-capture-viewer-actions">
+            {file.isSymlink && file.symlinkTarget ? (
+              <LinkedResourceIndicator
+                symlinkTarget={file.symlinkTarget}
+                className="rv-file-page-action"
+              />
+            ) : null}
             {!isArchiveDoc && onArchive && (
               <button
                 type="button"
@@ -126,17 +145,24 @@ export function FilePageView({
 
       <div
         ref={contentRef}
-        className={`rv-file-page-content${!isImage && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
+        className={`rv-file-page-content${isHtml ? ' rv-file-page-html' : ''}${!isImage && !isHtml && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
         onScroll={(e) => onDocScroll?.(e.currentTarget.scrollTop)}
       >
         {isImage ? (
           <img
-            src={getPanelFileUrl(panel, `${folder}/${file.name}`)}
+            src={getPanelFileUrl(panel, file.path)}
             alt={file.name}
             className="rv-file-page-image"
           />
+        ) : isHtml ? (
+          <IframeSurface
+            className="rv-file-page-html-frame"
+            iframeClassName="rv-file-page-html-iframe"
+            src={useCacheBusterUrl(getPanelFileUrl(panel, file.path), true)}
+            title={file.name}
+          />
         ) : (
-          <CodeView content={file.content} extension={file.extension} mode={isMarkdown ? viewMode : 'code'} />
+          <CodeView content={file.content} extension={extension} mode={isMarkdown ? viewMode : 'code'} />
         )}
       </div>
 
@@ -153,6 +179,7 @@ export function FilePageView({
                 folderPath={folder}
                 size="small"
                 active={sib.path === file.path}
+                starred={starredIds.has(activityId(panel, sib.path))}
                 onClick={() => onSelectSibling(sib)}
               />
             ))}

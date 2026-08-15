@@ -30,6 +30,6 @@ Living reference layer for architecture, decisions, and evolving knowledge.
 ## Principles
 
 - **Skills are durable. Wikis are living.** — Skills define capabilities. The wiki captures the reasoning, decisions, and context behind them.
-- **Local-first** — Wiki pages live in `ai/views/wiki-viewer/Wiki/` alongside the code.
+- **Local-first** — Wiki pages live in `ai/<machine>/Wiki/` alongside the code.
 - **One truth** — If it's a decision or architecture rationale, it belongs here, not in code comments.
 - **Progressive disclosure** — Load what you need, when you need it. Not everything at once.

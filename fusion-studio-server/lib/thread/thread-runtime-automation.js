@@ -64,6 +64,7 @@ function getAutomationRuntimeStatus(rawTarget) {
 function createHeadlessSession(target) {
   return {
     currentWorkspaceId: target.workspaceId,
+    projectRoot: target.projectRoot,
     currentThreadId: target.threadId,
     currentScope: target.scope,
     currentViewId: target.viewId,
@@ -81,22 +82,11 @@ function createHeadlessSession(target) {
 }
 
 function createAutomationBridge(target, manager, session) {
-  async function persistAssistantMessage(_ws, content, hasToolCalls, metadata, explicitThreadId) {
-    const threadId = explicitThreadId || target.threadId;
-    const message = { role: 'assistant', content, hasToolCalls };
-    if (metadata && Object.keys(metadata).length > 0) {
-      await manager.addMessageWithMetadata(threadId, message, metadata);
-    } else {
-      await manager.addMessage(threadId, message);
-    }
-  }
-
   const applier = createCanonicalChatEventApplier({
     session,
     emit,
     resolveWorkspace: resolveScope,
     touchThreadSession: () => manager.touchSession(target.threadId),
-    persistAssistantMessage,
     checkSettingsBounce,
     generateTurnId: () => generateId(),
   });

@@ -3,9 +3,9 @@ import { test, expect } from '@playwright/test';
 test.describe('Block Rendering', () => {
   test('orb appears after 500ms pause, then animates and disappears', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
     
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('Hello');
     
     const orb = page.locator('.material-symbols-outlined:has-text("lens_blur")');
@@ -28,10 +28,10 @@ test.describe('Block Rendering', () => {
   
   test('think block renders with shimmer then content', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
     
     // Request thinking
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('Explain your reasoning');
     
     const sendButton = page.locator('.send-btn').first();
@@ -46,9 +46,9 @@ test.describe('Block Rendering', () => {
   
   test('blocks queue sequentially', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('textarea.chat-input');
+    await page.waitForSelector('textarea.rv-chat-input');
     
-    const textarea = page.locator('textarea.chat-input').first();
+    const textarea = page.locator('textarea.rv-chat-input').first();
     await textarea.fill('Tell me a story');
     
     const sendButton = page.locator('.send-btn').first();

@@ -1,13 +1,14 @@
 /**
  * Run Folder Setup — creates the run directory and freezes seed files.
  *
- * Each run lives at:
- *   {projectRoot}/ai/views/agents-viewer/{agentFolder}/runs/{timestamp}/
+ * Each run lives under the resolved agents-viewer operational root:
+ *   {agentsRoot}/{agentFolder}/runs/{timestamp}/
  */
 
 const fs = require('fs');
 const path = require('path');
 const { parsePrompt } = require('./prompt-builder');
+const views = require('../views');
 
 /**
  * Filesystem-safe ISO timestamp: YYYY-MM-DDTHH-MM-SS
@@ -28,7 +29,7 @@ function makeTimestamp() {
  */
 function createRunFolder(projectRoot, agentFolder, ticket) {
   const runId = makeTimestamp();
-  const agentBase = path.join(projectRoot, 'ai', 'views', 'agents-viewer', agentFolder);
+  const agentBase = path.join(views.resolveOperationalViewRoot(projectRoot, 'agents-viewer'), agentFolder);
   const runPath = path.join(agentBase, 'runs', runId);
 
   // Create run directory (and runs/ parent if needed)
@@ -38,7 +39,7 @@ function createRunFolder(projectRoot, agentFolder, ticket) {
 
   // 1. ticket.md — copy from the issues panel
   const ticketSource = path.join(
-    projectRoot, 'ai', 'views', 'issues-viewer', ticket.filename
+    views.resolveOperationalViewRoot(projectRoot, 'issues-viewer'), ticket.filename
   );
   if (fs.existsSync(ticketSource)) {
     fs.copyFileSync(ticketSource, path.join(runPath, 'ticket.md'));

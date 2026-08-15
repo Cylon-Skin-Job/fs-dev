@@ -424,7 +424,7 @@ Other wire fields we could capture in metadata:
 
 ## Appendix: Universal Ledger (Future)
 
-**Status:** Design complete, implementation pending.
+**Status:** Historical design sketch; superseded for ledger/provenance implementation by the current [`008-Provenance-Temp` spec set](ai/RC-MacAir-15/Captures/008-Provenance-Temp/00-provenance-spec-set-map.md). Do not implement this appendix's standalone ledger schema, wire-derived mutation vocabulary, or `msg_id` bridge as the canonical provenance model. This correction follows the [2026-07-15 cross-article findings](ai/RC-MacAir-15/Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat; decision-tagged findings remain open.
 
 The Message ID audit is Phase 1 of a larger system: a **sparse temporal index** that enables tracing file mutations across the entire project history without duplicating content.
 

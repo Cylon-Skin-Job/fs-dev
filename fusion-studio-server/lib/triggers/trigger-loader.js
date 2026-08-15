@@ -12,6 +12,9 @@ const { parseTriggerBlocks } = require('./trigger-parser');
 const { runScript } = require('./script-runner');
 const { buildFilter, evaluateCondition, applyTemplate } = require('../watcher/filter-loader');
 const { on } = require('../event-bus');
+const views = require('../views');
+const { createCycleGuard } = require('../fs/cycle-guard');
+const { classifyEntrySync } = require('../fs/dirents');
 
 /**
  * Register an event bus listener for a TRIGGERS.md block.
@@ -73,17 +76,28 @@ function registerBusListener(eventType, block, assignee, actionHandlers) {
  * @param {string} dir - Directory to scan
  * @returns {string[]} Absolute paths to TRIGGERS.md files
  */
-function findTriggersFiles(dir) {
+function realpathOrNull(targetPath) {
+  try {
+    return fs.realpathSync(targetPath);
+  } catch {
+    return null;
+  }
+}
+
+function findTriggersFiles(dir, cycleGuard = createCycleGuard()) {
   const results = [];
   if (!fs.existsSync(dir)) return results;
+  const dirRealPath = realpathOrNull(dir);
+  if (!cycleGuard.shouldEnter(dirRealPath)) return results;
 
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     if (entry.name === 'node_modules' || entry.name === '.git') continue;
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...findTriggersFiles(fullPath));
-    } else if (entry.name === 'TRIGGERS.md') {
+    const classified = classifyEntrySync(dir, entry);
+    if (classified.isDir) {
+      results.push(...findTriggersFiles(fullPath, cycleGuard));
+    } else if (classified.isFile && entry.name === 'TRIGGERS.md') {
       results.push(fullPath);
     }
   }
@@ -107,7 +121,8 @@ function deriveAssignee(triggersPath, projectRoot) {
 
 /**
  * Scan agent folders for TRIGGERS.md and build filters + cron triggers.
- * Also scans ai/views/ and ai/components/ recursively for additional TRIGGERS.md files.
+ * Also scans the active view-capsule root and ai/components/ recursively
+ * for additional TRIGGERS.md files.
  *
  * @param {string} projectRoot - Absolute path to project root
  * @param {string} agentsBasePath - Absolute path to agents panel
@@ -120,6 +135,7 @@ function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
   const filters = [];
   const cronTriggers = [];
   const processedPaths = new Set();
+  const cycleGuard = createCycleGuard();
 
   // --- Pass 1: Agent TRIGGERS.md files (with known assignees from registry) ---
 
@@ -127,7 +143,7 @@ function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
     const agentPath = path.join(agentsBasePath, agent.folder);
 
     // Scan agent root and all subfolders (workflows, etc.)
-    const agentTriggerFiles = findTriggersFiles(agentPath);
+    const agentTriggerFiles = findTriggersFiles(agentPath, cycleGuard);
     for (const triggersPath of agentTriggerFiles) {
       processedPaths.add(triggersPath);
       const blocks = parseTriggerBlocks(triggersPath);
@@ -140,15 +156,15 @@ function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
     }
   }
 
-  // --- Pass 2: Recursive scan of ai/views/ and ai/components/ ---
+  // --- Pass 2: Recursive scan of view capsules and ai/components/ ---
 
   const scanDirs = [
-    path.join(projectRoot, 'ai', 'views'),
+    views.getViewsRoot(projectRoot),
     path.join(projectRoot, 'ai', 'components'),
   ];
 
   for (const scanDir of scanDirs) {
-    const triggerFiles = findTriggersFiles(scanDir);
+    const triggerFiles = findTriggersFiles(scanDir, cycleGuard);
     for (const triggersPath of triggerFiles) {
       if (processedPaths.has(triggersPath)) continue;
       processedPaths.add(triggersPath);

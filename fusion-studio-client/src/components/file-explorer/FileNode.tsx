@@ -25,6 +25,8 @@ export function FileNode({ node, depth }: FileNodeProps) {
       path: node.path,
       type: 'file',
       extension: node.extension,
+      isSymlink: node.isSymlink,
+      symlinkTarget: node.symlinkTarget,
     });
   }
 

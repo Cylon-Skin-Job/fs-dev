@@ -2,7 +2,7 @@
  * WorkspaceRibbon styles
  *
  * Glass dropdown panel centered beneath the header.
- * Visual language matches the doc-viewer bottom ribbon:
+ * Visual language matches the capture-viewer bottom ribbon:
  * diagonal white-alpha gradient, blurred + saturated backdrop,
  * thin highlight border, inset glow.
  */
@@ -75,13 +75,13 @@
 .rv-workspace-ribbon-item.is-dragging {
   opacity: 0.34;
   transform: scale(0.96);
-  outline: 1px dashed rgba(var(--theme-primary-rgb, 0, 212, 255), 0.42);
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+  outline: 1px dashed rgba(var(--theme-primary-rgb, 57, 98, 142), 0.42);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.08);
 }
 
 .rv-workspace-ribbon-item.is-drop-target {
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.16);
-  outline: 1px solid rgba(var(--theme-primary-rgb, 0, 212, 255), 0.36);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.16);
+  outline: 1px solid rgba(var(--theme-primary-rgb, 57, 98, 142), 0.36);
 }
 
 .rv-workspace-ribbon-item:hover {
@@ -89,7 +89,7 @@
 }
 
 .rv-workspace-ribbon-item.is-active {
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.12);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.12);
 }
 
 .rv-workspace-ribbon-item-thumb {

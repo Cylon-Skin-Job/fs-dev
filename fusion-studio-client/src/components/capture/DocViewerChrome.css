@@ -1,4 +1,4 @@
-.rv-doc-viewer-chrome {
+.rv-capture-viewer-chrome {
   display: flex;
   align-items: center;
   gap: var(--space-xs, 4px);
@@ -9,31 +9,31 @@
   flex-shrink: 0;
 }
 
-.rv-doc-viewer-chrome-left,
-.rv-doc-viewer-chrome-center,
-.rv-doc-viewer-chrome-right {
+.rv-capture-viewer-chrome-left,
+.rv-capture-viewer-chrome-center,
+.rv-capture-viewer-chrome-right {
   display: flex;
   align-items: center;
   gap: var(--space-xs, 4px);
   min-width: 0;
 }
 
-.rv-doc-viewer-chrome-left {
+.rv-capture-viewer-chrome-left {
   flex: 1;
   justify-content: flex-start;
 }
 
-.rv-doc-viewer-chrome-center {
+.rv-capture-viewer-chrome-center {
   flex: 0 0 auto;
   justify-content: center;
 }
 
-.rv-doc-viewer-chrome-right {
+.rv-capture-viewer-chrome-right {
   flex: 1;
   justify-content: flex-end;
 }
 
-.rv-doc-viewer-back {
+.rv-capture-viewer-back {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,16 +48,16 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.rv-doc-viewer-back:hover {
+.rv-capture-viewer-back:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.08));
   color: var(--text-primary, #eee);
 }
 
-.rv-doc-viewer-back .material-symbols-outlined {
+.rv-capture-viewer-back .material-symbols-outlined {
   font-size: 1.125rem;
 }
 
-.rv-doc-viewer-title {
+.rv-capture-viewer-title {
   margin: 0 0 0 var(--space-sm, 8px);
   color: var(--accent-dim, var(--text-primary, #eee));
   font-size: 0.8125rem;
@@ -67,7 +67,7 @@
   text-overflow: ellipsis;
 }
 
-.rv-doc-viewer-restore {
+.rv-capture-viewer-restore {
   margin-left: var(--space-sm, 8px);
   padding: var(--space-xs, 4px) var(--space-md, 12px);
   font-size: 11px;
@@ -80,18 +80,18 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.rv-doc-viewer-restore:hover {
+.rv-capture-viewer-restore:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.08));
   color: var(--text-primary, #eee);
 }
 
-.rv-doc-viewer-actions {
+.rv-capture-viewer-actions {
   display: flex;
   align-items: center;
   gap: var(--space-xs, 4px);
 }
 
-.rv-doc-viewer-actions .rv-file-page-action {
+.rv-capture-viewer-actions .rv-file-page-action {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,11 +106,11 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.rv-doc-viewer-actions .rv-file-page-action:hover {
+.rv-capture-viewer-actions .rv-file-page-action:hover {
   background: var(--surface-hover, rgba(255, 255, 255, 0.08));
   color: var(--text-primary, #eee);
 }
 
-.rv-doc-viewer-actions .rv-file-page-action .material-symbols-outlined {
+.rv-capture-viewer-actions .rv-file-page-action .material-symbols-outlined {
   font-size: 1.125rem;
 }

@@ -4,7 +4,7 @@ test('clipboard icon styling - hover and active states', async ({ page }) => {
   await page.goto('http://localhost:3001');
   await page.waitForTimeout(1500);
 
-  const trigger = page.locator('[title='Clipboard history (click to open)']:visible').first();
+  const trigger = page.locator('[title="Clipboard history (click to open)"]:visible').first();
 
   // Test 1: Default state styling
   const defaultStyles = await trigger.evaluate(el => {

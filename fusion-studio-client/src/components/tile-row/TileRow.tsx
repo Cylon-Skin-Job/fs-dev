@@ -6,12 +6,14 @@
  * Supports right-click context menu for rename, archive/restore, and delete.
  */
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
-import { useTileFileActions } from '../../hooks/useTileFileActions';
-import { showContextMenu } from '../../lib/contextMenu';
+import { useFileTileMenu } from '../../hooks/useFileTileMenu';
 import { DocumentTile } from './DocumentTile';
 import type { FileWithContent } from '../../state/fileDataStore';
+import { usePanelStore } from '../../state/panelStore';
+import { activityId } from '../../lib/viewActivity';
+import { normalizeViewCollections } from '../../lib/viewCollections';
 
 // Re-export for consumers that import from here
 export type { FileWithContent } from '../../state/fileDataStore';
@@ -33,42 +35,15 @@ export interface FileEntry {
 
 export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: TileRowProps) {
   const { files, loading } = useFolderFiles(panel, folder);
-  const { isArchive, renameFile, archiveOrRestoreFile, deleteFile } = useTileFileActions({
+  const rawCollections = usePanelStore((s) => s.viewStates[panel]?.collections);
+  const starredIds = useMemo(
+    () => new Set(normalizeViewCollections(rawCollections).starred.map((item) => item.id)),
+    [rawCollections]
+  );
+  const { getFileContextMenuHandler, getFileMoreClickHandler } = useFileTileMenu({
     panel,
     folder,
   });
-  const closeMenuRef = useRef<(() => void) | null>(null);
-
-  useEffect(() => {
-    return () => {
-      closeMenuRef.current?.();
-    };
-  }, []);
-
-  const handleContextMenu = useCallback(
-    (file: FileWithContent) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      closeMenuRef.current?.();
-
-      const items = [
-        { label: 'Rename', action: () => renameFile(file) },
-        {
-          label: isArchive ? 'Restore' : 'Archive',
-          action: () => archiveOrRestoreFile(file),
-        },
-        { label: 'Delete', danger: true, action: () => deleteFile(file) },
-      ];
-
-      closeMenuRef.current = showContextMenu({
-        x: e.clientX,
-        y: e.clientY,
-        items,
-      });
-    },
-    [isArchive, renameFile, archiveOrRestoreFile, deleteFile]
-  );
 
   return (
     <div className="rv-tile-row">
@@ -93,11 +68,13 @@ export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: Til
                 extension={file.extension}
                 panel={panel}
                 folderPath={folder}
+                starred={starredIds.has(activityId(panel, file.path))}
                 onClick={() => {
                   onFileClick?.(file.path);
                   onFileSelect?.(file, files);
                 }}
-                onContextMenu={handleContextMenu(file)}
+                onContextMenu={getFileContextMenuHandler(file)}
+                onMoreClick={getFileMoreClickHandler(file)}
               />
             ))}
             {files.length > 30 && (

@@ -21,6 +21,30 @@ const { resolveViewState, writeViewStatePatch } = require('../view-state');
 const { moveFileWithArchive } = require('../file-ops');
 const createService = require('../workspace/create-service');
 const { getPanelPath } = require('../views/panel-paths');
+const { classifyEntry } = require('../fs/dirents');
+
+const OFFICE_PANEL = 'office-viewer';
+const OFFICE_THUMBNAIL_FOLDER = '.thumbnails';
+
+function officeThumbnailPathForDocument(documentPath) {
+  return path.join(path.dirname(documentPath), OFFICE_THUMBNAIL_FOLDER, `${path.basename(documentPath)}.png`);
+}
+
+async function moveOfficeThumbnail(sourcePath, targetPath) {
+  const sourceThumbnail = officeThumbnailPathForDocument(sourcePath);
+  if (!fs.existsSync(sourceThumbnail)) return;
+  const targetThumbnail = officeThumbnailPathForDocument(targetPath);
+  if (sourceThumbnail === targetThumbnail) return;
+  await fsPromises.mkdir(path.dirname(targetThumbnail), { recursive: true });
+  if (fs.existsSync(targetThumbnail)) {
+    await fsPromises.rm(targetThumbnail, { force: true });
+  }
+  await fsPromises.rename(sourceThumbnail, targetThumbnail);
+}
+
+async function removeOfficeThumbnail(documentPath) {
+  await fsPromises.rm(officeThumbnailPathForDocument(documentPath), { force: true });
+}
 
 /**
  * @param {object} deps
@@ -29,21 +53,41 @@ const { getPanelPath } = require('../views/panel-paths');
  * @param {() => import('ws').WebSocket[]} deps.getAllClients
  */
 function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
-  function broadcastFileChanged(filePath) {
+  const mutationPanels = ['capture-viewer', 'office-viewer', 'email-viewer', 'file-viewer'];
+
+  function isPathInside(root, candidate) {
+    const relative = path.relative(path.resolve(root), path.resolve(candidate));
+    return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+  }
+
+  function isValidEntryName(name) {
+    return Boolean(name) &&
+      !name.includes('/') &&
+      !name.includes('\\') &&
+      name !== '.' &&
+      name !== '..';
+  }
+
+  function broadcastFileChanged(panel, filePath) {
     const clients = getAllClients ? getAllClients() : [];
     if (!clients.length) return;
-    const payload = JSON.stringify({ type: 'file_changed', panel: 'doc-viewer', filePath });
+    const payload = JSON.stringify({ type: 'file_changed', panel, filePath });
     for (const client of clients) {
       if (client.readyState === 1) client.send(payload);
     }
   }
 
-  function relativeToDocViewer(absPath) {
-    const panelRoot = getPanelPath('doc-viewer', ws);
-    if (!panelRoot) return null;
-    const rel = path.relative(panelRoot, absPath);
-    if (rel.startsWith('..')) return null;
-    return rel.split(path.sep).join('/');
+  function relativeToPanel(absPath) {
+    const resolvedPath = path.resolve(absPath);
+    for (const panel of mutationPanels) {
+      const panelRoot = getPanelPath(panel, ws);
+      if (!panelRoot) continue;
+      const rel = path.relative(path.resolve(panelRoot), resolvedPath);
+      if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) {
+        return { panel, path: rel.split(path.sep).join('/') };
+      }
+    }
+    return null;
   }
   return {
     // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
@@ -161,18 +205,9 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         }));
         return;
       }
-      if (clientMsg.viewIds !== undefined && !Array.isArray(clientMsg.viewIds)) {
-        ws.send(JSON.stringify({
-          type: 'workspace:create_rejected',
-          message: 'workspace:create_requested viewIds must be an array when provided.',
-        }));
-        return;
-      }
       emit('workspace:create_requested', {
         projectPath: clientMsg.projectPath,
         label: typeof clientMsg.label === 'string' ? clientMsg.label : '',
-        viewIds: Array.isArray(clientMsg.viewIds) ? clientMsg.viewIds : undefined,
-        workspaceTemplateId: typeof clientMsg.workspaceTemplateId === 'string' ? clientMsg.workspaceTemplateId : undefined,
         connectionId: session.connectionId,
       });
     },
@@ -187,7 +222,8 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         const folders = [];
 
         for (const entry of entries) {
-          if (!entry.isDirectory()) continue;
+          const classified = await classifyEntry(resolved, entry);
+          if (!classified.isDir) continue;
           if (entry.name.startsWith('.')) continue;
           if (entry.name === 'node_modules') continue;
 
@@ -254,17 +290,23 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         ws.send(JSON.stringify({
           type: 'state:result',
           view: clientMsg.view,
+          clientMutationId: clientMsg.clientMutationId,
           state: merged,
         }));
       } catch (err) {
         console.error('[state:set] failed:', err);
-        ws.send(JSON.stringify({ type: 'state:error', message: err.message }));
+        ws.send(JSON.stringify({
+          type: 'state:error',
+          view: clientMsg.view,
+          clientMutationId: clientMsg.clientMutationId,
+          message: err.message,
+        }));
       }
     },
 
     // ---- File move ----
 
-    'file:move'(clientMsg) {
+    async 'file:move'(clientMsg) {
       try {
         const { source, target } = clientMsg;
         const projectRoot = session.projectRoot;
@@ -272,6 +314,12 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
           return;
         }
+        if (!isPathInside(projectRoot, source) || !isPathInside(projectRoot, target)) {
+          ws.send(JSON.stringify({ type: 'file:move_error', error: 'Source or target path outside project root' }));
+          return;
+        }
+        const sourceStat = fs.statSync(source);
+        const sourceIsDirectory = sourceStat.isDirectory();
         const result = moveFileWithArchive(source, target, projectRoot);
         emit('system:file_deployed', {
           source,
@@ -279,13 +327,21 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           archived: result.archived,
           moved: result.moved,
         });
-        const sourceRel = relativeToDocViewer(source);
-        const targetRel = relativeToDocViewer(result.moved);
-        if (sourceRel) broadcastFileChanged(sourceRel);
-        if (targetRel) broadcastFileChanged(targetRel);
+        const sourceRef = relativeToPanel(source);
+        const targetRef = relativeToPanel(result.moved);
+        if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
+          await moveOfficeThumbnail(source, result.moved);
+        }
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
+        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path);
         ws.send(JSON.stringify({
           type: 'file:moved',
           ...result,
+          sourcePanel: sourceRef?.panel,
+          sourcePath: sourceRef?.path,
+          targetPanel: targetRef?.panel,
+          targetPath: targetRef?.path,
+          sourceIsDirectory,
         }));
       } catch (err) {
         console.error(`[FileMove] ${err.message}`);
@@ -299,7 +355,8 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     async 'file:rename'(clientMsg) {
       try {
         const { source, newName } = clientMsg;
-        if (typeof source !== 'string' || typeof newName !== 'string' || !newName.trim()) {
+        const trimmedName = typeof newName === 'string' ? newName.trim() : '';
+        if (typeof source !== 'string' || !isValidEntryName(trimmedName)) {
           ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source and newName are required' }));
           return;
         }
@@ -310,21 +367,36 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         }
         const resolvedSource = path.resolve(source);
         const resolvedRoot = path.resolve(projectRoot);
-        if (!resolvedSource.startsWith(resolvedRoot)) {
+        if (!isPathInside(resolvedRoot, resolvedSource) || resolvedSource === resolvedRoot) {
           ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source path outside project root' }));
           return;
         }
-        const target = path.join(path.dirname(resolvedSource), newName.trim());
+        const sourceStat = await fsPromises.stat(resolvedSource);
+        const sourceIsDirectory = sourceStat.isDirectory();
+        const target = path.join(path.dirname(resolvedSource), trimmedName);
         if (fs.existsSync(target)) {
           ws.send(JSON.stringify({ type: 'file:rename_error', error: 'A file with that name already exists' }));
           return;
         }
         await fsPromises.rename(resolvedSource, target);
-        const sourceRel = relativeToDocViewer(resolvedSource);
-        const targetRel = relativeToDocViewer(target);
-        if (sourceRel) broadcastFileChanged(sourceRel);
-        if (targetRel) broadcastFileChanged(targetRel);
-        ws.send(JSON.stringify({ type: 'file:renamed', source, target, newName }));
+        const sourceRef = relativeToPanel(resolvedSource);
+        const targetRef = relativeToPanel(target);
+        if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
+          await moveOfficeThumbnail(resolvedSource, target);
+        }
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
+        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path);
+        ws.send(JSON.stringify({
+          type: 'file:renamed',
+          source,
+          target,
+          newName: trimmedName,
+          sourcePanel: sourceRef?.panel,
+          sourcePath: sourceRef?.path,
+          targetPanel: targetRef?.panel,
+          targetPath: targetRef?.path,
+          sourceIsDirectory,
+        }));
       } catch (err) {
         console.error(`[FileRename] ${err.message}`);
         ws.send(JSON.stringify({ type: 'file:rename_error', error: err.message }));
@@ -345,17 +417,113 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         }
         const resolvedSource = path.resolve(source);
         const resolvedRoot = path.resolve(projectRoot);
-        if (!resolvedSource.startsWith(resolvedRoot)) {
+        if (!isPathInside(resolvedRoot, resolvedSource) || resolvedSource === resolvedRoot) {
           ws.send(JSON.stringify({ type: 'file:delete_error', error: 'Source path outside project root' }));
           return;
         }
-        await fsPromises.unlink(resolvedSource);
-        const sourceRel = relativeToDocViewer(resolvedSource);
-        if (sourceRel) broadcastFileChanged(sourceRel);
-        ws.send(JSON.stringify({ type: 'file:deleted', source }));
+        const sourceStat = await fsPromises.stat(resolvedSource);
+        const sourceIsDirectory = sourceStat.isDirectory();
+        if (sourceIsDirectory) {
+          await fsPromises.rm(resolvedSource, { recursive: true, force: false });
+        } else {
+          await fsPromises.unlink(resolvedSource);
+        }
+        const sourceRef = relativeToPanel(resolvedSource);
+        if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL) {
+          await removeOfficeThumbnail(resolvedSource);
+        }
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
+        ws.send(JSON.stringify({
+          type: 'file:deleted',
+          source,
+          sourcePanel: sourceRef?.panel,
+          sourcePath: sourceRef?.path,
+          sourceIsDirectory,
+        }));
       } catch (err) {
         console.error(`[FileDelete] ${err.message}`);
         ws.send(JSON.stringify({ type: 'file:delete_error', error: err.message }));
+      }
+    },
+
+    async 'office:thumbnail_save'(clientMsg) {
+      const documentPath = typeof clientMsg.documentPath === 'string' ? clientMsg.documentPath : '';
+      try {
+        const { dataUrl } = clientMsg;
+        if (!documentPath || path.isAbsolute(documentPath) || documentPath.split(/[\\/]/).includes(OFFICE_THUMBNAIL_FOLDER)) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'Invalid document path',
+          }));
+          return;
+        }
+        if (typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/png;base64,')) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'office:thumbnail_save requires a PNG dataUrl',
+          }));
+          return;
+        }
+
+        const panelRoot = getPanelPath(OFFICE_PANEL, ws);
+        if (!panelRoot) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'Office panel root not loaded',
+          }));
+          return;
+        }
+
+        const basePath = path.resolve(panelRoot);
+        const resolvedDocument = path.resolve(basePath, documentPath);
+        if (!isPathInside(basePath, resolvedDocument) || resolvedDocument === basePath) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'Document path outside Office root',
+          }));
+          return;
+        }
+
+        const stat = await fsPromises.stat(resolvedDocument);
+        if (!stat.isFile()) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'Expected document file',
+          }));
+          return;
+        }
+
+        const thumbnailPath = officeThumbnailPathForDocument(resolvedDocument);
+        if (!isPathInside(basePath, thumbnailPath)) {
+          ws.send(JSON.stringify({
+            type: 'office:thumbnail_error',
+            documentPath,
+            error: 'Thumbnail path outside Office root',
+          }));
+          return;
+        }
+
+        const buffer = Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64');
+        await fsPromises.mkdir(path.dirname(thumbnailPath), { recursive: true });
+        await fsPromises.writeFile(thumbnailPath, buffer);
+        const savedAt = Date.now();
+        ws.send(JSON.stringify({
+          type: 'office:thumbnail_saved',
+          documentPath,
+          thumbnailPath: path.relative(basePath, thumbnailPath).split(path.sep).join('/'),
+          savedAt,
+        }));
+      } catch (err) {
+        ws.send(JSON.stringify({
+          type: 'office:thumbnail_error',
+          documentPath,
+          error: err.message,
+        }));
       }
     },
   };

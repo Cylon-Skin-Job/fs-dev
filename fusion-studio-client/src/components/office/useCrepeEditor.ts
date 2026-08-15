@@ -1,18 +1,13 @@
 /**
  * @module useCrepeEditor
- * @role Encapsulates the Crepe (Milkdown) editor lifecycle — init, toolbar
- *       customisation, markdown-update listener, and teardown. The main
- *       OfficeDocumentPage component owns all refs and passes them in so
- *       handleSave can still close over the stable ref.
+ * @role Encapsulates the Crepe (Milkdown) editor lifecycle, toolbar
+ *       customisation, markdown-update listener, and teardown.
  */
 import { useEffect, useRef } from 'react';
 import { Crepe } from '@milkdown/crepe';
 import '@milkdown/crepe/theme/common/style.css';
 import '@milkdown/crepe/theme/frame-dark.css';
-import {
-  headingSchema,
-  wrapInHeadingCommand,
-} from '@milkdown/kit/preset/commonmark';
+import { headingSchema, wrapInHeadingCommand } from '@milkdown/kit/preset/commonmark';
 import { commandsCtx, editorViewCtx, serializerCtx } from '@milkdown/kit/core';
 import type { Ctx } from '@milkdown/kit/ctx';
 import {
@@ -21,15 +16,71 @@ import {
   createAdjustSpanStyleCommand,
   emLabelPlugin,
 } from '../../lib/milkdown-span-style';
+import { officePlainMarkdownInputRules } from '../../lib/officePlainMarkdown';
+import { showToast } from '../../lib/toast';
+import type {
+  DocumentSettings,
+  DocumentTableLayout,
+  DocumentTableColors,
+} from '../../lib/front-matter';
 import type { SaveReason } from '../../state/fileDataStore';
-
-const PANEL = 'office-viewer';
+import {
+  installOfficeInsertContextMenu,
+  installOfficeTableInsertGrid,
+} from './officeInsertMenu';
+import { installOfficeTableContextMenu } from './officeTableContextMenu';
+import {
+  installOfficeTableGeometry,
+  type OfficeTableGeometryController,
+} from './officeTableGeometry';
+import { installOfficeTableConfirmDialog } from './officeTableConfirmDialog';
+import {
+  installOfficeTableColors,
+  type OfficeTableColorsController,
+} from './officeTableColors';
+import { installOfficeColorPopover } from './officeColorPopover';
+import { officeTableNodeView } from './officeTableNodeView';
+import {
+  installOfficeTableDisplay,
+  type OfficeTableDisplayController,
+} from './officeTableDisplay';
+import { officeTableHardbreakNodeView } from './officeTableHardbreak';
+import {
+  configureOfficeTableBreakCodec,
+  officeTableParagraphSchema,
+} from './officeTableBreakCodec';
+import {
+  configureOfficeTableTitleCodec,
+  officeTableTitleHeaderSchema,
+  officeTableTitleSchema,
+} from './officeTableTitleCodec';
+import {
+  createOfficeDeferredMarkdownPublicationState,
+  createOfficeDirtySaveScheduler,
+  dispatchOfficeTableMetadataAction,
+  publishOfficeTableMetadataCombinedCallbacks,
+  registerOfficeTableMetadataBindings,
+  type OfficeTableMetadataActionResult,
+} from './officeTableHistory';
+import { runOfficeTableRemoval } from './officeTableRemoval';
+import {
+  officeTableInitializationNormalizationKey,
+  officeTableTitleQuarantinePlugin,
+} from './officeTableMutations';
 
 interface UseCrepeEditorOptions {
   containerRef: React.RefObject<HTMLDivElement | null>;
   filePath: string;
   fileContent: string;
   parsedBody: string;
+  tableLayouts: unknown;
+  onTableLayoutsChange: (layouts: DocumentTableLayout[]) => void;
+  tableColors: unknown;
+  onTableColorsChange: (colors: DocumentTableColors[]) => void;
+  tableStyles: unknown;
+  onTableStylesChange: (styles: unknown) => void;
+  pageAlignment: DocumentSettings['alignment'];
+  onPageAlignmentChange: (alignment: DocumentSettings['alignment']) => void;
   setIsDirty: (dirty: boolean) => void;
   setDirty: (panel: string, path: string, dirty: boolean) => void;
   handleSaveRef: React.MutableRefObject<
@@ -46,6 +97,14 @@ export function useCrepeEditor({
   filePath,
   fileContent,
   parsedBody,
+  tableLayouts,
+  onTableLayoutsChange,
+  tableColors,
+  onTableColorsChange,
+  tableStyles,
+  onTableStylesChange,
+  pageAlignment: initialPageAlignment,
+  onPageAlignmentChange,
   setIsDirty,
   setDirty,
   handleSaveRef,
@@ -55,11 +114,21 @@ export function useCrepeEditor({
   checkpointDueRef,
 }: UseCrepeEditorOptions) {
   const crepeRef = useRef<Crepe | null>(null);
+  const tableGeometryRef = useRef<OfficeTableGeometryController | null>(null);
+  const tableColorsRef = useRef<OfficeTableColorsController | null>(null);
+  const tableDisplayRef = useRef<OfficeTableDisplayController | null>(null);
   const initCompleteRef = useRef(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
     initCompleteRef.current = false;
+    const editorRoot = containerRef.current;
+    const deferredMarkdownPublication = createOfficeDeferredMarkdownPublicationState();
+    let pageAlignment = initialPageAlignment;
+    const unregisterPageAlignment = registerOfficeTableMetadataBindings(editorRoot, {
+      readPageAlignment: () => pageAlignment,
+      publishPageAlignment: (alignment) => { pageAlignment = alignment; },
+    });
 
     const materialIcon = (name: string) =>
       `<span class="material-symbols-outlined" style="font-size:18px">${name}</span>`;
@@ -80,13 +149,28 @@ export function useCrepeEditor({
       }
     };
 
+    const markDirtyAndScheduleSave = createOfficeDirtySaveScheduler({
+      filePath,
+      setIsDirty,
+      setDirty,
+      getSessionStart: () => sessionStartRef.current,
+      setSessionStart: (startedAt) => { sessionStartRef.current = startedAt; },
+      getTimer: () => autoSaveTimerRef.current,
+      setTimer: (timer) => { autoSaveTimerRef.current = timer; },
+      checkpointDue: () => checkpointDueRef.current,
+      save: (reason) => { void handleSaveRef.current({ reason }); },
+    });
+
     const crepe = new Crepe({
       root: containerRef.current,
       defaultValue: parsedBody,
+      features: {
+        [Crepe.Feature.BlockEdit]: false,
+        [Crepe.Feature.CodeMirror]: false,
+        [Crepe.Feature.Latex]: false,
+        [Crepe.Feature.Table]: false,
+      },
       featureConfigs: {
-        [Crepe.Feature.BlockEdit]: {
-          textGroup: { h1: null, h2: null, h3: null, h4: null, h5: null, h6: null },
-        },
         [Crepe.Feature.Toolbar]: {
           buildToolbar: (builder) => {
             const formatting = builder.getGroup('formatting');
@@ -121,18 +205,125 @@ export function useCrepeEditor({
               },
             );
             const func = builder.getGroup('function');
+            func.group.items = func.group.items.filter((item) => (
+              item.key !== 'code' && item.key !== 'latex'
+            ));
             func.group.items.forEach((item) => {
-              if (item.key === 'code') item.icon = materialIcon('code');
               if (item.key === 'link') item.icon = materialIcon('link');
-              if (item.key === 'latex') item.icon = materialIcon('functions');
             });
           },
         },
       },
     });
 
+    const insertContextMenu = installOfficeInsertContextMenu(editorRoot, crepe);
+    const cleanupTableInsertGrid = installOfficeTableInsertGrid(
+      insertContextMenu.insertTable,
+      insertContextMenu.hide,
+    );
+    const colorPopover = installOfficeColorPopover();
+    const tableColorsController = installOfficeTableColors(editorRoot, tableColors);
+    tableColorsRef.current = tableColorsController;
+    const tableDisplayController = installOfficeTableDisplay(
+      editorRoot,
+      tableStyles,
+      (prepare) => {
+        let result: OfficeTableMetadataActionResult = {
+          applied: false,
+          reason: 'metadata-unavailable',
+        };
+        crepe.editor.action((ctx) => {
+          result = dispatchOfficeTableMetadataAction(
+            editorRoot,
+            ctx.get(editorViewCtx),
+            prepare,
+          );
+        });
+        return result;
+      },
+      () => pageAlignment,
+    );
+    tableDisplayRef.current = tableDisplayController;
+    const cleanupTableContextMenu = installOfficeTableContextMenu(
+      editorRoot,
+      crepe,
+      tableColorsController,
+      tableDisplayController,
+      colorPopover,
+      (snapshot, before, document, token) => {
+        return publishOfficeTableMetadataCombinedCallbacks({
+          publication: deferredMarkdownPublication,
+          snapshot,
+          before,
+          document,
+          token,
+          publishTables: (tables) => onTableLayoutsChange(tables as DocumentTableLayout[]),
+          publishTableColors: (colors) => onTableColorsChange(colors as DocumentTableColors[]),
+          publishTableStyles: onTableStylesChange,
+          publishPageAlignment: onPageAlignmentChange,
+          markDirtyAndScheduleSave,
+        });
+      },
+      (token) => {
+        // Forward structure commits publish renderer stores before their live
+        // invariant. Suppress the dispatch's Markdown signal regardless of the
+        // proposed document because appended transactions may change the live
+        // document before the coordinator verifies it.
+        return deferredMarkdownPublication.prepare(token);
+      },
+      (token, document) => deferredMarkdownPublication.cancel(token, document),
+      (token) => deferredMarkdownPublication.isCurrent(token),
+    );
+    const tableConfirmDialog = installOfficeTableConfirmDialog(editorRoot, (request) => {
+      let applied = false;
+      crepe.editor.action((ctx) => {
+        const result = runOfficeTableRemoval({
+          root: editorRoot,
+          view: ctx.get(editorViewCtx),
+          capture: request.capture,
+        });
+        applied = result.applied;
+        if (!result.applied) {
+          showToast(result.reason === 'STALE_TARGET'
+            ? 'The table changed before it could be removed.'
+            : 'The table could not be safely removed.');
+        }
+      });
+      request.restoreEditorFocus();
+      if (!applied) console.warn('[OfficeTable] whole-table deletion aborted without changes');
+    });
+    const tableGeometry = installOfficeTableGeometry(
+      editorRoot,
+      tableLayouts,
+      (prepare) => {
+        let result: OfficeTableMetadataActionResult = {
+          applied: false,
+          reason: 'metadata-unavailable',
+        };
+        crepe.editor.action((ctx) => {
+          result = dispatchOfficeTableMetadataAction(
+            editorRoot,
+            ctx.get(editorViewCtx),
+            prepare,
+          );
+        });
+        return result;
+      },
+      tableDisplayController.resolveAlignment,
+    );
+    tableGeometryRef.current = tableGeometry;
+
+    crepe.editor.config(configureOfficeTableBreakCodec);
+    crepe.editor.config(configureOfficeTableTitleCodec(tableStyles));
+    crepe.editor.use(officeTableParagraphSchema);
+    crepe.editor.use(officeTableTitleSchema);
+    crepe.editor.use(officeTableTitleHeaderSchema);
+    crepe.editor.use(officeTableTitleQuarantinePlugin(editorRoot));
+    crepe.editor.use(officeTableNodeView);
+    crepe.editor.use(officeTableHardbreakNodeView);
     crepe.editor.use(spanStyleMark);
     crepe.editor.use(emLabelPlugin);
+    crepe.editor.use(officePlainMarkdownInputRules);
 
     crepe.on((listener) => {
       listener.markdownUpdated((_ctx, markdown) => {
@@ -140,19 +331,10 @@ export function useCrepeEditor({
           bodyRef.current = markdown;
           return;
         }
+        const currentDocument = _ctx.get(editorViewCtx).state.doc;
+        if (deferredMarkdownPublication.suppressMarkdown(currentDocument)) return;
         if (markdown !== bodyRef.current) {
-          setIsDirty(true);
-          setDirty(PANEL, filePath, true);
-          if (sessionStartRef.current === null) {
-            sessionStartRef.current = Date.now();
-          }
-          if (autoSaveTimerRef.current) {
-            clearTimeout(autoSaveTimerRef.current);
-          }
-          autoSaveTimerRef.current = setTimeout(() => {
-            const reason: SaveReason = checkpointDueRef.current ? 'checkpoint' : 'autosave';
-            handleSaveRef.current({ reason });
-          }, 500);
+          markDirtyAndScheduleSave();
         }
       });
     });
@@ -166,15 +348,32 @@ export function useCrepeEditor({
         if (transformed !== doc) {
           const tr = view.state.tr;
           tr.replaceWith(0, doc.content.size, transformed.content);
+          tr.setMeta('addToHistory', false);
+          tr.setMeta(officeTableInitializationNormalizationKey, true);
           view.dispatch(tr);
         }
         const serializer = ctx.get(serializerCtx);
         bodyRef.current = serializer(view.state.doc);
       });
+      tableGeometry.applyLayouts();
+      tableColorsController.applyColors();
+      tableDisplayController.applyDisplay();
       initCompleteRef.current = true;
     });
 
     return () => {
+      insertContextMenu.cleanup();
+      cleanupTableInsertGrid();
+      tableConfirmDialog.cleanup();
+      cleanupTableContextMenu();
+      colorPopover.cleanup();
+      tableColorsController.cleanup();
+      tableColorsRef.current = null;
+      tableDisplayController.cleanup();
+      unregisterPageAlignment();
+      tableDisplayRef.current = null;
+      tableGeometry.cleanup();
+      tableGeometryRef.current = null;
       if (autoSaveTimerRef.current) {
         clearTimeout(autoSaveTimerRef.current);
         autoSaveTimerRef.current = null;
@@ -185,5 +384,5 @@ export function useCrepeEditor({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filePath, fileContent]);
 
-  return { crepeRef };
+  return { crepeRef, tableGeometryRef, tableColorsRef, tableDisplayRef };
 }

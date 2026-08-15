@@ -8,6 +8,8 @@
 const fs = require('fs');
 const path = require('path');
 const { parseFrontmatter } = require('../frontmatter');
+const { createCycleGuard } = require('../fs/cycle-guard');
+const { classifyEntrySync } = require('../fs/dirents');
 
 /**
  * Parse a ticket markdown file into frontmatter object + body string.
@@ -46,7 +48,18 @@ function loadTicket(filePath) {
  * @param {number} depth - Current recursion depth (default 0)
  * @returns {Array<{ frontmatter: Object, body: string, filename: string }>}
  */
-function loadAllTickets(dirPath, depth = 0) {
+function realpathOrNull(targetPath) {
+  try {
+    return fs.realpathSync(targetPath);
+  } catch {
+    return null;
+  }
+}
+
+function loadAllTickets(dirPath, depth = 0, cycleGuard = createCycleGuard()) {
+  const dirRealPath = realpathOrNull(dirPath);
+  if (!cycleGuard.shouldEnter(dirRealPath)) return [];
+
   let entries;
   try {
     entries = fs.readdirSync(dirPath, { withFileTypes: true });
@@ -58,11 +71,12 @@ function loadAllTickets(dirPath, depth = 0) {
 
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
+    const classified = classifyEntrySync(dirPath, entry);
 
-    if (entry.isDirectory() && depth === 0) {
+    if (classified.isDir && depth === 0) {
       // Scan subdirectories (inbox, open, complete, archive) one level deep
-      tickets.push(...loadAllTickets(fullPath, depth + 1));
-    } else if (entry.isFile() && entry.name.endsWith('.md') && (entry.name.startsWith('KIMI-') || entry.name.startsWith('RCC-'))) {
+      tickets.push(...loadAllTickets(fullPath, depth + 1, cycleGuard));
+    } else if (classified.isFile && entry.name.endsWith('.md') && (entry.name.startsWith('KIMI-') || entry.name.startsWith('RCC-'))) {
       const ticket = loadTicket(fullPath);
       if (ticket) tickets.push(ticket);
     }
@@ -78,7 +92,10 @@ function loadAllTickets(dirPath, depth = 0) {
  */
 function loadSync(issuesDir) {
   try {
-    return JSON.parse(fs.readFileSync(path.join(issuesDir, 'sync.json'), 'utf8'));
+    const syncPath = fs.existsSync(path.join(issuesDir, 'sync.json'))
+      ? path.join(issuesDir, 'sync.json')
+      : path.join(issuesDir, 'content', 'sync.json');
+    return JSON.parse(fs.readFileSync(syncPath, 'utf8'));
   } catch {
     return null;
   }

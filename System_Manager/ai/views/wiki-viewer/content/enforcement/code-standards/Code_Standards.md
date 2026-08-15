@@ -18,33 +18,39 @@ Fusion Studio splits across three processes. Know which layer owns your code.
 
 ---
 
-## Views Are Iframes
+## View Rendering Model
 
-Every view runs in an iframe. The shell (left bar, header, ribbon) is React. Views are self-contained HTML/CSS/JS.
+Built-in Fusion Studio views are React components mounted by the renderer shell. Iframes are reserved for custom user-created views, local embedded apps, and browser-style surfaces.
 
-### Connection Pattern
+### Built-In View Pattern
 
 ```
-View iframe ──postMessage──→ Renderer shell ──WebSocket──→ Node server
+React view component -> renderer store/service -> WebSocket -> Node server
 ```
 
-Views never talk to the server directly. They emit events to the shell, which proxies everything.
+Built-in views never talk to the filesystem directly. They use renderer stores, hooks, or service modules, which send WebSocket requests to the server when data is needed.
 
-### postMessage Protocol
+### Custom Iframe Pattern
 
-Views receive:
+```
+Custom iframe -> renderer shell boundary -> WebSocket -> Node server
+```
+
+Custom iframe views are user-created surfaces. They may communicate with the shell through postMessage or an approved bridge. The shell proxies any server/file access.
+
+Custom iframe views receive, when the shell provides them:
 - `theme` — CSS variables injected on load
 - `state` — per-view state updates
 - `file-tree` — directory listings
 - `file-content` — file contents
 
-Views emit:
+Custom iframe views emit, when the shell supports them:
 - `state:update` — pane width, scroll position, selected item
 - `file:open` — request to open a file
 - `file:save` — request to save a file
 - `chat:send` — send a message to the active thread
 
-**Origin validation:** Views must check `event.origin === 'fusion-studio://'` before handling any postMessage.
+**Origin validation:** Custom iframe views must validate the trusted sender/origin before handling postMessage payloads. `fusion-studio://` applies only to shell-controlled custom-protocol iframe URLs; local-server custom views should validate their configured local origin.
 
 ---
 
@@ -154,9 +160,9 @@ A 350-line SSE controller handling parsing, buffering, and recovery = fine (one 
 
 ### View-Level Modularity
 
-Views are naturally modular — each iframe is an island. A wiki view cannot crash a file-explorer view.
+Views are naturally modular at the component or surface boundary. A wiki view should not crash a file-explorer view, and a custom iframe view should not assume it owns shell state.
 
-Within a view, the same rules apply. If `app.js` exceeds 400 lines, split it into modules the view loads. Do not split a single concept into multiple views just because the file got long.
+Within a view, the same rules apply. If a React view component starts owning unrelated concerns, split it into hooks, components, or services. If a custom iframe view's `app.js` exceeds 400 lines, split it into modules the custom view loads. Do not split a single concept into multiple views just because one file got long.
 
 ---
 
@@ -207,15 +213,15 @@ View IDs:  wiki-01, file-viewer-01, tools-02
 
 | Don't | Do |
 |-------|----|
-| View calls server directly | Emit postMessage to shell |
-| View skips origin check on postMessage | Validate `event.origin === 'fusion-studio://'` |
+| View calls server directly | Use a renderer store/service or approved shell bridge |
+| Custom iframe skips origin check on postMessage | Validate the trusted custom-protocol or local-server origin |
 | Hardcode color `#FF6B35` | Use `var(--palette-accent, #FF6B35)` |
 | Put business logic in Electron main | Main owns native APIs only |
 | Put native API calls in renderer | Renderer emits event → main handles it |
 | Store tint values in per-view state | Tints are theme properties |
 | Create per-view CSS programmatically | Per-view CSS is human-only |
 | Reference `ai/views/settings/` | Global files live in `ai/settings/` |
-| One giant app.js in a view | Split into modules the view loads |
+| One giant custom-view app.js | Split into modules loaded by that custom view |
 | Add features beyond what was asked | Do what was asked, nothing more |
 
 ---
@@ -228,6 +234,6 @@ Before writing code:
 - [ ] No file will exceed 400 lines
 - [ ] I know which layer owns this code (server / main / renderer / view)
 - [ ] CSS values use variables with fallbacks
-- [ ] Views use postMessage, not direct server calls
+- [ ] Built-in views use renderer services; custom iframes use the shell bridge, not direct server/filesystem access
 - [ ] No premature abstractions (is there actually a second consumer?)
 - [ ] No scope creep (does this change do more than what was asked?)

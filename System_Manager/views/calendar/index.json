@@ -2,7 +2,6 @@
   "version": "1.0",
   "id": "calendar",
   "label": "Calendar",
-  "icon": "calendar_today",
   "rank": 1,
   "type": "calendar",
   "settings": {

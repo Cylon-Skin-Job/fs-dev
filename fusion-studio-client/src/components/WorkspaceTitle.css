@@ -29,7 +29,7 @@
 }
 
 .rv-header-center-title:hover {
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.08);
 }
 
 .rv-header-nav-btn {
@@ -51,7 +51,7 @@
 }
 
 .rv-header-nav-btn:hover {
-  background: rgba(var(--theme-primary-rgb, 0, 212, 255), 0.08);
+  background: rgba(var(--theme-primary-rgb, 57, 98, 142), 0.08);
   color: var(--theme-primary);
 }
 

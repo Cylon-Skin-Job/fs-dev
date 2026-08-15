@@ -45,6 +45,25 @@
   background: var(--document-surface-bg);
 }
 
+.rv-file-page-html {
+  padding: 0;
+  overflow: hidden;
+  background: var(--document-surface-bg);
+}
+
+.rv-file-page-html-frame,
+.rv-file-page-html-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.rv-file-page-html-iframe {
+  display: block;
+  border: 0;
+  background: white;
+}
+
 /* Markdown render fills the width of the content area */
 .rv-file-page-content > .rv-wiki-page-content {
   width: 100%;
