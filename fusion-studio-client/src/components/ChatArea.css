@@ -30,6 +30,28 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* User messages shrink-wrap on the right while assistant turns retain their
+ * existing full-width, left-anchored orb/tool layout. */
+.rv-chat-scroll-viewport > .rv-message-user {
+  align-self: flex-end;
+  width: fit-content;
+  max-width: 85%;
+}
+
+/* Separate a user bubble from the following assistant turn without changing
+ * the assistant container's horizontal anchor. */
+.rv-chat-scroll-viewport > .rv-message-user + .rv-message-assistant {
+  margin-top: var(--space-md, 12px);
+}
+
+/* Match that turn spacing below completed reply chrome before the next user
+ * bubble, again without changing either message's horizontal alignment. */
+.rv-chat-scroll-viewport > .rv-message-assistant + .rv-message-user {
+  margin-top: var(--space-md, 12px);
 }
 
 /* SPEC-26c-2: collapsed rail — chat collapses to a 40px strip
@@ -218,6 +240,44 @@
 .rv-chat-emoji-recent:focus-visible {
   background: var(--hover-modal-row-hover-bg, rgba(255, 255, 255, 0.08));
   outline: none;
+}
+
+.rv-chat-emoji-recents-empty {
+  padding: 4px 2px;
+  color: var(--text-dim, rgba(255, 255, 255, 0.45));
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.rv-chat-emoji-add {
+  position: sticky;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  background: var(--bg-surface, rgba(12, 16, 24, 0.96));
+  color: var(--text-secondary, rgba(255, 255, 255, 0.72));
+  cursor: pointer;
+}
+
+.rv-chat-emoji-add:hover,
+.rv-chat-emoji-add:focus-visible {
+  border-color: var(--border-medium, rgba(255, 255, 255, 0.24));
+  background: var(--hover-modal-row-hover-bg, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #ffffff);
+  outline: none;
+}
+
+.rv-chat-emoji-add .material-symbols-outlined {
+  font-size: 16px;
 }
 
 /* Scroll sentinel — gives the last user bubble room to scroll to the top
@@ -417,7 +477,7 @@
   max-width: 100%;
   min-width: 0;
   height: 22px;
-  padding: 0 10px;
+  padding: 0 28px 0 10px;
   overflow: hidden;
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
   border-radius: 999px;
@@ -452,8 +512,8 @@
 
 .rv-chat-attachment-pill-remove {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: 50%;
+  right: 4px;
   z-index: 1;
   display: none;
   align-items: center;
@@ -466,17 +526,15 @@
   background: var(--bg-surface, rgba(12, 16, 24, 0.96));
   color: var(--text-secondary, rgba(255, 255, 255, 0.78));
   cursor: pointer;
+  transform: translateY(-50%);
 }
 
 .rv-chat-attachment-pill-remove .material-symbols-outlined {
   font-size: 12px;
 }
 
-.rv-chat-attachment-pill:hover {
-  overflow: visible;
-}
-
-.rv-chat-attachment-pill:hover .rv-chat-attachment-pill-remove {
+.rv-chat-attachment-pill:hover .rv-chat-attachment-pill-remove,
+.rv-chat-attachment-pill:focus-within .rv-chat-attachment-pill-remove {
   display: flex;
 }
 

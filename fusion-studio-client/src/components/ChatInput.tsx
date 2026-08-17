@@ -13,6 +13,7 @@
 import { useState, useRef, forwardRef, useImperativeHandle, useCallback, useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { useFileAutocomplete } from '../hooks/useFileAutocomplete';
+import { EmojiTrigger } from '../emojis';
 import {
   getInsertedText,
   listEmojiRecents,
@@ -157,13 +158,15 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       return;
     }
 
+    setEmojiRecents([]);
+    setEmojiRecentsOpen(true);
+
     try {
       const items = await listEmojiRecents(20);
       setEmojiRecents(items);
-      setEmojiRecentsOpen(items.length > 0);
     } catch (err) {
       console.error('[EmojiRecents] Failed to load recents:', err);
-      setEmojiRecentsOpen(false);
+      setEmojiRecents([]);
     }
   };
 
@@ -208,17 +211,26 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       <div className="rv-chat-input-wrapper">
         {emojiRecentsOpen && (
           <div ref={recentsRef} className="rv-chat-emoji-recents" role="menu" aria-label="Recent emojis">
-            {emojiRecents.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className="rv-chat-emoji-recent"
-                onClick={() => insertEmojiRecent(item.emoji)}
-                role="menuitem"
-              >
-                {item.emoji}
-              </button>
-            ))}
+            {emojiRecents.length > 0 ? (
+              emojiRecents.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="rv-chat-emoji-recent"
+                  onClick={() => insertEmojiRecent(item.emoji)}
+                  role="menuitem"
+                >
+                  {item.emoji}
+                </button>
+              ))
+            ) : (
+              <span className="rv-chat-emoji-recents-empty">No recent emojis yet</span>
+            )}
+            <EmojiTrigger
+              className="rv-chat-emoji-add"
+              icon="add"
+              title="Add emoji to recents"
+            />
           </div>
         )}
         <div className="rv-chat-input-text-stack">

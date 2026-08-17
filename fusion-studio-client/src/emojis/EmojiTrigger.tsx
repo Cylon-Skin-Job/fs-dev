@@ -3,22 +3,34 @@
  * @role Icon button for the native system emoji picker
  */
 
-import { useCallback, type MouseEvent } from 'react';
+import { useCallback, useRef, type MouseEvent } from 'react';
 import '../components/hover-icon-modal/HoverIconModal.css';
 
 interface EmojiTriggerProps {
   onInsert?: (text: string) => void;
+  className?: string;
+  icon?: string;
+  title?: string;
 }
 
-export function EmojiTrigger(props: EmojiTriggerProps) {
-  void props.onInsert;
+export function EmojiTrigger({
+  onInsert,
+  className = 'rv-hover-icon-trigger',
+  icon = 'add_reaction',
+  title = 'Open system emoji picker',
+}: EmojiTriggerProps) {
+  void onInsert;
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const keepComposerFocused = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }, []);
 
   const handleClick = useCallback(async () => {
-    const input = document.querySelector<HTMLTextAreaElement>('.rv-chat-input:not(:disabled)');
+    const input = buttonRef.current
+      ?.closest('.rv-chat-footer')
+      ?.querySelector<HTMLTextAreaElement>('.rv-chat-input:not(:disabled)')
+      ?? document.querySelector<HTMLTextAreaElement>('.rv-panel.active .rv-chat-input:not(:disabled)');
     input?.focus();
 
     if (window.electronAPI?.showEmojiPanel) {
@@ -31,13 +43,15 @@ export function EmojiTrigger(props: EmojiTriggerProps) {
 
   return (
     <button
-      className="rv-hover-icon-trigger"
-      title="Open system emoji picker"
-      aria-label="Open system emoji picker"
+      ref={buttonRef}
+      type="button"
+      className={className}
+      title={title}
+      aria-label={title}
       onMouseDown={keepComposerFocused}
       onClick={handleClick}
     >
-      <span className="material-symbols-outlined">add_reaction</span>
+      <span className="material-symbols-outlined">{icon}</span>
     </button>
   );
 }

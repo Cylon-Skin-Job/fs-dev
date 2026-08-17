@@ -1,8 +1,15 @@
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import type { SyntheticEvent } from 'react';
 
 export function ChatLinkAttachments() {
   const attachments = useChatFileLinkStore((state) => state.pendingAttachments);
   const removePendingAttachment = useChatFileLinkStore((state) => state.removePendingAttachment);
+
+  const handleRemove = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    removePendingAttachment(id);
+  };
 
   return (
     <>
@@ -19,7 +26,8 @@ export function ChatLinkAttachments() {
             type="button"
             className="rv-chat-attachment-pill-remove"
             aria-label={`Remove ${attachment.label}`}
-            onClick={() => removePendingAttachment(attachment.id)}
+            onPointerDown={(event) => handleRemove(event, attachment.id)}
+            onClick={(event) => handleRemove(event, attachment.id)}
           >
             <span className="material-symbols-outlined" aria-hidden="true">close</span>
           </button>
