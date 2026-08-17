@@ -47,7 +47,10 @@ function registerScreenshotHandlers(ipcMain) {
       const entries = await fs.promises.readdir(screenshotsDir, { withFileTypes: true });
       return entries
         .filter(e => e.isFile() && /\.(png|jpg|jpeg|gif|webp)$/i.test(e.name))
-        .map(e => e.name);
+        .map(e => ({
+          name: e.name,
+          path: path.join(screenshotsDir, e.name),
+        }));
     } catch {
       return [];
     }

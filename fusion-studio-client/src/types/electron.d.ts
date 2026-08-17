@@ -80,7 +80,7 @@ export interface ElectronAPI {
   onBrowserUrlChanged: (callback: (payload: { url: string }) => void) => (() => void);
   setWorkspaceRoot: (repoPath: string | null) => void;
   setWorkspaceMenuState: (state: WorkspaceMenuState) => void;
-  listScreenshots: () => Promise<string[]>;
+  listScreenshots: () => Promise<Array<{ name: string; path: string }>>;
   readScreenshot: (filename: string) => Promise<{ base64: string; mimeType: string }>;
 }
 

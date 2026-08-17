@@ -27,6 +27,7 @@ type ChatAreaFooterProps = Pick<
   | 'isAcceptancePending'
   | 'isForkThreadDisabled'
   | 'handleInsertText'
+  | 'handleAddAttachment'
   | 'handleForkThread'
   | 'warmCurrentThread'
   | 'contextUsage'
@@ -45,6 +46,7 @@ export function ChatAreaFooter({
   isAcceptancePending,
   isForkThreadDisabled,
   handleInsertText,
+  handleAddAttachment,
   handleForkThread,
   warmCurrentThread,
   contextUsage,
@@ -81,7 +83,7 @@ export function ChatAreaFooter({
       <div className="rv-chat-composer-meta-row">
         <div>
           <ClipboardTrigger onInsert={handleInsertText} />
-          <ScreenshotsTrigger onInsert={handleInsertText} />
+          <ScreenshotsTrigger onAttach={handleAddAttachment} />
           <RecentFilesTrigger onInsert={handleInsertText} />
           <EmojiTrigger onInsert={handleInsertText} />
           <button

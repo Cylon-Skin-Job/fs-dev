@@ -4,6 +4,8 @@
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
+import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
+import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import {
   useHoverIconModal,
   useListNavigation,
@@ -19,17 +21,18 @@ import {
 
 interface ScreenshotItem {
   name: string;
+  path: string;
   url: string;
   timestamp: number;
   displayName: string;
 }
 
 interface ScreenshotsTriggerProps {
-  onInsert?: (text: string) => void;
+  onAttach?: (attachment: ChatLinkAttachment) => void;
 }
 
-export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
-  const [screenshots, setScreenshots] = useState<string[]>([]);
+export function ScreenshotsTrigger({ onAttach }: ScreenshotsTriggerProps) {
+  const [screenshots, setScreenshots] = useState<Array<{ name: string; path: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -52,12 +55,12 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
   useEffect(() => {
     let cancelled = false;
 
-    screenshots.forEach((name) => {
-      if (imageUrls[name]) return;
+    screenshots.forEach(({ name, path }) => {
+      if (imageUrls[path]) return;
       window.electronAPI?.readScreenshot(name)
         .then(({ base64, mimeType }) => {
           if (cancelled) return;
-          setImageUrls((prev) => ({ ...prev, [name]: `data:${mimeType};base64,${base64}` }));
+          setImageUrls((prev) => ({ ...prev, [path]: `data:${mimeType};base64,${base64}` }));
         })
         .catch(() => {});
     });
@@ -105,11 +108,12 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
   };
 
   const screenshotItems: ScreenshotItem[] = useMemo(() => {
-    const items = screenshots.map((name) => {
+    const items = screenshots.map(({ name, path }) => {
       const parsed = parseScreenshotName(name);
       return {
         name,
-        url: imageUrls[name] || '',
+        path,
+        url: imageUrls[path] || '',
         timestamp: parsed.timestamp,
         displayName: parsed.displayName,
       };
@@ -133,6 +137,14 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
 
   const visibleItems = useMemo(() => screenshotItems.slice(-20), [screenshotItems]);
 
+  const handleSelect = useCallback((item: ScreenshotItem) => {
+    onAttach?.(createSendToChatAttachment({
+      panel: 'screenshots',
+      relativePath: `Data/Screenshots/${item.name}`,
+      absolutePath: item.path,
+    }));
+  }, [onAttach]);
+
   const {
     selectedIndex,
     handleItemClick,
@@ -140,7 +152,7 @@ export function ScreenshotsTrigger({ onInsert }: ScreenshotsTriggerProps) {
   } = useListNavigation<ScreenshotItem>({
     items: visibleItems,
     isOpen,
-    onSelect: (item) => onInsert?.(item.url),
+    onSelect: handleSelect,
     onClose: close,
     selectFromBottom: true,
   });

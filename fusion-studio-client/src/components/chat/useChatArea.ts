@@ -11,6 +11,7 @@ import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';
+import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { ChatInputRef } from '../ChatInput';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
 import { useComposerForkAction } from './useComposerForkAction';
@@ -86,6 +87,12 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     if (!tid || !isActive || pendingPromptRef.current) return;
     warmThread(tid);
   }, [currentThreadId, isActive, warmThread]);
+
+  const handleAddAttachment = useCallback((attachment: ChatLinkAttachment) => {
+    warmCurrentThread();
+    addPendingAttachment(attachment);
+    chatInputRef.current?.focus();
+  }, [addPendingAttachment, warmCurrentThread]);
 
   const handleInsertText = useCallback((text: string) => {
     warmCurrentThread();
@@ -351,9 +358,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
 
       if (action.attachment) {
         if (action.target !== 'current') return;
-        warmCurrentThread();
-        addPendingAttachment(action.attachment);
-        chatInputRef.current?.focus();
+        handleAddAttachment(action.attachment);
         return;
       }
 
@@ -394,7 +399,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
 
     window.addEventListener(CHAT_ACTION_EVENT, handleChatAction);
     return () => window.removeEventListener(CHAT_ACTION_EVENT, handleChatAction);
-  }, [threadIdOverride, handleInsertText, handleReplaceText, sendToThread, warmCurrentThread, addPendingAttachment]);
+  }, [threadIdOverride, handleInsertText, handleReplaceText, sendToThread, handleAddAttachment]);
 
   const handleStop = useCallback(() => {
     const state = usePanelStore.getState();
@@ -429,6 +434,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     moreMenuOpen,
     setMoreMenuOpen,
     handleInsertText,
+    handleAddAttachment,
     currentThreadId,
     currentThread,
     messages,

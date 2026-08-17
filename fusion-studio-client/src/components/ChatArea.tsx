@@ -34,6 +34,7 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     moreMenuOpen,
     setMoreMenuOpen,
     handleInsertText,
+    handleAddAttachment,
     currentThreadId,
     currentThread,
     messages,
@@ -101,6 +102,7 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     isForkThreadDisabled,
     handleForkThread,
     handleInsertText,
+    handleAddAttachment,
     warmCurrentThread,
     contextUsage,
   };
