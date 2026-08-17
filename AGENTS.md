@@ -132,6 +132,45 @@ Choose the narrowest verification that matches the change:
 
 If verification is skipped because of time, missing dependencies, or a dirty/concurrent worktree, say so explicitly.
 
+## Alpha Dogfood Installation On This Machine
+
+Fusion Studio Alpha is developed and dogfooded from two separate Git checkouts on this machine. Do not assume that updating the development checkout also updates the Alpha source checkout or installed app.
+
+| Purpose | Path |
+|------|------|
+| Primary development checkout | `/Users/rccurtrightjr./projects/fs-dev` |
+| Alpha dogfood source checkout | `/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source` |
+| Packaged Alpha build inside the source checkout | `/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source/fusion-studio-client/release/mac-arm64/Fusion Studio Alpha.app` |
+| Installed dogfood app | `/Applications/Fusion Studio Alpha.app` |
+| Alpha user data and live server log | `/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/` |
+
+At the start of work in either checkout, resolve the current repository root with `git rev-parse --show-toplevel` and compare it with the table above:
+
+- In the primary development checkout, author and verify product changes, then commit and publish approved work to GitHub.
+- In the Alpha source checkout, treat the repository as the dogfood build/deployment mirror. Use it for clean fast-forward pulls, Alpha builds, packaging, installation, and smoke testing. Do not originate independent product changes or commits there unless the user explicitly requests Alpha-only work.
+- Keep this tracked `AGENTS.md` identical across both checkouts. Do not maintain a separate Alpha-only copy of these instructions.
+
+The Alpha source checkout does not have a permanently named `alpha` branch. Before updating it, inspect its current branch and worktree with `git status -sb`. The normal update flow is:
+
+1. Commit and push the approved development changes to a GitHub branch from the primary development checkout.
+2. After every successful Fusion Studio GitHub push, proactively ask the user whether to fast-forward the Alpha source checkout and rebuild/reinstall the dogfood app. Do not make the user remember to request this follow-up.
+3. Do not pull, build, or reinstall Alpha until the user confirms that follow-up in the current conversation.
+4. After confirmation, verify the Alpha source checkout is clean and on the intended matching branch.
+5. Fast-forward it with `git pull --ff-only origin <branch>`.
+6. Treat the source pull and app installation as separate operations. Pulling does not rebuild or replace `/Applications/Fusion Studio Alpha.app`.
+7. When the user confirms both operations, rebuild/package from the updated Alpha source checkout and replace the installed dogfood app through its established build/install workflow.
+
+Alpha operations are also independently callable. Follow the exact scope the user requests:
+
+- **Pull/sync Alpha:** fast-forward the Alpha source checkout only. Do not build, install, or restart unless requested.
+- **Rebuild/reinstall Alpha:** package the source currently present in the Alpha checkout and replace the installed dogfood app. Do not pull first unless requested.
+- **Restart Alpha:** quit and relaunch the installed dogfood app without pulling or rebuilding.
+- **Update Alpha:** perform the combined clean flow: fast-forward the source checkout, rebuild/package, replace the installed app, and restart it.
+
+Before rebuild, reinstall, or restart, inspect the established Alpha scripts/package configuration and whether the app is running. Preserve recoverability when replacing the installed app, and verify the relaunched app path and basic startup health afterward.
+
+For GitHub publishing, use the installed GitHub publishing workflow when available. Local checkout discovery, branch inspection, and fast-forward pulls are normal local Git operations.
+
 ## Historical Names
 
 Older docs, handoffs, archived code, and chat transcripts may mention previous project names or previous directory names. Treat those as historical unless a current file or user instruction says otherwise.
