@@ -25,9 +25,10 @@ interface RecentFile {
 
 interface RecentFilesTriggerProps {
   onInsert?: (text: string) => void;
+  triggerVariant?: 'icon' | 'submenu';
 }
 
-export function RecentFilesTrigger({ onInsert }: RecentFilesTriggerProps) {
+export function RecentFilesTrigger({ onInsert, triggerVariant = 'icon' }: RecentFilesTriggerProps) {
   const [files, setFiles] = useState<RecentFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
@@ -35,39 +36,67 @@ export function RecentFilesTrigger({ onInsert }: RecentFilesTriggerProps) {
   const ws = usePanelStore((state) => state.ws);
   const panel = usePanelStore((state) => state.currentPanel);
 
-  const loadRecentFiles = useCallback(() => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+  const requestRecentFiles = useCallback((limit: number): Promise<RecentFile[]> => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      return Promise.reject(new Error('Recent files are unavailable while disconnected'));
+    }
 
-    setLoading(true);
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        clearTimeout(timeout);
+        ws.removeEventListener('message', handleMessage);
+      };
+      const handleMessage = (event: MessageEvent) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type !== 'recent_files_response' || msg.panel !== panel) return;
 
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const msg = JSON.parse(event.data);
-        if (msg.type === 'recent_files_response' && msg.panel === panel) {
-          ws.removeEventListener('message', handleMessage);
+          cleanup();
           if (msg.success) {
-            setFiles(msg.files || []);
+            resolve(msg.files || []);
+          } else {
+            reject(new Error(msg.error || 'Failed to load recent files'));
           }
-          setLoading(false);
+        } catch {
+          // Ignore unrelated non-JSON messages.
         }
-      } catch {
-        // Ignore
-      }
-    };
+      };
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error('Timed out loading recent files'));
+      }, 5000);
 
-    ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({
-      type: 'recent_files_request',
-      panel,
-      limit: 30,
-    }));
-
-    // Timeout after 5 seconds
-    setTimeout(() => {
-      ws.removeEventListener('message', handleMessage);
-      setLoading(false);
-    }, 5000);
+      ws.addEventListener('message', handleMessage);
+      ws.send(JSON.stringify({
+        type: 'recent_files_request',
+        panel,
+        limit,
+      }));
+    });
   }, [ws, panel]);
+
+  const loadRecentFiles = useCallback(async () => {
+    setLoading(true);
+    try {
+      setFiles(await requestRecentFiles(30));
+    } catch (err) {
+      console.error('[RecentFiles] Failed to load recent files:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [requestRecentFiles]);
+
+  const handleInsertMostRecent = useCallback(async () => {
+    try {
+      const recentFiles = await requestRecentFiles(1);
+      const mostRecent = [...recentFiles].sort((a, b) => b.mtime - a.mtime)[0];
+      if (mostRecent) {
+        onInsert?.(mostRecent.path);
+      }
+    } catch (err) {
+      console.error('[RecentFiles] Failed to insert most recently edited file:', err);
+    }
+  }, [onInsert, requestRecentFiles]);
 
   const handleOpen = useCallback(() => {
     if (files.length === 0) {
@@ -103,10 +132,18 @@ export function RecentFilesTrigger({ onInsert }: RecentFilesTriggerProps) {
   useEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      setPopoverPos({
-        left: rect.left,
-        bottom: window.innerHeight - rect.top + 12,
-      });
+      if (triggerVariant === 'submenu') {
+        const modalWidth = 600;
+        setPopoverPos({
+          left: Math.min(rect.right + 12, window.innerWidth - modalWidth - 12),
+          bottom: Math.max(12, window.innerHeight - rect.bottom),
+        });
+      } else {
+        setPopoverPos({
+          left: rect.left,
+          bottom: window.innerHeight - rect.top + 12,
+        });
+      }
       // Scroll to bottom to show newest
       setTimeout(() => {
         if (listRef.current) {
@@ -114,7 +151,7 @@ export function RecentFilesTrigger({ onInsert }: RecentFilesTriggerProps) {
         }
       }, 0);
     }
-  }, [isOpen, triggerRef]);
+  }, [isOpen, triggerRef, triggerVariant]);
 
   const formatSize = (bytes: number): string => {
     if (bytes < 1024) return `${bytes}B`;
@@ -141,13 +178,42 @@ export function RecentFilesTrigger({ onInsert }: RecentFilesTriggerProps) {
 
   return (
     <>
-      <HoverIconTrigger
-        icon="save_clock"
-        title="Recent files (click to open)"
-        isOpen={isOpen}
-        triggerRef={triggerRef}
-        triggerProps={triggerProps}
-      />
+      {triggerVariant === 'submenu' ? (
+        <div className="rv-chat-composer-menu-row rv-chat-composer-menu-row--last" role="none">
+          <button
+            type="button"
+            className="rv-chat-composer-menu-icon-action"
+            onClick={() => void handleInsertMostRecent()}
+            title="Insert most recently edited file"
+            aria-label="Insert most recently edited file"
+            role="menuitem"
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">save_clock</span>
+          </button>
+          <button
+            ref={triggerRef}
+            type="button"
+            className={`rv-chat-composer-menu-submenu${isOpen ? ' open' : ''}`}
+            title="Browse recent edits"
+            aria-label="Browse recent edits"
+            aria-haspopup="menu"
+            aria-expanded={isOpen}
+            role="menuitem"
+            {...triggerProps}
+          >
+            <span>Edits</span>
+            <span className="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
+        </div>
+      ) : (
+        <HoverIconTrigger
+          icon="save_clock"
+          title="Recent files (click to open)"
+          isOpen={isOpen}
+          triggerRef={triggerRef}
+          triggerProps={triggerProps}
+        />
+      )}
 
       <HoverIconModalContainer
         isOpen={isOpen}

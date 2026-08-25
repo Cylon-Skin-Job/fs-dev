@@ -6,7 +6,7 @@
  *   - 'code' (default): syntax-highlighted raw text with line gutter
  *   - 'markdown': rendered HTML via markdownToHtml
  *
- * Used by: FileContentRenderer, FilePageView (code ↔ rendered MD toggle), PromptCardView, etc.
+ * Used by: FileContentRenderer, FilePageView, PromptCardView, etc.
  * Shared styles: src/styles/document.css (.code-editor, .wiki-page-content).
  */
 

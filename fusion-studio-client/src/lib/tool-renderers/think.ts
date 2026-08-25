@@ -15,7 +15,7 @@ export const thinkRenderer: ToolRenderer = {
     whiteSpace: 'pre-wrap',
     fontFamily: 'inherit',
     fontStyle: 'italic',
-    color: 'var(--text-dim)',
+    color: 'var(--chat-foreground-color, var(--text-dim))',
   },
   formatContent: (content) => escapeHtml(content),
 };

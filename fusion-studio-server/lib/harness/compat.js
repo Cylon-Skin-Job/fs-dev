@@ -232,16 +232,35 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     }
 
     dummyProc.stderr = realProc.stderr;
-    dummyProc.kill = realProc.kill.bind(realProc);
-    dummyProc.killed = realProc.killed;
+
+    // The process exposed by a harness can be a placeholder rather than the
+    // process used for an individual turn (OpenCode is one example). Keep the
+    // outer wire's lifecycle authoritative so SessionManager idle expiry is
+    // visible to the wire registry and runtime controller.
+    let exitEmitted = false;
+    const emitExitOnce = (code = null, signal = null) => {
+      if (exitEmitted) return;
+      exitEmitted = true;
+      dummyProc.killed = true;
+      dummyProc.emit('exit', code, signal);
+      dummyProc.emit('close', code, signal);
+    };
+
+    dummyProc.killed = false;
+    dummyProc.kill = (signal = 'SIGTERM') => {
+      if (dummyProc.killed) return false;
+      dummyProc.killed = true;
+      Promise.resolve(session.stop?.()).catch(err => {
+        console.error('[Compat] Failed to stop harness session:', err);
+      });
+      process.nextTick(() => emitExitOnce(null, signal));
+      return true;
+    };
 
     // Re-emit events from real process
     realProc.on('error', (err) => dummyProc.emit('error', err));
-    realProc.on('exit', (code) => {
-      dummyProc.killed = true;
-      dummyProc.emit('exit', code);
-    });
-    realProc.on('close', (code) => dummyProc.emit('close', code));
+    realProc.on('exit', (code, signal) => emitExitOnce(code, signal));
+    realProc.on('close', (code, signal) => emitExitOnce(code, signal));
 
     // Expose ACP sendMessage so server.js can route prompts correctly
     dummyProc._sendMessage = (message, options) => session.sendMessage(message, options);

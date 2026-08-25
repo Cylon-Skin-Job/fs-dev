@@ -254,12 +254,43 @@ export interface ThemeEntry {
   id:             string;
   label:          string;
   accent:         string;   // hex #RRGGBB
+  themeColor?:    string;   // secondary theme color used as the zero endpoint for two-color sliders
+  borderColor?:   string;   // direct global structural-border color
+  bordersEnabled?: boolean; // false hides global structural borders and softens panel corners
   luminance:      number;   // 0-100
   panelContrast?: number;   // 0-100 (50 = baseline panel deltas; 0 = monotone; 100 = 2× exaggerated)
+  workspaceForeground?: number; // 0 = Secondary Color, 100 = Background Color
+  workspaceBorders?: number; // 0 = Background, 100 = Theme Color
+  workspaceAccent?: number; // Workspace Foreground range plus fixed 10% white (dark) or black (light); selected primary-nav icon
+  threadContrast?: number;  // Legacy; thread background is fixed at the former zero setting
+  threadBackground?: number; // 0 = Background, 100 = Background + 10% white (dark) or black (light)
+  threadForegroundContrast?: number; // 0 = Secondary Color + 10% white/black by mode, 100 = Background Color
+  threadHeadings?: number;   // 0 = Secondary Color, 100 = Background Color
+  threadForeground?: number; // 0 = Secondary Color, 100 = Background Color; thread-panel dock icon
+  threadAccent?: number;    // 0 = Secondary Color, 100 = Background Color
+  sidePanelBackground?: number; // Same range as Thread Background; file drawer + Wiki navigation surfaces
+  sidePanelForegroundContrast?: number; // Same range as Thread Text
+  sidePanelHeadings?: number; // Same range as Thread Headings
+  sidePanelForeground?: number; // Same range as Thread Foreground; passive navigation icons
+  sidePanelAccent?: number; // Same range as Thread Accent; selected/hovered navigation items
+  chatBackground?: number;  // 0 = Background, 100 = Background + 10% white (dark) or black (light)
+  chatContrast?: number;    // 0 = emphasized theme color, 100 = exact Background color; composer/input surface
+  chatBubble?: number;      // 0 = emphasized theme color, 100 = exact Background color; user bubble surface
+  chatForeground?: number;  // 0 = Secondary Color, 100 = Background Color; Chat has no Accent slider
+  chatAccent?: number;      // 0 = Theme Color + 10% mode pole, 100 = Background Color
+  chatTools?: number;       // Same range as Chat Headings; tool-call chrome
+  chatText?: number;        // 0 = white/black mode pole, 100 = 50/50 pole and theme color
+  contentBackground?: number; // Legacy content background control
+  contentCanvasBackground?: number; // Wiki/code page: 0 = Background, 100 = Background + 10% mode pole
+  contentAccent?: number; // 0 = Secondary Color, 100 = Background Color; active file tab
+  contentForeground?: number; // 0 = Secondary Color, 100 = Background Color; inactive file-tab titles
+  contentSurfaceContrast?: number; // Legacy removed Content Contrast control
+  contentHeadings?: number; // Same Theme Color + 10% mode pole → Background range as Chat Headings
+  contentText?: number;     // 0 = brighter/high contrast, 50 = semantic colors unchanged, 100 = muted toward content background
   bgTint?:        number;   // 0-30 percent accent blended into background surfaces
-  contentLuminance?: number; // 0-100 luminance for content/code surfaces only
-  contentContrast?: number;  // 0-100 contrast for content/code surfaces (stub)
-  contentTint?:   number;   // 0-30 percent accent blended into content/code surfaces
+  contentLuminance?: number; // Legacy content background control
+  contentContrast?: number;  // Legacy content contrast control
+  contentTint?:   number;   // Legacy content tint control
   borders?:       number;   // 0-100 percent accent blended into borders (legacy — replaced by borderLuminance + borderTint)
   borderLuminance?: number; // 0-100 black-to-white base for borders
   borderTint?:    number;   // 0-100 percent accent blended into border base
@@ -267,7 +298,7 @@ export interface ThemeEntry {
   chromeTint?:    number;   // 0-100 percent accent blended into chrome base
   accentLuminance?: number; // 0-100 black-to-white base for muted accent surfaces
   accentTint?:    number;   // 0-100 percent accent blended into muted accent base
-  chatBubbleChrome?: boolean; // When true, user chat bubble bg uses --chrome-accent (dim structural chrome color)
+  chatBubbleChrome?: boolean; // Legacy bubble toggle; superseded by chatBubble
   themeCode?:        boolean; // When true, syntax palette hues derive from accent instead of fixed rainbow
   tints?: {
     borders?: { chat?: boolean };
@@ -402,6 +433,16 @@ export type CliEntryOverride = Partial<Pick<ResolvedCliEntry, 'enabled' | 'name'
   runtime?: ResolvedCliEntry['runtime'];
 };
 
+export interface TokenUsage {
+  input_other?: number;
+  input_cache_read?: number;
+  input_cache_creation?: number;
+  input_total?: number;
+  output?: number;
+  total?: number;
+  context_pct?: number;
+}
+
 export interface WebSocketMessage {
   type: WebSocketMessageType;
   turnId?: string;
@@ -412,7 +453,7 @@ export interface WebSocketMessage {
   partial?: boolean;
   stepNumber?: number;
   contextUsage?: number;
-  tokenUsage?: number;
+  tokenUsage?: TokenUsage | null;
   requestType?: string;
   payload?: unknown;
   requestId?: string;
@@ -490,11 +531,18 @@ export interface WebSocketMessage {
 // SECONDARY_CHAT_SPEC: `rightSecondary` added for the sticky-right column.
 // `rightCol` is the view's right column (e.g. file-viewer file tree) — kept
 // separate from rightSecondary so the file tree retains its own width when
-// the sticky chat undocks.
-export type Pane = 'leftSidebar' | 'leftChat' | 'rightSecondary' | 'rightCol';
-// Only the left panes have collapse state — the secondary has its own
-// show/hide via traffic-light modes, not a collapse toggle.
-export type CollapsablePane = 'leftSidebar' | 'leftChat';
+// the sticky chat undocks. Content navigation widths are separate again so
+// resizing Wiki navigation never changes the workspace Threads width.
+export type Pane =
+  | 'leftSidebar'
+  | 'leftChat'
+  | 'rightSecondary'
+  | 'rightCol'
+  | 'contentNavLeft'
+  | 'contentNavRight';
+// The secondary pane has its own show/hide modes; the other layout panes can
+// be collapsed directly (rightCol is the File Explorer tree).
+export type CollapsablePane = 'leftSidebar' | 'leftChat' | 'rightCol' | 'contentArea';
 
 export type ViewActivityKind = 'file' | 'folder' | 'document' | 'page' | 'view';
 
@@ -544,12 +592,16 @@ export interface ViewUIState {
   collapsed: {
     leftSidebar: boolean;
     leftChat: boolean;
+    rightCol: boolean;
+    contentArea: boolean;
   };
   widths: {
     leftSidebar: number;
     leftChat: number;
     rightSecondary?: number;  // sticky secondary chat width (when docked)
     rightCol?: number;        // view's right column (e.g. file-viewer file tree)
+    contentNavLeft?: number;  // content-owned left navigation (e.g. Wiki topics)
+    contentNavRight?: number; // content-owned right navigation (e.g. Wiki page tree)
   };
   // STATE_OVERRIDE_SPEC §5: persisted popup geometry.
   popup: {
@@ -568,6 +620,7 @@ export interface ViewUIState {
   docViewerMode?: 'active' | 'recent' | 'starred' | 'archive';
   docViewerActiveSelectedPath?: string | null;
   docViewerArchiveSelectedPath?: string | null;
+  docViewerLastOpenedPath?: string | null;
   docViewerActiveGridScroll?: number;
   docViewerArchiveGridScroll?: number;
   docViewerActiveDocScroll?: number;

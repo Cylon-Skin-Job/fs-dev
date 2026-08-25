@@ -122,6 +122,21 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     [folder, showFileMenu]
   );
 
+  const getFileStarClickHandler = useCallback(
+    (file: FileWithContent, folderOverride = folder) => () => {
+      const filePath = file.path || [folderOverride, file.name].filter(Boolean).join('/');
+      toggleViewStarred(panel, {
+        panel,
+        path: filePath,
+        title: file.name,
+        kind: 'document',
+        folder: folderOverride,
+        extension: file.extension ?? file.name.split('.').pop()?.toLowerCase(),
+      });
+    },
+    [folder, panel]
+  );
+
   const getFolderContextMenuHandler = useCallback(
     (folderEntry: Pick<FileNode, 'name' | 'path'>, folderOverride = folder) => (event: ReactMouseEvent) => {
       event.preventDefault();
@@ -146,6 +161,7 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     showFolderMenu,
     getFileContextMenuHandler,
     getFileMoreClickHandler,
+    getFileStarClickHandler,
     getFolderContextMenuHandler,
     getFolderMoreClickHandler,
   };

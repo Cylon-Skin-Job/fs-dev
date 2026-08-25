@@ -84,14 +84,15 @@ export interface SegmentDefinition {
 /** Default visual style applied to all segments */
 const DEFAULT_VISUAL_STYLE: SegmentVisualStyle = {
   icon: '',
-  /* Tool icons and text are chrome-accented so they stand out as actionable
-   * UI within the chat stream. */
-  iconColor: 'var(--accent-dim, var(--text-dim))',
+  /* Tool calls belong to the chat chrome color system. Keep icon, label, and
+   * non-semantic content on Chat Tools so its slider updates every tool
+   * rendering path together. */
+  iconColor: 'var(--chat-tools-color, var(--text-dim))',
   iconSize: 16,
-  labelColor: 'var(--accent-dim, var(--text-dim))',
+  labelColor: 'var(--chat-tools-color, var(--text-dim))',
   labelStyle: 'italic',
   contentTypography: 'body',
-  contentColor: 'var(--accent-dim, var(--text-dim))',
+  contentColor: 'var(--chat-tools-color, var(--text-dim))',
 };
 
 /** Default behavior applied to all segments */
@@ -119,14 +120,14 @@ const VISUAL_OVERRIDES: Record<SegmentType, Partial<SegmentVisualStyle>> = {
 
   think: {
     icon: 'lightbulb',
-    borderLeft: { width: '1px', color: 'var(--theme-primary)' },
+    borderLeft: { width: '1px', color: 'var(--chat-tools-color, var(--theme-primary))' },
     contentTypography: 'italic',
   },
 
   shell: {
     icon: 'terminal',
     contentTypography: 'monospace',
-    borderLeft: { width: '1px', color: 'var(--theme-primary)' },
+    borderLeft: { width: '1px', color: 'var(--chat-tools-color, var(--theme-primary))' },
   },
 
   read: {
@@ -137,13 +138,13 @@ const VISUAL_OVERRIDES: Record<SegmentType, Partial<SegmentVisualStyle>> = {
   write: {
     icon: 'edit_note',
     contentTypography: 'monospace',
-    borderLeft: { width: '1px', color: 'var(--theme-primary)' },
+    borderLeft: { width: '1px', color: 'var(--chat-tools-color, var(--theme-primary))' },
   },
 
   edit: {
     icon: 'find_replace',
     contentTypography: 'monospace',
-    borderLeft: { width: '1px', color: 'var(--theme-primary)' },
+    borderLeft: { width: '1px', color: 'var(--chat-tools-color, var(--theme-primary))' },
   },
 
   glob: {

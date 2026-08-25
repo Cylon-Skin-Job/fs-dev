@@ -27,7 +27,7 @@ const HARDCODED_DEFAULTS = {
     rightSecondary: 400,
     rightCol:       220,
   },
-  collapsed: { leftSidebar: false, leftChat: false },
+  collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
   popup: {
     open: false, x: -1, y: -1, width: 420, height: 520, threadId: null,
   },

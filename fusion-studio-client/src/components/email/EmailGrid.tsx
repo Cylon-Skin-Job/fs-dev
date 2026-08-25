@@ -1266,7 +1266,6 @@ export function EmailGrid() {
         panel={PANEL}
         folder={documentFolderPath}
         folderName={selectedFolderName}
-        showRibbon={false}
         onBack={handleBackToFolder}
       />,
       'rv-email-detail-main',

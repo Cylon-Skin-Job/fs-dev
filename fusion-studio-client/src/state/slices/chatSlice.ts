@@ -97,6 +97,8 @@ export function createChatSlice(set: Set, get: Get) {
     projectChats: {} as Record<string, PanelState>,
     contextUsage: 0,
     setContextUsage: (usage: number) => set({ contextUsage: usage }),
+    tokenUsage: null,
+    setTokenUsage: (usage: AppState['tokenUsage']) => set({ tokenUsage: usage }),
 
     addMessage: (threadId: string | null, message: Message) => set((state) => {
       const cs = getChatState(state, threadId);

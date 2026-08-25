@@ -65,6 +65,61 @@ describe('view-state writer', () => {
     expect(officeState.officePaperBrightness).toBe(42);
   });
 
+  test('stores right-column collapse state in the view override', async () => {
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+
+    const resolved = await writeViewStatePatch(tempRoot, 'office-viewer', {
+      collapsed: {
+        rightCol: true,
+      },
+    });
+
+    const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
+    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+
+    expect(resolved.collapsed.rightCol).toBe(true);
+    expect(workspaceState.collapsed.rightCol).toBe(false);
+    expect(officeState.collapsed.rightCol).toBe(true);
+  });
+
+  test('stores content-area collapse state in the view override', async () => {
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+
+    const resolved = await writeViewStatePatch(tempRoot, 'office-viewer', {
+      collapsed: {
+        contentArea: true,
+      },
+    });
+
+    const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
+    const fileState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+
+    expect(resolved.collapsed.contentArea).toBe(true);
+    expect(workspaceState.collapsed.contentArea).toBe(false);
+    expect(fileState.collapsed.contentArea).toBe(true);
+  });
+
+  test('stores content navigation widths per view without changing workspace pane widths', async () => {
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+
+    const resolved = await writeViewStatePatch(tempRoot, 'office-viewer', {
+      widths: {
+        contentNavLeft: 284,
+        contentNavRight: 316,
+      },
+    });
+
+    const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
+    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+
+    expect(resolved.widths.contentNavLeft).toBe(284);
+    expect(resolved.widths.contentNavRight).toBe(316);
+    expect(workspaceState.widths.contentNavLeft).toBe(200);
+    expect(workspaceState.widths.contentNavRight).toBe(220);
+    expect(officeState.widths.contentNavLeft).toBe(284);
+    expect(officeState.widths.contentNavRight).toBe(316);
+  });
+
   test('serializes concurrent patches for the same view', async () => {
     let workspace = {};
     let override = null;

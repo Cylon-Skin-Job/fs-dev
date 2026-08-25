@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  padding-top: 10px;
+  padding-top: 0;
   background: var(--bg-solid, #000);
   border-bottom: none;
 }
 
 .rv-capture-viewer-main-header .rv-capture-viewer-chrome {
-  height: 44px;
+  height: var(--view-header-height, 40px);
   background: transparent;
   border-bottom: none;
 }
@@ -23,7 +23,7 @@
   border: none;
   border-radius: var(--radius-md, 4px);
   background: transparent;
-  color: var(--text-dim, rgba(255, 255, 255, 0.55));
+  color: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.55)));
   cursor: pointer;
 }
 
@@ -39,8 +39,16 @@
 .rv-capture-viewer-title-row {
   display: flex;
   align-items: center;
-  margin: 8px 0 0;
-  padding: 0 var(--space-lg, 16px) 14px;
+  justify-content: center;
+  margin: 0;
+  padding: 8px var(--space-lg, 16px) 14px;
+}
+
+.rv-capture-viewer-secondary-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px var(--space-lg, 16px) 14px;
 }
 
 .rv-capture-viewer-search-title-row {

@@ -52,8 +52,12 @@ export function getInsertedText(previous: string, next: string): string {
 
 export function recordEmojiRecentsFromText(text: string): void {
   for (const emoji of extractEmojis(text)) {
-    sendFusionMessage({ type: 'emoji_recents:record', emoji });
+    recordEmojiRecent(emoji);
   }
+}
+
+export function recordEmojiRecent(emoji: string): void {
+  sendFusionMessage({ type: 'emoji_recents:record', emoji });
 }
 
 export function listEmojiRecents(limit = 20): Promise<EmojiRecentItem[]> {

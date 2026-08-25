@@ -1,10 +1,4 @@
-const { clamp } = require('./color-math');
-
-function luminanceToHex(luminance) {
-  const ch = Math.round((luminance / 100) * 255);
-  const h  = ch.toString(16).padStart(2, '0');
-  return `#${h}${h}${h}`;
-}
+const { computePanelSurfaces } = require('./color-math');
 
 function hexToRgb(hex) {
   const clean = hex.replace('#', '');
@@ -16,18 +10,7 @@ function hexToRgb(hex) {
 
 function render(entry) {
   const accent    = entry.accent;
-  const luminance = entry.luminance ?? 6;
-  const bgTint    = entry.bgTint ?? entry.chromeTint ?? 12;
-
-  const floorL = clamp(luminance);
-
-  function surface(l, tint) {
-    const base = luminanceToHex(l);
-    if (tint <= 0) return base;
-    return `color-mix(in srgb, ${base} ${100 - tint}%, ${accent} ${tint}%)`;
-  }
-
-  const floor = surface(floorL, bgTint);
+  const { floor } = computePanelSurfaces(entry);
   const [r, g, b] = hexToRgb(accent);
 
   return `  --ws-sidebar-bg:   color-mix(in srgb, ${floor} 92%, ${accent} 8%);

@@ -30,10 +30,6 @@ test('removing an attachment excludes it from the outgoing prompt', async ({ pag
 
   await page.goto('/');
   await expect(page.locator('.rv-panel.active .rv-chat-footer')).toBeVisible();
-  const threadItems = page.locator('.rv-panel.active .rv-chat-item');
-  const threadCount = await threadItems.count();
-  expect(threadCount).toBeGreaterThan(0);
-  await threadItems.first().click();
   await expect(page.locator('.rv-panel.active textarea[placeholder="Ask about files..."]'))
     .toBeEnabled();
 
@@ -41,12 +37,38 @@ test('removing an attachment excludes it from the outgoing prompt', async ({ pag
     '.rv-panel.active button[title="Send folder path to chat"]:visible',
   );
   const attachmentSourceCount = await attachmentSources.count();
-  expect(attachmentSourceCount).toBeGreaterThan(0);
+  expect(attachmentSourceCount).toBeGreaterThan(1);
   await attachmentSources.first().click();
+  await attachmentSources.nth(1).click();
 
-  const pill = page.locator('.rv-panel.active .rv-chat-attachment-pill');
-  await expect(pill).toHaveCount(1);
-  await pill.hover();
+  const pills = page.locator('.rv-panel.active .rv-chat-attachment-pill');
+  await expect(pills).toHaveCount(2);
+  const pill = pills.first();
+
+  const shell = page.locator('.rv-panel.active .rv-chat-composer-shell');
+  const strip = shell.locator('.rv-chat-attachments-strip');
+  await expect(strip).toHaveCount(1);
+  await expect(pill.locator('.rv-chat-attachment-pill-label')).not.toBeEmpty();
+  await expect(pill.locator('.rv-chat-attachment-type')).toHaveText('Folder');
+
+  const trayLayout = await strip.evaluate((element) => {
+    const shellElement = element.closest('.rv-chat-composer-shell');
+    const card = element.querySelector('.rv-chat-attachment-pill');
+    return {
+      insideComposer: Boolean(shellElement?.contains(element)),
+      overflowX: getComputedStyle(element).overflowX,
+      shellRadius: shellElement ? getComputedStyle(shellElement).borderRadius : null,
+      cardRadius: card ? getComputedStyle(card).borderRadius : null,
+      horizontallyScrollable: element.scrollWidth > element.clientWidth,
+    };
+  });
+  expect(trayLayout).toEqual(expect.objectContaining({
+    insideComposer: true,
+    overflowX: 'auto',
+    shellRadius: '15px',
+    cardRadius: '15px',
+    horizontallyScrollable: true,
+  }));
 
   const removeButton = pill.getByRole('button', { name: /Remove / });
   await expect(removeButton).toBeVisible();
@@ -61,11 +83,16 @@ test('removing an attachment excludes it from the outgoing prompt', async ({ pag
   expect(removeBox!.y + removeBox!.height).toBeLessThanOrEqual(pillBox!.y + pillBox!.height);
 
   await removeButton.click();
-  await expect(pill).toHaveCount(0);
+  await expect(pills).toHaveCount(1);
+
+  const finalRemoveButton = pills.getByRole('button', { name: /Remove / });
+  await expect(finalRemoveButton).toBeVisible();
+  await finalRemoveButton.click();
+  await expect(pills).toHaveCount(0);
 
   const input = page.locator('.rv-panel.active textarea[placeholder="Ask about files..."]');
   await input.fill('attachment removal regression');
-  await page.locator('.rv-panel.active').getByRole('button', { name: 'Send', exact: true }).click();
+  await page.locator('.rv-panel.active').getByRole('button', { name: 'Send message', exact: true }).click();
 
   await expect.poll(async () => page.evaluate(() => window.__capturedPromptFrames?.length ?? 0))
     .toBe(1);

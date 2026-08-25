@@ -152,12 +152,21 @@ export function fetchPanelWorkspaceFile(
   return fetchPanelFile(ws, '__panels__', `${panelId}/${pathUnderView}`);
 }
 
+let nextPanelFileRequestId = 0;
+
 export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
+    nextPanelFileRequestId += 1;
+    const requestId = `panel-file-${nextPanelFileRequestId}`;
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'file_content_response' && msg.panel === panel && msg.path === filePath) {
+        if (
+          msg.type === 'file_content_response'
+          && msg.panel === panel
+          && msg.path === filePath
+          && msg.requestId === requestId
+        ) {
           ws.removeEventListener('message', handleMessage);
           if (msg.success) {
             resolve(msg.content);
@@ -173,6 +182,7 @@ export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): 
       type: 'file_content_request',
       panel,
       path: filePath,
+      requestId,
     }));
 
     setTimeout(() => {

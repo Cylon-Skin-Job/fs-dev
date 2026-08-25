@@ -912,7 +912,6 @@ export function OfficeGrid() {
         panel={PANEL}
         folder={documentFolderPath}
         folderName={selectedFolderName}
-        showRibbon={false}
         onBack={handleBackToFolder}
       />,
       'rv-office-detail-main',

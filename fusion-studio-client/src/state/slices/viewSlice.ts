@@ -13,8 +13,13 @@ type Get = () => AppState;
 
 // STATE_OVERRIDE_SPEC §5: per-view UI state defaults (full shape).
 export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
-  collapsed: { leftSidebar: false, leftChat: false },
-  widths:    { leftSidebar: 220,   leftChat: 320   },
+  collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
+  widths:    {
+    leftSidebar: 220,
+    leftChat: 360,
+    contentNavLeft: 200,
+    contentNavRight: 220,
+  },
   popup: {
     open: false,
     x: -1,
@@ -35,6 +40,7 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   docViewerMode: 'active',
   docViewerActiveSelectedPath: null,
   docViewerArchiveSelectedPath: null,
+  docViewerLastOpenedPath: null,
   docViewerActiveGridScroll: 0,
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
@@ -64,17 +70,25 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   },
 };
 
-export function clampPaneWidth(pane: Pane, n: number): number {
+export function clampPaneWidth(pane: Pane, n: number, maxOverride?: number): number {
   let min = 120;
-  const max = 600;
-  if (pane === 'leftChat') {
-    min = 300;
+  let max = 600;
+  if (pane === 'leftSidebar') {
+    min = 200;
+    max = 460;
+  } else if (pane === 'leftChat') {
+    min = 360;
   } else if (pane === 'rightSecondary') {
     min = 300;
   } else if (pane === 'rightCol') {
     // View's right column (e.g. file tree). Allow narrower than the chat
     // so the tree can be compact when no sticky chat is docked.
     min = 160;
+  } else if (pane === 'contentNavLeft' || pane === 'contentNavRight') {
+    min = 160;
+  }
+  if (typeof maxOverride === 'number' && Number.isFinite(maxOverride)) {
+    max = Math.max(min, maxOverride);
   }
   return Math.max(min, Math.min(max, n));
 }
@@ -139,12 +153,15 @@ export function createViewSlice(set: Set, get: Get) {
       };
     }),
 
-    commitPaneWidths: (view: string) => {
+    commitPaneWidths: (view: string, pane?: Pane) => {
       const state = get().viewStates[view];
       if (!state) return;
       const ws = get().ws;
       if (!ws || ws.readyState !== WebSocket.OPEN) return;
-      ws.send(JSON.stringify({ type: 'state:set', view, state: { widths: state.widths } }));
+      const widths = pane
+        ? { [pane]: state.widths[pane] }
+        : state.widths;
+      ws.send(JSON.stringify({ type: 'state:set', view, state: { widths } }));
     },
 
     // TINTS_SPEC §8b: flip a single tint leaf for `view`. Updates local

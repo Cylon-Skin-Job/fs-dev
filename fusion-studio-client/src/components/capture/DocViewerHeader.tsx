@@ -126,19 +126,21 @@ export function DocViewerHeader({
     <div className="rv-capture-viewer-main-header">
       <DocViewerChrome
         left={
-          <button
-            type="button"
-            className="rv-capture-viewer-search-icon"
-            aria-label="Search captures"
-            onClick={openSearch}
-          >
-            <span className="material-symbols-outlined">search</span>
-          </button>
+          <>
+            <button
+              type="button"
+              className="rv-capture-viewer-search-icon"
+              aria-label="Search captures"
+              onClick={openSearch}
+            >
+              <span className="material-symbols-outlined">search</span>
+            </button>
+          </>
         }
-        center={toggle}
+        center={<h1 className="rv-capture-viewer-main-title">{title}</h1>}
       />
-      <div className="rv-capture-viewer-title-row">
-        <h1 className="rv-capture-viewer-main-title">{title}</h1>
+      <div className="rv-capture-viewer-secondary-row">
+        {toggle}
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ export const globRenderer: ToolRenderer = {
     if (!content) return '';
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line =>
-      `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncatePath(line))}</div>`
+      `<div style="color:var(--chat-foreground-color, var(--text-dim));padding:1px 0">${escapeHtml(truncatePath(line))}</div>`
     ).join('');
   },
 

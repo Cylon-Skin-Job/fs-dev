@@ -14,6 +14,8 @@ import type { FileWithContent } from '../../state/fileDataStore';
 import { usePanelStore } from '../../state/panelStore';
 import { activityId } from '../../lib/viewActivity';
 import { normalizeViewCollections } from '../../lib/viewCollections';
+import { useTileFileActions } from '../../hooks/useTileFileActions';
+import { CaptureDocumentMenuButton } from '../capture/CaptureDocumentMenuButton';
 
 // Re-export for consumers that import from here
 export type { FileWithContent } from '../../state/fileDataStore';
@@ -22,8 +24,10 @@ interface TileRowProps {
   label: string;
   panel: string;
   folder: string;
+  checkedPath?: string | null;
   onFileClick?: (filePath: string) => void;
   onFileSelect?: (file: FileWithContent, siblings: FileWithContent[]) => void;
+  onFileContextMenu?: (event: React.MouseEvent, file: FileWithContent) => void;
 }
 
 export interface FileEntry {
@@ -33,17 +37,18 @@ export interface FileEntry {
   extension?: string;
 }
 
-export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: TileRowProps) {
+export function TileRow({ label, panel, folder, checkedPath, onFileClick, onFileSelect, onFileContextMenu }: TileRowProps) {
   const { files, loading } = useFolderFiles(panel, folder);
   const rawCollections = usePanelStore((s) => s.viewStates[panel]?.collections);
   const starredIds = useMemo(
     () => new Set(normalizeViewCollections(rawCollections).starred.map((item) => item.id)),
     [rawCollections]
   );
-  const { getFileContextMenuHandler, getFileMoreClickHandler } = useFileTileMenu({
+  const { getFileStarClickHandler } = useFileTileMenu({
     panel,
     folder,
   });
+  const { archiveOrRestoreFile, renameFile, deleteFile } = useTileFileActions({ panel, folder });
 
   return (
     <div className="rv-tile-row">
@@ -68,13 +73,23 @@ export function TileRow({ label, panel, folder, onFileClick, onFileSelect }: Til
                 extension={file.extension}
                 panel={panel}
                 folderPath={folder}
+                checked={checkedPath === file.path || checkedPath === `${folder}/${file.name}`}
                 starred={starredIds.has(activityId(panel, file.path))}
+                onStarClick={getFileStarClickHandler(file)}
                 onClick={() => {
                   onFileClick?.(file.path);
                   onFileSelect?.(file, files);
                 }}
-                onContextMenu={getFileContextMenuHandler(file)}
-                onMoreClick={getFileMoreClickHandler(file)}
+                onContextMenu={(event) => onFileContextMenu?.(event, file)}
+                moreButton={(
+                  <CaptureDocumentMenuButton
+                    fileName={file.name}
+                    className="rv-doc-tile-more"
+                    onRename={() => renameFile(file)}
+                    onArchive={() => archiveOrRestoreFile(file)}
+                    onDelete={() => deleteFile(file)}
+                  />
+                )}
               />
             ))}
             {files.length > 30 && (

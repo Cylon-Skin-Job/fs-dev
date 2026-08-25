@@ -2,8 +2,8 @@
  * @module DocViewerChrome
  * @role Shared chrome bar for capture-viewer grid and document views
  *
- * Mirrors the wiki header paradigm (.rv-wiki-page-nav):
- * 44px height, opaque rail background, bottom hairline.
+ * Mirrors the universal view-header paradigm:
+ * 40px height, opaque rail background, bottom hairline.
  * Content is split into left / center / right slots.
  */
 

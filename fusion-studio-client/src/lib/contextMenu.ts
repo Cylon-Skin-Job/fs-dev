@@ -9,6 +9,7 @@ export interface ContextMenuItem {
   label: string;
   action: () => void;
   danger?: boolean;
+  icon?: string;
 }
 
 interface ShowContextMenuOptions {
@@ -38,6 +39,7 @@ function injectStyles() {
     .rv-context-menu-item {
       display: flex;
       align-items: center;
+      gap: var(--space-sm, 8px);
       width: 100%;
       padding: var(--space-sm, 8px) var(--space-md, 12px);
       background: none;
@@ -47,6 +49,10 @@ function injectStyles() {
       text-align: left;
       cursor: pointer;
       transition: background var(--transition-fast, 0.12s ease);
+    }
+    .rv-context-menu-item .material-symbols-outlined {
+      flex: 0 0 auto;
+      font-size: 18px;
     }
     .rv-context-menu-item:hover,
     .rv-context-menu-item:focus {
@@ -77,7 +83,14 @@ export function showContextMenu({ x, y, items }: ShowContextMenuOptions): () => 
     const button = document.createElement('button');
     button.type = 'button';
     button.className = `rv-context-menu-item${item.danger ? ' rv-context-menu-item-danger' : ''}`;
-    button.textContent = item.label;
+    if (item.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'material-symbols-outlined';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = item.icon;
+      button.appendChild(icon);
+    }
+    button.appendChild(document.createTextNode(item.label));
     button.addEventListener('click', () => {
       close();
       item.action();

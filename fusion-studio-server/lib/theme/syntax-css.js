@@ -1,51 +1,73 @@
-const { computeSyntaxPalette, computeContentSurfaces, computeContentEmphasized, computeContentLink, computeContentBorder } = require('./color-math');
+const {
+  computeSyntaxPalette,
+  computeContentSurfaces,
+  computeContentHeadings,
+  computeContentText,
+  applyContentTextTone,
+  computeContentLink,
+  computeContentBorder,
+  computeContentAttenuated,
+} = require('./color-math');
+
+const AUTO_CONTENT_CONTRAST = 50;
+const AUTO_CONTENT_TINT = 12;
 
 function render(entry) {
-  const { documentBg } = computeContentSurfaces(entry);
+  const { documentSurfaceBg: documentBg } = computeContentSurfaces(entry);
   const accent = entry.accent;
   const luminance = entry.luminance ?? 6;
-  const panelContrast = entry.panelContrast ?? 50;
-  const contentLum = entry.contentLuminance ?? luminance;
-  const contentContrast = entry.contentContrast ?? panelContrast;
-
-  const contentTint = entry.contentTint ?? entry.bgTint ?? 12;
+  const contentHeadings = computeContentHeadings(entry);
+  const contentText = computeContentText(entry);
   const themeCode = entry.themeCode ?? false;
 
-  const palette = computeSyntaxPalette(accent, contentLum, contentContrast, documentBg, contentTint, themeCode);
+  const toneSyntaxPalette = (palette) => Object.fromEntries(
+    Object.entries(palette).map(([name, color]) => [
+      name,
+      applyContentTextTone(color, {
+        luminance,
+        contentText: entry.contentText,
+        documentBg,
+      }),
+    ]),
+  );
+
+  const palette = toneSyntaxPalette(computeSyntaxPalette(
+    accent,
+    luminance,
+    AUTO_CONTENT_CONTRAST,
+    documentBg,
+    AUTO_CONTENT_TINT,
+    themeCode,
+  ));
+  palette.base = contentText;
   // Parallel rainbow palette for markdown contexts — pinned to themeCode=false
   // so markdown code blocks always render with the standard rainbow regardless
   // of the Theme Code toggle. When themeCode is off, this matches `palette`.
   const paletteMd = themeCode
-    ? computeSyntaxPalette(accent, contentLum, contentContrast, documentBg, contentTint, false)
+    ? {
+        ...toneSyntaxPalette(computeSyntaxPalette(
+          accent,
+          luminance,
+          AUTO_CONTENT_CONTRAST,
+          documentBg,
+          AUTO_CONTENT_TINT,
+          false,
+        )),
+        base: contentText,
+      }
     : palette;
 
-  // Content-attenuated gray: brightness follows Content Contrast (same anchor
-  // as palette.comment), tint follows Content Tint (mirrors the --text-dim
-  // formula in text-css.js, but using contentTint instead of bgTint). Used by
-  // line numbers and the in-content dividers.
-  const isLight = luminance > 50;
-  const cTint = isLight ? Math.round(contentTint * 0.4) : contentTint;
-  const contentAttenuated = cTint > 0
-    ? `color-mix(in srgb, ${palette.comment} ${100 - cTint}%, ${accent} ${cTint}%)`
-    : palette.comment;
+  const contentAttenuated = computeContentAttenuated({ accent, luminance, documentBg });
 
-  // Content-emphasized: foreground tier of the content paradigm. Used by
-  // wiki H1/H2/H3, active tab + breadcrumb, code-block borders, and inline
-  // code backgrounds. Distance is driven by Content Contrast; chroma carries
-  // the accent so the result stays in-spectrum.
-  const emphasized = computeContentEmphasized({
+  const link = applyContentTextTone(computeContentLink({
     accent,
     luminance,
-    contentContrast,
-    contentTint,
+    contentContrast: AUTO_CONTENT_CONTRAST,
+    contentTint: AUTO_CONTENT_TINT,
     documentBg,
-  });
-
-  const link = computeContentLink({
-    accent,
+  }), {
     luminance,
-    contentContrast,
-    contentTint,
+    contentText: entry.contentText,
     documentBg,
   });
 
@@ -63,8 +85,11 @@ function render(entry) {
 
   return `${hljs}
 ${hljsMd}
+  --content-heading-color: ${contentHeadings};
+  --content-text-color: ${contentText};
   --content-attenuated: ${contentAttenuated};
-  --content-emphasized: ${emphasized};
+  --content-emphasized: ${contentHeadings};
+  --wiki-emphasized: ${contentHeadings};
   --content-link: ${link};
   --content-border: ${border};
   --content-highlight: color-mix(in srgb, var(--content-emphasized) 16%, transparent);`;

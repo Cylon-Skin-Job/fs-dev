@@ -19,10 +19,14 @@ const HARDCODED_DEFAULTS = Object.freeze({
     leftChat:       320,
     rightSecondary: 400,
     rightCol:       220,
+    contentNavLeft: 200,
+    contentNavRight: 220,
   },
   collapsed: {
     leftSidebar: false,
     leftChat:    false,
+    rightCol:    false,
+    contentArea: false,
   },
   popup: {
     open:     false,
@@ -48,6 +52,7 @@ const HARDCODED_DEFAULTS = Object.freeze({
   docViewerMode: 'active',
   docViewerActiveSelectedPath: null,
   docViewerArchiveSelectedPath: null,
+  docViewerLastOpenedPath: null,
   docViewerActiveGridScroll: 0,
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
@@ -160,6 +165,8 @@ function normalize(state) {
   out.widths.leftChat       = clampNum(out.widths.leftChat,       120, 600);
   out.widths.rightSecondary = clampNum(out.widths.rightSecondary, 120, 600);
   out.widths.rightCol       = clampNum(out.widths.rightCol,       120, 600);
+  out.widths.contentNavLeft = clampNum(out.widths.contentNavLeft, 160, 600);
+  out.widths.contentNavRight = clampNum(out.widths.contentNavRight, 160, 600);
   out.popup.width  = clampNum(out.popup.width,  280, 1200);
   out.popup.height = clampNum(out.popup.height, 240, 1200);
   const paperBrightness = typeof out.officePaperBrightness === 'number'

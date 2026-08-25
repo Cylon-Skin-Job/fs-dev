@@ -7,13 +7,13 @@
  * Discovers folders under ai/<machine>/Wiki and loads each selected PAGE.md.
  */
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, type CSSProperties } from 'react';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { usePanelStore } from '../../state/panelStore';
 import { createWikiNode, createWikiRootNode, useWikiStore, type WikiNode, type WikiNodeKind } from '../../state/wikiStore';
 import type { FileTreeNode } from '../../types/file-explorer';
 import { TopicList } from './TopicList';
-import { PageViewer } from './PageViewer';
+import { PageViewer, WikiPageNav } from './PageViewer';
 import { EdgePanel } from './EdgePanel';
 
 const MAX_WIKI_DEPTH = 4;
@@ -55,6 +55,11 @@ export function WikiExplorer() {
   useViewLayoutStyles('wiki-viewer');
   const ws = usePanelStore((s) => s.ws);
   const activeWorkspaceId = usePanelStore((s) => s.activeWorkspaceId);
+  const wikiWidths = usePanelStore((s) => s.viewStates['wiki-viewer']?.widths);
+  const wikiLayoutStyle = {
+    '--wiki-topic-width': `${wikiWidths?.contentNavLeft ?? 200}px`,
+    '--wiki-edge-width': `${wikiWidths?.contentNavRight ?? 220}px`,
+  } as CSSProperties;
   const pendingTreePathsRef = useRef<Set<string>>(new Set());
   const folderMapRef = useRef<Map<string, FileTreeNode[]>>(new Map());
 
@@ -171,7 +176,7 @@ export function WikiExplorer() {
 
   if (!root) {
     return (
-      <div className="rv-wiki-explorer">
+      <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
         <div className="rv-wiki-loading">
           <span className="rv-dim-label">Loading wiki...</span>
         </div>
@@ -180,7 +185,8 @@ export function WikiExplorer() {
   }
 
   return (
-    <div className="rv-wiki-explorer">
+    <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
+      <WikiPageNav />
       <TopicList />
       <PageViewer />
       <EdgePanel />

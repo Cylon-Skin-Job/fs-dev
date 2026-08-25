@@ -24,7 +24,7 @@ export const fetchRenderer: ToolRenderer = {
     const lines = content.split('\n').filter(l => l.trim());
     return lines.map(line => {
       const truncated = line.length > 80 ? line.slice(0, 77) + '...' : line;
-      return `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncated)}</div>`;
+      return `<div style="color:var(--chat-foreground-color, var(--text-dim));padding:1px 0">${escapeHtml(truncated)}</div>`;
     }).join('');
   },
 

@@ -11,6 +11,8 @@ interface ChatAreaProps {
   panel: string;
   collapsed?: boolean;
   sidebarCollapsed?: boolean;
+  contentCollapsed?: boolean;
+  hideCollapsedRail?: boolean;
   /**
    * When set, ChatArea reads/writes chat state for this specific thread
    * instead of the current workspace thread. Used by the secondary popup.
@@ -18,13 +20,11 @@ interface ChatAreaProps {
   threadIdOverride?: string | null;
 }
 
-export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride }: ChatAreaProps) {
+export function ChatArea({ panel, collapsed, sidebarCollapsed, contentCollapsed, hideCollapsedRail, threadIdOverride }: ChatAreaProps) {
   const {
     panel: chatPanel,
     toggleCollapsed,
-    toggleThreadDropdown,
     cliPickerOpen,
-    threadDropdownOpen,
     chatHeaderRef,
     lastUserMsgRef,
     chatContainerRef,
@@ -36,15 +36,13 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     handleInsertText,
     handleAddAttachment,
     currentThreadId,
-    currentThread,
     messages,
     currentTurn,
     segments,
     contextUsage,
+    tokenUsage,
     connectingHarnessId,
     connectingHarness,
-    identity,
-    resolveCliAccent,
     noThread,
     isActive,
     handleHarnessSelect,
@@ -60,8 +58,6 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     handleStop,
     warmCurrentThread,
     isAcceptancePending,
-    isForkThreadDisabled,
-    handleForkThread,
     inputPlaceholder,
   } = useChatArea({ panel, threadIdOverride });
 
@@ -71,14 +67,9 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     panel: chatPanel,
     chatHeaderRef,
     currentThreadId,
-    currentThread,
-    identity,
-    resolveCliAccent,
     cliPickerOpen,
-    threadDropdownOpen,
     moreMenuOpen,
     setMoreMenuOpen,
-    toggleThreadDropdown,
     harnessStatuses,
     showCliPicker,
     handleHarnessSelect,
@@ -87,6 +78,8 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     handleRename,
     handleCopyLink,
     handleViewMarkdown,
+    contentCollapsed,
+    handleToggleContent: () => toggleCollapsed(panel, 'contentArea'),
   };
   const footerProps = {
     panel: chatPanel,
@@ -99,15 +92,23 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, threadIdOverride 
     isTurnActive,
     isTurnFinalizing,
     isAcceptancePending,
-    isForkThreadDisabled,
-    handleForkThread,
     handleInsertText,
     handleAddAttachment,
     warmCurrentThread,
     contextUsage,
+    tokenUsage,
   };
 
   if (collapsed) {
+    if (hideCollapsedRail) {
+      return (
+        <section
+          className="rv-chat-area rv-chat-area--project rv-chat-area--collapsed"
+          aria-hidden="true"
+        />
+      );
+    }
+
     return (
       <section className="rv-chat-area rv-chat-area--project rv-chat-area--collapsed">
         <button

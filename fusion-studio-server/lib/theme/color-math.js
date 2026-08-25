@@ -8,6 +8,8 @@
 
 const { oklch, formatHex } = require('culori');
 
+const MEANINGFUL_CHROMA_MIN = 0.02;
+
 function hexToHsl(hex) {
   const r = parseInt(hex.slice(1, 3), 16) / 255;
   const g = parseInt(hex.slice(3, 5), 16) / 255;
@@ -80,45 +82,269 @@ const CONTENT_SURFACE_CATALOG = {
 };
 
 /**
+ * Derive the shared panel surfaces from the selected color.
+ *
+ * Background Contrast now controls how far the panel system moves away from
+ * the selected color. At zero contrast every panel surface is the exact accent;
+ * from the midpoint onward the established luminance/tint math is preserved.
+ */
+function computePanelSurfaces(entry) {
+  const accent = entry.accent;
+  const luminance = entry.luminance ?? 6;
+  const panelContrast = entry.panelContrast ?? 50;
+  const bgTint = entry.bgTint ?? entry.chromeTint ?? 12;
+  const isLight = luminance > 50;
+  const direction = isLight ? -1 : 1;
+  const factor = panelContrast / 50;
+  const contrastBlend = clamp(panelContrast, 0, 50) / 50;
+
+  function surface(offset) {
+    const base = luminanceToHex(luminance + direction * offset * factor);
+    const tinted = mixHex(base, accent, clamp(bgTint) / 100);
+    return mixHex(accent, tinted, contrastBlend);
+  }
+
+  return {
+    floor: surface(0),
+    surf: surface(5),
+    codeBg: surface(8),
+    panelBg: surface(10),
+  };
+}
+
+function computeThreadBackground(entry) {
+  const isLight = (entry.luminance ?? (entry.mode === 'light' ? 100 : 0)) > 50;
+  const contrastPole = isLight ? '#000000' : '#ffffff';
+  const blend = clamp(entry.threadBackground ?? 50) / 1000;
+  return mixHex(entry.accent, contrastPole, blend);
+}
+
+function computeChatSurfaceBackground(entry) {
+  return computeThreadBackground({
+    ...entry,
+    threadBackground: entry.chatBackground,
+  });
+}
+
+function computeThreadForeground(entry) {
+  const themeColor = /^#[0-9a-fA-F]{6}$/.test(entry.themeColor ?? '')
+    ? entry.themeColor
+    : entry.accent;
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  const start = mixHex(themeColor, contrastPole, 0.10);
+  return mixHex(start, entry.accent, clamp(entry.threadForegroundContrast ?? 0) / 100);
+}
+
+function computeThreadHeadings(entry) {
+  const themeColor = /^#[0-9a-fA-F]{6}$/.test(entry.themeColor ?? '')
+    ? entry.themeColor
+    : entry.accent;
+  return mixHex(themeColor, entry.accent, clamp(entry.threadHeadings ?? 0) / 100);
+}
+
+/**
+ * Shared Foreground/Accent slider range for Workspace, Thread, Navigation,
+ * Chat Foreground, and Content. Zero is Secondary Color; 100 is Background.
+ */
+function computeForegroundAccentRange(entry, value) {
+  const themeColor = /^#[0-9a-fA-F]{6}$/.test(entry.themeColor ?? '')
+    ? entry.themeColor
+    : entry.accent;
+  return mixHex(themeColor, entry.accent, clamp(value) / 100);
+}
+
+function computeThreadPanelForeground(entry) {
+  return computeForegroundAccentRange(entry, entry.threadForeground ?? 0);
+}
+
+function computeWorkspaceForeground(entry) {
+  return computeForegroundAccentRange(entry, entry.workspaceForeground ?? 0);
+}
+
+function computeWorkspaceBorders(entry) {
+  const themeColor = /^#[0-9a-fA-F]{6}$/.test(entry.themeColor ?? '')
+    ? entry.themeColor
+    : entry.accent;
+  return mixHex(entry.accent, themeColor, clamp(entry.workspaceBorders ?? 75) / 100);
+}
+
+function computeThreadAccent(entry) {
+  return computeForegroundAccentRange(entry, entry.threadAccent ?? 100);
+}
+
+function computeThemeOrWhiteForeground(background, _accent) {
+  const [r, g, b] = hexToRgb(background);
+  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return luminance > 0.55 ? '#000000' : '#ffffff';
+}
+
+function computeThreadAccentContrast(entry) {
+  return computeThemeOrWhiteForeground(computeThreadAccent(entry), entry.accent);
+}
+
+/**
+ * UI emphasis stays relative to the selected color instead of walking an
+ * absolute distance from the surface. This prevents medium and light accents
+ * from clipping into the same near-white value in dark mode, and prevents
+ * their light-mode counterparts from collapsing toward black.
+ *
+ * Shared foreground and accent controls use this curve across workspace,
+ * thread, chat, and content settings. Heading controls add a small mode-pole
+ * lift at their zero endpoint below.
+ */
+function computeUiEmphasizedAccent(entry) {
+  const accentColor = oklch(entry.accent);
+  const isLight = (entry.luminance ?? 6) > 50;
+  if ((accentColor.c ?? 0) < MEANINGFUL_CHROMA_MIN || accentColor.h == null) {
+    return isLight ? '#000000' : '#ffffff';
+  }
+
+  const targetLightness = isLight ? 0.05 : 0.95;
+  const blend = isLight ? 0.25 : 0.40;
+  const lightness = accentColor.l + (targetLightness - accentColor.l) * blend;
+  return formatHex({
+    mode: 'oklch',
+    l: lightness,
+    c: accentColor.c * 0.92,
+    h: accentColor.h,
+  });
+}
+
+function computeEmphasizedAccentRange(entry, value, poleShare = 0.1) {
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  const emphasized = computeUiEmphasizedAccent(entry);
+  const softenedBase = mixHex(entry.accent, contrastPole, poleShare);
+  return mixHex(emphasized, softenedBase, clamp(value) / 100);
+}
+
+function computeHeadingAccentRange(entry, value) {
+  const clampedValue = clamp(value);
+  const themeColor = /^#[0-9a-fA-F]{6}$/.test(entry.themeColor ?? '')
+    ? entry.themeColor
+    : entry.accent;
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  const liftedTheme = mixHex(themeColor, contrastPole, 0.1);
+  return mixHex(liftedTheme, entry.accent, clampedValue / 100);
+}
+
+function computeWorkspaceAccent(entry) {
+  const accent = computeForegroundAccentRange(entry, entry.workspaceAccent ?? 100);
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  return mixHex(accent, contrastPole, 0.1);
+}
+
+function computeChatForeground(entry) {
+  return computeForegroundAccentRange(entry, entry.chatForeground ?? 0);
+}
+
+function computeChatForegroundContrast(entry) {
+  return computeThemeOrWhiteForeground(computeChatForeground(entry), entry.accent);
+}
+
+function computeChatAccent(entry) {
+  return computeHeadingAccentRange(entry, entry.chatAccent ?? 0);
+}
+
+function computeChatTools(entry) {
+  return computeHeadingAccentRange(entry, entry.chatTools ?? entry.chatAccent ?? 0);
+}
+
+function computeChatText(entry) {
+  const value = clamp(entry.chatText ?? 0);
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  return mixHex(contrastPole, entry.accent, value / 200);
+}
+
+function computeChatBackground(entry) {
+  return computeEmphasizedAccentRange(entry, entry.chatContrast ?? 0, 0);
+}
+
+function computeChatBubbleBackground(entry) {
+  return computeEmphasizedAccentRange(
+    entry,
+    entry.chatBubble ?? entry.chatContrast ?? 0,
+    0,
+  );
+}
+
+function computeChatComposerChrome(entry) {
+  const background = computeChatBackground(entry);
+  const [r, g, b] = hexToRgb(background);
+  const perceivedBrightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return perceivedBrightness < 0.45 ? '#ffffff' : entry.accent;
+}
+
+function computeContentCanvasBackground(entry) {
+  return entry.accent;
+}
+
+function computeContentBackground(entry) {
+  const isLight = (entry.luminance ?? (entry.mode === 'light' ? 100 : 0)) > 50;
+  const contrastPole = isLight ? '#000000' : '#ffffff';
+  const blend = clamp(entry.contentCanvasBackground ?? 0) / 1000;
+  return mixHex(entry.accent, contrastPole, blend);
+}
+
+function computeContentForeground(entry) {
+  return computeForegroundAccentRange(entry, entry.contentForeground ?? 0);
+}
+
+function computeContentAccent(entry) {
+  return computeThreadAccent({
+    ...entry,
+    threadAccent: entry.contentAccent ?? 100,
+  });
+}
+
+function computeContentAccentContrast(entry) {
+  return computeThemeOrWhiteForeground(computeContentAccent(entry), entry.accent);
+}
+
+function computeContentHeadings(entry) {
+  return computeHeadingAccentRange(entry, entry.contentHeadings ?? 0);
+}
+
+function computeContentText(entry) {
+  const value = clamp(entry.contentText ?? 0);
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  return mixHex(contrastPole, entry.accent, value / 200);
+}
+
+/**
+ * Apply the Content Text control to an already-selected semantic color.
+ *
+ * The midpoint preserves the source color. The high-contrast end pulls it
+ * toward the mode pole, while the muted end pulls it toward the actual content
+ * background. This lets syntax families and links keep their chosen hues while
+ * their overall legibility follows the same control as body text.
+ */
+function applyContentTextTone(color, entry) {
+  const value = clamp(entry.contentText ?? 0);
+  const contrastPole = (entry.luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+
+  if (value <= 50) {
+    const brightened = mixHex(color, contrastPole, 0.2);
+    return mixHex(brightened, color, value / 50);
+  }
+
+  const muteAmount = ((value - 50) / 50) * 0.35;
+  return mixHex(color, entry.documentBg, muteAmount);
+}
+
+/**
  * Compute the actual hex values for content surfaces.
  * Mirrors the CSS that content-css.js emits, but returns hex
  * so syntax palette generation can reason about real backgrounds.
  *
- * Content surfaces are driven by contentLuminance/panelContrast/contentTint
- * so the content luminance slider controls the document background while
- * panelContrast controls the surface spread (separated from contentContrast
- * which only affects syntax token distances).
+ * The outer content canvas stays at the exact workspace Background. The one
+ * Content Background control applies the 0–10% mode-pole range only to the
+ * Wiki/code document surface above it.
  */
 function computeContentSurfaces(entry) {
-  const accent = entry.accent;
-  const contentTint = entry.contentTint ?? entry.bgTint ?? entry.chromeTint ?? 12;
-  const contentLum = entry.contentLuminance ?? entry.luminance ?? 6;
-  const panelContrast = entry.panelContrast ?? 50;
-
-  const contentIsLight = contentLum > 50;
-  const contentDir = contentIsLight ? -1 : 1;
-  const factor = panelContrast / 50;
-
-  const modeKey = contentIsLight ? 'light' : 'dark';
-  const { surfaceOffset, codeOffset } = CONTENT_SURFACE_CATALOG[modeKey];
-
-  const contentSurfaceL = clamp(contentLum + contentDir * surfaceOffset * factor);
-  const contentCodeL = clamp(contentLum + contentDir * codeOffset * factor);
-
-  const documentSurfaceBg = mixHex(
-    luminanceToHex(contentSurfaceL),
-    accent,
-    contentTint / 100,
-  );
-  const documentBg = (contentLum >= 100 && contentTint <= 0)
-    ? '#ffffff'
-    : mixHex(
-        luminanceToHex(contentCodeL),
-        accent,
-        contentTint / 100,
-      );
-
-  return { documentSurfaceBg, documentBg };
+  return {
+    documentSurfaceBg: computeContentBackground(entry),
+    documentBg: computeContentCanvasBackground(entry),
+  };
 }
 
 /**
@@ -287,9 +513,14 @@ function computeSyntaxPalette(accent, contentLuminance, contentContrast, codeBgH
  *     result stays "in the spectrum" of the active accent.
  */
 function computeContentEmphasized({ accent, luminance, contentContrast, contentTint, documentBg }) {
-  const accentH = oklch(accent).h ?? 0;
-  const bgL = oklch(documentBg).l;
+  const accentColor = oklch(accent);
   const isLight = (luminance ?? 6) > 50;
+  if ((accentColor.c ?? 0) < MEANINGFUL_CHROMA_MIN || accentColor.h == null) {
+    return isLight ? '#000000' : '#ffffff';
+  }
+
+  const accentH = accentColor.h;
+  const bgL = oklch(documentBg).l;
   const dir = isLight ? -1 : 1;
   const conNorm = clamp(contentContrast ?? 50, 0, 100) / 100;
   const minDist = 0.40;
@@ -354,6 +585,17 @@ function computeContentBorder({ luminance, documentBg }) {
   return formatHex({ mode: 'oklch', l: borderL, c: 0, h: 0 });
 }
 
+/**
+ * Automatic structural-content color shared by metadata, line numbers,
+ * dividers, and content-card outlines. It is intentionally independent from
+ * the Content Text and Borders controls.
+ */
+function computeContentAttenuated({ accent, luminance, documentBg }) {
+  const contentPole = (luminance ?? 6) > 50 ? '#000000' : '#ffffff';
+  const contentChromeTarget = mixHex(contentPole, accent, 0.5);
+  return mixHex(documentBg, contentChromeTarget, 0.45);
+}
+
 module.exports = {
   hexToHsl,
   hslToHex,
@@ -361,11 +603,40 @@ module.exports = {
   hexToRgb,
   mixHex,
   luminanceToHex,
+  computePanelSurfaces,
+  computeUiEmphasizedAccent,
+  computeWorkspaceForeground,
+  computeWorkspaceBorders,
+  computeWorkspaceAccent,
+  computeThreadBackground,
+  computeChatSurfaceBackground,
+  computeThreadForeground,
+  computeThreadHeadings,
+  computeThreadPanelForeground,
+  computeThreadAccent,
+  computeThreadAccentContrast,
+  computeChatBackground,
+  computeChatBubbleBackground,
+  computeChatComposerChrome,
+  computeChatForeground,
+  computeChatForegroundContrast,
+  computeChatAccent,
+  computeChatTools,
+  computeChatText,
+  computeContentCanvasBackground,
+  computeContentBackground,
+  computeContentAccent,
+  computeContentAccentContrast,
+  computeContentForeground,
+  computeContentHeadings,
+  computeContentText,
+  applyContentTextTone,
   computeContentSurfaces,
   computeSyntaxPalette,
   computeContentEmphasized,
   computeContentLink,
   computeContentBorder,
+  computeContentAttenuated,
   CONTENT_LUMINANCE_CATALOG,
   CONTENT_SURFACE_CATALOG,
 };

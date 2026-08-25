@@ -1,7 +1,7 @@
 .rv-hourglass-flow {
   --hourglass-size: var(--tool-icon-size, 16px);
-  --hourglass-color: var(--tool-icon-color, var(--accent-dim, var(--text-dim)));
-  --hourglass-muted: var(--tool-label-color, var(--accent-dim, var(--text-dim)));
+  --hourglass-color: var(--tool-icon-color, var(--chat-tools-color, var(--text-dim)));
+  --hourglass-muted: var(--tool-label-color, var(--chat-tools-color, var(--text-dim)));
   --hourglass-bg: var(--chat-surface-bg, var(--panel-chrome-bg, #1a1a1a));
   --hourglass-font-size-sm: var(--font-size-xs, 12px);
   --hourglass-font-size-md: var(--font-size-sm, 13px);
@@ -28,7 +28,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm, 8px);
-  color: var(--tool-label-color, var(--accent-dim, var(--text-dim)));
+  color: var(--tool-label-color, var(--chat-tools-color, var(--text-dim)));
   font-size: var(--hourglass-font-size-md);
   line-height: var(--hourglass-line-height);
 }

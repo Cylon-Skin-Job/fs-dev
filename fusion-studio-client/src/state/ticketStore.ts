@@ -13,6 +13,7 @@ export interface Ticket {
   created: string;
   author: string;
   state: string;
+  priority?: string;
   gitlab_iid?: string;
   body: string;
 }

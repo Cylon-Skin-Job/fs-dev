@@ -41,7 +41,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-md, 6px);
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
   transition:
     background var(--transition-fast, 120ms) ease,
@@ -56,13 +56,13 @@
 }
 
 .rv-header-nav-btn .material-symbols-outlined {
-  font-size: 20px;
+  font-size: var(--chrome-icon-size, 18px);
 }
 
 .rv-workspace-name {
   font-size: var(--font-lg, 16px);
   font-weight: 500;
-  color: var(--accent-dim, var(--text-primary, #e0e0e0));
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-primary, #e0e0e0)));
   letter-spacing: 0.3px;
   white-space: nowrap;
   overflow: hidden;

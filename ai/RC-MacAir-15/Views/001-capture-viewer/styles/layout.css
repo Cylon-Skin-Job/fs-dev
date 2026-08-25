@@ -2,7 +2,7 @@
   * capture-viewer panel layout.
  * ai/<machine>/Views/<view-folder>/styles/layout.css
  *
- * Tile grid + file page view with bottom ribbon.
+ * Tile grid + file page view.
  * Loaded at runtime by useViewLayoutStyles('capture-viewer').
  */
 
@@ -45,35 +45,23 @@
 }
 
 .rv-tile-row-scroll {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
   gap: 12px;
   padding: 0 20px 8px;
-  overflow-x: auto;
+  align-items: start;
+  justify-content: start;
+  overflow: visible;
   width: 100%;
   box-sizing: border-box;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12)) var(--scrollbar-track, transparent);
-}
-
-.rv-tile-row-scroll::-webkit-scrollbar {
-  height: 4px;
-}
-
-.rv-tile-row-scroll::-webkit-scrollbar-track {
-  background: var(--scrollbar-track, transparent);
-}
-
-.rv-tile-row-scroll::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
-  border-radius: 2px;
 }
 
 .rv-tile-row-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 140px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border: 1px dashed var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
   border-radius: 10px;
   color: var(--text-subtle, rgba(255, 255, 255, 0.4));
@@ -86,20 +74,26 @@
 
 .rv-doc-tile {
   position: relative;
-  width: 140px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 10px;
   background: var(--document-surface-bg, #0d0d0d);
-  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  overflow: hidden;
+  border: 1px solid var(--content-attenuated, rgba(255, 255, 255, 0.12));
+  overflow: visible;
   cursor: pointer;
   flex-shrink: 0;
-  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
+  transition: box-shadow 200ms;
+}
+
+.rv-doc-tile-surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .rv-doc-tile:hover {
-  border-color: var(--ws-primary, #a78bfa);
-  transform: translateY(-2px);
+  transform: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -107,43 +101,106 @@
   border-color: var(--ws-primary, #a78bfa);
 }
 
+.rv-doc-tile-hover-check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--text-primary, #ffffff);
+  color: var(--document-surface-bg, var(--content-bg, #0d0d0d));
+  font-size: 16px;
+  line-height: 1;
+  font-variation-settings: 'FILL' 0, 'wght' 650, 'GRAD' 0, 'opsz' 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.rv-doc-tile:hover .rv-doc-tile-hover-check,
+.rv-doc-tile.is-checked .rv-doc-tile-hover-check {
+  opacity: 1;
+}
+
 .rv-doc-tile-star {
   position: absolute;
-  top: 7px;
+  bottom: 7px;
   right: 7px;
   z-index: 2;
   width: 20px;
   height: 20px;
-  color: var(--chrome-accent, var(--text-dim));
-  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--content-accent-color, var(--accent-dim, var(--ws-primary, #a78bfa)));
   line-height: 20px;
-  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
-  -webkit-text-stroke: 0.7px var(--accent-dim, var(--ws-primary, #a78bfa));
-  text-shadow: 0 0 1px var(--accent-dim, var(--ws-primary, #a78bfa));
+  cursor: pointer;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 150ms ease, filter 150ms ease;
 }
 
-/* Small variant — used in ribbon strips. Sized at 0.6× the main tile
-   (140×180), preserving the same 7:9 portrait aspect ratio. */
+.rv-doc-tile-star .material-symbols-outlined,
+span.rv-doc-tile-star {
+  font-size: 18px;
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+  -webkit-text-stroke: 0.7px var(--content-attenuated, rgba(255, 255, 255, 0.12));
+  text-shadow: 0 0 1px var(--content-attenuated, rgba(255, 255, 255, 0.12));
+}
+
+.rv-doc-tile-star.is-starred {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rv-doc-tile-star.is-starred .material-symbols-outlined,
+span.rv-doc-tile-star.is-starred {
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.rv-doc-tile:hover .rv-doc-tile-star:not(.is-starred),
+.rv-doc-tile-star:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rv-doc-tile-star:hover {
+  filter: brightness(1.18);
+}
+
+/* Small variant — used in ribbon strips at 0.6× the square main tile. */
 .rv-doc-tile.rv-doc-tile-small {
-  width: 84px;
-  height: 108px;
+  width: 120px;
+  height: 120px;
 }
 
 .rv-doc-tile.rv-doc-tile-small .rv-doc-tile-star {
-  top: 4px;
+  bottom: 4px;
   right: 4px;
   width: 14px;
   height: 14px;
-  font-size: 14px;
   line-height: 14px;
   -webkit-text-stroke-width: 0.5px;
+}
+
+.rv-doc-tile.rv-doc-tile-small .rv-doc-tile-star .material-symbols-outlined,
+.rv-doc-tile.rv-doc-tile-small span.rv-doc-tile-star {
+  font-size: 14px;
 }
 
 .rv-doc-tile.rv-doc-tile-small .rv-doc-tile-preview {
   width: 560px;
   height: 580px;
-  transform: scale(0.15);
+  transform: scale(0.2142857);
 }
 
 .rv-doc-tile.rv-doc-tile-small .rv-doc-tile-footer {
@@ -171,7 +228,7 @@
 .rv-doc-tile-preview {
   width: 560px;
   height: 580px;
-  transform: scale(0.25);
+  transform: scale(0.3571429);
   transform-origin: top left;
   overflow: hidden;
   pointer-events: none;
@@ -203,17 +260,115 @@
   padding: 8px 10px;
 }
 
+/* Markdown previews use the same rendered-prose paradigm as the open page. */
+.rv-doc-tile-preview .rv-wiki-page-content {
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  white-space: normal;
+}
+
+/* Markdown tiles are readable cards rather than perfectly scaled pages. The
+   first heading stays large and clips at the card edge; body copy fills the
+   remaining surface beneath it. */
+.rv-doc-tile.rv-doc-tile-markdown .rv-doc-tile-preview {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  box-sizing: border-box;
+  padding: 18px;
+  background: var(--document-surface-bg, #0d0d0d);
+  border: none;
+  border-radius: inherit;
+}
+
+.rv-doc-tile.rv-doc-tile-markdown .rv-wiki-page-content {
+  width: 100%;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.rv-doc-tile.rv-doc-tile-markdown .rv-wiki-page-content > :is(h1, h2, h3):first-child {
+  margin: 0 0 14px;
+  padding: 0;
+  border: none;
+  font-size: 18px;
+  line-height: 1.15;
+  font-weight: 700;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.rv-doc-tile.rv-doc-tile-markdown .rv-wiki-page-content > h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.rv-doc-tile.rv-doc-tile-small.rv-doc-tile-markdown .rv-doc-tile-preview {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  padding: 10px;
+}
+
+.rv-doc-tile.rv-doc-tile-small.rv-doc-tile-markdown .rv-wiki-page-content {
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.rv-doc-tile.rv-doc-tile-small.rv-doc-tile-markdown .rv-wiki-page-content > :is(h1, h2, h3):first-child {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
 /* Footer label */
 .rv-doc-tile-footer {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1;
   padding: 8px 0;
-  background: linear-gradient(transparent, var(--document-surface-bg, #0d0d0d) 50%);
+  background: var(--document-surface-bg, #0d0d0d);
   display: flex;
   align-items: center;
   gap: 0;
+}
+
+.rv-doc-tile-footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 18px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--document-surface-bg, #0d0d0d)
+  );
+  pointer-events: none;
+}
+
+.rv-doc-tile-footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 52px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--document-surface-bg, #0d0d0d) 62%
+  );
+  pointer-events: none;
+}
+
+.rv-doc-tile-footer > * {
+  position: relative;
+  z-index: 1;
 }
 
 .rv-doc-tile-icon {
@@ -258,7 +413,7 @@
   color: var(--text-secondary, rgba(255, 255, 255, 0.66));
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   flex: 1;
 }
 
@@ -283,7 +438,7 @@
 
 .rv-capture-viewer-archive-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 140px);
+  grid-template-columns: repeat(auto-fill, 200px);
   gap: 18px;
   align-content: start;
   justify-content: start;
@@ -398,35 +553,3 @@
   height: auto;
   border-radius: 6px;
 }
-
-/* ── Bottom Ribbon ─────────────────────────────────────── */
-
-.rv-file-page-ribbon {
-  flex-shrink: 0;
-  padding: 8px 0;
-  /* Background + border-top color live in ai/<machine>/System/styles/capture-viewer.css. */
-}
-
-.rv-file-page-ribbon-scroll {
-  display: flex;
-  gap: 8px;
-  padding: 0 16px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12)) var(--scrollbar-track, transparent);
-}
-
-.rv-file-page-ribbon-scroll::-webkit-scrollbar {
-  height: 4px;
-}
-
-.rv-file-page-ribbon-scroll::-webkit-scrollbar-track {
-  background: var(--scrollbar-track, transparent);
-}
-
-.rv-file-page-ribbon-scroll::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
-  border-radius: 2px;
-}
-
-/* Ribbon tiles now use DocumentTile with size="small" — see tile-row.css */

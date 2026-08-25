@@ -13,6 +13,9 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  border: none;
+  border-radius: var(--chat-container-border-radius, 0px);
+  container-type: inline-size;
 }
 
 /* Chat messages container — holds the scroll viewport + the absolutely
@@ -23,6 +26,21 @@
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* The conversation visually belongs to the surrounding chat column. Extend
+   its scroll surface 10px beneath the composer (14px footer inset + 10px
+   overlap = 24px) so messages disappear behind the opaque input shell. */
+.rv-chat-area.rv-chat-area--project > .rv-chat-messages {
+  background: var(--chat-surface-bg, var(--panel-chrome-bg, #1a1a1a));
+  border: none;
+  border-radius: 0;
+  margin-bottom: -24px;
+}
+
+.rv-chat-area.rv-chat-area--project > .rv-chat-footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Scrollable message area — scrolls independently of the todo drawer */
@@ -40,6 +58,14 @@
   align-self: flex-end;
   width: fit-content;
   max-width: 85%;
+}
+
+/* User bubbles have their own Chat Bubble surface and remain borderless even
+ * if a legacy workspace still has Chat Border enabled. */
+.rv-chat-area.rv-chat-area--project .rv-message-user-content {
+  background: var(--chat-bubble-bg, var(--chat-content-bg, var(--bg-solid, #000)));
+  border: none;
+  color: var(--text-white, #fff);
 }
 
 /* Separate a user bubble from the following assistant turn without changing
@@ -77,6 +103,7 @@
   position: relative;
   overflow: visible;
   padding: 0 var(--space-sm, 8px) 0 0;
+  border-bottom: none;
 }
 
 .rv-chat-header-right {
@@ -84,6 +111,18 @@
   align-items: center;
   gap: var(--space-xs, 4px);
   margin-left: auto;
+}
+
+.rv-chat-header-left-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  margin-left: var(--space-xs, 4px);
+}
+
+.rv-chat-thread-dock,
+.rv-chat-new-thread {
+  flex: 0 0 auto;
 }
 
 .rv-chat-header-btn {
@@ -118,25 +157,47 @@
   color: var(--accent-dim, var(--theme-primary));
 }
 
-/* CLI_IDENTITY_SPEC: harness icon + name in primary chat header */
-.rv-chat-header-identity {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs, 4px);
-  font-size: var(--font-sm, 12px);
-  color: var(--text-dim);
-  margin-left: calc(var(--space-sm, 8px) + 10px);
+.rv-chat-header-right .rv-chat-header-btn,
+.rv-chat-header-right .rv-chat-header-btn:hover,
+.rv-chat-header-right .rv-chat-header-btn[aria-expanded="true"] {
+  color: var(--chat-foreground-color, var(--chrome-accent, var(--text-dim)));
 }
 
-.rv-chat-header-identity .material-symbols-outlined {
-  font-size: 18px;
-  color: var(--cli-accent, var(--text-dim));
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+/* The collapsed-header thread slider and New Chat controls belong to Chat
+ * Foreground. The pinned/preview slider is rendered inside .rv-sidebar and
+ * keeps its separate Thread Foreground rule in Sidebar.css. */
+.rv-chat-header-left-controls .rv-chat-thread-dock,
+.rv-chat-header-left-controls .rv-chat-thread-dock:hover,
+.rv-chat-header-left-controls .rv-chat-thread-dock[aria-expanded="true"],
+.rv-chat-header-left-controls .rv-chat-new-thread,
+.rv-chat-header-left-controls .rv-chat-new-thread:hover,
+.rv-chat-header-left-controls .rv-chat-new-thread[aria-expanded="true"] {
+  color: var(--chat-foreground-color, var(--chrome-accent, var(--text-dim)));
 }
 
-.rv-chat-header-identity-name {
-  color: var(--cli-accent, var(--text-primary));
-  font-size: 1.5em;
+/* Chat Text owns ordinary conversation and composer copy. Headings retain
+ * their explicit Chat Accent rule below, and tool chrome keeps its semantic
+ * Foreground tokens. */
+.rv-chat-area.rv-chat-area--project .rv-message-assistant-content,
+.rv-chat-area.rv-chat-area--project .rv-chat-input {
+  color: var(--chat-text-color, var(--text-primary));
+}
+
+/* Chat Accent is the single source for chat content headings.
+ * The workspace stylesheet supplies the base heading rules; this scoped rule
+ * keeps their color synchronized with the send button in every workspace. */
+.rv-chat-area .rv-message-assistant-content h1,
+.rv-chat-area .rv-message-assistant-content h2,
+.rv-chat-area .rv-message-assistant-content h3,
+.rv-chat-area .rv-message-assistant-content h4,
+.rv-chat-area .rv-code-block-header {
+  color: var(--chat-accent-color, var(--theme-primary));
+}
+
+.rv-secondary-header-identity,
+.rv-secondary-header-identity .material-symbols-outlined,
+.rv-secondary-header-identity-name {
+  color: var(--chat-accent-color, var(--cli-accent, var(--text-primary)));
 }
 
 /* Mirror of .rv-collapse-btn: absolutely positioned, sized to its 20px icon. */
@@ -150,7 +211,7 @@
 }
 
 .rv-chat-header-btn .material-symbols-outlined {
-  font-size: 20px;
+  font-size: var(--chrome-icon-size, 18px);
 }
 
 /* More-vert menu in the chat header: threads toggle / thread id / view md. */
@@ -159,19 +220,37 @@
   right: 15px;
 }
 
-/* Chat input - reduce gap to icons */
-.rv-chat-input-container {
-  margin-bottom: -15px;
+/* Condensed composer: text and controls share one rounded shell while staying
+ * in separate layout rows so typed content can never sit behind the icons. */
+.rv-chat-composer-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: var(--chat-content-bg, var(--bg-solid, #000));
+  border: none;
+  border-radius: var(--chat-input-border-radius, 15px);
 }
 
-.rv-chat-input-wrapper {
+.rv-chat-composer-shell .rv-chat-input-container {
+  margin-bottom: 0;
+}
+
+.rv-chat-footer .rv-chat-composer-shell .rv-chat-input-wrapper {
   position: relative;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
-.rv-chat-input-text-stack {
+.rv-chat-composer-shell .rv-chat-input-text-stack {
   position: relative;
   flex: 1;
   min-width: 0;
+  height: auto;
+  min-height: 42px;
+  overflow: hidden;
 }
 
 .rv-chat-autocomplete-ghost {
@@ -195,11 +274,27 @@
   color: transparent;
 }
 
-.rv-chat-input {
+.rv-chat-composer-shell .rv-chat-input {
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
+  height: 42px;
+  min-height: 42px;
+  max-height: none;
+  overflow-y: hidden;
+  resize: none;
+}
+
+/* The conversation surface and composer stay borderless. These selectors are
+ * deliberately more specific than the legacy runtime tint stylesheet so an
+ * older saved Chat Border toggle cannot restore either outline. */
+.rv-chat-area.rv-chat-area--project .rv-chat-composer-shell,
+.rv-chat-area.rv-chat-area--project .rv-chat-composer-shell:focus-within,
+.rv-chat-area.rv-chat-area--project .rv-chat-input-wrapper,
+.rv-chat-area.rv-chat-area--project .rv-chat-input-wrapper:focus-within {
+  border: none;
+  box-shadow: none;
 }
 
 .rv-chat-emoji-recents {
@@ -214,7 +309,7 @@
   padding: var(--space-xs, 4px) var(--space-sm, 8px);
   overflow-x: auto;
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
-  border-radius: var(--radius-sm, 6px);
+  border-radius: var(--chat-input-border-radius, 15px);
   background: var(--bg-surface, rgba(12, 16, 24, 0.96));
   box-shadow: var(--shadow-medium, 0 8px 24px rgba(0, 0, 0, 0.32));
 }
@@ -280,6 +375,19 @@
   font-size: 16px;
 }
 
+/* The native macOS picker types into its focused editable element. The add
+ * action focuses this offscreen capture input so selections update recents
+ * without ever entering the chat composer. */
+.rv-chat-emoji-capture {
+  position: fixed;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Scroll sentinel — gives the last user bubble room to scroll to the top
  * of the viewport. Invisible; only present when a thread is active. */
 .rv-chat-scroll-sentinel {
@@ -287,19 +395,390 @@
 }
 
 /* Chat footer layout - icons and button on one row */
-.rv-chat-composer-meta-row {
+.rv-chat-composer-shell > .rv-chat-composer-meta-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 4px;
+  min-height: 32px;
+  padding: 0;
+  margin: 0;
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
 }
 
-/* Icons container */
-.rv-chat-composer-meta-row > div:first-child {
+/* Composer controls */
+.rv-chat-composer-tools-left,
+.rv-chat-composer-actions {
   display: flex;
+  align-items: center;
   gap: 4px;
   flex-shrink: 0;
+}
+
+.rv-chat-composer-actions .rv-mic-trigger-wrap {
+  top: 5px;
+}
+
+.rv-chat-composer-tools-left,
+.rv-chat-composer-actions .rv-chat-composer-model {
+  position: relative;
+  top: 5px;
+}
+
+.rv-chat-composer-actions .rv-chat-composer-context {
+  position: relative;
+  top: 5px;
+}
+
+.rv-chat-composer-add {
+  position: relative;
+  display: inline-flex;
+}
+
+.rv-chat-composer-mode {
+  position: relative;
+  display: inline-flex;
+}
+
+.rv-chat-composer-mode-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 8px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
+  font-size: var(--font-sm, 12px);
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms) ease,
+    color var(--transition-fast, 150ms) ease;
+}
+
+.rv-chat-composer-mode-trigger:hover,
+.rv-chat-composer-mode-trigger.open {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
+}
+
+.rv-chat-composer-mode-trigger .material-symbols-outlined {
+  font-size: 17px;
+}
+
+@container (max-width: 500px) {
+  .rv-chat-composer-mode-label {
+    display: none;
+  }
+}
+
+.rv-chat-composer-mode-menu.rv-dropdown {
+  left: 0;
+  bottom: calc(100% + var(--space-xs, 6px));
+  width: min(380px, calc(100vw - 32px));
+  max-height: none;
+  padding: var(--space-xs, 6px);
+  border-radius: var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-composer-mode-option {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: var(--space-sm, 8px);
+  align-items: start;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: var(--chrome-accent, var(--text-dim));
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-chat-composer-mode-option:hover {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #fff);
+}
+
+.rv-chat-composer-mode-option-icon {
+  margin-top: 1px;
+  font-size: 22px;
+}
+
+.rv-chat-composer-mode-option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rv-chat-composer-mode-option-label {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.rv-chat-composer-mode-option-description {
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  font-size: var(--font-2xs, 10px);
+  line-height: 1.35;
+}
+
+.rv-chat-composer-model {
+  position: relative;
+  display: inline-flex;
+}
+
+.rv-chat-composer-model-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 32px;
+  padding: 0 6px 0 8px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
+  font-size: var(--font-sm, 12px);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms) ease,
+    color var(--transition-fast, 150ms) ease;
+}
+
+.rv-chat-composer-model-trigger:hover,
+.rv-chat-composer-model-trigger.open {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
+}
+
+.rv-chat-composer-model-trigger .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-chat-composer-model-menu.rv-dropdown {
+  right: 0;
+  bottom: calc(100% + var(--space-xs, 6px));
+  width: 220px;
+  max-height: none;
+  padding: var(--space-xs, 6px);
+  border-radius: var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-composer-context {
+  display: inline-flex;
+}
+
+.rv-chat-composer-context-trigger {
+  --ctx-fill: 0%;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--chat-composer-chrome-color, var(--theme-primary, #39628e)) var(--ctx-fill),
+    color-mix(in srgb, var(--chat-composer-chrome-color, var(--theme-primary, #39628e)) 35%, transparent) 0
+  );
+  cursor: pointer;
+}
+
+.rv-chat-composer-context-trigger::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  background: var(--chat-content-bg, var(--bg-solid, #000));
+}
+
+.rv-chat-composer-context-trigger:hover,
+.rv-chat-composer-context-trigger.open {
+  filter: brightness(1.35);
+}
+
+.rv-chat-context-menu.rv-hover-icon-modal {
+  --hover-modal-width: 220px;
+  --hover-modal-min-height: 0;
+  --hover-modal-max-height: none;
+  border-radius: var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-context-details {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px;
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-chat-context-bar {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid var(--chat-foreground-color, rgba(255, 255, 255, 0.2));
+  border-radius: 999px;
+  background: var(--chat-content-bg, var(--bg-solid, #000));
+}
+
+.rv-chat-context-bar-fill {
+  width: var(--ctx-fill, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--theme-primary, #39628e);
+  box-shadow: 0 0 6px rgba(var(--theme-primary-rgb, 57, 98, 142), 0.5);
+  transition: width 0.3s ease;
+}
+
+.rv-chat-context-token-summary {
+  color: var(--chat-foreground-color, rgba(255, 255, 255, 0.6));
+  font-size: 10px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.rv-chat-context-percent {
+  color: var(--theme-primary, #39628e);
+}
+
+.rv-chat-context-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--chrome-accent, var(--text-dim));
+  font-size: var(--font-sm, 12px);
+  text-align: left;
+  cursor: default;
+}
+
+.rv-chat-context-compact:hover {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #fff);
+}
+
+.rv-chat-context-compact .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.rv-chat-composer-model-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: var(--chrome-accent, var(--text-dim));
+  font-size: var(--font-sm, 12px);
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-chat-composer-model-option:hover {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #fff);
+}
+
+.rv-chat-composer-model-option .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-chat-composer-add-menu.rv-dropdown {
+  left: 0;
+  bottom: calc(100% + var(--space-xs, 6px));
+  width: var(--chat-composer-add-menu-width, 220px);
+  overflow: visible;
+  border-radius: var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-composer-menu-row {
+  display: flex;
+  align-items: stretch;
+  min-height: var(--hover-modal-row-height, 48px);
+}
+
+.rv-chat-composer-menu-row:not(:last-child) {
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+}
+
+.rv-chat-composer-menu-icon-action,
+.rv-chat-composer-menu-submenu {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--chrome-accent, var(--text-dim));
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms) ease,
+    color var(--transition-fast, 150ms) ease;
+}
+
+.rv-chat-composer-menu-icon-action {
+  justify-content: center;
+  width: var(--chat-composer-capture-action-width, 48px);
+  padding: 0;
+}
+
+.rv-chat-composer-menu-icon-action .material-symbols-outlined {
+  font-size: var(--icon-lg, 22px);
+}
+
+.rv-chat-composer-menu-submenu {
+  justify-content: space-between;
+  flex: 1;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  font-size: var(--font-sm, 12px);
+  text-align: left;
+}
+
+.rv-chat-composer-menu-submenu .material-symbols-outlined {
+  font-size: var(--icon-sm, 18px);
+}
+
+.rv-chat-composer-menu-row--first .rv-chat-composer-menu-icon-action {
+  border-radius: var(--chat-input-border-radius, 15px) 0 0 0;
+}
+
+.rv-chat-composer-menu-row--first .rv-chat-composer-menu-submenu {
+  border-radius: 0 var(--chat-input-border-radius, 15px) 0 0;
+}
+
+.rv-chat-composer-menu-row--last .rv-chat-composer-menu-icon-action {
+  border-radius: 0 0 0 var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-composer-menu-row--last .rv-chat-composer-menu-submenu {
+  border-radius: 0 0 var(--chat-input-border-radius, 15px) 0;
+}
+
+.rv-chat-composer-menu-icon-action:hover,
+.rv-chat-composer-menu-submenu:hover,
+.rv-chat-composer-menu-submenu.open {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #fff);
+}
+
+/* Composer-only tool glyphs: 22px is approximately 20% larger than the
+ * shared 18px hover-trigger default while preserving the 32px hit targets. */
+.rv-chat-composer-meta-row .rv-hover-icon-trigger .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.rv-chat-composer-meta-row .rv-hover-icon-trigger {
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
 }
 
 /* Send/Stop button */
@@ -307,28 +786,29 @@
   flex-shrink: 0;
 }
 
-/* Send button group - unified container with divider */
+/* Send button */
 .rv-send-button-group {
   display: flex;
   align-items: center;
-  background: var(--accent-dim, var(--neutral-chrome-bg));
-  /* Border is opt-in via data-tint-border-chat toggle. */
-  border: none;
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  background: var(--theme-primary, #39628e);
+  /* The send control stays borderless even when workspace chat-border tinting is enabled. */
+  border: none !important;
+  border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
 }
 
 .rv-send-btn-main {
-  padding: 0 12px;
+  width: 32px;
   height: 32px;
+  padding: 0;
   background: transparent;
   border: none;
-  /* Foreground flips with --chrome-accent-fg so the label stays legible when
-     the user picks a bright accent. Alpha controlled via color-mix. */
-  color: color-mix(in srgb, var(--chrome-accent-fg, #fff) 50%, transparent);
-  font-size: 13px;
-  font-weight: 500;
+  border-radius: 50%;
+  /* Bright send surfaces use the exact theme color; dark surfaces use white. */
+  color: color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 70%, transparent);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -336,12 +816,11 @@
 }
 
 .rv-send-btn-main:hover {
-  background: color-mix(in srgb, var(--chrome-accent-fg, #fff) 5%, transparent);
-  color: color-mix(in srgb, var(--chrome-accent-fg, #fff) 70%, transparent);
+  background: color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 5%, transparent);
+  color: color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 90%, transparent);
 }
 
-.rv-send-btn-main:disabled,
-.rv-send-btn-secondary:disabled {
+.rv-send-btn-main:disabled {
   cursor: wait;
 }
 
@@ -351,13 +830,13 @@
   border-radius: 999px;
   background: conic-gradient(
     from 0deg,
-    color-mix(in srgb, var(--chrome-accent-fg, #fff) 90%, transparent) 0 12deg,
+    color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 90%, transparent) 0 12deg,
     transparent 12deg 45deg,
-    color-mix(in srgb, var(--chrome-accent-fg, #fff) 65%, transparent) 45deg 57deg,
+    color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 65%, transparent) 45deg 57deg,
     transparent 57deg 90deg,
-    color-mix(in srgb, var(--chrome-accent-fg, #fff) 45%, transparent) 90deg 102deg,
+    color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 45%, transparent) 90deg 102deg,
     transparent 102deg 135deg,
-    color-mix(in srgb, var(--chrome-accent-fg, #fff) 30%, transparent) 135deg 147deg,
+    color-mix(in srgb, var(--chat-foreground-contrast-color, #fff) 30%, transparent) 135deg 147deg,
     transparent 147deg 360deg
   );
   animation: rv-send-warming-spin var(--transition-slow, 900ms) linear infinite;
@@ -365,29 +844,6 @@
 
 @keyframes rv-send-warming-spin {
   to { transform: rotate(360deg); }
-}
-
-.rv-send-btn-divider {
-  width: 1px;
-  height: 100%;
-  background: color-mix(in srgb, var(--chrome-accent-fg, #fff) 20%, transparent);
-}
-
-.rv-send-btn-secondary {
-  width: 32px;
-  height: 32px;
-  background: transparent;
-  border: none;
-  color: color-mix(in srgb, var(--chrome-accent-fg, #fff) 50%, transparent);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.rv-send-btn-secondary:hover {
-  background: color-mix(in srgb, var(--chrome-accent-fg, #fff) 5%, transparent);
-  color: color-mix(in srgb, var(--chrome-accent-fg, #fff) 70%, transparent);
 }
 
 .rv-chat-completing-indicator {
@@ -403,139 +859,108 @@
   pointer-events: none;
 }
 
-.rv-chat-completing-indicator img {
-  display: block;
-  width: var(--chat-completing-image-size, 24px);
-  height: var(--chat-completing-image-size, 24px);
-}
-
-.rv-chat-above-input-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  padding: 0 4px 6px;
-  min-width: 0;
-}
-
-/* Context usage container - compact block above input, left aligned */
-.rv-context-usage-container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 3px;
-  width: 120px;
-  max-width: 120px;
-  flex: 0 0 120px;
-  min-width: 0;
-}
-
-/* Standalone context usage bar */
-.rv-context-usage-bar-standalone {
-  width: 120px;
-  height: 8px;
-  background: var(--glass-md, rgba(255, 255, 255, 0.1));
-  border: 1px solid var(--chrome-accent, rgba(255, 255, 255, 0.2));
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.rv-context-usage-bar-standalone .rv-context-usage-fill {
-  width: var(--ctx-fill, 0%);
-  height: 100%;
-  background: var(--accent-dim, var(--theme-primary, #39628e));
-  border-radius: 999px;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 6px rgba(var(--theme-primary-rgb, 57, 98, 142), 0.5);
-}
-
-/* Context usage token/percentage text */
-.rv-context-usage-text {
-  color: var(--chrome-accent, rgba(255, 255, 255, 0.6));
-  font-size: 10px;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .rv-chat-attachments-strip {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 6px;
-  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 2px;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.rv-chat-attachments-strip::-webkit-scrollbar {
+  display: none;
 }
 
 .rv-chat-attachment-pill {
-  --pill-bg: var(--neutral-chrome-bg, rgba(255, 255, 255, 0.08));
   position: relative;
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 18px;
   align-items: center;
-  gap: 4px;
-  max-width: 100%;
-  min-width: 0;
-  height: 22px;
-  padding: 0 28px 0 10px;
+  gap: 9px;
+  flex: 0 0 min(240px, calc(100% - 2px));
+  width: min(240px, calc(100% - 2px));
+  height: 62px;
+  padding: 8px 7px 8px 8px;
   overflow: hidden;
   border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
-  border-radius: 999px;
-  background: var(--pill-bg);
+  border-radius: var(--chat-input-border-radius, 15px);
+  background: var(--neutral-chrome-bg, rgba(255, 255, 255, 0.08));
   color: var(--text-secondary, rgba(255, 255, 255, 0.78));
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
-.rv-chat-attachment-pill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 10px;
-  pointer-events: none;
-  background: linear-gradient(to right, transparent, var(--pill-bg));
+.rv-chat-attachment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: calc(var(--chat-input-border-radius, 15px) - 5px);
+  background: var(--bg-surface, rgba(12, 16, 24, 0.58));
+  color: var(--chrome-accent, var(--text-secondary));
 }
 
-.rv-chat-attachment-pill .material-symbols-outlined {
-  flex: 0 0 auto;
-  font-size: 15px;
-  text-decoration: none;
+.rv-chat-attachment-icon .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.rv-chat-attachment-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
 }
 
 .rv-chat-attachment-pill-label {
-  min-width: 0;
   overflow: hidden;
+  color: var(--text-primary, #fff);
+  font-size: 12px;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-chat-attachment-type {
+  overflow: hidden;
+  color: var(--text-dim, rgba(255, 255, 255, 0.48));
+  font-size: 10px;
+  line-height: 1.15;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .rv-chat-attachment-pill-remove {
-  position: absolute;
-  top: 50%;
-  right: 4px;
+  align-self: start;
   z-index: 1;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   padding: 0;
-  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.2));
+  border: none;
   border-radius: 999px;
-  background: var(--bg-surface, rgba(12, 16, 24, 0.96));
+  background: transparent;
   color: var(--text-secondary, rgba(255, 255, 255, 0.78));
   cursor: pointer;
-  transform: translateY(-50%);
 }
 
 .rv-chat-attachment-pill-remove .material-symbols-outlined {
-  font-size: 12px;
+  font-size: 15px;
 }
 
-.rv-chat-attachment-pill:hover .rv-chat-attachment-pill-remove,
-.rv-chat-attachment-pill:focus-within .rv-chat-attachment-pill-remove {
-  display: flex;
+.rv-chat-attachment-pill-remove:hover,
+.rv-chat-attachment-pill-remove:focus-visible {
+  background: var(--hover-modal-row-hover-bg, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #fff);
+  outline: none;
 }
 
 .rv-chat-composer-meta-row .rv-chat-footer-btn {
@@ -547,28 +972,19 @@
   background: var(--neutral-chrome-bg);
   border: 1px solid var(--neutral-chrome-border);
   border-radius: 4px;
-  color: var(--chrome-accent, var(--text-secondary));
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .rv-chat-composer-meta-row .rv-chat-footer-btn:hover {
   background: var(--hover-modal-row-hover-bg);
-  color: var(--text-primary);
+  color: var(--chat-composer-chrome-color, var(--theme-primary, #39628e));
 }
 
 .rv-chat-composer-meta-row .rv-chat-footer-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.rv-chat-composer-fork-btn:disabled {
-  opacity: var(--composer-disabled-opacity, 0.5);
-  cursor: not-allowed;
-}
-
-.rv-chat-composer-fork-btn:disabled:hover {
-  background: var(--composer-fork-disabled-hover-bg, transparent);
 }
 
 /* Chat footer disabled state — when no thread is active. */
@@ -583,49 +999,4 @@
 .rv-chat-area--no-thread .rv-chat-messages,
 .rv-chat-area--no-thread .rv-chat-footer {
   opacity: 0.35;
-}
-
-/* Send dropdown - narrower than standard hover modals */
-.rv-send-dropdown-modal {
-  width: 200px !important;
-  min-height: auto !important;
-  max-height: none !important;
-}
-
-.rv-send-dropdown-modal .rv-hover-icon-modal-list {
-  max-height: none;
-}
-
-.rv-send-dropdown-content {
-  display: flex;
-  flex-direction: column;
-  padding: 4px 0;
-}
-
-.rv-send-dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 13px;
-  cursor: pointer;
-  text-align: left;
-  width: 100%;
-}
-
-.rv-send-dropdown-item:hover {
-  background: var(--neutral-chrome-bg);
-  color: var(--text-primary);
-}
-
-.rv-send-dropdown-item .material-symbols-outlined {
-  font-size: 18px;
-  color: var(--text-dim);
-}
-
-.rv-send-dropdown-item:hover .material-symbols-outlined {
-  color: var(--text-primary);
 }

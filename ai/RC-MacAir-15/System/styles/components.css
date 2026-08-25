@@ -16,11 +16,13 @@
   user-select: none;
   transition: background-color 0.15s ease;
   margin-bottom: 2px;
-  color: var(--nav-text-color, var(--text-primary, #e0e0e0));
+  color: var(--side-panel-text-color, var(--nav-text-color, var(--text-primary, #e0e0e0)));
+  position: relative;
 }
 
 .rv-file-tree-item:hover {
-  background: var(--bg-tertiary, rgba(255, 255, 255, 0.05));
+  background: var(--side-panel-selected-bg, var(--bg-tertiary, rgba(255, 255, 255, 0.05)));
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #e0e0e0));
 }
 
 .rv-file-tree-item .rv-tree-icon {
@@ -29,7 +31,11 @@
   height: 1rem;
   line-height: 1rem;
   text-align: center;
-  color: var(--nav-icon-color, var(--text-secondary, #aaa));
+  color: var(--side-panel-foreground-color, var(--nav-icon-color, var(--text-secondary, #aaa)));
+}
+
+.rv-file-tree-item:hover .rv-tree-icon {
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #e0e0e0));
 }
 
 .rv-file-tree-item .rv-tree-icon.folder-filled {
@@ -49,7 +55,19 @@
   font-size: 0.85rem;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+}
+
+/* Folder labels are the file drawer's structural headings; file labels use
+   Side Panel Text through the parent row. */
+.folder-node > .rv-file-tree-item > .rv-tree-label {
+  color: var(--side-panel-heading-color, inherit);
+}
+
+.rv-file-tree-item:hover > .rv-tree-label {
+  color: var(--side-panel-selected-foreground-color, inherit);
 }
 
 .rv-file-tree-item.disabled {
@@ -64,21 +82,49 @@
 
 /* Hover actions for file tree items */
 .rv-file-tree-item-actions {
+  --file-tree-action-overlay-bg: var(--side-panel-selected-bg, var(--file-tree-sidebar-bg, var(--bg-solid, #161616)));
+  position: absolute;
+  top: 0;
+  right: 0.75rem;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: auto;
+  padding-left: 2px;
+  background: var(--file-tree-action-overlay-bg);
   opacity: 0;
-  transition: opacity 150ms;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms, visibility 150ms;
 }
 
-.rv-file-tree-item:hover .rv-file-tree-item-actions {
+.rv-file-tree-item-actions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  width: var(--list-nav-action-fade-width, 24px);
+  background: linear-gradient(to right, transparent, var(--file-tree-action-overlay-bg));
+  pointer-events: none;
+}
+
+.rv-file-tree-item:hover .rv-file-tree-item-actions,
+.rv-file-tree-item-actions:focus-within {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .rv-file-tree-item-actions .rv-file-page-action {
   width: 22px;
   height: 22px;
+  color: var(--side-panel-foreground-color, var(--text-secondary, #aaa));
+}
+
+.rv-file-tree-item:hover .rv-file-tree-item-actions .rv-file-page-action {
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #e0e0e0));
 }
 
 .rv-file-tree-item-actions .rv-file-page-action .material-symbols-outlined {

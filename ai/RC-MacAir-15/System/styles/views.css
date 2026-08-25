@@ -597,6 +597,8 @@
 .rv-thread-row-top {
   justify-content: space-between;
   margin-bottom: 2px;
+  min-height: 22px;
+  position: relative;
 }
 
 .rv-thread-row-bottom {
@@ -610,19 +612,45 @@
 }
 
 .rv-thread-menu-btn {
-  background: none;
+  --thread-action-overlay-bg: var(--thread-selected-bg, var(--accent-dim));
+  position: absolute;
+  top: 0;
+  right: -12px;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--thread-action-overlay-bg);
   border: none;
   color: var(--chrome-accent, var(--text-secondary));
   cursor: pointer;
   padding: 2px 6px;
   font-size: 16px;
   line-height: 1;
-  opacity: 0.4;
-  transition: opacity 0.15s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms, visibility 150ms;
 }
 
-.rv-chat-item:hover .rv-thread-menu-btn {
-  opacity: 0.8;
+.rv-thread-menu-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  width: var(--list-nav-action-fade-width, 24px);
+  background: linear-gradient(to right, transparent, var(--thread-action-overlay-bg));
+  pointer-events: none;
+}
+
+.rv-chat-item:hover .rv-thread-menu-btn,
+.rv-thread-menu-btn:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  color: var(--thread-selected-foreground-color, var(--text-white));
 }
 
 .rv-thread-menu-btn:hover {
@@ -659,9 +687,9 @@
  * menu-item system. */
 
 .rv-chat-item:hover {
-  /* Light tint using the raw accent (NOT --cli-accent, which is now an alias
-   * for the already-darkened --accent-dim — would compound). */
-  background: color-mix(in srgb, var(--theme-primary, #39628e) 8%, transparent);
+  /* Match Wiki navigation: hover previews the same accent surface used by
+   * the selected row instead of applying a separate low-opacity tint. */
+  background: var(--thread-selected-bg, var(--accent-dim));
 }
 
 /* Active thread highlight = exactly the chrome accent value. Locks parity
@@ -669,22 +697,28 @@
  * Connected dot, tool-call icons, and shimmer all share one color. Border
  * keeps the row visible at minimum panel contrast. */
 .rv-chat-item.active {
-  background: var(--accent-dim);
+  background: var(--thread-selected-bg, var(--accent-dim));
 }
 
 .rv-chat-item-text {
   flex: 1;
   font-size: 14px;
-  /* Inactive threads pick up accent-dim; active stays white. */
-  color: var(--chrome-accent, var(--text-dim));
+  /* Inactive thread text has an independent theme foreground control. */
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-dim)));
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
   min-width: 0;
 }
 
 .rv-chat-item.active .rv-chat-item-text {
-  color: var(--chrome-accent-fg, var(--text-white));
+  color: var(--thread-selected-foreground-color, var(--text-white));
+}
+
+.rv-chat-item:hover .rv-chat-item-text {
+  color: var(--thread-selected-foreground-color, var(--text-white));
 }
 
 /* Harness icon in thread list rows — inactive rows behave as other dim icons
@@ -702,15 +736,23 @@
   color: var(--chrome-accent-fg, var(--text-white));
 }
 
+.rv-chat-item:hover .rv-thread-row-icon {
+  color: var(--thread-selected-foreground-color, var(--text-white));
+}
+
 .rv-chat-item-meta {
   font-size: 11px;
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-dim)));
 }
 
 /* Active thread: meta (count + date) tracks the name color so the row reads
    as one cohesive label. */
 .rv-chat-item.active .rv-chat-item-meta {
-  color: var(--chrome-accent-fg, var(--text-white));
+  color: var(--thread-selected-foreground-color, var(--text-white));
+}
+
+.rv-chat-item:hover .rv-chat-item-meta {
+  color: var(--thread-selected-foreground-color, var(--text-white));
 }
 
 /* Active-harness status dot rendered inside a thread row. */

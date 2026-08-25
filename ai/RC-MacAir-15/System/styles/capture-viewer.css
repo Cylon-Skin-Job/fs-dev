@@ -13,9 +13,16 @@
    future pass if/when the capture-viewer accumulates more chrome surfaces.
 */
 
-/* ── Outer surface (header rail + around-document margin share this) ── */
-.rv-file-page-view {
-  background: var(--sidebar-surface-bg, #161616);
+/* ── Capture surfaces ──
+   The collection page, shared header, and open-document page all follow the
+   Content Background control. */
+.rv-capture-viewer-grid,
+.rv-capture-viewer-grid-scroll,
+.rv-capture-viewer-main-header,
+.rv-capture-viewer-chrome,
+.rv-file-page-view,
+.rv-file-page-content {
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
 /* ── Top bar: hairline beneath the header row ── */
@@ -41,12 +48,11 @@
   color: var(--accent-dim, var(--text-secondary, #aaa));
 }
 
-/* ── Action buttons (link copy, markdown/code switch) ──
-   Driven by the picker's "Chrome settings" sliders via --chrome-accent. Hover
-   escalates to --accent-dim (Accent) so the active state pops. Scoped to
-   FilePageView so the wiki's link button keeps its own theming. */
+/* ── Action buttons (link copy, archive, send to chat) ──
+   Base color follows Content Foreground. Hover escalates to Accent so the
+   active state pops. Scoped to FilePageView so the wiki keeps its own rules. */
 .rv-file-page-view .rv-file-page-action {
-  color: var(--chrome-accent, var(--text-secondary));
+  color: var(--content-foreground-color, var(--text-secondary));
 }
 
 .rv-file-page-view .rv-file-page-action:hover {
@@ -61,7 +67,7 @@
 
 /* ── Plain text fallback ── */
 .rv-file-page-text {
-  color: var(--text-primary, #e0e0e0);
+  color: var(--content-text-color, var(--text-primary, #e0e0e0));
 }
 
 /* ── Bottom ribbon strip ──
@@ -83,32 +89,31 @@
 /* ───────────────────────────────────────────────────────────────────────────
    Markdown render mode — wiki paradigm
    ───────────────────────────────────────────────────────────────────────────
-   When Capture's switch flips a .md file into rendered view, the prose
-   surface gets the same heuristics the wiki uses:
-     - headings + h1 underline → --content-emphasized / --content-highlight
-     - inline code chip + in-content borders → --content-highlight
-     - links → --content-link
-   All driven by the Content sliders, just like the wiki.
+   Capture .md files and their preview tiles render as prose using the same
+   content tokens the wiki uses:
+     - headings → --content-heading-color
+     - inline code chips, borders, and links → automatic derived tokens
+   Background and text inherit the shared Content controls.
    Scoped under .rv-file-page-view so non-FilePageView markdown surfaces
    (file-explorer, capture-viewer plain prose, etc.) keep the global defaults. */
 
 .rv-file-page-view .rv-wiki-page-content h1,
 .rv-file-page-view .rv-wiki-page-content h2,
 .rv-file-page-view .rv-wiki-page-content h3 {
-  color: var(--content-emphasized, #c0a0e0);
+  color: var(--content-heading-color, var(--content-emphasized, #c0a0e0));
 }
 
 .rv-file-page-view .rv-wiki-page-content h1 {
-  border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border-bottom: 1px solid var(--content-border, rgba(192, 160, 224, 0.16));
 }
 
 .rv-file-page-view .rv-wiki-page-content pre {
-  border: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border: 1px solid var(--content-border, rgba(192, 160, 224, 0.16));
 }
 
 .rv-file-page-view .rv-wiki-page-content th,
 .rv-file-page-view .rv-wiki-page-content td {
-  border-color: var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border-color: var(--content-border, rgba(192, 160, 224, 0.16));
 }
 
 .rv-file-page-view .rv-wiki-page-content code {

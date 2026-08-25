@@ -7,9 +7,19 @@
   --document-bg: #161616;
   /* Thread list, file-picker rail, and other typed sidebars — same default as document code canvas */
   --sidebar-surface-bg: var(--document-bg);
+  --side-panel-surface-bg: var(--sidebar-surface-bg);
+  --side-panel-text-color: var(--thread-text-color, var(--text-primary));
+  --side-panel-heading-color: var(--thread-heading-color, var(--text-primary));
+  --side-panel-foreground-color: var(--thread-foreground-color, var(--text-dim));
+  --side-panel-selected-bg: var(--thread-selected-bg, var(--sidebar-surface-bg));
+  --side-panel-selected-foreground-color: var(--thread-selected-foreground-color, #ffffff);
+  /* Universal sidebar/list navigation fades. */
+  --list-nav-edge-fade-width: 24px;
+  --list-nav-action-fade-width: 24px;
   /* Tab/header rail (code viewer) + main chat column — separate from sidebars */
   --panel-chrome-bg: #1a1a1a;
   --chat-surface-bg: var(--panel-chrome-bg);
+  --chat-content-bg: var(--bg-solid);
   --color-primary: #39628e;
   --color-secondary: #2d4f73;
   --border-primary: rgba(57, 98, 142, 0.38);
@@ -59,11 +69,14 @@
   --token-punctuation: #f8f8f2;
   
   /* Layout */
-  --header-height: 60px;
-  --tools-width: 60px;
+  --header-height: 40px;
+  --tools-width: 40px;
   --sidebar-width: 250px;
   --chat-width: 400px;
-  --chat-header-height: 40px;
+  --view-header-height: 40px;
+  --chat-header-height: var(--view-header-height);
+  --chrome-icon-size: 18px;
+  --navigation-rail-icon-size: 24px;
   
   /* Z-Index Hierarchy */
   --z-content: 1;

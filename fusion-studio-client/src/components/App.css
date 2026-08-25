@@ -1,5 +1,6 @@
 /* Main App Layout */
 .rv-app-container {
+  --theme-picker-drawer-width: min(480px, calc(100vw - 24px));
   display: grid;
   grid-template-rows: var(--header-height) 1fr;
   grid-template-columns: var(--tools-width) var(--sidebar-width) var(--chat-width) 1fr;
@@ -10,6 +11,11 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow: hidden;
   box-sizing: border-box;
+  transition: width 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rv-app-container--theme-picker-open {
+  width: calc(100vw - var(--theme-picker-drawer-width));
 }
 
 /* Header */
@@ -20,7 +26,7 @@
   justify-content: space-between;
   padding: 0 16px;
   background: var(--panel-chrome-bg, #1a1a1a);
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 .rv-header-left {
@@ -37,7 +43,7 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
   transition: color 0.2s ease, background 0.2s ease;
 }
@@ -71,7 +77,7 @@
 }
 
 .rv-connection-status.connected {
-  color: var(--accent-dim, var(--theme-primary));
+  color: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
 }
 
 .rv-connection-status::before {
@@ -83,7 +89,18 @@
 }
 
 .rv-connection-status.connected::before {
-  background: var(--accent-dim, var(--theme-primary));
+  background: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-header .rv-fusion-icon-btn,
+.rv-header .rv-theme-swatch-btn {
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+}
+
+.rv-header .rv-fusion-icon-btn .material-symbols-outlined,
+.rv-header .rv-theme-swatch-btn .material-symbols-outlined {
+  color: inherit;
+  font-size: var(--chrome-icon-size, 18px);
 }
 
 /* ── Shared utility classes ── */
@@ -186,10 +203,103 @@
 .rv-content-area {
   background: var(--bg-solid);
   padding: 24px;
+  border-radius: var(--content-container-border-radius, 0px);
   min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+/* Universal shell-owned controls. Keeping these outside individual viewers
+ * guarantees that every content type uses the same glyphs and coordinates. */
+.rv-view-layout-controls {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  left: 4px;
+  z-index: 60;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.rv-view-layout-controls__leading {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-view-layout-control {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--content-foreground-color, var(--text-dim));
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.rv-view-layout-control:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--content-accent-contrast, var(--text-primary));
+}
+
+.rv-view-layout-control:focus-visible {
+  outline: 2px solid var(--content-accent-color, var(--accent));
+  outline-offset: 1px;
+}
+
+.rv-view-layout-control .material-symbols-outlined {
+  font-size: var(--chrome-icon-size, 18px);
+}
+
+/* Non-tabbed content history starts after the universal 40px control reserve,
+ * plus the owner-approved 80px rightward offset established in Wiki. */
+.rv-view-history-controls {
+  position: absolute;
+  top: 6px;
+  left: 120px;
+  z-index: 61;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-view-history-control {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--content-foreground-color, var(--text-dim));
+  cursor: pointer;
+}
+
+.rv-view-history-control:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--content-accent-contrast, var(--text-primary));
+}
+
+.rv-view-history-control:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.rv-view-history-control .material-symbols-outlined {
+  font-size: var(--chrome-icon-size, 18px);
 }
 
 /* When the capture-viewer's FilePageView is shown, the content-area's outer
@@ -238,9 +348,40 @@ main.rv-content-area:has(> .rv-browser-viewer) {
     var(--left-sidebar-w, 220px)
     /* hide the first handle when rv-sidebar is collapsed (width 0) */
     max(0px, min(1px, var(--left-sidebar-w, 220px)))
-    var(--left-chat-w,    320px)
-    1px   /* resize handle 2 */
+    var(--left-chat-w,    360px)
+    /* hide the second handle when chat is fully collapsed (width 0) */
+    max(0px, min(1px, var(--left-chat-w, 360px)))
     1fr;
+}
+
+/* File Viewer focus mode: keep the thread column at its saved width and let
+ * the outer chat shell consume everything through the right edge. The
+ * conversation and composer are centered independently below. */
+.rv-layout-dual-chat.rv-panel--content-collapsed {
+  grid-template-columns:
+    var(--left-sidebar-w, 220px)
+    max(0px, min(1px, var(--left-sidebar-w, 220px)))
+    minmax(360px, 1fr)
+    0
+    0;
+}
+
+.rv-panel--content-collapsed > .rv-content-area {
+  visibility: hidden;
+  pointer-events: none;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Keep the readable chat surface compact while its outer shell spans the
+ * released File Viewer area. The header remains full-width so its panel
+ * controls stay pinned to the shell edge. */
+.rv-panel--content-collapsed > .rv-chat-area > .rv-chat-messages,
+.rv-panel--content-collapsed > .rv-chat-area > .rv-chat-footer {
+  width: min(100%, 40vw);
+  max-width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* SECONDARY_CHAT_SPEC §7c: when the secondary chat is sticky-right, it
@@ -269,9 +410,8 @@ main.rv-content-area:has(> .rv-browser-viewer) {
    the actual content into the wrong columns. */
 .rv-resize-handle {
   cursor: col-resize;
-  /* The handle IS the visible column divider — picks up Border accent via
-   * --neutral-chrome-border. Hit target stays 9px wide via ::before below. */
-  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  /* The handle IS the visible workspace-column divider. */
+  background: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
   transition: background 0.15s ease;
   min-width: 0;
   position: relative;
@@ -300,7 +440,8 @@ main.rv-content-area:has(> .rv-browser-viewer) {
  * this sits absolutely over the left edge. Visible strip is 1px to match
  * the in-grid chat handle; hit target comes from the base ::before (±4px). */
 .rv-resize-handle[data-pane="rightSecondary"],
-.rv-resize-handle[data-pane="rightCol"] {
+.rv-resize-handle[data-pane="rightCol"],
+.rv-resize-handle[data-pane="contentNavRight"] {
   position: absolute;
   left: 0;
   top: 0;

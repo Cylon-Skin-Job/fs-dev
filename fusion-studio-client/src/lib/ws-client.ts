@@ -166,6 +166,10 @@ export function connectWs() {
     reconnectTimer = null;
   }
 
+  // Every socket receives a fresh workspace:init. Until it arrives, thread
+  // lists may describe the server's workspace before the client has swapped
+  // its workspace-scoped state, so they must not activate a thread yet.
+  useWorkspaceStore.getState().beginInit();
   console.log('[WS] Connecting...');
   const ws = new WebSocket(WS_URL);
   socket = ws;

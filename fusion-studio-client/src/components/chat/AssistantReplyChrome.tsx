@@ -105,15 +105,6 @@ export function AssistantReplyChrome({
         <span className="material-symbols-outlined" aria-hidden="true">link_2</span>
       </button>
 
-      <button
-        type="button"
-        className="rv-assistant-reply-action"
-        disabled
-        aria-label="Compress"
-        title="Compress"
-      >
-        <span className="material-symbols-outlined" aria-hidden="true">compress</span>
-      </button>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
   type WikiNode,
 } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
+import { ContentNavRightResize } from '../ResizeHandle';
 import { SendToChatButton } from '../SendToChatButton';
 
 function NodeActions({ node, title }: { node: WikiNode; title: string }) {
@@ -44,22 +45,27 @@ export function EdgePanel() {
   // Only non-heading top-level article folders get contextual child navigation.
   if (!isWikiRightNavContext(node)) {
     return (
-      <div className="rv-wiki-edge-panel" />
+      <div className="rv-wiki-edge-panel">
+        <ContentNavRightResize panel="wiki-viewer" />
+        <div className="rv-wiki-edge-panel-scroll" />
+      </div>
     );
   }
 
   return (
     <div className="rv-wiki-edge-panel">
-      <button
-        className={`rv-wiki-edge-guide-header ${viewedPath === node.path ? 'active' : ''}`}
-        onClick={() => viewNode(node)}
-      >
-        <span className="material-symbols-outlined">chrome_reader_mode</span>
-        <span className="rv-wiki-edge-link-text rv-wiki-edge-guide-title">{node.label}</span>
-        <NodeActions node={node} title="page" />
-      </button>
+      <ContentNavRightResize panel="wiki-viewer" />
+      <div className="rv-wiki-edge-panel-scroll">
+        <button
+          className={`rv-wiki-edge-guide-header ${viewedPath === node.path ? 'active' : ''}`}
+          onClick={() => viewNode(node)}
+        >
+          <span className="material-symbols-outlined">chrome_reader_mode</span>
+          <span className="rv-wiki-edge-link-text rv-wiki-edge-guide-title">{node.label}</span>
+          <NodeActions node={node} title="page" />
+        </button>
 
-      {node.children.filter((child) => !isWikiHeadingArticle(child)).map((child) => {
+        {node.children.filter((child) => !isWikiHeadingArticle(child)).map((child) => {
         const nestedArticles = child.children.filter((nested) => !isWikiHeadingArticle(nested));
         const hasNestedArticles = nestedArticles.length > 0;
 
@@ -103,11 +109,12 @@ export function EdgePanel() {
             ))}
           </div>
         );
-      })}
+        })}
 
-      {node.children.length === 0 && (
-        <div className="rv-wiki-edge-empty">No child pages loaded</div>
-      )}
+        {node.children.length === 0 && (
+          <div className="rv-wiki-edge-empty">No child pages loaded</div>
+        )}
+      </div>
     </div>
   );
 }

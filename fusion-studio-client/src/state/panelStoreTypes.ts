@@ -20,6 +20,7 @@ import type {
   WorkspaceHiddenView,
   WorkspaceViewTemplate,
   MessageExchangeSavedPayload,
+  TokenUsage,
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
@@ -49,6 +50,7 @@ export interface WorkspacePanelState {
   chatActive: boolean;
   wireReady: boolean;
   contextUsage: number;
+  tokenUsage: TokenUsage | null;
   panelConfigs: PanelConfig[];
   panelRoots: Record<string, string>;
   viewStates: Record<string, ViewUIState>;
@@ -136,6 +138,8 @@ export interface AppState {
   // ── Context usage ──
   contextUsage: number;
   setContextUsage: (usage: number) => void;
+  tokenUsage: TokenUsage | null;
+  setTokenUsage: (usage: TokenUsage | null) => void;
 
   // ── Thread management (RCC-0095: single workspace chat) ──
   threads: Thread[];
@@ -160,7 +164,7 @@ export interface AppState {
   _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => void;
   toggleCollapsed: (view: string, pane: CollapsablePane) => void;
   setPaneWidth: (view: string, pane: Pane, width: number) => void;
-  commitPaneWidths: (view: string) => void;
+  commitPaneWidths: (view: string, pane?: Pane) => void;
   setTint: (view: string, path: TintPath, value: boolean) => void;
 
   // ── Chat-header dropdown UI state (transient) ──

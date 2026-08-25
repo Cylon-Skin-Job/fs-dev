@@ -3,6 +3,7 @@
 .rv-file-page-view {
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -30,6 +31,56 @@
 
 .rv-file-page-action .material-symbols-outlined {
   font-size: 18px;
+}
+
+.rv-capture-document-subheader {
+  display: flex;
+  flex: 0 0 47px;
+  align-items: center;
+  min-width: 0;
+  height: 47px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  background: var(--document-surface-bg, #0d0d0d);
+  color: var(--content-heading-color, var(--text-primary, #eee));
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.rv-capture-document-subheader-back {
+  display: inline-flex;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md, 4px);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.rv-capture-document-subheader-back:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+}
+
+.rv-capture-document-subheader-back .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.rv-capture-document-subheader-title {
+  flex: 1;
+  min-width: 0;
+  padding-right: 160px;
+  overflow: hidden;
+  color: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Content area */
@@ -75,18 +126,4 @@
   max-height: 100%;
   margin: 0 auto;
   object-fit: contain;
-}
-
-/* Bottom ribbon */
-.rv-file-page-ribbon {
-  flex-shrink: 0;
-  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  padding: var(--space-sm) var(--space-md);
-  overflow-x: auto;
-}
-
-.rv-file-page-ribbon-scroll {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
 }

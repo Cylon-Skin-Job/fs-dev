@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
-import { usePanelStore } from '../state/panelStore';
+import { clampPaneWidth, usePanelStore } from '../state/panelStore';
 import { useWorkspaceStore } from '../state/workspaceStore';
 
 import { useWebSocket } from '../hooks/useWebSocket';
@@ -26,15 +26,19 @@ import { WorkspaceTitle } from './WorkspaceTitle';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
 import { WorkspaceCreateModal } from './WorkspaceCreateModal';
 import { ThemePickerModal } from './ThemePickerModal';
+import ThemePickerButton from './ThemePickerButton';
 import { SecretsManagerModal } from './secrets/SecretsManagerModal';
 import { ConnectorsDropdown } from './ConnectorsDropdown';
-import { ScreenshotFlashOverlay } from '../screenshots';
-import { showToast } from '../lib/toast';
+import {
+  captureAndAttachScreenshot,
+  SCREENSHOT_FLASH_EVENT,
+  ScreenshotFlashOverlay,
+} from '../screenshots';
 import './App.css';
 
 // SPEC-26c-2: defaults for the 3-column layout
-const DEFAULT_WIDTHS = { leftSidebar: 220, leftChat: 320 };
-const DEFAULT_COLLAPSED = { leftSidebar: false, leftChat: false };
+const DEFAULT_WIDTHS = { leftSidebar: 220, leftChat: 360 };
+const DEFAULT_COLLAPSED = { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false };
 // TINTS_SPEC §8c: all-off fallback when viewState hasn't loaded yet.
 const DEFAULT_TINTS = {
   leftPanel:     false,
@@ -56,9 +60,10 @@ interface PanelContentProps {
   panel: string;
   collapsedSidebar: boolean;
   collapsedChat: boolean;
+  collapsedContent: boolean;
   secondarySticky: boolean;
 }
-const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, secondarySticky }: PanelContentProps) {
+const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, collapsedContent, secondarySticky }: PanelContentProps) {
   // SPEC-26c-2: [workspace sidebar][handle][workspace chat][handle][content]
   // SECONDARY_CHAT_SPEC §7c: when secondary is sticky-right, it overlays
   // the view's right column via absolute positioning + z-index. Grid stays
@@ -67,7 +72,13 @@ const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, colla
     <>
       <Sidebar panel={panel} collapsed={collapsedSidebar} />
       <LeftSidebarResize panel={panel} />
-      <ChatArea panel={panel} collapsed={collapsedChat} sidebarCollapsed={collapsedSidebar} />
+      <ChatArea
+        panel={panel}
+        collapsed={collapsedChat}
+        sidebarCollapsed={collapsedSidebar}
+        contentCollapsed={collapsedContent}
+        hideCollapsedRail
+      />
       <LeftChatResize panel={panel} />
       <ContentArea panel={panel} />
       {secondarySticky && <SecondaryChatSticky />}
@@ -91,6 +102,8 @@ function PanelWrapper({ panelId, isActive }: {
   // We merge to ensure that missing keys (like leftSidebar) don't result in "undefinedpx".
   const widths = { ...DEFAULT_WIDTHS, ...(viewState?.widths ?? {}) };
   const collapsed = { ...DEFAULT_COLLAPSED, ...(viewState?.collapsed ?? {}) };
+  const leftSidebarWidth = clampPaneWidth('leftSidebar', widths.leftSidebar);
+  const collapsedContent = collapsed.contentArea;
 
   // Only the active panel renders the sticky secondary (one grid track
   // at a time; the popup persists state across panel switches but the
@@ -105,15 +118,19 @@ function PanelWrapper({ panelId, isActive }: {
     : (widths.rightCol ?? 220);
 
   const gridStyle: CSSProperties = {
-    '--left-sidebar-w':   `${collapsed.leftSidebar ? 0 : widths.leftSidebar}px`,
-    '--left-chat-w':      `${collapsed.leftChat    ? 40 : widths.leftChat   }px`,
+    '--left-sidebar-w':   collapsed.leftSidebar ? '0px' : `min(${leftSidebarWidth}px, 25vw)`,
+    '--left-sidebar-expanded-w': `min(${leftSidebarWidth}px, 25vw)`,
+    '--left-chat-w':      `${collapsed.leftChat ? 0 : Math.max(360, widths.leftChat)}px`,
     '--right-col-w':      `${rightColWidth}px`,
+    '--file-tree-w':      `${collapsed.rightCol ? 0 : rightColWidth}px`,
   } as CSSProperties;
 
   const panelClasses = [
     'rv-panel',
     'rv-layout-dual-chat',
     isActive ? 'active' : '',
+    collapsed.leftSidebar ? 'rv-panel--sidebar-collapsed' : '',
+    collapsedContent ? 'rv-panel--content-collapsed' : '',
     secondarySticky ? 'rv-panel--secondary-sticky' : '',
   ].filter(Boolean).join(' ');
 
@@ -128,6 +145,7 @@ function PanelWrapper({ panelId, isActive }: {
         panel={panelId}
         collapsedSidebar={collapsed.leftSidebar}
         collapsedChat={collapsed.leftChat}
+        collapsedContent={collapsedContent}
         secondarySticky={secondarySticky}
       />
     </div>
@@ -149,6 +167,7 @@ function App() {
   const setCurrentPanel = usePanelStore((state) => state.setCurrentPanel);
   const ws = usePanelStore((state) => state.ws);
   const configs = usePanelStore((state) => state.panelConfigs);
+  const isThemePickerOpen = usePanelStore((state) => state.isThemePickerOpen);
   const isConnected = ws?.readyState === WebSocket.OPEN;
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -159,27 +178,22 @@ function App() {
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
   const activeWorkspaceId = useWorkspaceStore((s) => s.activeWorkspaceId);
 
-  const handleControlCamera = useCallback(async () => {
-    if (!activeWorkspaceId || !ws || ws.readyState !== WebSocket.OPEN) return;
-    const api = window.electronAPI;
-    if (!api?.capturePage) return;
+  const handleControlCamera = useCallback(() => {
+    void captureAndAttachScreenshot();
+  }, []);
 
-    try {
-      const base64 = await api.capturePage();
-      if (!base64) return;
+  const handlePanelSwitch = useCallback((panelId: string) => {
+    setCurrentPanel(panelId);
+  }, [setCurrentPanel]);
 
-      const dataUrl = `data:image/png;base64,${base64}`;
-      setScreenshotFlashImage(dataUrl);
-
-      ws.send(JSON.stringify({
-        type: 'screenshot:file-capture',
-        workspaceId: activeWorkspaceId,
-        dataUrl,
-      }));
-    } catch (err) {
-      console.error('[App] control_camera capture failed:', err);
-    }
-  }, [activeWorkspaceId, ws]);
+  useEffect(() => {
+    const handleScreenshotFlash = (event: Event) => {
+      const dataUrl = (event as CustomEvent<string>).detail;
+      if (typeof dataUrl === 'string') setScreenshotFlashImage(dataUrl);
+    };
+    window.addEventListener(SCREENSHOT_FLASH_EVENT, handleScreenshotFlash);
+    return () => window.removeEventListener(SCREENSHOT_FLASH_EVENT, handleScreenshotFlash);
+  }, []);
 
   const loading = configs.length === 0;
 
@@ -327,7 +341,10 @@ function App() {
   }
 
   return (
-    <div ref={containerRef} className="rv-app-container">
+    <div
+      ref={containerRef}
+      className={`rv-app-container${isThemePickerOpen ? ' rv-app-container--theme-picker-open' : ''}`}
+    >
       {/* Header */}
       <header className="rv-header">
         <div className="rv-header-left">
@@ -361,13 +378,14 @@ function App() {
           <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
             <span className="material-symbols-outlined">raven</span>
           </button>
+          <ThemePickerButton />
         </div>
       </header>
 
       {/* Tools Panel */}
       <ToolsPanel
         currentPanel={currentPanel}
-        onSwitch={setCurrentPanel}
+        onSwitch={handlePanelSwitch}
       />
 
       {/* Panel Container */}
@@ -394,10 +412,7 @@ function App() {
       <SecretsManagerModal />
       <ScreenshotFlashOverlay
         imageDataUrl={screenshotFlashImage}
-        onComplete={() => {
-          setScreenshotFlashImage(null);
-          showToast('Screenshot saved to ai/<machine>/Data/Screenshots');
-        }}
+        onComplete={() => setScreenshotFlashImage(null)}
       />
     </div>
   );

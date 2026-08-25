@@ -69,6 +69,7 @@ const SHARED_LAYERS: { id: string; path: string }[] = [
 // Guard against repeat loads from multiple consumers on the same WS connection.
 // Bumped on workspace switch so the hook refetches even when the WS ref is stable.
 let loadGeneration = 0;
+let themeReloadGeneration = 0;
 
 function fetchAndInject(ws: WebSocket, generation: number): void {
   Promise.all(
@@ -205,8 +206,11 @@ export function reloadThemesLayer(ws: WebSocket) {
   if (!ws || ws.readyState !== WebSocket.OPEN) return;
   const themeLayer = SHARED_LAYERS.find(l => l.id === 'themes');
   if (!themeLayer) return;
+  themeReloadGeneration += 1;
+  const generation = themeReloadGeneration;
   fetchSettingsFile(ws, themeLayer.path)
     .then((css) => {
+      if (generation !== themeReloadGeneration) return;
       if (!css) {
         document.getElementById(`${SHARED_STYLE_PREFIX}themes`)?.remove();
         return;

@@ -1,9 +1,13 @@
 {
   "collapsed": {
-    "leftSidebar": true
+    "leftSidebar": true,
+    "rightCol": false,
+    "contentArea": false
   },
   "widths": {
-    "leftChat": 403.17578125
+    "leftChat": 360,
+    "contentNavLeft": 240.1328125,
+    "contentNavRight": 240.72265625
   },
   "popup": {
     "x": -1,
@@ -12,6 +16,253 @@
   },
   "activity": {
     "recents": [
+      {
+        "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+        "panel": "wiki-viewer",
+        "path": "005-Enforcement/001-Code_Standards",
+        "title": "Code Standards",
+        "kind": "page",
+        "openedAt": 1787633794718,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/003-Adding_Workspaces",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/003-Adding_Workspaces",
+        "title": "Adding Workspaces",
+        "kind": "page",
+        "openedAt": 1787633790535,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/002-View_Architecture",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/002-View_Architecture",
+        "title": "View Architecture",
+        "kind": "page",
+        "openedAt": 1787633789068,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
+        "title": "Workspace Paradigm",
+        "kind": "page",
+        "openedAt": 1787618440930,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:000-Wiki_Guidance",
+        "panel": "wiki-viewer",
+        "path": "000-Wiki_Guidance",
+        "title": "Wiki Guidance",
+        "kind": "page",
+        "openedAt": 1787618435997,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "000-Wiki_Guidance/PAGE.md",
+          "kind": "section"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+        "panel": "wiki-viewer",
+        "path": "002-System_Tools/001-Custom_Theme_CSS",
+        "title": "Custom Theme CSS",
+        "kind": "page",
+        "openedAt": 1787618389964,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Project/018-Hooks",
+        "panel": "wiki-viewer",
+        "path": "001-Project/018-Hooks",
+        "title": "Hooks",
+        "kind": "page",
+        "openedAt": 1787618385247,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Project/018-Hooks/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Project/000-Project",
+        "panel": "wiki-viewer",
+        "path": "001-Project/000-Project",
+        "title": "Project",
+        "kind": "page",
+        "openedAt": 1787618361414,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Project/000-Project/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:005-Enforcement/001-Code_Standards/004-WebSocket_Protocol",
+        "panel": "wiki-viewer",
+        "path": "005-Enforcement/001-Code_Standards/004-WebSocket_Protocol",
+        "title": "WebSocket Protocol",
+        "kind": "page",
+        "openedAt": 1787618335666,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+          "kind": "sidebar-section"
+        }
+      },
+      {
+        "id": "wiki-viewer:005-Enforcement/000-Enforcement",
+        "panel": "wiki-viewer",
+        "path": "005-Enforcement/000-Enforcement",
+        "title": "Enforcement",
+        "kind": "page",
+        "openedAt": 1787616088245,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "005-Enforcement/000-Enforcement/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:010-Events_And_Ledger/000-Events_And_Ledger",
+        "panel": "wiki-viewer",
+        "path": "010-Events_And_Ledger/000-Events_And_Ledger",
+        "title": "Events And Ledger",
+        "kind": "page",
+        "openedAt": 1787616083480,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System_Tools/000-System_Tools",
+        "panel": "wiki-viewer",
+        "path": "002-System_Tools/000-System_Tools",
+        "title": "System Tools",
+        "kind": "page",
+        "openedAt": 1787616076628,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System_Tools/000-System_Tools/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
+        "title": "Workspaces And Views",
+        "kind": "page",
+        "openedAt": 1787616072263,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:007-Chat_System/001-Identity_And_Persistence",
+        "panel": "wiki-viewer",
+        "path": "007-Chat_System/001-Identity_And_Persistence",
+        "title": "Identity And Persistence",
+        "kind": "page",
+        "openedAt": 1787553354971,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
+        "panel": "wiki-viewer",
+        "path": "007-Chat_System/000-Overview_and_References",
+        "title": "Overview and References",
+        "kind": "page",
+        "openedAt": 1787553353087,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
+        "panel": "wiki-viewer",
+        "path": "009-Fusion_Home/000-Fusion_Home",
+        "title": "Fusion Home",
+        "kind": "page",
+        "openedAt": 1787553350205,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Project/013-Background_Agents",
+        "panel": "wiki-viewer",
+        "path": "001-Project/013-Background_Agents",
+        "title": "Background Agents",
+        "kind": "page",
+        "openedAt": 1787048401312,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Project/013-Background_Agents/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Project/004-Path_Resolution",
+        "panel": "wiki-viewer",
+        "path": "001-Project/004-Path_Resolution",
+        "title": "Path Resolution",
+        "kind": "page",
+        "openedAt": 1787048399811,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Project/004-Path_Resolution/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Project/001-Home",
+        "panel": "wiki-viewer",
+        "path": "001-Project/001-Home",
+        "title": "Home",
+        "kind": "page",
+        "openedAt": 1787048395494,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Project/001-Home/PAGE.md",
+          "kind": "article"
+        }
+      },
       {
         "id": "wiki-viewer:005-Enforcement/001-Code_Standards/000-Code_Standards",
         "panel": "wiki-viewer",
@@ -23,32 +274,6 @@
         "metadata": {
           "pagePath": "005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
           "kind": "sidebar-section"
-        }
-      },
-      {
-        "id": "wiki-viewer:005-Enforcement/000-Enforcement",
-        "panel": "wiki-viewer",
-        "path": "005-Enforcement/000-Enforcement",
-        "title": "Enforcement",
-        "kind": "page",
-        "openedAt": 1783941351014,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "005-Enforcement/000-Enforcement/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
-        "panel": "wiki-viewer",
-        "path": "005-Enforcement/001-Code_Standards",
-        "title": "Code Standards",
-        "kind": "page",
-        "openedAt": 1783897234291,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
-          "kind": "article"
         }
       },
       {
@@ -247,19 +472,6 @@
         }
       },
       {
-        "id": "wiki-viewer:010-Events_And_Ledger/000-Events_And_Ledger",
-        "panel": "wiki-viewer",
-        "path": "010-Events_And_Ledger/000-Events_And_Ledger",
-        "title": "Events And Ledger",
-        "kind": "page",
-        "openedAt": 1783592192288,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
         "id": "wiki-viewer:010-Events_And_Ledger/004-Ledger_Schema",
         "panel": "wiki-viewer",
         "path": "010-Events_And_Ledger/004-Ledger_Schema",
@@ -283,19 +495,6 @@
         "metadata": {
           "pagePath": "010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
           "kind": "sidebar-section"
-        }
-      },
-      {
-        "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
-        "panel": "wiki-viewer",
-        "path": "007-Chat_System/000-Overview_and_References",
-        "title": "Overview and References",
-        "kind": "page",
-        "openedAt": 1783588205367,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
-          "kind": "article"
         }
       },
       {
@@ -403,19 +602,6 @@
         }
       },
       {
-        "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
-        "panel": "wiki-viewer",
-        "path": "009-Fusion_Home/000-Fusion_Home",
-        "title": "Fusion Home",
-        "kind": "page",
-        "openedAt": 1783559462862,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
         "id": "wiki-viewer:000-Wiki_Guidance/001-Style_Guide",
         "panel": "wiki-viewer",
         "path": "000-Wiki_Guidance/001-Style_Guide",
@@ -455,19 +641,6 @@
         }
       },
       {
-        "id": "wiki-viewer:000-Wiki_Guidance",
-        "panel": "wiki-viewer",
-        "path": "000-Wiki_Guidance",
-        "title": "Wiki Guidance",
-        "kind": "page",
-        "openedAt": 1783557314928,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "000-Wiki_Guidance/PAGE.md",
-          "kind": "section"
-        }
-      },
-      {
         "id": "wiki-viewer:009-Fusion_Home/005-Documents/002-Crepe",
         "panel": "wiki-viewer",
         "path": "009-Fusion_Home/005-Documents/002-Crepe",
@@ -494,19 +667,6 @@
         }
       },
       {
-        "id": "wiki-viewer:001-Project/000-Project",
-        "panel": "wiki-viewer",
-        "path": "001-Project/000-Project",
-        "title": "Project",
-        "kind": "page",
-        "openedAt": 1783556232471,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Project/000-Project/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
         "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer/001-Document_Editor",
         "panel": "wiki-viewer",
         "path": "009-Fusion_Home/001-Office_Viewer/001-Document_Editor",
@@ -517,45 +677,6 @@
         "metadata": {
           "pagePath": "009-Fusion_Home/001-Office_Viewer/001-Document_Editor/PAGE.md",
           "kind": "sidebar-section"
-        }
-      },
-      {
-        "id": "wiki-viewer:001-Workspaces_And_Views/003-Adding_Workspaces",
-        "panel": "wiki-viewer",
-        "path": "001-Workspaces_And_Views/003-Adding_Workspaces",
-        "title": "Adding Workspaces",
-        "kind": "page",
-        "openedAt": 1783483468866,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
-        "panel": "wiki-viewer",
-        "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
-        "title": "Workspaces And Views",
-        "kind": "page",
-        "openedAt": 1783483468049,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
-        "panel": "wiki-viewer",
-        "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
-        "title": "Workspace Paradigm",
-        "kind": "page",
-        "openedAt": 1783483465350,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
-          "kind": "article"
         }
       },
       {
@@ -587,383 +708,6 @@
     ],
     "navigation": {
       "stack": [
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance",
-          "title": "Wiki Guidance",
-          "kind": "page",
-          "openedAt": 1783437018315,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/PAGE.md",
-            "kind": "section"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
-          "title": "Workspace Paradigm",
-          "kind": "page",
-          "openedAt": 1783437447127,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "title": "Workspaces And Views",
-          "kind": "page",
-          "openedAt": 1783437456777,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/014-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/014-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783437463126,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/014-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "title": "Workspaces And Views",
-          "kind": "page",
-          "openedAt": 1783483463868,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
-          "title": "Workspace Paradigm",
-          "kind": "page",
-          "openedAt": 1783483465350,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
-          "title": "Workspaces And Views",
-          "kind": "page",
-          "openedAt": 1783483468049,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Workspaces_And_Views/003-Adding_Workspaces",
-          "panel": "wiki-viewer",
-          "path": "001-Workspaces_And_Views/003-Adding_Workspaces",
-          "title": "Adding Workspaces",
-          "kind": "page",
-          "openedAt": 1783483468866,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/000-Fusion_Home",
-          "title": "Fusion Home",
-          "kind": "page",
-          "openedAt": 1783554636328,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783554659128,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer/001-Document_Editor",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer/001-Document_Editor",
-          "title": "Document Editor",
-          "kind": "page",
-          "openedAt": 1783554671027,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/001-Document_Editor/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/000-Fusion_Home",
-          "title": "Fusion Home",
-          "kind": "page",
-          "openedAt": 1783555097093,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783556140455,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents",
-          "title": "Documents",
-          "kind": "page",
-          "openedAt": 1783556209054,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Project/000-Project",
-          "panel": "wiki-viewer",
-          "path": "001-Project/000-Project",
-          "title": "Project",
-          "kind": "page",
-          "openedAt": 1783556232471,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Project/000-Project/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance",
-          "title": "Wiki Guidance",
-          "kind": "page",
-          "openedAt": 1783556234921,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/PAGE.md",
-            "kind": "section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783556358754,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents",
-          "title": "Documents",
-          "kind": "page",
-          "openedAt": 1783556581033,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/001-Milkdown",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/001-Milkdown",
-          "title": "Milkdown",
-          "kind": "page",
-          "openedAt": 1783556796104,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/001-Milkdown/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783556960612,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents",
-          "title": "Documents",
-          "kind": "page",
-          "openedAt": 1783556963161,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/004-Tables",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/004-Tables",
-          "title": "Tables",
-          "kind": "page",
-          "openedAt": 1783557118729,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/004-Tables/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents",
-          "title": "Documents",
-          "kind": "page",
-          "openedAt": 1783557187312,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/001-Milkdown",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/001-Milkdown",
-          "title": "Milkdown",
-          "kind": "page",
-          "openedAt": 1783557189178,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/001-Milkdown/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/002-Crepe",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/002-Crepe",
-          "title": "Crepe",
-          "kind": "page",
-          "openedAt": 1783557190778,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/002-Crepe/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/004-Tables",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/004-Tables",
-          "title": "Tables",
-          "kind": "page",
-          "openedAt": 1783557192144,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/004-Tables/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance",
-          "title": "Wiki Guidance",
-          "kind": "page",
-          "openedAt": 1783557314928,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/PAGE.md",
-            "kind": "section"
-          }
-        },
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance/001-Style_Guide",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance/001-Style_Guide",
-          "title": "Style Guide",
-          "kind": "page",
-          "openedAt": 1783557317461,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/001-Style_Guide/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance/002-Creating_Wikis",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance/002-Creating_Wikis",
-          "title": "Creating Wikis",
-          "kind": "page",
-          "openedAt": 1783557369462,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
-            "kind": "article"
-          }
-        },
         {
           "id": "wiki-viewer:000-Wiki_Guidance/003-Updating_Wikis",
           "panel": "wiki-viewer",
@@ -1885,6 +1629,383 @@
           "metadata": {
             "pagePath": "005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
             "kind": "sidebar-section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "title": "Workspaces And Views",
+          "kind": "page",
+          "openedAt": 1787041000249,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787048391644,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/000-Project",
+          "panel": "wiki-viewer",
+          "path": "001-Project/000-Project",
+          "title": "Project",
+          "kind": "page",
+          "openedAt": 1787048394106,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/000-Project/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/001-Home",
+          "panel": "wiki-viewer",
+          "path": "001-Project/001-Home",
+          "title": "Home",
+          "kind": "page",
+          "openedAt": 1787048395494,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/001-Home/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787048398643,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/004-Path_Resolution",
+          "panel": "wiki-viewer",
+          "path": "001-Project/004-Path_Resolution",
+          "title": "Path Resolution",
+          "kind": "page",
+          "openedAt": 1787048399811,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/004-Path_Resolution/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/013-Background_Agents",
+          "panel": "wiki-viewer",
+          "path": "001-Project/013-Background_Agents",
+          "title": "Background Agents",
+          "kind": "page",
+          "openedAt": 1787048401312,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/013-Background_Agents/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:010-Events_And_Ledger/000-Events_And_Ledger",
+          "panel": "wiki-viewer",
+          "path": "010-Events_And_Ledger/000-Events_And_Ledger",
+          "title": "Events And Ledger",
+          "kind": "page",
+          "openedAt": 1787553347755,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
+          "panel": "wiki-viewer",
+          "path": "009-Fusion_Home/000-Fusion_Home",
+          "title": "Fusion Home",
+          "kind": "page",
+          "openedAt": 1787553350205,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
+          "panel": "wiki-viewer",
+          "path": "007-Chat_System/000-Overview_and_References",
+          "title": "Overview and References",
+          "kind": "page",
+          "openedAt": 1787553353087,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:007-Chat_System/001-Identity_And_Persistence",
+          "panel": "wiki-viewer",
+          "path": "007-Chat_System/001-Identity_And_Persistence",
+          "title": "Identity And Persistence",
+          "kind": "page",
+          "openedAt": 1787553354971,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787558184859,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/000-Project",
+          "panel": "wiki-viewer",
+          "path": "001-Project/000-Project",
+          "title": "Project",
+          "kind": "page",
+          "openedAt": 1787573917157,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/000-Project/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "title": "Workspaces And Views",
+          "kind": "page",
+          "openedAt": 1787616072263,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/000-System_Tools",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/000-System_Tools",
+          "title": "System Tools",
+          "kind": "page",
+          "openedAt": 1787616076628,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/000-System_Tools/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:010-Events_And_Ledger/000-Events_And_Ledger",
+          "panel": "wiki-viewer",
+          "path": "010-Events_And_Ledger/000-Events_And_Ledger",
+          "title": "Events And Ledger",
+          "kind": "page",
+          "openedAt": 1787616083480,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:005-Enforcement/000-Enforcement",
+          "panel": "wiki-viewer",
+          "path": "005-Enforcement/000-Enforcement",
+          "title": "Enforcement",
+          "kind": "page",
+          "openedAt": 1787616088245,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "005-Enforcement/000-Enforcement/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+          "panel": "wiki-viewer",
+          "path": "005-Enforcement/001-Code_Standards",
+          "title": "Code Standards",
+          "kind": "page",
+          "openedAt": 1787616089130,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:005-Enforcement/001-Code_Standards/004-WebSocket_Protocol",
+          "panel": "wiki-viewer",
+          "path": "005-Enforcement/001-Code_Standards/004-WebSocket_Protocol",
+          "title": "WebSocket Protocol",
+          "kind": "page",
+          "openedAt": 1787618335666,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+            "kind": "sidebar-section"
+          }
+        },
+        {
+          "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+          "panel": "wiki-viewer",
+          "path": "005-Enforcement/001-Code_Standards",
+          "title": "Code Standards",
+          "kind": "page",
+          "openedAt": 1787618339080,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787618344215,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/000-Project",
+          "panel": "wiki-viewer",
+          "path": "001-Project/000-Project",
+          "title": "Project",
+          "kind": "page",
+          "openedAt": 1787618361414,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/000-Project/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Project/018-Hooks",
+          "panel": "wiki-viewer",
+          "path": "001-Project/018-Hooks",
+          "title": "Hooks",
+          "kind": "page",
+          "openedAt": 1787618385247,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Project/018-Hooks/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/001-Custom_Theme_CSS",
+          "title": "Custom Theme CSS",
+          "kind": "page",
+          "openedAt": 1787618389964,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787618435997,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
+          "title": "Workspace Paradigm",
+          "kind": "page",
+          "openedAt": 1787618440930,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/002-View_Architecture",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/002-View_Architecture",
+          "title": "View Architecture",
+          "kind": "page",
+          "openedAt": 1787633789068,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/003-Adding_Workspaces",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/003-Adding_Workspaces",
+          "title": "Adding Workspaces",
+          "kind": "page",
+          "openedAt": 1787633790535,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
+          "panel": "wiki-viewer",
+          "path": "005-Enforcement/001-Code_Standards",
+          "title": "Code Standards",
+          "kind": "page",
+          "openedAt": 1787633794718,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+            "kind": "article"
           }
         }
       ],

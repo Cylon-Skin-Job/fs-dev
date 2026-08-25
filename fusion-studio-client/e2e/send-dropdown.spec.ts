@@ -1,93 +1,42 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
 
-test.use({
-  permissions: ['clipboard-read', 'clipboard-write', 'notifications', 'microphone'],
-  viewport: { width: 1920, height: 1080 },
-});
+test('chat composer exposes one send action without a dropdown', async ({ page }) => {
+  const chatAreaCss = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/ChatArea.css'),
+    'utf8',
+  );
+  const sendButtonSource = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/chat/SendButtonGroup.tsx'),
+    'utf8',
+  );
 
-test('send dropdown opens on click', async ({ page }) => {
-  page.on('dialog', async dialog => await dialog.accept());
-  
-  await page.goto('/?panel=code-viewer');
-  await page.waitForTimeout(4000);
-  
-  // Click Test Conversation
-  await page.evaluate(() => {
-    const el = Array.from(document.querySelectorAll('*'))
-      .find(e => e.textContent?.includes('Test Conversation') && e.children.length === 0);
-    el?.closest('div')?.click();
-  });
-  
-  await page.waitForTimeout(3000);
-  
-  // Click the dropdown arrow button
-  const dropdownClicked = await page.evaluate(() => {
-    const btn = document.querySelector('.send-btn-secondary');
-    if (btn) {
-      (btn as HTMLElement).click();
-      return true;
-    }
-    return false;
-  });
-  
-  console.log('Dropdown button clicked:', dropdownClicked);
-  
-  await page.waitForTimeout(500);
-  
-  // Check if modal opened
-  const modalInfo = await page.evaluate(() => {
-    const modal = document.querySelector('.hover-icon-modal-container');
-    const items = document.querySelectorAll('.send-dropdown-item');
-    return {
-      modalExists: !!modal,
-      itemCount: items.length,
-      itemTexts: Array.from(items).map(i => i.textContent),
-    };
-  });
-  
-  console.log('Modal info:', modalInfo);
-  
-  await page.screenshot({ path: 'test-results/dropdown-open.png' });
-  
-  expect(modalInfo.modalExists).toBe(true);
-  expect(modalInfo.itemCount).toBe(3);
-});
+  expect(sendButtonSource).toContain('className="rv-send-btn-main"');
+  expect(sendButtonSource).toContain('onClick={handleSendClick}');
+  expect(sendButtonSource).toContain('rv-send-warming-wheel');
+  expect(sendButtonSource).toContain('arrow_upward');
+  expect(sendButtonSource).not.toContain(" : 'Send'");
+  expect(sendButtonSource).not.toContain('rv-send-btn-secondary');
+  expect(sendButtonSource).not.toContain('arrow_drop_down');
+  expect(sendButtonSource).not.toContain('HoverIconModal');
 
-test('send button works independently', async ({ page }) => {
-  page.on('dialog', async dialog => await dialog.accept());
-  
-  await page.goto('/?panel=code-viewer');
-  await page.waitForTimeout(4000);
-  
-  await page.evaluate(() => {
-    const el = Array.from(document.querySelectorAll('*'))
-      .find(e => e.textContent?.includes('Test Conversation') && e.children.length === 0);
-    el?.closest('div')?.click();
-  });
-  
-  await page.waitForTimeout(3000);
-  
-  // Click main send button
-  const sendClicked = await page.evaluate(() => {
-    const btn = document.querySelector('.send-btn-main');
-    if (btn) {
-      (btn as HTMLElement).click();
-      return true;
-    }
-    return false;
-  });
-  
-  console.log('Send button clicked:', sendClicked);
-  
-  // Verify modal did NOT open
-  const modalInfo = await page.evaluate(() => {
-    const modal = document.querySelector('.hover-icon-modal-container');
-    const isVisible = modal?.getAttribute('data-state') !== 'closed';
-    return { modalExists: !!modal, isVisible };
-  });
-  
-  console.log('Modal state after send click:', modalInfo);
-  
-  // Send button should not open the modal
-  expect(modalInfo.isVisible).toBe(false);
+  await page.setContent(`
+    <style>${chatAreaCss}</style>
+    <div class="rv-send-button-group">
+      <button class="rv-send-btn-main" aria-label="Send message">
+        <span class="material-symbols-outlined rv-icon-md" aria-hidden="true">arrow_upward</span>
+      </button>
+    </div>
+  `);
+
+  const sendButton = page.getByRole('button', { name: 'Send message' });
+  await expect(page.locator('.rv-send-button-group button')).toHaveCount(1);
+  await expect(sendButton).toBeVisible();
+  await expect(sendButton).toHaveCSS('width', '32px');
+  await expect(sendButton).toHaveCSS('height', '32px');
+  await expect(sendButton).toHaveCSS('border-radius', '50%');
+  await expect(sendButton).toHaveText('arrow_upward');
+  await expect(page.locator('.rv-send-btn-secondary')).toHaveCount(0);
+  await expect(page.locator('.rv-send-dropdown-modal')).toHaveCount(0);
 });

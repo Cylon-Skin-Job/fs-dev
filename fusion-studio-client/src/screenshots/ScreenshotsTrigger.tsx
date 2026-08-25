@@ -29,9 +29,10 @@ interface ScreenshotItem {
 
 interface ScreenshotsTriggerProps {
   onAttach?: (attachment: ChatLinkAttachment) => void;
+  triggerVariant?: 'icon' | 'submenu';
 }
 
-export function ScreenshotsTrigger({ onAttach }: ScreenshotsTriggerProps) {
+export function ScreenshotsTrigger({ onAttach, triggerVariant = 'icon' }: ScreenshotsTriggerProps) {
   const [screenshots, setScreenshots] = useState<Array<{ name: string; path: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
@@ -42,7 +43,12 @@ export function ScreenshotsTrigger({ onAttach }: ScreenshotsTriggerProps) {
 
   const loadScreenshots = useCallback(() => {
     setLoading(true);
-    window.electronAPI?.listScreenshots()
+    const listScreenshots = window.electronAPI?.listScreenshots;
+    if (!listScreenshots) {
+      setLoading(false);
+      return;
+    }
+    listScreenshots()
       .then((files) => {
         setScreenshots(files);
         setLoading(false);
@@ -160,17 +166,25 @@ export function ScreenshotsTrigger({ onAttach }: ScreenshotsTriggerProps) {
   useEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      setPopoverPos({
-        left: rect.left,
-        bottom: window.innerHeight - rect.top + 12,
-      });
+      if (triggerVariant === 'submenu') {
+        const modalWidth = 600;
+        setPopoverPos({
+          left: Math.min(rect.right + 12, window.innerWidth - modalWidth - 12),
+          bottom: Math.max(12, window.innerHeight - rect.bottom),
+        });
+      } else {
+        setPopoverPos({
+          left: rect.left,
+          bottom: window.innerHeight - rect.top + 12,
+        });
+      }
       setTimeout(() => {
         if (listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
         }
       }, 0);
     }
-  }, [isOpen, triggerRef]);
+  }, [isOpen, triggerRef, triggerVariant]);
 
   const handleMouseEnter = useCallback(
     (item: ScreenshotItem, index: number, e: React.MouseEvent) => {
@@ -187,13 +201,30 @@ export function ScreenshotsTrigger({ onAttach }: ScreenshotsTriggerProps) {
 
   return (
     <>
-      <HoverIconTrigger
-        icon="photo_size_select_large"
-        title="Screenshots gallery (click to lock)"
-        isOpen={isOpen}
-        triggerRef={triggerRef}
-        triggerProps={triggerProps}
-      />
+      {triggerVariant === 'submenu' ? (
+        <button
+          ref={triggerRef}
+          type="button"
+          className={`rv-chat-composer-menu-submenu${isOpen ? ' open' : ''}`}
+          title="Browse screenshots"
+          aria-label="Browse screenshots"
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+          role="menuitem"
+          {...triggerProps}
+        >
+          <span>Screenshots</span>
+          <span className="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </button>
+      ) : (
+        <HoverIconTrigger
+          icon="photo_size_select_large"
+          title="Screenshots gallery (click to lock)"
+          isOpen={isOpen}
+          triggerRef={triggerRef}
+          triggerProps={triggerProps}
+        />
+      )}
 
       <HoverIconModalContainer
         isOpen={isOpen}

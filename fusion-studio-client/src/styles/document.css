@@ -20,7 +20,7 @@
   padding: 0;
   /* Use --document-surface-bg, not --bg-solid (pure black), so the reading area is visibly gray */
   background: var(--document-surface-bg, #0d0d0d);
-  color: var(--text-primary, #e0e0e0);
+  color: var(--content-text-color, var(--text-primary, #e0e0e0));
 }
 
 /* --- File viewer tab: fill content area; scroll inside code body or markdown --- */
@@ -36,6 +36,56 @@
 .rv-file-viewer-content .rv-file-content-renderer {
   flex: 1;
   min-height: 0;
+}
+
+/* The file page header is structural content chrome, just like its line
+ * numbers. Keep this divider on the automatic content tone even when the
+ * workspace Borders control is disabled or recolored. The extra parent scope
+ * intentionally outranks machine/view CSS that assigns the general border
+ * token to this edge. */
+.rv-file-viewer .rv-file-viewer-info {
+  border-bottom-color: var(--content-attenuated, var(--text-dim, #aaa));
+}
+
+/* The tab rail no longer connects to the document with an upper border. The
+ * selected file is a standalone highlight, matching the active-thread model. */
+.rv-file-viewer .rv-file-viewer-header::after {
+  content: none;
+  display: none;
+}
+
+.rv-file-viewer .rv-file-viewer-tab.active {
+  background: var(--content-accent-color, var(--thread-selected-bg, var(--accent-dim)));
+  border: none;
+  border-radius: 8px;
+  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
+}
+
+.rv-file-viewer .rv-file-viewer-tab:not(.active):hover {
+  background: var(--content-accent-color, var(--thread-selected-bg, var(--accent-dim)));
+  border-radius: 8px;
+  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
+  transform: translateY(0);
+}
+
+.rv-file-viewer .rv-file-viewer-tab:not(.active):hover :is(.rv-tab-icon, .rv-tab-name) {
+  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
+}
+
+.rv-file-viewer .rv-file-viewer-tabs .rv-file-viewer-tab .rv-tab-close {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rv-file-viewer .rv-file-viewer-tabs .rv-file-viewer-tab:is(.active, :hover, :focus-within) .rv-tab-close {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
+/* Content Foreground controls inactive file-tab titles and their file icons as
+ * one visual label. Active tabs keep their higher-contrast selected state. */
+.rv-file-viewer .rv-file-viewer-tab:not(.active) :is(.rv-tab-icon, .rv-tab-name) {
+  color: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
 }
 
 /* One scroll on the editor; gutter sticky-left for wide lines (global .rv-code-editor rules) */
@@ -56,9 +106,13 @@
   overflow-y: auto;
 }
 
-/* Gutter separator inherits the wiki's border paradigm (--content-highlight). */
+/* File Viewer keeps the line numbers but presents code without a gutter divider. */
 .rv-file-viewer-content .rv-code-gutter {
-  border-right-color: var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border-right: none;
+}
+
+.rv-file-viewer-content .rv-wiki-page-content blockquote {
+  border-left-color: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 .rv-file-viewer-content .rv-code-editor::-webkit-scrollbar,
@@ -177,7 +231,7 @@
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
   font-size: 13px;
   line-height: 1.6;
-  background: var(--document-bg, #161616);
+  background: var(--document-surface-bg, #0d0d0d);
   border-radius: 0;
   /* Scroll here (not on .rv-code-content) so sticky gutter works for horizontal scroll */
   overflow: auto;
@@ -194,13 +248,10 @@
   align-items: flex-end;
   flex-shrink: 0;
   padding: 12px 12px 12px 16px;
-  background: var(--document-bg, #161616);
-  /* Numbers + separator both use --content-highlight (the wiki's border /
-   * inline code chip tier — alpha wash of --content-emphasized). Solid color
-   * resolves over the gutter's --document-bg background. Tracks Content
-   * Contrast on the raw slider, like the wiki. */
-  border-right: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
-  color: var(--content-highlight, rgba(192, 160, 224, 0.16));
+  background: var(--document-surface-bg, #0d0d0d);
+  /* Structural chrome is automatic: numbers and their divider are identical. */
+  border-right: 1px solid var(--content-attenuated, rgba(192, 160, 224, 0.42));
+  color: var(--content-attenuated, rgba(192, 160, 224, 0.42));
   user-select: none;
   min-width: 50px;
 }
@@ -217,7 +268,7 @@
   min-width: 0;
   padding: 12px 16px;
   overflow: visible;
-  background: var(--document-bg, #161616);
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
 .rv-code-content pre {
@@ -247,7 +298,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.7;
-  color: var(--text-white);
+  color: var(--content-text-color, var(--text-white));
   white-space: pre-wrap;
   word-wrap: break-word;
 }
@@ -287,7 +338,7 @@
   padding: 24px 32px;
   font-size: 0.875rem;
   line-height: 1.7;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--content-text-color, var(--text-primary, #e0e0e0));
 }
 
 /* Markdown is exempted from the Theme Code toggle. Two scopes pick up the
@@ -310,21 +361,21 @@
 }
 
 .rv-wiki-page-content h1 {
-  color: var(--theme-primary, var(--ws-primary, #ec4899));
+  color: var(--content-heading-color, var(--theme-primary, #ec4899));
   font-size: 1.5rem;
   margin: 0 0 16px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--theme-border, var(--ws-panel-border, #333));
+  border-bottom: 1px solid var(--content-border, var(--theme-border, #333));
 }
 
 .rv-wiki-page-content h2 {
-  color: var(--theme-primary, var(--ws-primary, #ec4899));
+  color: var(--content-heading-color, var(--theme-primary, #ec4899));
   font-size: 1.125rem;
   margin: 24px 0 12px;
 }
 
 .rv-wiki-page-content h3 {
-  color: var(--text-primary, #ddd);
+  color: var(--content-heading-color, var(--text-primary, #ddd));
   font-size: 0.9375rem;
   margin: 20px 0 8px;
 }
@@ -334,7 +385,7 @@
 }
 
 .rv-wiki-page-content a {
-  color: var(--theme-primary, var(--ws-primary, #ec4899));
+  color: var(--content-link, var(--content-heading-color, #ec4899));
   text-decoration: none;
 }
 
@@ -343,7 +394,7 @@
 }
 
 .rv-wiki-page-content code {
-  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  background: var(--content-highlight, color-mix(in srgb, var(--content-heading-color) 16%, transparent));
   padding: 2px 5px;
   border-radius: 3px;
   font-size: 0.8125rem;
@@ -351,7 +402,7 @@
 
 .rv-wiki-page-content pre {
   background: var(--document-bg, #161616);
-  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--content-border, rgba(255, 255, 255, 0.12));
   border-radius: 6px;
   padding: 12px 16px;
   overflow-x: auto;
@@ -375,12 +426,12 @@
 .rv-wiki-page-content th,
 .rv-wiki-page-content td {
   padding: 8px 12px;
-  border: 1px solid var(--theme-border, var(--ws-panel-border, #333));
+  border: 1px solid var(--content-border, var(--theme-border, #333));
   text-align: left;
 }
 
 .rv-wiki-page-content th {
-  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  background: var(--content-highlight, color-mix(in srgb, var(--content-heading-color) 16%, transparent));
   font-weight: 600;
 }
 
@@ -395,18 +446,18 @@
 }
 
 .rv-wiki-page-content blockquote {
-  border-left: 3px solid var(--theme-primary, var(--ws-primary, #ec4899));
+  border-left: 3px solid var(--content-heading-color, var(--theme-primary, #ec4899));
   margin: 12px 0;
   padding: 8px 16px;
-  color: var(--text-dim, #aaa);
+  color: var(--content-attenuated, var(--text-dim, #aaa));
 }
 
 .rv-wiki-page-content hr {
   border: none;
-  border-top: 1px solid var(--theme-border, var(--ws-panel-border, #333));
+  border-top: 1px solid var(--content-border, var(--theme-border, #333));
   margin: 24px 0;
 }
 
 .rv-wiki-page-content strong {
-  color: var(--text-primary, #fff);
+  color: var(--content-text-color, var(--text-primary, #fff));
 }

@@ -1,6 +1,7 @@
 {
   "collapsed": {
-    "leftSidebar": true
+    "leftSidebar": false,
+    "rightCol": false
   },
   "widths": {
     "leftChat": 414.06640625

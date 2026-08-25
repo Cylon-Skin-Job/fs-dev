@@ -5,7 +5,7 @@
  *       theme, and CLI config state inline.
  */
 import { create } from 'zustand';
-import type { Thread } from '../types';
+import type { ThemeEntry, Thread } from '../types';
 import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
 import { createChatSlice } from './slices/chatSlice';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
@@ -25,6 +25,7 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
     chatActive: false,
     wireReady: false,
     contextUsage: 0,
+    tokenUsage: null,
     panelConfigs: [],
     panelRoots: {},
     viewStates: {},
@@ -65,6 +66,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
         chatActive: false,
         wireReady: false,
         contextUsage: 0,
+        tokenUsage: null,
         panelConfigs: state.panelConfigs,
         panelRoots: state.panelRoots,
         viewStates: state.viewStates,
@@ -111,6 +113,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
       chatActive: false,
       wireReady: false,
       contextUsage: 0,
+      tokenUsage: null,
       panelConfigs,
       panelRoots,
       viewStates: loaded.viewStates,
@@ -155,6 +158,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
         chatActive: emptyState.chatActive,
         wireReady: emptyState.wireReady,
         contextUsage: emptyState.contextUsage,
+        tokenUsage: emptyState.tokenUsage,
         panelConfigs: emptyState.panelConfigs,
         panelRoots: emptyState.panelRoots,
         viewStates: emptyState.viewStates,
@@ -371,6 +375,19 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }
   },
   saveTheme: (entry) => {
+    // Keep the renderer catalog in lockstep with the live preview before the
+    // server round trip completes. Without this optimistic merge, closing and
+    // quickly reopening the picker can remount from the previous ThemeEntry
+    // and make newly-added controls appear not to persist.
+    set((state) => {
+      const index = state.themes.findIndex((theme) => theme.id === entry.id);
+      if (index < 0) {
+        return { themes: [...state.themes, entry as ThemeEntry] };
+      }
+      const themes = [...state.themes];
+      themes[index] = { ...themes[index], ...entry };
+      return { themes };
+    });
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'theme:save', theme: entry }));

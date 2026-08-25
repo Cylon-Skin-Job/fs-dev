@@ -1,45 +1,72 @@
-const { clamp } = require('./color-math');
-
-function luminanceToHex(luminance) {
-  const ch = Math.round((luminance / 100) * 255);
-  const h  = ch.toString(16).padStart(2, '0');
-  return `#${h}${h}${h}`;
-}
+const { computePanelSurfaces, computeWorkspaceForeground, computeWorkspaceBorders, computeWorkspaceAccent, computeThreadBackground, computeChatSurfaceBackground, computeThreadForeground, computeThreadHeadings, computeThreadPanelForeground, computeThreadAccent, computeThreadAccentContrast, computeChatBackground, computeChatBubbleBackground, computeChatComposerChrome, computeChatForeground, computeChatForegroundContrast, computeChatAccent, computeChatTools, computeChatText } = require('./color-math');
 
 function render(entry) {
   const accent        = entry.accent;
   const luminance     = entry.luminance ?? 6;
-  const panelContrast = entry.panelContrast ?? 50;
-  const bgTint        = entry.bgTint ?? entry.chromeTint ?? 12;
-
-  const isLight   = luminance > 50;
-  const direction = isLight ? -1 : 1;
-  const factor    = panelContrast / 50;
-
-  const floorL   = clamp(luminance);
-  const surfaceL = clamp(luminance + direction * 5  * factor);
-  const codeL    = clamp(luminance + direction * 8  * factor);
-  const panelL   = clamp(luminance + direction * 10 * factor);
-
-  function surface(l, tint) {
-    const base = luminanceToHex(l);
-    if (tint <= 0) return base;
-    return `color-mix(in srgb, ${base} ${100 - tint}%, ${accent} ${tint}%)`;
-  }
-
-  const floor   = surface(floorL, bgTint);
-  const surf    = surface(surfaceL, bgTint);
-  const codeBg  = surface(codeL, bgTint);
-  const panelBg = surface(panelL, bgTint);
-
+  const isLight = luminance > 50;
+  const { floor, surf, codeBg, panelBg } = computePanelSurfaces(entry);
+  const workspaceForeground = computeWorkspaceForeground(entry);
+  const workspaceBorders = computeWorkspaceBorders(entry);
+  const workspaceAccent = computeWorkspaceAccent(entry);
+  const threadBackground = computeThreadBackground(entry);
+  const threadText = computeThreadForeground(entry);
+  const threadHeadings = computeThreadHeadings(entry);
+  const threadForeground = computeThreadPanelForeground(entry);
+  const threadAccent = computeThreadAccent(entry);
+  const selectedThreadForeground = computeThreadAccentContrast(entry);
+  const sidePanelEntry = {
+    ...entry,
+    threadBackground: entry.sidePanelBackground ?? entry.threadBackground,
+    threadForegroundContrast: entry.sidePanelForegroundContrast ?? entry.threadForegroundContrast,
+    threadHeadings: entry.sidePanelHeadings ?? entry.threadHeadings,
+    threadForeground: entry.sidePanelForeground ?? entry.threadForeground,
+    threadAccent: entry.sidePanelAccent ?? entry.threadAccent,
+  };
+  const sidePanelBackground = computeThreadBackground(sidePanelEntry);
+  const sidePanelText = computeThreadForeground(sidePanelEntry);
+  const sidePanelHeadings = computeThreadHeadings(sidePanelEntry);
+  const sidePanelForeground = computeThreadPanelForeground(sidePanelEntry);
+  const sidePanelAccent = computeThreadAccent(sidePanelEntry);
+  const sidePanelAccentForeground = computeThreadAccentContrast(sidePanelEntry);
+  const chatSurfaceBackground = computeChatSurfaceBackground(entry);
+  const chatBackground = computeChatBackground(entry);
+  const chatBubbleBackground = computeChatBubbleBackground(entry);
+  const chatComposerChrome = computeChatComposerChrome(entry);
+  const chatForeground = computeChatForeground(entry);
+  const chatForegroundContrast = computeChatForegroundContrast(entry);
+  const chatAccent = computeChatAccent(entry);
+  const chatTools = computeChatTools(entry);
+  const chatText = computeChatText(entry);
   const neutralBorder = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
 
   return `  --bg-solid:              ${floor};
   --bg-primary:            ${floor};
   --bg-secondary:          ${surf};
   --panel-chrome-bg:       ${panelBg};
-  --sidebar-surface-bg:    ${codeBg};
-  --chat-surface-bg:       ${panelBg};
+  --workspace-foreground-color: ${workspaceForeground};
+  --workspace-border-color: ${workspaceBorders};
+  --workspace-accent-color: ${workspaceAccent};
+  --sidebar-surface-bg:    ${threadBackground};
+  --thread-text-color:     ${threadText};
+  --thread-heading-color:  ${threadHeadings};
+  --thread-foreground-color: ${threadForeground};
+  --thread-selected-bg:     ${threadAccent};
+  --thread-selected-foreground-color: ${selectedThreadForeground};
+  --side-panel-surface-bg:  ${sidePanelBackground};
+  --side-panel-text-color:  ${sidePanelText};
+  --side-panel-heading-color: ${sidePanelHeadings};
+  --side-panel-foreground-color: ${sidePanelForeground};
+  --side-panel-selected-bg: ${sidePanelAccent};
+  --side-panel-selected-foreground-color: ${sidePanelAccentForeground};
+  --chat-surface-bg:       ${chatSurfaceBackground};
+  --chat-content-bg:       ${chatBackground};
+  --chat-bubble-bg:        ${chatBubbleBackground};
+  --chat-composer-chrome-color: ${chatComposerChrome};
+  --chat-foreground-color: ${chatForeground};
+  --chat-foreground-contrast-color: ${chatForegroundContrast};
+  --chat-accent-color:     ${chatAccent};
+  --chat-tools-color:      ${chatTools};
+  --chat-text-color:       ${chatText};
   --neutral-chrome-bg:     ${surf};
   --panel-bg:              ${panelBg};
   --card-bg:           ${surf};

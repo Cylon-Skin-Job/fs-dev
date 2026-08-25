@@ -411,7 +411,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm, 2px);
-  color: var(--chrome-accent, #e0e0e0);
+  color: var(--content-foreground-color, var(--text-dim, #e0e0e0));
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
@@ -457,7 +457,7 @@
   background: transparent;
   border: none;
   border-radius: var(--radius-sm, 2px);
-  color: var(--chrome-accent, #e0e0e0);
+  color: var(--content-foreground-color, var(--text-dim, #e0e0e0));
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }

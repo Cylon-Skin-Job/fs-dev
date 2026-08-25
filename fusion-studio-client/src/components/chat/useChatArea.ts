@@ -7,7 +7,6 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
-import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';
@@ -61,16 +60,12 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const pendingTurnEnd = usePanelStore((state) => selector(state)?.pendingTurnEnd ?? false);
   const pendingExchangeSaveTurnId = usePanelStore((state) => selector(state)?.pendingExchangeSaveTurnId ?? null);
   const contextUsage = usePanelStore((state) => state.contextUsage);
+  const tokenUsage = usePanelStore((state) => state.tokenUsage);
   const chatActive = usePanelStore((state) => state.chatActive);
   const wireReady = usePanelStore((state) => state.wireReady);
   const threads = usePanelStore((state) => state.threads);
   const currentThread = threads.find((t) => t.threadId === currentThreadId);
-  const resolvedHarness = useResolvedHarness(currentThread?.entry?.harnessId);
   const connectingHarness = useResolvedHarness(connectingHarnessId);
-  const identity = resolvedHarness
-    ? { name: resolvedHarness.name, icon: resolvedHarness.materialIcon, accentColor: resolvedHarness.accentColor }
-    : { name: 'Unknown', icon: 'help', accentColor: undefined };
-  const resolveCliAccent = useCliAccentResolver();
   const setWireReady = usePanelStore((state) => state.setWireReady);
 
   const sendMessage = usePanelStore((state) => state.sendMessage);
@@ -441,10 +436,9 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     currentTurn,
     segments,
     contextUsage,
+    tokenUsage,
     connectingHarnessId,
     connectingHarness,
-    identity,
-    resolveCliAccent,
     noThread,
     isActive,
     handleHarnessSelect,

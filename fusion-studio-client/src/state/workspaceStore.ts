@@ -38,6 +38,7 @@ interface WorkspaceStoreState {
   setActiveWorkspaceId: (id: string | null) => void;
   setWorkspaceType: (type: 'code' | 'app') => void;
   setHomePath: (p: string) => void;
+  beginInit: () => void;
   markInit: () => void;
   openRibbon: () => void;
   closeRibbon: () => void;
@@ -118,6 +119,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
   setWorkspaceType: (type) => set({ workspaceType: type }),
   setHomePath: (p) => set({ homePath: p }),
+  beginInit: () => set({ hasReceivedInit: false }),
   markInit: () => {
     console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
     set({ hasReceivedInit: true });

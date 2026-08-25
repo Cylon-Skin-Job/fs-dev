@@ -38,17 +38,10 @@ function render(entry) {
   const accentDimBase = luminanceToHex(accentLuminance);
   const accentDim = mixHex(accentDimBase, accent, accentTint / 100);
 
-  const chatBubbleChrome = entry.chatBubbleChrome ?? false;
-  const chatBubbleBg = chatBubbleChrome ? 'var(--chrome-accent)' : 'var(--bg-secondary)';
-  // Foreground paired with --chat-bubble-bg: when the bubble takes the
-  // chrome accent, the fg flips with --chrome-accent-fg; otherwise it's
-  // body text on the panel surface.
-  const chatBubbleFg = chatBubbleChrome ? 'var(--chrome-accent-fg)' : 'var(--text-white)';
-
-  // Themed navigation is the default — nav glyphs and labels follow the
-  // dim structural chrome (--chrome-accent) regardless of theme.
-  const navIconColor = 'var(--chrome-accent)';
-  const navTextColor = 'var(--chrome-accent)';
+  // Workspace navigation has its own foreground family. The selected item
+  // is styled separately with --workspace-accent-color.
+  const navIconColor = 'var(--workspace-foreground-color)';
+  const navTextColor = 'var(--workspace-foreground-color)';
 
   return `  --theme-primary:     ${accent};
   --theme-primary-rgb: ${r}, ${g}, ${b};
@@ -61,8 +54,7 @@ function render(entry) {
   --cli-accent:        var(--accent-dim);
   --tile-color:        var(--accent-dim);
   --accent-dim:        ${chromeAccent};
-  --chat-bubble-bg:    ${chatBubbleBg};
-  --chat-bubble-fg:    ${chatBubbleFg};
+  --chat-bubble-fg:    var(--text-white);
   --nav-icon-color:    ${navIconColor};
   --nav-text-color:    ${navTextColor};`;
 }

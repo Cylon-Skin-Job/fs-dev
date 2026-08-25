@@ -1,6 +1,6 @@
 .rv-subagent-waiting-segment {
   --tool-icon-size: 16px;
-  --tool-icon-color: var(--accent-dim, var(--text-dim));
-  --tool-label-color: var(--accent-dim, var(--text-dim));
+  --tool-icon-color: var(--chat-tools-color, var(--text-dim));
+  --tool-label-color: var(--chat-tools-color, var(--text-dim));
   padding: var(--space-xs, 4px) 0;
 }

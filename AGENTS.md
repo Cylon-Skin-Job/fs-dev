@@ -143,6 +143,7 @@ Fusion Studio Alpha is developed and dogfooded from two separate Git checkouts o
 | Packaged Alpha build inside the source checkout | `/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source/fusion-studio-client/release/mac-arm64/Fusion Studio Alpha.app` |
 | Installed dogfood app | `/Applications/Fusion Studio Alpha.app` |
 | Alpha user data and live server log | `/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/` |
+| Alpha machine-scoped workspace identity | `RC-Alpha` (uses each workspace's `ai/RC-Alpha/` subtree) |
 
 At the start of work in either checkout, resolve the current repository root with `git rev-parse --show-toplevel` and compare it with the table above:
 
@@ -166,6 +167,29 @@ Alpha operations are also independently callable. Follow the exact scope the use
 - **Rebuild/reinstall Alpha:** package the source currently present in the Alpha checkout and replace the installed dogfood app. Do not pull first unless requested.
 - **Restart Alpha:** quit and relaunch the installed dogfood app without pulling or rebuilding.
 - **Update Alpha:** perform the combined clean flow: fast-forward the source checkout, rebuild/package, replace the installed app, and restart it.
+
+Alpha runtime isolation has two independent parts, and both are required on every launch or restart:
+
+- `FUSION_APP_USER_DATA=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha` selects Alpha's Electron profile, SQLite database, port file, and live server log.
+- `FUSION_LOCAL_MACHINE=RC-Alpha` selects the `ai/RC-Alpha/` subtree inside every attached workspace. Omitting it can make Alpha appear to have missing or foreign workspace content even when the correct Alpha database is open.
+
+The current Electron main process hardcodes the application name to `Fusion Studio`, so the Alpha bundle name and bundle identifier alone do not provide this runtime isolation. Launch or restart the installed dogfood app with both variables explicitly:
+
+```bash
+env \
+  FUSION_APP_USER_DATA='/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha' \
+  FUSION_LOCAL_MACHINE='RC-Alpha' \
+  open -n '/Applications/Fusion Studio Alpha.app'
+```
+
+Do not treat a running process as sufficient restart verification. Confirm all of the following before reporting Alpha healthy:
+
+- the renderer process uses `--user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha`;
+- `server-live.log` reports the expected workspace count and active workspace;
+- workspace state and watcher activity resolve under `ai/RC-Alpha/`, not `ai/RCs-Air-2/` or another machine subtree;
+- the renderer remains connected after the initial `workspace:init` message.
+
+If Alpha shows no workspaces or content from another build after a restart, verify these two identity variables before changing the workspace registry, restoring SQLite, clearing caches, or reattaching folders. Rebuilding or replacing the `.app` bundle must not copy, move, or replace either profile's database under `Application Support`.
 
 Before rebuild, reinstall, or restart, inspect the established Alpha scripts/package configuration and whether the app is running. Preserve recoverability when replacing the installed app, and verify the relaunched app path and basic startup health afterward.
 

@@ -9,9 +9,10 @@
  * Reusable across any workspace that wants a tile view.
  */
 
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { CodeView } from '../CodeView';
 import { getPanelFileUrl } from '../../lib/panels';
+import { getFileIcon } from '../../lib/file-utils';
 import { IMAGE_EXTENSIONS } from './documentTileUtils';
 
 interface DocumentTileProps {
@@ -23,33 +24,24 @@ interface DocumentTileProps {
   onClick?: () => void;
   onContextMenu?: (e: React.MouseEvent) => void;
   onMoreClick?: (e: React.MouseEvent) => void;
+  moreButton?: ReactNode;
+  onStarClick?: () => void;
   active?: boolean;
+  checked?: boolean;
   starred?: boolean;
   size?: 'default' | 'small';
 }
 
-const ICON_MAP: Record<string, string> = {
-  md: 'description',
-  html: 'html',
-  json: 'data_object',
-  js: 'javascript',
-  ts: 'javascript',
-  css: 'css',
-  txt: 'text_snippet',
-  png: 'image',
-  jpg: 'image',
-  jpeg: 'image',
-  svg: 'image',
-  pdf: 'picture_as_pdf',
-};
-
-export function DocumentTile({ name, content, extension, panel, folderPath, onClick, onContextMenu, onMoreClick, active, starred, size = 'default' }: DocumentTileProps) {
+export function DocumentTile({ name, content, extension, panel, folderPath, onClick, onContextMenu, onMoreClick, moreButton, onStarClick, active, checked, starred, size = 'default' }: DocumentTileProps) {
   const ext = extension || name.split('.').pop()?.toLowerCase() || '';
-  const icon = ICON_MAP[ext] || 'draft';
+  const icon = getFileIcon(ext, name);
   const isImage = IMAGE_EXTENSIONS.has(ext);
+  const isMarkdown = ext === 'md' || ext === 'markdown';
   const classes = ['rv-doc-tile'];
   if (size === 'small') classes.push('rv-doc-tile-small');
+  if (isMarkdown) classes.push('rv-doc-tile-markdown');
   if (active) classes.push('active');
+  if (checked) classes.push('is-checked');
 
   // Truncate content for preview to prevent performance issues with large files.
   // Thumbnails only need a snippet; full rendering happens in detail view.
@@ -64,38 +56,59 @@ export function DocumentTile({ name, content, extension, panel, folderPath, onCl
 
   return (
     <div className={classes.join(' ')} onClick={onClick} onContextMenu={onContextMenu} title={name}>
-      {starred ? (
-        <span className="material-symbols-outlined rv-doc-tile-star" aria-hidden="true">kid_star</span>
-      ) : null}
-      <div className="rv-doc-tile-preview">
-        {isImage ? (
-          <img
-            src={getPanelFileUrl(panel ?? '', `${folderPath ?? ''}/${name}`)}
-            alt={name}
-            loading="lazy"
-            className="rv-doc-tile-img"
-          />
-        ) : (
-          <CodeView content={previewContent} extension={ext} />
-        )}
-      </div>
-      <div className="rv-doc-tile-footer">
-        {onMoreClick ? (
+      <div className="rv-doc-tile-surface">
+        {onStarClick ? (
           <button
             type="button"
-            className="rv-doc-tile-more"
-            aria-label={`More actions for ${name}`}
+            className={`rv-doc-tile-star${starred ? ' is-starred' : ''}`}
+            aria-label={starred ? `Unstar ${name}` : `Star ${name}`}
+            aria-pressed={Boolean(starred)}
+            title={starred ? 'Unstar document' : 'Star document'}
             onClick={(event) => {
               event.stopPropagation();
-              onMoreClick(event);
+              onStarClick();
             }}
           >
-            <span className="material-symbols-outlined" aria-hidden="true">more_vert</span>
+            <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
           </button>
+        ) : starred ? (
+          <span className="material-symbols-outlined rv-doc-tile-star is-starred" aria-hidden="true">kid_star</span>
         ) : null}
-        <span className="material-symbols-outlined rv-doc-tile-icon">{icon}</span>
-        <span className="rv-doc-tile-name">{name}</span>
+        <div className="rv-doc-tile-preview">
+          {isImage ? (
+            <img
+              src={getPanelFileUrl(panel ?? '', `${folderPath ?? ''}/${name}`)}
+              alt={name}
+              loading="lazy"
+              className="rv-doc-tile-img"
+            />
+          ) : (
+            <CodeView
+              content={previewContent}
+              extension={ext}
+              mode={isMarkdown ? 'markdown' : 'code'}
+            />
+          )}
+        </div>
+        <div className="rv-doc-tile-footer">
+          {moreButton ?? (onMoreClick ? (
+            <button
+              type="button"
+              className="rv-doc-tile-more"
+              aria-label={`More actions for ${name}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                onMoreClick(event);
+              }}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">more_vert</span>
+            </button>
+          ) : null)}
+          <span className="material-symbols-outlined rv-doc-tile-icon">{icon}</span>
+          <span className="rv-doc-tile-name">{name}</span>
+        </div>
       </div>
+      <span className="material-symbols-outlined rv-doc-tile-hover-check" aria-hidden="true">check</span>
     </div>
   );
 }

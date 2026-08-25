@@ -8,10 +8,12 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { useWorkspaceStore } from '../../state/workspaceStore';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useFileStore } from '../../state/fileStore';
 import { loadRootTree } from '../file-tree';
 import { secondaryTracker } from '../secondary-tracker';
+import { readTokenUsage } from '../chat/context-usage';
 import { convertPartToSegment } from './assistant-parts';
 import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../types';
 
@@ -31,6 +33,10 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       console.log('[WS] thread:list received:', msg.threads?.length, 'threads');
       if (msg.threads) {
         store.setThreads(msg.threads);
+        if (!useWorkspaceStore.getState().hasReceivedInit) {
+          console.log('[WS] Deferring MRU thread open until workspace:init');
+          return true;
+        }
         // Auto-open the MRU (top) thread when none is active. Fills the chat
         // on refresh even when the threads sidebar is hidden.
         const hasActive = store.currentThreadId;
@@ -60,6 +66,8 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         store.setChatActive(true);
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
         store.clearChat(msg.threadId);
+        store.setContextUsage(0);
+        store.setTokenUsage(null);
         hydrateThreadCandidates([]);
         loadRootTree();
       } else {
@@ -82,7 +90,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           convertHistoryToMessages(msg.threadId, msg.history);
         }
         overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-        restoreContextUsage(msg.exchanges);
+        restoreContextSnapshot(msg.exchanges, msg.contextUsage, msg.tokenUsage);
       } else {
         console.error('[WS] thread:forked missing data:', msg);
       }
@@ -128,14 +136,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           convertHistoryToMessages(msg.threadId, msg.history);
         }
         overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-
-        // Restore context usage from last exchange if available
-        if (msg.contextUsage !== undefined && msg.contextUsage !== null) {
-          console.log('[WS] Restoring context usage:', msg.contextUsage);
-          store.setContextUsage(msg.contextUsage);
-        } else {
-          console.log('[WS] No contextUsage to restore - msg.contextUsage:', msg.contextUsage);
-        }
+        restoreContextSnapshot(msg.exchanges, msg.contextUsage, msg.tokenUsage);
       }
       return true;
     }
@@ -231,13 +232,24 @@ function convertHistoryToMessages(
   });
 }
 
-function restoreContextUsage(exchanges: ExchangeData[] | undefined) {
-  if (!exchanges || exchanges.length === 0) return;
-  const lastExchange = exchanges[exchanges.length - 1];
-  const contextUsage = lastExchange.metadata?.contextUsage;
-  if (typeof contextUsage === 'number') {
-    usePanelStore.getState().setContextUsage(contextUsage);
-  }
+function restoreContextSnapshot(
+  exchanges: ExchangeData[] | undefined,
+  messageContextUsage?: number,
+  messageTokenUsage?: unknown,
+) {
+  const lastExchange = exchanges?.[exchanges.length - 1];
+  const metadataContextUsage = lastExchange?.metadata?.contextUsage;
+  const contextUsage = typeof messageContextUsage === 'number'
+    ? messageContextUsage
+    : typeof metadataContextUsage === 'number'
+      ? metadataContextUsage
+      : 0;
+  const tokenUsage = readTokenUsage(messageTokenUsage)
+    ?? readTokenUsage(lastExchange?.metadata?.tokenUsage);
+  const store = usePanelStore.getState();
+  console.log('[WS] Restoring context snapshot:', { contextUsage, tokenUsage });
+  store.setContextUsage(contextUsage);
+  store.setTokenUsage(tokenUsage);
 }
 
 function overlayLiveTurn(

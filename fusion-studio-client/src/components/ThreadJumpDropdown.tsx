@@ -3,7 +3,6 @@ import './ThreadJumpDropdown.css';
 import { useEffect, useState } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { threadLinkIntent } from '../lib/thread-link-intent';
-import { useResolvedHarnessResolver } from '../config/harness';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 import { formatThreadDisplayName, reorderWithSecondary } from './sidebar/threadOrderUtils';
 
@@ -37,7 +36,6 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
 
   const threads = reorderWithSecondary(rawThreads, currentThreadId, secondary?.threadId ?? null);
   const resolveCliAccent = useCliAccentResolver();
-  const resolveHarness = useResolvedHarnessResolver();
 
   const sendMessage = (msg: object) => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -100,9 +98,6 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
               style={resolveCliAccent(t.entry?.harnessId) || undefined}
             >
               <span>
-                <span className="material-symbols-outlined rv-thread-row-icon">
-                  {resolveHarness(t.entry?.harnessId)?.materialIcon ?? 'help'}
-                </span>
                 {formatThreadDisplayName(t)}
               </span>
               <button

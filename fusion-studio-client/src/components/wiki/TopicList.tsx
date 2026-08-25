@@ -6,6 +6,7 @@
 
 import { findHeadingArticle, useWikiStore } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
+import { ContentNavLeftResize } from '../ResizeHandle';
 import { SendToChatButton } from '../SendToChatButton';
 
 export function TopicList() {
@@ -19,34 +20,37 @@ export function TopicList() {
 
   return (
     <div className="rv-wiki-topic-list">
-      <div className="rv-wiki-topic-list-items">
-        <div className="rv-wiki-collection-group">
-          <button
-            className={`rv-wiki-topic-item ${selectedPath === guideNode.path ? 'active' : ''}`}
-            onClick={() => selectNode(guideNode)}
-          >
-            <span className="material-symbols-outlined rv-wiki-topic-guide-icon">
-              menu_book
-            </span>
-            <span className="rv-wiki-topic-name rv-wiki-topic-guide-title">{root.label}</span>
-            <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
-              <CopyPathButton
-                panel="wiki-viewer"
-                relativePath={guideNode.pagePath}
-                className="rv-file-page-action"
-                title="Copy wiki guide path"
-              />
-              <SendToChatButton
-                panel="wiki-viewer"
-                relativePath={guideNode.pagePath}
-                className="rv-file-page-action"
-                title="Send wiki guide path to chat"
-              />
-            </div>
-          </button>
-        </div>
+      <ContentNavLeftResize panel="wiki-viewer" />
+      <div className="rv-wiki-topic-list-scroll">
+        <div className="rv-wiki-topic-list-items">
+          <div className="rv-wiki-collection-group">
+            <button
+              className={`rv-wiki-topic-item ${selectedPath === guideNode.path ? 'active' : ''}`}
+              onClick={() => selectNode(guideNode)}
+            >
+              <span className="material-symbols-outlined rv-wiki-topic-guide-icon">
+                menu_book
+              </span>
+              <span className="rv-wiki-topic-name rv-wiki-topic-guide-title">{root.label}</span>
+              <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
+                <CopyPathButton
+                  panel="wiki-viewer"
+                  relativePath={guideNode.pagePath}
+                  className="rv-file-page-action"
+                  title="Copy wiki guide path"
+                />
+                <SendToChatButton
+                  panel="wiki-viewer"
+                  relativePath={guideNode.pagePath}
+                  className="rv-file-page-action"
+                  title="Send wiki guide path to chat"
+                />
+              </div>
+            </button>
+          </div>
+          <div className="rv-wiki-topic-divider" role="separator" />
 
-        {root.children.filter((section) => section !== guideNode).map((section) => {
+          {root.children.filter((section) => section !== guideNode).map((section) => {
           const isActiveSection = selectedPath === section.path || selectedPath.startsWith(`${section.path}/`);
           const headingArticle = findHeadingArticle(section);
           const isHeadingViewed = headingArticle !== null && selectedPath === headingArticle.path;
@@ -90,7 +94,8 @@ export function TopicList() {
               })}
             </div>
           );
-        })}
+          })}
+        </div>
       </div>
     </div>
   );

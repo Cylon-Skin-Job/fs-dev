@@ -10,13 +10,15 @@
  * the AI is working. Clicking it kills the turn cleanly.
  */
 
-import { useState, useRef, forwardRef, useImperativeHandle, useCallback, useEffect } from 'react';
+import { useState, useRef, forwardRef, useImperativeHandle, useCallback, useEffect, useLayoutEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { useFileAutocomplete } from '../hooks/useFileAutocomplete';
 import { EmojiTrigger } from '../emojis';
 import {
+  extractEmojis,
   getInsertedText,
   listEmojiRecents,
+  recordEmojiRecent,
   recordEmojiRecentsFromText,
   type EmojiRecentItem,
 } from '../emojis/emoji-recents-api';
@@ -50,7 +52,9 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
   const [emojiRecentsOpen, setEmojiRecentsOpen] = useState(false);
   const [emojiRecents, setEmojiRecents] = useState<EmojiRecentItem[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const emojiCaptureRef = useRef<HTMLInputElement>(null);
   const recentsRef = useRef<HTMLDivElement>(null);
+  const textareaWidthRef = useRef(0);
   const config = usePanelStore((s) => s.getPanelConfig(panel));
   const autocomplete = useFileAutocomplete(text, cursorIndex);
 
@@ -60,6 +64,47 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     setCursorIndex(textarea.selectionStart);
   }, []);
 
+  const resizeTextarea = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = 'auto';
+    const style = window.getComputedStyle(textarea);
+    const lineHeight = Number.parseFloat(style.lineHeight) || 21;
+    const verticalChrome =
+      (Number.parseFloat(style.paddingTop) || 0)
+      + (Number.parseFloat(style.paddingBottom) || 0)
+      + (Number.parseFloat(style.borderTopWidth) || 0)
+      + (Number.parseFloat(style.borderBottomWidth) || 0);
+    const minHeight = Math.max(42, (lineHeight * 2) + verticalChrome);
+    const maxHeight = (lineHeight * 12) + verticalChrome;
+    const nextHeight = Math.min(Math.max(textarea.scrollHeight, minHeight), maxHeight);
+    const overflowing = textarea.scrollHeight > maxHeight + 1;
+
+    textarea.style.height = `${nextHeight}px`;
+    textarea.style.overflowY = overflowing ? 'auto' : 'hidden';
+    if (overflowing) textarea.scrollTop = textarea.scrollHeight;
+  }, []);
+
+  useLayoutEffect(() => {
+    resizeTextarea();
+  }, [text, resizeTextarea]);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea || typeof ResizeObserver === 'undefined') return;
+
+    textareaWidthRef.current = textarea.getBoundingClientRect().width;
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width ?? 0;
+      if (Math.abs(width - textareaWidthRef.current) < 0.5) return;
+      textareaWidthRef.current = width;
+      resizeTextarea();
+    });
+    observer.observe(textarea);
+    return () => observer.disconnect();
+  }, [resizeTextarea]);
+
   const setTextareaText = useCallback((nextText: string, nextCursor: number) => {
     const textarea = textareaRef.current;
     setText(nextText);
@@ -68,8 +113,6 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       if (!textarea) return;
       textarea.focus();
       textarea.setSelectionRange(nextCursor, nextCursor);
-      textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 140) + 'px';
     }, 0);
   }, []);
 
@@ -103,9 +146,6 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     clearText: () => {
       setText('');
       setCursorIndex(0);
-      if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
-      }
     }
   }), [setTextareaText, text]);
 
@@ -129,14 +169,6 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       } else {
         handleSend();
       }
-    }
-  };
-
-  const handleInput = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
     }
   };
 
@@ -185,6 +217,26 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     setEmojiRecentsOpen(false);
   };
 
+  const captureEmojiRecent = (capturedText: string) => {
+    const capturedEmojis = extractEmojis(capturedText);
+    if (capturedEmojis.length === 0) return;
+
+    const capturedAt = Date.now();
+    for (const emoji of capturedEmojis) recordEmojiRecent(emoji);
+    setEmojiRecents((current) => {
+      const capturedItems = capturedEmojis.map((emoji, index) => {
+        const existing = current.find((item) => item.emoji === emoji);
+        return {
+          id: existing?.id ?? -(capturedAt + index),
+          emoji,
+          last_used_at: capturedAt + index,
+        };
+      }).reverse();
+      const capturedSet = new Set(capturedEmojis);
+      return [...capturedItems, ...current.filter((item) => !capturedSet.has(item.emoji))].slice(0, 20);
+    });
+  };
+
   useEffect(() => {
     if (!emojiRecentsOpen) return;
 
@@ -230,6 +282,16 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
               className="rv-chat-emoji-add"
               icon="add"
               title="Add emoji to recents"
+              inputTargetRef={emojiCaptureRef}
+            />
+            <input
+              ref={emojiCaptureRef}
+              className="rv-chat-emoji-capture"
+              aria-label="Emoji selection capture"
+              tabIndex={-1}
+              autoComplete="off"
+              value=""
+              onChange={(event) => captureEmojiRecent(event.target.value)}
             />
           </div>
         )}
@@ -253,9 +315,8 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
             onChange={(e) => handleChange(e.target.value)}
             onContextMenu={handleContextMenu}
             onKeyDown={handleKeyDown}
-            onInput={handleInput}
             disabled={disabled}
-            rows={5}
+            rows={2}
           />
         </div>
 

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "last_updated": "2026-08-02T11:09:29.000Z",
+  "last_updated": "2026-08-17T07:46:53.000Z",
   "tickets": {
     "RCC-0086": {
       "title": "Chunk E — Theme token bridge",
@@ -329,6 +329,14 @@
       "state": "open",
       "priority": "high",
       "body": "Define and enforce the process-isolation boundary for Fusion Studio workspace applications. Fusion-owned routers may stay inside the Fusion server, but workspace-owned Node code must run in a Fusion-managed child process with validated workspace-local paths, minimal environment, negotiated private transport, health and crash-loop handling, bounded attributed logs, clean shutdown, and no access to Fusion's internal SQLite handle. Each workspace app owns its domain API, migrations, and database; Fusion provides lifecycle orchestration and a restricted workspace-scoped proxy."
+    },
+    "RCC-0114": {
+      "title": "Remove fork and clipboard subsystems; evaluate recent-files behavior",
+      "assignee": "rccurtrightjr",
+      "created": "2026-08-17T07:35:46.000Z",
+      "author": "rccurtrightjr",
+      "state": "open",
+      "body": "Remove the dormant thread-fork architecture and Fusion-managed clipboard history end to end. The Recent files composer control is also removed, but its remaining client/server scan behavior requires an explicit owner decision to retain, move, or remove it. Preserve ordinary threads, normal OpenCode sessions, direct macOS copy/paste, and unrelated secrets."
     }
   }
 }

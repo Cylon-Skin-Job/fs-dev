@@ -14,8 +14,13 @@ const aiPaths = require('../workspace/ai-paths');
 const { classifyEntrySync } = require('../fs/dirents');
 
 const HARDCODED_DEFAULTS = {
-  collapsed: { leftSidebar: false, leftChat: false },
-  widths:    { leftSidebar: 220,   leftChat: 320   },
+  collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
+  widths: {
+    leftSidebar: 220,
+    leftChat: 320,
+    contentNavLeft: 200,
+    contentNavRight: 220,
+  },
   docViewerMode: 'active',
   docViewerSelectedPath: null,
   docViewerGridScroll: 0,
@@ -58,10 +63,14 @@ function getDefaults(projectRoot, viewId) {
       // threadListVisible === false means the sidebar starts collapsed
       leftSidebar: layout.threadListVisible === false,
       leftChat:    false,  // no existing field; always start expanded
+      rightCol:    false,
+      contentArea: false,
     },
     widths: {
       leftSidebar: typeof layout.threadListWidth === 'number' ? layout.threadListWidth : HARDCODED_DEFAULTS.widths.leftSidebar,
       leftChat:    typeof layout.chatWidth       === 'number' ? layout.chatWidth       : HARDCODED_DEFAULTS.widths.leftChat,
+      contentNavLeft: HARDCODED_DEFAULTS.widths.contentNavLeft,
+      contentNavRight: HARDCODED_DEFAULTS.widths.contentNavRight,
     },
     docViewerMode: HARDCODED_DEFAULTS.docViewerMode,
     docViewerSelectedPath: HARDCODED_DEFAULTS.docViewerSelectedPath,

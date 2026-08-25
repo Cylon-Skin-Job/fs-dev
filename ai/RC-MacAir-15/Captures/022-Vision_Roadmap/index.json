@@ -1,0 +1,833 @@
+{
+  "schema_version": 2,
+  "name": "Vision Roadmap",
+  "description": "Static routing and record-schema metadata for Fusion Home, Agent Profiles and their design philosophy, plugins and settings, opt-in personal-context Wiki variants, the universal inbox, ticket automation, view-bound thread management, heartbeats and monitoring, cross-surface UI, chat-centered mobile integration, and future planning-family vision.",
+  "repository_root": "../../../..",
+  "wiki_root": "../../Wiki",
+  "workflow": [
+    "capture",
+    "resume_open_threads",
+    "clarify_umbrella_intent",
+    "catalog_existing_systems_broadly",
+    "shape_conceptual_systems",
+    "resolve_owner_decisions",
+    "identify_future_planning_families",
+    "hand_off_one_bounded_branch_when_authorized"
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Folder-local Launchpad, Second Brain, scope, authority, schema, and verification contract."
+    },
+    {
+      "path": "index.json",
+      "description": "Static routing metadata and record schemas; never a live status or lock ledger."
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Volatile coordination with no product, decision, roadmap, SPEC, or implementation authority.",
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["B"],
+        "required_fields": ["Type", "Status", "Owner/chat", "Target", "Source", "Summary", "Next", "Outcome"],
+        "field_values": {
+          "Type": ["assignment", "handoff", "conflict", "question", "observation", "completion"],
+          "Status": ["open", "claimed", "blocked", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Defines the bulletin's bounded coordination role and lack of content authority."
+        },
+        {
+          "key": "protocol",
+          "heading": "Protocol",
+          "description": "Defines stable records, posting thresholds, ownership, and safety rules."
+        },
+        {
+          "key": "entries",
+          "heading": "Entries",
+          "description": "Holds durable coordination records and their outcomes."
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "path": "CAPTURE.md",
+      "kind": "conversational_memory",
+      "authority": "context",
+      "description": "Readable synthesis, active owner threads, decision prompts, routed outcomes, and re-entry history for the Vision Roadmap conversation.",
+      "lifecycle": "curate_resume_promote_compact_and_preserve_provenance",
+      "read_before": [],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["CAP"],
+        "required_fields": ["Origin", "Type", "Status", "Source", "Summary", "Related"],
+        "field_values": {
+          "Origin": ["user", "assistant", "mixed"],
+          "Type": ["thread", "idea", "question", "decision_prompt", "observation"],
+          "Status": ["open", "parked", "routed", "closed"]
+        }
+      },
+      "sections": [
+        {
+          "key": "working-synthesis",
+          "heading": "Working Synthesis",
+          "description": "Restores the umbrella vision, scope boundary, current phase, and next thread."
+        },
+        {
+          "key": "user-threads",
+          "heading": "User Threads to Resume",
+          "description": "Holds user-originated loops that need future shaping, cataloging, or decisions."
+        },
+        {
+          "key": "assistant-possibilities",
+          "heading": "Assistant Possibilities",
+          "description": "Holds explicitly unendorsed assistant-originated adjacent ideas."
+        },
+        {
+          "key": "decision-queue",
+          "heading": "Decision Queue",
+          "description": "Holds bounded owner choices awaiting explicit disposition."
+        },
+        {
+          "key": "routed-outcomes",
+          "heading": "Routed Outcomes",
+          "description": "Preserves compact backlinks after memory responsibility moves to other documents."
+        },
+        {
+          "key": "capture-history",
+          "heading": "Capture History",
+          "description": "Records meaningful conversational checkpoints."
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "owner_intent",
+      "authority": "owner",
+      "description": "Purpose, desired outcomes, goals, success conditions, constraints, and non-goals for the umbrella vision.",
+      "lifecycle": "refine_with_explicit_owner_direction",
+      "read_before": ["CAPTURE.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Explains why the Vision Roadmap capture exists."
+        },
+        {
+          "key": "desired-outcomes",
+          "heading": "Desired Outcomes",
+          "description": "Defines the broad product and conceptual-system end states being sought."
+        },
+        {
+          "key": "enduring-goals",
+          "heading": "Enduring Goals",
+          "description": "Defines the long-range cross-surface trajectory without approving implementation."
+        },
+        {
+          "key": "success-conditions",
+          "heading": "Success Conditions",
+          "description": "Defines evidence that the vision is coherent and useful at its intended level."
+        },
+        {
+          "key": "constraints",
+          "heading": "Constraints",
+          "description": "Defines abstraction, evidence, authority, and planning boundaries."
+        },
+        {
+          "key": "non-goals",
+          "heading": "Non-goals",
+          "description": "Prevents accidental descent into implementation roadmapping or SPEC production."
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "owner_decisions",
+      "authority": "owner",
+      "description": "Sole durable register of settled identity, scope, experience, system, and process choices.",
+      "lifecycle": "append_and_supersede_never_delete",
+      "read_before": ["CAPTURE.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["D"],
+        "required_fields": ["Date", "Category", "Status", "Source"],
+        "field_values": {
+          "Category": ["product", "experience", "system", "process"],
+          "Status": ["active", "superseded", "revoked"]
+        }
+      },
+      "sections": [
+        {
+          "key": "identity-scope",
+          "heading": "Identity and Scope",
+          "description": "Owner choices about the capture's identity and umbrella boundary."
+        },
+        {
+          "key": "experience-direction",
+          "heading": "Experience Direction",
+          "description": "Owner choices about inbox, UI flow, chat, threading, mobile, and continuity."
+        },
+        {
+          "key": "system-direction",
+          "heading": "System Direction",
+          "description": "Owner choices about broad conceptual system responsibilities and relationships."
+        },
+        {
+          "key": "process-governance",
+          "heading": "Process and Governance",
+          "description": "Owner choices about exploration, cataloging, and future planning-family boundaries."
+        }
+      ]
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "verified_issues",
+      "authority": "evidence",
+      "description": "Verified conceptual gaps, conflicts, and risks affecting the umbrella vision.",
+      "lifecycle": "verify_track_resolve_or_supersede",
+      "read_before": ["DECISIONS.md", "INTENT.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["I"],
+        "required_fields": ["Category", "Type", "Severity", "Status", "Source", "Related"],
+        "field_values": {
+          "Category": ["inbox", "interaction", "chat_threading", "mobile", "continuity", "scope"],
+          "Type": ["risk", "gap", "inconsistency", "debt"],
+          "Severity": ["high", "medium", "low"],
+          "Status": ["open", "resolved", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "existing-experience-system-gaps",
+          "heading": "Existing Experience and System Gaps",
+          "description": "Verified gaps in capabilities or system relationships relevant to the vision."
+        },
+        {
+          "key": "cross-surface-continuity-risks",
+          "heading": "Cross-Surface and Continuity Risks",
+          "description": "Verified risks to desktop, mobile, and cross-device coherence."
+        },
+        {
+          "key": "vision-coherence-scope-risks",
+          "heading": "Vision Coherence and Scope Risks",
+          "description": "Verified contradictions or scope failures that could fragment future planning branches."
+        }
+      ]
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "candidate_actions",
+      "authority": "proposal",
+      "description": "Candidate inbox, interaction, chat, threading, mobile, system-landscape, and future planning directions.",
+      "lifecycle": "propose_decide_link_or_supersede",
+      "read_before": ["DECISIONS.md", "INTENT.md", "ISSUES.md"],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["P"],
+        "required_fields": ["Category", "Status", "Source", "Addresses"],
+        "field_values": {
+          "Category": ["inbox", "interaction", "chat_threading", "mobile", "continuity", "system_landscape", "workflow", "planning_family"],
+          "Status": ["proposed", "approved", "rejected", "deferred", "superseded"]
+        }
+      },
+      "sections": [
+        {
+          "key": "inbox-attention",
+          "heading": "Inbox and Attention",
+          "description": "Candidate roles and behaviors for the universal system inbox."
+        },
+        {
+          "key": "navigation-ui-flow",
+          "heading": "Navigation and UI Flow",
+          "description": "Candidate product-level navigation and interaction relationships."
+        },
+        {
+          "key": "chat-threading",
+          "heading": "Chat and Threading",
+          "description": "Candidate evolution of conversation, thread identity, and their product role."
+        },
+        {
+          "key": "mobile-cross-device",
+          "heading": "Mobile and Cross-Device Experience",
+          "description": "Candidate mobile and continuity directions."
+        },
+        {
+          "key": "system-landscape",
+          "heading": "System Landscape",
+          "description": "Candidate conceptual systems and relationships not yet approved as implementation direction."
+        },
+        {
+          "key": "future-planning-families",
+          "heading": "Future Planning Families",
+          "description": "Candidate bounded roadmap and SPEC families that may later be selected for separate planning."
+        }
+      ]
+    },
+    {
+      "path": "SYSTEM_INBOX.md",
+      "kind": "attention_inbox_model",
+      "authority": "analysis",
+      "description": "Broad model of the universal inbox's product role, app-wide bell and full-screen mail-style card panel, persistent workspace notification chats, workspace navigation and optional metadata, notification routing and batching, owner-reported foundation, event substrate, attention states, activity experience, workflow integration, artifact direction, and open questions.",
+      "lifecycle": "develop_from_owner_direction_verify_current_foundation_and_preserve_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines the inbox as the universal attention surface and its compact-versus-expanded experience."
+        },
+        {
+          "key": "notification-scope-bell",
+          "heading": "Notification Scope and Bell",
+          "description": "Defines the upper-left app-wide bell, workspace-local policies, selective escalation, dual delivery, and scheduled or trigger/state batching."
+        },
+        {
+          "key": "system-wide-panel-experience",
+          "heading": "System-Wide Panel Experience",
+          "description": "Defines the desktop full-screen panel, one persistent notification-handling chat per workspace, workspace filtering, divided mail-inbox styling, card-based presentation, and the related mobile Notifications mode."
+        },
+        {
+          "key": "owner-reported-existing-foundation",
+          "heading": "Owner-Reported Existing Foundation",
+          "description": "Catalogs relevant current capabilities reported by RC while preserving their unverified status."
+        },
+        {
+          "key": "event-subscription-vision",
+          "heading": "Event and Subscription Vision",
+          "description": "Describes the broad universal-subscriber and event-filter direction without prescribing implementation."
+        },
+        {
+          "key": "attention-states",
+          "heading": "Attention States",
+          "description": "Defines the initial alert taxonomy and current visual direction."
+        },
+        {
+          "key": "item-activity-experience",
+          "heading": "Item and Activity Experience",
+          "description": "Develops the compact row, expandable history, milestone, reply, and control experience."
+        },
+        {
+          "key": "workflow-integration",
+          "heading": "Workflow Integration",
+          "description": "Relates the inbox to Launchpad, tickets, reviews, planning, assurance, and autonomous construction."
+        },
+        {
+          "key": "artifact-template-direction",
+          "heading": "Artifact and Template Direction",
+          "description": "Describes the proposed HTML artifact and appendable-template approach without settling storage."
+        },
+        {
+          "key": "open-design-questions",
+          "heading": "Open Design Questions",
+          "description": "Preserves unresolved identity, metadata, icon, control, and chat-thread relationship choices."
+        }
+      ]
+    },
+    {
+      "path": "THREADS_AND_VIEWS.md",
+      "kind": "view_thread_context_model",
+      "authority": "analysis",
+      "description": "Broad model of left-side navigation, view-bound thread identity, per-thread view-state continuity, the persistent workspace notification-chat exception, mobile view/thread switching, experience consequences, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_current_future_distinctions_and_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "navigation-relationship",
+          "heading": "Navigation Relationship",
+          "description": "Explains the intended adjacency and distinct roles of left-side navigation and threads."
+        },
+        {
+          "key": "view-bound-thread-identity",
+          "heading": "View-Bound Thread Identity",
+          "description": "Develops the shift from workspace-wide threads to threads belonging to individual views."
+        },
+        {
+          "key": "per-thread-view-state",
+          "heading": "Per-Thread View State",
+          "description": "Defines the broad requirement to restore tabs, documents, and other view content with a thread."
+        },
+        {
+          "key": "experience-consequences",
+          "heading": "Experience Consequences",
+          "description": "Describes contextual continuity, suite density, content-driven creation, the workspace-level system-inbox chat exception, and mobile view/thread switching."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved binding, cross-view, state-ownership, restoration, mobile, and inbox relationships."
+        }
+      ]
+    },
+    {
+      "path": "FUSION_HOME.md",
+      "kind": "default_workspace_model",
+      "authority": "analysis",
+      "description": "Broad model of Fusion Home's default role, addable workspace families, the System Manager bootstrap workspace, plugin principle and Wiki variants, grouped navigation, suite consolidation, thread density, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_plugin_and_thread_management_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "PROPOSALS.md", "THREADS_AND_VIEWS.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines Fusion Home as the downloaded product's useful default folder and common center."
+        },
+        {
+          "key": "addable-workspace-families",
+          "heading": "Addable Workspace Families",
+          "description": "Catalogs the code, bookkeeping, media, research, and system-management workspace families."
+        },
+        {
+          "key": "system-manager-bootstrap-workspace",
+          "heading": "System Manager Bootstrap Workspace",
+          "description": "Defines System Manager as the required repository-backed workspace containing the System Wiki and plugin catalog."
+        },
+        {
+          "key": "plugin-principle",
+          "heading": "Plugin Principle",
+          "description": "Records the broad everything-is-a-plugin direction without defining technical contracts."
+        },
+        {
+          "key": "left-navigation-structure",
+          "heading": "Left Navigation Structure",
+          "description": "Develops the four grouped navigation areas and their constituent Fusion Home capabilities."
+        },
+        {
+          "key": "suite-consolidation",
+          "heading": "Suite Consolidation",
+          "description": "Explains the shift from separate low-density apps to coherent suite-level views."
+        },
+        {
+          "key": "thread-density-implications",
+          "heading": "Thread Density Implications",
+          "description": "Preserves the provisional daily-thread direction pending the complete Thread Management model."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved folder, plugin, navigation, suite, naming, thread, and workspace-family questions."
+        }
+      ]
+    },
+    {
+      "path": "THREAD_MANAGEMENT.md",
+      "kind": "thread_management_model",
+      "authority": "analysis",
+      "description": "Broad model of content-to-thread actions, view-bound creation, ticket-derived identity, view guidance, ticket-agent activation, Skills-defined workflows, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_view_skill_and_user_authority_boundaries",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "THREADS_AND_VIEWS.md", "FUSION_HOME.md"],
+      "sections": [
+        {
+          "key": "content-actions",
+          "heading": "Content Actions",
+          "description": "Defines Link, Send to Chat, and Send to New Chat with their visual distinction."
+        },
+        {
+          "key": "new-thread-creation",
+          "heading": "New Thread Creation",
+          "description": "Describes creation inside the active view with the source content already attached."
+        },
+        {
+          "key": "ticket-derived-thread-identity",
+          "heading": "Ticket-Derived Thread Identity",
+          "description": "Develops ticket-based naming and hover-only full-title reveal."
+        },
+        {
+          "key": "view-level-guidance",
+          "heading": "View-Level Guidance",
+          "description": "Explains view-specific system messages and heuristics without defining prompt internals."
+        },
+        {
+          "key": "ticket-agent-activation",
+          "heading": "Ticket-Agent Activation",
+          "description": "Defines the attachment-only ticket send and default ticketing-agent behavior."
+        },
+        {
+          "key": "skills-workflow-definition",
+          "heading": "Skills and Workflow Definition",
+          "description": "Places reusable ticket-agent role and workflow definition in the Skills surface."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved title, empty-send, multi-attachment, precedence, role-selection, grouping, and motion choices."
+        }
+      ]
+    },
+    {
+      "path": "HEARTBEATS_AND_MONITORING.md",
+      "kind": "heartbeat_monitoring_model",
+      "authority": "analysis",
+      "description": "Broad model of heartbeat product role, composer presence, creation, monitored variables, opt-in inbox filtering, wake/action/sleep behavior, long-running project use, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_consent_permission_scope_and_persistence_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "SYSTEM_INBOX.md", "THREAD_MANAGEMENT.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines a heartbeat as bounded persistent monitoring connected to thread and inbox context."
+        },
+        {
+          "key": "composer-presence",
+          "heading": "Composer Presence",
+          "description": "Defines plus-menu setup and conditional pulse-alert visibility beside Access permissions."
+        },
+        {
+          "key": "creation-direct-access",
+          "heading": "Creation and Direct Access",
+          "description": "Develops manual and AI-created heartbeats and the direct management surface."
+        },
+        {
+          "key": "monitoring-scope-variables",
+          "heading": "Monitoring Scope and Variables",
+          "description": "Describes specific monitored values while preserving their representation as an open choice."
+        },
+        {
+          "key": "opt-in-inbox-filtering",
+          "heading": "Opt-In Inbox Filtering",
+          "description": "Connects bounded inbox notification activity to heartbeat conditions."
+        },
+        {
+          "key": "wake-action-sleep-cycle",
+          "heading": "Wake, Action, and Sleep Cycle",
+          "description": "Develops intermittent autonomous response and return to dormancy."
+        },
+        {
+          "key": "long-running-project-use",
+          "heading": "Long-Running Project Use",
+          "description": "Captures multi-day process monitoring such as the web-scraper example."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved ownership, multiplicity, variables, scheduling, persistence, permissions, retry, history, and Access-permission choices."
+        }
+      ]
+    },
+    {
+      "path": "TICKET_AUTOMATION.md",
+      "kind": "ticket_automation_model",
+      "authority": "analysis",
+      "description": "Broad model of tickets as universal work objects, Scheduled/calendar and cron creation, templates, In Progress assignment, manual and automated dispatch, non-focus-stealing threads, assignment sources, state-derived ticket generation and aggregation, and background-work reframing.",
+      "lifecycle": "develop_from_owner_direction_preserve_state_retry_identity_and_trigger_policy_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "SYSTEM_INBOX.md", "THREAD_MANAGEMENT.md", "HEARTBEATS_AND_MONITORING.md"],
+      "sections": [
+        {
+          "key": "product-principle",
+          "heading": "Product Principle",
+          "description": "Defines tickets as the universal object for deferred, assigned, and automated work."
+        },
+        {
+          "key": "scheduled-calendar-cron",
+          "heading": "Scheduled Calendar and Cron",
+          "description": "Describes calendar and cron creation while separating schedule, template, and assignment roles."
+        },
+        {
+          "key": "ticket-templates",
+          "heading": "Ticket Templates",
+          "description": "Develops reusable templates and scheduled instantiation without defining representation."
+        },
+        {
+          "key": "in-progress-assignment-boundary",
+          "heading": "In Progress as Assignment Boundary",
+          "description": "Defines the shared state transition that assigns tickets from any source."
+        },
+        {
+          "key": "manual-assignment",
+          "heading": "Manual Assignment",
+          "description": "Defines drag-to-In-Progress and To Do Assign actions."
+        },
+        {
+          "key": "automated-dispatch",
+          "heading": "Automated Dispatch",
+          "description": "Connects In Progress observation to Send to New Chat, attachment-only send, and ticket-agent activation."
+        },
+        {
+          "key": "non-focus-stealing-thread-creation",
+          "heading": "Non-Focus-Stealing Thread Creation",
+          "description": "Defines background thread appearance without changing active user focus."
+        },
+        {
+          "key": "assignment-sources",
+          "heading": "Assignment Sources",
+          "description": "Catalogs organic, manual, scheduled, and triggered sources converging on one lifecycle."
+        },
+        {
+          "key": "state-derived-ticket-creation",
+          "heading": "State-Derived Ticket Creation",
+          "description": "Defines ticket and notification generation from derived multi-ticket state, including sibling counts and completion digests."
+        },
+        {
+          "key": "background-agents-reframed",
+          "heading": "Background Agents Reframed",
+          "description": "Removes Background Agents as a separate product category while retaining agent execution through tickets."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved instantiation, identity, versioning, idempotency, failure, retry, agent-selection, visibility, and trigger-policy choices."
+        }
+      ]
+    },
+    {
+      "path": "AGENT_PROFILES.md",
+      "kind": "agent_profile_model",
+      "authority": "analysis",
+      "description": "Broad model of the Agent Profiles view, harness-backed roles, ticket selection, invocation paths, workspace defaults, lightweight profiles, orchestrated workflows, durable state, examples, and scheduling boundaries.",
+      "lifecycle": "develop_from_owner_direction_preserve_harness_precedence_state_version_and_permission_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "PROPOSALS.md", "THREAD_MANAGEMENT.md", "TICKET_AUTOMATION.md", "AGENT_PHILOSOPHY.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines Agent Profiles as the harness-backed capability library and composition surface."
+        },
+        {
+          "key": "harness-backed-roles",
+          "heading": "Harness-Backed Roles",
+          "description": "Develops primary-persona and subagent use without implying persistent processes."
+        },
+        {
+          "key": "ticket-profile-selection",
+          "heading": "Ticket Profile Selection",
+          "description": "Defines declarative profile or workflow selection from ticket frontmatter."
+        },
+        {
+          "key": "invocation-paths",
+          "heading": "Invocation Paths",
+          "description": "Catalogs plus-menu, ticket, workspace-default, agent-to-agent, and workflow invocation."
+        },
+        {
+          "key": "workspace-default-profile",
+          "heading": "Workspace Default Profile",
+          "description": "Develops automatic workspace defaults while preserving replacement and layering choices."
+        },
+        {
+          "key": "lightweight-profiles",
+          "heading": "Lightweight Profiles",
+          "description": "Shows how bounded work can use a small capability bundle and proportionate validation."
+        },
+        {
+          "key": "orchestrated-workflows",
+          "heading": "Orchestrated Workflows",
+          "description": "Develops reusable gated workflows with role-specific subagents and validation."
+        },
+        {
+          "key": "workflow-state",
+          "heading": "Workflow State",
+          "description": "Preserves JSON checkpoints and event-ledger retrieval as open or complementary approaches."
+        },
+        {
+          "key": "wiki-maintenance-example",
+          "heading": "Wiki Maintenance Example",
+          "description": "Captures the incremental nightly Wiki workflow as a non-authorized product example."
+        },
+        {
+          "key": "bug-fix-example",
+          "heading": "Bug-Fix Example",
+          "description": "Captures a lightweight plan-validate-fix-report workflow with focused checks."
+        },
+        {
+          "key": "scheduling-trigger-boundary",
+          "heading": "Scheduling and Trigger Boundary",
+          "description": "Separates timing and event policy from inert reusable profiles."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved harness, metadata, precedence, version, mask, state, evidence, permission, and delegation choices."
+        }
+      ]
+    },
+    {
+      "path": "AGENT_PHILOSOPHY.md",
+      "kind": "agent_design_philosophy",
+      "authority": "owner",
+      "description": "Owner-directed philosophy that Agent Profiles are invocable masks and capability containers rather than persistent managed entities.",
+      "lifecycle": "refine_only_with_explicit_owner_direction_and_apply_as_design_guidance",
+      "read_before": ["INTENT.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "core-principle",
+          "heading": "Core Principle",
+          "description": "Defines profiles as inert invocable capability containers rather than persistent entities."
+        },
+        {
+          "key": "capability-without-entityhood",
+          "heading": "Capability Without Entityhood",
+          "description": "Separates richness of capability from persistence of identity."
+        },
+        {
+          "key": "thread-wears-mask",
+          "heading": "The Thread Wears the Mask",
+          "description": "Places temporary profile behavior on the durable thread identity."
+        },
+        {
+          "key": "work-owns-state",
+          "heading": "Work Owns State",
+          "description": "Places durable truth in tickets, threads, workflows, project state, and event history."
+        },
+        {
+          "key": "scheduling-outside-profile",
+          "heading": "Scheduling Lives Outside the Profile",
+          "description": "Separates schedules, triggers, and heartbeats from capability identity."
+        },
+        {
+          "key": "reusable-second-brain-abilities",
+          "heading": "Reusable Second-Brain Abilities",
+          "description": "Explains portable branching capabilities without turning them into persistent beings."
+        },
+        {
+          "key": "user-relationship",
+          "heading": "User Relationship",
+          "description": "Centers the user's relationship on work, context, capability, permissions, and outcomes."
+        },
+        {
+          "key": "design-consequences",
+          "heading": "Design Consequences",
+          "description": "Lists concrete philosophy consequences without defining implementation."
+        },
+        {
+          "key": "open-philosophy-questions",
+          "heading": "Open Philosophy Questions",
+          "description": "Preserves unresolved persona styling, mask visibility, composition, reproducibility, and user-authored boundary questions."
+        }
+      ]
+    },
+    {
+      "path": "PLUGINS_AND_SETTINGS.md",
+      "kind": "plugin_settings_model",
+      "authority": "analysis",
+      "description": "Broad model of lightweight core settings, workspace appearance, Theme Customization, operational plugins, opt-in personal-context Wiki variants, folder-based bundles, UEB hook toggles, registry-backed consent, the System Manager bootstrap, registry-authoritative configuration projection, installation defaults, composition examples, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_manifest_scope_permission_update_removal_and_trust_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "FUSION_HOME.md", "SYSTEM_INBOX.md", "HEARTBEATS_AND_MONITORING.md", "AGENT_PROFILES.md", "TICKET_AUTOMATION.md"],
+      "sections": [
+        {
+          "key": "product-principle",
+          "heading": "Product Principle",
+          "description": "Defines compact core settings plus optional plugin-delivered capability."
+        },
+        {
+          "key": "core-workspace-appearance",
+          "heading": "Core Workspace Appearance",
+          "description": "Defines primary and secondary colors plus a small slider set per workspace."
+        },
+        {
+          "key": "theme-customization-plugin",
+          "heading": "Theme Customization Plugin",
+          "description": "Develops Custom mode, granular color pickers, and contextual menu extensions."
+        },
+        {
+          "key": "operational-capability-plugins",
+          "heading": "Operational Capability Plugins",
+          "description": "Captures Inbox Alerts, Heartbeats, and Wiki Maintainer as composable examples."
+        },
+        {
+          "key": "personal-context-wiki-variants",
+          "heading": "Personal Context and Wiki Variants",
+          "description": "Defines Context Manager's semantic indexable history, the User Profile candidate, and opt-in user control over recording and surfacing."
+        },
+        {
+          "key": "folder-based-bundles",
+          "heading": "Folder-Based Bundles",
+          "description": "Defines inspectable folders of Markdown, scripts, configuration, regex, templates, and related resources."
+        },
+        {
+          "key": "universal-event-bus-hooks",
+          "heading": "Universal Event Bus Hooks",
+          "description": "Requires inbound and outbound plugin hooks to appear as UI toggles."
+        },
+        {
+          "key": "registry-consent-boundary",
+          "heading": "Registry and Consent Boundary",
+          "description": "Makes the database registry authoritative for plugin UI, registration, consent, activation, hooks, and execution."
+        },
+        {
+          "key": "system-manager-bootstrap",
+          "heading": "System Manager Bootstrap",
+          "description": "Defines the repository-backed System Manager workspace as the prerequisite distribution root for all other plugins."
+        },
+        {
+          "key": "local-viewer-configuration-projection",
+          "heading": "Local Viewer and Configuration Projection",
+          "description": "Keeps the local viewer thin, projects registry state into configuration, and removes configuration-only permission grants."
+        },
+        {
+          "key": "installation-defaults-customization",
+          "heading": "Installation Defaults and Customization",
+          "description": "Balances intelligent working defaults with user-adjustable configuration."
+        },
+        {
+          "key": "composition-examples",
+          "heading": "Composition Examples",
+          "description": "Shows how independently installable plugins compose shared product primitives."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved naming, core boundary, manifest, scope, conflicts, trust, updates, removal, editing, and installation choices."
+        }
+      ]
+    },
+    {
+      "path": "MOBILE_EXPERIENCE.md",
+      "kind": "mobile_experience_model",
+      "authority": "analysis",
+      "description": "Broad model of the chat-centered phone state, chat-mode controls, workspace and notification navigation, view-driven thread switching, chat-to-app transformation, app-owned chrome, and cross-mode continuity.",
+      "lifecycle": "develop_from_owner_direction_preserve_picker_event_detail_return_control_and_responsive_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "SYSTEM_INBOX.md", "THREADS_AND_VIEWS.md"],
+      "sections": [
+        {
+          "key": "product-principle",
+          "heading": "Product Principle",
+          "description": "Defines mobile as chat-centered while retaining direct access to full Fusion views."
+        },
+        {
+          "key": "chat-centered-state",
+          "heading": "Chat-Centered State",
+          "description": "Defines the default phone screen, composer, and round active-view button."
+        },
+        {
+          "key": "chat-mode-header",
+          "heading": "Chat-Mode Header",
+          "description": "Defines the slide-out navigation control and event-list context surface available in chat mode."
+        },
+        {
+          "key": "workspace-notification-navigation",
+          "heading": "Workspace and Notification Navigation",
+          "description": "Defines the workspace-name switcher, notification bell, Notifications menu, and persistent notification-chat entry."
+        },
+        {
+          "key": "view-thread-navigation",
+          "heading": "View and Thread Navigation",
+          "description": "Connects workspace view icons to the active mobile thread population."
+        },
+        {
+          "key": "chat-app-transition",
+          "heading": "Chat-to-App Transition",
+          "description": "Defines the active-view takeover, expanded app navigation, and collapsed robot chat control."
+        },
+        {
+          "key": "app-mode-chrome",
+          "heading": "App-Mode Chrome",
+          "description": "Removes the chat-only event list and gives the full top header to the active app view."
+        },
+        {
+          "key": "cross-mode-continuity",
+          "heading": "Cross-Mode Continuity",
+          "description": "Preserves workspace, view, thread, notification, and conversation identity across mobile modes."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved picker, drawer, event detail, notification, return-control, navigation-extension, and responsive choices."
+        }
+      ]
+    }
+  ]
+}

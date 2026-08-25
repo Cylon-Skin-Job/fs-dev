@@ -4,7 +4,6 @@
  */
 
 import { CliPickerDropdown } from '../CliPickerDropdown';
-import { ThreadJumpDropdown } from '../ThreadJumpDropdown';
 import type { useChatArea } from './useChatArea';
 
 type ChatAreaHeaderProps = Pick<
@@ -12,14 +11,9 @@ type ChatAreaHeaderProps = Pick<
   | 'panel'
   | 'chatHeaderRef'
   | 'currentThreadId'
-  | 'currentThread'
-  | 'identity'
-  | 'resolveCliAccent'
   | 'cliPickerOpen'
-  | 'threadDropdownOpen'
   | 'moreMenuOpen'
   | 'setMoreMenuOpen'
-  | 'toggleThreadDropdown'
   | 'harnessStatuses'
   | 'showCliPicker'
   | 'handleHarnessSelect'
@@ -34,15 +28,10 @@ export function ChatAreaHeader({
   panel,
   chatHeaderRef,
   currentThreadId,
-  currentThread,
-  identity,
-  resolveCliAccent,
   sidebarCollapsed,
   cliPickerOpen,
-  threadDropdownOpen,
   moreMenuOpen,
   setMoreMenuOpen,
-  toggleThreadDropdown,
   harnessStatuses,
   showCliPicker,
   handleHarnessSelect,
@@ -51,45 +40,39 @@ export function ChatAreaHeader({
   handleRename,
   handleCopyLink,
   handleViewMarkdown,
-}: ChatAreaHeaderProps & { sidebarCollapsed?: boolean }) {
+  contentCollapsed,
+  handleToggleContent,
+}: ChatAreaHeaderProps & {
+  sidebarCollapsed?: boolean;
+  contentCollapsed?: boolean;
+  handleToggleContent?: () => void;
+}) {
   return (
     <div className="rv-chat-header" ref={chatHeaderRef}>
-      {currentThreadId && (
-        <div
-          className="rv-chat-header-identity"
-          style={resolveCliAccent(currentThread?.entry?.harnessId)}
-        >
-          <span className="material-symbols-outlined">{identity.icon}</span>
-          <span className="rv-chat-header-identity-name">{identity.name}</span>
+      {sidebarCollapsed && (
+        <div className="rv-chat-header-left-controls">
+          <button
+            className="rv-chat-header-btn rv-chat-thread-dock"
+            onClick={handleToggleThreads}
+            aria-label="Show threads"
+            title="Show threads"
+          >
+            <span className="material-symbols-outlined">dock_to_right</span>
+          </button>
+          <button
+            className="rv-chat-header-btn rv-chat-new-thread"
+            onClick={handleCreateThread}
+            aria-haspopup={showCliPicker ? 'menu' : undefined}
+            aria-expanded={showCliPicker ? cliPickerOpen : undefined}
+            aria-controls={showCliPicker ? `cli-picker-${panel}` : undefined}
+            aria-label="New chat"
+            title="New chat"
+          >
+            <span className="material-symbols-outlined">edit_square</span>
+          </button>
         </div>
       )}
       <div className="rv-chat-header-right">
-        {sidebarCollapsed && (
-          <>
-            <button
-              className="rv-chat-header-btn"
-              onClick={handleCreateThread}
-              aria-haspopup={showCliPicker ? 'menu' : undefined}
-              aria-expanded={showCliPicker ? cliPickerOpen : undefined}
-              aria-controls={showCliPicker ? `cli-picker-${panel}` : undefined}
-              aria-label="New chat"
-              title="New chat"
-            >
-              <span className="material-symbols-outlined">playlist_add</span>
-            </button>
-            <button
-              className="rv-chat-header-btn"
-              onClick={() => toggleThreadDropdown(panel)}
-              aria-haspopup="menu"
-              aria-expanded={threadDropdownOpen}
-              aria-controls={`thread-dropdown-${panel}`}
-              aria-label="Show thread list"
-              title="Show thread list"
-            >
-              <span className="material-symbols-outlined">subject</span>
-            </button>
-          </>
-        )}
         <button
           className="rv-chat-header-btn"
           onClick={() => setMoreMenuOpen((o) => !o)}
@@ -99,8 +82,18 @@ export function ChatAreaHeader({
           aria-label="More options"
           title="More options"
         >
-          <span className="material-symbols-outlined">more_vert</span>
+          <span className="material-symbols-outlined">event_list</span>
         </button>
+        {contentCollapsed && handleToggleContent && (
+          <button
+            className="rv-chat-header-btn"
+            onClick={handleToggleContent}
+            aria-label="Show content"
+            title="Show content"
+          >
+            <span className="material-symbols-outlined">dock_to_right</span>
+          </button>
+        )}
       </div>
       {sidebarCollapsed && (
         <>
@@ -111,7 +104,6 @@ export function ChatAreaHeader({
               onSelect={handleHarnessSelect}
             />
           )}
-          <ThreadJumpDropdown panel={panel} />
         </>
       )}
       <div

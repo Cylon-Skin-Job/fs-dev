@@ -255,6 +255,30 @@ describe('thread runtime prompt controller', () => {
     expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
   });
 
+  test('thread warm replaces a closed wire left behind by idle expiry', async () => {
+    const replacementWire = makeHarness([]);
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(replacementWire)),
+    });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const expiredWire = { ...makeHarness([]), killed: true };
+    threadRuntimeManager.markReady(runtimeKey);
+    getWireForThread.mockReturnValueOnce(expiredWire).mockReturnValueOnce(expiredWire);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(unregisterWire).toHaveBeenCalledWith('thread-1');
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+  });
+
   test('thread warm while busy does not stop, send, spawn, or scare user', async () => {
     const deps = makeDeps();
     const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');

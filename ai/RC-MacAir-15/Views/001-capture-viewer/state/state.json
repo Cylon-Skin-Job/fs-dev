@@ -1,13 +1,15 @@
 {
   "widths": {
-    "leftSidebar": 220,
-    "leftChat": 421.62109375,
+    "leftSidebar": 237.9921875,
+    "leftChat": 509.58203125,
     "rightSecondary": 400,
     "rightCol": 220
   },
   "collapsed": {
-    "leftSidebar": true,
-    "leftChat": false
+    "leftSidebar": false,
+    "leftChat": false,
+    "rightCol": false,
+    "contentArea": false
   },
   "popup": {
     "open": false,
@@ -30,22 +32,252 @@
   "activity": {
     "recents": [
       {
-        "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+        "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
         "panel": "capture-viewer",
-        "path": "021-Project_Vision/CAPTURE.md",
-        "title": "CAPTURE.md",
+        "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+        "title": "THREADS_AND_VIEWS.md",
         "kind": "document",
-        "openedAt": 1786345383040,
+        "openedAt": 1787640648143,
+        "folder": "022-Vision_Roadmap",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/view-onboarding-front-pages.md",
+        "title": "view-onboarding-front-pages.md",
+        "kind": "document",
+        "openedAt": 1787640358761,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/wiki-audit-decisions.md",
+        "title": "wiki-audit-decisions.md",
+        "kind": "document",
+        "openedAt": 1787638888882,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+        "panel": "capture-viewer",
+        "path": "004-Playground/robin-overlay-v3.html",
+        "title": "robin-overlay-v3.html",
+        "kind": "document",
+        "openedAt": 1787638339675,
+        "folder": "004-Playground",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:004-Playground/theme-studio.html",
+        "panel": "capture-viewer",
+        "path": "004-Playground/theme-studio.html",
+        "title": "theme-studio.html",
+        "kind": "document",
+        "openedAt": 1787638127309,
+        "folder": "004-Playground",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:001-Captures/system-manager-hub.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/system-manager-hub.md",
+        "title": "system-manager-hub.md",
+        "kind": "document",
+        "openedAt": 1787635699822,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/workspace-as-distributable.md",
+        "title": "workspace-as-distributable.md",
+        "kind": "document",
+        "openedAt": 1787635423267,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/opencode-harness-integration.md",
+        "title": "opencode-harness-integration.md",
+        "kind": "document",
+        "openedAt": 1787635348734,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/TRIGGERS.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/TRIGGERS.md",
+        "title": "TRIGGERS.md",
+        "kind": "document",
+        "openedAt": 1787634589908,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/VIEW-TABLE.md",
+        "title": "VIEW-TABLE.md",
+        "kind": "document",
+        "openedAt": 1787627154982,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/agent-registry-redundancy.md",
+        "title": "agent-registry-redundancy.md",
+        "kind": "document",
+        "openedAt": 1787626311153,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+        "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+        "kind": "document",
+        "openedAt": 1787624193856,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/SPEC-agent-self-improvement.md",
+        "title": "SPEC-agent-self-improvement.md",
+        "kind": "document",
+        "openedAt": 1787624187406,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+        "panel": "capture-viewer",
+        "path": "004-Playground/theme-picker-mockup.html",
+        "title": "theme-picker-mockup.html",
+        "kind": "document",
+        "openedAt": 1787619365462,
+        "folder": "004-Playground",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:005-Assets/modal-mockup.html",
+        "panel": "capture-viewer",
+        "path": "005-Assets/modal-mockup.html",
+        "title": "modal-mockup.html",
+        "kind": "document",
+        "openedAt": 1787619283145,
+        "folder": "005-Assets",
+        "extension": "html"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+        "title": "PENDING_CHAT_INTENT_SPEC.md",
+        "kind": "document",
+        "openedAt": 1787619275229,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+        "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+        "kind": "document",
+        "openedAt": 1787554903487,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+        "panel": "capture-viewer",
+        "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+        "title": "2026-05-22-view-architecture-session-3.md",
+        "kind": "document",
+        "openedAt": 1787552452671,
+        "folder": "999-Archive",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+        "panel": "capture-viewer",
+        "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+        "title": "2026-05-19-fusion-studio-view-architecture.md",
+        "kind": "document",
+        "openedAt": 1787552449670,
+        "folder": "999-Archive",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+        "panel": "capture-viewer",
+        "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+        "title": "WS_CLIENT_EXTRACTION.md",
+        "kind": "document",
+        "openedAt": 1787536811380,
+        "folder": "999-Archive",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+        "panel": "capture-viewer",
+        "path": "020-CSS_UI_Changes/DECISIONS.md",
+        "title": "DECISIONS.md",
+        "kind": "document",
+        "openedAt": 1787361592975,
+        "folder": "020-CSS_UI_Changes",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+        "panel": "capture-viewer",
+        "path": "020-CSS_UI_Changes/ISSUES.md",
+        "title": "ISSUES.md",
+        "kind": "document",
+        "openedAt": 1787231988550,
+        "folder": "020-CSS_UI_Changes",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+        "panel": "capture-viewer",
+        "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+        "title": "WIKI_IMPACT.md",
+        "kind": "document",
+        "openedAt": 1787231982866,
+        "folder": "020-CSS_UI_Changes",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/ISSUES.md",
+        "title": "ISSUES.md",
+        "kind": "document",
+        "openedAt": 1787191656257,
         "folder": "021-Project_Vision",
         "extension": "md"
       },
       {
-        "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+        "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
         "panel": "capture-viewer",
-        "path": "021-Project_Vision/BULLETIN.md",
-        "title": "BULLETIN.md",
+        "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+        "title": "WORKFLOW_MODEL.md",
         "kind": "document",
-        "openedAt": 1786345381742,
+        "openedAt": 1787191650238,
         "folder": "021-Project_Vision",
         "extension": "md"
       },
@@ -55,7 +287,117 @@
         "path": "021-Project_Vision/SYSTEM_MANAGER.md",
         "title": "SYSTEM_MANAGER.md",
         "kind": "document",
-        "openedAt": 1786345214776,
+        "openedAt": 1787143539327,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/ROUTINES_MODEL.md",
+        "title": "ROUTINES_MODEL.md",
+        "kind": "document",
+        "openedAt": 1787143537728,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/PROPOSALS.md",
+        "title": "PROPOSALS.md",
+        "kind": "document",
+        "openedAt": 1787143535745,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+        "title": "PRIVACY_AND_DATA.md",
+        "kind": "document",
+        "openedAt": 1787143533979,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/MEMORY_MODEL.md",
+        "title": "MEMORY_MODEL.md",
+        "kind": "document",
+        "openedAt": 1787143532395,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/INTERACTION_MODEL.md",
+        "title": "INTERACTION_MODEL.md",
+        "kind": "document",
+        "openedAt": 1787143525145,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/INTENT.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/INTENT.md",
+        "title": "INTENT.md",
+        "kind": "document",
+        "openedAt": 1787143521527,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/index.json",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/index.json",
+        "title": "index.json",
+        "kind": "document",
+        "openedAt": 1787143517677,
+        "folder": "021-Project_Vision",
+        "extension": "json"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/DECISIONS.md",
+        "title": "DECISIONS.md",
+        "kind": "document",
+        "openedAt": 1787143515095,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/CAPTURE.md",
+        "title": "CAPTURE.md",
+        "kind": "document",
+        "openedAt": 1787143509995,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/BULLETIN.md",
+        "title": "BULLETIN.md",
+        "kind": "document",
+        "openedAt": 1787143505295,
+        "folder": "021-Project_Vision",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+        "panel": "capture-viewer",
+        "path": "021-Project_Vision/AGENTS.md",
+        "title": "AGENTS.md",
+        "kind": "document",
+        "openedAt": 1787143500011,
         "folder": "021-Project_Vision",
         "extension": "md"
       },
@@ -67,26 +409,6 @@
         "kind": "document",
         "openedAt": 1786264616387,
         "folder": "019-System_Manager",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/wiki-audit-decisions.md",
-        "title": "wiki-audit-decisions.md",
-        "kind": "document",
-        "openedAt": 1785665896648,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/workspace-as-distributable.md",
-        "title": "workspace-as-distributable.md",
-        "kind": "document",
-        "openedAt": 1785665888597,
-        "folder": "001-Captures",
         "extension": "md"
       },
       {
@@ -130,16 +452,6 @@
         "extension": "html"
       },
       {
-        "id": "capture-viewer:005-Assets/modal-mockup.html",
-        "panel": "capture-viewer",
-        "path": "005-Assets/modal-mockup.html",
-        "title": "modal-mockup.html",
-        "kind": "document",
-        "openedAt": 1783850523126,
-        "folder": "005-Assets",
-        "extension": "html"
-      },
-      {
         "id": "capture-viewer:005-Assets/sketch.txt",
         "panel": "capture-viewer",
         "path": "005-Assets/sketch.txt",
@@ -148,16 +460,6 @@
         "openedAt": 1783850493493,
         "folder": "005-Assets",
         "extension": "txt"
-      },
-      {
-        "id": "capture-viewer:004-Playground/theme-studio.html",
-        "panel": "capture-viewer",
-        "path": "004-Playground/theme-studio.html",
-        "title": "theme-studio.html",
-        "kind": "document",
-        "openedAt": 1783843884743,
-        "folder": "004-Playground",
-        "extension": "html"
       },
       {
         "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
@@ -230,26 +532,6 @@
         "extension": "md"
       },
       {
-        "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
-        "panel": "capture-viewer",
-        "path": "002-SPECs/VIEW-TABLE.md",
-        "title": "VIEW-TABLE.md",
-        "kind": "document",
-        "openedAt": 1783643697459,
-        "folder": "002-SPECs",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
-        "panel": "capture-viewer",
-        "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
-        "title": "SPEC-KNOWLEDGE-AUTHORING.md",
-        "kind": "document",
-        "openedAt": 1783244189435,
-        "folder": "002-SPECs",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
         "panel": "capture-viewer",
         "path": "001-Captures/templates-repo-architecture.md",
@@ -298,36 +580,6 @@
         "openedAt": 1783239254453,
         "folder": "001-Captures",
         "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/opencode-harness-integration.md",
-        "title": "opencode-harness-integration.md",
-        "kind": "document",
-        "openedAt": 1783239253887,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/system-manager-hub.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/system-manager-hub.md",
-        "title": "system-manager-hub.md",
-        "kind": "document",
-        "openedAt": 1783239252704,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/view-onboarding-front-pages.md",
-        "title": "view-onboarding-front-pages.md",
-        "kind": "document",
-        "openedAt": 1783239250453,
-        "folder": "001-Captures",
-        "extension": "md"
       }
     ],
     "navigation": {
@@ -345,7 +597,17 @@
         "path": "001-Captures/workspace-as-distributable.md",
         "title": "workspace-as-distributable.md",
         "kind": "document",
-        "savedAt": 1783246475933,
+        "savedAt": 1787634377739,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/templates-repo-architecture.md",
+        "title": "templates-repo-architecture.md",
+        "kind": "document",
+        "savedAt": 1787627263472,
         "folder": "001-Captures",
         "extension": "md"
       }

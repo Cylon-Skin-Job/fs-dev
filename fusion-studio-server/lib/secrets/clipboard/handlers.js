@@ -34,8 +34,14 @@ function createClipboardHandlers({ getAllClients }) {
     }
   }
 
-  function sendError(ws, code, message) {
-    ws.send(JSON.stringify({ type: 'clipboard:error', code, message }));
+  function sendError(ws, requestType, code, message, request = {}) {
+    ws.send(JSON.stringify({
+      type: 'clipboard:error',
+      requestType,
+      ...(Number.isInteger(request.id) ? { id: request.id } : {}),
+      code,
+      message,
+    }));
   }
 
   async function broadcastAll() {
@@ -52,7 +58,7 @@ function createClipboardHandlers({ getAllClients }) {
         ws.send(JSON.stringify({ type: 'clipboard:list', items, total, offset, limit }));
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:list', err.code, err.message, msg);
           return;
         }
         throw err;
@@ -71,7 +77,7 @@ function createClipboardHandlers({ getAllClients }) {
         await broadcastAll();
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:append', err.code, err.message, msg);
           return;
         }
         throw err;
@@ -89,7 +95,7 @@ function createClipboardHandlers({ getAllClients }) {
         await broadcastAll();
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:use', err.code, err.message, msg);
           return;
         }
         throw err;
@@ -104,7 +110,7 @@ function createClipboardHandlers({ getAllClients }) {
         await broadcastAll();
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:touch', err.code, err.message, msg);
           return;
         }
         throw err;
@@ -121,7 +127,7 @@ function createClipboardHandlers({ getAllClients }) {
         }
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:delete', err.code, err.message, msg);
           return;
         }
         throw err;
@@ -136,7 +142,7 @@ function createClipboardHandlers({ getAllClients }) {
         await broadcastAll();
       } catch (err) {
         if (err instanceof backend.ClipboardBackendError) {
-          sendError(ws, err.code, err.message);
+          sendError(ws, 'clipboard:clear', err.code, err.message);
           return;
         }
         throw err;

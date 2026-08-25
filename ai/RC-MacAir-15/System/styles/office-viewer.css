@@ -42,11 +42,10 @@
 }
 
 /* ── Action buttons (link copy, markdown/code switch) ──
-   Driven by the picker's "Chrome settings" sliders via --chrome-accent. Hover
-   escalates to --accent-dim (Accent) so the active state pops. Scoped to
-   FilePageView so the wiki's link button keeps its own theming. */
+   Base color follows Content Foreground. Hover escalates to Accent so the
+   active state pops. Scoped to FilePageView so the wiki keeps its own rules. */
 .rv-file-page-view .rv-file-page-action {
-  color: var(--chrome-accent, var(--text-secondary));
+  color: var(--content-foreground-color, var(--text-secondary));
 }
 
 .rv-file-page-view .rv-file-page-action:hover {

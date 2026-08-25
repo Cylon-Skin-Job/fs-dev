@@ -112,10 +112,11 @@ function createScreenshotHandlers({ getAllClients }) {
     },
 
     'screenshot:file-capture': async (ws, msg) => {
-      const { workspaceId, dataUrl } = msg;
+      const { workspaceId, dataUrl, requestId } = msg;
       if (!workspaceId || typeof dataUrl !== 'string') {
         ws.send(JSON.stringify({
           type: 'screenshot:error',
+          ...(requestId ? { requestId } : {}),
           message: 'screenshot:file-capture requires workspaceId and dataUrl',
         }));
         return;
@@ -127,6 +128,7 @@ function createScreenshotHandlers({ getAllClients }) {
         const savedPath = await saveFileScreenshot(workspaceId, dataUrl);
         ws.send(JSON.stringify({
           type: 'screenshot:file-captured',
+          ...(requestId ? { requestId } : {}),
           workspaceId,
           savedPath,
           capturedAt: Date.now(),
@@ -135,6 +137,7 @@ function createScreenshotHandlers({ getAllClients }) {
         console.error('[ScreenshotHandler] file-capture failed:', err.message);
         ws.send(JSON.stringify({
           type: 'screenshot:error',
+          ...(requestId ? { requestId } : {}),
           message: err.message,
         }));
       }

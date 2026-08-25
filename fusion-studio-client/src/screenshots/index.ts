@@ -7,3 +7,4 @@
 
 export { ScreenshotsTrigger } from './ScreenshotsTrigger';
 export { ScreenshotFlashOverlay } from './ScreenshotFlashOverlay';
+export { captureAndAttachScreenshot, SCREENSHOT_FLASH_EVENT } from './chatScreenshotCapture';

@@ -14,6 +14,11 @@ const RENAME_WINDOW_MS = 2000;
 
 const DEFAULT_EXCLUDES = [
   'node_modules', 'dist', '.git', '.kimi',
+  // Served as a static asset library, not workspace content. Watching the
+  // full Material Symbols checkout opens tens of thousands of file handles
+  // on macOS and can prevent unrelated child processes (including Keychain
+  // lookups) from spawning.
+  'material-symbols',
   'fusion-studio-server/data',
   'ai/*/Data/Chatlogs',
   'ai/*/Data/Runs',

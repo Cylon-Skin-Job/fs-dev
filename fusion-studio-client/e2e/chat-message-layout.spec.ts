@@ -8,6 +8,10 @@ test('user bubbles shrink-wrap on the right without moving the assistant anchor'
     'utf8',
   );
 
+  expect(chatAreaCss).toMatch(
+    /\.rv-chat-area\.rv-chat-area--project \.rv-message-user-content\s*\{[^}]*background: var\(--chat-content-bg,[^}]*border: none;/s,
+  );
+
   await page.setContent(`
     <style>
       .fixture {
@@ -83,4 +87,105 @@ test('user bubbles shrink-wrap on the right without moving the assistant anchor'
   expect(layout.assistant.left).toBeCloseTo(layout.shortViewport.left, 1);
   expect(layout.orb.left).toBeCloseTo(layout.assistant.left, 1);
   expect(layout.tool.left).toBeCloseTo(layout.assistant.left, 1);
+});
+
+test('turn finalization keeps the CSS spinner and does not swap to a GIF', async ({ page }) => {
+  const chatAreaCss = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/ChatArea.css'),
+    'utf8',
+  );
+  const footerSource = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/chat/ChatAreaFooter.tsx'),
+    'utf8',
+  );
+
+  expect(footerSource).toContain('className="rv-send-warming-wheel"');
+  expect(footerSource).not.toContain('chat-completing-pinwheel.gif');
+
+  await page.setContent(`
+    <style>${chatAreaCss}</style>
+    <div class="rv-chat-completing-indicator" aria-label="Completing">
+      <span class="rv-send-warming-wheel" aria-hidden="true"></span>
+    </div>
+  `);
+
+  const indicator = page.locator('.rv-chat-completing-indicator');
+  await expect(indicator.locator('img')).toHaveCount(0);
+  await expect(indicator.locator('.rv-send-warming-wheel')).toHaveCSS(
+    'animation-name',
+    'rv-send-warming-spin',
+  );
+});
+
+test('condensed composer reserves separate growing text and control rows', async ({ page }) => {
+  const chatAreaCss = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/ChatArea.css'),
+    'utf8',
+  );
+  const chatInputSource = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/ChatInput.tsx'),
+    'utf8',
+  );
+
+  expect(chatInputSource).toContain('rows={2}');
+  expect(chatInputSource).toContain('lineHeight * 12');
+  expect(chatInputSource).toContain("textarea.style.overflowY = overflowing ? 'auto' : 'hidden'");
+
+  await page.setContent(`
+    <style>
+      ${chatAreaCss}
+      .rv-chat-input-wrapper { border-radius: 10px; }
+      .rv-chat-composer-meta-row { padding: 6px 0 0; margin-top: 4px; }
+    </style>
+    <div class="rv-chat-composer-shell" style="width: 360px">
+      <div class="rv-chat-input-container">
+        <div class="rv-chat-input-wrapper">
+          <div class="rv-chat-input-text-stack">
+            <textarea class="rv-chat-input"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="rv-chat-composer-meta-row">
+        <div><button>Tool</button></div>
+        <div class="rv-send-button-group"><button class="rv-send-btn-main">Send</button></div>
+      </div>
+    </div>
+  `);
+
+  const layout = await page.evaluate(() => {
+    const rect = (selector: string) => {
+      const value = document.querySelector(selector)!.getBoundingClientRect();
+      return { top: value.top, right: value.right, bottom: value.bottom, height: value.height };
+    };
+    return {
+      shell: rect('.rv-chat-composer-shell'),
+      input: rect('.rv-chat-input'),
+      controls: rect('.rv-chat-composer-meta-row'),
+      send: rect('.rv-send-button-group'),
+    };
+  });
+
+  await expect(page.locator('.rv-chat-composer-shell')).toHaveCSS('border-radius', '15px');
+  expect(layout.input.height).toBeCloseTo(42, 1);
+  expect(layout.controls.top - layout.input.bottom).toBeCloseTo(10, 1);
+  expect(layout.shell.right - layout.send.right).toBeCloseTo(10, 1);
+  expect(layout.shell.bottom - layout.send.bottom).toBeCloseTo(10, 1);
+
+});
+
+test('conversation surface blends into the chat column and scrolls beneath the composer', () => {
+  const chatAreaCss = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/components/ChatArea.css'),
+    'utf8',
+  );
+
+  expect(chatAreaCss).toMatch(
+    /\.rv-chat-area\.rv-chat-area--project > \.rv-chat-messages\s*\{[^}]*background: var\(--chat-surface-bg,[^}]*border-radius: 0;[^}]*margin-bottom: -24px;/s,
+  );
+  expect(chatAreaCss).toMatch(
+    /\.rv-chat-area\.rv-chat-area--project > \.rv-chat-footer\s*\{[^}]*position: relative;[^}]*z-index: 1;/s,
+  );
+  expect(chatAreaCss).toMatch(
+    /\.rv-chat-composer-shell\s*\{[^}]*background: var\(--chat-content-bg,/s,
+  );
 });

@@ -113,9 +113,13 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       window.electronAPI?.setWorkspaceRoot(activeRepoPath);
 
       store.markInit();
-      // Request existing screenshots so the ribbon can show thumbnails immediately
+      // Re-request the thread list after workspace activation. A list may have
+      // arrived before workspace:init and was intentionally prevented from
+      // opening a thread whose state activation would immediately erase.
       const wsConn2 = usePanelStore.getState().ws;
       if (wsConn2 && wsConn2.readyState === WebSocket.OPEN) {
+        wsConn2.send(JSON.stringify({ type: 'thread:list' }));
+        // Request existing screenshots so the ribbon can show thumbnails immediately
         wsConn2.send(JSON.stringify({ type: 'screenshot:list' }));
       }
       return true;

@@ -1,55 +1,18 @@
-import type { KeyboardEvent, MouseEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
 import { useFileStore } from '../../state/fileStore';
+import { usePanelStore } from '../../state/panelStore';
+import { CopyPathButton } from '../CopyPathButton';
+import { SendToChatButton } from '../SendToChatButton';
 import { FileContentRenderer } from './FileContentRenderer';
 import type { EditorTab } from '../../types/file-explorer';
+import { getFileIcon } from '../../lib/file-utils';
 
-// File extension to icon mapping
-const FILE_ICONS: Record<string, string> = {
-  js: 'javascript',
-  jsx: 'code',
-  ts: 'terminal',
-  tsx: 'code',
-  json: 'data_object',
-  css: 'format_paint',
-  scss: 'format_paint',
-  html: 'html',
-  htm: 'html',
-  py: 'terminal',
-  rb: 'terminal',
-  go: 'terminal',
-  rs: 'terminal',
-  java: 'coffee',
-  c: 'memory',
-  cpp: 'memory',
-  h: 'memory',
-  sh: 'terminal',
-  bash: 'terminal',
-  yml: 'list',
-  yaml: 'list',
-  toml: 'settings',
-  xml: 'code',
-  sql: 'database',
-  md: 'description',
-  txt: 'description',
-  env: 'settings',
-  gitignore: 'settings',
-};
-
-function getFileIcon(extension?: string): string {
-  if (!extension) return 'description';
-  return FILE_ICONS[extension] || 'description';
-}
-
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-function formatFilePath(path: string): string {
-  const parts = path.split('/');
-  if (parts.length <= 2) return path;
-  return '.../' + parts.slice(-2).join('/');
+function getFileBreadcrumb(path: string): { folders: string[]; fileName: string } {
+  const visibleParts = path.split('/').filter(Boolean).slice(-3);
+  return {
+    folders: visibleParts.slice(0, -1),
+    fileName: visibleParts.at(-1) ?? path,
+  };
 }
 
 function TabRow({
@@ -61,8 +24,9 @@ function TabRow({
   active: boolean;
   onClose: (e: MouseEvent) => void;
 }) {
-  const fileIcon = getFileIcon(tab.file.extension);
+  const fileIcon = getFileIcon(tab.file.extension, tab.file.name);
   const path = tab.file.path;
+
   return (
     <div
       role="tab"
@@ -99,27 +63,40 @@ function TabRow({
 export function FileViewer() {
   const tabs = useFileStore((s) => s.tabs);
   const activeTabPath = useFileStore((s) => s.activeTabPath);
-  const activateAdjacentTab = useFileStore((s) => s.activateAdjacentTab);
   const closeTab = useFileStore((s) => s.closeTab);
+  const fileTreeCollapsed = usePanelStore(
+    (s) => s.viewStates['file-viewer']?.collapsed?.rightCol ?? false,
+  );
+  const toggleCollapsed = usePanelStore((s) => s.toggleCollapsed);
+  const tabStripRef = useRef<HTMLDivElement>(null);
+  const [compactTabs, setCompactTabs] = useState(false);
 
   const activeTab = tabs.find((t) => t.file.path === activeTabPath) ?? null;
+
+  useEffect(() => {
+    const tabStrip = tabStripRef.current;
+    if (!tabStrip) return;
+
+    const updateTabDensity = () => {
+      const firstTab = tabStrip.querySelector<HTMLElement>('.rv-file-viewer-tab');
+      setCompactTabs(Boolean(firstTab && firstTab.getBoundingClientRect().width <= 120));
+    };
+
+    const resizeObserver = new ResizeObserver(updateTabDensity);
+    resizeObserver.observe(tabStrip);
+    updateTabDensity();
+    return () => resizeObserver.disconnect();
+  }, [tabs.length, activeTabPath]);
 
   if (!activeTab || !activeTabPath) return null;
 
   const selectedFile = activeTab.file;
   const fileContent = activeTab.content;
   const isLoading = activeTab.loading;
-  const fileSize = activeTab.size;
-
-  const displaySize = fileSize ? formatFileSize(fileSize) : isLoading ? 'Loading...' : '—';
-  const lineCount = fileContent.split('\n').length;
   const symlinkTooltip = selectedFile.isSymlink && selectedFile.symlinkTarget
     ? `This resource is linked. Source: ${selectedFile.symlinkTarget}. Edits here update the same underlying file.`
     : null;
-
-  const activeIdx = tabs.findIndex((t) => t.file.path === activeTabPath);
-  const canGoPrev = tabs.length > 1 && activeIdx > 0;
-  const canGoNext = tabs.length > 1 && activeIdx >= 0 && activeIdx < tabs.length - 1;
+  const fileBreadcrumb = getFileBreadcrumb(selectedFile.path);
 
   function handleTabStripClick(e: MouseEvent<HTMLDivElement>) {
     if ((e.target as HTMLElement).closest('button.rv-tab-close')) return;
@@ -134,27 +111,11 @@ export function FileViewer() {
   return (
     <div className="rv-file-viewer">
       <div className="rv-file-viewer-header">
-        <div className="rv-file-viewer-nav">
-          <button
-            type="button"
-            className="rv-nav-btn"
-            title="Previous tab"
-            disabled={!canGoPrev}
-            onClick={() => activateAdjacentTab(-1)}
-          >
-            <span className="material-symbols-outlined">chevron_left</span>
-          </button>
-          <button
-            type="button"
-            className="rv-nav-btn"
-            title="Next tab"
-            disabled={!canGoNext}
-            onClick={() => activateAdjacentTab(1)}
-          >
-            <span className="material-symbols-outlined">chevron_right</span>
-          </button>
-        </div>
-        <div className="rv-file-viewer-tabs" onClick={handleTabStripClick}>
+        <div
+          ref={tabStripRef}
+          className={`rv-file-viewer-tabs${compactTabs ? ' compact' : ''}`}
+          onClick={handleTabStripClick}
+        >
           {tabs.map((tab) => (
             <TabRow
               key={tab.file.path}
@@ -166,26 +127,60 @@ export function FileViewer() {
               }}
             />
           ))}
+          <button
+            type="button"
+            className="rv-file-viewer-tab-bar-action"
+            aria-label="New file tab"
+          >
+            <span className="material-symbols-outlined">add</span>
+          </button>
         </div>
       </div>
 
       <div className="rv-file-viewer-info">
-        <div className="info-item">
-          <span>{formatFilePath(selectedFile.path)}</span>
+        <div
+          className="info-item rv-file-breadcrumb"
+          aria-label={selectedFile.path}
+          title={selectedFile.path}
+        >
+          {fileBreadcrumb.folders.map((folder, index) => (
+            <span className="rv-file-breadcrumb-part" key={`${folder}-${index}`}>
+              <span className="rv-file-breadcrumb-folder">{folder}</span>
+              <span className="rv-file-breadcrumb-separator" aria-hidden="true">&gt;</span>
+            </span>
+          ))}
+          <span className="rv-file-breadcrumb-filename">{fileBreadcrumb.fileName}</span>
         </div>
         {symlinkTooltip && (
-          <div className="info-item rv-file-viewer-info-spacer" title={symlinkTooltip}>
+          <div className="info-item" title={symlinkTooltip}>
             <span className="material-symbols-outlined">folder_match</span>
             <span>Symlink</span>
           </div>
         )}
-        <div className="info-item">
-          <span className="material-symbols-outlined">straighten</span>
-          <span>{displaySize}</span>
-        </div>
-        <div className="info-item">
-          <span className="material-symbols-outlined">format_list_numbered</span>
-          <span>{lineCount} lines</span>
+        <div className="rv-file-page-actions" aria-label="File actions">
+          <CopyPathButton
+            panel="file-viewer"
+            relativePath={selectedFile.path}
+            title="Copy file path"
+          />
+          <SendToChatButton
+            panel="file-viewer"
+            relativePath={selectedFile.path}
+            title="Send file path to chat"
+          />
+          <button
+            type="button"
+            className="rv-file-page-action rv-file-header-folder-action"
+            aria-label={fileTreeCollapsed ? 'Open file tree' : 'Close file tree'}
+            aria-expanded={!fileTreeCollapsed}
+            title={fileTreeCollapsed ? 'Open file tree' : 'Close file tree'}
+            onClick={() => toggleCollapsed('file-viewer', 'rightCol')}
+          >
+            <span className="material-symbols-outlined">folder</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              {fileTreeCollapsed ? 'arrow_left_alt' : 'arrow_right_alt'}
+            </span>
+          </button>
         </div>
       </div>
 

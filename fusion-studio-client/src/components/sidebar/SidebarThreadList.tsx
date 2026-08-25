@@ -14,7 +14,6 @@ type SidebarThreadListProps = Pick<
   | 'openSecondary'
   | 'setThreadRef'
   | 'resolveCliAccent'
-  | 'resolveHarness'
   | 'renamingId'
   | 'renameValue'
   | 'setRenameValue'
@@ -37,7 +36,6 @@ export function SidebarThreadList(props: SidebarThreadListProps) {
     openSecondary,
     setThreadRef,
     resolveCliAccent,
-    resolveHarness,
     renamingId,
     renameValue,
     setRenameValue,
@@ -96,9 +94,6 @@ export function SidebarThreadList(props: SidebarThreadListProps) {
               <>
                 <div className="rv-thread-row rv-thread-row-top">
                   <span className="rv-chat-item-text" title={formatThreadDisplayName(thread)}>
-                    <span className="material-symbols-outlined rv-thread-row-icon">
-                      {resolveHarness(thread.entry?.harnessId)?.materialIcon ?? 'help'}
-                    </span>
                     {formatThreadDisplayName(thread)}
                     {thread.entry?.status === 'active' && (
                       <span className="rv-thread-status-dot--active">●</span>
@@ -110,9 +105,10 @@ export function SidebarThreadList(props: SidebarThreadListProps) {
                       e.stopPropagation();
                       setMenuOpenId(menuOpenId === thread.threadId ? null : thread.threadId);
                     }}
+                    aria-label="More options"
                     title="More options"
                   >
-                    ⋮
+                    <span className="material-symbols-outlined">more_vert</span>
                   </button>
                   {menuOpenId === thread.threadId && (() => {
                     const isPrimary = currentThreadId === thread.threadId;

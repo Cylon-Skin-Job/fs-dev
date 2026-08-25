@@ -15,6 +15,7 @@ import type { FileWithContent } from '../components/tile-row/TileRow';
 import type { ViewUIState } from '../types';
 import { recordViewRecent } from '../lib/viewActivity';
 import { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
+import { isImageFile } from '../components/tile-row/documentTileUtils';
 
 export { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 
@@ -31,6 +32,7 @@ export interface DocViewerSelection {
 export interface UseDocViewerStateResult {
   mode: DocViewerMode;
   selected: DocViewerSelection | null;
+  lastOpenedPath: string | null;
   gridScroll: number;
   docScroll: number;
   setMode: (mode: DocViewerMode) => void;
@@ -78,6 +80,9 @@ export function useDocViewerState(): UseDocViewerStateResult {
     const vs = s.viewStates[DOC_VIEWER_PANEL];
     return mode === 'archive' ? (vs?.docViewerArchiveSelectedPath ?? null) : (vs?.docViewerActiveSelectedPath ?? null);
   });
+  const lastOpenedPath = usePanelStore(
+    (s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerLastOpenedPath ?? null
+  );
   const gridScroll = usePanelStore((s) => {
     const vs = s.viewStates[DOC_VIEWER_PANEL];
     return mode === 'archive' ? (vs?.docViewerArchiveGridScroll ?? 0) : (vs?.docViewerActiveGridScroll ?? 0);
@@ -101,6 +106,8 @@ export function useDocViewerState(): UseDocViewerStateResult {
   const contentMetadata = useFileDataStore((s) =>
     selectedPath ? s.contentMetadata[`${DOC_VIEWER_PANEL}:${selectedPath}`] : undefined
   );
+  const contents = useFileDataStore((s) => s.contents);
+  const contentMetadataByPath = useFileDataStore((s) => s.contentMetadata);
 
   useEffect(() => {
     if (!parsedPath || !selectedPath) return;
@@ -109,15 +116,31 @@ export function useDocViewerState(): UseDocViewerStateResult {
     store.requestContent(DOC_VIEWER_PANEL, selectedPath);
   }, [fileDataGeneration, parsedPath, selectedPath]);
 
+  useEffect(() => {
+    if (!tree) return;
+    const store = useFileDataStore.getState();
+    for (const node of tree) {
+      if (node.type !== 'file' || isImageFile(node.name)) continue;
+      store.requestContent(DOC_VIEWER_PANEL, node.path);
+    }
+  }, [fileDataGeneration, tree]);
+
   const selected: DocViewerSelection | null = useMemo(() => {
     if (!parsedPath || !selectedPath || !tree || content === undefined) return null;
     const fileNode = tree.find((n) => n.type === 'file' && n.name === parsedPath.name);
     if (!fileNode) return null;
     const siblings = tree
       .filter((n) => n.type === 'file')
-      .map((n) => ({ ...n, content: n.name === parsedPath.name ? content : '' }) as FileWithContent);
+      .map((n) => {
+        const key = `${DOC_VIEWER_PANEL}:${n.path}`;
+        return {
+          ...n,
+          ...contentMetadataByPath[key],
+          content: isImageFile(n.name) ? '' : (contents[key] ?? ''),
+        } as FileWithContent;
+      });
     return { file: { ...fileNode, ...contentMetadata, content }, siblings, folder: parsedPath.folder };
-  }, [parsedPath, selectedPath, tree, content, contentMetadata]);
+  }, [parsedPath, selectedPath, tree, content, contentMetadata, contents, contentMetadataByPath]);
 
   const setMode = useCallback((nextMode: DocViewerMode) => {
     persistViewPatch({
@@ -127,7 +150,11 @@ export function useDocViewerState(): UseDocViewerStateResult {
   }, []);
 
   const selectFile = useCallback((folder: string, file: FileWithContent) => {
-    persistViewPatch({ [selectedPathKey(mode)]: `${folder}/${file.name}` } as Partial<ViewUIState>);
+    const path = `${folder}/${file.name}`;
+    persistViewPatch({
+      [selectedPathKey(mode)]: path,
+      docViewerLastOpenedPath: path,
+    } as Partial<ViewUIState>);
     recordViewRecent(DOC_VIEWER_PANEL, {
       panel: DOC_VIEWER_PANEL,
       path: file.path,
@@ -140,7 +167,11 @@ export function useDocViewerState(): UseDocViewerStateResult {
 
   const selectSibling = useCallback((sib: FileWithContent) => {
     if (!selected) return;
-    persistViewPatch({ [selectedPathKey(mode)]: `${selected.folder}/${sib.name}` } as Partial<ViewUIState>);
+    const path = `${selected.folder}/${sib.name}`;
+    persistViewPatch({
+      [selectedPathKey(mode)]: path,
+      docViewerLastOpenedPath: path,
+    } as Partial<ViewUIState>);
     recordViewRecent(DOC_VIEWER_PANEL, {
       panel: DOC_VIEWER_PANEL,
       path: sib.path,
@@ -206,6 +237,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
   return {
     mode,
     selected,
+    lastOpenedPath,
     gridScroll,
     docScroll,
     setMode,

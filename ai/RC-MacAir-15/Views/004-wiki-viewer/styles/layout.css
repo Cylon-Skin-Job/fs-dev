@@ -10,14 +10,19 @@
 /* TINTS_SPEC: card defaults inverted to neutral. Build bump for cache-bust. */
 
 .rv-wiki-explorer {
+  --content-border: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  --wiki-topic-width: 200px;
+  --wiki-edge-width: 220px;
   display: grid;
-  grid-template-columns: 200px 1fr 220px;
+  grid-template-columns: var(--wiki-topic-width) minmax(0, 1fr) var(--wiki-edge-width);
+  grid-template-rows: var(--view-header-height, 40px) minmax(0, 1fr);
   height: 100%;
   overflow: hidden;
 }
 
 .rv-wiki-loading {
   grid-column: 1 / -1;
+  grid-row: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,30 +32,46 @@
 /* --- Topic List (left sidebar) --- */
 
 .rv-wiki-topic-list {
-  background: var(--sidebar-surface-bg, #161616);
-  border-right: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  overflow-y: auto;
+  grid-column: 1;
+  /* Threads own their full rail height, while Wiki previously began this rail
+     below the shared 40px content header. Span both grid rows so the 16px
+     inset + 15px first-item offset are measured from the same top edge as the
+     Threads rail instead of being counted a second time below the header. */
+  grid-row: 1 / 3;
+  background: var(--side-panel-surface-bg, var(--theme-primary, var(--bg-solid, #161616)));
+  border-right: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* Match the right edge panel's top padding so the first collection header
-     ("Project") doesn't sit flush against the top of the rail. */
-  padding-top: 12px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.rv-wiki-topic-list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+  /* Mirror the Threads rail's outer inset. The Wiki Guide group supplies the
+     same 15px top offset used by Active Threads inside that inset. */
+  padding: 16px;
 }
 
 .rv-wiki-topic-list-items {
   display: flex;
   flex-direction: column;
-  padding: 0 4px;
+  padding: 0;
 }
 
 .rv-wiki-topic-item {
   display: flex;
   align-items: center;
+  position: relative;
   gap: 8px;
   padding: 6px 8px;
   border: none;
   background: none;
-  color: var(--nav-text-color, var(--text-dim, #888));
+  color: var(--side-panel-text-color, var(--nav-text-color, var(--text-dim, #888)));
   font-size: 0.8125rem;
   cursor: pointer;
   border-radius: 4px;
@@ -60,51 +81,90 @@
 }
 
 .rv-wiki-topic-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary, #eee);
+  background: var(--side-panel-selected-bg, rgba(255, 255, 255, 0.05));
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }
 
 .rv-wiki-topic-item.active {
-  background: var(--accent-dim);
+  background: var(--side-panel-selected-bg, var(--accent-dim));
 }
 
 .rv-wiki-topic-item.active .rv-wiki-topic-indicator,
 .rv-wiki-topic-item.active .rv-wiki-topic-name {
-  color: var(--chrome-accent-fg, var(--text-white));
+  color: var(--side-panel-selected-foreground-color, var(--chrome-accent-fg, var(--text-white)));
 }
 
 .rv-wiki-topic-indicator {
   font-size: 0.625rem;
   line-height: 1;
+  color: var(--side-panel-foreground-color, currentColor);
 }
 
 .rv-wiki-topic-guide-icon {
-  font-size: 20px;
+  flex: 0 0 auto;
+  font-size: 24px;
   line-height: 1;
+  color: var(--side-panel-foreground-color, currentColor);
+}
+
+.rv-wiki-topic-item:is(:hover, .active) .rv-wiki-topic-guide-icon {
+  color: #fff;
 }
 
 .rv-wiki-topic-name {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
 }
 
 .rv-wiki-topic-guide-title {
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 700;
+  color: var(--side-panel-heading-color, currentColor);
+}
+
+.rv-wiki-topic-item:hover .rv-wiki-topic-guide-title {
+  color: #fff;
 }
 
 .rv-wiki-collection-group {
   margin-bottom: 4px;
 }
 
+.rv-wiki-collection-group:first-child {
+  margin-top: 15px;
+  margin-bottom: 16px;
+}
+
+.rv-wiki-collection-group:first-child .rv-wiki-topic-item {
+  gap: 8px;
+  padding: 10px;
+}
+
+.rv-wiki-topic-divider {
+  flex: 0 0 auto;
+  height: 1px;
+  margin: 0 0 12px;
+  background: var(--side-panel-foreground-color, var(--thread-foreground-color, var(--text-dim, #888)));
+}
+
+.rv-wiki-topic-list > .rv-resize-handle[data-pane="contentNavLeft"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+}
+
 .rv-wiki-collection-header {
   display: flex;
   align-items: center;
   padding: 8px 12px 4px;
-  color: var(--accent-dim, var(--text-dim, #888));
+  color: var(--side-panel-heading-color, var(--accent-dim, var(--text-dim, #888)));
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -130,14 +190,14 @@
 }
 
 .rv-wiki-collection-header.active {
-  color: var(--accent-dim, var(--theme-primary, #ec4899));
+  color: var(--side-panel-heading-color, var(--accent-dim, var(--theme-primary, #ec4899)));
 }
 
 /* Heading whose own 000- article is the viewed page — match the active
    article-row highlight. Must follow .active so it wins when both apply. */
 .rv-wiki-collection-header.is-selected {
-  background: var(--accent-dim);
-  color: var(--chrome-accent-fg, var(--text-white));
+  background: var(--side-panel-selected-bg, var(--accent-dim));
+  color: var(--side-panel-selected-foreground-color, var(--chrome-accent-fg, var(--text-white)));
   border-radius: 4px;
 }
 
@@ -149,48 +209,48 @@
 /* --- Page Viewer (center) --- */
 
 .rv-wiki-page-viewer {
+  grid-column: 2;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
+  position: relative;
   overflow: hidden;
-  /* Match the file-viewer's document body — the canvas tier of the
-     content paradigm, not the lighter reading surface. */
-  background: var(--document-bg, #161616);
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
-/* Override .rv-document-surface inside the wiki: the prose surface should
-   match the document body color used by the file-viewer's code canvas, not
-   the lighter reading-surface tier that .rv-document-surface defaults to. */
+/* Keep the rendered prose surface continuous with Content Background. */
 .rv-wiki-page-viewer .rv-wiki-page-content.rv-document-surface {
-  background: var(--document-bg, #161616);
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
 /* ── Content-emphasized surfaces (wiki-only) ──────────────────────────────
-   --content-emphasized is derived from --document-bg in color-math.js: walks
-   away from the bg luminance (lighter in dark mode, darker in light mode),
-   carries the accent hue, distance driven by Content Contrast (default
-   middle), saturation driven by Content Tint. */
+   Headings follow Content Headings. Structural borders follow Workspace
+   Theme > Borders; highlight washes remain content-derived. */
 
 /* Document headings on the rendered prose surface (wiki-only). */
 .rv-wiki-page-viewer .rv-wiki-page-content h1,
 .rv-wiki-page-viewer .rv-wiki-page-content h2,
 .rv-wiki-page-viewer .rv-wiki-page-content h3 {
-  color: var(--content-emphasized, #c0a0e0);
+  color: var(--content-heading-color, var(--wiki-emphasized, #c0a0e0));
 }
 
-/* In-content borders share the inline-code chip background (--content-highlight),
-   so a section divider, code-block frame, or table grid reads with the same
-   subtle accent wash that the syntax-highlighted inline code uses. */
+/* In-content borders inherit the workspace border slider through
+   --content-border on .rv-wiki-explorer. */
 .rv-wiki-page-viewer .rv-wiki-page-content h1 {
-  border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border-bottom: 1px solid var(--content-border, rgba(192, 160, 224, 0.16));
 }
 
 .rv-wiki-page-viewer .rv-wiki-page-content pre {
-  border: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border: 1px solid var(--content-border, rgba(192, 160, 224, 0.16));
 }
 
 .rv-wiki-page-viewer .rv-wiki-page-content th,
 .rv-wiki-page-viewer .rv-wiki-page-content td {
-  border-color: var(--content-highlight, rgba(192, 160, 224, 0.16));
+  border-color: var(--content-border, rgba(192, 160, 224, 0.16));
+}
+
+.rv-wiki-page-viewer .rv-wiki-page-content blockquote {
+  border-left-color: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 /* Inline code background: the canonical "syntax-highlight chip" — and the
@@ -207,12 +267,12 @@
 
 /* Base button reset for .rv-file-page-action now lives globally in
    ai/<machine>/System/styles/views.css. Wiki-specific theming layered on top: */
-.rv-wiki-page-viewer .rv-wiki-page-nav .rv-file-page-action {
-  color: var(--chrome-accent, var(--text-dim));
+.rv-wiki-page-nav .rv-file-page-action {
+  color: var(--content-foreground-color, var(--text-dim));
 }
 
-.rv-wiki-page-viewer .rv-wiki-page-nav .rv-file-page-action:hover {
-  color: var(--content-link, #c97cf6);
+.rv-wiki-page-nav .rv-file-page-action:hover {
+  color: var(--side-panel-heading-color, var(--content-link, #c97cf6));
 }
 
 /* Header rails above the page:
@@ -222,19 +282,19 @@
    - Disabled front/back buttons → --chrome-accent (Chrome) */
 .rv-wiki-page-viewer .rv-wiki-tab.active {
   color: var(--accent-dim, var(--theme-primary));
-  border-bottom-color: var(--accent-dim, var(--theme-primary));
+  border-bottom-color: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 .rv-wiki-page-viewer .rv-wiki-breadcrumb {
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--side-panel-heading-color, var(--chrome-accent, var(--text-dim)));
 }
 
 .rv-wiki-page-viewer .rv-wiki-nav-btn {
-  color: var(--accent-dim, var(--theme-primary));
+  color: var(--content-foreground-color, var(--text-dim));
 }
 
 .rv-wiki-page-viewer .rv-wiki-nav-btn:disabled {
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--content-foreground-color, var(--text-dim));
 }
 
 .rv-wiki-page-empty {
@@ -249,12 +309,24 @@
 }
 
 .rv-wiki-page-nav {
-  display: flex;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: var(--wiki-topic-width) minmax(0, 1fr) var(--wiki-edge-width);
   align-items: center;
-  gap: 4px;
-  padding: 8px 16px;
-  background: var(--sidebar-surface-bg, #161616);
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  min-width: 0;
+  height: var(--view-header-height, 40px);
+  box-sizing: border-box;
+  position: relative;
+  padding: 0 40px;
+  background: var(--side-panel-surface-bg, var(--theme-primary, var(--bg-solid, #161616)));
+  border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+}
+
+/* History belongs to the document, not the topic rail. Align its leading edge
+   with the rendered prose inset (the page starts 32px inside column two). */
+.rv-wiki-page-nav > .rv-view-history-controls {
+  left: calc(var(--wiki-topic-width) + 32px);
 }
 
 .rv-wiki-nav-btn {
@@ -271,6 +343,17 @@
   padding: 0;
 }
 
+.rv-wiki-nav-leading-controls,
+.rv-wiki-nav-history-arrows {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-wiki-nav-leading-controls {
+  padding-left: 4px;
+}
+
 .rv-wiki-nav-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-primary, #eee);
@@ -282,21 +365,34 @@
 }
 
 .rv-wiki-nav-btn .material-symbols-outlined {
-  font-size: 1.125rem;
+  font-size: var(--chrome-icon-size, 18px);
 }
 
 .rv-wiki-breadcrumb {
-  margin-left: 8px;
+  position: absolute;
+  left: 50%;
+  max-width: calc(100% - 280px);
+  transform: translateX(-50%);
+  min-width: 0;
+  margin: 0;
   color: var(--accent-dim, var(--text-primary, #eee));
   font-size: 0.8125rem;
   font-weight: 500;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rv-wiki-nav-actions {
+  position: absolute;
+  right: calc(var(--wiki-edge-width) + 32px);
+  top: 4px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
-  margin-left: auto;
+  min-width: 0;
 }
 
 /* Prose for rendered markdown lives in src/styles/document.css (.rv-wiki-page-content) */
@@ -304,7 +400,7 @@
 .rv-wiki-page-frontmatter-header {
   padding-bottom: 16px;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 .rv-wiki-page-frontmatter-header h1 {
@@ -321,7 +417,7 @@
 .rv-wiki-page-metadata-footer {
   padding-top: 20px;
   margin-top: 28px;
-  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-top: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
 .rv-wiki-page-metadata-footer section {
@@ -371,46 +467,73 @@
 /* --- Edge Panel (right column) --- */
 
 .rv-wiki-edge-panel {
-  background: var(--sidebar-surface-bg, #161616);
-  border-left: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  grid-column: 3;
+  /* Match the left Wiki/Threads navigation paradigm: the rail owns the full
+     view height and positions its first primary row independently of the
+     content header. */
+  grid-row: 1 / 3;
+  background: var(--side-panel-surface-bg, var(--theme-primary, var(--bg-solid, #161616)));
+  border-left: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-wiki-edge-panel-scroll {
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  padding: 12px 0;
+  box-sizing: border-box;
+  padding: 16px;
 }
 
 .rv-wiki-edge-guide-header {
   display: flex;
   align-items: center;
+  position: relative;
   gap: 8px;
-  padding: 10px 16px;
-  margin: 0 8px 8px;
+  padding: 10px;
+  margin: 15px 0 8px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-primary, #eee);
+  color: var(--side-panel-heading-color, var(--text-primary, #eee));
   cursor: pointer;
   border: none;
   background: none;
   border-radius: 4px;
   transition: background 150ms, color 150ms;
-  width: calc(100% - 16px);
+  width: 100%;
   text-align: left;
 }
 
 .rv-wiki-edge-guide-header:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--side-panel-selected-bg, rgba(255, 255, 255, 0.06));
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }
 
 .rv-wiki-edge-guide-header.active {
-  background: var(--accent-dim, rgba(0, 212, 255, 0.1));
-  color: var(--chrome-accent-fg, var(--text-white));
+  background: var(--side-panel-selected-bg, var(--accent-dim, rgba(0, 212, 255, 0.1)));
+  color: var(--side-panel-selected-foreground-color, var(--chrome-accent-fg, var(--text-white)));
 }
 
 .rv-wiki-edge-guide-header .material-symbols-outlined {
-  font-size: 20px;
+  font-size: 24px;
+  color: var(--side-panel-foreground-color, currentColor);
+}
+
+.rv-wiki-edge-guide-header:is(:hover, .active) .material-symbols-outlined {
+  color: #fff;
 }
 
 .rv-wiki-edge-guide-title {
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 700;
+  color: inherit;
+}
+
+.rv-wiki-edge-guide-header:hover .rv-wiki-edge-guide-title {
+  color: #fff;
 }
 
 .rv-wiki-edge-section {
@@ -421,7 +544,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  color: var(--accent-dim, var(--text-dim, #888));
+  color: var(--side-panel-heading-color, var(--accent-dim, var(--text-dim, #888)));
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -436,27 +559,33 @@
   background: none;
   cursor: pointer;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
 }
 
 .rv-wiki-edge-heading-button:hover {
-  color: var(--text-primary, #eee);
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }
 
 .rv-wiki-edge-heading-button.active {
-  background: var(--accent-dim, rgba(0, 212, 255, 0.1));
-  color: var(--chrome-accent-fg, var(--text-white));
+  background: var(--side-panel-selected-bg, var(--accent-dim, rgba(0, 212, 255, 0.1)));
+  color: var(--side-panel-selected-foreground-color, var(--chrome-accent-fg, var(--text-white)));
   border-radius: 4px;
 }
 
 .rv-wiki-edge-link {
   display: flex;
   align-items: center;
+  position: relative;
   gap: 8px;
   width: 100%;
   padding: 6px 8px;
   border: none;
   background: none;
-  color: var(--nav-text-color, var(--text-dim, #888));
+  color: var(--side-panel-text-color, var(--nav-text-color, var(--text-dim, #888)));
   font-size: 0.8125rem;
   cursor: pointer;
   text-align: left;
@@ -465,29 +594,31 @@
 }
 
 .rv-wiki-edge-link:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary, #eee);
+  background: var(--side-panel-selected-bg, rgba(255, 255, 255, 0.06));
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }
 
 .rv-wiki-edge-link.active {
-  background: var(--accent-dim, rgba(0, 212, 255, 0.1));
+  background: var(--side-panel-selected-bg, var(--accent-dim, rgba(0, 212, 255, 0.1)));
 }
 
 .rv-wiki-edge-link.active .rv-wiki-topic-indicator,
 .rv-wiki-edge-link.active .rv-wiki-edge-link-text {
-  color: var(--chrome-accent-fg, var(--text-white));
+  color: var(--side-panel-selected-foreground-color, var(--chrome-accent-fg, var(--text-white)));
 }
 
 .rv-wiki-edge-link-text {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--list-nav-edge-fade-width, 24px)), transparent 100%);
 }
 
 .rv-wiki-edge-empty {
-  color: var(--nav-icon-color, var(--text-dim, #666));
+  color: var(--side-panel-foreground-color, var(--nav-icon-color, var(--text-dim, #666)));
   font-size: 0.75rem;
   text-align: center;
   padding: 16px 0;
@@ -496,23 +627,58 @@
 /* --- Hover actions for wiki nav items --- */
 
 .rv-wiki-item-actions {
+  --wiki-action-overlay-bg: var(--side-panel-selected-bg, var(--side-panel-surface-bg, var(--bg-solid, #161616)));
+  position: absolute;
+  top: 0;
+  right: 8px;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: auto;
+  padding-left: 2px;
+  background: var(--wiki-action-overlay-bg);
   opacity: 0;
-  transition: opacity 150ms;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms, visibility 150ms;
+}
+
+.rv-wiki-item-actions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  width: var(--list-nav-action-fade-width, 24px);
+  background: linear-gradient(to right, transparent, var(--wiki-action-overlay-bg));
+  pointer-events: none;
+}
+
+.rv-wiki-edge-guide-header .rv-wiki-item-actions {
+  right: 10px;
 }
 
 .rv-wiki-topic-item:hover .rv-wiki-item-actions,
 .rv-wiki-edge-guide-header:hover .rv-wiki-item-actions,
-.rv-wiki-edge-link:hover .rv-wiki-item-actions {
+.rv-wiki-edge-link:hover .rv-wiki-item-actions,
+.rv-wiki-item-actions:focus-within {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .rv-wiki-item-actions .rv-file-page-action {
   width: 22px;
   height: 22px;
+  color: var(--side-panel-foreground-color, var(--text-dim, #888));
+}
+
+.rv-wiki-topic-item:hover .rv-wiki-item-actions .rv-file-page-action,
+.rv-wiki-edge-guide-header:hover .rv-wiki-item-actions .rv-file-page-action,
+.rv-wiki-edge-link:hover .rv-wiki-item-actions .rv-file-page-action,
+.rv-wiki-item-actions:focus-within .rv-file-page-action {
+  color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }
 
 .rv-wiki-item-actions .rv-file-page-action .material-symbols-outlined {

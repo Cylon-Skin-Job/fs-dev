@@ -78,7 +78,10 @@ function useResizeDrag({ panel, pane, edge, defaultWidth }: ResizeDragConfig) {
     // Left-edge handles (secondary chat, file tree): -delta grows the pane
     // (the left edge moves outward as the pointer moves leftward).
     const signedDelta = edge === 'right' ? delta : -delta;
-    d.pendingWidth = clampPaneWidth(pane, d.startWidth + signedDelta);
+    const dragMax = pane === 'leftSidebar'
+      ? Math.min(460, window.innerWidth * 0.25)
+      : undefined;
+    d.pendingWidth = clampPaneWidth(pane, d.startWidth + signedDelta, dragMax);
 
     if (d.rafId != null) return;
     d.rafId = requestAnimationFrame(() => {
@@ -111,7 +114,7 @@ function useResizeDrag({ panel, pane, edge, defaultWidth }: ResizeDragConfig) {
 
     dragRef.current = null;
     document.body.style.userSelect = '';
-    commitPaneWidths(panel);
+    commitPaneWidths(panel, pane);
   };
 
   return {
@@ -134,7 +137,7 @@ export function LeftSidebarResize({ panel }: { panel: string }) {
 
 /** Primary chat column. Right-edge handle: drag right grows. */
 export function LeftChatResize({ panel }: { panel: string }) {
-  const props = useResizeDrag({ panel, pane: 'leftChat', edge: 'right', defaultWidth: 320 });
+  const props = useResizeDrag({ panel, pane: 'leftChat', edge: 'right', defaultWidth: 360 });
   return <div {...props} />;
 }
 
@@ -150,6 +153,18 @@ export function RightSecondaryResize({ panel }: { panel: string }) {
  *  file tree returns to its own size when the chat undocks. */
 export function RightColResize({ panel }: { panel: string }) {
   const props = useResizeDrag({ panel, pane: 'rightCol', edge: 'left', defaultWidth: 220 });
+  return <div {...props} />;
+}
+
+/** Content-owned left navigation (e.g. Wiki topics). Right-edge handle. */
+export function ContentNavLeftResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'contentNavLeft', edge: 'right', defaultWidth: 200 });
+  return <div {...props} />;
+}
+
+/** Content-owned right navigation (e.g. Wiki page tree). Left-edge handle. */
+export function ContentNavRightResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'contentNavRight', edge: 'left', defaultWidth: 220 });
   return <div {...props} />;
 }
 

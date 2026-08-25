@@ -70,7 +70,12 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
 
   if (state === RUNTIME_STATES.READY) {
     const readyWire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
-    if (readyWire) return readyWire;
+    if (readyWire && !readyWire.killed) return readyWire;
+    if (readyWire?.killed) {
+      console.warn(`[ThreadRuntime] Discarding closed ready wire for thread ${threadId}; warming a replacement`);
+      if (getWireForThread(threadId) === readyWire) unregisterWire(threadId);
+      if (session.wire === readyWire) session.wire = null;
+    }
     threadRuntimeManager.markCold(runtimeKey);
   }
 

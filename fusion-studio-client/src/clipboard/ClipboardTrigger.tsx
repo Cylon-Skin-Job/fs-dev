@@ -26,9 +26,10 @@ import './Clipboard.css';
 
 interface ClipboardTriggerProps {
   onInsert?: (text: string) => void;
+  triggerVariant?: 'icon' | 'submenu';
 }
 
-export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
+export function ClipboardTrigger({ onInsert, triggerVariant = 'icon' }: ClipboardTriggerProps) {
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const items = useClipboardStore((s) => s.items);
@@ -83,6 +84,18 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
     }
   };
 
+  const handleInsertTopRanked = async () => {
+    try {
+      const { items: rankedItems } = await listPage(0, 1);
+      const topRanked = rankedItems[0];
+      if (topRanked) {
+        await handleSelect(topRanked);
+      }
+    } catch (err) {
+      console.error('[Clipboard] Failed to insert top-ranked item:', err);
+    }
+  };
+
   const {
     selectedIndex,
     handleItemClick,
@@ -115,27 +128,64 @@ export function ClipboardTrigger({ onInsert }: ClipboardTriggerProps) {
   useEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      setPopoverPos({
-        left: rect.left,
-        bottom: window.innerHeight - rect.top + 12,
-      });
+      if (triggerVariant === 'submenu') {
+        const modalWidth = 600;
+        setPopoverPos({
+          left: Math.min(rect.right + 12, window.innerWidth - modalWidth - 12),
+          bottom: Math.max(12, window.innerHeight - rect.bottom),
+        });
+      } else {
+        setPopoverPos({
+          left: rect.left,
+          bottom: window.innerHeight - rect.top + 12,
+        });
+      }
       setTimeout(() => {
         if (listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
         }
       }, 0);
     }
-  }, [isOpen, triggerRef]);
+  }, [isOpen, triggerRef, triggerVariant]);
 
   return (
     <>
-      <HoverIconTrigger
-        icon="content_paste"
-        title="Clipboard history (click to open)"
-        isOpen={isOpen}
-        triggerRef={triggerRef}
-        triggerProps={triggerProps}
-      />
+      {triggerVariant === 'submenu' ? (
+        <div className="rv-chat-composer-menu-row" role="none">
+          <button
+            type="button"
+            className="rv-chat-composer-menu-icon-action"
+            onClick={() => void handleInsertTopRanked()}
+            title="Insert top clipboard item"
+            aria-label="Insert top clipboard item"
+            role="menuitem"
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">content_paste</span>
+          </button>
+          <button
+            ref={triggerRef}
+            type="button"
+            className={`rv-chat-composer-menu-submenu${isOpen ? ' open' : ''}`}
+            title="Browse clipboard history"
+            aria-label="Browse clipboard history"
+            aria-haspopup="menu"
+            aria-expanded={isOpen}
+            role="menuitem"
+            {...triggerProps}
+          >
+            <span>Clipboard</span>
+            <span className="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
+        </div>
+      ) : (
+        <HoverIconTrigger
+          icon="content_paste"
+          title="Clipboard history (click to open)"
+          isOpen={isOpen}
+          triggerRef={triggerRef}
+          triggerProps={triggerProps}
+        />
+      )}
 
       <HoverIconModalContainer
         isOpen={isOpen}

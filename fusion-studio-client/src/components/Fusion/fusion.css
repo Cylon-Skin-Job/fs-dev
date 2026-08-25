@@ -908,7 +908,7 @@
   background: transparent;
   border: none;
   border-radius: 8px;
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
   transition: all 200ms;
 }

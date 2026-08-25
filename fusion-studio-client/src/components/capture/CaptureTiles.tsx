@@ -11,11 +11,14 @@ import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { DOC_VIEWER_ARCHIVE_FOLDER, type DocViewerMode, useDocViewerState } from '../../hooks/useDocViewerState';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
 import { useFileTileMenu } from '../../hooks/useFileTileMenu';
+import { useTileFileActions } from '../../hooks/useTileFileActions';
 import { TileRow } from '../tile-row/TileRow';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { DocumentTile } from '../tile-row/DocumentTile';
 import { Pinwheel } from '../Pinwheel';
 import { FilePageView } from './FilePageView';
+import { DocumentPreviewModal } from './DocumentPreviewModal';
+import { CaptureDocumentMenuButton } from './CaptureDocumentMenuButton';
 import { DocViewerHeader } from './DocViewerHeader';
 import { useFileDataStore } from '../../state/fileDataStore';
 import { usePanelStore } from '../../state/panelStore';
@@ -49,6 +52,7 @@ export function CaptureTiles() {
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState('');
+  const [isFullPageSelected, setIsFullPageSelected] = useState(false);
   const rootNodes = useFileDataStore((s) => s.trees[`${DOC_VIEWER_PANEL}:`]);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
   const requestTree = useFileDataStore((s) => s.requestTree);
@@ -77,11 +81,11 @@ export function CaptureTiles() {
   const {
     mode,
     selected,
+    lastOpenedPath,
     gridScroll,
     docScroll,
     setMode,
     selectFile,
-    selectSibling,
     clearSelection,
     restoreSelectedFile,
     archiveSelectedFile,
@@ -89,9 +93,13 @@ export function CaptureTiles() {
     resetGridScroll,
     persistDocScroll,
   } = useDocViewerState();
-  const { getFileContextMenuHandler, getFileMoreClickHandler } = useFileTileMenu({
+  const { getFileStarClickHandler } = useFileTileMenu({
     panel: DOC_VIEWER_PANEL,
     folder: '',
+  });
+  const { archiveOrRestoreFile, renameFile, deleteFile } = useTileFileActions({
+    panel: DOC_VIEWER_PANEL,
+    folder: selected?.folder ?? '',
   });
   const { files: archiveFiles, loading: archiveLoading } = useFolderFiles(
     DOC_VIEWER_PANEL,
@@ -121,9 +129,29 @@ export function CaptureTiles() {
     }
   }, [selected, gridScroll]);
 
-  const handleFileSelect = (folder: string) => (file: FileWithContent) => {
+  const openFilePreview = (folder: string, file: FileWithContent) => {
+    setIsFullPageSelected(false);
     selectFile(folder, file);
   };
+
+  const openFileFullScreen = (
+    event: React.MouseEvent,
+    folder: string,
+    file: FileWithContent
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    selectFile(folder, file);
+    setIsFullPageSelected(true);
+  };
+
+  const handleFileSelect = (folder: string) => (file: FileWithContent) => {
+    openFilePreview(folder, file);
+  };
+
+  const isLastOpenedFile = (folder: string, file: FileWithContent) => (
+    lastOpenedPath === file.path || lastOpenedPath === `${folder}/${file.name}`
+  );
 
   const rows = useMemo(
     () => (rootNodes ?? [])
@@ -193,19 +221,24 @@ export function CaptureTiles() {
     setIsSearchSubmitted(true);
   };
 
-  if (selected) {
+  if (selected && isFullPageSelected) {
     return (
       <FilePageView
         file={selected.file}
-        siblings={selected.siblings}
         panel={DOC_VIEWER_PANEL}
         folder={selected.folder}
         docScroll={docScroll}
         onDocScroll={persistDocScroll}
         onRestore={selected.folder === DOC_VIEWER_ARCHIVE_FOLDER ? undefined : restoreSelectedFile}
         onArchive={archiveSelectedFile}
-        onBack={clearSelection}
-        onSelectSibling={selectSibling}
+        starred={isDocFileStarred(selected.file.path)}
+        onRename={() => renameFile(selected.file, selected.folder)}
+        onDelete={() => deleteFile(selected.file, selected.folder)}
+        onToggleStar={getFileStarClickHandler(selected.file, selected.folder)}
+        onBack={() => {
+          setIsFullPageSelected(false);
+          clearSelection();
+        }}
       />
     );
   }
@@ -254,10 +287,20 @@ export function CaptureTiles() {
                   extension={file.extension}
                   panel={DOC_VIEWER_PANEL}
                   folderPath={folder}
+                  checked={isLastOpenedFile(folder, file)}
                   starred={isDocFileStarred(file.path)}
-                  onClick={() => selectFile(folder, file)}
-                  onContextMenu={getFileContextMenuHandler(file, folder)}
-                  onMoreClick={getFileMoreClickHandler(file, folder)}
+                  onStarClick={getFileStarClickHandler(file, folder)}
+                  onClick={() => openFilePreview(folder, file)}
+                  onContextMenu={(event) => openFileFullScreen(event, folder, file)}
+                  moreButton={(
+                    <CaptureDocumentMenuButton
+                      fileName={file.name}
+                      className="rv-doc-tile-more"
+                      onRename={() => renameFile(file, folder)}
+                      onArchive={() => archiveOrRestoreFile(file, folder)}
+                      onDelete={() => deleteFile(file, folder)}
+                    />
+                  )}
                 />
               ))}
             </div>
@@ -288,10 +331,20 @@ export function CaptureTiles() {
                           extension={file.extension}
                           panel={DOC_VIEWER_PANEL}
                           folderPath={folder}
+                          checked={isLastOpenedFile(folder, file)}
                           starred={isDocFileStarred(file.path)}
-                          onClick={() => selectFile(folder, file)}
-                          onContextMenu={getFileContextMenuHandler(file, folder)}
-                          onMoreClick={getFileMoreClickHandler(file, folder)}
+                          onStarClick={getFileStarClickHandler(file, folder)}
+                          onClick={() => openFilePreview(folder, file)}
+                          onContextMenu={(event) => openFileFullScreen(event, folder, file)}
+                          moreButton={(
+                            <CaptureDocumentMenuButton
+                              fileName={file.name}
+                              className="rv-doc-tile-more"
+                              onRename={() => renameFile(file, folder)}
+                              onArchive={() => archiveOrRestoreFile(file, folder)}
+                              onDelete={() => deleteFile(file, folder)}
+                            />
+                          )}
                         />
                       );
                     })}
@@ -324,10 +377,20 @@ export function CaptureTiles() {
                       extension={file.extension}
                       panel={DOC_VIEWER_PANEL}
                       folderPath={folder}
+                      checked={isLastOpenedFile(folder, file)}
                       starred={true}
-                      onClick={() => selectFile(folder, file)}
-                      onContextMenu={getFileContextMenuHandler(file, folder)}
-                      onMoreClick={getFileMoreClickHandler(file, folder)}
+                      onStarClick={getFileStarClickHandler(file, folder)}
+                      onClick={() => openFilePreview(folder, file)}
+                      onContextMenu={(event) => openFileFullScreen(event, folder, file)}
+                      moreButton={(
+                        <CaptureDocumentMenuButton
+                          fileName={file.name}
+                          className="rv-doc-tile-more"
+                          onRename={() => renameFile(file, folder)}
+                          onArchive={() => archiveOrRestoreFile(file, folder)}
+                          onDelete={() => deleteFile(file, folder)}
+                        />
+                      )}
                     />
                   );
                 })}
@@ -348,10 +411,20 @@ export function CaptureTiles() {
                   extension={file.extension}
                   panel={DOC_VIEWER_PANEL}
                   folderPath={DOC_VIEWER_ARCHIVE_FOLDER}
+                  checked={isLastOpenedFile(DOC_VIEWER_ARCHIVE_FOLDER, file)}
                   starred={isDocFileStarred(file.path)}
-                  onClick={() => selectFile(DOC_VIEWER_ARCHIVE_FOLDER, file)}
-                  onContextMenu={getFileContextMenuHandler(file, DOC_VIEWER_ARCHIVE_FOLDER)}
-                  onMoreClick={getFileMoreClickHandler(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                  onStarClick={getFileStarClickHandler(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                  onClick={() => openFilePreview(DOC_VIEWER_ARCHIVE_FOLDER, file)}
+                  onContextMenu={(event) => openFileFullScreen(event, DOC_VIEWER_ARCHIVE_FOLDER, file)}
+                  moreButton={(
+                    <CaptureDocumentMenuButton
+                      fileName={file.name}
+                      className="rv-doc-tile-more"
+                      onRename={() => renameFile(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                      onArchive={() => archiveOrRestoreFile(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                      onDelete={() => deleteFile(file, DOC_VIEWER_ARCHIVE_FOLDER)}
+                    />
+                  )}
                 />
               ))}
             </div>
@@ -366,10 +439,28 @@ export function CaptureTiles() {
             label={row.label}
             panel={DOC_VIEWER_PANEL}
             folder={row.folder}
+            checkedPath={lastOpenedPath}
             onFileSelect={handleFileSelect(row.folder)}
+            onFileContextMenu={(event, file) => openFileFullScreen(event, row.folder, file)}
           />
         ))}
       </div>
+      {selected && (
+        <DocumentPreviewModal
+          file={selected.file}
+          panel={DOC_VIEWER_PANEL}
+          starred={isDocFileStarred(selected.file.path)}
+          onClose={() => {
+            setIsFullPageSelected(false);
+            clearSelection();
+          }}
+          onOpenFullScreen={() => setIsFullPageSelected(true)}
+          onRename={() => renameFile(selected.file, selected.folder)}
+          onArchive={archiveSelectedFile}
+          onDelete={() => deleteFile(selected.file, selected.folder)}
+          onToggleStar={getFileStarClickHandler(selected.file, selected.folder)}
+        />
+      )}
     </div>
   );
 }

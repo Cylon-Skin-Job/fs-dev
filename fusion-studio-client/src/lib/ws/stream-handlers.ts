@@ -10,6 +10,7 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { readTokenUsage } from '../chat/context-usage';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useFileStore } from '../../state/fileStore';
 import { toolNameToSegmentType } from '../instructions';
@@ -362,8 +363,16 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
 
     case 'status_update':
       if (!threadId) return true;
-      if (msg.contextUsage !== undefined) {
-        store.setContextUsage(msg.contextUsage);
+      {
+        const tokenUsage = readTokenUsage(msg.tokenUsage);
+        if (msg.tokenUsage !== undefined) {
+          store.setTokenUsage(tokenUsage);
+        }
+        if (msg.contextUsage !== undefined) {
+          store.setContextUsage(msg.contextUsage);
+        } else if (typeof tokenUsage?.context_pct === 'number') {
+          store.setContextUsage(tokenUsage.context_pct);
+        }
       }
       return true;
 

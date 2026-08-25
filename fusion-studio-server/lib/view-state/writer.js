@@ -35,6 +35,13 @@ const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
   'officePaperBrightness',
 ]);
 
+const FORCE_VIEW_OVERRIDE_PATHS = new Set([
+  'collapsed.rightCol',
+  'collapsed.contentArea',
+  'widths.contentNavLeft',
+  'widths.contentNavRight',
+]);
+
 const writeQueues = new Map();
 
 function writeQueueKey(projectRoot, viewId) {
@@ -93,7 +100,8 @@ async function writeViewStatePatchNow(projectRoot, viewId, patch) {
   let overrideTouched = false;
 
   for (const [keyPath, value] of leafEntries(patch)) {
-    if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0])) {
+    const pathKey = keyPath.join('.');
+    if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0]) || FORCE_VIEW_OVERRIDE_PATHS.has(pathKey)) {
       setKeyPath(overrideUpdates, keyPath, value);
       overrideTouched = true;
     } else if (overrideExists && hasKeyPath(overrideBefore, keyPath)) {

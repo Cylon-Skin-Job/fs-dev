@@ -13,6 +13,7 @@ import { findWikiNodeByPath, useWikiStore } from '../../state/wikiStore';
 import { CopyPathButton } from '../CopyPathButton';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { SendToChatButton } from '../SendToChatButton';
+import { ViewHistoryControls } from '../ViewHistoryControls';
 
 const METADATA_SECTIONS: Array<{ key: string; label: string }> = [
   { key: 'incoming-edges', label: 'Incoming Edges' },
@@ -64,15 +65,9 @@ function WikiMetadataFooter({ frontmatter }: { frontmatter: WikiFrontmatter | nu
 export function PageViewer() {
   const root = useWikiStore((s) => s.root);
   const viewedPath = useWikiStore((s) => s.viewedPath);
-  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
   const selectedContent = useWikiStore((s) => s.selectedContent);
-  const selectedSymlinkTarget = useWikiStore((s) => s.selectedSymlinkTarget);
   const loading = useWikiStore((s) => s.loading);
   const error = useWikiStore((s) => s.error);
-  const historyIndex = useWikiStore((s) => s.historyIndex);
-  const history = useWikiStore((s) => s.history);
-  const goBack = useWikiStore((s) => s.goBack);
-  const goForward = useWikiStore((s) => s.goForward);
   const viewNode = useWikiStore((s) => s.viewNode);
 
   const selectedNode = useMemo(
@@ -80,8 +75,6 @@ export function PageViewer() {
     [root, viewedPath]
   );
 
-  const title = selectedNode?.label || 'Wiki';
-  const relativePath = viewedPagePath;
   const parsedPage = useMemo(() => parseWikiPage(selectedContent), [selectedContent]);
   const rendered = useMemo(() => markdownToHtml(parsedPage.body), [parsedPage.body]);
 
@@ -123,51 +116,6 @@ export function PageViewer() {
 
   return (
     <div className="rv-wiki-page-viewer" onClick={handleContentClick}>
-      {/* Header: nav + article name */}
-      <div className="rv-wiki-page-nav">
-        <button
-          className="rv-wiki-nav-btn"
-          onClick={goBack}
-          disabled={historyIndex <= 0}
-          title="Back"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <button
-          className="rv-wiki-nav-btn"
-          onClick={goForward}
-          disabled={historyIndex >= history.length - 1}
-          title="Forward"
-        >
-          <span className="material-symbols-outlined">arrow_forward</span>
-        </button>
-        <span className="rv-wiki-breadcrumb">{title}</span>
-        <div className="rv-wiki-nav-actions">
-          {relativePath && (
-            <>
-              {selectedSymlinkTarget ? (
-                <LinkedResourceIndicator
-                  symlinkTarget={selectedSymlinkTarget}
-                  className="rv-file-page-action"
-                />
-              ) : null}
-              <CopyPathButton
-                panel="wiki-viewer"
-                relativePath={relativePath}
-                className="rv-file-page-action"
-                title="Copy article path"
-              />
-              <SendToChatButton
-                panel="wiki-viewer"
-                relativePath={relativePath}
-                className="rv-file-page-action"
-                title="Send article path to chat"
-              />
-            </>
-          )}
-        </div>
-      </div>
-
       {/* Content */}
       {error && (
         <div className="rv-wiki-page-error">
@@ -184,6 +132,60 @@ export function PageViewer() {
         <WikiPageHeader frontmatter={parsedPage.frontmatter} />
         <div dangerouslySetInnerHTML={{ __html: rendered as string }} />
         <WikiMetadataFooter frontmatter={parsedPage.frontmatter} />
+      </div>
+
+    </div>
+  );
+}
+
+export function WikiPageNav() {
+  const root = useWikiStore((s) => s.root);
+  const viewedPath = useWikiStore((s) => s.viewedPath);
+  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
+  const selectedSymlinkTarget = useWikiStore((s) => s.selectedSymlinkTarget);
+  const historyIndex = useWikiStore((s) => s.historyIndex);
+  const history = useWikiStore((s) => s.history);
+  const goBack = useWikiStore((s) => s.goBack);
+  const goForward = useWikiStore((s) => s.goForward);
+
+  const selectedNode = useMemo(
+    () => findWikiNodeByPath(root, viewedPath),
+    [root, viewedPath]
+  );
+  const title = selectedNode?.label || 'Wiki';
+
+  return (
+    <div className="rv-wiki-page-nav">
+      <ViewHistoryControls
+        onBack={goBack}
+        onForward={goForward}
+        canGoBack={historyIndex > 0}
+        canGoForward={historyIndex < history.length - 1}
+      />
+      <span className="rv-wiki-breadcrumb">{title}</span>
+      <div className="rv-wiki-nav-actions" aria-label="Wiki page actions">
+        {viewedPagePath && selectedSymlinkTarget ? (
+          <LinkedResourceIndicator
+            symlinkTarget={selectedSymlinkTarget}
+            className="rv-file-page-action"
+          />
+        ) : null}
+        {viewedPagePath ? (
+          <>
+            <CopyPathButton
+              panel="wiki-viewer"
+              relativePath={viewedPagePath}
+              className="rv-file-page-action"
+              title="Copy article path"
+            />
+            <SendToChatButton
+              panel="wiki-viewer"
+              relativePath={viewedPagePath}
+              className="rv-file-page-action"
+              title="Send article path to chat"
+            />
+          </>
+        ) : null}
       </div>
     </div>
   );

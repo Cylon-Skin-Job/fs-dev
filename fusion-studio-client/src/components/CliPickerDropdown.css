@@ -2,8 +2,9 @@
 
 .rv-cli-picker-dropdown {
   top: calc(var(--chat-header-height, 40px) - 4px);
-  /* Anchored roughly under the playlist_add button: subject button (28px) + gap (4px) + right-edge padding (15px). */
-  right: calc(15px + 28px + var(--space-xs, 4px));
+  /* Anchored under the edit_square button beside the collapsed thread dock. */
+  right: auto;
+  left: calc(var(--space-xs, 4px) + 28px + var(--space-xs, 4px));
 }
 
 /* Each row carries its CLI's accent as `--cli-accent`.

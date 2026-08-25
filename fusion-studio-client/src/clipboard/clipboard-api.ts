@@ -21,6 +21,7 @@ import type {
   ClipboardDeleteResponse,
   ClipboardClearResponse,
   ClipboardStateBroadcast,
+  ClipboardErrorFrame,
 } from './types';
 
 // ── State broadcast subscription ─────────────────────────────
@@ -61,20 +62,34 @@ function request<T extends { error?: string }>(
   const matches = options.matches ?? (() => true);
 
   return new Promise((resolve, reject) => {
+    let settled = false;
+    const cleanup = () => {
+      if (settled) return;
+      settled = true;
+      unsubscribe();
+      unsubscribeError();
+      clearTimeout(timeout);
+    };
     const unsubscribe = onFusionMessage(type, (msg: T) => {
       if (!matches(msg)) return;
 
-      unsubscribe();
-      clearTimeout(timeout);
+      cleanup();
       if (msg.error) {
         reject(new Error(msg.error));
       } else {
         resolve(msg);
       }
     });
+    const unsubscribeError = onFusionMessage('clipboard:error', (msg: ClipboardErrorFrame) => {
+      if (msg.requestType && msg.requestType !== type) return;
+      if (typeof payload.id === 'number' && typeof msg.id === 'number' && msg.id !== payload.id) return;
+
+      cleanup();
+      reject(new Error(msg.message || msg.code || `Clipboard request failed: ${type}`));
+    });
     sendFusionMessage({ type, ...payload });
     const timeout = setTimeout(() => {
-      unsubscribe();
+      cleanup();
       reject(new Error(`Timeout waiting for ${type}`));
     }, timeoutMs);
   });

@@ -80,14 +80,22 @@ describe('backend.append', () => {
   });
 
   test('rolls back index row if keychain write fails', async () => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
     indexTable.getByContentHash.mockResolvedValue(null);
     indexTable.insert.mockResolvedValue(99);
     keychain.set.mockRejectedValue(new Error('keychain locked'));
     indexTable.remove.mockResolvedValue(true);
 
-    await expect(backend.append({ text: 'hello world' })).rejects.toThrow('keychain locked');
+    await expect(backend.append({ text: 'hello world' })).rejects.toMatchObject({
+      code: 'STORAGE_UNAVAILABLE',
+    });
 
     expect(indexTable.remove).toHaveBeenCalledWith(99);
+    expect(log).toHaveBeenCalledWith(
+      '[Clipboard] Secure storage operation failed:',
+      'keychain locked'
+    );
+    log.mockRestore();
   });
 
   test('prunes to capacity after insert', async () => {
@@ -137,6 +145,22 @@ describe('backend.use', () => {
     await expect(backend.use(4)).rejects.toMatchObject({ code: 'NOT_FOUND' });
 
     expect(indexTable.remove).toHaveBeenCalledWith(4);
+  });
+
+  test('reports secure-storage read failures as a backend error', async () => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    indexTable.get.mockResolvedValue({ id: 5, type: 'text', preview: 'x' });
+    keychain.get.mockRejectedValue(new Error('spawn EBADF'));
+
+    await expect(backend.use(5)).rejects.toMatchObject({
+      code: 'STORAGE_UNAVAILABLE',
+    });
+    expect(indexTable.touch).not.toHaveBeenCalled();
+    expect(log).toHaveBeenCalledWith(
+      '[Clipboard] Secure storage operation failed:',
+      'spawn EBADF'
+    );
+    log.mockRestore();
   });
 });
 

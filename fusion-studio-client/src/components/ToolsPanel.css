@@ -63,7 +63,7 @@
 }
 
 .rv-shell-command {
-  color: var(--text-white, currentColor);
+  color: var(--chat-tools-color, currentColor);
 }
 
 .rv-tool-error {
@@ -99,8 +99,10 @@
 /* ── ToolsPanel — left-rail workspace/tool switcher ─────────────────────── */
 
 .rv-tools-panel {
+  grid-column: 1 / 2;
+  grid-row: 2;
   background: var(--panel-chrome-bg, #1a1a1a);
-  border-right: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-right: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
   display: flex;
   flex-direction: column;
   padding: 8px 0;
@@ -108,16 +110,20 @@
 }
 
 .rv-tool-btn {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
   position: relative;
+}
+
+.rv-tool-btn .material-symbols-outlined {
+  font-size: var(--navigation-rail-icon-size, 24px);
 }
 
 .rv-tool-btn:hover {
@@ -126,7 +132,7 @@
 }
 
 .rv-tool-btn.active {
-  color: var(--accent-dim, var(--theme-primary));
+  color: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
 }
 
 .rv-tool-btn.active::before {
@@ -137,7 +143,7 @@
   transform: translateY(-50%);
   width: 3px;
   height: 24px;
-  background: var(--accent-dim, var(--theme-primary));
+  background: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
   border-radius: 0 2px 2px 0;
 }
 
@@ -155,7 +161,7 @@
 
 .rv-tools-divider {
   border: none;
-  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.25));
+  border-top: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.25)));
   margin: 8px 16px;
 }
 
@@ -167,7 +173,7 @@
 }
 
 .rv-tool-btn--app {
-  height: 56px;
+  height: 40px;
 }
 
 .rv-tool-btn--tool {

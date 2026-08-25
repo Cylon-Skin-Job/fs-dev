@@ -87,6 +87,7 @@ describe('clipboard:append', () => {
     await handlers['clipboard:append'](ws, { text: '' });
     const out = lastJson(ws);
     expect(out.type).toBe('clipboard:error');
+    expect(out.requestType).toBe('clipboard:append');
     expect(out.code).toBe('INVALID_VALUE');
   });
 });
@@ -110,6 +111,19 @@ describe('clipboard:use', () => {
       expect(msg.type).toBe('clipboard:state');
       expect(msg.value).toBeUndefined();
     }
+  });
+
+  test('returns a correlated error when secure storage is unavailable', async () => {
+    backend.use.mockRejectedValue(new ClipboardBackendError('STORAGE_UNAVAILABLE', 'unavailable'));
+    const ws = makeWs();
+    await handlers['clipboard:use'](ws, { id: 9 });
+    const out = lastJson(ws);
+    expect(out).toEqual(expect.objectContaining({
+      type: 'clipboard:error',
+      requestType: 'clipboard:use',
+      id: 9,
+      code: 'STORAGE_UNAVAILABLE',
+    }));
   });
 });
 

@@ -9,15 +9,16 @@
    this layer applies color where the layout file applies structure.
 
    Token map:
-     --file-viewer-chrome-border = neutral chrome border (Border sliders)
+     --file-viewer-chrome-border = workspace border (Workspace Theme > Borders)
      --file-tree-sidebar-bg      = panel-chrome surface
-     --content-attenuated        = Content Contrast luminance + Content Tint
+     --content-attenuated        = automatic code-chrome tone derived from the content background
 */
 
 /* ── Local theme aliases (scoped to the file-viewer layout root) ── */
 .rv-file-explorer-layout {
-  --file-viewer-chrome-border: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  --file-tree-sidebar-bg:      var(--panel-chrome-bg, #1a1a1a);
+  --file-viewer-chrome-border: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  --content-border:            var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  --file-tree-sidebar-bg:      var(--side-panel-surface-bg, var(--panel-chrome-bg, #1a1a1a));
 }
 
 /* ── Empty states (file picker not yet showing a viewer) ── */
@@ -36,32 +37,32 @@
 
 /* ── File tree sidebar surface ── */
 .rv-file-tree-sidebar {
-  background: var(--sidebar-surface-bg, #161616);
+  background: var(--file-tree-sidebar-bg);
 }
 
 .rv-file-tree-footer {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    var(--sidebar-surface-bg, #161616) 10%,
-    var(--sidebar-surface-bg, #161616) 100%
+    var(--file-tree-sidebar-bg) 10%,
+    var(--file-tree-sidebar-bg) 100%
   );
 }
 
 .rv-file-hidden-toggle {
-  background: var(--sidebar-surface-bg, #161616);
-  border-color: var(--chrome-accent, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
-  color: var(--chrome-accent, var(--text-dim));
+  background: var(--file-tree-sidebar-bg);
+  border-color: var(--file-viewer-chrome-border);
+  color: var(--side-panel-foreground-color, var(--chrome-accent, var(--text-dim)));
 }
 
 .rv-file-hidden-toggle:hover {
-  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
-  border-color: var(--accent-dim, var(--chrome-accent));
-  color: var(--accent-dim, var(--text-white));
+  background: var(--side-panel-selected-bg, var(--glass-sm, rgba(255, 255, 255, 0.06)));
+  border-color: var(--file-viewer-chrome-border);
+  color: var(--side-panel-selected-foreground-color, var(--text-white));
 }
 
 .rv-file-hidden-toggle[aria-pressed="true"] {
-  color: var(--chrome-accent, var(--text-dim));
+  color: var(--side-panel-heading-color, var(--chrome-accent, var(--text-dim)));
 }
 
 .rv-file-hidden-toggle[aria-pressed="true"] .material-symbols-outlined {
@@ -69,7 +70,7 @@
 }
 
 .rv-file-tree-item--hidden-folder::after {
-  background: color-mix(in srgb, var(--accent-dim, var(--theme-primary, #39628e)) 42%, transparent);
+  background: color-mix(in srgb, var(--side-panel-selected-bg, var(--accent-dim, var(--theme-primary, #39628e))) 42%, transparent);
 }
 
 /* ── Open file: same surface as document code canvas ── */
@@ -77,12 +78,9 @@
   background: var(--document-bg, #161616);
 }
 
-/* ── Header rail + chrome divider beneath tabs ──
-   Header rail matches the sidebar surface so the area around the nav
-   buttons and the gap where no tabs are visible reads as a continuation
-   of the workspace's sidebar/rail chrome. */
+/* ── Browser-style tab rail + divider ── */
 .rv-file-viewer-header {
-  background: var(--sidebar-surface-bg, #161616);
+  background: var(--panel-chrome-bg, #1a1a1a);
 }
 
 .rv-file-viewer-header::after {
@@ -91,67 +89,65 @@
   background: var(--file-viewer-chrome-border, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
 
-/* ── Header nav buttons (chevrons) ── */
-.rv-file-viewer-nav .rv-nav-btn {
-  background: var(--sidebar-surface-bg, #161616);
-  color: var(--text-dim);
-}
-
-.rv-file-viewer-nav .rv-nav-btn:hover:not(:disabled) {
-  color: var(--text-white);
-}
-
-/* ── Tab strip rail + tab chrome ──
-   Strip surface matches the sidebar so the area between/beside tabs reads
-   as a continuation of the workspace's sidebar chrome. Individual tab chips
-   keep --file-tree-sidebar-bg so they read as raised elements on the rail. */
+/* ── Tab strip rail + connected active tab ── */
 .rv-file-viewer-tabs {
-  background: var(--sidebar-surface-bg, #161616);
+  background: var(--panel-chrome-bg, #1a1a1a);
 }
 
 .rv-file-viewer-tab {
-  border-left:  1px solid var(--file-viewer-chrome-border);
-  border-right: 1px solid var(--file-viewer-chrome-border);
-  background-color: var(--file-tree-sidebar-bg, #1a1a1a);
+  border: none;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+}
+
+.rv-file-viewer-tab:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #e0e0e0);
 }
 
 .rv-file-viewer-tab.active {
-  background-color: var(--document-bg, #161616);
+  background: var(--document-bg, #161616);
+  border-top: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
+  border-right: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
+  border-bottom: none;
+  border-left: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
+  color: var(--text-primary, #e0e0e0);
 }
 
-/* Tab name + icon — driven by the picker's "Chrome settings" sliders
-   (Luminance + Tint) via --chrome-accent. */
 .rv-file-viewer-tab .rv-tab-icon {
-  color: var(--chrome-accent, var(--text-dim));
+  color: inherit;
 }
 
 .rv-file-viewer-tab .rv-tab-name {
-  color: var(--chrome-accent, var(--text-dim));
+  color: inherit;
 }
 
 .rv-file-viewer-tab:not(.active) .rv-tab-name {
-  color: var(--chrome-accent, var(--text-dim));
+  color: inherit;
 }
 
 .rv-file-viewer-tab .rv-tab-close {
-  color: var(--text-dim);
+  color: inherit;
 }
 
 .rv-file-viewer-tab .rv-tab-close:hover {
-  background: var(--glass-md, rgba(255, 255, 255, 0.1));
-  color: var(--text-white);
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  opacity: 1;
 }
 
 /* ── Filename info row + content divider ── */
 .rv-file-viewer-info {
   background: var(--document-bg, #161616);
-  /* Content divider (between filename row and the code body). Inherits the
-     wiki's border paradigm (--content-highlight) so file-viewer in-content
-     borders match the wiki's borders. Not driven by the Border sliders. */
-  border-bottom: 1px solid var(--content-highlight, rgba(192, 160, 224, 0.16));
-  /* Filename row text — driven by the picker's "Chrome settings" sliders
-     via --chrome-accent. The border above stays on the wiki content paradigm. */
-  color: var(--chrome-accent, var(--text-dim));
+  border-bottom: 1px solid var(--file-viewer-chrome-border);
+  color: var(--content-attenuated, var(--text-dim));
+}
+
+.rv-file-viewer-info .rv-file-page-action {
+  color: var(--content-foreground-color, var(--text-dim));
+}
+
+.rv-file-viewer-info .rv-file-page-action:hover {
+  color: var(--text-primary, #e0e0e0);
 }
 
 /* ── Code-content fill ── */

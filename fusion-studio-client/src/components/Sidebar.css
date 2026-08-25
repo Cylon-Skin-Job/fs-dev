@@ -3,22 +3,166 @@
 /* Anchor the absolute collapse button to the sidebar */
 .rv-sidebar {
   position: relative;
+  border-radius: var(--thread-container-border-radius, 0px);
 }
 
 .rv-sidebar--active {
   /* no active-wire highlight — .rv-chat-area--inactive opacity dimming is enough */
 }
 
+.rv-thread-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs, 4px);
+  width: 100%;
+  min-height: 47px;
+  margin: 0 0 var(--space-md, 12px);
+}
+
+.rv-sidebar-peek-dock {
+  position: absolute;
+  top: 6px;
+  left: 4px;
+}
+
+.rv-thread-view-select {
+  align-self: flex-start;
+  width: auto;
+  max-width: calc(100% - 32px);
+  margin: 15px 0 0 7px;
+  padding: var(--space-xs, 4px) 2px var(--space-xs, 4px) 0;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--sidebar-surface-bg, var(--panel-chrome-bg));
+  color: var(--thread-heading-color, var(--thread-foreground-color, var(--chrome-accent, var(--text-dim))));
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  text-align-last: left;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast, 150ms) ease,
+    color var(--transition-fast, 150ms) ease;
+}
+
+.rv-thread-view-select:hover {
+  background: var(--glass-sm, rgba(255, 255, 255, 0.06));
+  color: var(--thread-selected-bg, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-thread-view-select:focus-visible {
+  outline: 2px solid var(--thread-selected-bg, var(--accent-dim, var(--theme-primary)));
+  outline-offset: 2px;
+}
+
+.rv-sidebar .rv-sidebar-peek-dock {
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-dim)));
+}
+
+.rv-sidebar .rv-sidebar-peek-dock:hover,
+.rv-sidebar .rv-sidebar-peek-dock[aria-expanded="true"] {
+  color: var(--thread-selected-bg, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-sidebar .rv-sidebar-peek-dock:focus-visible {
+  outline-color: var(--thread-selected-bg, var(--theme-primary));
+}
+
+.rv-thread-view-select option {
+  background: var(--sidebar-surface-bg, var(--panel-chrome-bg));
+  color: var(--thread-heading-color, var(--thread-foreground-color, var(--chrome-accent, var(--text-dim))));
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rv-thread-list-empty {
+  cursor: default;
+}
+
+.rv-thread-menu-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-sidebar .rv-new-chat-btn {
+  justify-content: flex-start;
+  border: none;
+  color: var(--thread-heading-color, var(--thread-foreground-color, var(--chrome-accent, var(--text-dim))));
+  text-align: left;
+}
+
+.rv-sidebar .rv-chat-item-text,
+.rv-sidebar .rv-chat-item-meta {
+  color: var(--thread-text-color, var(--thread-foreground-color, var(--chrome-accent, var(--text-dim))));
+}
+
+.rv-sidebar .rv-new-chat-btn .material-symbols-outlined {
+  flex: 0 0 auto;
+}
+
+.rv-sidebar .rv-new-chat-btn span:last-child {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.rv-thread-list-divider {
+  flex: 0 0 auto;
+  height: 1px;
+  margin: 0 0 var(--space-md, 12px);
+  background: var(--thread-foreground-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+}
+
+.rv-sidebar .rv-thread-menu-btn,
+.rv-sidebar .rv-thread-menu-btn:hover {
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-secondary)));
+}
+
 /* SPEC-26c-2: collapsed rail — sidebar collapses to a 40px strip
    with only an expand icon. Width comes from the inline CSS variable
    on .rv-panel (set to 40px when collapsed). Hide child content except
    the expand affordance. */
-.rv-sidebar--collapsed {
-  overflow: hidden;
+.rv-sidebar.rv-sidebar--collapsed {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  z-index: var(--z-dropdown, 100);
 }
 
-.rv-sidebar--collapsed > *:not(.rv-collapse-rail-btn) {
-  display: none;
+.rv-sidebar-peek-panel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: var(--left-sidebar-expanded-w, 220px);
+  min-height: 0;
+  padding: var(--space-lg, 16px);
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-10px);
+  background: var(--sidebar-surface-bg, #161616);
+  border-right: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  box-shadow: var(--shadow-large, 12px 0 28px rgba(0, 0, 0, 0.34));
+  transition:
+    opacity var(--transition-fast, 150ms) ease,
+    transform var(--transition-fast, 150ms) ease,
+    visibility 0s linear var(--transition-fast, 150ms);
+}
+
+.rv-panel:has(.rv-chat-thread-dock:hover) .rv-sidebar-peek-panel,
+.rv-panel:has(.rv-chat-thread-dock:focus-visible) .rv-sidebar-peek-panel,
+.rv-sidebar-peek-panel:hover,
+.rv-sidebar-peek-panel:focus-within {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0s;
 }
 
 .rv-collapse-rail-btn {

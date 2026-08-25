@@ -504,6 +504,7 @@
 
 .rv-email-header-action {
   width: 32px;
+  color: var(--content-foreground-color, var(--text-dim));
 }
 
 .rv-email-header-action:hover,

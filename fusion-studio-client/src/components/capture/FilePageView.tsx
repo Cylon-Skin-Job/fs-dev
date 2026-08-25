@@ -3,76 +3,92 @@
  * @role Full-content file viewer for the capture-viewer panel
  *
  * Pure presentation. Displays a single file at readable size, with a back
- * button, filename, chrome actions, mode toggle, and a bottom ribbon of
- * sibling tiles.
+ * button, filename, and chrome actions.
  */
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
-import { DocumentTile } from '../tile-row/DocumentTile';
 import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 import { getPanelFileUrl } from '../../lib/panels';
+import { getFileIcon } from '../../lib/file-utils';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
-import { usePanelStore } from '../../state/panelStore';
 import { DOC_VIEWER_ARCHIVE_FOLDER } from '../../hooks/useDocViewerState';
-import { activityId } from '../../lib/viewActivity';
-import { normalizeViewCollections } from '../../lib/viewCollections';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { IframeSurface, useCacheBusterUrl } from '../iframe';
 import { DocViewerChrome } from './DocViewerChrome';
+import { stripFrontmatter } from '../../lib/transforms';
+import { CaptureDocumentMenuButton } from './CaptureDocumentMenuButton';
 import './FilePageView.css';
 import './DocViewerHeader.css';
 import './DocViewerChrome.css';
 
 interface FilePageViewProps {
   file: FileWithContent;
-  siblings?: FileWithContent[];
   panel: string;
   folder: string;
   folderName?: string;
-  showRibbon?: boolean;
   docScroll?: number;
   onDocScroll?: (scrollTop: number) => void;
   onRestore?: () => void;
   onArchive?: () => void;
+  starred?: boolean;
+  onRename?: () => void;
+  onDelete?: () => void;
+  onToggleStar?: () => void;
   onBack: () => void;
-  onSelectSibling?: (file: FileWithContent) => void;
+}
+
+function extractMarkdownHeading(content: string, fallback: string) {
+  const source = stripFrontmatter(content);
+  const heading = /^ {0,3}#\s+(.+?)\s*#*\s*$(?:\r?\n)?/m.exec(source);
+  if (!heading || heading.index === undefined) {
+    return { title: fallback, body: source };
+  }
+
+  const title = heading[1]
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`~]/g, '')
+    .trim();
+  const body = source.slice(0, heading.index) + source.slice(heading.index + heading[0].length);
+  return { title: title || fallback, body };
 }
 
 export function FilePageView({
   file,
-  siblings,
   panel,
   folder,
   folderName,
-  showRibbon = true,
   docScroll = 0,
   onDocScroll,
   onRestore,
   onArchive,
+  starred = false,
+  onRename,
+  onDelete,
+  onToggleStar,
   onBack,
-  onSelectSibling,
 }: FilePageViewProps) {
   const isImage = isImageFile(file.name);
   const extension = file.extension || file.name.split('.').pop()?.toLowerCase() || '';
   const isMarkdown = extension === 'md' || extension === 'markdown';
   const isHtml = extension === 'html' || extension === 'htm';
+  const isCaptureView = panel === 'capture-viewer';
+  const fileIcon = getFileIcon(extension, file.name);
   const isArchiveDoc = folder === DOC_VIEWER_ARCHIVE_FOLDER;
   const titleLabel = isArchiveDoc
     ? `ARCHIVE: ${file.name}`
     : folderName
       ? `${folderName} / ${file.name}`
       : file.name;
-  const [viewMode, setViewMode] = useState<'code' | 'markdown'>('code');
-  const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
-  const rawCollections = usePanelStore((s) => s.viewStates[panel]?.collections);
-  const starredIds = useMemo(
-    () => new Set(normalizeViewCollections(rawCollections).starred.map((item) => item.id)),
-    [rawCollections]
+  const markdownDocument = useMemo(
+    () => isMarkdown ? extractMarkdownHeading(file.content, file.name) : null,
+    [file.content, file.name, isMarkdown],
   );
+  const documentTitle = markdownDocument?.title ?? titleLabel;
+  const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -85,18 +101,25 @@ export function FilePageView({
     if (el.scrollHeight > el.clientHeight) {
       el.scrollTop = Math.min(docScroll, el.scrollHeight - el.clientHeight);
     }
-  }, [docScroll, file.path, file.content, viewMode]);
+  }, [docScroll, file.path, file.content]);
 
   return (
-    <div className="rv-file-page-view">
+    <div className={`rv-file-page-view${isCaptureView ? ' rv-file-page-view--capture' : ''}`}>
       <DocViewerChrome
         left={
           <>
-            <button className="rv-capture-viewer-back" onClick={onBack} title="Back to tiles">
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-            <span className="rv-capture-viewer-title">{titleLabel}</span>
-            {isArchiveDoc && onRestore && (
+            {!isCaptureView ? (
+              <button
+                type="button"
+                className="rv-capture-viewer-close"
+                onClick={onBack}
+                aria-label="Close document"
+                title="Close document"
+              >
+                Close
+              </button>
+            ) : null}
+            {isArchiveDoc && onRestore ? (
               <button
                 type="button"
                 className="rv-capture-viewer-restore"
@@ -105,8 +128,18 @@ export function FilePageView({
               >
                 Restore
               </button>
-            )}
+            ) : null}
           </>
+        }
+        center={
+          isCaptureView ? (
+            <span className="rv-capture-viewer-file-identity">
+              <span className="material-symbols-outlined" aria-hidden="true">{fileIcon}</span>
+              <span className="rv-capture-viewer-title">{file.name}</span>
+            </span>
+          ) : (
+            <span className="rv-capture-viewer-title">{titleLabel}</span>
+          )
         }
         right={
           <div className="rv-capture-viewer-actions">
@@ -116,36 +149,61 @@ export function FilePageView({
                 className="rv-file-page-action"
               />
             ) : null}
-            {!isArchiveDoc && onArchive && (
+            <CopyPathButton
+              panel={panel}
+              relativePath={file.path}
+              className="rv-file-page-action"
+              title="Copy file path"
+            />
+            <SendToChatButton
+              panel={panel}
+              relativePath={file.path}
+              className="rv-file-page-action"
+              title="Send file path to chat"
+            />
+            {onToggleStar ? (
               <button
                 type="button"
-                className="rv-file-page-action"
-                onClick={onArchive}
-                title="Archive this file"
+                className={`rv-file-page-action rv-capture-viewer-star${starred ? ' is-starred' : ''}`}
+                onClick={onToggleStar}
+                aria-label={starred ? `Unstar ${file.name}` : `Star ${file.name}`}
+                aria-pressed={starred}
+                title={starred ? 'Unstar' : 'Star'}
               >
-                <span className="material-symbols-outlined">archive</span>
+                <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
               </button>
-            )}
-            <CopyPathButton panel={panel} relativePath={file.path} title="Copy file path" />
-            <SendToChatButton panel={panel} relativePath={file.path} title="Send file path to chat" />
-            {isMarkdown && (
-              <button
+            ) : null}
+            {onRename || onDelete || onToggleStar ? (
+              <CaptureDocumentMenuButton
+                fileName={file.name}
                 className="rv-file-page-action"
-                onClick={() => setViewMode(viewMode === 'code' ? 'markdown' : 'code')}
-                title={viewMode === 'code' ? 'Switch to document view' : 'Switch to code view'}
-              >
-                <span className="material-symbols-outlined">
-                  {viewMode === 'code' ? 'toggle_off' : 'toggle_on'}
-                </span>
-              </button>
-            )}
+                onRename={onRename}
+                onArchive={!isArchiveDoc ? onArchive : undefined}
+                onDelete={onDelete}
+              />
+            ) : null}
           </div>
         }
       />
 
+      {isCaptureView ? (
+        <div className="rv-capture-document-subheader">
+          <button
+            type="button"
+            className="rv-capture-document-subheader-back"
+            onClick={onBack}
+            aria-label="Close document"
+            title="Close document"
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+          </button>
+          <span className="rv-capture-document-subheader-title">{documentTitle}</span>
+        </div>
+      ) : null}
+
       <div
         ref={contentRef}
-        className={`rv-file-page-content${isHtml ? ' rv-file-page-html' : ''}${!isImage && !isHtml && !(isMarkdown && viewMode === 'markdown') ? ' rv-file-page-document' : ''}`}
+        className={`rv-file-page-content${isHtml ? ' rv-file-page-html' : ''}${!isImage && !isHtml && !isMarkdown ? ' rv-file-page-document' : ''}`}
         onScroll={(e) => onDocScroll?.(e.currentTarget.scrollTop)}
       >
         {isImage ? (
@@ -162,30 +220,14 @@ export function FilePageView({
             title={file.name}
           />
         ) : (
-          <CodeView content={file.content} extension={extension} mode={isMarkdown ? viewMode : 'code'} />
+          <CodeView
+            content={markdownDocument?.body ?? file.content}
+            extension={extension}
+            mode={isMarkdown ? 'markdown' : 'code'}
+          />
         )}
       </div>
 
-      {showRibbon && siblings && siblings.length > 0 && onSelectSibling && (
-        <div className="rv-file-page-ribbon">
-          <div className="rv-file-page-ribbon-scroll">
-            {siblings.map((sib) => (
-              <DocumentTile
-                key={sib.path}
-                name={sib.name}
-                content={sib.content}
-                extension={sib.extension}
-                panel={panel}
-                folderPath={folder}
-                size="small"
-                active={sib.path === file.path}
-                starred={starredIds.has(activityId(panel, sib.path))}
-                onClick={() => onSelectSibling(sib)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

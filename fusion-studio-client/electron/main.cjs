@@ -473,11 +473,6 @@ function buildMenu() {
       label: 'Tools',
       submenu: [
         {
-          label: 'Theme Picker',
-          accelerator: 'CmdOrCtrl+Shift+T',
-          click: () => sendMenuAction({ type: 'open-theme-picker' }),
-        },
-        {
           label: 'Secrets Manager',
           accelerator: 'CmdOrCtrl+Shift+S',
           click: () => sendMenuAction({ type: 'open-secrets-manager' }),

@@ -30,6 +30,15 @@ class ClipboardBackendError extends Error {
 }
 ClipboardBackendError.NOT_FOUND = 'NOT_FOUND';
 ClipboardBackendError.INVALID_VALUE = 'INVALID_VALUE';
+ClipboardBackendError.STORAGE_UNAVAILABLE = 'STORAGE_UNAVAILABLE';
+
+function storageUnavailable(err) {
+  console.error('[Clipboard] Secure storage operation failed:', err?.message || err);
+  return new ClipboardBackendError(
+    ClipboardBackendError.STORAGE_UNAVAILABLE,
+    'Clipboard secure storage is unavailable'
+  );
+}
 
 function sha256(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
@@ -82,7 +91,7 @@ async function append({ text, source = 'manual' }) {
   } catch (err) {
     // Roll back the index row — keychain write is the load-bearing step.
     await indexTable.remove(id).catch(() => {});
-    throw err;
+    throw storageUnavailable(err);
   }
 
   await pruneToCapacity();
@@ -102,7 +111,12 @@ async function use(id) {
       `clipboard item ${id} not found`
     );
   }
-  const value = await keychain.get(id);
+  let value;
+  try {
+    value = await keychain.get(id);
+  } catch (err) {
+    throw storageUnavailable(err);
+  }
   if (value === null) {
     // Index/keychain divergence — clean up the orphan row and report missing.
     await indexTable.remove(id).catch(() => {});

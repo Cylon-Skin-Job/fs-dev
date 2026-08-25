@@ -482,6 +482,7 @@
 
 .rv-office-header-action {
   width: 32px;
+  color: var(--content-foreground-color, var(--text-dim));
 }
 
 .rv-office-header-action:hover,

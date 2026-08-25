@@ -62,6 +62,8 @@ export interface ClipboardStateBroadcast {
 
 export interface ClipboardErrorFrame {
   type: 'clipboard:error';
+  requestType?: string;
+  id?: number;
   code: string;
   message: string;
 }

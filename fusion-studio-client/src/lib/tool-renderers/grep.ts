@@ -26,9 +26,9 @@ export const grepRenderer: ToolRenderer = {
     return lines.map(line => {
       const isMatchRow = line.startsWith('  ');
       if (isMatchRow) {
-        return `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(line)}</div>`;
+        return `<div style="color:var(--chat-foreground-color, var(--text-dim));padding:1px 0">${escapeHtml(line)}</div>`;
       }
-      return `<div style="color:var(--text-dim);padding:1px 0">${escapeHtml(truncatePath(line))}</div>`;
+      return `<div style="color:var(--chat-foreground-color, var(--text-dim));padding:1px 0">${escapeHtml(truncatePath(line))}</div>`;
     }).join('');
   },
 

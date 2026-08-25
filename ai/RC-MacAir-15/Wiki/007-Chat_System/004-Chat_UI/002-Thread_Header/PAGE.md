@@ -27,3 +27,21 @@ Thread ID and Chat ID are different.
 - Reply chrome Chat ID actions copy SQLite `exchanges.id`.
 
 Do not reuse the thread id value for turn-level actions.
+
+## Collapsed Thread Rail
+
+When the persistent thread rail is hidden, the upper-left of the chat header
+shows a `dock_to_right` control. Hovering the control reveals the existing
+thread rail from the left as a full-height overlay; it does not resize the chat
+column. Moving into the overlay keeps it open so its normal thread-row actions
+remain usable.
+
+The hover preview keeps the thread-view dropdown available but hides the close
+control. It also shows `dock_to_right` in the same upper-left position as the
+chat header control. Clicking either dock control expands and pins the normal
+thread rail, at which point the close control appears.
+
+Preview and pinned states share a fixed-height management-header slot, New chat
+row, divider, and thread-list structure. Filling the management slot must not
+shift New chat or any thread row. The hover preview reuses passive thread-open
+behavior and must not warm, spawn, stop, or replace a thread runtime.

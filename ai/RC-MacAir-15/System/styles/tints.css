@@ -68,7 +68,7 @@ body[data-tint-cards="true"] .rv-ticket-detail-id {
 }
 
 body[data-tint-cards="true"] .rv-wiki-topic-list {
-  background: var(--ws-sidebar-bg, #111);
+  background: var(--theme-primary, var(--bg-solid, #111));
   border-right-color: var(--ws-panel-border, #333);
 }
 
@@ -77,7 +77,7 @@ body[data-tint-cards="true"] .rv-wiki-page-viewer {
 }
 
 body[data-tint-cards="true"] .rv-wiki-page-nav {
-  background: var(--ws-sidebar-bg, #111);
+  background: var(--theme-primary, var(--bg-solid, #111));
   border-bottom-color: var(--ws-panel-border, #333);
 }
 
@@ -87,7 +87,7 @@ body[data-tint-cards="true"] .rv-wiki-tab-bar {
 }
 
 body[data-tint-cards="true"] .rv-wiki-edge-panel {
-  background: var(--ws-sidebar-bg, #111);
+  background: var(--theme-primary, var(--bg-solid, #111));
   border-left-color: var(--ws-panel-border, #333);
 }
 
@@ -98,7 +98,7 @@ body[data-tint-left="true"] .rv-sidebar {
 
 /* ── Right Panel ── */
 body[data-tint-right="true"] .rv-file-tree-sidebar {
-  background: color-mix(in srgb, var(--sidebar-surface-bg, #161616) 88%, var(--ws-primary, #ec4899) 12%);
+  background: var(--theme-primary, var(--bg-solid, #161616));
 }
 
 body[data-tint-right="true"] .rv-secondary-sticky > .rv-chat-area {

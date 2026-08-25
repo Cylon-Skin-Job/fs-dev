@@ -1,13 +1,15 @@
 {
   "widths": {
-    "leftSidebar": 220,
-    "leftChat": 399.29296875,
+    "leftSidebar": 240.25390625,
+    "leftChat": 486.80078125,
     "rightSecondary": 400,
-    "rightCol": 225.234375
+    "rightCol": 247.0625
   },
   "collapsed": {
-    "leftSidebar": true,
-    "leftChat": false
+    "leftSidebar": false,
+    "leftChat": false,
+    "rightCol": false,
+    "contentArea": false
   },
   "popup": {
     "open": false,
@@ -35,64 +37,24 @@
     },
     "tabs": [
       {
-        "id": "file-viewer:install-voice-transcription.sh",
+        "id": "file-viewer:restart-fusion.sh",
         "panel": "file-viewer",
-        "path": "install-voice-transcription.sh",
-        "title": "install-voice-transcription.sh",
+        "path": "restart-fusion.sh",
+        "title": "restart-fusion.sh",
         "kind": "file",
-        "openedAt": 1786352240594,
+        "openedAt": 1787640834903,
         "extension": "sh",
         "tabIndex": 0
       },
       {
-        "id": "file-viewer:HANDOFF.md",
+        "id": "file-viewer:fusion-studio-server/AGENTS.md",
         "panel": "file-viewer",
-        "path": "HANDOFF.md",
-        "title": "HANDOFF.md",
+        "path": "fusion-studio-server/AGENTS.md",
+        "title": "AGENTS.md",
         "kind": "file",
-        "openedAt": 1786352240594,
+        "openedAt": 1787640834903,
         "extension": "md",
         "tabIndex": 1
-      },
-      {
-        "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
-        "panel": "file-viewer",
-        "path": "MESSAGE_ID_AUDIT_SPEC.md",
-        "title": "MESSAGE_ID_AUDIT_SPEC.md",
-        "kind": "file",
-        "openedAt": 1786352240594,
-        "extension": "md",
-        "tabIndex": 2
-      },
-      {
-        "id": "file-viewer:CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
-        "panel": "file-viewer",
-        "path": "CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
-        "title": "CONTEXT_USAGE_PERCENTAGE_BAR_SPEC.md",
-        "kind": "file",
-        "openedAt": 1786352240594,
-        "extension": "md",
-        "tabIndex": 3
-      },
-      {
-        "id": "file-viewer:wiki-fallback-debug-report.md",
-        "panel": "file-viewer",
-        "path": "wiki-fallback-debug-report.md",
-        "title": "wiki-fallback-debug-report.md",
-        "kind": "file",
-        "openedAt": 1786352240594,
-        "extension": "md",
-        "tabIndex": 4
-      },
-      {
-        "id": "file-viewer:claude-convo-artifacts/LESSONS.md",
-        "panel": "file-viewer",
-        "path": "claude-convo-artifacts/LESSONS.md",
-        "title": "LESSONS.md",
-        "kind": "file",
-        "openedAt": 1786352240594,
-        "extension": "md",
-        "tabIndex": 5
       },
       {
         "id": "file-viewer:ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
@@ -100,21 +62,41 @@
         "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
         "title": "PAGE.md",
         "kind": "file",
-        "openedAt": 1786352240594,
+        "openedAt": 1787640834903,
         "extension": "md",
-        "tabIndex": 6
+        "tabIndex": 2
       },
       {
-        "id": "file-viewer:ai/RC-MacAir-15/Views/001-capture-viewer/content.json",
+        "id": "file-viewer:fusion-studio-server/data/background-services.log",
         "panel": "file-viewer",
-        "path": "ai/RC-MacAir-15/Views/001-capture-viewer/content.json",
-        "title": "content.json",
+        "path": "fusion-studio-server/data/background-services.log",
+        "title": "background-services.log",
         "kind": "file",
-        "openedAt": 1786352240594,
-        "extension": "json",
-        "tabIndex": 7
+        "openedAt": 1787640834903,
+        "extension": "log",
+        "tabIndex": 3
+      },
+      {
+        "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
+        "panel": "file-viewer",
+        "path": "MESSAGE_ID_AUDIT_SPEC.md",
+        "title": "MESSAGE_ID_AUDIT_SPEC.md",
+        "kind": "file",
+        "openedAt": 1787640834903,
+        "extension": "md",
+        "tabIndex": 4
+      },
+      {
+        "id": "file-viewer:fusion-studio-client/index.html",
+        "panel": "file-viewer",
+        "path": "fusion-studio-client/index.html",
+        "title": "index.html",
+        "kind": "file",
+        "openedAt": 1787640834903,
+        "extension": "html",
+        "tabIndex": 5
       }
     ],
-    "activeTabId": "file-viewer:ai/RC-MacAir-15/Views/001-capture-viewer/content.json"
+    "activeTabId": "file-viewer:fusion-studio-client/index.html"
   }
 }
