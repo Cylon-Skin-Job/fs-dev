@@ -109,6 +109,7 @@ describe('compat harness config binding', () => {
       model: 'kimi-for-coding/k2p7',
       thinking: true,
       pure: false,
+      variant: null,
     });
   });
 
@@ -156,6 +157,7 @@ describe('compat harness config binding', () => {
       model: null,
       thinking: false,
       pure: false,
+      variant: null,
     });
   });
 

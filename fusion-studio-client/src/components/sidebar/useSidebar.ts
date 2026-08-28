@@ -121,8 +121,8 @@ export function useSidebar({ panel }: UseSidebarOptions) {
     toggleCliPicker(panel);
   }, [createDefaultAssistantThread, panel, selectableHarnesses.length, toggleCliPicker]);
 
-  const handleHarnessSelect = useCallback((harnessId: string) => {
-    selectHarness(harnessId);
+  const handleHarnessSelect = useCallback((harnessId: string, modelId?: string) => {
+    selectHarness(harnessId, modelId);
   }, [selectHarness]);
 
   const handleOpenThread = useCallback((threadId: string) => {

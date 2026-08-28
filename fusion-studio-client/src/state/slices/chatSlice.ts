@@ -324,11 +324,19 @@ export function createChatSlice(set: Set, get: Get) {
       const now = performance.now();
       (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
       console.log(`[TIMING] SEND at ${now.toFixed(1)}ms threadId=${threadId.slice(0, 8)}`);
+      const composerModelConfig = state.composerModelConfig?.[state.currentPanel];
+      const harnessConfig = composerModelConfig
+        ? {
+            ...(composerModelConfig.modelId ? { model: composerModelConfig.modelId } : {}),
+            ...(composerModelConfig.effort ? { variant: composerModelConfig.effort } : {}),
+          }
+        : undefined;
       socket.send(JSON.stringify({
         type: 'prompt',
         threadId,
         user_input: text,
         ...(attachments?.length ? { attachments } : {}),
+        ...(harnessConfig && Object.keys(harnessConfig).length ? { harnessConfig } : {}),
       }));
     },
 

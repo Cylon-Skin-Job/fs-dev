@@ -4,7 +4,7 @@
  *       chat-header dropdown (multi-harness picker, thread jump) transient state.
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
-import type { AppState, TintPath } from '../panelStoreTypes';
+import type { AppState, ComposerModelSelection, TintPath } from '../panelStoreTypes';
 import { nextViewStateMutationId } from '../../lib/viewStateMutationTracker';
 import { OFFICE_PAPER_BRIGHTNESS_DEFAULT } from '../../lib/officePaperBrightness';
 
@@ -45,6 +45,8 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
   docViewerArchiveDocScroll: 0,
+  docViewerTabs: [],
+  docViewerActiveTabId: null,
   officeViewerMode: 'home',
   officeViewerCurrentFolder: null,
   officeViewerSelectedPath: null,
@@ -100,6 +102,17 @@ export function createViewSlice(set: Set, get: Get) {
     viewStates: {} as Record<string, ViewUIState>,
     cliPickerOpen: {} as Record<string, boolean>,
     threadDropdownOpen: {} as Record<string, boolean>,
+    composerModelConfig: {} as Record<string, ComposerModelSelection>,
+
+    setComposerModelConfig: (panel: string, patch: Partial<ComposerModelSelection>) => set((s) => {
+      const base = s.composerModelConfig[panel] ?? { providerId: null, modelId: null, effort: null };
+      return {
+        composerModelConfig: {
+          ...s.composerModelConfig,
+          [panel]: { ...base, ...patch },
+        },
+      };
+    }),
 
     loadViewState: (view: string) => {
       const ws = get().ws;
@@ -126,10 +139,7 @@ export function createViewSlice(set: Set, get: Get) {
         const nextCollapsed = { ...current.collapsed, [pane]: !wasCollapsed };
         const nextState: ViewUIState = { ...current, collapsed: nextCollapsed };
 
-        const ws = get().ws;
-        if (ws && ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'state:set', view, state: { collapsed: nextCollapsed } }));
-        }
+        get()._persistViewPatch(view, { collapsed: nextCollapsed });
 
         // When the sidebar is being expanded (was collapsed, now not), close
         // any open chat-header dropdowns for that panel.
@@ -156,12 +166,10 @@ export function createViewSlice(set: Set, get: Get) {
     commitPaneWidths: (view: string, pane?: Pane) => {
       const state = get().viewStates[view];
       if (!state) return;
-      const ws = get().ws;
-      if (!ws || ws.readyState !== WebSocket.OPEN) return;
       const widths = pane
         ? { [pane]: state.widths[pane] }
         : state.widths;
-      ws.send(JSON.stringify({ type: 'state:set', view, state: { widths } }));
+      get()._persistViewPatch(view, { widths } as Partial<ViewUIState>);
     },
 
     // TINTS_SPEC §8b: flip a single tint leaf for `view`. Updates local

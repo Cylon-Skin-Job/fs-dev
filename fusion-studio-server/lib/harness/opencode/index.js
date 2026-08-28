@@ -35,6 +35,10 @@ function buildRunArgs(config, projectRoot, openCodeSessionId, message, pendingFo
     args.push('--model', config.model);
   }
 
+  if (config.variant) {
+    args.push('--variant', config.variant);
+  }
+
   if (config.pure === true) {
     args.push('--pure');
   }
@@ -137,6 +141,12 @@ class OpenCodeHarness extends EventEmitter {
       stopRequested: false,
       projectRoot,
       scopeContext,
+      // Live per-thread config. Mutated by applyHarnessConfig() so mid-thread
+      // model/effort changes take effect on the next prompt without a re-spawn.
+      harnessConfig,
+      applyHarnessConfig(patch) {
+        session.harnessConfig = { ...session.harnessConfig, ...patch };
+      },
       async *sendMessage(message, options = {}) {
         const translator = new OpenCodeJsonEventTranslator();
         const events = [translator.beginTurn(message)];
@@ -145,7 +155,13 @@ class OpenCodeHarness extends EventEmitter {
         const pendingForkForRun = session.openCodeSessionId || session.pendingForkConsumed
           ? null
           : session.pendingFork;
-        const args = buildRunArgs(harness.config, projectRoot, session.openCodeSessionId, message, pendingForkForRun);
+        const runConfig = {
+          ...harness.config,
+          // Live per-thread model + effort override the workspace defaults.
+          ...(session.harnessConfig.model ? { model: session.harnessConfig.model } : {}),
+          ...(session.harnessConfig.variant ? { variant: session.harnessConfig.variant } : {}),
+        };
+        const args = buildRunArgs(runConfig, projectRoot, session.openCodeSessionId, message, pendingForkForRun);
         let done = false;
         let sawTurnEnd = false;
         let sawUsefulAssistantEvent = false;

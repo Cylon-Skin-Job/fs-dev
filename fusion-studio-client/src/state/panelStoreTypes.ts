@@ -38,6 +38,15 @@ export interface ConnectorState {
   lastSync: string | null;
 }
 
+// Composer provider/model/effort selection, per panel. Effort is the opencode
+// `--variant` string for the chosen model (e.g. 'high'); it defaults to 'high'
+// whenever the provider or model changes.
+export interface ComposerModelSelection {
+  providerId: string | null;
+  modelId: string | null;
+  effort: string | null;
+}
+
 // Per-workspace runtime state. currentPanel is persisted as workspace shell
 // state; viewStates are loaded through the view-state resolver. panelConfigs
 // and panelRoots are discovered from Views/.
@@ -176,6 +185,10 @@ export interface AppState {
   closeThreadDropdown: (panel: string) => void;
   closeAllChatHeaderDropdowns: (panel: string) => void;
 
+  // ── Composer model selection (provider/model/effort) per panel ──
+  composerModelConfig: Record<string, ComposerModelSelection>;
+  setComposerModelConfig: (panel: string, patch: Partial<ComposerModelSelection>) => void;
+
   // ── Harness status cache (HARNESS_STATUS_CACHE_SPEC) ──
   harnessStatuses: Record<string, HarnessStatus>;
   setHarnessStatuses: (map: Record<string, HarnessStatus>) => void;
@@ -211,7 +224,7 @@ export interface AppState {
   // ── Harness connection state ──
   connectingHarnessId: string | null;
   setConnectingHarnessId: (id: string | null) => void;
-  selectHarness: (harnessId: string) => void;
+  selectHarness: (harnessId: string, modelId?: string) => void;
   createDefaultAssistantThread: () => void;
 
   // ── Secondary chat (SECONDARY_CHAT_SPEC) ──

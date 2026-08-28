@@ -37,6 +37,10 @@ function workspacePath(projectRoot) {
   return path.join(aiPaths.getSystemConfigRoot(projectRoot), 'cli.json');
 }
 
+function openCodeModelsPath(projectRoot) {
+  return path.join(aiPaths.getSystemConfigRoot(projectRoot), 'opencode-models.json');
+}
+
 function viewPath(projectRoot, viewId) {
   const viewFolder = findV2ViewFolder(projectRoot, viewId);
   return path.join(viewFolder || aiPaths.getMachineViewsRoot(projectRoot), 'state', 'cli.json');
@@ -78,6 +82,48 @@ async function loadViewConfig(projectRoot, viewId) {
   return readJsonOrEmpty(viewPath(projectRoot, viewId), `per-view cli.json (${viewId})`);
 }
 
+/**
+ * Load the per-machine OpenCode model list from
+ * `ai/<machine>/System/config/opencode-models.json`.
+ *
+ * Shape mirrors the opencode model catalog:
+ *   { defaultProvider, providers: [{ id, label, defaultModel, models: [{ id, name, variants: string[] }] }] }
+ * Missing, malformed, or shape-invalid files resolve to `null` so callers
+ * fall back to the workspace cli.json model.
+ */
+async function loadOpenCodeModels(projectRoot) {
+  const raw = await readJsonOrEmpty(openCodeModelsPath(projectRoot), 'opencode-models.json');
+  if (!raw || typeof raw !== 'object') return null;
+
+  const providers = Array.isArray(raw.providers)
+    ? raw.providers
+        .filter((p) => p && typeof p === 'object' && Array.isArray(p.models))
+        .map((p) => ({
+          id: typeof p.id === 'string' && p.id.trim() ? p.id : null,
+          label: typeof p.label === 'string' && p.label.trim() ? p.label : null,
+          defaultModel: typeof p.defaultModel === 'string' && p.defaultModel.trim() ? p.defaultModel : null,
+          models: p.models
+            .filter((m) => m && typeof m === 'object' && typeof m.id === 'string' && m.id.trim())
+            .map((m) => ({
+              id: m.id.trim(),
+              name: typeof m.name === 'string' && m.name.trim() ? m.name.trim() : m.id.trim(),
+              variants: Array.isArray(m.variants)
+                ? m.variants.filter((v) => typeof v === 'string' && v.trim())
+                : [],
+            })),
+        }))
+        .filter((p) => p.models.length > 0)
+    : [];
+
+  const defaultProvider = typeof raw.defaultProvider === 'string' && raw.defaultProvider.trim()
+    ? raw.defaultProvider
+    : null;
+
+  if (providers.length === 0) return null;
+
+  return { defaultProvider, providers };
+}
+
 async function ensureWorkspaceFile(projectRoot) {
   const file = workspacePath(projectRoot);
   try {
@@ -93,8 +139,10 @@ async function ensureWorkspaceFile(projectRoot) {
 module.exports = {
   workspacePath,
   viewPath,
+  openCodeModelsPath,
   loadWorkspaceConfig,
   loadViewConfig,
+  loadOpenCodeModels,
   ensureWorkspaceFile,
   defaultWorkspaceConfig,
 };
