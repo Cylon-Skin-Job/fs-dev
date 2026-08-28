@@ -37,6 +37,7 @@ describe('view-state writer', () => {
     process.env.FUSION_LOCAL_MACHINE = 'Test-Machine';
     tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-view-state-'));
     fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer'), { recursive: true });
+    fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-capture-viewer'), { recursive: true });
     jest.resetModules();
   });
 
@@ -118,6 +119,44 @@ describe('view-state writer', () => {
     expect(workspaceState.widths.contentNavRight).toBe(220);
     expect(officeState.widths.contentNavLeft).toBe(284);
     expect(officeState.widths.contentNavRight).toBe(316);
+  });
+
+  test('stores durable capture tab truth only in the capture view override', async () => {
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+    const tabs = [
+      {
+        id: 'cvt-doc',
+        kind: 'doc',
+        path: '002-Captures/ideas.md',
+        name: 'ideas.md',
+        extension: 'md',
+        ui: { mode: 'active', gridScroll: 12, docScroll: 34 },
+      },
+      {
+        id: 'cvt-capture',
+        kind: 'capture',
+        ui: { mode: 'recent', gridScroll: 56, docScroll: 0 },
+      },
+    ];
+
+    const resolved = await writeViewStatePatch(tempRoot, 'capture-viewer', {
+      docViewerTabs: tabs,
+      docViewerActiveTabId: 'cvt-doc',
+    });
+
+    const workspaceState = readJson(path.join(
+      tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json',
+    ));
+    const captureState = readJson(path.join(
+      tempRoot, 'ai', 'Test-Machine', 'Views', '001-capture-viewer', 'state', 'state.json',
+    ));
+
+    expect(resolved.docViewerTabs).toEqual(tabs);
+    expect(resolved.docViewerActiveTabId).toBe('cvt-doc');
+    expect(captureState.docViewerTabs).toEqual(tabs);
+    expect(captureState.docViewerActiveTabId).toBe('cvt-doc');
+    expect(workspaceState).not.toHaveProperty('docViewerTabs');
+    expect(workspaceState).not.toHaveProperty('docViewerActiveTabId');
   });
 
   test('serializes concurrent patches for the same view', async () => {

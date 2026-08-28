@@ -853,26 +853,100 @@
   margin-left: auto;
 }
 
-/* --- Detail drawer --- */
+/* --- Ticket preview --- */
+
+.rv-ticket-detail-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: color-mix(in srgb, var(--document-bg, #101017) 58%, transparent);
+  backdrop-filter: blur(2px);
+}
 
 .rv-ticket-detail {
   position: absolute;
-  z-index: 4;
   top: 18px;
-  right: 18px;
+  right: 9px;
   bottom: 18px;
   display: flex;
   flex-direction: column;
-  width: min(430px, calc(100% - 36px));
+  width: min(66.666%, 50vw);
+  max-width: calc(100% - 27px);
   overflow: hidden;
+  box-sizing: border-box;
   color: var(--content-text-color, var(--text-primary, #e7e7ee));
-  background: color-mix(in srgb, var(--sidebar-surface-bg, #181824) 96%, var(--workspace-accent-color, #8076d9) 4%);
+  background: var(--document-surface-bg, #0d0d0d);
   border: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.14)));
   border-radius: 16px;
   box-shadow: -14px 18px 44px rgba(0, 0, 0, 0.42);
 }
 
-.rv-ticket-detail-header {
+.rv-ticket-detail-chrome {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 0 0 40px;
+  align-items: center;
+  min-width: 0;
+  padding: 0 14px;
+  color: var(--content-foreground-color, var(--text-dim, #858292));
+  background: var(--document-surface-bg, #0d0d0d);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rv-ticket-detail-chrome-icon {
+  flex: 0 0 auto;
+  font-size: 18px;
+}
+
+.rv-ticket-detail-chrome-title {
+  min-width: 0;
+  margin-left: 7px;
+  overflow: hidden;
+  color: var(--text-primary, #f4f4f4);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-ticket-detail-chrome-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.rv-ticket-detail-chrome-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: var(--content-foreground-color, var(--text-dim, #858292));
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.rv-ticket-detail-chrome-action:hover,
+.rv-ticket-detail-chrome-action:focus-visible {
+  color: var(--text-primary, #f4f4f4);
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  outline: none;
+}
+
+.rv-ticket-detail-chrome-action .material-symbols-outlined {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.rv-ticket-detail-summary {
   flex: 0 0 auto;
   padding: 18px 20px;
   border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
@@ -926,31 +1000,134 @@
   white-space: pre-wrap;
 }
 
-.rv-ticket-detail-close {
-  position: absolute;
-  z-index: 1;
-  top: 11px;
-  right: 11px;
+/* --- Full-page ticket --- */
+
+.rv-ticket-full-page {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--document-bg, var(--bg-solid, #101017));
+}
+
+.rv-ticket-full-page-topbar {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--view-header-height, 40px);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--view-header-height, 40px);
+  padding: 0 40px;
+  background: var(--document-surface-bg, var(--document-bg, #101017));
+}
+
+.rv-ticket-full-page-topbar h1 {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--content-headings-color, var(--text-primary, #e7e7ee));
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-ticket-full-page-subheader {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 0 0 47px;
+  align-items: center;
+  min-width: 0;
+  height: 47px;
+  padding: 0 24px 0 14px;
+  box-sizing: border-box;
+  color: var(--content-heading-color, var(--text-primary, #eee));
+  background: var(--document-surface-bg, #0d0d0d);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rv-ticket-full-page-back {
+  display: inline-flex;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translateX(-5px);
+}
+
+.rv-ticket-full-page-back:hover,
+.rv-ticket-full-page-action:hover,
+.rv-ticket-full-page-action:focus-visible {
+  color: var(--text-primary, #f4f4f4);
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  outline: none;
+}
+
+.rv-ticket-full-page-back .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.rv-ticket-full-page-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-ticket-full-page-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.rv-ticket-full-page-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
   padding: 0;
-  color: var(--text-dim, #858292);
+  color: var(--content-foreground-color, var(--text-dim, #858292));
   background: transparent;
   border: 0;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.rv-ticket-detail-close:hover {
-  color: var(--content-text-color, var(--text-primary, #e7e7ee));
-  background: color-mix(in srgb, var(--workspace-accent-color, #8076d9) 14%, transparent);
+.rv-ticket-full-page-action .material-symbols-outlined {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
 }
 
-.rv-ticket-detail-close .material-symbols-outlined {
-  font-size: 19px;
+.rv-ticket-full-page-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--document-surface-bg, #0d0d0d);
 }
 
 @media (max-width: 720px) {
@@ -965,8 +1142,9 @@
 
   .rv-ticket-detail {
     top: 12px;
-    right: 12px;
+    right: 6px;
     bottom: 12px;
-    width: calc(100% - 24px);
+    width: calc(100% - 18px);
+    max-width: none;
   }
 }

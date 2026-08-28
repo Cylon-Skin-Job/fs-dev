@@ -11,6 +11,10 @@ import { markOfficeThumbnailUpdated } from '../../state/officeThumbnailStore';
 import { showToast } from '../toast';
 import { removeViewPathReferences, rewriteViewPathReferences } from '../viewCollections';
 import type { WebSocketMessage } from '../../types';
+import {
+  removeCaptureDocumentPaths,
+  rewriteCaptureDocumentPaths,
+} from '../../components/view-tabs/captureTabsController';
 
 interface FileChangedMessage extends WebSocketMessage {
   type: 'file_changed';
@@ -258,6 +262,13 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
           extension: extensionFromPath(m.targetPath),
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
+        rewriteCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel: m.targetPanel,
+          targetPath: m.targetPath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
       }
       return true;
     }
@@ -279,6 +290,13 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
           extension: extensionFromPath(m.targetPath),
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
+        rewriteCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel: m.targetPanel,
+          targetPath: m.targetPath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
       }
       showToast(`Renamed to ${m.newName || 'file'}`);
       return true;
@@ -294,6 +312,11 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
         removeViewPathReferences({
           panel: m.sourcePanel,
           path: m.sourcePath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
+        removeCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
       }

@@ -192,9 +192,11 @@ export function replaceViewTabs(
 ): ViewActivityState {
   const current = getViewActivity(view);
   const normalizedTabs = tabs.filter(isActivityItem).map(normalizeItem).slice(0, MAX_RECENTS);
-  const activeId = activeTabId && normalizedTabs.some((tab) => tab.id === activeTabId)
-    ? activeTabId
-    : (normalizedTabs[0]?.id ?? null);
+  const activeId = activeTabId === null
+    ? null
+    : normalizedTabs.some((tab) => tab.id === activeTabId)
+      ? activeTabId
+      : (normalizedTabs[0]?.id ?? null);
   const next = {
     ...current,
     tabs: normalizedTabs,

@@ -33,6 +33,8 @@ const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
   'officeViewerSelectedPath',
   'officeDocumentSidePanel',
   'officePaperBrightness',
+  'docViewerTabs',
+  'docViewerActiveTabId',
 ]);
 
 const FORCE_VIEW_OVERRIDE_PATHS = new Set([

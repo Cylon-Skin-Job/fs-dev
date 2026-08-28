@@ -316,6 +316,7 @@
 }
 
 .rv-office-content-panel {
+  position: relative;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -456,13 +457,6 @@
   padding: 0 var(--space-xl);
   box-sizing: border-box;
   background: transparent;
-}
-
-.rv-office-folder-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-left: 10px;
 }
 
 .rv-office-header-action,

@@ -35,6 +35,10 @@ import {
 import type { ModalConfig } from '../lib/modal';
 import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
 import type { ViewUIState, WebSocketMessage } from '../types';
+import {
+  CAPTURE_VIEWER_PANEL,
+  normalizeCaptureTabsAfterStateResult,
+} from '../components/view-tabs/captureTabsController';
 
 // --- Module state ---
 
@@ -283,6 +287,9 @@ function handleMessage(msg: WebSocketMessage) {
     store.setViewState(view, stateToApply);
     if (clientMutationId !== null) {
       settleViewStateMutation(view, clientMutationId);
+    }
+    if (view === CAPTURE_VIEWER_PANEL) {
+      normalizeCaptureTabsAfterStateResult(clientMutationId);
     }
     // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
     // live slot when loading the active view. Guarded equality check in

@@ -655,13 +655,7 @@
   pointer-events: none;
 }
 
-.rv-wiki-edge-guide-header .rv-wiki-item-actions {
-  right: 10px;
-}
-
 .rv-wiki-topic-item:hover .rv-wiki-item-actions,
-.rv-wiki-edge-guide-header:hover .rv-wiki-item-actions,
-.rv-wiki-edge-link:hover .rv-wiki-item-actions,
 .rv-wiki-item-actions:focus-within {
   opacity: 1;
   visibility: visible;
@@ -675,8 +669,6 @@
 }
 
 .rv-wiki-topic-item:hover .rv-wiki-item-actions .rv-file-page-action,
-.rv-wiki-edge-guide-header:hover .rv-wiki-item-actions .rv-file-page-action,
-.rv-wiki-edge-link:hover .rv-wiki-item-actions .rv-file-page-action,
 .rv-wiki-item-actions:focus-within .rv-file-page-action {
   color: var(--side-panel-selected-foreground-color, var(--text-primary, #eee));
 }

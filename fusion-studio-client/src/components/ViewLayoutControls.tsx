@@ -1,12 +1,62 @@
 import { usePanelStore } from '../state/panelStore';
+import {
+  isCaptureTabsActive,
+  plusPressed,
+} from './view-tabs/captureTabsController';
 
 interface ViewLayoutControlsProps {
   panel: string;
 }
 
+/** App-header controls for the active view's primary chat/content columns. */
+export function AppHeaderLayoutControls({ panel }: ViewLayoutControlsProps) {
+  const chatCollapsed = usePanelStore(
+    (state) => state.viewStates[panel]?.collapsed?.leftChat ?? false,
+  );
+  const contentCollapsed = usePanelStore(
+    (state) => state.viewStates[panel]?.collapsed?.contentArea ?? false,
+  );
+  const toggleCollapsed = usePanelStore((state) => state.toggleCollapsed);
+  const contentFullScreen = chatCollapsed && !contentCollapsed;
+
+  function handleAdvanceContent() {
+    if (contentFullScreen) return;
+    toggleCollapsed(panel, contentCollapsed ? 'contentArea' : 'leftChat');
+  }
+
+  function handleReverseContent() {
+    if (contentCollapsed) return;
+    toggleCollapsed(panel, chatCollapsed ? 'leftChat' : 'contentArea');
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="rv-fusion-icon-btn"
+        aria-label={contentFullScreen ? 'Content fully expanded' : 'Expand content'}
+        title={contentFullScreen ? 'Content fully expanded' : 'Expand content'}
+        onClick={handleAdvanceContent}
+        disabled={contentFullScreen}
+      >
+        <span className="material-symbols-outlined">first_page</span>
+      </button>
+      <button
+        type="button"
+        className="rv-fusion-icon-btn"
+        aria-label={contentCollapsed ? 'Content collapsed' : 'Reduce content'}
+        title={contentCollapsed ? 'Content collapsed' : 'Reduce content'}
+        onClick={handleReverseContent}
+        disabled={contentCollapsed}
+      >
+        <span className="material-symbols-outlined">last_page</span>
+      </button>
+    </>
+  );
+}
+
 /**
- * Universal view-shell controls. These live above view content so every view
- * type gets identical chat/content toggles in identical locations.
+ * Conditional view-shell controls that remain attached to view content.
  */
 export function ViewLayoutControls({ panel }: ViewLayoutControlsProps) {
   const chatCollapsed = usePanelStore(
@@ -17,15 +67,29 @@ export function ViewLayoutControls({ panel }: ViewLayoutControlsProps) {
   );
   const toggleCollapsed = usePanelStore((state) => state.toggleCollapsed);
   const showThreadDrawerControl = chatCollapsed && threadsCollapsed;
+  const isCapturePanel = panel === 'capture-viewer';
+  const showCapturePreTabsPlus = usePanelStore((state) => {
+    if (!isCapturePanel) return false;
+    const vs = state.viewStates[panel];
+    return Boolean(vs?.docViewerFullPage) && !isCaptureTabsActive(vs);
+  });
 
-  function handleHideContent() {
-    if (chatCollapsed) toggleCollapsed(panel, 'leftChat');
-    toggleCollapsed(panel, 'contentArea');
-  }
+  if (!showThreadDrawerControl && !showCapturePreTabsPlus) return null;
 
   return (
     <div className="rv-view-layout-controls" aria-label="View layout controls">
       <div className="rv-view-layout-controls__leading">
+        {showCapturePreTabsPlus && (
+          <button
+            type="button"
+            className="rv-view-layout-control"
+            aria-label="New capture view"
+            title="New capture view"
+            onClick={() => plusPressed()}
+          >
+            <span className="material-symbols-outlined">add</span>
+          </button>
+        )}
         {showThreadDrawerControl && (
           <button
             type="button"
@@ -37,28 +101,7 @@ export function ViewLayoutControls({ panel }: ViewLayoutControlsProps) {
             <span className="material-symbols-outlined">dock_to_right</span>
           </button>
         )}
-        <button
-          type="button"
-          className="rv-view-layout-control"
-          aria-label={chatCollapsed ? 'Expand chat' : 'Collapse chat'}
-          title={chatCollapsed ? 'Expand chat' : 'Collapse chat'}
-          onClick={() => toggleCollapsed(panel, 'leftChat')}
-        >
-          <span className="material-symbols-outlined">
-            {chatCollapsed ? 'robot_2' : 'first_page'}
-          </span>
-        </button>
       </div>
-
-      <button
-        type="button"
-        className="rv-view-layout-control rv-view-layout-control--trailing"
-        aria-label="Hide content"
-        title="Hide content"
-        onClick={handleHideContent}
-      >
-        <span className="material-symbols-outlined">dock_to_left</span>
-      </button>
     </div>
   );
 }

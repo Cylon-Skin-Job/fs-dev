@@ -9,35 +9,15 @@ import {
   isWikiHeadingArticle,
   isWikiRightNavContext,
   useWikiStore,
-  type WikiNode,
 } from '../../state/wikiStore';
-import { CopyPathButton } from '../CopyPathButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { ContentNavRightResize } from '../ResizeHandle';
-import { SendToChatButton } from '../SendToChatButton';
-
-function NodeActions({ node, title }: { node: WikiNode; title: string }) {
-  return (
-    <div className="rv-wiki-item-actions" onClick={(e) => e.stopPropagation()}>
-      <CopyPathButton
-        panel="wiki-viewer"
-        relativePath={node.pagePath}
-        className="rv-file-page-action"
-        title={`Copy ${title} path`}
-      />
-      <SendToChatButton
-        panel="wiki-viewer"
-        relativePath={node.pagePath}
-        className="rv-file-page-action"
-        title={`Send ${title} path to chat`}
-      />
-    </div>
-  );
-}
 
 export function EdgePanel() {
   const root = useWikiStore((s) => s.root);
   const selectedPath = useWikiStore((s) => s.selectedPath);
   const viewedPath = useWikiStore((s) => s.viewedPath);
+  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
   const viewNode = useWikiStore((s) => s.viewNode);
 
   const node = findWikiNodeByPath(root, selectedPath);
@@ -62,7 +42,6 @@ export function EdgePanel() {
         >
           <span className="material-symbols-outlined">chrome_reader_mode</span>
           <span className="rv-wiki-edge-link-text rv-wiki-edge-guide-title">{node.label}</span>
-          <NodeActions node={node} title="page" />
         </button>
 
         {node.children.filter((child) => !isWikiHeadingArticle(child)).map((child) => {
@@ -80,7 +59,6 @@ export function EdgePanel() {
                   {viewedPath === child.path ? '\u25C9' : '\u25CB'}
                 </span>
                 <span className="rv-wiki-edge-link-text">{child.label}</span>
-                <NodeActions node={child} title="page" />
               </button>
             </div>
           );
@@ -104,7 +82,6 @@ export function EdgePanel() {
                   {viewedPath === nested.path ? '\u25C9' : '\u25CB'}
                 </span>
                 <span className="rv-wiki-edge-link-text">{nested.label}</span>
-                <NodeActions node={nested} title="page" />
               </button>
             ))}
           </div>
@@ -115,6 +92,15 @@ export function EdgePanel() {
           <div className="rv-wiki-edge-empty">No child pages loaded</div>
         )}
       </div>
+      {viewedPagePath ? (
+        <FloatingPathActions
+          panel="wiki-viewer"
+          relativePath={viewedPagePath}
+          copyTitle="Copy page path"
+          sendTitle="Send page path to chat"
+          ariaLabel="Wiki edge panel actions"
+        />
+      ) : null}
     </div>
   );
 }

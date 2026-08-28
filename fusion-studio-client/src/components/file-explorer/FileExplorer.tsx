@@ -8,6 +8,7 @@ import { FileViewer } from './FileViewer';
 import { RightColResize } from '../ResizeHandle';
 import { sendFusionMessage } from '../../lib/ws-client';
 import { normalizeViewActivity } from '../../lib/viewActivity';
+import { isFileEditorTab } from '../../types/file-explorer';
 
 export function FileExplorer() {
   useViewLayoutStyles('file-viewer');
@@ -43,7 +44,7 @@ export function FileExplorer() {
 
   useEffect(() => {
     for (const tab of tabs) {
-      if (!tab.loading) continue;
+      if (!isFileEditorTab(tab) || !tab.loading) continue;
       sendFusionMessage({
         type: 'file_content_request',
         panel: 'file-viewer',

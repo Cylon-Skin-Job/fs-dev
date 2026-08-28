@@ -33,6 +33,7 @@ import {
 } from '../subagent-output';
 import { showToast } from '../toast';
 import type { WebSocketMessage, WebSocketMessageType } from '../../types';
+import { isFileEditorTab } from '../../types/file-explorer';
 import { handleSubagentEvent, resetSubagentStreams } from './subagent-stream';
 import { handleTurnBegin, handleTurnEnd } from './turn-lifecycle';
 import {
@@ -333,7 +334,9 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
 
     case 'exchange_metadata': {
       if (!threadId) return true;
-      const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
+      const openTabPaths = useFileStore.getState().tabs
+        .filter(isFileEditorTab)
+        .map((tab) => tab.file.path);
       useChatFileLinkStore.getState().mergeExchangeAutocompleteCandidates({
         seq: 0,
         ts: typeof msg.ts === 'number' ? msg.ts : Date.now(),

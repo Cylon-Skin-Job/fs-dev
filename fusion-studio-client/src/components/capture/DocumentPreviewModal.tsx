@@ -3,8 +3,6 @@ import type { FileWithContent } from '../tile-row/TileRow';
 import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
 import { IframeSurface, useCacheBusterUrl } from '../iframe';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
 import { getPanelFileUrl } from '../../lib/panels';
 import { getFileIcon } from '../../lib/file-utils';
 import { CaptureDocumentMenuButton } from './CaptureDocumentMenuButton';
@@ -63,15 +61,49 @@ export function DocumentPreviewModal({
         aria-label={`Preview ${file.name}`}
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <button
-          type="button"
-          className="rv-document-preview-expand"
-          onClick={onOpenFullScreen}
-          aria-label={`Open ${file.name} full screen`}
-          title="Open full screen"
-        >
-          <span className="material-symbols-outlined" aria-hidden="true">expand_content</span>
-        </button>
+        <header className="rv-document-preview-header">
+          <span className="material-symbols-outlined rv-doc-tile-icon" aria-hidden="true">
+            {icon}
+          </span>
+          <span className="rv-document-preview-name">{file.name}</span>
+          <div className="rv-document-preview-header-actions">
+            <button
+              type="button"
+              className={`rv-document-preview-header-action rv-document-preview-star${starred ? ' is-starred' : ''}`}
+              onClick={onToggleStar}
+              aria-label={starred ? `Unstar ${file.name}` : `Star ${file.name}`}
+              aria-pressed={starred}
+              title={starred ? 'Unstar' : 'Star'}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
+            </button>
+            <CaptureDocumentMenuButton
+              fileName={file.name}
+              className="rv-document-preview-header-action rv-document-preview-more"
+              onRename={onRename}
+              onArchive={onArchive}
+              onDelete={onDelete}
+            />
+            <button
+              type="button"
+              className="rv-document-preview-header-action rv-document-preview-expand"
+              onClick={onOpenFullScreen}
+              aria-label={`Open ${file.name} full screen`}
+              title="Open full screen"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">expand_content</span>
+            </button>
+            <button
+              type="button"
+              className="rv-document-preview-header-action"
+              onClick={onClose}
+              aria-label={`Close ${file.name} preview`}
+              title="Close preview"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+          </div>
+        </header>
         <div
           className={`rv-document-preview-content${isHtml ? ' is-html' : ''}`}
           role="button"
@@ -103,43 +135,6 @@ export function DocumentPreviewModal({
           )}
         </div>
 
-        <footer className="rv-document-preview-footer">
-          <CaptureDocumentMenuButton
-            fileName={file.name}
-            className="rv-doc-tile-more rv-document-preview-more"
-            onRename={onRename}
-            onArchive={onArchive}
-            onDelete={onDelete}
-          />
-          <span className="material-symbols-outlined rv-doc-tile-icon" aria-hidden="true">
-            {icon}
-          </span>
-          <span className="rv-document-preview-name">{file.name}</span>
-          <div className="rv-document-preview-footer-actions">
-            <CopyPathButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-document-preview-footer-action"
-              title="Copy file path"
-            />
-            <SendToChatButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-document-preview-footer-action"
-              title="Send file path to chat"
-            />
-            <button
-              type="button"
-              className={`rv-document-preview-footer-action rv-document-preview-star${starred ? ' is-starred' : ''}`}
-              onClick={onToggleStar}
-              aria-label={starred ? `Unstar ${file.name}` : `Star ${file.name}`}
-              aria-pressed={starred}
-              title={starred ? 'Unstar' : 'Star'}
-            >
-              <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
-            </button>
-          </div>
-        </footer>
       </section>
     </div>
   );

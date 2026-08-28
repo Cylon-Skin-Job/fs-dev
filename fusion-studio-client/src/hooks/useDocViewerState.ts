@@ -16,6 +16,10 @@ import type { ViewUIState } from '../types';
 import { recordViewRecent } from '../lib/viewActivity';
 import { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 import { isImageFile } from '../components/tile-row/documentTileUtils';
+import {
+  clearActiveDocumentAfterArchive,
+  persistCaptureViewPatch,
+} from '../components/view-tabs/captureTabsController';
 
 export { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 
@@ -65,12 +69,6 @@ function parseSelectedPath(selectedPath: string): { folder: string; name: string
     folder: selectedPath.slice(0, lastSlash),
     name: selectedPath.slice(lastSlash + 1),
   };
-}
-
-function persistViewPatch(patch: Partial<ViewUIState>) {
-  const state = usePanelStore.getState();
-  state.setViewState(DOC_VIEWER_PANEL, patch);
-  state._persistViewPatch(DOC_VIEWER_PANEL, patch);
 }
 
 export function useDocViewerState(): UseDocViewerStateResult {
@@ -143,7 +141,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
   }, [parsedPath, selectedPath, tree, content, contentMetadata, contents, contentMetadataByPath]);
 
   const setMode = useCallback((nextMode: DocViewerMode) => {
-    persistViewPatch({
+    persistCaptureViewPatch({
       docViewerMode: nextMode,
       [gridScrollKey(nextMode)]: 0,
     } as Partial<ViewUIState>);
@@ -151,7 +149,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
 
   const selectFile = useCallback((folder: string, file: FileWithContent) => {
     const path = `${folder}/${file.name}`;
-    persistViewPatch({
+    persistCaptureViewPatch({
       [selectedPathKey(mode)]: path,
       docViewerLastOpenedPath: path,
     } as Partial<ViewUIState>);
@@ -168,7 +166,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
   const selectSibling = useCallback((sib: FileWithContent) => {
     if (!selected) return;
     const path = `${selected.folder}/${sib.name}`;
-    persistViewPatch({
+    persistCaptureViewPatch({
       [selectedPathKey(mode)]: path,
       docViewerLastOpenedPath: path,
     } as Partial<ViewUIState>);
@@ -183,7 +181,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
   }, [selected, mode]);
 
   const clearSelection = useCallback(() => {
-    persistViewPatch({ [selectedPathKey(mode)]: null } as Partial<ViewUIState>);
+    persistCaptureViewPatch({ [selectedPathKey(mode)]: null } as Partial<ViewUIState>);
   }, [mode]);
 
   const gridScrollThrottleRef = useRef<number>(0);
@@ -191,12 +189,12 @@ export function useDocViewerState(): UseDocViewerStateResult {
     const now = Date.now();
     if (now - gridScrollThrottleRef.current < 100) return;
     gridScrollThrottleRef.current = now;
-    persistViewPatch({ [gridScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
+    persistCaptureViewPatch({ [gridScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
   }, [mode]);
 
   const resetGridScroll = useCallback((targetMode: DocViewerMode = mode) => {
     gridScrollThrottleRef.current = 0;
-    persistViewPatch({ [gridScrollKey(targetMode)]: 0 } as Partial<ViewUIState>);
+    persistCaptureViewPatch({ [gridScrollKey(targetMode)]: 0 } as Partial<ViewUIState>);
   }, [mode]);
 
   const docScrollThrottleRef = useRef<number>(0);
@@ -204,7 +202,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
     const now = Date.now();
     if (now - docScrollThrottleRef.current < 100) return;
     docScrollThrottleRef.current = now;
-    persistViewPatch({ [docScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
+    persistCaptureViewPatch({ [docScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
   }, [mode]);
 
   const restoreSelectedFile = useCallback(() => {
@@ -228,9 +226,7 @@ export function useDocViewerState(): UseDocViewerStateResult {
     const source = `${panelRoot}/${selected.folder}/${selected.file.name}`;
     const target = `${panelRoot}/${DOC_VIEWER_ARCHIVE_FOLDER}`;
     ws.send(JSON.stringify({ type: 'file:move', source, target }));
-    persistViewPatch({
-      docViewerActiveSelectedPath: null,
-    });
+    clearActiveDocumentAfterArchive();
     showToast('Archived');
   }, [selected]);
 

@@ -16,8 +16,13 @@ test('Captures Archive uses the flat 999-Archive grid', async ({ page }) => {
       }
       await page.waitForTimeout(500);
     }
+    await page.waitForTimeout(500);
+    const previewClose = panel.locator('button[title="Close preview"]');
+    if (await previewClose.count()) {
+      await previewClose.evaluate((button: HTMLButtonElement) => button.click());
+    }
 
-    await panel.getByRole('button', { name: 'Home' }).click();
+    await panel.getByRole('tab', { name: 'Home', exact: true }).click();
     await expect(panel.locator('.rv-capture-viewer-main-title')).toContainText('Document and Artifact Capture');
     await expect(panel.locator('.rv-capture-viewer-archive-grid')).toHaveCount(0);
     await expect(panel.locator('.rv-tile-row-label', { hasText: /archive/i })).toHaveCount(0);
@@ -25,7 +30,7 @@ test('Captures Archive uses the flat 999-Archive grid', async ({ page }) => {
     await panel.getByRole('button', { name: 'Search captures' }).click();
     const searchBox = panel.getByRole('searchbox', { name: 'Search captures' });
     await expect(searchBox).toBeVisible();
-    await expect(panel.getByRole('button', { name: 'Home' })).toHaveCount(0);
+    await expect(panel.getByRole('tab', { name: 'Home', exact: true })).toHaveCount(0);
     await expect(panel.locator('.rv-capture-viewer-main-title')).toContainText('Document and Artifact Capture');
     await expect(panel.locator('.rv-capture-viewer-search-grid')).toHaveCount(0);
     await expect(panel.locator('.rv-tile-row').first()).toBeVisible({ timeout: 15000 });
@@ -35,12 +40,11 @@ test('Captures Archive uses the flat 999-Archive grid', async ({ page }) => {
     await expect(panel.locator('.rv-capture-viewer-search-grid')).toHaveCount(0);
 
     await searchBox.press('Enter');
-    await expect(panel.locator('.rv-capture-viewer-main-title')).toContainText('Search results');
+    await expect(panel.locator('.rv-capture-viewer-main-title')).toContainText('Document and Artifact Capture');
     await expect(panel.getByLabel('Filter by type')).toBeVisible();
     await expect(panel.getByLabel('Filter by modified date')).toBeVisible();
     await expect(panel.getByLabel('Filter by location')).toBeVisible();
     await expect(panel.getByRole('button', { name: 'Title only' })).toBeVisible();
-    await expect(panel.getByRole('button', { name: 'Starred only' })).toBeVisible();
     await expect(panel.locator('.rv-capture-viewer-search-grid .rv-doc-tile')).toHaveCount(0);
     await expect(panel.locator('.rv-tile-row-empty')).toContainText('No matches');
 
@@ -54,9 +58,9 @@ test('Captures Archive uses the flat 999-Archive grid', async ({ page }) => {
     expect(searchResultCount).toBeGreaterThan(0);
 
     await panel.getByRole('button', { name: 'Dismiss search' }).click();
-    await expect(panel.getByRole('button', { name: 'Home' })).toBeVisible();
+    await expect(panel.getByRole('tab', { name: 'Home', exact: true })).toBeVisible();
 
-    await panel.getByRole('button', { name: 'Archive' }).click();
+    await panel.getByRole('tab', { name: 'Archive', exact: true }).click();
     await expect(panel.locator('.rv-capture-viewer-main-title')).toContainText('Archive');
     await expect(panel.locator('.rv-capture-viewer-archive-grid')).toBeVisible({ timeout: 15000 });
     await expect(panel.locator('.rv-tile-row')).toHaveCount(0);
@@ -64,7 +68,7 @@ test('Captures Archive uses the flat 999-Archive grid', async ({ page }) => {
     const tileCount = await panel.locator('.rv-capture-viewer-archive-grid .rv-doc-tile').count();
     expect(tileCount).toBeGreaterThan(0);
   } finally {
-    const homeButton = panel.getByRole('button', { name: 'Home' });
+    const homeButton = panel.getByRole('tab', { name: 'Home', exact: true });
     if (await homeButton.count()) {
       await homeButton.click().catch(() => {});
     }

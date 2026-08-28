@@ -480,13 +480,6 @@
   background: transparent;
 }
 
-.rv-email-folder-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-left: 10px;
-}
-
 .rv-email-header-action,
 .rv-email-new-btn {
   display: inline-flex;

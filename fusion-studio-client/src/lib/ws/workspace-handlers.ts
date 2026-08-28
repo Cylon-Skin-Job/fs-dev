@@ -44,6 +44,7 @@ type WorkspaceStateSnapshot = Pick<Partial<WorkspacePanelState>, 'currentPanel'>
 
 interface WorkspaceWireMessage extends WebSocketMessage {
   workspaceType?: WorkspaceType;
+  sourceMachineName?: string;
   themes?: ThemeEntry[];
   activeThemeId?: string | null;
   styles?: Record<string, string>;
@@ -69,6 +70,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
       useFileDataStore.getState().beginWorkspaceGeneration(msg.activeWorkspaceId ?? null);
       store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
+      store.setSourceMachineName(workspaceMsg.sourceMachineName ?? 'local-machine');
       console.log('[workspace-handlers] activeWorkspaceId set to:', msg.activeWorkspaceId);
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});

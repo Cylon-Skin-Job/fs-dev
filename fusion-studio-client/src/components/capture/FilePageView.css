@@ -39,7 +39,7 @@
   align-items: center;
   min-width: 0;
   height: 47px;
-  padding: 0 24px;
+  padding: 0 24px 0 14px;
   box-sizing: border-box;
   background: var(--document-surface-bg, #0d0d0d);
   color: var(--content-heading-color, var(--text-primary, #eee));
@@ -56,10 +56,11 @@
   height: 32px;
   padding: 0;
   border: 0;
-  border-radius: var(--radius-md, 4px);
+  border-radius: 50%;
   background: transparent;
   color: inherit;
   cursor: pointer;
+  transform: translateX(-5px);
 }
 
 .rv-capture-document-subheader-back:hover {
@@ -81,6 +82,10 @@
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.rv-capture-document-subheader.is-tabbed .rv-capture-document-subheader-title {
+  padding-right: 0;
 }
 
 /* Content area */

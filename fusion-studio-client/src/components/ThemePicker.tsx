@@ -5,8 +5,7 @@
  *   1. Preset chips grid (all themes.json entries)
  *   2. 6 custom slots (localStorage)
  *   3. Color picker native input + hex field + bookmark button
- *   4. Sliders: luminance, chrome tint, border accent, card highlights
- *   5. Footer: [Save as new]  [Apply]
+ *   4. Scoped Workspace, Thread, Navigation, Chat, and Content controls
  *
  * See THEME_PICKER_SPEC.md §3b.
  */
@@ -75,10 +74,12 @@ export default function ThemePicker({ onClose }: Props) {
   const [mode, setMode] = useState<PickerMode>(inferredMode);
   const [borderLuminance] = useState(activeTheme?.borderLuminance ?? (activeTheme?.luminance ?? 50));
   const [borderTint] = useState(activeTheme?.borderTint ?? (activeTheme?.borders ?? 0));
-  const [chromeLuminance, setChromeLuminance] = useState(activeTheme?.chromeLuminance ?? (activeTheme?.luminance ?? 6));
-  const [chromeTint, setChromeTint] = useState(activeTheme?.chromeTint ?? 18);
-  const [accentLuminance, setAccentLuminance] = useState(activeTheme?.accentLuminance ?? 50);
-  const [accentTint, setAccentTint] = useState(activeTheme?.accentTint ?? 0);
+  // Legacy derivation inputs remain readable for theme compatibility, but
+  // their obsolete global Accent/Chrome controls are no longer exposed.
+  const [chromeLuminance] = useState(activeTheme?.chromeLuminance ?? (activeTheme?.luminance ?? 6));
+  const [chromeTint] = useState(activeTheme?.chromeTint ?? 18);
+  const [accentLuminance] = useState(activeTheme?.accentLuminance ?? 50);
+  const [accentTint] = useState(activeTheme?.accentTint ?? 0);
   const [chatBorder] = useState(activeTheme?.tints?.borders?.chat ?? false);
   const [themeCode] = useState(activeTheme?.themeCode ?? false);
 
@@ -488,31 +489,7 @@ export default function ThemePicker({ onClose }: Props) {
           max={100}
           onChange={setContentText}
         />
-        <div className="rv-tp-divider" />
-        <div className="rv-tp-group-header">Accent settings</div>
-        <SliderRow label="Luminance" value={chromeLuminance} min={0} max={100} onChange={setChromeLuminance} />
-        <SliderRow label="Tint" value={chromeTint} min={0} max={100} onChange={setChromeTint} />
-        <div className="rv-tp-divider" />
-        <div className="rv-tp-group-header">Chrome settings</div>
-        <SliderRow label="Luminance" value={accentLuminance} min={0} max={100} onChange={setAccentLuminance} />
-        <SliderRow label="Tint" value={accentTint} min={0} max={100} onChange={setAccentTint} />
       </section>
-    </div>
-  );
-}
-
-function SliderRow({ label, value, min, max, onChange }: { label: string; value: number; min: number; max: number; onChange: (v: number) => void }) {
-  return (
-    <div className="rv-tp-slider-row">
-      <input
-        type="range"
-        className="rv-tp-slider"
-        min={min}
-        max={max}
-        value={value}
-        onChange={e => onChange(Number(e.target.value))}
-      />
-      <span className="rv-tp-slider-label">{label}</span>
     </div>
   );
 }

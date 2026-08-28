@@ -16,6 +16,7 @@ import { secondaryTracker } from '../secondary-tracker';
 import { readTokenUsage } from '../chat/context-usage';
 import { convertPartToSegment } from './assistant-parts';
 import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../types';
+import { isFileEditorTab } from '../../types/file-explorer';
 
 /**
  * Handle thread-related WebSocket messages.
@@ -24,7 +25,9 @@ import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../typ
 export function handleThreadMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
   const hydrateThreadCandidates = (exchanges: ExchangeData[] | undefined) => {
-    const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
+    const openTabPaths = useFileStore.getState().tabs
+      .filter(isFileEditorTab)
+      .map((tab) => tab.file.path);
     useChatFileLinkStore.getState().hydrateThreadAutocompleteCandidates(exchanges || [], openTabPaths);
   };
 

@@ -4,6 +4,7 @@ import { useFileStore } from '../../state/fileStore';
 import { loadFileContent } from '../../hooks/useFileTree';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
+import { isFileEditorTab } from '../../types/file-explorer';
 
 interface FileNodeProps {
   node: FileTreeNode;
@@ -12,7 +13,7 @@ interface FileNodeProps {
 
 export function FileNode({ node, depth }: FileNodeProps) {
   const isThisFileLoading = useFileStore((s) =>
-    s.tabs.some((t) => t.file.path === node.path && t.loading),
+    s.tabs.some((tab) => isFileEditorTab(tab) && tab.file.path === node.path && tab.loading),
   );
 
   const icon = getFileIcon(node.extension);

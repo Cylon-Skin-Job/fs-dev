@@ -9,13 +9,14 @@
  *   DONE        — state: closed
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePanelData } from '../../hooks/usePanelData';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { useTicketStore, type Ticket } from '../../state/ticketStore';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
-import { ViewHistoryControls } from '../ViewHistoryControls';
+import { FloatingPathActions } from '../FloatingPathActions';
+import { SegmentedViewNav } from '../SegmentedViewNav';
+import { CaptureDocumentMenuButton } from '../capture/CaptureDocumentMenuButton';
+import { useTileFileActions } from '../../hooks/useTileFileActions';
 
 
 // Bot names we recognize — matches registry.json
@@ -26,6 +27,13 @@ const NOTIFICATION_ICONS = [
   { icon: 'feedback', label: 'Feedback' },
   { icon: 'directory_sync', label: 'Directory sync' },
   { icon: 'inventory', label: 'Inventory' },
+] as const;
+
+const ISSUE_NAV_ITEMS = [
+  { value: 'inbox', label: 'Alerts', controls: 'issues-inbox-panel' },
+  { value: 'tickets', label: 'Tickets', controls: 'issues-ticket-panel' },
+  { value: 'scheduled', label: 'Scheduled', controls: 'issues-scheduled-panel' },
+  { value: 'triggers', label: 'Triggers', controls: 'issues-triggers-panel' },
 ] as const;
 
 type NotificationIcon = (typeof NOTIFICATION_ICONS)[number]['icon'];
@@ -155,27 +163,6 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
           )}
         </div>
         <div className="rv-ticket-card-trailing">
-          <div className="rv-ticket-card-actions">
-            <CopyPathButton
-              panel="issues-viewer"
-              relativePath={`${ticketFolder(ticket)}/${ticket.id}.md`}
-              className="rv-ticket-card-link"
-              title="Copy file path"
-            />
-            <SendToChatButton
-              panel="issues-viewer"
-              relativePath={`${ticketFolder(ticket)}/${ticket.id}.md`}
-              className="rv-ticket-card-link"
-              title="Send file path to chat"
-            />
-            <button
-              className="rv-ticket-card-link"
-              onClick={(e) => { e.stopPropagation(); }}
-              title="Expand content"
-            >
-              <span className="material-symbols-outlined">open_in_new</span>
-            </button>
-          </div>
           {completed && (
             <span className="rv-ticket-card-complete" aria-label="Completed">
               <span className="material-symbols-outlined">check</span>
@@ -198,44 +185,162 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
   );
 }
 
-function TicketDetail({ ticket }: { ticket: Ticket }) {
-  const setActive = useTicketStore((s) => s.setActiveTicket);
+interface TicketDetailProps {
+  ticket: Ticket;
+  onClose: () => void;
+  onExpand: () => void;
+}
+
+function TicketDetail({ ticket, onClose, onExpand }: TicketDetailProps) {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   return (
-    <div className="rv-ticket-detail">
-      <button className="rv-ticket-detail-close" onClick={() => setActive(null)} aria-label="Close ticket details">
-        <span className="material-symbols-outlined">close</span>
-      </button>
-      <div className="rv-ticket-detail-header">
-        <div className="rv-ticket-detail-id">{ticket.id}</div>
-        <div className="rv-ticket-detail-title">{ticket.title}</div>
-        <div className="rv-ticket-detail-fields">
-          <span className="rv-ticket-detail-label">Assignee</span>
-          <span className="rv-ticket-detail-value">{ticket.assignee}</span>
-          <span className="rv-ticket-detail-label">State</span>
-          <span className="rv-ticket-detail-value">{ticket.state}</span>
-          <span className="rv-ticket-detail-label">Author</span>
-          <span className="rv-ticket-detail-value">{ticket.author}</span>
-          <span className="rv-ticket-detail-label">Created</span>
-          <span className="rv-ticket-detail-value">{ticket.created}</span>
-          {ticket.gitlab_iid && (
-            <>
-              <span className="rv-ticket-detail-label">GitLab</span>
-              <span className="rv-ticket-detail-value">#{ticket.gitlab_iid}</span>
-            </>
-          )}
+    <div
+      className="rv-ticket-detail-backdrop"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section
+        className="rv-ticket-detail"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Ticket ${ticket.id}`}
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <header className="rv-ticket-detail-chrome">
+          <span className="material-symbols-outlined rv-ticket-detail-chrome-icon" aria-hidden="true">
+            confirmation_number
+          </span>
+          <span className="rv-ticket-detail-chrome-title">{ticket.id}</span>
+          <div className="rv-ticket-detail-chrome-actions">
+            <button
+              type="button"
+              className="rv-ticket-detail-chrome-action"
+              onClick={onExpand}
+              aria-label={`Expand ${ticket.id}`}
+              title="Expand content"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">expand_content</span>
+            </button>
+            <button
+              type="button"
+              className="rv-ticket-detail-chrome-action"
+              onClick={onClose}
+              aria-label="Close ticket details"
+              title="Close preview"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+          </div>
+        </header>
+        <div className="rv-ticket-detail-summary">
+          <div className="rv-ticket-detail-id">{ticket.id}</div>
+          <div className="rv-ticket-detail-title">{ticket.title}</div>
+          <div className="rv-ticket-detail-fields">
+            <span className="rv-ticket-detail-label">Assignee</span>
+            <span className="rv-ticket-detail-value">{ticket.assignee}</span>
+            <span className="rv-ticket-detail-label">State</span>
+            <span className="rv-ticket-detail-value">{ticket.state}</span>
+            <span className="rv-ticket-detail-label">Author</span>
+            <span className="rv-ticket-detail-value">{ticket.author}</span>
+            <span className="rv-ticket-detail-label">Created</span>
+            <span className="rv-ticket-detail-value">{ticket.created}</span>
+            {ticket.gitlab_iid && (
+              <>
+                <span className="rv-ticket-detail-label">GitLab</span>
+                <span className="rv-ticket-detail-value">#{ticket.gitlab_iid}</span>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="rv-ticket-detail-body">
+          {ticket.body || '(no description)'}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function TicketFullPage({ ticket, onBack }: { ticket: Ticket; onBack: () => void }) {
+  const folder = ticketFolder(ticket);
+  const relativePath = `${folder}/${ticket.id}.md`;
+  const file = {
+    name: `${ticket.id}.md`,
+    path: relativePath,
+    type: 'file' as const,
+    extension: 'md',
+  };
+  const { renameFile, deleteFile } = useTileFileActions({ panel: 'issues-viewer', folder });
+
+  return (
+    <div className="rv-ticket-full-page">
+      <header className="rv-ticket-full-page-topbar">
+        <h1>Ticket - {ticket.id}</h1>
+      </header>
+      <div className="rv-ticket-full-page-subheader">
+        <button
+          type="button"
+          className="rv-ticket-full-page-back"
+          onClick={onBack}
+          aria-label="Back to tickets"
+          title="Back to tickets"
+        >
+          <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        </button>
+        <span className="rv-ticket-full-page-title">{ticket.title}</span>
+        <div className="rv-ticket-full-page-actions">
+          <CaptureDocumentMenuButton
+            fileName={file.name}
+            className="rv-ticket-full-page-action"
+            onRename={() => renameFile(file, folder)}
+            onDelete={() => deleteFile(file, folder)}
+          />
         </div>
       </div>
-      <div className="rv-ticket-detail-body">
-        {ticket.body || '(no description)'}
+      <div className="rv-ticket-full-page-content">
+        <div className="rv-ticket-detail-summary">
+          <div className="rv-ticket-detail-id">{ticket.id}</div>
+          <div className="rv-ticket-detail-title">{ticket.title}</div>
+          <div className="rv-ticket-detail-fields">
+            <span className="rv-ticket-detail-label">Assignee</span>
+            <span className="rv-ticket-detail-value">{ticket.assignee}</span>
+            <span className="rv-ticket-detail-label">State</span>
+            <span className="rv-ticket-detail-value">{ticket.state}</span>
+            <span className="rv-ticket-detail-label">Author</span>
+            <span className="rv-ticket-detail-value">{ticket.author}</span>
+            <span className="rv-ticket-detail-label">Created</span>
+            <span className="rv-ticket-detail-value">{ticket.created}</span>
+            {ticket.gitlab_iid && (
+              <>
+                <span className="rv-ticket-detail-label">GitLab</span>
+                <span className="rv-ticket-detail-value">#{ticket.gitlab_iid}</span>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="rv-ticket-detail-body">{ticket.body || '(no description)'}</div>
       </div>
+      <FloatingPathActions
+        panel="issues-viewer"
+        relativePath={relativePath}
+        copyTitle="Copy ticket path"
+        sendTitle="Send ticket to chat"
+        ariaLabel="Ticket actions"
+      />
     </div>
   );
 }
 
 type ColumnTone = 'todo' | 'progress' | 'done';
 type IssuesSection = 'inbox' | 'tickets' | 'scheduled' | 'triggers';
-const ISSUES_SECTIONS: IssuesSection[] = ['inbox', 'tickets', 'scheduled', 'triggers'];
 
 const SCHEDULED_CALENDAR_DAYS = Array.from({ length: 42 }, (_, index) => {
   const date = new Date(2026, 7, index - 5);
@@ -371,7 +476,7 @@ function Column({ title, tickets, tone }: { title: string; tickets: Ticket[]; to
 export function TicketBoard() {
   useViewLayoutStyles('issues-viewer');
   const [section, setSection] = useState<IssuesSection>('tickets');
-  const sectionIndex = ISSUES_SECTIONS.indexOf(section);
+  const [fullPageTicketId, setFullPageTicketId] = useState<string | null>(null);
 
   const onIndex = useCallback((content: string) => {
     try {
@@ -406,67 +511,26 @@ export function TicketBoard() {
     ? tickets.find((t) => t.id === activeTicketId) || null
     : null;
 
+  const closeTicket = useCallback(() => {
+    setFullPageTicketId(null);
+    useTicketStore.getState().setActiveTicket(null);
+  }, []);
+
+  if (activeTicket && fullPageTicketId === activeTicket.id) {
+    return <TicketFullPage ticket={activeTicket} onBack={closeTicket} />;
+  }
+
   return (
     <div className="rv-ticket-view">
       <header className="rv-ticket-view-header">
-        <ViewHistoryControls
-          onBack={() => {
-            const previousSection = ISSUES_SECTIONS[sectionIndex - 1];
-            if (previousSection) setSection(previousSection);
-          }}
-          onForward={() => {
-            const nextSection = ISSUES_SECTIONS[sectionIndex + 1];
-            if (nextSection) setSection(nextSection);
-          }}
-          canGoBack={sectionIndex > 0}
-          canGoForward={sectionIndex < ISSUES_SECTIONS.length - 1}
-        />
-        <h1 className="rv-ticket-view-title">Issues</h1>
+        <h1 className="rv-ticket-view-title">Issues Tracker</h1>
       </header>
-      <nav className="rv-ticket-view-tabs" aria-label="Issues sections">
-        <div className="rv-ticket-view-tablist" role="tablist">
-          <button
-            type="button"
-            className={`rv-ticket-view-tab${section === 'inbox' ? ' rv-ticket-view-tab-active' : ''}`}
-            role="tab"
-            aria-selected={section === 'inbox'}
-            aria-controls="issues-inbox-panel"
-            onClick={() => setSection('inbox')}
-          >
-            Inbox
-          </button>
-          <button
-            type="button"
-            className={`rv-ticket-view-tab${section === 'tickets' ? ' rv-ticket-view-tab-active' : ''}`}
-            role="tab"
-            aria-selected={section === 'tickets'}
-            aria-controls="issues-ticket-panel"
-            onClick={() => setSection('tickets')}
-          >
-            Tickets
-          </button>
-          <button
-            type="button"
-            className={`rv-ticket-view-tab${section === 'scheduled' ? ' rv-ticket-view-tab-active' : ''}`}
-            role="tab"
-            aria-selected={section === 'scheduled'}
-            aria-controls="issues-scheduled-panel"
-            onClick={() => setSection('scheduled')}
-          >
-            Scheduled
-          </button>
-          <button
-            type="button"
-            className={`rv-ticket-view-tab${section === 'triggers' ? ' rv-ticket-view-tab-active' : ''}`}
-            role="tab"
-            aria-selected={section === 'triggers'}
-            aria-controls="issues-triggers-panel"
-            onClick={() => setSection('triggers')}
-          >
-            Triggers
-          </button>
-        </div>
-      </nav>
+      <SegmentedViewNav
+        ariaLabel="Issues sections"
+        items={ISSUE_NAV_ITEMS}
+        activeValue={section}
+        onChange={(value) => setSection(value as IssuesSection)}
+      />
       {section === 'inbox' ? (
         <section
           id="issues-inbox-panel"
@@ -530,7 +594,13 @@ export function TicketBoard() {
           <Column title="To Do" tickets={inbox} tone="todo" />
           <Column title="In Progress" tickets={open} tone="progress" />
           <Column title="Done" tickets={completed} tone="done" />
-          {activeTicket && <TicketDetail ticket={activeTicket} />}
+          {activeTicket && (
+            <TicketDetail
+              ticket={activeTicket}
+              onClose={closeTicket}
+              onExpand={() => setFullPageTicketId(activeTicket.id)}
+            />
+          )}
         </div>
       )}
     </div>

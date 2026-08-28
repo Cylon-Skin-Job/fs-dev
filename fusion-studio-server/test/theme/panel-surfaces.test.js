@@ -292,6 +292,8 @@ describe('panel surface color derivation', () => {
     expect(computeContentAccentContrast({ accent: '#f4f4f4', themeColor: '#d8d8d8', contentAccent: 100 })).toBe('#000000');
     expect(themeCssGenerator.render({ ...entry, themeColor: '#42678a', contentForeground: 0 })).toContain('--content-foreground-color: #42678a;');
     expect(themeCssGenerator.render({ ...entry, themeColor: '#42678a', contentAccent: 0 })).toContain('--content-accent-color: #42678a;');
+    expect(themeCssGenerator.render({ ...entry, mode: 'dark' })).toContain('--capture-star-color: #d6b85a;');
+    expect(themeCssGenerator.render({ ...entry, mode: 'light' })).toContain('--capture-star-color: #8a6a0a;');
     expect(computeContentHeadings({ ...entry, themeColor: '#42678a', contentHeadings: 0 })).toBe('#557696');
     expect(computeContentHeadings({ ...entry, themeColor: '#42678a', luminance: 100, contentHeadings: 0 })).toBe('#3b5d7c');
     expect(computeContentHeadings({ ...entry, themeColor: '#42678a', contentHeadings: 100 })).toBe('#80270a');

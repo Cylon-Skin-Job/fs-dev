@@ -28,8 +28,7 @@ import { EmailBreadcrumb } from './EmailBreadcrumb';
 import { useEmailViewerSearch } from './useEmailViewerSearch';
 import { FilePageView } from '../capture/FilePageView';
 import { Icon } from '../Icon';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { EMAIL_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
 import type { ViewUIState } from '../../types';
@@ -1115,10 +1114,13 @@ export function EmailGrid() {
     />
   ) : 'Home';
   const headerRightControls = currentFolder && !isSearchSubmitted ? (
-    <div className="rv-email-folder-actions" aria-label="Folder actions">
-      <SendToChatButton panel={PANEL} relativePath={currentFolder} className="rv-email-header-action" title="Send folder path to chat" />
-      <CopyPathButton panel={PANEL} relativePath={currentFolder} className="rv-email-header-action" title="Copy folder path" />
-    </div>
+    <FloatingPathActions
+      panel={PANEL}
+      relativePath={currentFolder}
+      copyTitle="Copy folder path"
+      sendTitle="Send folder path to chat"
+      ariaLabel="Email folder actions"
+    />
   ) : null;
   const handleSidebarAction = useCallback((action: EmailSidebarAction) => {
     persistEmailViewPatch({

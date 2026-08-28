@@ -1,6 +1,8 @@
 /* Main App Layout */
 .rv-app-container {
   --theme-picker-drawer-width: min(480px, calc(100vw - 24px));
+  --trailing-action-inset: 8px;
+  --trailing-action-gap: 4px;
   display: grid;
   grid-template-rows: var(--header-height) 1fr;
   grid-template-columns: var(--tools-width) var(--sidebar-width) var(--chat-width) 1fr;
@@ -24,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 var(--trailing-action-inset) 0 16px;
   background: var(--panel-chrome-bg, #1a1a1a);
   border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
 }
@@ -63,7 +65,13 @@
 .rv-header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--trailing-action-gap);
+}
+
+.rv-header-right .rv-fusion-icon-btn {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
 }
 
 /* Context usage chip: views.css */
@@ -101,6 +109,15 @@
 .rv-header .rv-theme-swatch-btn .material-symbols-outlined {
   color: inherit;
   font-size: var(--chrome-icon-size, 18px);
+}
+
+.rv-header .rv-fusion-icon-btn:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.rv-header .rv-fusion-icon-btn:disabled:hover {
+  background: transparent;
 }
 
 /* ── Shared utility classes ── */
@@ -216,7 +233,7 @@
 .rv-view-layout-controls {
   position: absolute;
   top: 4px;
-  right: 4px;
+  right: var(--trailing-action-inset);
   left: 4px;
   z-index: 60;
   height: 32px;
@@ -230,6 +247,13 @@
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Trailing control cluster (for view-specific controls such as the file tree dock). */
+.rv-view-layout-controls__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--trailing-action-gap);
 }
 
 .rv-view-layout-control {
@@ -324,6 +348,10 @@ main.rv-content-area:has(> .rv-browser-viewer) {
   flex: 1;
   min-height: 0;
   min-width: 0;
+}
+
+.rv-content-area > .rv-view-tab-bar {
+  flex: 0 0 auto;
 }
 
 /* Content area in full layout gets no padding (explorer/viewer fills it) */

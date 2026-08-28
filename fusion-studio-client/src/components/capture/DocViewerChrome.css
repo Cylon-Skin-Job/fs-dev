@@ -106,12 +106,17 @@
 /* Capture's document actions occupy the fixed secondary document header.
    Keep the upper chrome's balanced slots intact so its file identity remains
    truly centered, while anchoring the action row to the lower rail's right. */
-.rv-file-page-view--capture .rv-capture-viewer-actions {
+.rv-file-page-view--capture .rv-capture-viewer-chrome .rv-capture-viewer-actions {
   position: absolute;
   top: var(--view-header-height, 40px);
   right: 24px;
   z-index: 4;
   height: 47px;
+}
+
+.rv-capture-document-subheader.is-tabbed > .rv-capture-viewer-actions {
+  flex: 0 0 auto;
+  margin-left: var(--space-xs, 4px);
 }
 
 .rv-capture-viewer-actions .rv-file-page-action {
@@ -140,6 +145,10 @@
 
 .rv-capture-viewer-actions .rv-capture-viewer-star .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.rv-capture-viewer-actions .rv-capture-viewer-star.is-starred {
+  color: var(--capture-star-color, #d6b85a);
 }
 
 .rv-capture-viewer-actions .rv-capture-viewer-star.is-starred .material-symbols-outlined {

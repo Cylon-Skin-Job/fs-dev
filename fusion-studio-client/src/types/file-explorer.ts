@@ -20,12 +20,29 @@ export interface FileInfo {
   symlinkTarget?: string;
 }
 
-/** One open file tab in the code viewer (path is unique per tab). */
-export interface EditorTab {
+interface EditorTabBase {
+  /** Opaque, session-local identity. Consumers must not parse tab ids. */
+  id: string;
+}
+
+/** One open file tab in the code viewer (file path is unique among file tabs). */
+export interface FileEditorTab extends EditorTabBase {
+  kind: 'file';
   file: FileInfo;
   content: string;
   size: number;
   loading: boolean;
+}
+
+/** Session-only file-picker tab. It never enters persisted view activity. */
+export interface EmptyEditorTab extends EditorTabBase {
+  kind: 'empty';
+}
+
+export type EditorTab = FileEditorTab | EmptyEditorTab;
+
+export function isFileEditorTab(tab: EditorTab): tab is FileEditorTab {
+  return tab.kind === 'file';
 }
 
 export type FileErrorCode =

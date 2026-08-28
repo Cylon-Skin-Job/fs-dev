@@ -47,7 +47,7 @@
 .rv-file-tree-sidebar {
   width: var(--file-tree-w, var(--right-col-w, 220px));
   position: absolute;
-  top: calc(var(--view-header-height, 40px) + var(--view-header-height, 40px) - 1px);
+  top: calc(var(--view-header-height, 40px) - 1px);
   right: 0;
   bottom: 0;
   z-index: 3;
@@ -160,199 +160,13 @@
   pointer-events: none;
 }
 
-/* Full top row: browser-style tab strip. */
-.rv-file-viewer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: var(--view-header-height, 40px);
-  /* The bottom border is drawn by ::after so that z-index layering lets the
-   * active tab cover it while inactive tabs (translateY) leave it visible. */
-  position: relative;
-  z-index: 0;
-  padding-left: 40px;
-  padding-right: 40px;
-  box-sizing: border-box;
-}
-
-.rv-file-viewer-header::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.rv-file-viewer-tab-bar-action {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 32px;
-}
-
-.rv-file-viewer-tab-bar-action .material-symbols-outlined {
-  font-size: 20px;
-}
-
-.rv-file-viewer-tab-bar-action--leading {
-  margin-left: 4px;
-}
-
-.rv-file-viewer-tab-bar-action--trailing {
-  margin-right: 4px;
-}
-
-/* Mirrors BrowserTabs: inset top rail, proportional tab shrinkage, and a
-   baseline covered by the connected active tab. */
-.rv-file-viewer-tabs {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 4px 0;
-  min-height: 36px;
-}
-
-.rv-file-viewer-tab {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 6px 6px 0 0;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, transform 0.15s ease;
-  max-width: 140px;
-  min-width: 0;
-  flex: 1 1 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  transform: translateY(-2px);
-}
-
-.rv-file-viewer-tab:not(.active) {
-  transform: translateY(-2px);
-}
-
-.rv-file-viewer-tab:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 1px;
-  height: 16px;
-  background: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.rv-file-viewer-tab.active::after,
-.rv-file-viewer-tab:last-of-type::after,
-.rv-file-viewer-tab:has(+ .rv-file-viewer-tab.active)::after,
-.rv-file-viewer-tab:has(+ .rv-file-viewer-tab:hover)::after {
-  display: none;
-}
-
-.rv-file-viewer-tab.active {
-  transform: translateY(0);
-  /* Render above the header ::after border so the active tab covers the line. */
-  z-index: 2;
-}
-
-.rv-file-viewer-tab .rv-tab-icon {
-  font-size: 16px;
-}
-
-.rv-file-viewer-tab .rv-tab-name {
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
-  flex: 1;
-  min-width: 0;
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent 100%);
-  mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent 100%);
-}
-
-.rv-file-viewer-tab .rv-tab-close {
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  opacity: 0.6;
-  flex-shrink: 0;
-}
-
-.rv-file-viewer-tab .rv-tab-close .material-symbols-outlined {
-  font-size: 10.5px;
-}
-
-/* Once tabs become narrow, reserve the strip for the filename. The close
-   control remains available on hover/focus and sits over the name's fade. */
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab {
-  gap: 0;
-  padding-inline: 6px;
-}
-
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab .rv-tab-close {
-  position: absolute;
-  right: 2px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab:hover .rv-tab-close,
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab:focus-within .rv-tab-close {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab:hover .rv-tab-name,
-.rv-file-viewer-tabs.compact .rv-file-viewer-tab:focus-within .rv-tab-name {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 calc(100% - 24px),
-    transparent calc(100% - 16px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 calc(100% - 24px),
-    transparent calc(100% - 16px),
-    transparent 100%
-  );
-}
-
 .rv-file-viewer-info {
   display: flex;
   align-items: center;
   height: var(--view-header-height, 40px);
   box-sizing: border-box;
   gap: 12px;
-  padding: 4px 116px 4px 16px;
+  padding: 4px 8px 4px 16px;
   border-top: none;
   /* Border-bottom (width + color) lives in ai/<machine>/System/styles/file-viewer.css. */
   font-size: 12px;
@@ -365,9 +179,15 @@
 }
 
 .rv-file-viewer-info .rv-file-breadcrumb {
+  flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.rv-file-tree-dock-control {
+  flex: 0 0 32px;
+  margin-left: auto;
 }
 
 .rv-file-breadcrumb-part {
@@ -387,34 +207,9 @@
   text-overflow: ellipsis;
 }
 
-.rv-file-viewer-info .rv-file-page-actions {
-  position: absolute;
-  top: var(--view-header-height, 40px);
-  right: 8px;
-  height: var(--view-header-height, 40px);
-  margin-left: 0;
-  z-index: 4;
-}
-
-.rv-file-header-folder-action {
-  position: relative;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  flex: 0 0 28px;
-}
-
-.rv-file-header-folder-action .material-symbols-outlined {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.rv-file-header-folder-action .material-symbols-outlined:last-child {
-  top: calc(50% + 1px);
-  font-size: 12px;
+.rv-file-floating-actions {
+  --floating-path-actions-right-offset: var(--file-tree-w, 0px);
+  transition: right var(--transition-normal, 180ms) ease;
 }
 
 .rv-file-viewer-info .info-item .material-symbols-outlined {

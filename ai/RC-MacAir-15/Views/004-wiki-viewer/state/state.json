@@ -1,12 +1,12 @@
 {
   "collapsed": {
-    "leftSidebar": true,
+    "leftSidebar": false,
     "rightCol": false,
     "contentArea": false
   },
   "widths": {
-    "leftChat": 360,
-    "contentNavLeft": 240.1328125,
+    "leftChat": 380.046875,
+    "contentNavLeft": 263.80078125,
     "contentNavRight": 240.72265625
   },
   "popup": {
@@ -16,6 +16,97 @@
   },
   "activity": {
     "recents": [
+      {
+        "id": "wiki-viewer:002-System_Tools/002-Secrets_Manager",
+        "panel": "wiki-viewer",
+        "path": "002-System_Tools/002-Secrets_Manager",
+        "title": "Secrets Manager",
+        "kind": "page",
+        "openedAt": 1787872555568,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System_Tools/002-Secrets_Manager/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+        "panel": "wiki-viewer",
+        "path": "002-System_Tools/001-Custom_Theme_CSS",
+        "title": "Custom Theme CSS",
+        "kind": "page",
+        "openedAt": 1787872554583,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:002-System_Tools/000-System_Tools",
+        "panel": "wiki-viewer",
+        "path": "002-System_Tools/000-System_Tools",
+        "title": "System Tools",
+        "kind": "page",
+        "openedAt": 1787872553117,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "002-System_Tools/000-System_Tools/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
+        "title": "Workspace Paradigm",
+        "kind": "page",
+        "openedAt": 1787828644829,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
+        "panel": "wiki-viewer",
+        "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
+        "title": "Workspaces And Views",
+        "kind": "page",
+        "openedAt": 1787828642362,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+          "kind": "article"
+        }
+      },
+      {
+        "id": "wiki-viewer:000-Wiki_Guidance",
+        "panel": "wiki-viewer",
+        "path": "000-Wiki_Guidance",
+        "title": "Wiki Guidance",
+        "kind": "page",
+        "openedAt": 1787828318096,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "000-Wiki_Guidance/PAGE.md",
+          "kind": "section"
+        }
+      },
+      {
+        "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
+        "panel": "wiki-viewer",
+        "path": "007-Chat_System/000-Overview_and_References",
+        "title": "Overview and References",
+        "kind": "page",
+        "openedAt": 1787803524914,
+        "extension": "md",
+        "metadata": {
+          "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
+          "kind": "article"
+        }
+      },
       {
         "id": "wiki-viewer:005-Enforcement/001-Code_Standards",
         "panel": "wiki-viewer",
@@ -52,45 +143,6 @@
         "extension": "md",
         "metadata": {
           "pagePath": "001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
-        "panel": "wiki-viewer",
-        "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
-        "title": "Workspace Paradigm",
-        "kind": "page",
-        "openedAt": 1787618440930,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:000-Wiki_Guidance",
-        "panel": "wiki-viewer",
-        "path": "000-Wiki_Guidance",
-        "title": "Wiki Guidance",
-        "kind": "page",
-        "openedAt": 1787618435997,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "000-Wiki_Guidance/PAGE.md",
-          "kind": "section"
-        }
-      },
-      {
-        "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
-        "panel": "wiki-viewer",
-        "path": "002-System_Tools/001-Custom_Theme_CSS",
-        "title": "Custom Theme CSS",
-        "kind": "page",
-        "openedAt": 1787618389964,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
           "kind": "article"
         }
       },
@@ -160,32 +212,6 @@
         }
       },
       {
-        "id": "wiki-viewer:002-System_Tools/000-System_Tools",
-        "panel": "wiki-viewer",
-        "path": "002-System_Tools/000-System_Tools",
-        "title": "System Tools",
-        "kind": "page",
-        "openedAt": 1787616076628,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "002-System_Tools/000-System_Tools/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
-        "panel": "wiki-viewer",
-        "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
-        "title": "Workspaces And Views",
-        "kind": "page",
-        "openedAt": 1787616072263,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
         "id": "wiki-viewer:007-Chat_System/001-Identity_And_Persistence",
         "panel": "wiki-viewer",
         "path": "007-Chat_System/001-Identity_And_Persistence",
@@ -195,19 +221,6 @@
         "extension": "md",
         "metadata": {
           "pagePath": "007-Chat_System/001-Identity_And_Persistence/PAGE.md",
-          "kind": "article"
-        }
-      },
-      {
-        "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
-        "panel": "wiki-viewer",
-        "path": "007-Chat_System/000-Overview_and_References",
-        "title": "Overview and References",
-        "kind": "page",
-        "openedAt": 1787553353087,
-        "extension": "md",
-        "metadata": {
-          "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
           "kind": "article"
         }
       },
@@ -708,136 +721,6 @@
     ],
     "navigation": {
       "stack": [
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance/003-Updating_Wikis",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance/003-Updating_Wikis",
-          "title": "Updating Wikis",
-          "kind": "page",
-          "openedAt": 1783557384728,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:000-Wiki_Guidance/001-Style_Guide",
-          "panel": "wiki-viewer",
-          "path": "000-Wiki_Guidance/001-Style_Guide",
-          "title": "Style Guide",
-          "kind": "page",
-          "openedAt": 1783557566211,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "000-Wiki_Guidance/001-Style_Guide/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents",
-          "title": "Documents",
-          "kind": "page",
-          "openedAt": 1783557667777,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/005-Documents/004-Tables",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/005-Documents/004-Tables",
-          "title": "Tables",
-          "kind": "page",
-          "openedAt": 1783557671410,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/005-Documents/004-Tables/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783558041626,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:001-Project/022-Ticket_Routing",
-          "panel": "wiki-viewer",
-          "path": "001-Project/022-Ticket_Routing",
-          "title": "Ticket Routing",
-          "kind": "page",
-          "openedAt": 1783558258492,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "001-Project/022-Ticket_Routing/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783558367076,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/000-Fusion_Home",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/000-Fusion_Home",
-          "title": "Fusion Home",
-          "kind": "page",
-          "openedAt": 1783558634471,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/000-Fusion_Home/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer",
-          "title": "Office Viewer",
-          "kind": "page",
-          "openedAt": 1783558825818,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/PAGE.md",
-            "kind": "article"
-          }
-        },
-        {
-          "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer/001-Layout_And_Rendering",
-          "panel": "wiki-viewer",
-          "path": "009-Fusion_Home/001-Office_Viewer/001-Layout_And_Rendering",
-          "title": "Layout And Rendering",
-          "kind": "page",
-          "openedAt": 1783558909134,
-          "extension": "md",
-          "metadata": {
-            "pagePath": "009-Fusion_Home/001-Office_Viewer/001-Layout_And_Rendering/PAGE.md",
-            "kind": "sidebar-section"
-          }
-        },
         {
           "id": "wiki-viewer:009-Fusion_Home/001-Office_Viewer",
           "panel": "wiki-viewer",
@@ -2005,6 +1888,136 @@
           "extension": "md",
           "metadata": {
             "pagePath": "005-Enforcement/001-Code_Standards/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:007-Chat_System/000-Overview_and_References",
+          "panel": "wiki-viewer",
+          "path": "007-Chat_System/000-Overview_and_References",
+          "title": "Overview and References",
+          "kind": "page",
+          "openedAt": 1787803524914,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "007-Chat_System/000-Overview_and_References/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787803528446,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/001-Custom_Theme_CSS",
+          "title": "Custom Theme CSS",
+          "kind": "page",
+          "openedAt": 1787826609907,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:000-Wiki_Guidance",
+          "panel": "wiki-viewer",
+          "path": "000-Wiki_Guidance",
+          "title": "Wiki Guidance",
+          "kind": "page",
+          "openedAt": 1787828318096,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "000-Wiki_Guidance/PAGE.md",
+            "kind": "section"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/000-Workspaces_And_Views",
+          "title": "Workspaces And Views",
+          "kind": "page",
+          "openedAt": 1787828642362,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:001-Workspaces_And_Views/001-Workspace_Paradigm",
+          "panel": "wiki-viewer",
+          "path": "001-Workspaces_And_Views/001-Workspace_Paradigm",
+          "title": "Workspace Paradigm",
+          "kind": "page",
+          "openedAt": 1787828644829,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/001-Custom_Theme_CSS",
+          "title": "Custom Theme CSS",
+          "kind": "page",
+          "openedAt": 1787872550868,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/000-System_Tools",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/000-System_Tools",
+          "title": "System Tools",
+          "kind": "page",
+          "openedAt": 1787872553117,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/000-System_Tools/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/001-Custom_Theme_CSS",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/001-Custom_Theme_CSS",
+          "title": "Custom Theme CSS",
+          "kind": "page",
+          "openedAt": 1787872554583,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+            "kind": "article"
+          }
+        },
+        {
+          "id": "wiki-viewer:002-System_Tools/002-Secrets_Manager",
+          "panel": "wiki-viewer",
+          "path": "002-System_Tools/002-Secrets_Manager",
+          "title": "Secrets Manager",
+          "kind": "page",
+          "openedAt": 1787872555568,
+          "extension": "md",
+          "metadata": {
+            "pagePath": "002-System_Tools/002-Secrets_Manager/PAGE.md",
             "kind": "article"
           }
         }

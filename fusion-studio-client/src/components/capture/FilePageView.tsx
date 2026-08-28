@@ -10,8 +10,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { getPanelFileUrl } from '../../lib/panels';
 import { getFileIcon } from '../../lib/file-utils';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
@@ -38,6 +37,8 @@ interface FilePageViewProps {
   onRename?: () => void;
   onDelete?: () => void;
   onToggleStar?: () => void;
+  /** Tabs mode replaces the capture document's complete upper chrome row. */
+  hideChromeTitle?: boolean;
   onBack: () => void;
 }
 
@@ -69,6 +70,7 @@ export function FilePageView({
   onRename,
   onDelete,
   onToggleStar,
+  hideChromeTitle = false,
   onBack,
 }: FilePageViewProps) {
   const isImage = isImageFile(file.name);
@@ -76,6 +78,8 @@ export function FilePageView({
   const isMarkdown = extension === 'md' || extension === 'markdown';
   const isHtml = extension === 'html' || extension === 'htm';
   const isCaptureView = panel === 'capture-viewer';
+  const fileUrl = getPanelFileUrl(panel, file.path);
+  const htmlUrl = useCacheBusterUrl(fileUrl, true);
   const fileIcon = getFileIcon(extension, file.name);
   const isArchiveDoc = folder === DOC_VIEWER_ARCHIVE_FOLDER;
   const titleLabel = isArchiveDoc
@@ -103,9 +107,41 @@ export function FilePageView({
     }
   }, [docScroll, file.path, file.content]);
 
+  const documentActions = (
+    <div className="rv-capture-viewer-actions">
+      {file.isSymlink && file.symlinkTarget ? (
+        <LinkedResourceIndicator
+          symlinkTarget={file.symlinkTarget}
+          className="rv-file-page-action"
+        />
+      ) : null}
+      {onToggleStar ? (
+        <button
+          type="button"
+          className={`rv-file-page-action rv-capture-viewer-star${starred ? ' is-starred' : ''}`}
+          onClick={onToggleStar}
+          aria-label={starred ? `Unstar ${file.name}` : `Star ${file.name}`}
+          aria-pressed={starred}
+          title={starred ? 'Unstar' : 'Star'}
+        >
+          <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
+        </button>
+      ) : null}
+      {onRename || onDelete || onToggleStar ? (
+        <CaptureDocumentMenuButton
+          fileName={file.name}
+          className="rv-file-page-action"
+          onRename={onRename}
+          onArchive={!isArchiveDoc ? onArchive : undefined}
+          onDelete={onDelete}
+        />
+      ) : null}
+    </div>
+  );
+
   return (
     <div className={`rv-file-page-view${isCaptureView ? ' rv-file-page-view--capture' : ''}`}>
-      <DocViewerChrome
+      {isCaptureView && hideChromeTitle ? null : <DocViewerChrome
         left={
           <>
             {!isCaptureView ? (
@@ -141,53 +177,11 @@ export function FilePageView({
             <span className="rv-capture-viewer-title">{titleLabel}</span>
           )
         }
-        right={
-          <div className="rv-capture-viewer-actions">
-            {file.isSymlink && file.symlinkTarget ? (
-              <LinkedResourceIndicator
-                symlinkTarget={file.symlinkTarget}
-                className="rv-file-page-action"
-              />
-            ) : null}
-            <CopyPathButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-file-page-action"
-              title="Copy file path"
-            />
-            <SendToChatButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-file-page-action"
-              title="Send file path to chat"
-            />
-            {onToggleStar ? (
-              <button
-                type="button"
-                className={`rv-file-page-action rv-capture-viewer-star${starred ? ' is-starred' : ''}`}
-                onClick={onToggleStar}
-                aria-label={starred ? `Unstar ${file.name}` : `Star ${file.name}`}
-                aria-pressed={starred}
-                title={starred ? 'Unstar' : 'Star'}
-              >
-                <span className="material-symbols-outlined" aria-hidden="true">kid_star</span>
-              </button>
-            ) : null}
-            {onRename || onDelete || onToggleStar ? (
-              <CaptureDocumentMenuButton
-                fileName={file.name}
-                className="rv-file-page-action"
-                onRename={onRename}
-                onArchive={!isArchiveDoc ? onArchive : undefined}
-                onDelete={onDelete}
-              />
-            ) : null}
-          </div>
-        }
-      />
+        right={documentActions}
+      />}
 
       {isCaptureView ? (
-        <div className="rv-capture-document-subheader">
+        <div className={`rv-capture-document-subheader${hideChromeTitle ? ' is-tabbed' : ''}`}>
           <button
             type="button"
             className="rv-capture-document-subheader-back"
@@ -198,6 +192,7 @@ export function FilePageView({
             <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
           </button>
           <span className="rv-capture-document-subheader-title">{documentTitle}</span>
+          {hideChromeTitle ? documentActions : null}
         </div>
       ) : null}
 
@@ -208,7 +203,7 @@ export function FilePageView({
       >
         {isImage ? (
           <img
-            src={getPanelFileUrl(panel, file.path)}
+            src={fileUrl}
             alt={file.name}
             className="rv-file-page-image"
           />
@@ -216,7 +211,7 @@ export function FilePageView({
           <IframeSurface
             className="rv-file-page-html-frame"
             iframeClassName="rv-file-page-html-iframe"
-            src={useCacheBusterUrl(getPanelFileUrl(panel, file.path), true)}
+            src={htmlUrl}
             title={file.name}
           />
         ) : (
@@ -227,6 +222,14 @@ export function FilePageView({
           />
         )}
       </div>
+
+      <FloatingPathActions
+        panel={panel}
+        relativePath={file.path}
+        copyTitle="Copy file path"
+        sendTitle="Send file path to chat"
+        ariaLabel={isCaptureView ? 'Capture document actions' : 'Document actions'}
+      />
 
     </div>
   );

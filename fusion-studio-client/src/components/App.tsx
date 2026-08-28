@@ -12,6 +12,7 @@ import { ToolsPanel } from './ToolsPanel';
 import { Sidebar } from './Sidebar';
 import { ChatArea } from './ChatArea';
 import { ContentArea } from './ContentArea';
+import { AppHeaderLayoutControls } from './ViewLayoutControls';
 import { LeftSidebarResize, LeftChatResize } from './ResizeHandle';
 import { Toast } from './Toast';
 import { ModalOverlay } from './Modal/ModalOverlay';
@@ -23,12 +24,12 @@ import { WorkspaceRibbon } from './WorkspaceRibbon';
 import { WorkspaceCarousel } from './WorkspaceCarousel';
 
 import { WorkspaceTitle } from './WorkspaceTitle';
+import { AiSourceSelector } from './AiSourceSelector';
 import { WorkspaceAddModal } from './WorkspaceAddModal';
 import { WorkspaceCreateModal } from './WorkspaceCreateModal';
 import { ThemePickerModal } from './ThemePickerModal';
-import ThemePickerButton from './ThemePickerButton';
 import { SecretsManagerModal } from './secrets/SecretsManagerModal';
-import { ConnectorsDropdown } from './ConnectorsDropdown';
+import { HeaderActionsMenu } from './HeaderActionsMenu';
 import {
   captureAndAttachScreenshot,
   SCREENSHOT_FLASH_EVENT,
@@ -172,7 +173,6 @@ function App() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [fusionOpen, setFusionOpen] = useState(false);
-  const connectorsRef = useRef<HTMLDivElement>(null);
   const [screenshotFlashImage, setScreenshotFlashImage] = useState<string | null>(null);
 
   const hasReceivedWorkspaceInit = useWorkspaceStore((s) => s.hasReceivedInit);
@@ -207,17 +207,6 @@ function App() {
       setCurrentPanel(configs[0].id);
     }
   }, [configs, currentPanel, setCurrentPanel]);
-
-  // Click outside connectors dropdown closes it
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (connectorsRef.current && !connectorsRef.current.contains(e.target as Node)) {
-        usePanelStore.getState().setConnectorsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   // Keyboard: Escape defocuses content, Option+Up/Down cycles panels
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -278,20 +267,21 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
-            <button
-              className="rv-fusion-icon-btn"
-              title="Control camera"
-              aria-label="Control camera"
-              onClick={handleControlCamera}
-            >
-              <span className="material-symbols-outlined">control_camera</span>
-            </button>
+            <AiSourceSelector />
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
           </div>
           <WorkspaceTitle />
           <div className="rv-header-right">
+            <button
+              className="rv-fusion-icon-btn"
+              title="Take screenshot"
+              aria-label="Take screenshot"
+              onClick={handleControlCamera}
+            >
+              <span className="material-symbols-outlined">control_camera</span>
+            </button>
             <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
@@ -311,20 +301,21 @@ function App() {
       <div ref={containerRef} className="rv-app-container">
         <header className="rv-header">
           <div className="rv-header-left">
-            <button
-              className="rv-fusion-icon-btn"
-              title="Control camera"
-              aria-label="Control camera"
-              onClick={handleControlCamera}
-            >
-              <span className="material-symbols-outlined">control_camera</span>
-            </button>
+            <AiSourceSelector />
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
               {isConnected ? 'Connected' : 'Connecting...'}
             </div>
           </div>
           <WorkspaceTitle />
           <div className="rv-header-right">
+            <button
+              className="rv-fusion-icon-btn"
+              title="Take screenshot"
+              aria-label="Take screenshot"
+              onClick={handleControlCamera}
+            >
+              <span className="material-symbols-outlined">control_camera</span>
+            </button>
             <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
               <span className="material-symbols-outlined">raven</span>
             </button>
@@ -348,14 +339,7 @@ function App() {
       {/* Header */}
       <header className="rv-header">
         <div className="rv-header-left">
-          <button
-            className="rv-fusion-icon-btn"
-            title="Control camera"
-            aria-label="Control camera"
-            onClick={handleControlCamera}
-          >
-            <span className="material-symbols-outlined">control_camera</span>
-          </button>
+          <AiSourceSelector />
           <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
             {isConnected ? 'Connected' : 'Disconnected'}
           </div>
@@ -364,21 +348,16 @@ function App() {
         <WorkspaceTitle />
 
         <div className="rv-header-right">
-          <div className="rv-connectors-trigger-wrap" ref={connectorsRef}>
-            <button
-              className="rv-fusion-icon-btn"
-              onClick={() => usePanelStore.getState().setConnectorsDropdownOpen(true)}
-              title="macOS Connectors"
-              aria-label="Open macOS Connectors panel"
-            >
-              <span className="material-symbols-outlined">hub</span>
-            </button>
-            <ConnectorsDropdown />
-          </div>
-          <button className="rv-fusion-icon-btn" onClick={() => setFusionOpen(true)}>
-            <span className="material-symbols-outlined">raven</span>
+          <button
+            className="rv-fusion-icon-btn"
+            title="Take screenshot"
+            aria-label="Take screenshot"
+            onClick={handleControlCamera}
+          >
+            <span className="material-symbols-outlined">control_camera</span>
           </button>
-          <ThemePickerButton />
+          <AppHeaderLayoutControls panel={currentPanel} />
+          <HeaderActionsMenu onOpenFusion={() => setFusionOpen(true)} />
         </div>
       </header>
 

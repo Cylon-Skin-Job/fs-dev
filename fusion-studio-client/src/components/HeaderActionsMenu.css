@@ -1,0 +1,9 @@
+.rv-header-actions-menu-wrap {
+  position: relative;
+}
+
+.rv-header-actions-menu {
+  width: 220px;
+  top: calc(100% + 6px);
+  right: 0;
+}

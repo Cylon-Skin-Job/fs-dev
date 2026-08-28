@@ -23,9 +23,8 @@ import { OfficeBreadcrumb } from './OfficeBreadcrumb';
 import { useOfficeViewerSearch } from './useOfficeViewerSearch';
 import { FilePageView } from '../capture/FilePageView';
 import { Icon } from '../Icon';
-import { CopyPathButton } from '../CopyPathButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
-import { SendToChatButton } from '../SendToChatButton';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { OFFICE_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
 import type { ViewUIState } from '../../types';
@@ -729,16 +728,21 @@ export function OfficeGrid() {
     />
   ) : 'Home';
   const headerRightControls = currentFolder && !isSearchSubmitted ? (
-    <div className="rv-office-folder-actions" aria-label="Folder actions">
+    <>
       {activeFolderMetadata?.isSymlink && activeFolderMetadata.symlinkTarget ? (
         <LinkedResourceIndicator
           symlinkTarget={activeFolderMetadata.symlinkTarget}
           className="rv-office-header-action"
         />
       ) : null}
-      <SendToChatButton panel={PANEL} relativePath={currentFolder} className="rv-office-header-action" title="Send folder path to chat" />
-      <CopyPathButton panel={PANEL} relativePath={currentFolder} className="rv-office-header-action" title="Copy folder path" />
-    </div>
+      <FloatingPathActions
+        panel={PANEL}
+        relativePath={currentFolder}
+        copyTitle="Copy folder path"
+        sendTitle="Send folder path to chat"
+        ariaLabel="Office folder actions"
+      />
+    </>
   ) : null;
   const handleOfficeHome = useCallback(() => {
     persistOfficeViewPatch({

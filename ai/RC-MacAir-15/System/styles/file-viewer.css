@@ -78,76 +78,11 @@
   background: var(--document-bg, #161616);
 }
 
-/* ── Browser-style tab rail + divider ── */
-.rv-file-viewer-header {
-  background: var(--panel-chrome-bg, #1a1a1a);
-}
-
-.rv-file-viewer-header::after {
-  /* Chrome divider (between the tab strip and the content frame).
-   * Driven by the Border sliders via --file-viewer-chrome-border. */
-  background: var(--file-viewer-chrome-border, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
-}
-
-/* ── Tab strip rail + connected active tab ── */
-.rv-file-viewer-tabs {
-  background: var(--panel-chrome-bg, #1a1a1a);
-}
-
-.rv-file-viewer-tab {
-  border: none;
-  background: transparent;
-  color: var(--text-dim, rgba(255, 255, 255, 0.6));
-}
-
-.rv-file-viewer-tab:hover {
-  background: var(--glass-md, rgba(255, 255, 255, 0.06));
-  color: var(--text-primary, #e0e0e0);
-}
-
-.rv-file-viewer-tab.active {
-  background: var(--document-bg, #161616);
-  border-top: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
-  border-right: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
-  border-bottom: none;
-  border-left: 1px solid var(--workspace-border-color, var(--file-viewer-chrome-border));
-  color: var(--text-primary, #e0e0e0);
-}
-
-.rv-file-viewer-tab .rv-tab-icon {
-  color: inherit;
-}
-
-.rv-file-viewer-tab .rv-tab-name {
-  color: inherit;
-}
-
-.rv-file-viewer-tab:not(.active) .rv-tab-name {
-  color: inherit;
-}
-
-.rv-file-viewer-tab .rv-tab-close {
-  color: inherit;
-}
-
-.rv-file-viewer-tab .rv-tab-close:hover {
-  background: var(--glass-md, rgba(255, 255, 255, 0.08));
-  opacity: 1;
-}
-
 /* ── Filename info row + content divider ── */
 .rv-file-viewer-info {
   background: var(--document-bg, #161616);
   border-bottom: 1px solid var(--file-viewer-chrome-border);
   color: var(--content-attenuated, var(--text-dim));
-}
-
-.rv-file-viewer-info .rv-file-page-action {
-  color: var(--content-foreground-color, var(--text-dim));
-}
-
-.rv-file-viewer-info .rv-file-page-action:hover {
-  color: var(--text-primary, #e0e0e0);
 }
 
 /* ── Code-content fill ── */

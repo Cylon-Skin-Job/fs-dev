@@ -30,15 +30,16 @@ export function CaptureDocumentMenuButton({
         event.stopPropagation();
         closeMenuRef.current?.();
         const rect = event.currentTarget.getBoundingClientRect();
+        const items = [
+          { label: 'Rename', icon: 'drive_file_rename', action: () => onRename?.() },
+          { label: 'Make a Copy', icon: 'note_stack_add', action: () => {} },
+          ...(onArchive ? [{ label: 'Archive', icon: 'archive', action: onArchive }] : []),
+          { label: 'Delete', icon: 'delete', danger: true, action: () => onDelete?.() },
+        ];
         closeMenuRef.current = showContextMenu({
           x: rect.left,
           y: rect.bottom + 4,
-          items: [
-            { label: 'Rename', icon: 'drive_file_rename', action: () => onRename?.() },
-            { label: 'Make a Copy', icon: 'note_stack_add', action: () => {} },
-            { label: 'Archive', icon: 'archive', action: () => onArchive?.() },
-            { label: 'Delete', icon: 'delete', danger: true, action: () => onDelete?.() },
-          ],
+          items,
         });
       }}
     >
