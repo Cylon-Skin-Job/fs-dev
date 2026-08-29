@@ -4,27 +4,32 @@
  */
 
 const ThreadWebSocketHandler = require('./ThreadWebSocketHandler');
+// crypto.randomUUID() emits RFC 4122 v4 UUIDs and stays CommonJS-safe
+// (the 'uuid' package is ESM-only under Jest). Same precedent as
+// lib/wire/process-manager.js.
+const { randomUUID: generateDrainId } = require('crypto');
+const { resolveScope } = require('../chat-scope');
 const { attachClientToWire, getWireForThread, unregisterWire } = require('../wire/process-manager');
+const {
+  isHarnessRuntimeError,
+  HARNESS_RUNTIME_ERROR_MESSAGES,
+} = require('../harness/errors');
+const {
+  normalizeTurnTerminalError,
+  TURN_TERMINAL_ERROR_CATALOG,
+} = require('./turn-terminal-error');
+const { persistDiagnosticReport } = require('./harness-diagnostic-service');
+const { persistTerminalDiagnosticSafely } = require('./terminal-diagnostic-boundary');
+const {
+  createCanonicalDrainControl,
+  createCanonicalRouteContext,
+  normalizeRouteAttachments,
+} = require('./canonical-drain-context');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 
 // RCC-0095: all threads are workspace-scoped. The 'project' scope literal
 // is kept on runtime keys and outbound messages for wire compatibility.
 const SCOPE = 'project';
-
-function normalizeAttachments(attachments) {
-  if (!Array.isArray(attachments)) return [];
-  return attachments
-    .filter((item) => item && typeof item === 'object')
-    .map((item) => ({
-      kind: typeof item.kind === 'string' ? item.kind : 'file',
-      label: typeof item.label === 'string' ? item.label : 'attachment',
-      path: typeof item.path === 'string' ? item.path : '',
-      sourceName: typeof item.sourceName === 'string' ? item.sourceName : (typeof item.label === 'string' ? item.label : 'attachment'),
-      ...(typeof item.panel === 'string' ? { panel: item.panel } : {}),
-      ...(typeof item.relativePath === 'string' ? { relativePath: item.relativePath } : {}),
-    }))
-    .filter((item) => item.path);
-}
 
 function serializeAttachmentsForHarness(userInput, attachments) {
   if (!attachments.length) return userInput;
@@ -42,6 +47,64 @@ function getRuntimeKey(manager, threadId) {
 
 function sendRuntimeError(ws, message, threadId, recoverable) {
   ws.send(JSON.stringify({ type: 'error', message, scope: SCOPE, threadId, recoverable }));
+}
+
+// Controller exception boundaries never serialize or log the caught value.
+// These fixed reports preserve route correlation while keeping provider text,
+// stacks, and arbitrary thrown objects outside ordinary frames and logs.
+function reportWarmupFailure(ws, threadId) {
+  console.error('[ThreadRuntime] Thread warm-up failed', {
+    threadId,
+    marker: 'THREAD_WARM_UP_FAILED',
+  });
+  sendRuntimeError(ws, 'Thread warm-up failed', threadId, true);
+}
+
+function reportThreadLookupFailure(ws, threadId) {
+  console.error('[ThreadRuntime] Thread lookup failed', {
+    threadId,
+    marker: 'THREAD_LOOKUP_FAILED',
+  });
+  sendRuntimeError(ws, 'Thread lookup failed', threadId, true);
+}
+
+function reportPromptAcceptanceFailure(ws, threadId) {
+  console.error('[ThreadRuntime] Prompt acceptance failed', {
+    threadId,
+    marker: 'PROMPT_ACCEPTANCE_FAILED',
+  });
+  sendRuntimeError(ws, 'Message could not be accepted', threadId, true);
+}
+
+function reportDrainBindingFailure(ws, threadId) {
+  console.error('[ThreadRuntime] Prompt drain binding failed', {
+    threadId,
+    marker: 'PROMPT_DRAIN_BINDING_FAILED',
+  });
+  sendRuntimeError(ws, 'Prompt binding failed', threadId, true);
+}
+
+function reportHarnessStopFailure(threadId, drainId) {
+  console.warn('[ThreadRuntime] Harness stop failed', {
+    threadId,
+    drainId,
+    marker: 'HARNESS_STOP_FAILED',
+  });
+}
+
+function reportInterruptedSynthesisFailure(threadId, drainId) {
+  console.error('[ThreadRuntime] Interrupted-turn synthesis failed', {
+    threadId,
+    ...(drainId ? { drainId } : {}),
+    marker: 'INTERRUPTED_TURN_SYNTHESIS_FAILED',
+  });
+}
+
+function reportLegacyStopFailure(threadId) {
+  console.warn('[ThreadRuntime] Legacy harness stop failed', {
+    threadId,
+    marker: 'LEGACY_HARNESS_STOP_FAILED',
+  });
 }
 
 function markReadyIfRuntimeStillActive(runtimeKey) {
@@ -83,9 +146,9 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
     try {
       const warmedWire = await threadRuntimeManager.getWarmPromise(runtimeKey);
       return warmedWire || getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
-    } catch (err) {
+    } catch {
       threadRuntimeManager.markCold(runtimeKey);
-      sendRuntimeError(ws, err?.message || 'Thread warm-up failed', threadId, true);
+      reportWarmupFailure(ws, threadId);
       return null;
     }
   }
@@ -97,22 +160,24 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
     return null;
   }
 
-  const warmPromise = spawnAndSetupWire({
+  // Promise indirection also captures a synchronous spawn exception into the
+  // same fixed-safe failure boundary as an asynchronous rejection.
+  const warmPromise = Promise.resolve().then(() => spawnAndSetupWire({
     ws,
     session,
     wireLifecycle,
     threadId,
     projectRoot,
-  });
+  }));
   threadRuntimeManager.markWarming(runtimeKey, warmPromise);
 
   try {
     const wire = await warmPromise;
     threadRuntimeManager.markReady(runtimeKey);
     return wire;
-  } catch (err) {
+  } catch {
     threadRuntimeManager.markCold(runtimeKey);
-    sendRuntimeError(ws, err?.message || 'Thread warm-up failed', threadId, true);
+    reportWarmupFailure(ws, threadId);
     return null;
   } finally {
     threadRuntimeManager.clearWarmPromise(runtimeKey);
@@ -135,7 +200,13 @@ async function warmRuntimeForIntent({
     return;
   }
 
-  const thread = await manager.getThread(threadId);
+  let thread;
+  try {
+    thread = await manager.getThread(threadId);
+  } catch {
+    reportThreadLookupFailure(ws, threadId);
+    return;
+  }
   if (!thread) {
     sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
@@ -173,7 +244,22 @@ async function acceptPromptThroughRuntime({
     return;
   }
 
-  const thread = await manager.getThread(threadId);
+  // SPEC-01 Slice B: the drain-binding factories below require non-empty
+  // string input. Validate before spawning a wire, persisting, or entering
+  // IN_FLIGHT so a garbage prompt can neither wedge the runtime nor dirty
+  // history.
+  if (typeof clientMsg.user_input !== 'string' || !clientMsg.user_input) {
+    sendRuntimeError(ws, 'Prompt requires a non-empty user_input', threadId, false);
+    return;
+  }
+
+  let thread;
+  try {
+    thread = await manager.getThread(threadId);
+  } catch {
+    reportThreadLookupFailure(ws, threadId);
+    return;
+  }
   if (!thread) {
     sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
@@ -212,11 +298,18 @@ async function acceptPromptThroughRuntime({
   }
 
   threadRuntimeManager.markInFlight(runtimeKey);
-  const attachments = normalizeAttachments(clientMsg.attachments);
+  const attachments = normalizeRouteAttachments(clientMsg.attachments);
   const harnessInput = serializeAttachmentsForHarness(clientMsg.user_input, attachments);
-  const accepted = await ThreadWebSocketHandler.handleMessageSend(ws, {
-    content: clientMsg.user_input,
-  });
+  let accepted = false;
+  try {
+    accepted = await ThreadWebSocketHandler.handleMessageSend(ws, {
+      content: clientMsg.user_input,
+    });
+  } catch {
+    threadRuntimeManager.markReady(runtimeKey);
+    reportPromptAcceptanceFailure(ws, threadId);
+    return;
+  }
   if (!accepted) {
     threadRuntimeManager.markReady(runtimeKey);
     return;
@@ -228,29 +321,168 @@ async function acceptPromptThroughRuntime({
     viewId: null,
   });
 
-  session.pendingUserInput = clientMsg.user_input;
-  session.pendingAttachments = attachments;
+  // SPEC-01 Slice B: bind the accepted prompt to an immutable route context
+  // and claim one UUID drain before the harness iterator is consumed. The
+  // control closes over the exact wire that accepted this prompt; it never
+  // looks the session up through mutable connection selection. Any binding
+  // failure rolls the runtime back to READY instead of wedging it. Accepted
+  // input/attachments live in the frozen route context from here on — the
+  // connection session stores none of them.
+  let claimedRecord = null;
+  try {
+    const routeContext = createCanonicalRouteContext({
+      workspaceId: manager.workspaceId,
+      workspace: resolveScope({ currentWorkspaceId: session.currentWorkspaceId, currentViewId: null }),
+      projectRoot,
+      scope: SCOPE,
+      threadId,
+      acceptedUserInput: clientMsg.user_input,
+      attachments,
+    });
+
+    const drainId = generateDrainId();
+    const drainControl = createCanonicalDrainControl({
+      drainId,
+      runtimeKey,
+      touchThreadSession: () => manager.touchSession(threadId),
+      stopHarness: async () => {
+        try {
+          if (wire._stopSession) {
+            await wire._stopSession();
+          } else if (wire.stop) {
+            await wire.stop();
+          } else if (wire.kill) {
+            wire.kill('SIGTERM');
+          }
+        } catch {
+          reportHarnessStopFailure(threadId, drainId);
+        }
+      },
+    });
+
+    claimedRecord = threadRuntimeManager.claimActiveDrain(runtimeKey, drainControl, routeContext);
+  } catch {
+    threadRuntimeManager.markReady(runtimeKey);
+    reportDrainBindingFailure(ws, threadId);
+    return;
+  }
+
+  const drainId = claimedRecord.drainId;
+  // SPEC-01 Slice C: every iterator event carries its claimed drain context so
+  // canonical mutations compare the exact route/control that accepted them.
+  const drainContext = { route: claimedRecord.routeContext, control: claimedRecord.control };
+
+  // Replacement-aware supersession check for the end/error paths below. A
+  // normal turn clears its own record in terminalize/clear-if-current before
+  // iteration completes, so record-absence alone is NOT supersession; only a
+  // DIFFERENT live drain proves this iterator is stale.
+  function isDrainSuperseded() {
+    const current = threadRuntimeManager.getActiveDrain(runtimeKey);
+    return Boolean(current && current.drainId !== drainId);
+  }
 
   (async () => {
     try {
       for await (const event of wire._sendMessage(harnessInput, {})) {
-        handleCanonicalHarnessEvent(event, ws);
+        handleCanonicalHarnessEvent(event, ws, drainContext);
+      }
+      if (isDrainSuperseded()) {
+        console.warn(`[ThreadRuntime] Drain ${drainId} superseded; completion handling is a diagnostic no-op`);
+        return;
       }
       markReadyIfRuntimeStillActive(runtimeKey);
     } catch (err) {
+      if (isDrainSuperseded()) {
+        console.warn('[ThreadRuntime] Ignoring superseded iterator failure', {
+          threadId,
+          drainId,
+          marker: 'SUPERSEDED_ITERATOR_FAILURE',
+        });
+        return;
+      }
+      // Reconstruct the disclosure-safe outcome once at this boundary. This
+      // genuine-marker check never reads raw message/name/stack/provider data;
+      // every unknown throw becomes the fixed generic catalog row.
+      const safeTerminalError = normalizeTurnTerminalError(err);
+      // SPEC-03 Slice B (parent §4.13, DEV-5 carry-forward slot): a begun,
+      // non-terminalized bound turn is a POST-BEGIN failure — terminalize it
+      // exactly once by synthesizing ONE canonical error turn_end through
+      // handleCanonicalHarnessEvent with the bound drain context. This flows
+      // through bridge → applier → canonical-chat-terminal-events.handleTurnEnd
+      // — the SAME single sequenced terminal publication path as every other
+      // turn_end, with compare-current gating intact. The safe catalog
+      // envelope is reconstructed from the fixed table only; raw error
+      // material never travels with it.
+      const boundTurnId = threadRuntimeManager.resolveBoundTurnId(runtimeKey, drainId);
+      if (boundTurnId) {
+        // SPEC-03 Slice C (parent §4.13.1, R5/R5A): best-effort diagnostic
+        // persistence BEFORE synthesis, gated on a genuine marker carrying
+        // an already-redacted closed V1 candidate. The service re-validates,
+        // binds the authoritative workspace/thread/turn identity, and
+        // normally resolves to null on failure. The shared terminal boundary
+        // also contains a rejecting replacement/dependency as fixed-safe null,
+        // so persistence cannot block terminalization or rewrite the envelope.
+        // The supersession guard above ran first and downstream compare-current
+        // gating in handleTurnEnd still drops a stale synthesis.
+        let diagnosticId = null;
+        if (isHarnessRuntimeError(err) && err.candidate) {
+          diagnosticId = await persistTerminalDiagnosticSafely(
+            persistDiagnosticReport,
+            { workspaceId: manager.workspaceId, threadId, turnId: boundTurnId },
+            err.candidate,
+          );
+        }
+        try {
+          // Envelopes are frozen catalog copies — construct a NEW plain
+          // object with the optional opaque diagnosticId. Downstream
+          // validateTurnTerminalError re-validates the final shape
+          // (diagnosticId: non-empty string ≤128 chars).
+          handleCanonicalHarnessEvent({
+            type: 'turn_end',
+            reason: 'error',
+            partial: true,
+            terminalError: {
+              ...safeTerminalError,
+              ...(diagnosticId ? { diagnosticId } : {}),
+            },
+          }, ws, drainContext);
+        } catch {
+          console.error('[ThreadRuntime] Error-turn synthesis failed', {
+            threadId,
+            drainId,
+            marker: 'ERROR_TURN_SYNTHESIS_FAILED',
+          });
+        }
+      }
+      // Pre-begin failures (no bound turnId): NO exchange, NO turn_begin-
+      // dependent state change — synthesis skipped entirely; warm-up and
+      // validation failure behavior elsewhere in this file stays untouched.
       markReadyIfRuntimeStillActive(runtimeKey);
-      console.error('[WS] Harness sendMessage failed:', err);
-      const errorMessage = err?.message || '';
-      if (err?.code === -32004 || /Authentication failed/i.test(errorMessage)) {
+      console.error('[WS] Harness sendMessage failed', {
+        threadId,
+        drainId,
+        marker: safeTerminalError.code,
+      });
+      // SPEC-03 Slice A: companion selection is marker-only. Shared code
+      // checks ONLY a genuine HarnessRuntimeError — never raw codes, names,
+      // or message text (roadmap §5.5). The auth_error companion carries the
+      // fixed safe authentication text and no raw error serialization.
+      // Companion notification runs AFTER the synthesis attempt above.
+      if (isHarnessRuntimeError(err) && err.code === 'HARNESS_AUTHENTICATION_FAILED') {
         ws.send(JSON.stringify({
           type: 'auth_error',
           scope: SCOPE,
           threadId,
-          message: errorMessage || 'Authentication failed. Run `kimi login` in your terminal.',
-          error: err,
+          recoverable: true,
+          message: HARNESS_RUNTIME_ERROR_MESSAGES.HARNESS_AUTHENTICATION_FAILED,
         }));
       } else {
-        sendRuntimeError(ws, errorMessage || 'Harness send failed', threadId, true);
+        sendRuntimeError(
+          ws,
+          TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED.message,
+          threadId,
+          true,
+        );
       }
     }
   })();
@@ -279,32 +511,103 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     return;
   }
 
-  const wire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
+  // SPEC-01 Slice D: capture the bound drain identity BEFORE synthesizing the
+  // interrupted turn_end. When a record exists, stopping goes ONLY through
+  // that record's control — never through registry/session wire lookup.
+  const activeDrain = threadRuntimeManager.getActiveDrain(runtimeKey);
+  const capturedDrain = activeDrain
+    ? { drainId: activeDrain.drainId, routeContext: activeDrain.routeContext, control: activeDrain.control }
+    : null;
+
   threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
   session.currentThreadId = threadId;
   session.currentScope = SCOPE;
   session.currentViewId = null;
-  if (!session.currentTurn || session.currentTurn.id !== liveTurn.turnId) {
-    session.currentTurn = {
-      id: liveTurn.turnId,
-      text: liveTurn.fullText || '',
-      userInput: liveTurn.userInput || '',
-    };
-    session.assistantParts = Array.isArray(liveTurn.parts) ? liveTurn.parts : [];
-    session.hasToolCalls = session.assistantParts.some(part => part.type === 'tool_call');
-  }
+
+  // Canonical accumulator reconstruction through session state is retired:
+  // the applier sources interrupted-turn assembly from the runtime snapshot.
 
   if (handleCanonicalHarnessEvent) {
-    handleCanonicalHarnessEvent({
-      type: 'turn_end',
-      reason: 'interrupted',
-      partial: true,
-    }, ws);
+    try {
+      if (capturedDrain) {
+        handleCanonicalHarnessEvent({
+          type: 'turn_end',
+          reason: 'interrupted',
+          partial: true,
+        }, ws, { route: capturedDrain.routeContext, control: capturedDrain.control });
+      } else {
+        // No active drain record: keep the historical 2-arg call shape so the
+        // applier's defensive no-drain-context drop behaves unchanged.
+        handleCanonicalHarnessEvent({
+          type: 'turn_end',
+          reason: 'interrupted',
+          partial: true,
+        }, ws);
+      }
+    } catch {
+      // A terminal publication failure must not escape into the router's raw
+      // catch or prevent the bound harness and runtime from being cleaned up.
+      reportInterruptedSynthesisFailure(threadId, capturedDrain?.drainId);
+    }
   }
 
+  if (capturedDrain) {
+    // SPEC-01 Slice D item 2: stop only the bound harness through the matching
+    // control capability.
+    try {
+      await capturedDrain.control.stopHarness();
+    } catch {
+      // Controls are expected to contain their own provider failure, but the
+      // controller defends the Promise<void> contract so an injected or
+      // automation-owned control cannot escape into the router's raw catch.
+      reportHarnessStopFailure(threadId, capturedDrain.drainId);
+    }
+
+    // SPEC-01 Slice D item 4 (supersession-safe completion): re-read the
+    // active record AFTER the stop resolves. Absence of a record is our own
+    // clear-if-current from the synthesized terminal above (NOT supersession);
+    // only a DIFFERENT live drainId proves this stop is stale. A superseded
+    // Stop completion is a diagnostic no-op: no unregisterWire (the registry
+    // slot may belong to the replacement's wire), no state transition (the
+    // replacement owns runtime state), and nothing extra sent.
+    const currentDrain = threadRuntimeManager.getActiveDrain(runtimeKey);
+    const superseded = Boolean(currentDrain && currentDrain.drainId !== capturedDrain.drainId);
+    if (superseded) {
+      console.warn(`[ThreadRuntime] Drain ${capturedDrain.drainId} superseded during stop; cleanup is a diagnostic no-op`);
+      return;
+    }
+
+    // Registry hygiene for our own wire slot...
+    unregisterWire(threadId);
+    // ...then remove any orphaned never-begun record (idempotent no-op after
+    // the applier's own terminal clear-if-current).
+    threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, capturedDrain.drainId);
+    // Transition to cold only while still STOPPING — mirrors the
+    // markReadyIfRuntimeStillActive precedent so a replacement drain's
+    // IN_FLIGHT state is never stomped by a late stop completion.
+    if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING) {
+      threadRuntimeManager.markCold(runtimeKey);
+    }
+    // Bound path: session.wire can no longer be identity-compared to the
+    // stopped harness; a stale reference is discarded by ensureReadyRuntime's
+    // killed-wire logic instead.
+    return;
+  }
+
+  // No active drain record (pre-claim stop edge): keep the historical legacy
+  // wire lookup + unconditional cold exactly as before Slice D.
+  const wire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
+
   if (wire) {
-    await stopWire(wire, threadId);
+    try {
+      await stopWire(wire, threadId);
+    } catch {
+      // stopWire unregisters in its finally block. Keep completing local
+      // cleanup, but never let the caught provider/runtime value reach the
+      // router's raw exception frame/logger.
+      reportLegacyStopFailure(threadId);
+    }
     if (session.wire === wire) session.wire = null;
   }
   threadRuntimeManager.markCold(runtimeKey);

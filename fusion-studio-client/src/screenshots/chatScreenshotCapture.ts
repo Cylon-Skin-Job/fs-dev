@@ -5,7 +5,6 @@
 
 import { useChatFileLinkStore } from '../state/chatFileLinkStore';
 import { usePanelStore } from '../state/panelStore';
-import { useWorkspaceStore } from '../state/workspaceStore';
 import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
 import { showToast } from '../lib/toast';
@@ -13,6 +12,32 @@ import { showToast } from '../lib/toast';
 export const SCREENSHOT_FLASH_EVENT = 'fusion:screenshot-flash';
 
 const CAPTURE_TIMEOUT_MS = 30_000;
+const OWNER_CHANGED_MESSAGE = 'Screenshot was not attached because the chat changed.';
+
+export interface ScreenshotAttachmentOwner {
+  workspaceId: string;
+  threadId: string;
+  surface: 'primary' | 'secondary';
+}
+
+function currentPrimaryOwner(
+  state: ReturnType<typeof usePanelStore.getState>,
+): ScreenshotAttachmentOwner | null {
+  if (!state.activeWorkspaceId || !state.currentThreadId) return null;
+  return {
+    workspaceId: state.activeWorkspaceId,
+    threadId: state.currentThreadId,
+    surface: 'primary',
+  };
+}
+
+function isCurrentOwner(owner: ScreenshotAttachmentOwner): boolean {
+  const state = usePanelStore.getState();
+  if (state.activeWorkspaceId !== owner.workspaceId) return false;
+  if (owner.surface === 'primary') return state.currentThreadId === owner.threadId;
+  return state.secondary?.threadId === owner.threadId
+    && state.secondary.mode !== 'minimized';
+}
 
 function screenshotName(savedPath: string): string {
   return savedPath.split(/[\\/]/).pop() || 'screenshot.png';
@@ -77,14 +102,19 @@ function waitForSavedScreenshot(
   });
 }
 
-export async function captureAndAttachScreenshot(): Promise<ChatLinkAttachment | null> {
-  const workspaceId = useWorkspaceStore.getState().activeWorkspaceId;
+export async function captureAndAttachScreenshot(
+  requestedOwner?: ScreenshotAttachmentOwner,
+): Promise<ChatLinkAttachment | null> {
   const panelState = usePanelStore.getState();
+  // Snapshot the complete owner and socket from one state read before the
+  // first await. Composer callers pass their exact primary/secondary owner;
+  // global capture defaults to the primary owner from this same read.
+  const owner = requestedOwner ?? currentPrimaryOwner(panelState);
   const socket = panelState.ws;
   const capturePage = window.electronAPI?.capturePage;
 
-  if (!workspaceId) {
-    showToast('Open a workspace before taking a screenshot.');
+  if (!owner || !isCurrentOwner(owner)) {
+    showToast(OWNER_CHANGED_MESSAGE);
     return null;
   }
   if (!capturePage) {
@@ -99,11 +129,19 @@ export async function captureAndAttachScreenshot(): Promise<ChatLinkAttachment |
   try {
     const base64 = await capturePage();
     if (!base64) throw new Error('The current window could not be captured.');
+    if (!isCurrentOwner(owner)) {
+      showToast(OWNER_CHANGED_MESSAGE);
+      return null;
+    }
 
     const dataUrl = `data:image/png;base64,${base64}`;
     window.dispatchEvent(new CustomEvent<string>(SCREENSHOT_FLASH_EVENT, { detail: dataUrl }));
 
-    const savedPath = await waitForSavedScreenshot(socket, workspaceId, dataUrl);
+    const savedPath = await waitForSavedScreenshot(socket, owner.workspaceId, dataUrl);
+    if (!isCurrentOwner(owner)) {
+      showToast(OWNER_CHANGED_MESSAGE);
+      return null;
+    }
     const name = screenshotName(savedPath);
     const attachment = createSendToChatAttachment({
       panel: 'screenshots',
@@ -111,11 +149,15 @@ export async function captureAndAttachScreenshot(): Promise<ChatLinkAttachment |
       absolutePath: savedPath,
     });
 
-    useChatFileLinkStore.getState().addPendingAttachment(attachment);
+    useChatFileLinkStore.getState().addPendingAttachment(
+      owner.workspaceId,
+      owner.threadId,
+      attachment,
+    );
 
     const currentState = usePanelStore.getState();
-    if (currentState.currentThreadId && currentState.chatActive) {
-      currentState.warmThread(currentState.currentThreadId);
+    if (currentState.chatActive) {
+      currentState.warmThread(owner.threadId);
     }
 
     showToast('Screenshot attached to chat.');

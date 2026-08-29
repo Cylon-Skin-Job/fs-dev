@@ -236,3 +236,7 @@ The implementation report must include:
 - security/privacy evidence for diagnostic handling;
 - residual risks and deferred RCC-0112 cosmetic work;
 - the final RCC-0108 ticket state.
+
+## Supervisor Amendment (2026-08-25, post SPEC-01 acceptance review)
+
+DEV-3 carry-forward for the parent-criterion-22 line/job audit: `fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js` is 546 lines — known and intentional (its filename is pinned verbatim by SPEC-01's gate command, single describable job). Treat as accepted or split at a natural boundary during this SPEC's audit; do not flag it as drift.

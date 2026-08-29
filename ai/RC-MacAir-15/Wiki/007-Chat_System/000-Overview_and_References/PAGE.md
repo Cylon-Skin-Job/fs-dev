@@ -15,6 +15,8 @@ Chat is a core system, not just a view. It crosses SQLite persistence, thread id
 
 Fusion Studio chat is thread-centered and server-owned. The thread is the durable conversational identity; live stream routing uses `threadId`. Completed history hydrates from SQLite `exchanges`. Harness output is translated into canonical chat events before it reaches application state. The renderer presents state and sends user intents; it does not own persistence.
 
+The live-turn contract is also turn- and sequence-bound. Each accepted prompt owns one immutable canonical route context and unique drain, every accepted in-flight publication carries the bound `threadId`, `turnId`, and authoritative `streamSeq`, and the client rejects or buffers frames before mutation according to that frontier. Provider-neutral `step_begin` drives a transient Working row; readable thinking remains actual model output. Failed accepted turns finalize through one safe catalog error, while detailed redacted diagnostics are retrieved only after an explicit user action.
+
 Orient with [Runtime Model](../006-Runtime_Model/PAGE.md) and [Structure](../007-Structure/PAGE.md) before diving into the subsystem articles.
 
 <!-- section-toc:start -->

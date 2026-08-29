@@ -21,6 +21,8 @@ import type {
   WorkspaceViewTemplate,
   MessageExchangeSavedPayload,
   TokenUsage,
+  TurnActivity,
+  TurnTerminalError,
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
@@ -106,6 +108,14 @@ export interface AppState {
   appendSegmentContentByIndex: (threadId: string | null, index: number, text: string) => void;
   resetSegments: (threadId: string | null) => void;
   setPendingTurnEnd: (threadId: string | null, pending: boolean) => void;
+  setPendingPromptAcceptance: (
+    threadId: string,
+    pending: PanelState['pendingPromptAcceptance'],
+  ) => void;
+  setPromptRetryDraft: (
+    threadId: string,
+    draft: PanelState['retryPromptDraft'],
+  ) => void;
   setPendingExchangeSave: (threadId: string | null, turnId: string | null) => void;
   setPendingMessage: (threadId: string | null, message: Message | null) => void;
   setTodoDrawer: (threadId: string | null, drawer: PanelState['todoDrawer']) => void;
@@ -119,8 +129,16 @@ export interface AppState {
     exchangeId: number,
     metadata: Record<string, unknown>
   ) => void;
-  finalizeTurn: (threadId: string | null) => void;
+  finalizeTurn: (threadId: string | null, terminalError?: TurnTerminalError) => void;
   clearChat: (threadId: string | null) => void;
+
+  // ── RCC-0108 SPEC-05 Slice A: observable transient Working activity ──
+  // Transition rules + gate ownership live in slices/chatActivityState.ts.
+  setTurnActivity: (threadId: string, activity: TurnActivity) => void;
+  /** Unconditional clear: turn_end (any reason) / terminalization / new-turn reset. */
+  clearTurnActivity: (threadId: string) => void;
+  /** Strictly-greater gated clear for the first renderable output event. */
+  clearTurnActivityIfNewer: (threadId: string, activityRevision: number) => void;
 
   // ── WebSocket ──
   ws: WebSocket | null;

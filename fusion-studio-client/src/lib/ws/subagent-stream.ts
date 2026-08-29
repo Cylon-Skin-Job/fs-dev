@@ -20,85 +20,102 @@ interface SubagentStreamState {
   tools: Map<string, SubagentToolState>;
 }
 
-const subagentStreams = new Map<string, SubagentStreamState>();
-
-export function resetSubagentStreams(): void {
-  subagentStreams.clear();
+/**
+ * One thread+turn's subagent stream bookkeeping (RCC-0108 parent §4.12).
+ * Instances live inside the stream-helper-registry namespace for their
+ * exact `threadId + turnId` pair, so one turn's terminalization or another
+ * thread's events can never clear this turn's streams. Every entry point
+ * receives both keys explicitly; nothing is inferred from selected UI state.
+ */
+export interface SubagentStreamBookkeeping {
+  handleSubagentEvent(msg: WebSocketMessage, threadId: string): void;
+  /** Clears ONLY this namespace's subagent streams. */
+  reset(): void;
 }
 
-export function handleSubagentEvent(msg: WebSocketMessage, threadId: string): void {
-  const parentToolCallId = msg.parentToolCallId || '';
-  if (!parentToolCallId) return;
+export function createSubagentStreamBookkeeping(): SubagentStreamBookkeeping {
+  const subagentStreams = new Map<string, SubagentStreamState>();
 
-  const streamKey = `${parentToolCallId}:${msg.agentId || ''}`;
-  const stream = getSubagentStream(streamKey);
-  const eventType = msg.subagentEventType || '';
-  const payload = objectValue(msg.subagentPayload);
-
-  if (eventType === 'TurnBegin') {
-    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
-    return;
-  }
-
-  if (eventType === 'ToolCall') {
-    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
-
-    const toolId = stringValue(payload.id) || `${streamKey}:tool:${stream.tools.size + 1}`;
-    const toolName = stringValue(objectValue(payload.function).name) || 'Tool';
-    const argsRaw = rawToolArguments(payload);
-    const toolState: SubagentToolState = {
-      id: toolId,
-      name: toolName,
-      argsRaw,
-      emitted: false,
-    };
-
-    stream.activeToolId = toolId;
-    stream.tools.set(toolId, toolState);
-    emitSubagentToolIfReady(threadId, parentToolCallId, toolState);
-    return;
-  }
-
-  if (eventType === 'ToolCallPart') {
-    const activeTool = stream.activeToolId ? stream.tools.get(stream.activeToolId) : undefined;
-    const argsPart = stringValue(payload.arguments_part);
-    if (!activeTool || !argsPart) return;
-
-    activeTool.argsRaw += argsPart;
-    emitSubagentToolIfReady(threadId, parentToolCallId, activeTool);
-    return;
-  }
-
-  if (eventType === 'ToolResult') {
-    const toolId = stringValue(payload.tool_call_id) || stream.activeToolId || '';
-    const toolState = toolId ? stream.tools.get(toolId) : undefined;
-    if (toolState && !toolState.emitted) {
-      appendSubagentLine(
-        threadId,
-        parentToolCallId,
-        buildSubagentToolLine(toolState.name, parseToolArgs(toolState.argsRaw))
-      );
-      toolState.emitted = true;
+  function getSubagentStream(key: string): SubagentStreamState {
+    let stream = subagentStreams.get(key);
+    if (!stream) {
+      stream = {
+        introEmitted: false,
+        tools: new Map<string, SubagentToolState>(),
+      };
+      subagentStreams.set(key, stream);
     }
-    return;
+    return stream;
   }
 
-  if (eventType === 'TurnEnd') {
-    emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
-    appendSubagentLine(threadId, parentToolCallId, buildSubagentCompletedLine());
-  }
-}
+  return {
+    handleSubagentEvent(msg: WebSocketMessage, threadId: string): void {
+      const parentToolCallId = msg.parentToolCallId || '';
+      if (!parentToolCallId) return;
 
-function getSubagentStream(key: string): SubagentStreamState {
-  let stream = subagentStreams.get(key);
-  if (!stream) {
-    stream = {
-      introEmitted: false,
-      tools: new Map<string, SubagentToolState>(),
-    };
-    subagentStreams.set(key, stream);
-  }
-  return stream;
+      const streamKey = `${parentToolCallId}:${msg.agentId || ''}`;
+      const stream = getSubagentStream(streamKey);
+      const eventType = msg.subagentEventType || '';
+      const payload = objectValue(msg.subagentPayload);
+
+      if (eventType === 'TurnBegin') {
+        emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+        return;
+      }
+
+      if (eventType === 'ToolCall') {
+        emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+
+        const toolId = stringValue(payload.id) || `${streamKey}:tool:${stream.tools.size + 1}`;
+        const toolName = stringValue(objectValue(payload.function).name) || 'Tool';
+        const argsRaw = rawToolArguments(payload);
+        const toolState: SubagentToolState = {
+          id: toolId,
+          name: toolName,
+          argsRaw,
+          emitted: false,
+        };
+
+        stream.activeToolId = toolId;
+        stream.tools.set(toolId, toolState);
+        emitSubagentToolIfReady(threadId, parentToolCallId, toolState);
+        return;
+      }
+
+      if (eventType === 'ToolCallPart') {
+        const activeTool = stream.activeToolId ? stream.tools.get(stream.activeToolId) : undefined;
+        const argsPart = stringValue(payload.arguments_part);
+        if (!activeTool || !argsPart) return;
+
+        activeTool.argsRaw += argsPart;
+        emitSubagentToolIfReady(threadId, parentToolCallId, activeTool);
+        return;
+      }
+
+      if (eventType === 'ToolResult') {
+        const toolId = stringValue(payload.tool_call_id) || stream.activeToolId || '';
+        const toolState = toolId ? stream.tools.get(toolId) : undefined;
+        if (toolState && !toolState.emitted) {
+          appendSubagentLine(
+            threadId,
+            parentToolCallId,
+            buildSubagentToolLine(toolState.name, parseToolArgs(toolState.argsRaw))
+          );
+          toolState.emitted = true;
+        }
+        return;
+      }
+
+      if (eventType === 'TurnEnd') {
+        emitSubagentIntro(threadId, parentToolCallId, stream, msg.agentId, msg.subagentType);
+        appendSubagentLine(threadId, parentToolCallId, buildSubagentCompletedLine());
+      }
+    },
+
+    reset(): void {
+      subagentStreams.clear();
+    },
+  };
 }
 
 function emitSubagentIntro(

@@ -13,6 +13,7 @@ const { on, emit } = require('../event-bus');
 const { HistoryFile } = require('../thread/HistoryFile');
 const { getProjectThreadManager, awaitThreadManagerReady } = require('../thread/thread-manager-registry');
 const { aggregateExchangeMetadata } = require('../chat-metadata/exchange-metadata-aggregator');
+const { resolveTerminalErrorForReason } = require('../thread/turn-terminal-error');
 
 // Pending audit data keyed by threadId
 // Map<threadId, { messageId, planMode, contextUsage, tokenUsage, timestamp }>
@@ -104,6 +105,21 @@ async function handleTurnEnd(event) {
     capturedAt: auditData?.timestamp ?? Date.now(),
     savedAt: Date.now(),
   };
+
+  // SPEC-03 Slice B (parent §4.13): persist ONLY exchange.metadata.terminalError
+  // — the safe envelope, RE-VALIDATED here because the bus payload is never
+  // trusted blindly. aggregateExchangeMetadata's existing spread carries it
+  // into the persisted exchange metadata. Non-error metadata keeps its exact
+  // prior byte shape with NO terminalError key (matching the wire choice:
+  // the key is omitted, not nulled). No assistant part is ever created for
+  // the error — parts/fullText flow exactly as before.
+  const durableTerminalError = resolveTerminalErrorForReason(
+    event.reason || 'complete',
+    event.terminalError
+  );
+  if (durableTerminalError) {
+    auditMetadata.terminalError = durableTerminalError;
+  }
 
   // Persist to SQLite via HistoryFile
   if (event.userInput && event.parts) {

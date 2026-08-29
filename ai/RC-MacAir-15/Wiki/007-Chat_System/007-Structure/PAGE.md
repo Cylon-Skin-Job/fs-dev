@@ -39,6 +39,9 @@ Current file/module map for chat work.
 | `fusion-studio-server/lib/thread/thread-runtime-controller.js` | prompt acceptance, warm/send, stop |
 | `fusion-studio-server/lib/thread/thread-runtime-manager.js` | runtime state and live turn ownership |
 | `fusion-studio-server/lib/thread/live-turn-snapshot.js` | in-memory live turn snapshot |
+| `fusion-studio-server/lib/thread/canonical-drain-context.js` | immutable accepted route data and exact non-serializable drain control |
+| `fusion-studio-server/lib/thread/turn-terminal-error.js` | fixed safe terminal-error catalog and validator |
+| `fusion-studio-server/lib/thread/harness-diagnostic-service.js` | bounded dedicated diagnostic persistence, cleanup, and exact-owner retrieval |
 | `fusion-studio-server/lib/thread/thread-runtime-automation.js` | background automation prompt hooks |
 | `fusion-studio-server/lib/thread/ThreadIndex.js` | SQLite thread metadata |
 | `fusion-studio-server/lib/thread/HistoryFile.js` | SQLite exchange read/write |
@@ -57,6 +60,7 @@ Current file/module map for chat work.
 | `fusion-studio-server/lib/wire/wire-broadcaster.js` | event bus to WebSocket routing |
 | `fusion-studio-server/lib/ws/client-message-router.js` | client message dispatch |
 | `fusion-studio-server/lib/ws/thread-ws-handlers.js` | thread websocket handlers |
+| `fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js` | explicit diagnostic request route and fixed unavailable response |
 
 ## Client
 
@@ -71,13 +75,20 @@ Current file/module map for chat work.
 | `fusion-studio-client/src/components/Sidebar.tsx` | thread list and New Thread surface |
 | `fusion-studio-client/src/components/CliPickerDropdown.tsx` | multi-harness picker when policy enables 2+ harnesses |
 | `fusion-studio-client/src/components/LiveSegmentRenderer.tsx` | sequential live reveal |
+| `fusion-studio-client/src/components/chat/WorkingActivity.tsx` | transient elapsed Working presentation and stable accessibility status |
+| `fusion-studio-client/src/components/chat/ChatTurnError.tsx` | one safe turn-terminal error row |
+| `fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx` | explicit View/Copy/Ask AI diagnostic controls |
 | `fusion-studio-client/src/components/InstantSegmentRenderer.tsx` | completed history render |
 | `fusion-studio-client/src/components/ToolCallBlock.tsx` | shared tool shell |
 | `fusion-studio-client/src/lib/ws/thread-handlers.ts` | thread list/open/hydration handlers |
 | `fusion-studio-client/src/lib/ws/stream-handlers.ts` | live stream event routing |
+| `fusion-studio-client/src/lib/ws/activity-stream-handler.ts` | seen-ledger/revision-gated Working transitions and snapshot restoration |
+| `fusion-studio-client/src/lib/ws/frontier.ts` | per-thread/turn snapshot/live stream frontier |
+| `fusion-studio-client/src/lib/ws/chat-diagnostic-handlers.ts` | explicit diagnostic request registry and exact-route response validation |
 | `fusion-studio-client/src/lib/chat-action.ts` | client-side chat action event payloads |
 | `fusion-studio-client/src/lib/chat-file-links/*` | attachment labels, filtering, and autocomplete matching |
 | `fusion-studio-client/src/state/chatFileLinkStore.ts` | RAM-only pending attachments and autocomplete candidates |
+| `fusion-studio-client/src/state/chatComposerDraftStore.ts` | workspace/thread-owned composer drafts |
 | `fusion-studio-client/src/lib/ws/assistant-parts.ts` | assistant part reconstruction |
 | `fusion-studio-client/src/lib/ws/tool-result-helpers.ts` | live tool result normalization for frontend segments |
 | `fusion-studio-client/src/state/slices/chatSlice.ts` | keyed chat state and finalization |

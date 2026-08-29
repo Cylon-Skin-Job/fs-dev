@@ -1,8 +1,9 @@
 /**
  * MessageList — Pure routing between Live and Instant renderers.
  *
- * History messages → InstantSegmentRenderer (collapsed, no animation)
- * Current turn     → LiveSegmentRenderer (orb gatekeeper → animated typing)
+ * Completed/history messages → InstantSegmentRenderer + message reply chrome
+ * Snapshot catch-up baseline → InstantSegmentRenderer only (still unfinished)
+ * Current turn              → LiveSegmentRenderer (orb → animated typing)
  *
  * ┌─────────────────────────────────────────────────────────────────┐
  * │ TURN FINALIZATION HANDOFF                                       │
@@ -32,9 +33,14 @@ import type { Message, AssistantTurn, StreamSegment } from '../types';
 import { LiveSegmentRenderer } from './LiveSegmentRenderer';
 import { InstantSegmentRenderer } from './InstantSegmentRenderer';
 import { extractAssistantReplyText } from '../lib/chat/reply-text';
+import { readMessageTerminalError } from '../lib/chat/terminal-error';
+import { ChatTurnError } from './chat/ChatTurnError';
+import { ChatDiagnosticDetails } from './chat/ChatDiagnosticDetails';
 import { AssistantReplyChrome } from './chat/AssistantReplyChrome';
 import { AssistantReplyBookmarkModal } from './chat/AssistantReplyBookmarkModal';
 import { useAssistantReplyChromeController } from './chat/useAssistantReplyChromeController';
+import type { ChatDiagnosticRouteIds } from '../lib/ws/chat-diagnostic-handlers';
+import type { ValidatedChatTurnDiagnosticReport } from '../lib/chat/diagnostic-report';
 
 interface MessageListProps {
   // PER_THREAD_CHAT_STATE: primary passes the current workspace thread;
@@ -45,6 +51,12 @@ interface MessageListProps {
   segments: StreamSegment[];
   lastUserMsgRef?: React.RefObject<HTMLDivElement | null>;
   showOrb?: boolean;
+  onRequestDiagnostic: (
+    route: ChatDiagnosticRouteIds,
+  ) => Promise<ValidatedChatTurnDiagnosticReport | null>;
+  onCopyDiagnostic: (text: string) => Promise<void>;
+  onAskAIWithDiagnostic: (text: string) => boolean;
+  askAIWithDiagnosticEnabled: boolean;
 }
 
 function CompletedAssistantReplyChrome({
@@ -91,6 +103,53 @@ function CompletedAssistantReplyChrome({
   );
 }
 
+/**
+ * SPEC-05 Slice B (parent §4.13): ONE validated safe terminal error after all
+ * accumulated output, before reply chrome — read through the single
+ * client-boundary validation read (readMessageTerminalError), so the
+ * immediate finalize-time envelope wins over the later saved-metadata
+ * fallback and the two can never render together. A truly absent source
+ * renders nothing; any present malformed value maps to the generic safe row.
+ */
+function AssistantTurnError({
+  threadId,
+  message,
+  onRequestDiagnostic,
+  onCopyDiagnostic,
+  onAskAIWithDiagnostic,
+  askAIWithDiagnosticEnabled,
+}: {
+  threadId: string | null;
+  message: Message;
+  onRequestDiagnostic: MessageListProps['onRequestDiagnostic'];
+  onCopyDiagnostic: MessageListProps['onCopyDiagnostic'];
+  onAskAIWithDiagnostic: MessageListProps['onAskAIWithDiagnostic'];
+  askAIWithDiagnosticEnabled: boolean;
+}) {
+  const terminalError = readMessageTerminalError(message);
+  if (!terminalError) return null;
+  const metadataTurnId = message.metadata?.turnId;
+  const turnId = typeof metadataTurnId === 'string' && metadataTurnId.length > 0
+    ? metadataTurnId
+    : message.id;
+  return (
+    <>
+      <ChatTurnError error={terminalError} />
+      {threadId && terminalError.diagnosticId ? (
+        <ChatDiagnosticDetails
+          threadId={threadId}
+          turnId={turnId}
+          diagnosticId={terminalError.diagnosticId}
+          onRequest={onRequestDiagnostic}
+          onCopy={onCopyDiagnostic}
+          onAskAI={onAskAIWithDiagnostic}
+          askAIEnabled={askAIWithDiagnosticEnabled}
+        />
+      ) : null}
+    </>
+  );
+}
+
 export function MessageList({
   threadId,
   messages,
@@ -98,12 +157,23 @@ export function MessageList({
   segments,
   lastUserMsgRef,
   showOrb,
+  onRequestDiagnostic,
+  onCopyDiagnostic,
+  onAskAIWithDiagnostic,
+  askAIWithDiagnosticEnabled,
 }: MessageListProps) {
   // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId.
   const pendingTurnEnd = usePanelStore((s) =>
     threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false
   );
   const finalizeTurn = usePanelStore((s) => s.finalizeTurn);
+
+  // SPEC-05 Slice A: this thread's observable transient Working activity —
+  // MessageList is the documented presentation routing point into the live
+  // renderer; history rows never see it.
+  const activity = usePanelStore((s) =>
+    threadId ? (s.projectChats[threadId]?.activity ?? null) : null
+  );
 
   // CRITICAL: undefined when not pending, NOT a no-op function.
   // LiveSegmentRenderer's completion effect checks `if (!onRevealComplete) return;`
@@ -128,10 +198,34 @@ export function MessageList({
           ) : msg.type === 'assistant' && threadId ? (
             <>
               <InstantSegmentRenderer segments={msg.segments} />
-              <CompletedAssistantReplyChrome threadId={threadId} message={msg} />
+              {msg.projection !== 'in-flight-snapshot-baseline' ? (
+                <>
+                  <AssistantTurnError
+                    threadId={threadId}
+                    message={msg}
+                    onRequestDiagnostic={onRequestDiagnostic}
+                    onCopyDiagnostic={onCopyDiagnostic}
+                    onAskAIWithDiagnostic={onAskAIWithDiagnostic}
+                    askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
+                  />
+                  <CompletedAssistantReplyChrome threadId={threadId} message={msg} />
+                </>
+              ) : null}
             </>
           ) : (
-            <InstantSegmentRenderer segments={msg.segments} />
+            <>
+              <InstantSegmentRenderer segments={msg.segments} />
+              {msg.type === 'assistant' ? (
+                <AssistantTurnError
+                  threadId={threadId}
+                  message={msg}
+                  onRequestDiagnostic={onRequestDiagnostic}
+                  onCopyDiagnostic={onCopyDiagnostic}
+                  onAskAIWithDiagnostic={onAskAIWithDiagnostic}
+                  askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
+                />
+              ) : null}
+            </>
           )}
         </div>
       ))}
@@ -144,6 +238,7 @@ export function MessageList({
           <LiveSegmentRenderer
             turnId={currentTurn?.id}
             segments={segments}
+            activity={activity}
             onRevealComplete={onRevealComplete}
           />
         </div>

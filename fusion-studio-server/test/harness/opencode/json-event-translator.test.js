@@ -264,4 +264,118 @@ describe('OpenCodeJsonEventTranslator', () => {
     expect(mapOpenCodeToolName('todowrite')).toBe('todo');
     expect(mapOpenCodeToolName('task')).toBe('subagent');
   });
+
+  describe('step_begin translation', () => {
+    it('maps both OpenCode step-start spellings to one identical canonical shape', () => {
+      const fromTopLevel = new OpenCodeJsonEventTranslator().translate({
+        type: 'step_start',
+        timestamp: 1780703411800,
+        id: 'step_same',
+        messageID: 'msg_same',
+        part: {},
+      });
+      const fromPart = new OpenCodeJsonEventTranslator().translate({
+        type: 'message.updated',
+        timestamp: 1780703411800,
+        part: { type: 'step-start', id: 'step_same', messageID: 'msg_same' },
+      });
+
+      const expected = [{ type: 'step_begin', timestamp: 1780703411800, stepId: 'step_same', messageId: 'msg_same' }];
+      expect(fromTopLevel).toStrictEqual(expected);
+      expect(fromPart).toStrictEqual(expected);
+    });
+
+    it.each([
+      ['missing', undefined],
+      ['string', '1780703411800'],
+      ['NaN', Number.NaN],
+      ['positive Infinity', Number.POSITIVE_INFINITY],
+      ['negative Infinity', Number.NEGATIVE_INFINITY],
+    ])('omits the timestamp key for a %s native value instead of synthesizing time', (_label, rawTimestamp) => {
+      const translator = new OpenCodeJsonEventTranslator();
+      const event = { type: 'step_start', part: { type: 'step-start' } };
+      if (rawTimestamp !== undefined) {
+        event.timestamp = rawTimestamp;
+      }
+
+      const [stepBegin] = translator.translate(event);
+
+      expect(stepBegin).toStrictEqual({ type: 'step_begin' });
+      expect(Object.prototype.hasOwnProperty.call(stepBegin, 'timestamp')).toBe(false);
+    });
+
+    it('preserves present finite numeric timestamps exactly, including falsy zero and negatives', () => {
+      const translator = new OpenCodeJsonEventTranslator();
+
+      expect(translator.translate({ type: 'step_start', timestamp: 0, part: {} }))
+        .toStrictEqual([{ type: 'step_begin', timestamp: 0 }]);
+      expect(translator.translate({ type: 'step_start', timestamp: -42, part: {} }))
+        .toStrictEqual([{ type: 'step_begin', timestamp: -42 }]);
+      expect(translator.translate({ type: 'step_start', timestamp: 1780703411800.5, part: {} }))
+        .toStrictEqual([{ type: 'step_begin', timestamp: 1780703411800.5 }]);
+    });
+
+    it('prefers part-level identifiers over event-level fallbacks and preserves values unchanged', () => {
+      const [stepBegin] = new OpenCodeJsonEventTranslator().translate({
+        type: 'step_start',
+        id: 'event_step',
+        messageID: 'event_msg',
+        part: { type: 'step-start', id: 'part_step', messageID: 'part_msg' },
+      });
+
+      expect(stepBegin).toStrictEqual({
+        type: 'step_begin',
+        stepId: 'part_step',
+        messageId: 'part_msg',
+      });
+    });
+
+    it('falls back to event-level identifiers only when the part omits them', () => {
+      const [stepBegin] = new OpenCodeJsonEventTranslator().translate({
+        type: 'step_start',
+        id: 'event_step',
+        messageID: 'event_msg',
+        part: { type: 'step-start' },
+      });
+
+      expect(stepBegin).toStrictEqual({
+        type: 'step_begin',
+        stepId: 'event_step',
+        messageId: 'event_msg',
+      });
+    });
+
+    it.each([
+      ['empty string', ''],
+      ['whitespace-only string', '   '],
+      ['number', 42],
+      ['null', null],
+    ])('omits identifiers that are %s instead of passing them through', (_label, rawValue) => {
+      const translator = new OpenCodeJsonEventTranslator();
+
+      const [fromPart] = translator.translate({
+        type: 'step_start',
+        part: { type: 'step-start', id: rawValue, messageID: rawValue },
+      });
+      expect(fromPart).toStrictEqual({ type: 'step_begin' });
+
+      const [fromEvent] = new OpenCodeJsonEventTranslator().translate({
+        type: 'step_start',
+        id: rawValue,
+        messageID: rawValue,
+        part: { type: 'step-start' },
+      });
+      expect(fromEvent).toStrictEqual({ type: 'step_begin' });
+    });
+
+    it('preserves identifier strings verbatim without trimming content', () => {
+      const [stepBegin] = new OpenCodeJsonEventTranslator().translate({
+        type: 'step_start',
+        part: { type: 'step-start', id: '  step-7  ', messageID: ' msg_7 ' },
+      });
+
+      expect(stepBegin.stepId).toBe('  step-7  ');
+      expect(stepBegin.messageId).toBe(' msg_7 ');
+    });
+  });
 });

@@ -16,6 +16,8 @@ metadata:
     - fusion-studio-server/lib/thread/thread-runtime-controller.js
     - fusion-studio-server/lib/thread/thread-runtime-manager.js
     - fusion-studio-server/lib/thread/live-turn-snapshot.js
+    - fusion-studio-server/lib/thread/canonical-drain-context.js
+    - fusion-studio-server/lib/thread/turn-terminal-error.js
     - fusion-studio-server/lib/thread/HistoryFile.js
     - fusion-studio-server/lib/thread/ThreadIndex.js
     - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
@@ -125,6 +127,14 @@ Current flow:
    attachment metadata is present.
 8. Harness events stream through the canonical path.
 
+At acceptance, the controller also creates one unique `drainId`, a deeply
+copied/frozen route context containing the accepted workspace/thread/input and
+attachments, and a non-serializable control bound to the exact runtime and
+harness. `ThreadRuntimeManager` claims the drain before iterator consumption,
+binds the server `turnId` once, and compare-checks every later mutation,
+terminalization, Stop, lease touch, exception, and cleanup. Interactive and
+automation prompts use the same ownership model.
+
 The client no longer commits the user bubble optimistically on click.
 
 ## Turn Metadata
@@ -151,6 +161,16 @@ Current collector fields:
 
 The runtime owns an in-memory `liveTurn` snapshot. Canonical events update this
 snapshot through the same state path used for persistence.
+
+The JSON-safe snapshot projects accepted input/attachments, assistant/tool
+parts, usage, `activity`, `stepCursor`, `seenStepIdentities`,
+`activityRevision`, `terminalError`, status, and the authoritative
+`streamSeq`. Functions, harness objects, and drain control never enter it.
+Each accepted in-flight publication exposes the sequence produced by the same
+gated mutation, so a same-or-newer snapshot can reconstruct that frontier.
+Terminalization clears transient activity/cursor/ledger/usage; an error
+snapshot retains only the validated safe terminal envelope until durable save
+catches up.
 
 When a user revisits a thread with an active turn, `thread:opened` can include
 `liveTurn`. The client hydrates durable history first, then overlays the live
@@ -186,6 +206,9 @@ terminalSource: "process_exit_missing_step_finish"
 ```
 
 Nonzero exits, process errors, and clean exits with no useful output still fail.
+After an accepted `turn_begin`, those failures terminalize exactly once through
+the bound drain as `reason: "error"`, `partial: true`; pre-begin failures create
+no assistant exchange.
 
 ## Automation
 

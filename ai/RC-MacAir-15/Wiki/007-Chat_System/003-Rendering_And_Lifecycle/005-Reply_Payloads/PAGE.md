@@ -11,6 +11,8 @@ metadata:
     - fusion-studio-client/src/lib/ws/thread-handlers.ts
     - fusion-studio-client/src/state/slices/chatSlice.ts
     - fusion-studio-client/src/components/InstantSegmentRenderer.tsx
+    - fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx
+    - fusion-studio-client/src/components/chat/useChatArea.ts
     - fusion-studio-client/src/lib/tool-grouper.ts
     - fusion-studio-client/src/clipboard/clipboard-api.ts
     - fusion-studio-server/lib/secrets/clipboard/handlers.js
@@ -80,6 +82,14 @@ Chat source labels:
 - Reply copy: `assistant-reply`
 - Chat ID copy: `assistant-reply-chat-id`
 - Note copy: `assistant-reply-note`
+- Diagnostic copy: `chat-diagnostic`
+
+Diagnostic presentation validates and formats the retrieved report, then passes
+only that text through its injected copy callback. The chat controller owns the
+canonical `writeAndRecord(text, 'chat-diagnostic')` call; the presentation
+component does not write to `navigator.clipboard` directly. One explicit Copy
+activation therefore performs one system clipboard write and one
+`clipboard:append` history request with the same validated text and source.
 
 Active copy actions that unexpectedly lack required data should use the shared
 fallback toast:

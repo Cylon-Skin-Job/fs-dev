@@ -12,9 +12,11 @@ import type {
   StreamSegment,
   TodoDrawerState,
   MessageExchangeSavedPayload,
+  TurnTerminalError,
 } from '../../types';
 import type { AppState } from '../panelStoreTypes';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+import { sanitizeTerminalErrorMetadata } from '../../lib/chat/terminal-error';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
@@ -34,12 +36,15 @@ export function createInitialPanelState(): PanelState {
     messages: [],
     currentTurn: null,
     pendingTurnEnd: false,
+    pendingPromptAcceptance: null,
+    retryPromptDraft: null,
     pendingMessage: null,
     segments: [],
     lastReleasedSegmentCount: 0,
     todoDrawer: undefined,
     pendingSavedExchanges: {},
     pendingExchangeSaveTurnId: null,
+    activity: null, // SPEC-05 Slice A: observable Working starts empty
   };
 }
 
@@ -76,7 +81,24 @@ function resolveThreadId(state: AppState, threadId: string | null): string | nul
   return threadId ?? state.currentThreadId;
 }
 
-function applySavedExchangePayload(
+/**
+ * Merge a later `chat-turn:saved` payload into a message state (Slice C,
+ * objective 4 — save-merge race discipline).
+ *
+ * Absent-key winner semantics (documented per SPEC-04 Slice C #4):
+ * - A payload WITHOUT a metadata key NEVER erases anything already on the
+ *   message. In particular, the immediate validated terminalError survives.
+ * - A payload WITH an explicit metadata key replaces metadata wholesale
+ *   (today's normal overwrite semantics): the server's explicit acknowledgement
+ *   is the newer durable authority. Any terminalError value is reconstructed
+ *   from the closed client catalog before it enters message state. The
+ *   immediate field remains the presentation preference until rehydration,
+ *   where metadata is the sole source.
+ * - exchangeId/seq/ts merge field-wise under the same present-key rule; the
+ *   completed-message identity, content, and segments are untouched, so no
+ *   duplicate row or duplicated content can arise from THIS path.
+ */
+export function applySavedExchangePayload(
   message: Message,
   payload: MessageExchangeSavedPayload | undefined,
 ): Message {
@@ -86,7 +108,9 @@ function applySavedExchangePayload(
     ...(payload.exchangeId !== undefined ? { exchangeId: payload.exchangeId } : {}),
     ...(payload.seq !== undefined ? { exchangeSeq: payload.seq } : {}),
     ...(payload.ts !== undefined ? { timestamp: payload.ts } : {}),
-    ...(payload.metadata !== undefined ? { metadata: payload.metadata } : {}),
+    ...(payload.metadata !== undefined
+      ? { metadata: sanitizeTerminalErrorMetadata(payload.metadata) }
+      : {}),
   };
 }
 
@@ -190,6 +214,22 @@ export function createChatSlice(set: Set, get: Get) {
       return writeChatState(state, threadId, { ...cs, pendingTurnEnd: pending });
     }),
 
+    setPendingPromptAcceptance: (
+      threadId: string,
+      pendingPromptAcceptance: PanelState['pendingPromptAcceptance'],
+    ) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, pendingPromptAcceptance });
+    }),
+
+    setPromptRetryDraft: (
+      threadId: string,
+      retryPromptDraft: PanelState['retryPromptDraft'],
+    ) => set((state) => {
+      const cs = getChatState(state, threadId);
+      return writeChatState(state, threadId, { ...cs, retryPromptDraft });
+    }),
+
     setPendingExchangeSave: (threadId: string | null, turnId: string | null) => set((state) => {
       const cs = getChatState(state, threadId);
       return writeChatState(state, threadId, { ...cs, pendingExchangeSaveTurnId: turnId });
@@ -209,7 +249,7 @@ export function createChatSlice(set: Set, get: Get) {
     // KNOWN PAST BUG (DO NOT REINTRODUCE):
     // The old finalizeTurn only set status='complete' but left the turn in
     // currentTurn, causing it to stay in limbo until the next turn_begin.
-    finalizeTurn: (threadId: string | null) => {
+    finalizeTurn: (threadId: string | null, terminalError?: TurnTerminalError) => {
       const state = get();
       const cs = getChatState(state, threadId);
       const turn = cs.currentTurn;
@@ -224,6 +264,9 @@ export function createChatSlice(set: Set, get: Get) {
           content: turn.content,
           timestamp: Date.now(),
           segments: segments.length > 0 ? [...segments] : undefined,
+          // Immediate validated source. Durable history supplies the metadata
+          // fallback; MessageList prefers this field and never renders both.
+          ...(terminalError ? { terminalError } : {}),
         }, savedPayload);
         const newMessages = [
           ...cs.messages,
@@ -299,7 +342,7 @@ export function createChatSlice(set: Set, get: Get) {
       const messages = [...cs.messages];
       messages[messageIndex] = {
         ...messages[messageIndex],
-        metadata,
+        metadata: sanitizeTerminalErrorMetadata(metadata),
       };
 
       return writeChatState(state, threadId, {
@@ -308,9 +351,15 @@ export function createChatSlice(set: Set, get: Get) {
       });
     }),
 
-    clearChat: (threadId: string | null) => set((state) =>
-      writeChatState(state, threadId, createInitialPanelState())
-    ),
+    clearChat: (threadId: string | null) => set((state) => {
+      const current = getChatState(state, threadId);
+      return writeChatState(state, threadId, {
+        ...createInitialPanelState(),
+        // Passive re-hydration must not forget server-owned prompt acceptance.
+        pendingPromptAcceptance: current.pendingPromptAcceptance,
+        retryPromptDraft: current.retryPromptDraft,
+      });
+    }),
 
     sendMessage: (text: string, threadIdOpt?: string | null, attachments?: ChatLinkAttachment[]) => {
       const state = get();

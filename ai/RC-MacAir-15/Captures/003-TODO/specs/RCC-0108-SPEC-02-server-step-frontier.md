@@ -167,3 +167,7 @@ SPEC-02 is accepted only when:
 ## 8. Handoff to SPEC-03
 
 Record the final server wire union and snapshot shape. SPEC-03 extends `turn_end` and error snapshots without changing the frontier algorithm or adding an alternate terminal publication path.
+
+## Supervisor Amendment (2026-08-25, post SPEC-01 acceptance review)
+
+SPEC-01 delivered `threadRuntimeManager.applyLiveMutation(runtimeKey, {drainId, turnId}, mutator)` as the single gated mutation primitive returning the resulting `streamSeq`. Build all §2 publications on that API — do not add another accumulator or sequence site. See `RCC-0108-SPEC-01-report.md` §9 for the full implemented API surface.

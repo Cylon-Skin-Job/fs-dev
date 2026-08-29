@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "last_updated": "2026-08-17T07:46:53.000Z",
+  "last_updated": "2026-08-28T12:31:02.000Z",
   "tickets": {
     "RCC-0086": {
       "title": "Chunk E — Theme token bridge",
@@ -282,7 +282,7 @@
       "assignee": "rccurtrightjr",
       "created": "2026-06-25T04:15:00.000Z",
       "author": "rccurtrightjr",
-      "state": "open",
+      "state": "closed",
       "priority": "medium",
       "body": "Design and implement the chat UI behavior for provider thinking blocks that exist structurally but have no renderable text.\n\nObserved context: OpenAI-backed OpenCode can emit reasoning events with empty part.text plus opaque/encrypted metadata, while Kimi Code 2.7 emits non-empty reasoning.part.text that Fusion can render. Treat thinking enabled and thinking renderable as separate states.\n\nTarget behavior: if empty thinking arrives during an active turn, show a compact activity ticker instead of an empty dropdown. The ticker should show elapsed seconds since opaque thinking began and show streamed token count when reliable live token data exists. If live token data only appears at step_finish, show elapsed seconds only. If non-empty thinking text later arrives, upgrade to the normal thinking dropdown. If text/tool output arrives first, transition into normal live rendering. On completion or interrupted stop, remove/collapse any empty thinking block so chat history does not contain a blank dropdown.\n\nImplementation notes: handle this in renderer/state-machine behavior, not as a provider parser failure. Avoid model-specific hardcoding; respond to whether thinking text exists and whether the turn is active. Preserve non-empty thinking text for providers that expose it. Decide whether empty thinking parts should be filtered before persistence or hidden during render, while keeping enough metadata for diagnostics.\n\nAcceptance criteria: OpenAI-backed empty reasoning shows activity feedback during the live turn; activity feedback includes elapsed seconds; token count appears when available; completed turns with only empty thinking leave no empty dropdown; Kimi Code 2.7 visible thinking still renders normally; text/tool rendering is not blocked by empty thinking; stop/interrupted partial turns do not leave empty thinking artifacts; smoke tests cover empty thinking, delayed text after empty thinking, visible thinking, and interrupted empty thinking."
     },

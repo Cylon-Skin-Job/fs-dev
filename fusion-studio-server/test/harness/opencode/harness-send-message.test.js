@@ -254,7 +254,7 @@ describe('OpenCodeHarness', () => {
       proc.emit('close', 1, null);
     });
 
-    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    await expect(eventsPromise).rejects.toThrow('The harness process ended before the response completed');
     expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_source', '--fork', 'fork prompt']);
     expect(updateHarnessConfig).not.toHaveBeenCalled();
     expect(session.openCodeSessionId).toBeNull();
@@ -285,7 +285,7 @@ describe('OpenCodeHarness', () => {
       proc.emit('close', 1, null);
     });
 
-    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    await expect(eventsPromise).rejects.toThrow('The harness process ended before the response completed');
     expect(updateHarnessConfig).toHaveBeenCalledWith(expect.objectContaining({
       opencodeSessionId: 'ses_forked',
       pendingFork: null,
@@ -592,6 +592,45 @@ describe('OpenCodeHarness', () => {
     expect(events.at(-1)).toMatchObject({ type: 'turn_end', fullText: '', hasToolCalls: true });
   });
 
+  it('surfaces a canonical step_begin before subsequent content for a top-level step_start line', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const session = await harness.startThread('thread-1', '/project');
+
+    const eventsPromise = collect(session.sendMessage('hello'));
+    setImmediate(() => {
+      proc.stdout.emit('data', '{"type":"step_start","timestamp":1780703411800,"sessionID":"ses_probe","part":{"type":"step-start"}}\n');
+      emitSuccessfulTextRun(proc);
+    });
+    const events = await eventsPromise;
+
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'step_begin', 'content', 'status_update', 'turn_end']);
+    expect(events[1]).toStrictEqual({ type: 'step_begin', timestamp: 1780703411800 });
+  });
+
+  it('surfaces a canonical step_begin from a part-only step-start spelling with preserved identifiers', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const session = await harness.startThread('thread-1', '/project');
+
+    const eventsPromise = collect(session.sendMessage('hello'));
+    setImmediate(() => {
+      proc.stdout.emit('data', '{"timestamp":1780703411801,"sessionID":"ses_probe","part":{"type":"step-start","id":"step_probe","messageID":"msg_probe"}}\n');
+      emitSuccessfulTextRun(proc);
+    });
+    const events = await eventsPromise;
+
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'step_begin', 'content', 'status_update', 'turn_end']);
+    expect(events[1]).toStrictEqual({
+      type: 'step_begin',
+      timestamp: 1780703411801,
+      stepId: 'step_probe',
+      messageId: 'msg_probe',
+    });
+  });
+
   it('clean exit after only step_start still throws', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
@@ -604,7 +643,7 @@ describe('OpenCodeHarness', () => {
       proc.emit('close', 0, null);
     });
 
-    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    await expect(eventsPromise).rejects.toThrow('The harness process ended before the response completed');
   });
 
   it('nonzero exit after useful output still throws', async () => {
@@ -619,7 +658,7 @@ describe('OpenCodeHarness', () => {
       proc.emit('close', 1, null);
     });
 
-    await expect(eventsPromise).rejects.toThrow('OpenCode process exited before turn_end');
+    await expect(eventsPromise).rejects.toThrow('The harness process ended before the response completed');
   });
 
   it('final step_finish reason stop yields turn_end', async () => {
@@ -693,7 +732,7 @@ describe('OpenCodeHarness', () => {
     proc.stderr.emit('data', 'boom');
     proc.emit('close', 1, null);
 
-    await expect(iterator.next()).rejects.toThrow('OpenCode process exited before turn_end');
+    await expect(iterator.next()).rejects.toThrow('The harness process ended before the response completed');
   });
 
   it('dispose stops active sessions and clears the session map', async () => {
@@ -720,5 +759,218 @@ describe('OpenCode registry registration', () => {
     expect(registry.get('opencode')).toBeInstanceOf(OpenCodeHarness);
     expect(registry.get('kimi').id).toBe('kimi');
     expect(registry.getIds()[0]).toBe('kimi');
+  });
+});
+
+describe('OpenCodeHarness native failure markers (SPEC-03 Slice A)', () => {
+  const PROCESS_EXIT_MESSAGE = 'The harness process ended before the response completed';
+  const AUTH_MESSAGE = 'Harness authentication failed';
+  const TIMEOUT_MESSAGE = 'The model response timed out';
+
+  // A configured secret injected through initialize(config) so the redaction
+  // pipeline can be pinned end-to-end without touching the real keychain.
+  const CONFIGURED_SECRET = 'sk-live-injected-secret-4242';
+
+  beforeEach(() => {
+    spawn.mockReset();
+    delete process.env.OPENCODE_PATH;
+    process.env.SLICE_A_TEST_TOKEN = 'env-token-value-7777';
+  });
+
+  afterEach(() => {
+    delete process.env.SLICE_A_TEST_TOKEN;
+  });
+
+  function makeMarkerHarness() {
+    const harness = new OpenCodeHarness();
+    harness.initialize({
+      getConfiguredSecrets: async () => [CONFIGURED_SECRET],
+    });
+    return harness;
+  }
+
+  async function collectFailure(session, arm) {
+    const eventsPromise = collect(session.sendMessage('hello'));
+    let caught;
+    setImmediate(arm);
+    try {
+      await eventsPromise;
+    } catch (err) {
+      caught = err;
+    }
+    return caught;
+  }
+
+  const CLOSED_CANDIDATE_KEYS = [
+    'version', 'harnessId', 'category', 'hadRenderableOutput', 'hadToolCalls', 'truncatedFields',
+  ];
+
+  it('maps a native -32004 protocol error to HARNESS_AUTHENTICATION_FAILED with the fixed message', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const err = await collectFailure(session, async () => {
+      proc.stdout.emit('data', '{"code":-32004,"message":"Authentication failed: bad key"}\n');
+      proc.stderr.emit('data', `auth exploded with ${CONFIGURED_SECRET}\n`);
+      proc.emit('close', 1, null);
+    });
+
+    expect(err.code).toBe('HARNESS_AUTHENTICATION_FAILED');
+    expect(err.message).toBe(AUTH_MESSAGE);
+    expect(err.candidate.category).toBe('authentication');
+    expect(err.candidate.providerCode).toBe('-32004');
+  });
+
+  it('maps provider authentication-failure stderr text to HARNESS_AUTHENTICATION_FAILED', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const err = await collectFailure(session, async () => {
+      proc.stderr.emit('data', 'Error: invalid api key supplied by provider\n');
+      proc.emit('close', 1, null);
+    });
+
+    expect(err.code).toBe('HARNESS_AUTHENTICATION_FAILED');
+    expect(err.message).toBe(AUTH_MESSAGE);
+    expect(err.candidate.category).toBe('authentication');
+  });
+
+  it('maps a native timeout signal to HARNESS_MODEL_TIMEOUT', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const err = await collectFailure(session, async () => {
+      proc.stderr.emit('data', 'request timed out after 30000ms\n');
+      proc.emit('close', 1, null);
+    });
+
+    expect(err.code).toBe('HARNESS_MODEL_TIMEOUT');
+    expect(err.message).toBe(TIMEOUT_MESSAGE);
+    expect(err.candidate.category).toBe('timeout');
+  });
+
+  it('maps process close/exit before turn_end to HARNESS_PROCESS_EXIT by default', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const err = await collectFailure(session, async () => {
+      proc.stderr.emit('data', 'some ordinary failure text\n');
+      proc.emit('close', 1, null);
+    });
+
+    expect(err.code).toBe('HARNESS_PROCESS_EXIT');
+    expect(err.message).toBe(PROCESS_EXIT_MESSAGE);
+    expect(err.candidate.category).toBe('process_exit');
+    expect(err.candidate.exitCode).toBe(1);
+  });
+
+  it('throws only the fixed internal message — raw stderr never enters Error.message', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const secretStderr = `stack trace containing ${CONFIGURED_SECRET} and env ${'env-token-value-7777'}`;
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const err = await collectFailure(session, async () => {
+      proc.stderr.emit('data', `${secretStderr}\n`);
+      proc.emit('close', 1, null);
+    });
+
+    expect(err.message).toBe(PROCESS_EXIT_MESSAGE);
+    expect(err.message).not.toContain(CONFIGURED_SECRET);
+    expect(String(err.stack || '')).not.toContain(CONFIGURED_SECRET);
+  });
+
+  it('carries an already-redacted closed-shape candidate (secrets absent)', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const homeDir = require('os').homedir();
+    const session = await makeMarkerHarness().startThread('thread-1', `${homeDir}/slice-a-project`);
+
+    const err = await collectFailure(session, async () => {
+      proc.stderr.emit('data', `failed after loading ${CONFIGURED_SECRET} from ${homeDir}/.config\n`);
+      proc.emit('close', 1, null);
+    });
+
+    const candidate = err.candidate;
+    for (const key of Object.keys(candidate)) {
+      expect([...CLOSED_CANDIDATE_KEYS, 'exitCode', 'signal', 'message', 'stderrExcerpt',
+        'modelId', 'providerCode', 'errorName', 'lastCanonicalEventType']).toContain(key);
+    }
+    expect(candidate.version).toBe(1);
+    expect(candidate.harnessId).toBe('opencode');
+    expect(JSON.stringify(candidate)).not.toContain(CONFIGURED_SECRET);
+    expect(JSON.stringify(candidate)).not.toContain('env-token-value-7777');
+    expect(JSON.stringify(candidate)).not.toContain(homeDir);
+    expect(candidate.stderrExcerpt).toContain('$HOME/');
+  });
+
+  it('stop-requested exits still yield no failure (interrupted, not failed)', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const session = await harness.startThread('thread-1', '/project');
+    const iterator = session.sendMessage('hello')[Symbol.asyncIterator]();
+
+    await expect(iterator.next()).resolves.toMatchObject({ value: { type: 'turn_begin' } });
+    await session.stop();
+    proc.emit('close', 1, null);
+
+    await expect(iterator.next()).resolves.toEqual({ done: true, value: undefined });
+  });
+
+  it('clean-exit synthetic turn_end path is unchanged by marker translation', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const eventsPromise = collect(session.sendMessage('hello'));
+    setImmediate(() => emitCleanExitTextRunWithoutStepFinish(proc));
+    const events = await eventsPromise;
+
+    expect(events.at(-1)).toMatchObject({
+      type: 'turn_end',
+      reason: 'complete',
+      fullText: 'OPEN_CODE_JSON_PROBE_OK',
+      _meta: { terminalSource: 'process_exit_missing_step_finish' },
+    });
+  });
+
+  it('missing-sessionID completion stays a generic error, not a marker', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const session = await makeMarkerHarness().startThread('thread-1', '/project');
+
+    const eventsPromise = collect(session.sendMessage('hello'));
+    setImmediate(() => {
+      proc.stdout.emit('data', '{"type":"text","timestamp":1780703411893,"part":{"type":"text","text":"OK"}}\n');
+      proc.stdout.emit('data', '{"type":"step_finish","timestamp":1780703411932,"part":{"type":"step-finish","reason":"stop"}}\n');
+      proc.emit('close', 0, null);
+    });
+
+    await expect(eventsPromise).rejects.toThrow('completed without a sessionID');
+  });
+
+  it('createConfiguredSecretsProvider reads the secrets owner lazily and swallows failures', async () => {
+    jest.resetModules();
+    jest.mock('../../../lib/secrets/api-keys/backend', () => ({
+      list: jest.fn(async () => [{ name: 'PROVIDER_KEY' }, { name: 42 }, null]),
+    }));
+    jest.mock('../../../lib/secrets', () => ({
+      getMany: jest.fn(async (names) => ({ PROVIDER_KEY: 'real-secret-value', MISSING: null })),
+    }));
+    const {
+      createConfiguredSecretsProvider,
+    } = require('../../../lib/harness/opencode');
+
+    const provider = createConfiguredSecretsProvider();
+    await expect(provider()).resolves.toEqual(['real-secret-value']);
+
+    const backend = require('../../../lib/secrets/api-keys/backend');
+    backend.list.mockRejectedValueOnce(new Error('db unavailable'));
+    await expect(provider()).resolves.toEqual([]);
   });
 });

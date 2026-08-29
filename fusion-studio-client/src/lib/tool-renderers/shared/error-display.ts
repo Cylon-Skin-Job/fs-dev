@@ -18,6 +18,31 @@ interface ErrorContextRow {
 const MAX_ERROR_OUTPUT_LINES = 16;
 const MAX_ERROR_OUTPUT_LINE_LENGTH = 220;
 
+/**
+ * ONE shared pure compaction/dedupe presentation limit for safe error
+ * message text (RCC-0108 parent §4.13 — reused by the tool-error formatter
+ * and the ChatTurnError terminal row): compacts (newline normalization,
+ * trailing-whitespace trim, line/line-length caps), then drops the result
+ * when it normalizes equal to any already-presented duplicate. Returns
+ * undefined when nothing renderable remains. Defensive presentation limit
+ * ONLY — the server owns disclosure safety; the client never decides
+ * whether provider data is safe.
+ */
+export function compactDedupedSafeErrorText(
+  raw: string,
+  duplicates: string[] = [],
+): string | undefined {
+  const compacted = compactErrorOutput(raw || '');
+  if (!compacted) return undefined;
+
+  const normalized = normalizeComparableText(compacted);
+  if (duplicates.some((candidate) => normalizeComparableText(candidate) === normalized)) {
+    return undefined;
+  }
+
+  return compacted;
+}
+
 const TOOL_LABELS: Record<SegmentType, string> = {
   text: 'Text',
   think: 'Thinking',
@@ -137,13 +162,7 @@ function getRenderableStatus(status: string | undefined, duplicates: string[]): 
 }
 
 function getRenderableOutput(content: string | undefined, duplicates: string[]): string | undefined {
-  const compacted = compactErrorOutput(content || '');
-  if (!compacted) return undefined;
-
-  const normalized = normalizeComparableText(compacted);
-  if (duplicates.some((candidate) => normalizeComparableText(candidate) === normalized)) return undefined;
-
-  return compacted;
+  return compactDedupedSafeErrorText(content || '', duplicates);
 }
 
 function compactErrorOutput(content: string): string {

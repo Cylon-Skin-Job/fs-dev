@@ -3,7 +3,7 @@
  * event bus / websocket broadcaster. All harnesses (Kimi, Claude, Codex, etc.)
  * must translate their wire protocol into these events.
  *
- * @typedef {'turn_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event' | 'status_update' | 'turn_end'} CanonicalEventType
+ * @typedef {'turn_begin' | 'step_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event' | 'status_update' | 'turn_end'} CanonicalEventType
  */
 
 /**
@@ -19,6 +19,20 @@
  * @property {number} timestamp
  * @property {string} turnId
  * @property {string} userInput
+ */
+
+/**
+ * One fresh model generation/API call within the active assistant turn.
+ * Provider-neutral translation of a harness's native model-step-begin
+ * notification. The adapter preserves only a present finite numeric native
+ * timestamp (never synthesized) and non-empty step/message identifiers;
+ * temporal normalization and identity derivation happen applier-side.
+ *
+ * @typedef {Object} StepBeginEvent
+ * @property {'step_begin'} type
+ * @property {number} [timestamp]
+ * @property {string} [stepId]
+ * @property {string} [messageId]
  */
 
 /**

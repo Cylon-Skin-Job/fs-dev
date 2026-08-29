@@ -56,9 +56,18 @@ function createMessageHandlers({ wsState }) {
       }));
       return true;
 
-    } catch (err) {
-      console.error('[ThreadWS] Send message failed:', err);
-      ws.send(JSON.stringify({ type: 'error', message: err.message }));
+    } catch {
+      console.error('[ThreadWS] Send message failed', {
+        threadId,
+        marker: 'MESSAGE_PERSISTENCE_FAILED',
+      });
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'Message could not be saved',
+        scope: 'project',
+        threadId,
+        recoverable: true,
+      }));
       return false;
     }
   }

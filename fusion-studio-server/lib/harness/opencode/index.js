@@ -1,4 +1,5 @@
 const { EventEmitter } = require('events');
+const os = require('os');
 const { PassThrough } = require('stream');
 const { spawn } = require('child_process');
 const { JsonLineParser } = require('./json-line-parser');
@@ -7,6 +8,19 @@ const {
   mapOpenCodeToolName,
   mapOpenCodeTokenUsage,
 } = require('./json-event-translator');
+const { buildHarnessFailureMarker } = require('./failure-marker-builder');
+const { createConfiguredSecretsProvider } = require('./configured-secrets-provider');
+
+/**
+ * Native OpenCode protocol error observation — adapter boundary ONLY
+ * (SPEC-03 §A3). Detects the -32004 authentication protocol error in parsed
+ * JSON lines so shared runtime code never parses raw provider codes.
+ */
+function isOpenCodeNativeAuthFailure(event) {
+  if (!event || typeof event !== 'object') return false;
+  if (event.code === -32004) return true;
+  return event.error?.code === -32004;
+}
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -71,16 +85,18 @@ function createSessionIdPatch(openCodeSessionId, pendingFork, existingForkProven
   };
 }
 
-function makeExitError(code, signal, stderr) {
-  const suffix = stderr ? `: ${stderr}` : '';
-  return new Error(`OpenCode process exited before turn_end (code: ${code ?? 'unknown'}, signal: ${signal || 'none'})${suffix}`);
-}
-
 function getEventSessionId(event) {
   return event?.sessionID || event?.part?.sessionID || null;
 }
 
 function isUsefulAssistantEvent(event) {
+  // Canonical 'step_begin' is intentionally NOT useful assistant output.
+  // A run that emits only step_start and then exits cleanly must still fail
+  // with "exited before turn_end" (pinned by
+  // "clean exit after only step_start still throws"); counting step_begin
+  // here would suppress that error path by enabling the synthetic turn_end.
+  // Working-activity consumption of step_begin belongs to the wire/thread
+  // layers, not this exit guard.
   if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
     return true;
   }
@@ -112,6 +128,10 @@ class OpenCodeHarness extends EventEmitter {
     this.cliName = 'opencode';
     this.config = {};
     this.sessions = new Map();
+    // Default real configured-secrets provider; initialize(config) may
+    // override it with config.getConfiguredSecrets (documented injection
+    // point for tests/alternative owners).
+    this.getConfiguredSecrets = createConfiguredSecretsProvider();
   }
 
   async initialize(config = {}) {
@@ -149,8 +169,21 @@ class OpenCodeHarness extends EventEmitter {
         let done = false;
         let sawTurnEnd = false;
         let sawUsefulAssistantEvent = false;
-        let failure = null;
+        let sawNativeAuthFailure = false;
+        let sawRenderableOutput = false;
+        let sawToolCalls = false;
+        let lastTranslatedType = null;
+        // SPEC-03 Slice A: exit/close failures are described, then translated
+        // into a genuine HarnessRuntimeError marker at throw time (the
+        // builder is async). Spawn errors stay raw — they are not one of the
+        // three native signals and take the shared generic path unchanged.
+        let failureDescriptor = null;
+        let spawnFailure = null;
         let stderr = '';
+        const envSnapshot = { ...process.env };
+        const getConfiguredSecrets = typeof harness.config.getConfiguredSecrets === 'function'
+          ? harness.config.getConfiguredSecrets
+          : harness.getConfiguredSecrets;
         let capturedOpenCodeSessionId = session.openCodeSessionId;
         let capturedSessionIdPatch = null;
 
@@ -174,6 +207,9 @@ class OpenCodeHarness extends EventEmitter {
         session.stopRequested = false;
 
         parser.on('message', (openCodeEvent) => {
+          if (isOpenCodeNativeAuthFailure(openCodeEvent)) {
+            sawNativeAuthFailure = true;
+          }
           const openCodeSessionId = getEventSessionId(openCodeEvent);
           if (!capturedOpenCodeSessionId && openCodeSessionId) {
             const sessionIdPatch = createSessionIdPatch(
@@ -192,8 +228,15 @@ class OpenCodeHarness extends EventEmitter {
           const translated = translator.translate(openCodeEvent);
           for (const event of translated) {
             events.push(event);
+            lastTranslatedType = event.type;
             if (isUsefulAssistantEvent(event)) {
               sawUsefulAssistantEvent = true;
+            }
+            if (event.type === 'content' || event.type === 'thinking') {
+              sawRenderableOutput = true;
+            }
+            if (event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
+              sawToolCalls = true;
             }
             if (event.type === 'turn_end') {
               sawTurnEnd = true;
@@ -211,7 +254,7 @@ class OpenCodeHarness extends EventEmitter {
           stderr += data.toString();
         });
         proc.on('error', (err) => {
-          if (!session.stopRequested) failure = err;
+          if (!session.stopRequested) spawnFailure = err;
           done = true;
         });
         proc.on('close', (code, signal) => {
@@ -221,18 +264,18 @@ class OpenCodeHarness extends EventEmitter {
             return;
           }
           if (code !== 0) {
-            failure = makeExitError(code, signal, stderr.trim());
+            failureDescriptor = { exitCode: code, signal };
           } else if (!sawTurnEnd && sawUsefulAssistantEvent) {
             events.push(createSyntheticTurnEnd(translator));
             sawTurnEnd = true;
           } else if (!sawTurnEnd) {
-            failure = makeExitError(code, signal, stderr.trim());
+            failureDescriptor = { exitCode: code, signal };
           }
           done = true;
         });
         proc.on('exit', (code, signal) => {
-          if (!session.stopRequested && code !== 0 && !sawTurnEnd) {
-            failure = makeExitError(code, signal, stderr.trim());
+          if (!session.stopRequested && code !== 0 && !sawTurnEnd && !failureDescriptor) {
+            failureDescriptor = { exitCode: code, signal };
           }
         });
 
@@ -245,8 +288,30 @@ class OpenCodeHarness extends EventEmitter {
             await updateHarnessConfig(capturedSessionIdPatch);
             commitSessionIdPatch(capturedOpenCodeSessionId, capturedSessionIdPatch);
           }
-          if (failure) throw failure;
+          if (spawnFailure) throw spawnFailure;
+          if (failureDescriptor) {
+            // SPEC-03 Slice A: translate the native exit signal into a
+            // provider-neutral marker AT THE ADAPTER BOUNDARY. The thrown
+            // message is fixed internal text; stderr survives only inside
+            // the already-redacted candidate.
+            throw await buildHarnessFailureMarker({
+              nativeAuthFailure: sawNativeAuthFailure,
+              stderr,
+              exitCode: failureDescriptor.exitCode,
+              signal: failureDescriptor.signal,
+              harnessId: harness.id,
+              workspaceRoot: projectRoot || undefined,
+              homePath: os.homedir(),
+              envSnapshot,
+              lastCanonicalEventType: lastTranslatedType || undefined,
+              hadRenderableOutput: sawRenderableOutput,
+              hadToolCalls: sawToolCalls,
+              getConfiguredSecrets,
+            });
+          }
           if (!session.stopRequested && !session.openCodeSessionId) {
+            // Missing-sessionID stays a generic error by contract (not one of
+            // the three native signals; semantics unchanged).
             throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
           }
         } finally {
@@ -312,4 +377,6 @@ module.exports = {
   JsonLineParser,
   mapOpenCodeToolName,
   mapOpenCodeTokenUsage,
+  createConfiguredSecretsProvider,
+  isOpenCodeNativeAuthFailure,
 };

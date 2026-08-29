@@ -10,11 +10,14 @@
 import { usePanelStore } from '../../state/panelStore';
 import { useWorkspaceStore } from '../../state/workspaceStore';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import { useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
 import { useFileStore } from '../../state/fileStore';
 import { loadRootTree } from '../file-tree';
 import { secondaryTracker } from '../secondary-tracker';
 import { readTokenUsage } from '../chat/context-usage';
+import { sanitizeTerminalErrorMetadata } from '../chat/terminal-error';
 import { convertPartToSegment } from './assistant-parts';
+import { installLiveTurnSnapshot } from './snapshot-restore';
 import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../types';
 
 /**
@@ -25,7 +28,13 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
   const hydrateThreadCandidates = (exchanges: ExchangeData[] | undefined) => {
     const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
-    useChatFileLinkStore.getState().hydrateThreadAutocompleteCandidates(exchanges || [], openTabPaths);
+    useChatFileLinkStore.getState().hydrateThreadAutocompleteCandidates(
+      (exchanges || []).map((exchange) => ({
+        ...exchange,
+        metadata: sanitizeTerminalErrorMetadata(exchange.metadata),
+      })),
+      openTabPaths,
+    );
   };
 
   switch (msg.type) {
@@ -161,6 +170,26 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'message:sent':
       console.log('[WS] Message accepted and saved to thread');
       if (msg.threadId && typeof msg.content === 'string') {
+        const isOwnedThread = store.currentThreadId === msg.threadId
+          || store.secondary?.threadId === msg.threadId
+          || store.threads.some((thread) => thread.threadId === msg.threadId);
+        // A late acknowledgement for a deleted or previous-workspace thread
+        // must not recreate chat state in the active workspace. Legitimate
+        // current threads still commit their server-owned user bubble even
+        // when a remount/reload no longer has a local pending marker.
+        if (!isOwnedThread) return true;
+        const pendingPrompt = store.projectChats[msg.threadId]?.pendingPromptAcceptance;
+        const pendingPromptMatched = pendingPrompt?.text === msg.content
+          && pendingPrompt.workspaceId === store.activeWorkspaceId;
+        if (pendingPromptMatched) {
+          store.setPendingPromptAcceptance(msg.threadId, null);
+          store.setPromptRetryDraft(msg.threadId, null);
+          useChatFileLinkStore.getState().removePendingAttachments(
+            pendingPrompt.workspaceId,
+            msg.threadId,
+            pendingPrompt.attachmentIds,
+          );
+        }
         store.addMessage(msg.threadId, {
           id: `user-${Date.now()}`,
           type: 'user',
@@ -168,8 +197,24 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           timestamp: Date.now(),
         });
         window.dispatchEvent(new CustomEvent('fusion:prompt-accepted', {
-          detail: { threadId: msg.threadId, content: msg.content },
+          detail: {
+            threadId: msg.threadId,
+            content: msg.content,
+            pendingPromptMatched,
+            pendingPromptComposerText: pendingPromptMatched
+              ? pendingPrompt.composerText
+              : undefined,
+          },
         }));
+        // The durable owner must clear even when its composer is unmounted or
+        // another thread is visible. Dispatch first so a mounted exact owner
+        // can perform its existing local scroll/clear lifecycle unchanged.
+        if (pendingPromptMatched) {
+          useChatComposerDraftStore.getState().clearDraft(
+            pendingPrompt.workspaceId,
+            msg.threadId,
+          );
+        }
       }
       return true;
 
@@ -212,7 +257,7 @@ function convertExchangesToMessages(threadId: string, exchanges: ExchangeData[])
       segments: segments.length > 0 ? segments : undefined,
       exchangeId: exchange.exchangeId,
       exchangeSeq: exchange.seq,
-      metadata: exchange.metadata,
+      metadata: sanitizeTerminalErrorMetadata(exchange.metadata),
     });
   });
 }
@@ -252,56 +297,17 @@ function restoreContextSnapshot(
   store.setTokenUsage(tokenUsage);
 }
 
+/**
+ * Overlay the served live turn onto the hydrated chat slot (thread:opened /
+ * thread:forked). Slice C delegates ALL restoration semantics to
+ * snapshot-restore.ts: status routing, monotone per-pair authority, atomic
+ * in-flight already-revealed install, terminal instant path, and retained
+ * terminal-error envelopes live there now.
+ */
 function overlayLiveTurn(
   threadId: string,
   liveTurn: LiveTurnSnapshot | null | undefined,
   exchanges: ExchangeData[] | undefined,
-) {
-  if (!liveTurn || liveTurn.threadId !== threadId) return;
-  if (isLiveTurnDurable(liveTurn, exchanges)) return;
-
-  const store = usePanelStore.getState();
-  const chatState = store.projectChats[threadId];
-  const hasUserBubble = chatState?.messages.some(
-    message => message.type === 'user' && message.content === liveTurn.userInput,
-  );
-
-  if (!hasUserBubble) {
-    store.addMessage(threadId, {
-      id: `live-${liveTurn.turnId}-user`,
-      type: 'user',
-      content: liveTurn.userInput,
-      timestamp: liveTurn.updatedAt,
-    });
-  }
-
-  store.resetSegments(threadId);
-  const isTerminal = liveTurn.status !== 'in_flight';
-  liveTurn.parts.map((part, index) => convertPartToSegment(part, {
-    isTerminal,
-    isLastPart: index === liveTurn.parts.length - 1,
-  })).forEach(segment => {
-    store.pushSegment(threadId, segment);
-  });
-  store.setCurrentTurn(threadId, {
-    id: liveTurn.turnId,
-    content: liveTurn.fullText,
-    status: isTerminal ? 'complete' : 'streaming',
-    hasThinking: liveTurn.parts.some(part => part.type === 'think'),
-    thinkingContent: liveTurn.parts
-      .filter((part): part is { type: 'think'; content: string } => part.type === 'think')
-      .map(part => part.content)
-      .join(''),
-  });
-  store.setPendingTurnEnd(threadId, isTerminal);
-}
-
-function isLiveTurnDurable(liveTurn: LiveTurnSnapshot, exchanges: ExchangeData[] | undefined): boolean {
-  return Boolean(exchanges?.some(exchange => {
-    const assistantText = exchange.assistant.parts
-      .filter((part): part is { type: 'text'; content: string } => part.type === 'text')
-      .map(part => part.content)
-      .join('');
-    return exchange.user === liveTurn.userInput && assistantText === liveTurn.fullText;
-  }));
+): void {
+  installLiveTurnSnapshot(threadId, liveTurn, exchanges);
 }

@@ -30,8 +30,15 @@ derived state, but reloads and thread switches should hydrate from SQLite.
 
 ## Turn End Persistence
 
-Normal completion and interrupted Stop completion go through the same durable
-path: canonical `turn_end` -> audit subscriber -> `HistoryFile.addExchange()`.
+Normal completion, interrupted Stop completion, and accepted-turn error
+completion go through the same durable path: canonical `turn_end` -> audit
+subscriber -> `HistoryFile.addExchange()`.
+
+Working activity, its cursor, its seen-identity ledger, and `activityRevision`
+are transient and never enter SQLite or assistant parts. A failed exchange may
+persist one validated `metadata.terminalError`; its optional `diagnosticId` is
+only an opaque reference. The redacted report itself lives in the dedicated
+bounded diagnostics table and is not part of exchange history.
 
 A completed exchange that cannot be saved is a bug. Features that require a
 saved turn should stay disabled until the save acknowledgement provides

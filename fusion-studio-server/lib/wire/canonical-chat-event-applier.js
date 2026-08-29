@@ -1,446 +1,187 @@
 /**
  * Canonical Chat Event Applier
  *
- * Consumes canonical-shaped chat events and applies them to session state,
- * emitting chat:* events on the event bus.
+ * Provider-neutral dispatcher/factory for drain-driven canonical chat events
+ * (SPEC-01 Slice C). Every event is applied against the claimed drain context
+ * { route, control }: ThreadRuntimeManager is the sole mutable canonical turn
+ * owner, route fields drive emissions, and the control capability touches or
+ * stops the exact bound harness session. Canonical accumulator state no longer
+ * touches connection/session state at all.
+ *
+ * Separable mutation jobs live in focused modules composed here at creation:
+ *   - canonical-chat-text-events.js      (content/thinking accumulation)
+ *   - canonical-chat-tool-events.js      (tool_call/args/result + enforcement)
+ *   - canonical-chat-terminal-events.js  (turn_end assembly/emission/clear)
+ *
+ * SPEC-02 Slice B: the step_begin identity/dedupe/time-normalization handler
+ * lives here beside the other single-handler events (turn begin, subagent,
+ * status) because it mutates only through the shared gated runtime API.
  *
  * This module is vendor-agnostic. It does not parse raw wire protocol messages
  * and does not import Kimi-specific normalizers.
  *
  * Dependencies are injected:
- *   - session: per-connection session state (mutated)
  *   - emit: event bus emitter
- *   - resolveWorkspace: function to resolve workspace string from session
- *   - touchThreadSession: function to reset idle timeout
  *   - checkSettingsBounce: function(toolName, args, workspaceRoot) -> {message}|null
  *   - generateTurnId: function() -> string
  */
 
 const { threadRuntimeManager } = require('../thread/thread-runtime-manager');
+const liveTurnSnapshot = require('../thread/live-turn-snapshot');
+const { createCanonicalChatTextEvents } = require('./canonical-chat-text-events');
+const { createCanonicalChatToolEvents } = require('./canonical-chat-tool-events');
+const { createCanonicalChatTerminalEvents } = require('./canonical-chat-terminal-events');
 
 function createCanonicalChatEventApplier({
-  session,
   emit,
-  resolveWorkspace,
-  touchThreadSession,
   checkSettingsBounce,
   generateTurnId,
 }) {
 
-  function getWorkspace() {
-    return resolveWorkspace(session);
-  }
+  const textEvents = createCanonicalChatTextEvents({ emit });
 
-  function getThreadId() {
-    return session.currentThreadId;
-  }
+  const toolEvents = createCanonicalChatToolEvents({
+    emit,
+    checkSettingsBounce,
+  });
 
-  function getScope() {
-    // RCC-0095: all threads are workspace-scoped. The literal is kept on
-    // emitted chat:* events for wire compatibility.
-    return 'project';
-  }
-
-  function getTurnId() {
-    return session.currentTurn?.id;
-  }
-
-  function getRuntimeKey(threadId = getThreadId()) {
-    if (!session.currentWorkspaceId || !threadId) return null;
-    return {
-      workspaceId: session.currentWorkspaceId,
-      scope: getScope(),
-      threadId,
-    };
-  }
+  const terminalEvents = createCanonicalChatTerminalEvents({ emit });
 
   /**
-   * Apply a canonical chat event.
+   * Apply a canonical chat event against a claimed drain context.
+   *
    * @param {object} event
    * @param {string} event.type - canonical event type
    * @param {object} event.payload - event-specific payload
-   * @param {import('ws').WebSocket} [ws] - required for turn_end persistence
+   * @param {import('ws').WebSocket} [ws] - transport handle (unused by the
+   *        drain-driven handlers; retained for call-shape compatibility)
+   * @param {{ route: object, control: object }} drainContext - the claimed
+   *        record's frozen route context and bound control. Events arriving
+   *        without one are diagnostic drops (defensive; both real paths —
+   *        interactive iteration and automation draining — always supply one).
+   * @returns {{ accepted: boolean, turnId?: string }|undefined} turn_begin
+   *          result so the bridge can bind the accepted server turnId once.
    */
-  function applyChatEvent(event, ws) {
+  function applyChatEvent(event, ws, drainContext) {
+    if (!drainContext?.control || !drainContext?.route) {
+      console.warn('[CanonicalApplier] Dropping canonical event without a drain context');
+      return;
+    }
+    if (!event || !event.type) return;
+
     const { type, payload } = event;
+    const route = drainContext.route;
+    const control = drainContext.control;
 
     switch (type) {
       case 'turn_begin':
-        applyTurnStart(payload);
-        break;
+        return applyTurnStart(payload, route, control);
       case 'content':
-        handleContent(payload);
-        break;
+        textEvents.handleContent({ payload, route, control });
+        return;
       case 'thinking':
-        handleThinking(payload);
-        break;
+        textEvents.handleThinking({ payload, route, control });
+        return;
       case 'tool_call':
-        handleToolCall(payload);
-        break;
+        toolEvents.handleToolCall({ payload, route, control });
+        return;
       case 'tool_call_args':
-        handleToolCallArgs(payload);
-        break;
+        toolEvents.handleToolCallArgs({ payload, route, control });
+        return;
       case 'tool_result':
-        applyToolOutcome(payload);
-        break;
+        toolEvents.applyToolOutcome({ payload, route, control });
+        return;
       case 'subagent_event':
-        applySubagentUpdate(payload);
-        break;
+        applySubagentUpdate(payload, route, control);
+        return;
       case 'status_update':
-        applyStatusMetadata(payload);
-        break;
+        applyStatusMetadata(payload, route, control);
+        return;
+      case 'step_begin':
+        applyStepBegin(payload, route, control);
+        return;
       case 'turn_end':
-        handleTurnEnd(payload, ws);
-        break;
+        terminalEvents.handleTurnEnd({ payload, route, control });
+        return;
       default:
         // Unknown canonical event type — silently ignore
         break;
     }
   }
 
-  function applyTurnStart(payload) {
-    touchThreadSession();
+  function applyTurnStart(payload, route, control) {
+    control.touchThreadSession();
 
-    // Ignore spurious startup turns (Gemini emits one on ACP session creation)
-    if (!payload?.userInput && !session.pendingUserInput) {
+    // userInput precedence: accepted route data wins; payload is fallback.
+    const userInput = route.acceptedUserInput || payload?.userInput || '';
+
+    // Ignore spurious startup turns (e.g. harnesses emitting one on session
+    // creation): no accepted input AND no payload input.
+    if (!userInput) {
       console.log('[CanonicalApplier] Ignoring spurious turn_begin (no user input)');
-      return;
+      return { accepted: false };
     }
 
-    const pendingAttachments = Array.isArray(session.pendingAttachments)
-      ? session.pendingAttachments
-      : [];
-
-    session.currentTurn = {
-      id: generateTurnId(),
-      text: '',
-      userInput: session.pendingUserInput || payload?.userInput || '',
-      attachments: pendingAttachments,
-    };
-    session.pendingUserInput = null;
-    session.pendingAttachments = [];
-    session.hasToolCalls = false;
-    session.assistantParts = [];  // Reset parts for new exchange
-
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.beginLiveTurn(runtimeKey, {
-        turnId: session.currentTurn.id,
-        userInput: session.currentTurn.userInput,
-      });
+    const turnId = generateTurnId();
+    const result = threadRuntimeManager.beginCanonicalTurn(control.runtimeKey, control.drainId, {
+      turnId,
+      userInput,
+      attachments: Array.isArray(route.attachments) ? route.attachments : [],
+    });
+    if (!result.accepted) {
+      console.log('[CanonicalApplier] Rejecting gated-out turn_begin (drain not current or live duplicate)');
+      return { accepted: false };
     }
 
     emit('chat:turn_begin', {
-      workspace: getWorkspace(),
-      workspaceId: session.currentWorkspaceId,
-      projectRoot: session.projectRoot,
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: session.currentTurn.id,
-      userInput: session.currentTurn.userInput,
-      attachments: session.currentTurn.attachments,
-    });
-  }
-
-  function handleContent(payload) {
-    touchThreadSession();
-    if (!session.currentTurn) return;
-
-    const text = payload?.text || '';
-    session.currentTurn.text += text;
-
-    // Combine consecutive text parts
-    const lastPart = session.assistantParts[session.assistantParts.length - 1];
-    if (lastPart && lastPart.type === 'text') {
-      lastPart.content += text;
-    } else {
-      session.assistantParts.push({
-        type: 'text',
-        content: text
-      });
-    }
-
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.appendLiveContent(runtimeKey, text);
-    }
-
-    emit('chat:content', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
-      text
-    });
-  }
-
-  function handleThinking(payload) {
-    touchThreadSession();
-    if (!session.currentTurn) return;
-
-    const text = payload?.text || '';
-
-    // Track thinking separately (not combined with text)
-    const lastPart = session.assistantParts[session.assistantParts.length - 1];
-    if (lastPart && lastPart.type === 'think') {
-      lastPart.content += text;
-    } else {
-      session.assistantParts.push({
-        type: 'think',
-        content: text
-      });
-    }
-
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.appendLiveThinking(runtimeKey, text);
-    }
-
-    emit('chat:thinking', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
-      text
-    });
-  }
-
-  function handleToolCall(payload) {
-    touchThreadSession();
-    session.hasToolCalls = true;
-    session.activeToolId = payload?.toolCallId || '';
-    session.activeToolName = payload?.toolName || '';
-    session.toolArgs[session.activeToolId] = '';
-    session.toolNamesById = session.toolNamesById || {};
-    session.toolNamesById[session.activeToolId] = session.activeToolName;
-
-    // Start tracking tool call for history
-    session.assistantParts.push({
-      type: 'tool_call',
-      toolCallId: session.activeToolId,
-      name: payload?.toolName || 'unknown',
-      arguments: {},
-      result: {
-        output: '',
-        display: [],
-        isError: false
-      }
+      workspace: route.workspace,
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      scope: route.scope,
+      threadId: route.threadId,
+      turnId,
+      // SPEC-02 Slice D §2 rule 1: the initial positive integer frontier,
+      // read back from the just-created snapshot through the manager's
+      // single authority (never inferred from arrival order).
+      streamSeq: threadRuntimeManager.getLiveTurn(control.runtimeKey)?.streamSeq ?? null,
+      userInput,
+      attachments: [...(route.attachments || [])],
     });
 
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.appendLiveToolCall(runtimeKey, {
-        toolCallId: session.activeToolId,
-        toolName: payload?.toolName || 'unknown',
-      });
-    }
-
-    emit('chat:tool_call', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
-      toolName: payload?.toolName || 'unknown',
-      toolCallId: session.activeToolId
-    });
+    return { accepted: true, turnId };
   }
 
-  function handleToolCallArgs(payload) {
-    touchThreadSession();
-    const toolCallId = payload?.toolCallId || session.activeToolId;
-    const argsChunk = payload?.argsChunk || '';
+  function applySubagentUpdate(payload, route, control) {
+    control.touchThreadSession();
 
-    if (toolCallId && argsChunk) {
-      session.toolArgs[toolCallId] = (session.toolArgs[toolCallId] || '') + argsChunk;
-      const toolName = payload?.toolName || session.toolNamesById?.[toolCallId] || session.activeToolName || '';
-      const runtimeKey = getRuntimeKey();
-      if (runtimeKey) {
-        threadRuntimeManager.appendLiveToolArgs(runtimeKey, toolCallId, argsChunk);
-      }
-      emit('chat:tool_call_args', {
-        workspace: getWorkspace(),
-        scope: getScope(),
-        threadId: getThreadId(),
-        turnId: getTurnId(),
-        toolCallId,
-        argsChunk
-      });
-
-      try {
-        const parsedArgs = JSON.parse(session.toolArgs[toolCallId]);
-        const bounced = applySettingsBounce(toolCallId, toolName, parsedArgs, true);
-        if (bounced) {
-          stopWireAfterPreExecutionBounce();
-        }
-      } catch (_) {
-        // Tool args may stream in chunks; enforce once a complete JSON object exists.
-      }
-    }
-  }
-
-  function getBouncedToolCalls() {
-    if (!session.bouncedToolCalls) {
-      session.bouncedToolCalls = new Set();
-    }
-    return session.bouncedToolCalls;
-  }
-
-  function stopWireAfterPreExecutionBounce() {
-    if (session.wire && typeof session.wire.kill === 'function' && !session.wire.killed) {
-      session.wire.kill('SIGTERM');
-    }
-  }
-
-  function applySettingsBounce(toolCallId, toolName, parsedArgs, preExecution = false) {
-    const bouncedToolCalls = getBouncedToolCalls();
-    if (toolCallId && bouncedToolCalls.has(toolCallId)) return true;
-
-    const bounce = checkSettingsBounce(toolName, parsedArgs, session.projectRoot || null);
-    if (!bounce) return false;
-
-    if (toolCallId) bouncedToolCalls.add(toolCallId);
-    delete session.toolArgs[toolCallId];
-
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.applyLiveToolResult(runtimeKey, {
-        toolCallId,
-        toolArgs: parsedArgs,
-        output: bounce.message,
-        statusMessage: bounce.message,
-        display: [],
-        returnedDiff: false,
-        isError: true,
-        files: [],
-      });
-    }
-
-    const toolCallPart = session.assistantParts.find(
-      p => p.type === 'tool_call' && p.toolCallId === toolCallId
-    );
-    if (toolCallPart) {
-      toolCallPart.arguments = parsedArgs;
-      toolCallPart.result = {
-        output: bounce.message,
-        statusMessage: bounce.message,
-        display: [],
-        returnedDiff: false,
-        isError: true,
-        files: [],
-        enforcementPhase: preExecution ? 'tool_args' : 'tool_result',
-      };
-    }
-
-    emit('system:tool_bounced', {
-      workspace: getWorkspace(),
-      threadId: getThreadId(),
-      toolName,
-      filePath: parsedArgs.file_path || parsedArgs.filePath || parsedArgs.path,
-      reason: bounce.message,
-      phase: preExecution ? 'tool_args' : 'tool_result',
-    });
-
-    emit('chat:tool_result', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
-      toolCallId,
-      toolName,
-      toolArgs: parsedArgs,
-      toolOutput: bounce.message,
-      toolStatus: bounce.message,
-      toolDisplay: [],
-      returnedDiff: false,
-      isError: true,
-      enforcementPhase: preExecution ? 'tool_args' : 'tool_result',
-    });
-
-    return true;
-  }
-
-  function applyToolOutcome(payload) {
-    touchThreadSession();
-
-    const toolCallId = payload?.toolCallId || '';
-    const toolName = payload?.toolName || '';
-    const fullArgs = session.toolArgs[toolCallId] || '';
-    let parsedArgs = {};
-    try { parsedArgs = JSON.parse(fullArgs); } catch (_) {}
-    delete session.toolArgs[toolCallId];
-
-    if (toolCallId && session.bouncedToolCalls?.has(toolCallId)) {
+    const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
+    if (!turnId) {
+      console.warn('[CanonicalApplier] Dropping pre-binding subagent_event');
       return;
     }
 
-    // --- Hardwired enforcement: settings/ folder write-lock ---
-    if (applySettingsBounce(toolCallId, toolName, parsedArgs, false)) {
+    // SPEC-02 Slice D §3.D: each subagent publication is a projection-changing
+    // event, so it is sequenced through the same gated mutation primitive —
+    // the snapshot touch gives every publication its unique resulting seq
+    // represented by the snapshot projection. Stale drains drop here.
+    const seq = threadRuntimeManager.applyLiveMutation(
+      control.runtimeKey,
+      { drainId: control.drainId, turnId },
+      ({ snapshot }) => {
+        liveTurnSnapshot.touchStatus(snapshot);
+      }
+    );
+    if (seq === null) {
+      console.warn('[CanonicalApplier] Dropping stale subagent_event (drain/turn no longer current)');
       return;
     }
-    // --- End enforcement ---
 
-    const result = payload?.result || {};
-    const output = result.output || '';
-    const statusMessage = result.statusMessage;
-    const display = Array.isArray(result.display) ? result.display : [];
-    const returnedDiff = Boolean(result.returnedDiff);
-    const isError = Boolean(result.isError);
-    const files = Array.isArray(result.files) ? result.files : [];
-
-    // Find and update the corresponding tool_call part
-    const toolCallPart = session.assistantParts.find(
-      p => p.type === 'tool_call' && p.toolCallId === toolCallId
-    );
-    if (toolCallPart) {
-      toolCallPart.arguments = parsedArgs;
-      toolCallPart.result = {
-        output,
-        statusMessage,
-        display,
-        returnedDiff,
-        isError,
-        error: isError ? (output || statusMessage || 'Tool failed') : undefined,
-        files
-      };
-    }
-
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.applyLiveToolResult(runtimeKey, {
-        toolCallId,
-        toolArgs: parsedArgs,
-        output,
-        statusMessage,
-        display,
-        returnedDiff,
-        isError,
-        files,
-      });
-    }
-
-    emit('chat:tool_result', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
-      toolCallId,
-      toolName,
-      toolArgs: parsedArgs,
-      toolOutput: output,
-      toolStatus: statusMessage,
-      toolDisplay: display,
-      returnedDiff,
-      isError
-    });
-  }
-
-  function applySubagentUpdate(payload) {
-    touchThreadSession();
     emit('chat:subagent_event', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
-      turnId: getTurnId(),
+      workspace: route.workspace,
+      scope: route.scope,
+      threadId: route.threadId,
+      turnId,
+      streamSeq: seq,
       parentToolCallId: payload?.parentToolCallId || '',
       agentId: payload?.agentId || '',
       subagentType: payload?.subagentType || '',
@@ -449,24 +190,43 @@ function createCanonicalChatEventApplier({
     });
   }
 
-  function applyStatusMetadata(payload) {
-    touchThreadSession();
+  function applyStatusMetadata(payload, route, control) {
+    control.touchThreadSession();
 
-    // Track latest context/token usage for persistence
-    session.contextUsage = payload?.contextUsage ?? null;
-    session.tokenUsage = payload?.tokenUsage ?? null;
-    session.messageId = payload?.messageId ?? null;
-    session.planMode = payload?.planMode ?? false;
+    const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
+    if (!turnId) {
+      console.warn('[CanonicalApplier] Dropping pre-binding status_update');
+      return;
+    }
 
-    const runtimeKey = getRuntimeKey();
-    if (runtimeKey) {
-      threadRuntimeManager.touchLiveTurn(runtimeKey);
+    // Usage metadata lives on the runtime-owned accumulator (authoritative
+    // mutable copy). SPEC-02 Slice D repair R-FINDING-2 (roadmap §5.2): the
+    // same gated mutation also mirrors a JSON-safe usage projection onto the
+    // snapshot — one call, exactly one frontier advance — so the usage
+    // published at seq N is reconstructible from the snapshot at N.
+    const seq = threadRuntimeManager.applyLiveMutation(
+      control.runtimeKey,
+      { drainId: control.drainId, turnId },
+      ({ snapshot, turn }) => {
+        turn.usage.contextUsage = payload?.contextUsage ?? null;
+        turn.usage.tokenUsage = payload?.tokenUsage ?? null;
+        turn.usage.messageId = payload?.messageId ?? null;
+        turn.usage.planMode = payload?.planMode ?? false;
+        liveTurnSnapshot.setUsage(snapshot, turn.usage);
+      }
+    );
+    if (seq === null) {
+      console.warn('[CanonicalApplier] Dropping stale status_update (drain/turn no longer current)');
+      return;
     }
 
     emit('chat:status_update', {
-      workspace: getWorkspace(),
-      scope: getScope(),
-      threadId: getThreadId(),
+      workspace: route.workspace,
+      scope: route.scope,
+      threadId: route.threadId,
+      // SPEC-02 Slice D: bound turnId + the already-computed resulting seq.
+      turnId,
+      streamSeq: seq,
       contextUsage: payload?.contextUsage,
       tokenUsage: payload?.tokenUsage,
       messageId: payload?.messageId,
@@ -474,42 +234,110 @@ function createCanonicalChatEventApplier({
     });
   }
 
-  function handleTurnEnd(payload, ws) {
-    if (!session.currentTurn) return;
+  // SPEC-02 Slice B (RCC-0108 parent §4.7): step_begin identity, dedupe, and
+  // display-time normalization. Handler order is normative:
+  //   bind gate → identity derivation → full-turn ledger dedupe →
+  //   one-captured-now normalization → single gated live mutation →
+  //   compatibility-bus emission. Rejected input never mutates, bumps,
+  //   or publishes.
+  const MIN_STEP_TIMESTAMP_MS = 946684800000; // 2000-01-01T00:00:00Z
+  const STEP_TIMESTAMP_FUTURE_SKEW_MS = 60000;
 
-    // Runtime-1R: capture the thread identity that produced this turn.
-    // Do NOT read mutable selection state later — passive browse may have
-    // changed it while this turn was in flight.
-    const threadId = getThreadId();
-    const runtimeKey = getRuntimeKey(threadId);
+  function applyStepBegin(payload, route, control) {
+    control.touchThreadSession();
 
-    emit('chat:turn_end', {
-      workspace: getWorkspace(),
-      workspaceId: session.currentWorkspaceId,
-      projectRoot: session.projectRoot,
-      scope: getScope(),
-      threadId,
-      turnId: session.currentTurn.id,
-      fullText: session.currentTurn.text,
-      hasToolCalls: session.hasToolCalls,
-      userInput: session.currentTurn.userInput,
-      parts: session.assistantParts,
-      attachments: session.currentTurn.attachments || [],
-      reason: payload?.reason || 'complete',
-      partial: Boolean(payload?.partial),
-    });
-
-    if (runtimeKey) {
-      threadRuntimeManager.completeLiveTurn(runtimeKey, payload?.reason || 'complete');
+    const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
+    if (!turnId) {
+      console.warn('[CanonicalApplier] Dropping pre-binding step_begin');
+      return;
     }
 
-    // Reset turn tracking
-    session.currentTurn = null;
-    session.assistantParts = [];
-    session.contextUsage = null;
-    session.tokenUsage = null;
-    session.messageId = null;
-    session.planMode = false;
+    // Derive the stable source identity BEFORE any time handling, in the
+    // exact precedence step:<id> > message:<id> > time:<String(ts)>.
+    const stepId = typeof payload?.stepId === 'string' && payload.stepId ? payload.stepId : null;
+    const messageId = typeof payload?.messageId === 'string' && payload.messageId ? payload.messageId : null;
+    const candidate = payload?.timestamp;
+    const hasTimestampCandidate = typeof candidate === 'number' && Number.isFinite(candidate);
+
+    let identity = null;
+    if (stepId) {
+      identity = `step:${stepId}`;
+    } else if (messageId) {
+      identity = `message:${messageId}`;
+    } else if (hasTimestampCandidate) {
+      identity = `time:${String(candidate)}`;
+    }
+    if (!identity) {
+      // No replay-safe identity source — ignore with the normal diagnostic
+      // style; the orb-until-output fallback remains.
+      console.warn('[CanonicalApplier] Ignoring step_begin without a stable identity source');
+      return;
+    }
+
+    // Full-turn seen-ledger dedupe BEFORE deriving startedAt — duplicate
+    // detection never depends on time validity or the clock. A seen identity
+    // changes nothing: no activity, cursor, ledger, revision, or publication.
+    const record = threadRuntimeManager.getActiveDrain(control.runtimeKey);
+    const seenStepIdentities = record && record.drainId === control.drainId && record.turn
+      ? record.turn.seenStepIdentities
+      : null;
+    if (seenStepIdentities && seenStepIdentities.has(identity)) {
+      console.warn('[CanonicalApplier] Dropping duplicate step_begin (identity already seen this turn)');
+      return;
+    }
+
+    // Normalize display time ONCE with ONE captured now.
+    const now = Date.now();
+    const startedAt = (
+      hasTimestampCandidate
+      && candidate >= MIN_STEP_TIMESTAMP_MS
+      && candidate <= now + STEP_TIMESTAMP_FUTURE_SKEW_MS
+    ) ? Math.min(candidate, now) : now;
+
+    let activityRevision = null;
+    const streamSeq = threadRuntimeManager.applyLiveMutation(
+      control.runtimeKey,
+      { drainId: control.drainId, turnId },
+      ({ snapshot, turn }) => {
+        if (turn.seenStepIdentities.has(identity)) return; // defensive re-check
+        turn.seenStepIdentities.add(identity);
+        snapshot.seenStepIdentities = Array.from(turn.seenStepIdentities);
+        snapshot.activityRevision += 1;
+        activityRevision = snapshot.activityRevision;
+        snapshot.activity = {
+          kind: 'working',
+          turnId,
+          identity,
+          startedAt,
+          activityRevision,
+          ...(stepId ? { stepId } : {}),
+          ...(messageId ? { messageId } : {}),
+        };
+        snapshot.stepCursor = { identity, startedAt };
+        // Projection-changing mutation: bump the single streamSeq frontier
+        // exactly once (SPEC-02 §2 rule 2) so the emitted seq is the
+        // resulting one.
+        liveTurnSnapshot.touchStatus(snapshot);
+      }
+    );
+    if (streamSeq === null || activityRevision === null) {
+      console.warn('[CanonicalApplier] Dropping stale or defensively-skipped step_begin (drain/turn no longer current)');
+      return;
+    }
+
+    // Compatibility bus only — same path as every sibling chat:* emission.
+    emit('chat:step_begin', {
+      workspace: route.workspace,
+      scope: route.scope,
+      threadId: route.threadId,
+      turnId,
+      streamSeq,
+      identity,
+      ...(stepId ? { stepId } : {}),
+      ...(messageId ? { messageId } : {}),
+      startedAt,
+      activityRevision,
+    });
   }
 
   return { applyChatEvent };

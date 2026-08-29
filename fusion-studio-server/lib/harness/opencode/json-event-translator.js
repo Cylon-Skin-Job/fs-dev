@@ -29,6 +29,21 @@ function stringValue(value) {
   return typeof value === 'string' && value.trim().length > 0 ? value.trim() : undefined;
 }
 
+/**
+ * Primitive shape selection for optional identifiers: returns the first
+ * candidate that is a non-empty (after trim) string, preserving its value
+ * exactly as received. Unlike stringValue(), this never rewrites content —
+ * identity judgment belongs to the canonical applier, not this adapter.
+ */
+function selectPreservedIdentifier(...candidates) {
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && candidate.trim().length > 0) {
+      return candidate;
+    }
+  }
+  return undefined;
+}
+
 function normalizeComparableText(value) {
   return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
 }
@@ -108,8 +123,19 @@ class OpenCodeJsonEventTranslator {
       return [];
     }
 
-    const timestamp = event.timestamp || Date.now();
     const part = event.part || {};
+
+    // OpenCode emits two native spellings for the same signal: a top-level
+    // `step_start` event and a message part with `type: 'step-start'`. Both
+    // map to one canonical step_begin. This branch must stay ahead of the
+    // synthesized `event.timestamp || Date.now()` fallback below: adapters
+    // never synthesize time (parent contract §4.7), they only preserve a
+    // present finite numeric native envelope timestamp.
+    if (event.type === 'step_start' || part.type === 'step-start') {
+      return [this.translateStepBegin(part, event)];
+    }
+
+    const timestamp = event.timestamp || Date.now();
 
     if (event.type === 'text' || part.type === 'text') {
       return this.translateText(part, timestamp);
@@ -186,6 +212,38 @@ class OpenCodeJsonEventTranslator {
     });
 
     return events;
+  }
+
+  /**
+   * Translate either OpenCode step-start spelling into one canonical
+   * step_begin event. Adapter duties are shape selection only:
+   * - timestamp: preserve the native envelope value (`event.timestamp`) only
+   *   when it is present and a finite number — exactly as received. Omit the
+   *   key entirely for missing/string/NaN/Infinity values; never synthesize
+   *   or default time here.
+   * - stepId: `part.id`, falling back to `event.id`.
+   * - messageId: `part.messageID`, falling back to `event.messageID`.
+   *   Non-empty values pass through unchanged; empty/whitespace-only/
+   *   non-string values are omitted.
+   */
+  translateStepBegin(part, event) {
+    const stepBegin = { type: 'step_begin' };
+
+    if (Number.isFinite(event.timestamp)) {
+      stepBegin.timestamp = event.timestamp;
+    }
+
+    const stepId = selectPreservedIdentifier(part.id, event.id);
+    if (stepId !== undefined) {
+      stepBegin.stepId = stepId;
+    }
+
+    const messageId = selectPreservedIdentifier(part.messageID, event.messageID);
+    if (messageId !== undefined) {
+      stepBegin.messageId = messageId;
+    }
+
+    return stepBegin;
   }
 
   translateStepFinish(part, timestamp) {

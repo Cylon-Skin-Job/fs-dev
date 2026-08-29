@@ -29,7 +29,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { StreamSegment } from '../types';
+import type { StreamSegment, TurnActivity } from '../types';
 import { getToolRenderer } from '../lib/tool-renderers';
 import type { TimingProfile } from '../lib/timing';
 import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
@@ -40,6 +40,7 @@ import { sleep } from '../lib/animate-utils';
 import { ToolCallBlock } from './ToolCallBlock';
 import { Orb } from './Orb';
 import { HourglassFlow } from './chat/HourglassFlow';
+import { WorkingActivity } from './chat/WorkingActivity';
 import './LiveSegmentRenderer.css';
 
 interface TimingProbe {
@@ -58,9 +59,15 @@ interface LiveSegmentRendererProps {
   turnId?: string;
   segments: StreamSegment[];
   onRevealComplete?: () => void;
+  /**
+   * SPEC-05 Slice A: the addressed thread's observable transient Working
+   * activity (passed through by MessageList, the documented presentation
+   * routing point). Read-only here — all transitions live in the state layer.
+   */
+  activity?: TurnActivity | null;
 }
 
-export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: LiveSegmentRendererProps) {
+export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
   const [orbDone, setOrbDone] = useState(false);
   const [orbDisposing, setOrbDisposing] = useState(false);
   const [revealedCount, setRevealedCount] = useState(0);
@@ -77,7 +84,12 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: Live
     finalizedRef.current = false;
   }, [turnId]);
 
-  // ── Phase 1: Watch for first token → trigger orb disposal ──
+  // ── Phase 1: Watch for first token or step activity → trigger orb disposal ──
+  // SPEC-05 Slice A (§4.4): a routed step_begin IS activity and starts orb
+  // disposal using the current animation path. No-step turns keep the
+  // existing orb-until-output trigger. If renderable output arrives during
+  // disposal, the revision-gated clear nulls the activity, so Working can
+  // never flash when the orb completes.
   useEffect(() => {
     if (hasTokenRef.current || orbDone) return;
 
@@ -86,11 +98,12 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: Live
       firstSegment.type !== 'text' ||
       firstSegment.content.length > 0
     );
-    if (hasRenderableSegment) {
+    const hasTurnActivity = Boolean(activity && turnId && activity.turnId === turnId);
+    if (hasRenderableSegment || hasTurnActivity) {
       hasTokenRef.current = true;
       setOrbDisposing(true);
     }
-  }, [segments, orbDone]);
+  }, [segments, orbDone, activity, turnId]);
 
   const handleOrbDone = useCallback(() => {
     setOrbDone(true);
@@ -178,8 +191,24 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: Live
     return <Orb disposing={orbDisposing} onDone={handleOrbDone} />;
   }
 
+  // SPEC-05 Slice A (§4.5) — Working reveal order. Render Working only when
+  // ALL hold: orb disposal is complete (we are past Phase 1); the activity
+  // belongs to the CURRENT turn; no newer renderable event cleared it
+  // (activity still non-null in state); and every already-queued segment has
+  // revealed (revealedCount >= segments.length — which also orders a later
+  // post-tool step AFTER the queued tool segments). Output rendering is
+  // independent of this gate; the gate only places the transient row.
+  const showWorking = Boolean(activity && turnId && activity.turnId === turnId)
+    && revealedCount >= segments.length;
+  const working = showWorking && activity ? activity : null;
+
   // Phase 2: Orb is done. Render segments sequentially.
   if (!segments || segments.length === 0) {
+    if (working) {
+      // key={identity}: a fresh step remounts the row, so its elapsed label
+      // re-inits truthfully from the new server startedAt (never stale, never 0s-forced).
+      return <WorkingActivity key={working.identity} activity={working} />;
+    }
     return <div className="rv-message-assistant-content streaming" />;
   }
 
@@ -214,6 +243,7 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete }: Live
           </div>
         );
       })}
+      {working && <WorkingActivity key={working.identity} activity={working} />}
     </>
   );
 }

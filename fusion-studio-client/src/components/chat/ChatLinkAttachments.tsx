@@ -1,4 +1,7 @@
-import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import {
+  chatAttachmentOwnerKey,
+  useChatFileLinkStore,
+} from '../../state/chatFileLinkStore';
 import type { SyntheticEvent } from 'react';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 
@@ -45,14 +48,25 @@ function attachmentIcon(attachment: ChatLinkAttachment): string {
   return 'draft';
 }
 
-export function ChatLinkAttachments() {
-  const attachments = useChatFileLinkStore((state) => state.pendingAttachments);
+const EMPTY_ATTACHMENTS: ChatLinkAttachment[] = [];
+
+interface ChatLinkAttachmentsProps {
+  workspaceId: string | null;
+  threadId: string | null;
+}
+
+export function ChatLinkAttachments({ workspaceId, threadId }: ChatLinkAttachmentsProps) {
+  const attachments = useChatFileLinkStore((state) => {
+    if (!workspaceId || !threadId) return EMPTY_ATTACHMENTS;
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    return state.pendingAttachmentsByOwner[key]?.attachments ?? EMPTY_ATTACHMENTS;
+  });
   const removePendingAttachment = useChatFileLinkStore((state) => state.removePendingAttachment);
 
   const handleRemove = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     event.preventDefault();
     event.stopPropagation();
-    removePendingAttachment(id);
+    if (workspaceId && threadId) removePendingAttachment(workspaceId, threadId, id);
   };
 
   const holdRemoveClick = (event: SyntheticEvent<HTMLButtonElement>) => {

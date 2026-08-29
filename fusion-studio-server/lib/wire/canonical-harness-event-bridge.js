@@ -7,6 +7,12 @@
  * This module provides a direct bridge for harness sessions that yield
  * canonical events, bypassing the Kimi-wire compatibility serialization
  * when _usesDirectCanonicalEvents is enabled.
+ *
+ * SPEC-01 Slice C: every applied event carries the claimed drainContext
+ * ({ route, control }) through to the applier. On an accepted turn_begin the
+ * returned server turnId is bound to the matching drain exactly once via the
+ * injected bindDrainTurn capability. Rejected, spurious, and duplicate begins
+ * never reach bindDrainTurn.
  */
 
 /**
@@ -14,11 +20,14 @@
  *
  * @param {object} deps
  * @param {Function} deps.applyChatEvent - from canonical-chat-event-applier
+ * @param {Function} [deps.bindDrainTurn] - (drainContext, turnId) => boolean;
+ *        binds the accepted server turnId once for the matching drain
  * @param {Function} [deps.onNonChatEvent] - optional handler for non-chat events
  * @returns {{ applyHarnessEvent: Function, drainHarnessEvents: Function }}
  */
 function createCanonicalHarnessEventBridge({
   applyChatEvent,
+  bindDrainTurn,
   onNonChatEvent,
 }) {
 
@@ -26,19 +35,27 @@ function createCanonicalHarnessEventBridge({
    * Apply a single canonical harness event.
    * @param {import('../harness/types').CanonicalEvent} event
    * @param {import('ws').WebSocket} [ws]
+   * @param {{ route: object, control: object }} [drainContext] - claimed route + control
    */
-  function applyHarnessEvent(event, ws) {
+  function applyHarnessEvent(event, ws, drainContext) {
     if (!event || !event.type) return;
 
     switch (event.type) {
-      case 'turn_begin':
-        applyChatEvent({
+      case 'turn_begin': {
+        const result = applyChatEvent({
           type: 'turn_begin',
           payload: {
             userInput: event.userInput
           }
-        }, ws);
+        }, ws, drainContext);
+        // Bind-once (parent §4.6): only an accepted begin with a non-empty
+        // server turnId binds; rejected/spurious/duplicate begins never reach
+        // bindDrainTurn.
+        if (drainContext && result?.accepted && result.turnId && bindDrainTurn) {
+          bindDrainTurn(drainContext, result.turnId);
+        }
         break;
+      }
 
       case 'content':
         applyChatEvent({
@@ -46,7 +63,7 @@ function createCanonicalHarnessEventBridge({
           payload: {
             text: event.text
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'thinking':
@@ -55,7 +72,7 @@ function createCanonicalHarnessEventBridge({
           payload: {
             text: event.text
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'tool_call':
@@ -65,7 +82,7 @@ function createCanonicalHarnessEventBridge({
             toolCallId: event.toolCallId,
             toolName: event.toolName
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'tool_call_args':
@@ -75,7 +92,7 @@ function createCanonicalHarnessEventBridge({
             toolCallId: event.toolCallId,
             argsChunk: event.argsChunk
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'tool_result':
@@ -93,7 +110,7 @@ function createCanonicalHarnessEventBridge({
               files: event.files
             }
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'subagent_event':
@@ -106,7 +123,7 @@ function createCanonicalHarnessEventBridge({
             subagentEventType: event.subagentEventType,
             subagentPayload: event.subagentPayload
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       case 'status_update':
@@ -118,17 +135,36 @@ function createCanonicalHarnessEventBridge({
             messageId: event.messageId,
             planMode: event.planMode
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
+      // SPEC-02 Slice B: native fields forwarded verbatim — timestamp stays
+      // unchanged (absent keys stay undefined; the applier owns all judging).
+      case 'step_begin':
+        applyChatEvent({
+          type: 'step_begin',
+          payload: {
+            timestamp: event.timestamp,
+            stepId: event.stepId,
+            messageId: event.messageId
+          }
+        }, ws, drainContext);
+        break;
+
+      // SPEC-03 Slice B: terminalError forwarded verbatim when the harness
+      // event carries one (the failure-path synthesis paths attach the
+      // already-normalized safe envelope). The applier owns validation and
+      // reason gating; undefined stays absent exactly like every other
+      // optional native field.
       case 'turn_end':
         applyChatEvent({
           type: 'turn_end',
           payload: {
             reason: event.reason,
             partial: event.partial,
+            ...(event.terminalError !== undefined ? { terminalError: event.terminalError } : {}),
           }
-        }, ws);
+        }, ws, drainContext);
         break;
 
       default:
@@ -144,13 +180,15 @@ function createCanonicalHarnessEventBridge({
    * @param {AsyncIterable<import('../harness/types').CanonicalEvent>} events
    * @param {import('ws').WebSocket} [ws]
    * @param {object} [options]
+   * @param {{ route: object, control: object }} [options.drainContext] - passed
+   *        through per event to every applier call
    * @param {Function} [options.onError] - error handler
    * @returns {Promise<void>}
    */
   async function drainHarnessEvents(events, ws, options = {}) {
     try {
       for await (const event of events) {
-        applyHarnessEvent(event, ws);
+        applyHarnessEvent(event, ws, options.drainContext);
       }
     } catch (err) {
       if (options.onError) {

@@ -30,6 +30,11 @@ type ChatAreaFooterProps = Pick<
   | 'warmCurrentThread'
   | 'contextUsage'
   | 'tokenUsage'
+  | 'activeWorkspaceId'
+  | 'currentThreadId'
+  | 'composerDraft'
+  | 'handleComposerDraftChange'
+  | 'screenshotOwner'
 >;
 
 export function ChatAreaFooter({
@@ -48,11 +53,16 @@ export function ChatAreaFooter({
   warmCurrentThread,
   contextUsage,
   tokenUsage,
+  activeWorkspaceId,
+  currentThreadId,
+  composerDraft,
+  handleComposerDraftChange,
+  screenshotOwner,
 }: ChatAreaFooterProps) {
   return (
     <div className={`rv-chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}>
       <div className="rv-chat-composer-shell">
-        <ChatLinkAttachments />
+        <ChatLinkAttachments workspaceId={activeWorkspaceId} threadId={currentThreadId} />
         <ChatInput
           ref={chatInputRef}
           onSend={handleSend}
@@ -62,12 +72,15 @@ export function ChatAreaFooter({
           panel={panel}
           isTurnActive={isTurnActive}
           onWarmIntent={warmCurrentThread}
+          draftText={composerDraft}
+          onDraftChange={handleComposerDraftChange}
         />
         <div className="rv-chat-composer-meta-row">
           <div className="rv-chat-composer-tools-left">
             <ChatComposerAddMenu
               onAttach={handleAddAttachment}
               onInsert={handleInsertText}
+              screenshotOwner={screenshotOwner}
             />
             <ChatComposerModeMenu />
           </div>

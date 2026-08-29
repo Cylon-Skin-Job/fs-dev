@@ -34,13 +34,18 @@
  * Layer 1 answers: "should this new tool_call join the current group?"
  * Layer 2 answers: "which group does this tool_result belong to?"
  *
- * LIFECYCLE:
- *   turn_begin  → reset()
+ * LIFECYCLE (RCC-0108 SPEC-04 Slice B — parent §4.12):
+ *   turn_begin (addressed pair) → createToolGrouper() via the
+ *                                  stream-helper-registry namespace
  *   tool_call   → onToolCall() — registers in both layers
  *   content     → breakSequence() — clears layer 1 only
  *   thinking    → breakSequence() — clears layer 1 only
  *   tool_result → getGroupForResult() — reads layer 2
- *   turn_end    → reset()
+ *   turn_end / new-turn supersede (addressed pair only) → reset()
+ *
+ * RCC-0108 §4.12: each thread+turn gets its OWN grouper instance held in
+ * the stream-helper-registry keyed namespace, so one turn's terminalization
+ * or another thread's content can never clear this turn's correlation map.
  */
 
 import type { SegmentType } from '../types';
@@ -96,112 +101,127 @@ export interface ToolResultCompletion {
   complete: boolean;
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// State
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-/** Layer 1: current group sequence. Cleared by content/thinking. */
-let activeGroup: ActiveGroup | null = null;
-
-/** Layer 2: every toolCallId → group info. Survives interleaving. Cleared on turn_end. */
-const toolCallMap = new Map<string, GroupState>();
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Public API
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 /**
- * A new tool_call arrived. Register it and decide whether to
- * extend the current group or start a new segment.
- *
- * @param segType — canonical segment type (from toolNameToSegmentType)
- * @param toolCallId — unique ID for correlation
- * @param currentSegmentCount — current segments.length in the store (for new segment index)
- * @returns action telling the caller what to do
+ * One turn's two-layer grouping/correlation state. Instances are per
+ * `threadId + turnId` (created/held/released by stream-helper-registry);
+ * every entry point accepts explicit state from its caller and never infers
+ * selected UI context.
  */
-export function onToolCall(
-  segType: SegmentType,
-  toolCallId: string,
-  currentSegmentCount: number,
-): ToolCallAction {
-  if (isGroupable(segType)) {
-    if (activeGroup && activeGroup.type === segType) {
-      // Extend current group
-      activeGroup.toolCallIds.add(toolCallId);
-      activeGroup.expected++;
-      toolCallMap.set(toolCallId, activeGroup);
+export interface ToolGrouper {
+  onToolCall(
+    segType: SegmentType,
+    toolCallId: string,
+    currentSegmentCount: number,
+  ): ToolCallAction;
+  getGroupForResult(toolCallId: string): ToolResultLookup | null;
+  recordGroupResult(toolCallId: string): ToolResultCompletion | null;
+  breakSequence(): void;
+  reset(): void;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Instance factory
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+export function createToolGrouper(): ToolGrouper {
+  /** Layer 1: current group sequence. Cleared by content/thinking. */
+  let activeGroup: ActiveGroup | null = null;
+
+  /** Layer 2: every toolCallId → group info. Survives interleaving. Cleared on turn_end. */
+  const toolCallMap = new Map<string, GroupState>();
+
+  return {
+    /**
+     * A new tool_call arrived. Register it and decide whether to
+     * extend the current group or start a new segment.
+     *
+     * @param segType — canonical segment type (from toolNameToSegmentType)
+     * @param toolCallId — unique ID for correlation
+     * @param currentSegmentCount — current segments.length in the store (for new segment index)
+     * @returns action telling the caller what to do
+     */
+    onToolCall(segType, toolCallId, currentSegmentCount): ToolCallAction {
+      if (isGroupable(segType)) {
+        if (activeGroup && activeGroup.type === segType) {
+          // Extend current group
+          activeGroup.toolCallIds.add(toolCallId);
+          activeGroup.expected++;
+          toolCallMap.set(toolCallId, activeGroup);
+          return {
+            action: 'extend',
+            segmentType: segType,
+            segmentIndex: activeGroup.segmentIndex,
+            groupCount: activeGroup.expected,
+          };
+        } else {
+          // Start new group
+          activeGroup = {
+            type: segType,
+            segmentIndex: currentSegmentCount,
+            toolCallIds: new Set([toolCallId]),
+            expected: 1,
+            completed: 0,
+          };
+          toolCallMap.set(toolCallId, activeGroup);
+          return { action: 'new', segmentType: segType, groupCount: 1 };
+        }
+      } else {
+        // Non-groupable — always a new segment, breaks any active group
+        activeGroup = null;
+        return { action: 'new', segmentType: segType };
+      }
+    },
+
+    /**
+     * A tool_result arrived. Look up which group it belongs to.
+     * Uses layer 2 (toolCallMap) which survives interleaving.
+     *
+     * @returns lookup info, or null if this toolCallId was never registered
+     */
+    getGroupForResult(toolCallId): ToolResultLookup | null {
+      const entry = toolCallMap.get(toolCallId);
+      if (!entry) return null;
       return {
-        action: 'extend',
-        segmentType: segType,
-        segmentIndex: activeGroup.segmentIndex,
-        groupCount: activeGroup.expected,
+        grouped: true,
+        type: entry.type,
+        segmentIndex: entry.segmentIndex,
+        expected: entry.expected,
+        completed: entry.completed,
       };
-    } else {
-      // Start new group
-      activeGroup = {
-        type: segType,
-        segmentIndex: currentSegmentCount,
-        toolCallIds: new Set([toolCallId]),
-        expected: 1,
-        completed: 0,
+    },
+
+    /**
+     * Record that a grouped tool_result has been applied to its segment.
+     */
+    recordGroupResult(toolCallId): ToolResultCompletion | null {
+      const entry = toolCallMap.get(toolCallId);
+      if (!entry) return null;
+
+      entry.completed++;
+      return {
+        segmentIndex: entry.segmentIndex,
+        expected: entry.expected,
+        completed: entry.completed,
+        complete: entry.completed >= entry.expected,
       };
-      toolCallMap.set(toolCallId, activeGroup);
-      return { action: 'new', segmentType: segType, groupCount: 1 };
-    }
-  } else {
-    // Non-groupable — always a new segment, breaks any active group
-    activeGroup = null;
-    return { action: 'new', segmentType: segType };
-  }
-}
+    },
 
-/**
- * A tool_result arrived. Look up which group it belongs to.
- * Uses layer 2 (toolCallMap) which survives interleaving.
- *
- * @returns lookup info, or null if this toolCallId was never registered
- */
-export function getGroupForResult(toolCallId: string): ToolResultLookup | null {
-  const entry = toolCallMap.get(toolCallId);
-  if (!entry) return null;
-  return {
-    grouped: true,
-    type: entry.type,
-    segmentIndex: entry.segmentIndex,
-    expected: entry.expected,
-    completed: entry.completed,
+    /**
+     * A non-tool event arrived (content, thinking).
+     * Breaks the current sequence (layer 1) but preserves
+     * the toolCallId registry (layer 2).
+     */
+    breakSequence(): void {
+      activeGroup = null;
+    },
+
+    /**
+     * Turn ended or a newer turn supersedes this one.
+     * Clears BOTH layers — called only for THIS thread/turn pair.
+     */
+    reset(): void {
+      activeGroup = null;
+      toolCallMap.clear();
+    },
   };
-}
-
-/**
- * Record that a grouped tool_result has been applied to its segment.
- */
-export function recordGroupResult(toolCallId: string): ToolResultCompletion | null {
-  const entry = toolCallMap.get(toolCallId);
-  if (!entry) return null;
-
-  entry.completed++;
-  return {
-    segmentIndex: entry.segmentIndex,
-    expected: entry.expected,
-    completed: entry.completed,
-    complete: entry.completed >= entry.expected,
-  };
-}
-
-/**
- * A non-tool event arrived (content, thinking).
- * Breaks the current sequence (layer 1) but preserves
- * the toolCallId registry (layer 2).
- */
-export function breakSequence(): void {
-  activeGroup = null;
-}
-
-/**
- * Turn ended or new turn began. Clear everything.
- */
-export function reset(): void {
-  activeGroup = null;
-  toolCallMap.clear();
 }

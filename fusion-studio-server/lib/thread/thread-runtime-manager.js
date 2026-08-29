@@ -12,6 +12,10 @@ const RUNTIME_STATES = Object.freeze({
 });
 
 const liveTurnSnapshot = require('./live-turn-snapshot');
+const {
+  createTurnAccumulator,
+  settleAccumulatorForTerminal,
+} = require('./canonical-turn-accumulator');
 
 class ThreadRuntimeManager {
   constructor() {
@@ -41,6 +45,7 @@ class ThreadRuntimeManager {
         warmPromise: null,
         liveTurn: null,
         liveToolArgs: new Map(),
+        activeDrain: null,
         updatedAt: Date.now(),
       };
       this.runtimes.set(serializedKey, runtime);
@@ -167,6 +172,224 @@ class ThreadRuntimeManager {
   getLiveTurn(key) {
     const runtime = this.runtimes.get(this.makeKey(key));
     return liveTurnSnapshot.cloneLiveTurn(runtime?.liveTurn || null);
+  }
+
+  /**
+   * Claim the active canonical drain for a runtime key (SPEC-01 Slice B).
+   * Must be called before the harness iterator is consumed. A leftover record
+   * is replaced with a diagnostic: runtime state gating already prevents
+   * concurrent prompts, so replacement is stale-record cleanup, never a live
+   * takeover. Slice C adds bind/compare/mutate/terminalize/clear authority.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {{ drainId: string, runtimeKey: object, touchThreadSession: () => void, stopHarness: () => Promise<void> }} control - CanonicalDrainControl capability
+   * @param {object|null} [routeContext] - frozen CanonicalRouteContext for the accepted prompt
+   * @returns {{ drainId: string, turnId: string|null, control: object, routeContext: object|null, turn: object|null }}
+   */
+  claimActiveDrain(key, control, routeContext = null) {
+    if (!control || !control.drainId) {
+      throw new Error('Active drain claim requires a control with a drainId');
+    }
+    const runtime = this.ensureRuntime(key);
+    if (runtime.activeDrain) {
+      console.warn(
+        `[ThreadRuntime] Replacing leftover active drain ${runtime.activeDrain.drainId} with ${control.drainId} (stale-record cleanup)`
+      );
+    }
+    runtime.activeDrain = {
+      drainId: control.drainId,
+      turnId: null,
+      control,
+      routeContext: routeContext || null,
+    };
+    runtime.updatedAt = Date.now();
+    return runtime.activeDrain;
+  }
+
+  /**
+   * Read the active canonical drain record for a runtime key, or null.
+   * @param {object} key - structured thread runtime key
+   */
+  getActiveDrain(key) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    return runtime?.activeDrain || null;
+  }
+
+  // ─── SPEC-01 Slice C: runtime drain authority API ────────────────────
+  // ThreadRuntimeManager is the SOLE mutable canonical turn owner. Every
+  // canonical mutation below compares the current drain (and, after bind,
+  // the bound server turnId). The active drain record shape is:
+  //   { drainId, turnId: string|null, control, routeContext,
+  //     turn: <accumulator>|null }
+  // where `turn` is created by beginCanonicalTurn and holds the
+  // non-serializable mutable accumulator beside the serializable snapshot.
+
+  /**
+   * True when an active drain record exists for the runtime key and its
+   * drainId still matches. The compare-current primitive every other
+   * operation builds on.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {string} drainId
+   * @returns {boolean}
+   */
+  isDrainCurrent(key, drainId) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    return Boolean(record && record.drainId === drainId);
+  }
+
+  /**
+   * Begin one canonical turn under the claimed drain. Gates on
+   * isDrainCurrent AND a not-yet-terminalized record AND no live duplicate
+   * begin (a rejected/spurious/duplicate begin can never reset state).
+   * Creates the serializable live-turn snapshot (with attachments) plus the
+   * non-serializable turn accumulator; replaces any previous completed
+   * snapshot exactly like beginLiveTurn.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {string} drainId
+   * @param {{ turnId: string, userInput: string, attachments?: Array }} payload
+   * @returns {{ accepted: boolean, turnId?: string }}
+   */
+  beginCanonicalTurn(key, drainId, { turnId, userInput, attachments = [] }) {
+    if (typeof turnId !== 'string' || !turnId) {
+      return { accepted: false };
+    }
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== drainId) {
+      return { accepted: false };
+    }
+    if (record.turn && !record.turn.terminalized) {
+      // Duplicate turn_begin for the live turn — idempotent reject, never reset.
+      return { accepted: false };
+    }
+
+    runtime.liveTurn = liveTurnSnapshot.beginLiveTurn(key, {
+      turnId,
+      userInput,
+      attachments,
+    });
+    runtime.liveToolArgs.clear();
+    record.turn = createTurnAccumulator();
+    runtime.updatedAt = Date.now();
+    return { accepted: true, turnId };
+  }
+
+  /**
+   * Bind the accepted server turnId to the current drain exactly once.
+   * Returns true only when the record exists, drainId matches, no turnId has
+   * been bound yet, and turnId is non-empty (bind-once contract §4.6).
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {string} drainId
+   * @param {string} turnId
+   * @returns {boolean}
+   */
+  bindTurnToDrain(key, drainId, turnId) {
+    if (typeof turnId !== 'string' || !turnId) return false;
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== drainId) return false;
+    if (record.turnId !== null) return false;
+    record.turnId = turnId;
+    runtime.updatedAt = Date.now();
+    return true;
+  }
+
+  /**
+   * Resolve the bound server turnId for the current drain, or null when the
+   * record is missing, superseded, or has no bound turn yet (pre-binding
+   * events are dropped by callers).
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {string} drainId
+   * @returns {string|null}
+   */
+  resolveBoundTurnId(key, drainId) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== drainId) return null;
+    return record.turnId;
+  }
+
+  /**
+   * Apply one gated live mutation and return its resulting streamSeq.
+   *
+   * Gate: record exists && drainId matches && record.turnId !== null &&
+   * record.turnId === identity.turnId. When gated in, mutator({ snapshot,
+   * turn }) mutates the live-turn snapshot and/or the turn accumulator using
+   * the existing live-turn-snapshot helpers (bump semantics preserved
+   * exactly); returns snapshot.streamSeq after mutation. Returns null when
+   * gated out. This is the method downstream SPECs build on.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {{ drainId: string, turnId: string }} identity
+   * @param {({ snapshot: object|null, turn: object }) => void} mutator
+   * @returns {number|null}
+   */
+  applyLiveMutation(key, identity, mutator) {
+    if (!identity || typeof mutator !== 'function') return null;
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== identity.drainId) return null;
+    if (record.turnId === null || record.turnId !== identity.turnId) return null;
+    mutator({ snapshot: runtime.liveTurn, turn: record.turn });
+    return runtime.liveTurn ? runtime.liveTurn.streamSeq : null;
+  }
+
+  /**
+   * Idempotently terminalize the current drain's canonical turn: completes
+   * the snapshot via completeLiveTurn(status, terminalError), resets usage
+   * metadata, clears mutable accumulator buffers, and marks the record
+   * terminalized. Repeated calls return false without side effects. Gate:
+   * compare-current AND a begun, not-yet-terminalized turn.
+   *
+   * SPEC-03 Slice B (parent §4.13): the optional `options.terminalError`
+   * safe envelope rides INSIDE this one existing terminal mutation — it is
+   * carried into completeLiveTurn so the error envelope lands on the
+   * snapshot during the single terminal bump. No second bump, no separate
+   * setter. The envelope must already be validated (the applier validates;
+   * completeLiveTurn re-validates defensively). Non-error terminals pass no
+   * envelope and force snapshot terminalError null.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {{ drainId: string, turnId: string }} identity
+   * @param {string} [status]
+   * @param {{ terminalError?: object|null }} [options]
+   * @returns {boolean}
+   */
+  terminalizeTurn(key, identity, status = 'complete', options = {}) {
+    if (!identity || typeof identity.drainId !== 'string') return false;
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== identity.drainId) return false;
+    if (!record.turn || record.turn.terminalized) return false;
+    liveTurnSnapshot.completeLiveTurn(runtime.liveTurn, status, options?.terminalError ?? null);
+    settleAccumulatorForTerminal(record.turn);
+    runtime.liveToolArgs.clear();
+    runtime.updatedAt = Date.now();
+    return true;
+  }
+
+  /**
+   * Remove the active drain record only when its drainId still matches
+   * (clear-if-current). The completed snapshot remains available for the
+   * thread:opened overlay. A replacement drain's record is never touched.
+   *
+   * @param {object} key - structured thread runtime key
+   * @param {string} drainId
+   * @returns {boolean}
+   */
+  clearActiveDrainIfCurrent(key, drainId) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    if (!runtime?.activeDrain || runtime.activeDrain.drainId !== drainId) {
+      return false;
+    }
+    runtime.activeDrain = null;
+    runtime.updatedAt = Date.now();
+    return true;
   }
 }
 

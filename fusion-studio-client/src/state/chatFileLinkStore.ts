@@ -4,15 +4,33 @@ import type { ChatFileAutocompleteCandidate, ChatLinkAttachment } from '../lib/c
 import type { ExchangeData } from '../types';
 
 interface ChatFileLinkState {
-  pendingAttachments: ChatLinkAttachment[];
+  pendingAttachmentsByOwner: Record<string, {
+    workspaceId: string;
+    threadId: string;
+    attachments: ChatLinkAttachment[];
+  }>;
   autocompleteCandidates: ChatFileAutocompleteCandidate[];
-  addPendingAttachment: (attachment: ChatLinkAttachment) => void;
-  removePendingAttachment: (id: string) => void;
-  clearPendingAttachments: () => void;
+  addPendingAttachment: (
+    workspaceId: string,
+    threadId: string,
+    attachment: ChatLinkAttachment,
+  ) => void;
+  removePendingAttachment: (workspaceId: string, threadId: string, id: string) => void;
+  removePendingAttachments: (
+    workspaceId: string,
+    threadId: string,
+    ids: readonly string[],
+  ) => void;
+  clearPendingAttachments: (workspaceId: string, threadId: string) => void;
+  clearWorkspaceAttachments: (workspaceId: string) => void;
   upsertAutocompleteCandidate: (candidate: ChatFileAutocompleteCandidate) => void;
   hydrateOpenTabCandidates: (paths: string[]) => void;
   hydrateThreadAutocompleteCandidates: (exchanges: ExchangeData[], openTabPaths: string[]) => void;
   mergeExchangeAutocompleteCandidates: (exchange: ExchangeData, openTabPaths: string[]) => void;
+}
+
+export function chatAttachmentOwnerKey(workspaceId: string, threadId: string): string {
+  return JSON.stringify([workspaceId, threadId]);
 }
 
 function candidateFromPath(
@@ -64,17 +82,62 @@ function candidatesFromExchangeMetadata(exchange: ExchangeData): ChatFileAutocom
 }
 
 export const useChatFileLinkStore = create<ChatFileLinkState>((set) => ({
-  pendingAttachments: [],
+  pendingAttachmentsByOwner: {},
   autocompleteCandidates: [],
-  addPendingAttachment: (attachment) => set((state) => {
-    const exists = state.pendingAttachments.some((item) => item.id === attachment.id);
+  addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    const attachments = state.pendingAttachmentsByOwner[key]?.attachments ?? [];
+    const exists = attachments.some((item) => item.id === attachment.id);
     if (exists) return state;
-    return { pendingAttachments: [...state.pendingAttachments, attachment] };
+    return {
+      pendingAttachmentsByOwner: {
+        ...state.pendingAttachmentsByOwner,
+        [key]: { workspaceId, threadId, attachments: [...attachments, attachment] },
+      },
+    };
   }),
-  removePendingAttachment: (id) => set((state) => ({
-    pendingAttachments: state.pendingAttachments.filter((attachment) => attachment.id !== id),
+  removePendingAttachment: (workspaceId, threadId, id) => set((state) => {
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    const owner = state.pendingAttachmentsByOwner[key];
+    if (!owner) return state;
+    return {
+      pendingAttachmentsByOwner: {
+        ...state.pendingAttachmentsByOwner,
+        [key]: {
+          ...owner,
+          attachments: owner.attachments.filter((attachment) => attachment.id !== id),
+        },
+      },
+    };
+  }),
+  removePendingAttachments: (workspaceId, threadId, ids) => set((state) => {
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    const owner = state.pendingAttachmentsByOwner[key];
+    if (!owner) return state;
+    const accepted = new Set(ids);
+    return {
+      pendingAttachmentsByOwner: {
+        ...state.pendingAttachmentsByOwner,
+        [key]: {
+          ...owner,
+          attachments: owner.attachments.filter((attachment) => !accepted.has(attachment.id)),
+        },
+      },
+    };
+  }),
+  clearPendingAttachments: (workspaceId, threadId) => set((state) => {
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    if (!state.pendingAttachmentsByOwner[key]) return state;
+    const pendingAttachmentsByOwner = { ...state.pendingAttachmentsByOwner };
+    delete pendingAttachmentsByOwner[key];
+    return { pendingAttachmentsByOwner };
+  }),
+  clearWorkspaceAttachments: (workspaceId) => set((state) => ({
+    pendingAttachmentsByOwner: Object.fromEntries(
+      Object.entries(state.pendingAttachmentsByOwner)
+        .filter(([, owner]) => owner.workspaceId !== workspaceId),
+    ),
   })),
-  clearPendingAttachments: () => set({ pendingAttachments: [] }),
   upsertAutocompleteCandidate: (candidate) => set((state) => {
     if (!isAutocompleteFilePath(candidate.path)) return state;
     const next = state.autocompleteCandidates.filter((item) => item.id !== candidate.id);

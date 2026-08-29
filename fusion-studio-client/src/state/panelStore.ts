@@ -8,8 +8,11 @@ import { create } from 'zustand';
 import type { ThemeEntry, Thread } from '../types';
 import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
 import { createChatSlice } from './slices/chatSlice';
+import { createChatActivitySlice } from './slices/chatActivityState';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createSecondarySlice } from './slices/secondarySlice';
+import { useChatFileLinkStore } from './chatFileLinkStore';
+import { useChatComposerDraftStore } from './chatComposerDraftStore';
 
 // Re-export for consumers that import clampPaneWidth from this module (e.g. ResizeHandle.tsx).
 export { clampPaneWidth };
@@ -35,6 +38,7 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
 export const usePanelStore = create<AppState>((set, get) => ({
   // ── Slice composition ─────────────────────────────────────────────────────
   ...createChatSlice(set, get),
+  ...createChatActivitySlice(set),
   ...createViewSlice(set, get),
   ...createSecondarySlice(set, get),
 
@@ -57,6 +61,9 @@ export const usePanelStore = create<AppState>((set, get) => ({
     // and panel roots are filesystem-derived from ai/<machine>/Views.
     const nextWorkspaceState = { ...state.workspaceState };
     if (oldId) {
+      if (oldId !== workspaceId) {
+        useChatFileLinkStore.getState().clearWorkspaceAttachments(oldId);
+      }
       const oldState: WorkspacePanelState = {
         projectRoot: null,
         currentPanel: state.currentPanel,
@@ -144,6 +151,8 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }
 
     const nextWorkspaceState = { ...state.workspaceState };
+    useChatFileLinkStore.getState().clearWorkspaceAttachments(workspaceId);
+    useChatComposerDraftStore.getState().clearWorkspaceDrafts(workspaceId);
     delete nextWorkspaceState[workspaceId];
 
     if (state.activeWorkspaceId === workspaceId) {
@@ -308,19 +317,26 @@ export const usePanelStore = create<AppState>((set, get) => ({
     ),
   })),
 
-  removeThread: (threadId) => set((state) => {
-    // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
-    const dropSecondary = state.secondary?.threadId === threadId;
-    // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
-    const nextProjectChats = { ...state.projectChats };
-    delete nextProjectChats[threadId];
-    return {
-      threads: state.threads.filter(t => t.threadId !== threadId),
-      currentThreadId: state.currentThreadId === threadId ? null : state.currentThreadId,
-      projectChats: nextProjectChats,
-      ...(dropSecondary ? { secondary: null } : {}),
-    };
-  }),
+  removeThread: (threadId) => {
+    const workspaceId = get().activeWorkspaceId;
+    if (workspaceId) {
+      useChatFileLinkStore.getState().clearPendingAttachments(workspaceId, threadId);
+      useChatComposerDraftStore.getState().clearDraft(workspaceId, threadId);
+    }
+    set((state) => {
+      // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
+      const dropSecondary = state.secondary?.threadId === threadId;
+      // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
+      const nextProjectChats = { ...state.projectChats };
+      delete nextProjectChats[threadId];
+      return {
+        threads: state.threads.filter(t => t.threadId !== threadId),
+        currentThreadId: state.currentThreadId === threadId ? null : state.currentThreadId,
+        projectChats: nextProjectChats,
+        ...(dropSecondary ? { secondary: null } : {}),
+      };
+    });
+  },
 
   // ── Harness status cache (HARNESS_STATUS_CACHE_SPEC) ──────────────────────
   harnessStatuses: {},

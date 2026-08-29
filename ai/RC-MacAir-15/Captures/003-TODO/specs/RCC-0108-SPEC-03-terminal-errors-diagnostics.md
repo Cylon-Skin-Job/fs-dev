@@ -209,3 +209,7 @@ SPEC-03 is accepted only when:
 ## 9. Handoff to SPEC-04
 
 Record the final terminal envelope validator rules, diagnostic request/response wire shapes, terminal snapshot shape, and post-terminal save-correlation fields. SPEC-04 consumes those exact shapes and must not loosen validation.
+
+## Supervisor Amendment (2026-08-25, post SPEC-01 acceptance review)
+
+DEV-5 carry-forward: SPEC-01 deliberately left the failure-path canonical terminalization slot vacant (baseline had no exception-path `turn_end` synthesis; verified against `4f972c5`). This SPEC owns implementing it through the existing bound machinery: `terminalizeTurn(key, identity, status)` + `CanonicalDrainControl`, per parent criteria 9/16. Until this SPEC lands, error-failed turns keep an in_flight snapshot with a warn-logged leftover record replaced on next claim.

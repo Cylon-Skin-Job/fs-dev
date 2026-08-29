@@ -25,6 +25,7 @@ import {
 
 export interface ChatInputRef {
   insertText: (text: string) => void;
+  appendText: (text: string) => void;
   replaceText: (text: string) => void;
   getText: () => string;
   focus: () => void;
@@ -41,13 +42,24 @@ interface ChatInputProps {
   /** True when the AI is streaming or the renderer is still revealing. */
   isTurnActive: boolean;
   onWarmIntent?: () => void;
+  draftText: string;
+  onDraftChange: (text: string) => void;
 }
 
 export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatInput(
-  { onSend, onStop, disabled, panel, placeholder, isTurnActive, onWarmIntent },
+  {
+    onSend,
+    onStop,
+    disabled,
+    panel,
+    placeholder,
+    isTurnActive,
+    onWarmIntent,
+    draftText: text,
+    onDraftChange,
+  },
   ref
 ) {
-  const [text, setText] = useState('');
   const [cursorIndex, setCursorIndex] = useState(0);
   const [emojiRecentsOpen, setEmojiRecentsOpen] = useState(false);
   const [emojiRecents, setEmojiRecents] = useState<EmojiRecentItem[]>([]);
@@ -107,14 +119,14 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
 
   const setTextareaText = useCallback((nextText: string, nextCursor: number) => {
     const textarea = textareaRef.current;
-    setText(nextText);
+    onDraftChange(nextText);
     setCursorIndex(nextCursor);
     window.setTimeout(() => {
       if (!textarea) return;
       textarea.focus();
       textarea.setSelectionRange(nextCursor, nextCursor);
     }, 0);
-  }, []);
+  }, [onDraftChange]);
 
   useImperativeHandle(ref, () => ({
     insertText: (newText: string) => {
@@ -135,6 +147,13 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       
       // Cursor and height are restored by setTextareaText.
     },
+    appendText: (newText: string) => {
+      const currentText = textareaRef.current?.value ?? '';
+      const separator = currentText.length > 0 ? '\n\n' : '';
+      const updatedText = `${currentText}${separator}${newText}`;
+      recordEmojiRecentsFromText(newText);
+      setTextareaText(updatedText, updatedText.length);
+    },
     replaceText: (newText: string) => {
       recordEmojiRecentsFromText(newText);
       setTextareaText(newText, newText.length);
@@ -144,10 +163,10 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
       textareaRef.current?.focus();
     },
     clearText: () => {
-      setText('');
+      onDraftChange('');
       setCursorIndex(0);
     }
-  }), [setTextareaText, text]);
+  }), [onDraftChange, setTextareaText, text]);
 
   const handleSend = useCallback(() => {
     if (!text.trim() || disabled) return;
@@ -176,7 +195,7 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
     const insertedText = getInsertedText(text, nextText);
     if (insertedText) recordEmojiRecentsFromText(insertedText);
     if (emojiRecentsOpen) setEmojiRecentsOpen(false);
-    setText(nextText);
+    onDraftChange(nextText);
     window.requestAnimationFrame(syncCursor);
   };
 

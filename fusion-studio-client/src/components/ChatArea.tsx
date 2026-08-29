@@ -34,6 +34,9 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, contentCollapsed,
     moreMenuOpen,
     setMoreMenuOpen,
     handleInsertText,
+    handleRequestDiagnostic,
+    handleCopyDiagnostic,
+    handleAskAIWithDiagnostic,
     handleAddAttachment,
     currentThreadId,
     messages,
@@ -59,6 +62,10 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, contentCollapsed,
     warmCurrentThread,
     isAcceptancePending,
     inputPlaceholder,
+    activeWorkspaceId,
+    composerDraft,
+    handleComposerDraftChange,
+    screenshotOwner,
   } = useChatArea({ panel, threadIdOverride });
 
   const sectionClass = `rv-chat-area rv-chat-area--project${isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${noThread ? ' rv-chat-area--no-thread' : ''}`;
@@ -97,6 +104,11 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, contentCollapsed,
     warmCurrentThread,
     contextUsage,
     tokenUsage,
+    activeWorkspaceId,
+    currentThreadId,
+    composerDraft,
+    handleComposerDraftChange,
+    screenshotOwner,
   };
 
   if (collapsed) {
@@ -146,6 +158,10 @@ export function ChatArea({ panel, collapsed, sidebarCollapsed, contentCollapsed,
               segments={segments}
               lastUserMsgRef={lastUserMsgRef}
               showOrb={showOrb}
+              onRequestDiagnostic={handleRequestDiagnostic}
+              onCopyDiagnostic={handleCopyDiagnostic}
+              onAskAIWithDiagnostic={handleAskAIWithDiagnostic}
+              askAIWithDiagnosticEnabled={!isAcceptancePending}
             />
           )}
 

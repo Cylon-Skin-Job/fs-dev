@@ -5,7 +5,14 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
-import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
+import {
+  chatAttachmentOwnerKey,
+  useChatFileLinkStore,
+} from '../../state/chatFileLinkStore';
+import {
+  chatComposerDraftOwnerKey,
+  useChatComposerDraftStore,
+} from '../../state/chatComposerDraftStore';
 import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
@@ -14,10 +21,18 @@ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-typ
 import type { ChatInputRef } from '../ChatInput';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
 import { useComposerForkAction } from './useComposerForkAction';
+import {
+  requestChatTurnDiagnostic,
+  type ChatDiagnosticRouteIds,
+} from '../../lib/ws/chat-diagnostic-handlers';
+import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+import { writeAndRecord } from '../../clipboard/clipboard-api';
 
 interface PendingPromptTarget {
   threadId: string;
   text: string;
+  composerText: string;
+  workspaceId: string | null;
 }
 
 type ChatTarget = Pick<PendingPromptTarget, 'threadId'>;
@@ -40,7 +55,6 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const chatInputRef = useRef<ChatInputRef>(null);
   const justSentRef = useRef(false);
   const [sendingTarget, setSendingTarget] = useState<ChatTarget | null>(null);
-  const [isAcceptancePending, setIsAcceptancePending] = useState(false);
   const pendingPromptRef = useRef<PendingPromptTarget | null>(null);
   const connectingHarnessId = usePanelStore((s) => s.connectingHarnessId);
   const setConnectingHarnessId = usePanelStore((s) => s.setConnectingHarnessId);
@@ -59,6 +73,13 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const segments = usePanelStore((state) => selector(state)?.segments ?? EMPTY_SEGMENTS);
   const pendingTurnEnd = usePanelStore((state) => selector(state)?.pendingTurnEnd ?? false);
   const pendingExchangeSaveTurnId = usePanelStore((state) => selector(state)?.pendingExchangeSaveTurnId ?? null);
+  const pendingPromptAcceptance = usePanelStore(
+    (state) => selector(state)?.pendingPromptAcceptance ?? null,
+  );
+  const retryPromptDraft = usePanelStore(
+    (state) => selector(state)?.retryPromptDraft ?? null,
+  );
+  const activeWorkspaceId = usePanelStore((state) => state.activeWorkspaceId);
   const contextUsage = usePanelStore((state) => state.contextUsage);
   const tokenUsage = usePanelStore((state) => state.tokenUsage);
   const chatActive = usePanelStore((state) => state.chatActive);
@@ -71,23 +92,45 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const sendMessage = usePanelStore((state) => state.sendMessage);
   const warmThread = usePanelStore((state) => state.warmThread);
   const finalizeTurn = usePanelStore((state) => state.finalizeTurn);
+  const setPendingPromptAcceptance = usePanelStore((state) => state.setPendingPromptAcceptance);
+  const setPromptRetryDraft = usePanelStore((state) => state.setPromptRetryDraft);
   const addPendingAttachment = useChatFileLinkStore((state) => state.addPendingAttachment);
-  const clearPendingAttachments = useChatFileLinkStore((state) => state.clearPendingAttachments);
 
   const noThread = !currentThreadId;
   const isActive = chatActive;
+  const isAcceptancePending = pendingPromptAcceptance !== null;
+  const composerDraft = useChatComposerDraftStore((state) => {
+    if (!activeWorkspaceId || !currentThreadId) return '';
+    return state.draftsByOwner[
+      chatComposerDraftOwnerKey(activeWorkspaceId, currentThreadId)
+    ] ?? '';
+  });
+  const setComposerDraft = useChatComposerDraftStore((state) => state.setDraft);
+  const screenshotOwner: ScreenshotAttachmentOwner | null = activeWorkspaceId && currentThreadId
+    ? {
+        workspaceId: activeWorkspaceId,
+        threadId: currentThreadId,
+        surface: threadIdOverride ? 'secondary' : 'primary',
+      }
+    : null;
+
+  const hasPendingAcceptance = useCallback((threadId: string | null) => {
+    if (!threadId) return false;
+    return usePanelStore.getState().projectChats[threadId]?.pendingPromptAcceptance != null;
+  }, []);
 
   const warmCurrentThread = useCallback(() => {
     const tid = currentThreadId;
-    if (!tid || !isActive || pendingPromptRef.current) return;
+    if (!tid || !isActive || hasPendingAcceptance(tid)) return;
     warmThread(tid);
-  }, [currentThreadId, isActive, warmThread]);
+  }, [currentThreadId, hasPendingAcceptance, isActive, warmThread]);
 
   const handleAddAttachment = useCallback((attachment: ChatLinkAttachment) => {
+    if (!activeWorkspaceId || !currentThreadId) return;
     warmCurrentThread();
-    addPendingAttachment(attachment);
+    addPendingAttachment(activeWorkspaceId, currentThreadId, attachment);
     chatInputRef.current?.focus();
-  }, [addPendingAttachment, warmCurrentThread]);
+  }, [activeWorkspaceId, addPendingAttachment, currentThreadId, warmCurrentThread]);
 
   const handleInsertText = useCallback((text: string) => {
     warmCurrentThread();
@@ -98,6 +141,62 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     warmCurrentThread();
     chatInputRef.current?.replaceText(text);
   }, [warmCurrentThread]);
+
+  const handleAppendText = useCallback((text: string) => {
+    warmCurrentThread();
+    chatInputRef.current?.appendText(text);
+  }, [warmCurrentThread]);
+
+  const handleComposerDraftChange = useCallback((text: string) => {
+    if (!activeWorkspaceId || !currentThreadId) return;
+    const state = usePanelStore.getState();
+    if (state.activeWorkspaceId !== activeWorkspaceId) return;
+    if (threadIdOverride) {
+      if (state.secondary?.threadId !== currentThreadId) return;
+    } else if (state.currentThreadId !== currentThreadId) {
+      return;
+    }
+    setComposerDraft(activeWorkspaceId, currentThreadId, text);
+  }, [activeWorkspaceId, currentThreadId, setComposerDraft, threadIdOverride]);
+
+  const handleRequestDiagnostic = useCallback((route: ChatDiagnosticRouteIds) => (
+    requestChatTurnDiagnostic(route)
+  ), []);
+
+  const handleCopyDiagnostic = useCallback(async (text: string) => {
+    // Chat Reply Payloads / Clipboard History require every app-owned system
+    // clipboard write to use the canonical write + history path.
+    await writeAndRecord(text, 'chat-diagnostic');
+  }, []);
+
+  const handleAskAIWithDiagnostic = useCallback((text: string) => {
+    // The accepted user draft still owns the composer until message:sent.
+    // Guard at this final synchronous boundary as well as disabling the UI,
+    // because retrieval may have started before acceptance became pending.
+    if (hasPendingAcceptance(currentThreadId)) return false;
+    // Explicit append only. ChatInput preserves the current draft byte-for-
+    // byte, inserts one separator, and never invokes onSend; the user retains
+    // review/edit/send authority even when a range was selected beforehand.
+    handleAppendText(text);
+    return true;
+  }, [currentThreadId, handleAppendText, hasPendingAcceptance]);
+
+  useEffect(() => {
+    const restorableDraft = pendingPromptAcceptance ?? retryPromptDraft;
+    if (!restorableDraft) return;
+    const input = chatInputRef.current;
+    // ChatInput is component-local; a minimized secondary remounts empty.
+    // Restore only that empty remount, preserving the user's exact bytes.
+    if (input?.getText() === '') input.replaceText(restorableDraft.composerText);
+  }, [pendingPromptAcceptance, retryPromptDraft]);
+
+  useEffect(() => {
+    const owner = pendingPromptRef.current;
+    if (!owner) return;
+    if (owner.workspaceId !== activeWorkspaceId || !threads.some((thread) => thread.threadId === owner.threadId)) {
+      pendingPromptRef.current = null;
+    }
+  }, [activeWorkspaceId, threads]);
 
   useEffect(() => {
     if (threadIdOverride) return;
@@ -216,37 +315,57 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
 
   useEffect(() => {
     const handleAccepted = (e: Event) => {
-      const detail = (e as CustomEvent<{ threadId: string; content: string }>).detail;
-      const pending = pendingPromptRef.current;
-      if (!pending || !detail) return;
-      if (detail.threadId !== pending.threadId) return;
-      if (typeof detail.content === 'string' && detail.content !== pending.text) return;
-      pendingPromptRef.current = null;
-      setIsAcceptancePending(false);
-      setSendingTarget({ threadId: pending.threadId });
+      const detail = (e as CustomEvent<{
+        threadId: string;
+        content: string;
+        pendingPromptMatched?: boolean;
+        pendingPromptComposerText?: string;
+      }>).detail;
+      if (!detail) return;
+      const durable = usePanelStore.getState().projectChats[detail.threadId]?.pendingPromptAcceptance;
+      const local = pendingPromptRef.current;
+      const matchesDurable = durable?.text === detail.content;
+      const matchesLocalOwner = local?.threadId === detail.threadId
+        && local.text === detail.content
+        && local.workspaceId === activeWorkspaceId;
+      const matchesVisibleLocal = matchesLocalOwner
+        && currentThreadId === detail.threadId
+        && chatInputRef.current?.getText() === local.composerText;
+      const matchesRestored = detail.pendingPromptMatched === true
+        && currentThreadId === detail.threadId
+        && chatInputRef.current?.getText() === detail.pendingPromptComposerText;
+      if (!matchesDurable && !matchesLocalOwner && !matchesRestored) return;
+      if (matchesDurable) setPendingPromptAcceptance(detail.threadId, null);
+      if (matchesLocalOwner) pendingPromptRef.current = null;
+      if (!matchesVisibleLocal && !matchesRestored) return;
+      setSendingTarget({ threadId: detail.threadId });
       justSentRef.current = true;
       chatInputRef.current?.clearText();
-      clearPendingAttachments();
     };
     const handleFailed = (e: Event) => {
-      const detail = (e as CustomEvent<{ threadId?: string }>).detail;
-      const pending = pendingPromptRef.current;
-      if (!pending) {
-        if (detail?.threadId) {
-          setSendingTarget((target) => {
-            if (!target) return null;
-            if (target.threadId !== detail.threadId) return target;
-            return null;
-          });
-        }
+      const detail = (e as CustomEvent<{
+        threadId?: string;
+        pendingPromptMatched?: boolean;
+      }>).detail;
+      // Acceptance failure is thread-owned. A route-less/global error cannot
+      // guess the current pending prompt, even if another producer dispatches
+      // this event without the required correlation field.
+      if (!detail?.threadId) return;
+      const local = pendingPromptRef.current;
+      // Failure deliberately retains the restored/current composer draft.
+      if (!local) {
+        setSendingTarget((target) => {
+          if (!target) return null;
+          if (target.threadId !== detail.threadId) return target;
+          return null;
+        });
         return;
       }
-      if (detail?.threadId && detail.threadId !== pending.threadId) return;
+      if (detail.threadId !== local.threadId) return;
       pendingPromptRef.current = null;
-      setIsAcceptancePending(false);
       setSendingTarget((target) => {
         if (!target) return null;
-        if (target.threadId !== pending.threadId) return target;
+        if (target.threadId !== local.threadId) return target;
         return null;
       });
     };
@@ -267,7 +386,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
       window.removeEventListener('fusion:prompt-acceptance-failed', handleFailed);
       window.removeEventListener('fusion:turn-ended', handleTurnEnded);
     };
-  }, [clearPendingAttachments]);
+  }, [activeWorkspaceId, currentThreadId, setPendingPromptAcceptance]);
 
   const isTurnFinalizing = Boolean(pendingTurnEnd || pendingExchangeSaveTurnId);
   const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0 && !isTurnFinalizing;
@@ -284,10 +403,25 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   });
 
   const sendToThread = useCallback((threadId: string, text: string) => {
-    if (pendingPromptRef.current) return;
+    if (hasPendingAcceptance(threadId)) return;
 
-    pendingPromptRef.current = { threadId, text };
-    setIsAcceptancePending(true);
+    if (!activeWorkspaceId) return;
+    const attachmentKey = chatAttachmentOwnerKey(activeWorkspaceId, threadId);
+    const attachments = useChatFileLinkStore.getState()
+      .pendingAttachmentsByOwner[attachmentKey]?.attachments ?? [];
+    pendingPromptRef.current = {
+      threadId,
+      text,
+      composerText: chatInputRef.current?.getText() ?? text,
+      workspaceId: activeWorkspaceId,
+    };
+    setPromptRetryDraft(threadId, null);
+    setPendingPromptAcceptance(threadId, {
+      text,
+      composerText: pendingPromptRef.current.composerText,
+      workspaceId: activeWorkspaceId,
+      attachmentIds: attachments.map((attachment) => attachment.id),
+    });
 
     const state = usePanelStore.getState();
     const cs = state.projectChats[threadId];
@@ -295,9 +429,8 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
       finalizeTurn(threadId);
     }
 
-    const attachments = useChatFileLinkStore.getState().pendingAttachments;
     sendMessage(text, threadId, attachments);
-  }, [finalizeTurn, sendMessage]);
+  }, [activeWorkspaceId, finalizeTurn, hasPendingAcceptance, sendMessage, setPendingPromptAcceptance, setPromptRetryDraft]);
 
   const handleSend = useCallback((text: string) => {
     const tid = currentThreadId;
@@ -429,6 +562,9 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     moreMenuOpen,
     setMoreMenuOpen,
     handleInsertText,
+    handleRequestDiagnostic,
+    handleCopyDiagnostic,
+    handleAskAIWithDiagnostic,
     handleAddAttachment,
     currentThreadId,
     currentThread,
@@ -457,5 +593,9 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     isForkThreadDisabled,
     handleForkThread,
     inputPlaceholder,
+    activeWorkspaceId,
+    composerDraft,
+    handleComposerDraftChange,
+    screenshotOwner,
   };
 }

@@ -1,0 +1,35 @@
+/*
+ * WorkingActivity — transient "Working…" row (RCC-0108 SPEC-05 Slice A).
+ *
+ * Visual vocabulary matches the existing tool rows / subagent waiting row:
+ * small hourglass + muted label. Every value traces to a CSS variable with a
+ * fallback; nothing is hardcoded (parent §4.3, project CSS rules).
+ */
+.rv-working-activity {
+  --working-activity-color: var(--tool-label-color, var(--chat-tools-color, var(--text-dim)));
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) 0;
+  margin-bottom: var(--space-md, 12px);
+  color: var(--working-activity-color);
+  font-size: var(--font-size-xs, 12px);
+}
+
+.rv-working-activity-seconds {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+/*
+ * Scoped reduced-motion extension (§4.10): the hourglass drain/flip cycle is
+ * already honored by HourglassFlow.css; this only calms this row's own
+ * motion-sensitive properties WITHOUT touching other HourglassFlow consumers.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .rv-working-activity,
+  .rv-working-activity-seconds {
+    animation: none;
+    transition: none;
+  }
+}

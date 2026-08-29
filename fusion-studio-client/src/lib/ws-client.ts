@@ -28,6 +28,9 @@ import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
 import { loadAllPanels } from '../lib/panels';
 import {
+  sanitizeTerminalErrorsAtIngress,
+} from './chat/terminal-error';
+import {
   getLatestViewStateMutationId,
   hasPendingViewStateMutation,
   settleViewStateMutation,
@@ -112,24 +115,58 @@ function redactNoteBody(value: unknown): unknown {
   return clone;
 }
 
-function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {
+/**
+ * Reduce an inbound frame to its loggable form. Exported as the single
+ * suppression-boundary seam (roadmap §5.5) so browser fixtures can prove
+ * report-field containment; called before every inbound console.log above.
+ */
+export function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {
+  // MANDATORY diagnostic log suppression (roadmap §5.5 sentence 2; parent
+  // §4.13.1; binding SPEC-03 §7): report frames are reduced to {type, opaque
+  // route/diagnostic identifiers} with the ENTIRE report object removed
+  // BEFORE any console logging or captured-log forwarding (the logger
+  // captures console output downstream). Built as a fixed allowlist literal —
+  // never spread from msg — so no present-or-future report field can reach
+  // console or captured logs by construction.
+  if (msg.type === 'chat-turn:diagnostic:report') {
+    return {
+      type: 'chat-turn:diagnostic:report',
+      threadId: typeof msg.threadId === 'string' ? msg.threadId : undefined,
+      turnId: typeof msg.turnId === 'string' ? msg.turnId : undefined,
+      diagnosticId: typeof msg.diagnosticId === 'string' ? msg.diagnosticId : undefined,
+    };
+  }
+  // Unavailable frames may carry only the null-echo identifier values and a
+  // fixed marker — strip everything else identically.
+  if (msg.type === 'chat-turn:diagnostic:unavailable') {
+    return {
+      type: 'chat-turn:diagnostic:unavailable',
+      availability: 'unavailable',
+      threadId: typeof msg.threadId === 'string' ? msg.threadId : undefined,
+      turnId: typeof msg.turnId === 'string' ? msg.turnId : undefined,
+      diagnosticId: typeof msg.diagnosticId === 'string' ? msg.diagnosticId : undefined,
+    };
+  }
+
+  const safeMessage = sanitizeTerminalErrorsAtIngress(msg);
+
   if (
-    msg.type !== 'chat-turn:metadata:update' &&
-    msg.type !== 'chat-turn:metadata:updated' &&
-    msg.type !== 'chat-turn:metadata:error'
+    safeMessage.type !== 'chat-turn:metadata:update' &&
+    safeMessage.type !== 'chat-turn:metadata:updated' &&
+    safeMessage.type !== 'chat-turn:metadata:error'
   ) {
-    return msg;
+    return safeMessage;
   }
 
   return {
-    ...msg,
-    metadata: redactNoteBody(msg.metadata) as Record<string, unknown> | undefined,
-    patch: msg.patch
+    ...safeMessage,
+    metadata: redactNoteBody(safeMessage.metadata) as Record<string, unknown> | undefined,
+    patch: safeMessage.patch
       ? {
-        ...msg.patch,
-        note: redactNoteBody(msg.patch.note) as { body: string } | null | undefined,
+        ...safeMessage.patch,
+        note: redactNoteBody(safeMessage.patch.note) as { body: string } | null | undefined,
       }
-      : msg.patch,
+      : safeMessage.patch,
   };
 }
 
@@ -205,7 +242,7 @@ export function connectWs() {
       if (!isWebSocketMessage(parsed)) {
         throw new Error('WebSocket message missing type');
       }
-      const msg = parsed;
+      const msg = sanitizeTerminalErrorsAtIngress(parsed);
       console.log('[WS] Message received:', msg.type, redactMessageForLog(msg));
       handleMessage(msg);
     } catch (err) {

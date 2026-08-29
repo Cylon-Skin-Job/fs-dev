@@ -10,6 +10,8 @@ metadata:
   source-files:
     - fusion-studio-client/src/state/slices/chatSlice.ts
     - fusion-studio-client/src/lib/ws/turn-lifecycle.ts
+    - fusion-studio-client/src/components/MessageList.tsx
+    - fusion-studio-server/lib/thread/turn-terminal-error.js
     - fusion-studio-server/lib/audit/audit-subscriber.js
     - fusion-studio-server/lib/thread/HistoryFile.js
   connected-skills: []
@@ -28,6 +30,19 @@ assistant output ended
 
 `turn_end` means the stream is terminal. It does not by itself mean saved-turn
 actions are viable.
+
+For `reason: "error"`, the server preserves accumulated assistant/tool output,
+clears Working, stores one fixed safe terminal envelope, and publishes one
+sequenced `turn_end`. The client immediately flushes queued partial output and
+finalizes atomically instead of waiting for typing/tool animation. The visible
+order is output, one turn error, then reply chrome. Normal completion retains
+the reveal-complete gate; Stop remains interrupted rather than failed.
+
+An error envelope is never a stream segment, assistant part, or tool error.
+Invalid client-bound data maps to the fixed generic safe catalog row without
+copying unknown fields. A post-terminal `error`/`auth_error` is notification or
+acceptance-failure correlation only and cannot create a second row or mutate a
+replacement prompt.
 
 ## Saved Exchange Ack
 

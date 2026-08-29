@@ -13,6 +13,8 @@ metadata:
     - fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js
     - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
     - fusion-studio-server/lib/thread/HistoryFile.js
+    - fusion-studio-server/lib/thread/turn-terminal-error.js
+    - fusion-studio-server/lib/thread/harness-diagnostic-service.js
   connected-skills: []
   related-trigger-files: []
 ---
@@ -26,10 +28,17 @@ metadata:
 - `fileMutations`
 - `contextUsage`
 - `tokenUsage`
+- `terminalError` on an error turn only: one fixed safe catalog envelope and
+  optional opaque `diagnosticId`
 
 Turn-end metadata is assembled by focused collectors and the metadata
 aggregator. Do not add collector behavior to runtime, canonical appliers,
 `HistoryFile`, or UI components.
+
+`terminalError` is a turn-finalization field rather than a collector-derived
+assistant part. It is validated at server and client boundaries. Raw provider
+errors, stacks, stderr, prompts, attachment contents, secrets, and the detailed
+diagnostic report are forbidden from general exchange metadata.
 
 ## Post-Save User Metadata
 

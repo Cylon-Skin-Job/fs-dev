@@ -33,6 +33,7 @@ const { redactWsMessage } = require('./redaction-map');
 const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
 const { createHarnessWsHandlers } = require('./harness-ws-handlers');
 const { createChatTurnMetadataHandlers } = require('./chat-turn-metadata-handlers');
+const { createChatTurnDiagnosticHandlers } = require('./chat-turn-diagnostic-handlers');
 const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
 const { resolvePrompt } = require('../prompts/prompt-registry');
 
@@ -87,6 +88,7 @@ function createClientMessageRouter({
   const threadHandlers = createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot });
   const harnessHandlers = createHarnessWsHandlers({ ws });
   const chatTurnMetadataHandlers = createChatTurnMetadataHandlers({ ws });
+  const chatTurnDiagnosticHandlers = createChatTurnDiagnosticHandlers({ ws });
   const workspaceRequestHandlers = createWorkspaceRequestHandlers({ ws, session, getAllClients });
 
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
@@ -114,6 +116,17 @@ function createClientMessageRouter({
       if (clientMsg.type.startsWith('thread:')) {
         const handler = threadHandlers[clientMsg.type];
         if (handler) { await handler(clientMsg); return; }
+      }
+
+      // RCC-0108 SPEC-03 Slice D: diagnostic retrieval is dispatched AHEAD
+      // OF the chat-turn metadata handlers with EXPLICITLY NO fallthrough.
+      // A diagnostic request must never reach metadata-update routing
+      // semantics; an unknown diagnostic type returns no report and no
+      // metadata handling.
+      if (clientMsg.type.startsWith('chat-turn:diagnostic:')) {
+        const handler = chatTurnDiagnosticHandlers[clientMsg.type];
+        if (handler) { await handler(clientMsg); }
+        return;
       }
 
       if (clientMsg.type.startsWith('chat-turn:')) {

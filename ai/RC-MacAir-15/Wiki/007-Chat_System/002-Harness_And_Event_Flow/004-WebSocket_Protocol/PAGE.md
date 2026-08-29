@@ -10,8 +10,13 @@ metadata:
     - fusion-studio-server/lib/ws/client-message-router.js
     - fusion-studio-server/lib/ws/thread-ws-handlers.js
     - fusion-studio-client/src/types/index.ts
+    - fusion-studio-client/src/types/chat-wire.ts
+    - fusion-studio-client/src/lib/ws-client.ts
     - fusion-studio-client/src/lib/ws/thread-handlers.ts
     - fusion-studio-client/src/lib/ws/stream-handlers.ts
+    - fusion-studio-client/src/lib/ws/frontier.ts
+    - fusion-studio-client/src/lib/ws/chat-diagnostic-handlers.ts
+    - fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js
     - fusion-studio-client/src/lib/chat-action.ts
     - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
   connected-skills: []
@@ -31,6 +36,7 @@ protocol.
 | `thread:warm` | Warm a cold runtime based on send intent |
 | `prompt` | Send user input and optional attachment metadata to a specific thread |
 | `turn:stop` | Interrupt an in-flight turn |
+| `chat-turn:diagnostic:get` | Explicitly retrieve one bounded redacted report for an exact thread/turn/id |
 | `chat-turn:metadata:update` | Post-save user metadata update for a saved exchange |
 
 Prompt payloads may include attachment metadata:
@@ -68,6 +74,8 @@ state until send.
 | `chat-turn:metadata:error` | Failed post-save metadata update |
 | `fusion:prompt-acceptance-failed` | Prompt was rejected before acceptance |
 | `fusion:turn-ended` | Terminal turn event reached client state |
+| `chat-turn:diagnostic:report` | One validated redacted V1 report after an explicit request |
+| `chat-turn:diagnostic:unavailable` | Fixed value-free denial for every unavailable class |
 
 ## Canonical Harness Events
 
@@ -76,6 +84,7 @@ application:
 
 ```text
 turn_begin
+step_begin
 content
 thinking
 tool_call
@@ -88,6 +97,36 @@ turn_end
 
 The canonical bridge/applier owns mutation, event bus emission, persistence
 handoff, and live snapshot updates.
+
+Every accepted in-flight message from `turn_begin` through `turn_end` carries
+the prompt-bound `threadId`, `turnId`, and positive integer `streamSeq`.
+Messages that can change Working additionally carry `activityRevision`.
+Companion transport notifications remain unsequenced and cannot become a
+second transcript terminal source.
+
+## Client Route And Frontier Gate
+
+The client keys live namespaces by `threadId + turnId`. A snapshot at sequence
+N installs atomically as an already-revealed baseline; frames at or below N are
+dropped, frames above N buffer, and only a contiguous N+1 frontier drains.
+Gaps are never guessed. A newer snapshot may advance through a gap, while an
+older snapshot cannot regress visible state. Hydrating one thread cannot reset
+another thread's helpers or frontier.
+
+Route and turn validation runs before helper/store mutation. `turn_begin` has
+the separate empty/same/different initialization rules; `chat-turn:saved` and
+metadata acknowledgements use post-terminal correlation rather than the live
+turn gate.
+
+## Diagnostic Privacy
+
+Diagnostic lookup requires the exact server-authorized
+`workspaceId + threadId + turnId + diagnosticId` tuple and returns at most one
+validated report. Missing, expired, rejected, malformed, or failed retrievals
+share one unavailable shape. No report appears in thread-open, history,
+lifecycle, or metadata frames. The central client WebSocket logger strips the
+entire report before console/captured-log forwarding and retains only type,
+availability, and opaque route identifiers.
 
 ## Exchange Metadata
 
@@ -169,7 +208,7 @@ The saved exchange acknowledgement is `chat-turn:saved`:
   seq: number;
   ts: number;
   partial: boolean;
-  reason: "completed" | "interrupted";
+  reason: "complete" | "interrupted" | "error";
   metadata: Record<string, unknown>;
 }
 ```

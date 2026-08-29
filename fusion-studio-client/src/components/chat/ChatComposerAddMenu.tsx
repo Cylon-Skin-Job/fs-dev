@@ -6,6 +6,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScreenshotsTrigger } from '../../screenshots';
 import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
+import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
 import { ClipboardTrigger } from '../../clipboard';
 import { RecentFilesTrigger } from '../../recent-files';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
@@ -13,9 +14,10 @@ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-typ
 interface ChatComposerAddMenuProps {
   onAttach: (attachment: ChatLinkAttachment) => void;
   onInsert: (text: string) => void;
+  screenshotOwner: ScreenshotAttachmentOwner | null;
 }
 
-export function ChatComposerAddMenu({ onAttach, onInsert }: ChatComposerAddMenuProps) {
+export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: ChatComposerAddMenuProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -40,8 +42,8 @@ export function ChatComposerAddMenu({ onAttach, onInsert }: ChatComposerAddMenuP
 
   const handleCapture = useCallback(() => {
     setOpen(false);
-    void captureAndAttachScreenshot();
-  }, []);
+    if (screenshotOwner) void captureAndAttachScreenshot(screenshotOwner);
+  }, [screenshotOwner]);
 
   const handleAttach = useCallback((attachment: ChatLinkAttachment) => {
     setOpen(false);

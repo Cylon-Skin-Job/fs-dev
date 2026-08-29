@@ -26,6 +26,10 @@ collection, file mutation correlation, and future automations meet here.
 - The broadcaster fans events out to WebSocket clients by `threadId`.
 - Metadata collectors listen for relevant events without owning chat runtime.
 
+RCC-0108 lifecycle events, including `chat:step_begin` and the safe error
+`chat:turn_end`, use this existing `chat:*` compatibility bus. They do not enter
+canonical-admission-only publication or ledger paths.
+
 ## Rule
 
 Do not bypass the event bus for normal chat turn lifecycle. Do not put raw

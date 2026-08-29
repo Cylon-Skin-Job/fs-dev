@@ -62,6 +62,14 @@ async function start({ server, app, sessions, getProjectRoot }) {
   await initDb();
   process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] fusion.db initialized');
+
+  // 1b. Harness error diagnostics cleanup (RCC-0108 SPEC-03 Slice C) — the
+  // SAME purge-expired + evict-to-caps cleanup as insertion-time, run once
+  // at boot after migrations have applied. Best-effort by contract: warns
+  // on failure and NEVER blocks boot.
+  const { runStartupDiagnosticCleanup } = require('./thread/harness-diagnostic-service');
+  await runStartupDiagnosticCleanup();
+
   const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
   const localMachineName = await initializeLocalMachineIdentity();
   console.log('[Workspace] local machine name: ' + localMachineName);

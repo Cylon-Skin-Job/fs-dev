@@ -30,5 +30,5 @@ needed when the app shell itself matters.
 - [Chat Smoke Tests](001-Smoke_Tests/PAGE.md) - Vertical-slice smoke testing guidance for chat changes.
 - [Chat Browser Playwright](002-Playwright_Browser/PAGE.md) - Browser Playwright configuration and when to use it for chat validation.
 - [Chat Electron Playwright](003-Playwright_Electron/PAGE.md) - Target structure for future Electron Playwright coverage.
-- [Fusion Restart](004-Fusion_Restart/PAGE.md) - Fusion Home restart script behavior and when to use it for chat validation.
+- [Fusion Restart](004-Fusion_Restart/PAGE.md) - Fusion restart script behavior and when to use it for chat validation.
 <!-- children:end -->

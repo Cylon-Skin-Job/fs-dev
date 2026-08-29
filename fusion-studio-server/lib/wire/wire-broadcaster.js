@@ -64,13 +64,37 @@ function createWireBroadcaster({ getClientForThread }) {
 
   // Every outbound live stream message carries scope and threadId so the
   // client routes by explicit server identity, not selected UI state.
+  //
+  // SPEC-02 Slice D (RCC-0108 §2): every accepted client-facing in-flight
+  // message from turn_begin through turn_end additionally carries turnId +
+  // streamSeq, forwarded 1:1 from the bus payload; content/thinking/tool_call/
+  // turn_end also carry activityRevision (parent §4.9 — their handling may
+  // change Working activity). Post-terminal acknowledgements
+  // (chat:exchange_metadata / chat-turn:saved) stay in their separate
+  // lifecycle family without streamSeq.
   on('chat:turn_begin', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_begin',
       scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
       userInput: event.userInput,
+    });
+  });
+
+  on('chat:step_begin', (event) => {
+    sendToThread(event.threadId, {
+      type: 'step_begin',
+      scope: event.scope,
+      threadId: event.threadId,
+      turnId: event.turnId,
+      streamSeq: event.streamSeq,
+      identity: event.identity,
+      ...(event.stepId ? { stepId: event.stepId } : {}),
+      ...(event.messageId ? { messageId: event.messageId } : {}),
+      startedAt: event.startedAt,
+      activityRevision: event.activityRevision,
     });
   });
 
@@ -79,8 +103,10 @@ function createWireBroadcaster({ getClientForThread }) {
       type: 'content',
       scope: event.scope,
       threadId: event.threadId,
-      text: event.text,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
+      activityRevision: event.activityRevision,
+      text: event.text,
     });
   });
 
@@ -89,8 +115,10 @@ function createWireBroadcaster({ getClientForThread }) {
       type: 'thinking',
       scope: event.scope,
       threadId: event.threadId,
-      text: event.text,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
+      activityRevision: event.activityRevision,
+      text: event.text,
     });
   });
 
@@ -102,6 +130,8 @@ function createWireBroadcaster({ getClientForThread }) {
       toolName: event.toolName,
       toolCallId: event.toolCallId,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
+      activityRevision: event.activityRevision,
     });
   });
 
@@ -113,6 +143,7 @@ function createWireBroadcaster({ getClientForThread }) {
       toolCallId: event.toolCallId,
       argsChunk: event.argsChunk,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
     });
   });
 
@@ -129,6 +160,7 @@ function createWireBroadcaster({ getClientForThread }) {
       returnedDiff: event.returnedDiff,
       isError: event.isError,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
     });
   });
 
@@ -138,6 +170,7 @@ function createWireBroadcaster({ getClientForThread }) {
       scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
       parentToolCallId: event.parentToolCallId,
       agentId: event.agentId,
       subagentType: event.subagentType,
@@ -146,18 +179,27 @@ function createWireBroadcaster({ getClientForThread }) {
     });
   });
 
+  // SPEC-02 Slice D: turn_end forwards streamSeq + activityRevision 1:1.
+  // SPEC-03 Slice B: terminalError is forwarded 1:1 ONLY when the bus event
+  // carries one — i.e. reason-'error' terminals, which always carry a
+  // validated safe envelope from the canonical terminal path. Non-error
+  // terminals OMIT the key entirely (pinned wire shape; the SPEC-02 wire
+  // union table has no terminalError key on turn_end).
   on('chat:turn_end', (event) => {
     sendToThread(event.threadId, {
       type: 'turn_end',
       scope: event.scope,
       threadId: event.threadId,
       turnId: event.turnId,
+      streamSeq: event.streamSeq,
+      activityRevision: event.activityRevision,
       fullText: event.fullText,
       hasToolCalls: event.hasToolCalls,
       userInput: event.userInput,
       parts: event.parts,
       reason: event.reason,
       partial: event.partial,
+      ...(event.terminalError ? { terminalError: event.terminalError } : {}),
     });
   });
 
@@ -166,6 +208,8 @@ function createWireBroadcaster({ getClientForThread }) {
       type: 'status_update',
       scope: event.scope,
       threadId: event.threadId,
+      turnId: event.turnId,
+      streamSeq: event.streamSeq,
       contextUsage: event.contextUsage,
       tokenUsage: event.tokenUsage,
     });
