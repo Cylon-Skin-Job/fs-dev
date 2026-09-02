@@ -208,8 +208,8 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     return () => window.removeEventListener('fusion:chat-insert', handler);
   }, [threadIdOverride, handleInsertText]);
 
-  const handleHarnessSelect = useCallback((harnessId: string) => {
-    selectHarness(harnessId);
+  const handleHarnessSelect = useCallback((harnessId: string, modelId?: string) => {
+    selectHarness(harnessId, modelId);
   }, [selectHarness]);
 
   const handleCreateThread = useCallback(() => {

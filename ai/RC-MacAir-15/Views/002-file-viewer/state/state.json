@@ -1,9 +1,9 @@
 {
   "widths": {
-    "leftSidebar": 240.25390625,
+    "leftSidebar": 237.71484375,
     "leftChat": 486.80078125,
     "rightSecondary": 400,
-    "rightCol": 247.0625
+    "rightCol": 193.7734375
   },
   "collapsed": {
     "leftSidebar": false,
@@ -42,7 +42,7 @@
         "path": "restart-fusion.sh",
         "title": "restart-fusion.sh",
         "kind": "file",
-        "openedAt": 1787923898475,
+        "openedAt": 1788347929753,
         "extension": "sh",
         "tabIndex": 0
       },
@@ -52,7 +52,7 @@
         "path": "fusion-studio-server/AGENTS.md",
         "title": "AGENTS.md",
         "kind": "file",
-        "openedAt": 1787923898475,
+        "openedAt": 1788347929753,
         "extension": "md",
         "tabIndex": 1
       },
@@ -62,9 +62,19 @@
         "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
         "title": "PAGE.md",
         "kind": "file",
-        "openedAt": 1787923898475,
+        "openedAt": 1788347929753,
         "extension": "md",
         "tabIndex": 2
+      },
+      {
+        "id": "file-viewer:fusion-studio-server/data/background-services.log",
+        "panel": "file-viewer",
+        "path": "fusion-studio-server/data/background-services.log",
+        "title": "background-services.log",
+        "kind": "file",
+        "openedAt": 1788347929753,
+        "extension": "log",
+        "tabIndex": 3
       },
       {
         "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
@@ -72,21 +82,11 @@
         "path": "MESSAGE_ID_AUDIT_SPEC.md",
         "title": "MESSAGE_ID_AUDIT_SPEC.md",
         "kind": "file",
-        "openedAt": 1787923898475,
+        "openedAt": 1788347929753,
         "extension": "md",
-        "tabIndex": 3
-      },
-      {
-        "id": "file-viewer:fusion-studio-client/index.html",
-        "panel": "file-viewer",
-        "path": "fusion-studio-client/index.html",
-        "title": "index.html",
-        "kind": "file",
-        "openedAt": 1787923898475,
-        "extension": "html",
         "tabIndex": 4
       }
     ],
-    "activeTabId": "file-viewer:fusion-studio-client/index.html"
+    "activeTabId": "file-viewer:ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md"
   }
 }

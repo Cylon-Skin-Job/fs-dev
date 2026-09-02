@@ -26,6 +26,7 @@ import { Icon } from '../Icon';
 import { CopyPathButton } from '../CopyPathButton';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { SendToChatButton } from '../SendToChatButton';
+import { OfficeNewMenuButton } from './OfficeNewMenuButton';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { OFFICE_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
 import type { ViewUIState } from '../../types';
@@ -39,7 +40,6 @@ import {
   recordViewRecent,
 } from '../../lib/viewActivity';
 import { normalizeOfficePaperBrightness, officePaperMuteAlpha } from '../../lib/officePaperBrightness';
-import '../../styles/dropdown.css';
 import './OfficeGrid.css';
 
 const PANEL = 'office-viewer';
@@ -78,15 +78,6 @@ const OFFICE_SIDEBAR_ITEMS = [
 type OfficeSidebarItem = Extract<typeof OFFICE_SIDEBAR_ITEMS[number], { kind: 'item' }>;
 type OfficeSidebarAction = OfficeSidebarItem['action'];
 type OfficeCreateModalKind = 'folder' | 'document';
-
-const OFFICE_NEW_MENU_ITEMS = [
-  { icon: 'create_new_folder', label: 'New folder', action: 'new-folder' },
-  'separator',
-  { icon: 'upload_file', label: 'Import file', action: 'import-file' },
-  { icon: 'drive_folder_upload', label: 'Import Folder', action: 'import-folder' },
-  'separator',
-  { icon: 'description', label: 'New Document', action: 'new-document' },
-] as const;
 
 interface FolderInfo {
   name: string;
@@ -266,82 +257,13 @@ function OfficeSidebar({
   onNewFolder: () => void;
   onNewDocument: () => void;
 }) {
-  const [newMenuOpen, setNewMenuOpen] = useState(false);
-  const newMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!newMenuOpen) return;
-
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target;
-      if (target instanceof Node && newMenuRef.current?.contains(target)) return;
-      setNewMenuOpen(false);
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setNewMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handlePointerDown);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handlePointerDown);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [newMenuOpen]);
-
-  const handleNewMenuItem = useCallback((action: string) => {
-    setNewMenuOpen(false);
-    if (action === 'new-folder') {
-      onNewFolder();
-    } else if (action === 'new-document') {
-      onNewDocument();
-    }
-  }, [onNewDocument, onNewFolder]);
-
   return (
     <aside className="rv-office-sidebar" aria-label="Office navigation">
       <h2 className="rv-office-sidebar-title">Office</h2>
-      <div className="rv-office-new-menu" ref={newMenuRef}>
-        <button
-          type="button"
-          className="rv-office-new-btn rv-office-sidebar-new-btn"
-          aria-haspopup="menu"
-          aria-expanded={newMenuOpen}
-          aria-controls="office-new-menu"
-          onClick={() => setNewMenuOpen((open) => !open)}
-        >
-          New
-        </button>
-        <div
-          className="rv-dropdown rv-office-new-dropdown"
-          id="office-new-menu"
-          role="menu"
-          data-open={newMenuOpen}
-        >
-          {OFFICE_NEW_MENU_ITEMS.map((item, index) => (
-            item === 'separator' ? (
-              <div
-                key={`separator-${index}`}
-                className="rv-office-new-menu-separator"
-                role="separator"
-              />
-            ) : (
-              <button
-                key={item.label}
-                type="button"
-                className="rv-dropdown-item rv-office-new-menu-item"
-                role="menuitem"
-                onClick={() => handleNewMenuItem(item.action)}
-              >
-                <span className="material-symbols-outlined" aria-hidden="true">{item.icon}</span>
-                <span>{item.label}</span>
-              </button>
-            )
-          ))}
-        </div>
-      </div>
+      <OfficeNewMenuButton
+        onNewFolder={onNewFolder}
+        onNewDocument={onNewDocument}
+      />
       <nav className="rv-office-sidebar-nav">
         {OFFICE_SIDEBAR_ITEMS.slice(0, 3).map((item) => {
           const isActive = item.action === activeAction;

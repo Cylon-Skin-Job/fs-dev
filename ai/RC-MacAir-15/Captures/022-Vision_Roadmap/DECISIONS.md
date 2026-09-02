@@ -51,7 +51,7 @@ Move the current right-side navigation bar to the left side of the interface, ad
 
 Fusion Home's left navigation is grouped as follows:
 
-1. Issues, including its inbox; and Project Manager, formerly Launchpad.
+1. Issues, including its inbox; and Projects, represented by individually created Project Viewer entries and formerly framed as one Launchpad/Project Manager surface.
 2. Office Suite; Productivity Suite; Health & Fitness Tracker; and Recipes, Meal Tracker & Shopping List.
 3. Wiki; File Explorer; and Browser.
 4. Agent Profiles under a brain/node-network icon; and Settings Manager under a gears icon.
@@ -698,6 +698,294 @@ The planned **Context Manager** plugin provides semantic, indexable history and 
 - **Source:** CAP-113
 
 Personal-context extraction is opt-in. The user controls what the system records and, separately, what recorded information it surfaces into product context.
+
+### D-078 — Compose views from independent chat, thread, and content surfaces
+
+- **Date:** 2026-09-02
+- **Category:** product
+- **Status:** active
+- **Source:** CAP-117
+
+Chat, thread navigation, and the content view are independently presentable parts of the Fusion Studio shell. A view can show all three, retain threads without chat, retain chat without threads, or occupy the full window without either one.
+
+### D-079 — Persist only the content worksurface state with a thread
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-117
+
+Per-thread continuity applies to the content worksurface: open tabs, documents, locations, selections, scroll positions, and similar view-owned state. Surrounding chat and thread chrome do not need to be stored as part of that worksurface state. This decision narrows D-005 without reversing its continuity goal.
+
+### D-080 — Treat assigned folders as worksurfaces rather than hard boundaries
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-117
+
+A folder assigned to a view, thread, or launched work item is a starting context and body of related material. It is not by itself a filesystem, permission, or reasoning boundary.
+
+### D-081 — Host side chats as content tabs with bounded handoff
+
+- **Date:** 2026-09-02
+- **Category:** product
+- **Status:** active
+- **Source:** CAP-117
+
+Side chats use the same composable conversation component and can appear as tabs inside a content surface. Each side chat remains a distinct conversation associated with its parent view and originating context. When it continues prior work, an agent or helper can read the prior chat and pass forward only the context the new conversation needs.
+
+### D-082 — Make New a configurable view launch action
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** superseded
+- **Source:** CAP-117
+
+A view controls the label and icon presented for its creation action. The earlier proposal also coupled thread creation to folder templates, starter files, worksurface creation, and CWD selection. D-101 supersedes that coupling: creating a thread consumes an existing view context, while creating a project or another domain object is a separate flow.
+
+### D-083 — Keep the harness project root as the default working directory
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-117
+
+New sessions continue to use the workspace/project-root working directory already supplied by the harness unless the registered view configuration explicitly overrides it. A separately created Project Viewer may bind that override once for every thread it owns; New Chat does not calculate or negotiate a working directory.
+
+### D-084 — Store view-level conversation configuration in view folders
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-117
+
+View-specific conversation configuration belongs in the view folder and uses the same conceptual configuration approach as workspace-wide defaults. It may cover launch presentation and behavior, instructions, thread organization, sensible default switches, working-directory policy, transcript behavior, and related settings. Installed view defaults remain user-changeable through those settings, and view instructions do not require changing the working directory.
+
+### D-085 — Support folder or tag organization for view threads
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-117
+
+A view's thread collections begin with a default collection named **Threads**, which may be renamed, extended, or deleted. Thread metadata can retain multiple ranked collection assignments in either mode. Folder mode projects only the highest-ranked valid assignment, while tag mode projects all valid assignments. Deleting a configured collection never deletes a thread; an affected thread resolves into Archive when it has no other valid assignment.
+
+### D-086 — Deliver automatic thread renaming as a plugin
+
+- **Date:** 2026-09-02
+- **Category:** product
+- **Status:** active
+- **Source:** CAP-117
+
+Automatic attachment-aware, ticket-aware, and LLM-assisted naming belongs to an **Auto-Rename Chat Threads** plugin rather than the core conversation component. The core continues to support explicit titles and source-provided identity.
+
+### D-087 — Make transcript destinations configurable
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-117
+
+Saving a transcript can target an explicit folder, create a folder under a selected location, or use the folder passed through a worksurface binding. The exact transcript format and retention behavior remain open.
+
+### D-088 — Give every view capsule an immutable manifest identity
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-120
+
+Each view capsule carries an immutable `metadata.view-id` inside its own `manifest.md`. Folder names, display names, and ordering prefixes may change without changing thread ownership or saved view state. Filesystem inode metadata may help correlate a live rename but is not durable application identity.
+
+### D-089 — Treat the visible thread as an umbrella of peer chat sessions
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-120
+
+The row users see as a thread is a stable umbrella for one body of work. It normally contains one chat session but may contain multiple peer sessions. The umbrella is their parent; sessions do not form a parent/child tree. Immutable membership order records chronology, and append-only primary-change events record which member was treated as primary over time.
+
+### D-090 — Define Move Chat to Side Chat as an empty-primary transition
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-120
+
+**Move Chat to Side Chat** places the current primary chat in a content tab and immediately creates a durable, cold, completely empty primary chat within the same visible thread. It transfers no transcript, provider session, summary, prompt, or hidden context. The prior chat remains unchanged and interactive; explicit **Send to Chat** plus later resume guidance is the only context-transfer path.
+
+### D-091 — Use the full chat module in a centered side-chat tab
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-120
+
+A side-chat tab centers the same complete chat module used by the primary surface, including its list/menu button and shared menu behavior. It does not place another persistent thread list beside the chat.
+
+### D-092 — Remove context-cloning conversation branches from the product
+
+- **Date:** 2026-09-02
+- **Category:** product
+- **Status:** active
+- **Source:** CAP-120
+
+Fusion Studio will not expose a context-cloning branch action in its UI, public protocol, server services, provider invocation, tests, active roadmaps, or plans. **Send to Chat** supersedes that model with an explicit, simpler transfer of selected material.
+
+### D-093 — Keep one canonical thread-action family
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-120
+
+User-initiated visible-thread and chat-session operations continue through `thread:action`. Thread group is internal domain/storage language rather than a new transport family. `threadGroupId` identifies the visible body of work, `threadId` remains the live route for one chat session, `viewId` identifies its owning view, and `surfaceId` scopes one transient mounted chat instance.
+
+### D-094 — Store group-keyed worksurfaces in the owning view folder
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-120
+
+SQLite owns visible-thread structure, session membership, primary-role history,
+and a bounded outbox for unapplied cross-store projections. The owning view
+capsule stores each visible thread's content-worksurface snapshot in its view
+state. The two stores do not duplicate the worksurface; a failed view-state
+projection retries idempotently from its pending outbox instruction without
+reopening a tab the user intentionally closed later.
+
+### D-095 — Place view capsules under the machine-scoped System folder
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-121
+
+View definitions move from `ai/<machine>/Views/` to
+`ai/<machine>/System/Views/`. A capsule contains the view's manifest,
+configuration, styles, and application-owned state, while `content.json`
+continues to point independently at the view's primary content root. Wiki or
+another content collection may therefore live under the machine AI tree or in
+a Git-tracked workspace-root folder without moving the view definition.
+
+### D-096 — Make System policy readable but not directly writable by agents
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-121
+
+The future System access boundary permits agents to read effective
+configuration so they can understand and explain it, but denies them direct or
+indirect mutation of System configuration and permissions. Changes occur only
+through a trusted Fusion UI/service path; an agent may guide the user through
+that interface but may not invoke a generic file operation to make the change.
+This prevents an agent from granting itself capabilities, altering launch
+policy, or enabling agent-controlled thread creation. New threads require an
+explicit user action or a separately user-authorized automation enforced by the
+server.
+
+### D-097 — Make System configuration portable and editable through GUI or source
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-122
+
+System configuration is an inspectable, versioned file representation that can
+be edited through purpose-built Fusion GUI tools or directly as JSON by the
+user. Both editing surfaces operate on the same canonical schema and validated
+write service; the GUI is not a second source of truth. System may hold view
+definitions, reusable component references, templates, and other declarative
+customization needed to assemble richer experiences.
+
+### D-098 — Clone configuration without cloning authority or local state
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-122
+
+System configurations can be copied, exported, and cloned between compatible
+workspaces. A clone receives new instance identity and retains portable
+declarations and stable component references. It does not inherit secrets,
+granted permissions, user-consent records, active sessions, thread history, or
+ordinary runtime/view state. Requested capabilities may travel as declarations
+but require fresh user review and consent before activation.
+
+### D-099 — Use stable tag assignments with a permanent Archive fallback
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-123
+
+A view's configuration defines the folders or tags available in its thread
+dropdown. Both presentation modes use stable collection identifiers underneath,
+and changing a label does not change its identity. Fusion always injects a
+non-removable **Archive** collection for threads with no currently configured
+assignment. If configuration removes one or more assigned collections, the
+thread is not deleted or stranded; it appears in Archive whenever no valid
+assignment remains.
+
+### D-100 — Preserve ranked collection memberships across presentation modes
+
+- **Date:** 2026-09-02
+- **Category:** system
+- **Status:** active
+- **Source:** CAP-124
+
+Thread metadata always supports multiple stable collection-ID assignments,
+each carrying server-owned precedence rank. View configuration uses
+`mode: "folders" | "tags"` and defaults to `"folders"`. Folder mode projects
+only the highest-ranked valid assignment; tags mode projects all valid
+assignments. Selecting another folder raises that assignment's rank without
+deleting the others, so switching modes is lossless. Assignments missing from
+current configuration remain dormant and become effective again if the same ID
+returns. The Archive action deliberately clears every assignment, including
+dormant ones, and Archive remains the derived zero-valid-assignment grouping
+rather than a separate status flag.
+
+### D-101 — Represent each project as its own ordinary Project Viewer
+
+- **Date:** 2026-09-02
+- **Category:** product
+- **Status:** active
+- **Source:** CAP-125
+
+The user creates projects directly in side navigation. Each project is a
+separate numbered Project Viewer capsule, such as `001-project-viewer` or
+`002-project-viewer`, with its own immutable manifest ID and project content
+root. The numeric folder prefix controls presentation order but is not project
+identity. Project creation establishes the folder/content binding and any
+view-level instructions or CWD policy once.
+
+New Chat inside a Project Viewer creates only a view-bound visible thread and
+its initial chat session. It does not create project/content folders, copy
+starter files, create another view, or pass a folder ID/path through the thread
+creation transaction. Multiple primary threads share the Project Viewer's
+worksurface, and each may own multiple side-chat sessions. Project Viewer uses
+the same viewer, thread-list, content-tab, and chat contracts as other views
+rather than introducing a special Project Manager host paradigm.
+
+### D-102 — Use the shared menu with radio folders and checkbox tags
+
+- **Date:** 2026-09-02
+- **Category:** experience
+- **Status:** active
+- **Source:** CAP-126
+
+The thread row's right-click and kebab actions use the recently extracted shared
+menu module rather than another bespoke dropdown. A **Collections** item with
+the Material Symbol `sub_header` opens a standard right-side submenu containing
+the effective configured collections. Folder mode uses mutually exclusive radio
+items and closes after selection. Tag mode extends the shared menu with true
+checkbox items, uses `menuitemcheckbox` semantics, and remains open for multiple
+selections. Both use the same visual checkmark column. Archive is a separate
+clear-all action, not a tag checkbox.
 
 ## Process and Governance
 

@@ -175,9 +175,9 @@ async function openTableInsertGridAt(
       ? editor.getByRole('heading', { name: 'life-b', exact: true })
       : editor.locator('p').filter({ hasText: 'After table-lifecycle.' }).last()
   await target.click({ button: 'right' })
-  const menu = page.locator('.rv-office-insert-context-menu')
+  const menu = page.getByRole('menu', { name: 'Insert content' })
   await expect(menu).toBeVisible()
-  await menu.locator('[data-office-insert="table"]').hover()
+  await menu.locator('[data-menu-item-id="insert-table"]').hover()
   const grid = page.locator('.rv-office-table-grid-popover')
   await expect(grid).toBeVisible()
   return grid
@@ -512,7 +512,7 @@ test('[slice 06.1] pointer Table submenu preserves Remove table and root actions
     ])
     const tableItem = rootMenu.getByRole('menuitem', { name: 'Table', exact: true })
     await expect(tableItem.locator('.material-symbols-outlined').first()).toHaveText('table_edit')
-    await expect(tableItem.locator('.rv-office-table-context-chevron')).toHaveText('chevron_right')
+    await expect(tableItem.locator('.rv-menu-item-chevron')).toHaveText('chevron_right')
     await tableItem.hover()
 
     const tableMenu = page.getByRole('menu', { name: 'Table', exact: true })
@@ -1263,9 +1263,9 @@ test('[slice 06.4] owner-visible post-removal gap accepts a caret and inserts at
 
     await page.mouse.click(gap!.x, gap!.y)
     await page.mouse.click(gap!.x, gap!.y, { button: 'right' })
-    const insertMenu = page.locator('.rv-office-insert-context-menu')
+    const insertMenu = page.getByRole('menu', { name: 'Insert content' })
     await expect(insertMenu).toBeVisible()
-    await insertMenu.locator('[data-office-insert="table"]').hover()
+    await insertMenu.locator('[data-menu-item-id="insert-table"]').hover()
     const grid = page.locator('.rv-office-table-grid-popover')
     await expect(grid).toBeVisible()
     await grid.locator('[data-row="2"][data-col="2"]').click()

@@ -1,0 +1,1784 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Fusion Studio Style Guide — Working Artifact</title>
+  <style>
+    :root {
+      --page: #111111;
+      --page-deep: #0d0d0d;
+      --surface: #181818;
+      --surface-raised: #202020;
+      --surface-soft: #252525;
+      --line: #303030;
+      --line-strong: #454545;
+      --text: #f2f2f2;
+      --text-soft: #c7c7c7;
+      --text-muted: #929292;
+      --text-quiet: #6f6f6f;
+      --white: #ffffff;
+      --green: #7da68b;
+      --amber: #bca470;
+      --blue: #829eb8;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --content-width: 1040px;
+      --nav-width: 248px;
+      --header-height: 40px;
+      --trailing-action-inset: 8px;
+      --trailing-action-gap: 4px;
+      --chrome-button-size: 32px;
+      --chrome-icon-size: 18px;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--page);
+      color: var(--text);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--page);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 78% -20%, rgba(255,255,255,0.04), transparent 32rem),
+        var(--page);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(0, 1fr);
+    }
+
+    .guide-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 32px 20px 24px;
+      border-right: 1px solid var(--line);
+      background: rgba(15, 15, 15, 0.92);
+      backdrop-filter: blur(18px);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-copy strong,
+    .brand-copy span { display: block; }
+
+    .brand-copy strong {
+      font-size: 13px;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-copy span {
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .nav-label {
+      margin: 24px 10px 8px;
+      color: var(--text-quiet);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .guide-nav nav {
+      display: grid;
+      gap: 3px;
+    }
+
+    .guide-nav nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 140ms ease, background 140ms ease;
+    }
+
+    .guide-nav nav a::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+
+    .guide-nav nav a:hover,
+    .guide-nav nav a.is-active {
+      color: var(--text);
+      background: var(--surface-raised);
+    }
+
+    .nav-foot {
+      margin-top: 32px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    main {
+      min-width: 0;
+      padding: 64px clamp(28px, 6vw, 88px) 120px;
+    }
+
+    .main-inner {
+      width: min(100%, var(--content-width));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 720;
+    }
+
+    .lede {
+      max-width: 700px;
+      margin-bottom: 28px;
+      color: var(--text-soft);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.55;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 28px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .tag::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .tag.direction { color: var(--green); }
+    .tag.observation { color: var(--blue); }
+    .tag.open { color: var(--amber); }
+
+    .intro-rule {
+      height: 1px;
+      margin: 56px 0 0;
+      background: linear-gradient(90deg, var(--line-strong), transparent 84%);
+    }
+
+    section {
+      padding-top: 82px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.52fr);
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-quiet);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .section-summary {
+      margin-bottom: 2px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .card h3 {
+      margin-bottom: 9px;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .card p,
+    .card li {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .card li + li { margin-top: 6px; }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .principle {
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      border-top: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent);
+    }
+
+    .principle .index {
+      margin-bottom: auto;
+      color: var(--text-quiet);
+      font-size: 11px;
+    }
+
+    .principle h3 {
+      margin: 28px 0 8px;
+      font-size: 15px;
+    }
+
+    .principle p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .hover-comparison {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hover-example {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .hover-example-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .hover-example-head strong,
+    .hover-example-head span { display: block; }
+
+    .hover-example-head strong {
+      margin-bottom: 3px;
+      font-size: 13px;
+    }
+
+    .hover-example-head span {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    .radius-badge {
+      flex: 0 0 auto;
+      padding: 4px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 9px;
+    }
+
+    .state-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .state-cell {
+      min-width: 0;
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--page-deep);
+    }
+
+    .state-cell > span {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--text-quiet);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hover-control {
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 9px;
+      border: 0;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 11px;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .hover-control span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hover-control.source {
+      height: 28px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background: #191919;
+    }
+
+    .hover-control.source.is-hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .hover-control.composer {
+      height: 32px;
+      border-radius: 6px;
+      color: var(--blue);
+    }
+
+    .hover-control.composer.is-hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hover-control.capture-tab,
+    .hover-control.file-tab {
+      height: 32px;
+      justify-content: flex-start;
+      border-radius: 8px;
+    }
+
+    .hover-control.capture-tab.is-hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .hover-control.file-tab.is-hover {
+      background: #3a3a3a;
+      color: var(--white);
+    }
+
+    .behavior-note {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 14px;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .behavior-note strong {
+      font-size: 11px;
+    }
+
+    .behavior-note p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .direction-panel {
+      margin-top: 14px;
+      padding: 22px;
+      border: 1px solid rgba(125, 166, 139, 0.38);
+      border-radius: var(--radius-md);
+      background: rgba(125, 166, 139, 0.055);
+    }
+
+    .direction-panel > strong {
+      display: block;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .interaction-families {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .interaction-family {
+      padding: 16px;
+      border: 1px solid rgba(125, 166, 139, 0.2);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .interaction-family h3 {
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .interaction-family p {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .icon-state-pair {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .icon-state {
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      color: var(--text-muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .icon-state-glyph {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 19px;
+    }
+
+    .icon-state-glyph.hovered {
+      color: var(--blue);
+    }
+
+    .envelope-demo {
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: var(--page-deep);
+      box-shadow: var(--shadow);
+    }
+
+    .envelope-stage {
+      min-height: 190px;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+      background:
+        linear-gradient(90deg, transparent 49.9%, rgba(255,255,255,0.035) 50%, transparent 50.1%),
+        #141414;
+    }
+
+    .envelope-control {
+      position: relative;
+      width: min(100%, 310px);
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .envelope-control .leading-glyph {
+      flex: 0 0 auto;
+      color: var(--text-soft);
+      font-size: 16px;
+    }
+
+    .envelope-label-well {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      max-width: 16ch;
+      overflow: hidden;
+      white-space: nowrap;
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent 100%);
+      mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent 100%);
+    }
+
+    .envelope-control .trailing-glyph {
+      flex: 0 0 auto;
+      margin-left: auto;
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .envelope-measure {
+      position: absolute;
+      color: var(--blue);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .envelope-measure.height { left: calc(100% + 12px); top: 8px; }
+    .envelope-measure.inset { left: 8px; top: calc(100% + 10px); }
+    .envelope-measure.radius { right: 7px; bottom: calc(100% + 9px); }
+    .envelope-measure.fade { right: 31px; top: calc(100% + 10px); }
+
+    .envelope-rules {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+    }
+
+    .envelope-rule {
+      min-height: 104px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .envelope-rule:last-child { border-right: 0; }
+
+    .envelope-rule strong,
+    .envelope-rule span { display: block; }
+
+    .envelope-rule strong {
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .envelope-rule span {
+      color: var(--text-muted);
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .menu-theme-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .menu-theme-card {
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .menu-theme-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .menu-theme-head strong,
+    .menu-theme-head span { display: block; }
+
+    .menu-theme-head strong { font-size: 12px; }
+
+    .menu-theme-head span {
+      color: var(--text-muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-stage {
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: var(--page-deep);
+    }
+
+    .menu-demo {
+      width: min(100%, 240px);
+      padding: 4px;
+      border-radius: 8px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.4);
+    }
+
+    .menu-demo.dark {
+      border: 1px solid #b8b8b8;
+      background: #242424;
+      color: #f5f5f5;
+    }
+
+    .menu-demo.light {
+      border: 1px solid #4a4a4a;
+      background: #e6e6e6;
+      color: #111111;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+    }
+
+    .menu-item-demo {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 8px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .menu-item-demo .menu-shortcut {
+      margin-left: auto;
+      opacity: 0.55;
+      font-size: 10px;
+    }
+
+    .menu-demo.dark .menu-item-demo.hovered { background: rgba(255,255,255,0.08); }
+    .menu-demo.light .menu-item-demo.hovered { background: rgba(0,0,0,0.08); }
+    .menu-item-demo.danger { color: #ef4444; }
+
+    .menu-divider-demo {
+      height: 1px;
+      margin: 4px 8px;
+      background: currentColor;
+    }
+
+    .menu-token-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+    }
+
+    .menu-token-row span {
+      padding: 11px 14px;
+      color: var(--text-muted);
+      font-size: 9px;
+    }
+
+    .menu-token-row span + span { border-left: 1px solid var(--line); }
+
+    .role-row {
+      display: grid;
+      grid-template-columns: 128px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .role-row:last-child { border-bottom: 1px solid var(--line); }
+
+    .role-swatch {
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-raised);
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .role-swatch.accent {
+      background: #303030;
+      color: var(--white);
+    }
+
+    .role-copy h3 { margin-bottom: 6px; }
+
+    .role-copy p {
+      max-width: 680px;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    code {
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--page-deep);
+      color: var(--text-soft);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.88em;
+    }
+
+    .demo-frame {
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: var(--page-deep);
+      box-shadow: var(--shadow);
+    }
+
+    .demo-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--text-muted);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-demo {
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--trailing-action-inset) 0 16px;
+      background: #191919;
+    }
+
+    .fake-workspace {
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--trailing-action-gap);
+    }
+
+    .icon-button {
+      width: var(--chrome-button-size);
+      height: var(--chrome-button-size);
+      flex: 0 0 var(--chrome-button-size);
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-soft);
+    }
+
+    .icon-button svg {
+      width: var(--chrome-icon-size);
+      height: var(--chrome-icon-size);
+      stroke: currentColor;
+      stroke-width: 1.7;
+      fill: none;
+    }
+
+    .measurements {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+    }
+
+    .measurement {
+      min-height: 88px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .measurement:last-child { border-right: 0; }
+
+    .measurement strong,
+    .measurement span { display: block; }
+
+    .measurement strong {
+      margin-bottom: 4px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .measurement span {
+      color: var(--text-muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .exception {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+      padding: 18px;
+      border: 1px solid rgba(188, 164, 112, 0.35);
+      border-radius: var(--radius-md);
+      background: rgba(188, 164, 112, 0.06);
+    }
+
+    .exception .plus-demo {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .exception strong { font-size: 12px; }
+
+    .exception p {
+      margin: 4px 0 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tab-example {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .tab-example-head {
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .tab-rail {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px;
+    }
+
+    .capture-rail { background: #242424; }
+    .files-rail { background: #171717; }
+
+    .fake-tab {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .capture-rail .fake-tab.active { background: #353535; color: var(--text); }
+    .files-rail .fake-tab.active { background: #242424; color: var(--text); }
+
+    .tab-token {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    figure.reference-shot {
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: var(--page-deep);
+    }
+
+    figure.reference-shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: zoom-in;
+    }
+
+    .shot-placeholder {
+      min-height: 340px;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background:
+        linear-gradient(135deg, transparent 49.6%, var(--line) 50%, transparent 50.4%),
+        linear-gradient(45deg, transparent 49.6%, var(--line) 50%, transparent 50.4%),
+        #151515;
+      background-size: 56px 56px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .shot-placeholder strong,
+    .shot-placeholder span { display: block; }
+
+    .shot-placeholder strong {
+      margin-bottom: 6px;
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .shot-placeholder span {
+      max-width: 430px;
+      font-size: 11px;
+    }
+
+    figcaption {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    figcaption strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+
+    .caption-state {
+      align-self: start;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+
+    .shot-notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .shot-note {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .shot-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-soft);
+    }
+
+    .open-question {
+      padding: 24px;
+      border: 1px solid rgba(188, 164, 112, 0.35);
+      border-radius: var(--radius-md);
+      background: rgba(188, 164, 112, 0.055);
+    }
+
+    .open-question strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .open-question p {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    dialog {
+      width: min(94vw, 1440px);
+      max-width: none;
+      padding: 0;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: var(--page-deep);
+      color: var(--text);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.7);
+    }
+
+    dialog::backdrop {
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(8px);
+    }
+
+    dialog img { display: block; width: 100%; height: auto; }
+
+    .dialog-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      background: rgba(15,15,15,0.82);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 90px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--text-quiet);
+      font-size: 11px;
+    }
+
+    @media (max-width: 900px) {
+      .shell { display: block; }
+      .guide-nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 18px 20px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand { margin-bottom: 14px; }
+      .guide-nav nav {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .guide-nav nav a { flex: 0 0 auto; }
+      .nav-label, .nav-foot { display: none; }
+      main { padding-top: 48px; }
+      .section-head { grid-template-columns: 1fr; gap: 14px; }
+    }
+
+    @media (max-width: 680px) {
+      main { padding: 40px 18px 80px; }
+      .card-grid,
+      .principle-grid,
+      .hover-comparison,
+      .interaction-families,
+      .envelope-rules,
+      .menu-theme-compare,
+      .compare,
+      .shot-notes { grid-template-columns: 1fr; }
+      .behavior-note { grid-template-columns: 1fr; gap: 6px; }
+      .envelope-rule { border-right: 0; border-bottom: 1px solid var(--line); }
+      .envelope-rule:last-child { border-bottom: 0; }
+      .menu-token-row { grid-template-columns: 1fr; }
+      .menu-token-row span + span { border-left: 0; border-top: 1px solid var(--line); }
+      .role-row { grid-template-columns: 1fr; }
+      .role-swatch { height: 54px; }
+      .measurements { grid-template-columns: repeat(2, 1fr); }
+      .measurement:nth-child(2) { border-right: 0; }
+      .measurement:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      figcaption { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+    @media print {
+      .shell { display: block; }
+      .guide-nav { display: none; }
+      main { padding: 0; }
+      body { background: #111; }
+      section { break-inside: avoid; }
+      .demo-frame, figure.reference-shot { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="guide-nav" aria-label="Style guide navigation">
+      <div class="brand">
+        <div class="brand-mark">FS</div>
+        <div class="brand-copy">
+          <strong>Fusion Studio</strong>
+          <span>Style guide · working artifact</span>
+        </div>
+      </div>
+
+      <div class="nav-label">Foundations</div>
+      <nav>
+        <a href="#first-principles">First principles</a>
+        <a href="#hover-behavior">Hover behavior</a>
+        <a href="#interactive-envelope">Interactive envelope</a>
+        <a href="#menu-surfaces">Menu surfaces</a>
+        <a href="#color-roles">Workspace color roles</a>
+        <a href="#icon-geometry">Icon geometry</a>
+        <a href="#view-tabs">Universal view tabs</a>
+        <a href="#screenshots">Screenshot references</a>
+        <a href="#open-questions">Open questions</a>
+      </nav>
+
+      <div class="nav-foot">
+        This artifact records owner direction, current observations, and open questions separately. It is not yet the living Wiki article.
+      </div>
+    </aside>
+
+    <main>
+      <div class="main-inner">
+        <header>
+          <p class="eyebrow">Fusion Studio · foundation layer</p>
+          <h1>Style begins with relationships.</h1>
+          <p class="lede">A visual and behavioral guide built from first principles downward. We establish semantic roles, geometry, spacing, and state before naming reusable components.</p>
+          <div class="status-row" aria-label="Artifact legend">
+            <span class="tag direction">Owner direction</span>
+            <span class="tag observation">Current observation</span>
+            <span class="tag open">Open decision</span>
+          </div>
+          <div class="intro-rule"></div>
+        </header>
+
+        <section id="first-principles">
+          <div class="section-head">
+            <div>
+              <span class="section-number">01 / Foundation</span>
+              <h2>First principles</h2>
+            </div>
+            <p class="section-summary">Rules describe what an element means and how it relates to its neighbors—not merely what class happens to style it today.</p>
+          </div>
+
+          <div class="principle-grid">
+            <article class="principle">
+              <span class="index">01</span>
+              <h3>Semantics before selectors</h3>
+              <p>Elements may use different structural classes while belonging to the same visual role through a shared semantic variable.</p>
+            </article>
+            <article class="principle">
+              <span class="index">02</span>
+              <h3>Patterns include relationships</h3>
+              <p>A component pattern includes its size, spacing, edge alignment, state, and relationship to adjacent elements.</p>
+            </article>
+            <article class="principle">
+              <span class="index">03</span>
+              <h3>Exceptions remain narrow</h3>
+              <p>An exception belongs to a named context. It does not silently redefine the default used everywhere else.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="hover-behavior">
+          <div class="section-head">
+            <div>
+              <span class="section-number">02 / Interaction</span>
+              <h2>Hover has families</h2>
+            </div>
+            <p class="section-summary">Related controls currently use two visible signals: a border-color change or a shaded fill. Fill-based hovers then vary by radius and token.</p>
+          </div>
+
+          <div class="hover-comparison">
+            <article class="hover-example">
+              <div class="hover-example-head">
+                <div><strong>AI source selector</strong><span>Upper-left app header</span></div>
+                <span class="radius-badge">6px radius</span>
+              </div>
+              <div class="state-pair">
+                <div class="state-cell">
+                  <span>Rest</span>
+                  <button class="hover-control source"><span>Local: RC-MacAir-15</span><span>⌄</span></button>
+                </div>
+                <div class="state-cell">
+                  <span>Hover</span>
+                  <button class="hover-control source is-hover"><span>Local: RC-MacAir-15</span><span>⌄</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="hover-example">
+              <div class="hover-example-head">
+                <div><strong>Composer dropdown</strong><span>User-input chrome</span></div>
+                <span class="radius-badge">6px radius</span>
+              </div>
+              <div class="state-pair">
+                <div class="state-cell">
+                  <span>Rest</span>
+                  <button class="hover-control composer"><span>Model</span><span>⌄</span></button>
+                </div>
+                <div class="state-cell">
+                  <span>Hover</span>
+                  <button class="hover-control composer is-hover"><span>Model</span><span>⌄</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="hover-example">
+              <div class="hover-example-head">
+                <div><strong>Capture tab</strong><span>Inactive document tab</span></div>
+                <span class="radius-badge">8px radius</span>
+              </div>
+              <div class="state-pair">
+                <div class="state-cell">
+                  <span>Rest</span>
+                  <button class="hover-control capture-tab"><span>▣&nbsp; Capture.md</span></button>
+                </div>
+                <div class="state-cell">
+                  <span>Hover</span>
+                  <button class="hover-control capture-tab is-hover"><span>▣&nbsp; Capture.md</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="hover-example">
+              <div class="hover-example-head">
+                <div><strong>File-viewer tab</strong><span>Inactive file tab</span></div>
+                <span class="radius-badge">8px radius</span>
+              </div>
+              <div class="state-pair">
+                <div class="state-cell">
+                  <span>Rest</span>
+                  <button class="hover-control file-tab"><span>▤&nbsp; File.tsx</span></button>
+                </div>
+                <div class="state-cell">
+                  <span>Hover</span>
+                  <button class="hover-control file-tab is-hover"><span>▤&nbsp; File.tsx</span></button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="behavior-note">
+            <strong>Current observation</strong>
+            <p>The source selector's hover only recolors its existing 1px border and text; it does not add a CSS outline. Keyboard focus adds a separate 2px outline. The composer uses <code>--glass-sm</code> at 6% white. Capture uses <code>--glass-md</code> at 8% white. File tabs use the content Accent fill, so their effect is visually related but not token-identical.</p>
+          </div>
+
+          <div class="direction-panel">
+            <strong>Owner direction: one interaction system, two visual families</strong>
+            <div class="interaction-families">
+              <div class="interaction-family">
+                <h3>Surface controls shade</h3>
+                <p>Dropdown triggers and view tabs share the Interactive Surface hover fill. The current source-selector border-only hover and the differing 6%/8% fills are replaced by one semantic hover token.</p>
+                <code>--interactive-hover-bg</code>
+              </div>
+              <div class="interaction-family">
+                <h3>Icon-only chrome changes color</h3>
+                <p>Left-rail icons and header icons do not acquire a hover tile. They move from Workspace Foreground to Workspace Accent while their background remains transparent.</p>
+                <div class="icon-state-pair" aria-label="Icon-only hover comparison">
+                  <span class="icon-state"><span class="icon-state-glyph">◫</span>Rest</span>
+                  <span class="icon-state"><span class="icon-state-glyph hovered">◫</span>Hover</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="interactive-envelope">
+          <div class="section-head">
+            <div>
+              <span class="section-number">03 / Control geometry</span>
+              <h2>The interactive envelope</h2>
+            </div>
+            <p class="section-summary">Hover is only the state. The reusable pattern is the complete area around the content: height, inset, internal gap, radius, and overflow behavior.</p>
+          </div>
+
+          <div class="envelope-demo">
+            <div class="demo-label">
+              <span>Proposed compact envelope</span>
+              <span>Baseline measurements</span>
+            </div>
+            <div class="envelope-stage">
+              <div class="envelope-control">
+                <span class="leading-glyph">▤</span>
+                <span class="envelope-label-well">A deliberately long control or document name</span>
+                <span class="trailing-glyph">×</span>
+                <span class="envelope-measure height">32px high</span>
+                <span class="envelope-measure inset">8px inset</span>
+                <span class="envelope-measure radius">8px radius</span>
+                <span class="envelope-measure fade">18px fade</span>
+              </div>
+            </div>
+            <div class="envelope-rules">
+              <div class="envelope-rule">
+                <strong>Geometry stays fixed</strong>
+                <span>The background envelope owns a 32px height, 8px inline padding, 8px corners, and a 6px content gap.</span>
+              </div>
+              <div class="envelope-rule">
+                <strong>Capacity may respond</strong>
+                <span>A tab, machine selector, or menu item may receive a different label width without changing the space around its content.</span>
+              </div>
+              <div class="envelope-rule">
+                <strong>Overflow stays predictable</strong>
+                <span>One-line labels clip through a right-edge fade. A trailing action receives a reserved well rather than compressing the outer padding.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="direction-panel">
+            <strong>Owner direction: background geometry is part of the component contract</strong>
+            <div class="interaction-families">
+              <div class="interaction-family">
+                <h3>Uniform envelope</h3>
+                <p>Controls should present the same amount of background above, below, and beside comparable text. Hover, open, and selected states fill the same physical envelope.</p>
+                <code>--interactive-control-*</code>
+              </div>
+              <div class="interaction-family">
+                <h3>Tabs are responsive, not exempt</h3>
+                <p>Tabs may shrink their label well and reveal an overlaid close action, but the outer height, inset, corner shape, and fade behavior still come from the shared contract.</p>
+                <code>--interactive-label-*</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="exception">
+            <div class="plus-demo" aria-hidden="true">◫</div>
+            <div>
+              <strong>Left navigation rail exception</strong>
+              <p>The left-sidebar icon targets belong to the navigation rail's own geometry: currently a 40px square target with a 24px glyph. They retain a transparent background and change from Workspace Foreground to Workspace Accent on hover. They do not inherit the compact text-control padding, radius, or 32px envelope.</p>
+            </div>
+          </div>
+
+          <div class="behavior-note">
+            <strong>Current observation</strong>
+            <p>Capture currently caps its label at <code>16ch</code> and uses ellipsis. Files caps each tab at <code>140px</code>, fades the final <code>18px</code>, and expands the action fade to <code>24px</code> in compact mode. Compact controls currently vary between 28–32px high, 6–10px inline padding, and several radii.</p>
+          </div>
+
+          <div class="open-question" style="margin-top: 14px;">
+            <strong>Open: confirm the baseline numbers</strong>
+            <p>The illustrated starting point is 32px height, 8px inline padding, 8px radius, 6px internal gap, and an 18px label fade. The principle is owner direction; these exact measurements remain proposed until confirmed.</p>
+          </div>
+        </section>
+
+        <section id="menu-surfaces">
+          <div class="section-head">
+            <div>
+              <span class="section-number">04 / Menus</span>
+              <h2>One themed menu surface</h2>
+            </div>
+            <p class="section-summary">Right-click menus and dropdown menus are transient system surfaces. Their base contrast should not change because they were opened from different panels.</p>
+          </div>
+
+          <div class="menu-theme-compare">
+            <article class="menu-theme-card">
+              <div class="menu-theme-head">
+                <div><strong>Dark mode</strong><span>Charcoal + white</span></div>
+                <span>Illustrative state</span>
+              </div>
+              <div class="menu-stage">
+                <div class="menu-demo dark" aria-label="Dark menu example">
+                  <div class="menu-item-demo"><span>▤</span><span>Open</span><span class="menu-shortcut">⌘O</span></div>
+                  <div class="menu-item-demo hovered"><span>✎</span><span>Rename</span><span class="menu-shortcut">↵</span></div>
+                  <div class="menu-divider-demo" aria-hidden="true"></div>
+                  <div class="menu-item-demo danger"><span>⌫</span><span>Delete</span><span class="menu-shortcut">⌫</span></div>
+                </div>
+              </div>
+              <div class="menu-token-row">
+                <span>Navigation Background</span>
+                <span>White content</span>
+                <span>Navigation Foreground</span>
+              </div>
+            </article>
+
+            <article class="menu-theme-card">
+              <div class="menu-theme-head">
+                <div><strong>Light mode</strong><span>Light grey + black</span></div>
+                <span>Illustrative state</span>
+              </div>
+              <div class="menu-stage">
+                <div class="menu-demo light" aria-label="Light menu example">
+                  <div class="menu-item-demo"><span>▤</span><span>Open</span><span class="menu-shortcut">⌘O</span></div>
+                  <div class="menu-item-demo hovered"><span>✎</span><span>Rename</span><span class="menu-shortcut">↵</span></div>
+                  <div class="menu-divider-demo" aria-hidden="true"></div>
+                  <div class="menu-item-demo danger"><span>⌫</span><span>Delete</span><span class="menu-shortcut">⌫</span></div>
+                </div>
+              </div>
+              <div class="menu-token-row">
+                <span>Navigation Background</span>
+                <span>Black content</span>
+                <span>Navigation Foreground</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="direction-panel">
+            <strong>Owner direction: dropdowns and context menus share one themed contract</strong>
+            <div class="interaction-families">
+              <div class="interaction-family">
+                <h3>Navigation-derived shell</h3>
+                <p>Menu Background aliases Navigation Background. The outer border aliases Navigation Foreground. These are currently exposed in code as the Side Panel surface and foreground tokens.</p>
+                <code>--menu-surface-bg: var(--side-panel-surface-bg)</code> <code>--menu-border-color: var(--side-panel-foreground-color)</code>
+              </div>
+              <div class="interaction-family">
+                <h3>High-contrast contents</h3>
+                <p>Normal labels, icons, shortcuts, and internal dividers are white in dark mode and black in light mode. Delete alone uses the destructive error color. Hover uses the shared Interactive Surface treatment.</p>
+                <code>--menu-foreground-color</code> <code>--status-error</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-grid" style="margin-top: 14px;">
+            <article class="card">
+              <h3>Common action catalog</h3>
+              <p>A single catalog defines stable action IDs, labels, Material icons, and semantic tones. Initial entries include Open, Rename, Make a Copy, Duplicate, Star/Unstar, Pin/Unpin, Archive/Restore, and Delete.</p>
+              <code>COMMON_MENU_ACTIONS</code>
+            </article>
+            <article class="card">
+              <h3>Menu composition</h3>
+              <p>A view references catalog entries, chooses their order and groups, and supplies runtime state: visible, enabled, current, and the action callback.</p>
+              <code>menuAction('rename', { onSelect })</code>
+            </article>
+            <article class="card">
+              <h3>Shared renderer</h3>
+              <p>The renderer owns the menu surface, placement, row envelope, icons, dividers, hover, focus, submenus, dismissal, and keyboard navigation.</p>
+              <code>MenuSurface</code>
+            </article>
+            <article class="card">
+              <h3>Specialized actions</h3>
+              <p>Office table commands and other domain-specific items may define local descriptors, but they still render through the same surface and item contract.</p>
+              <code>MenuActionDescriptor</code>
+            </article>
+          </div>
+
+          <div class="behavior-note">
+            <strong>Current observation</strong>
+            <p>Capture and Office tile ellipses already open the same programmatic <code>showContextMenu</code> renderer, but they compose actions separately: Capture provides icons while Office's shared file/folder hook currently does not. Other dropdown and Office editor menus still use separate surfaces, tokens, and row implementations.</p>
+          </div>
+
+          <div class="direction-panel">
+            <strong>Owner direction: icons are required</strong>
+            <div class="interaction-families">
+              <div class="interaction-family">
+                <h3>Every actionable row has an icon</h3>
+                <p>The catalog supplies the canonical icon so Rename, Archive, Delete, and other common actions do not drift between views.</p>
+                <code>icon</code>
+              </div>
+              <div class="interaction-family">
+                <h3>Variant pairs stay related</h3>
+                <p>Star/Unstar, Pin/Unpin, and Archive/Restore are state variants of one conceptual action and retain coordinated labels and icons.</p>
+                <code>variants</code>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="color-roles">
+          <div class="section-head">
+            <div>
+              <span class="section-number">05 / Color</span>
+              <h2>Workspace color roles</h2>
+            </div>
+            <p class="section-summary">The Workspace Settings sliders control semantic groups, not one universal CSS class.</p>
+          </div>
+
+          <div class="role-row">
+            <div class="role-swatch">Foreground</div>
+            <div class="role-copy">
+              <h3>Normal workspace chrome</h3>
+              <p>Header text, the workspace name, ordinary header icons and navigation buttons, left-rail view icons that are neither hovered nor selected, and inactive view-tab labels and icons.</p>
+              <code>--workspace-foreground-color</code>
+            </div>
+          </div>
+
+          <div class="role-row">
+            <div class="role-swatch accent">Accent</div>
+            <div class="role-copy">
+              <h3>State that must stand apart</h3>
+              <p>The Connected indicator; hovered header and left-rail icons; the currently selected view icon; and the active view-tab treatment. Hover and selection temporarily override the normal Foreground role.</p>
+              <code>--workspace-accent-color</code>
+            </div>
+          </div>
+        </section>
+
+        <section id="icon-geometry">
+          <div class="section-head">
+            <div>
+              <span class="section-number">06 / Geometry</span>
+              <h2>Upper-right icon pattern</h2>
+            </div>
+            <p class="section-summary">The app header establishes the reference geometry for comparable trailing icon clusters.</p>
+          </div>
+
+          <div class="demo-frame">
+            <div class="demo-label">
+              <span>Reference header</span>
+              <span>Actual scale</span>
+            </div>
+            <div class="header-demo">
+              <span class="fake-workspace">Workspace</span>
+              <div class="header-actions" aria-label="Example header actions">
+                <button class="icon-button" aria-label="Screenshot example">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.4-2h7.2l1.4 2h3v10H4z"/><circle cx="12" cy="13.5" r="3.25"/></svg>
+                </button>
+                <button class="icon-button" aria-label="Layout example">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM9 5v14M15 5v14"/></svg>
+                </button>
+                <button class="icon-button" aria-label="Settings example">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 17h14M8 4v6M16 14v6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="measurements">
+              <div class="measurement"><strong>32px</strong><span>button box</span></div>
+              <div class="measurement"><strong>18px</strong><span>glyph</span></div>
+              <div class="measurement"><strong>4px</strong><span>between boxes</span></div>
+              <div class="measurement"><strong>8px</strong><span>trailing edge inset</span></div>
+            </div>
+          </div>
+
+          <div class="exception">
+            <div class="plus-demo" aria-hidden="true">+</div>
+            <div>
+              <strong>View-tab plus exception</strong>
+              <p>The tab-strip plus retains the 32px button box and 8px radius, but uses a 20px glyph. Because it belongs to the tab sequence, the 8px trailing-window-edge rule does not apply.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-tabs">
+          <div class="section-head">
+            <div>
+              <span class="section-number">07 / Shared chrome</span>
+              <h2>Universal view tabs</h2>
+            </div>
+            <p class="section-summary">The upper tab area will be ported to every view. View-specific data may vary; the rail's geometry and surface contract may not.</p>
+          </div>
+
+          <div class="compare">
+            <article class="tab-example">
+              <div class="tab-example-head">Current Capture ownership</div>
+              <div class="tab-rail capture-rail">
+                <div class="fake-tab active">▣&nbsp; Capture</div>
+                <div class="fake-tab">Document.md</div>
+                <div class="plus-demo" aria-hidden="true">+</div>
+              </div>
+              <div class="tab-token"><span>Rail</span><code>--document-surface-bg</code></div>
+            </article>
+
+            <article class="tab-example">
+              <div class="tab-example-head">Current Files ownership</div>
+              <div class="tab-rail files-rail">
+                <div class="fake-tab active">▤&nbsp; File.tsx</div>
+                <div class="fake-tab">README.md</div>
+                <div class="plus-demo" aria-hidden="true">+</div>
+              </div>
+              <div class="tab-token"><span>Rail</span><code>--panel-chrome-bg</code></div>
+            </article>
+          </div>
+
+          <div class="direction-panel">
+            <strong>Owner direction: tabs are Workspace chrome</strong>
+            <div class="interaction-families">
+              <div class="interaction-family">
+                <h3>Inactive</h3>
+                <p>Tab label and icon use Workspace Foreground. The rail remains on the shared Workspace chrome background.</p>
+                <code>--workspace-foreground-color</code>
+              </div>
+              <div class="interaction-family">
+                <h3>Active</h3>
+                <p>The active tab uses Workspace Accent to distinguish selection. Hover remains the shared Interactive Surface state and must not be confused with selection.</p>
+                <code>--workspace-accent-color</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="open-question" style="margin-top: 14px;">
+            <strong>Open: canonical shared surface</strong>
+            <p>Capture and Files currently consume different background tokens because they still own separate tab headers. The shared component will use one semantic surface. The canonical background has not been chosen yet.</p>
+          </div>
+        </section>
+
+        <section id="screenshots">
+          <div class="section-head">
+            <div>
+              <span class="section-number">08 / Evidence</span>
+              <h2>Screenshot references</h2>
+            </div>
+            <p class="section-summary">Screenshots live inside the article at the point where they provide evidence. They are never detached into an unexplained gallery.</p>
+          </div>
+
+          <figure class="reference-shot">
+            <div class="shot-placeholder">
+              <div>
+                <strong>First inline screenshot goes here</strong>
+                <span>The image will appear at full article width with a precise caption, observation date, view name, and state.</span>
+              </div>
+            </div>
+            <figcaption>
+              <div>
+                <strong>Reference title</strong>
+                Explain what the screenshot proves, what area to inspect, and whether it represents current behavior or desired direction.
+              </div>
+              <span class="caption-state">Awaiting reference</span>
+            </figcaption>
+          </figure>
+
+          <div class="shot-notes">
+            <div class="shot-note"><strong>Place it with the rule</strong>Evidence appears directly below the behavior it supports.</div>
+            <div class="shot-note"><strong>Caption the state</strong>Name the view, mode, theme, date, and relevant interaction state.</div>
+            <div class="shot-note"><strong>Preserve the source</strong>Use the original image. Let the article scale it without overwriting it.</div>
+          </div>
+        </section>
+
+        <section id="open-questions">
+          <div class="section-head">
+            <div>
+              <span class="section-number">09 / Unresolved</span>
+              <h2>Open questions</h2>
+            </div>
+            <p class="section-summary">Unsettled details stay visible rather than being filled in by assumption.</p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card">
+              <h3>Menu catalog migration</h3>
+              <p>Inventory specialized and repeated menu commands, then decide which enter the common catalog first during renderer convergence.</p>
+            </article>
+            <article class="card">
+              <h3>Interactive-envelope values</h3>
+              <p>Confirm or revise the proposed 32px height, 8px inline inset, 8px radius, 6px content gap, and 18px right-edge fade. The left navigation rail is explicitly outside this envelope.</p>
+            </article>
+            <article class="card">
+              <h3>View-tab background</h3>
+              <p>Which semantic surface becomes canonical when the tab header is shared across all views?</p>
+            </article>
+            <article class="card">
+              <h3>Interaction states</h3>
+              <p>The shared hover families are now defined. Focus, disconnected, pressed, and selection-marker treatments still need their complete state rules.</p>
+            </article>
+          </div>
+        </section>
+
+        <footer>
+          Working artifact · CSS/UI Changes capture · Updated 2026-08-30
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="image-dialog" aria-label="Expanded screenshot">
+    <button class="dialog-close" aria-label="Close expanded screenshot">×</button>
+    <img alt="">
+  </dialog>
+
+  <template id="inline-screenshot-template">
+    <figure class="reference-shot">
+      <img src="assets/example.png" alt="Describe the visible Fusion Studio state">
+      <figcaption>
+        <div><strong>Reference title</strong>Explain what this screenshot proves.</div>
+        <span class="caption-state">Current observation</span>
+      </figcaption>
+    </figure>
+  </template>
+
+  <script>
+    const navLinks = [...document.querySelectorAll('.guide-nav nav a')];
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach((link) => {
+        link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`);
+      });
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.2, 0.6] });
+
+    sections.forEach((section) => observer.observe(section));
+
+    const dialog = document.querySelector('#image-dialog');
+    const dialogImage = dialog.querySelector('img');
+    document.querySelectorAll('figure.reference-shot img').forEach((image) => {
+      image.addEventListener('click', () => {
+        dialogImage.src = image.currentSrc || image.src;
+        dialogImage.alt = image.alt;
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  </script>
+</body>
+</html>

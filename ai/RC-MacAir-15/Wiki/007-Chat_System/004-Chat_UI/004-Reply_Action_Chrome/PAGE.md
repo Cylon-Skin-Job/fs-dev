@@ -32,14 +32,13 @@ more_horiz      Overflow menu
 add_notes       Add Note
 sticky_note_2   View Note
 local_activity  Create Ticket
-fork_right      Fork
 ```
 
 Notes remain supported through the bookmark modal's note field. The separate
 Add/View Note action is redundant and should not render.
 
-Fork is not a per-reply chrome action. OpenCode current-head fork is a
-composer-level thread action placed immediately left of the microphone button.
+Conversation transfer does not belong in reply chrome. **Send to Chat** is the
+explicit mechanism for bringing selected material into another chat.
 
 ## Active And Stub Policy
 

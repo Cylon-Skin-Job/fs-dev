@@ -71,6 +71,7 @@ Examples:
 |---|---|---|
 | Send prompt | `prompt` WS message | `chat:*` lifecycle events |
 | Compact thread | `thread:action` with `action: compact` | optional `thread:compacted` fact |
+| Move primary chat to a side tab | `thread:action` with `action: move_chat_to_side` | optional `thread:primary_changed` fact |
 | Add secret | `secrets:*` WS handler | `secret:added` fact |
 
 ## Forbidden Bypasses

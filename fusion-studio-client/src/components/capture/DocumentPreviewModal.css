@@ -31,7 +31,7 @@
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
 }
 
-.rv-document-preview-footer {
+.rv-document-preview-header {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
@@ -39,16 +39,13 @@
   padding: 0 14px;
   color: var(--content-foreground-color, var(--text-secondary));
   background: var(--document-surface-bg, #0d0d0d);
-  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 }
 
-.rv-document-preview-footer .rv-doc-tile-icon {
+.rv-document-preview-header .rv-doc-tile-icon {
   flex: 0 0 auto;
   font-size: 18px;
-}
-
-.rv-document-preview-more {
-  flex: 0 0 auto;
 }
 
 .rv-document-preview-name {
@@ -63,7 +60,7 @@
   white-space: nowrap;
 }
 
-.rv-document-preview-footer-actions {
+.rv-document-preview-header-actions {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
@@ -71,7 +68,7 @@
   margin-left: auto;
 }
 
-.rv-document-preview-footer-action {
+.rv-document-preview-header-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -85,14 +82,14 @@
   cursor: pointer;
 }
 
-.rv-document-preview-footer-action:hover,
-.rv-document-preview-footer-action:focus-visible {
+.rv-document-preview-header-action:hover,
+.rv-document-preview-header-action:focus-visible {
   outline: none;
   background: var(--surface-hover, rgba(255, 255, 255, 0.08));
   color: var(--text-primary, #f4f4f4);
 }
 
-.rv-document-preview-footer-action .material-symbols-outlined {
+.rv-document-preview-header-action .material-symbols-outlined {
   width: 18px;
   height: 18px;
   font-size: 18px;
@@ -107,40 +104,17 @@
   font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
 }
 
+.rv-document-preview-star.is-starred {
+  color: var(--capture-star-color, #d6b85a);
+}
+
 .rv-document-preview-star.is-starred .material-symbols-outlined {
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
 }
 
-.rv-document-preview-expand {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 3;
-  display: inline-flex;
+.rv-document-preview-header-action.rv-document-preview-more {
   flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
   margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--content-foreground-color, var(--text-secondary));
-  cursor: pointer;
-}
-
-.rv-document-preview-expand:hover {
-  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
-  color: var(--text-primary, #f4f4f4);
-}
-
-.rv-document-preview-expand .material-symbols-outlined {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-  line-height: 18px;
 }
 
 .rv-document-preview-content {

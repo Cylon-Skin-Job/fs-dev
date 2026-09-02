@@ -99,20 +99,24 @@ test('[slice 11.4] Office Export exposes direct single-shot Markdown email by po
       await page.keyboard.press('Enter')
     }
 
-    const dropdown = page.locator('.rv-office-export-dropdown')
+    const dropdown = page.getByRole('menu', { name: 'Export document' })
     await expect(dropdown).toBeVisible()
-    const topLevelActions = dropdown.locator(':scope > .rv-office-export-row > button, :scope > button')
+    const topLevelActions = dropdown.locator(':scope > [role="menuitem"]')
     await expect(topLevelActions).toHaveCount(4)
-    expect((await topLevelActions.allTextContents()).map((value) => value.replace(/\s+/g, ' ').trim())).toEqual([
-      'descriptionExport DOCXchevron_right',
-      'picture_as_pdfExport PDFchevron_right',
-      'markdownEmail Markdown',
-      'printPreview PDF',
+    expect(await topLevelActions.evaluateAll((elements) => elements.map((element) => ({
+      id: (element as HTMLElement).dataset.menuItemId,
+      label: element.querySelector('.rv-menu-item-label')?.textContent,
+      icon: element.querySelector('.rv-menu-item-icon')?.textContent,
+    })))).toEqual([
+      { id: 'office-export-docx', label: 'Export DOCX', icon: 'description' },
+      { id: 'office-export-pdf', label: 'Export PDF', icon: 'picture_as_pdf' },
+      { id: 'office-export-markdown-email', label: 'Email Markdown', icon: 'markdown' },
+      { id: 'office-export-preview-pdf', label: 'Preview PDF', icon: 'print' },
     ])
-    const markdown = dropdown.getByRole('button', { name: 'markdown Email Markdown', exact: true })
-    await expect(markdown.locator('.material-symbols-outlined')).toHaveText('markdown')
+    const markdown = dropdown.getByRole('menuitem', { name: 'Email Markdown', exact: true })
+    await expect(markdown.locator('.rv-menu-item-icon')).toHaveText('markdown')
     expect(await markdown.evaluate((element) => (
-      element.parentElement?.classList.contains('rv-office-export-dropdown')
+      element.parentElement?.classList.contains('rv-menu-surface')
     ))).toBe(true)
     if (activation === 'pointer') {
       await markdown.click()
@@ -166,13 +170,15 @@ test('[slice 11.4] every Office PDF DOCX and Print action sends the exact body p
   ]
   for (const action of actions) {
     await trigger.click()
-    const row = page.locator('.rv-office-export-row').filter({ hasText: action.parent })
-    await row.locator(':scope > button').hover()
-    await row.locator('.rv-office-export-submenu').getByRole('button', { name: action.child }).click()
+    await page.getByRole('menu', { name: 'Export document' })
+      .getByRole('menuitem', { name: action.parent, exact: true }).hover()
+    await page.getByRole('menu', { name: action.parent })
+      .getByRole('menuitem', { name: action.child, exact: true }).click()
     await expect(trigger).toBeEnabled()
   }
   await trigger.click()
-  await page.getByRole('button', { name: 'print Preview PDF', exact: true }).click()
+  await page.getByRole('menu', { name: 'Export document' })
+    .getByRole('menuitem', { name: 'Preview PDF', exact: true }).click()
   await expect(trigger).toBeEnabled()
 
   await expect.poll(async () => (await outputCalls(page)).length).toBe(5)

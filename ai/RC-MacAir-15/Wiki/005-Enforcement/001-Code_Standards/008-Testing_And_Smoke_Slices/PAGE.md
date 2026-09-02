@@ -31,6 +31,12 @@ A vertical slice should include:
 - the persistence or state side effect
 - a focused smoke test before the next slice
 
+Slices are user-observable increments, not frontend/backend/database phases. A
+thread feature slice should, for example, begin at the public `thread:action`,
+pass through its handler and owning domain service, persist or update view
+state, fan out the result, render the resulting UI, and prove restart/readback
+before the next behavioral increment begins.
+
 ## Required Coverage By Risk
 
 | Risk | Required check |
@@ -41,6 +47,8 @@ A vertical slice should include:
 | UI chrome move | client build plus stale-symbol sweep |
 | Event bus change | emitted fact plus subscriber behavior |
 | Refactor of routing | old bypass removed and canonical path exercised |
+| Multi-window durable action | requester response plus authoritative fan-out to another client |
+| Cross-store action | injected second-store failure plus deterministic repair on hydration |
 
 ## Forbidden Test Gaps
 
@@ -62,8 +70,7 @@ For each slice, report:
 
 ## Related Pages
 
-- [Code Standards(../000-Code_Standards/PAGE.md)
+- [Code Standards](../000-Code_Standards/PAGE.md)
 - [Architecture Routing](../001-Architecture_Routing/PAGE.md)
 - [WebSocket Protocol Standards](../004-WebSocket_Protocol/PAGE.md)
 - [Harness Adapter Standards](../006-Harness_Adapters/PAGE.md)
-

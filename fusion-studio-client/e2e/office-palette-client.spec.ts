@@ -14,7 +14,8 @@ import {
   useOfficePaletteStore,
 } from '../src/state/officePaletteStore'
 import type { OfficePaletteOperation, WebSocketMessage } from '../src/types'
-import { OFFICE_E2E_MACHINE, resetOfficePlaywrightScenario } from './office/fixture-lifecycle.mjs'
+import { resetOfficePlaywrightScenario } from './office/fixture-lifecycle.mjs'
+import { globalPath, localPath, readJson } from './office/palette-selector-test-helpers'
 
 const LEGACY_KEY = 'rv-office-table-custom-colors'
 const LEGACY_BYTES = '["#123456","#654321"]'
@@ -251,29 +252,6 @@ test.describe('[slice 05S.2] direct selector client protocol', () => {
   })
 })
 
-function fixtureRoot(): string {
-  const root = process.env.FUSION_OFFICE_E2E_FIXTURE_ROOT
-  if (!root) throw new Error('FUSION_OFFICE_E2E_FIXTURE_ROOT is not set')
-  return path.resolve(root)
-}
-
-function localPalettePath(): string {
-  return path.join(
-    fixtureRoot(), 'workspace-a', 'ai', OFFICE_E2E_MACHINE, 'System', 'config', 'colors.json',
-  )
-}
-
-function globalPalettePath(): string {
-  return path.join(
-    fixtureRoot(), 'user-data', 'System_Manager', 'global-configs',
-    'office-custom-color-pallete', 'colors.json',
-  )
-}
-
-function readJson(candidate: string): Record<string, unknown> {
-  return JSON.parse(fs.readFileSync(candidate, 'utf8')) as Record<string, unknown>
-}
-
 async function installLegacyProbe(context: BrowserContext): Promise<void> {
   await context.addInitScript(({ key, bytes }) => {
     const get = Storage.prototype.getItem
@@ -332,7 +310,7 @@ test('[slice 05S.2] picker cutover Add Remove toggle Undo and legacy/config sepa
     socket.on('framereceived', ({ payload }) => capture('received', payload))
   })
   await resetOfficePlaywrightScenario({ scenario: 'palette', variant: 'local-selected', copies: 1, workspaces: 3 })
-  const globalBefore = fs.readFileSync(globalPalettePath())
+  const globalBefore = fs.readFileSync(globalPath())
   await installLegacyProbe(context)
   await page.goto('/')
   await expect(page.locator('.rv-workspace-name')).toHaveText('Office E2E A')
@@ -364,21 +342,31 @@ test('[slice 05S.2] picker cutover Add Remove toggle Undo and legacy/config sepa
   ))?.frame).toMatchObject({
     type: 'office:palette_state', operation: 'set_sync', syncEnabled: true,
   })
-  await expect.poll(() => readJson(localPalettePath()).sync_enabled).toBe(true)
+  await expect.poll(() => readJson(localPath('a')).sync_enabled).toBe(true)
   await expect(popover.locator('.rv-office-color-sync')).toHaveAttribute('aria-label', 'Sync Enabled')
   await expect(popover.locator('.rv-office-color-custom .rv-office-color-swatch')).toHaveCount(2)
-  expect(readJson(localPalettePath())).toEqual({ custom_colors: ['#aa0001'], sync_enabled: true })
-  expect(fs.readFileSync(globalPalettePath())).toEqual(globalBefore)
+  expect(readJson(localPath('a'))).toEqual({ custom_colors: ['#aa0001'], sync_enabled: true })
+  expect(fs.readFileSync(globalPath())).toEqual(globalBefore)
   await popover.locator('.rv-office-color-sync').click()
   await expect(popover.locator('.rv-office-color-sync')).toHaveAttribute('aria-label', 'Sync Disabled')
   await expect(popover.locator('.rv-office-color-custom .rv-office-color-swatch[title="#aa0001"]')).toHaveCount(1)
 
+  const target = table.locator('tbody > tr').nth(1).locator('td, th').first()
+  const colorBeforeAdd = await target.evaluate((cell) => getComputedStyle(cell).backgroundColor)
   await popover.locator('.rv-office-color-add').click()
   await popover.getByRole('textbox', { name: 'Custom color hex' }).fill('#123456')
   await popover.locator('.rv-office-color-commit').click()
-  await expect.poll(() => readJson(localPalettePath()).custom_colors).toEqual(['#aa0001', '#123456'])
+  await expect.poll(() => readJson(localPath('a')).custom_colors).toEqual(['#aa0001', '#123456'])
+  await expect(popover).toBeVisible()
+  await expect(popover.locator('.rv-office-color-custom-editor')).toHaveAttribute('data-open', 'false')
+  const confirmedSwatch = popover.locator(
+    '.rv-office-color-custom .rv-office-color-swatch[title="#123456"]',
+  )
+  await expect(confirmedSwatch).toBeFocused()
+  await expect.poll(() => target.evaluate((cell) => getComputedStyle(cell).backgroundColor))
+    .toBe(colorBeforeAdd)
+  await confirmedSwatch.click()
   await expect(popover).toHaveCount(0)
-  const target = table.locator('tbody > tr').nth(1).locator('td, th').first()
   await expect.poll(() => target.evaluate((cell) => getComputedStyle(cell).backgroundColor)).toBe('rgb(18, 52, 86)')
 
   await openPalette(page)
@@ -388,16 +376,19 @@ test('[slice 05S.2] picker cutover Add Remove toggle Undo and legacy/config sepa
   await expect(page.getByRole('menuitem', { name: 'Remove', exact: true })).toHaveCount(1)
   await page.keyboard.press('Escape')
   await expect(page.getByRole('menuitem', { name: 'Remove', exact: true })).toHaveCount(0)
-  expect(readJson(localPalettePath()).custom_colors).toEqual(['#aa0001', '#123456'])
-  await custom.click({ button: 'right' })
+  expect(readJson(localPath('a')).custom_colors).toEqual(['#aa0001', '#123456'])
+  await openPalette(page)
+  await page.locator(
+    '.rv-office-color-custom .rv-office-color-swatch[title="#123456"]',
+  ).click({ button: 'right' })
   await page.getByRole('menuitem', { name: 'Remove', exact: true }).click()
-  await expect.poll(() => readJson(localPalettePath()).custom_colors).toEqual(['#aa0001'])
+  await expect.poll(() => readJson(localPath('a')).custom_colors).toEqual(['#aa0001'])
   await expect.poll(() => target.evaluate((cell) => getComputedStyle(cell).backgroundColor)).toBe('rgb(18, 52, 86)')
 
   await editor.focus()
-  await page.keyboard.press('Meta+z')
+  await page.keyboard.press('ControlOrMeta+z')
   await expect.poll(() => target.evaluate((cell) => getComputedStyle(cell).backgroundColor)).not.toBe('rgb(18, 52, 86)')
-  expect(readJson(localPalettePath()).custom_colors).toEqual(['#aa0001'])
+  expect(readJson(localPath('a')).custom_colors).toEqual(['#aa0001'])
   const legacy = await page.evaluate(() => {
     const targetWindow = window as typeof window & {
       __paletteLegacyAccesses?: string[]

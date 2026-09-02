@@ -24,10 +24,7 @@ import type {
   DocumentTableColors,
 } from '../../lib/front-matter';
 import type { SaveReason } from '../../state/fileDataStore';
-import {
-  installOfficeInsertContextMenu,
-  installOfficeTableInsertGrid,
-} from './officeInsertMenu';
+import { installOfficeInsertContextMenu } from './officeInsertMenu';
 import { installOfficeTableContextMenu } from './officeTableContextMenu';
 import {
   installOfficeTableGeometry,
@@ -217,10 +214,6 @@ export function useCrepeEditor({
     });
 
     const insertContextMenu = installOfficeInsertContextMenu(editorRoot, crepe);
-    const cleanupTableInsertGrid = installOfficeTableInsertGrid(
-      insertContextMenu.insertTable,
-      insertContextMenu.hide,
-    );
     const colorPopover = installOfficeColorPopover();
     const tableColorsController = installOfficeTableColors(editorRoot, tableColors);
     tableColorsRef.current = tableColorsController;
@@ -363,7 +356,6 @@ export function useCrepeEditor({
 
     return () => {
       insertContextMenu.cleanup();
-      cleanupTableInsertGrid();
       tableConfirmDialog.cleanup();
       cleanupTableContextMenu();
       colorPopover.cleanup();

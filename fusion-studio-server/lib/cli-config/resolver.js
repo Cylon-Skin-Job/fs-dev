@@ -9,9 +9,9 @@
  */
 
 const { CATALOG_BY_ID } = require('./catalog');
-const { loadWorkspaceConfig, loadViewConfig, defaultWorkspaceConfig } = require('./loader');
+const { loadWorkspaceConfig, loadViewConfig, loadOpenCodeModels, defaultWorkspaceConfig } = require('./loader');
 
-const ALLOWED_KEYS = new Set(['enabled', 'name', 'materialIcon', 'accentColor', 'order', 'model', 'thinking', 'pure']);
+const ALLOWED_KEYS = new Set(['enabled', 'name', 'materialIcon', 'accentColor', 'order', 'model', 'variant', 'thinking', 'pure']);
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
 function cloneEntry(entry) {
@@ -56,6 +56,14 @@ function validateOverrideEntry(id, override, label) {
       }
       clean.details = { ...(clean.details || {}), model: val };
       clean.runtime = { ...(clean.runtime || {}), model: val };
+      continue;
+    }
+    if (key === 'variant') {
+      if (typeof val !== 'string' || val.trim() === '') {
+        console.warn(`[cli-config] ${label}: '${id}.variant' must be non-empty string — ignored`);
+        continue;
+      }
+      clean.runtime = { ...(clean.runtime || {}), variant: val };
       continue;
     }
     if ((key === 'thinking' || key === 'pure') && typeof val !== 'boolean') {
@@ -157,7 +165,7 @@ function applyOverride(entry, override) {
   return entry;
 }
 
-function buildResolved(workspaceClean, viewClean) {
+function buildResolved(workspaceClean, viewClean, modelsList) {
   const out = {};
   Object.keys(workspaceClean.harnesses).forEach((id, idx) => {
     const factory = CATALOG_BY_ID[id];
@@ -168,9 +176,34 @@ function buildResolved(workspaceClean, viewClean) {
     entry.order = idx;
     applyOverride(entry, override);
     applyOverride(entry, viewClean[id]);
-    if (entry.enabled !== false) out[id] = entry;
+    if (entry.enabled !== false) {
+      if (id === 'opencode' && modelsList) {
+        entry.models = modelsList;
+        const defaultModel = resolveOpenCodeDefaultModel(modelsList);
+        if (defaultModel) {
+          entry.runtime = { ...(entry.runtime || {}), model: defaultModel };
+        }
+      }
+      out[id] = entry;
+    }
   });
   return out;
+}
+
+/**
+ * Resolve the effective default model from an opencode-models list:
+ * the default model of the list's defaultProvider, falling back to the
+ * first provider's default model when the defaultProvider is absent.
+ */
+function resolveOpenCodeDefaultModel(modelsList) {
+  if (!modelsList || !Array.isArray(modelsList.providers)) return null;
+  const pick = (provider) => provider?.defaultModel || provider?.models?.[0]?.id || null;
+  if (modelsList.defaultProvider) {
+    const provider = modelsList.providers.find((p) => p.id === modelsList.defaultProvider);
+    const model = provider ? pick(provider) : null;
+    if (model) return model;
+  }
+  return pick(modelsList.providers[0]);
 }
 
 /**
@@ -183,13 +216,15 @@ async function resolveCliConfig(projectRoot, viewId = null) {
   const viewRaw      = viewId ? await loadViewConfig(projectRoot, viewId) : {};
   const workspaceClean = normalizeWorkspacePolicy(workspaceRaw, 'workspace cli.json');
   const viewClean      = sanitizeOverrides(viewRaw,      `per-view cli.json (${viewId})`);
-  return buildResolved(workspaceClean, viewClean);
+  const modelsList     = await loadOpenCodeModels(projectRoot);
+  return buildResolved(workspaceClean, viewClean, modelsList);
 }
 
 async function resolveCliPolicy(projectRoot) {
   const workspaceRaw = await loadWorkspaceConfig(projectRoot);
   const policy = normalizeWorkspacePolicy(workspaceRaw, 'workspace cli.json');
-  const config = buildResolved(policy, {});
+  const modelsList = await loadOpenCodeModels(projectRoot);
+  const config = buildResolved(policy, {}, modelsList);
   const enabledIds = Object.keys(config);
   const defaultHarness = config[policy.defaultHarness]
     ? policy.defaultHarness

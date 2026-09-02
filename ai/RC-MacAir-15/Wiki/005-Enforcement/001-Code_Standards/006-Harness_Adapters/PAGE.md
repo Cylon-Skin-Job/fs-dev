@@ -44,7 +44,7 @@ WebSocket product messages, or generic thread services.
 
 ## Canonical Actions
 
-Thread/session actions use product names such as `fork` and `compact`.
+Provider-backed session actions use product names such as `compact`.
 
 Adapters map those names to provider-specific syntax.
 
@@ -52,8 +52,12 @@ Examples:
 
 | Canonical action | OpenCode mapping |
 |---|---|
-| `fork` | `opencode run --session <source> --fork` |
 | `compact` | `opencode run --session <id> --command compact` |
+
+Fusion-owned group actions such as `move_chat_to_side` remain in the thread
+domain service. They must not call a harness adapter because they create no
+provider session, inherit no provider context, and translate to no provider
+syntax.
 
 ## Required Checks
 
@@ -66,10 +70,9 @@ Examples:
 
 ## Related Pages
 
-- [Code Standards(../000-Code_Standards/PAGE.md)
+- [Code Standards](../000-Code_Standards/PAGE.md)
 - [Architecture Routing](../001-Architecture_Routing/PAGE.md)
 - [WebSocket Protocol Standards](../004-WebSocket_Protocol/PAGE.md)
 - [Harness Boundary](../../../007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md)
 - [Canonical Events](../../../007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md)
 - [Chat Thread Actions](../../../007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md)
-

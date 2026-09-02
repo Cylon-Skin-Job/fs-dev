@@ -22,7 +22,7 @@ export default defineConfig({
     ['./e2e/office/run-isolated-electron.mjs', { runRoot: runPaths.root }],
   ],
   retries: 0,
-  testMatch: '**/office*.spec.ts',
+  testMatch: ['**/office*.spec.ts', '**/shared-menu-component.spec.ts'],
   workers: 1,
   use: {
     baseURL: `http://127.0.0.1:${port}`,

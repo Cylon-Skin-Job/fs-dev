@@ -1114,7 +1114,7 @@ test('[slice 07.2] Table Overflow submenu changes one target, saves once, and ha
     await expect(defaultTrigger).toHaveAttribute('aria-label', 'Overflow: current mode Overflow')
     await expect(defaultTrigger.locator('.material-symbols-outlined').first())
       .toHaveText('format_text_overflow')
-    await expect(defaultTrigger.locator('.rv-office-table-context-current'))
+    await expect(defaultTrigger.locator('.rv-menu-item-secondary'))
       .toHaveText('Overflow')
     const defaultChoices = overflowMenu.getByRole('menuitemradio')
     await expect(defaultChoices).toHaveCount(3)
@@ -2006,9 +2006,9 @@ test('[slice 07.3] structure rebuild insertion removal history and reopen preser
   }
   const insertAtHeading = async (heading: string) => {
     await page.getByRole('heading', { name: heading, exact: true }).click({ button: 'right' })
-    const menu = page.locator('.rv-office-insert-context-menu')
+    const menu = page.getByRole('menu', { name: 'Insert content' })
     await expect(menu).toBeVisible()
-    await menu.locator('[data-office-insert="table"]').hover()
+    await menu.locator('[data-menu-item-id="insert-table"]').hover()
     const grid = page.locator('.rv-office-table-grid-popover')
     await expect(grid).toBeVisible()
     await grid.locator('[data-row="2"][data-col="2"]').click()

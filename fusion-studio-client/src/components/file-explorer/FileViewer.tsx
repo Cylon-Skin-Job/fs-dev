@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
 import { useFileStore } from '../../state/fileStore';
 import { usePanelStore } from '../../state/panelStore';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { FileContentRenderer } from './FileContentRenderer';
 import type { EditorTab } from '../../types/file-explorer';
 import { getFileIcon } from '../../lib/file-utils';
@@ -157,31 +156,16 @@ export function FileViewer() {
             <span>Symlink</span>
           </div>
         )}
-        <div className="rv-file-page-actions" aria-label="File actions">
-          <CopyPathButton
-            panel="file-viewer"
-            relativePath={selectedFile.path}
-            title="Copy file path"
-          />
-          <SendToChatButton
-            panel="file-viewer"
-            relativePath={selectedFile.path}
-            title="Send file path to chat"
-          />
-          <button
-            type="button"
-            className="rv-file-page-action rv-file-header-folder-action"
-            aria-label={fileTreeCollapsed ? 'Open file tree' : 'Close file tree'}
-            aria-expanded={!fileTreeCollapsed}
-            title={fileTreeCollapsed ? 'Open file tree' : 'Close file tree'}
-            onClick={() => toggleCollapsed('file-viewer', 'rightCol')}
-          >
-            <span className="material-symbols-outlined">folder</span>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              {fileTreeCollapsed ? 'arrow_left_alt' : 'arrow_right_alt'}
-            </span>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="rv-view-layout-control rv-file-tree-dock-control"
+          aria-label={fileTreeCollapsed ? 'Show file tree' : 'Hide file tree'}
+          aria-expanded={!fileTreeCollapsed}
+          title={fileTreeCollapsed ? 'Show file tree' : 'Hide file tree'}
+          onClick={() => toggleCollapsed('file-viewer', 'rightCol')}
+        >
+          <span className="material-symbols-outlined">dock_to_left</span>
+        </button>
       </div>
 
       <div className={`rv-file-viewer-content${isLoading ? ' loading' : ''}`}>
@@ -191,6 +175,15 @@ export function FileViewer() {
           fileName={selectedFile.name}
         />
       </div>
+
+      <FloatingPathActions
+        panel="file-viewer"
+        relativePath={selectedFile.path}
+        className="rv-file-floating-actions"
+        copyTitle="Copy file path"
+        sendTitle="Send file path to chat"
+        ariaLabel="File actions"
+      />
     </div>
   );
 }

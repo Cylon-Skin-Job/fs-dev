@@ -72,10 +72,9 @@ A new route is allowed only when all are true:
 
 ## Related Pages
 
-- [Code Standards(../000-Code_Standards/PAGE.md)
+- [Code Standards](../000-Code_Standards/PAGE.md)
 - [WebSocket Protocol Standards](../004-WebSocket_Protocol/PAGE.md)
 - [Universal Event Bus Standards](../005-Universal_Event_Bus/PAGE.md)
 - [Harness Adapter Standards](../006-Harness_Adapters/PAGE.md)
 - [Chat Thread Actions](../../../007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md)
 - [Chat WebSocket Protocol](../../../007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md)
-

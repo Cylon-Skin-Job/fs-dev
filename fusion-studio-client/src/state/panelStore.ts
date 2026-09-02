@@ -427,7 +427,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
   // ── Harness connection state ───────────────────────────────────────────────
   connectingHarnessId: null,
   setConnectingHarnessId: (id) => set({ connectingHarnessId: id }),
-  selectHarness: (harnessId) => {
+  selectHarness: (harnessId, modelId) => {
     const s = get();
     set({
       connectingHarnessId: harnessId,
@@ -436,7 +436,11 @@ export const usePanelStore = create<AppState>((set, get) => ({
     });
     const ws = s.ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant', harnessId }));
+      ws.send(JSON.stringify({
+        type: 'thread:open-assistant',
+        harnessId,
+        harnessConfig: modelId ? { model: modelId } : undefined,
+      }));
     }
   },
   createDefaultAssistantThread: () => {

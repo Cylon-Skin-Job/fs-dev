@@ -4,7 +4,7 @@
  *       chat-header dropdown (multi-harness picker, thread jump) transient state.
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
-import type { AppState, TintPath } from '../panelStoreTypes';
+import type { AppState, ComposerModelSelection, TintPath } from '../panelStoreTypes';
 import { nextViewStateMutationId } from '../../lib/viewStateMutationTracker';
 import { OFFICE_PAPER_BRIGHTNESS_DEFAULT } from '../../lib/officePaperBrightness';
 
@@ -100,6 +100,17 @@ export function createViewSlice(set: Set, get: Get) {
     viewStates: {} as Record<string, ViewUIState>,
     cliPickerOpen: {} as Record<string, boolean>,
     threadDropdownOpen: {} as Record<string, boolean>,
+    composerModelConfig: {} as Record<string, ComposerModelSelection>,
+
+    setComposerModelConfig: (panel: string, patch: Partial<ComposerModelSelection>) => set((s) => {
+      const base = s.composerModelConfig[panel] ?? { providerId: null, modelId: null, effort: null };
+      return {
+        composerModelConfig: {
+          ...s.composerModelConfig,
+          [panel]: { ...base, ...patch },
+        },
+      };
+    }),
 
     loadViewState: (view: string) => {
       const ws = get().ws;

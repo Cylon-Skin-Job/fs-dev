@@ -6,8 +6,8 @@
     "rightCol": 220
   },
   "collapsed": {
-    "leftSidebar": true,
-    "leftChat": true,
+    "leftSidebar": false,
+    "leftChat": false,
     "rightCol": false,
     "contentArea": false
   },

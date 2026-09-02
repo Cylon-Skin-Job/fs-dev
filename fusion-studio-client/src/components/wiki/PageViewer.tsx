@@ -10,9 +10,8 @@ import { useCallback, useMemo } from 'react';
 import { markdownToHtml } from '../../lib/transforms';
 import { parseWikiPage, type WikiFrontmatter } from '../../lib/wiki-frontmatter';
 import { findWikiNodeByPath, useWikiStore } from '../../state/wikiStore';
-import { CopyPathButton } from '../CopyPathButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
-import { SendToChatButton } from '../SendToChatButton';
 import { ViewHistoryControls } from '../ViewHistoryControls';
 
 const METADATA_SECTIONS: Array<{ key: string; label: string }> = [
@@ -65,6 +64,7 @@ function WikiMetadataFooter({ frontmatter }: { frontmatter: WikiFrontmatter | nu
 export function PageViewer() {
   const root = useWikiStore((s) => s.root);
   const viewedPath = useWikiStore((s) => s.viewedPath);
+  const viewedPagePath = useWikiStore((s) => s.viewedPagePath);
   const selectedContent = useWikiStore((s) => s.selectedContent);
   const loading = useWikiStore((s) => s.loading);
   const error = useWikiStore((s) => s.error);
@@ -134,6 +134,16 @@ export function PageViewer() {
         <WikiMetadataFooter frontmatter={parsedPage.frontmatter} />
       </div>
 
+      {viewedPagePath ? (
+        <FloatingPathActions
+          panel="wiki-viewer"
+          relativePath={viewedPagePath}
+          copyTitle="Copy article path"
+          sendTitle="Send article path to chat"
+          ariaLabel="Wiki page actions"
+        />
+      ) : null}
+
     </div>
   );
 }
@@ -169,22 +179,6 @@ export function WikiPageNav() {
             symlinkTarget={selectedSymlinkTarget}
             className="rv-file-page-action"
           />
-        ) : null}
-        {viewedPagePath ? (
-          <>
-            <CopyPathButton
-              panel="wiki-viewer"
-              relativePath={viewedPagePath}
-              className="rv-file-page-action"
-              title="Copy article path"
-            />
-            <SendToChatButton
-              panel="wiki-viewer"
-              relativePath={viewedPagePath}
-              className="rv-file-page-action"
-              title="Send article path to chat"
-            />
-          </>
         ) : null}
       </div>
     </div>

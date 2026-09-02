@@ -6,6 +6,10 @@
 
 The **Agent Profiles** view is a capability library and composition surface. It hooks into roles, personas, Skills, workflows, and subagent behavior already available through the configured harness instead of inventing a second execution universe inside Fusion Studio.
 
+The inspectable source form is folder-based. A profile can begin as a folder named for the agent with one primary instruction document plus optional `Skills` and `Sub-agents` folders. The exact primary filename—such as `AGENTS.md` or `Prompt.md`—remains open. This keeps the profile portable and legible outside the GUI.
+
+The view can project that folder as a simple hierarchy: the profile appears at the top, Skills and subagents branch beneath it with indentation and connector lines, and each item can open into a readable or editable detail surface. **New Agent** is the view-specific presentation of the shared New action.
+
 RC referenced OpenCode as the available harness foundation and OpenClaw as supporting role discovery and invocation. The exact product and integration boundary between those names should be verified later; the durable vision is that Fusion surfaces existing harness capabilities coherently.
 
 ## Harness-Backed Roles
@@ -107,6 +111,8 @@ This keeps timing and event policy in the ticket automation system, reusable cap
 ## Open Questions
 
 - What is the exact relationship among OpenCode, OpenClaw, Fusion Skills, profiles, and subagents?
+- Is the profile's primary instruction file standardized as `AGENTS.md`, `Prompt.md`, or selected through its manifest/configuration?
+- Which folder entries are first-class profile resources, and how does the GUI represent user-added resource types?
 - Which ticket metadata field selects a profile, and how is compatibility validated?
 - What precedence applies among ticket metadata, view heuristics, workflow defaults, and explicit user selection?
 - Does an explicitly selected profile replace or layer on top of the workspace default?

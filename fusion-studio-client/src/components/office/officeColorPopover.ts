@@ -1,12 +1,6 @@
 /**
  * @module officeColorPopover
- * @role Reusable click-to-pick color popover for Office table backgrounds.
- *
- *       Sections, top to bottom: None → Google → file-backed Custom.
- *
- *       Every palette/swatch/None click resolves and closes in one click.
- *       Add applies only after the server acknowledges the captured workspace;
- *       Remove changes config only and never changes existing document fills.
+ * @role Render and refresh the specialized Office color palette inside a shared menu tree.
  */
 
 import { showToast } from '../../lib/toast';
@@ -16,12 +10,17 @@ import {
   setOfficePaletteSync,
 } from '../../lib/ws/office-palette-handlers';
 import { useOfficePaletteStore } from '../../state/officePaletteStore';
+import type {
+  MenuDescriptor,
+  MenuExternalChildContext,
+  MenuExternalRegistration,
+} from '../menu';
 import { createOfficeCustomColorEditor } from './officeCustomColorEditor';
 import { OFFICE_GOOGLE_PALETTE } from './officeGooglePalette';
 
 export type ColorPopoverOpenOptions = {
-  clientX: number;
-  clientY: number;
+  anchorElement: HTMLButtonElement;
+  external: MenuExternalChildContext;
   /** `undefined` is an unselected/default state; `null` is explicit None. */
   current?: string | null;
   onPick: (color: string | null) => void;
@@ -35,42 +34,52 @@ export type ColorPopoverController = {
 
 export function installOfficeColorPopover(): ColorPopoverController {
   let popover: HTMLDivElement | null = null;
-  let removeMenu: HTMLDivElement | null = null;
-  let removeInvoker: HTMLButtonElement | null = null;
+  let registration: MenuExternalRegistration | null = null;
   let unsubscribePalette: (() => void) | null = null;
+  let session = 0;
+  let pendingAddColor: string | null = null;
 
-  const close = () => {
+  const showMutationError = (error: unknown) => {
+    showToast(error instanceof Error ? error.message : 'The workspace palette could not be updated.');
+  };
+
+  const destroySurface = (unregister: boolean) => {
     unsubscribePalette?.();
     unsubscribePalette = null;
-    removeMenu?.remove();
-    removeMenu = null;
-    removeInvoker = null;
+    if (unregister) registration?.unregister();
+    registration = null;
     popover?.remove();
     popover = null;
   };
 
-  const position = (clientX: number, clientY: number) => {
+  const close = () => {
+    session += 1;
+    pendingAddColor = null;
+    destroySurface(true);
+  };
+
+  const position = (anchorElement: HTMLElement) => {
     if (!popover) return;
+    const anchor = anchorElement.getBoundingClientRect();
     const rect = popover.getBoundingClientRect();
-    const left = Math.min(clientX, window.innerWidth - rect.width - 8);
-    const top = Math.min(clientY, window.innerHeight - rect.height - 8);
+    const preferredLeft = anchor.right + 4;
+    const left = preferredLeft + rect.width <= window.innerWidth - 8
+      ? preferredLeft
+      : anchor.left - rect.width - 4;
+    const top = Math.min(anchor.top + 12, window.innerHeight - rect.height - 8);
     popover.style.left = `${Math.max(8, left)}px`;
     popover.style.top = `${Math.max(8, top)}px`;
   };
 
-  const open = ({ clientX, clientY, current, onPick }: ColorPopoverOpenOptions) => {
-    close();
-    const normalizedCurrent = typeof current === 'string' ? current.toLowerCase() : current;
-    popover = document.createElement('div');
-    popover.className = 'rv-office-color-popover';
-    popover.addEventListener('contextmenu', (event) => { event.preventDefault(); event.stopPropagation(); });
-
-    const host = popover;
-    const pick = (color: string | null) => { close(); onPick(color); };
+  const render = (options: ColorPopoverOpenOptions, activeSession: number) => {
+    if (session !== activeSession || !options.external.menu.isOpen()) return;
+    destroySurface(true);
+    const normalizedCurrent = typeof options.current === 'string'
+      ? options.current.toLowerCase()
+      : options.current;
     const paletteStore = useOfficePaletteStore.getState();
-    const paletteState = paletteStore.activeWorkspaceId
-      ? paletteStore.byWorkspace[paletteStore.activeWorkspaceId]
-      : undefined;
+    const openedWorkspaceId = paletteStore.activeWorkspaceId;
+    const paletteState = openedWorkspaceId ? paletteStore.byWorkspace[openedWorkspaceId] : undefined;
     const customColors = paletteState?.customColors ?? [];
     const canMutate = Boolean(
       paletteState
@@ -79,42 +88,45 @@ export function installOfficeColorPopover(): ColorPopoverController {
       && !paletteState.isLoading
     );
 
-    const showMutationError = (error: unknown) => {
-      showToast(error instanceof Error ? error.message : 'The workspace palette could not be updated.');
+    const host = document.createElement('div');
+    host.className = 'rv-office-color-popover';
+    host.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+    popover = host;
+
+    const pick = (color: string | null) => {
+      if (session !== activeSession || popover !== host) return;
+      options.onPick(color);
+      registration?.closeTree('action');
     };
 
-    const openRemoveMenu = (
-      hex: string,
-      anchorX: number,
-      anchorY: number,
-      invoker: HTMLButtonElement,
-    ) => {
-      removeMenu?.remove();
-      removeInvoker = invoker;
-      removeMenu = document.createElement('div');
-      removeMenu.className = 'rv-office-color-remove-menu';
-      removeMenu.setAttribute('role', 'menu');
-      const remove = document.createElement('button');
-      remove.type = 'button';
-      remove.textContent = 'Remove';
-      remove.setAttribute('role', 'menuitem');
-      remove.disabled = !canMutate;
-      remove.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        if (remove.disabled) return;
-        remove.disabled = true;
-        void removeOfficePaletteColor(hex).then(() => close(), (error) => {
-          close();
-          showMutationError(error);
-        });
+    const openRemoveMenu = (hex: string, invoker: HTMLButtonElement) => {
+      const descriptors: readonly MenuDescriptor[] = [{
+        kind: 'action',
+        id: `office-custom-color-remove-${hex}`,
+        label: 'Remove',
+        icon: 'delete',
+        tone: 'destructive',
+        disabled: !canMutate,
+        onSelect: async () => {
+          try {
+            await removeOfficePaletteColor(hex);
+          } catch (error) {
+            showMutationError(error);
+            throw error;
+          }
+          if (session === activeSession) close();
+          return { kind: 'close-current' };
+        },
+      }];
+      registration?.openChildMenu({
+        anchorElement: invoker,
+        items: descriptors,
+        ariaLabel: 'Custom color actions',
+        minWidth: 112,
       });
-      removeMenu.appendChild(remove);
-      document.body.appendChild(removeMenu);
-      const rect = removeMenu.getBoundingClientRect();
-      removeMenu.style.left = `${Math.max(8, Math.min(anchorX, window.innerWidth - rect.width - 8))}px`;
-      removeMenu.style.top = `${Math.max(8, Math.min(anchorY, window.innerHeight - rect.height - 8))}px`;
-      remove.focus();
     };
 
     const swatch = (hex: string, custom = false) => {
@@ -124,20 +136,23 @@ export function installOfficeColorPopover(): ColorPopoverController {
       button.style.setProperty('--swatch', hex);
       button.title = hex;
       if (normalizedCurrent === hex) button.dataset.active = 'true';
-      button.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); pick(hex); });
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        pick(hex);
+      });
       if (custom) {
         button.dataset.paletteSource = 'custom';
         button.addEventListener('contextmenu', (event) => {
           event.preventDefault();
           event.stopPropagation();
-          openRemoveMenu(hex, event.clientX, event.clientY, button);
+          openRemoveMenu(hex, button);
         });
         button.addEventListener('keydown', (event) => {
           if (event.key !== 'ContextMenu' && !(event.shiftKey && event.key === 'F10')) return;
           event.preventDefault();
           event.stopPropagation();
-          const rect = button.getBoundingClientRect();
-          openRemoveMenu(hex, rect.left + rect.width / 2, rect.bottom + 4, button);
+          openRemoveMenu(hex, button);
         });
       }
       return button;
@@ -151,25 +166,24 @@ export function installOfficeColorPopover(): ColorPopoverController {
 
     const defaultSection = document.createElement('div');
     defaultSection.className = 'rv-office-color-default-section';
-    host.appendChild(defaultSection);
-
-    // None / No fill — full-width, borderless, hover-revealed.
     const none = document.createElement('button');
     none.type = 'button';
     none.className = 'rv-office-color-none';
     none.innerHTML = '<span class="material-symbols-outlined">format_color_reset</span><span>None</span>';
     none.setAttribute('aria-pressed', String(normalizedCurrent === null));
     if (normalizedCurrent === null) none.dataset.active = 'true';
-    none.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); pick(null); });
+    none.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      pick(null);
+    });
     defaultSection.appendChild(none);
-
-    // Defaults — the Google palette grid.
     const grid = document.createElement('div');
     grid.className = 'rv-office-color-grid';
     OFFICE_GOOGLE_PALETTE.forEach((row) => row.forEach((hex) => grid.appendChild(swatch(hex))));
     defaultSection.appendChild(grid);
+    host.appendChild(defaultSection);
 
-    // Custom — the confirmed workspace-file projection and mutation controls.
     host.appendChild(divider());
     const sync = document.createElement('button');
     sync.type = 'button';
@@ -184,9 +198,8 @@ export function installOfficeColorPopover(): ColorPopoverController {
       event.stopPropagation();
       if (sync.disabled) return;
       sync.disabled = true;
-      void setOfficePaletteSync(!(paletteState?.syncEnabled ?? true)).then(() => undefined, (error) => {
-        close();
-        showMutationError(error);
+      void setOfficePaletteSync(!(paletteState?.syncEnabled ?? true)).catch((error) => {
+        if (session === activeSession) showMutationError(error);
       });
     });
     host.appendChild(sync);
@@ -194,98 +207,101 @@ export function installOfficeColorPopover(): ColorPopoverController {
     const customRow = document.createElement('div');
     customRow.className = 'rv-office-color-row rv-office-color-custom';
     customColors.forEach((hex) => customRow.appendChild(swatch(hex, true)));
-
     const customEditor = createOfficeCustomColorEditor({
       initialColor: normalizedCurrent ?? null,
       enabled: canMutate,
       onCommit: (hex, commit) => {
+        if (pendingAddColor) return;
+        pendingAddColor = hex;
         commit.disabled = true;
-        void addOfficePaletteColor(hex).then(() => pick(hex), (error) => {
-          showMutationError(error);
-          if (popover === host) {
-            // The correlated error may carry a newer server-confirmed projection
-            // (for example, a raced 20th color). Rebuild the still-open picker
-            // from the store while retaining the captured document target.
-            open({ clientX, clientY, current, onPick });
+        void addOfficePaletteColor(hex).then(() => {
+          if (session !== activeSession || !registration?.isActive()) return;
+          const confirmed = useOfficePaletteStore.getState();
+          const state = openedWorkspaceId ? confirmed.byWorkspace[openedWorkspaceId] : undefined;
+          if (pendingAddColor === hex && state?.customColors.includes(hex)) {
+            render(options, activeSession);
           }
+        }, (error) => {
+          if (session !== activeSession || popover !== host) return;
+          pendingAddColor = null;
+          commit.disabled = !canMutate;
+          showMutationError(error);
         });
       },
       onOpen: (hexInput) => {
         window.requestAnimationFrame(() => {
-          position(clientX, clientY);
+          if (session !== activeSession || popover !== host) return;
+          position(options.anchorElement);
           hexInput.focus();
           hexInput.select();
         });
       },
     });
     if (customColors.length < 20) customRow.appendChild(customEditor.add);
-    host.appendChild(customRow);
-    host.appendChild(customEditor.editor);
+    host.append(customRow, customEditor.editor);
 
     document.body.appendChild(host);
-    position(clientX, clientY);
-    const openedWorkspaceId = paletteStore.activeWorkspaceId;
+    position(options.anchorElement);
+    registration = options.external.registerSurface(host, {
+      teardown: () => {
+        if (session !== activeSession) return;
+        session += 1;
+        pendingAddColor = null;
+        destroySurface(false);
+      },
+      reposition: () => position(options.anchorElement),
+    });
+    if (!registration) {
+      if (session === activeSession) session += 1;
+      pendingAddColor = null;
+      destroySurface(false);
+      return;
+    }
+
+    const focusConfirmedColor = pendingAddColor;
+    if (focusConfirmedColor && customColors.includes(focusConfirmedColor)) {
+      pendingAddColor = null;
+      window.requestAnimationFrame(() => {
+        if (session !== activeSession || popover !== host) return;
+        host.querySelector<HTMLButtonElement>(
+          `.rv-office-color-custom .rv-office-color-swatch[title="${CSS.escape(focusConfirmedColor)}"]`,
+        )?.focus({ preventScroll: true });
+      });
+    }
+
     unsubscribePalette = useOfficePaletteStore.subscribe((next) => {
-      if (popover !== host) return;
+      if (session !== activeSession || popover !== host) return;
       if (next.activeWorkspaceId !== openedWorkspaceId) {
         close();
         return;
       }
-      const nextPaletteState = openedWorkspaceId ? next.byWorkspace[openedWorkspaceId] : undefined;
+      const nextState = openedWorkspaceId ? next.byWorkspace[openedWorkspaceId] : undefined;
+      if (pendingAddColor) {
+        if (nextState?.isLoading || nextState?.error?.operation === 'add') return;
+        if (nextState?.customColors.includes(pendingAddColor)) {
+          render(options, activeSession);
+          return;
+        }
+      }
       const renderedProjectionChanged = Boolean(
-        nextPaletteState && (
-          nextPaletteState.syncEnabled !== paletteState?.syncEnabled ||
-          nextPaletteState.availability !== paletteState?.availability ||
-          nextPaletteState.syncStatus !== paletteState?.syncStatus ||
-          nextPaletteState.isLoading !== paletteState?.isLoading ||
-          nextPaletteState.customColors.length !== customColors.length ||
-          nextPaletteState.customColors.some((hex, index) => hex !== customColors[index])
+        nextState && (
+          nextState.syncEnabled !== paletteState?.syncEnabled
+          || nextState.availability !== paletteState?.availability
+          || nextState.syncStatus !== paletteState?.syncStatus
+          || nextState.isLoading !== paletteState?.isLoading
+          || nextState.customColors.length !== customColors.length
+          || nextState.customColors.some((hex, index) => hex !== customColors[index])
         )
       );
-      if (renderedProjectionChanged) {
-        // The popover is imperative DOM, so rebuild it from every authoritative
-        // rendered projection change while keeping the document target captured by open().
-        open({ clientX, clientY, current, onPick });
-      }
+      if (renderedProjectionChanged) render(options, activeSession);
     });
   };
 
-  const onWindowPointerDown = (event: PointerEvent) => {
-    if (removeMenu) {
-      if (removeMenu.contains(event.target as Node)) return;
-      removeMenu.remove();
-      removeMenu = null;
-      removeInvoker = null;
-    }
-    if (popover && !popover.contains(event.target as Node)) close();
-  };
-  const onWindowKeyDown = (event: KeyboardEvent) => {
-    if (event.key !== 'Escape') return;
-    if (removeMenu) {
-      event.preventDefault();
-      event.stopPropagation();
-      removeMenu.remove();
-      removeMenu = null;
-      removeInvoker?.focus();
-      removeInvoker = null;
-      return;
-    }
-    if (popover) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const open = (options: ColorPopoverOpenOptions) => {
     close();
+    const activeSession = session;
+    render(options, activeSession);
   };
-  window.addEventListener('pointerdown', onWindowPointerDown, true);
-  window.addEventListener('keydown', onWindowKeyDown, true);
 
-  return {
-    open,
-    close,
-    cleanup: () => {
-      window.removeEventListener('pointerdown', onWindowPointerDown, true);
-      window.removeEventListener('keydown', onWindowKeyDown, true);
-      close();
-    },
-  };
+  return { open, close, cleanup: close };
 }

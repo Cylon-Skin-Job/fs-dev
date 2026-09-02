@@ -31,6 +31,18 @@ const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manag
 // is kept on runtime keys and outbound messages for wire compatibility.
 const SCOPE = 'project';
 
+function extractSelectionPatch(harnessConfig) {
+  if (!harnessConfig || typeof harnessConfig !== 'object') return null;
+  const patch = {};
+  if (typeof harnessConfig.model === 'string' && harnessConfig.model.trim()) {
+    patch.model = harnessConfig.model.trim();
+  }
+  if (typeof harnessConfig.variant === 'string' && harnessConfig.variant.trim()) {
+    patch.variant = harnessConfig.variant.trim();
+  }
+  return Object.keys(patch).length > 0 ? patch : null;
+}
+
 function serializeAttachmentsForHarness(userInput, attachments) {
   if (!attachments.length) return userInput;
   const lines = attachments.map((attachment) => `- ${attachment.label}: ${attachment.path}`);
@@ -265,6 +277,17 @@ async function acceptPromptThroughRuntime({
     return;
   }
 
+  // Apply per-prompt model/effort selection to the thread before the turn.
+  // Persists into harness_config so cold restarts keep the selection.
+  const selectionPatch = extractSelectionPatch(clientMsg.harnessConfig);
+  if (selectionPatch) {
+    try {
+      await manager.updateHarnessConfig(threadId, selectionPatch);
+    } catch (err) {
+      console.error('[WS] Failed to persist harnessConfig selection:', err?.message || err);
+    }
+  }
+
   const runtimeKey = getRuntimeKey(manager, threadId);
   const wire = await ensureReadyRuntime({
     ws,
@@ -290,6 +313,12 @@ async function acceptPromptThroughRuntime({
   if (!wire._usesDirectCanonicalEvents || !handleCanonicalHarnessEvent) {
     sendRuntimeError(ws, 'Wire does not support direct canonical event delivery. Legacy wire format has been retired.', threadId, false);
     return;
+  }
+
+  // Push the per-prompt model/effort selection live onto the wire so the
+  // current session picks it up without a re-spawn.
+  if (selectionPatch && typeof wire._applyHarnessConfig === 'function') {
+    wire._applyHarnessConfig(selectionPatch);
   }
 
   if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {

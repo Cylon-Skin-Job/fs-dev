@@ -8,7 +8,8 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
-import { showContextMenu } from '../lib/contextMenu';
+import { openMenuTree } from '../components/menu';
+import type { MenuAnchor, MenuDescriptor, MenuHandle } from '../components/menu';
 import {
   isViewPinnedFolder,
   isViewStarred,
@@ -33,81 +34,187 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     panel,
     folder,
   });
-  const closeMenuRef = useRef<(() => void) | null>(null);
+  const menuRef = useRef<MenuHandle | null>(null);
 
   useEffect(() => {
     return () => {
-      closeMenuRef.current?.();
+      menuRef.current?.close('programmatic');
+      menuRef.current = null;
     };
   }, []);
 
+  const focusInvocationTarget = useCallback((target: HTMLElement) => {
+    if (!target.isConnected) return;
+    if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
+    target.focus({ preventScroll: true });
+  }, []);
+
+  const openActionMenu = useCallback((
+    anchor: MenuAnchor,
+    invocationTarget: HTMLElement,
+    ariaLabel: string,
+    items: readonly MenuDescriptor[],
+  ) => {
+    menuRef.current?.close('replaced');
+    let handle: MenuHandle;
+    handle = openMenuTree({
+      anchor,
+      items,
+      ariaLabel,
+      minWidth: 160,
+      restoreInvocationFocus: () => focusInvocationTarget(invocationTarget),
+      focusAfterAction: () => focusInvocationTarget(invocationTarget),
+      onClose: () => {
+        if (menuRef.current === handle) menuRef.current = null;
+      },
+    });
+    menuRef.current = handle;
+  }, [focusInvocationTarget]);
+
   const showFileMenu = useCallback(
-    (file: FileWithContent, x: number, y: number, folderOverride = folder) => {
+    (
+      file: FileWithContent,
+      anchor: MenuAnchor,
+      invocationTarget: HTMLElement,
+      folderOverride = folder,
+    ) => {
       const filePath = file.path || [folderOverride, file.name].filter(Boolean).join('/');
       const isStarred = isViewStarred(panel, panel, filePath);
-      closeMenuRef.current?.();
-      closeMenuRef.current = showContextMenu({
-        x,
-        y,
-        items: [
+      openActionMenu(
+        anchor,
+        invocationTarget,
+        `Actions for ${file.name}`,
+        [
           {
+            kind: 'action',
+            id: 'file-toggle-star',
             label: isStarred ? 'Unstar' : 'Star',
-            action: () => toggleViewStarred(panel, {
-              panel,
-              path: filePath,
-              title: file.name,
-              kind: 'document',
-              folder: folderOverride,
-              extension: file.extension ?? file.name.split('.').pop()?.toLowerCase(),
-            }),
+            icon: 'kid_star',
+            onSelect: () => {
+              toggleViewStarred(panel, {
+                panel,
+                path: filePath,
+                title: file.name,
+                kind: 'document',
+                folder: folderOverride,
+                extension: file.extension ?? file.name.split('.').pop()?.toLowerCase(),
+              });
+              return { kind: 'close-all' };
+            },
           },
-          { label: 'Rename', action: () => renameFile(file, folderOverride) },
           {
-            label: isArchiveEntry(file, folderOverride) ? 'Restore' : 'Archive',
-            action: () => archiveOrRestoreFile(file, folderOverride),
+            kind: 'action',
+            id: 'file-rename',
+            label: 'Rename',
+            icon: 'drive_file_rename',
+            onSelect: () => {
+              renameFile(file, folderOverride);
+              return { kind: 'close-all' };
+            },
           },
-          { label: 'Delete', danger: true, action: () => deleteFile(file, folderOverride) },
+          {
+            kind: 'action',
+            id: 'file-archive-restore',
+            label: isArchiveEntry(file, folderOverride) ? 'Restore' : 'Archive',
+            icon: isArchiveEntry(file, folderOverride) ? 'unarchive' : 'archive',
+            onSelect: () => {
+              archiveOrRestoreFile(file, folderOverride);
+              return { kind: 'close-all' };
+            },
+          },
+          {
+            kind: 'action',
+            id: 'file-delete',
+            label: 'Delete',
+            icon: 'delete',
+            tone: 'destructive',
+            onSelect: () => {
+              deleteFile(file, folderOverride);
+              return { kind: 'close-all' };
+            },
+          },
         ],
-      });
+      );
     },
-    [archiveOrRestoreFile, deleteFile, folder, isArchiveEntry, panel, renameFile]
+    [archiveOrRestoreFile, deleteFile, folder, isArchiveEntry, openActionMenu, panel, renameFile]
   );
 
   const showFolderMenu = useCallback(
-    (folderEntry: Pick<FileNode, 'name' | 'path'>, x: number, y: number, folderOverride = folder) => {
+    (
+      folderEntry: Pick<FileNode, 'name' | 'path'>,
+      anchor: MenuAnchor,
+      invocationTarget: HTMLElement,
+      folderOverride = folder,
+    ) => {
       const entry = { ...folderEntry, type: 'folder' as const };
       const isPinned = isViewPinnedFolder(panel, panel, entry.path);
-      closeMenuRef.current?.();
-      closeMenuRef.current = showContextMenu({
-        x,
-        y,
-        items: [
+      openActionMenu(
+        anchor,
+        invocationTarget,
+        `Actions for ${entry.name}`,
+        [
           {
+            kind: 'action',
+            id: 'folder-toggle-pin',
             label: isPinned ? 'Unpin folder' : 'Pin folder',
-            action: () => toggleViewPinnedFolder(panel, {
-              panel,
-              path: entry.path,
-              title: entry.name,
-              kind: 'folder',
-            }),
+            icon: 'push_pin',
+            onSelect: () => {
+              toggleViewPinnedFolder(panel, {
+                panel,
+                path: entry.path,
+                title: entry.name,
+                kind: 'folder',
+              });
+              return { kind: 'close-all' };
+            },
           },
-          { label: 'Rename', action: () => renameFile(entry, folderOverride) },
           {
-            label: isArchiveEntry(entry, folderOverride) ? 'Restore' : 'Archive',
-            action: () => archiveOrRestoreFile(entry, folderOverride),
+            kind: 'action',
+            id: 'folder-rename',
+            label: 'Rename',
+            icon: 'drive_file_rename',
+            onSelect: () => {
+              renameFile(entry, folderOverride);
+              return { kind: 'close-all' };
+            },
           },
-          { label: 'Delete', danger: true, action: () => deleteFile(entry, folderOverride) },
+          {
+            kind: 'action',
+            id: 'folder-archive-restore',
+            label: isArchiveEntry(entry, folderOverride) ? 'Restore' : 'Archive',
+            icon: isArchiveEntry(entry, folderOverride) ? 'unarchive' : 'archive',
+            onSelect: () => {
+              archiveOrRestoreFile(entry, folderOverride);
+              return { kind: 'close-all' };
+            },
+          },
+          {
+            kind: 'action',
+            id: 'folder-delete',
+            label: 'Delete',
+            icon: 'delete',
+            tone: 'destructive',
+            onSelect: () => {
+              deleteFile(entry, folderOverride);
+              return { kind: 'close-all' };
+            },
+          },
         ],
-      });
+      );
     },
-    [archiveOrRestoreFile, deleteFile, folder, isArchiveEntry, panel, renameFile]
+    [archiveOrRestoreFile, deleteFile, folder, isArchiveEntry, openActionMenu, panel, renameFile]
   );
 
   const getFileContextMenuHandler = useCallback(
     (file: FileWithContent, folderOverride = folder) => (event: ReactMouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      showFileMenu(file, event.clientX, event.clientY, folderOverride);
+      showFileMenu(
+        file,
+        { kind: 'pointer', clientX: event.clientX, clientY: event.clientY },
+        event.currentTarget as HTMLElement,
+        folderOverride,
+      );
     },
     [folder, showFileMenu]
   );
@@ -116,8 +223,12 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     (file: FileWithContent, folderOverride = folder) => (event: ReactMouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      const rect = event.currentTarget.getBoundingClientRect();
-      showFileMenu(file, rect.left, rect.bottom + 4, folderOverride);
+      showFileMenu(
+        file,
+        { kind: 'element', element: event.currentTarget, placement: 'below-start' },
+        event.currentTarget as HTMLElement,
+        folderOverride,
+      );
     },
     [folder, showFileMenu]
   );
@@ -141,7 +252,12 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     (folderEntry: Pick<FileNode, 'name' | 'path'>, folderOverride = folder) => (event: ReactMouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      showFolderMenu(folderEntry, event.clientX, event.clientY, folderOverride);
+      showFolderMenu(
+        folderEntry,
+        { kind: 'pointer', clientX: event.clientX, clientY: event.clientY },
+        event.currentTarget as HTMLElement,
+        folderOverride,
+      );
     },
     [folder, showFolderMenu]
   );
@@ -150,8 +266,12 @@ export function useFileTileMenu({ panel, folder }: UseFileTileMenuOptions) {
     (folderEntry: Pick<FileNode, 'name' | 'path'>, folderOverride = folder) => (event: ReactMouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      const rect = event.currentTarget.getBoundingClientRect();
-      showFolderMenu(folderEntry, rect.left, rect.bottom + 4, folderOverride);
+      showFolderMenu(
+        folderEntry,
+        { kind: 'element', element: event.currentTarget, placement: 'below-start' },
+        event.currentTarget as HTMLElement,
+        folderOverride,
+      );
     },
     [folder, showFolderMenu]
   );

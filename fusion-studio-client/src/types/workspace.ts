@@ -110,8 +110,27 @@ export interface ResolvedCliEntry {
   };
   runtime?: {
     model?: string | null;
+    variant?: string | null;
     thinking?: boolean;
     pure?: boolean;
+  };
+  /**
+   * Per-machine OpenCode model list from `ai/<machine>/System/config/opencode-models.json`.
+   * Present only on the opencode harness entry when the file exists.
+   * Mirrors the opencode model catalog shape.
+   */
+  models?: {
+    defaultProvider: string | null;
+    providers: Array<{
+      id: string | null;
+      label: string | null;
+      defaultModel: string | null;
+      models: Array<{
+        id: string;
+        name: string;
+        variants: string[];
+      }>;
+    }>;
   };
   enabled: boolean;
   comingSoon?: boolean;

@@ -90,32 +90,6 @@
   margin: 0;
 }
 
-.rv-office-new-dropdown {
-  top: calc(100% + 6px);
-  left: 0;
-  width: 100%;
-  min-width: 172px;
-  max-height: none;
-  overflow: visible;
-  background: var(--rv-office-card-fill);
-}
-
-.rv-office-new-menu-item {
-  min-height: 40px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.rv-office-new-menu-item:hover:not([disabled]) {
-  color: var(--accent-dim, var(--chrome-accent));
-}
-
-.rv-office-new-menu-separator {
-  height: 1px;
-  margin: var(--space-xs) var(--space-sm);
-  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-}
-
 .rv-office-create-modal-overlay {
   position: fixed;
   inset: 0;

@@ -163,6 +163,110 @@ describe('OpenCodeHarness', () => {
     expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_stored', 'after cold start']);
   });
 
+  it('passes the per-thread model override to opencode run', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'workspace-default-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('model probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_model_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      'model probe',
+    ]);
+  });
+
+  it('passes the per-thread effort variant to opencode run', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'default-model', variant: 'high' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731', variant: 'max' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('variant probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_variant_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      '--variant', 'max',
+      'variant probe',
+    ]);
+  });
+
+  it('applies live harnessConfig changes to the next prompt', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'default-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: {},
+    });
+
+    session.applyHarnessConfig({ model: 'baseten/deepseek-ai/DeepSeek-V4-Flash-0731', variant: 'high' });
+
+    const eventsPromise = collect(session.sendMessage('live config probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_live_config_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'baseten/deepseek-ai/DeepSeek-V4-Flash-0731',
+      '--variant', 'high',
+      'live config probe',
+    ]);
+  });
+
+  it('omits --variant when the model has no effort selection', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'kimi-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'kimi-model' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('no variant probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_no_variant_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'kimi-model',
+      'no variant probe',
+    ]);
+  });
+
+  it('falls back to the workspace default model without a per-thread override', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: {},
+    });
+
+    const eventsPromise = collect(session.sendMessage('default model probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_default_model_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      'default model probe',
+    ]);
+  });
+
   it('starts a pending fork from the source OpenCode session without making it active', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);

@@ -129,6 +129,24 @@ COMPONENT may:       create DOM, accept config/callbacks, use CSS variables
 COMPONENT must NOT:  controllers, services, state, network
 ```
 
+### Portable components and connected hosts
+
+The `COMPONENT` rule applies to reusable presentation boundaries. A connected
+feature host or controller hook may read established stores and invoke
+established actions, but it must pass explicit data and callbacks into the
+portable component. Do not make a supposedly reusable component discover its
+workspace, view, thread, or network route from app-global state.
+
+For chat composition, keep these identities explicit:
+
+- `viewId` identifies the immutable owning view capsule;
+- `threadGroupId` identifies the visible thread/body of work;
+- `threadId` identifies one independently routed chat session; and
+- `surfaceId` identifies one transient mounted UI instance.
+
+Existing live protocol continues to route by `threadId`. Do not rename that
+field to `sessionId` as part of an otherwise bounded component extraction.
+
 ---
 
 ## Component Portability
@@ -215,6 +233,8 @@ Before writing code, verify the plan against these standards:
 - [ ] Provider or external syntax is contained in the adapter layer
 - [ ] CSS values use variables with fallbacks
 - [ ] Components are portable (no app-state, no services, no network)
+- [ ] Connected hosts pass explicit data/actions into portable components
+- [ ] View, visible-thread, session, and mounted-surface identities are not conflated
 - [ ] No premature abstractions (is there actually a second consumer?)
 - [ ] No scope creep (does this change do more than what was asked?)
 

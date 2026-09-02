@@ -51,5 +51,5 @@ compatibility paths.
 - [Universal Event Bus](003-Universal_Event_Bus/PAGE.md) - Server cross-module pub/sub backbone used by chat lifecycle, persistence, fan-out, and automation.
 - [Chat WebSocket Protocol](004-WebSocket_Protocol/PAGE.md) - WebSocket and canonical event contracts for Fusion Studio chat. Use this page when changing client/server messages, canonical harness events, stream routing, or chat-turn messages.
 - [Legacy Wire Terminology](005-Legacy_Wire_Terminology/PAGE.md) - How to interpret active files that still contain the word wire without falling back to old Kimi protocol paths.
-- [Chat Thread Actions](006-Thread_Actions/PAGE.md) - Canonical path for user-initiated thread/session actions such as fork and compact.
+- [Chat Thread Actions](006-Thread_Actions/PAGE.md) - Canonical path for user-initiated visible-thread and chat-session actions such as Move Chat to Side Chat and compact.
 <!-- children:end -->

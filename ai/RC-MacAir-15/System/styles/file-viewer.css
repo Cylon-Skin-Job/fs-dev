@@ -142,14 +142,6 @@
   color: var(--content-attenuated, var(--text-dim));
 }
 
-.rv-file-viewer-info .rv-file-page-action {
-  color: var(--content-foreground-color, var(--text-dim));
-}
-
-.rv-file-viewer-info .rv-file-page-action:hover {
-  color: var(--text-primary, #e0e0e0);
-}
-
 /* ── Code-content fill ── */
 .rv-file-viewer-content {
   background: var(--document-bg, #161616);

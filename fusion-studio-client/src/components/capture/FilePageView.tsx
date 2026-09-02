@@ -12,6 +12,7 @@ import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { getPanelFileUrl } from '../../lib/panels';
 import { getFileIcon } from '../../lib/file-utils';
 import { useActiveResourceStore } from '../../state/activeResourceStore';
@@ -38,6 +39,8 @@ interface FilePageViewProps {
   onRename?: () => void;
   onDelete?: () => void;
   onToggleStar?: () => void;
+  /** Tabs mode owns the top chrome; suppress the centered file identity. */
+  hideChromeTitle?: boolean;
   onBack: () => void;
 }
 
@@ -69,6 +72,7 @@ export function FilePageView({
   onRename,
   onDelete,
   onToggleStar,
+  hideChromeTitle = false,
   onBack,
 }: FilePageViewProps) {
   const isImage = isImageFile(file.name);
@@ -132,13 +136,15 @@ export function FilePageView({
           </>
         }
         center={
-          isCaptureView ? (
-            <span className="rv-capture-viewer-file-identity">
-              <span className="material-symbols-outlined" aria-hidden="true">{fileIcon}</span>
-              <span className="rv-capture-viewer-title">{file.name}</span>
-            </span>
-          ) : (
-            <span className="rv-capture-viewer-title">{titleLabel}</span>
+          isCaptureView && hideChromeTitle ? null : (
+            isCaptureView ? (
+              <span className="rv-capture-viewer-file-identity">
+                <span className="material-symbols-outlined" aria-hidden="true">{fileIcon}</span>
+                <span className="rv-capture-viewer-title">{file.name}</span>
+              </span>
+            ) : (
+              <span className="rv-capture-viewer-title">{titleLabel}</span>
+            )
           )
         }
         right={
@@ -149,18 +155,22 @@ export function FilePageView({
                 className="rv-file-page-action"
               />
             ) : null}
-            <CopyPathButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-file-page-action"
-              title="Copy file path"
-            />
-            <SendToChatButton
-              panel={panel}
-              relativePath={file.path}
-              className="rv-file-page-action"
-              title="Send file path to chat"
-            />
+            {!isCaptureView ? (
+              <>
+                <CopyPathButton
+                  panel={panel}
+                  relativePath={file.path}
+                  className="rv-file-page-action"
+                  title="Copy file path"
+                />
+                <SendToChatButton
+                  panel={panel}
+                  relativePath={file.path}
+                  className="rv-file-page-action"
+                  title="Send file path to chat"
+                />
+              </>
+            ) : null}
             {onToggleStar ? (
               <button
                 type="button"
@@ -227,6 +237,16 @@ export function FilePageView({
           />
         )}
       </div>
+
+      {isCaptureView ? (
+        <FloatingPathActions
+          panel={panel}
+          relativePath={file.path}
+          copyTitle="Copy file path"
+          sendTitle="Send file path to chat"
+          ariaLabel="Capture document actions"
+        />
+      ) : null}
 
     </div>
   );

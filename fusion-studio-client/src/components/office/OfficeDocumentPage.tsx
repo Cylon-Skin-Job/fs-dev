@@ -71,11 +71,9 @@ export function OfficeDocumentPage({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDirty, setIsDirty] = useState(false);
   const [zoom, setZoom] = useState(1);
-  const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const [marginsMenuOpen, setMarginsMenuOpen] = useState(false);
   const [brightnessMenuOpen, setBrightnessMenuOpen] = useState(false);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const exportMenuRef = useRef<HTMLDivElement>(null);
   const marginsMenuRef = useRef<HTMLDivElement>(null);
   const sessionStartRef = useRef<number | null>(null);
   const checkpointDueRef = useRef(false);
@@ -427,17 +425,6 @@ export function OfficeDocumentPage({
   }, [isDirty]);
 
   useEffect(() => {
-    if (!exportMenuOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (exportMenuRef.current && !exportMenuRef.current.contains(e.target as Node)) {
-        setExportMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [exportMenuOpen]);
-
-  useEffect(() => {
     if (!marginsMenuOpen) return;
     const handler = (e: MouseEvent) => {
       if (marginsMenuRef.current && !marginsMenuRef.current.contains(e.target as Node)) {
@@ -456,9 +443,6 @@ export function OfficeDocumentPage({
         isDirty={isDirty}
         sidePanel={sidePanel}
         onToggleRecentPanel={handleToggleRecentPanel}
-        exportMenuRef={exportMenuRef}
-        exportMenuOpen={exportMenuOpen}
-        setExportMenuOpen={setExportMenuOpen}
         exportingFormat={exportingFormat}
         onBack={() => requestNavigation({ type: 'back' })}
         onExport={handleExport}

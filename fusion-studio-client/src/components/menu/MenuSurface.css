@@ -1,0 +1,70 @@
+.rv-menu-surface {
+  position: fixed;
+  z-index: calc(var(--rv-menu-z-index, var(--z-overlay, 1000)) + var(--rv-menu-level, 0));
+  min-width: var(--rv-menu-min-width, 218px);
+  max-height: calc(100vh - var(--rv-menu-viewport-inset, 16px));
+  overflow-y: auto;
+  padding: var(--rv-menu-padding, 6px);
+  border: var(--rv-menu-border-width, 1px) solid var(--rv-menu-border-color, var(--side-panel-foreground-color, rgba(154, 176, 200, 0.38)));
+  border-radius: var(--rv-menu-radius, 6px);
+  background: var(--rv-menu-surface-bg, var(--side-panel-surface-bg, #1c2a36));
+  box-shadow: var(--rv-menu-shadow, 0 14px 34px rgba(0, 0, 0, 0.34));
+  color: var(--rv-menu-foreground, var(--text-primary, #dce7f1));
+}
+
+.rv-menu-item {
+  display: grid;
+  grid-template-columns: var(--rv-menu-icon-column, 22px) minmax(0, 1fr) auto auto;
+  align-items: center;
+  width: 100%;
+  min-height: var(--rv-menu-item-min-height, 30px);
+  column-gap: var(--rv-menu-item-column-gap, 8px);
+  padding: var(--rv-menu-item-padding-block, 4px) var(--rv-menu-item-padding-inline, 8px);
+  border: var(--rv-menu-item-border-width, 0);
+  border-radius: var(--rv-menu-item-radius, 4px);
+  background: transparent;
+  color: var(--rv-menu-foreground, var(--text-primary, #dce7f1));
+  font: inherit;
+  font-size: var(--rv-menu-font-size, 13px);
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-menu-item:hover:not(:disabled),
+.rv-menu-item:focus-visible {
+  outline: none;
+  background: var(--rv-menu-interactive-bg, var(--interactive-surface-hover, rgba(154, 176, 200, 0.12)));
+}
+
+.rv-menu-item:disabled {
+  opacity: var(--rv-menu-disabled-opacity, 0.42);
+  cursor: default;
+}
+
+.rv-menu-item[data-tone="destructive"] {
+  color: var(--rv-menu-destructive-foreground, var(--status-error, #ff8a8a));
+}
+
+.rv-menu-item-icon,
+.rv-menu-item-chevron,
+.rv-menu-item-check {
+  color: currentColor;
+  font-size: var(--rv-menu-icon-size, 18px);
+}
+
+.rv-menu-item-secondary {
+  color: var(--rv-menu-secondary-foreground, color-mix(in srgb, var(--rv-menu-foreground, var(--text-primary, #dce7f1)) var(--rv-menu-secondary-mix, 72%), transparent));
+  font-size: var(--rv-menu-secondary-font-size, 12px);
+  white-space: nowrap;
+}
+
+.rv-menu-item-chevron,
+.rv-menu-item-check {
+  justify-self: end;
+}
+
+.rv-menu-separator {
+  height: var(--rv-menu-separator-height, 1px);
+  margin: var(--rv-menu-separator-margin-block, 6px) var(--rv-menu-separator-margin-inline, 4px);
+  background: var(--rv-menu-divider-color, color-mix(in srgb, var(--rv-menu-foreground, var(--text-primary, #dce7f1)) var(--rv-menu-divider-mix, 22%), transparent));
+}

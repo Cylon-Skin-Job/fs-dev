@@ -55,6 +55,10 @@
           "description": "Holds stable coordination records and their outcomes."
         }
       ]
+    },
+    {
+      "path": "STYLE_GUIDE.html",
+      "description": "Standalone charcoal-black visual style-guide artifact with first-principles rules, current workspace-chrome direction, and reusable inline screenshot treatment."
     }
   ],
   "documents": [
@@ -145,6 +149,81 @@
           "key": "non-goals",
           "heading": "Non-goals",
           "description": "Explicit exclusions preventing accidental scope expansion."
+        }
+      ]
+    },
+    {
+      "path": "VISION.md",
+      "kind": "long_range_vision",
+      "authority": "owner",
+      "lifecycle": "develop_with_owner_without_granting_implementation_scope",
+      "description": "Long-range owner direction for the component system and top-down Wiki renewal while design and implementation remain in transition.",
+      "read_before": ["INTENT.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "component-direction",
+          "heading": "Component Direction",
+          "description": "Long-range direction for building a coherent component and interaction language step by step."
+        },
+        {
+          "key": "wiki-direction",
+          "heading": "Wiki Direction",
+          "description": "Fresh top-down review of affected Wiki material without inheriting prior judgments as final authority."
+        },
+        {
+          "key": "current-transition",
+          "heading": "Current Transition",
+          "description": "Distinguishes current implementation, in-progress refactoring, and intended outcomes."
+        },
+        {
+          "key": "open-vision",
+          "heading": "Open Vision",
+          "description": "Holds component boundaries and interaction rules that remain to be developed with the owner."
+        }
+      ]
+    },
+    {
+      "path": "WORKSPACE_CHROME_COLOR_GROUPINGS.md",
+      "kind": "wiki_article_prototype",
+      "authority": "owner",
+      "lifecycle": "refine_before_promotion_to_the_living_wiki",
+      "description": "Prototype Wiki article defining the Workspace Foreground and Workspace Accent semantic groups for header and primary-navigation chrome.",
+      "read_before": ["VISION.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "direction",
+          "heading": "Direction",
+          "description": "Defines the two semantic color groups and their shared-control behavior."
+        },
+        {
+          "key": "workspace-foreground-group",
+          "heading": "Workspace Foreground Group",
+          "description": "Lists the ordinary header and navigation elements governed by Workspace Foreground."
+        },
+        {
+          "key": "workspace-accent-group",
+          "heading": "Workspace Accent Group",
+          "description": "Lists the Connected and selected-view states governed by Workspace Accent."
+        },
+        {
+          "key": "upper-right-header-icon-pattern",
+          "heading": "Upper-Right Header Icon Pattern",
+          "description": "Defines the reusable size, spacing, edge-inset, and styling reference established by the upper-right header actions."
+        },
+        {
+          "key": "universal-view-tab-header",
+          "heading": "Universal View-Tab Header",
+          "description": "Records the all-views tab-header direction and the current Capture-versus-Files background divergence."
+        },
+        {
+          "key": "component-contract",
+          "heading": "Component Contract",
+          "description": "Separates semantic token sharing from structural CSS class reuse."
+        },
+        {
+          "key": "prototype-boundary",
+          "heading": "Prototype Boundary",
+          "description": "Identifies interaction states that remain outside the current direction."
         }
       ]
     },
@@ -294,6 +373,226 @@
       ]
     },
     {
+      "path": "SPEC-SHARED-MENU-COMPONENT-EXTRACTION.md",
+      "kind": "implementation_specification",
+      "authority": "owner_scoped_spec",
+      "lifecycle": "review_approve_execute_in_vertical_slices",
+      "description": "Bounded vertical-slice SPEC for extracting the Office-reference menu mechanics into one portable shared component while deferring site-wide adoption and deletion.",
+      "read_before": ["DECISIONS.md", "INTENT.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the owner-directed extraction goal, authority sources, and implementation-status boundary."
+        },
+        {
+          "key": "scope-boundary",
+          "heading": "Scope Boundary",
+          "description": "Separates the Office-only extraction from deferred site-wide adoption and deletion."
+        },
+        {
+          "key": "reference-behavior-and-existing-debt",
+          "heading": "Reference Behavior and Existing Debt",
+          "description": "Identifies the mature Office behavior to preserve and the mixed responsibilities to extract."
+        },
+        {
+          "key": "shared-component-contract",
+          "heading": "Shared Component Contract",
+          "description": "Defines portable descriptors, menu-tree lifecycle, outcomes, keyboard, positioning, focus, and visual ownership."
+        },
+        {
+          "key": "office-ownership-contract",
+          "heading": "Office Ownership Contract",
+          "description": "Keeps Office context, commands, mutation state, and specialized color content outside the shared renderer."
+        },
+        {
+          "key": "vertical-slices",
+          "heading": "Vertical Slices",
+          "description": "Sequences simple Office action-menu cutover, nested table menus, and palette return behavior with slice gates."
+        },
+        {
+          "key": "verification-and-acceptance",
+          "heading": "Verification and Acceptance",
+          "description": "Defines incremental commands, public-route checks, cleanup checks, and terminal acceptance."
+        },
+        {
+          "key": "non-goals-and-deferred-work",
+          "heading": "Non-Goals and Deferred Work",
+          "description": "Prevents site-wide migration, native-control replacement, and unrelated Office or backend changes."
+        },
+        {
+          "key": "implementer-handoff",
+          "heading": "Implementer Handoff",
+          "description": "Defines the evidence and deviation accounting required from the implementation agent."
+        }
+      ]
+    },
+    {
+      "path": "SPEC-OFFICE-FIRST-SHARED-MENU-ADOPTION.md",
+      "kind": "implementation_specification",
+      "authority": "owner_scoped_spec",
+      "lifecycle": "review_approve_execute_in_vertical_slices",
+      "description": "Office-first follow-on SPEC for migrating remaining Office action menus, retiring the bounded legacy showContextMenu caller set, and preserving specialized form popovers.",
+      "read_before": ["SPEC-SHARED-MENU-COMPONENT-EXTRACTION.md", "DECISIONS.md", "INTENT.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the Office-first follow-on goal, accepted shared-menu prerequisite, and implementation-status boundary."
+        },
+        {
+          "key": "current-inventory-and-adoption-boundary",
+          "heading": "Current Inventory and Adoption Boundary",
+          "description": "Separates migrated editor menus, remaining Office action menus, shared legacy callers, and specialized form popovers."
+        },
+        {
+          "key": "shared-adoption-contract",
+          "heading": "Shared Adoption Contract",
+          "description": "Defines React integration, anchoring, focus, dismissal, descriptors, visual ownership, and legacy-renderer retirement."
+        },
+        {
+          "key": "office-action-ownership",
+          "heading": "Office Action Ownership",
+          "description": "Preserves Office New, Export, file/folder, and supporting Capture action composition and domain ownership."
+        },
+        {
+          "key": "vertical-slices",
+          "heading": "Vertical Slices",
+          "description": "Sequences Office New, Export, shared file actions, legacy renderer deletion, and cumulative cleanup."
+        },
+        {
+          "key": "verification-and-acceptance",
+          "heading": "Verification and Acceptance",
+          "description": "Defines incremental builds, public-route suites, behavior checks, stale sweeps, and terminal acceptance."
+        },
+        {
+          "key": "non-goals-and-deferred-work",
+          "heading": "Non-Goals and Deferred Work",
+          "description": "Defers unrelated app menus, specialized popup conversion, domain changes, backend work, and broad dropdown deletion."
+        },
+        {
+          "key": "implementer-handoff",
+          "heading": "Implementer Handoff",
+          "description": "Requires responsibility, behavior, validation, cleanup, supporting-consumer, and deviation evidence per slice."
+        }
+      ]
+    },
+    {
+      "path": "SPEC-WORKSPACE-CHROME-INTERACTION-CONTRACT.md",
+      "kind": "implementation_specification",
+      "authority": "owner_scoped_spec",
+      "lifecycle": "execute_in_vertical_slices_and_report_deviations",
+      "description": "Owner-authorized SPEC for background-derived Workspace interaction states, clarified Foreground and Accent roles, and one shared ViewTabBar proven through Capture and Files.",
+      "read_before": ["WORKSPACE_CHROME_COLOR_GROUPINGS.md", "DECISIONS.md", "VISION.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the owner-authorized package, source precedence, and reusable view-authoring outcome."
+        },
+        {
+          "key": "product-contract",
+          "heading": "Product Contract",
+          "description": "Defines the App Shell boundary and the narrowed Workspace Foreground, Accent, and future remote-machine roles."
+        },
+        {
+          "key": "theme-and-interaction-token-contract",
+          "heading": "Theme and Interaction Token Contract",
+          "description": "Defines local-background state derivation, precedence, focus separation, and surface versus icon-only behavior."
+        },
+        {
+          "key": "shared-viewtabbar-contract",
+          "heading": "Shared ViewTabBar Contract",
+          "description": "Defines reusable tab structure, state, accessibility, styling, consumer inputs, and geometry preservation."
+        },
+        {
+          "key": "current-consumer-migration",
+          "heading": "Current Consumer Migration",
+          "description": "Maps the machine selector, header, rail, Capture, File viewer, and cascade cleanup requirements."
+        },
+        {
+          "key": "implementation-slices",
+          "heading": "Implementation Slices",
+          "description": "Sequences theme and shell state work before shared tab extraction and consumer cutover."
+        },
+        {
+          "key": "verification-and-acceptance",
+          "heading": "Verification and Acceptance",
+          "description": "Defines build, computed-style, live-slider, keyboard, responsive-tab, and terminal acceptance checks."
+        },
+        {
+          "key": "deferred-work",
+          "heading": "Deferred Work",
+          "description": "Defers remote connectivity, other view-building components, menus, geometry decisions, and unrelated interaction cleanup."
+        },
+        {
+          "key": "implementer-handoff",
+          "heading": "Implementer Handoff",
+          "description": "Requires dirty-worktree preservation, source checks, and complete implementation/deviation reporting."
+        }
+      ]
+    },
+    {
+      "path": "SPEC-WORKSPACE-DRAWER-FILE-TREE.md",
+      "kind": "implementation_specification",
+      "authority": "owner_scoped_spec",
+      "lifecycle": "execute_in_vertical_slices_and_report_deviations",
+      "description": "Owner-authorized SPEC for one Workspace-owned compressing drawer and a complete FileTree content component as its only initial provider.",
+      "read_before": ["SPEC-WORKSPACE-CHROME-INTERACTION-CONTRACT.md", "WORKSPACE_CHROME_COLOR_GROUPINGS.md", "DECISIONS.md", "VISION.md"],
+      "sections": [
+        {
+          "key": "purpose-and-authority",
+          "heading": "Purpose and Authority",
+          "description": "Defines the owner-authorized first drawer package and its File Viewer-only outcome."
+        },
+        {
+          "key": "current-architecture-and-required-boundary",
+          "heading": "Current Architecture and Required Boundary",
+          "description": "Maps the current File sidebar overlay and separates drawer-shell, file-domain, viewer, and state ownership."
+        },
+        {
+          "key": "workspacedrawer-component-contract",
+          "heading": "WorkspaceDrawer Component Contract",
+          "description": "Defines the controlled API, compression, availability, toggle/focus, resize, persistence, and sticky-chat behavior."
+        },
+        {
+          "key": "filetree-content-component-contract",
+          "heading": "FileTree Content Component Contract",
+          "description": "Defines the complete file-domain child component, its exclusions, and Workspace navigation states."
+        },
+        {
+          "key": "workspace-theme-contract",
+          "heading": "Workspace Theme Contract",
+          "description": "Defines Workspace surface, Foreground, Accent, local interaction, border, and live/persisted theme ownership."
+        },
+        {
+          "key": "file-viewer-integration",
+          "heading": "File Viewer Integration",
+          "description": "Defines the structural cutover from the absolute File sidebar and the file behavior that must remain unchanged."
+        },
+        {
+          "key": "implementation-slices",
+          "heading": "Implementation Slices",
+          "description": "Sequences the controlled drawer shell before complete FileTree content extraction and cleanup."
+        },
+        {
+          "key": "verification-and-acceptance",
+          "heading": "Verification and Acceptance",
+          "description": "Defines build, compression, state, file behavior, theme, accessibility, sticky-chat, and cleanup checks."
+        },
+        {
+          "key": "deferred-work",
+          "heading": "Deferred Work",
+          "description": "Defers other views, provider registries, Content cards, other drawer migrations, Wiki navigation, and unrelated file work."
+        },
+        {
+          "key": "implementer-handoff",
+          "heading": "Implementer Handoff",
+          "description": "Requires source/diff inspection, concurrent-work preservation, and complete implementation/deviation reporting."
+        }
+      ]
+    },
+    {
       "path": "PROPOSALS.md",
       "kind": "candidate_actions",
       "authority": "proposal",
@@ -331,6 +630,15 @@
           "description": "Candidate cleanup of dead or obsolete styling artifacts."
         }
       ]
+    },
+    {
+      "path": "WIKI_LIST.md",
+      "kind": "wiki_review_list",
+      "authority": "inventory",
+      "lifecycle": "review_top_to_bottom",
+      "description": "Bare names and repository-relative locations of Wiki articles to revisit during the CSS/UI documentation renewal.",
+      "read_before": [],
+      "sections": []
     },
     {
       "path": "WIKI_IMPACT.md",

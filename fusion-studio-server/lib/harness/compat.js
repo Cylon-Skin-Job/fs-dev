@@ -102,6 +102,7 @@ function defaultRuntimeConfigForHarness(harnessId) {
   if (harnessId === 'opencode') {
     return {
       model: null,
+      variant: null,
       thinking: false,
       pure: false,
     };
@@ -265,6 +266,7 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     // Expose ACP sendMessage so server.js can route prompts correctly
     dummyProc._sendMessage = (message, options) => session.sendMessage(message, options);
     dummyProc._stopSession = () => session.stop?.();
+    dummyProc._applyHarnessConfig = (patch) => session.applyHarnessConfig?.(patch);
 
     console.log(`[Compat] ${session.threadId} harness ready, pid: ${realProc.pid}, directCanonical: ${!!dummyProc._usesDirectCanonicalEvents}`);
   }).catch(err => {

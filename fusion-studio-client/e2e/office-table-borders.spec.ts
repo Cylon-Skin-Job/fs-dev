@@ -828,7 +828,7 @@ test('[slice 09.2] Border size menu persists every width with exact no-op canoni
     const defaultTrigger = await openBorderWithPointer(editor, 0)
     await expect(defaultTrigger).toHaveAttribute('aria-label', 'Border size: current width 1px')
     await expect(defaultTrigger.locator('.material-symbols-outlined').first()).toHaveText('border_all')
-    await expect(defaultTrigger.locator('.rv-office-table-context-current')).toHaveText('1px')
+    await expect(defaultTrigger.locator('.rv-menu-item-secondary')).toHaveText('1px')
     await expect(tableMenu.locator(':scope > [role="menuitem"], :scope > [role="menuitemradio"]'))
       .toHaveCount(8)
     await expect(tableMenu.locator(':scope > [role="menuitem"], :scope > [role="menuitemradio"]'))
@@ -1087,7 +1087,7 @@ test('[slice 09.3] Border color uses Default, Google, Custom, and None with exac
   ) => {
     const trigger = await openColorPicker(editor, tableIndex)
     await expect(trigger).toHaveAttribute('aria-label', `Border color: current color ${summary}`)
-    await expect(trigger.locator('.rv-office-table-context-current')).toHaveText(summary)
+    await expect(trigger.locator('.rv-menu-item-secondary')).toHaveText(summary)
     await expect(popover.locator('[data-active="true"]')).toHaveCount(1)
     await expect(popover.locator(activeSelector)).toHaveAttribute('data-active', 'true')
     await page.keyboard.press('Escape')
@@ -1154,7 +1154,7 @@ test('[slice 09.3] Border color uses Default, Google, Custom, and None with exac
       'aria-label',
       'Border color: current color Default',
     )
-    await expect(defaultTrigger.locator('.rv-office-table-context-current')).toHaveText('Default')
+    await expect(defaultTrigger.locator('.rv-menu-item-secondary')).toHaveText('Default')
     await expect(tableMenu.locator(':scope > [role="menuitem"], :scope > [role="menuitemradio"]'))
       .toHaveText([
       'variable_addAdd title row',

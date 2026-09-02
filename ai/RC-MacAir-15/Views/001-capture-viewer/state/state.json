@@ -32,22 +32,12 @@
   "activity": {
     "recents": [
       {
-        "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
-        "panel": "capture-viewer",
-        "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
-        "title": "THREADS_AND_VIEWS.md",
-        "kind": "document",
-        "openedAt": 1787640648143,
-        "folder": "022-Vision_Roadmap",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
         "panel": "capture-viewer",
         "path": "001-Captures/view-onboarding-front-pages.md",
         "title": "view-onboarding-front-pages.md",
         "kind": "document",
-        "openedAt": 1787640358761,
+        "openedAt": 1788347836865,
         "folder": "001-Captures",
         "extension": "md"
       },
@@ -57,9 +47,39 @@
         "path": "001-Captures/wiki-audit-decisions.md",
         "title": "wiki-audit-decisions.md",
         "kind": "document",
-        "openedAt": 1787638888882,
+        "openedAt": 1787875098733,
         "folder": "001-Captures",
         "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/templates-repo-architecture.md",
+        "title": "templates-repo-architecture.md",
+        "kind": "document",
+        "openedAt": 1787875089389,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/TRIGGERS.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/TRIGGERS.md",
+        "title": "TRIGGERS.md",
+        "kind": "document",
+        "openedAt": 1787829675488,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:004-Playground/robin-overlay.html",
+        "panel": "capture-viewer",
+        "path": "004-Playground/robin-overlay.html",
+        "title": "robin-overlay.html",
+        "kind": "document",
+        "openedAt": 1787656739822,
+        "folder": "004-Playground",
+        "extension": "html"
       },
       {
         "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
@@ -67,9 +87,39 @@
         "path": "004-Playground/robin-overlay-v3.html",
         "title": "robin-overlay-v3.html",
         "kind": "document",
-        "openedAt": 1787638339675,
+        "openedAt": 1787652266847,
         "folder": "004-Playground",
         "extension": "html"
+      },
+      {
+        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/workspace-as-distributable.md",
+        "title": "workspace-as-distributable.md",
+        "kind": "document",
+        "openedAt": 1787645738577,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/STYLE_GUIDE.md",
+        "title": "STYLE_GUIDE.md",
+        "kind": "document",
+        "openedAt": 1787644627558,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+        "panel": "capture-viewer",
+        "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+        "title": "THREADS_AND_VIEWS.md",
+        "kind": "document",
+        "openedAt": 1787640648143,
+        "folder": "022-Vision_Roadmap",
+        "extension": "md"
       },
       {
         "id": "capture-viewer:004-Playground/theme-studio.html",
@@ -92,32 +142,12 @@
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/workspace-as-distributable.md",
-        "title": "workspace-as-distributable.md",
-        "kind": "document",
-        "openedAt": 1787635423267,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
         "panel": "capture-viewer",
         "path": "001-Captures/opencode-harness-integration.md",
         "title": "opencode-harness-integration.md",
         "kind": "document",
         "openedAt": 1787635348734,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/TRIGGERS.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/TRIGGERS.md",
-        "title": "TRIGGERS.md",
-        "kind": "document",
-        "openedAt": 1787634589908,
         "folder": "001-Captures",
         "extension": "md"
       },
@@ -532,16 +562,6 @@
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/templates-repo-architecture.md",
-        "title": "templates-repo-architecture.md",
-        "kind": "document",
-        "openedAt": 1783244182469,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
         "panel": "capture-viewer",
         "path": "001-Captures/discovery-gated-ceilings.md",
@@ -597,7 +617,7 @@
         "path": "001-Captures/workspace-as-distributable.md",
         "title": "workspace-as-distributable.md",
         "kind": "document",
-        "savedAt": 1787634377739,
+        "savedAt": 1787645084836,
         "folder": "001-Captures",
         "extension": "md"
       },

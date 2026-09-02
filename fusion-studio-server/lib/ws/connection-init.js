@@ -76,6 +76,7 @@ async function buildWorkspaceInit(getProjectRoot) {
     activeWorkspaceId,
     activeRepoPath: activeWs ? activeWs.repo_path : null,
     workspaceType: activeWs ? activeWs.type : 'code',
+    sourceMachineName: aiPaths.getLocalMachineName(),
     homePath: require('os').homedir(),
     cliConfig,
     themes,

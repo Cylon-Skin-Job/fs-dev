@@ -72,74 +72,6 @@
   text-transform: uppercase;
 }
 
-.rv-office-export-divider {
-  height: 1px;
-  margin: 0 var(--space-md);
-  background: var(--border-subtle, rgba(255, 255, 255, 0.12));
-}
-
-/* Export submenu — pops out to the right on hover */
-.rv-office-export-row {
-  position: relative;
-}
-
-.rv-office-export-submenu {
-  display: none;
-  position: absolute;
-  left: calc(100% - 4px);
-  top: 0;
-  z-index: var(--z-dropdown, 200);
-  min-width: 140px;
-  padding: 0;
-  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
-  border-radius: var(--radius-md, 10px);
-  background: var(--surface-elevated, #202020);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  animation: rv-office-view-enter 0.12s ease-out;
-}
-
-.rv-office-export-row:hover .rv-office-export-submenu {
-  display: block;
-}
-
-.rv-office-export-chevron {
-  margin-left: auto;
-  font-size: 16px;
-  opacity: 0.6;
-}
-
-.rv-office-export-submenu-option {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border: none;
-  background: transparent;
-  color: var(--chrome-accent);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  transition: background-color 0.12s ease;
-  white-space: nowrap;
-}
-
-.rv-office-export-submenu-option:hover:not(:disabled) {
-  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
-  color: var(--accent-dim);
-}
-
-.rv-office-export-submenu-option:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.rv-office-export-submenu-option .material-symbols-outlined {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
 /* Margins dropdown */
 .rv-office-margins-menu {
   position: relative;
@@ -638,7 +570,7 @@ body.rv-office-col-resizing {
 /* ── Table background color picker ────────────────────────────────────── */
 .rv-office-color-popover {
   position: fixed;
-  z-index: 10001;
+  z-index: calc(var(--rv-menu-z-index, var(--z-overlay)) + 1);
   width: 236px;
   padding: 8px;
   border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
@@ -767,36 +699,6 @@ body.rv-office-col-resizing {
   display: grid;
   grid-template-columns: repeat(10, 18px);
   grid-auto-rows: 18px;
-}
-
-.rv-office-color-remove-menu {
-  position: fixed;
-  z-index: 10002;
-  min-width: 96px;
-  padding: 4px;
-  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.28));
-  border-radius: 6px;
-  background: var(--bg-surface, #1e1e1e);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
-}
-
-.rv-office-color-remove-menu button {
-  width: 100%;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--text-primary, #dce7f1);
-  font: inherit;
-  font-size: 12px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.rv-office-color-remove-menu button:hover,
-.rv-office-color-remove-menu button:focus-visible {
-  outline: none;
-  background: rgba(154, 176, 200, 0.14);
 }
 
 .rv-office-color-add {
@@ -982,112 +884,6 @@ body.rv-office-col-resizing {
   font-size: 12px;
   line-height: 1.2;
   text-align: center;
-}
-
-.rv-office-insert-context-menu,
-.rv-office-table-context-menu {
-  position: fixed;
-  z-index: 10000;
-  min-width: 218px;
-  max-height: calc(100vh - 16px);
-  overflow-y: auto;
-  padding: 6px;
-  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
-  border-radius: 6px;
-  background: var(--rv-office-content-fill, #1c2a36);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
-}
-
-.rv-office-insert-context-menu {
-  min-width: 184px;
-}
-
-.rv-office-insert-context-item,
-.rv-office-table-context-item {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
-  align-items: center;
-  width: 100%;
-  min-height: 30px;
-  column-gap: 8px;
-  padding: 4px 8px;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--text-secondary, #9ab0c8);
-  font: inherit;
-  font-size: 13px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.rv-office-table-context-submenu {
-  z-index: 10001;
-}
-
-.rv-office-table-context-nested-submenu {
-  z-index: 10002;
-}
-
-.rv-office-table-context-submenu-trigger {
-  grid-template-columns: 22px minmax(0, 1fr) 18px;
-}
-
-.rv-office-table-context-overflow-trigger {
-  grid-template-columns: 22px minmax(0, 1fr) auto 18px;
-}
-
-.rv-office-table-context-alignment {
-  grid-template-columns: 22px minmax(0, 1fr) 18px;
-}
-
-.rv-office-table-context-radio-check {
-  justify-self: end;
-}
-
-.rv-office-table-context-current {
-  color: var(--text-muted, #7890a8);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.rv-office-table-context-chevron {
-  justify-self: end;
-}
-
-.rv-office-table-context-destructive {
-  color: var(--error, #ff8a8a);
-}
-
-.rv-office-insert-context-item:hover,
-.rv-office-table-context-item:hover,
-.rv-office-table-context-item:focus-visible {
-  outline: none;
-  background: rgba(154, 176, 200, 0.12);
-  color: var(--text-primary, #dce7f1);
-}
-
-.rv-office-table-context-item:disabled {
-  opacity: 0.42;
-  cursor: default;
-}
-
-.rv-office-table-context-item:disabled:hover {
-  background: transparent;
-  color: var(--text-secondary, #9ab0c8);
-}
-
-.rv-office-insert-context-item .material-symbols-outlined,
-.rv-office-table-context-item .material-symbols-outlined {
-  font-size: 18px;
-  color: currentColor;
-}
-
-.rv-office-insert-context-divider,
-.rv-office-table-context-divider {
-  height: 1px;
-  margin: 6px 4px;
-  background: var(--neutral-chrome-border, rgba(154, 176, 200, 0.28));
 }
 
 .rv-office-table-confirm-overlay {
@@ -1377,13 +1173,11 @@ body.rv-office-col-resizing {
    Send dropdown menu
    ============================================ */
 
-.rv-office-send-menu,
-.rv-office-export-menu {
+.rv-office-send-menu {
   position: relative;
 }
 
-.rv-office-send-dropdown,
-.rv-office-export-dropdown {
+.rv-office-send-dropdown {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
@@ -1397,8 +1191,7 @@ body.rv-office-col-resizing {
   animation: rv-office-view-enter 0.12s ease-out;
 }
 
-.rv-office-send-option,
-.rv-office-export-option {
+.rv-office-send-option {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
@@ -1415,20 +1208,17 @@ body.rv-office-col-resizing {
   white-space: nowrap;
 }
 
-.rv-office-send-option:hover:not(:disabled),
-.rv-office-export-option:hover:not(:disabled) {
+.rv-office-send-option:hover:not(:disabled) {
   background: var(--surface-hover, rgba(255, 255, 255, 0.06));
   color: var(--accent-dim);
 }
 
-.rv-office-send-option:disabled,
-.rv-office-export-option:disabled {
+.rv-office-send-option:disabled {
   opacity: 0.4;
   cursor: default;
 }
 
-.rv-office-send-option .material-symbols-outlined,
-.rv-office-export-option .material-symbols-outlined {
+.rv-office-send-option .material-symbols-outlined {
   font-size: 18px;
   flex-shrink: 0;
 }

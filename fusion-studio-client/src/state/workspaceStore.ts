@@ -17,6 +17,7 @@ interface WorkspaceStoreState {
   workspaces: Workspace[];
   activeWorkspaceId: string | null;
   workspaceType: 'code' | 'app';
+  sourceMachineName: string;
   hasReceivedInit: boolean;
   homePath: string;
 
@@ -37,6 +38,7 @@ interface WorkspaceStoreState {
   setWorkspaces: (workspaces: Workspace[]) => void;
   setActiveWorkspaceId: (id: string | null) => void;
   setWorkspaceType: (type: 'code' | 'app') => void;
+  setSourceMachineName: (name: string) => void;
   setHomePath: (p: string) => void;
   beginInit: () => void;
   markInit: () => void;
@@ -101,6 +103,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   workspaces: [],
   activeWorkspaceId: null,
   workspaceType: 'code',
+  sourceMachineName: 'local-machine',
   hasReceivedInit: false,
   homePath: '/',
   isRibbonOpen: false,
@@ -118,6 +121,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   setWorkspaces: (workspaces) => set({ workspaces }),
   setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
   setWorkspaceType: (type) => set({ workspaceType: type }),
+  setSourceMachineName: (name) => set({ sourceMachineName: name || 'local-machine' }),
   setHomePath: (p) => set({ homePath: p }),
   beginInit: () => set({ hasReceivedInit: false }),
   markInit: () => {

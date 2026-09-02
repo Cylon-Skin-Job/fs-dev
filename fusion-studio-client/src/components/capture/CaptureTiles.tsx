@@ -20,6 +20,14 @@ import { FilePageView } from './FilePageView';
 import { DocumentPreviewModal } from './DocumentPreviewModal';
 import { CaptureDocumentMenuButton } from './CaptureDocumentMenuButton';
 import { DocViewerHeader } from './DocViewerHeader';
+import { CaptureTabStrip } from './CaptureTabStrip';
+import {
+  activateTab,
+  backOutOfDocTabs,
+  closeTab,
+  docOpenedInTabs,
+  isTabsActive,
+} from './captureTabsController';
 import { useFileDataStore } from '../../state/fileDataStore';
 import { usePanelStore } from '../../state/panelStore';
 import { useCaptureViewerSearch } from './useCaptureViewerSearch';
@@ -52,7 +60,21 @@ export function CaptureTiles() {
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState('');
-  const [isFullPageSelected, setIsFullPageSelected] = useState(false);
+  const isFullPageSelected = usePanelStore(
+    (s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerFullPage ?? false
+  );
+  const setIsFullPageSelected = (next: boolean) => {
+    usePanelStore.getState().setViewState(DOC_VIEWER_PANEL, { docViewerFullPage: next });
+  };
+  const docTabs = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerTabs);
+  const activeTabId = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerActiveTabId ?? null);
+  const isTabsMode = isTabsActive(docTabs);
+  const capturePanelIcon = usePanelStore((s) =>
+    s.panelConfigs.find((c) => c.id === DOC_VIEWER_PANEL)?.icon ?? 'note_stack'
+  );
+  const gridScrollNow = () => scrollRef.current?.scrollTop ?? 0;
+  const handleTabSelect = (id: string) => activateTab(id, { gridScroll: gridScrollNow() });
+  const handleTabClose = (id: string) => closeTab(id, { gridScroll: gridScrollNow() });
   const rootNodes = useFileDataStore((s) => s.trees[`${DOC_VIEWER_PANEL}:`]);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
   const requestTree = useFileDataStore((s) => s.requestTree);
@@ -134,6 +156,15 @@ export function CaptureTiles() {
     selectFile(folder, file);
   };
 
+  const openDocFullScreen = (folder: string, file: FileWithContent) => {
+    selectFile(folder, file);
+    if (isTabsMode) {
+      docOpenedInTabs({ folder, path: file.path, name: file.name });
+      return;
+    }
+    setIsFullPageSelected(true);
+  };
+
   const openFileFullScreen = (
     event: React.MouseEvent,
     folder: string,
@@ -141,8 +172,7 @@ export function CaptureTiles() {
   ) => {
     event.preventDefault();
     event.stopPropagation();
-    selectFile(folder, file);
-    setIsFullPageSelected(true);
+    openDocFullScreen(folder, file);
   };
 
   const handleFileSelect = (folder: string) => (file: FileWithContent) => {
@@ -235,7 +265,12 @@ export function CaptureTiles() {
         onRename={() => renameFile(selected.file, selected.folder)}
         onDelete={() => deleteFile(selected.file, selected.folder)}
         onToggleStar={getFileStarClickHandler(selected.file, selected.folder)}
+        hideChromeTitle={isTabsMode}
         onBack={() => {
+          if (isTabsMode) {
+            backOutOfDocTabs({ gridScroll: gridScrollNow() });
+            return;
+          }
           setIsFullPageSelected(false);
           clearSelection();
         }}
@@ -254,6 +289,17 @@ export function CaptureTiles() {
         onSearchOpenChange={handleSearchOpenChange}
         onSearchQueryChange={handleSearchQueryChange}
         onSearchSubmit={handleSearchSubmit}
+        tabStrip={
+          isTabsMode && docTabs ? (
+            <CaptureTabStrip
+              tabs={docTabs}
+              activeId={activeTabId}
+              captureIcon={capturePanelIcon}
+              onSelect={handleTabSelect}
+              onClose={handleTabClose}
+            />
+          ) : undefined
+        }
       />
       <div
         ref={scrollRef}
@@ -454,7 +500,7 @@ export function CaptureTiles() {
             setIsFullPageSelected(false);
             clearSelection();
           }}
-          onOpenFullScreen={() => setIsFullPageSelected(true)}
+          onOpenFullScreen={() => openDocFullScreen(selected.folder, selected.file)}
           onRename={() => renameFile(selected.file, selected.folder)}
           onArchive={archiveSelectedFile}
           onDelete={() => deleteFile(selected.file, selected.folder)}

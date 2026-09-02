@@ -8,6 +8,8 @@ Settings is not intended to grow into a monolithic control panel for every possi
 
 The user should be able to install an advanced capability without losing visibility into what it adds or control over how it connects to the rest of the system.
 
+The intended Plugins view borrows the legibility of a browser extension manager: a small sidebar and a centered grid of compact cards, roughly two across, with an icon, name, description, enable switch, and lightweight metadata. **New Plugin** or **Add Plugin** can be the view-specific presentation of the shared New action; the final wording remains open.
+
 ## Core Workspace Appearance
 
 Core Fusion supports substantial but approachable appearance changes on a per-workspace basis through:
@@ -33,10 +35,13 @@ The plugin extends the same workspace appearance system rather than creating an 
 Plugins can also enable operational systems. Examples named by RC include:
 
 - **Inbox Alerts**;
-- **Heartbeats**; and
+- **Heartbeats**;
+- **Auto-Rename Chat Threads**; and
 - **Wiki Maintainer**.
 
 Wiki Maintainer demonstrates composition: one plugin may install or configure ticket schedulers, Agent Profiles, trigger-created tickets, durable state, templates, and event hooks as a coherent capability.
+
+Auto-Rename Chat Threads keeps naming policy outside the core conversation component. It can reconnect the existing LLM-assisted naming capability and add deterministic rules for tickets, attachments, attachment-only requests, and filename-plus-summary prompts. The plugin owns whether and when automatic renaming runs; explicit titles and source-provided identity remain available without it.
 
 ## Personal Context and Wiki Variants
 
@@ -71,7 +76,15 @@ A plugin is fundamentally a folder of inspectable resources. It may contain:
 - state conventions; and
 - other resources required by the capability.
 
+A bundle may also contribute a custom view using one of the supported view profiles. This is the bridge between plugin installation and front-end composability: installing a folder can add behavior, configuration, and a content surface without making every extension part of Fusion's core navigation code.
+
 The exact required manifest and directory contract remain open. The folder model should preserve portability and inspectability while allowing the system to validate what the plugin contains and intends to do.
+
+The same principle applies to protected System configuration. View definitions,
+component assemblies, templates, and related customization can be represented
+as versioned declarative files under System while referring to content elsewhere
+in the workspace. Stable component/type identifiers make the declaration
+portable without embedding the component implementation into every view.
 
 ## Universal Event Bus Hooks
 
@@ -102,6 +115,8 @@ The System Manager workspace contains:
 - a fully developed System Wiki; and
 - a Plugins folder containing the other available plugin bundles and their configuration declarations.
 
+The catalog in that registered repository is the approved, low-friction library presented when a user browses available plugins. Users may also install a bundle from another source, but doing so is an explicit untrusted-source path that relies on inspection, validation, testing, permission review, and consent before activation.
+
 This gives Fusion a known, registered workspace from which it can discover plugin offerings and system documentation while preserving the rule that arbitrary folders are not executable merely because they exist.
 
 ## Local Viewer and Configuration Projection
@@ -109,6 +124,21 @@ This gives Fusion a known, registered workspace from which it can discover plugi
 Fusion's local Plugins viewer is intentionally thin. It points to the relevant configuration folder in the registered System Manager workspace and uses those declarations to construct plugin controls such as UI toggles. The viewer does not become a second independent plugin catalog.
 
 Configuration is a readable and writable projection of plugin settings, but the database registry remains authoritative for activation and permission state. When a user changes a toggle, Fusion persists the state through the registry and writes the resulting state to configuration.
+
+Purpose-built GUI editors and direct user access to the JSON are two editing
+surfaces for the same canonical schema. Both save through Fusion's validation
+and privileged configuration service, report invalid declarations without
+activating them, and preserve the last-known-good effective configuration.
+OpenCode and later harnesses may read the effective configuration and guide the
+user, but cannot call that privileged write path or mutate System through a
+generic filesystem tool.
+
+Portable configuration and local authority are separate. Export or clone may
+carry declarative defaults, requested capabilities, templates, and stable
+component references. It does not carry secret values, recorded consent,
+granted permissions, active sessions, thread history, or ordinary view/runtime
+state. A cloned view receives a new immutable instance ID, and requested
+privileges require fresh consent before activation.
 
 Reconciliation does not force every mismatch to disabled. Instead, the database's recorded state wins. Most importantly, a permission declared as granted in configuration but not granted in the database is unauthorized; the server overwrites the configuration to remove that grant. Configuration therefore cannot become a second path for granting consent.
 
@@ -126,6 +156,7 @@ The installation experience therefore has two responsibilities:
 - Theme Customization composes workspace color state, extended controls, and contextual menus.
 - Inbox Alerts composes inbox classifications, notification presentation, and UEB subscriptions.
 - Heartbeats composes thread controls, monitored variables, opt-in event filtering, actions, and sleep/wake state.
+- Auto-Rename Chat Threads composes thread events, attachment metadata, configurable naming rules, and optional LLM-assisted titles.
 - Wiki Maintainer composes schedules, tickets, Agent Profiles, triggers, validation workflows, state, and event history.
 
 These examples share primitives but remain independently installable capabilities.
@@ -133,6 +164,8 @@ These examples share primitives but remain independently installable capabilitie
 ## Open Questions
 
 - Is the navigation surface permanently named Settings Manager, Plugins, or a combination such as Settings & Plugins?
+- Is the primary creation action labeled New Plugin, Add Plugin, or changed according to whether the user is authoring or installing?
+- Which card metadata best communicates source, trust, permissions, version, and update state without turning the grid into a technical dashboard?
 - Which settings and capabilities must remain core rather than optional?
 - What manifest declares a plugin's resources, hooks, permissions, defaults, UI extensions, and dependencies?
 - Are plugins installed globally, per workspace, or with both scopes?
@@ -151,5 +184,8 @@ These examples share primitives but remain independently installable capabilitie
 - Can the user review, edit, exclude, expire, or delete individual context records and derived semantic entries?
 - How are “record” permission and “surface” permission represented separately and changed over time?
 - What distinguishes Context Manager from a possible User Profile Wiki in purpose, data, and presentation?
-- Can users edit installed plugin folders directly, fork them per workspace, or export customized bundles?
+- What import/export package and compatibility metadata should carry portable
+  configuration and component dependencies between workspaces?
 - How are intelligent defaults explained, and can installation offer a simple versus advanced configuration path?
+- Which automatic naming rules run locally and deterministically, and which may send thread context to a configured LLM?
+- Does automatic naming occur only at creation, after the first accepted message, or whenever stronger identifying context appears?

@@ -1,0 +1,87 @@
+{
+  "defaultProvider": "fireworks",
+  "providers": [
+    {
+      "id": "fireworks",
+      "label": "Fireworks AI",
+      "defaultModel": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "models": [
+        {
+          "id": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+          "name": "DeepSeek V4 Flash 0731",
+          "variants": ["low", "high", "max"]
+        }
+      ]
+    },
+    {
+      "id": "kimi-for-coding",
+      "label": "Kimi Code Plan",
+      "defaultModel": "kimi-for-coding/k3",
+      "models": [
+        {
+          "id": "kimi-for-coding/k3",
+          "name": "Kimi K3",
+          "variants": ["low", "high", "max"]
+        },
+        {
+          "id": "kimi-for-coding/k3-256k",
+          "name": "Kimi K3 256K",
+          "variants": ["low", "high", "max"]
+        }
+      ]
+    },
+    {
+      "id": "baseten",
+      "label": "Baseten",
+      "defaultModel": "baseten/zai-org/GLM-5.3-Flash",
+      "models": [
+        {
+          "id": "baseten/zai-org/GLM-5.3-Flash",
+          "name": "GLM 5.3 Flash",
+          "variants": ["low", "high", "max"]
+        }
+      ]
+    },
+    {
+      "id": "cerebras",
+      "label": "Cerebras",
+      "defaultModel": "cerebras/gpt-oss-120b",
+      "models": [
+        {
+          "id": "cerebras/gpt-oss-120b",
+          "name": "GPT OSS 120B",
+          "variants": ["low", "medium", "high"]
+        }
+      ]
+    },
+    {
+      "id": "zai-coding-plan",
+      "label": "Z.ai Code Plan",
+      "defaultModel": "zai-coding-plan/glm-5.3-flash",
+      "models": [
+        {
+          "id": "zai-coding-plan/glm-5.3",
+          "name": "GLM 5.3",
+          "variants": ["low", "high", "max"]
+        },
+        {
+          "id": "zai-coding-plan/glm-5.3-flash",
+          "name": "GLM 5.3 Flash",
+          "variants": ["low", "high", "max"]
+        }
+      ]
+    },
+    {
+      "id": "novita",
+      "label": "Novita",
+      "defaultModel": "novita/inclusionai/ling-3.0-flash",
+      "models": [
+        {
+          "id": "novita/inclusionai/ling-3.0-flash",
+          "name": "Ling 3.0 Flash",
+          "variants": ["low", "medium", "high"]
+        }
+      ]
+    }
+  ]
+}

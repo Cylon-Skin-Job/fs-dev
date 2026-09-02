@@ -34,6 +34,7 @@ protocol.
 | `thread:open` | Passive browse/hydrate an existing thread |
 | `thread:open-assistant` | Activate/resume assistant thread or create new one |
 | `thread:warm` | Warm a cold runtime based on send intent |
+| `thread:action` | Perform a canonical visible-thread or chat-session action |
 | `prompt` | Send user input and optional attachment metadata to a specific thread |
 | `turn:stop` | Interrupt an in-flight turn |
 | `chat-turn:diagnostic:get` | Explicitly retrieve one bounded redacted report for an exact thread/turn/id |
@@ -66,6 +67,8 @@ state until send.
 |---|---|
 | `thread:created` | New thread metadata was created |
 | `thread:opened` | Thread history and optional live turn are hydrated |
+| `thread:action:completed` | Canonical action completed with authoritative state |
+| `thread:action:error` | Canonical action failed or conflicted without ambiguous client state |
 | `wire_ready` | Runtime is ready for prompt delivery |
 | `message:sent` | Server accepted/persisted user prompt |
 | `exchange_metadata` | Just-completed exchange metadata is available for RAM refresh |
@@ -160,6 +163,25 @@ Post-save user metadata updates, such as bookmarks and notes, use the
 Chat streams route by `threadId` first. Scope, workspace, and view context are
 metadata for ownership and storage. They are not the primary live-stream routing
 key.
+
+## Visible-thread and session actions
+
+Keep one `thread:action` command family. A group action such as
+`move_chat_to_side` carries `threadGroupId` and
+`expectedPrimaryThreadId`. A provider-backed session action such as `compact`
+carries `threadId`. The handler validates whichever identity set the action
+requires; do not create a separate `thread-group:*` transport family.
+
+Durable action responses go to the requester after commit. The server also
+fans the authoritative result out to every open window in the workspace. An
+optional UEB fact such as `thread:primary_changed` is post-commit and cannot
+gate the response, persistence, or fan-out.
+
+Requester acknowledgement, each workspace-recipient send, and UEB publication
+run as separate failure-isolated post-commit deliveries. Failure or closure of
+one socket never prevents attempts to the other sockets. A client that misses
+the fact rehydrates authoritative group state through normal reconnect/init;
+delivery failure never repeats the underlying action.
 
 ## Harness Policy
 

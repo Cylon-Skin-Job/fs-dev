@@ -3948,6 +3948,7 @@ async function buildInitialNodeViewProbe(): Promise<string> {
   const colorsPath = path.resolve('src/components/office/officeTableColors.ts')
   const identityPath = path.resolve('src/components/office/officeTableIdentity.ts')
   const contextMenuPath = path.resolve('src/components/office/officeTableContextMenu.ts')
+  const sharedMenuPath = path.resolve('src/components/menu/index.ts')
   const source = `
     import { Schema } from '@milkdown/kit/prose/model'
     import { EditorState } from '@milkdown/kit/prose/state'
@@ -3960,10 +3961,8 @@ async function buildInitialNodeViewProbe(): Promise<string> {
       getDomTableLogicalWidth,
       mapOfficeDomTableLogicalCells,
     } from ${JSON.stringify(identityPath)}
-    import {
-      createOfficeTableContextItem,
-      getOfficeTableActionDisabledReason,
-    } from ${JSON.stringify(contextMenuPath)}
+    import { getOfficeTableActionDisabledReason } from ${JSON.stringify(contextMenuPath)}
+    import { openMenuTree } from ${JSON.stringify(sharedMenuPath)}
 
     window.__officeInitialNodeViewProbe = () => {
       const schema = new Schema({
@@ -4054,14 +4053,22 @@ async function buildInitialNodeViewProbe(): Promise<string> {
         bottomSpanContext,
         'delete-row-below',
       )
-      const bottomDeleteButton = createOfficeTableContextItem(
-        'Delete Row Below',
-        'delete',
-        () => {},
-        Boolean(bottomDeleteReason),
-        bottomDeleteReason,
-      )
-      document.body.appendChild(bottomDeleteButton)
+      const menuHandle = openMenuTree({
+        anchor: { kind: 'pointer', clientX: 8, clientY: 8 },
+        ariaLabel: 'Accessibility probe',
+        items: [{
+          kind: 'action',
+          id: 'bottom-delete',
+          label: 'Delete Row Below',
+          icon: 'delete',
+          disabled: Boolean(bottomDeleteReason),
+          disabledReason: bottomDeleteReason,
+          onSelect: () => ({ kind: 'stay' }),
+        }],
+        restoreInvocationFocus: () => {},
+        focusAfterAction: () => {},
+      })
+      const bottomDeleteButton = document.querySelector('[data-menu-item-id="bottom-delete"]')
       const origins = Array.from(domTable.rows).map((row) => (
         Array.from(row.cells).map((cell) => logicalCells.get(cell))
       ))
@@ -4086,6 +4093,7 @@ async function buildInitialNodeViewProbe(): Promise<string> {
       }
       colors.cleanup()
       geometry.cleanup()
+      menuHandle.close()
       view.destroy()
       mount.remove()
       return result
@@ -4506,7 +4514,7 @@ test('[slice 01.2] isolated R2 adjacent deletes are visible disabled accessible 
 
     await rows.nth(1).locator('td').click({ button: 'right' })
     for (const label of ['Delete Row Above', 'Delete Row Below']) {
-      const item = page.locator('.rv-office-table-context-item').filter({ hasText: label })
+      const item = page.locator('.rv-menu-item').filter({ hasText: label })
       await expect(item).toBeVisible()
       await expect(item).toBeDisabled()
       await expect(item).toHaveAttribute('aria-disabled', 'true')
@@ -4569,7 +4577,7 @@ test('[slice 01.2] ordinary R5 top and bottom boundary deletes are distinct acce
     ] as const
     for (const boundary of boundaries) {
       await rows.nth(boundary.row).locator(boundary.cell).first().click({ button: 'right' })
-      const item = page.locator('.rv-office-table-context-item').filter({ hasText: boundary.label })
+      const item = page.locator('.rv-menu-item').filter({ hasText: boundary.label })
       await expect(item).toBeVisible()
       await expect(item).toBeDisabled()
       await expect(item).toHaveAttribute('aria-disabled', 'true')
@@ -4856,13 +4864,13 @@ test('[slice 01.3] one-column deletes stay visible disabled accessible and force
     for (const label of [
       'Insert Row Above', 'Insert Row Below', 'Insert Column Left', 'Insert Column Right',
     ]) {
-      const item = page.locator('.rv-office-table-context-item').filter({ hasText: label })
+      const item = page.locator('.rv-menu-item').filter({ hasText: label })
       await expect(item).toBeVisible()
       await expect(item.locator('.material-symbols-outlined')).toHaveText('add')
     }
     const reason = 'A table must keep at least one column.'
     for (const label of ['Delete Column Left', 'Delete Column Right']) {
-      const item = page.locator('.rv-office-table-context-item').filter({ hasText: label })
+      const item = page.locator('.rv-menu-item').filter({ hasText: label })
       await expect(item).toBeVisible()
       await expect(item).toBeDisabled()
       await expect(item).toHaveAttribute('aria-disabled', 'true')
@@ -4924,7 +4932,7 @@ for (const cumulativePass of [1, 2]) {
       for (const label of [
         'Delete Row Above', 'Delete Row Below', 'Delete Column Left', 'Delete Column Right',
       ]) {
-        const item = page.locator('.rv-office-table-context-item').filter({ hasText: label })
+        const item = page.locator('.rv-menu-item').filter({ hasText: label })
         await expect(item).toBeVisible()
         await expect(item).toBeDisabled()
         await expect(item).toHaveAttribute('aria-disabled', 'true')
@@ -5071,7 +5079,7 @@ for (const cumulativePass of [1, 2]) {
       const finalBytes = fs.readFileSync(fixture!.path)
       await rows.nth(1).locator('td').click({ button: 'right' })
       for (const label of ['Delete Column Left', 'Delete Column Right']) {
-        const item = page.locator('.rv-office-table-context-item').filter({ hasText: label })
+        const item = page.locator('.rv-menu-item').filter({ hasText: label })
         await expect(item).toBeDisabled()
         await item.evaluate((element) => {
           element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))

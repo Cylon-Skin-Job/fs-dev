@@ -1,6 +1,6 @@
 ---
 name: Chat Thread Actions
-description: Canonical path for user-initiated thread/session actions such as fork and compact.
+description: Canonical path for user-initiated visible-thread and chat-session actions.
 metadata:
   incoming-edges:
     - Chat Harness And Event Flow
@@ -19,12 +19,13 @@ metadata:
   related-trigger-files: []
 ---
 
-Thread actions are user-initiated operations on a thread or provider session.
-They are not ordinary prompt text and they are not provider-native protocol.
+Thread actions are user-initiated operations on a visible thread group or one
+underlying chat session. They are not ordinary prompt text and they are not
+provider-native protocol.
 
 Examples:
 
-- `fork`
+- `move_chat_to_side`
 - `compact`
 
 ## Canonical Message
@@ -34,8 +35,9 @@ Thread actions should enter the backend through a canonical product message:
 ```json
 {
   "type": "thread:action",
-  "action": "compact",
-  "threadId": "..."
+  "action": "move_chat_to_side",
+  "threadGroupId": "...",
+  "expectedPrimaryThreadId": "..."
 }
 ```
 
@@ -52,11 +54,14 @@ Frontend:
 
 Backend thread action handler:
 
-- resolves workspace, thread, scope, runtime state, and harness
+- resolves workspace, view, thread group, session membership, runtime state,
+  and harness only when the action needs one
 - validates that the action is currently allowed
-- delegates provider-specific syntax to the harness adapter
+- routes Fusion-owned group actions to the thread-group domain service
+- delegates only provider-backed session actions to the harness adapter
 - persists Fusion-owned state through normal managers
-- returns canonical success or error messages
+- returns `thread:action:completed` or `thread:action:error`
+- fans committed state out to every window in the workspace
 
 Harness adapter:
 
@@ -68,35 +73,43 @@ Harness adapter:
 
 | Action | Product scope | OpenCode translation |
 |---|---|---|
-| `fork` | Create a new Fusion thread from current thread head | `opencode run --session <source> --fork` |
+| `move_chat_to_side` | Move the current primary session into a content tab and create a cold, empty primary peer in the same visible thread | none; Fusion-owned |
 | `compact` | Compact provider context for future turns; visible Fusion history remains | `opencode run --session <id> --command compact` |
+
+Group actions carry `threadGroupId`. Session actions carry `threadId` and may
+also carry `threadGroupId` when membership must be checked. Live chat output
+continues to route by `threadId`.
 
 ## Events
 
 Thread actions are commands. They are not UEB events.
 
 After an action changes durable state or session state, the backend may emit a
-fact such as `thread:forked` or `thread:compacted` for subscribers and fan-out.
+post-commit fact such as `thread:primary_changed` or `thread:compacted` for
+subscribers. Fact publication never gates the action response or fan-out.
 
 ## Forbidden Bypasses
 
 - frontend harness-specific checks such as `harnessId === "opencode"`
-- one-off `thread:fork` or `thread:compact` handlers when `thread:action` fits
+- one-off `thread-group:*` or `thread:compact` handlers when `thread:action` fits
 - provider CLI flags in frontend code
 - direct DB mutation that skips thread managers or metadata paths
 - treating compact as a per-reply action
+- routing `move_chat_to_side` through a harness adapter
 
 ## Required Tests
 
 - frontend action sends canonical `thread:action`
 - backend routes action through the thread action handler
-- harness adapter receives canonical action and emits provider args
+- Fusion-owned actions use the group service and never invoke a harness
+- provider-backed actions reach the adapter and emit provider args
 - unsupported harness/action returns visible canonical error
 - restart/hydration behavior is covered when durable state changes
+- multi-window clients receive the same committed primary transition
 
 ## Related Pages
 
-- [Chat Harness And Event Flow(../000-Harness_And_Event_Flow/PAGE.md)
+- [Chat Harness And Event Flow](../PAGE.md)
 - [Chat WebSocket Protocol](../004-WebSocket_Protocol/PAGE.md)
 - [Harness Boundary](../001-Harness_Boundary/PAGE.md)
 - [Universal Event Bus](../003-Universal_Event_Bus/PAGE.md)

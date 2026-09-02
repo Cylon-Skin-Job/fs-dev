@@ -1,0 +1,88 @@
+/* Capture-viewer tab strip. Mirrors the file-viewer tab row: active fill uses
+ * the content accent pair; inactive labels ride the content foreground. */
+
+.rv-capture-tab-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs, 3px);
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.rv-capture-viewer-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs, 3px);
+  height: 32px;
+  padding: 0 var(--space-sm, 8px);
+  border-radius: var(--radius-md, 8px);
+  background: transparent;
+  color: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
+  cursor: pointer;
+  user-select: none;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.rv-capture-tab-icon,
+.rv-capture-tab-name {
+  font-size: var(--font-size-xs, 12px);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rv-capture-tab-icon {
+  font-size: var(--icon-size-sm, 16px);
+}
+
+.rv-capture-tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 16ch;
+}
+
+.rv-capture-tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-xs, 2px);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast, 100ms ease);
+}
+
+.rv-capture-tab-close .material-symbols-outlined {
+  font-size: var(--icon-size-sm, 14px);
+}
+
+.rv-capture-viewer-tab.active {
+  background: var(--content-accent-color, var(--thread-selected-bg, var(--accent-dim)));
+  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
+}
+
+.rv-capture-viewer-tab:not(.active):hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--content-accent-foreground-color, var(--text-primary));
+}
+
+.rv-capture-viewer-tab:focus-visible {
+  outline: 2px solid var(--content-accent-color, var(--accent));
+  outline-offset: 1px;
+}
+
+.rv-capture-viewer-tab:is(.active, :hover, :focus-within) .rv-capture-tab-close {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
+/* Strip occupies the header's center slot where the classic title lived. */
+.rv-capture-viewer-main-header--tabs .rv-capture-tab-strip {
+  margin: 0 auto;
+}

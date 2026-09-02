@@ -18,11 +18,13 @@ The longer-term substrate is an event-fed system rather than a set of isolated n
 
 The inbox also participates in the full work lifecycle: Launchpad work can generate a first-draft ticket, return here for shaping and review, route through issue resolution and separately authorized roadmap/SPEC creation, undergo later compliance, Wiki, issue, and blast-radius sweeps, and eventually proceed to autonomous construction. The inbox should make this activity observable and actionable without requiring the user to chase separate subsystems.
 
-Navigation and thread identity are also being reorganized around views. The current right-side navigation will move to the left beside the thread list. Threads, currently workspace-wide, will become bound to individual views. Each thread will preserve the content state needed to return to its working context inside that view, including which tabs, documents, and related content were open. This establishes a contextual continuity layer that the owner expects to simplify the next set of features.
+Navigation and thread identity are also being reorganized around views. The current right-side navigation will move to the left beside the thread list. Threads, currently workspace-wide, will become bound to individual views. Chat, threads, and content are independently presentable parts of the shell: without chat, the thread list becomes a menu of saved content-worksurface states; without chat or threads, the view becomes a full-screen app. Each thread preserves only the content worksurface state needed to resume its work, including tabs, documents, locations, selections, and scroll positions. An assigned folder can anchor that worksurface without becoming a hard filesystem or reasoning boundary. View configuration defines the folder/tag choices in the thread dropdown, while thread metadata always retains multiple stable, ranked collection IDs. The default folder mode projects the highest-ranked valid assignment; optional tags mode projects them all. Changing folders raises a rank without discarding dormant memberships. A non-removable Archive collection catches any thread with no currently valid assignment, and its button clears all assignments instead of setting a separate archive status.
 
 The downloaded product will open with **Fusion Home** as its default folder. Users can add more specialized workspaces for code, bookkeeping, media production, research, or system management. Fusion Home adopts an “everything is a plugin” direction and presents a grouped left navigation spanning attention and project management, office and personal-productivity suites, health and household domains, core knowledge and browsing surfaces, extensibility tools, and settings. Lower-density capabilities such as email, calendar, tasks, notes, and contacts move from separate app identities into a consolidated Productivity Suite so thread binding occurs at a useful level of activity.
 
-Thread creation becomes a first-class action on content. Alongside the existing Link and Send to Chat actions, every content surface will offer Send to New Chat. The existing lined chat icon continues to target the current chat; the matching empty icon gains a plus sign to create a new chat and place the content there as an attachment. Ticket attachments give the new thread the ticket's full name, reveal long names with a hover-only ticker effect, and can activate view-specific ticket-agent behavior when the user sends the attachment without additional instructions. The role, heuristics, and workflow are defined through the view's guidance and the Skills area rather than embedded in the ticket itself.
+Thread creation becomes a first-class, view-configurable action. Alongside Link and Send to Chat, content can start a new conversation or be sent into a side chat hosted as a content tab. A side chat remains a distinct conversation and can continue prior work through a bounded handoff prepared from the earlier chat. The visible New action can use any label and icon—such as New Chat, New Routine, New Agent, or New Plugin—but thread creation itself consumes an already-registered view context. It does not create project folders, copy starter content, or negotiate a folder binding. Domain-object creation remains a separate user action.
+
+View capsules form a machine-scoped control plane under `ai/<machine>/System/Views/`, while each capsule's declared content root remains independent and may live inside the machine AI tree or in a Git-tracked workspace folder. Their versioned JSON is the canonical configuration used by both purpose-built GUI editors and direct user editing, making view definitions and component assemblies portable and clonable. Portability does not transfer authority: imports and clones receive new identities and omit secrets, permission grants, consent, sessions, thread history, and local runtime or view state. The target protected-System policy lets OpenCode and later harnesses read effective configuration and guide the user, but reserves mutation for validated, user-mediated Fusion services. New-thread creation likewise requires a verified user action or separately user-authorized automation. The folder placement establishes the architecture; a later security implementation must enforce the boundary across every write path.
 
 Inside Issues, inbox items can expand in place or open into the full content area. Any item can start a new chat. Once a ticket has a view-bound thread, selecting that thread restores the exact ticket content in the Issues area and lets the user watch its work evolve. This creates a user-in-the-loop form of background agency: tickets may be generated automatically and queued, the user can choose when to run them, and an agent can monitor the inbox and surface significant changes rather than requiring constant manual inspection.
 
@@ -32,7 +34,9 @@ Scheduled work and assignment use tickets as the universal work object. The Sche
 
 The **Agent Profiles** view is a way to discover, define, and invoke capabilities already available through the configured harness rather than a system for managing persistent agent beings. A profile can be selected from the plus button, named in ticket frontmatter, loaded automatically as a workspace default, or invoked by another agent or workflow as a subagent. Profiles can range from lightweight orientation and tool awareness to elaborate gated workflows with role-specific subagents and validation. The governing philosophy is that the profile is a frozen capability container—a mask a thread wears when that set of abilities is needed. Schedules and triggers live outside the profile; durable state belongs to the ticket, workflow, project state, or event history; the user interacts with the work and its thread rather than managing an agent entity.
 
-Settings follow the same plugin philosophy. Fusion's core provides useful but deliberately compact per-workspace palette controls: primary and secondary colors plus a handful of sliders. Installing a **Theme Customization** plugin adds a Custom mode between Light and Dark, granular color pickers, and context-menu entries for deeper control. Other plugins can enable Inbox Alerts, Heartbeats, or a Wiki Maintainer assembled from ticket schedules, Agent Profiles, triggers, and durable state. Plugins are folder-based bundles of Markdown, scripts, configurations, regex, and related resources. Any inbound or outbound Universal Event Bus hooks are surfaced as UI toggles with intelligent installation defaults that remain customizable.
+The view family around that model is still being shaped. Routines organizes schedules and triggers around the question of what wakes a capability and causes it to act. Agent Profiles can project inspectable profile folders into a profile/Skills/subagent hierarchy. Plugins uses a browser-extension-style card library for installed and available bundles. Projects use the ordinary view model rather than an upper-level Project Manager exception: Create Project in side navigation adds a numbered Project Viewer capsule with its own immutable ID and content-root binding. That single project view can hold several primary threads, each with several side-chat peers, while reusing the same viewer and tab behavior as every other view.
+
+Settings follow the same plugin philosophy. Fusion's core provides useful but deliberately compact per-workspace palette controls: primary and secondary colors plus a handful of sliders. Installing a **Theme Customization** plugin adds a Custom mode between Light and Dark, granular color pickers, and context-menu entries for deeper control. Other plugins can enable Inbox Alerts, Heartbeats, Auto-Rename Chat Threads, or a Wiki Maintainer assembled from ticket schedules, Agent Profiles, triggers, and durable state. The auto-rename plugin owns deterministic attachment and ticket rules as well as optional LLM-assisted naming, keeping that policy outside the core conversation component. Plugins are folder-based bundles of Markdown, scripts, configurations, regex, and related resources. Any inbound or outbound Universal Event Bus hooks are surfaced as UI toggles with intelligent installation defaults that remain customizable.
 
 Plugins can also extend Wiki into personal-context surfaces. **Context Manager** is a planned semantic and indexable history that can include basic user data. It may appear as a second Wiki tab or as another Wiki type; that presentation remains open. **User Profile** is another candidate Wiki variant. Any extraction feeding these surfaces is opt-in, and the user retains control over what the system records and what it surfaces back into product context.
 
@@ -46,7 +50,7 @@ This capture is expected to branch into many future roadmaps and SPECs. The work
 
 The current documented chat architecture is thread-centered and server-owned: durable identity belongs to the thread, live routing uses `threadId`, completed exchanges hydrate from SQLite, and the renderer presents server-owned state. That is current-system context, not a constraint that predetermines the future vision. Later conversation can identify which existing concepts remain useful, which need to evolve, and which broader system relationships are missing.
 
-The inferred phase is **framing and shaping**. The active thread is the phone interaction model: the transition among main chat, slide-out workspace/view/thread navigation, Notifications, the active app surface, and app-owned chrome. The exact workspace-picker presentation, event-list depth, robot-button return behavior, and responsive variants remain open for later shaping.
+The inferred phase is **framing and shaping**. The first implementation SPEC covers the composable conversation/thread foundation. A second SPEC now covers relocation into `System/Views`, versioned `content.json` chat presentation, ranked collection persistence, derived Archive behavior, and shared thread-row menus with radio folders or checkbox tags. Ordinary Project Viewer instances remain created separately from their threads. Broader configuration precedence, protected-root enforcement, trusted user-presence mechanism, side-chat handoff, and Create Project confirmation rules remain open for later shaping.
 
 ## User Threads to Resume
 
@@ -164,7 +168,7 @@ The inferred phase is **framing and shaping**. The active thread is the phone in
 - **Type:** thread
 - **Status:** open
 - **Source:** RC's Fusion Home direction on 2026-08-22
-- **Summary:** Continue with the intended Thread Management behavior that will govern view-bound threads. The content-to-new-chat and ticket-agent path is now defined, while daily-thread creation, rollover, coexistence, and other lifecycle behavior remain open.
+- **Summary:** Continue with the intended Thread Management behavior that will govern view-bound threads. The content-to-new-chat and ticket-agent path is now defined, while rules for creating new daily threads, resuming earlier ones, coexistence, and other lifecycle behavior remain open.
 - **Related:** CAP-019, CAP-025, D-004, D-005
 
 ### CAP-037 — User-in-the-loop background agency
@@ -211,6 +215,15 @@ The inferred phase is **framing and shaping**. The active thread is the phone in
 - **Source:** RC's agent and workflow direction on 2026-08-23
 - **Summary:** Explore a lightweight bug-fix profile with a small skill set and subagents for blast-radius and knock-on-effect checks that plans, validates, executes, repairs, and reports.
 - **Related:** D-033, D-034
+
+### CAP-119 — Shape the view family around composable conversations
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** open
+- **Source:** RC's Routines, Agent Profiles, Plugins, and Project Manager host-surface description on 2026-09-02
+- **Summary:** Continue shaping the views that motivate the composable conversation model: Routines as schedules and triggers framed around what wakes a capability; Agent Profiles as inspectable folders projected into a profile/Skills/subagent hierarchy; Plugins as a browser-extension-style card library spanning trusted System Manager offerings and explicit untrusted-source installation; and individually created Project Viewer instances as ordinary Markdown-centered views that can own several threads and side chats.
+- **Related:** CAP-003, CAP-005, CAP-117, CAP-125, D-035, D-039, D-043, D-078, D-081, D-084, D-101
 
 ## Assistant Possibilities
 
@@ -940,6 +953,15 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Summary:** Consider **User Profile** as another plugin-added Wiki variant governed by the same opt-in extraction and user-control principles.
 - **Related:** P-008
 
+### CAP-117 — Compose conversations and saved worksurfaces by view
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's composable chat, side-chat, view configuration, and launch-action direction on 2026-09-02
+- **Summary:** Make chat, thread navigation, and content independently presentable; persist only a thread's content worksurface; treat assigned folders as contextual worksurfaces; host side chats in content tabs with bounded prior-chat handoff; let each view configure its New action, thread collections, instructions, working-directory override, and transcript behavior from the view folder; retain project root as the default working directory; and deliver automatic renaming as a plugin.
+- **Related:** D-078, D-079, D-080, D-081, D-082, D-083, D-084, D-085, D-086, D-087
+
 
 ## Capture History
 
@@ -1104,3 +1126,75 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Source:** Launchpad reconciliation on 2026-08-23
 - **Summary:** Recorded plugin-added Wiki variants, Context Manager's semantic indexable history, opt-in extraction, user control over recording and surfacing, and the open tab/type and User Profile proposals.
 - **Related:** CAP-111, CAP-112, CAP-113, CAP-114, CAP-115, D-075, D-076, D-077, P-007, P-008
+
+### CAP-118 — Composable conversation and view-launch checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** Launchpad reconciliation on 2026-09-02
+- **Summary:** Refined the earlier view-bound thread model into an independently composable chat/thread/content shell, narrowed saved thread state to the content worksurface, added side-chat tabs and bounded continuation, proposed view-configured launch recipes and folder worksurfaces, kept project root as the default working directory, placed view overrides in view folders, added folder-or-tag thread collections and configurable transcript destinations, separated automatic naming into a plugin, and preserved the surrounding Routines, Agent Profiles, Plugins, and project presentation as an open shaping thread. CAP-125 and D-101 later superseded thread-time project launch recipes with separate Project Viewer creation.
+- **Related:** CAP-117, CAP-119, D-078, D-079, D-080, D-081, D-082, D-083, D-084, D-085, D-086, D-087
+
+### CAP-120 — Composable threaded-chat specification checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** Owner refinements, code-standards review, and SPEC drafting on 2026-09-02
+- **Summary:** Bounded the first implementation SPEC to a rename-safe view-bound visible-thread umbrella, peer chat sessions, a pure reusable chat surface with connected hosts, per-thread content worksurfaces stored in the owning view folder, and an exact Move Chat to Side Chat transition that creates a cold empty primary. Kept `thread:action` as the canonical command family, separated `threadGroupId`, `threadId`, `viewId`, and `surfaceId`, defined post-commit fan-out and cross-store repair, replaced horizontal work phases with vertical slices, and removed context-cloning branch behavior from active standards and plans.
+- **Related:** CAP-117, CAP-118, D-078, D-079, D-081, D-088, D-089, D-090, D-091, D-092, D-093, D-094
+
+### CAP-121 — System-owned view-capsule and thread-authority checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's view-location and protected-System clarification on 2026-09-02
+- **Summary:** Recognized that existing `content.json` roots already separate a view definition from its primary content folder. Moved the target capsule location to `ai/<machine>/System/Views/`, allowing Wiki and other content to remain either machine-local under `ai/` or independently Git-tracked at workspace root. Defined the future System tree as readable to agents but writable only through trusted user-mediated Fusion services, preventing agents from modifying their own configuration, permissions, launch policy, or authority to create new threads.
+- **Related:** CAP-117, CAP-120, D-084, D-088, D-095, D-096
+
+### CAP-122 — Portable System configuration checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's GUI, raw JSON, component-composition, and cloning clarification on 2026-09-02
+- **Summary:** Expanded System into a portable declarative control plane. Purpose-built GUI editors and direct user JSON access operate on the same canonical validated files; reusable components and other customization can be referenced from those configurations. Configurations may be cloned or exported, while new instance IDs, fresh permission consent, and exclusion of secrets, thread history, sessions, and local runtime/view state prevent portability from becoming authority transfer. OpenCode is the first explicitly named read-only harness under the future protected-System boundary, which also applies to later harnesses.
+- **Related:** CAP-121, D-045, D-046, D-095, D-096, D-097, D-098
+
+### CAP-123 — Configured thread tags and Archive fallback checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's thread-dropdown and fallback clarification on 2026-09-02
+- **Summary:** Defined the view configuration as the source of the folder/tag choices shown in the thread dropdown. Both modes use stable collection IDs underneath. Fusion injects a non-removable Archive collection for every thread with no currently valid configured assignment, including when direct configuration changes remove collections that existing threads used. Automatic title-renaming rules remain configurable through the separate Auto-Rename Chat Threads plugin.
+- **Related:** CAP-118, CAP-120, CAP-122, D-085, D-086, D-099, D-100
+
+### CAP-124 — Lossless ranked collection-mode checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's collection-rank clarification on 2026-09-02
+- **Summary:** Made collection metadata permanently multi-assignment and ranked even though `mode: "folders"` is the default single-group presentation. Folder mode shows the highest-ranked valid assignment, selecting another folder reranks it without removing lower-ranked memberships, and `mode: "tags"` reveals all valid memberships across multiple groupings. Configuration-absent IDs remain dormant. The Archive button is the intentional destructive exception: it clears every assignment and Archive is derived from having no valid assignments. Reused the Office Viewer's newest-rank-wins principle while keeping thread ranking in the server-owned thread domain rather than extracting the Office color-policy module.
+- **Related:** CAP-120, CAP-123, D-085, D-099, D-100
+
+### CAP-125 — One ordinary Project Viewer per project checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's Project Viewer simplification on 2026-09-02
+- **Summary:** Replaced the proposed thread-time folder/template launch recipe and special Project Manager host with a separate side-navigation Create Project flow. Each project becomes its own numbered Project Viewer capsule with an immutable manifest ID and one established content-root/configuration binding. The project can then contain several ordinary primary threads, each with several side-chat peers. New Chat consumes the existing view context and never creates project/content files or passes folder identity through thread creation; the existing generated chat transcript mirror remains ordinary session persistence.
+- **Related:** CAP-117, CAP-118, CAP-120, D-078, D-082, D-083, D-084, D-101
+
+### CAP-126 — View-configured thread collections specification checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's second-SPEC boundary and shared-menu direction on 2026-09-02
+- **Summary:** Created the second composable-chat SPEC for relocating view capsules into `System/Views`, extending existing `content.json` chat configuration, projecting New-action and collection display behavior, storing ranked group-level collection metadata, filtering by configured collections plus derived Archive, and adopting the shared menu for thread right-click and kebab actions. The Collections/`sub_header` submenu uses radio semantics in default folder mode and adds correct checkbox semantics with keep-open interaction in advanced tag mode. The public New Chat request gains no project/content folder, path, or config fields.
+- **Related:** CAP-120, CAP-122, CAP-123, CAP-124, CAP-125, D-084, D-085, D-095, D-099, D-100, D-101, D-102

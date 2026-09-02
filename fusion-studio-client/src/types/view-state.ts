@@ -179,6 +179,9 @@ export interface ViewUIState {
   docViewerArchiveGridScroll?: number;
   docViewerActiveDocScroll?: number;
   docViewerArchiveDocScroll?: number;
+  docViewerFullPage?: boolean;
+  docViewerTabs?: DocViewerTab[];
+  docViewerActiveTabId?: string | null;
   officeViewerMode?: 'home' | 'recent' | 'starred' | 'archive';
   officeViewerCurrentFolder?: string | null;
   officeViewerSelectedPath?: string | null;
@@ -192,6 +195,21 @@ export interface ViewUIState {
   emailPaperBrightness?: number;
   activity: ViewActivityState;
   collections: ViewCollectionsState;
+}
+
+export interface DocViewerTabUi {
+  mode?: 'active' | 'recent' | 'starred' | 'archive';
+  gridScroll?: number;
+  docScroll?: number;
+}
+
+export interface DocViewerTab {
+  id: string;
+  kind: 'capture' | 'doc';
+  path?: string;
+  name?: string;
+  extension?: string;
+  ui?: DocViewerTabUi;
 }
 
 export interface ViewStateTints {

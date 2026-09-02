@@ -8,6 +8,8 @@ Tickets are the universal work object for deferred, assigned, automated, and use
 
 Agents and Skills still perform work. The distinction being removed is the separate product container called Background Agents. Execution becomes a property of assigned tickets rather than a different kind of object.
 
+The planned **Routines** view is the user-facing place to organize the schedules and triggers that activate this work. Its framing question is not “which agent stays alive?” but “what wakes this capability and causes it to act?” A routine therefore composes a wake condition with a ticket, profile, workflow, or launch recipe rather than becoming a persistent agent entity itself.
+
 ## Scheduled Calendar and Cron
 
 The Scheduled area already has a calendar according to RC. Its future role includes configuring cron-driven ticket creation and allowing the scheduled ticket to contain whatever content the intended workflow requires.
@@ -88,6 +90,7 @@ This preserves the benefits usually associated with background agents—parallel
 ## Open Questions
 
 - Is a scheduled ticket copied directly into In Progress, or created in To Do and transitioned atomically?
+- Is **Routines** the final view name, and which schedule, trigger, and launch-recipe objects appear there together?
 - How are ticket identifiers allocated for recurring template instances?
 - How are template updates versioned relative to already scheduled or previously instantiated tickets?
 - How does the system prevent duplicate dispatch if the same In Progress addition is observed more than once?

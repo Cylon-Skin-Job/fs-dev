@@ -23,6 +23,10 @@ toolbar controls, or visible user workflows.
 UI presents state and emits canonical user intent. It does not interpret backend,
 harness, provider, or persistence details.
 
+Reusable presentation components receive all durable identity and behavior
+through props. Connected feature hosts and controller hooks may read established
+stores and actions, then adapt them into that explicit component contract.
+
 ## Allowed Responsibilities
 
 - render state from stores and props
@@ -50,8 +54,38 @@ Examples:
 
 | Product intent | UI label may say | Adapter may translate to |
 |---|---|---|
-| `fork` | Fork thread | OpenCode `--fork` |
+| `move_chat_to_side` | Move Chat to Side Chat | Fusion-owned group mutation; no adapter call |
 | `compact` | Compress context | OpenCode `--command compact` |
+
+## Chat identity and action scope
+
+- `viewId` owns placement in a view.
+- `threadGroupId` owns the visible rail row and group actions such as rename,
+  collection assignment/clear, delete, and Move Chat to Side Chat.
+- `threadId` owns one transcript, composer, runtime, usage state, and live route.
+- `surfaceId` owns transient DOM, menu, focus, and mounted-instance state.
+
+Do not derive one identity from whichever global chat happens to be selected.
+The same chat component must be able to render a primary chat or a side-chat tab
+from an explicit identity contract.
+
+## Shared menu semantics
+
+New or migrated context menus, kebab menus, and nested action menus use the
+shared menu module under `src/components/menu/`. One descriptor tree should
+serve every invocation gesture for the same menu, including right-click and a
+visible button. Do not recreate outside-click, focus restoration, submenu
+positioning, pending-action, or keyboard behavior in a feature component.
+
+Use semantic selection kinds:
+
+- `radio` for one mutually exclusive value;
+- `checkbox`/`menuitemcheckbox` for independently selectable values; and
+- `action` for commands such as clearing all selections.
+
+Several visually checked values must never be exposed as radio items. Shared
+visual checkmarks do not override the selection semantics communicated to
+assistive technology.
 
 ## Required Checks
 
@@ -60,13 +94,13 @@ Examples:
 - Does the UI send canonical intent rather than provider syntax?
 - Is disabled state generic, not provider-specific?
 - Does the visible placement match the action scope?
+- Does a reusable component receive explicit identity and callbacks from a connected host?
 
 ## Related Pages
 
-- [Code Standards(../000-Code_Standards/PAGE.md)
+- [Code Standards](../000-Code_Standards/PAGE.md)
 - [Architecture Routing](../001-Architecture_Routing/PAGE.md)
 - [State Management Standards](../003-State_Management/PAGE.md)
 - [Chat Styling And Workspace CSS](../../003-Chat_Styling_And_Workspace_CSS/PAGE.md)
 - [Reply Action Chrome](../../../007-Chat_System/004-Chat_UI/004-Reply_Action_Chrome/PAGE.md)
 - [Composer](../../../007-Chat_System/004-Chat_UI/001-Composer/PAGE.md)
-

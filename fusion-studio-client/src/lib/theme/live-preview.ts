@@ -39,6 +39,7 @@ import {
 export const LIVE_PREVIEW_TOKENS = [
   '--bg-solid', '--bg-primary', '--bg-secondary',
   '--document-surface-bg', '--document-bg', '--content-accent-color', '--content-accent-foreground-color', '--content-foreground-color', '--panel-chrome-bg',
+  '--capture-star-color',
   '--workspace-foreground-color', '--workspace-border-color', '--workspace-accent-color', '--sidebar-surface-bg', '--thread-text-color', '--thread-heading-color', '--thread-foreground-color', '--thread-selected-bg', '--thread-selected-foreground-color',
   '--side-panel-surface-bg', '--side-panel-text-color', '--side-panel-heading-color', '--side-panel-foreground-color', '--side-panel-selected-bg', '--side-panel-selected-foreground-color',
   '--chat-surface-bg', '--chat-content-bg', '--chat-composer-chrome-color', '--chat-foreground-color', '--chat-foreground-contrast-color', '--chat-accent-color', '--chat-tools-color', '--chat-text-color', '--thread-surface-bg',
@@ -272,6 +273,7 @@ export function applyLivePreview(
   root.setProperty('--content-accent-color', contentAccentColor);
   root.setProperty('--content-accent-foreground-color', contentAccentForegroundColor);
   root.setProperty('--content-foreground-color', contentForegroundColor);
+  root.setProperty('--capture-star-color', isLight ? '#8a6a0a' : '#d6b85a');
   root.setProperty('--panel-chrome-bg', panelBg);
   root.setProperty('--workspace-foreground-color', workspaceForegroundColor);
   root.setProperty('--workspace-border-color', workspaceBorderColor);
