@@ -9,7 +9,7 @@
  * diagonal white-alpha gradient, blurred backdrop, thin border.
  */
 
-import { useEffect, useRef, useState, type DragEvent, type MouseEvent } from 'react';
+import { useRef, useState, type DragEvent, type MouseEvent } from 'react';
 import {
   toHiddenRibbonWorkspaces,
   toRibbonWorkspaces,
@@ -17,15 +17,14 @@ import {
 } from '../state/workspaceStore';
 import { useScreenshotStore } from '../state/screenshotStore';
 import { Icon } from './Icon';
+import { WorkspaceRibbonAddMenu } from './WorkspaceRibbonAddMenu';
 import type { Workspace } from '../types';
 import './WorkspaceRibbon.css';
 
 export function WorkspaceRibbon() {
-  const [isAddDropdownOpen, setIsAddDropdownOpen] = useState(false);
   const [draggingWorkspaceId, setDraggingWorkspaceId] = useState<string | null>(null);
   const [dragOverWorkspaceId, setDragOverWorkspaceId] = useState<string | null>(null);
   const [previewWorkspaceIds, setPreviewWorkspaceIds] = useState<string[] | null>(null);
-  const addDropdownRef = useRef<HTMLDivElement | null>(null);
   const ribbonItemsRef = useRef<HTMLDivElement | null>(null);
   const didDragRef = useRef(false);
   const dragOffsetXRef = useRef(0);
@@ -51,36 +50,6 @@ export function WorkspaceRibbon() {
     ? previewWorkspaceIds.map((id) => sortedById.get(id)).filter((workspace): workspace is Workspace => Boolean(workspace))
     : sorted;
   const highlightedId = previewId || activeId;
-
-  if (!isOpen && isAddDropdownOpen) {
-    setIsAddDropdownOpen(false);
-  }
-
-  useEffect(() => {
-    if (!isAddDropdownOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.stopPropagation();
-        setIsAddDropdownOpen(false);
-      }
-    };
-
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target;
-      if (!(target instanceof Node)) return;
-      if (!addDropdownRef.current?.contains(target)) {
-        setIsAddDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('pointerdown', onPointerDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('pointerdown', onPointerDown);
-    };
-  }, [isAddDropdownOpen]);
 
   const onItemClick = (w: Workspace) => {
     if (didDragRef.current) {
@@ -237,23 +206,6 @@ export function WorkspaceRibbon() {
     setPreviewWorkspaceIds(null);
   };
 
-  const onAddClick = () => {
-    setIsAddDropdownOpen(false);
-    closeRibbon();
-    openAddModal();
-  };
-
-  const onCreateClick = () => {
-    setIsAddDropdownOpen(false);
-    closeRibbon();
-    openCreateModal();
-  };
-
-  const onAddToRibbonClick = (w: Workspace) => {
-    requestAddToRibbon(w.id);
-    setIsAddDropdownOpen(false);
-  };
-
   return (
     <>
       {isOpen && (
@@ -310,71 +262,14 @@ export function WorkspaceRibbon() {
               </div>
             ))}
           </div>
-          <div className="rv-workspace-ribbon-add-wrap" ref={addDropdownRef}>
-            <button
-              className="rv-workspace-ribbon-add"
-              onClick={() => setIsAddDropdownOpen((open) => !open)}
-              type="button"
-              title="Add to ribbon"
-              aria-haspopup="menu"
-              aria-expanded={isAddDropdownOpen}
-            >
-              <span className="material-symbols-outlined rv-workspace-ribbon-add-icon">
-                add
-              </span>
-              <span className="rv-workspace-ribbon-add-label">Add</span>
-            </button>
-
-            {isAddDropdownOpen && (
-              <div className="rv-workspace-ribbon-add-menu" role="menu" aria-label="Add workspace to ribbon">
-                <div className="rv-workspace-ribbon-add-menu-section">
-                  <div className="rv-workspace-ribbon-add-menu-title">Add to ribbon</div>
-                  <div className="rv-workspace-ribbon-add-menu-list">
-                    {hiddenWorkspaces.length > 0 ? (
-                      hiddenWorkspaces.map((w) => (
-                        <button
-                          key={w.id}
-                          className="rv-workspace-ribbon-add-menu-item"
-                          type="button"
-                          role="menuitem"
-                          onClick={() => onAddToRibbonClick(w)}
-                        >
-                          <Icon
-                            name={w.icon || 'folder'}
-                            className="rv-workspace-ribbon-add-menu-item-icon"
-                          />
-                          <span className="rv-workspace-ribbon-add-menu-item-label">{w.label}</span>
-                        </button>
-                      ))
-                    ) : (
-                      <div className="rv-workspace-ribbon-add-menu-empty">No hidden workspaces</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="rv-workspace-ribbon-add-menu-actions">
-                  <button
-                    className="rv-workspace-ribbon-add-menu-action"
-                    type="button"
-                    role="menuitem"
-                    onClick={onAddClick}
-                  >
-                    <span className="material-symbols-outlined">drive_folder_upload</span>
-                    <span>Add Project</span>
-                  </button>
-                  <button
-                    className="rv-workspace-ribbon-add-menu-action"
-                    type="button"
-                    role="menuitem"
-                    onClick={onCreateClick}
-                  >
-                    <span className="material-symbols-outlined">create_new_folder</span>
-                    <span>Create New</span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          <WorkspaceRibbonAddMenu
+            hiddenWorkspaces={hiddenWorkspaces}
+            ribbonOpen={isOpen}
+            closeRibbon={closeRibbon}
+            openAddModal={openAddModal}
+            openCreateModal={openCreateModal}
+            requestAddToRibbon={requestAddToRibbon}
+          />
         </div>
       </div>
     </>

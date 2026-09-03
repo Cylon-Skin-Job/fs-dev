@@ -11,6 +11,7 @@ import { useCallback } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import { showToast } from '../lib/toast';
 import { getPanelArchiveFolder, isViewerArchivePath } from '../lib/viewFolders';
+import { nextWorkspaceRequestId } from '../lib/workspaceResponseTracker';
 import type { FileNode } from '../state/fileDataStore';
 
 interface UseTileFileActionsOptions {
@@ -54,7 +55,7 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
       showToast('Not connected');
       return null;
     }
-    return { panelRoot, ws };
+    return { panelRoot, ws, workspaceId: state.activeWorkspaceId };
   }, [panel]);
 
   const isArchiveEntry = useCallback(
@@ -76,10 +77,15 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
         showToast('Restore from the flat archive is not available');
         return;
       }
-      const { panelRoot, ws } = conn;
+      const { panelRoot, ws, workspaceId } = conn;
       const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
       const target = `${panelRoot.replace(/\/+$/, '')}/${archiveFolder}`;
-      ws.send(JSON.stringify({ type: 'file:move', source, target }));
+      ws.send(JSON.stringify({
+        type: 'file:move',
+        source,
+        target,
+        requestId: nextWorkspaceRequestId('file:move', workspaceId),
+      }));
     },
     [archiveFolder, folder, getWs, isArchiveEntry]
   );
@@ -88,11 +94,16 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
     (entry: FileActionEntry, folderOverride = folder) => {
       const conn = getWs();
       if (!conn) return;
-      const { panelRoot, ws } = conn;
+      const { panelRoot, ws, workspaceId } = conn;
       const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
       const newName = window.prompt(`Rename ${entryKind(entry)}`, entry.name);
       if (!newName || newName === entry.name) return;
-      ws.send(JSON.stringify({ type: 'file:rename', source, newName }));
+      ws.send(JSON.stringify({
+        type: 'file:rename',
+        source,
+        newName,
+        requestId: nextWorkspaceRequestId('file:rename', workspaceId),
+      }));
     },
     [folder, getWs]
   );
@@ -101,10 +112,14 @@ export function useTileFileActions({ panel, folder }: UseTileFileActionsOptions)
     (entry: FileActionEntry, folderOverride = folder) => {
       const conn = getWs();
       if (!conn) return;
-      const { panelRoot, ws } = conn;
+      const { panelRoot, ws, workspaceId } = conn;
       const source = joinPanelPath(panelRoot, entryRelativePath(entry, folderOverride));
       if (!window.confirm(`Delete ${entry.name}?`)) return;
-      ws.send(JSON.stringify({ type: 'file:delete', source }));
+      ws.send(JSON.stringify({
+        type: 'file:delete',
+        source,
+        requestId: nextWorkspaceRequestId('file:delete', workspaceId),
+      }));
     },
     [folder, getWs]
   );

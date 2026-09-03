@@ -50,7 +50,7 @@ async function removeOfficeThumbnail(documentPath) {
  * @param {object} deps
  * @param {import('ws').WebSocket} deps.ws
  * @param {object} deps.session
- * @param {() => import('ws').WebSocket[]} deps.getAllClients
+ * @param {(workspaceId?: string|null) => import('ws').WebSocket[]} deps.getAllClients
  */
 function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
   const mutationPanels = ['capture-viewer', 'office-viewer', 'email-viewer', 'file-viewer'];
@@ -68,8 +68,8 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
       name !== '..';
   }
 
-  function broadcastFileChanged(panel, filePath) {
-    const clients = getAllClients ? getAllClients() : [];
+  function broadcastFileChanged(panel, filePath, workspaceId) {
+    const clients = getAllClients ? getAllClients(workspaceId) : [];
     if (!clients.length) return;
     const payload = JSON.stringify({ type: 'file_changed', panel, filePath });
     for (const client of clients) {
@@ -88,6 +88,13 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
       }
     }
     return null;
+  }
+
+  function captureRequestCorrelation(clientMsg) {
+    return {
+      requestId: typeof clientMsg.requestId === 'string' ? clientMsg.requestId : undefined,
+      workspaceId: session.currentWorkspaceId ?? null,
+    };
   }
   return {
     // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
@@ -261,35 +268,55 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     // ---- View UI state (SPEC-26c-2) ----
 
     async 'state:get'(clientMsg) {
+      const correlation = captureRequestCorrelation(clientMsg);
       try {
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          ws.send(JSON.stringify({
+            type: 'state:error',
+            view: clientMsg.view,
+            ...correlation,
+            message: 'No active workspace',
+          }));
           return;
         }
         const state = await resolveViewState(projectRoot, clientMsg.view);
         ws.send(JSON.stringify({
           type: 'state:result',
           view: clientMsg.view,
+          ...correlation,
           state,
         }));
       } catch (err) {
         console.error('[state:get] failed:', err);
-        ws.send(JSON.stringify({ type: 'state:error', message: err.message }));
+        ws.send(JSON.stringify({
+          type: 'state:error',
+          view: clientMsg.view,
+          ...correlation,
+          message: err.message,
+        }));
       }
     },
 
     async 'state:set'(clientMsg) {
+      const correlation = captureRequestCorrelation(clientMsg);
       try {
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          ws.send(JSON.stringify({
+            type: 'state:error',
+            view: clientMsg.view,
+            ...correlation,
+            clientMutationId: clientMsg.clientMutationId,
+            message: 'No active workspace',
+          }));
           return;
         }
         const merged = await writeViewStatePatch(projectRoot, clientMsg.view, clientMsg.state);
         ws.send(JSON.stringify({
           type: 'state:result',
           view: clientMsg.view,
+          ...correlation,
           clientMutationId: clientMsg.clientMutationId,
           state: merged,
         }));
@@ -298,6 +325,7 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         ws.send(JSON.stringify({
           type: 'state:error',
           view: clientMsg.view,
+          ...correlation,
           clientMutationId: clientMsg.clientMutationId,
           message: err.message,
         }));
@@ -307,15 +335,24 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     // ---- File move ----
 
     async 'file:move'(clientMsg) {
+      const correlation = captureRequestCorrelation(clientMsg);
       try {
         const { source, target } = clientMsg;
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          ws.send(JSON.stringify({
+            type: 'file:move_error',
+            ...correlation,
+            error: 'No active workspace',
+          }));
           return;
         }
         if (!isPathInside(projectRoot, source) || !isPathInside(projectRoot, target)) {
-          ws.send(JSON.stringify({ type: 'file:move_error', error: 'Source or target path outside project root' }));
+          ws.send(JSON.stringify({
+            type: 'file:move_error',
+            ...correlation,
+            error: 'Source or target path outside project root',
+          }));
           return;
         }
         const sourceStat = fs.statSync(source);
@@ -332,10 +369,11 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
           await moveOfficeThumbnail(source, result.moved);
         }
-        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
-        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path);
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path, correlation.workspaceId);
+        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path, correlation.workspaceId);
         ws.send(JSON.stringify({
           type: 'file:moved',
+          ...correlation,
           ...result,
           sourcePanel: sourceRef?.panel,
           sourcePath: sourceRef?.path,
@@ -347,47 +385,66 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         console.error(`[FileMove] ${err.message}`);
         ws.send(JSON.stringify({
           type: 'file:move_error',
+          ...correlation,
           error: err.message,
         }));
       }
     },
 
     async 'file:rename'(clientMsg) {
+      const correlation = captureRequestCorrelation(clientMsg);
       try {
         const { source, newName } = clientMsg;
         const trimmedName = typeof newName === 'string' ? newName.trim() : '';
         if (typeof source !== 'string' || !isValidEntryName(trimmedName)) {
-          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source and newName are required' }));
+          ws.send(JSON.stringify({
+            type: 'file:rename_error',
+            ...correlation,
+            error: 'Source and newName are required',
+          }));
           return;
         }
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          ws.send(JSON.stringify({
+            type: 'file:rename_error',
+            ...correlation,
+            error: 'No active workspace',
+          }));
           return;
         }
         const resolvedSource = path.resolve(source);
         const resolvedRoot = path.resolve(projectRoot);
         if (!isPathInside(resolvedRoot, resolvedSource) || resolvedSource === resolvedRoot) {
-          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'Source path outside project root' }));
+          ws.send(JSON.stringify({
+            type: 'file:rename_error',
+            ...correlation,
+            error: 'Source path outside project root',
+          }));
           return;
         }
+        const target = path.join(path.dirname(resolvedSource), trimmedName);
+        const sourceRef = relativeToPanel(resolvedSource);
+        const targetRef = relativeToPanel(target);
         const sourceStat = await fsPromises.stat(resolvedSource);
         const sourceIsDirectory = sourceStat.isDirectory();
-        const target = path.join(path.dirname(resolvedSource), trimmedName);
         if (fs.existsSync(target)) {
-          ws.send(JSON.stringify({ type: 'file:rename_error', error: 'A file with that name already exists' }));
+          ws.send(JSON.stringify({
+            type: 'file:rename_error',
+            ...correlation,
+            error: 'A file with that name already exists',
+          }));
           return;
         }
         await fsPromises.rename(resolvedSource, target);
-        const sourceRef = relativeToPanel(resolvedSource);
-        const targetRef = relativeToPanel(target);
         if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
           await moveOfficeThumbnail(resolvedSource, target);
         }
-        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
-        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path);
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path, correlation.workspaceId);
+        if (targetRef) broadcastFileChanged(targetRef.panel, targetRef.path, correlation.workspaceId);
         ws.send(JSON.stringify({
           type: 'file:renamed',
+          ...correlation,
           source,
           target,
           newName: trimmedName,
@@ -399,28 +456,42 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         }));
       } catch (err) {
         console.error(`[FileRename] ${err.message}`);
-        ws.send(JSON.stringify({ type: 'file:rename_error', error: err.message }));
+        ws.send(JSON.stringify({ type: 'file:rename_error', ...correlation, error: err.message }));
       }
     },
 
     async 'file:delete'(clientMsg) {
+      const correlation = captureRequestCorrelation(clientMsg);
       try {
         const { source } = clientMsg;
         if (typeof source !== 'string') {
-          ws.send(JSON.stringify({ type: 'file:delete_error', error: 'Source is required' }));
+          ws.send(JSON.stringify({
+            type: 'file:delete_error',
+            ...correlation,
+            error: 'Source is required',
+          }));
           return;
         }
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
-          ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+          ws.send(JSON.stringify({
+            type: 'file:delete_error',
+            ...correlation,
+            error: 'No active workspace',
+          }));
           return;
         }
         const resolvedSource = path.resolve(source);
         const resolvedRoot = path.resolve(projectRoot);
         if (!isPathInside(resolvedRoot, resolvedSource) || resolvedSource === resolvedRoot) {
-          ws.send(JSON.stringify({ type: 'file:delete_error', error: 'Source path outside project root' }));
+          ws.send(JSON.stringify({
+            type: 'file:delete_error',
+            ...correlation,
+            error: 'Source path outside project root',
+          }));
           return;
         }
+        const sourceRef = relativeToPanel(resolvedSource);
         const sourceStat = await fsPromises.stat(resolvedSource);
         const sourceIsDirectory = sourceStat.isDirectory();
         if (sourceIsDirectory) {
@@ -428,13 +499,13 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         } else {
           await fsPromises.unlink(resolvedSource);
         }
-        const sourceRef = relativeToPanel(resolvedSource);
         if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL) {
           await removeOfficeThumbnail(resolvedSource);
         }
-        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path);
+        if (sourceRef) broadcastFileChanged(sourceRef.panel, sourceRef.path, correlation.workspaceId);
         ws.send(JSON.stringify({
           type: 'file:deleted',
+          ...correlation,
           source,
           sourcePanel: sourceRef?.panel,
           sourcePath: sourceRef?.path,
@@ -442,7 +513,7 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         }));
       } catch (err) {
         console.error(`[FileDelete] ${err.message}`);
-        ws.send(JSON.stringify({ type: 'file:delete_error', error: err.message }));
+        ws.send(JSON.stringify({ type: 'file:delete_error', ...correlation, error: err.message }));
       }
     },
 

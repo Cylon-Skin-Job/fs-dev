@@ -265,7 +265,7 @@ function App() {
   if (hasReceivedWorkspaceInit && activeWorkspaceId === null) {
     return (
       <div ref={containerRef} className="rv-app-container">
-        <header className="rv-header">
+        <header className="rv-header rv-interaction-context">
           <div className="rv-header-left">
             <AiSourceSelector />
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
@@ -299,7 +299,7 @@ function App() {
   if (loading) {
     return (
       <div ref={containerRef} className="rv-app-container">
-        <header className="rv-header">
+        <header className="rv-header rv-interaction-context">
           <div className="rv-header-left">
             <AiSourceSelector />
             <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>
@@ -337,7 +337,7 @@ function App() {
       className={`rv-app-container${isThemePickerOpen ? ' rv-app-container--theme-picker-open' : ''}`}
     >
       {/* Header */}
-      <header className="rv-header">
+      <header className="rv-header rv-interaction-context">
         <div className="rv-header-left">
           <AiSourceSelector />
           <div className={`rv-connection-status ${isConnected ? 'connected' : ''}`}>

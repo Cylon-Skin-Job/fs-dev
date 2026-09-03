@@ -1529,13 +1529,6 @@
    renders a .rv-file-page-action button gets the base reset for free
    (used by Capture's FilePageView header AND the wiki page nav).
 */
-.rv-file-page-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-}
-
 .rv-file-page-action {
   display: flex;
   align-items: center;

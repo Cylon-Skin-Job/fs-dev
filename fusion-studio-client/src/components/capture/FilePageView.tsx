@@ -10,8 +10,6 @@ import { useEffect, useMemo, useRef } from 'react';
 import type { FileWithContent } from '../tile-row/TileRow';
 import { isImageFile } from '../tile-row/documentTileUtils';
 import { CodeView } from '../CodeView';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
 import { FloatingPathActions } from '../FloatingPathActions';
 import { getPanelFileUrl } from '../../lib/panels';
 import { getFileIcon } from '../../lib/file-utils';
@@ -82,6 +80,7 @@ export function FilePageView({
   const isCaptureView = panel === 'capture-viewer';
   const fileIcon = getFileIcon(extension, file.name);
   const isArchiveDoc = folder === DOC_VIEWER_ARCHIVE_FOLDER;
+  const htmlUrl = useCacheBusterUrl(getPanelFileUrl(panel, file.path), true);
   const titleLabel = isArchiveDoc
     ? `ARCHIVE: ${file.name}`
     : folderName
@@ -155,22 +154,6 @@ export function FilePageView({
                 className="rv-file-page-action"
               />
             ) : null}
-            {!isCaptureView ? (
-              <>
-                <CopyPathButton
-                  panel={panel}
-                  relativePath={file.path}
-                  className="rv-file-page-action"
-                  title="Copy file path"
-                />
-                <SendToChatButton
-                  panel={panel}
-                  relativePath={file.path}
-                  className="rv-file-page-action"
-                  title="Send file path to chat"
-                />
-              </>
-            ) : null}
             {onToggleStar ? (
               <button
                 type="button"
@@ -226,7 +209,7 @@ export function FilePageView({
           <IframeSurface
             className="rv-file-page-html-frame"
             iframeClassName="rv-file-page-html-iframe"
-            src={useCacheBusterUrl(getPanelFileUrl(panel, file.path), true)}
+            src={htmlUrl}
             title={file.name}
           />
         ) : (
@@ -238,15 +221,13 @@ export function FilePageView({
         )}
       </div>
 
-      {isCaptureView ? (
-        <FloatingPathActions
-          panel={panel}
-          relativePath={file.path}
-          copyTitle="Copy file path"
-          sendTitle="Send file path to chat"
-          ariaLabel="Capture document actions"
-        />
-      ) : null}
+      <FloatingPathActions
+        panel={panel}
+        relativePath={file.path}
+        copyTitle="Copy file path"
+        sendTitle="Send file path to chat"
+        ariaLabel={isCaptureView ? 'Capture document actions' : 'Document actions'}
+      />
 
     </div>
   );

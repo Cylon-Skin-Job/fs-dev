@@ -27,6 +27,7 @@ import { WebBrowser } from './browser/WebBrowser';
 import { CustomViewer } from './browser/CustomViewer';
 import { CalendarViewer } from './calendar/CalendarViewer';
 import { ViewLayoutControls } from './ViewLayoutControls';
+import { ViewTabBar } from './view-tabs/ViewTabBar';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
@@ -47,9 +48,9 @@ interface ContentAreaProps {
 
 function ContentFrame({ panel, children }: { panel: string; children: ReactNode }) {
   return (
-    <main className="rv-content-area">
+    <main className="rv-content-area" tabIndex={-1}>
       <ViewLayoutControls panel={panel} />
-      {children}
+      <ViewTabBar panel={panel}>{children}</ViewTabBar>
     </main>
   );
 }

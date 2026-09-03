@@ -497,10 +497,9 @@ span.rv-doc-tile-star.is-starred {
   /* Color lives in ai/<machine>/System/styles/capture-viewer.css. */
 }
 
-/* `.rv-file-page-actions` + `.rv-file-page-action` (the action-button cluster)
-   now live in ai/<machine>/System/styles/views.css since they're shared with
-   the wiki page nav. Wiki-specific layout remains in the wiki view's
-   styles/layout.css. */
+/* The shared `.rv-file-page-action` button reset lives in
+   ai/<machine>/System/styles/views.css. Floating page-level placement is
+   owned by the shared renderer component. */
 
 /* Content area — fills remaining space, scrolls. Owns its own padding/
    scroll/box-sizing/text color now that .rv-document-surface no longer

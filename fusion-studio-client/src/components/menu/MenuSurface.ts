@@ -1,3 +1,5 @@
+import { isInteractiveMenuDescriptor } from './menuDescriptors';
+import type { InteractiveMenuDescriptor } from './menuDescriptors';
 import type { MenuDescriptor } from './types';
 
 export interface MenuSurfaceCallbacks {
@@ -11,6 +13,7 @@ export interface RenderMenuSurfaceOptions {
   callbacks: MenuSurfaceCallbacks;
   pendingItemIds: ReadonlySet<string>;
   minWidth?: number;
+  zIndex?: string;
 }
 
 export function enabledMenuItems(surface: HTMLElement): HTMLButtonElement[] {
@@ -22,7 +25,7 @@ export function focusInitialMenuItem(
   surface: HTMLElement,
   descriptors: readonly MenuDescriptor[],
 ) {
-  const interactive = descriptors.filter(({ kind }) => kind !== 'separator');
+  const interactive = descriptors.filter(isInteractiveMenuDescriptor);
   const checked = interactive.length > 0 && interactive.every(({ kind }) => kind === 'radio')
     ? surface.querySelector<HTMLButtonElement>(
       ':scope > .rv-menu-item[role="menuitemradio"][aria-checked="true"]:not(:disabled)',
@@ -32,7 +35,7 @@ export function focusInitialMenuItem(
 }
 
 function renderInteractiveItem(
-  descriptor: Exclude<MenuDescriptor, { kind: 'separator' }>,
+  descriptor: InteractiveMenuDescriptor,
   callbacks: MenuSurfaceCallbacks,
   pending: boolean,
 ) {
@@ -110,12 +113,29 @@ function renderInteractiveItem(
   return item;
 }
 
+function renderNonInteractiveContent(
+  descriptor: Extract<MenuDescriptor, { kind: 'heading' | 'status' }>,
+) {
+  const content = document.createElement('div');
+  content.className = descriptor.kind === 'heading' ? 'rv-menu-heading' : 'rv-menu-status';
+  content.dataset.menuItemId = descriptor.id;
+  content.textContent = descriptor.label;
+  if (descriptor.kind === 'heading') {
+    content.setAttribute('role', 'heading');
+    content.setAttribute('aria-level', '2');
+  } else {
+    content.setAttribute('role', 'status');
+  }
+  return content;
+}
+
 export function createMenuSurface(options: RenderMenuSurfaceOptions): HTMLDivElement {
   const surface = document.createElement('div');
-  surface.className = 'rv-menu-surface';
+  surface.className = 'rv-menu-surface rv-interaction-context';
   surface.setAttribute('role', 'menu');
   surface.setAttribute('aria-label', options.ariaLabel);
   if (options.minWidth) surface.style.setProperty('--rv-menu-min-width', `${options.minWidth}px`);
+  if (options.zIndex) surface.style.setProperty('--rv-menu-z-index', options.zIndex);
   surface.addEventListener('contextmenu', (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -127,6 +147,10 @@ export function createMenuSurface(options: RenderMenuSurfaceOptions): HTMLDivEle
       separator.dataset.menuItemId = descriptor.id;
       separator.setAttribute('role', 'separator');
       surface.appendChild(separator);
+      continue;
+    }
+    if (!isInteractiveMenuDescriptor(descriptor)) {
+      surface.appendChild(renderNonInteractiveContent(descriptor));
       continue;
     }
     surface.appendChild(renderInteractiveItem(

@@ -1,5 +1,6 @@
 import { usePanelStore } from '../state/panelStore';
-import { plusPressed } from './capture/captureTabsController';
+import { isCaptureTabsLatched, plusPressed } from './view-tabs/captureTabsController';
+import { viewTabDomId } from './view-tabs/viewTabDomIds';
 
 interface ViewLayoutControlsProps {
   panel: string;
@@ -65,24 +66,35 @@ export function ViewLayoutControls({ panel }: ViewLayoutControlsProps) {
   const toggleCollapsed = usePanelStore((state) => state.toggleCollapsed);
   const showThreadDrawerControl = chatCollapsed && threadsCollapsed;
   const isCapturePanel = panel === 'capture-viewer';
-  const isCaptureDocFullPage = usePanelStore((state) => {
+  const showCapturePlus = usePanelStore((state) => {
     if (!isCapturePanel) return false;
     const vs = state.viewStates[panel];
-    return (vs?.docViewerFullPage ?? false) || (vs?.docViewerTabs?.length ?? 0) > 0;
+    const tabs = vs?.docViewerTabs ?? [];
+    const active = tabs.find((tab) => tab.id === vs?.docViewerActiveTabId) ?? tabs[0];
+    return Boolean(vs?.docViewerFullPage || active?.kind === 'doc')
+      && !isCaptureTabsLatched(tabs);
   });
 
-  if (!showThreadDrawerControl && !isCaptureDocFullPage) return null;
+  function handleCapturePlus() {
+    const createdId = plusPressed();
+    if (!createdId) return;
+    window.requestAnimationFrame(() => {
+      document.getElementById(viewTabDomId(panel, createdId))?.focus();
+    });
+  }
+
+  if (!showThreadDrawerControl && !showCapturePlus) return null;
 
   return (
     <div className="rv-view-layout-controls" aria-label="View layout controls">
       <div className="rv-view-layout-controls__leading">
-        {isCaptureDocFullPage && (
+        {showCapturePlus && (
           <button
             type="button"
             className="rv-view-layout-control"
             aria-label="New capture view"
             title="New capture view"
-            onClick={() => plusPressed()}
+            onClick={handleCapturePlus}
           >
             <span className="material-symbols-outlined">add</span>
           </button>

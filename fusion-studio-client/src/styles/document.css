@@ -47,47 +47,6 @@
   border-bottom-color: var(--content-attenuated, var(--text-dim, #aaa));
 }
 
-/* The tab rail no longer connects to the document with an upper border. The
- * selected file is a standalone highlight, matching the active-thread model. */
-.rv-file-viewer .rv-file-viewer-header::after {
-  content: none;
-  display: none;
-}
-
-.rv-file-viewer .rv-file-viewer-tab.active {
-  background: var(--content-accent-color, var(--thread-selected-bg, var(--accent-dim)));
-  border: none;
-  border-radius: 8px;
-  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
-}
-
-.rv-file-viewer .rv-file-viewer-tab:not(.active):hover {
-  background: var(--content-accent-color, var(--thread-selected-bg, var(--accent-dim)));
-  border-radius: 8px;
-  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
-  transform: translateY(0);
-}
-
-.rv-file-viewer .rv-file-viewer-tab:not(.active):hover :is(.rv-tab-icon, .rv-tab-name) {
-  color: var(--content-accent-foreground-color, var(--thread-selected-foreground-color, var(--text-white)));
-}
-
-.rv-file-viewer .rv-file-viewer-tabs .rv-file-viewer-tab .rv-tab-close {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.rv-file-viewer .rv-file-viewer-tabs .rv-file-viewer-tab:is(.active, :hover, :focus-within) .rv-tab-close {
-  opacity: 0.6;
-  pointer-events: auto;
-}
-
-/* Content Foreground controls inactive file-tab titles and their file icons as
- * one visual label. Active tabs keep their higher-contrast selected state. */
-.rv-file-viewer .rv-file-viewer-tab:not(.active) :is(.rv-tab-icon, .rv-tab-name) {
-  color: var(--content-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
-}
-
 /* One scroll on the editor; gutter sticky-left for wide lines (global .rv-code-editor rules) */
 .rv-file-viewer-content .rv-code-editor {
   flex: 1;

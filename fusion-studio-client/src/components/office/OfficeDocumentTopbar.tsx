@@ -1,12 +1,11 @@
 /**
  * @module OfficeDocumentTopbar
  * @role Pure renderer for the document editor's top navigation strip.
- *       Includes the back button, filename/dirty indicator, copy/chat path
- *       actions, the export trigger, and the side-panel toggles.
+ *       Includes the back button, filename/dirty indicator, export trigger,
+ *       side-panel toggles, and the page-level floating path actions.
  */
 import type { FileWithContent } from '../../state/fileDataStore';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 import { OfficeDocumentExportMenuButton } from './OfficeDocumentExportMenuButton';
 
 const PANEL = 'office-viewer';
@@ -52,9 +51,6 @@ export function OfficeDocumentTopbar({
       </span>
 
       <div className="rv-office-document-actions">
-        <CopyPathButton panel={PANEL} relativePath={file.path} className="rv-office-document-action" title="Copy path" />
-        <SendToChatButton panel={PANEL} relativePath={file.path} className="rv-office-document-action" title="Send path to chat" />
-
         <OfficeDocumentExportMenuButton
           exportingFormat={exportingFormat}
           onExport={onExport}
@@ -77,6 +73,7 @@ export function OfficeDocumentTopbar({
           <span className="material-symbols-outlined">browse_gallery</span>
         </button>
       </div>
+      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Office document actions" />
     </div>
   );
 }

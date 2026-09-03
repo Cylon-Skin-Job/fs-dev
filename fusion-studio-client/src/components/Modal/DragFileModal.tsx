@@ -11,6 +11,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import type { ModalConfig } from '../../lib/modal';
+import { nextWorkspaceRequestId } from '../../lib/workspaceResponseTracker';
 
 interface Props {
   config: ModalConfig;
@@ -45,7 +46,8 @@ export function DragFileModal({ config, onDismiss }: Props) {
     e.preventDefault();
     setDragOver(false);
 
-    const ws = usePanelStore.getState().ws;
+    const panelState = usePanelStore.getState();
+    const ws = panelState.ws;
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       console.error('[DragFileModal] WebSocket not connected');
       return;
@@ -55,6 +57,7 @@ export function DragFileModal({ config, onDismiss }: Props) {
       type: 'file:move',
       source: data.source,
       target: data.target,
+      requestId: nextWorkspaceRequestId('file:move', panelState.activeWorkspaceId),
     }));
 
     setDeployed(true);

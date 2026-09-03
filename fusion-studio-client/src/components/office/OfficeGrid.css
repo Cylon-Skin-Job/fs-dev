@@ -3,6 +3,7 @@
    ============================================ */
 
 .rv-office-shell {
+  position: relative;
   --rv-office-item-min-width: 220px;
   --rv-office-grid-gap: var(--space-md);
   --rv-office-card-fill: var(--sidebar-surface-bg, var(--ws-sidebar-bg, var(--panel-chrome-bg, var(--surface-elevated, #1a1a1a))));
@@ -430,13 +431,6 @@
   padding: 0 var(--space-xl);
   box-sizing: border-box;
   background: transparent;
-}
-
-.rv-office-folder-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-left: 10px;
 }
 
 .rv-office-header-action,

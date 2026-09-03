@@ -1,11 +1,16 @@
 import { create } from 'zustand';
-import type { FileTreeNode, FileInfo, EditorTab } from '../types/file-explorer';
+import type { FileTreeNode, FileInfo, EditorTab, FileEditorTab } from '../types/file-explorer';
 import { basename, isAutocompleteFilePath } from '../lib/chat-file-links/file-link-filter';
 import { useChatFileLinkStore } from './chatFileLinkStore';
 import { createActivityItem, replaceViewTabs } from '../lib/viewActivity';
 import type { ViewActivityState } from '../types';
 
 const FILE_VIEWER_PANEL = 'file-viewer';
+export const FILE_VIEW_HOME_TAB_ID = 'file-view-home' as const;
+
+export function fileTabId(tab: EditorTab): string {
+  return tab.kind === 'home' ? tab.id : tab.file.path;
+}
 
 interface WorkspaceFileState {
   rootNodes: FileTreeNode[];
@@ -53,6 +58,7 @@ interface FileState {
 
   /** Add or focus tab; returns whether to send file_content_request. */
   openFileTab: (file: FileInfo) => { shouldFetch: boolean };
+  openViewHomeTab: () => string | null;
   applyFileContent: (
     path: string,
     content: string,
@@ -74,8 +80,8 @@ interface FileState {
 /** After removing the tab that was at `closedIdx`, prefer the tab to the left (reading order). */
 function pickActiveAfterClose(newTabs: EditorTab[], closedIdx: number): string {
   const left = newTabs[closedIdx - 1];
-  if (left) return left.file.path;
-  return newTabs[closedIdx]!.file.path;
+  if (left) return fileTabId(left);
+  return fileTabId(newTabs[closedIdx]!);
 }
 
 function upsertOpenTabAutocompleteCandidate(path: string) {
@@ -100,9 +106,13 @@ function createFileMetadata(file: FileInfo): Record<string, string | boolean> | 
 }
 
 function persistFileTabs(tabs: EditorTab[], activeTabPath: string | null) {
+  const durableTabs = tabs.filter((tab) => tab.kind === 'file');
+  const durableActivePath = durableTabs.some((tab) => tab.file.path === activeTabPath)
+    ? activeTabPath
+    : (durableTabs[0]?.file.path ?? null);
   replaceViewTabs(
     FILE_VIEWER_PANEL,
-    tabs.map((tab, index) => createActivityItem({
+    durableTabs.map((tab, index) => createActivityItem({
       panel: FILE_VIEWER_PANEL,
       path: tab.file.path,
       title: tab.file.name,
@@ -111,15 +121,19 @@ function persistFileTabs(tabs: EditorTab[], activeTabPath: string | null) {
       tabIndex: index,
       metadata: createFileMetadata(tab.file),
     })),
-    activeTabPath ? `${FILE_VIEWER_PANEL}:${activeTabPath}` : null,
+    durableActivePath ? `${FILE_VIEWER_PANEL}:${durableActivePath}` : null,
   );
 }
 
 function tabsMatchActivity(tabs: EditorTab[], activeTabPath: string | null, activity: ViewActivityState): boolean {
-  if (tabs.length !== activity.tabs.length) return false;
-  const activeId = activeTabPath ? `${FILE_VIEWER_PANEL}:${activeTabPath}` : null;
+  const durableTabs = tabs.filter((tab) => tab.kind === 'file');
+  if (durableTabs.length !== activity.tabs.length) return false;
+  const durableActivePath = durableTabs.some((tab) => tab.file.path === activeTabPath)
+    ? activeTabPath
+    : (durableTabs[0]?.file.path ?? null);
+  const activeId = durableActivePath ? `${FILE_VIEWER_PANEL}:${durableActivePath}` : null;
   if (activeId !== activity.activeTabId) return false;
-  return tabs.every((tab, index) => tab.file.path === activity.tabs[index]?.path);
+  return durableTabs.every((tab, index) => tab.file.path === activity.tabs[index]?.path);
 }
 
 export const useFileStore = create<FileState>((set, get) => ({
@@ -230,12 +244,20 @@ export const useFileStore = create<FileState>((set, get) => ({
   openFileTab: (file) => {
     const state = get();
     const path = file.path;
-    const existingIdx = state.tabs.findIndex((t) => t.file.path === path);
+    const activeHomeIndex = state.activeTabPath === FILE_VIEW_HOME_TAB_ID
+      ? state.tabs.findIndex((tab) => tab.kind === 'home')
+      : -1;
+    const existingIdx = state.tabs.findIndex((tab) => tab.kind === 'file' && tab.file.path === path);
 
     if (existingIdx !== -1) {
-      const tabs = [...state.tabs];
-      const [tab] = tabs.splice(existingIdx, 1);
-      tabs.unshift(tab);
+      const remaining = activeHomeIndex >= 0
+        ? state.tabs.filter((candidate) => candidate.kind !== 'home')
+        : [...state.tabs];
+      const reorderedIndex = remaining.findIndex(
+        (candidate) => candidate.kind === 'file' && candidate.file.path === path,
+      );
+      const [existing] = remaining.splice(reorderedIndex, 1);
+      const tabs = existing ? [existing, ...remaining] : remaining;
       upsertOpenTabAutocompleteCandidate(path);
       persistFileTabs(tabs, path);
       set({
@@ -248,13 +270,16 @@ export const useFileStore = create<FileState>((set, get) => ({
     }
 
     const newTab: EditorTab = {
+      kind: 'file',
       file,
       content: '',
       size: 0,
       loading: true,
     };
     upsertOpenTabAutocompleteCandidate(path);
-    const tabs = [...state.tabs, newTab];
+    const tabs = activeHomeIndex >= 0
+      ? state.tabs.map((tab, index) => index === activeHomeIndex ? newTab : tab)
+      : [...state.tabs, newTab];
     persistFileTabs(tabs, path);
     set({
       tabs,
@@ -265,9 +290,22 @@ export const useFileStore = create<FileState>((set, get) => ({
     return { shouldFetch: true };
   },
 
+  openViewHomeTab: () => {
+    const state = get();
+    if (state.tabs.length === 0) return null;
+    const existing = state.tabs.find((tab) => tab.kind === 'home');
+    if (existing) {
+      set({ activeTabPath: existing.id, viewMode: 'viewer', error: null });
+      return existing.id;
+    }
+    const home: EditorTab = { kind: 'home', id: FILE_VIEW_HOME_TAB_ID, loading: false };
+    set({ tabs: [...state.tabs, home], activeTabPath: home.id, viewMode: 'viewer', error: null });
+    return home.id;
+  },
+
   applyFileContent: (path, content, size, metadata) => set((state) => {
     const tabs = state.tabs.map((t) =>
-      t.file.path === path
+      t.kind === 'file' && t.file.path === path
         ? {
             ...t,
             file: metadata
@@ -291,10 +329,10 @@ export const useFileStore = create<FileState>((set, get) => ({
   }),
 
   removeTabAfterError: (path, message) => set((state) => {
-    const closedIdx = state.tabs.findIndex((t) => t.file.path === path);
+    const closedIdx = state.tabs.findIndex((tab) => tab.kind === 'file' && tab.file.path === path);
     if (closedIdx === -1) return { error: message };
     const wasActive = state.activeTabPath === path;
-    const newTabs = state.tabs.filter((t) => t.file.path !== path);
+    const newTabs = state.tabs.filter((tab) => tab.kind !== 'file' || tab.file.path !== path);
     if (newTabs.length === 0) {
       persistFileTabs([], null);
       return {
@@ -318,7 +356,7 @@ export const useFileStore = create<FileState>((set, get) => ({
   }),
 
   setActiveTab: (path) => set((state) => {
-    if (!state.tabs.some((t) => t.file.path === path)) return {};
+    if (!state.tabs.some((tab) => fileTabId(tab) === path)) return {};
     persistFileTabs(state.tabs, path);
     return { activeTabPath: path };
   }),
@@ -326,20 +364,20 @@ export const useFileStore = create<FileState>((set, get) => ({
   activateAdjacentTab: (delta) => set((state) => {
     const { tabs, activeTabPath } = state;
     if (tabs.length === 0) return {};
-    const idx = tabs.findIndex((t) => t.file.path === activeTabPath);
+    const idx = tabs.findIndex((tab) => fileTabId(tab) === activeTabPath);
     if (idx === -1) return {};
     const nextIdx = idx + delta;
     if (nextIdx < 0 || nextIdx >= tabs.length) return {};
-    const nextActiveTabPath = tabs[nextIdx].file.path;
+    const nextActiveTabPath = fileTabId(tabs[nextIdx]);
     persistFileTabs(tabs, nextActiveTabPath);
     return { activeTabPath: nextActiveTabPath };
   }),
 
   closeTab: (path) => set((state) => {
-    const closedIdx = state.tabs.findIndex((t) => t.file.path === path);
+    const closedIdx = state.tabs.findIndex((tab) => fileTabId(tab) === path);
     if (closedIdx === -1) return {};
     const wasActive = state.activeTabPath === path;
-    const newTabs = state.tabs.filter((t) => t.file.path !== path);
+    const newTabs = state.tabs.filter((tab) => fileTabId(tab) !== path);
     if (newTabs.length === 0) {
       persistFileTabs([], null);
       return {
@@ -365,7 +403,10 @@ export const useFileStore = create<FileState>((set, get) => ({
   hydrateTabsFromActivity: (activity) => {
     const state = get();
     if (tabsMatchActivity(state.tabs, state.activeTabPath, activity)) return;
-    const tabs: EditorTab[] = activity.tabs.map((item) => ({
+    const tabs: FileEditorTab[] = activity.tabs
+      .filter((item) => typeof item.path === 'string' && item.path.trim().length > 0)
+      .map((item) => ({
+      kind: 'file',
       file: {
         name: item.title,
         path: item.path,
@@ -378,9 +419,11 @@ export const useFileStore = create<FileState>((set, get) => ({
       size: 0,
       loading: true,
     }));
+    const fallbackPath = tabs[0]?.file.path ?? null;
     const activePath = activity.activeTabId
-      ? tabs.find((tab) => `${FILE_VIEWER_PANEL}:${tab.file.path}` === activity.activeTabId)?.file.path ?? null
-      : (tabs[0]?.file.path ?? null);
+      ? tabs.find((tab) => `${FILE_VIEWER_PANEL}:${tab.file.path}` === activity.activeTabId)?.file.path
+        ?? fallbackPath
+      : fallbackPath;
     for (const tab of tabs) {
       upsertOpenTabAutocompleteCandidate(tab.file.path);
     }

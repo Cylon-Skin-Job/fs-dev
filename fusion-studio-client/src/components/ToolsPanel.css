@@ -99,6 +99,7 @@
 /* ── ToolsPanel — left-rail workspace/tool switcher ─────────────────────── */
 
 .rv-tools-panel {
+  --interactive-surface-bg: var(--panel-chrome-bg, #1a1a1a);
   grid-column: 1 / 2;
   grid-row: 2;
   background: var(--panel-chrome-bg, #1a1a1a);
@@ -126,9 +127,15 @@
   font-size: var(--navigation-rail-icon-size, 24px);
 }
 
-.rv-tool-btn:hover {
-  color: var(--theme-primary);
-  background: rgba(var(--theme-primary-rgb), 0.05);
+.rv-tool-btn:hover:not(.active),
+.rv-tool-btn:active:not(.active) {
+  color: var(--interactive-contrast-foreground, #ffffff);
+  background: transparent;
+}
+
+.rv-tool-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
 }
 
 .rv-tool-btn.active {
@@ -177,7 +184,7 @@
 }
 
 .rv-tool-btn--tool {
-  height: 48px;
+  height: 40px;
 }
 
 .rv-view-context-menu {

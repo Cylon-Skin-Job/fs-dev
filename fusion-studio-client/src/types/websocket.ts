@@ -171,7 +171,7 @@ export interface WebSocketMessage {
   workspace?: Workspace;
   activeWorkspaceId?: string | null;
   sourceMachineName?: string;
-  workspaceId?: string;
+  workspaceId?: string | null;
   from?: string | null;
   to?: string | null;
   repoPath?: string | null;

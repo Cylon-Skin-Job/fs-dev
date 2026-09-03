@@ -188,7 +188,11 @@ export interface AppState {
   viewStates: Record<string, ViewUIState>;
   loadViewState: (view: string) => void;
   setViewState: (view: string, state: Partial<ViewUIState>) => void;
-  _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => void;
+  _persistViewPatch: (
+    view: string,
+    patch: Partial<ViewUIState>,
+    clientMutationId?: number,
+  ) => void;
   toggleCollapsed: (view: string, pane: CollapsablePane) => void;
   setPaneWidth: (view: string, pane: Pane, width: number) => void;
   commitPaneWidths: (view: string, pane?: Pane) => void;

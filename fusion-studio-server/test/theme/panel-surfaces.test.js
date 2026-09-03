@@ -28,6 +28,13 @@ describe('panel surface color derivation', () => {
     expect(computePanelSurfaces({ ...entry, panelContrast: 50 }).floor).toBe('#260c03');
   });
 
+  test('publishes the mode-correct interactive contrast foreground', () => {
+    expect(panelCss.render({ ...entry, luminance: 50 }))
+      .toContain('--interactive-contrast-foreground: #ffffff;');
+    expect(panelCss.render({ ...entry, luminance: 51 }))
+      .toContain('--interactive-contrast-foreground: #000000;');
+  });
+
   test('derives the wand color with the shared OKLCH emphasis heuristic', () => {
     expect(computeUiEmphasizedAccent({ accent: '#242235', luminance: 0 })).toBe('#6d6b80');
     expect(computeUiEmphasizedAccent({ accent: '#000000', luminance: 0 })).toBe('#ffffff');

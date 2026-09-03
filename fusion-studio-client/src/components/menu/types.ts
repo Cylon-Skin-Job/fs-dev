@@ -79,19 +79,35 @@ export interface MenuSeparatorDescriptor {
   id: string;
 }
 
+export interface MenuHeadingDescriptor {
+  kind: 'heading';
+  id: string;
+  label: string;
+}
+
+export interface MenuStatusDescriptor {
+  kind: 'status';
+  id: string;
+  label: string;
+}
+
 export type MenuDescriptor =
   | MenuActionDescriptor
   | MenuRadioDescriptor
   | MenuSubmenuDescriptor
   | MenuExternalChildDescriptor
-  | MenuSeparatorDescriptor;
+  | MenuSeparatorDescriptor
+  | MenuHeadingDescriptor
+  | MenuStatusDescriptor;
 
 export interface MenuOpenOptions {
   anchor: MenuAnchor;
+  invocationElement?: Element;
   items: readonly MenuDescriptor[];
   ariaLabel: string;
   initialFocusId?: string;
   minWidth?: number;
+  zIndex?: string;
   restoreInvocationFocus: () => void;
   focusAfterAction: () => void;
   onActionError?: (error: unknown, itemId: string) => void;

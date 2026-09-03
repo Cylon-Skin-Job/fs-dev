@@ -364,7 +364,9 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       // Post-terminal acknowledgement family — bypasses the live-current-
       // turn gate entirely (legally arrives after currentTurn===null) and
       // touches no live helper namespace.
-      const openTabPaths = useFileStore.getState().tabs.map((tab) => tab.file.path);
+      const openTabPaths = useFileStore.getState().tabs
+        .filter((tab) => tab.kind === 'file')
+        .map((tab) => tab.file.path);
       useChatFileLinkStore.getState().mergeExchangeAutocompleteCandidates({
         seq: 0,
         ts: typeof msg.ts === 'number' ? msg.ts : Date.now(),

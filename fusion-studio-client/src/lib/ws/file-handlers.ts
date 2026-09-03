@@ -7,10 +7,19 @@
 
 import { useActiveResourceStore } from '../../state/activeResourceStore';
 import { useFileDataStore, type FileNode, type FileResourceMetadata } from '../../state/fileDataStore';
+import { usePanelStore } from '../../state/panelStore';
 import { markOfficeThumbnailUpdated } from '../../state/officeThumbnailStore';
 import { showToast } from '../toast';
 import { removeViewPathReferences, rewriteViewPathReferences } from '../viewCollections';
+import {
+  removeCaptureTabPathReferences,
+  rewriteCaptureTabPathReferences,
+} from '../../components/view-tabs/captureTabPathReferences';
 import type { WebSocketMessage } from '../../types';
+import {
+  shouldApplyWorkspaceResponse,
+  type WorkspaceRequestFamily,
+} from '../workspaceResponseTracker';
 
 interface FileChangedMessage extends WebSocketMessage {
   type: 'file_changed';
@@ -142,6 +151,18 @@ function symlinkMetadata(msg: { isSymlink?: boolean; symlinkTarget?: string }): 
     : undefined;
 }
 
+function shouldApplyFileMutationResponse(
+  family: WorkspaceRequestFamily,
+  msg: WebSocketMessage,
+): boolean {
+  return shouldApplyWorkspaceResponse(
+    family,
+    msg.requestId,
+    msg.workspaceId,
+    usePanelStore.getState().activeWorkspaceId,
+  );
+}
+
 function responseCorrelation(msg: {
   requestId?: string;
   workspaceId?: string | null;
@@ -246,16 +267,25 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file:moved': {
+      if (!shouldApplyFileMutationResponse('file:move', msg)) return true;
       const m = msg as FileMovedMessage;
       if (m.sourcePanel && m.sourcePath && m.targetPath) {
+        const targetPanel = m.targetPanel ?? m.sourcePanel;
         rewriteViewPathReferences({
           panel: m.sourcePanel,
           path: m.sourcePath,
-          nextPanel: m.targetPanel ?? m.sourcePanel,
+          nextPanel: targetPanel,
           nextPath: m.targetPath,
           title: m.targetPath.split('/').pop(),
           folder: folderFromPath(m.targetPath),
           extension: extensionFromPath(m.targetPath),
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
+        rewriteCaptureTabPathReferences({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel,
+          targetPath: m.targetPath,
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
       }
@@ -263,20 +293,30 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file:move_error':
+      if (!shouldApplyFileMutationResponse('file:move', msg)) return true;
       showToast(`File move failed: ${(msg as FileMoveErrorMessage).error}`);
       return true;
 
     case 'file:renamed': {
+      if (!shouldApplyFileMutationResponse('file:rename', msg)) return true;
       const m = msg as FileRenamedMessage;
       if (m.sourcePanel && m.sourcePath && m.targetPath) {
+        const targetPanel = m.targetPanel ?? m.sourcePanel;
         rewriteViewPathReferences({
           panel: m.sourcePanel,
           path: m.sourcePath,
-          nextPanel: m.targetPanel ?? m.sourcePanel,
+          nextPanel: targetPanel,
           nextPath: m.targetPath,
           title: m.newName || m.targetPath.split('/').pop(),
           folder: folderFromPath(m.targetPath),
           extension: extensionFromPath(m.targetPath),
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
+        rewriteCaptureTabPathReferences({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel,
+          targetPath: m.targetPath,
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
       }
@@ -285,15 +325,22 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file:rename_error':
+      if (!shouldApplyFileMutationResponse('file:rename', msg)) return true;
       showToast(`Rename failed: ${(msg as FileRenameErrorMessage).error}`);
       return true;
 
     case 'file:deleted': {
+      if (!shouldApplyFileMutationResponse('file:delete', msg)) return true;
       const m = msg as FileDeletedMessage;
       if (m.sourcePanel && m.sourcePath) {
         removeViewPathReferences({
           panel: m.sourcePanel,
           path: m.sourcePath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
+        removeCaptureTabPathReferences({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
       }
@@ -302,6 +349,7 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file:delete_error':
+      if (!shouldApplyFileMutationResponse('file:delete', msg)) return true;
       showToast(`Delete failed: ${(msg as FileDeleteErrorMessage).error}`);
       return true;
 

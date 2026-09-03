@@ -1,5 +1,7 @@
 import { enabledMenuItems, focusInitialMenuItem } from './MenuSurface';
 import { createMenuActionRuntime } from './menuActionRuntime';
+import { isInteractiveMenuDescriptor } from './menuDescriptors';
+import type { InteractiveMenuDescriptor } from './menuDescriptors';
 import { createMenuExternalRegistry } from './menuExternalRegistry';
 import { handleMenuTreeKeyDown } from './menuKeyboard';
 import { positionChildMenu, positionRootMenu } from './menuPositioning';
@@ -11,7 +13,7 @@ import {
   menuSurfaceItemReference,
   rerenderMenuSurfaceRecord,
 } from './menuSurfaceRecords';
-import type { InteractiveMenuDescriptor, MenuSurfaceRecord } from './menuTreeRecords';
+import type { MenuSurfaceRecord } from './menuTreeRecords';
 import type {
   MenuCloseReason,
   MenuDescriptor,
@@ -39,6 +41,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
   const isNodeInsideTree = (node: Node | null) => Boolean(node && (
     surfaces.some((surface) => surface.element.contains(node))
     || externals.contains(node)
+    || options.invocationElement?.contains(node)
   ));
 
   const focusClosestParent = (closed: MenuSurfaceRecord) => {
@@ -228,6 +231,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
     const child = createSurfaceRecord({
       items: descriptor.items,
       ariaLabel: descriptor.label,
+      zIndex: options.zIndex,
       anchor: { kind: 'element', element, placement: 'right-start' },
       parentSurfaceId: surface.id,
       parentItemId: descriptor.id,
@@ -252,6 +256,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
       items: childOptions.items,
       ariaLabel: childOptions.ariaLabel,
       minWidth: childOptions.minWidth,
+      zIndex: options.zIndex,
       anchor: { kind: 'element', element: childOptions.anchorElement, placement: 'right-start' },
       parentSurfaceId: surface.id,
       parentItemId: ownerItemId,
@@ -274,7 +279,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
     descriptor: MenuDescriptor,
     element: HTMLButtonElement,
   ) => {
-    if (descriptor.kind === 'separator' || descriptor.disabled) return;
+    if (!isInteractiveMenuDescriptor(descriptor) || descriptor.disabled) return;
     if (descriptor.kind === 'submenu') {
       openSubmenu(surface, descriptor, element, true);
       return;
@@ -292,7 +297,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
     descriptor: MenuDescriptor,
     element: HTMLButtonElement,
   ) => {
-    if (descriptor.kind === 'separator' || descriptor.disabled) return;
+    if (!isInteractiveMenuDescriptor(descriptor) || descriptor.disabled) return;
     if (descriptor.kind === 'submenu') {
       openSubmenu(surface, descriptor, element, false);
       return;
@@ -414,6 +419,7 @@ export function openMenuTree(options: MenuOpenOptions): MenuHandle {
     items: rootItems,
     ariaLabel: options.ariaLabel,
     minWidth: options.minWidth,
+    zIndex: options.zIndex,
     anchor: options.anchor,
     parentSurfaceId: null,
     parentItemId: null,

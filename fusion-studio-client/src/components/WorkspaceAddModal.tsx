@@ -56,7 +56,7 @@ function WorkspaceAddModalContent() {
               Cancel to abort, or continue when you are ready to choose a project folder that already has /ai.
             </p>
             <div className="rv-add-modal-actions">
-              <button type="button" className="rv-add-modal-btn" onClick={closeAndReset}>
+              <button type="button" className="rv-add-modal-btn" onClick={closeAndReset} autoFocus>
                 Cancel
               </button>
               <button

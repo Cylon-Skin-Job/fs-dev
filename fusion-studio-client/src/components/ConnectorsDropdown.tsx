@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import '../styles/dropdown.css';
 import './ConnectorsDropdown.css';
 import { usePanelStore } from '../state/panelStore';
@@ -22,13 +23,27 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 export function ConnectorsDropdown() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const open = usePanelStore((s) => s.isConnectorsDropdownOpen);
   const statuses = usePanelStore((s) => s.connectorStatuses);
   const toggleConnector = usePanelStore((s) => s.toggleConnector);
   const setConnectorsDropdownOpen = usePanelStore((s) => s.setConnectorsDropdownOpen);
 
+  useEffect(() => {
+    if (!open) return;
+    const handleOutsidePointer = (event: PointerEvent) => {
+      if (rootRef.current?.contains(event.target as Node)) return;
+      setConnectorsDropdownOpen(false);
+    };
+    document.addEventListener('pointerdown', handleOutsidePointer, true);
+    return () => document.removeEventListener('pointerdown', handleOutsidePointer, true);
+  }, [open, setConnectorsDropdownOpen]);
+
+  useEffect(() => () => setConnectorsDropdownOpen(false), [setConnectorsDropdownOpen]);
+
   return (
     <div
+      ref={rootRef}
       className="rv-dropdown rv-connectors-dropdown"
       role="menu"
       data-open={open}

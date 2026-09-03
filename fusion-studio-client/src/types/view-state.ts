@@ -197,20 +197,41 @@ export interface ViewUIState {
   collections: ViewCollectionsState;
 }
 
-export interface DocViewerTabUi {
-  mode?: 'active' | 'recent' | 'starred' | 'archive';
-  gridScroll?: number;
-  docScroll?: number;
+export type DocViewerMode = 'active' | 'recent' | 'starred' | 'archive';
+
+export interface DocViewerModeBucket {
+  selectedPath: string | null;
+  gridScroll: number;
+  docScroll: number;
 }
 
-export interface DocViewerTab {
-  id: string;
-  kind: 'capture' | 'doc';
-  path?: string;
-  name?: string;
-  extension?: string;
-  ui?: DocViewerTabUi;
+export interface DocViewerTabUi {
+  mode: DocViewerMode;
+  lastOpenedPath: string | null;
+  byMode: {
+    active: DocViewerModeBucket;
+    archive: DocViewerModeBucket;
+  };
 }
+
+interface DocViewerTabBase {
+  id: string;
+  ui: DocViewerTabUi;
+}
+
+export interface DocViewerDocumentTab extends DocViewerTabBase {
+  kind: 'doc';
+  path: string;
+  name: string;
+  extension: string;
+}
+
+export interface DocViewerCaptureTab extends DocViewerTabBase {
+  kind: 'capture';
+}
+
+/** A future transportable-view variant is reserved by the Universal Tab SPEC. */
+export type DocViewerTab = DocViewerDocumentTab | DocViewerCaptureTab;
 
 export interface ViewStateTints {
   leftPanel:     boolean;

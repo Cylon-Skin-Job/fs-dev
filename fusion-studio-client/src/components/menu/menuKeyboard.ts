@@ -1,4 +1,6 @@
 import { enabledMenuItems } from './MenuSurface';
+import { isInteractiveMenuDescriptor } from './menuDescriptors';
+import type { InteractiveMenuDescriptor } from './menuDescriptors';
 import type { MenuSurfaceRecord } from './menuTreeRecords';
 import type { MenuDescriptor } from './types';
 
@@ -15,7 +17,7 @@ interface MenuKeyboardOptions {
   ) => void;
   activate: (
     surface: MenuSurfaceRecord,
-    descriptor: Exclude<MenuDescriptor, { kind: 'separator' }>,
+    descriptor: InteractiveMenuDescriptor,
     element: HTMLButtonElement,
   ) => void;
 }
@@ -73,7 +75,9 @@ export function handleMenuTreeKeyDown(event: KeyboardEvent, options: MenuKeyboar
     if (options.surfaceIndex(surface) > 0) options.closeChildSurface(surface);
     return;
   }
-  if ((event.key === 'Enter' || event.key === ' ') && descriptor && descriptor.kind !== 'separator') {
+  if ((event.key === 'Enter' || event.key === ' ')
+    && descriptor
+    && isInteractiveMenuDescriptor(descriptor)) {
     event.preventDefault();
     event.stopPropagation();
     options.activate(surface, descriptor, active);

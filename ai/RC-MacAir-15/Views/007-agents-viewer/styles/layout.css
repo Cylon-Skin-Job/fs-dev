@@ -127,6 +127,7 @@
    ============================================================ */
 
 .rv-agent-detail-fullscreen {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;

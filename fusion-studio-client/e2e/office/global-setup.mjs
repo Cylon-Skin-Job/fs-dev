@@ -93,6 +93,42 @@ function seedCaptureRehydrationFixtures(fixture) {
       path.join(capturesRoot, `Capture-${suffix.toUpperCase()}.md`),
       `# Capture ${suffix.toUpperCase()}\n`,
     )
+    fs.writeFileSync(
+      path.join(capturesRoot, `Capture-${suffix.toUpperCase()}-Second.md`),
+      `# Capture ${suffix.toUpperCase()} Second\n`,
+    )
+
+    const fileViewRoot = path.join(machineRoot, 'Views', '005-file-viewer')
+    fs.mkdirSync(path.join(fileViewRoot, 'styles'), { recursive: true })
+    fs.mkdirSync(path.join(fileViewRoot, 'state'), { recursive: true })
+    fs.writeFileSync(path.join(fileViewRoot, 'manifest.md'), [
+      '---',
+      'name: Files',
+      'metadata:',
+      '  view-id: file-viewer',
+      '  view-type: files',
+      '  data-source: project-root',
+      '  enabled: true',
+      '---',
+      '',
+    ].join('\n'))
+    fs.writeFileSync(path.join(fileViewRoot, 'content.json'), `${JSON.stringify({
+      version: 1,
+      dataSource: 'project-root',
+      root: { type: 'project-root' },
+    }, null, 2)}\n`)
+    fs.writeFileSync(path.join(fileViewRoot, 'styles', 'icon.md'), [
+      '---',
+      'metadata:',
+      '  icon-name: folder_code',
+      '---',
+      '',
+    ].join('\n'))
+    fs.writeFileSync(path.join(fileViewRoot, 'styles', 'layout.json'), '{}\n')
+    fs.writeFileSync(path.join(fileViewRoot, 'styles', 'layout.css'), '\n')
+    fs.writeFileSync(path.join(fileViewRoot, 'state', 'state.json'), '{}\n')
+    fs.writeFileSync(path.join(workspaceRoot, `Tab-${suffix.toUpperCase()}-One.md`), '# File one\n')
+    fs.writeFileSync(path.join(workspaceRoot, `Tab-${suffix.toUpperCase()}-Two.md`), '# File two\n')
 
     fs.mkdirSync(path.join(emailViewRoot, 'styles'), { recursive: true })
     fs.mkdirSync(path.join(emailViewRoot, 'state'), { recursive: true })

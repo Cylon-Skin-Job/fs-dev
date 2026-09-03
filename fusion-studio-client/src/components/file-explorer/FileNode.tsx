@@ -12,7 +12,7 @@ interface FileNodeProps {
 
 export function FileNode({ node, depth }: FileNodeProps) {
   const isThisFileLoading = useFileStore((s) =>
-    s.tabs.some((t) => t.file.path === node.path && t.loading),
+    s.tabs.some((tab) => tab.kind === 'file' && tab.file.path === node.path && tab.loading),
   );
 
   const icon = getFileIcon(node.extension);

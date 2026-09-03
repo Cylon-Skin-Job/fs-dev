@@ -83,7 +83,12 @@ function createClientMessageRouter({
 }) {
 
   // Per-connection sub-factories for larger handler groups
-  const getAllClients = () => Array.from(sessions.keys()).filter((client) => client.readyState === 1);
+  const getAllClients = (workspaceId) => Array.from(sessions.entries())
+    .filter(([client, clientSession]) => (
+      client.readyState === 1
+      && (workspaceId === undefined || clientSession.currentWorkspaceId === workspaceId)
+    ))
+    .map(([client]) => client);
 
   const threadHandlers = createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot });
   const harnessHandlers = createHarnessWsHandlers({ ws });

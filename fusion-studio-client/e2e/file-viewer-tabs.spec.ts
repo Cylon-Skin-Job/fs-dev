@@ -1,58 +1,122 @@
 import { expect, test } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+import { useFileStore } from '../src/state/fileStore';
 
 function read(relativePath: string) {
   return fs.readFileSync(path.resolve(process.cwd(), relativePath), 'utf8');
 }
 
-test('file tabs use the browser tab design and shrink to fit without navigation controls', () => {
-  const viewerSource = read('src/components/file-explorer/FileViewer.tsx');
+test('File tabs are shell-hosted and retain shared responsive geometry', () => {
+  const contentArea = read('src/components/ContentArea.tsx');
+  const viewer = read('src/components/file-explorer/FileViewer.tsx');
   const browserTabsCss = read('src/components/browser/BrowserTabs.css');
+  const strip = read('src/components/view-tabs/ViewTabStrip.tsx');
+  const css = read('src/components/view-tabs/ViewTabBar.css');
+  const fileLayout = read('../ai/RC-MacAir-15/Views/002-file-viewer/styles/layout.css');
+  const fileTheme = read('../ai/RC-MacAir-15/System/styles/file-viewer.css');
   const documentCss = read('src/styles/document.css');
-  const fileLayoutCss = read('../ai/RC-MacAir-15/Views/002-file-viewer/styles/layout.css');
-  const fileThemeCss = read('../ai/RC-MacAir-15/System/styles/file-viewer.css');
 
-  expect(viewerSource).not.toContain('className="rv-file-viewer-nav"');
-  expect(viewerSource).not.toContain('title="Previous tab"');
-  expect(viewerSource).not.toContain('title="Next tab"');
-  expect(viewerSource).not.toContain('activateAdjacentTab');
-  expect(viewerSource).not.toContain('scrollIntoView');
-  expect(viewerSource).toContain('new ResizeObserver(updateTabDensity)');
-  expect(viewerSource).toContain("firstTab.getBoundingClientRect().width <= 120");
-  expect(viewerSource).toContain("className={`rv-file-viewer-tabs${compactTabs ? ' compact' : ''}`}");
-  expect(viewerSource).toContain("import { CopyPathButton } from '../CopyPathButton';");
-  expect(viewerSource).toContain("import { SendToChatButton } from '../SendToChatButton';");
-  expect(viewerSource).toMatch(/<div className="rv-file-page-actions" aria-label="File actions">[\s\S]*?<CopyPathButton[\s\S]*?panel="file-viewer"[\s\S]*?relativePath=\{selectedFile\.path\}[\s\S]*?<SendToChatButton[\s\S]*?panel="file-viewer"[\s\S]*?relativePath=\{selectedFile\.path\}/);
+  expect(contentArea.match(/<ViewTabBar\s+panel=/g)).toHaveLength(1);
+  expect(viewer).not.toContain('TabRow');
+  expect(viewer).not.toContain('rv-file-viewer-tabs');
+  expect(viewer).not.toContain('rv-file-viewer-header');
+  expect(viewer).not.toContain('className="rv-file-viewer-nav"');
+  expect(viewer).not.toContain('title="Previous tab"');
+  expect(viewer).not.toContain('title="Next tab"');
+  expect(viewer).not.toContain('activateAdjacentTab');
+  expect(viewer).not.toContain('scrollIntoView');
+  expect(viewer).toContain('<FloatingPathActions');
+  expect(strip).toContain('new ResizeObserver(updateDensity)');
+  expect(strip).toContain('first.getBoundingClientRect().width <= 120');
+  expect(strip).toContain('role="tablist"');
+  expect(strip).toContain('role="tab"');
 
   for (const declaration of [
     'gap: 2px;',
-    'padding: 4px 4px 0',
     'min-height: 36px;',
     'border-radius: 6px 6px 0 0;',
     'transform: translateY(-2px);',
   ]) {
     expect(browserTabsCss).toContain(declaration);
-    expect(fileLayoutCss).toContain(declaration);
+    expect(css).toContain(declaration);
   }
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tabs\s*\{[^}]*overflow: hidden;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tab\s*\{[^}]*max-width: 200px;[^}]*min-width: 0;[^}]*flex: 1 1 200px;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tab:not\(:last-child\)::after\s*\{[^}]*right: 0;[^}]*width: 1px;[^}]*height: 16px;[^}]*background: var\(--workspace-border-color, var\(--file-viewer-chrome-border\)\);/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tab\.active::after,\s*\.rv-file-viewer-tab:has\(\+ \.rv-file-viewer-tab\.active\)::after,\s*\.rv-file-viewer-tab:has\(\+ \.rv-file-viewer-tab:hover\)::after\s*\{[^}]*display: none;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tab \.rv-tab-name\s*\{[^}]*text-overflow: clip;[^}]*mask-image: linear-gradient\(to right, #000 calc\(100% - 18px\), transparent 100%\);/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tab \.rv-tab-close \.material-symbols-outlined\s*\{[^}]*font-size: 10\.5px;/s);
-  expect(fileLayoutCss).not.toMatch(/\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab \.rv-tab-icon\s*\{[^}]*display: none;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab \.rv-tab-close\s*\{[^}]*position: absolute;[^}]*opacity: 0;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab:hover \.rv-tab-close,[\s\S]*\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab:focus-within \.rv-tab-close\s*\{[^}]*opacity: 1;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab:hover \.rv-tab-name,[\s\S]*\.rv-file-viewer-tabs\.compact \.rv-file-viewer-tab:focus-within \.rv-tab-name\s*\{[^}]*mask-image: linear-gradient\([\s\S]*transparent calc\(100% - 16px\),[\s\S]*transparent 100%/s);
+  expect(browserTabsCss).toContain('padding: 4px 4px 0 4px;');
+  expect(css).toContain('padding: 4px 4px 0;');
+  for (const declaration of [
+    'max-width: 140px;',
+    'flex: 1 1 200px;',
+    'font-size: 10.5px;',
+  ]) {
+    expect(css).toContain(declaration);
+  }
+  expect(css).toContain('transparent calc(100% - 16px)');
+  expect(css).toContain('.rv-view-tab-rail.is-compact');
+  expect(css).toContain('overflow: hidden;');
 
-  expect(fileLayoutCss).not.toMatch(/\.rv-file-viewer-tab\s*\{[^}]*border:\s*none;/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-header\s*\{[^}]*height: var\(--chat-header-height, 40px\);/s);
-  expect(fileLayoutCss).toMatch(/\.rv-file-viewer-info\s*\{[^}]*height: var\(--chat-header-height, 40px\);/s);
+  for (const retiredSelector of ['rv-file-viewer-tabs', 'rv-file-viewer-tab', 'rv-tab-close']) {
+    expect(fileLayout).not.toContain(retiredSelector);
+    expect(fileTheme).not.toContain(retiredSelector);
+    expect(documentCss).not.toContain(retiredSelector);
+  }
   expect(documentCss).toMatch(/\.rv-file-viewer-content \.rv-code-gutter\s*\{[^}]*border-right: none;/s);
   expect(documentCss).toMatch(/\.rv-file-viewer-content \.rv-wiki-page-content blockquote\s*\{[^}]*border-left-color: var\(--workspace-border-color,/s);
-  expect(fileThemeCss).toMatch(/\.rv-file-explorer-layout\s*\{[^}]*--file-viewer-chrome-border: var\(--workspace-border-color,[^}]*--content-border:\s+var\(--workspace-border-color,/s);
-  expect(fileThemeCss).toMatch(/\.rv-file-viewer-info\s*\{[^}]*border-bottom: 1px solid var\(--file-viewer-chrome-border\);/s);
-  expect(fileThemeCss).toMatch(/\.rv-file-viewer-tab\.active\s*\{[^}]*border-top: 1px solid var\(--workspace-border-color, var\(--file-viewer-chrome-border\)\);[^}]*border-right: 1px solid var\(--workspace-border-color, var\(--file-viewer-chrome-border\)\);[^}]*border-bottom: none;[^}]*border-left: 1px solid var\(--workspace-border-color, var\(--file-viewer-chrome-border\)\);/s);
-  expect(fileThemeCss).toMatch(/\.rv-file-viewer-header\s*\{[^}]*background: var\(--panel-chrome-bg/s);
+  expect(fileTheme).toMatch(/\.rv-file-explorer-layout\s*\{[^}]*--file-viewer-chrome-border: var\(--workspace-border-color,[^}]*--content-border:\s+var\(--workspace-border-color,/s);
+  expect(fileTheme).toMatch(/\.rv-file-viewer-info\s*\{[^}]*border-bottom: 1px solid var\(--file-viewer-chrome-border\);/s);
+});
+
+test('File zero/first/home flow is pathless-session-safe', () => {
+  const store = read('src/state/fileStore.ts');
+  const adapter = read('src/components/view-tabs/viewTabAdapters.ts');
+  const viewer = read('src/components/file-explorer/FileViewer.tsx');
+
+  expect(adapter).toContain("tabs.length === 0");
+  expect(adapter).toContain("label: 'New file tab'");
+  expect(store).toContain("kind: 'home'");
+  expect(store).toContain('if (state.tabs.length === 0) return null');
+  expect(store).toContain("tabs.filter((tab) => tab.kind === 'file')");
+  expect(store).toContain(".filter((item) => typeof item.path === 'string' && item.path.trim().length > 0)");
+  expect(store).toContain('state.activeTabPath === FILE_VIEW_HOME_TAB_ID');
+  expect(store).toContain('index === activeHomeIndex ? newTab : tab');
+  expect(viewer).toContain('<span>Select File</span>');
+  expect(adapter).toContain("toggleCollapsed('file-viewer', 'rightCol')");
+});
+
+test('File hydration drops an active pathless record and activates its first real survivor', () => {
+  const original = useFileStore.getState();
+  useFileStore.setState({ tabs: [], activeTabPath: null, viewMode: 'tree' });
+  try {
+    useFileStore.getState().hydrateTabsFromActivity({
+      recents: [],
+      navigation: { stack: [], index: -1 },
+      tabs: [
+        {
+          id: 'file-viewer:',
+          panel: 'file-viewer',
+          path: '',
+          title: 'FILES',
+          kind: 'view',
+          openedAt: 1,
+        },
+        {
+          id: 'file-viewer:notes/real.md',
+          panel: 'file-viewer',
+          path: 'notes/real.md',
+          title: 'real.md',
+          kind: 'file',
+          extension: 'md',
+          openedAt: 2,
+        },
+      ],
+      activeTabId: 'file-viewer:',
+    });
+
+    expect(useFileStore.getState()).toMatchObject({
+      activeTabPath: 'notes/real.md',
+      viewMode: 'viewer',
+      tabs: [{ kind: 'file', file: { path: 'notes/real.md' } }],
+    });
+  } finally {
+    useFileStore.setState(original);
+  }
 });

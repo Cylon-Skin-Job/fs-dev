@@ -24,6 +24,9 @@
   --list-nav-action-fade-width: 24px;
   /* Tab/header rail (code viewer) + main chat column — separate from sidebars */
   --panel-chrome-bg: #1a1a1a;
+  --interactive-contrast-foreground: #ffffff;
+  --interactive-focus-ring: color-mix(in srgb, var(--interactive-contrast-foreground) 75%, transparent);
+  --view-tab-rail-bg: var(--panel-chrome-bg);
   --chat-surface-bg: var(--panel-chrome-bg);
   --chat-content-bg: var(--bg-solid);
   --chat-composer-chrome-color: var(--theme-primary);
@@ -126,6 +129,13 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
+}
+
+.rv-interaction-context {
+  --interactive-surface-bg: var(--panel-chrome-bg, #1a1a1a);
+  --interactive-hover-bg: color-mix(in srgb, var(--interactive-surface-bg) 92%, var(--interactive-contrast-foreground) 8%);
+  --interactive-pressed-bg: color-mix(in srgb, var(--interactive-surface-bg) 88%, var(--interactive-contrast-foreground) 12%);
+  --interactive-selected-bg: color-mix(in srgb, var(--interactive-surface-bg) 84%, var(--interactive-contrast-foreground) 16%);
 }
 
 /* Theme tokens live in ai/<machine>/System/styles/themes.css (loaded at runtime by

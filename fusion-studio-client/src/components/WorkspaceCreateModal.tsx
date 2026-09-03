@@ -103,6 +103,7 @@ function WorkspaceCreateModalContent() {
             <span>Project folder path</span>
             <input
               type="text"
+              autoFocus
               value={projectPath}
               onChange={(event) => setProjectPath(event.target.value)}
               placeholder="/Users/name/projects/my-project"

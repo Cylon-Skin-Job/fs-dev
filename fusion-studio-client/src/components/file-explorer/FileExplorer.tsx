@@ -43,7 +43,7 @@ export function FileExplorer() {
 
   useEffect(() => {
     for (const tab of tabs) {
-      if (!tab.loading) continue;
+      if (tab.kind !== 'file' || !tab.loading) continue;
       sendFusionMessage({
         type: 'file_content_request',
         panel: 'file-viewer',

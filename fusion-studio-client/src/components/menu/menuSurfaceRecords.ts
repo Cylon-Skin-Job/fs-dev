@@ -1,4 +1,5 @@
 import { createMenuSurface } from './MenuSurface';
+import { isInteractiveMenuDescriptor } from './menuDescriptors';
 import type { MenuSurfaceRecord } from './menuTreeRecords';
 import type { MenuDescriptor } from './types';
 
@@ -22,6 +23,7 @@ function renderSurface(record: MenuSurfaceRecord, context: MenuSurfaceRecordCont
     items: record.items,
     ariaLabel: record.ariaLabel,
     minWidth: record.minWidth,
+    zIndex: record.zIndex,
     pendingItemIds: context.pendingItemIds(record.id, record.items),
     callbacks: {
       onActivate: (descriptor, element) => context.onActivate(record, descriptor, element),
@@ -54,7 +56,7 @@ export function menuSurfaceItemReference(
 ): MenuSurfaceItemReference {
   return {
     itemId,
-    index: surface.items.filter(({ kind }) => kind !== 'separator')
+    index: surface.items.filter(isInteractiveMenuDescriptor)
       .findIndex(({ id }) => id === itemId),
   };
 }

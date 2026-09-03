@@ -20,13 +20,23 @@ export interface FileInfo {
   symlinkTarget?: string;
 }
 
-/** One open file tab in the code viewer (path is unique per tab). */
-export interface EditorTab {
+/** One durable open file tab in the code viewer (path is unique per tab). */
+export interface FileEditorTab {
+  kind: 'file';
   file: FileInfo;
   content: string;
   size: number;
   loading: boolean;
 }
+
+/** Session-only view-home tab. It is deliberately pathless and never persisted. */
+export interface FileViewHomeTab {
+  kind: 'home';
+  id: 'file-view-home';
+  loading: false;
+}
+
+export type EditorTab = FileEditorTab | FileViewHomeTab;
 
 export type FileErrorCode =
   | 'ENOENT'

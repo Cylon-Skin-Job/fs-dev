@@ -16,6 +16,8 @@ import type { ViewUIState } from '../types';
 import { recordViewRecent } from '../lib/viewActivity';
 import { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 import { isImageFile } from '../components/tile-row/documentTileUtils';
+import { updateCaptureTabUi } from '../components/view-tabs/captureTabsController';
+import { nextWorkspaceRequestId } from '../lib/workspaceResponseTracker';
 
 export { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 
@@ -68,6 +70,13 @@ function parseSelectedPath(selectedPath: string): { folder: string; name: string
 }
 
 function persistViewPatch(patch: Partial<ViewUIState>) {
+  if (updateCaptureTabUi(patch)) return;
+  const state = usePanelStore.getState();
+  state.setViewState(DOC_VIEWER_PANEL, patch);
+  state._persistViewPatch(DOC_VIEWER_PANEL, patch);
+}
+
+function persistClassicScrollPatch(patch: Partial<ViewUIState>) {
   const state = usePanelStore.getState();
   state.setViewState(DOC_VIEWER_PANEL, patch);
   state._persistViewPatch(DOC_VIEWER_PANEL, patch);
@@ -188,10 +197,12 @@ export function useDocViewerState(): UseDocViewerStateResult {
 
   const gridScrollThrottleRef = useRef<number>(0);
   const persistGridScroll = useCallback((scrollTop: number) => {
+    const patch = { [gridScrollKey(mode)]: scrollTop } as Partial<ViewUIState>;
+    if (updateCaptureTabUi(patch, { throttled: true })) return;
     const now = Date.now();
     if (now - gridScrollThrottleRef.current < 100) return;
     gridScrollThrottleRef.current = now;
-    persistViewPatch({ [gridScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
+    persistClassicScrollPatch(patch);
   }, [mode]);
 
   const resetGridScroll = useCallback((targetMode: DocViewerMode = mode) => {
@@ -201,10 +212,12 @@ export function useDocViewerState(): UseDocViewerStateResult {
 
   const docScrollThrottleRef = useRef<number>(0);
   const persistDocScroll = useCallback((scrollTop: number) => {
+    const patch = { [docScrollKey(mode)]: scrollTop } as Partial<ViewUIState>;
+    if (updateCaptureTabUi(patch, { throttled: true })) return;
     const now = Date.now();
     if (now - docScrollThrottleRef.current < 100) return;
     docScrollThrottleRef.current = now;
-    persistViewPatch({ [docScrollKey(mode)]: scrollTop } as Partial<ViewUIState>);
+    persistClassicScrollPatch(patch);
   }, [mode]);
 
   const restoreSelectedFile = useCallback(() => {
@@ -227,7 +240,12 @@ export function useDocViewerState(): UseDocViewerStateResult {
     }
     const source = `${panelRoot}/${selected.folder}/${selected.file.name}`;
     const target = `${panelRoot}/${DOC_VIEWER_ARCHIVE_FOLDER}`;
-    ws.send(JSON.stringify({ type: 'file:move', source, target }));
+    ws.send(JSON.stringify({
+      type: 'file:move',
+      source,
+      target,
+      requestId: nextWorkspaceRequestId('file:move', state.activeWorkspaceId),
+    }));
     persistViewPatch({
       docViewerActiveSelectedPath: null,
     });

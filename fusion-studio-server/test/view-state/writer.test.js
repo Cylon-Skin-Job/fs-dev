@@ -65,6 +65,27 @@ describe('view-state writer', () => {
     expect(officeState.officePaperBrightness).toBe(42);
   });
 
+  test('stores Capture tab records and active identity in Capture view state', async () => {
+    fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-capture-viewer'), { recursive: true });
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+    const tabs = [{ id: 'cvt-one', kind: 'doc', path: '001-Captures/note.md' }];
+
+    const resolved = await writeViewStatePatch(tempRoot, 'capture-viewer', {
+      docViewerTabs: tabs,
+      docViewerActiveTabId: 'cvt-one',
+    });
+
+    const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
+    const captureState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-capture-viewer', 'state', 'state.json'));
+
+    expect(resolved.docViewerTabs).toEqual(tabs);
+    expect(resolved.docViewerActiveTabId).toBe('cvt-one');
+    expect(workspaceState.docViewerTabs).toBeUndefined();
+    expect(workspaceState.docViewerActiveTabId).toBeUndefined();
+    expect(captureState.docViewerTabs).toEqual(tabs);
+    expect(captureState.docViewerActiveTabId).toBe('cvt-one');
+  });
+
   test('stores right-column collapse state in the view override', async () => {
     const { writeViewStatePatch } = require('../../lib/view-state/writer');
 

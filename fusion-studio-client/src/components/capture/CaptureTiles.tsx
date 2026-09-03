@@ -6,7 +6,7 @@
  * useDocViewerState; this component only wires presentation to that state.
  */
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { DOC_VIEWER_ARCHIVE_FOLDER, type DocViewerMode, useDocViewerState } from '../../hooks/useDocViewerState';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
@@ -20,14 +20,13 @@ import { FilePageView } from './FilePageView';
 import { DocumentPreviewModal } from './DocumentPreviewModal';
 import { CaptureDocumentMenuButton } from './CaptureDocumentMenuButton';
 import { DocViewerHeader } from './DocViewerHeader';
-import { CaptureTabStrip } from './CaptureTabStrip';
 import {
-  activateTab,
-  backOutOfDocTabs,
-  closeTab,
-  docOpenedInTabs,
-  isTabsActive,
-} from './captureTabsController';
+  backOutOfCaptureDocument,
+  getCaptureHandoffStatus,
+  openDocumentInCaptureTabs,
+  isCaptureTabsLatched,
+  subscribeCaptureHandoff,
+} from '../view-tabs/captureTabsController';
 import { useFileDataStore } from '../../state/fileDataStore';
 import { usePanelStore } from '../../state/panelStore';
 import { useCaptureViewerSearch } from './useCaptureViewerSearch';
@@ -60,21 +59,27 @@ export function CaptureTiles() {
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState('');
-  const isFullPageSelected = usePanelStore(
-    (s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerFullPage ?? false
-  );
+  const isFullPageSelected = usePanelStore((s) => {
+    const viewState = s.viewStates[DOC_VIEWER_PANEL];
+    const tabs = viewState?.docViewerTabs ?? [];
+    const activeId = viewState?.docViewerActiveTabId;
+    const durableDocument = tabs.find((tab) => tab.id === activeId)?.kind === 'doc'
+      || (tabs.length === 1 && tabs[0]?.kind === 'doc');
+    return Boolean(viewState?.docViewerFullPage || durableDocument);
+  });
   const setIsFullPageSelected = (next: boolean) => {
     usePanelStore.getState().setViewState(DOC_VIEWER_PANEL, { docViewerFullPage: next });
   };
   const docTabs = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerTabs);
-  const activeTabId = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.docViewerActiveTabId ?? null);
-  const isTabsMode = isTabsActive(docTabs);
-  const capturePanelIcon = usePanelStore((s) =>
-    s.panelConfigs.find((c) => c.id === DOC_VIEWER_PANEL)?.icon ?? 'note_stack'
+  const captureHandoffStatus = useSyncExternalStore(
+    subscribeCaptureHandoff,
+    getCaptureHandoffStatus,
+    getCaptureHandoffStatus,
   );
-  const gridScrollNow = () => scrollRef.current?.scrollTop ?? 0;
-  const handleTabSelect = (id: string) => activateTab(id, { gridScroll: gridScrollNow() });
-  const handleTabClose = (id: string) => closeTab(id, { gridScroll: gridScrollNow() });
+  const recoveryCaptureVisible = docTabs?.length === 1
+    && docTabs[0]?.kind === 'capture'
+    && captureHandoffStatus === 'failed';
+  const isTabsMode = isCaptureTabsLatched(docTabs) || recoveryCaptureVisible;
   const rootNodes = useFileDataStore((s) => s.trees[`${DOC_VIEWER_PANEL}:`]);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
   const requestTree = useFileDataStore((s) => s.requestTree);
@@ -157,11 +162,12 @@ export function CaptureTiles() {
   };
 
   const openDocFullScreen = (folder: string, file: FileWithContent) => {
-    selectFile(folder, file);
     if (isTabsMode) {
-      docOpenedInTabs({ folder, path: file.path, name: file.name });
+      openDocumentInCaptureTabs({ folder, path: file.path, name: file.name });
+      selectFile(folder, file);
       return;
     }
+    selectFile(folder, file);
     setIsFullPageSelected(true);
   };
 
@@ -251,6 +257,14 @@ export function CaptureTiles() {
     setIsSearchSubmitted(true);
   };
 
+  const loneCaptureIsHandingOff = docTabs?.length === 1
+    && docTabs[0]?.kind === 'capture'
+    && captureHandoffStatus !== 'failed';
+
+  if (loneCaptureIsHandingOff) {
+    return <div className="rv-tile-grid rv-capture-viewer-grid" aria-busy="true" />;
+  }
+
   if (selected && isFullPageSelected) {
     return (
       <FilePageView
@@ -267,8 +281,8 @@ export function CaptureTiles() {
         onToggleStar={getFileStarClickHandler(selected.file, selected.folder)}
         hideChromeTitle={isTabsMode}
         onBack={() => {
-          if (isTabsMode) {
-            backOutOfDocTabs({ gridScroll: gridScrollNow() });
+          if ((docTabs?.length ?? 0) > 0) {
+            backOutOfCaptureDocument();
             return;
           }
           setIsFullPageSelected(false);
@@ -289,17 +303,7 @@ export function CaptureTiles() {
         onSearchOpenChange={handleSearchOpenChange}
         onSearchQueryChange={handleSearchQueryChange}
         onSearchSubmit={handleSearchSubmit}
-        tabStrip={
-          isTabsMode && docTabs ? (
-            <CaptureTabStrip
-              tabs={docTabs}
-              activeId={activeTabId}
-              captureIcon={capturePanelIcon}
-              onSelect={handleTabSelect}
-              onClose={handleTabClose}
-            />
-          ) : undefined
-        }
+        tabsMode={isTabsMode}
       />
       <div
         ref={scrollRef}

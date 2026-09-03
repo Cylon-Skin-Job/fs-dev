@@ -37,12 +37,14 @@ function render(entry) {
   const chatAccent = computeChatAccent(entry);
   const chatTools = computeChatTools(entry);
   const chatText = computeChatText(entry);
+  const interactiveContrastForeground = isLight ? '#000000' : '#ffffff';
   const neutralBorder = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
 
   return `  --bg-solid:              ${floor};
   --bg-primary:            ${floor};
   --bg-secondary:          ${surf};
   --panel-chrome-bg:       ${panelBg};
+  --interactive-contrast-foreground: ${interactiveContrastForeground};
   --workspace-foreground-color: ${workspaceForeground};
   --workspace-border-color: ${workspaceBorders};
   --workspace-accent-color: ${workspaceAccent};

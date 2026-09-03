@@ -910,11 +910,12 @@
   border-radius: 8px;
   color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
-  transition: all 200ms;
+  transition: color 200ms ease;
 }
 
 .rv-fusion-icon-btn:hover {
-  background: color-mix(in srgb, var(--accent-dim) 8%, transparent);
+  color: var(--interactive-contrast-foreground, #ffffff);
+  background: transparent;
 }
 
 .rv-fusion-icon-btn .material-symbols-outlined {

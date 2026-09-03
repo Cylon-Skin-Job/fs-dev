@@ -1,4 +1,5 @@
-import type { InteractiveMenuDescriptor, MenuSurfaceRecord } from './menuTreeRecords';
+import type { InteractiveMenuDescriptor } from './menuDescriptors';
+import type { MenuSurfaceRecord } from './menuTreeRecords';
 import type { MenuActionContext, MenuDescriptor, MenuHandle, MenuOutcome } from './types';
 
 type ActionDescriptor = Extract<

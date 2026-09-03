@@ -31,10 +31,16 @@ import {
   sanitizeTerminalErrorsAtIngress,
 } from './chat/terminal-error';
 import {
+  abandonViewStateMutations,
   getLatestViewStateMutationId,
+  getViewStateMutationOrigin,
   hasPendingViewStateMutation,
   settleViewStateMutation,
 } from './viewStateMutationTracker';
+import {
+  abandonWorkspaceRequests,
+  shouldApplyWorkspaceResponse,
+} from './workspaceResponseTracker';
 import type { ModalConfig } from '../lib/modal';
 import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
 import type { ViewUIState, WebSocketMessage } from '../types';
@@ -46,6 +52,11 @@ const WS_URL = `ws://${window.location.host}`;
 let socket: WebSocket | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let officePaletteWorkspaceSubscriptionStarted = false;
+
+export function abandonWsResponseTracking(): void {
+  abandonViewStateMutations();
+  abandonWorkspaceRequests();
+}
 
 function ensureOfficePaletteWorkspaceSubscription(): void {
   if (officePaletteWorkspaceSubscriptionStarted) return;
@@ -69,6 +80,8 @@ interface StateResultMessage extends WebSocketMessage {
   view?: string;
   state?: ViewUIState;
   clientMutationId?: number;
+  requestId?: string;
+  workspaceId?: string | null;
 }
 
 interface StateErrorMessage extends WebSocketMessage {
@@ -76,6 +89,8 @@ interface StateErrorMessage extends WebSocketMessage {
   message?: string;
   view?: string;
   clientMutationId?: number;
+  requestId?: string;
+  workspaceId?: string | null;
 }
 
 interface PanelConfigMessage extends WebSocketMessage {
@@ -207,6 +222,7 @@ export function connectWs() {
   // lists may describe the server's workspace before the client has swapped
   // its workspace-scoped state, so they must not activate a thread yet.
   useWorkspaceStore.getState().beginInit();
+  abandonWsResponseTracking();
   console.log('[WS] Connecting...');
   const ws = new WebSocket(WS_URL);
   socket = ws;
@@ -253,6 +269,9 @@ export function connectWs() {
   ws.onclose = () => {
     console.log('[WS] Disconnected');
     handleOfficePaletteSocketClose(ws);
+    if (socket !== ws) return;
+    abandonWsResponseTracking();
+    socket = null;
     usePanelStore.getState().setWs(null);
     reconnectTimer = setTimeout(connectWs, 3000);
   };
@@ -268,15 +287,15 @@ export function disconnectWs() {
     reconnectTimer = null;
   }
   if (socket) {
+    abandonWsResponseTracking();
     socket.close();
-    socket = null;
   }
 }
 
 // --- Message handling ---
 // Every store read uses getState() — always fresh, no stale closures.
 
-function handleMessage(msg: WebSocketMessage) {
+export function handleMessage(msg: WebSocketMessage) {
   if (
     msg.type === 'chat-turn:metadata:updated' ||
     msg.type === 'chat-turn:metadata:error' ||
@@ -306,20 +325,46 @@ function handleMessage(msg: WebSocketMessage) {
     const clientMutationId = typeof stateMsg.clientMutationId === 'number'
       ? stateMsg.clientMutationId
       : null;
-    const latestMutationId = getLatestViewStateMutationId(view);
+    if (
+      clientMutationId === null
+      && !shouldApplyWorkspaceResponse(
+        'state:get',
+        stateMsg.requestId,
+        stateMsg.workspaceId,
+        store.activeWorkspaceId,
+        {
+          view,
+          mutationWatermark: getLatestViewStateMutationId(view, store.activeWorkspaceId),
+        },
+      )
+    ) {
+      return;
+    }
+    const mutationOrigin = clientMutationId === null
+      ? null
+      : getViewStateMutationOrigin(clientMutationId);
+    if (clientMutationId !== null && !mutationOrigin) return;
+    if (clientMutationId !== null && mutationOrigin
+      && (mutationOrigin.workspaceId !== store.activeWorkspaceId || mutationOrigin.view !== view)) {
+      settleViewStateMutation(clientMutationId);
+      return;
+    }
+    const workspaceId = mutationOrigin?.workspaceId ?? store.activeWorkspaceId;
+    const latestMutationId = getLatestViewStateMutationId(view, workspaceId);
     if (clientMutationId !== null && clientMutationId < latestMutationId) {
+      settleViewStateMutation(clientMutationId);
       return;
     }
 
     const current = store.viewStates[view];
-    const hasPendingMutation = current && hasPendingViewStateMutation(view);
+    const hasPendingMutation = current && hasPendingViewStateMutation(view, workspaceId);
     // state:set responses contain a full server state. When multiple patches
     // are in flight, a later echo can be based on an older disk snapshot, so
     // keep the optimistic local state until the pending mutation settles.
     const stateToApply = hasPendingMutation ? { ...incoming, ...current } : incoming;
     store.setViewState(view, stateToApply);
     if (clientMutationId !== null) {
-      settleViewStateMutation(view, clientMutationId);
+      settleViewStateMutation(clientMutationId);
     }
     // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
     // live slot when loading the active view. Guarded equality check in
@@ -335,8 +380,35 @@ function handleMessage(msg: WebSocketMessage) {
   }
   if (msg.type === 'state:error') {
     const stateMsg = msg as StateErrorMessage;
+    if (
+      typeof stateMsg.clientMutationId !== 'number'
+      && !shouldApplyWorkspaceResponse(
+        'state:get',
+        stateMsg.requestId,
+        stateMsg.workspaceId,
+        usePanelStore.getState().activeWorkspaceId,
+        stateMsg.view ? {
+          view: stateMsg.view,
+          mutationWatermark: getLatestViewStateMutationId(
+            stateMsg.view,
+            usePanelStore.getState().activeWorkspaceId,
+          ),
+        } : undefined,
+      )
+    ) {
+      return;
+    }
     if (stateMsg.view && typeof stateMsg.clientMutationId === 'number') {
-      settleViewStateMutation(stateMsg.view, stateMsg.clientMutationId);
+      const mutationOrigin = getViewStateMutationOrigin(stateMsg.clientMutationId);
+      if (
+        mutationOrigin
+        && (mutationOrigin.workspaceId !== usePanelStore.getState().activeWorkspaceId
+          || mutationOrigin.view !== stateMsg.view)
+      ) {
+        settleViewStateMutation(stateMsg.clientMutationId);
+        return;
+      }
+      settleViewStateMutation(stateMsg.clientMutationId);
     }
     console.error('[state] error:', stateMsg.message);
     return;

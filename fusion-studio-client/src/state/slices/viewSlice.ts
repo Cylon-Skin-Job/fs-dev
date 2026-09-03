@@ -5,7 +5,12 @@
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
 import type { AppState, ComposerModelSelection, TintPath } from '../panelStoreTypes';
-import { nextViewStateMutationId } from '../../lib/viewStateMutationTracker';
+import {
+  getLatestViewStateMutationId,
+  hasPendingViewStateMutation,
+  nextViewStateMutationId,
+} from '../../lib/viewStateMutationTracker';
+import { nextWorkspaceRequestId } from '../../lib/workspaceResponseTracker';
 import { OFFICE_PAPER_BRIGHTNESS_DEFAULT } from '../../lib/officePaperBrightness';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
@@ -45,6 +50,8 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   docViewerArchiveGridScroll: 0,
   docViewerActiveDocScroll: 0,
   docViewerArchiveDocScroll: 0,
+  docViewerTabs: [],
+  docViewerActiveTabId: null,
   officeViewerMode: 'home',
   officeViewerCurrentFolder: null,
   officeViewerSelectedPath: null,
@@ -113,16 +120,30 @@ export function createViewSlice(set: Set, get: Get) {
     }),
 
     loadViewState: (view: string) => {
+      const workspaceId = get().activeWorkspaceId;
       const ws = get().ws;
       if (!ws || ws.readyState !== WebSocket.OPEN) return;
-      ws.send(JSON.stringify({ type: 'state:get', view }));
+      ws.send(JSON.stringify({
+        type: 'state:get',
+        view,
+        requestId: nextWorkspaceRequestId('state:get', workspaceId, {
+          view,
+          mutationWatermark: getLatestViewStateMutationId(view, workspaceId),
+          hadPendingMutation: hasPendingViewStateMutation(view, workspaceId),
+        }),
+      }));
     },
 
     // STATE_OVERRIDE_SPEC: send a minimal state:set patch for the given view.
-    _persistViewPatch: (view: string, patch: Partial<ViewUIState>) => {
+    _persistViewPatch: (
+      view: string,
+      patch: Partial<ViewUIState>,
+      suppliedMutationId?: number,
+    ) => {
       const ws = get().ws;
       if (!ws || ws.readyState !== WebSocket.OPEN) return;
-      const clientMutationId = nextViewStateMutationId(view);
+      const clientMutationId = suppliedMutationId
+        ?? nextViewStateMutationId(view, get().activeWorkspaceId);
       ws.send(JSON.stringify({ type: 'state:set', view, state: patch, clientMutationId }));
     },
 
@@ -131,16 +152,13 @@ export function createViewSlice(set: Set, get: Get) {
     })),
 
     toggleCollapsed: (view: string, pane: CollapsablePane) => {
+      let persistedCollapsed: ViewUIState['collapsed'] | null = null;
       set((s) => {
         const current = s.viewStates[view] ?? DEFAULT_VIEW_UI_STATE;
         const wasCollapsed = current.collapsed[pane];
         const nextCollapsed = { ...current.collapsed, [pane]: !wasCollapsed };
+        persistedCollapsed = nextCollapsed;
         const nextState: ViewUIState = { ...current, collapsed: nextCollapsed };
-
-        const ws = get().ws;
-        if (ws && ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'state:set', view, state: { collapsed: nextCollapsed } }));
-        }
 
         // When the sidebar is being expanded (was collapsed, now not), close
         // any open chat-header dropdowns for that panel.
@@ -153,6 +171,7 @@ export function createViewSlice(set: Set, get: Get) {
           }),
         };
       });
+      if (persistedCollapsed) get()._persistViewPatch(view, { collapsed: persistedCollapsed });
     },
 
     setPaneWidth: (view: string, pane: Pane, width: number) => set((s) => {
@@ -167,12 +186,10 @@ export function createViewSlice(set: Set, get: Get) {
     commitPaneWidths: (view: string, pane?: Pane) => {
       const state = get().viewStates[view];
       if (!state) return;
-      const ws = get().ws;
-      if (!ws || ws.readyState !== WebSocket.OPEN) return;
       const widths = pane
         ? { [pane]: state.widths[pane] }
         : state.widths;
-      ws.send(JSON.stringify({ type: 'state:set', view, state: { widths } }));
+      get()._persistViewPatch(view, { widths } as Partial<ViewUIState>);
     },
 
     // TINTS_SPEC §8b: flip a single tint leaf for `view`. Updates local

@@ -17,11 +17,13 @@
   border: 0;
 }
 
-.rv-ai-source-selector__select {
-  appearance: none;
+.rv-ai-source-selector__trigger {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
   height: 28px;
   max-width: min(280px, 36vw);
-  padding: 0 28px 0 10px;
+  padding: 0 6px 0 10px;
   border: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, transparent));
   border-radius: 6px;
   background: var(--panel-chrome-bg, var(--bg-solid));
@@ -29,25 +31,37 @@
   font: inherit;
   font-size: 12px;
   line-height: 1;
-  text-overflow: ellipsis;
   cursor: pointer;
 }
 
-.rv-ai-source-selector__select:hover,
-.rv-ai-source-selector__select:focus-visible {
-  color: var(--workspace-accent-color, var(--theme-primary));
-  border-color: var(--workspace-accent-color, var(--theme-primary));
+.rv-ai-source-selector__trigger:hover,
+.rv-ai-source-selector__trigger:active {
+  color: var(--interactive-contrast-foreground, #ffffff);
 }
 
-.rv-ai-source-selector__select:focus-visible {
-  outline: 2px solid var(--workspace-accent-color, var(--theme-primary));
+.rv-ai-source-selector__trigger:hover {
+  background: var(--interactive-hover-bg, var(--panel-chrome-bg, var(--bg-solid)));
+}
+
+.rv-ai-source-selector__trigger:active {
+  background: var(--interactive-pressed-bg, var(--interactive-hover-bg, var(--panel-chrome-bg, var(--bg-solid))));
+}
+
+.rv-ai-source-selector__trigger:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
   outline-offset: 1px;
 }
 
+.rv-ai-source-selector__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rv-ai-source-selector__arrow {
-  position: absolute;
-  right: 6px;
-  color: var(--workspace-foreground-color, var(--text-dim));
+  flex: 0 0 auto;
+  color: inherit;
   font-size: var(--chrome-icon-size, 18px);
   pointer-events: none;
 }

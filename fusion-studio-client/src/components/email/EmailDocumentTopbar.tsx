@@ -5,8 +5,7 @@
  *       actions, the export dropdown menu, and the side-panel toggles.
  */
 import type { FileWithContent } from '../../state/fileDataStore';
-import { CopyPathButton } from '../CopyPathButton';
-import { SendToChatButton } from '../SendToChatButton';
+import { FloatingPathActions } from '../FloatingPathActions';
 
 const PANEL = 'email-viewer';
 
@@ -57,9 +56,6 @@ export function EmailDocumentTopbar({
       </span>
 
       <div className="rv-email-document-actions">
-        <CopyPathButton panel={PANEL} relativePath={file.path} className="rv-email-document-action" title="Copy path" />
-        <SendToChatButton panel={PANEL} relativePath={file.path} className="rv-email-document-action" title="Send path to chat" />
-
         <div className="rv-email-export-menu" ref={exportMenuRef}>
           <button
             className="rv-email-document-action"
@@ -150,6 +146,7 @@ export function EmailDocumentTopbar({
           <span className="material-symbols-outlined">browse_gallery</span>
         </button>
       </div>
+      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Email document actions" />
     </div>
   );
 }

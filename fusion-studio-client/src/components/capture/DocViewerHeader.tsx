@@ -5,7 +5,7 @@
  * Pure presentation component. Mode state is owned by useDocViewerState.
  */
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { DocViewerChrome } from './DocViewerChrome';
 import { ViewerSearchField } from '../search/ViewerSearchField';
 import { ViewerSearchFilters } from '../search/ViewerSearchFilters';
@@ -22,8 +22,8 @@ interface DocViewerHeaderProps {
   onSearchOpenChange: (isOpen: boolean) => void;
   onSearchQueryChange: (query: string) => void;
   onSearchSubmit: () => void;
-  /** Tabs mode: replaces the top chrome row; section nav stays. */
-  tabStrip?: ReactNode;
+  /** The shell rail replaces the centered title row while section navigation remains. */
+  tabsMode?: boolean;
 }
 
 const CAPTURE_NAV_ITEMS = [
@@ -42,16 +42,18 @@ export function DocViewerHeader({
   onSearchOpenChange,
   onSearchQueryChange,
   onSearchSubmit,
-  tabStrip,
+  tabsMode = false,
 }: DocViewerHeaderProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const title = mode === 'archive'
-    ? 'Archive'
-    : mode === 'recent'
-      ? 'Recent'
-      : mode === 'starred'
-        ? 'Starred'
-        : 'Document and Artifact Capture';
+  const title = isSearchSubmitted
+    ? 'Search results'
+    : mode === 'archive'
+      ? 'Archive'
+      : mode === 'recent'
+        ? 'Recent'
+        : mode === 'starred'
+          ? 'Starred'
+          : 'Document and Artifact Capture';
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -69,10 +71,9 @@ export function DocViewerHeader({
     onSearchOpenChange(false);
   };
 
-  if (tabStrip) {
+  if (tabsMode) {
     return (
       <div className="rv-capture-viewer-main-header rv-capture-viewer-main-header--tabs">
-        {tabStrip}
         <SegmentedViewNav
           ariaLabel="Capture sections"
           items={CAPTURE_NAV_ITEMS}
@@ -101,7 +102,10 @@ export function DocViewerHeader({
           />
         </div>
         {isSearchSubmitted ? (
-          <ViewerSearchFilters className="rv-capture-viewer-search-filter-row" />
+          <ViewerSearchFilters
+            className="rv-capture-viewer-search-filter-row"
+            showStarredOnly
+          />
         ) : null}
       </div>
     );

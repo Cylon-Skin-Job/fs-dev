@@ -276,7 +276,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
   // Code workspaces: flat list (existing behavior)
   if (workspaceType === 'code') {
     return (
-      <nav className="rv-tools-panel" onContextMenu={openRailMenu}>
+      <nav className="rv-tools-panel rv-interaction-context" onContextMenu={openRailMenu}>
         {configs.map((config) => renderToolButton(config))}
         {renderViewMenu()}
         {renderRailMenu()}
@@ -289,7 +289,7 @@ export function ToolsPanel({ currentPanel, onSwitch }: ToolsPanelProps) {
   const tools = configs.filter((c) => c.category === 'tool');
 
   return (
-    <nav className="rv-tools-panel rv-tools-panel--app" onContextMenu={openRailMenu}>
+    <nav className="rv-tools-panel rv-tools-panel--app rv-interaction-context" onContextMenu={openRailMenu}>
       {/* Apps zone — spaced out, top */}
       <div className="rv-tools-apps">
         {apps.map((config) => (

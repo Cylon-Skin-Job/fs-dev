@@ -38,7 +38,7 @@ import {
 // when the picker unmounts so themes.css from the server takes over cleanly.
 export const LIVE_PREVIEW_TOKENS = [
   '--bg-solid', '--bg-primary', '--bg-secondary',
-  '--document-surface-bg', '--document-bg', '--content-accent-color', '--content-accent-foreground-color', '--content-foreground-color', '--panel-chrome-bg',
+  '--document-surface-bg', '--document-bg', '--content-accent-color', '--content-accent-foreground-color', '--content-foreground-color', '--panel-chrome-bg', '--interactive-contrast-foreground',
   '--capture-star-color',
   '--workspace-foreground-color', '--workspace-border-color', '--workspace-accent-color', '--sidebar-surface-bg', '--thread-text-color', '--thread-heading-color', '--thread-foreground-color', '--thread-selected-bg', '--thread-selected-foreground-color',
   '--side-panel-surface-bg', '--side-panel-text-color', '--side-panel-heading-color', '--side-panel-foreground-color', '--side-panel-selected-bg', '--side-panel-selected-foreground-color',
@@ -275,6 +275,7 @@ export function applyLivePreview(
   root.setProperty('--content-foreground-color', contentForegroundColor);
   root.setProperty('--capture-star-color', isLight ? '#8a6a0a' : '#d6b85a');
   root.setProperty('--panel-chrome-bg', panelBg);
+  root.setProperty('--interactive-contrast-foreground', isLight ? '#000000' : '#ffffff');
   root.setProperty('--workspace-foreground-color', workspaceForegroundColor);
   root.setProperty('--workspace-border-color', workspaceBorderColor);
   root.setProperty('--workspace-accent-color', workspaceAccentColor);

@@ -22,6 +22,7 @@
 
 /* Header */
 .rv-header {
+  --interactive-surface-bg: var(--panel-chrome-bg, #1a1a1a);
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
@@ -47,18 +48,24 @@
   border: none;
   color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease;
 }
 
-.rv-menu-btn:hover {
-  color: var(--theme-primary);
-  background: rgba(var(--theme-primary-rgb), 0.05);
+.rv-menu-btn:hover,
+.rv-menu-btn:active {
+  color: var(--interactive-contrast-foreground, #ffffff);
+  background: transparent;
+}
+
+.rv-menu-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
 }
 
 .rv-project-name {
   font-size: 16px;
   font-weight: 500;
-  color: var(--theme-primary);
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
   letter-spacing: 0.5px;
 }
 
@@ -102,7 +109,23 @@
 
 .rv-header .rv-fusion-icon-btn,
 .rv-header .rv-theme-swatch-btn {
+  background: transparent;
   color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+}
+
+.rv-header .rv-fusion-icon-btn:hover:not(:disabled),
+.rv-header .rv-fusion-icon-btn:active:not(:disabled),
+.rv-header .rv-theme-swatch-btn:hover:not(:disabled),
+.rv-header .rv-theme-swatch-btn:active:not(:disabled),
+.rv-header .rv-theme-swatch-btn.open:not(:disabled) {
+  background: transparent;
+  color: var(--interactive-contrast-foreground, #ffffff);
+}
+
+.rv-header .rv-fusion-icon-btn:focus-visible,
+.rv-header .rv-theme-swatch-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
 }
 
 .rv-header .rv-fusion-icon-btn .material-symbols-outlined,
@@ -116,8 +139,10 @@
   opacity: 0.35;
 }
 
-.rv-header .rv-fusion-icon-btn:disabled:hover {
+.rv-header .rv-fusion-icon-btn:disabled:hover,
+.rv-header .rv-fusion-icon-btn:disabled:active {
   background: transparent;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
 }
 
 /* ── Shared utility classes ── */
@@ -330,7 +355,8 @@
    24px --bg-solid frame would compete with the FilePageView's surface
    (set by the capture-viewer styles). Drop the frame here so the whole
    panel becomes one continuous chrome surface. */
-.rv-content-area:has(> .rv-file-page-view) {
+.rv-content-area:has(> .rv-file-page-view),
+.rv-content-area:has(> .rv-view-tab-panel > .rv-file-page-view) {
   background: transparent;
   padding: 0;
 }

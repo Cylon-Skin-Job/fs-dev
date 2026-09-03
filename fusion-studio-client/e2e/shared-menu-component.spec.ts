@@ -31,6 +31,10 @@ function buildSharedMenuHarness(): Promise<string> {
       const evidence = { restored: 0, postAction: 0, teardown: 0, reposition: 0 }
 
       const items = () => [{
+        kind: 'heading', id: 'contract-heading', label: 'Contract heading',
+      }, {
+        kind: 'status', id: 'contract-status', label: 'Contract status',
+      }, {
         kind: 'action', id: 'stay-root', label: 'Stay', icon: 'keep',
         onSelect: () => ({ kind: 'stay' }),
       }, {
@@ -213,6 +217,29 @@ test('all five outcomes retain distinct root and hierarchy semantics', async ({ 
   await expect(page.locator('#invocation')).toBeFocused()
 })
 
+test('heading and status descriptors remain semantic, stable, and outside all interaction paths', async ({ page }) => {
+  await installHarness(page)
+  await page.evaluate(() => (window as any).__sharedMenuHarness.open())
+  const menu = page.getByRole('menu', { name: 'Contract menu' })
+  const heading = menu.getByRole('heading', { name: 'Contract heading' })
+  const status = menu.getByRole('status').filter({ hasText: 'Contract status' })
+
+  await expect(heading).toHaveAttribute('data-menu-item-id', 'contract-heading')
+  await expect(status).toHaveAttribute('data-menu-item-id', 'contract-status')
+  await expect(heading).not.toHaveAttribute('tabindex', /.+/)
+  await expect(status).not.toHaveAttribute('tabindex', /.+/)
+  await expect(heading).not.toHaveAttribute('role', 'menuitem')
+  await expect(status).not.toHaveAttribute('role', 'menuitem')
+  await expect(menu.getByRole('menuitem', { name: 'Stay' })).toBeFocused()
+  expect(await page.evaluate(() => (window as any).__sharedMenuHarness.focus('contract-heading'))).toBe(false)
+  expect(await page.evaluate(() => (window as any).__sharedMenuHarness.focus('contract-status'))).toBe(false)
+
+  await menu.getByRole('menuitem', { name: 'Stay' }).press('ArrowDown')
+  await expect(menu.getByRole('menuitem', { name: 'Root outcome' })).toBeFocused()
+  await page.evaluate(() => (window as any).__sharedMenuHarness.update())
+  await expect(menu.getByRole('menuitem', { name: 'Root outcome' })).toBeFocused()
+})
+
 test('updates preserve ancestry and focus; async actions are single-flight and rejection stays open', async ({ page }) => {
   await installHarness(page)
   await page.evaluate(() => (window as any).__sharedMenuHarness.open())
@@ -242,6 +269,22 @@ test('updates preserve ancestry and focus; async actions are single-flight and r
   await page.evaluate(() => (window as any).__sharedMenuHarness.resolveAsync({ kind: 'stay' }))
   await expect(asyncItem).not.toHaveAttribute('aria-busy', 'true')
   await expect(page.getByRole('menu', { name: 'Contract menu' })).toBeVisible()
+})
+
+test('an async outcome settling after replacement cannot affect the current tree or focus', async ({ page }) => {
+  await installHarness(page)
+  await page.evaluate(() => (window as any).__sharedMenuHarness.open())
+  await page.evaluate(() => (window as any).__sharedMenuHarness.focus('async'))
+  await page.getByRole('menuitem', { name: 'Async' }).press('Enter')
+  await expect(page.getByRole('menuitem', { name: 'Async' })).toHaveAttribute('aria-busy', 'true')
+
+  await page.evaluate(() => (window as any).__sharedMenuHarness.open())
+  const current = page.getByRole('menu', { name: 'Contract menu' })
+  await expect(current).toHaveCount(1)
+  await expect(current.getByRole('menuitem', { name: 'Stay' })).toBeFocused()
+  await page.evaluate(() => (window as any).__sharedMenuHarness.resolveAsync({ kind: 'close-all' }))
+  await expect(current).toHaveCount(1)
+  await expect(current.getByRole('menuitem', { name: 'Stay' })).toBeFocused()
 })
 
 test('external surfaces share dismissal ownership, Escape tears down the tree, and Tab restores its origin', async ({ page }) => {
