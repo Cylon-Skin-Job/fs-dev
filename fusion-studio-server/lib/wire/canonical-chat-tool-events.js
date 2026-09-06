@@ -291,6 +291,9 @@ function createCanonicalChatToolEvents({
             isError: true,
             files: [],
             enforcementPhase: 'tool_result',
+            ...(payload?.origin === 'terminal_snapshot'
+              ? { terminalSnapshotResult: payload?.result || {} }
+              : {}),
           });
           return;
         }
@@ -304,6 +307,9 @@ function createCanonicalChatToolEvents({
           returnedDiff: Boolean(result.returnedDiff),
           isError: Boolean(result.isError),
           files: Array.isArray(result.files) ? result.files : [],
+          ...(payload?.origin === 'terminal_snapshot'
+            ? { terminalSnapshotResult: result }
+            : {}),
         });
       }
     );

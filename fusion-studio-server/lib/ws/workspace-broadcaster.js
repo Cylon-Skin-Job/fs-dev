@@ -12,12 +12,13 @@
  *     by connectionId on the originating event (rejection modals).
  *
  * Architectural template: lib/wire/wire-broadcaster.js. Same shape —
- * subscribe to bus events at startup, deliver on each, no state.
+ * subscribe to bus events at startup and serialize workspace bind delivery.
  *
  * This module owns ONE job: translating workspace/thread bus events
  * to wire messages and delivering them. It does NOT own:
  *   - Emitting workspace events (that's the workspace-controller).
- *   - Per-client session state (that's server.js).
+ *   - Creating per-client session state (that's server.js); bind transitions
+ *     are intentionally delegated to workspace-session.
  *   - Client-side handling (that's the future workspaceStore).
  */
 
@@ -28,6 +29,10 @@ const registry = require('../workspace/registry-service');
 const themesService = require('../theme/themes-service');
 const aiPaths = require('../workspace/ai-paths');
 const { buildPanelConfig } = require('./connection-init');
+const {
+  beginWorkspaceBind,
+  completeWorkspaceBind,
+} = require('./workspace-session');
 
 const STYLE_FILES = [
   'variables.css',
@@ -69,7 +74,7 @@ async function readWorkspaceStyles(repoPath) {
  *        Returns the WebSocket for a specific connectionId, or null.
  * @returns {{ started: boolean }}
  */
-function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) {
+function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, getSessionForClient }) {
   let workspaceSwitchBroadcastQueue = Promise.resolve();
 
   function broadcastAll(wireMessage) {
@@ -88,46 +93,76 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId }) 
   }
 
   async function broadcastWorkspaceSwitched(event) {
-    const target = event.to ? await registry.getById(event.to) : null;
-    const baseMessage = {
-      type: 'workspace:switched',
-      from: event.from,
-      to: event.to,
-      repoPath: event.repoPath,
-      workspaceType: target ? target.type : 'code',
-    };
+    const clients = getAllClients().filter((ws) => ws.readyState === 1);
+    const bindings = clients.map((ws) => {
+      const session = getSessionForClient?.(ws);
+      if (!session) return null;
+      return Object.freeze({
+        ws,
+        session,
+        pair: beginWorkspaceBind(session, { workspaceId: event.to, repoPath: event.repoPath }),
+      });
+    }).filter(Boolean);
+    let baseMessage;
+    try {
+      const target = event.to ? await registry.getById(event.to) : null;
+      baseMessage = {
+        type: 'workspace:switched',
+        fileSaveProtocolVersion: 1,
+        resourceProvenanceProtocolVersion: 1,
+        agentActivityProtocolVersion: 1,
+        fileViewerReadProtocolVersion: 1,
+        from: event.from,
+        to: event.to,
+        repoPath: event.repoPath,
+        workspaceType: target ? target.type : 'code',
+      };
 
-    // WORKSPACE_ISOLATION_SPEC: include compiled CSS so the client can
-    // inject styles synchronously without 7 separate WebSocket round-trips.
-    if (event.repoPath) {
-      try {
-        baseMessage.styles = await readWorkspaceStyles(event.repoPath);
-      } catch (err) {
-        console.error('[WorkspaceBroadcaster] Failed to read styles:', err.message);
-        baseMessage.styles = {};
-      }
+      // WORKSPACE_ISOLATION_SPEC: include compiled CSS so the client can
+      // inject styles synchronously without 7 separate WebSocket round-trips.
+      if (event.repoPath) {
+        try {
+          baseMessage.styles = await readWorkspaceStyles(event.repoPath);
+        } catch (err) {
+          console.error('[WorkspaceBroadcaster] Failed to read styles:', err.message);
+          baseMessage.styles = {};
+        }
 
-      // Include themes so the client's theme picker stays in sync
-      try {
-        const themes = await themesService.list(event.repoPath);
-        baseMessage.themes = themes;
-        const active = themes.find(t => t.active);
-        baseMessage.activeThemeId = active ? active.id : null;
-      } catch (err) {
-        console.error('[WorkspaceBroadcaster] Failed to read themes:', err.message);
-        baseMessage.themes = [];
-        baseMessage.activeThemeId = null;
+        // Include themes so the client's theme picker stays in sync.
+        try {
+          const themes = await themesService.list(event.repoPath);
+          baseMessage.themes = themes;
+          const active = themes.find(t => t.active);
+          baseMessage.activeThemeId = active ? active.id : null;
+        } catch (err) {
+          console.error('[WorkspaceBroadcaster] Failed to read themes:', err.message);
+          baseMessage.themes = [];
+          baseMessage.activeThemeId = null;
+        }
       }
+    } catch (error) {
+      console.error('[WorkspaceBroadcaster] Failed to build switch frame:', error.message);
+      for (const { ws } of bindings) {
+        try { ws.close(1011, 'workspace bind failed'); } catch (_closeError) {}
+      }
+      return;
     }
 
-    broadcastAll(baseMessage);
+    const completed = [];
+    for (const binding of bindings) {
+      if (await completeWorkspaceBind(binding.ws, binding.session, baseMessage, binding.pair)) {
+        completed.push(binding);
+      }
+    }
 
     if (event.repoPath) {
       // Send panel_config after workspace:switched. The client activates the
       // new workspace on that message, which clears old per-workspace roots.
       // Link/copy/send-to-chat actions consume these resolved content roots
       // through the shared resource-path module.
-      broadcastAll(buildPanelConfig(event.repoPath));
+      for (const { ws } of completed) {
+        if (ws.readyState === 1) ws.send(JSON.stringify(buildPanelConfig(event.repoPath)));
+      }
     }
   }
 

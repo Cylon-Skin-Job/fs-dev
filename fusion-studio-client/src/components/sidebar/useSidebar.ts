@@ -5,7 +5,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
-import { useFileStore } from '../../state/fileStore';
+import { loadFileContent } from '../../lib/file-tree';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { threadLinkIntent } from '../../lib/thread-link-intent';
 import { showToast } from '../../lib/toast';
@@ -73,19 +73,12 @@ export function useSidebar({ panel }: UseSidebarOptions) {
             const store = usePanelStore.getState();
             store.setCurrentPanel('file-viewer');
             const name = relPath.split('/').pop() || relPath;
-            const { shouldFetch } = useFileStore.getState().openFileTab({
+            loadFileContent({
               path: relPath,
               name,
               type: 'file',
               extension: 'md',
             });
-            if (shouldFetch) {
-              ws.send(JSON.stringify({
-                type: 'file_content_request',
-                panel: 'file-viewer',
-                path: relPath,
-              }));
-            }
           } else {
             navigator.clipboard.writeText(msg.filePath).then(() => {
               console.log('[Sidebar] Copied link to clipboard:', msg.filePath);

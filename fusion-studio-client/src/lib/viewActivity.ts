@@ -189,12 +189,15 @@ export function replaceViewTabs(
   view: string,
   tabs: ViewActivityItem[],
   activeTabId: string | null,
+  options: { preserveExplicitNull?: boolean } = {},
 ): ViewActivityState {
   const current = getViewActivity(view);
   const normalizedTabs = tabs.filter(isActivityItem).map(normalizeItem).slice(0, MAX_RECENTS);
   const activeId = activeTabId && normalizedTabs.some((tab) => tab.id === activeTabId)
     ? activeTabId
-    : (normalizedTabs[0]?.id ?? null);
+    : activeTabId === null && options.preserveExplicitNull === true
+      ? null
+      : (normalizedTabs[0]?.id ?? null);
   const next = {
     ...current,
     tabs: normalizedTabs,

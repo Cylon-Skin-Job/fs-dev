@@ -27,18 +27,20 @@ const sessions = new Map();
 
 const sessionRoots = new Map();
 
-function isDirectory(targetPath) {
+function isDirectory(targetPath, { strictFilesystemErrors = false } = {}) {
   try {
     return fs.statSync(targetPath).isDirectory();
-  } catch {
+  } catch (error) {
+    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
     return false;
   }
 }
 
-function readJson(filePath) {
+function readJson(filePath, { strictFilesystemErrors = false } = {}) {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch {
+  } catch (error) {
+    if (strictFilesystemErrors && error?.code && error.code !== 'ENOENT') throw error;
     return null;
   }
 }
@@ -67,14 +69,24 @@ function resolveLegacyRelativePath(projectRoot, relativePath) {
   return resolved;
 }
 
-function resolveLegacyPanelContentPath(projectRoot, panel, context = {}) {
-  if (views.hasV2Views(projectRoot)) return null;
+function resolveLegacyPanelContentPath(
+  projectRoot,
+  panel,
+  context = {},
+  { strictFilesystemErrors = false } = {},
+) {
+  const directory = (target) => isDirectory(target, { strictFilesystemErrors });
+  const hasV2Views = strictFilesystemErrors
+    ? directory(views.getViewsRoot(projectRoot))
+    : views.hasV2Views(projectRoot);
+  if (hasV2Views) return null;
 
   const legacyViewRoot = path.join(getLegacyViewsRoot(projectRoot), panel);
-  if (!isDirectory(legacyViewRoot)) return null;
+  if (!directory(legacyViewRoot)) return null;
 
-  const contentConfig = readJson(path.join(legacyViewRoot, 'content.json')) || {};
-  const indexConfig = readJson(path.join(legacyViewRoot, 'index.json')) || {};
+  const readOptions = { strictFilesystemErrors };
+  const contentConfig = readJson(path.join(legacyViewRoot, 'content.json'), readOptions) || {};
+  const indexConfig = readJson(path.join(legacyViewRoot, 'index.json'), readOptions) || {};
   const display = contentConfig.display || indexConfig.type;
 
   if (panel === 'file-viewer' || display === 'file-explorer') {
@@ -84,16 +96,16 @@ function resolveLegacyPanelContentPath(projectRoot, panel, context = {}) {
   const declaredRoot = contentConfig.root || indexConfig.settings?.contentDir || indexConfig.settings?.systemWikiDir;
   if (typeof declaredRoot === 'string') {
     const resolved = resolveLegacyRelativePath(projectRoot, declaredRoot);
-    if (resolved && isDirectory(resolved)) return resolved;
+    if (resolved && directory(resolved)) return resolved;
   }
 
   const wikiRoot = path.join(legacyViewRoot, 'Wiki');
-  if ((panel === 'wiki-viewer' || display === 'wiki' || display === 'navigation') && isDirectory(wikiRoot)) {
+  if ((panel === 'wiki-viewer' || display === 'wiki' || display === 'navigation') && directory(wikiRoot)) {
     return wikiRoot;
   }
 
   const contentRoot = path.join(legacyViewRoot, 'content');
-  if (isDirectory(contentRoot)) return contentRoot;
+  if (directory(contentRoot)) return contentRoot;
 
   return legacyViewRoot;
 }
@@ -111,7 +123,7 @@ function resolveLegacyPanelContentPath(projectRoot, panel, context = {}) {
 function getProjectRoot(ws) {
   if (ws) {
     const session = sessions.get(ws);
-    if (session && session.projectRoot) return session.projectRoot;
+    if (session) return session.projectRoot || null;
   }
   const active = workspaceController.getActiveWorkspaceSync();
   return active ? active.repo_path : null;
@@ -187,6 +199,53 @@ function getPanelPath(panel, ws) {
   return null;
 }
 
+/**
+ * Resolve a filesystem-backed panel root for a mutation from an already
+ * authoritative workspace-registry root. Unlike getPanelPath(), this path
+ * never consults per-connection set_panel/session root hints.
+ */
+function getAuthoritativePanelPath(projectRoot, panel, { strictFilesystemErrors = false } = {}) {
+  if (typeof projectRoot !== 'string' || !path.isAbsolute(projectRoot)) return null;
+  const directory = (target) => isDirectory(target, { strictFilesystemErrors });
+
+  if (panel === '__panels__') {
+    const viewsRoot = views.getViewsRoot(projectRoot);
+    if (directory(viewsRoot)) return viewsRoot;
+    const legacyViewsRoot = getLegacyViewsRoot(projectRoot);
+    return directory(legacyViewsRoot) ? legacyViewsRoot : null;
+  }
+  if (panel === '__apps__') {
+    const appsRoot = path.join(projectRoot, 'ai', 'apps');
+    return directory(appsRoot) ? appsRoot : null;
+  }
+  if (panel === '__settings__') {
+    const settingsRoot = aiPaths.getSystemStylesRoot(projectRoot);
+    if (directory(settingsRoot)) return settingsRoot;
+    const legacySettingsRoot = getLegacySettingsRoot(projectRoot);
+    return directory(legacySettingsRoot) ? legacySettingsRoot : null;
+  }
+  if (panel === '__workspace__') {
+    const workspaceRoot = path.join(aiPaths.getSystemRoot(projectRoot), 'workspace');
+    if (directory(workspaceRoot)) return workspaceRoot;
+    const legacyWorkspaceRoot = getLegacyWorkspaceRoot(projectRoot);
+    return directory(legacyWorkspaceRoot) ? legacyWorkspaceRoot : null;
+  }
+
+  const resolved = views.resolveContentPath(projectRoot, panel, {
+    includeHidden: true,
+    sessionRoot: projectRoot,
+    strictFilesystemErrors,
+  });
+  if (resolved && directory(resolved)) return resolved;
+  const legacyResolved = resolveLegacyPanelContentPath(
+    projectRoot,
+    panel,
+    { sessionRoot: projectRoot },
+    { strictFilesystemErrors },
+  );
+  return legacyResolved && directory(legacyResolved) ? legacyResolved : null;
+}
+
 module.exports = {
   sessions,
   getProjectRoot,
@@ -194,4 +253,5 @@ module.exports = {
   getSessionRoot,
   clearSessionRoot,
   getPanelPath,
+  getAuthoritativePanelPath,
 };

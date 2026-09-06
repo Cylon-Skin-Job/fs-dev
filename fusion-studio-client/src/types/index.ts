@@ -1,18 +1,17 @@
 /**
- * @module types
- * @role Compatibility re-export hub.
+ * @module types/index
+ * @role Compatibility barrel for the renderer's decomposed type domains.
  *
- * SPEC-04 Slice A split the former monolithic type surface into focused
- * modules by domain: chat (messages/segments/panel state/live snapshot),
- * websocket (legacy wire union + broad ingress bag), chat-wire (routed
- * required-shape chat contracts + diagnostics), workspace
- * (registry/templates/CLI catalog/threads/harness status), and view-state
- * (panes/layout/theme/timing).
+ * SPEC-04 ownership split:
+ *   chat.ts       — chat history, stream snapshots, tool/turn metadata
+ *   websocket.ts  — legacy broad wire surface
+ *   chat-wire.ts  — typed routed REQUIRED-shape chat contracts
+ *   workspace.ts  — workspace, harness catalog, palette state
+ *   view-state.ts — view/activity/collection/UI state and remaining shell types
  *
- * Every existing importer of `../types` / `../../types` keeps compiling
- * unchanged through these re-exports. New code may import directly from the
- * owning module. Names across the five modules are disjoint by design so the
- * star re-exports never conflict.
+ * Existing importers of `../types` and `../../types` keep compiling through
+ * these re-exports. Provenance-specific resource protocol contracts are owned
+ * by `types/file-explorer.ts` and imported directly by their handlers.
  */
 
 export * from './chat';

@@ -151,7 +151,7 @@ export function useCrepeEditor({
           }
           autoSaveTimerRef.current = setTimeout(() => {
             const reason: SaveReason = checkpointDueRef.current ? 'checkpoint' : 'autosave';
-            handleSaveRef.current({ reason });
+            handleSaveRef.current({ reason }).catch(() => {});
           }, 500);
         }
       });

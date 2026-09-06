@@ -1,5 +1,9 @@
 'use strict';
 
+const fs = require('fs/promises');
+const os = require('os');
+const path = require('path');
+
 jest.mock('uuid', () => ({ v4: jest.fn(() => 'turn-1') }));
 
 jest.mock('../../lib/harness/compat', () => ({
@@ -187,6 +191,7 @@ describe('thread runtime automation', () => {
     const result = await sendAutomationPrompt(target, 'hello');
     await flushAsyncWork();
 
+    expect(result.error).toBeUndefined();
     expect(result).toMatchObject({
       accepted: true,
       deferred: false,
@@ -237,6 +242,33 @@ describe('thread runtime automation', () => {
       content: 'hello',
       hasToolCalls: false,
     });
+  });
+
+  test('headless turns bind authority to server-resolved harness and canonical root', async () => {
+    const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'fusion-headless-authority-'));
+    try {
+      const target = makeTarget({ projectRoot: temporaryRoot });
+      const manager = makeManager({
+        projectRoot: temporaryRoot,
+        getThread: jest.fn(async () => ({ threadId: 'thread-1', entry: { harnessId: 'opencode' } })),
+      });
+      registry.getThreadManagerForTarget.mockReturnValue(manager);
+      const wire = makeWire([
+        { type: 'turn_begin', userInput: 'hello' },
+        { type: 'turn_end', reason: 'complete' },
+      ]);
+      wire._harnessId = 'opencode';
+      wire._provider = 'opencode';
+      spawnThreadWire.mockReturnValue(wire);
+
+      await expect(sendAutomationPrompt(target, 'hello')).resolves.toMatchObject({ accepted: true });
+      expect(emit).toHaveBeenCalledWith('chat:turn_begin', expect.objectContaining({
+        workspaceId: 'workspace-1', threadId: 'thread-1',
+        projectRoot: await fs.realpath(temporaryRoot),
+      }));
+    } finally {
+      await fs.rm(temporaryRoot, { recursive: true, force: true });
+    }
   });
 
   test('thread not found returns failed result without warming', async () => {

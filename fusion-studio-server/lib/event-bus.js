@@ -9,6 +9,11 @@
  *           codex, qwen, robin), client message router, runner, dispatch
  * Listeners: wire-broadcaster, audit-subscriber, trigger-loader,
  *            (future) workspace/thread lifecycle controllers
+ *
+ * Governed facts use a separately admitted, private delivery path attached to
+ * this singleton by lib/subscriptions/host-bootstrap. That path deliberately
+ * does not call emit() or on(), so legacy callers cannot forge an admitted
+ * fact. The public compatibility surface below remains unchanged.
  */
 
 const EventEmitter = require('events');

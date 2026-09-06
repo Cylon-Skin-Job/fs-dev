@@ -20,6 +20,16 @@ const { v4: generateId } = require('uuid');
 const { threadRuntimeManager } = require('../thread/thread-runtime-manager');
 const { createCanonicalChatEventApplier } = require('./canonical-chat-event-applier');
 const { createCanonicalHarnessEventBridge } = require('./canonical-harness-event-bridge');
+const { getDb } = require('../db');
+const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
+const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
+const { getAgentTurnAuthorityRef } = require('../agent-provenance/turn-authority');
+const { getWireForThread } = require('./process-manager');
+const {
+  createCanonicalDrainControl,
+  createCanonicalRouteContext,
+} = require('../thread/canonical-drain-context');
+const { resolveScope } = require('../chat-scope');
 
 /**
  * SPEC-03 Slice A: wire JSON-RPC error responses are a transport relay for
@@ -41,13 +51,98 @@ const WIRE_ERROR_RELAY_MESSAGE = 'The harness reported a protocol error.';
  * @param {(toolName: string, args: object, workspaceRoot?: string | null) => {message: string}|null} deps.checkSettingsBounce
  * @returns {{ handleMessage: (msg: object) => void }}
  */
-function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
+function createWireMessageRouter({ session, ws, emit, checkSettingsBounce, activityOwner: injectedActivityOwner = null }) {
+
+  let activityOwner = injectedActivityOwner;
+  if (!activityOwner) {
+    try {
+      const db = getDb();
+      const activityRepository = createAgentActivityRepository(db, {
+        onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+      });
+      activityOwner = getSharedAgentActivityOwner({
+        db,
+        activityRepository,
+        onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+      });
+    } catch {
+      console.warn('[AgentProvenance] agent_activity_owner_unavailable');
+    }
+  }
 
   const applier = createCanonicalChatEventApplier({
     emit,
     checkSettingsBounce,
-    generateTurnId: () => generateId()
+    generateTurnId: () => generateId(),
+    activityOwner,
   });
+
+  function resolveAgentTurnIdentity(event) {
+    const pendingAuthority = session.pendingAgentTurnAuthority;
+    const currentAuthority = session.currentTurn?.authority;
+    const currentIsLive = currentAuthority
+      && getAgentTurnAuthorityRef(currentAuthority) === currentAuthority;
+    const pendingIsLive = pendingAuthority
+      && getAgentTurnAuthorityRef(pendingAuthority) === pendingAuthority;
+    const authority = event?.type === 'turn_begin'
+      ? (pendingIsLive ? pendingAuthority : null)
+        || (currentIsLive ? currentAuthority : null)
+        || pendingAuthority
+        || currentAuthority
+      : (currentIsLive ? currentAuthority : null)
+        || (pendingIsLive ? pendingAuthority : null)
+        || pendingAuthority
+        || currentAuthority;
+    if (authority) return authority;
+    return {
+      workspaceId: session.currentWorkspaceId,
+      threadId: session.currentThreadId,
+      turnId: session.currentTurn?.id || session.pendingTurnId,
+    };
+  }
+
+  function directDrainContext(event) {
+    const identity = resolveAgentTurnIdentity(event);
+    if (!identity?.workspaceId || !identity?.threadId || !identity?.turnId) return null;
+    const runtimeKey = {
+      workspaceId: identity.workspaceId,
+      scope: 'project',
+      threadId: identity.threadId,
+    };
+    const active = threadRuntimeManager.getActiveDrain(runtimeKey);
+    if (active) return { route: active.routeContext, control: active.control };
+    if (event?.type !== 'turn_begin') return null;
+    const capturedWire = getWireForThread(identity.threadId)
+      || (session.currentThreadId === identity.threadId ? session.wire : null);
+    const control = createCanonicalDrainControl({
+      drainId: generateId(),
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: async () => {
+        try {
+          if (capturedWire?._stopSession) await capturedWire._stopSession();
+          else if (capturedWire?.stop) await capturedWire.stop();
+          else if (capturedWire?.kill) capturedWire.kill('SIGTERM');
+        } catch {
+          console.warn('[ThreadRuntime] Direct canonical harness stop failed', {
+            threadId: identity.threadId,
+            marker: 'DIRECT_CANONICAL_HARNESS_STOP_FAILED',
+          });
+        }
+      },
+    });
+    const route = createCanonicalRouteContext({
+      workspaceId: identity.workspaceId,
+      workspace: resolveScope({ currentWorkspaceId: identity.workspaceId, currentViewId: null }),
+      projectRoot: identity.canonicalRoot || session.projectRoot,
+      scope: 'project',
+      threadId: identity.threadId,
+      acceptedUserInput: session.pendingUserInput || event.userInput,
+      attachments: Array.isArray(session.pendingAttachments) ? session.pendingAttachments : [],
+    });
+    const claimed = threadRuntimeManager.claimActiveDrain(runtimeKey, control, route);
+    return { route: claimed.routeContext, control: claimed.control };
+  }
 
   const bridge = createCanonicalHarnessEventBridge({
     applyChatEvent: applier.applyChatEvent,
@@ -58,6 +153,7 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
       drainContext.control.drainId,
       turnId
     ),
+    resolveTurnIdentity: resolveAgentTurnIdentity,
   });
 
   function handleMessage(msg) {
@@ -114,7 +210,14 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
     }
   }
 
-  return { handleMessage, handleCanonicalHarnessEvent: bridge.applyHarnessEvent };
+  const handleCanonicalHarnessEvent = (event, eventWs, drainContext = null) => bridge.applyHarnessEvent(
+    event,
+    eventWs,
+    drainContext || directDrainContext(event),
+  );
+  handleCanonicalHarnessEvent.drainHarnessEvents = bridge.drainHarnessEvents;
+  handleCanonicalHarnessEvent.finalizeTurn = bridge.finalizeTurn;
+  return { handleMessage, handleCanonicalHarnessEvent };
 }
 
 module.exports = { createWireMessageRouter };

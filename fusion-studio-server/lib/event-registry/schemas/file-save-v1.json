@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/file-save-v1",
+  "title": "File save command request and response family v1",
+  "oneOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/envelopeInvalid" },
+    { "$ref": "#/$defs/pairRejected" },
+    { "$ref": "#/$defs/workspaceUnavailable" },
+    { "$ref": "#/$defs/preAcceptanceRejected" },
+    { "$ref": "#/$defs/failedBeforeReplace" },
+    { "$ref": "#/$defs/outcomeUnknown" },
+    { "$ref": "#/$defs/succeeded" }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "boundedPath": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "fixedError": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "content"],
+      "properties": {
+        "type": { "const": "file_save" },
+        "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "content": { "type": "string", "maxLength": 10485760 },
+        "reason": {
+          "enum": ["autosave", "manual", "session_end", "checkpoint", "milestone"]
+        },
+        "milestone": { "type": "string", "maxLength": 256 },
+        "clientActionId": { "$ref": "#/$defs/boundedId" },
+        "reportedUiContext": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "viewId": { "$ref": "#/$defs/boundedId" },
+            "viewInstanceId": { "$ref": "#/$defs/boundedId" }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "reason": { "const": "milestone" } },
+            "required": ["reason"]
+          },
+          "then": { "required": ["milestone"] },
+          "else": { "not": { "required": ["milestone"] } }
+        }
+      ]
+    },
+    "envelopeInvalid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "error", "retrySafe"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "rejected" },
+        "errorCode": { "const": "invalid_request" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "error": { "const": "The save request is invalid." },
+        "retrySafe": { "const": true }
+      }
+    },
+    "pairRejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "requestId", "workspaceId", "workspaceEpoch", "error", "retrySafe"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "rejected" },
+        "errorCode": { "enum": ["invalid_request", "stale_workspace"] },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "error": { "$ref": "#/$defs/fixedError" },
+        "retrySafe": { "const": true }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "errorCode": { "const": "invalid_request" } }, "required": ["errorCode"] },
+          "then": { "properties": { "error": { "const": "The save request is invalid." } } },
+          "else": { "properties": { "error": { "const": "The workspace changed before this save was accepted." } } }
+        }
+      ]
+    },
+    "workspaceUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "requestId", "error", "retrySafe"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "rejected" },
+        "errorCode": { "const": "workspace_unavailable" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "error": { "const": "The workspace is not available." },
+        "retrySafe": { "const": true }
+      }
+    },
+    "preAcceptanceRejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "error", "retrySafe"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "rejected" },
+        "errorCode": {
+          "enum": ["path_not_allowed", "unsupported_text", "too_large", "save_busy", "storage_unavailable"]
+        },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "error": { "$ref": "#/$defs/fixedError" },
+        "retrySafe": { "const": true }
+      },
+      "allOf": [
+        { "if": { "properties": { "errorCode": { "const": "path_not_allowed" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The requested path is not allowed." } } } },
+        { "if": { "properties": { "errorCode": { "const": "unsupported_text" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "Only supported UTF-8 text can be saved." } } } },
+        { "if": { "properties": { "errorCode": { "const": "too_large" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The file exceeds the 10 MiB limit." } } } },
+        { "if": { "properties": { "errorCode": { "const": "save_busy" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "Too many saves are queued for this file." } } } },
+        { "if": { "properties": { "errorCode": { "const": "storage_unavailable" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "Save storage is temporarily unavailable." } } } }
+      ]
+    },
+    "failedBeforeReplace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "operationId", "commandId", "commandAcceptedEventId", "resourceEventId", "resourceId", "fileVersionId", "canonicalPath", "error", "retrySafe", "commandFactState", "resourceFactState", "ledgerState"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "failed_before_replace" },
+        "errorCode": { "enum": ["snapshot_failed", "unsupported_preimage", "preimage_too_large", "preimage_conflict", "write_prepare_failed", "replace_failed", "permission_denied"] },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "operationId": { "$ref": "#/$defs/uuid" },
+        "commandId": { "$ref": "#/$defs/uuid" },
+        "commandAcceptedEventId": { "$ref": "#/$defs/uuid" },
+        "resourceEventId": { "$ref": "#/$defs/uuid" },
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "fileVersionId": { "$ref": "#/$defs/uuid" },
+        "canonicalPath": { "$ref": "#/$defs/boundedPath" },
+        "error": { "$ref": "#/$defs/fixedError" },
+        "retrySafe": { "const": true },
+        "commandFactState": { "enum": ["admitted", "pending"] },
+        "resourceFactState": { "const": "not_emitted" },
+        "ledgerState": { "const": "not_applicable" }
+      },
+      "allOf": [
+        { "if": { "properties": { "errorCode": { "const": "snapshot_failed" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The existing file could not be captured safely." } } } },
+        { "if": { "properties": { "errorCode": { "const": "unsupported_preimage" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The existing file is not supported UTF-8 text." } } } },
+        { "if": { "properties": { "errorCode": { "const": "preimage_too_large" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The existing file exceeds the 10 MiB limit." } } } },
+        { "if": { "properties": { "errorCode": { "const": "preimage_conflict" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The file changed before it could be replaced." } } } },
+        { "if": { "properties": { "errorCode": { "const": "write_prepare_failed" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The replacement could not be prepared." } } } },
+        { "if": { "properties": { "errorCode": { "const": "replace_failed" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "The file could not be replaced." } } } },
+        { "if": { "properties": { "errorCode": { "const": "permission_denied" } }, "required": ["errorCode"] }, "then": { "properties": { "error": { "const": "Permission was denied while saving the file." } } } }
+      ]
+    },
+    "outcomeUnknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "errorCode", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "operationId", "commandId", "commandAcceptedEventId", "resourceEventId", "resourceId", "fileVersionId", "canonicalPath", "error", "retrySafe", "commandFactState", "resourceFactState", "ledgerState"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "outcome": { "const": "outcome_unknown" },
+        "errorCode": { "const": "mutation_outcome_unknown" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "operationId": { "$ref": "#/$defs/uuid" },
+        "commandId": { "$ref": "#/$defs/uuid" },
+        "commandAcceptedEventId": { "$ref": "#/$defs/uuid" },
+        "resourceEventId": { "$ref": "#/$defs/uuid" },
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "fileVersionId": { "$ref": "#/$defs/uuid" },
+        "canonicalPath": { "$ref": "#/$defs/boundedPath" },
+        "error": { "const": "The save outcome is uncertain and requires reconciliation." },
+        "retrySafe": { "const": false },
+        "commandFactState": { "enum": ["admitted", "pending"] },
+        "resourceFactState": { "const": "not_emitted" },
+        "ledgerState": { "const": "not_applicable" }
+      }
+    },
+    "succeeded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "outcome", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "operationId", "commandId", "commandAcceptedEventId", "resourceEventId", "resourceId", "fileVersionId", "canonicalPath", "commandFactState", "resourceFactState", "ledgerState", "provenanceState", "checkpointState"],
+      "properties": {
+        "type": { "const": "file_save_response" },
+        "version": { "const": 1 },
+        "success": { "const": true },
+        "outcome": { "const": "succeeded" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "operationId": { "$ref": "#/$defs/uuid" },
+        "commandId": { "$ref": "#/$defs/uuid" },
+        "commandAcceptedEventId": { "$ref": "#/$defs/uuid" },
+        "resourceEventId": { "$ref": "#/$defs/uuid" },
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "fileVersionId": { "$ref": "#/$defs/uuid" },
+        "canonicalPath": { "$ref": "#/$defs/boundedPath" },
+        "commandFactState": { "enum": ["admitted", "pending"] },
+        "resourceFactState": { "enum": ["admitted", "pending"] },
+        "ledgerState": { "enum": ["stored", "pending", "conflict"] },
+        "provenanceState": { "enum": ["complete", "pending_reconciliation"] },
+        "checkpointState": { "enum": ["not_requested", "committed", "no_change", "failed"] },
+        "warningCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 2,
+          "items": { "enum": ["checkpoint_failed", "provenance_pending"] }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "commandFactState": { "const": "admitted" },
+              "resourceFactState": { "const": "admitted" },
+              "ledgerState": { "const": "stored" }
+            },
+            "required": ["commandFactState", "resourceFactState", "ledgerState"]
+          },
+          "then": { "properties": { "provenanceState": { "const": "complete" } } },
+          "else": { "properties": { "provenanceState": { "const": "pending_reconciliation" } } }
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "checkpointState": { "const": "failed" },
+                "provenanceState": { "const": "pending_reconciliation" },
+                "warningCodes": { "const": ["checkpoint_failed", "provenance_pending"] }
+              },
+              "required": ["warningCodes"]
+            },
+            {
+              "properties": {
+                "checkpointState": { "const": "failed" },
+                "provenanceState": { "const": "complete" },
+                "warningCodes": { "const": ["checkpoint_failed"] }
+              },
+              "required": ["warningCodes"]
+            },
+            {
+              "properties": {
+                "checkpointState": { "enum": ["not_requested", "committed", "no_change"] },
+                "provenanceState": { "const": "pending_reconciliation" },
+                "warningCodes": { "const": ["provenance_pending"] }
+              },
+              "required": ["warningCodes"]
+            },
+            {
+              "properties": {
+                "checkpointState": { "enum": ["not_requested", "committed", "no_change"] },
+                "provenanceState": { "const": "complete" }
+              },
+              "not": { "required": ["warningCodes"] }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

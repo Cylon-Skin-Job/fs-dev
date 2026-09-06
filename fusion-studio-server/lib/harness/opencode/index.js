@@ -101,7 +101,8 @@ function isUsefulAssistantEvent(event) {
   // here would suppress that error path by enabling the synthetic turn_end.
   // Working-activity consumption of step_begin belongs to the wire/thread
   // layers, not this exit guard.
-  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
+  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args'
+    || event.type === 'tool_result' || event.type === 'tool_snapshot') {
     return true;
   }
   return event.type === 'thinking' && String(event.text || '').length > 0;
@@ -109,9 +110,12 @@ function isUsefulAssistantEvent(event) {
 
 function createSyntheticTurnEnd(translator) {
   const terminalState = translator.getTerminalState();
+  const observedAt = translator.now();
   return {
     type: 'turn_end',
-    timestamp: Date.now(),
+    timestamp: observedAt,
+    timestampSource: 'host_observed',
+    observedAt,
     reason: 'complete',
     fullText: terminalState.fullText,
     hasToolCalls: terminalState.hasToolCalls,
@@ -154,6 +158,7 @@ class OpenCodeHarness extends EventEmitter {
       threadId,
       process: createProcessProxy(),
       activeProcess: null,
+      activeProcessClose: null,
       openCodeSessionId: storedSessionId,
       pendingFork,
       forkProvenance: harnessConfig.forkProvenance || null,
@@ -219,6 +224,9 @@ class OpenCodeHarness extends EventEmitter {
         });
 
         session.activeProcess = proc;
+        session.activeProcessClose = new Promise((resolve) => {
+          proc.once('close', resolve);
+        });
         session.process = proc;
         session.stopRequested = false;
 
@@ -251,7 +259,8 @@ class OpenCodeHarness extends EventEmitter {
             if (event.type === 'content' || event.type === 'thinking') {
               sawRenderableOutput = true;
             }
-            if (event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
+            if (event.type === 'tool_call' || event.type === 'tool_call_args'
+              || event.type === 'tool_result' || event.type === 'tool_snapshot') {
               sawToolCalls = true;
             }
             if (event.type === 'turn_end') {
@@ -331,13 +340,26 @@ class OpenCodeHarness extends EventEmitter {
             throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
           }
         } finally {
-          session.activeProcess = null;
+          if (session.activeProcess === proc) {
+            session.activeProcess = null;
+            session.activeProcessClose = null;
+          }
         }
       },
-      async stop() {
+      async stop(signal) {
         session.stopRequested = true;
-        if (session.activeProcess && !session.activeProcess.killed) {
-          session.activeProcess.kill('SIGTERM');
+        const activeProcess = session.activeProcess;
+        const activeProcessClose = session.activeProcessClose;
+        if (!activeProcess || !activeProcessClose) return;
+        // ChildProcess.killed means only that kill() accepted a signal. It is
+        // not evidence of process exit and must not suppress SIGKILL escalation.
+        activeProcess.kill(signal || 'SIGTERM');
+        // Explicit signals are the escalation-aware path used by the wire
+        // owner: completion means that the child actually closed. Preserve the
+        // pre-existing direct-session contract for stop() with no argument,
+        // whose promise resolves after requesting SIGTERM.
+        if (signal !== undefined) {
+          await activeProcessClose;
         }
       },
     };

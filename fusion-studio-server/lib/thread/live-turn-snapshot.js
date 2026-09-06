@@ -108,19 +108,28 @@ function applyToolResult(snapshot, payload) {
   const part = snapshot.parts.find(item => item.type === 'tool_call' && item.toolCallId === toolCallId);
   if (!part) return;
   part.arguments = payload.toolArgs || part.arguments || {};
-  part.result = {
-    output: payload.output || '',
-    statusMessage: payload.statusMessage,
-    display: Array.isArray(payload.display) ? payload.display : [],
-    returnedDiff: Boolean(payload.returnedDiff),
-    isError: Boolean(payload.isError),
-    error: payload.isError ? (payload.output || payload.statusMessage || 'Tool failed') : undefined,
-    files: Array.isArray(payload.files) ? payload.files : [],
-    // SPEC-01 Slice C: enforcement bounces carry their phase on the persisted
-    // result. Conditional spread keeps ordinary results byte-identical to the
-    // pre-drain snapshot shape; bump timing is unchanged.
-    ...(payload.enforcementPhase ? { enforcementPhase: payload.enforcementPhase } : {}),
-  };
+  if (Object.prototype.hasOwnProperty.call(payload, 'terminalSnapshotResult')) {
+    // The terminal snapshot result is the exact JSON-safe value fingerprinted
+    // by provenance before expansion. Preserve its byte shape and stamp the
+    // durable proof fields consumed by the exchange binder.
+    part.result = cloneJson(payload.terminalSnapshotResult);
+    part.terminalSnapshotExpansionVersion = 1;
+    part.terminalSnapshotExpansionComplete = true;
+  } else {
+    part.result = {
+      output: payload.output || '',
+      statusMessage: payload.statusMessage,
+      display: Array.isArray(payload.display) ? payload.display : [],
+      returnedDiff: Boolean(payload.returnedDiff),
+      isError: Boolean(payload.isError),
+      error: payload.isError ? (payload.output || payload.statusMessage || 'Tool failed') : undefined,
+      files: Array.isArray(payload.files) ? payload.files : [],
+      // SPEC-01 Slice C: enforcement bounces carry their phase on the persisted
+      // result. Conditional spread keeps ordinary results byte-identical to the
+      // pre-drain snapshot shape; bump timing is unchanged.
+      ...(payload.enforcementPhase ? { enforcementPhase: payload.enforcementPhase } : {}),
+    };
+  }
   bump(snapshot);
 }
 

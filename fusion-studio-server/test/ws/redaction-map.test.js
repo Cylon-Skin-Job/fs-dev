@@ -33,6 +33,49 @@ describe('redactWsMessage', () => {
     expect(out.key).toBe('GITLAB_TOKEN');
   });
 
+  test('file_save redacts the complete content without mutating the handler copy', () => {
+    const input = {
+      type: 'file_save', version: 1, requestId: 'request-1',
+      panel: 'file-viewer', path: 'note.md', content: 'top secret\nsecond line',
+    };
+    const out = redactWsMessage(input);
+    expect(out).toEqual({ ...input, content: '[redacted]' });
+    expect(input.content).toBe('top secret\nsecond line');
+  });
+
+  test('agent activity query redacts resource selectors without mutating the routed copy', () => {
+    const input = {
+      type: 'agent:activity:query',
+      path: '/Users/alice/private/secret.txt',
+      folderPrefix: '/Users/alice/private',
+      fileName: 'secret.txt',
+      subject: 'resource_edges',
+    };
+    const out = redactWsMessage(input);
+    expect(out).toEqual({
+      ...input,
+      path: '[redacted]',
+      folderPrefix: '[redacted]',
+      fileName: '[redacted]',
+    });
+    expect(input.path).toBe('/Users/alice/private/secret.txt');
+    expect(input.folderPrefix).toBe('/Users/alice/private');
+    expect(input.fileName).toBe('secret.txt');
+  });
+
+  test('agent tool fixture redacts its authorization nonce without mutating the routed copy', () => {
+    const input = {
+      type: 'provenance:test:agent_tool',
+      version: 1,
+      requestId: 'fixture-1',
+      nonce: '123e4567-e89b-42d3-a456-426614174000',
+      fixture: 'edit-first-a',
+    };
+    const out = redactWsMessage(input);
+    expect(out).toEqual({ ...input, nonce: '[redacted]' });
+    expect(input.nonce).toBe('123e4567-e89b-42d3-a456-426614174000');
+  });
+
   test('chat-turn:metadata:update redacts inbound note patch body', () => {
     const input = {
       type: 'chat-turn:metadata:update',

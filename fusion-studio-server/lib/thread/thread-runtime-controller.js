@@ -26,11 +26,23 @@ const {
   normalizeRouteAttachments,
 } = require('./canonical-drain-context');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
+const { randomUUID } = require('crypto');
+const {
+  createAgentTurnAuthorityRef,
+  getAgentTurnAuthorityRef,
+  releaseAgentTurnAuthorityRef,
+} = require('../agent-provenance/turn-authority');
 
 // RCC-0095: all threads are workspace-scoped. The 'project' scope literal
 // is kept on runtime keys and outbound messages for wire compatibility.
 const SCOPE = 'project';
 
+/**
+ * Extract the model/effort selection from a client-provided harnessConfig.
+ * Only model and variant are writable per-prompt; everything else is left
+ * untouched so session continuity fields are never clobbered.
+ * @returns {object|null}
+ */
 function extractSelectionPatch(harnessConfig) {
   if (!harnessConfig || typeof harnessConfig !== 'object') return null;
   const patch = {};
@@ -126,14 +138,115 @@ function markReadyIfRuntimeStillActive(runtimeKey) {
   }
 }
 
+function clearAcceptedPromptIfOwned(session, acceptedPrompt) {
+  if (session.pendingTurnId !== acceptedPrompt.turnId
+    || session.pendingAgentTurnAuthority !== acceptedPrompt.authority
+    || session.pendingUserInput !== acceptedPrompt.userInput
+    || session.pendingAttachments !== acceptedPrompt.attachments) return false;
+  session.pendingTurnId = null;
+  session.pendingAgentTurnAuthority = null;
+  session.pendingUserInput = null;
+  session.pendingAttachments = [];
+  return true;
+}
+
+function captureBaseTurnOwnership(session, identity) {
+  const turn = session.currentTurn;
+  if (!turn || turn.id !== identity.turnId || session.currentThreadId !== identity.threadId) return null;
+  if (turn.authority && identity.authority && turn.authority !== identity.authority) return null;
+  if (turn.authority && !identity.authority
+    && (turn.authority.workspaceId !== identity.workspaceId
+      || turn.authority.threadId !== identity.threadId
+      || turn.authority.turnId !== identity.turnId)) return null;
+  return {
+    currentTurn: turn,
+    assistantParts: session.assistantParts,
+  };
+}
+
+function clearBaseTurnIfOwned(session, identity, ownership) {
+  if (!ownership || session.currentThreadId !== identity.threadId) return false;
+  const stillOwned = session.currentTurn === ownership.currentTurn
+    && session.assistantParts === ownership.assistantParts;
+  const clearedByOwnedFinalizer = session.currentTurn === null
+    && Array.isArray(session.assistantParts)
+    && session.assistantParts.length === 0;
+  if (!stillOwned && !clearedByOwnedFinalizer) return false;
+  if (stillOwned) {
+    session.currentTurn = null;
+    session.assistantParts = [];
+  }
+  session.hasToolCalls = false;
+  session.activeToolId = null;
+  session.activeToolName = null;
+  session.toolArgs = {};
+  session.toolNamesById = {};
+  session.bouncedToolCalls = new Set();
+  session.contextUsage = null;
+  session.tokenUsage = null;
+  session.messageId = null;
+  session.planMode = false;
+  return true;
+}
+
+function disposeTurnApplicationContext(context) {
+  context.pendingTurnId = null;
+  context.pendingAgentTurnAuthority = null;
+  context.pendingUserInput = null;
+  context.pendingAttachments = [];
+  context.currentTurn = null;
+  context.assistantParts = [];
+  context.hasToolCalls = false;
+  context.activeToolId = null;
+  context.activeToolName = null;
+  context.toolArgs = {};
+  context.toolNamesById = {};
+  context.bouncedToolCalls = new Set();
+  context.contextUsage = null;
+  context.tokenUsage = null;
+  context.messageId = null;
+  context.planMode = false;
+  context.wire = null;
+  context.projectRoot = null;
+}
+
 async function stopWire(wire, threadId) {
+  const bounded = (promise, timeoutMs) => new Promise((resolve) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      resolve('timeout');
+    }, timeoutMs);
+    timer.unref?.();
+    Promise.resolve(promise).then(() => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve('fulfilled');
+    }, () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve('rejected');
+    });
+  });
   try {
     if (wire._stopSession) {
-      await wire._stopSession();
+      const stopped = await bounded(wire._stopSession('SIGTERM'), 2_000);
+      if (stopped === 'timeout') await bounded(wire._stopSession('SIGKILL'), 1_000);
+      if (stopped === 'rejected') throw new Error('legacy stop rejected');
     } else if (wire.stop) {
-      await wire.stop();
+      const stopped = await bounded(wire.stop('SIGTERM'), 2_000);
+      if (stopped === 'timeout') await bounded(wire.stop('SIGKILL'), 1_000);
+      if (stopped === 'rejected') throw new Error('legacy stop rejected');
     } else if (wire.kill) {
       wire.kill('SIGTERM');
+      const closed = await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 2_000);
+      if (closed === 'timeout') {
+        wire.kill('SIGKILL');
+        await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 1_000);
+      }
     }
   } finally {
     unregisterWire(threadId);
@@ -345,10 +458,59 @@ async function acceptPromptThroughRuntime({
   }
   console.log('[WS] Message accepted by runtime and tracked in thread');
 
+  const turnId = randomUUID();
+  session.pendingTurnId = turnId;
+  let authorityAttempted = false;
+  try {
+    const harnessId = thread.entry?.harnessId;
+    if (!harnessId || wire._harnessId !== harnessId) throw new Error('resolved harness identity mismatch');
+    authorityAttempted = true;
+    session.pendingAgentTurnAuthority = await createAgentTurnAuthorityRef({
+      workspaceId: manager.workspaceId,
+      threadId,
+      turnId,
+      harnessId,
+      provider: wire._provider || harnessId,
+      workspaceRoot: manager.projectRoot,
+    });
+  } catch {
+    session.pendingAgentTurnAuthority = null;
+    if (authorityAttempted) console.warn('[AgentProvenance] agent_turn_authority_unavailable');
+  }
+  const turnAuthority = session.pendingAgentTurnAuthority;
+
   attachClientToWire(threadId, wire, projectRoot, ws, {
     workspaceId: session.currentWorkspaceId,
     viewId: null,
   });
+
+  if (turnAuthority) {
+    session.pendingUserInput = clientMsg.user_input;
+    session.pendingAttachments = attachments;
+  }
+  const acceptedPrompt = turnAuthority ? {
+    turnId,
+    authority: turnAuthority,
+    userInput: clientMsg.user_input,
+    attachments,
+  } : null;
+  const turnApplicationContext = {
+    ...session,
+    currentWorkspaceId: manager.workspaceId,
+    currentThreadId: threadId,
+    projectRoot: turnAuthority?.canonicalRoot || manager.projectRoot || projectRoot,
+    wire,
+    pendingAgentTurnAuthority: turnAuthority,
+    pendingTurnId: turnId,
+    pendingUserInput: clientMsg.user_input,
+    pendingAttachments: [...attachments],
+    currentTurn: null,
+    assistantParts: [],
+    hasToolCalls: false,
+    toolArgs: {},
+    toolNamesById: {},
+    bouncedToolCalls: new Set(),
+  };
 
   // SPEC-01 Slice B: bind the accepted prompt to an immutable route context
   // and claim one UUID drain before the harness iterator is consumed. The
@@ -362,7 +524,7 @@ async function acceptPromptThroughRuntime({
     const routeContext = createCanonicalRouteContext({
       workspaceId: manager.workspaceId,
       workspace: resolveScope({ currentWorkspaceId: session.currentWorkspaceId, currentViewId: null }),
-      projectRoot,
+      projectRoot: turnAuthority?.canonicalRoot || projectRoot,
       scope: SCOPE,
       threadId,
       acceptedUserInput: clientMsg.user_input,
@@ -373,7 +535,7 @@ async function acceptPromptThroughRuntime({
     const drainControl = createCanonicalDrainControl({
       drainId,
       runtimeKey,
-      touchThreadSession: () => manager.touchSession(threadId),
+      touchThreadSession: () => manager.touchSession?.(threadId),
       stopHarness: async () => {
         try {
           if (wire._stopSession) {
@@ -412,8 +574,17 @@ async function acceptPromptThroughRuntime({
 
   (async () => {
     try {
-      for await (const event of wire._sendMessage(harnessInput, {})) {
-        handleCanonicalHarnessEvent(event, ws, drainContext);
+      if (typeof handleCanonicalHarnessEvent.drainHarnessEvents === 'function') {
+        await handleCanonicalHarnessEvent.drainHarnessEvents(wire._sendMessage(harnessInput, {}), ws, {
+          drainContext,
+          turnAuthority,
+          turnApplicationContext,
+          finalizeOnError: false,
+        });
+      } else {
+        for await (const event of wire._sendMessage(harnessInput, {})) {
+          await handleCanonicalHarnessEvent(event, ws, drainContext);
+        }
       }
       if (isDrainSuperseded()) {
         console.warn(`[ThreadRuntime] Drain ${drainId} superseded; completion handling is a diagnostic no-op`);
@@ -466,7 +637,7 @@ async function acceptPromptThroughRuntime({
           // object with the optional opaque diagnosticId. Downstream
           // validateTurnTerminalError re-validates the final shape
           // (diagnosticId: non-empty string ≤128 chars).
-          handleCanonicalHarnessEvent({
+          await handleCanonicalHarnessEvent({
             type: 'turn_end',
             reason: 'error',
             partial: true,
@@ -513,6 +684,16 @@ async function acceptPromptThroughRuntime({
           true,
         );
       }
+    } finally {
+      if (acceptedPrompt) clearAcceptedPromptIfOwned(session, acceptedPrompt);
+      else {
+        if (session.pendingTurnId === turnId) session.pendingTurnId = null;
+        if (session.pendingAgentTurnAuthority === turnAuthority) {
+          session.pendingAgentTurnAuthority = null;
+        }
+      }
+      releaseAgentTurnAuthorityRef(turnAuthority);
+      disposeTurnApplicationContext(turnApplicationContext);
     }
   })();
 }
@@ -547,32 +728,93 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
   const capturedDrain = activeDrain
     ? { drainId: activeDrain.drainId, routeContext: activeDrain.routeContext, control: activeDrain.control }
     : null;
+  const wire = capturedDrain
+    ? null
+    : getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
+
+  const authority = getAgentTurnAuthorityRef({
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+  });
+  const stopIdentity = authority || {
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+  };
+  const pendingAuthority = session.pendingAgentTurnAuthority;
+  const pendingBelongsToStop = session.pendingTurnId === liveTurn.turnId
+    && (authority
+      ? pendingAuthority === authority
+      : (!pendingAuthority
+        ? session.currentThreadId === threadId
+        : pendingAuthority.workspaceId === manager.workspaceId
+          && pendingAuthority.threadId === threadId
+          && pendingAuthority.turnId === liveTurn.turnId));
+  const pendingOwnership = pendingBelongsToStop ? {
+    turnId: liveTurn.turnId,
+    authority: pendingAuthority,
+    userInput: session.pendingUserInput,
+    attachments: session.pendingAttachments,
+  } : null;
+  const hasOwnedFinalizer = typeof handleCanonicalHarnessEvent?.finalizeTurn === 'function';
+  const canReconstructWithoutNavigationLoss = !hasOwnedFinalizer
+    && (!session.currentThreadId || session.currentThreadId === threadId)
+    && (!session.currentTurn || session.currentTurn.id === liveTurn.turnId);
+  if (canReconstructWithoutNavigationLoss
+    && (!session.currentTurn || session.currentTurn.id !== liveTurn.turnId)) {
+    if (!session.currentThreadId) session.currentThreadId = threadId;
+    session.currentTurn = {
+      id: liveTurn.turnId,
+      text: liveTurn.fullText || '',
+      userInput: liveTurn.userInput || '',
+    };
+    session.assistantParts = Array.isArray(liveTurn.parts) ? liveTurn.parts : [];
+    session.hasToolCalls = session.assistantParts.some(part => part.type === 'tool_call');
+  }
+  if (session.currentTurn?.id === liveTurn.turnId && !session.currentTurn.authority && authority) {
+    Object.defineProperty(session.currentTurn, 'authority', {
+      value: authority,
+      enumerable: false,
+    });
+  }
+  const baseTurnOwnership = captureBaseTurnOwnership(session, {
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+    authority,
+  });
 
   threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
-  session.currentThreadId = threadId;
-  session.currentScope = SCOPE;
-  session.currentViewId = null;
-
-  // Canonical accumulator reconstruction through session state is retired:
-  // the applier sources interrupted-turn assembly from the runtime snapshot.
-
+  let finalization = Promise.resolve();
   if (handleCanonicalHarnessEvent) {
     try {
-      if (capturedDrain) {
-        handleCanonicalHarnessEvent({
-          type: 'turn_end',
-          reason: 'interrupted',
-          partial: true,
-        }, ws, { route: capturedDrain.routeContext, control: capturedDrain.control });
+      const terminalEvent = {
+        type: 'turn_end',
+        reason: 'interrupted',
+        partial: true,
+      };
+      if (hasOwnedFinalizer) {
+        finalization = Promise.resolve(
+          handleCanonicalHarnessEvent.finalizeTurn(
+            terminalEvent,
+            ws,
+            stopIdentity,
+            null,
+            capturedDrain
+              ? { route: capturedDrain.routeContext, control: capturedDrain.control }
+              : null,
+          ),
+        );
+      } else if (capturedDrain) {
+        finalization = Promise.resolve(handleCanonicalHarnessEvent({
+          ...terminalEvent,
+        }, ws, { route: capturedDrain.routeContext, control: capturedDrain.control }));
       } else {
         // No active drain record: keep the historical 2-arg call shape so the
         // applier's defensive no-drain-context drop behaves unchanged.
-        handleCanonicalHarnessEvent({
-          type: 'turn_end',
-          reason: 'interrupted',
-          partial: true,
-        }, ws);
+        finalization = Promise.resolve(handleCanonicalHarnessEvent(terminalEvent, ws));
       }
     } catch {
       // A terminal publication failure must not escape into the router's raw
@@ -582,6 +824,7 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
   }
 
   if (capturedDrain) {
+    await finalization.catch(() => {});
     // SPEC-01 Slice D item 2: stop only the bound harness through the matching
     // control capability.
     try {
@@ -603,6 +846,7 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     const currentDrain = threadRuntimeManager.getActiveDrain(runtimeKey);
     const superseded = Boolean(currentDrain && currentDrain.drainId !== capturedDrain.drainId);
     if (superseded) {
+      releaseAgentTurnAuthorityRef(authority);
       console.warn(`[ThreadRuntime] Drain ${capturedDrain.drainId} superseded during stop; cleanup is a diagnostic no-op`);
       return;
     }
@@ -618,6 +862,13 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING) {
       threadRuntimeManager.markCold(runtimeKey);
     }
+    if (pendingOwnership) clearAcceptedPromptIfOwned(session, pendingOwnership);
+    clearBaseTurnIfOwned(session, {
+      threadId,
+      turnId: liveTurn.turnId,
+      authority,
+    }, baseTurnOwnership);
+    releaseAgentTurnAuthorityRef(authority);
     // Bound path: session.wire can no longer be identity-compared to the
     // stopped harness; a stale reference is discarded by ensureReadyRuntime's
     // killed-wire logic instead.
@@ -626,19 +877,20 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
 
   // No active drain record (pre-claim stop edge): keep the historical legacy
   // wire lookup + unconditional cold exactly as before Slice D.
-  const wire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
-
+  let stopping = Promise.resolve();
   if (wire) {
-    try {
-      await stopWire(wire, threadId);
-    } catch {
-      // stopWire unregisters in its finally block. Keep completing local
-      // cleanup, but never let the caught provider/runtime value reach the
-      // router's raw exception frame/logger.
-      reportLegacyStopFailure(threadId);
-    }
-    if (session.wire === wire) session.wire = null;
+    stopping = stopWire(wire, threadId).then(() => {
+      if (session.wire === wire) session.wire = null;
+    }).catch(() => reportLegacyStopFailure(threadId));
   }
+  await Promise.allSettled([finalization, stopping]);
+  if (pendingOwnership) clearAcceptedPromptIfOwned(session, pendingOwnership);
+  clearBaseTurnIfOwned(session, {
+    threadId,
+    turnId: liveTurn.turnId,
+    authority,
+  }, baseTurnOwnership);
+  releaseAgentTurnAuthorityRef(authority);
   threadRuntimeManager.markCold(runtimeKey);
 }
 

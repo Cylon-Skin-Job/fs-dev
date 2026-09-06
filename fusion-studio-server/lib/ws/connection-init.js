@@ -24,12 +24,16 @@ const aiPaths = require('../workspace/ai-paths');
  * @param {(ws?: import('ws').WebSocket) => string|null} getProjectRoot
  * @returns {Promise<object>}
  */
-async function buildWorkspaceInit(getProjectRoot) {
+async function buildWorkspaceInit(getProjectRoot, workspacePair = {}) {
   const workspaces = await workspaceController.listWorkspaces();
-  const activeWorkspaceId = workspaceController.getActiveWorkspaceId();
+  const activeWorkspaceId = Object.prototype.hasOwnProperty.call(workspacePair, 'workspaceId')
+    ? workspacePair.workspaceId
+    : workspaceController.getActiveWorkspaceId();
   console.log('[WS] activeWorkspaceId:', activeWorkspaceId, 'workspaces count:', workspaces.length);
   const { resolveCliConfig } = require('../cli-config');
-  const activeRoot = getProjectRoot();
+  const activeRoot = Object.prototype.hasOwnProperty.call(workspacePair, 'repoPath')
+    ? workspacePair.repoPath
+    : getProjectRoot();
   console.log('[WS] activeRoot:', activeRoot);
   const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
   let themes = [];
@@ -69,12 +73,18 @@ async function buildWorkspaceInit(getProjectRoot) {
       })
     );
   }
-  const activeWs = workspaceController.getActiveWorkspaceSync();
+  const activeWs = workspaces.find((workspace) => workspace.id === activeWorkspaceId) || null;
   return {
     type: 'workspace:init',
+    workspaceId: workspacePair.workspaceId ?? activeWorkspaceId ?? null,
+    workspaceEpoch: workspacePair.workspaceEpoch ?? null,
+    fileSaveProtocolVersion: 1,
+    resourceProvenanceProtocolVersion: 1,
+    agentActivityProtocolVersion: 1,
+    fileViewerReadProtocolVersion: 1,
     workspaces,
     activeWorkspaceId,
-    activeRepoPath: activeWs ? activeWs.repo_path : null,
+    activeRepoPath: activeRoot || null,
     workspaceType: activeWs ? activeWs.type : 'code',
     sourceMachineName: aiPaths.getLocalMachineName(),
     homePath: require('os').homedir(),

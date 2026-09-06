@@ -1,19 +1,20 @@
 'use strict';
 
 const { createOfficePaletteHandlers } = require('./office-palette-handlers');
+const { decodeClientTextFrame } = require('./client-frame-decoder');
 
 function createOfficePaletteDispatch({ ws, session, handleNext }) {
   const handlers = createOfficePaletteHandlers({ ws, session });
 
-  return async function handlePaletteOrNext(raw) {
+  return async function handlePaletteOrNext(raw, isBinary = false) {
     let message;
     try {
-      message = JSON.parse(raw.toString());
+      message = decodeClientTextFrame(raw, isBinary).value;
     } catch {
-      return handleNext(raw);
+      return handleNext(raw, isBinary);
     }
     const handler = handlers[message?.type];
-    return handler ? handler(message) : handleNext(raw);
+    return handler ? handler(message) : handleNext(raw, isBinary);
   };
 }
 

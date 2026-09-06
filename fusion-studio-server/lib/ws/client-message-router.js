@@ -36,6 +36,7 @@ const { createChatTurnMetadataHandlers } = require('./chat-turn-metadata-handler
 const { createChatTurnDiagnosticHandlers } = require('./chat-turn-diagnostic-handlers');
 const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
 const { resolvePrompt } = require('../prompts/prompt-registry');
+const { ClientFrameError, decodeClientTextFrame } = require('./client-frame-decoder');
 
 /**
  * Create a per-connection client message router.
@@ -79,6 +80,11 @@ function createClientMessageRouter({
   getThemeHandlers,
   getSecretsHandlers,
   getScreenshotHandlers,
+  getFileSaveRoute = () => null,
+  getResourceProvenanceRoute = () => null,
+  getAgentActivityRoute = () => null,
+  getFileViewerReadRoute = () => null,
+  getAgentToolFixtureRoute = () => null,
   handleCanonicalHarnessEvent,
 }) {
 
@@ -98,10 +104,21 @@ function createClientMessageRouter({
 
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
 
-  async function handleClientMessage(message) {
-    const text = message.toString();
+  async function handleClientMessage(message, isBinary = false) {
+    let clientMsg;
     try {
-      const clientMsg = JSON.parse(text);
+      clientMsg = decodeClientTextFrame(message, isBinary).value;
+    } catch (error) {
+      if (error instanceof ClientFrameError) {
+        try { ws.close(error.closeCode, error.message.slice(0, 123)); } catch (_closeError) {}
+        return;
+      }
+      throw error;
+    }
+    try {
+      if (!clientMsg || typeof clientMsg !== 'object' || Array.isArray(clientMsg)) {
+        throw new TypeError('Client message must be an object');
+      }
       // Redact credential-bearing fields before logging the payload.
       // See lib/ws/redaction-map.js + CLIPBOARD_KEYCHAIN_REDESIGN.md §3i.
       const safe = redactWsMessage(clientMsg);
@@ -143,11 +160,37 @@ function createClientMessageRouter({
       // --------------------------------------------------
 
       if (clientMsg.type === 'file_tree_request') {
+        if (
+          clientMsg.panel == null
+          || clientMsg.panel === 'file-viewer'
+          || Object.prototype.hasOwnProperty.call(clientMsg, 'version')
+        ) {
+          const fileViewerReadRoute = getFileViewerReadRoute();
+          if (fileViewerReadRoute) {
+            await fileViewerReadRoute.handleTree({ ws, session, message: clientMsg });
+          } else {
+            try { ws.close(1011, 'file viewer read route unavailable'); } catch (_error) {}
+          }
+          return;
+        }
         await fileExplorer.handleFileTreeRequest(ws, clientMsg);
         return;
       }
 
       if (clientMsg.type === 'file_content_request') {
+        if (
+          clientMsg.panel == null
+          || clientMsg.panel === 'file-viewer'
+          || Object.prototype.hasOwnProperty.call(clientMsg, 'version')
+        ) {
+          const fileViewerReadRoute = getFileViewerReadRoute();
+          if (fileViewerReadRoute) {
+            await fileViewerReadRoute.handleContent({ ws, session, message: clientMsg });
+          } else {
+            try { ws.close(1011, 'file viewer read route unavailable'); } catch (_error) {}
+          }
+          return;
+        }
         await fileExplorer.handleFileContentRequest(ws, clientMsg);
         return;
       }
@@ -181,7 +224,44 @@ function createClientMessageRouter({
       }
 
       if (clientMsg.type === 'file_save') {
-        await fileExplorer.handleFileSaveRequest(ws, clientMsg);
+        const fileSaveRoute = getFileSaveRoute();
+        if (fileSaveRoute) {
+          await fileSaveRoute.handleFileSave({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'file save route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'resource:provenance:query') {
+        const resourceProvenanceRoute = getResourceProvenanceRoute();
+        if (resourceProvenanceRoute) {
+          await resourceProvenanceRoute.handleQuery({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'resource provenance route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'agent:activity:query') {
+        const agentActivityRoute = getAgentActivityRoute();
+        if (agentActivityRoute) {
+          await agentActivityRoute.handleQuery({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'agent activity route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'provenance:test:agent_tool') {
+        const fixtureRoute = getAgentToolFixtureRoute();
+        if (!fixtureRoute) {
+          try { ws.close(1008, 'test fixture route unavailable'); } catch (_error) {}
+          return;
+        }
+        await fixtureRoute.handle({
+          ws, session, message: clientMsg, handleCanonicalHarnessEvent,
+        });
         return;
       }
 

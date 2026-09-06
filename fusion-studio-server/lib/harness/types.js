@@ -3,14 +3,41 @@
  * event bus / websocket broadcaster. All harnesses (Kimi, Claude, Codex, etc.)
  * must translate their wire protocol into these events.
  *
- * @typedef {'turn_begin' | 'step_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event' | 'status_update' | 'turn_end'} CanonicalEventType
+ * @typedef {'turn_begin' | 'step_begin' | 'content' | 'thinking' | 'tool_call' | 'tool_call_args' | 'tool_result' | 'tool_snapshot' | 'subagent_event' | 'status_update' | 'turn_end'} CanonicalEventType
  */
 
 /**
  * @typedef {Object} CanonicalEvent
  * @property {CanonicalEventType} type
  * @property {number} timestamp
+ * @property {'provider_reported'|'host_observed'} [timestampSource]
+ * @property {number} [observedAt]
+ * @property {number} [reportedAt]
  * @property {string} [turnId]
+ */
+
+/**
+ * Atomic terminal ToolPart emitted only by the OpenCode adapter. The complete
+ * input is the sole provenance extraction source; result file hints stay inert.
+ * @typedef {Object} ToolSnapshotEvent
+ * @property {'tool_snapshot'} type
+ * @property {'terminal_snapshot'} origin
+ * @property {'opencode'} harnessId
+ * @property {'opencode'} provider
+ * @property {number} timestamp
+ * @property {'provider_reported'|'host_observed'} timestampSource
+ * @property {number} observedAt
+ * @property {number} [reportedAt]
+ * @property {string} toolCallId
+ * @property {string} toolName
+ * @property {string} nativeToolName
+ * @property {'completed'|'error'} status
+ * @property {boolean} hasInput
+ * @property {*} [input]
+ * @property {number} [executionStartedReportedAt]
+ * @property {number} [terminalReportedAt]
+ * @property {number} [terminalSnapshotReportedAt]
+ * @property {Object} result
  */
 
 /**

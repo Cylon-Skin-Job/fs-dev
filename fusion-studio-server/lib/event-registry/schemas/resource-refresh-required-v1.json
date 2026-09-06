@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/projection/resource-refresh-required/v1",
+  "title": "ResourceRefreshRequiredV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "version",
+    "workspaceId",
+    "panel",
+    "path",
+    "operationId",
+    "workspaceEpoch",
+    "reason"
+  ],
+  "properties": {
+    "type": { "const": "resource:refresh_required" },
+    "version": { "const": 1 },
+    "workspaceId": { "$ref": "#/$defs/boundedId" },
+    "panel": { "const": "file-viewer" },
+    "path": { "$ref": "#/$defs/path" },
+    "operationId": { "$ref": "#/$defs/uuid" },
+    "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+    "reason": {
+      "enum": [
+        "fact_publish_failed",
+        "projection_failed",
+        "projection_unavailable",
+        "mutation_outcome_unknown"
+      ]
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 }
+  }
+}

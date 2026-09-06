@@ -155,7 +155,7 @@ export function useCrepeEditor({
       getTimer: () => autoSaveTimerRef.current,
       setTimer: (timer) => { autoSaveTimerRef.current = timer; },
       checkpointDue: () => checkpointDueRef.current,
-      save: (reason) => { void handleSaveRef.current({ reason }); },
+      save: (reason) => { handleSaveRef.current({ reason }).catch(() => {}); },
     });
 
     const crepe = new Crepe({

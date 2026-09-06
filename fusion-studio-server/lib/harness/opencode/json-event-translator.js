@@ -12,8 +12,26 @@ const TOOL_NAME_MAP = {
 };
 
 function mapOpenCodeToolName(toolName) {
-  const normalized = String(toolName || 'unknown').toLowerCase();
-  return TOOL_NAME_MAP[normalized] || normalized;
+  if (typeof toolName !== 'string') return 'unknown';
+  const normalized = toolName.replace(/[A-Z]/g, (character) => character.toLowerCase());
+  return TOOL_NAME_MAP[normalized] || 'unknown';
+}
+
+function validReportedTime(value) {
+  return Number.isSafeInteger(value) && value >= 0 ? value : undefined;
+}
+
+function validScalarBounded(value, maxBytes) {
+  if (typeof value !== 'string' || value.length === 0 || Buffer.byteLength(value, 'utf8') > maxBytes) return false;
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+    if (code >= 0xd800 && code <= 0xdbff) {
+      const next = value.charCodeAt(index + 1);
+      if (!(next >= 0xdc00 && next <= 0xdfff)) return false;
+      index += 1;
+    } else if (code >= 0xdc00 && code <= 0xdfff) return false;
+  }
+  return true;
 }
 
 function mapOpenCodeTokenUsage(tokens = {}) {
@@ -98,22 +116,24 @@ function normalizeStatusMessage(toolName, state, output, isError) {
 }
 
 class OpenCodeJsonEventTranslator {
-  constructor() {
+  constructor({ now = () => Date.now(), onDiagnostic = () => {} } = {}) {
+    this.now = now;
+    this.onDiagnostic = onDiagnostic;
     this.fullText = '';
     this.hasToolCalls = false;
-    this.startedToolCallIds = new Set();
-    this.emittedToolArgsIds = new Set();
+    this.nextLegacyToolId = 0;
   }
 
-  beginTurn(userInput, timestamp = Date.now()) {
+  beginTurn(userInput, timestamp = this.now()) {
     this.fullText = '';
     this.hasToolCalls = false;
-    this.startedToolCallIds.clear();
-    this.emittedToolArgsIds.clear();
+    this.nextLegacyToolId = 0;
 
     return {
       type: 'turn_begin',
       timestamp,
+      timestampSource: 'host_observed',
+      observedAt: timestamp,
       userInput: String(userInput || ''),
     };
   }
@@ -135,82 +155,136 @@ class OpenCodeJsonEventTranslator {
       return [this.translateStepBegin(part, event)];
     }
 
-    const timestamp = event.timestamp || Date.now();
+    const observedAt = this.now();
+    const reportedAt = validReportedTime(event.timestamp);
+    const timestamp = reportedAt ?? observedAt;
+    const timestampSource = reportedAt == null ? 'host_observed' : 'provider_reported';
 
     if (event.type === 'text' || part.type === 'text') {
-      return this.translateText(part, timestamp);
+      return this.translateText(part, timestamp, timestampSource, observedAt, reportedAt);
     }
 
     if (part.type === 'reasoning') {
-      return this.translateReasoning(part, timestamp);
+      return this.translateReasoning(part, timestamp, timestampSource, observedAt, reportedAt);
     }
 
     if (event.type === 'tool_use' || part.type === 'tool') {
-      return this.translateToolUse(part, timestamp);
+      return this.translateToolUse(event, part, timestamp, timestampSource, observedAt, reportedAt);
     }
 
     if (event.type === 'step_finish' || part.type === 'step-finish') {
-      return this.translateStepFinish(part, timestamp);
+      return this.translateStepFinish(part, timestamp, timestampSource, observedAt, reportedAt);
     }
 
     return [];
   }
 
-  translateText(part, timestamp) {
+  translateText(part, timestamp, timestampSource, observedAt, reportedAt) {
     const text = String(part.text || '');
     this.fullText += text;
-    return [{ type: 'content', timestamp, text }];
+    return [{ type: 'content', timestamp, timestampSource, observedAt, reportedAt, text }];
   }
 
-  translateReasoning(part, timestamp) {
-    return [{ type: 'thinking', timestamp, text: String(part.text || '') }];
+  translateReasoning(part, timestamp, timestampSource, observedAt, reportedAt) {
+    return [{ type: 'thinking', timestamp, timestampSource, observedAt, reportedAt, text: String(part.text || '') }];
   }
 
-  translateToolUse(part, timestamp) {
-    const toolCallId = String(part.callID || part.id || '');
-    const toolName = mapOpenCodeToolName(part.tool);
-    const state = part.state || {};
-    const events = [];
-
-    this.hasToolCalls = true;
-
-    if (!this.startedToolCallIds.has(toolCallId)) {
-      this.startedToolCallIds.add(toolCallId);
-      events.push({ type: 'tool_call', timestamp, toolCallId, toolName });
+  translateToolUse(envelope, part, timestamp, timestampSource, observedAt, reportedAt) {
+    const validCallId = Object.hasOwn(part, 'callID') && validScalarBounded(part.callID, 512);
+    const validToolName = Object.hasOwn(part, 'tool') && validScalarBounded(part.tool, 128);
+    if (!validCallId || !validToolName) {
+      this.onDiagnostic('agent_tool_malformed_identity');
+      return this.translateLegacyToolUse(part, {
+        timestamp, timestampSource, observedAt, reportedAt,
+        validCallId, validToolName,
+      });
     }
-
-    if (state.input && !this.emittedToolArgsIds.has(toolCallId)) {
-      this.emittedToolArgsIds.add(toolCallId);
-      events.push({
-        type: 'tool_call_args',
-        timestamp,
-        toolCallId,
-        argsChunk: JSON.stringify(state.input),
+    const toolCallId = part.callID;
+    const nativeToolName = part.tool;
+    const toolName = mapOpenCodeToolName(nativeToolName);
+    const state = part.state || {};
+    if (state.status !== 'completed' && state.status !== 'error') {
+      this.onDiagnostic('agent_tool_terminal_status_invalid');
+      return this.translateLegacyToolUse(part, {
+        timestamp, timestampSource, observedAt, reportedAt,
+        validCallId: true, validToolName: true,
       });
     }
 
-    if (state.status !== 'completed' && state.status !== 'error') {
-      return events;
-    }
+    this.hasToolCalls = true;
 
     const exit = state.metadata?.exit;
     const isError = typeof exit === 'number' ? exit !== 0 : state.status === 'error';
     const output = String(state.output || state.metadata?.output || '');
     const statusMessage = normalizeStatusMessage(toolName, state, output, isError);
 
-    events.push({
-      type: 'tool_result',
+    return [{
+      type: 'tool_snapshot',
       timestamp,
+      timestampSource,
+      observedAt,
+      reportedAt,
+      origin: 'terminal_snapshot',
+      harnessId: 'opencode',
+      provider: 'opencode',
       toolCallId,
       toolName,
-      output,
-      statusMessage,
-      display: [],
-      returnedDiff: false,
-      isError,
-      files: [],
-    });
+      nativeToolName,
+      status: state.status,
+      hasInput: Object.hasOwn(state, 'input'),
+      input: state.input,
+      executionStartedReportedAt: validReportedTime(state.time?.start),
+      terminalReportedAt: validReportedTime(state.time?.end),
+      terminalSnapshotReportedAt: reportedAt,
+      result: {
+        output,
+        statusMessage,
+        display: [],
+        returnedDiff: false,
+        isError,
+        files: [],
+      },
+    }];
+  }
 
+  translateLegacyToolUse(part, timing) {
+    const state = part.state && typeof part.state === 'object' ? part.state : {};
+    const isTerminal = state.status === 'completed' || state.status === 'error';
+    const toolCallId = timing.validCallId
+      ? part.callID
+      : `legacy-chat-tool-${++this.nextLegacyToolId}`;
+    const toolName = timing.validToolName ? mapOpenCodeToolName(part.tool) : 'unknown';
+    const base = {
+      timestamp: timing.timestamp,
+      timestampSource: timing.timestampSource,
+      observedAt: timing.observedAt,
+      reportedAt: timing.reportedAt,
+      origin: isTerminal ? 'terminal_chat_fail_open' : 'legacy_chat_fail_open',
+      toolCallId,
+      toolName,
+    };
+    const events = [{ type: 'tool_call', ...base }];
+    if (Object.hasOwn(state, 'input')) {
+      let argsChunk = '';
+      try { argsChunk = JSON.stringify(state.input); } catch (_error) {}
+      if (argsChunk) events.push({ type: 'tool_call_args', ...base, argsChunk });
+    }
+    if (isTerminal) {
+      const exit = state.metadata?.exit;
+      const isError = typeof exit === 'number' ? exit !== 0 : state.status === 'error';
+      const output = String(state.output || state.metadata?.output || '');
+      events.push({
+        type: 'tool_result',
+        ...base,
+        output,
+        statusMessage: normalizeStatusMessage(toolName, state, output, isError),
+        display: [],
+        returnedDiff: false,
+        isError,
+        files: [],
+      });
+    }
+    this.hasToolCalls = true;
     return events;
   }
 
@@ -246,13 +320,16 @@ class OpenCodeJsonEventTranslator {
     return stepBegin;
   }
 
-  translateStepFinish(part, timestamp) {
+  translateStepFinish(part, timestamp, timestampSource, observedAt, reportedAt) {
     const events = [];
     const tokenUsage = mapOpenCodeTokenUsage(part.tokens || {});
 
     events.push({
       type: 'status_update',
       timestamp,
+      timestampSource,
+      observedAt,
+      reportedAt,
       tokenUsage,
       messageId: part.messageID,
     });
@@ -264,6 +341,9 @@ class OpenCodeJsonEventTranslator {
     events.push({
       type: 'turn_end',
       timestamp,
+      timestampSource,
+      observedAt,
+      reportedAt,
       reason: part.reason || 'complete',
       fullText: this.fullText,
       hasToolCalls: this.hasToolCalls,

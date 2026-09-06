@@ -45,6 +45,11 @@ import { useDocumentActions } from './useDocumentActions';
 import { OfficeDocumentTopbar } from './OfficeDocumentTopbar';
 import { OfficeDocumentToolbar } from './OfficeDocumentToolbar';
 import type { CapturedOfficeOutputState } from './officeTableOutputDescriptor';
+import {
+  documentDirtyRevision,
+  isDocumentDirty,
+  saveBeforeDocumentNavigation,
+} from '../documentSaveAcknowledgement';
 
 const PANEL = 'office-viewer';
 const THUMBNAIL_MAX_WIDTH = 420;
@@ -83,7 +88,6 @@ export function OfficeDocumentPage({
 
   const saveFile = useFileDataStore((s) => s.saveFile);
   const setDirty = useFileDataStore((s) => s.setDirty);
-  const isSaving = useFileDataStore((s) => s.pendingSaves.has(`${PANEL}:${file.path}`));
   const contents = useFileDataStore((s) => s.contents);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
 
@@ -252,11 +256,8 @@ export function OfficeDocumentPage({
 
   const handleSave = useCallback(async (options?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => {
     if (!crepeRef.current) return;
-    if (isSaving) {
-      if (options?.notify) showToast('Save already in progress...');
-      return;
-    }
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       if (autoSaveTimerRef.current) {
         clearTimeout(autoSaveTimerRef.current);
         autoSaveTimerRef.current = null;
@@ -286,12 +287,15 @@ export function OfficeDocumentPage({
       }
       const fullContent = serializeDocumentSettings(markdown, docSettingsRef.current, frontmatter);
       const reason = checkpointDueRef.current ? 'checkpoint' : (options?.reason ?? 'autosave');
-      saveFile(PANEL, file.path, fullContent, reason, options?.milestone);
-      bodyRef.current = markdown;
-      setIsDirty(false);
-      setDirty(PANEL, file.path, false);
-      sessionStartRef.current = null;
-      checkpointDueRef.current = false;
+      await saveFile(
+        PANEL, file.path, fullContent, reason, options?.milestone, capturedDirtyRevision,
+      );
+      if (!isDocumentDirty(PANEL, file.path)) {
+        bodyRef.current = markdown;
+        setIsDirty(false);
+        sessionStartRef.current = null;
+        checkpointDueRef.current = false;
+      }
       if (options?.notify) showToast('Saving document...');
     } catch (error) {
       showToast(`Save failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -299,9 +303,7 @@ export function OfficeDocumentPage({
     }
   }, [
     file.path,
-    isSaving,
     saveFile,
-    setDirty,
     getSerializedMarkdown,
     crepeRef,
     tableGeometryRef,
@@ -313,11 +315,9 @@ export function OfficeDocumentPage({
 
   const { exportingFormat, handleExport, handlePrint, handleSendEmail } = useDocumentActions({
     file,
-    isDirty,
     crepeRef,
     captureOfficeOutputState,
     saveFile,
-    setDirty,
     setIsDirty,
   });
 
@@ -386,18 +386,26 @@ export function OfficeDocumentPage({
       clearTimeout(autoSaveTimerRef.current);
       autoSaveTimerRef.current = null;
     }
-    if (isDirty && !isSaving && crepeRef.current) {
-      handleSaveRef.current({ reason: 'autosave' }).catch(() => {});
+    if (crepeRef.current) {
+      try {
+        await saveBeforeDocumentNavigation({
+          panel: PANEL,
+          path: file.path,
+          saveCurrent: () => handleSaveRef.current({ reason: 'autosave' }),
+        });
+      } catch {
+        return;
+      }
     }
     await captureDocumentThumbnail();
     runNavigation(navigation);
-  }, [captureDocumentThumbnail, isDirty, isSaving, runNavigation, crepeRef]);
+  }, [captureDocumentThumbnail, file.path, runNavigation, crepeRef]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 's') {
         e.preventDefault();
-        handleSave({ notify: true, reason: 'manual' });
+        void handleSave({ notify: true, reason: 'manual' }).catch(() => {});
         return;
       }
       if (e.key === 'Escape') requestNavigation({ type: 'back' });

@@ -30,6 +30,11 @@ import { useCrepeEditor } from './useCrepeEditor';
 import { useDocumentActions } from './useDocumentActions';
 import { EmailDocumentTopbar } from './EmailDocumentTopbar';
 import { EmailDocumentToolbar } from './EmailDocumentToolbar';
+import {
+  documentDirtyRevision,
+  isDocumentDirty,
+  saveBeforeDocumentNavigation,
+} from '../documentSaveAcknowledgement';
 
 const PANEL = 'email-viewer';
 
@@ -66,7 +71,6 @@ export function EmailDocumentPage({
 
   const saveFile = useFileDataStore((s) => s.saveFile);
   const setDirty = useFileDataStore((s) => s.setDirty);
-  const isSaving = useFileDataStore((s) => s.pendingSaves.has(`${PANEL}:${file.path}`));
   const contents = useFileDataStore((s) => s.contents);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
 
@@ -153,11 +157,8 @@ export function EmailDocumentPage({
 
   const handleSave = useCallback(async (options?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => {
     if (!crepeRef.current) return;
-    if (isSaving) {
-      if (options?.notify) showToast('Save already in progress...');
-      return;
-    }
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       if (autoSaveTimerRef.current) {
         clearTimeout(autoSaveTimerRef.current);
         autoSaveTimerRef.current = null;
@@ -165,29 +166,30 @@ export function EmailDocumentPage({
       const markdown = await getSerializedMarkdown();
       const fullContent = serializeDocumentSettings(markdown, docSettings, docFrontmatter);
       const reason = checkpointDueRef.current ? 'checkpoint' : (options?.reason ?? 'autosave');
-      saveFile(PANEL, file.path, fullContent, reason, options?.milestone);
-      setIsDirty(false);
-      setDirty(PANEL, file.path, false);
-      sessionStartRef.current = null;
-      checkpointDueRef.current = false;
+      await saveFile(
+        PANEL, file.path, fullContent, reason, options?.milestone, capturedDirtyRevision,
+      );
+      if (!isDocumentDirty(PANEL, file.path)) {
+        setIsDirty(false);
+        sessionStartRef.current = null;
+        checkpointDueRef.current = false;
+      }
       if (options?.notify) showToast('Saving document...');
     } catch (error) {
       showToast(`Save failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       throw error;
     }
-  }, [file.path, isSaving, saveFile, setDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
+  }, [file.path, saveFile, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
 
   useEffect(() => { handleSaveRef.current = handleSave; }, [handleSave]);
 
   const { exportingFormat, handleExport, handlePrint, handleSendEmail } = useDocumentActions({
     file,
-    isDirty,
     docSettings,
     docFrontmatter,
     crepeRef,
     getSerializedMarkdown,
     saveFile,
-    setDirty,
     setIsDirty,
   });
 
@@ -202,22 +204,30 @@ export function EmailDocumentPage({
     persistViewPatch(PANEL, { emailDocumentSidePanel: nextSidePanel });
   }, [persistViewPatch, setViewState, sidePanel]);
 
-  const requestNavigation = useCallback((navigation: PendingNavigation) => {
+  const requestNavigation = useCallback(async (navigation: PendingNavigation) => {
     if (autoSaveTimerRef.current) {
       clearTimeout(autoSaveTimerRef.current);
       autoSaveTimerRef.current = null;
     }
-    if (isDirty && !isSaving && crepeRef.current) {
-      handleSaveRef.current({ reason: 'autosave' }).catch(() => {});
+    if (crepeRef.current) {
+      try {
+        await saveBeforeDocumentNavigation({
+          panel: PANEL,
+          path: file.path,
+          saveCurrent: () => handleSaveRef.current({ reason: 'autosave' }),
+        });
+      } catch {
+        return;
+      }
     }
     runNavigation(navigation);
-  }, [isDirty, isSaving, runNavigation, crepeRef]);
+  }, [file.path, runNavigation, crepeRef]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 's') {
         e.preventDefault();
-        handleSave({ notify: true, reason: 'manual' });
+        void handleSave({ notify: true, reason: 'manual' }).catch(() => {});
         return;
       }
       if (e.key === 'Escape') requestNavigation({ type: 'back' });

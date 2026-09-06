@@ -7,10 +7,15 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
+import { useFileDataStore } from '../state/fileDataStore';
 import { useSecretsStore } from '../state/secretsStore';
 import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
+import {
+  handleResourceProvenanceResponse,
+  retirePendingResourceProvenanceQueries,
+} from './ws/resource-provenance-protocol';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
@@ -26,7 +31,6 @@ import {
 import { useWorkspaceStore } from '../state/workspaceStore';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
-import { loadAllPanels } from '../lib/panels';
 import {
   sanitizeTerminalErrorsAtIngress,
 } from './chat/terminal-error';
@@ -223,6 +227,8 @@ export function connectWs() {
   // its workspace-scoped state, so they must not activate a thread yet.
   useWorkspaceStore.getState().beginInit();
   abandonWsResponseTracking();
+  useFileDataStore.getState().retirePendingSaves();
+  retirePendingResourceProvenanceQueries();
   console.log('[WS] Connecting...');
   const ws = new WebSocket(WS_URL);
   socket = ws;
@@ -234,22 +240,9 @@ export function connectWs() {
     store.setWs(ws);
     setLoggerWs(ws);
     captureConsoleLogs();
-    handleOfficePaletteSocketOpen(ws);
-
-    // Tell server which panel we're using
-    const currentPanel = store.currentPanel;
-    if (currentPanel) {
-      console.log('[WS] Sending set_panel for:', currentPanel);
-      ws.send(JSON.stringify({ type: 'set_panel', panel: currentPanel }));
-    }
-
-    // Discover panels
-    loadAllPanels(ws).then((configs) => {
-      console.log(`[WS] Discovered ${configs.length} panels`);
-      usePanelStore.getState().setPanelConfigs(configs);
-    }).catch((err) => {
-      console.error('[WS] Panel discovery failed:', err);
-    });
+    // The socket is transport-ready, but workspace-bound bootstrap traffic
+    // must wait for workspace:init to establish the recipient-specific pair.
+    handleOfficePaletteSocketOpen(ws, { requestImmediately: false });
   };
 
   ws.onmessage = (event) => {
@@ -272,6 +265,9 @@ export function connectWs() {
     if (socket !== ws) return;
     abandonWsResponseTracking();
     socket = null;
+    useWorkspaceStore.getState().beginInit();
+    useFileDataStore.getState().retirePendingSaves();
+    retirePendingResourceProvenanceQueries();
     usePanelStore.getState().setWs(null);
     reconnectTimer = setTimeout(connectWs, 3000);
   };
@@ -307,6 +303,7 @@ export function handleMessage(msg: WebSocketMessage) {
   if (handleStreamMessage(msg)) return;
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;
+  if (handleResourceProvenanceResponse(msg)) return;
   if (handleWorkspaceMessage(msg)) return;
   if (handleHarnessMessage(msg)) return;
   if (handleThemeMessage(msg)) return;

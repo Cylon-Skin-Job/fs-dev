@@ -1,209 +1,341 @@
 /**
  * Canonical Chat Event Applier
  *
- * Provider-neutral dispatcher/factory for drain-driven canonical chat events
- * (SPEC-01 Slice C). Every event is applied against the claimed drain context
- * { route, control }: ThreadRuntimeManager is the sole mutable canonical turn
- * owner, route fields drive emissions, and the control capability touches or
- * stops the exact bound harness session. Canonical accumulator state no longer
- * touches connection/session state at all.
- *
- * Separable mutation jobs live in focused modules composed here at creation:
- *   - canonical-chat-text-events.js      (content/thinking accumulation)
- *   - canonical-chat-tool-events.js      (tool_call/args/result + enforcement)
- *   - canonical-chat-terminal-events.js  (turn_end assembly/emission/clear)
- *
- * SPEC-02 Slice B: the step_begin identity/dedupe/time-normalization handler
- * lives here beside the other single-handler events (turn begin, subagent,
- * status) because it mutates only through the shared gated runtime API.
- *
- * This module is vendor-agnostic. It does not parse raw wire protocol messages
- * and does not import Kimi-specific normalizers.
- *
- * Dependencies are injected:
- *   - emit: event bus emitter
- *   - checkSettingsBounce: function(toolName, args, workspaceRoot) -> {message}|null
- *   - generateTurnId: function() -> string
+ * Provider-neutral dispatcher for prompt-bound canonical drains. Runtime state
+ * remains owned by ThreadRuntimeManager; agent provenance uses the immutable
+ * authority captured at prompt acceptance and carried by the bridge.
  */
 
 const { threadRuntimeManager } = require('../thread/thread-runtime-manager');
 const liveTurnSnapshot = require('../thread/live-turn-snapshot');
+const { releaseAgentTurnAuthorityRef } = require('../agent-provenance/turn-authority');
 const { createCanonicalChatTextEvents } = require('./canonical-chat-text-events');
 const { createCanonicalChatToolEvents } = require('./canonical-chat-tool-events');
 const { createCanonicalChatTerminalEvents } = require('./canonical-chat-terminal-events');
+const {
+  createCanonicalChatEventApplier: createLegacyCanonicalChatEventApplier,
+} = require('./canonical-chat-event-applier-legacy');
 
-function createCanonicalChatEventApplier({
+function createDrainDrivenCanonicalChatEventApplier({
   emit,
   checkSettingsBounce,
   generateTurnId,
+  activityOwner = null,
+  enableSyntheticIncrementalProvenance = false,
 }) {
-
   const textEvents = createCanonicalChatTextEvents({ emit });
-
+  let replayedTerminalBounce = null;
   const toolEvents = createCanonicalChatToolEvents({
     emit,
-    checkSettingsBounce,
+    checkSettingsBounce: (toolName, args, workspaceRoot) => {
+      const replay = replayedTerminalBounce;
+      if (replay
+        && replay.toolName === toolName
+        && replay.workspaceRoot === workspaceRoot
+        && JSON.stringify(replay.args) === JSON.stringify(args)) {
+        replayedTerminalBounce = null;
+        return replay.bounce;
+      }
+      return checkSettingsBounce(toolName, args, workspaceRoot);
+    },
   });
-
   const terminalEvents = createCanonicalChatTerminalEvents({ emit });
 
-  /**
-   * Apply a canonical chat event against a claimed drain context.
-   *
-   * @param {object} event
-   * @param {string} event.type - canonical event type
-   * @param {object} event.payload - event-specific payload
-   * @param {import('ws').WebSocket} [ws] - transport handle (unused by the
-   *        drain-driven handlers; retained for call-shape compatibility)
-   * @param {{ route: object, control: object }} drainContext - the claimed
-   *        record's frozen route context and bound control. Events arriving
-   *        without one are diagnostic drops (defensive; both real paths —
-   *        interactive iteration and automation draining — always supply one).
-   * @returns {{ accepted: boolean, turnId?: string }|undefined} turn_begin
-   *          result so the bridge can bind the accepted server turnId once.
-   */
+  function lifecycleCurrent(payload) {
+    return !payload?.isLifecycleCurrent || payload.isLifecycleCurrent();
+  }
+
+  function authorityFor(payload) {
+    return payload?.agentTurnAuthority || null;
+  }
+
+  function currentTurn(control) {
+    const record = threadRuntimeManager.getActiveDrain(control.runtimeKey);
+    if (!record || record.drainId !== control.drainId || !record.turn) return null;
+    const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
+    return turnId ? { record, turnId } : null;
+  }
+
+  function jsonSafePersistedResult(result) {
+    if (activityOwner?.jsonSafePersistedResult) return activityOwner.jsonSafePersistedResult(result);
+    const serialized = JSON.stringify(result);
+    if (serialized === undefined) throw new TypeError('Tool result has no JSON representation');
+    return JSON.parse(serialized);
+  }
+
   function applyChatEvent(event, ws, drainContext) {
     if (!drainContext?.control || !drainContext?.route) {
       console.warn('[CanonicalApplier] Dropping canonical event without a drain context');
-      return;
+      return undefined;
     }
-    if (!event || !event.type) return;
-
+    if (!event || !event.type) return undefined;
     const { type, payload } = event;
-    const route = drainContext.route;
-    const control = drainContext.control;
-
+    const { route, control } = drainContext;
     switch (type) {
-      case 'turn_begin':
-        return applyTurnStart(payload, route, control);
-      case 'content':
-        textEvents.handleContent({ payload, route, control });
-        return;
-      case 'thinking':
-        textEvents.handleThinking({ payload, route, control });
-        return;
-      case 'tool_call':
-        toolEvents.handleToolCall({ payload, route, control });
-        return;
-      case 'tool_call_args':
-        toolEvents.handleToolCallArgs({ payload, route, control });
-        return;
-      case 'tool_result':
-        toolEvents.applyToolOutcome({ payload, route, control });
-        return;
-      case 'subagent_event':
-        applySubagentUpdate(payload, route, control);
-        return;
-      case 'status_update':
-        applyStatusMetadata(payload, route, control);
-        return;
-      case 'step_begin':
-        applyStepBegin(payload, route, control);
-        return;
-      case 'turn_end':
-        terminalEvents.handleTurnEnd({ payload, route, control });
-        return;
-      default:
-        // Unknown canonical event type — silently ignore
-        break;
+      case 'turn_begin': return applyTurnStart(payload, route, control);
+      case 'content': textEvents.handleContent({ payload, route, control }); return undefined;
+      case 'thinking': textEvents.handleThinking({ payload, route, control }); return undefined;
+      case 'tool_call': return applyToolCall(payload, route, control);
+      case 'tool_call_args': return applyToolCallArgs(payload, route, control);
+      case 'tool_result': return applyToolResult(payload, route, control);
+      case 'tool_snapshot': return applyTerminalToolSnapshot(payload, route, control);
+      case 'subagent_event': applySubagentUpdate(payload, route, control); return undefined;
+      case 'status_update': applyStatusMetadata(payload, route, control); return undefined;
+      case 'step_begin': applyStepBegin(payload, route, control); return undefined;
+      case 'turn_end': return applyTurnEnd(payload, route, control);
+      default: return undefined;
     }
   }
 
   function applyTurnStart(payload, route, control) {
     control.touchThreadSession();
-
-    // userInput precedence: accepted route data wins; payload is fallback.
     const userInput = route.acceptedUserInput || payload?.userInput || '';
-
-    // Ignore spurious startup turns (e.g. harnesses emitting one on session
-    // creation): no accepted input AND no payload input.
-    if (!userInput) {
-      console.log('[CanonicalApplier] Ignoring spurious turn_begin (no user input)');
-      return { accepted: false };
-    }
-
-    const turnId = generateTurnId();
+    if (!userInput) return { accepted: false };
+    const authority = authorityFor(payload);
+    const turnId = authority?.turnId || generateTurnId();
     const result = threadRuntimeManager.beginCanonicalTurn(control.runtimeKey, control.drainId, {
       turnId,
       userInput,
       attachments: Array.isArray(route.attachments) ? route.attachments : [],
     });
-    if (!result.accepted) {
-      console.log('[CanonicalApplier] Rejecting gated-out turn_begin (drain not current or live duplicate)');
-      return { accepted: false };
-    }
-
+    if (!result.accepted) return { accepted: false };
     emit('chat:turn_begin', {
       workspace: route.workspace,
       workspaceId: route.workspaceId,
-      projectRoot: route.projectRoot,
+      projectRoot: authority?.canonicalRoot || route.projectRoot,
       scope: route.scope,
       threadId: route.threadId,
       turnId,
-      // SPEC-02 Slice D §2 rule 1: the initial positive integer frontier,
-      // read back from the just-created snapshot through the manager's
-      // single authority (never inferred from arrival order).
       streamSeq: threadRuntimeManager.getLiveTurn(control.runtimeKey)?.streamSeq ?? null,
       userInput,
       attachments: [...(route.attachments || [])],
     });
-
     return { accepted: true, turnId };
+  }
+
+  async function applyToolCall(payload, route, control) {
+    const active = currentTurn(control);
+    if (enableSyntheticIncrementalProvenance
+      && payload?.origin !== 'terminal_snapshot' && activityOwner?.announce) {
+      try {
+        await activityOwner.announce(authorityFor(payload), {
+          ...payload,
+          nativeToolName: payload?.nativeToolName || payload?.toolName || 'unknown',
+          observedAt: payload?.observedAt ?? Date.now(),
+        });
+      } catch {
+        console.warn('[CanonicalApplier] agent_tool_reservation_failed');
+      }
+    }
+    const stillActive = currentTurn(control);
+    if (!lifecycleCurrent(payload) || !active || active.record !== stillActive?.record) return;
+    toolEvents.handleToolCall({ payload, route, control });
+  }
+
+  async function applyToolCallArgs(payload, route, control) {
+    const activeBefore = currentTurn(control);
+    let completeArgs = null;
+    if (payload?.hasCompleteArgs) {
+      completeArgs = payload.completeArgs;
+    } else if (activeBefore && payload?.toolCallId && payload?.argsChunk) {
+      try {
+        completeArgs = JSON.parse(
+          (activeBefore.record.turn.toolArgsBuffers.get(payload.toolCallId) || '')
+            + payload.argsChunk,
+        );
+      } catch {
+        completeArgs = null;
+      }
+    }
+    toolEvents.handleToolCallArgs({ payload, route, control });
+    if (!enableSyntheticIncrementalProvenance
+      || payload?.origin === 'terminal_snapshot' || !activityOwner?.acceptArguments) return;
+    const active = currentTurn(control);
+    if (!active || !lifecycleCurrent(payload)) return;
+    try {
+      if (completeArgs === null) return;
+      await activityOwner.acceptArguments(authorityFor(payload), {
+        ...payload,
+        hasCompleteArgs: true,
+        completeArgs,
+        observedAt: payload?.observedAt ?? Date.now(),
+      });
+      if (!lifecycleCurrent(payload) || active.record !== currentTurn(control)?.record) return;
+      if (active.record.turn.bouncedToolCalls.has(payload?.toolCallId)
+        && activityOwner?.blockBeforeExecution) {
+        await activityOwner.blockBeforeExecution(authorityFor(payload), {
+          ...payload,
+          toolCallId: payload?.toolCallId,
+          toolName: payload?.toolName
+            || active.record.turn.toolNamesById?.[payload?.toolCallId]
+            || '',
+          observedAt: payload?.observedAt ?? Date.now(),
+        });
+      }
+    } catch {
+      // Partial argument streams are expected; ownership advances once complete.
+    }
+  }
+
+  async function applyToolResult(payload, route, control) {
+    toolEvents.applyToolOutcome({ payload, route, control });
+    if (!enableSyntheticIncrementalProvenance
+      || payload?.origin === 'terminal_snapshot' || !activityOwner?.complete) return;
+    try {
+      await activityOwner.complete(authorityFor(payload), {
+        ...payload,
+        isError: Boolean(payload?.result?.isError),
+        observedAt: payload?.observedAt ?? Date.now(),
+      }, jsonSafePersistedResult(payload?.result || {}));
+    } catch {
+      console.warn('[CanonicalApplier] agent_tool_reservation_failed');
+    }
+  }
+
+  async function applyTerminalToolSnapshot(payload, route, control) {
+    control.touchThreadSession();
+    const active = currentTurn(control);
+    if (!active || !lifecycleCurrent(payload)) return;
+    const authority = authorityFor(payload);
+    if (payload?.origin !== 'terminal_snapshot') {
+      console.warn('[CanonicalApplier] agent_tool_malformed_identity');
+      return;
+    }
+    const eligible = authority?.harnessId === 'opencode'
+      && authority.provider === 'opencode'
+      && payload.harnessId === authority.harnessId
+      && payload.provider === authority.provider;
+    if (!eligible) console.warn('[CanonicalApplier] agent_tool_malformed_identity');
+    const turn = active.record.turn;
+    if (!turn.terminalSnapshotsExpanded) turn.terminalSnapshotsExpanded = new Set();
+    const alreadyExpanded = turn.terminalSnapshotsExpanded.has(payload.toolCallId);
+    if (alreadyExpanded && !eligible) {
+      console.warn('[CanonicalApplier] agent_tool_duplicate_terminal');
+      return;
+    }
+
+    const args = payload.hasInput ? payload.input : undefined;
+    let resolvedBounce = null;
+    if (payload.hasInput && authority?.canonicalRoot) {
+      try {
+        resolvedBounce = checkSettingsBounce(payload.toolName, args, authority.canonicalRoot);
+      } catch {
+        console.warn('[CanonicalApplier] agent_tool_enforcement_evaluation_failed');
+      }
+    }
+    const selectedResult = resolvedBounce ? {
+      output: resolvedBounce.message,
+      statusMessage: resolvedBounce.message,
+      display: [], returnedDiff: false, isError: true, files: [],
+      enforcementPhase: 'tool_result',
+    } : (payload.result || {});
+    const output = selectedResult.output || '';
+    const statusMessage = selectedResult.statusMessage;
+    const isError = Boolean(selectedResult.isError);
+    const resultValue = {
+      output,
+      statusMessage,
+      display: Array.isArray(selectedResult.display) ? selectedResult.display : [],
+      returnedDiff: Boolean(selectedResult.returnedDiff),
+      isError,
+      error: isError ? (output || statusMessage || 'Tool failed') : undefined,
+      files: Array.isArray(selectedResult.files) ? selectedResult.files : [],
+      ...(resolvedBounce ? { enforcementPhase: 'tool_result' } : {}),
+    };
+    let persistedResult;
+    let fingerprintResult;
+    try {
+      persistedResult = jsonSafePersistedResult(resultValue);
+      fingerprintResult = persistedResult;
+    } catch {
+      persistedResult = resultValue;
+      fingerprintResult = undefined;
+    }
+    try {
+      if (eligible) {
+        await activityOwner?.captureTerminalSnapshot(authority, payload, fingerprintResult, {
+          isCurrent: payload.isLifecycleCurrent,
+        });
+      }
+    } catch {
+      console.warn('[CanonicalApplier] agent_tool_reservation_failed');
+    }
+    if (!lifecycleCurrent(payload) || active.record !== currentTurn(control)?.record) return;
+    if (alreadyExpanded || turn.terminalSnapshotsExpanded.has(payload.toolCallId)) {
+      console.warn('[CanonicalApplier] agent_tool_duplicate_terminal');
+      return;
+    }
+    turn.terminalSnapshotsExpanded.add(payload.toolCallId);
+
+    toolEvents.handleToolCall({ payload: { ...payload, origin: 'terminal_snapshot' }, route, control });
+    if (payload.hasInput) {
+      const identity = { drainId: control.drainId, turnId: active.turnId };
+      const argsChunk = JSON.stringify(args);
+      const seq = threadRuntimeManager.applyLiveMutation(
+        control.runtimeKey,
+        identity,
+        ({ snapshot, turn: accumulator }) => {
+          accumulator.toolArgsBuffers.set(payload.toolCallId, argsChunk);
+          liveTurnSnapshot.applyToolArgs(snapshot, payload.toolCallId, args);
+        },
+      );
+      if (seq !== null) {
+        emit('chat:tool_call_args', {
+          workspace: route.workspace,
+          scope: route.scope,
+          threadId: route.threadId,
+          turnId: active.turnId,
+          streamSeq: seq,
+          toolCallId: payload.toolCallId,
+          argsChunk,
+        });
+      }
+    }
+    const terminalRoute = { ...route, projectRoot: authority?.canonicalRoot || null };
+    replayedTerminalBounce = {
+      toolName: payload.toolName,
+      args: payload.hasInput ? args : {},
+      workspaceRoot: terminalRoute.projectRoot,
+      bounce: resolvedBounce,
+    };
+    try {
+      toolEvents.applyToolOutcome({
+        payload: {
+          toolCallId: payload.toolCallId,
+          toolName: payload.toolName,
+          result: persistedResult,
+          origin: 'terminal_snapshot',
+        },
+        route: terminalRoute,
+        control,
+      });
+    } finally {
+      replayedTerminalBounce = null;
+    }
   }
 
   function applySubagentUpdate(payload, route, control) {
     control.touchThreadSession();
-
     const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
-    if (!turnId) {
-      console.warn('[CanonicalApplier] Dropping pre-binding subagent_event');
-      return;
-    }
-
-    // SPEC-02 Slice D §3.D: each subagent publication is a projection-changing
-    // event, so it is sequenced through the same gated mutation primitive —
-    // the snapshot touch gives every publication its unique resulting seq
-    // represented by the snapshot projection. Stale drains drop here.
+    if (!turnId) return;
     const seq = threadRuntimeManager.applyLiveMutation(
       control.runtimeKey,
       { drainId: control.drainId, turnId },
-      ({ snapshot }) => {
-        liveTurnSnapshot.touchStatus(snapshot);
-      }
+      ({ snapshot }) => liveTurnSnapshot.touchStatus(snapshot),
     );
-    if (seq === null) {
-      console.warn('[CanonicalApplier] Dropping stale subagent_event (drain/turn no longer current)');
-      return;
-    }
-
+    if (seq === null) return;
     emit('chat:subagent_event', {
-      workspace: route.workspace,
-      scope: route.scope,
-      threadId: route.threadId,
-      turnId,
-      streamSeq: seq,
-      parentToolCallId: payload?.parentToolCallId || '',
-      agentId: payload?.agentId || '',
-      subagentType: payload?.subagentType || '',
-      eventType: payload?.subagentEventType || '',
-      eventPayload: payload?.subagentPayload || {}
+      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      turnId, streamSeq: seq, parentToolCallId: payload?.parentToolCallId || '',
+      agentId: payload?.agentId || '', subagentType: payload?.subagentType || '',
+      eventType: payload?.subagentEventType || '', eventPayload: payload?.subagentPayload || {},
     });
   }
 
   function applyStatusMetadata(payload, route, control) {
     control.touchThreadSession();
-
     const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
-    if (!turnId) {
-      console.warn('[CanonicalApplier] Dropping pre-binding status_update');
-      return;
-    }
-
-    // Usage metadata lives on the runtime-owned accumulator (authoritative
-    // mutable copy). SPEC-02 Slice D repair R-FINDING-2 (roadmap §5.2): the
-    // same gated mutation also mirrors a JSON-safe usage projection onto the
-    // snapshot — one call, exactly one frontier advance — so the usage
-    // published at seq N is reconstructible from the snapshot at N.
+    if (!turnId) return;
     const seq = threadRuntimeManager.applyLiveMutation(
       control.runtimeKey,
       { drainId: control.drainId, turnId },
@@ -213,134 +345,101 @@ function createCanonicalChatEventApplier({
         turn.usage.messageId = payload?.messageId ?? null;
         turn.usage.planMode = payload?.planMode ?? false;
         liveTurnSnapshot.setUsage(snapshot, turn.usage);
-      }
+      },
     );
-    if (seq === null) {
-      console.warn('[CanonicalApplier] Dropping stale status_update (drain/turn no longer current)');
-      return;
-    }
-
+    if (seq === null) return;
     emit('chat:status_update', {
-      workspace: route.workspace,
-      scope: route.scope,
-      threadId: route.threadId,
-      // SPEC-02 Slice D: bound turnId + the already-computed resulting seq.
-      turnId,
-      streamSeq: seq,
-      contextUsage: payload?.contextUsage,
-      tokenUsage: payload?.tokenUsage,
-      messageId: payload?.messageId,
-      planMode: payload?.planMode
+      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      turnId, streamSeq: seq, contextUsage: payload?.contextUsage,
+      tokenUsage: payload?.tokenUsage, messageId: payload?.messageId, planMode: payload?.planMode,
     });
   }
 
-  // SPEC-02 Slice B (RCC-0108 parent §4.7): step_begin identity, dedupe, and
-  // display-time normalization. Handler order is normative:
-  //   bind gate → identity derivation → full-turn ledger dedupe →
-  //   one-captured-now normalization → single gated live mutation →
-  //   compatibility-bus emission. Rejected input never mutates, bumps,
-  //   or publishes.
-  const MIN_STEP_TIMESTAMP_MS = 946684800000; // 2000-01-01T00:00:00Z
+  const MIN_STEP_TIMESTAMP_MS = 946684800000;
   const STEP_TIMESTAMP_FUTURE_SKEW_MS = 60000;
-
   function applyStepBegin(payload, route, control) {
     control.touchThreadSession();
-
     const turnId = threadRuntimeManager.resolveBoundTurnId(control.runtimeKey, control.drainId);
-    if (!turnId) {
-      console.warn('[CanonicalApplier] Dropping pre-binding step_begin');
-      return;
-    }
-
-    // Derive the stable source identity BEFORE any time handling, in the
-    // exact precedence step:<id> > message:<id> > time:<String(ts)>.
+    if (!turnId) return;
     const stepId = typeof payload?.stepId === 'string' && payload.stepId ? payload.stepId : null;
     const messageId = typeof payload?.messageId === 'string' && payload.messageId ? payload.messageId : null;
     const candidate = payload?.timestamp;
-    const hasTimestampCandidate = typeof candidate === 'number' && Number.isFinite(candidate);
-
-    let identity = null;
-    if (stepId) {
-      identity = `step:${stepId}`;
-    } else if (messageId) {
-      identity = `message:${messageId}`;
-    } else if (hasTimestampCandidate) {
-      identity = `time:${String(candidate)}`;
-    }
-    if (!identity) {
-      // No replay-safe identity source — ignore with the normal diagnostic
-      // style; the orb-until-output fallback remains.
-      console.warn('[CanonicalApplier] Ignoring step_begin without a stable identity source');
-      return;
-    }
-
-    // Full-turn seen-ledger dedupe BEFORE deriving startedAt — duplicate
-    // detection never depends on time validity or the clock. A seen identity
-    // changes nothing: no activity, cursor, ledger, revision, or publication.
+    const hasTimestamp = typeof candidate === 'number' && Number.isFinite(candidate);
+    const identity = stepId ? `step:${stepId}` : messageId ? `message:${messageId}`
+      : hasTimestamp ? `time:${String(candidate)}` : null;
+    if (!identity) return;
     const record = threadRuntimeManager.getActiveDrain(control.runtimeKey);
-    const seenStepIdentities = record && record.drainId === control.drainId && record.turn
-      ? record.turn.seenStepIdentities
-      : null;
-    if (seenStepIdentities && seenStepIdentities.has(identity)) {
-      console.warn('[CanonicalApplier] Dropping duplicate step_begin (identity already seen this turn)');
-      return;
-    }
-
-    // Normalize display time ONCE with ONE captured now.
+    if (record?.turn?.seenStepIdentities?.has(identity)) return;
     const now = Date.now();
-    const startedAt = (
-      hasTimestampCandidate
-      && candidate >= MIN_STEP_TIMESTAMP_MS
-      && candidate <= now + STEP_TIMESTAMP_FUTURE_SKEW_MS
-    ) ? Math.min(candidate, now) : now;
-
+    const startedAt = hasTimestamp && candidate >= MIN_STEP_TIMESTAMP_MS
+      && candidate <= now + STEP_TIMESTAMP_FUTURE_SKEW_MS ? Math.min(candidate, now) : now;
     let activityRevision = null;
     const streamSeq = threadRuntimeManager.applyLiveMutation(
       control.runtimeKey,
       { drainId: control.drainId, turnId },
       ({ snapshot, turn }) => {
-        if (turn.seenStepIdentities.has(identity)) return; // defensive re-check
+        if (turn.seenStepIdentities.has(identity)) return;
         turn.seenStepIdentities.add(identity);
         snapshot.seenStepIdentities = Array.from(turn.seenStepIdentities);
         snapshot.activityRevision += 1;
         activityRevision = snapshot.activityRevision;
         snapshot.activity = {
-          kind: 'working',
-          turnId,
-          identity,
-          startedAt,
-          activityRevision,
-          ...(stepId ? { stepId } : {}),
-          ...(messageId ? { messageId } : {}),
+          kind: 'working', turnId, identity, startedAt, activityRevision,
+          ...(stepId ? { stepId } : {}), ...(messageId ? { messageId } : {}),
         };
         snapshot.stepCursor = { identity, startedAt };
-        // Projection-changing mutation: bump the single streamSeq frontier
-        // exactly once (SPEC-02 §2 rule 2) so the emitted seq is the
-        // resulting one.
         liveTurnSnapshot.touchStatus(snapshot);
-      }
+      },
     );
-    if (streamSeq === null || activityRevision === null) {
-      console.warn('[CanonicalApplier] Dropping stale or defensively-skipped step_begin (drain/turn no longer current)');
-      return;
-    }
-
-    // Compatibility bus only — same path as every sibling chat:* emission.
+    if (streamSeq === null || activityRevision === null) return;
     emit('chat:step_begin', {
-      workspace: route.workspace,
-      scope: route.scope,
-      threadId: route.threadId,
-      turnId,
-      streamSeq,
-      identity,
-      ...(stepId ? { stepId } : {}),
-      ...(messageId ? { messageId } : {}),
-      startedAt,
-      activityRevision,
+      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      turnId, streamSeq, identity, ...(stepId ? { stepId } : {}),
+      ...(messageId ? { messageId } : {}), startedAt, activityRevision,
     });
   }
 
+  async function applyTurnEnd(payload, route, control) {
+    const authority = authorityFor(payload);
+    try {
+      if (activityOwner?.interruptOpen) {
+        const interruption = Promise.resolve(activityOwner.interruptOpen(authority, {
+          observedAt: payload?.observedAt ?? Date.now(), timeoutMs: 2_000,
+        }));
+        if (payload?.shutdownSignal) {
+          const aborted = new Promise((resolve) => {
+            if (payload.shutdownSignal.aborted) resolve();
+            else payload.shutdownSignal.addEventListener('abort', resolve, { once: true });
+          });
+          await Promise.race([interruption, aborted]);
+          interruption.catch(() => {});
+        } else {
+          await interruption;
+        }
+      }
+    } catch {
+      console.warn('[CanonicalApplier] agent_tool_reservation_failed');
+    }
+    if (payload?.shutdownSignal?.aborted) {
+      releaseAgentTurnAuthorityRef(authority);
+      return;
+    }
+    terminalEvents.handleTurnEnd({ payload, route, control });
+    releaseAgentTurnAuthorityRef(authority);
+  }
+
   return { applyChatEvent };
+}
+
+function createCanonicalChatEventApplier(options) {
+  if (options && Object.prototype.hasOwnProperty.call(options, 'session')) {
+    const legacy = createLegacyCanonicalChatEventApplier(options);
+    Object.defineProperty(legacy.applyChatEvent, '_requiresSequencedBridge', {
+      value: true,
+    });
+    return legacy;
+  }
+  return createDrainDrivenCanonicalChatEventApplier(options);
 }
 
 module.exports = { createCanonicalChatEventApplier };

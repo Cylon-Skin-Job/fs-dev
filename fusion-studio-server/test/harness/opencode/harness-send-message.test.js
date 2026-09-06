@@ -99,6 +99,29 @@ describe('OpenCodeHarness', () => {
     expect(harness.getSession('thread-1')).toBe(session);
   });
 
+  it('stop waits for process close and permits TERM to KILL escalation', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const session = await harness.startThread('thread-1', '/project');
+    const eventsPromise = collect(session.sendMessage('hello'));
+    await new Promise(resolve => setImmediate(resolve));
+
+    let termSettled = false;
+    const term = session.stop('SIGTERM').then(() => { termSettled = true; });
+    await Promise.resolve();
+    expect(termSettled).toBe(false);
+    expect(proc.kill).toHaveBeenCalledWith('SIGTERM');
+    expect(proc.killed).toBe(true);
+
+    const kill = session.stop('SIGKILL');
+    expect(proc.kill).toHaveBeenCalledWith('SIGKILL');
+    expect(termSettled).toBe(false);
+    proc.emit('close', null, 'SIGKILL');
+    await Promise.all([term, kill, eventsPromise]);
+    expect(termSettled).toBe(true);
+  });
+
   it('sendMessage spawns opencode run with JSON format, dir, and prompt', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
@@ -614,7 +637,10 @@ describe('OpenCodeHarness', () => {
     const events = await eventsPromise;
 
     expect(events[0]).toMatchObject({ type: 'turn_begin', userInput: 'hello' });
-    expect(events[1]).toEqual({ type: 'content', timestamp: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK' });
+    expect(events[1]).toMatchObject({
+      type: 'content', timestamp: 1780703411893, timestampSource: 'provider_reported',
+      reportedAt: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK',
+    });
   });
 
   it('stdout tool JSON yields canonical tool events through the translator', async () => {
@@ -632,9 +658,9 @@ describe('OpenCodeHarness', () => {
 
     const events = await eventsPromise;
 
-    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_call', 'tool_call_args', 'tool_result', 'status_update', 'turn_end']);
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_snapshot', 'status_update', 'turn_end']);
     expect(events[1]).toMatchObject({ toolCallId: 'call_probe', toolName: 'shell' });
-    expect(events[3]).toMatchObject({ output: 'OPENCODE_TOOL_PROBE_OK', isError: false });
+    expect(events[1].result).toMatchObject({ output: 'OPENCODE_TOOL_PROBE_OK', isError: false });
   });
 
   it('clean exit with text and no step_finish yields a synthetic turn_end', async () => {
@@ -692,7 +718,7 @@ describe('OpenCodeHarness', () => {
     });
     const events = await eventsPromise;
 
-    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_call', 'tool_call_args', 'tool_result', 'turn_end']);
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_snapshot', 'turn_end']);
     expect(events.at(-1)).toMatchObject({ type: 'turn_end', fullText: '', hasToolCalls: true });
   });
 
@@ -819,8 +845,9 @@ describe('OpenCodeHarness', () => {
     const iterator = session.sendMessage('hello')[Symbol.asyncIterator]();
 
     await expect(iterator.next()).resolves.toMatchObject({ value: { type: 'turn_begin' } });
-    await session.stop();
+    const stopped = session.stop();
     proc.emit('close', null, 'SIGTERM');
+    await stopped;
 
     await expect(iterator.next()).resolves.toEqual({ done: true, value: undefined });
   });
@@ -847,8 +874,9 @@ describe('OpenCodeHarness', () => {
     const iterator = session.sendMessage('hello')[Symbol.asyncIterator]();
 
     await iterator.next();
-    await harness.dispose();
-    proc.emit('close', null, 'SIGTERM');
+    const disposed = harness.dispose();
+    setImmediate(() => proc.emit('close', null, 'SIGTERM'));
+    await disposed;
 
     expect(proc.kill).toHaveBeenCalledWith('SIGTERM');
     expect(harness.sessions.size).toBe(0);

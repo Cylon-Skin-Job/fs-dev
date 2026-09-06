@@ -6,8 +6,13 @@
  */
 import { useState, useCallback } from 'react';
 import { Crepe } from '@milkdown/crepe';
-import type { FileWithContent, SaveReason } from '../../state/fileDataStore';
+import type { FileWithContent } from '../../state/fileDataStore';
 import { showToast } from '../../lib/toast';
+import {
+  documentDirtyRevision,
+  saveAcknowledgedMilestone,
+  type SaveFileAction,
+} from '../documentSaveAcknowledgement';
 import { downloadDocumentArtifact } from '../../lib/downloadDocumentArtifact.mjs';
 import {
   buildLegacyEmailDocumentPayload,
@@ -30,21 +35,17 @@ function getErrorMessage(error: unknown): string {
 
 interface UseDocumentActionsOptions {
   file: FileWithContent;
-  isDirty: boolean;
   crepeRef: React.RefObject<Crepe | null>;
   captureOfficeOutputState: () => CapturedOfficeOutputState;
-  saveFile: (panel: string, path: string, content: string, reason: SaveReason, milestone?: string) => void;
-  setDirty: (panel: string, path: string, dirty: boolean) => void;
+  saveFile: SaveFileAction;
   setIsDirty: (dirty: boolean) => void;
 }
 
 export function useDocumentActions({
   file,
-  isDirty,
   crepeRef,
   captureOfficeOutputState,
   saveFile,
-  setDirty,
   setIsDirty,
 }: UseDocumentActionsOptions) {
   const [exportingFormat, setExportingFormat] = useState<'docx' | 'pdf' | 'markdown' | null>(null);
@@ -58,6 +59,7 @@ export function useDocumentActions({
 
     setExportingFormat(format);
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const snapshot = await serializeOfficeOutputSnapshot(captureOfficeOutputState);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
       const payload = buildOfficeExportDocumentPayload({
@@ -70,13 +72,11 @@ export function useDocumentActions({
         tablePresentation: snapshot.tablePresentation,
       });
 
-      if (isDirty) {
-        saveFile(PANEL, file.path, snapshot.fullMarkdown, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
       const milestone = format === 'pdf' ? 'export_pdf' : 'export_docx';
-      saveFile(PANEL, file.path, snapshot.fullMarkdown, 'milestone', milestone);
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: snapshot.fullMarkdown, milestone,
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
 
       const result = await window.electronAPI.exportDocument(payload);
 
@@ -101,7 +101,7 @@ export function useDocumentActions({
     } finally {
       setExportingFormat(null);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, captureOfficeOutputState, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, captureOfficeOutputState, crepeRef]);
 
   const handlePrint = useCallback(async () => {
     if (!window.electronAPI?.printDocument) {
@@ -111,6 +111,7 @@ export function useDocumentActions({
     if (!crepeRef.current) return;
     setExportingFormat('pdf');
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const snapshot = await serializeOfficeOutputSnapshot(captureOfficeOutputState);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
       const payload = buildOfficePrintDocumentPayload({
@@ -119,12 +120,10 @@ export function useDocumentActions({
         presentationMode: 'office-tables',
         tablePresentation: snapshot.tablePresentation,
       });
-      if (isDirty) {
-        saveFile(PANEL, file.path, snapshot.fullMarkdown, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
-      saveFile(PANEL, file.path, snapshot.fullMarkdown, 'milestone', 'print');
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: snapshot.fullMarkdown, milestone: 'print',
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
       const result = await window.electronAPI.printDocument(payload);
       if (!result.success) {
         showToast(`Print failed: ${result.error}`);
@@ -134,7 +133,7 @@ export function useDocumentActions({
     } finally {
       setExportingFormat(null);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, captureOfficeOutputState, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, captureOfficeOutputState, crepeRef]);
 
   const handleSendEmail = useCallback(async (format: 'docx' | 'pdf' | 'markdown') => {
     if (!window.electronAPI?.sendDocumentEmail) {
@@ -145,6 +144,7 @@ export function useDocumentActions({
 
     setExportingFormat(format);
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const snapshot = await serializeOfficeOutputSnapshot(captureOfficeOutputState);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
       const payload = format === 'markdown'
@@ -160,13 +160,11 @@ export function useDocumentActions({
           presentationMode: 'office-tables',
           tablePresentation: snapshot.tablePresentation,
         });
-      if (isDirty) {
-        saveFile(PANEL, file.path, snapshot.fullMarkdown, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
       const milestoneMap = { docx: 'send_docx', pdf: 'send_pdf', markdown: 'send_markdown' };
-      saveFile(PANEL, file.path, snapshot.fullMarkdown, 'milestone', milestoneMap[format]);
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: snapshot.fullMarkdown, milestone: milestoneMap[format],
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
       const result = await window.electronAPI.sendDocumentEmail(payload);
       if (!result.success) {
         showToast(`Send failed: ${result.error}`);
@@ -178,7 +176,7 @@ export function useDocumentActions({
     } finally {
       setExportingFormat(null);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, captureOfficeOutputState, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, captureOfficeOutputState, crepeRef]);
 
   return { exportingFormat, setExportingFormat, handleExport, handlePrint, handleSendEmail };
 }

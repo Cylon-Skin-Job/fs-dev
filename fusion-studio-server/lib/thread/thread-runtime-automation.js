@@ -11,6 +11,13 @@ const { spawnThreadWire } = require('../harness/compat');
 const { createCanonicalChatEventApplier } = require('../wire/canonical-chat-event-applier');
 const { createCanonicalHarnessEventBridge } = require('../wire/canonical-harness-event-bridge');
 const { getWireForThread, registerWire } = require('../wire/process-manager');
+const { getDb } = require('../db');
+const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
+const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
+const {
+  createAgentTurnAuthorityRef,
+  releaseAgentTurnAuthorityRef,
+} = require('../agent-provenance/turn-authority');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 const { isHarnessRuntimeError } = require('../harness/errors');
 const { normalizeTurnTerminalError } = require('./turn-terminal-error');
@@ -69,11 +76,64 @@ function getAutomationRuntimeStatus(rawTarget) {
   };
 }
 
-function createAutomationBridge() {
+function createHeadlessTurnApplicationContext(target, wire, turnAuthority, turnId, input) {
+  return {
+    currentWorkspaceId: target.workspaceId,
+    projectRoot: turnAuthority?.canonicalRoot || target.projectRoot,
+    currentThreadId: target.threadId,
+    currentScope: target.scope,
+    currentViewId: target.viewId,
+    pendingUserInput: input,
+    pendingTurnId: turnId,
+    pendingAgentTurnAuthority: turnAuthority,
+    pendingAttachments: [],
+    currentTurn: null,
+    assistantParts: [],
+    hasToolCalls: false,
+    activeToolId: null,
+    activeToolName: null,
+    toolArgs: {},
+    toolNamesById: {},
+    bouncedToolCalls: new Set(),
+    contextUsage: null,
+    tokenUsage: null,
+    messageId: null,
+    planMode: false,
+    wire,
+  };
+}
+
+function disposeTurnApplicationContext(context) {
+  context.pendingTurnId = null;
+  context.pendingAgentTurnAuthority = null;
+  context.pendingUserInput = null;
+  context.pendingAttachments = [];
+  context.currentTurn = null;
+  context.assistantParts = [];
+  context.wire = null;
+  context.projectRoot = null;
+}
+
+function createAutomationBridge(turnAuthority = null) {
+  let activityOwner = null;
+  try {
+    const db = getDb();
+    const activityRepository = createAgentActivityRepository(db, {
+      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+    });
+    activityOwner = getSharedAgentActivityOwner({
+      db,
+      activityRepository,
+      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+    });
+  } catch {
+    console.warn('[AgentProvenance] agent_activity_owner_unavailable');
+  }
   const applier = createCanonicalChatEventApplier({
     emit,
     checkSettingsBounce,
     generateTurnId: () => generateId(),
+    activityOwner,
   });
 
   return createCanonicalHarnessEventBridge({
@@ -85,6 +145,7 @@ function createAutomationBridge() {
       drainContext.control.drainId,
       turnId
     ),
+    resolveTurnIdentity: () => turnAuthority,
   });
 }
 
@@ -259,7 +320,30 @@ async function sendAutomationPrompt(rawTarget, input) {
     };
   }
 
-  const bridge = createAutomationBridge();
+  const turnId = generateId();
+  let turnAuthority = null;
+  try {
+    const harnessId = thread.entry?.harnessId;
+    if (!harnessId || wire._harnessId !== harnessId) throw new Error('resolved harness identity mismatch');
+    turnAuthority = await createAgentTurnAuthorityRef({
+      workspaceId: manager.workspaceId,
+      threadId: target.threadId,
+      turnId,
+      harnessId,
+      provider: wire._provider || harnessId,
+      workspaceRoot: manager.projectRoot || target.projectRoot,
+    });
+  } catch {
+    console.warn('[AgentProvenance] agent_turn_authority_unavailable');
+  }
+  const bridge = createAutomationBridge(turnAuthority);
+  const turnApplicationContext = createHeadlessTurnApplicationContext(
+    target,
+    wire,
+    turnAuthority,
+    turnId,
+    input,
+  );
 
   // SPEC-01 Slice B: bind the accepted prompt to an immutable route context
   // and claim one UUID drain before bridge.drainHarnessEvents consumes the
@@ -270,7 +354,7 @@ async function sendAutomationPrompt(rawTarget, input) {
     const routeContext = createCanonicalRouteContext({
       workspaceId: target.workspaceId,
       workspace: resolveScope({ currentWorkspaceId: target.workspaceId, currentViewId: null }),
-      projectRoot: target.projectRoot,
+      projectRoot: turnAuthority?.canonicalRoot || target.projectRoot,
       scope: 'project',
       threadId: target.threadId,
       acceptedUserInput: input,
@@ -330,7 +414,12 @@ async function sendAutomationPrompt(rawTarget, input) {
   }
 
   try {
-    await bridge.drainHarnessEvents(wire._sendMessage(input, {}), null, { drainContext });
+    await bridge.drainHarnessEvents(wire._sendMessage(input, {}), null, {
+      drainContext,
+      turnAuthority,
+      turnApplicationContext,
+      finalizeOnError: false,
+    });
     if (isDrainSuperseded()) {
       console.warn(`[ThreadRuntime] Drain ${claimedRecord.drainId} superseded; automation completion is a diagnostic no-op`);
       return {
@@ -391,7 +480,7 @@ async function sendAutomationPrompt(rawTarget, input) {
       try {
         // New plain envelope object carrying the optional opaque
         // diagnosticId; downstream validateTurnTerminalError re-validates.
-        bridge.applyHarnessEvent({
+        await bridge.applyHarnessEvent({
           type: 'turn_end',
           reason: 'error',
           partial: true,
@@ -424,6 +513,9 @@ async function sendAutomationPrompt(rawTarget, input) {
       threadId: target.threadId,
       scope: target.scope,
     };
+  } finally {
+    releaseAgentTurnAuthorityRef(turnAuthority);
+    disposeTurnApplicationContext(turnApplicationContext);
   }
 }
 

@@ -7,6 +7,15 @@
 
 const express = require('express');
 
+let runBackgroundRevalidation = (service) => service.revalidateAll();
+
+function installBackgroundRevalidationRunner(runner) {
+  if (typeof runner !== 'function') {
+    throw new TypeError('harness background revalidation runner must be a function');
+  }
+  runBackgroundRevalidation = runner;
+}
+
 function createRouter() {
   const router = express.Router();
 
@@ -17,7 +26,7 @@ function createRouter() {
       res.json(harnesses);
       // Fire-and-forget revalidation so repeated hits stay sub-ms while
       // the cache converges on real state. Debounced internally.
-      service.revalidateAll().catch(() => {});
+      Promise.resolve(runBackgroundRevalidation(service)).catch(() => {});
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -39,4 +48,4 @@ function createRouter() {
   return router;
 }
 
-module.exports = { createRouter };
+module.exports = { createRouter, installBackgroundRevalidationRunner };

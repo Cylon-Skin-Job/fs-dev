@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/event/resource.state_observed/v1",
+  "title": "ResourceStateObservedV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventId", "eventType", "schemaVersion", "occurredAt", "workspaceId", "operationId", "source", "resource", "observation"],
+  "properties": {
+    "eventId": { "$ref": "#/$defs/uuid" }, "eventType": { "const": "resource.state_observed" },
+    "schemaVersion": { "const": 1 }, "occurredAt": { "$ref": "#/$defs/timestamp" },
+    "workspaceId": { "$ref": "#/$defs/id128" }, "operationId": { "$ref": "#/$defs/uuid" },
+    "source": { "$ref": "#/$defs/source" }, "resource": { "$ref": "#/$defs/resource" },
+    "observation": { "$ref": "#/$defs/observation" }
+  },
+  "$defs": {
+    "uuid": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "id128": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "toolCallId": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "timestamp": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "accessFamily": { "enum": ["read", "write", "execute", "unknown"] },
+    "accessKind": { "enum": ["read", "write", "create", "delete", "move_from", "move_to", "execute", "unknown"] },
+    "extractionBasis": { "enum": ["structured_path", "shell_input_redirection", "shell_output_redirection", "shell_known_operand"] },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["activityId", "edgeId", "threadId", "turnId", "toolCallId", "harnessId", "accessFamily", "accessKind", "extractionBasis"],
+      "properties": {
+        "activityId": { "$ref": "#/$defs/uuid" }, "edgeId": { "$ref": "#/$defs/uuid" },
+        "threadId": { "$ref": "#/$defs/id128" }, "turnId": { "$ref": "#/$defs/id128" },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" }, "harnessId": { "$ref": "#/$defs/id128" },
+        "accessFamily": { "$ref": "#/$defs/accessFamily" }, "accessKind": { "$ref": "#/$defs/accessKind" },
+        "extractionBasis": { "$ref": "#/$defs/extractionBasis" }
+      }
+    },
+    "resource": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "path"],
+      "properties": { "resourceId": { "$ref": "#/$defs/uuid" }, "kind": { "const": "file" }, "path": { "$ref": "#/$defs/path" } }
+    },
+    "observation": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["snapshotId", "state", "relation", "sha256", "byteLength"],
+          "properties": {
+            "snapshotId": { "$ref": "#/$defs/uuid" }, "state": { "const": "bytes" },
+            "relation": { "enum": ["first_observation", "changed"] }, "sha256": { "$ref": "#/$defs/sha256" },
+            "byteLength": { "type": "integer", "minimum": 0, "maximum": 10485760 },
+            "previousSnapshotId": { "$ref": "#/$defs/uuid" }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["snapshotId", "state", "relation", "byteLength"],
+          "properties": {
+            "snapshotId": { "$ref": "#/$defs/uuid" }, "state": { "const": "absent" },
+            "relation": { "enum": ["first_observation", "changed"] }, "byteLength": { "const": 0 },
+            "previousSnapshotId": { "$ref": "#/$defs/uuid" }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "observation": { "type": ["object"], "properties": { "state": { "const": "bytes" } }, "required": ["state"] } } },
+      "then": { "properties": { "resource": { "type": ["object"], "required": ["resourceId"] } } },
+      "else": { "properties": { "resource": { "type": ["object"], "not": { "required": ["resourceId"] } } } }
+    },
+    {
+      "if": { "properties": { "observation": { "type": ["object"], "properties": { "relation": { "const": "first_observation" } }, "required": ["relation"] } } },
+      "then": { "properties": { "observation": { "type": ["object"], "not": { "required": ["previousSnapshotId"] } } } },
+      "else": { "properties": { "observation": { "type": ["object"], "required": ["previousSnapshotId"] } } }
+    }
+  ]
+}
