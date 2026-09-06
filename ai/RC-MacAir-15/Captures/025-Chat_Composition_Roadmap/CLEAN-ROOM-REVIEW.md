@@ -1,75 +1,78 @@
 # Chat Composition Roadmap — Clean-Room Review
 
-**Candidate:** `CHAT-COMPOSITION-a07c15a4d1b153f9`  
-**Final verdict:** `CLEAN`  
-**Reviewed:** 2026-09-03  
-**Review mode:** fresh read-only current-byte review
+**Candidate:** `CHAT-COMPOSITION-e3d2c49f044cd7f7`
+**Exact aggregate:** `e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7`
+**Final verdict:** `CLEAN`
+**Reviewed:** 2026-09-05
+**Review mode:** fresh independent read-only current-byte review
+**Completed passes:** 1
 
 ## Scope
 
-The final semantic reviewer and subsequent exact-hash verification read the
-normative artifacts named in `RELEASE-MANIFEST.md`, the repository `AGENTS.md`, directly routed Code
-Standards and Chat System pages, source Vision decisions and SPECs, the external
-Agent Tool Provenance contract, and relevant current code where needed.
+The review covered the ten ordered normative artifacts frozen by
+`RELEASE-MANIFEST.md`, the repository `AGENTS.md`, the directly routed Code
+Standards and Chat System pages, the accepted TABS-03 report and implementation
+contract, the accepted PROV-01 report, relevant bridge coordination records,
+and current Electron, server, and renderer code where needed to test whether
+the proposed work is executable.
 
-The review tested:
+The pass independently assessed:
 
-- owner-intent fidelity and the four-SPEC domain split;
-- dependency and acceptance gates;
-- stable view identity and migration safety;
-- trusted Fusion-shell origin, transport, and one-use proof authority;
-- group/session/turn/exchange/model/surface/tab/placement identity boundaries;
-- public-route vertical slices;
-- group deletion, retry, cleanup, and Provenance retention;
-- composable chat state isolation;
-- worksurface single ownership, acknowledged switching, concurrency, and
-  managed placement lanes;
-- Generic Component Tab Host non-ownership;
-- native and adapterless Side Chat placement;
-- Move activity, MRU, primary history, Move/Delete ordering, member access,
-  exact-member links, close/reopen, restart, and multi-window behavior; and
-- executable acceptance and regression coverage.
+- whether SPEC-00 is one coherent trusted-shell transport-security domain;
+- whether SPEC-00 and SPEC-01 divide authority without contradiction or
+  duplicate implementation ownership;
+- whether prerequisite and execution gates describe current accepted and
+  unintegrated work accurately;
+- whether TABS, bridge, and Provenance ownership remains protected;
+- whether the owner's instruction to eliminate Fork is preserved;
+- whether the slices and tests are executable and follow the applicable Code
+  Standards; and
+- whether every normative artifact hash and the aggregate candidate identity
+  reproduce exactly.
 
 ## Review Loop
 
-Earlier fresh passes identified material defects. Validated defects were repaired
-forward and recorded in `ISSUES.md`, including generic-placement ownership,
-trusted-shell authority, view-ID preflight, worksurface flush/merge rules,
-multi-member access, global writer cutover, adapterless view support, MRU and
-race semantics, vertical slice shape, model-selection authority, deep links,
-Delete recovery, event vocabulary, and membership origin.
+Before delegation, the primary session audited the candidate scope and exact
+manifest, checked internal Markdown links, checked the working diff for
+whitespace defects, and confirmed that the change touches planning documents
+only.
 
-Each normative repair invalidated the preceding verdict. The final pass reviewed
-the corrected bytes without receiving prior diagnoses or a desired conclusion.
+One fresh clean-room reviewer then read the candidate without prior diagnoses
+or a requested outcome. The reviewer made no edits and reported no material
+finding, so the loop stopped at the first clean verdict under the default
+materiality-aware review budget.
 
 ## Final Result
 
-The final semantic reviewer reported:
+The independent reviewer reported:
 
-> CLEAN — No material release blocker found in the current candidate.
+> CLEAN — no material findings.
 
 The reviewer specifically verified:
 
-- `set_harness_selection` accepts only portable `{model, variant}` while the
-  harness remains immutable server-owned state;
-- a new-request-ID Delete recovery durably records the retained aggregate under
-  the new request ID;
-- Move uses `origin_kind='move-to-side-chat-primary'`;
-- primary history consistently uses `reason='move-to-side-chat'`;
-- SPEC-01 owns group/sole-current links and SPEC-04 exclusively owns
-  non-primary Side Chat link behavior;
-- secure-shell, migration, vertical-slice, worksurface, Generic Host, Side Chat,
-  and Provenance contracts remain coherent across the bundle; and
-- the unaccepted Provenance and Generic Component Tab Host implementations are
-  correctly represented as execution gates, not planning blockers.
+- the complete aggregate reproduces as
+  `e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7`
+  and all ten artifact hashes match the manifest;
+- SPEC-00 coherently owns shell origin, runtime endpoint, bootstrap and proof,
+  connection role, trusted-shell guard, restart and redaction behavior, and
+  child-environment isolation;
+- SPEC-01 consumes the guard without reimplementing or weakening SPEC-00;
+- TABS, bridge, and Provenance ownership remains protected;
+- Fork is denied in SPEC-00 and fully removed before Thread Group activation in
+  SPEC-01, with no later reintroduction; and
+- the proposed slices and verification requirements are vertical, executable,
+  and standards-aligned.
 
-After the bundle-index evidence statuses were advanced, a fresh reviewer
-spot-checked the new normative bytes and found no additional semantic
-contradiction. The candidate hashes and ID below were then regenerated for that
-exact index version and independently verified.
+## Advisories And Gates
 
-## Advisories
+There are no material findings. The following documented gates remain in
+force:
 
-There are no material findings. The external Agent Tool Provenance and Generic
-Component Tab Host implementations must still be independently owner-accepted
-before their dependent SPECs may execute.
+- the owner-accepted PROV-01 product bytes must be integrated into the exact
+  implementation baseline;
+- BRIDGE-01 and BRIDGE-02 must be approved and accepted before their dependent
+  Chat work; and
+- the owner must release the accepted Tab Platform milestone before SPEC-01
+  implementation.
+
+These are execution gates, not defects in this planning candidate.

@@ -45,8 +45,12 @@ presents it to the owner. Only explicit owner acceptance permits the next SPEC.
 
 ## 4. Baselines And External Gates
 
-- SPEC-01 baseline is the final owner-accepted Agent Tool Provenance result,
-  rebased/integrated into the implementation checkout. Determine the next free
+- SPEC-00 baseline is the final owner-accepted Agent Tool Provenance result,
+  rebased/integrated into the implementation checkout. It also records the
+  accepted TABS-03 identity as a protected non-owned baseline and re-inventories
+  any overlapping bridge paths without editing bridge contracts.
+- SPEC-01 baseline includes accepted SPEC-00, approved BRIDGE-01/BRIDGE-02,
+  and the owner-released accepted Tab Platform milestone. Determine the next free
   migration from that accepted database chain; do not rename an already-run
   migration or assume the planning worktree's number is still free.
 - SPEC-02 baseline includes accepted SPEC-01 and the final independently
@@ -71,7 +75,7 @@ A deviation may not silently:
 - add a new WebSocket family when the accepted route fits;
 - move view configuration, Collections, plugin behavior, Pending New Chat, or
   protected-System permissions into this roadmap;
-- weaken SPEC-01's narrow trusted-shell command gate or expand it into a general
+- weaken SPEC-00's narrow trusted-shell command gate or expand it into a general
   remote authentication platform;
 - modify an accepted external prerequisite's contract; or
 - begin a later SPEC's behavior early.

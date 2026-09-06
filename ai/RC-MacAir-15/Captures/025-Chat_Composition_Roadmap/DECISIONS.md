@@ -6,15 +6,16 @@
 
 ## Owner Decisions
 
-### CHAT-RD-001 — Use four single-domain SPECs
+### CHAT-RD-001 — Use five single-domain SPECs
 
 - **Authority:** owner decision
 - **Status:** propagated
 
-The roadmap has four implementation SPECs: Thread Group Foundation, Composable
-Chat Surfaces, Thread Worksurface Continuity, and Move Chat to Side Chat. Schema
-and public group behavior stay together because they are one Thread Group domain;
-renderer composition and view-state worksurface persistence are separated
+The refreshed roadmap has five implementation SPECs: Trusted Fusion Shell
+Authority, Thread Group Foundation, Composable Chat Surfaces, Thread Worksurface
+Continuity, and Move Chat to Side Chat. Shell connection authority is separate
+from the Thread Group domain. Schema and public group behavior stay together;
+renderer composition and view-state worksurface persistence remain separated
 because they have different owners and failure modes.
 
 ### CHAT-RD-002 — Provenance acceptance gates Thread Group work
@@ -185,3 +186,19 @@ Deleted sessions retain their immutable Provenance facts under workspace and
 `threadId`. This roadmap does not add permanent deleted-group membership solely
 to browse those facts by a removed `threadGroupId`. Bounded deletion/action
 tombstones exist only for recovery and retry.
+
+### CHAT-RD-017 — Extract trusted shell authority before Thread Groups
+
+- **Authority:** code standards plus single-domain roadmap scoping
+- **Status:** proposed for owner approval in the refreshed candidate
+
+The Electron secure-origin migration, centralized runtime endpoint, one-use
+connection proof, privileged-route guard, and child-environment isolation form
+one transport-security domain. They are extracted from Thread Group Foundation
+into `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md`.
+
+SPEC-00 changes no Thread Group, component-tab, bridge, Provenance-event,
+worksurface, or Side Chat behavior. Thread Group Foundation consumes its
+accepted `trusted-shell` connection role instead of implementing a second
+authentication path. This keeps each SPEC independently judgeable and prevents
+the thread-group builder from also owning an Electron origin/transport rewrite.

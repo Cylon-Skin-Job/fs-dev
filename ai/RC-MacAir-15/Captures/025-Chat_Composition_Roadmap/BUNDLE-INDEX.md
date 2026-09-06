@@ -1,7 +1,7 @@
 # Chat Composition Roadmap Bundle Index
 
 **Bundle status:** `DRAFT_CANDIDATE`  
-**Prepared:** 2026-09-03  
+**Prepared:** 2026-09-05
 **Owner:** Fusion Studio product owner  
 **Execution:** sequential SPEC orchestration with explicit owner acceptance between SPECs
 
@@ -9,17 +9,20 @@
 
 This bundle turns Fusion Studio's current one-global-chat presentation into a
 view-bound, explicitly addressed chat system that can later mount the same chat
-surface in a content tab. It does so through four independently judged domains:
+surface in a content tab. It does so through five independently judged domains:
 
-1. durable Thread Groups and their public application behavior;
-2. composable renderer chat surfaces;
-3. group-keyed content worksurface continuity; and
-4. Move Chat to Side Chat.
+1. trusted Fusion-shell connection authority;
+2. durable Thread Groups and their public application behavior;
+3. composable renderer chat surfaces;
+4. group-keyed content worksurface continuity; and
+5. Move Chat to Side Chat.
 
-The first domain waits for the owner-accepted Agent Tool Provenance
-implementation. The renderer domains also wait for the independently accepted
-Generic Component Tab Host implementation. Neither in-progress worktree is an
-accepted prerequisite merely because code is present.
+The first domain waits for the owner-accepted Agent Tool Provenance product
+bytes to be integrated because the accepted Provenance work overlaps transport,
+startup, and child-process paths. Chat implementation also waits for approved
+BRIDGE-01 and BRIDGE-02 contracts and the owner-released Tab Platform milestone.
+The renderer domains consume the independently accepted Tab Platform rather
+than recreating it.
 
 ## 2. Normative Bundle Artifacts
 
@@ -29,12 +32,13 @@ accepted prerequisite merely because code is present.
 | 00 | `ISSUES.md` | External gates, resolved conflicts, and deferrals | draft |
 | 00 | `GUIDANCE.md` | Builder, reviewer, deviation, and acceptance lifecycle | draft |
 | 00 | `ROADMAP.md` | Dependency order and roadmap completion contract | draft |
+| 00 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | Shell origin, transport descriptor, connection proof, and privileged-route gate | draft |
 | 01 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | Thread Group persistence, migration, lifecycle, and public protocol | draft |
 | 02 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | Explicit renderer chat and thread-rail composition | draft |
 | 03 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | View-state ownership, switching, recovery, and deletion cleanup | draft |
 | 04 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | Multi-member transition and Side Chat component placement | draft |
-| gate | `CLEAN-ROOM-REVIEW.md` | Review result for the exact current candidate | clean |
-| gate | `RELEASE-MANIFEST.md` | Ordered hashes, candidate ID, deferrals, and approval record | awaiting owner approval |
+| gate | `CLEAN-ROOM-REVIEW.md` | Review result for the exact current candidate | prior review superseded; refresh required |
+| gate | `RELEASE-MANIFEST.md` | Ordered hashes, candidate ID, deferrals, and approval record | draft; review required |
 
 ## 3. Authority Order
 
@@ -59,8 +63,12 @@ accepted prerequisite merely because code is present.
 - `../002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md`
 - `../002-SPECs/SYSTEM_VIEW_CAPSULE_FOUNDATION_SPEC.md`
 - `../002-SPECs/VIEW_CONFIGURED_THREAD_COLLECTIONS_SPEC.md`
+- `../026-Tab-Target-Placement/TAB_TARGET_PLACEMENT_ORCHESTRATOR_REPORT.md`
+- `../002-SPECs/TABS-PROVENANCE-COORDINATION/README.md`
+- `../002-SPECs/TABS-PROVENANCE-COORDINATION/INTERFACE-CONTRACT.md`
+- `../002-SPECs/TABS-PROVENANCE-COORDINATION/CHAT-HANDOFF.md`
 
-### External prerequisite candidate under implementation
+### Accepted external prerequisite awaiting integration
 
 - `/Users/rccurtrightjr./projects/fs-dev-wt-universal-view-tab-bar/ai/RC-MacAir-15/Captures/024-Agent-Tool-Provenance/RELEASE-MANIFEST.md`
 - `/Users/rccurtrightjr./projects/fs-dev-wt-universal-view-tab-bar/ai/RC-MacAir-15/Captures/024-Agent-Tool-Provenance/IMPLEMENTATION-LEDGER.md`
@@ -82,6 +90,7 @@ All SPECs use this exact hub:
 
 | SPEC | Routed standards pages |
 |---|---|
+| 00 | Architecture Routing; WebSocket Protocol; Universal Event Bus; Harness Adapters; Persistence And Metadata; Testing And Smoke Slices |
 | 01 | Architecture Routing; WebSocket Protocol; Universal Event Bus; Harness Adapters; Persistence And Metadata; Testing And Smoke Slices |
 | 02 | Architecture Routing; Frontend UI; State Management; WebSocket Protocol; Testing And Smoke Slices |
 | 03 | Architecture Routing; State Management; WebSocket Protocol; Persistence And Metadata; Testing And Smoke Slices |
@@ -94,14 +103,21 @@ defers it rather than silently weakening the applicable standard.
 ## 6. Dependency Map
 
 ```text
-Owner-accepted Agent Tool Provenance
+Integrated owner-accepted Agent Tool Provenance
+                 |
+                 v
+SPEC-00 Trusted Fusion Shell Authority
+                 |
+                 v
+Approved BRIDGE-01 + BRIDGE-02
+and owner-released Tab Platform milestone
                  |
                  v
 SPEC-01 Thread Group Foundation
                  |
                  +-------------------------------+
                                                  |
-Independently accepted Generic Component Tab Host|
+Independently accepted Tab Platform              |
                  |                               |
                  +---------------+---------------+
                                  v
@@ -128,8 +144,8 @@ The following are not hidden inside this roadmap:
 - project/folder/template creation and CWD overrides;
 - plugins, dynamic component registration, trust, permissions, and installation;
 - protected-System permissions and general remote-account authentication beyond
-  SPEC-01's narrow Fusion-shell command gate; and
+  SPEC-00's narrow Fusion-shell command gate; and
 - permanent deleted-group browsing of historical Provenance.
 
 Each deferral remains independently specifiable. None is required to prove the
-four outcomes in this bundle.
+five outcomes in this bundle.

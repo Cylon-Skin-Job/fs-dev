@@ -2,7 +2,7 @@
 
 **Status:** `DRAFT_CANDIDATE`  
 **Domain owner:** server Thread Group domain with ThreadManager integration  
-**Prerequisite:** owner-accepted Agent Tool Provenance implementation  
+**Prerequisites:** accepted SPEC-00; integrated owner-accepted Agent Tool Provenance; approved BRIDGE-01 and BRIDGE-02; owner-released accepted Tab Platform milestone
 **Blocks:** SPEC-02, Pending New Chat, Collections, and every multi-member thread action
 
 ## 1. Objective
@@ -35,13 +35,20 @@ Read before implementation:
   Runtime Model, Structure, and Testing And Operations;
 - the final owner-accepted Agent Tool Provenance SPEC, implementation report,
   changed-path evidence, and accepted regression commands; and
+- the accepted `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` report and exported
+  server connection-authority guard;
+- the approved BRIDGE-01 and BRIDGE-02 contracts, consumed without local
+  additions or reinterpretation;
+- the accepted TABS-03 report, implementation commits, exact fingerprint, and
+  exported placement boundary as a protected non-owned baseline; and
 - the current `threads`, `exchanges`, ThreadManager, ThreadIndex, thread runtime,
   thread WebSocket, chat search, OpenCode, and Markdown mirror code/tests.
 
-The orchestrator records the exact accepted Provenance commit and migration head
-before dispatch. Use the next free migration after that baseline. Do not rename
-an already-run migration, assume `037`, or edit the accepted Provenance
-migration.
+The orchestrator records the exact integrated Provenance commit, accepted
+SPEC-00 commit/report, approved bridge candidates, owner-released Tab Platform
+milestone, and migration head before dispatch. Use the next free migration
+after that baseline. Do not rename an already-run migration, assume `037`, or
+edit an accepted prerequisite migration.
 
 ## 3. Scope
 
@@ -56,8 +63,8 @@ migration.
   Copy Link, Resolve Link, and View Markdown;
 - canonical `thread:action` mutation routing, request idempotency, requester
   acknowledgement, workspace fan-out, and reconnect hydration;
-- a narrow server-verified Fusion-shell connection role gating new-session
-  creation and durable thread mutations at public activation;
+- consumption of SPEC-00's accepted server-owned `trusted-shell` connection
+  guard on new-session creation and durable thread mutations;
 - runtime-safe, mirror-recoverable, Provenance-safe group deletion;
 - end-to-end removal of Fork/context cloning and the obsolete `thread:touch`
   secondary-chat ordering path; and
@@ -74,8 +81,9 @@ migration.
   bounded missing-ID preflight;
 - Send to Chat expansion, automatic naming, transcript export, folders,
   templates, CWD policy, plugins, or automation authority; and
-- protected-System permissions or a general remote-account authentication
-  platform beyond the narrow local shell-command gate.
+- Electron shell origin, runtime descriptor, connection proof, child-process
+  environment policy, protected-System permissions, or a general remote-account
+  authentication platform.
 
 ## 4. Identity And Ownership Contract
 
@@ -323,71 +331,22 @@ state and never replays the mutation.
 Commands are not UEB events. Optional facts cannot gate, roll back, or rewrite
 the command result.
 
-### 8.4 Fusion-shell command authority
+### 8.4 Accepted Fusion-shell authority dependency
 
-Before any group-backed public route activates, Electron main and the server
-establish a narrow authenticated Fusion-shell connection role. Electron main
-generates one ephemeral high-entropy master per app/server launch, retains it in
-main memory, and sends it to the server through a dedicated inherited bootstrap
-pipe read once and closed before readiness. The master never enters an
-environment variable, command line, log, workspace, renderer JavaScript, or
-downstream harness/CLI child process. The server child receives it only through
-that one-read pipe.
-
-Before exposing the proof method, Electron moves the trusted app renderer to an
-Electron-owned secure origin such as `fusion-shell://app/`, serving only
-packaged/development shell assets. The main frame may not navigate to workspace
-or web content, and subframes may not load the shell origin. Workspace HTML,
-panel files, custom views, browser frames, and remote pages retain distinct
-content origins and cannot read or invoke `parent.electronAPI`; context
-isolation alone is not treated as protection. Shell CSP and server CORS allow
-only the exact shell origin, exact runtime loopback endpoint, and separately
-configured child-content origins—never a wildcard or shared localhost origin.
-
-The server binds explicitly to IPv4 `127.0.0.1` and advertises a bounded runtime
-descriptor only through a main-frame/exact-shell-origin preload call. On each
-socket it issues a short-lived one-use challenge. A context-isolated preload
-method sends the challenge and renderer nonce to Electron main; main validates
-the current main frame, exact committed shell origin, launch generation, and
-fields, then returns only a one-use HMAC proof bound to connection ID, server
-nonce, and renderer nonce. The renderer never receives the master.
-
-The server validates Origin, expiry, one-use state, exact binding, and
-constant-time proof equality before marking the socket `trusted-shell`.
-Reconnect and server restart require a fresh challenge/proof; replay, subframe,
-custom/iframe content, stale generation, absent proof, and a standalone server
-without injected test authority remain read-only or close before durable work.
-There is no fallback to `localhost`, wildcard listen/origin, `window.location`,
-or a client-supplied endpoint for privileged shell transport.
-
-One renderer transport/bootstrap owner validates that descriptor before feature
-state loads and supplies the WebSocket plus every server-backed HTTP/resource
-URL. Existing relative API, panel, icon, style, screenshot, and other server
-resource consumers are rebased through it. A changed launch generation aborts
-old-generation requests and reboots transport; malformed, non-loopback, or
-stale descriptors show a disconnected shell rather than guessing an endpoint.
+SPEC-00 exclusively owns the Electron shell origin, runtime endpoint,
+bootstrap secret, proof handshake, connection role, privileged-route guard,
+redaction, restart rotation, and child-environment policy. This SPEC consumes
+only its accepted server-owned guard.
 
 `thread:open-assistant` creation and every durable `thread:action` mutation
-require that role. Workspace still comes from the server-bound session, and
-view/group/session membership is separately validated. A request field,
-workspace file, view config, chat attachment, model response, harness message,
-or automation payload cannot assert or mint the role. Raw local WebSocket
-clients and iframe/custom-view content without the privileged preload bridge
-fail closed before any durable work.
+require the accepted `trusted-shell` role in addition to server-derived
+workspace and validated view/group/session ownership. No request, bridge field,
+tab/component identity, workspace file, view config, attachment, model output,
+harness message, or automation payload may assert or mint it.
 
-The proof IPC is non-delegable: attempts by workspace/custom content to call
-through `parent.electronAPI`, any subframe, or a stale main-frame navigation are
-explicitly rejected and covered by an Electron integration test.
-
-This is the minimum authority boundary required by the routed WebSocket
-standard and later System work. It does not define user accounts, remote
-authentication, or protected-System filesystem permissions.
-
-One server-owned child-environment builder starts from a documented minimal
-allowlist and unconditionally excludes the master, proofs, nonces, bootstrap
-pipe/descriptor, and server-only secrets. Every discovered harness/CLI child
-spawn uses it before trusted commands ship. Static tests forbid direct
-`process.env` spreading or another child-spawn bypass.
+The Thread Group builder may add new guarded call sites and tests but may not
+modify, fork, weaken, or reimplement the proof protocol. A discovered defect in
+SPEC-00 is an external prerequisite repair, not an implementation deviation.
 
 ### 8.5 Search
 
@@ -445,19 +404,19 @@ silently resume a provider Fork.
 
 - Start at the existing New Thread/list/open UI and carry the increment through
   stable view-ID preflight, next-free migration/backfill, repositories,
-  trusted-shell handshake, atomic ThreadManager group/session/mirror recovery,
+  accepted trusted-shell guard, atomic ThreadManager group/session/mirror recovery,
   registered WebSocket routes, minimal group-backed rail rendering, restart,
   and second-window hydration.
 - Remove Fork and reconcile every creation path before activating the feature;
   no schema-only or hidden ungrouped interval is accepted.
-- Prove fresh/upgrade databases, invalid view IDs, raw-socket denial, one visible
+- Prove fresh/upgrade databases, invalid view IDs, untrusted-route denial, one visible
   row per retained/new session, passive open, eager create, crash repair, and
   rollback/readback through the public path.
 
 ### Slice 01B — Group Rename and Delete
 
 - Start at the visible row actions and carry Rename/Delete through
-  `thread:action`, shell authority, idempotent ledger, group lease/runtime
+  `thread:action`, accepted shell guard, idempotent ledger, group lease/runtime
   fences, transaction, mirror deletion recovery, Provenance retention, fan-out,
   renderer result, and restart/readback.
 - Remove superseded raw-session mutation routes and prove busy, late-frame,
@@ -484,7 +443,7 @@ builder before integration.
 Add focused tests equivalent to:
 
 - `test/thread/thread-group-migration.test.js`;
-- focused view-registry identity and trusted-shell authentication tests;
+- focused view-registry identity and accepted-shell-guard integration tests;
 - `test/thread/thread-group-repository.test.js`;
 - `test/thread/thread-group-lifecycle.test.js`;
 - `test/thread/thread-group-delete-recovery.test.js`;
@@ -513,9 +472,9 @@ Required proof:
 - after failed cleanup and restart, Delete with a new request ID returns the
   retained cleanup aggregate, records it durably under the new ID, and resumes
   idempotent repair; replay of that ID survives tombstone expiry;
-- authenticated shell reconnect succeeds while raw socket, iframe/custom-view,
-  stale/replayed proof, forged-role, model-content, and harness-payload attempts fail
-  before session creation or mutation;
+- authenticated shell requests succeed while untrusted, forged-role,
+  model-content, bridge-context, and harness-payload attempts fail before
+  session creation or mutation; SPEC-00 owns proof/reconnect/origin mechanics;
 - Delete busy/fence/late-frame/mirror-failure/restart behavior is deterministic;
 - deleting sessions clears only allowed Provenance exchange binding and retains
   every durable Provenance fact;
@@ -543,15 +502,13 @@ Expected, not exclusive:
 - ThreadManager/ThreadIndex transaction and mirror-recovery seams;
 - thread CRUD/runtime prompt-acceptance integration;
 - thread WebSocket handlers/router/redaction and server/client types;
-- Electron main/preload HMAC proof plumbing, bootstrap pipe, loopback runtime
-  descriptor, centralized transport URLs, child-environment guard, and server
-  startup;
 - chat search and application-link handling;
 - minimal existing Sidebar/thread handlers needed for compatibility;
 - OpenCode/Fork removal paths; and
 - focused server/client tests.
 
-No accepted Provenance migration or fact schema is edited.
+No accepted SPEC-00, TABS-03, bridge, Provenance migration, or Provenance fact
+schema is edited.
 
 ## 14. Definition Of Done
 
