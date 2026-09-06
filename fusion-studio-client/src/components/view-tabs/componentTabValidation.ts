@@ -35,12 +35,14 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
 function ownDataEntries(
   value: Record<string, unknown>,
 ): ComponentTabValidationResult<Array<[string, unknown]>> {
-  if (Object.getOwnPropertySymbols(value).length > 0) {
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  const keys = Reflect.ownKeys(descriptors);
+  if (keys.some((key) => typeof key !== 'string')) {
     return failure('invalid_json_value', 'The descriptor contains a non-JSON property.');
   }
-  const descriptors = Object.getOwnPropertyDescriptors(value);
   const entries: Array<[string, unknown]> = [];
-  for (const [key, descriptor] of Object.entries(descriptors)) {
+  for (const key of keys as string[]) {
+    const descriptor = descriptors[key];
     if (!descriptor.enumerable || !('value' in descriptor)) {
       return failure('invalid_json_value', 'The descriptor contains a non-JSON property.');
     }
@@ -60,10 +62,11 @@ function requireFields(
   if (entries.value.some(([key]) => !allowedSet.has(key))) {
     return failure('unknown_field', 'The descriptor contains an unsupported field.');
   }
-  if (required.some((key) => !Object.hasOwn(value, key))) {
+  const keys = new Set(entries.value.map(([key]) => key));
+  if (required.some((key) => !keys.has(key))) {
     return failure('invalid_shape', 'The descriptor is missing a required field.');
   }
-  return { ok: true, value };
+  return { ok: true, value: Object.fromEntries(entries.value) };
 }
 
 function containsControlCharacter(value: string): boolean {
@@ -113,17 +116,25 @@ function inspectJsonValue(
   inspection.ancestors.add(value);
   try {
     if (Array.isArray(value)) {
-      if (value.length > COMPONENT_TAB_LIMITS.maxContainerEntries) {
+      const lengthProperty = Object.getOwnPropertyDescriptor(value, 'length');
+      if (!lengthProperty
+        || !('value' in lengthProperty)
+        || !Number.isSafeInteger(lengthProperty.value)
+        || lengthProperty.value < 0) {
+        return failure('invalid_json_value', 'The component input contains a non-JSON array.');
+      }
+      const length = lengthProperty.value as number;
+      if (length > COMPONENT_TAB_LIMITS.maxContainerEntries) {
         return failure('excessive_size', 'The component input exceeds the supported size.');
       }
       const ownKeys = Reflect.ownKeys(value);
-      const allowedKeys = new Set(['length', ...Array.from({ length: value.length }, (_, index) => String(index))]);
+      const allowedKeys = new Set(['length', ...Array.from({ length }, (_, index) => String(index))]);
       if (ownKeys.some((key) => typeof key !== 'string' || !allowedKeys.has(key))
-        || Object.keys(value).length !== value.length) {
+        || ownKeys.length !== length + 1) {
         return failure('invalid_json_value', 'The component input contains a non-JSON array.');
       }
       const inspected: JsonValue[] = [];
-      for (let index = 0; index < value.length; index += 1) {
+      for (let index = 0; index < length; index += 1) {
         const descriptor = Object.getOwnPropertyDescriptor(value, String(index));
         if (!descriptor?.enumerable || !('value' in descriptor)) {
           return failure('invalid_json_value', 'The component input contains a non-JSON array.');
@@ -187,26 +198,28 @@ export function validateComponentDescriptor(
       ['schemaVersion', 'componentTypeId', 'componentInstanceId', 'input'],
     );
     if (!shape.ok) return shape;
-    if (value.schemaVersion !== 1) {
+    const descriptor = shape.value;
+    if (descriptor.schemaVersion !== 1) {
       return failure('unsupported_schema_version', 'The component descriptor version is unsupported.');
     }
-    if (!isBoundedOpaqueId(value.componentTypeId) || !isBoundedOpaqueId(value.componentInstanceId)) {
+    if (!isBoundedOpaqueId(descriptor.componentTypeId)
+      || !isBoundedOpaqueId(descriptor.componentInstanceId)) {
       return failure('invalid_id', 'The component descriptor contains an invalid identifier.');
     }
-    if (Object.hasOwn(value, 'targetKey')
-      && !isBoundedOpaqueId(value.targetKey, COMPONENT_TAB_LIMITS.maxTargetKeyBytes)) {
+    if (Object.hasOwn(descriptor, 'targetKey')
+      && !isBoundedOpaqueId(descriptor.targetKey, COMPONENT_TAB_LIMITS.maxTargetKeyBytes)) {
       return failure('invalid_id', 'The component descriptor contains an invalid target key.');
     }
-    const input = validateInput(value.input);
+    const input = validateInput(descriptor.input);
     if (!input.ok) return input;
     return {
       ok: true,
       value: {
         schemaVersion: 1,
-        componentTypeId: value.componentTypeId,
-        componentInstanceId: value.componentInstanceId,
+        componentTypeId: descriptor.componentTypeId,
+        componentInstanceId: descriptor.componentInstanceId,
         input: input.value,
-        ...(typeof value.targetKey === 'string' ? { targetKey: value.targetKey } : {}),
+        ...(typeof descriptor.targetKey === 'string' ? { targetKey: descriptor.targetKey } : {}),
       },
     };
   } catch {
@@ -223,19 +236,35 @@ export function validateTabContentDescriptor(
 ): ComponentTabValidationResult<TabContentDescriptor> {
   try {
     if (!isPlainRecord(value)) return failure('invalid_shape', 'The tab content descriptor is invalid.');
-    if (value.kind === 'empty') {
-      const shape = requireFields(value, ['kind', 'revision'], ['kind', 'revision']);
-      if (!shape.ok) return shape;
-      if (!isRevision(value.revision)) return failure('invalid_revision', 'The tab revision is invalid.');
-      return { ok: true, value: { kind: 'empty', revision: value.revision } };
+    const shape = requireFields(
+      value,
+      ['kind', 'revision', 'component'],
+      ['kind', 'revision'],
+    );
+    if (!shape.ok) return shape;
+    const descriptor = shape.value;
+    if (descriptor.kind === 'empty') {
+      if (Object.hasOwn(descriptor, 'component')) {
+        return failure('unknown_field', 'The descriptor contains an unsupported field.');
+      }
+      if (!isRevision(descriptor.revision)) {
+        return failure('invalid_revision', 'The tab revision is invalid.');
+      }
+      return { ok: true, value: { kind: 'empty', revision: descriptor.revision } };
     }
-    if (value.kind === 'component') {
-      const shape = requireFields(value, ['kind', 'revision', 'component'], ['kind', 'revision', 'component']);
-      if (!shape.ok) return shape;
-      if (!isRevision(value.revision)) return failure('invalid_revision', 'The tab revision is invalid.');
-      const component = validateComponentDescriptor(value.component);
+    if (descriptor.kind === 'component') {
+      if (!Object.hasOwn(descriptor, 'component')) {
+        return failure('invalid_shape', 'The descriptor is missing a required field.');
+      }
+      if (!isRevision(descriptor.revision)) {
+        return failure('invalid_revision', 'The tab revision is invalid.');
+      }
+      const component = validateComponentDescriptor(descriptor.component);
       if (!component.ok) return component;
-      return { ok: true, value: { kind: 'component', revision: value.revision, component: component.value } };
+      return {
+        ok: true,
+        value: { kind: 'component', revision: descriptor.revision, component: component.value },
+      };
     }
     return failure('invalid_shape', 'The tab content kind is invalid.');
   } catch {
@@ -248,10 +277,13 @@ export function validateTabContentRecord(value: unknown): ComponentTabValidation
     if (!isPlainRecord(value)) return failure('invalid_shape', 'The tab content record is invalid.');
     const shape = requireFields(value, ['tabId', 'content'], ['tabId', 'content']);
     if (!shape.ok) return shape;
-    if (!isBoundedOpaqueId(value.tabId)) return failure('invalid_id', 'The tab record contains an invalid identifier.');
-    const content = validateTabContentDescriptor(value.content);
+    const record = shape.value;
+    if (!isBoundedOpaqueId(record.tabId)) {
+      return failure('invalid_id', 'The tab record contains an invalid identifier.');
+    }
+    const content = validateTabContentDescriptor(record.content);
     if (!content.ok) return content;
-    return { ok: true, value: { tabId: value.tabId, content: content.value } };
+    return { ok: true, value: { tabId: record.tabId, content: content.value } };
   } catch {
     return failure('invalid_shape', 'The tab content record is invalid.');
   }

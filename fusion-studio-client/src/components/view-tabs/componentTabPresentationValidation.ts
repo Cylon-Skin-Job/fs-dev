@@ -28,11 +28,12 @@ function exactDataProperties(
   if (prototype !== Object.prototype && prototype !== null) {
     return failure('invalid_shape', 'The tab shell projection is invalid.');
   }
-  if (Object.getOwnPropertySymbols(value).length > 0) {
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  const ownKeys = Reflect.ownKeys(descriptors);
+  if (ownKeys.some((key) => typeof key !== 'string')) {
     return failure('unknown_field', 'The tab shell projection contains an unsupported field.');
   }
-  const descriptors = Object.getOwnPropertyDescriptors(value);
-  const keys = Object.keys(descriptors);
+  const keys = ownKeys as string[];
   const allowedSet = new Set(allowed);
   if (keys.some((key) => !allowedSet.has(key))) {
     return failure('unknown_field', 'The tab shell projection contains an unsupported field.');
@@ -104,29 +105,36 @@ function validateBreadcrumbSegments(
   if (!Array.isArray(value) || Object.getPrototypeOf(value) !== Array.prototype) {
     return failure('invalid_shape', 'The tab location segments are invalid.');
   }
-  if (value.length === 0) {
+  const lengthProperty = Object.getOwnPropertyDescriptor(value, 'length');
+  if (!lengthProperty
+    || !('value' in lengthProperty)
+    || !Number.isSafeInteger(lengthProperty.value)
+    || lengthProperty.value < 0) {
+    return failure('invalid_shape', 'The tab location segments are invalid.');
+  }
+  const length = lengthProperty.value as number;
+  if (length === 0) {
     return failure('invalid_shape', 'The tab location requires at least one segment.');
   }
-  if (value.length > COMPONENT_TAB_PRESENTATION_LIMITS.maxLocationSegments) {
+  if (length > COMPONENT_TAB_PRESENTATION_LIMITS.maxLocationSegments) {
     return failure('excessive_size', 'The tab location contains too many segments.');
   }
 
-  const descriptors = Object.getOwnPropertyDescriptors(value);
-  const keys = Reflect.ownKeys(descriptors);
+  const keys = Reflect.ownKeys(value);
   const allowedKeys = new Set<PropertyKey>([
     'length',
-    ...Array.from({ length: value.length }, (_, index) => String(index)),
+    ...Array.from({ length }, (_, index) => String(index)),
   ]);
   if (keys.some((key) => !allowedKeys.has(key))) {
     return failure('unknown_field', 'The tab location segments contain an unsupported field.');
   }
-  if (keys.length !== value.length + 1) {
+  if (keys.length !== length + 1) {
     return failure('invalid_shape', 'The tab location segments must be a dense array.');
   }
 
   const segments: TabBreadcrumbSegment[] = [];
-  for (let index = 0; index < value.length; index += 1) {
-    const descriptor = descriptors[String(index)];
+  for (let index = 0; index < length; index += 1) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, String(index));
     if (!descriptor?.enumerable || !('value' in descriptor)) {
       return failure('invalid_shape', 'The tab location segments must contain plain data.');
     }

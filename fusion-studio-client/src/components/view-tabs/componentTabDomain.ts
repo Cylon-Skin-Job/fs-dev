@@ -3,3 +3,8 @@ export * from './componentTabValidation';
 export * from './componentTabLifecycle';
 export * from './componentTabPresentationDomain';
 export * from './componentTabPresentationValidation';
+export * from './componentTabPlacementTypes';
+export * from './componentTabPlacementValidation';
+export { validateTabPlacementSnapshot } from './componentTabPlacementSnapshotValidation';
+export * from './componentTabPlacement';
+export { createConnectedTabPlacementController } from './componentTabPlacementController';
