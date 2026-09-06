@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
-import { viewTabDomId, viewTabPanelDomId } from './viewTabDomIds';
+import {
+  viewTabDomId,
+  viewTabPanelDomId,
+  viewTabSingleIdentityDomId,
+} from './viewTabDomIds';
 
 export interface ViewTabDescriptor {
   id: string;
@@ -66,13 +70,27 @@ export function ViewTabStrip({
     });
   };
 
-  const recoverFocus = (id: string | null) => {
+  const recoverFocus = (id: string | null, origin?: HTMLElement | null) => {
     requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+      if (origin
+        && activeElement
+        && activeElement !== document.body
+        && activeElement !== origin) {
+        return;
+      }
       if (id) {
         const button = document.getElementById(viewTabDomId(panelId, id));
         if (button) {
           setRovingId(id);
           button.focus();
+          return;
+        }
+        const singleIdentity = document.getElementById(
+          viewTabSingleIdentityDomId(panelId, id),
+        );
+        if (singleIdentity) {
+          singleIdentity.focus();
           return;
         }
       }
@@ -89,8 +107,9 @@ export function ViewTabStrip({
     const focusId = id === activeId
       ? (tabs[index - 1]?.id ?? tabs[index + 1]?.id ?? null)
       : activeId;
+    const origin = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     onClose(id);
-    recoverFocus(focusId);
+    recoverFocus(focusId, origin);
   };
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, id: string) => {

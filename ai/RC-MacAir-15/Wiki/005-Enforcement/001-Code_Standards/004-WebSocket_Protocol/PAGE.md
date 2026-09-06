@@ -53,14 +53,44 @@ required by the action:
 
 - group actions (`rename`, `collection_promote`, `collection_remove`,
   `collections_clear`, `delete`, `move_chat_to_side`) carry `threadGroupId`;
-- session actions (`compact`, transcript operations) carry `threadId` and, when
-  membership matters, `threadGroupId`;
+- link actions (`copy_link`, `resolve_link`) carry `threadGroupId` and an
+  optional exact member `threadId`; the server verifies workspace, nullable
+  host/view binding, group, and membership before navigation state can change.
+  A null-view Legacy group resolves only to its workspace Legacy host and does
+  not accept a member-placement link;
+- session actions (`compact`, `set_harness_selection`, transcript operations)
+  carry `threadId` and, when membership matters, `threadGroupId`;
 - turn actions continue through their existing prompt/stop routes; and
 - view-state actions continue through the existing view-state route.
 
 Do not create a `thread-group:*` transport family merely because group storage
 exists. `thread group` is internal domain language; the user-facing object and
 canonical action family remain `thread`.
+
+Fork/context-cloning is not a supported Fusion action, compatibility route, or
+provider invocation. Use the explicit Send to Chat flow when material from one
+session should be introduced into another.
+
+Client harness-selection payloads may contain only the portable model and
+nullable variant proposed for the exact pending intent or session. Provider
+session IDs, resume/runtime metadata, credentials, Fork-era fields, and unknown
+keys are server/adapter-owned and must be rejected at the protocol boundary.
+
+Destructive group actions must return a bounded non-mutating error such as
+`group_busy` while any member runtime is accepting, active, finalizing,
+stopping, or draining. Success requires a server-owned group fence that drains
+canonical event/persistence work and rejects late old-generation frames before
+the owning persistence service removes members.
+
+Membership/primary-changing actions share one exclusive group-mutation lease.
+In particular, Move and Delete must serialize and revalidate inside their
+transactions; a deleting group rejects Move before any new session is created.
+
+For a group-backed session, canonical prompt acceptance records one idempotent
+group activity event before emitting `message:sent` or dispatching the provider
+turn. That group timestamp—not the session's later saved-exchange compatibility
+timestamp—orders the visible Threads rail. Failure to persist activity rejects
+the prompt through the normal acceptance path.
 
 ## Command, response, and fact
 

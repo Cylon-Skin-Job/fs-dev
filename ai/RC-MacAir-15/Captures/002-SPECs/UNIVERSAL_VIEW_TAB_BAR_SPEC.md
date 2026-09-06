@@ -1,11 +1,16 @@
 # Universal View Tab Bar — SPEC
 
 **Date:** 2026-08-27
-**Status:** Implementation-ready — clean-room reviewed; OD-1 RESOLVED (B11 empty-tab semantics incl. activity-pipeline exclusion), path-actions uniformity scoped (§4.1), owner placement revision folded in; ONE bounded two-key server delta (§9.1). No open decisions remain.
+**Status:** Implemented and accepted at commit `9f89aea`; retained as the
+foundation contract for later tab work. The accepted orchestrator report named
+below controls where this pre-implementation wording differs from an accepted
+necessary-integration deviation.
 **Enforces:** `ai/<machine>/Wiki/005-Enforcement/001-Code_Standards/PAGE.md`
 **Supersedes:** None (initial)
 **Machine:** RC-MacAir-15
-**Sequence:** Runs before `COMPOSABLE_THREADED_CHAT_SPEC.md`. It is neutral to the capsule's physical root and does not depend on the later `System/Views/` relocation.
+**Sequence:** Implemented before `GENERIC_COMPONENT_TAB_HOST_SPEC.md`, which in
+turn precedes `COMPOSABLE_THREADED_CHAT_SPEC.md` and
+`MOVE_CHAT_TO_SIDE_CHAT_SPEC.md`. It is neutral to capsule physical location.
 
 ---
 
@@ -44,40 +49,41 @@ Integration details: the bar renders with `flex: 0 0 auto` (override `.rv-conten
 
 | Piece | Path | Job |
 |-------|------|-----|
-| `ViewTabBar` | `fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx` | Shell host. Reads panel id → resolves adapter → decides visibility via mode config → renders strip or nothing. One job: host+route. |
+| `ViewTabBar` | `fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx` | Shell host. Reads panel id → resolves the connected adapter → renders strip plus one labeled tabpanel, or children only when no adapter exists. One job: host+route. |
 | `ViewTabStrip` | same dir | Dumb presentational rail: config-in / callbacks-out. Clones file-viewer anatomy exactly (icon, label, close button, active fill, hover reveal of ×, Enter/Space keyboard activation, and the in-strip trailing plus slot after the last tab per §2.4). |
 | `ViewTabBar.css` | same dir | Strip + bar styles. Token-fallback recipes cloned from `.rv-file-viewer-tab` treatments currently split across `document.css` (`.rv-file-viewer`-scoped overrides) AND machine-side CSS: `ai/RC-MacAir-15/System/styles/file-viewer.css` plus the registry-resolved file-viewer capsule's `styles/layout.css` compact-density rules (pinned by `file-viewer-tabs.spec.ts`). Class prefix: `rv-view-tab-*`. |
-| Adapters | `same dir/viewTabAdapters.ts` | Per-panel registry mapping panel id → `{ getTabs, getActiveId, onSelect(id), onClose(id), getLabel(tab), getIcon(tab), visibility: {...} (see §2.3), plus?: {...} (see §2.4) }`. |
+| Adapters | `same dir/viewTabAdapters.ts` | Store-owning registry mapping panel id to the explicit `ViewTabAdapterModel`: panel/list identity, ordered descriptors, active ID, tabpanel focus policy, select/close callbacks, and optional add action. |
 
 Dependency rules honored: components accept props/callbacks only; adapters touch stores; views register handlers.
 
-### 2.3 Mode submodule
+### 2.3 Adapter availability as implemented
 
-Per-panel mode decides when the rail shows:
+The accepted implementation expresses visibility by whether the connected hook
+returns an adapter; it did not add a separate visibility-mode submodule:
 
-- `'always'` — file viewer. Rail visible whenever the view is active, including
-  when it has zero tabs, so an adapter's always-available trailing plus remains
-  a public way to create the first empty tab.
-- `'state'` — capture viewer. Visible only when the latched flag says so (derived from at least two normalized `docViewerTabs`, re-homed into the adapter so the shell stays generic).
+- File Viewer returns no adapter at zero tabs. The first file-tree selection
+  creates the first real file tab; the rail and trailing plus then appear.
+- Capture returns an adapter only for a latched multi-tab surface or its
+  controller-owned recovery case. Classic single-content mode stays tabless.
 
-Declared in the adapter as `visibility: { mode: 'always' } | { mode: 'state', isVisible(state): boolean }`.
+`ViewTabBar` therefore renders children without tab semantics whenever the
+adapter is null.
 
 ### 2.4 Plus button policy
 
-Plus presence is a **per-adapter flag**, not hardcoded per view. Views without a `plus` block render no plus at all (absent by default):
+Plus presence is a **per-adapter action**, not hardcoded per view. An adapter
+without `add` renders no plus:
 
 ```ts
-plus?: {
-  label: string;            // aria/title text, e.g. 'New file tab', 'New capture view'
-  icon?: string;            // default 'add'
-  availability: 'always'    // surface whenever the view is active…
-            | 'expanded';   // …only while expanded/openable content occupies the view
-  onPlus: () => void;       // click semantics stay view-owned (plus duplicates HOST paradigm)
-}
+add?: {
+  label: string;
+  icon?: string;
+  onAdd: () => string | null;
+};
 ```
 
-| `capture-viewer` | `expanded` | Easter-egg rule B1: hidden until a doc is full-screen or tabs are latched. |
-| `file-viewer` | `always` — **ships this cycle** (OD-1 resolved, §3.2) | Placement parity is inherent: in-strip after its tabs, where its current add button already sits. Semantics per B11. |
+| `capture-viewer` | adapter supplies add only while the tab rail is latched and not in its recovery-only state | The classic document's pre-tab plus remains separately owned by the existing layout controller. |
+| `file-viewer` | adapter supplies add whenever at least one file/home tab exists | The first file-tree selection creates the first real tab; thereafter plus follows B11. |
 | other views | none until they adopt the rail | Explicit decision per view; never a default. |
 
 **Placement model (owner-approved, 2026-08-27):**
@@ -85,7 +91,8 @@ plus?: {
 - **Non-tab mode:** the plus sits at the **far LEFT** of the view's top bar zone (today: the leading slot of the conditional `.rv-view-layout-controls` overlay — the owner's completed preliminary work).
 - **Tabs latched:** the plus renders **INSIDE the strip, immediately after the last tab** — exactly the file-explorer pattern (its in-strip add button after the tab list). First `+` press therefore relocates it: bar converts to tabs, plus hops from far-left to after-tabs. Unlatching to one document (B7) returns it to the far-left slot; unlatching to CAPTURE collapses to the plain grid and hides it.
 - **Two-slot gating (prevents double-render):** derive `isTabsLatched` from at least two normalized tabs. The far-left overlay plus shows only while `docViewerFullPage === true && !isTabsLatched`; the in-strip plus shows only while `isTabsLatched`. Exactly one plus is ever visible. A retained single hidden document record is classic mode, not a latched strip; a lone CAPTURE is normalized back to the record-free classic grid per B7.
-- `availability` evaluation is adapter-owned, so the shell stays generic. Concrete capture predicate for `'expanded'`: `docViewerFullPage === true || isTabsLatched`.
+- Availability is adapter-owned by returning/nulling the adapter or omitting its
+  add action, so the shell remains generic.
 
 ## 3. Behavior Contract — Capture Viewer Tabs
 
@@ -102,8 +109,8 @@ Owner-approved rules from the design conversation (authoritative; builder must n
 | B7 | Tabs latch until closed down to ONE item, then unwind to single-item/classic look. A document survivor remains as the hidden durable record that restores classic document content and can be exited through the classic Back control in B6. A CAPTURE survivor is already visually the plain grid, so the same close transition uses the acknowledged crash-safe handoff in §9.3: persist its latest UI into legacy globals first, then clear the tab array. There is therefore no hidden CAPTURE record with no close affordance. |
 | B8 | Per-tab memory: each tab remembers own section/mode, scroll positions, selections. **Tabs survive restarts** (persisted through the existing `state:set` view-state pipeline — see §9). Existing keys (`docViewerMode`, selected-path, scroll keys) describe the ACTIVE tab globally. Whenever at least one durable tab record exists—including one hidden document survivor—the controller is the sole persistence owner: it owns atomic swaps and live write-through into that record while globals are reader-facing RAM projections only. The legacy durable global-key writer is used in record-free classic mode and only during §9.3's ordered ownership handoff immediately before the last record is cleared. |
 | B9 | Plus when CAPTURE already open → focus existing CAPTURE (no duplicate). |
-| B10 | File viewer adopts the universal placement model: its plus renders in-strip after its tabs — the same position its current add button already occupies — so file-explorer placement parity is inherent, not added. Click SEMANTICS: **RESOLVED (OD-1, §3.2)** — see B11. Capture plus stays expanded-only per §2.4. |
-| B11 | File-viewer plus semantics (owner decision, 2026-08-27): tapping it opens a NEW EMPTY TAB (session-only) and slides the right file drawer open if not already visible. The empty tab's content area shows a centered "Select File" placeholder. Create-or-focus: a second tap focuses the existing empty tab rather than stacking duplicates. First file selected from the tree FILLS the empty tab in place (editor-standard) rather than appending. |
+| B10 | File viewer adopts the universal placement model after its first real tab exists: its plus renders in-strip after its tabs. With zero tabs the accepted adapter is absent; the first file-tree selection creates the first real tab and reveals the rail/plus. Capture plus remains governed by its classic-versus-latched controller behavior. |
+| B11 | File-viewer plus creates or focuses one session-only pathless FILES Home tab and slides the right file drawer open if hidden. Home shows centered "Select File" content. Only a selected Home is filled in place by the next file selection; otherwise a file selection appends/activates by the existing file-store rules. Home never persists or hydrates. |
 
 ### 3.1 Known round-one compromises carried forward or fixed
 
@@ -114,13 +121,18 @@ Owner-approved rules from the design conversation (authoritative; builder must n
 
 | # | Decision | Resolution |
 |---|----------|------------|
-| OD-1 | ~~File-viewer plus click semantics~~ **RESOLVED by owner 2026-08-27:** new empty tab + slide out the right file drawer if hidden + centered "Select File" placeholder (now codified as B11). No open decisions remain in this SPEC. | Implemented this cycle per B10/B11. |
+| OD-1 | ~~File-viewer plus click semantics~~ **RESOLVED and accepted:** after at least one real tab exists, create/focus one session-only FILES Home, open the drawer, show "Select File," and fill only the active Home. At zero tabs the file tree creates the first real tab. | Implemented per B10/B11 and the accepted orchestrator report. |
 
 ## 4. Refactor Targets (file viewer)
 
 1. Move `TabRow` out of `FileViewer.tsx` internals into the shared `ViewTabStrip`.
 2. File viewer stops rendering its own strip. Note: `.rv-file-viewer-header` contains ONLY the strip (breadcrumb/symlink/actions live in the sibling `.rv-file-viewer-info` row — file actions now render through the owner-extracted `components/FloatingPathActions.tsx`), so once the strip moves out the empty header wrapper is deleted — file-level chrome reduces to `.rv-file-viewer-info`.
-3. Wire the in-strip add button to B11 semantics: `fileStore` gains an empty-tab variant (current `openFileTab(file)` requires an existing path — add a pathless tab shape, e.g. a `kind: 'empty'` EditorTab); clicking the universal plus creates-or-focuses the empty tab, expands the right file drawer via `toggleCollapsed('file-viewer', 'rightCol')` when collapsed, and the content area renders a centered "Select File" placeholder (reuse the existing `.rv-file-explorer-empty` pattern). First real file selection fills the empty tab in place. **Empty-tab persistence exclusion (required):** file-viewer tabs ALREADY persist today via the activity pipeline (`fileStore.persistFileTabs` → `replaceViewTabs` writes `activity.tabs`, force-routed per-view; `hydrateTabsFromActivity` rebuilds them on mount). The empty-tab variant MUST be excluded from that channel — filter `kind: 'empty'` out before `replaceViewTabs`, and have `hydrateTabsFromActivity` defensively drop any pathless activity item — otherwise a pathless item corrupts `activity.tabs` and resurrects a ghost empty tab on every restart.
+3. Wire the in-strip add button to B11 semantics through
+   `openViewHomeTab()`: create/focus one pathless `kind: 'home'` record only
+   after a real tab exists, expand the right file drawer when collapsed, and
+   render the centered "Select File" surface. `openFileTab()` replaces only an
+   active Home. File persistence filters Home out before `activity.tabs`, and
+   hydration accepts only real path-bearing file records.
 4. Keyboard/click behaviors preserved verbatim.
 
 Care: `document.css` carries `.rv-file-viewer` scoped overrides of tab visuals; `ai/RC-MacAir-15/System/styles/file-viewer.css` carries base tab styles, and the registry-resolved file-viewer capsule's `styles/layout.css` carries compact-density rules (all pinned by e2e). These rules must be re-pointed at the new classes (or generalized to both strips) without changing rendered outcome. Audit each source before touching tokens — do not assume a single source or hardcode the capsule root.
@@ -157,7 +169,7 @@ No `_unused` prefixes, no compat shims.
 | Check | How |
 |-------|-----|
 | TS + build green | `npm run build` in `fusion-studio-client/` |
-| Bounded server delta | ONLY the two-key `FORCE_VIEW_OVERRIDE_TOP_KEYS` addition in `view-state/writer.js`; zero other server diffs (§9.1) |
+| Accepted server integration | Per-view writer keys plus the report's compatible workspace/request-correlation changes in `client-message-router.js` and `workspace-request-handlers.js`; no new route, protocol family, service, schema, or durable/global owner (§9.1) |
 | e2e passes | `captures-archive.spec.ts`, `clipboard-capture.spec.ts`, AND `file-viewer-tabs.spec.ts`. **Known red baseline:** the owner's preliminary work has already invalidated 8 pins — 3 source pins (`CopyPathButton`/`SendToChatButton` imports + `rv-file-page-actions` wrapper) and 5 machine-CSS pins (`max-width: 200px`→`140px`; divider token→`--content-foreground-color` chain; divider selector now has a `:last-of-type` arm; two `--chat-header-height`→`--view-header-height`). §4 authorizes exact fates: the 5 CSS pins re-pin to current values; of the 3 source pins, the wrapper pin is DELETED (feature deliberately removed — actions are floating now, §4.1) and the import pins re-pin to `FloatingPathActions`. Relocation-related pins update to the shared module/CSS. Never delete coverage beyond the one wrapper pin |
 | Visual parity | manual: file-viewer tabs look unchanged (icon/name/×/active/hover/density) |
 | B-rule walk | run the eleven-row table in §3 (B1–B11) manually in dev Electron |
@@ -165,15 +177,15 @@ No `_unused` prefixes, no compat shims.
 | Restart survival | with tabs latched: quit app, relaunch → same tab set, same active tab, per-tab sections restored; active DOC tab reopens full-screen (derived from kind — see §9.4), content reloads from its `path` |
 | Corrupt-state tolerance | hand-edit the registry-resolved capture-viewer capsule's `state/state.json`: unknown `kind`, missing `id`, non-array, dangling/duplicate `docViewerActiveTabId`, two `capture` entries — hydrate degrades per §9.4 rules, never crashes |
 | Per-view routing | `state:set` a `docViewerTabs` patch → key appears in the registry-resolved view capsule's `state/state.json`, NOT in shared `System/state/state.json`; after the later relocation SPEC, the same check resolves under `System/Views/<id>/` without changing this feature |
-| Plus policy + placement | capture: plus hidden on tile grid; far-left slot whenever a doc is open and `!isTabsLatched` (including one retained hidden doc record); in-strip after the last tab once at least two tabs latch; exactly one plus ever visible (§2.4). A CAPTURE survivor collapses to the record-free grid and exposes no plus. file viewer: rail and plus remain visible even with zero tabs, with the plus after any tabs; B11 semantics (§3). A view with no `plus` block renders none. The content-area TOP-BAR ZONE holds no other expand/collapse chrome except the threads-dock edge case (§2.1); view-internal chrome is unaffected (e.g. file-viewer's in-info tree dock survives, §4 item 2) |
-| Empty tab (B11) | tap file-viewer plus → empty tab appears (or existing one focuses), right drawer slides open if hidden, content shows centered "Select File"; second tap focuses, does not stack; first tree selection fills the tab in place |
+| Plus policy + placement | capture: plus hidden on tile grid; far-left classic control while a document is open before latching; in-strip after the last tab once latched; exactly one plus visible. File Viewer: at zero tabs no rail/tabpanel/plus exists; first tree selection creates a real tab and reveals them; thereafter plus follows B11. An adapter without `add` renders none. |
+| FILES Home (B11) | after a real file tab exists, tap plus → one Home appears/focuses, drawer opens if hidden, and centered "Select File" renders; second tap focuses rather than stacks; a file selection fills only the active Home; Home never persists/hydrates |
 | Path actions uniformity | every page-level surface listed in §4.1 renders FloatingPathActions bottom-right; per-item tree/list contexts unchanged; no inline copy/send pairs remain on page chrome |
 
 Manual walk documented in PR description with pass/fail per rule.
 
 ## 7. Out of Scope
 
-- Persistence of OTHER panels' tab state via this SPEC's schema (capture persists this cycle; the pattern generalizes). File-viewer REAL tabs already persist through the pre-existing `activity.tabs` pipeline (outside this SPEC's schema); only B11 empty tabs are excluded from persistence (§4 item 3).
+- Persistence of OTHER panels' tab state via this SPEC's schema (capture persists this cycle; the pattern generalizes). File-viewer real tabs already persist through the pre-existing `activity.tabs` pipeline; B11 Home is session-only and excluded (§4 item 3).
 - Other viewers adopting tabs (office/email/calendar) — rail must make adoption trivial, but their adapters are follow-on work.
 - Redesigning lower headers, search UX changes, drag-reorder of capture tabs.
 
@@ -197,24 +209,45 @@ Design intent on record: this spec delivers cosmetic-looking parity, but F1–F7
 
 Goal: tabs, active tab, and per-tab UI state survive app restarts — laying the durable-state groundwork that transportable views will later reuse unchanged.
 
-### 9.1 Pipeline (one bounded server delta)
+### 9.1 Pipeline and accepted bounded integration
 
 The persistence channel already exists end-to-end; its destination routing has one wrinkle:
 
 ```
-controller patch → setViewState (RAM) + _persistViewPatch
-                 → WS 'state:set' → writeViewStatePatch (server, view-state/writer.js)
+controller patch → setViewState (RAM) + controller-local persistPatch
+                 → correlated WS 'state:set' → writeViewStatePatch
                  → <registry-resolved capsule>/state/state.json       ← per-view capsule
                    ai/<machine>/System/state/state.json                ← workspace-shared fallback
 ```
 
 Writer routing (`view-state/writer.js`): top-level keys listed in `FORCE_VIEW_OVERRIDE_TOP_KEYS` always go to the **per-view** file; any other NEW key defaults to the workspace-shared file unless already pinned there. Today's `activity` / `collections` / `office*` are force-listed; live disk shows all eight current `docViewer*` keys landed in the shared file. Leaving tab keys unrouted therefore contradicts both the isolation story (F3, §8) and the schema section below.
 
-**Required server delta (the ONLY server change in this SPEC):** append `"docViewerTabs"` and `"docViewerActiveTabId"` to `FORCE_VIEW_OVERRIDE_TOP_KEYS` in `fusion-studio-server/lib/view-state/writer.js`. This reuses the established owner mechanism for durable per-view arrays (recents/starred) so the durable-truth tab array lives in the registry-resolved capture-viewer capsule while legacy global keys keep their existing shared-file routing. Before relocation it lands at the current capsule root; after the later relocation SPEC the same resolver sends it to `System/Views/<id>/state/state.json` without a tab-specific path change.
+The implementation appends `"docViewerTabs"` and
+`"docViewerActiveTabId"` to `FORCE_VIEW_OVERRIDE_TOP_KEYS` in
+`fusion-studio-server/lib/view-state/writer.js`. It also includes the accepted
+compatible necessary-integration delta recorded in the orchestrator report:
+optional request/workspace correlation on existing state and file-mutation
+families, originating-workspace fan-out scoping, stale/mismatched response
+rejection, same-workspace mutation/load ordering, and pending-record cleanup on
+timeout, abort, synchronous send failure, close, or socket-generation change.
+These changes add no route, protocol family, service, schema, or durable/global
+state owner.
 
-Every other constraint stands: server accepts arbitrary JSON keys deep-merged by the resolver; `clientMutationId` tracking applies automatically.
+Implementation retains one controller persistence chokepoint. Every persisted
+tab write updates renderer state and uses the controller-local `persistPatch`
+wrapper to send the existing correlated `state:set` envelope and await its exact
+acknowledgement. This accepted wrapper is intentionally not the generic
+`_persistViewPatch` helper named in the original plan. Both paths share the
+established mutation tracking and server family; future transport changes must
+update or consolidate both.
 
-Implementation is a single client chokepoint rule: every PERSISTED write (`docViewerTabs`, `docViewerActiveTabId`) goes through ONE controller helper that calls BOTH `setViewState` AND `_persistViewPatch`. While any durable tab record remains, transition swap patches over global mode/selected-path/scroll keys are RAM-only projections—durability comes from the tab array plus hydrate-time re-application. The only exception is the explicit tab-owner-to-classic-owner handoff in §9.3: it durably writes the already-existing legacy global keys and waits for acknowledgement before clearing the final record. This needs no additional server routing delta because those keys already have a durable destination. The full-page flag transitions route through the controller for normalization but stay RAM-only-transient—never sent through `state:set` (rendering derives from active-tab kind per §9.4; this is why the server delta adds only the two new tab keys).
+While any durable tab record remains, transition swap patches over global
+mode/selected-path/scroll keys are RAM-only projections—durability comes from
+the tab array plus hydrate-time re-application. The only exception is the
+explicit tab-owner-to-classic-owner handoff in §9.3: it durably writes the
+already-existing legacy global keys and waits for acknowledgement before
+clearing the final record. The full-page flag transitions route through the
+controller for normalization but stay RAM-only and never enter `state:set`.
 
 ### 9.2 Schema — self-describing tab records
 
@@ -323,8 +356,8 @@ chokepoint they use an ordered, acknowledged two-phase handoff:
 
 1. snapshot and sanitize the survivor's complete Active/Archive mode,
    selection, last-opened-path, and scroll state;
-2. persist those existing legacy global keys through `_persistViewPatch` and
-   wait for `state:result`;
+2. persist those existing legacy global keys through the controller-local
+   correlated `persistPatch` wrapper and wait for the exact `state:result`;
 3. only after success, persist `docViewerTabs: []` and
    `docViewerActiveTabId: null`; and
 4. then expose the record-free grid/classic owner in the UI.
@@ -378,11 +411,16 @@ changes the persistence destination while a visible thread group is selected:
   default and does not silently clone the unbound view-default surface;
 - the adapter must stop the old top-level/activity writer while group-bound so
   the same open-tab fact never has two persistence owners; and
-- File Viewer's `kind: 'empty'` tab remains session-only in either mode.
+- File Viewer's `kind: 'home'` tab remains session-only in either mode.
 
 The controller's transition-time snapshot rule in §9.3 remains authoritative.
 The downstream adapter reads current state at its controller chokepoint; it does
 not reintroduce component-supplied flush arguments or a second tab controller.
+
+`GENERIC_COMPONENT_TAB_HOST_SPEC.md` is the sole intervening owner of generic
+component-backed content and empty-container lifecycle. This implemented rail
+SPEC does not acquire component resolution, Side Chat, plugin, or launcher
+semantics retroactively.
 
 ## 10. Dependency-Ordered Vertical Slices
 
@@ -392,8 +430,9 @@ the next slice begins.
 
 ### Slice 1 — Shell-owned Capture rail
 
-- First add the two-key `FORCE_VIEW_OVERRIDE_TOP_KEYS` delta so every tab write
-  in this and later slices is per-view from its first persisted use.
+- First add the two `FORCE_VIEW_OVERRIDE_TOP_KEYS` entries and the accepted
+  request/workspace correlation lifecycle so every tab write is per-view and
+  every acknowledgement is attributed before mutation.
 - Mount the shared rail from `ContentFrame`, adapt Capture through explicit
   callbacks, and remove the view-local strip.
 - Exercise the first-plus transition, doc/CAPTURE switching, close-to-classic
@@ -415,13 +454,15 @@ the next slice begins.
   plain grid with no inaccessible record after success.
 - Run the client build and Capture regressions before proceeding.
 
-### Slice 2 — File Viewer adoption and session-only empty tab
+### Slice 2 — File Viewer adoption and session-only Home tab
 
 - Move the existing File Viewer strip into the shared rail without changing
   its file-tab behavior or style.
-- Add the create-or-focus empty tab, drawer opening, Select File placeholder,
-  and fill-in-place behavior through the public plus button.
-- Prove the empty tab never enters `activity.tabs`, restart never resurrects it,
+- Preserve zero-tab classic Files: the first file-tree selection creates the
+  first real tab and reveals rail/plus.
+- Add the create-or-focus Home, drawer opening, Select File surface, and
+  active-Home-only fill-in-place behavior through the public plus button.
+- Prove Home never enters `activity.tabs`, restart never resurrects it,
   and the existing real-tab persistence route still hydrates.
 
 ### Slice 3 — Per-view Capture persistence and cleanup

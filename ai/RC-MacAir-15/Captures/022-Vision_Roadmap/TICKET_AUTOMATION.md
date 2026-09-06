@@ -52,6 +52,8 @@ An automation observes the ticket entering In Progress and performs the equivale
 
 The automation reuses the same product behavior available to the user rather than inventing a separate hidden dispatch path.
 
+This shared path is conversation-only. It does not create a project or routine folder. Fusion waits for the harness-side conversation identity or accepted creation result before registering the new ticket thread.
+
 ## Non-Focus-Stealing Thread Creation
 
 Automatic assignment creates the new thread in the left-side thread list without changing the user's current focus. The user can continue the present task, notice the new thread when appropriate, and open it later to restore the ticket content and observe progress.
@@ -87,10 +89,12 @@ Background work is no longer modeled as a discrete category of agent objects. It
 
 This preserves the benefits usually associated with background agents—parallelism, autonomy, scheduling, event triggers, monitoring, and later inspection—while giving every activity a consistent user-facing artifact and lifecycle.
 
+Routines add an inspectable layer before or around ticket creation. A semantic trigger graph can run scripts, apply conditions, invoke a heartbeat or Agent Profile, synthesize a result, and then file a ticket or inbox report as its authorized output. The routine is the visible automation definition; any generated ticket remains the visible work object after assignment.
+
 ## Open Questions
 
 - Is a scheduled ticket copied directly into In Progress, or created in To Do and transitioned atomically?
-- Is **Routines** the final view name, and which schedule, trigger, and launch-recipe objects appear there together?
+- Which schedule, trigger, script, heartbeat, reasoning, and output nodes are available in Routines by default versus through plugins?
 - How are ticket identifiers allocated for recurring template instances?
 - How are template updates versioned relative to already scheduled or previously instantiated tickets?
 - How does the system prevent duplicate dispatch if the same In Progress addition is observed more than once?

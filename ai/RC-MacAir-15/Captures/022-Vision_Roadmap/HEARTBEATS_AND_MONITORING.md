@@ -35,6 +35,8 @@ A heartbeat can watch specific variables rather than relying only on a broad tex
 
 The representation of those variables remains open. They may be selected from known fields, defined through a natural-language condition, expressed through a structured filter, or combined. The user should be able to understand what is being monitored even if an AI helped configure it.
 
+The assistant may help establish a monitored variable while shaping a routine, and an installed plugin may supply a known variable, default, or reusable condition as part of its package. Neither source grants execution authority by itself; the resulting trigger and actions remain visible and permission-controlled.
+
 ## Opt-In Inbox Filtering
 
 The universal inbox is envisioned as an opt-in notification fabric. A heartbeat can monitor the notification activity associated with its thread or inbox item and filter for any relevant kind of change.
@@ -58,6 +60,10 @@ When a monitored condition matches, the heartbeat can wake and perform behavior 
 
 This is a small event-driven autonomy loop rather than a permanently running agent. The permissions, retry limits, escalation conditions, failure handling, and audit trail remain open and must eventually distinguish observation from consequential action.
 
+Once Provenance supplies the event and permission foundation, the same cycle can begin from any installed, registered, configured, and authorized routine trigger. Schedules, file changes, derived folder conditions, script results, plugin outputs, and heartbeat intervals all use the same conceptual wake boundary.
+
+Waiting should be proportional to the operation. Work expected to finish in seconds can remain within the active turn. Longer operations can run, sleep for a meaningful interval, wake to verify and repair the result, rerun when necessary, and sleep again. Limits, escalation, and retry policy remain to be shaped.
+
 ## Long-Running Project Use
 
 Within a project, a heartbeat could monitor work that spans days. RC's example is a web scraper expected to run for three days. The heartbeat could watch process health, output progress, errors, or staleness, then alert, recover, or annotate the associated work according to its authorization.
@@ -71,10 +77,12 @@ Scheduled and triggered ticket assignment use the same visible ticket lifecycle 
 - Is a heartbeat owned by a thread, inbox item, view, workspace, project, agent, or a combination of these?
 - Can one thread have multiple heartbeats, and if so, what does the single pulse icon open?
 - How are monitored variables discovered, named, validated, and edited?
+- How are assistant-created variables and plugin-supplied defaults distinguished and approved?
 - Are checks scheduled, event-driven, or hybrid?
 - How do heartbeats persist across app restarts, device changes, offline periods, or upgraded plugins?
 - Which actions can be pre-authorized, which require confirmation when triggered, and which are never allowed autonomously?
 - How are repeated failures, restart loops, noisy changes, and duplicate alerts prevented?
+- What decides when work waits inline versus scheduling a heartbeat follow-up?
 - What history shows when the heartbeat woke, what it observed, what it did, and why it returned to sleep?
 - How does Access permissions constrain heartbeat creation, subscriptions, tools, and recovery actions?
 - When a heartbeat restarts ticket-driven work, does it reuse the existing thread or trigger a new assignment attempt?

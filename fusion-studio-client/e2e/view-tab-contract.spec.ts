@@ -239,7 +239,11 @@ test('shared tab DOM implements the complete manual-activation keyboard and focu
   expect(strip).toContain('CSS.escape(panelId)');
   expect(strip).toContain('.active .rv-content-area');
   expect(host).toContain('role="tabpanel"');
-  expect(host).toContain('aria-labelledby={viewTabDomId(adapter.panelId, adapter.activeId)}');
+  expect(host).toContain("mode === 'single'");
+  expect(host).toContain('viewTabSingleIdentityDomId(adapter.panelId, adapter.activeId)');
+  expect(host).toContain('viewTabDomId(adapter.panelId, adapter.activeId)');
+  expect(host).toContain('aria-labelledby={activeDescriptor ? panelLabelId : undefined}');
+  expect(host).toContain("aria-label={activeDescriptor ? undefined : 'Content unavailable'}");
   expect(host).toContain('tabIndex={adapter.tabPanelTabIndex}');
   expect(content).toContain('tabIndex={-1}');
   expect(content.match(/<ViewTabBar\s+panel=/g)).toHaveLength(1);

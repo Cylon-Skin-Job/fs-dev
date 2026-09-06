@@ -34,13 +34,14 @@ test('File tabs are shell-hosted and retain shared responsive geometry', () => {
 
   for (const declaration of [
     'gap: 2px;',
-    'min-height: 36px;',
     'border-radius: 6px 6px 0 0;',
     'transform: translateY(-2px);',
   ]) {
     expect(browserTabsCss).toContain(declaration);
     expect(css).toContain(declaration);
   }
+  expect(browserTabsCss).toContain('min-height: 36px;');
+  expect(css).toContain('min-height: var(--view-tab-rail-height, 36px);');
   expect(browserTabsCss).toContain('padding: 4px 4px 0 4px;');
   expect(css).toContain('padding: 4px 4px 0;');
   for (const declaration of [
