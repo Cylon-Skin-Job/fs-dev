@@ -1,6 +1,6 @@
 # TABS-03 Tab Target Placement Orchestrator Report
 
-**Status:** `OWNER-ACCEPTED — UNCOMMITTED`
+**Status:** `OWNER-ACCEPTED — COMMITTED LOCALLY`
 
 **Candidate:** `TABS-03-9683fd552866ec41`
 
@@ -17,8 +17,9 @@
 RC explicitly accepted the completed TABS-03 implementation on 2026-09-05 at
 the exact full implementation fingerprint
 `59d6e036026ad0c609b1c40a271951671ee24075fbb1aa6637b2f5e4d6a14666`.
-Commit, publication, checkout reconciliation, BRIDGE-01, and production-adopter
-authorization remain separate actions.
+The implementation was committed as `22cc435` and integrated into
+`agent/exact-workspace-paths` by merge commit `2748f03`. Publication,
+BRIDGE-01, and production-adopter authorization remain separate actions.
 
 ## 1. Authority, Preflight, And Worktree Preservation
 
@@ -405,4 +406,4 @@ For continuity with slice evidence, the narrower ordered 20-path placement-core/
 
 All three dependency-ordered slices reached clean builder and independent orchestrator acceptance gates. Fresh whole-SPEC review reached its first clean pass on the final current bytes. Required focused, cumulative, production-regression, type, lint, build, and diff gates are green; deviations and downstream consequences are explicit; excluded work was not begun.
 
-`OWNER-ACCEPTED — UNCOMMITTED`
+`OWNER-ACCEPTED — COMMITTED LOCALLY`
