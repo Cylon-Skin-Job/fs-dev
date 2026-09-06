@@ -1,7 +1,7 @@
 # Chat Composition Roadmap — Release Manifest
 
 **Candidate ID:** `CHAT-COMPOSITION-e3d2c49f044cd7f7`
-**Candidate status:** `OWNER APPROVED — IMPLEMENTATION GATED`
+**Candidate status:** `OWNER APPROVED — SPEC-00 READY FOR IMPLEMENTATION`
 **Prepared:** 2026-09-05
 **Clean-room verdict:** `CLEAN — 1 fresh independent pass`
 
@@ -133,8 +133,9 @@ remaining execution gates.
 - **Owner approval:** granted 2026-09-05 by the owner's direct instruction to
   start a new implementation session for candidate
   `CHAT-COMPOSITION-e3d2c49f044cd7f7`
-- **Implementation gate:** integrate the owner-accepted PROV-01 product bytes
-  into the exact implementation baseline before SPEC-00 execution
+- **Implementation gate:** satisfied by owner-accepted PROV-01 integration merge
+  `d31fc8aeab0eae9cd622cad7b6db7b81a3498e87`, with integration acceptance
+  recorded in `3110bd0`
 - **Implementation before approval:** prohibited
 
 After approval, execution may begin through either:
