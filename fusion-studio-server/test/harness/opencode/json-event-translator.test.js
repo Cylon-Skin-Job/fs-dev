@@ -11,6 +11,8 @@ describe('OpenCodeJsonEventTranslator', () => {
     expect(translator.beginTurn('hello', 100)).toEqual({
       type: 'turn_begin',
       timestamp: 100,
+      timestampSource: 'host_observed',
+      observedAt: 100,
       userInput: 'hello',
     });
   });
@@ -24,7 +26,10 @@ describe('OpenCodeJsonEventTranslator', () => {
       part: { type: 'text', text: 'OPEN_CODE_JSON_PROBE_OK' },
     });
 
-    expect(events).toEqual([{ type: 'content', timestamp: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK' }]);
+    expect(events).toEqual([expect.objectContaining({
+      type: 'content', timestamp: 1780703411893, timestampSource: 'provider_reported',
+      reportedAt: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK',
+    })]);
   });
 
   it('maps reasoning parts to canonical thinking', () => {
@@ -36,7 +41,10 @@ describe('OpenCodeJsonEventTranslator', () => {
       part: { type: 'reasoning', text: 'checking approach' },
     });
 
-    expect(events).toEqual([{ type: 'thinking', timestamp: 1780703411893, text: 'checking approach' }]);
+    expect(events).toEqual([expect.objectContaining({
+      type: 'thinking', timestamp: 1780703411893, timestampSource: 'provider_reported',
+      reportedAt: 1780703411893, text: 'checking approach',
+    })]);
   });
 
   it('maps completed tool-use events to call, args, and result', () => {
@@ -59,32 +67,15 @@ describe('OpenCodeJsonEventTranslator', () => {
       },
     });
 
-    expect(events).toEqual([
-      {
-        type: 'tool_call',
-        timestamp: 1780703445385,
-        toolCallId: 'call_b50fbfe191e94243a66a4733',
-        toolName: 'shell',
-      },
-      {
-        type: 'tool_call_args',
-        timestamp: 1780703445385,
-        toolCallId: 'call_b50fbfe191e94243a66a4733',
-        argsChunk: JSON.stringify({ command: 'printf OPENCODE_TOOL_PROBE_OK', description: 'Run printf probe command' }),
-      },
-      {
-        type: 'tool_result',
-        timestamp: 1780703445385,
-        toolCallId: 'call_b50fbfe191e94243a66a4733',
-        toolName: 'shell',
-        output: 'OPENCODE_TOOL_PROBE_OK',
-        statusMessage: 'Run printf probe command',
-        display: [],
-        returnedDiff: false,
-        isError: false,
-        files: [],
-      },
-    ]);
+    expect(events).toEqual([expect.objectContaining({
+      type: 'tool_snapshot', origin: 'terminal_snapshot', harnessId: 'opencode', provider: 'opencode',
+      timestamp: 1780703445385, timestampSource: 'provider_reported',
+      terminalSnapshotReportedAt: 1780703445385,
+      toolCallId: 'call_b50fbfe191e94243a66a4733', toolName: 'shell', nativeToolName: 'bash',
+      status: 'completed', hasInput: true,
+      input: { command: 'printf OPENCODE_TOOL_PROBE_OK', description: 'Run printf probe command' },
+      result: expect.objectContaining({ output: 'OPENCODE_TOOL_PROBE_OK', isError: false, files: [] }),
+    })]);
   });
 
   it('maps nonzero tool exit to isError true', () => {
@@ -106,7 +97,7 @@ describe('OpenCodeJsonEventTranslator', () => {
       },
     });
 
-    expect(events[2]).toMatchObject({ type: 'tool_result', isError: true, output: 'failed' });
+    expect(events[0]).toMatchObject({ type: 'tool_snapshot', status: 'completed', result: { isError: true, output: 'failed' } });
   });
 
   it('suppresses shell status when OpenCode title duplicates the command', () => {
@@ -129,13 +120,11 @@ describe('OpenCodeJsonEventTranslator', () => {
       },
     });
 
-    expect(events[2]).toMatchObject({
-      type: 'tool_result',
-      toolName: 'shell',
+    expect(events[0].result).toMatchObject({
       isError: true,
       output: 'fatal: not a git repository (or any of the parent directories): .git\n',
     });
-    expect(events[2].statusMessage).toBeUndefined();
+    expect(events[0].result.statusMessage).toBeUndefined();
   });
 
   it('emits an exit diagnostic for failed shell calls without output', () => {
@@ -158,16 +147,14 @@ describe('OpenCodeJsonEventTranslator', () => {
       },
     });
 
-    expect(events[2]).toMatchObject({
-      type: 'tool_result',
-      toolName: 'shell',
+    expect(events[0].result).toMatchObject({
       isError: true,
       output: '',
       statusMessage: 'Command failed with exit code 1',
     });
   });
 
-  it('defers tool result for incomplete tool states', () => {
+  it('keeps incomplete tool states on the legacy chat path without provenance', () => {
     const translator = new OpenCodeJsonEventTranslator();
 
     const events = translator.translate({
@@ -181,8 +168,9 @@ describe('OpenCodeJsonEventTranslator', () => {
       },
     });
 
-    expect(events).toHaveLength(2);
-    expect(events.map((event) => event.type)).toEqual(['tool_call', 'tool_call_args']);
+    expect(events.map(event => event.type)).toEqual(['tool_call', 'tool_call_args']);
+    expect(events.every(event => event.origin === 'legacy_chat_fail_open')).toBe(true);
+    expect(events.some(event => event.type === 'tool_snapshot')).toBe(false);
   });
 
   it('does not emit turn_end for step_finish reason tool-calls', () => {
@@ -263,5 +251,60 @@ describe('OpenCodeJsonEventTranslator', () => {
     expect(mapOpenCodeToolName('websearch')).toBe('search');
     expect(mapOpenCodeToolName('todowrite')).toBe('todo');
     expect(mapOpenCodeToolName('task')).toBe('subagent');
+    expect(mapOpenCodeToolName('BASH')).toBe('shell');
+    expect(mapOpenCodeToolName('future-tool')).toBe('unknown');
+  });
+
+  it('maps terminal snapshot status and the three reported clocks without substitution', () => {
+    const translator = new OpenCodeJsonEventTranslator({ now: () => 400 });
+    const completed = translator.translate({
+      type: 'tool_use', timestamp: 300,
+      part: { type: 'tool', callID: 'own-call', id: 'ignored-part', tool: 'edit', state: {
+        status: 'completed', time: { start: 100, end: 200 }, input: { filePath: 'a' },
+        output: 'failed', metadata: { exit: 1 }, files: ['must-stay-inert'],
+      } },
+    })[0];
+    expect(completed).toMatchObject({
+      status: 'completed', observedAt: 400, executionStartedReportedAt: 100,
+      terminalReportedAt: 200, terminalSnapshotReportedAt: 300, toolCallId: 'own-call',
+      result: { isError: true, files: [] },
+    });
+    expect(completed).not.toHaveProperty('announcedReportedAt');
+    expect(completed).not.toHaveProperty('argumentsReportedAt');
+
+    const errored = translator.translate({
+      type: 'tool_use',
+      part: { type: 'tool', callID: 'error-call', tool: 'bash', state: {
+        status: 'error', input: { command: 'false' }, output: 'error', metadata: { exit: 0 },
+      } },
+    })[0];
+    expect(errored).toMatchObject({
+      status: 'error', observedAt: 400, timestamp: 400, timestampSource: 'host_observed',
+      result: { isError: false },
+    });
+    expect(errored.executionStartedReportedAt).toBeUndefined();
+    expect(errored.terminalReportedAt).toBeUndefined();
+    expect(errored.terminalSnapshotReportedAt).toBeUndefined();
+  });
+
+  it.each([
+    [{ id: 'must-not-be-used', tool: 'read', state: { status: 'completed' } }],
+    [{ callID: 1, tool: 'read', state: { status: 'completed' } }],
+    [{ callID: 'call', state: { status: 'completed' } }],
+    [{ callID: 'call', tool: 1, state: { status: 'completed' } }],
+    [{ callID: 'call', tool: 'read', state: { status: 'running' } }],
+  ])('takes the redacted provenance-only diagnostic branch for malformed identity/status %#', (part) => {
+    const diagnostics = [];
+    const translator = new OpenCodeJsonEventTranslator({ onDiagnostic: code => diagnostics.push(code) });
+    const events = translator.translate({ type: 'tool_use', part });
+    expect(events.length).toBeGreaterThan(0);
+    const expectedOrigin = part.state?.status === 'completed' || part.state?.status === 'error'
+      ? 'terminal_chat_fail_open'
+      : 'legacy_chat_fail_open';
+    expect(events.every(event => event.origin === expectedOrigin)).toBe(true);
+    expect(events.some(event => event.type === 'tool_snapshot')).toBe(false);
+    expect(events.some(event => event.toolCallId === 'must-not-be-used')).toBe(false);
+    expect(diagnostics).toHaveLength(1);
+    expect(diagnostics[0]).toMatch(/^agent_tool_/u);
   });
 });

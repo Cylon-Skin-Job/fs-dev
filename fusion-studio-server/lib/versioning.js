@@ -7,12 +7,12 @@
  * (session_end, checkpoint, milestone). A diff guard prevents empty commits.
  */
 
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 /**
  * Run a git command inside contentRoot.
@@ -20,15 +20,7 @@ const execAsync = promisify(exec);
  * @param {string[]} args
  */
 function runGit(contentRoot, args) {
-  // Quote arguments that contain spaces or quotes
-  const quoted = args.map((arg) => {
-    if (/[\s"']/.test(arg)) {
-      return `"${arg.replace(/"/g, '\\"')}"`;
-    }
-    return arg;
-  });
-  const cmd = `git -C "${contentRoot}" ${quoted.join(' ')}`;
-  return execAsync(cmd);
+  return execFileAsync('git', ['-C', contentRoot, ...args]);
 }
 
 /**
@@ -90,7 +82,7 @@ async function commitIfChanged(contentRoot, relativePath, message) {
   await ensureRepo(contentRoot);
 
   // Stage the file
-  await runGit(contentRoot, ['add', relativePath]);
+  await runGit(contentRoot, ['add', '--', relativePath]);
 
   // Diff guard: skip if nothing changed
   let hasChanges = false;
@@ -105,11 +97,12 @@ async function commitIfChanged(contentRoot, relativePath, message) {
   }
 
   if (!hasChanges) {
-    return;
+    return false;
   }
 
   // Commit
   await runGit(contentRoot, ['commit', '-m', message, '--quiet']);
+  return true;
 }
 
 module.exports = { ensureRepo, commitIfChanged };

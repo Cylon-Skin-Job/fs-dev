@@ -6,8 +6,13 @@
  */
 import { useState, useCallback } from 'react';
 import { Crepe } from '@milkdown/crepe';
-import type { FileWithContent, SaveReason } from '../../state/fileDataStore';
+import type { FileWithContent } from '../../state/fileDataStore';
 import { showToast } from '../../lib/toast';
+import {
+  documentDirtyRevision,
+  saveAcknowledgedMilestone,
+  type SaveFileAction,
+} from '../documentSaveAcknowledgement';
 import {
   buildLegacyEmailDocumentPayload,
   buildLegacyExportDocumentPayload,
@@ -29,25 +34,21 @@ function getErrorMessage(error: unknown): string {
 
 interface UseDocumentActionsOptions {
   file: FileWithContent;
-  isDirty: boolean;
   docSettings: DocumentSettings;
   docFrontmatter: DocumentFrontmatter;
   crepeRef: React.RefObject<Crepe | null>;
   getSerializedMarkdown: () => Promise<string>;
-  saveFile: (panel: string, path: string, content: string, reason: SaveReason, milestone?: string) => void;
-  setDirty: (panel: string, path: string, dirty: boolean) => void;
+  saveFile: SaveFileAction;
   setIsDirty: (dirty: boolean) => void;
 }
 
 export function useDocumentActions({
   file,
-  isDirty,
   docSettings,
   docFrontmatter,
   crepeRef,
   getSerializedMarkdown,
   saveFile,
-  setDirty,
   setIsDirty,
 }: UseDocumentActionsOptions) {
   const [exportingFormat, setExportingFormat] = useState<'docx' | 'pdf' | null>(null);
@@ -61,17 +62,16 @@ export function useDocumentActions({
 
     setExportingFormat(format);
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const markdown = await getSerializedMarkdown();
       const fullContent = serializeDocumentSettings(markdown, docSettings, docFrontmatter);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
 
-      if (isDirty) {
-        saveFile(PANEL, file.path, fullContent, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
       const milestone = format === 'pdf' ? 'export_pdf' : 'export_docx';
-      saveFile(PANEL, file.path, fullContent, 'milestone', milestone);
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: fullContent, milestone,
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
 
       const result = await window.electronAPI.exportDocument(buildLegacyExportDocumentPayload({
         sourceType: 'document',
@@ -110,7 +110,7 @@ export function useDocumentActions({
     } finally {
       setExportingFormat(null);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
 
   const handlePrint = useCallback(async () => {
     if (!window.electronAPI?.printDocument) {
@@ -119,15 +119,14 @@ export function useDocumentActions({
     }
     if (!crepeRef.current) return;
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const markdown = await getSerializedMarkdown();
       const fullContent = serializeDocumentSettings(markdown, docSettings, docFrontmatter);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
-      if (isDirty) {
-        saveFile(PANEL, file.path, fullContent, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
-      saveFile(PANEL, file.path, fullContent, 'milestone', 'print');
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: fullContent, milestone: 'print',
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
       const result = await window.electronAPI.printDocument(buildLegacyPrintDocumentPayload({
         content: markdown,
         filename: baseName,
@@ -138,7 +137,7 @@ export function useDocumentActions({
     } catch (error) {
       showToast(`Print failed: ${getErrorMessage(error)}`);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
 
   const handleSendEmail = useCallback(async (format: 'docx' | 'pdf' | 'markdown') => {
     if (!window.electronAPI?.sendDocumentEmail) {
@@ -149,16 +148,15 @@ export function useDocumentActions({
 
     setExportingFormat(format === 'markdown' ? null : format);
     try {
+      const capturedDirtyRevision = documentDirtyRevision(PANEL, file.path);
       const markdown = await getSerializedMarkdown();
       const fullContent = serializeDocumentSettings(markdown, docSettings, docFrontmatter);
       const baseName = file.name.replace(/\.md$/i, '') || 'document';
-      if (isDirty) {
-        saveFile(PANEL, file.path, fullContent, 'autosave');
-        setIsDirty(false);
-        setDirty(PANEL, file.path, false);
-      }
       const milestoneMap = { docx: 'send_docx', pdf: 'send_pdf', markdown: 'send_markdown' };
-      saveFile(PANEL, file.path, fullContent, 'milestone', milestoneMap[format]);
+      await saveAcknowledgedMilestone({
+        panel: PANEL, path: file.path, content: fullContent, milestone: milestoneMap[format],
+        capturedDirtyRevision, saveFile, setLocalDirty: setIsDirty,
+      });
       const result = await window.electronAPI.sendDocumentEmail(buildLegacyEmailDocumentPayload({
         format,
         content: markdown,
@@ -174,7 +172,7 @@ export function useDocumentActions({
     } finally {
       setExportingFormat(null);
     }
-  }, [file.name, file.path, isDirty, saveFile, setDirty, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
+  }, [file.name, file.path, saveFile, setIsDirty, docSettings, docFrontmatter, getSerializedMarkdown, crepeRef]);
 
   return { exportingFormat, setExportingFormat, handleExport, handlePrint, handleSendEmail };
 }

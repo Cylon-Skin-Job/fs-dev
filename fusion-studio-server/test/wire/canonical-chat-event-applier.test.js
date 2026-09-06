@@ -709,6 +709,41 @@ describe('CanonicalChatEventApplier', () => {
       expect(session.currentTurn).toBeNull();
       expect(session.assistantParts).toEqual([]);
     });
+
+    test('shutdown fence abandons a nonsettling interruption without late turn or runtime effects', async () => {
+      const shutdownFence = new AbortController();
+      const activityOwner = { interruptOpen: jest.fn(() => new Promise(() => {})) };
+      applier = createCanonicalChatEventApplier({
+        session,
+        emit,
+        resolveWorkspace,
+        touchThreadSession,
+        checkSettingsBounce,
+        generateTurnId,
+        activityOwner,
+      });
+      const liveBefore = threadRuntimeManager.getLiveTurn({
+        workspaceId: 'code', scope: 'project', threadId: 'thread-1',
+      });
+
+      const ending = applier.applyChatEvent({
+        type: 'turn_end',
+        payload: { reason: 'interrupted', partial: true, shutdownSignal: shutdownFence.signal },
+      }, mockWs);
+      await Promise.resolve();
+      expect(activityOwner.interruptOpen).toHaveBeenCalledTimes(1);
+      shutdownFence.abort();
+      await ending;
+
+      expect(emittedEvents.filter((event) => event.type === 'chat:turn_end')).toHaveLength(0);
+      expect(threadRuntimeManager.getLiveTurn({
+        workspaceId: 'code', scope: 'project', threadId: 'thread-1',
+      })).toEqual(liveBefore);
+      expect(session.currentTurn).toBeNull();
+      expect(session.pendingAgentTurnAuthority).toBeNull();
+      expect(session.projectRoot).toBeNull();
+      expect(session.wire).toBeNull();
+    });
   });
 
   // ─── unknown canonical event ──────────────────────────────────────────

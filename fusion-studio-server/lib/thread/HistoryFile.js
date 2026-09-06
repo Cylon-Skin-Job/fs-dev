@@ -9,6 +9,18 @@
 const { getDb } = require('../db');
 
 const SCHEMA_VERSION = '1.0.0';
+let agentExchangeBinding = null;
+
+function installAgentExchangeBinding(binding) {
+  if (agentExchangeBinding) throw new Error('Agent exchange binding is already installed');
+  if (typeof binding?.insertInTransaction !== 'function' || typeof binding?.signal !== 'function') {
+    throw new TypeError('Agent exchange bind writer and signal are required');
+  }
+  agentExchangeBinding = Object.freeze({
+    insertInTransaction: binding.insertInTransaction,
+    signal: binding.signal,
+  });
+}
 
 class HistoryFile {
   /**
@@ -65,26 +77,43 @@ class HistoryFile {
    * @param {object} [metadata] - Optional metadata (contextUsage, tokenUsage, etc.)
    * @returns {Promise<object>} Exchange object
    */
-  async addExchange(threadId, userInput, parts, metadata = null) {
+  async addExchange(threadId, userInput, parts, metadata = null, bindingAuthority = null) {
     const db = getDb();
-    const seq = (await this.countExchanges()) + 1;
-    const ts = Date.now();
     const assistant = JSON.stringify({ parts: parts.map((p) => ({ ...p })) });
-
-    const inserted = await db('exchanges').insert({
-      thread_id: threadId,
-      seq,
-      ts,
-      user_input: userInput,
-      assistant,
-      metadata: JSON.stringify(metadata || {}),
+    if (bindingAuthority && !agentExchangeBinding) {
+      throw new Error('Agent exchange binding is not installed');
+    }
+    const saved = await db.transaction(async (trx) => {
+      const exchangeTs = Date.now();
+      const count = await trx('exchanges').where('thread_id', threadId).count('* as count').first();
+      const seq = Number(count?.count || 0) + 1;
+      const inserted = await trx('exchanges').insert({
+        thread_id: threadId,
+        seq,
+        ts: exchangeTs,
+        user_input: userInput,
+        assistant,
+        metadata: JSON.stringify(metadata || {}),
+      });
+      const exchangeId = Array.isArray(inserted) ? inserted[0] : inserted;
+      if (bindingAuthority) {
+        await agentExchangeBinding.insertInTransaction(trx, {
+          exchangeId,
+          workspaceId: bindingAuthority.workspaceId,
+          threadId,
+          turnId: bindingAuthority.turnId,
+          exchangeSavedAt: exchangeTs,
+          now: exchangeTs,
+        });
+      }
+      return Object.freeze({ exchangeId, seq, exchangeTs });
     });
-    const exchangeId = Array.isArray(inserted) ? inserted[0] : inserted;
+    if (bindingAuthority) agentExchangeBinding.signal();
 
     return {
-      exchangeId,
-      seq,
-      ts,
+      exchangeId: saved.exchangeId,
+      seq: saved.seq,
+      ts: saved.exchangeTs,
       user: userInput,
       assistant: { parts: parts.map((p) => ({ ...p })) },
       metadata: metadata || {},
@@ -158,4 +187,4 @@ class HistoryFile {
   }
 }
 
-module.exports = { HistoryFile, SCHEMA_VERSION };
+module.exports = { HistoryFile, SCHEMA_VERSION, installAgentExchangeBinding };

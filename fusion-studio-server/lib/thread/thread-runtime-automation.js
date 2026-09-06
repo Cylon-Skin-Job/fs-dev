@@ -11,6 +11,13 @@ const { spawnThreadWire } = require('../harness/compat');
 const { createCanonicalChatEventApplier } = require('../wire/canonical-chat-event-applier');
 const { createCanonicalHarnessEventBridge } = require('../wire/canonical-harness-event-bridge');
 const { getWireForThread, registerWire } = require('../wire/process-manager');
+const { getDb } = require('../db');
+const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
+const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
+const {
+  createAgentTurnAuthorityRef,
+  getAgentTurnAuthorityRef,
+} = require('../agent-provenance/turn-authority');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 const {
   awaitThreadManagerReady,
@@ -82,6 +89,20 @@ function createHeadlessSession(target) {
 }
 
 function createAutomationBridge(target, manager, session) {
+  let activityOwner = null;
+  try {
+    const db = getDb();
+    const activityRepository = createAgentActivityRepository(db, {
+      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+    });
+    activityOwner = getSharedAgentActivityOwner({
+      db,
+      activityRepository,
+      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+    });
+  } catch {
+    console.warn('[AgentProvenance] agent_activity_owner_unavailable');
+  }
   const applier = createCanonicalChatEventApplier({
     session,
     emit,
@@ -89,10 +110,34 @@ function createAutomationBridge(target, manager, session) {
     touchThreadSession: () => manager.touchSession(target.threadId),
     checkSettingsBounce,
     generateTurnId: () => generateId(),
+    activityOwner,
   });
 
   return createCanonicalHarnessEventBridge({
     applyChatEvent: applier.applyChatEvent,
+    resolveTurnIdentity: (event) => {
+      const pendingAuthority = session.pendingAgentTurnAuthority;
+      const currentAuthority = session.currentTurn?.authority;
+      const currentIsLive = currentAuthority
+        && getAgentTurnAuthorityRef(currentAuthority) === currentAuthority;
+      const pendingIsLive = pendingAuthority
+        && getAgentTurnAuthorityRef(pendingAuthority) === pendingAuthority;
+      const authority = event?.type === 'turn_begin'
+        ? (pendingIsLive ? pendingAuthority : null)
+          || (currentIsLive ? currentAuthority : null)
+          || pendingAuthority
+          || currentAuthority
+        : (currentIsLive ? currentAuthority : null)
+          || (pendingIsLive ? pendingAuthority : null)
+          || pendingAuthority
+          || currentAuthority;
+      if (authority) return authority;
+      return {
+        workspaceId: session.currentWorkspaceId,
+        threadId: session.currentThreadId,
+        turnId: session.currentTurn?.id || session.pendingTurnId,
+      };
+    },
   });
 }
 
@@ -218,10 +263,45 @@ async function sendAutomationPrompt(rawTarget, input) {
 
   const session = createHeadlessSession(target);
   session.pendingUserInput = input;
+  const turnId = generateId();
+  session.pendingTurnId = turnId;
+  try {
+    const harnessId = thread.entry?.harnessId;
+    if (!harnessId || wire._harnessId !== harnessId) throw new Error('resolved harness identity mismatch');
+    session.pendingAgentTurnAuthority = await createAgentTurnAuthorityRef({
+      workspaceId: manager.workspaceId,
+      threadId: target.threadId,
+      turnId,
+      harnessId,
+      provider: wire._provider || harnessId,
+      workspaceRoot: manager.projectRoot || target.projectRoot,
+    });
+  } catch {
+    session.pendingAgentTurnAuthority = null;
+    console.warn('[AgentProvenance] agent_turn_authority_unavailable');
+  }
   const bridge = createAutomationBridge(target, manager, session);
+  const turnAuthority = session.pendingAgentTurnAuthority;
+  const turnApplicationContext = {
+    ...session,
+    wire,
+    pendingAgentTurnAuthority: turnAuthority,
+    pendingAttachments: Array.isArray(session.pendingAttachments)
+      ? [...session.pendingAttachments]
+      : [],
+    currentTurn: null,
+    assistantParts: [],
+    hasToolCalls: false,
+    toolArgs: {},
+    toolNamesById: {},
+    bouncedToolCalls: new Set(),
+  };
 
   try {
-    await bridge.drainHarnessEvents(wire._sendMessage(input, {}), null);
+    await bridge.drainHarnessEvents(wire._sendMessage(input, {}), null, {
+      turnAuthority,
+      turnApplicationContext,
+    });
     if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.IN_FLIGHT) {
       threadRuntimeManager.markReady(runtimeKey);
     }

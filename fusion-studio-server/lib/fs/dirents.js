@@ -51,7 +51,7 @@ async function classifyEntry(parentDir, dirent) {
   };
 }
 
-function classifyEntrySync(parentDir, dirent) {
+function classifyEntrySync(parentDir, dirent, { strictFilesystemErrors = false } = {}) {
   const name = dirent.name;
   const fullPath = path.join(parentDir, name);
   let isDir = dirent.isDirectory();
@@ -64,7 +64,9 @@ function classifyEntrySync(parentDir, dirent) {
       if (lstat.isSymbolicLink()) {
         isSymlink = true;
       }
-    } catch (_) {}
+    } catch (error) {
+      if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
+    }
   }
 
   if (isSymlink) {
@@ -78,7 +80,8 @@ function classifyEntrySync(parentDir, dirent) {
         isSymlink: true,
         realPath,
       };
-    } catch (_) {
+    } catch (error) {
+      if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
       return {
         name,
         isDir: false,

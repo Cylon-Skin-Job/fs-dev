@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/event/resource.mutated/v1",
+  "title": "ResourceMutatedV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "schemaVersion",
+    "occurredAt",
+    "workspaceId",
+    "operationId",
+    "commandId",
+    "commandAcceptedEventId",
+    "origin",
+    "resource",
+    "mutation",
+    "fileVersionId"
+  ],
+  "properties": {
+    "eventId": { "$ref": "#/$defs/uuid" },
+    "eventType": { "const": "resource.mutated" },
+    "schemaVersion": { "const": 1 },
+    "occurredAt": { "$ref": "#/$defs/timestamp" },
+    "workspaceId": { "$ref": "#/$defs/boundedId" },
+    "operationId": { "$ref": "#/$defs/uuid" },
+    "commandId": { "$ref": "#/$defs/uuid" },
+    "commandAcceptedEventId": { "$ref": "#/$defs/uuid" },
+    "origin": { "$ref": "#/$defs/origin" },
+    "resource": { "$ref": "#/$defs/resource" },
+    "mutation": { "$ref": "#/$defs/mutation" },
+    "fileVersionId": { "$ref": "#/$defs/uuid" }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "timestamp": { "type": "integer", "minimum": 0 },
+    "reportedUiContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "viewId": { "$ref": "#/$defs/boundedId" },
+        "viewInstanceId": { "$ref": "#/$defs/boundedId" }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "connectionId", "assurance"],
+      "properties": {
+        "kind": { "const": "local_client" },
+        "connectionId": { "$ref": "#/$defs/boundedId" },
+        "assurance": { "const": "transport_only" },
+        "reportedUiContext": { "$ref": "#/$defs/reportedUiContext" }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["panel", "path"],
+      "properties": {
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/path" }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceId", "kind", "path", "access"],
+      "properties": {
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "kind": { "const": "file" },
+        "path": { "$ref": "#/$defs/path" },
+        "access": { "$ref": "#/$defs/access" }
+      }
+    },
+    "mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["create", "modify"] },
+        "saveReason": {
+          "enum": ["autosave", "manual", "session_end", "checkpoint", "milestone"]
+        },
+        "milestone": { "type": "string", "maxLength": 256 }
+      },
+      "if": {
+        "required": ["saveReason"],
+        "properties": { "saveReason": { "const": "milestone" } }
+      },
+      "then": { "required": ["milestone"] },
+      "else": { "not": { "required": ["milestone"] } }
+    }
+  }
+}

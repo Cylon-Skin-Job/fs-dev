@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import type { FileTreeNode } from '../../types/file-explorer';
 import { formatNodeName } from '../../lib/file-utils';
 import { useFileStore } from '../../state/fileStore';
-import { usePanelStore } from '../../state/panelStore';
+import { useFileDataStore } from '../../state/fileDataStore';
+import { loadFolderChildren } from '../../lib/file-tree';
 import { FileTree } from './FileTree';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
@@ -14,22 +15,12 @@ interface FolderNodeProps {
 
 export function FolderNode({ node, depth }: FolderNodeProps) {
   const expandedFolders = useFileStore((s) => s.expandedFolders);
-  const folderChildren = useFileStore((s) => s.folderChildren);
   const showHiddenFolders = useFileStore((s) => s.showHiddenFolders);
-  const isLoading = useFileStore((s) => s.isLoading);
-  const ws = usePanelStore((s) => s.ws);
-  const wsRef = useRef(ws);
-  
-  // Keep wsRef current without triggering re-renders
-  useEffect(() => {
-    wsRef.current = ws;
-  }, [ws]);
-  
-  // Local loading state for this specific folder
-  const [isLoadingChildren, setIsLoadingChildren] = useState(false);
 
   const isExpanded = expandedFolders.has(node.path);
-  const children = folderChildren.get(node.path);
+  const treeKey = `file-viewer:${node.path}`;
+  const children = useFileDataStore((s) => s.trees[treeKey]) as FileTreeNode[] | undefined;
+  const isLoadingChildren = useFileDataStore((s) => s.pendingTrees.has(treeKey));
   const hasChildrenLoaded = children !== undefined;
   const isHiddenFolder = node.name.startsWith('.');
   const paddingLeft = `${0.75 + depth * 1.25}rem`;
@@ -37,57 +28,11 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
   // Auto-fetch children when:
   // - Folder is expanded
   // - We don't have children cached
-  // - WebSocket is connected
   useEffect(() => {
-    const currentWs = wsRef.current;
-    if (isExpanded && !hasChildrenLoaded && node.hasChildren && currentWs?.readyState === WebSocket.OPEN) {
-      setIsLoadingChildren(true);
-      
-      const loadChildren = async () => {
-        try {
-          const response = await new Promise<FileTreeNode[]>((resolve, reject) => {
-            const handleMessage = (event: MessageEvent) => {
-              try {
-                const msg = JSON.parse(event.data);
-                if (msg.type === 'file_tree_response' && msg.panel === 'file-viewer' && msg.path === node.path) {
-                  currentWs.removeEventListener('message', handleMessage);
-                  if (msg.success) {
-                    resolve(msg.nodes);
-                  } else {
-                    reject(new Error(msg.error || 'Failed to load'));
-                  }
-                }
-              } catch {
-                // Ignore parse errors
-              }
-            };
-            currentWs.addEventListener('message', handleMessage);
-            currentWs.send(JSON.stringify({
-              type: 'file_tree_request',
-              panel: 'file-viewer',
-              path: node.path,
-              includeHiddenFolders: showHiddenFolders,
-            }));
-            // Timeout after 5 seconds
-            setTimeout(() => {
-              currentWs.removeEventListener('message', handleMessage);
-              reject(new Error('Timeout'));
-            }, 5000);
-          });
-          
-          useFileStore.getState().setFolderChildren(node.path, response);
-        } catch (err) {
-          console.error('Failed to load folder:', err);
-        } finally {
-          setIsLoadingChildren(false);
-        }
-      };
-      
-      loadChildren();
+    if (isExpanded && !hasChildrenLoaded && !isLoadingChildren && node.hasChildren) {
+      loadFolderChildren(node.path);
     }
-    // Intentionally exclude 'ws' from deps - use wsRef to avoid re-triggering
-     
-  }, [isExpanded, hasChildrenLoaded, node.path, node.hasChildren, showHiddenFolders]);
+  }, [isExpanded, hasChildrenLoaded, isLoadingChildren, node.path, node.hasChildren, showHiddenFolders]);
 
   // Tree rows intentionally do not expose symlink chrome.
   let icon: string;
@@ -106,9 +51,9 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
     iconClass = 'rv-tree-icon folder-outline';
   }
 
-  async function handleClick() {
-    if (isLoading || isLoadingChildren) return;
-    
+  function handleClick() {
+    if (isLoadingChildren) return;
+
     if (isExpanded) {
       // Collapse: remove from expanded set (keep children in cache)
       useFileStore.getState().collapseFolder(node.path);
@@ -118,12 +63,10 @@ export function FolderNode({ node, depth }: FolderNodeProps) {
     }
   }
 
-  const showLoading = isLoading || isLoadingChildren;
-
   return (
     <div className="folder-node">
       <div
-        className={`rv-file-tree-item${showLoading ? ' disabled' : ''}${isHiddenFolder ? ' rv-file-tree-item--hidden-folder' : ''}`}
+        className={`rv-file-tree-item${isLoadingChildren ? ' disabled' : ''}${isHiddenFolder ? ' rv-file-tree-item--hidden-folder' : ''}`}
         style={{ '--tree-indent': paddingLeft } as React.CSSProperties}
         onClick={handleClick}
       >

@@ -99,6 +99,29 @@ describe('OpenCodeHarness', () => {
     expect(harness.getSession('thread-1')).toBe(session);
   });
 
+  it('stop waits for process close and permits TERM to KILL escalation', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    const session = await harness.startThread('thread-1', '/project');
+    const eventsPromise = collect(session.sendMessage('hello'));
+    await new Promise(resolve => setImmediate(resolve));
+
+    let termSettled = false;
+    const term = session.stop('SIGTERM').then(() => { termSettled = true; });
+    await Promise.resolve();
+    expect(termSettled).toBe(false);
+    expect(proc.kill).toHaveBeenCalledWith('SIGTERM');
+    expect(proc.killed).toBe(true);
+
+    const kill = session.stop('SIGKILL');
+    expect(proc.kill).toHaveBeenCalledWith('SIGKILL');
+    expect(termSettled).toBe(false);
+    proc.emit('close', null, 'SIGKILL');
+    await Promise.all([term, kill, eventsPromise]);
+    expect(termSettled).toBe(true);
+  });
+
   it('sendMessage spawns opencode run with JSON format, dir, and prompt', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
@@ -161,6 +184,110 @@ describe('OpenCodeHarness', () => {
 
     expect(session.openCodeSessionId).toBe('ses_stored');
     expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_stored', 'after cold start']);
+  });
+
+  it('passes the per-thread model override to opencode run', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'workspace-default-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('model probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_model_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      'model probe',
+    ]);
+  });
+
+  it('passes the per-thread effort variant to opencode run', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'default-model', variant: 'high' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731', variant: 'max' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('variant probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_variant_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      '--variant', 'max',
+      'variant probe',
+    ]);
+  });
+
+  it('applies live harnessConfig changes to the next prompt', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'default-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: {},
+    });
+
+    session.applyHarnessConfig({ model: 'baseten/deepseek-ai/DeepSeek-V4-Flash-0731', variant: 'high' });
+
+    const eventsPromise = collect(session.sendMessage('live config probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_live_config_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'baseten/deepseek-ai/DeepSeek-V4-Flash-0731',
+      '--variant', 'high',
+      'live config probe',
+    ]);
+  });
+
+  it('omits --variant when the model has no effort selection', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'kimi-model' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: { model: 'kimi-model' },
+    });
+
+    const eventsPromise = collect(session.sendMessage('no variant probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_no_variant_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'kimi-model',
+      'no variant probe',
+    ]);
+  });
+
+  it('falls back to the workspace default model without a per-thread override', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const harness = new OpenCodeHarness();
+    harness.initialize({ model: 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731' });
+    const session = await harness.startThread('thread-1', '/project', {}, {
+      harnessConfig: {},
+    });
+
+    const eventsPromise = collect(session.sendMessage('default model probe'));
+    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_default_model_probe'));
+    await eventsPromise;
+
+    expect(spawn.mock.calls[0][1]).toEqual([
+      'run', '--format', 'json', '--dir', '/project',
+      '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
+      'default model probe',
+    ]);
   });
 
   it('starts a pending fork from the source OpenCode session without making it active', async () => {
@@ -510,7 +637,10 @@ describe('OpenCodeHarness', () => {
     const events = await eventsPromise;
 
     expect(events[0]).toMatchObject({ type: 'turn_begin', userInput: 'hello' });
-    expect(events[1]).toEqual({ type: 'content', timestamp: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK' });
+    expect(events[1]).toMatchObject({
+      type: 'content', timestamp: 1780703411893, timestampSource: 'provider_reported',
+      reportedAt: 1780703411893, text: 'OPEN_CODE_JSON_PROBE_OK',
+    });
   });
 
   it('stdout tool JSON yields canonical tool events through the translator', async () => {
@@ -528,9 +658,9 @@ describe('OpenCodeHarness', () => {
 
     const events = await eventsPromise;
 
-    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_call', 'tool_call_args', 'tool_result', 'status_update', 'turn_end']);
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_snapshot', 'status_update', 'turn_end']);
     expect(events[1]).toMatchObject({ toolCallId: 'call_probe', toolName: 'shell' });
-    expect(events[3]).toMatchObject({ output: 'OPENCODE_TOOL_PROBE_OK', isError: false });
+    expect(events[1].result).toMatchObject({ output: 'OPENCODE_TOOL_PROBE_OK', isError: false });
   });
 
   it('clean exit with text and no step_finish yields a synthetic turn_end', async () => {
@@ -588,7 +718,7 @@ describe('OpenCodeHarness', () => {
     });
     const events = await eventsPromise;
 
-    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_call', 'tool_call_args', 'tool_result', 'turn_end']);
+    expect(events.map((event) => event.type)).toEqual(['turn_begin', 'tool_snapshot', 'turn_end']);
     expect(events.at(-1)).toMatchObject({ type: 'turn_end', fullText: '', hasToolCalls: true });
   });
 
@@ -676,8 +806,9 @@ describe('OpenCodeHarness', () => {
     const iterator = session.sendMessage('hello')[Symbol.asyncIterator]();
 
     await expect(iterator.next()).resolves.toMatchObject({ value: { type: 'turn_begin' } });
-    await session.stop();
+    const stopped = session.stop();
     proc.emit('close', null, 'SIGTERM');
+    await stopped;
 
     await expect(iterator.next()).resolves.toEqual({ done: true, value: undefined });
   });
@@ -704,8 +835,9 @@ describe('OpenCodeHarness', () => {
     const iterator = session.sendMessage('hello')[Symbol.asyncIterator]();
 
     await iterator.next();
-    await harness.dispose();
-    proc.emit('close', null, 'SIGTERM');
+    const disposed = harness.dispose();
+    setImmediate(() => proc.emit('close', null, 'SIGTERM'));
+    await disposed;
 
     expect(proc.kill).toHaveBeenCalledWith('SIGTERM');
     expect(harness.sessions.size).toBe(0);

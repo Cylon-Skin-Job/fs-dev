@@ -170,6 +170,11 @@ export type WebSocketMessageType =
   | 'file_content_response'
   | 'file_save'
   | 'file_save_response'
+  | 'resource:provenance:query'
+  | 'resource:provenance:result'
+  | 'resource:provenance:error'
+  | 'resource:changed'
+  | 'resource:refresh_required'
   | 'folder_create_response'
   | 'document_create_response'
   | 'fusion:tabs'
@@ -419,8 +424,27 @@ export interface ResolvedCliEntry {
   };
   runtime?: {
     model?: string | null;
+    variant?: string | null;
     thinking?: boolean;
     pure?: boolean;
+  };
+  /**
+   * Per-machine OpenCode model list from `ai/<machine>/System/config/opencode-models.json`.
+   * Present only on the opencode harness entry when the file exists.
+   * Mirrors the opencode model catalog shape.
+   */
+  models?: {
+    defaultProvider: string | null;
+    providers: Array<{
+      id: string | null;
+      label: string | null;
+      defaultModel: string | null;
+      models: Array<{
+        id: string;
+        name: string;
+        variants: string[];
+      }>;
+    }>;
   };
   enabled: boolean;
   comingSoon?: boolean;
@@ -510,7 +534,12 @@ export interface WebSocketMessage {
   workspaces?: Workspace[];
   workspace?: Workspace;
   activeWorkspaceId?: string | null;
+  sourceMachineName?: string;
   workspaceId?: string;
+  workspaceEpoch?: string | null;
+  fileSaveProtocolVersion?: 1;
+  resourceProvenanceProtocolVersion?: 1;
+  fileViewerReadProtocolVersion?: 1;
   from?: string | null;
   to?: string | null;
   repoPath?: string | null;
@@ -617,7 +646,7 @@ export interface ViewUIState {
   // TINTS_SPEC §4: per-surface tint toggles. All default false (neutral).
   tints: ViewStateTints;
   // Doc viewer persisted UI state.
-  docViewerMode?: 'active' | 'recent' | 'starred' | 'archive';
+  docViewerMode?: DocViewerMode;
   docViewerActiveSelectedPath?: string | null;
   docViewerArchiveSelectedPath?: string | null;
   docViewerLastOpenedPath?: string | null;
@@ -625,6 +654,9 @@ export interface ViewUIState {
   docViewerArchiveGridScroll?: number;
   docViewerActiveDocScroll?: number;
   docViewerArchiveDocScroll?: number;
+  docViewerFullPage?: boolean;
+  docViewerTabs?: DocViewerTab[];
+  docViewerActiveTabId?: string | null;
   officeViewerMode?: 'home' | 'recent' | 'starred' | 'archive';
   officeViewerCurrentFolder?: string | null;
   officeViewerSelectedPath?: string | null;
@@ -639,6 +671,32 @@ export interface ViewUIState {
   activity: ViewActivityState;
   collections: ViewCollectionsState;
 }
+
+export interface DocViewerTabUi {
+  mode: DocViewerMode;
+  gridScroll: number;
+  docScroll: number;
+}
+
+export type DocViewerMode = 'active' | 'recent' | 'starred' | 'archive';
+
+export interface DocViewerCaptureTab {
+  id: string;
+  kind: 'capture';
+  ui: DocViewerTabUi;
+}
+
+export interface DocViewerDocumentTab {
+  id: string;
+  kind: 'doc';
+  path: string;
+  name: string;
+  extension: string;
+  ui: DocViewerTabUi;
+}
+
+/** Durable capture tabs. `kind: 'view'` is reserved for a future SPEC. */
+export type DocViewerTab = DocViewerCaptureTab | DocViewerDocumentTab;
 
 export interface ViewStateTints {
   leftPanel:     boolean;

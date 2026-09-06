@@ -7,10 +7,15 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
+import { useFileDataStore } from '../state/fileDataStore';
 import { useSecretsStore } from '../state/secretsStore';
 import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
+import {
+  handleResourceProvenanceResponse,
+  retirePendingResourceProvenanceQueries,
+} from './ws/resource-provenance-protocol';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
@@ -26,7 +31,6 @@ import {
 import { useWorkspaceStore } from '../state/workspaceStore';
 import { setLoggerWs, captureConsoleLogs } from '../lib/logger';
 import { showModal } from '../lib/modal';
-import { loadAllPanels } from '../lib/panels';
 import {
   getLatestViewStateMutationId,
   hasPendingViewStateMutation,
@@ -35,6 +39,10 @@ import {
 import type { ModalConfig } from '../lib/modal';
 import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
 import type { ViewUIState, WebSocketMessage } from '../types';
+import {
+  CAPTURE_VIEWER_PANEL,
+  normalizeCaptureTabsAfterStateResult,
+} from '../components/view-tabs/captureTabsController';
 
 // --- Module state ---
 
@@ -170,6 +178,8 @@ export function connectWs() {
   // lists may describe the server's workspace before the client has swapped
   // its workspace-scoped state, so they must not activate a thread yet.
   useWorkspaceStore.getState().beginInit();
+  useFileDataStore.getState().retirePendingSaves();
+  retirePendingResourceProvenanceQueries();
   console.log('[WS] Connecting...');
   const ws = new WebSocket(WS_URL);
   socket = ws;
@@ -181,22 +191,9 @@ export function connectWs() {
     store.setWs(ws);
     setLoggerWs(ws);
     captureConsoleLogs();
-    handleOfficePaletteSocketOpen(ws);
-
-    // Tell server which panel we're using
-    const currentPanel = store.currentPanel;
-    if (currentPanel) {
-      console.log('[WS] Sending set_panel for:', currentPanel);
-      ws.send(JSON.stringify({ type: 'set_panel', panel: currentPanel }));
-    }
-
-    // Discover panels
-    loadAllPanels(ws).then((configs) => {
-      console.log(`[WS] Discovered ${configs.length} panels`);
-      usePanelStore.getState().setPanelConfigs(configs);
-    }).catch((err) => {
-      console.error('[WS] Panel discovery failed:', err);
-    });
+    // The socket is transport-ready, but workspace-bound bootstrap traffic
+    // must wait for workspace:init to establish the recipient-specific pair.
+    handleOfficePaletteSocketOpen(ws, { requestImmediately: false });
   };
 
   ws.onmessage = (event) => {
@@ -216,6 +213,9 @@ export function connectWs() {
   ws.onclose = () => {
     console.log('[WS] Disconnected');
     handleOfficePaletteSocketClose(ws);
+    useWorkspaceStore.getState().beginInit();
+    useFileDataStore.getState().retirePendingSaves();
+    retirePendingResourceProvenanceQueries();
     usePanelStore.getState().setWs(null);
     reconnectTimer = setTimeout(connectWs, 3000);
   };
@@ -251,6 +251,7 @@ function handleMessage(msg: WebSocketMessage) {
   if (handleStreamMessage(msg)) return;
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;
+  if (handleResourceProvenanceResponse(msg)) return;
   if (handleWorkspaceMessage(msg)) return;
   if (handleHarnessMessage(msg)) return;
   if (handleThemeMessage(msg)) return;
@@ -283,6 +284,9 @@ function handleMessage(msg: WebSocketMessage) {
     store.setViewState(view, stateToApply);
     if (clientMutationId !== null) {
       settleViewStateMutation(view, clientMutationId);
+    }
+    if (view === CAPTURE_VIEWER_PANEL) {
+      normalizeCaptureTabsAfterStateResult(clientMutationId);
     }
     // STATE_OVERRIDE_SPEC §9.3: hydrate persisted currentThreadId into the
     // live slot when loading the active view. Guarded equality check in

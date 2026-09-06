@@ -102,6 +102,7 @@ function defaultRuntimeConfigForHarness(harnessId) {
   if (harnessId === 'opencode') {
     return {
       model: null,
+      variant: null,
       thinking: false,
       pure: false,
     };
@@ -193,10 +194,15 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
 
     const runtimeConfig = await resolveRuntimeConfigForHarness(projectRoot, harnessId);
     await harness.initialize(runtimeConfig);
-    return await harness.startThread(threadId, projectRoot, resolvedScope, {
+    const session = await harness.startThread(threadId, projectRoot, resolvedScope, {
       harnessConfig,
       updateHarnessConfig: (patch) => updateThreadHarnessConfig(threadId, patch),
     });
+    Object.defineProperties(session, {
+      _fusionHarnessId: { value: harnessId, enumerable: false },
+      _fusionProvider: { value: harness.provider, enumerable: false },
+    });
+    return session;
   };
 
   const sessionPromise = startHarness();
@@ -205,7 +211,9 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
   /** @ts-ignore */
   dummyProc._harnessPromise = sessionPromise;
 
-  sessionPromise.then(session => {
+  sessionPromise.then((session) => {
+    const harnessId = session._fusionHarnessId;
+    const provider = session._fusionProvider;
     if (dummyProc.killed) {
       session.stop?.().catch(err => {
         console.error('[Compat] Failed to stop cancelled harness session:', err);
@@ -250,7 +258,7 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     dummyProc.kill = (signal = 'SIGTERM') => {
       if (dummyProc.killed) return false;
       dummyProc.killed = true;
-      Promise.resolve(session.stop?.()).catch(err => {
+      Promise.resolve(session.stop?.(signal)).catch(err => {
         console.error('[Compat] Failed to stop harness session:', err);
       });
       process.nextTick(() => emitExitOnce(null, signal));
@@ -264,7 +272,10 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
 
     // Expose ACP sendMessage so server.js can route prompts correctly
     dummyProc._sendMessage = (message, options) => session.sendMessage(message, options);
-    dummyProc._stopSession = () => session.stop?.();
+    dummyProc._stopSession = (signal = 'SIGTERM') => session.stop?.(signal);
+    dummyProc._applyHarnessConfig = (patch) => session.applyHarnessConfig?.(patch);
+    dummyProc._harnessId = harnessId;
+    dummyProc._provider = provider;
 
     console.log(`[Compat] ${session.threadId} harness ready, pid: ${realProc.pid}, directCanonical: ${!!dummyProc._usesDirectCanonicalEvents}`);
   }).catch(err => {

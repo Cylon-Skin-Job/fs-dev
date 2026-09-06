@@ -6,6 +6,12 @@
 const ThreadWebSocketHandler = require('./ThreadWebSocketHandler');
 const { attachClientToWire, getWireForThread, unregisterWire } = require('../wire/process-manager');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
+const { randomUUID } = require('crypto');
+const {
+  createAgentTurnAuthorityRef,
+  getAgentTurnAuthorityRef,
+  releaseAgentTurnAuthorityRef,
+} = require('../agent-provenance/turn-authority');
 
 // RCC-0095: all threads are workspace-scoped. The 'project' scope literal
 // is kept on runtime keys and outbound messages for wire compatibility.
@@ -24,6 +30,24 @@ function normalizeAttachments(attachments) {
       ...(typeof item.relativePath === 'string' ? { relativePath: item.relativePath } : {}),
     }))
     .filter((item) => item.path);
+}
+
+/**
+ * Extract the model/effort selection from a client-provided harnessConfig.
+ * Only model and variant are writable per-prompt; everything else is left
+ * untouched so session continuity fields are never clobbered.
+ * @returns {object|null}
+ */
+function extractSelectionPatch(harnessConfig) {
+  if (!harnessConfig || typeof harnessConfig !== 'object') return null;
+  const patch = {};
+  if (typeof harnessConfig.model === 'string' && harnessConfig.model.trim()) {
+    patch.model = harnessConfig.model.trim();
+  }
+  if (typeof harnessConfig.variant === 'string' && harnessConfig.variant.trim()) {
+    patch.variant = harnessConfig.variant.trim();
+  }
+  return Object.keys(patch).length > 0 ? patch : null;
 }
 
 function serializeAttachmentsForHarness(userInput, attachments) {
@@ -51,14 +75,113 @@ function markReadyIfRuntimeStillActive(runtimeKey) {
   }
 }
 
+function clearAcceptedPromptIfOwned(session, acceptedPrompt) {
+  if (session.pendingTurnId !== acceptedPrompt.turnId
+    || session.pendingAgentTurnAuthority !== acceptedPrompt.authority
+    || session.pendingUserInput !== acceptedPrompt.userInput
+    || session.pendingAttachments !== acceptedPrompt.attachments) return false;
+  session.pendingTurnId = null;
+  session.pendingAgentTurnAuthority = null;
+  session.pendingUserInput = null;
+  session.pendingAttachments = [];
+  return true;
+}
+
+function captureBaseTurnOwnership(session, identity) {
+  const turn = session.currentTurn;
+  if (!turn || turn.id !== identity.turnId || session.currentThreadId !== identity.threadId) return null;
+  if (turn.authority && identity.authority && turn.authority !== identity.authority) return null;
+  if (turn.authority && !identity.authority
+    && (turn.authority.workspaceId !== identity.workspaceId
+      || turn.authority.threadId !== identity.threadId
+      || turn.authority.turnId !== identity.turnId)) return null;
+  return {
+    currentTurn: turn,
+    assistantParts: session.assistantParts,
+  };
+}
+
+function clearBaseTurnIfOwned(session, identity, ownership) {
+  if (!ownership || session.currentThreadId !== identity.threadId) return false;
+  const stillOwned = session.currentTurn === ownership.currentTurn
+    && session.assistantParts === ownership.assistantParts;
+  const clearedByOwnedFinalizer = session.currentTurn === null
+    && Array.isArray(session.assistantParts)
+    && session.assistantParts.length === 0;
+  if (!stillOwned && !clearedByOwnedFinalizer) return false;
+  if (stillOwned) {
+    session.currentTurn = null;
+    session.assistantParts = [];
+  }
+  session.hasToolCalls = false;
+  session.activeToolId = null;
+  session.activeToolName = null;
+  session.toolArgs = {};
+  session.toolNamesById = {};
+  session.bouncedToolCalls = new Set();
+  session.contextUsage = null;
+  session.tokenUsage = null;
+  session.messageId = null;
+  session.planMode = false;
+  return true;
+}
+
+function disposeTurnApplicationContext(context) {
+  context.pendingTurnId = null;
+  context.pendingAgentTurnAuthority = null;
+  context.pendingUserInput = null;
+  context.pendingAttachments = [];
+  context.currentTurn = null;
+  context.assistantParts = [];
+  context.hasToolCalls = false;
+  context.activeToolId = null;
+  context.activeToolName = null;
+  context.toolArgs = {};
+  context.toolNamesById = {};
+  context.bouncedToolCalls = new Set();
+  context.contextUsage = null;
+  context.tokenUsage = null;
+  context.messageId = null;
+  context.planMode = false;
+  context.wire = null;
+  context.projectRoot = null;
+}
+
 async function stopWire(wire, threadId) {
+  const bounded = (promise, timeoutMs) => new Promise((resolve) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      resolve(false);
+    }, timeoutMs);
+    timer.unref?.();
+    Promise.resolve(promise).then(() => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(true);
+    }, () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(false);
+    });
+  });
   try {
     if (wire._stopSession) {
-      await wire._stopSession();
+      const stopped = await bounded(wire._stopSession('SIGTERM'), 2_000);
+      if (!stopped) await bounded(wire._stopSession('SIGKILL'), 1_000);
     } else if (wire.stop) {
-      await wire.stop();
+      const stopped = await bounded(wire.stop('SIGTERM'), 2_000);
+      if (!stopped) await bounded(wire.stop('SIGKILL'), 1_000);
     } else if (wire.kill) {
       wire.kill('SIGTERM');
+      const closed = await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 2_000);
+      if (!closed) {
+        wire.kill('SIGKILL');
+        await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 1_000);
+      }
     }
   } finally {
     unregisterWire(threadId);
@@ -179,6 +302,17 @@ async function acceptPromptThroughRuntime({
     return;
   }
 
+  // Apply per-prompt model/effort selection to the thread before the turn.
+  // Persists into harness_config so cold restarts keep the selection.
+  const selectionPatch = extractSelectionPatch(clientMsg.harnessConfig);
+  if (selectionPatch) {
+    try {
+      await manager.updateHarnessConfig(threadId, selectionPatch);
+    } catch (err) {
+      console.error('[WS] Failed to persist harnessConfig selection:', err?.message || err);
+    }
+  }
+
   const runtimeKey = getRuntimeKey(manager, threadId);
   const wire = await ensureReadyRuntime({
     ws,
@@ -206,6 +340,12 @@ async function acceptPromptThroughRuntime({
     return;
   }
 
+  // Push the per-prompt model/effort selection live onto the wire so the
+  // current session picks it up without a re-spawn.
+  if (selectionPatch && typeof wire._applyHarnessConfig === 'function') {
+    wire._applyHarnessConfig(selectionPatch);
+  }
+
   if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
     sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
     return;
@@ -223,6 +363,24 @@ async function acceptPromptThroughRuntime({
   }
   console.log('[WS] Message accepted by runtime and tracked in thread');
 
+  const turnId = randomUUID();
+  session.pendingTurnId = turnId;
+  try {
+    const harnessId = thread.entry?.harnessId;
+    if (!harnessId || wire._harnessId !== harnessId) throw new Error('resolved harness identity mismatch');
+    session.pendingAgentTurnAuthority = await createAgentTurnAuthorityRef({
+      workspaceId: manager.workspaceId,
+      threadId,
+      turnId,
+      harnessId,
+      provider: wire._provider || harnessId,
+      workspaceRoot: manager.projectRoot,
+    });
+  } catch {
+    session.pendingAgentTurnAuthority = null;
+    console.warn('[AgentProvenance] agent_turn_authority_unavailable');
+  }
+
   attachClientToWire(threadId, wire, projectRoot, ws, {
     workspaceId: session.currentWorkspaceId,
     viewId: null,
@@ -230,11 +388,42 @@ async function acceptPromptThroughRuntime({
 
   session.pendingUserInput = clientMsg.user_input;
   session.pendingAttachments = attachments;
+  const turnAuthority = session.pendingAgentTurnAuthority;
+  const acceptedPrompt = {
+    turnId,
+    authority: turnAuthority,
+    userInput: clientMsg.user_input,
+    attachments,
+  };
+  const turnApplicationContext = {
+    ...session,
+    currentWorkspaceId: manager.workspaceId,
+    currentThreadId: threadId,
+    projectRoot: manager.projectRoot || projectRoot,
+    wire,
+    pendingAgentTurnAuthority: turnAuthority,
+    pendingTurnId: turnId,
+    pendingUserInput: clientMsg.user_input,
+    pendingAttachments: [...attachments],
+    currentTurn: null,
+    assistantParts: [],
+    hasToolCalls: false,
+    toolArgs: {},
+    toolNamesById: {},
+    bouncedToolCalls: new Set(),
+  };
 
   (async () => {
     try {
-      for await (const event of wire._sendMessage(harnessInput, {})) {
-        handleCanonicalHarnessEvent(event, ws);
+      if (typeof handleCanonicalHarnessEvent.drainHarnessEvents === 'function') {
+        await handleCanonicalHarnessEvent.drainHarnessEvents(wire._sendMessage(harnessInput, {}), ws, {
+          turnAuthority,
+          turnApplicationContext,
+        });
+      } else {
+        for await (const event of wire._sendMessage(harnessInput, {})) {
+          await handleCanonicalHarnessEvent(event, ws);
+        }
       }
       markReadyIfRuntimeStillActive(runtimeKey);
     } catch (err) {
@@ -252,6 +441,10 @@ async function acceptPromptThroughRuntime({
       } else {
         sendRuntimeError(ws, errorMessage || 'Harness send failed', threadId, true);
       }
+    } finally {
+      clearAcceptedPromptIfOwned(session, acceptedPrompt);
+      releaseAgentTurnAuthorityRef(turnAuthority);
+      disposeTurnApplicationContext(turnApplicationContext);
     }
   })();
 }
@@ -282,10 +475,38 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
   const wire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
   threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
 
-  session.currentThreadId = threadId;
-  session.currentScope = SCOPE;
-  session.currentViewId = null;
-  if (!session.currentTurn || session.currentTurn.id !== liveTurn.turnId) {
+  const authority = getAgentTurnAuthorityRef({
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+  });
+  const stopIdentity = authority || {
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+  };
+  const pendingAuthority = session.pendingAgentTurnAuthority;
+  const pendingBelongsToStop = session.pendingTurnId === liveTurn.turnId
+    && (authority
+      ? pendingAuthority === authority
+      : (!pendingAuthority
+        ? session.currentThreadId === threadId
+        : pendingAuthority.workspaceId === manager.workspaceId
+          && pendingAuthority.threadId === threadId
+          && pendingAuthority.turnId === liveTurn.turnId));
+  const pendingOwnership = pendingBelongsToStop ? {
+    turnId: liveTurn.turnId,
+    authority: pendingAuthority,
+    userInput: session.pendingUserInput,
+    attachments: session.pendingAttachments,
+  } : null;
+  const hasOwnedFinalizer = typeof handleCanonicalHarnessEvent?.finalizeTurn === 'function';
+  const canReconstructWithoutNavigationLoss = !hasOwnedFinalizer
+    && (!session.currentThreadId || session.currentThreadId === threadId)
+    && (!session.currentTurn || session.currentTurn.id === liveTurn.turnId);
+  if (canReconstructWithoutNavigationLoss
+    && (!session.currentTurn || session.currentTurn.id !== liveTurn.turnId)) {
+    if (!session.currentThreadId) session.currentThreadId = threadId;
     session.currentTurn = {
       id: liveTurn.turnId,
       text: liveTurn.fullText || '',
@@ -294,19 +515,45 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     session.assistantParts = Array.isArray(liveTurn.parts) ? liveTurn.parts : [];
     session.hasToolCalls = session.assistantParts.some(part => part.type === 'tool_call');
   }
+  if (session.currentTurn?.id === liveTurn.turnId && !session.currentTurn.authority && authority) {
+    Object.defineProperty(session.currentTurn, 'authority', {
+      value: authority,
+      enumerable: false,
+    });
+  }
+  const baseTurnOwnership = captureBaseTurnOwnership(session, {
+    workspaceId: manager.workspaceId,
+    threadId,
+    turnId: liveTurn.turnId,
+    authority,
+  });
 
+  let finalization = Promise.resolve();
   if (handleCanonicalHarnessEvent) {
-    handleCanonicalHarnessEvent({
+    const terminalEvent = {
       type: 'turn_end',
       reason: 'interrupted',
       partial: true,
-    }, ws);
+    };
+    finalization = hasOwnedFinalizer
+      ? Promise.resolve(handleCanonicalHarnessEvent.finalizeTurn(terminalEvent, ws, stopIdentity))
+      : Promise.resolve(handleCanonicalHarnessEvent(terminalEvent, ws));
   }
 
+  let stopping = Promise.resolve();
   if (wire) {
-    await stopWire(wire, threadId);
-    if (session.wire === wire) session.wire = null;
+    stopping = stopWire(wire, threadId).then(() => {
+      if (session.wire === wire) session.wire = null;
+    });
   }
+  await Promise.allSettled([finalization, stopping]);
+  if (pendingOwnership) clearAcceptedPromptIfOwned(session, pendingOwnership);
+  clearBaseTurnIfOwned(session, {
+    threadId,
+    turnId: liveTurn.turnId,
+    authority,
+  }, baseTurnOwnership);
+  releaseAgentTurnAuthorityRef(authority);
   threadRuntimeManager.markCold(runtimeKey);
 }
 

@@ -42,10 +42,11 @@ function getMachineAiRoot(projectRoot) {
   return aiPaths.getMachineAiRoot(projectRoot);
 }
 
-function hasV2Views(projectRoot) {
+function hasV2Views(projectRoot, { strictFilesystemErrors = false } = {}) {
   try {
     return fs.statSync(aiPaths.getMachineViewsRoot(projectRoot)).isDirectory();
-  } catch {
+  } catch (error) {
+    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
     return false;
   }
 }
@@ -131,6 +132,7 @@ function loadAllViews(projectRoot) {
 function resolveContentPath(projectRoot, viewId, context = {}) {
   const view = loadView(projectRoot, viewId, {
     includeHidden: context.includeHidden === true,
+    strictFilesystemErrors: context.strictFilesystemErrors === true,
   });
   if (!view) return null;
 
@@ -140,6 +142,7 @@ function resolveContentPath(projectRoot, viewId, context = {}) {
 function resolveViewRoot(projectRoot, viewId, options = {}) {
   const view = loadView(projectRoot, viewId, {
     includeHidden: options.includeHidden === true,
+    strictFilesystemErrors: options.strictFilesystemErrors === true,
   });
   if (view) return view.viewRoot;
   return null;
@@ -287,27 +290,34 @@ function listV2Views(projectRoot) {
 }
 
 function loadV2ViewShell(projectRoot, viewId, options = {}) {
-  if (!hasV2Views(projectRoot)) return null;
+  if (!hasV2Views(projectRoot, options)) return null;
   if (!options.includeHidden) {
     const hiddenIds = registryWriter.getV2HiddenViewIds(projectRoot);
     if (hiddenIds.has(viewId)) return null;
   }
-  const entry = listV2ViewFolders(projectRoot).find((candidate) => candidate.id === viewId);
+  const entry = listV2ViewFolders(projectRoot, options).find((candidate) => candidate.id === viewId);
   if (!entry) return null;
-  return loadV2ViewShellFromEntry(projectRoot, entry);
+  return loadV2ViewShellFromEntry(projectRoot, entry, options);
 }
 
-function listV2ViewFolders(projectRoot) {
+function listV2ViewFolders(projectRoot, { strictFilesystemErrors = false } = {}) {
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
   try {
     return fs.readdirSync(viewsRoot, { withFileTypes: true })
-      .filter((entry) => classifyEntrySync(viewsRoot, entry).isDir && !entry.name.startsWith('.'))
+      .filter((entry) => classifyEntrySync(
+        viewsRoot,
+        entry,
+        { strictFilesystemErrors },
+      ).isDir && !entry.name.startsWith('.'))
       .map((entry) => {
         const match = entry.name.match(/^(\d+)-(.+)$/);
         const order = match ? Number(match[1]) : 999;
         const fallbackId = match ? match[2] : entry.name;
         const viewRoot = path.join(viewsRoot, entry.name);
-        const manifest = readFrontmatter(path.join(viewRoot, 'manifest.md'));
+        const manifest = readFrontmatter(
+          path.join(viewRoot, 'manifest.md'),
+          { strictFilesystemErrors },
+        );
         const id = manifest.metadata?.['view-id'] || fallbackId;
         return {
           id,
@@ -322,13 +332,17 @@ function listV2ViewFolders(projectRoot) {
         if (orderDiff !== 0) return orderDiff;
         return a.folderName.localeCompare(b.folderName);
       });
-  } catch {
+  } catch (error) {
+    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
     return [];
   }
 }
 
-function loadV2ViewShellFromEntry(projectRoot, entry) {
-  const icon = readFrontmatter(path.join(entry.viewRoot, 'styles', 'icon.md'));
+function loadV2ViewShellFromEntry(projectRoot, entry, { strictFilesystemErrors = false } = {}) {
+  const icon = readFrontmatter(
+    path.join(entry.viewRoot, 'styles', 'icon.md'),
+    { strictFilesystemErrors },
+  );
   const metadata = entry.manifest.metadata || {};
   const id = metadata['view-id'] || entry.id;
   const contentConfig = readJsonObject(
@@ -402,11 +416,12 @@ function readJsonObject(filePath, errorPrefix) {
   }
 }
 
-function readFrontmatter(filePath) {
+function readFrontmatter(filePath, { strictFilesystemErrors = false } = {}) {
   let text = '';
   try {
     text = fs.readFileSync(filePath, 'utf8');
-  } catch {
+  } catch (error) {
+    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
     return {};
   }
   const match = text.match(/^---\s*\n([\s\S]*?)\n---/);

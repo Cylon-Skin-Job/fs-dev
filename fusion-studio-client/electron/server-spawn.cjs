@@ -179,7 +179,15 @@ function resolveServerPath(resourcesPath) {
  * @param {string} opts.focusStatePath   — path to the focus-state JSON snapshot
  * @returns {Promise<{ port: number, process: ChildProcess }>}
  */
-function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
+function spawnServer({
+  onExit = () => {},
+  resourcesPath,
+  userDataPath,
+  focusStatePath,
+  environment = process.env,
+  port = 0,
+  nativeObserverHealthOnly = false,
+}) {
   return new Promise((resolve, reject) => {
     let ready = false;
     const packaged = Boolean(resourcesPath && fs.existsSync(
@@ -188,13 +196,14 @@ function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
     seedPackagedGlobalConfigs({ resourcesPath, userDataPath, packaged });
     const serverPath = resolveServerPath(resourcesPath);
     const env = {
-      ...process.env,
-      PORT: '0',
+      ...environment,
+      PORT: String(port),
     };
     if (resourcesPath) env.FUSION_RESOURCES_PATH = resourcesPath;
     if (userDataPath) env.FUSION_APP_USER_DATA = userDataPath;
     if (packaged) env.FUSION_APP_PACKAGED = '1';
     if (focusStatePath) env.FUSION_FOCUS_STATE_PATH = focusStatePath;
+    if (nativeObserverHealthOnly) env.FUSION_SECURE_OBSERVER_HEALTH_ONLY = '1';
 
     console.log(`[Resources] root=${env.FUSION_RESOURCES_PATH || ''} userData=${env.FUSION_APP_USER_DATA || ''}`);
 
@@ -205,6 +214,21 @@ function spawnServer({ onExit, resourcesPath, userDataPath, focusStatePath }) {
 
     pipeServerOutput(child, {
       onStdout(text) {
+        const observerMatch = text.match(/SECURE_FILE_OBSERVER_READY:(darwin):([^:\s]+):(\d+):([^:\s]+)/);
+        if (nativeObserverHealthOnly && observerMatch) {
+          ready = true;
+          resolve({
+            port: null,
+            process: child,
+            nativeObserver: Object.freeze({
+              platform: observerMatch[1],
+              arch: observerMatch[2],
+              moduleAbi: parseInt(observerMatch[3], 10),
+              fixture: observerMatch[4],
+            }),
+          });
+          return;
+        }
         const match = text.match(/SERVER_READY:(\d+)/);
         if (match) {
           ready = true;

@@ -3,15 +3,16 @@
  *
  * Extracted from server.js — handles the full bootstrap sequence:
  *   1. initDb
- *   2. createFusionHandlers + createClipboardHandlers
- *   3. startAuditSubscriber
- *   4. server.listen()
- *   5. wiki hooks
- *   6. project file watcher + loadComponents + createActionHandlers
- *   7. agent triggers + cron scheduler
- *   8. runner heartbeat monitor
- *   9. SIGTERM/SIGINT handlers for clean shutdown
- *  10. material-symbols static mount (post-listen, DB-resolved path)
+ *   2. initialize locked event registry authority
+ *   3. createFusionHandlers + createClipboardHandlers
+ *   4. startAuditSubscriber
+ *   5. server.listen()
+ *   6. wiki hooks
+ *   7. project file watcher + loadComponents + createActionHandlers
+ *   8. agent triggers + cron scheduler
+ *   9. runner heartbeat monitor
+ *  10. SIGTERM/SIGINT handlers for clean shutdown
+ *  11. material-symbols static mount (post-listen, DB-resolved path)
  *
  * Ordering is load-bearing. Do not reorder steps. See the gotchas in
  * SPEC-01b for the specific hard dependencies.
@@ -24,6 +25,7 @@
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
+const { performance } = require('perf_hooks');
 
 const { initDb, getDb, closeDb, DB_PATH } = require('./db');
 const createFusionHandlers = require('./fusion/ws-handlers');
@@ -34,13 +36,111 @@ const createThemeHandlers = require('./ws/theme-handlers');
 const { createHandlers: createSecretsHandlers } = require('./secrets/index');
 const createScreenshotHandlers = require('./screenshot/ws-handlers');
 const themesService = require('./theme/themes-service');
-const { startAuditSubscriber } = require('./audit/audit-subscriber');
+const { drainAuditSaves, startAuditSubscriber } = require('./audit/audit-subscriber');
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 const views = require('./views');
 const { createShutdownHandler } = require('./shutdown');
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
+const { createIsolatedProvenanceRuntime } = require('./testing/isolated-provenance-runtime');
+
+function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.promises.realpath } = {}) {
+  if (typeof getWorkspaceById !== 'function' || typeof realpath !== 'function') {
+    throw new TypeError('workspace-root resolution capabilities are required');
+  }
+  return async function resolveWorkspaceRoot(workspaceId) {
+    const workspace = await getWorkspaceById(workspaceId);
+    const declared = workspace?.repoPath ?? workspace?.repo_path;
+    if (typeof declared !== 'string') return null;
+    try {
+      return await realpath(declared);
+    } catch (_error) {
+      // A captured workspace that disappeared or became unresolvable is a
+      // terminal authority failure, not a retryable scheduler transition.
+      return null;
+    }
+  };
+}
+
+function createAgentPhaseAOwner({
+  shutdownActiveTurns,
+  drainAuditSaves: drainAuditSaveOwner,
+  shutdownActivityOwners,
+  binderOwner,
+  announcedOwner,
+  admissionOwner,
+  ledgerOwner,
+  observationOwner,
+  rendererProjectionOwner,
+  closeReconciliationDatabase,
+  monotonicNow = () => performance.now(),
+}) {
+  if (typeof drainAuditSaveOwner !== 'function') {
+    throw new TypeError('audit save drain owner is required');
+  }
+  return async function shutdownAgentOwners(options) {
+    const beforeDeadline = () => monotonicNow() < options.deadline;
+    const bounded = (maximumMs) => ({
+      ...options,
+      timeoutMs: Math.min(maximumMs, Math.max(0, options.deadline - monotonicNow())),
+    });
+    const runBeforeDeadline = async (work, maximumMs) => {
+      if (!beforeDeadline()) return false;
+      const result = await work(bounded(maximumMs));
+      const drained = result !== false && result?.drained !== false;
+      return drained && beforeDeadline();
+    };
+
+    // Durable crash-recovery work is independent and can quiesce immediately.
+    // Turn finalizers remain the first prerequisite because they may reserve
+    // terminal activity and synchronously start exchange persistence. Audit
+    // saves then drain before the binder can stop; unrelated durable owners
+    // still drain concurrently under this same absolute Phase-A deadline.
+    const announcedDrain = runBeforeDeadline(
+      (boundedOptions) => announcedOwner.shutdown(boundedOptions),
+      2_000,
+    );
+    const causalDrain = (async () => {
+      if (!await runBeforeDeadline(shutdownActiveTurns, 5_000)) return false;
+      const auditDrain = runBeforeDeadline(drainAuditSaveOwner, 5_000);
+      const binderDrain = binderOwner
+        ? (async () => {
+          if (!await auditDrain) return false;
+          return runBeforeDeadline(
+            (boundedOptions) => binderOwner.shutdown(boundedOptions), 2_000,
+          );
+        })()
+        : auditDrain;
+      const results = await Promise.allSettled([
+        runBeforeDeadline(shutdownActivityOwners, 2_000),
+        binderDrain,
+        runBeforeDeadline(
+          (boundedOptions) => admissionOwner.shutdown(boundedOptions), 2_000,
+        ),
+        runBeforeDeadline(
+          (boundedOptions) => ledgerOwner.shutdown(boundedOptions), 2_000,
+        ),
+        ...(observationOwner ? [runBeforeDeadline(
+          (boundedOptions) => observationOwner.shutdown(boundedOptions), 2_000,
+        )] : []),
+        ...(rendererProjectionOwner ? [runBeforeDeadline(
+          (boundedOptions) => rendererProjectionOwner.shutdown(boundedOptions), 2_000,
+        )] : []),
+      ]);
+      const rejected = results.find((result) => result.status === 'rejected');
+      if (rejected) throw rejected.reason;
+      return results.every((result) => result.value === true);
+    })();
+
+    const [announcedResult, causalResult] = await Promise.allSettled([announcedDrain, causalDrain]);
+    if (announcedResult.status === 'rejected') throw announcedResult.reason;
+    if (causalResult.status === 'rejected') throw causalResult.reason;
+    if (!announcedResult.value || !causalResult.value || !beforeDeadline()) return false;
+    await closeReconciliationDatabase();
+    return beforeDeadline();
+  };
+}
 
 /**
  * Bootstrap and start the server. Must be called after the http.Server
@@ -53,15 +153,297 @@ const PORT = parseInt(process.env.PORT ?? '3001', 10);
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @returns {Promise<{ fusionHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
  */
-async function start({ server, app, sessions, getProjectRoot }) {
+async function start({ server, app, sessions, getProjectRoot, installProtocolRoutes }) {
+  if (typeof installProtocolRoutes !== 'function') {
+    throw new TypeError('atomic protocol route installer is required');
+  }
+  const isolatedProvenance = createIsolatedProvenanceRuntime({
+    port: PORT,
+    dbPath: DB_PATH,
+  });
+  isolatedProvenance.installObservationGuards();
+  if (isolatedProvenance.enabled) {
+    process.once('exit', isolatedProvenance.restoreObservationGuards);
+  }
+  const harnessHttpRevalidation = isolatedProvenance.defineRuntimeEffect(
+    'harness-http-revalidation',
+    (service) => service.revalidateAll(),
+  );
+  const {
+    installBackgroundRevalidationRunner,
+  } = require('./http/harness-routes');
+  installBackgroundRevalidationRunner((service) => harnessHttpRevalidation.start(service));
+
   // 1. DB init — fusion.db lives at <server>/data/fusion.db (fixed,
   // workspace-independent). It is intentionally NOT tied to the active
   // workspace, because the workspace registry is *in* the DB —
   // chicken-and-egg. The DB is the registry's home; workspaces resolve
   // through it, not the other way around.
   await initDb();
+  await isolatedProvenance.initializeProfile(getDb());
   process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] fusion.db initialized');
+
+  // Registry authority is reconstructed from SQLite immediately after
+  // migrations and before any fact producer, subscriber, watcher, or public
+  // socket can start. Row-local seed corruption is diagnosed/inactivated by
+  // the registry; an infrastructure bootstrap failure remains startup-fatal.
+  const { initializeEventRegistry } = require('./event-registry');
+  const registryAccess = await initializeEventRegistry(getDb(), {
+    installedHandlers: [
+      'system.provenance-ledger',
+      'system.agent-provenance-ledger',
+      'system.agent-resource-observer',
+      'system.resource-render-projection',
+    ],
+  });
+
+  // The governed controller, durable save owner, ledger subscriber, and both
+  // public protocol routes are composed as one startup unit before any legacy
+  // listener, workspace module, watcher, or public socket can observe them.
+  const {
+    createHandlerCatalog,
+    createScopedCapabilityFactory,
+    createSubscriptionController,
+  } = require('./subscriptions');
+  const { bootstrapFileProvenanceAdmission } = require('./subscriptions/file-provenance-bootstrap');
+  const { createFileSaveOwner } = require('./file-mutations/save-owner');
+  const { createResourceProvenanceRepository } = require('./ledger/resource-provenance-repository');
+  const { createProvenanceLedgerHandler } = require('./ledger/provenance-ledger-handler');
+  const {
+    createAgentFactAuthorityRepository,
+  } = require('./agent-provenance/fact-authority-repository');
+  const {
+    createAgentFactAdmissionReconciler,
+  } = require('./agent-provenance/fact-admission-reconciler');
+  const { createAgentLedgerRepository } = require('./agent-provenance/agent-ledger-repository');
+  const { createAgentLedgerReconciler } = require('./agent-provenance/agent-ledger-reconciler');
+  const { createAgentActivityRepository } = require('./agent-provenance/activity-repository');
+  const { createAgentActivityQueryRepository } = require('./agent-provenance/query-repository');
+  const { createAgentExchangeBindRepository } = require('./agent-provenance/exchange-bind-repository');
+  const { createAgentExchangeBinder } = require('./agent-provenance/exchange-binder');
+  const { createAgentObservationJobRepository } = require('./agent-provenance/observation-job-repository');
+  const { createAgentCheckpointRepository } = require('./agent-provenance/checkpoint-repository');
+  const { createAgentResourceIdentityService } = require('./agent-provenance/resource-identity');
+  const { createAgentResourceObserver } = require('./agent-provenance/resource-observer');
+  const { createAgentRendererProjectionJobRepository } = require('./agent-provenance/renderer-projection-job-repository');
+  const { createAgentRendererProjectionAuthority } = require('./agent-provenance/renderer-projection-authority');
+  const { createAgentRendererProjectionOwner } = require('./agent-provenance/renderer-projection-scheduler');
+  const { createStableResourceRepository } = require('./file-mutations/stable-resource-repository');
+  const { createPathCoordinator } = require('./file-mutations/save-mutex');
+  const secureFileObserver = require('../native/secure-file-observer');
+  const {
+    createAgentReconciliationDb,
+  } = require('./agent-provenance/reconciliation-db');
+  const {
+    createAnnouncedActivityReconciler,
+  } = require('./agent-provenance/announced-activity-reconciler');
+  const {
+    getSharedAgentActivityOwner,
+    shutdownSharedAgentActivityOwners,
+  } = require('./agent-provenance/activity-owner');
+  const {
+    shutdownActiveTurnLifecycles,
+  } = require('./wire/canonical-harness-event-bridge');
+  const {
+    createAgentProvenanceLedgerHandler,
+  } = require('./subscriptions/handlers/agent-provenance-ledger');
+  const {
+    createAgentResourceObserverHandler,
+  } = require('./subscriptions/handlers/agent-resource-observer');
+  const {
+    createResourceRenderProjectionHandler,
+  } = require('./subscriptions/handlers/resource-render-projection');
+  const { createResourceProjectionPublishers } = require('./ws/resource-projection-publisher');
+  const { createFileSaveRoute } = require('./ws/file-save-route');
+  const { createResourceProvenanceRoute } = require('./ws/resource-provenance-route');
+  const { createAgentActivityRoute } = require('./ws/agent-activity-route');
+  const { createFileViewerReadRoute } = require('./ws/file-viewer-read-route');
+  const { createAgentToolFixtureRoute } = require('./testing/agent-tool-fixture-route');
+  const writeGovernedDiagnostic = (item) => {
+    console.warn(`[Subscriptions] ${item.code}`);
+  };
+  const provenanceRepository = createResourceProvenanceRepository(getDb());
+  const agentReconciliationDb = await createAgentReconciliationDb(getDb());
+  const agentExchangeBindRepository = createAgentExchangeBindRepository(agentReconciliationDb);
+  const agentExchangeBinder = createAgentExchangeBinder(agentExchangeBindRepository, {
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const { installAgentExchangeBinding } = require('./thread/HistoryFile');
+  installAgentExchangeBinding({
+    insertInTransaction: agentExchangeBindRepository.insertInTransaction,
+    signal: agentExchangeBinder.signal,
+  });
+  let agentFactAdmissionOwner;
+  const agentFactAuthority = createAgentFactAuthorityRepository(agentReconciliationDb, {
+    canAttempt: () => agentFactAdmissionOwner?.isAccepting() !== false,
+  });
+  agentFactAdmissionOwner = createAgentFactAdmissionReconciler({
+    authority: agentFactAuthority,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  let agentLedgerOwner;
+  const agentLedgerRepository = createAgentLedgerRepository(agentReconciliationDb, {
+    canAttempt: () => agentLedgerOwner?.isAccepting() !== false,
+  });
+  agentLedgerOwner = createAgentLedgerReconciler({
+    repository: agentLedgerRepository,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  // Construct the accepted 01b singleton before public work so all foreground
+  // and headless routers inherit the shutdown-registered owner and wake the
+  // same admission reconciler after a terminal reservation commits.
+  const agentActivityRepository = createAgentActivityRepository(getDb(), {
+    onDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  getSharedAgentActivityOwner({
+    db: getDb(),
+    activityRepository: agentActivityRepository,
+    onDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    onTerminalReserved: () => agentFactAdmissionOwner.signal(),
+  });
+  const announcedActivityReconciler = createAnnouncedActivityReconciler({
+    db: agentReconciliationDb,
+    activityRepository: createAgentActivityRepository(agentReconciliationDb, {
+      onDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    }),
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    onTerminalReserved: () => agentFactAdmissionOwner.signal(),
+  });
+  const resourceProjectionPublishers = createResourceProjectionPublishers({
+    sessions,
+    registryAccess,
+  });
+  const pathCoordinator = createPathCoordinator();
+  const observationJobs = createAgentObservationJobRepository(agentReconciliationDb);
+  const stableResources = createStableResourceRepository(agentReconciliationDb);
+  const checkpoints = createAgentCheckpointRepository(agentReconciliationDb, {
+    resourceIdentity: createAgentResourceIdentityService(agentReconciliationDb, stableResources),
+  });
+  const rendererProjectionJobs = createAgentRendererProjectionJobRepository(agentReconciliationDb);
+  const rendererProjectionAuthority = createAgentRendererProjectionAuthority(agentReconciliationDb, {
+    publishResourceObservedV2: resourceProjectionPublishers.publishResourceObservedV2,
+    publishRefreshRequired: resourceProjectionPublishers.publishAgentObservationRefreshRequired,
+  });
+  const rendererProjectionOwner = createAgentRendererProjectionOwner({
+    repository: rendererProjectionJobs,
+    authority: rendererProjectionAuthority,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const observationOwner = createAgentResourceObserver({
+    repository: observationJobs,
+    checkpointRepository: checkpoints,
+    pathCoordinator,
+    nativeObserver: secureFileObserver,
+    resolveWorkspaceRoot: createAgentWorkspaceRootResolver({
+      getWorkspaceById: async (workspaceId) => agentReconciliationDb('workspaces')
+        .where({ id: workspaceId }).select('repo_path').first(),
+    }),
+    onObservationReserved: () => agentFactAdmissionOwner.signal(),
+    onProjectionReserved: () => rendererProjectionOwner.signal(),
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const fileSaveOwner = createFileSaveOwner({
+    db: getDb(),
+    publishResourceRefreshRequired:
+      resourceProjectionPublishers.publishControllerRefreshRequired,
+    controllerOptions: {
+      mutex: pathCoordinator,
+      writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    },
+    reconcilerOptions: {
+      writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    },
+  });
+  let deliverAdmittedFact = null;
+  const subscriptionController = createSubscriptionController({
+    registryAccess,
+    handlerCatalog: createHandlerCatalog({
+      'system.provenance-ledger': createProvenanceLedgerHandler(),
+      'system.agent-provenance-ledger': createAgentProvenanceLedgerHandler(),
+      'system.agent-resource-observer': createAgentResourceObserverHandler(),
+      'system.resource-render-projection': createResourceRenderProjectionHandler(),
+    }),
+    createScopedContext: createScopedCapabilityFactory({
+      appendResourceFact: provenanceRepository.appendResourceFact,
+      appendAgentFact: agentLedgerOwner.appendAgentFact,
+      scheduleAgentObservation(fact) {
+        if (fact?.eventType !== 'agent.tool_completed' || fact?.schemaVersion !== 1) {
+          throw new TypeError('agent observation requires an admitted tool fact');
+        }
+        observationOwner.signal();
+        return Object.freeze({ scheduled: true, activityId: fact.operationId });
+      },
+      publishResourceChanged: resourceProjectionPublishers.publishResourceChanged,
+      publishResourceRefreshRequired:
+        resourceProjectionPublishers.publishSubscriberRefreshRequired,
+      writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+    }),
+    installAdmittedFactDelivery(delivery) {
+      if (deliverAdmittedFact) throw new Error('Admitted-fact delivery is already installed');
+      deliverAdmittedFact = delivery;
+    },
+    writeDiagnostic: writeGovernedDiagnostic,
+  });
+  await subscriptionController.start();
+  bootstrapFileProvenanceAdmission({
+    registryAccess,
+    deliverAdmittedFact,
+    writeDiagnostic: writeGovernedDiagnostic,
+    fileSaveOwner: isolatedProvenance.wrapFileSaveOwner(fileSaveOwner),
+    agentFactAuthority,
+    agentFactAdmissionOwner,
+    onAgentAdmissionCommitted: (fact) => {
+      agentLedgerOwner.signal();
+      if (fact?.eventType === 'agent.tool_completed') observationOwner.signal();
+      if (fact?.eventType === 'resource.state_observed') rendererProjectionOwner.signal();
+    },
+  });
+  announcedActivityReconciler.deferContinuations();
+  agentExchangeBinder.deferContinuations();
+  agentFactAdmissionOwner.deferContinuations();
+  agentLedgerOwner.deferContinuations();
+  observationOwner.deferContinuations();
+  await announcedActivityReconciler.start();
+  await agentExchangeBinder.start();
+  await agentFactAdmissionOwner.start();
+  await agentLedgerOwner.start();
+  await observationOwner.start();
+  await rendererProjectionOwner.start();
+  await fileSaveOwner.reconcile();
+
+  const fileSaveRoute = createFileSaveRoute({
+    registryAccess,
+    fileSaveOwner,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const resourceProvenanceRoute = createResourceProvenanceRoute({
+    registryAccess,
+    repository: provenanceRepository,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const agentActivityRoute = createAgentActivityRoute({
+    registryAccess,
+    repository: createAgentActivityQueryRepository(getDb()),
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const fileViewerReadRoute = createFileViewerReadRoute({
+    registryAccess,
+    writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
+  });
+  const agentToolFixtureRoute = createAgentToolFixtureRoute({
+    db: getDb(),
+    enabled: isolatedProvenance.enabled,
+    nonce: process.env.FUSION_PROVENANCE_TEST_NONCE,
+  });
+  installProtocolRoutes(Object.freeze({
+    fileSaveRoute,
+    resourceProvenanceRoute,
+    agentActivityRoute,
+    fileViewerReadRoute,
+    agentToolFixtureRoute,
+  }));
+
   const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
   const localMachineName = await initializeLocalMachineIdentity();
   console.log('[Workspace] local machine name: ' + localMachineName);
@@ -70,7 +452,7 @@ async function start({ server, app, sessions, getProjectRoot }) {
   const fusionHandlers = createFusionHandlers({ getDb, sessions, getProjectRoot });
 
   // 3. Audit subscriber — listens to event bus, persists exchange metadata
-  startAuditSubscriber();
+  startAuditSubscriber({ enableAgentExchangeBinding: true });
   const { startEventLedgerSubscriber } = require('./ledger/event-ledger-subscriber');
   startEventLedgerSubscriber();
 
@@ -106,20 +488,25 @@ async function start({ server, app, sessions, getProjectRoot }) {
     }
     return null;
   };
+  const getSessionForClient = (ws) => sessions.get(ws) || null;
   const { createWorkspaceBroadcaster } = require('./ws/workspace-broadcaster');
-  createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId });
+  createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, getSessionForClient });
 
   // 3.7b. Harness-status broadcaster + initial revalidation pass.
   // Subscribe before any revalidate() emits so the first diff is
   // delivered. Kick off revalidateAll as a fire-and-forget so we
   // don't block listen(); the picker reads from cache with optimistic
   // defaults while the pass completes.
-  const { createHarnessBroadcaster } = require('./ws/harness-broadcaster');
-  createHarnessBroadcaster({ getAllClients });
+  isolatedProvenance.defineStartupEffect('harness-broadcaster', () => {
+    const { createHarnessBroadcaster } = require('./ws/harness-broadcaster');
+    createHarnessBroadcaster({ getAllClients });
+  }).start();
 
   // 3.7c-alt. Calendar broadcaster — bus → WebSocket for calendar sync events
-  const { createCalendarBroadcaster } = require('./ws/calendar-broadcaster');
-  createCalendarBroadcaster({ getAllClients });
+  isolatedProvenance.defineStartupEffect('calendar-broadcaster', () => {
+    const { createCalendarBroadcaster } = require('./ws/calendar-broadcaster');
+    createCalendarBroadcaster({ getAllClients });
+  }).start();
 
   // 3.7c. Theme handlers — need getAllClients for broadcast, created here
   // alongside the other getAllClients consumers.
@@ -138,13 +525,17 @@ async function start({ server, app, sessions, getProjectRoot }) {
   const screenshotHandlers = createScreenshotHandlers({ getAllClients });
 
   // 3.7f. Calendar adapters — start after DB init so migrations have run
-  const calendar = require('./calendar');
-  calendar.start();
+  isolatedProvenance.defineStartupEffect('calendar-adapters', () => {
+    const calendar = require('./calendar');
+    calendar.start();
+  }).start();
 
-  const harnessStatusService = require('./harness/harness-status-service');
-  harnessStatusService.revalidateAll().catch((err) => {
-    console.error('[Startup] harness revalidateAll failed:', err.message);
-  });
+  isolatedProvenance.defineStartupEffect('harness-status-revalidation', () => {
+    const harnessStatusService = require('./harness/harness-status-service');
+    harnessStatusService.revalidateAll().catch((err) => {
+      console.error('[Startup] harness revalidateAll failed:', err.message);
+    });
+  }).start();
 
   // 3.8. Workspace controller — workspace CRUD, launch validator, switch
   // logic. Must run before listen() so the registry is validated and the
@@ -154,15 +545,18 @@ async function start({ server, app, sessions, getProjectRoot }) {
 
   // 3.8a. Start watching the macOS screenshot folder for hotkey captures.
   // Started after workspaceController so the active workspace repo_path is known.
-  const hotkeyScreenshotWatcher = require('./screenshot/hotkey-screenshot-watcher');
-  hotkeyScreenshotWatcher.start().catch((err) => {
-    console.error('[Startup] Failed to start hotkey screenshot watcher:', err.message);
-  });
+  isolatedProvenance.defineStartupEffect('hotkey-screenshot-watcher', () => {
+    const hotkeyScreenshotWatcher = require('./screenshot/hotkey-screenshot-watcher');
+    hotkeyScreenshotWatcher.start().catch((err) => {
+      console.error('[Startup] Failed to start hotkey screenshot watcher:', err.message);
+    });
+  }).start();
 
   // 3.8b. Themes CSS — re-derive themes.css from the active slug in themes.json
   // on every boot so the CSS is never stale after a hand-edit (THEME_PICKER_SPEC §5c).
   const projectRootForThemes = getProjectRoot();
-  if (projectRootForThemes) {
+  isolatedProvenance.defineStartupEffect('theme-css-bootstrap', () => {
+    if (!projectRootForThemes) return;
     themesService.list(projectRootForThemes).then(themes => {
       const active = themes.find(t => t.active);
       if (active) {
@@ -171,19 +565,20 @@ async function start({ server, app, sessions, getProjectRoot }) {
     }).catch(err => {
       console.warn('[themes] boot CSS generation failed:', err.message);
     });
-  }
+  }).start();
 
   // 3.8c. CLI-config workspace file — ensure ai/<machine>/System/config/cli.json
   // exists so discovery is trivial (CLI_CONFIG_SPEC §7e). Runs after
   // workspaceController.start() so getProjectRoot() resolves to the active
   // workspace root; otherwise bootstrap silently no-ops.
   const projectRootForCli = getProjectRoot();
-  if (projectRootForCli) {
+  isolatedProvenance.defineStartupEffect('cli-config-bootstrap', () => {
+    if (!projectRootForCli) return;
     const { ensureWorkspaceFile } = require('./cli-config');
     ensureWorkspaceFile(projectRootForCli).catch((err) => {
       console.warn('[cli-config] ensureWorkspaceFile failed:', err.message);
     });
-  }
+  }).start();
 
   // 4. listen() — must come before watcher/hooks start, they broadcast to clients
   await new Promise((resolve, reject) => {
@@ -194,7 +589,9 @@ async function start({ server, app, sessions, getProjectRoot }) {
       process.stdout.write(`SERVER_READY:${boundPort}\n`);
 
       try {
-        _startPipeline({ sessions, getProjectRoot });
+        isolatedProvenance.defineStartupEffect('workspace-watcher-trigger-pipeline', () => {
+          _startPipeline({ sessions, getProjectRoot });
+        }).start();
       } catch (err) {
         // Don't crash the server if pipeline init fails — log and continue
         console.error('[Server] Pipeline init error:', err);
@@ -204,15 +601,36 @@ async function start({ server, app, sessions, getProjectRoot }) {
     });
     server.on('error', reject);
   });
+  announcedActivityReconciler.enableContinuations();
+  agentExchangeBinder.enableContinuations();
+  agentFactAdmissionOwner.enableContinuations();
+  agentLedgerOwner.enableContinuations();
+  observationOwner.enableContinuations();
+  rendererProjectionOwner.enableContinuations();
+  await isolatedProvenance.finalizeStartupAudit(getDb());
 
   // 5. Signal handlers — register after successful startup
   const requestShutdown = createShutdownHandler({
     server,
     sessions,
+    beginQuiesce: () => subscriptionController.quiesce(),
+    phaseAOwners: [createAgentPhaseAOwner({
+      shutdownActiveTurns: shutdownActiveTurnLifecycles,
+      drainAuditSaves,
+      shutdownActivityOwners: shutdownSharedAgentActivityOwners,
+      binderOwner: agentExchangeBinder,
+      announcedOwner: announcedActivityReconciler,
+      admissionOwner: agentFactAdmissionOwner,
+      ledgerOwner: agentLedgerOwner,
+      observationOwner,
+      rendererProjectionOwner,
+      closeReconciliationDatabase: () => agentReconciliationDb.destroy(),
+    })],
     closeWatchers: () => {
       const { abandonAll } = require('./watch/core');
       abandonAll();
     },
+    stopSubscriptions: () => subscriptionController.stop(),
     closeDatabase: closeDb,
   });
   process.on('SIGTERM', () => { void requestShutdown('SIGTERM'); });
@@ -371,4 +789,4 @@ function _startPipeline({ sessions, getProjectRoot }) {
   checkHeartbeats(projectRoot);
 }
 
-module.exports = { start };
+module.exports = { createAgentPhaseAOwner, createAgentWorkspaceRootResolver, start };

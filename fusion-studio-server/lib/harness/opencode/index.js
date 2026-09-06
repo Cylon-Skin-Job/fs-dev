@@ -35,6 +35,10 @@ function buildRunArgs(config, projectRoot, openCodeSessionId, message, pendingFo
     args.push('--model', config.model);
   }
 
+  if (config.variant) {
+    args.push('--variant', config.variant);
+  }
+
   if (config.pure === true) {
     args.push('--pure');
   }
@@ -81,7 +85,8 @@ function getEventSessionId(event) {
 }
 
 function isUsefulAssistantEvent(event) {
-  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args' || event.type === 'tool_result') {
+  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args'
+    || event.type === 'tool_result' || event.type === 'tool_snapshot') {
     return true;
   }
   return event.type === 'thinking' && String(event.text || '').length > 0;
@@ -89,9 +94,12 @@ function isUsefulAssistantEvent(event) {
 
 function createSyntheticTurnEnd(translator) {
   const terminalState = translator.getTerminalState();
+  const observedAt = translator.now();
   return {
     type: 'turn_end',
-    timestamp: Date.now(),
+    timestamp: observedAt,
+    timestampSource: 'host_observed',
+    observedAt,
     reason: 'complete',
     fullText: terminalState.fullText,
     hasToolCalls: terminalState.hasToolCalls,
@@ -130,6 +138,7 @@ class OpenCodeHarness extends EventEmitter {
       threadId,
       process: createProcessProxy(),
       activeProcess: null,
+      activeProcessClose: null,
       openCodeSessionId: storedSessionId,
       pendingFork,
       forkProvenance: harnessConfig.forkProvenance || null,
@@ -137,6 +146,12 @@ class OpenCodeHarness extends EventEmitter {
       stopRequested: false,
       projectRoot,
       scopeContext,
+      // Live per-thread config. Mutated by applyHarnessConfig() so mid-thread
+      // model/effort changes take effect on the next prompt without a re-spawn.
+      harnessConfig,
+      applyHarnessConfig(patch) {
+        session.harnessConfig = { ...session.harnessConfig, ...patch };
+      },
       async *sendMessage(message, options = {}) {
         const translator = new OpenCodeJsonEventTranslator();
         const events = [translator.beginTurn(message)];
@@ -145,7 +160,13 @@ class OpenCodeHarness extends EventEmitter {
         const pendingForkForRun = session.openCodeSessionId || session.pendingForkConsumed
           ? null
           : session.pendingFork;
-        const args = buildRunArgs(harness.config, projectRoot, session.openCodeSessionId, message, pendingForkForRun);
+        const runConfig = {
+          ...harness.config,
+          // Live per-thread model + effort override the workspace defaults.
+          ...(session.harnessConfig.model ? { model: session.harnessConfig.model } : {}),
+          ...(session.harnessConfig.variant ? { variant: session.harnessConfig.variant } : {}),
+        };
+        const args = buildRunArgs(runConfig, projectRoot, session.openCodeSessionId, message, pendingForkForRun);
         let done = false;
         let sawTurnEnd = false;
         let sawUsefulAssistantEvent = false;
@@ -170,6 +191,9 @@ class OpenCodeHarness extends EventEmitter {
         });
 
         session.activeProcess = proc;
+        session.activeProcessClose = new Promise((resolve) => {
+          proc.once('close', resolve);
+        });
         session.process = proc;
         session.stopRequested = false;
 
@@ -250,14 +274,21 @@ class OpenCodeHarness extends EventEmitter {
             throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
           }
         } finally {
-          session.activeProcess = null;
+          if (session.activeProcess === proc) {
+            session.activeProcess = null;
+            session.activeProcessClose = null;
+          }
         }
       },
-      async stop() {
+      async stop(signal = 'SIGTERM') {
         session.stopRequested = true;
-        if (session.activeProcess && !session.activeProcess.killed) {
-          session.activeProcess.kill('SIGTERM');
-        }
+        const activeProcess = session.activeProcess;
+        const activeProcessClose = session.activeProcessClose;
+        if (!activeProcess || !activeProcessClose) return;
+        // ChildProcess.killed means only that kill() accepted a signal. It is
+        // not evidence of process exit and must not suppress SIGKILL escalation.
+        activeProcess.kill(signal);
+        await activeProcessClose;
       },
     };
 

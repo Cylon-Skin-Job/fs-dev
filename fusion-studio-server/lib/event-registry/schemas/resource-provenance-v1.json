@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/resource-provenance-v1",
+  "title": "Resource provenance query family v1",
+  "oneOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/result" },
+    { "$ref": "#/$defs/envelopeInvalid" },
+    { "$ref": "#/$defs/pairInvalid" },
+    { "$ref": "#/$defs/workspaceUnavailable" },
+    { "$ref": "#/$defs/pairError" }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "boundedPath": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch"],
+      "properties": {
+        "type": { "const": "resource:provenance:query" },
+        "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "fileName": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "folderPrefix": { "type": "string", "maxLength": 4096 },
+        "operationId": { "$ref": "#/$defs/uuid" },
+        "since": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 200 }
+      }
+    },
+    "snapshotBytes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "sha256", "byteLength", "capturedAt"],
+      "properties": {
+        "kind": { "const": "bytes" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "byteLength": { "type": "integer", "minimum": 0, "maximum": 10485760 },
+        "capturedAt": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "snapshotAbsent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "byteLength", "capturedAt"],
+      "properties": {
+        "kind": { "const": "absent" },
+        "byteLength": { "const": 0 },
+        "capturedAt": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventId", "eventType", "occurredAt", "acceptedAt", "operationId", "commandId", "commandAcceptedEventId", "resourceId", "fileVersionId", "mutationKind", "canonicalPath", "ingress", "origin", "snapshot"],
+      "properties": {
+        "eventId": { "$ref": "#/$defs/uuid" },
+        "eventType": { "const": "resource.mutated" },
+        "occurredAt": { "type": "integer", "minimum": 0 },
+        "acceptedAt": { "type": "integer", "minimum": 0 },
+        "operationId": { "$ref": "#/$defs/uuid" },
+        "commandId": { "$ref": "#/$defs/uuid" },
+        "commandAcceptedEventId": { "$ref": "#/$defs/uuid" },
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "fileVersionId": { "$ref": "#/$defs/uuid" },
+        "mutationKind": { "enum": ["create", "modify"] },
+        "canonicalPath": { "$ref": "#/$defs/boundedPath" },
+        "ingress": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["panel", "path"],
+          "properties": {
+            "panel": { "$ref": "#/$defs/boundedId" },
+            "path": { "$ref": "#/$defs/boundedPath" }
+          }
+        },
+        "origin": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "assurance", "connectionId"],
+          "properties": {
+            "kind": { "const": "local_client" },
+            "assurance": { "const": "transport_only" },
+            "connectionId": { "$ref": "#/$defs/boundedId" }
+          }
+        },
+        "snapshot": {
+          "oneOf": [
+            { "$ref": "#/$defs/snapshotBytes" },
+            { "$ref": "#/$defs/snapshotAbsent" }
+          ]
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "items"],
+      "properties": {
+        "type": { "const": "resource:provenance:result" },
+        "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "items": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/item" } }
+      }
+    },
+    "envelopeInvalid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "code"],
+      "properties": {
+        "type": { "const": "resource:provenance:error" },
+        "version": { "const": 1 },
+        "code": { "const": "invalid_request" },
+        "requestId": { "$ref": "#/$defs/boundedId" }
+      }
+    },
+    "pairInvalid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "code", "requestId", "workspaceId", "workspaceEpoch"],
+      "properties": {
+        "type": { "const": "resource:provenance:error" },
+        "version": { "const": 1 },
+        "code": { "const": "invalid_request" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" }
+      }
+    },
+    "workspaceUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "code", "requestId"],
+      "properties": {
+        "type": { "const": "resource:provenance:error" },
+        "version": { "const": 1 },
+        "code": { "const": "workspace_unavailable" },
+        "requestId": { "$ref": "#/$defs/boundedId" }
+      }
+    },
+    "pairError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "code", "requestId", "workspaceId", "workspaceEpoch"],
+      "properties": {
+        "type": { "const": "resource:provenance:error" },
+        "version": { "const": 1 },
+        "code": { "enum": ["query_failed", "stale_workspace"] },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" }
+      }
+    }
+  }
+}

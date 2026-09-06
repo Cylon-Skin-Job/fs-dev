@@ -7,10 +7,23 @@
 
 import { useActiveResourceStore } from '../../state/activeResourceStore';
 import { useFileDataStore, type FileNode, type FileResourceMetadata } from '../../state/fileDataStore';
+import { useFileStore } from '../../state/fileStore';
+import { usePanelStore } from '../../state/panelStore';
 import { markOfficeThumbnailUpdated } from '../../state/officeThumbnailStore';
 import { showToast } from '../toast';
 import { removeViewPathReferences, rewriteViewPathReferences } from '../viewCollections';
 import type { WebSocketMessage } from '../../types';
+import type { FileContentResponseV1, FileSaveResponseV1 } from '../../types/file-explorer';
+import { isFileContentResponseV1, isFileTreeResponseV1 } from './file-viewer-read-protocol';
+import {
+  isResourceChangedMessageV1,
+  isResourceChangedMessageV2,
+  isResourceRefreshRequiredV1,
+} from './resource-projection-protocol';
+import {
+  removeCaptureDocumentPaths,
+  rewriteCaptureDocumentPaths,
+} from '../../components/view-tabs/captureTabsController';
 
 interface FileChangedMessage extends WebSocketMessage {
   type: 'file_changed';
@@ -152,10 +165,16 @@ function responseCorrelation(msg: {
   return {
     requestId: msg.requestId ?? '',
     workspaceId: msg.workspaceId ?? null,
-    generation: msg.generation ?? -1,
+    workspaceEpoch: useFileDataStore.getState().workspaceEpoch,
+    localGeneration: msg.generation ?? -1,
     success: msg.success === true,
     error: msg.error,
   };
+}
+
+function closeForInvalidCanonicalMessage(reason: string): void {
+  const ws = usePanelStore.getState().ws;
+  try { ws?.close(1011, reason); } catch { /* best effort */ }
 }
 
 /**
@@ -184,6 +203,15 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
 
     // --- Central file data cache population ---
     case 'file_tree_response': {
+      const protocol = msg as unknown as { version?: number; panel?: string };
+      if (protocol.panel === 'file-viewer' || Object.prototype.hasOwnProperty.call(protocol, 'version')) {
+        if (protocol.version !== 1 || !isFileTreeResponseV1(msg)) {
+          closeForInvalidCanonicalMessage('invalid file tree v1 response');
+          return true;
+        }
+        useFileDataStore.getState().handleTreeResponseV1(msg);
+        return true;
+      }
       const m = msg as FileTreeResponseMessage;
       if (m.panel && m.path !== undefined) {
         useFileDataStore.getState().handleTreeResponse(
@@ -198,6 +226,30 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'file_content_response': {
+      const protocol = msg as unknown as { version?: number; panel?: string };
+      if (protocol.panel === 'file-viewer' || Object.prototype.hasOwnProperty.call(protocol, 'version')) {
+        if (protocol.version !== 1 || !isFileContentResponseV1(msg)) {
+          closeForInvalidCanonicalMessage('invalid file content v1 response');
+          return true;
+        }
+        const response = msg as unknown as FileContentResponseV1;
+        const fileData = useFileDataStore.getState();
+        const pendingPath = Array.from(fileData.pendingContents.entries()).find(
+          ([, pending]) => pending.requestId === response.requestId,
+        )?.[0].slice('file-viewer:'.length);
+        const accepted = fileData.handleContentResponseV1(response);
+        if (accepted && response.success) {
+          // Persist presentation activity from canonical symlink metadata
+          // without copying resource metadata into the presentation store.
+          useFileStore.getState().refreshPersistedTabMetadata();
+        } else if (accepted && pendingPath !== undefined) {
+          // Error state remains canonical in fileDataStore. This adapter only
+          // preserves the File Viewer presentation behavior of closing a tab
+          // whose authoritative read failed.
+          useFileStore.getState().removeTabAfterError(pendingPath);
+        }
+        return true;
+      }
       const m = msg as FileContentResponseMessage;
       if (m.panel && m.path) {
         useFileDataStore.getState().handleContentResponse(
@@ -211,10 +263,38 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
       return true;
     }
 
+    case 'resource:changed': {
+      const version = (msg as unknown as { version?: unknown }).version;
+      const projection = version === 1 && isResourceChangedMessageV1(msg)
+        ? msg
+        : version === 2 && isResourceChangedMessageV2(msg)
+          ? msg
+          : null;
+      if (!projection) {
+        closeForInvalidCanonicalMessage('invalid resource changed message');
+        return true;
+      }
+      if (useFileDataStore.getState().handleResourceChanged(projection) === 'conflict') {
+        closeForInvalidCanonicalMessage('conflicting resource projection identity');
+      }
+      return true;
+    }
+
+    case 'resource:refresh_required': {
+      if (!isResourceRefreshRequiredV1(msg)) {
+        closeForInvalidCanonicalMessage('invalid resource recovery message');
+        return true;
+      }
+      useFileDataStore.getState().handleResourceRefreshRequired(msg);
+      return true;
+    }
+
     case 'file_save_response': {
       const m = msg as FileSaveResponseMessage;
-      if (m.panel && m.path) {
-        useFileDataStore.getState().handleSaveResponse(m.panel, m.path, Boolean(m.success), m.error);
+      if ((msg as unknown as { version?: number }).version === 1) {
+        useFileDataStore.getState().handleSaveResponseV1(msg as unknown as FileSaveResponseV1);
+      } else if (m.panel && m.path) {
+        useFileDataStore.getState().handleLegacySaveResponse(m.panel, m.path, Boolean(m.success), m.error);
       }
       return true;
     }
@@ -258,6 +338,13 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
           extension: extensionFromPath(m.targetPath),
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
+        rewriteCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel: m.targetPanel,
+          targetPath: m.targetPath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
       }
       return true;
     }
@@ -279,6 +366,13 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
           extension: extensionFromPath(m.targetPath),
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
+        rewriteCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
+          targetPanel: m.targetPanel,
+          targetPath: m.targetPath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
       }
       showToast(`Renamed to ${m.newName || 'file'}`);
       return true;
@@ -294,6 +388,11 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
         removeViewPathReferences({
           panel: m.sourcePanel,
           path: m.sourcePath,
+          includeDescendants: Boolean(m.sourceIsDirectory),
+        });
+        removeCaptureDocumentPaths({
+          sourcePanel: m.sourcePanel,
+          sourcePath: m.sourcePath,
           includeDescendants: Boolean(m.sourceIsDirectory),
         });
       }

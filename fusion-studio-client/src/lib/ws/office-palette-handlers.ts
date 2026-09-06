@@ -157,13 +157,13 @@ export class OfficePaletteClientController {
     this.dependencies = dependencies;
   }
 
-  onSocketOpen(socket: OfficePaletteSocket): void {
+  onSocketOpen(socket: OfficePaletteSocket, requestImmediately = true): void {
     this.socket = socket;
     this.requestedWorkspaceId = null;
     this.pendingRead = null;
     this.activeWorkspaceId = this.dependencies.getActiveWorkspaceId();
     this.dependencies.getPaletteStore().setActiveWorkspace(this.activeWorkspaceId);
-    this.requestCurrentState();
+    if (requestImmediately) this.requestCurrentState();
   }
 
   onSocketClose(socket: OfficePaletteSocket): void {
@@ -324,7 +324,10 @@ export const removeOfficePaletteColor = (color: string) => officePaletteControll
 export const setOfficePaletteSync = (enabled: boolean) => officePaletteController.mutate('set_sync', enabled);
 export const refreshOfficePalette = () => officePaletteController.refreshCurrentState();
 export const handleOfficePaletteMessage = (msg: WebSocketMessage) => officePaletteController.handleMessage(msg);
-export const handleOfficePaletteSocketOpen = (socket: OfficePaletteSocket) => officePaletteController.onSocketOpen(socket);
+export const handleOfficePaletteSocketOpen = (
+  socket: OfficePaletteSocket,
+  options: { requestImmediately?: boolean } = {},
+) => officePaletteController.onSocketOpen(socket, options.requestImmediately ?? true);
 export const handleOfficePaletteSocketClose = (socket: OfficePaletteSocket) => officePaletteController.onSocketClose(socket);
 export const handleOfficePaletteWorkspaceChanged = (workspaceId: string | null) => (
   officePaletteController.onWorkspaceChanged(workspaceId)

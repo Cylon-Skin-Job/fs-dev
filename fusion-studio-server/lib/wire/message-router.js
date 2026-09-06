@@ -21,6 +21,10 @@ const { resolveScope } = require('../chat-scope');
 const { ThreadWebSocketHandler } = require('../thread');
 const { createCanonicalChatEventApplier } = require('./canonical-chat-event-applier');
 const { createCanonicalHarnessEventBridge } = require('./canonical-harness-event-bridge');
+const { getDb } = require('../db');
+const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
+const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
+const { getAgentTurnAuthorityRef } = require('../agent-provenance/turn-authority');
 
 /**
  * Create a per-connection wire message router.
@@ -32,14 +36,30 @@ const { createCanonicalHarnessEventBridge } = require('./canonical-harness-event
  * @param {(toolName: string, args: object, workspaceRoot?: string | null) => {message: string}|null} deps.checkSettingsBounce
  * @returns {{ handleMessage: (msg: object) => void }}
  */
-function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
+function createWireMessageRouter({ session, ws, emit, checkSettingsBounce, activityOwner: injectedActivityOwner = null }) {
+
+  let activityOwner = injectedActivityOwner;
+  if (!activityOwner) {
+    try {
+      const db = getDb();
+      const activityRepository = createAgentActivityRepository(db, {
+        onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+      });
+      activityOwner = getSharedAgentActivityOwner({
+        db,
+        activityRepository,
+        onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
+      });
+    } catch {
+      console.warn('[AgentProvenance] agent_activity_owner_unavailable');
+    }
+  }
 
   /**
    * Touch the session for the current thread to reset the idle timeout.
    * Called on wire activity so in-flight turns are not killed by the session idle timer.
    */
-  function touchThreadSession() {
-    const threadId = session.currentThreadId;
+  function touchThreadSession(threadId = session.currentThreadId) {
     if (!threadId) return;
     const manager = ThreadWebSocketHandler.getCurrentThreadManager(ws);
     if (manager) {
@@ -53,11 +73,35 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
     resolveWorkspace: resolveScope,
     touchThreadSession,
     checkSettingsBounce,
-    generateTurnId: () => generateId()
+    generateTurnId: () => generateId(),
+    activityOwner,
   });
 
   const bridge = createCanonicalHarnessEventBridge({
     applyChatEvent: applier.applyChatEvent,
+    resolveTurnIdentity: (event) => {
+      const pendingAuthority = session.pendingAgentTurnAuthority;
+      const currentAuthority = session.currentTurn?.authority;
+      const currentIsLive = currentAuthority
+        && getAgentTurnAuthorityRef(currentAuthority) === currentAuthority;
+      const pendingIsLive = pendingAuthority
+        && getAgentTurnAuthorityRef(pendingAuthority) === pendingAuthority;
+      const authority = event?.type === 'turn_begin'
+        ? (pendingIsLive ? pendingAuthority : null)
+          || (currentIsLive ? currentAuthority : null)
+          || pendingAuthority
+          || currentAuthority
+        : (currentIsLive ? currentAuthority : null)
+          || (pendingIsLive ? pendingAuthority : null)
+          || pendingAuthority
+          || currentAuthority;
+      if (authority) return authority;
+      return {
+        workspaceId: session.currentWorkspaceId,
+        threadId: session.currentThreadId,
+        turnId: session.currentTurn?.id || session.pendingTurnId,
+      };
+    },
   });
 
   function handleMessage(msg) {
@@ -127,7 +171,10 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce }) {
     }
   }
 
-  return { handleMessage, handleCanonicalHarnessEvent: bridge.applyHarnessEvent };
+  const handleCanonicalHarnessEvent = bridge.applyHarnessEvent;
+  handleCanonicalHarnessEvent.drainHarnessEvents = bridge.drainHarnessEvents;
+  handleCanonicalHarnessEvent.finalizeTurn = bridge.finalizeTurn;
+  return { handleMessage, handleCanonicalHarnessEvent };
 }
 
 module.exports = { createWireMessageRouter };

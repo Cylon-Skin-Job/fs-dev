@@ -36,6 +36,8 @@ import { rediscoverPanels } from '../panels';
 import { loadRootTree } from '../file-tree';
 import { showModal, onModalAction } from '../modal';
 import { resetSharedStyles, injectWorkspaceStyles } from '../../hooks/useSharedWorkspaceStyles';
+import { handleOfficePaletteWorkspaceChanged } from './office-palette-handlers';
+import { retirePendingResourceProvenanceQueries } from './resource-provenance-protocol';
 import type { ThemeEntry, WebSocketMessage } from '../../types';
 import type { WorkspacePanelState } from '../../state/panelStoreTypes';
 
@@ -44,17 +46,36 @@ type WorkspaceStateSnapshot = Pick<Partial<WorkspacePanelState>, 'currentPanel'>
 
 interface WorkspaceWireMessage extends WebSocketMessage {
   workspaceType?: WorkspaceType;
+  sourceMachineName?: string;
   themes?: ThemeEntry[];
   activeThemeId?: string | null;
   styles?: Record<string, string>;
   workspaceStates?: Record<string, WorkspaceStateSnapshot>;
   activeRepoPath?: string | null;
+  workspaceEpoch?: string | null;
+  fileSaveProtocolVersion?: 1;
+  resourceProvenanceProtocolVersion?: 1;
+  fileViewerReadProtocolVersion?: 1;
 }
 
 function toWorkspacePanelStateSnapshot(snapshot: WorkspaceStateSnapshot): Partial<WorkspacePanelState> {
   return {
     currentPanel: typeof snapshot.currentPanel === 'string' ? snapshot.currentPanel : undefined,
   };
+}
+
+function bindingWorkspaceId(msg: WebSocketMessage, legacyId: string | null | undefined): string | null {
+  const pair = msg as unknown as { workspaceId?: string | null };
+  return Object.prototype.hasOwnProperty.call(pair, 'workspaceId') ? pair.workspaceId ?? null : legacyId ?? null;
+}
+
+export async function bootstrapWorkspaceAfterBind(
+  ws: WebSocket,
+  currentPanel: string | null,
+  discover: typeof rediscoverPanels = rediscoverPanels,
+): Promise<void> {
+  if (currentPanel) ws.send(JSON.stringify({ type: 'set_panel', panel: currentPanel }));
+  await discover(ws, { preserveCurrent: true });
 }
 
 export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
@@ -65,11 +86,20 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     case 'workspace:init': {
       console.log('[workspace-handlers] workspace:init received:', msg);
       const workspaces = msg.workspaces ?? [];
+      const workspaceId = bindingWorkspaceId(msg, msg.activeWorkspaceId);
+      retirePendingResourceProvenanceQueries();
       store.setWorkspaces(workspaces);
-      store.setActiveWorkspaceId(msg.activeWorkspaceId ?? null);
-      useFileDataStore.getState().beginWorkspaceGeneration(msg.activeWorkspaceId ?? null);
+      store.applyWorkspaceBinding(
+        workspaceId,
+        workspaceMsg.workspaceEpoch ?? null,
+        workspaceMsg.fileSaveProtocolVersion ?? null,
+        workspaceMsg.resourceProvenanceProtocolVersion ?? null,
+        workspaceMsg.fileViewerReadProtocolVersion ?? null,
+      );
+      useFileDataStore.getState().beginWorkspaceGeneration(workspaceId, workspaceMsg.workspaceEpoch ?? null);
       store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
-      console.log('[workspace-handlers] activeWorkspaceId set to:', msg.activeWorkspaceId);
+      store.setSourceMachineName(workspaceMsg.sourceMachineName ?? 'local-machine');
+      console.log('[workspace-handlers] activeWorkspaceId set to:', workspaceId);
       if (msg.homePath) store.setHomePath(msg.homePath);
       usePanelStore.getState().hydrateCliConfig(msg.cliConfig ?? {});
       usePanelStore.getState().hydrateThemes(workspaceMsg.themes ?? [], workspaceMsg.activeThemeId ?? null);
@@ -86,19 +116,21 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       }
       // If there's an active workspace on init, activate it so workspace shell
       // state loads immediately (avoids a blank-first-load after refresh).
-      const activeId = msg.activeWorkspaceId ?? null;
-      const panelBefore = usePanelStore.getState().currentPanel;
+      const activeId = workspaceId;
       if (activeId) {
         usePanelStore.getState().activateWorkspace(activeId);
         useFileStore.getState().activateWorkspace(activeId);
         useWikiStore.getState().activateWorkspace(activeId);
       }
-      // Sync panel with server if the restored panel differs from the default
-      // that was already sent in ws.onopen (set_panel is idempotent-ish).
+      // The socket deliberately sends no workspace-bound bootstrap traffic in
+      // onopen. Now that the bind frame has been applied atomically, always
+      // establish the panel and discover its workspace-scoped configuration.
       const panelStore = usePanelStore.getState();
       const wsConn = panelStore.ws;
-      if (wsConn && wsConn.readyState === WebSocket.OPEN && panelStore.currentPanel && panelStore.currentPanel !== panelBefore) {
-        wsConn.send(JSON.stringify({ type: 'set_panel', panel: panelStore.currentPanel }));
+      if (wsConn && wsConn.readyState === WebSocket.OPEN) {
+        void bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel).catch((error) => {
+          console.error('[WS] Panel discovery after workspace bind failed:', error);
+        });
       }
       // Preload workspace icon SVGs from Fusion Home so the ribbon
       // renders inline SVGs instead of font glyphs on first paint.
@@ -108,11 +140,12 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       }
 
       // Keep Electron protocol handler's workspace root in sync
-      const activeWs = workspaces.find((w) => w.id === msg.activeWorkspaceId);
+      const activeWs = workspaces.find((w) => w.id === workspaceId);
       const activeRepoPath = workspaceMsg.activeRepoPath ?? activeWs?.repoPath ?? null;
       window.electronAPI?.setWorkspaceRoot(activeRepoPath);
 
       store.markInit();
+      handleOfficePaletteWorkspaceChanged(workspaceId);
       // Re-request the thread list after workspace activation. A list may have
       // arrived before workspace:init and was intentionally prevented from
       // opening a thread whose state activation would immediately erase.
@@ -137,9 +170,16 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'workspace:switched': {
-      const workspaceId = msg.to ?? null;
-      store.setActiveWorkspaceId(workspaceId);
-      useFileDataStore.getState().beginWorkspaceGeneration(workspaceId);
+      const workspaceId = bindingWorkspaceId(msg, msg.to);
+      retirePendingResourceProvenanceQueries();
+      store.applyWorkspaceBinding(
+        workspaceId,
+        workspaceMsg.workspaceEpoch ?? null,
+        workspaceMsg.fileSaveProtocolVersion ?? null,
+        workspaceMsg.resourceProvenanceProtocolVersion ?? null,
+        workspaceMsg.fileViewerReadProtocolVersion ?? null,
+      );
+      useFileDataStore.getState().beginWorkspaceGeneration(workspaceId, workspaceMsg.workspaceEpoch ?? null);
       store.completeWorkspacePreviewSwitch(workspaceId);
       store.setWorkspaceType(workspaceMsg.workspaceType ?? 'code');
 
@@ -226,7 +266,7 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
     case 'workspace:ribbon_removed':
       if (msg.workspaceId) {
         usePanelStore.getState().evictWorkspaceRuntimeState(msg.workspaceId);
-        useFileStore.getState().evictWorkspaceTree(msg.workspaceId);
+        useFileStore.getState().evictWorkspacePresentation(msg.workspaceId);
       }
       return true;
 

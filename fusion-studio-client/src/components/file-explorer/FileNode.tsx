@@ -1,7 +1,7 @@
 import type { FileTreeNode } from '../../types/file-explorer';
 import { getFileIcon, formatNodeName } from '../../lib/file-utils';
-import { useFileStore } from '../../state/fileStore';
-import { loadFileContent } from '../../hooks/useFileTree';
+import { useFileDataStore } from '../../state/fileDataStore';
+import { loadFileContent } from '../../lib/file-tree';
 import { CopyPathButton } from '../CopyPathButton';
 import { SendToChatButton } from '../SendToChatButton';
 
@@ -11,9 +11,7 @@ interface FileNodeProps {
 }
 
 export function FileNode({ node, depth }: FileNodeProps) {
-  const isThisFileLoading = useFileStore((s) =>
-    s.tabs.some((t) => t.file.path === node.path && t.loading),
-  );
+  const isThisFileLoading = useFileDataStore((s) => s.pendingContents.has(`file-viewer:${node.path}`));
 
   const icon = getFileIcon(node.extension);
   const paddingLeft = `${0.75 + depth * 1.25}rem`;

@@ -10,6 +10,7 @@
  */
 
 const { on, emit } = require('../event-bus');
+const { performance } = require('perf_hooks');
 const { HistoryFile } = require('../thread/HistoryFile');
 const { getProjectThreadManager, awaitThreadManagerReady } = require('../thread/thread-manager-registry');
 const { aggregateExchangeMetadata } = require('../chat-metadata/exchange-metadata-aggregator');
@@ -22,19 +23,35 @@ const pendingAuditData = new Map();
 const PENDING_TTL_MS = 5 * 60 * 1000;
 let cleanupTimer = null;
 let unsubscribeFns = [];
+let bindAgentExchanges = false;
+let unsubscribeTurnEnd = null;
+const inFlightAuditSaves = new Set();
+let auditSaveFailure = null;
+
+function bindingAuthorityFor(event) {
+  if (!bindAgentExchanges
+    || typeof event?.workspaceId !== 'string'
+    || event.workspaceId.length === 0
+    || typeof event?.turnId !== 'string'
+    || event.turnId.length === 0) return null;
+  return Object.freeze({ workspaceId: event.workspaceId, turnId: event.turnId });
+}
 
 /**
  * Start the audit subscriber.
  * Call this once during server initialization.
  */
-function startAuditSubscriber() {
+function startAuditSubscriber({ enableAgentExchangeBinding = false } = {}) {
   if (cleanupTimer) return stopAuditSubscriber;
+  bindAgentExchanges = enableAgentExchangeBinding === true;
+  auditSaveFailure = null;
 
   // Listen for status updates — capture audit metadata
   unsubscribeFns.push(on('chat:status_update', handleStatusUpdate));
 
   // Listen for turn end — persist exchange with audit metadata
-  unsubscribeFns.push(on('chat:turn_end', handleTurnEnd));
+  unsubscribeTurnEnd = on('chat:turn_end', trackTurnEnd);
+  unsubscribeFns.push(unsubscribeTurnEnd);
 
   // Periodic cleanup of stale pending data
   cleanupTimer = setInterval(cleanupStalePendingData, 60000);
@@ -54,6 +71,56 @@ function stopAuditSubscriber() {
     cleanupTimer = null;
   }
   pendingAuditData.clear();
+  bindAgentExchanges = false;
+  unsubscribeTurnEnd = null;
+}
+
+function trackTurnEnd(event) {
+  const task = handleTurnEnd(event);
+  inFlightAuditSaves.add(task);
+  task.then(
+    () => { inFlightAuditSaves.delete(task); },
+    (error) => {
+      inFlightAuditSaves.delete(task);
+      if (!auditSaveFailure) auditSaveFailure = error;
+    },
+  );
+  return task;
+}
+
+async function drainAuditSaves({
+  timeoutMs = 5_000,
+  deadline = null,
+  monotonicNow = () => performance.now(),
+  setTimer = setTimeout,
+  clearTimer = clearTimeout,
+} = {}) {
+  if (unsubscribeTurnEnd) {
+    unsubscribeTurnEnd();
+    unsubscribeFns = unsubscribeFns.filter((unsubscribe) => unsubscribe !== unsubscribeTurnEnd);
+    unsubscribeTurnEnd = null;
+  }
+  const startedAt = monotonicNow();
+  const localDeadline = Math.min(
+    startedAt + Math.max(0, timeoutMs),
+    Number.isFinite(deadline) ? deadline : Number.POSITIVE_INFINITY,
+  );
+  while (inFlightAuditSaves.size > 0) {
+    const remaining = Math.max(0, localDeadline - monotonicNow());
+    if (remaining <= 0) return Object.freeze({ drained: false });
+    let timer;
+    const settled = await Promise.race([
+      Promise.allSettled([...inFlightAuditSaves]).then(() => true),
+      new Promise((resolve) => {
+        timer = setTimer(() => resolve(false), remaining);
+        timer?.unref?.();
+      }),
+    ]);
+    if (timer) clearTimer(timer);
+    if (!settled) return Object.freeze({ drained: false });
+  }
+  if (auditSaveFailure) throw auditSaveFailure;
+  return Object.freeze({ drained: true });
 }
 
 /**
@@ -124,7 +191,8 @@ async function handleTurnEnd(event) {
         event.threadId,
         event.userInput,
         event.parts,
-        metadata
+        metadata,
+        bindingAuthorityFor(event),
       );
       if (!savedExchange?.exchangeId) {
         throw new Error(`Saved exchange missing exchangeId for thread ${event.threadId}`);
@@ -155,7 +223,8 @@ async function handleTurnEnd(event) {
       await finalizeSavedExchange(event, savedExchange);
     } catch (err) {
       console.error('[AuditSubscriber] Failed to save exchange:', err);
-      // Fire-and-forget: don't block the event bus
+      pendingAuditData.delete(event.threadId);
+      throw err;
     }
   }
 
@@ -210,4 +279,5 @@ module.exports = {
   stopAuditSubscriber,
   getPendingCount,
   getPendingForThread,
+  drainAuditSaves,
 };

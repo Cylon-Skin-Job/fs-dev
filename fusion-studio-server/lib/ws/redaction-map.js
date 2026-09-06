@@ -43,6 +43,9 @@ const RULES = {
   'chat-turn:metadata:update': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
   'chat-turn:metadata:updated': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
   'chat-turn:metadata:error': { redactPaths: CHAT_TURN_NOTE_REDACTION_PATHS },
+  'agent:activity:query': { redactPaths: ['path', 'folderPrefix', 'fileName'] },
+  'provenance:test:agent_tool': { redactPaths: ['nonce'] },
+  file_save: { redactPaths: ['content'] },
 };
 
 function setAtPath(obj, path, value) {

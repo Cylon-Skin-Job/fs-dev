@@ -16,7 +16,15 @@ interface WorkspaceStoreState {
   // Registry
   workspaces: Workspace[];
   activeWorkspaceId: string | null;
+  workspaceEpoch: string | null;
+  /** Null keeps first-party saves on the legacy path until SPEC-03d activates v1. */
+  fileSaveProtocolVersion: 1 | null;
+  /** Null prevents provenance queries until the active server bind advertises v1. */
+  resourceProvenanceProtocolVersion: 1 | null;
+  /** Null prevents canonical File Viewer reads until the active bind advertises v1. */
+  fileViewerReadProtocolVersion: 1 | null;
   workspaceType: 'code' | 'app';
+  sourceMachineName: string;
   hasReceivedInit: boolean;
   homePath: string;
 
@@ -35,8 +43,15 @@ interface WorkspaceStoreState {
 
   // Setters
   setWorkspaces: (workspaces: Workspace[]) => void;
-  setActiveWorkspaceId: (id: string | null) => void;
+  applyWorkspaceBinding: (
+    id: string | null,
+    epoch: string | null,
+    fileSaveProtocolVersion?: 1 | null,
+    resourceProvenanceProtocolVersion?: 1 | null,
+    fileViewerReadProtocolVersion?: 1 | null,
+  ) => void;
   setWorkspaceType: (type: 'code' | 'app') => void;
+  setSourceMachineName: (name: string) => void;
   setHomePath: (p: string) => void;
   beginInit: () => void;
   markInit: () => void;
@@ -100,7 +115,12 @@ export function toHiddenRibbonWorkspaces(workspaces: Workspace[]): Workspace[] {
 export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   workspaces: [],
   activeWorkspaceId: null,
+  workspaceEpoch: null,
+  fileSaveProtocolVersion: null,
+  resourceProvenanceProtocolVersion: null,
+  fileViewerReadProtocolVersion: null,
   workspaceType: 'code',
+  sourceMachineName: 'local-machine',
   hasReceivedInit: false,
   homePath: '/',
   isRibbonOpen: false,
@@ -116,10 +136,31 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   isCreatingWorkspace: false,
 
   setWorkspaces: (workspaces) => set({ workspaces }),
-  setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
+  applyWorkspaceBinding: (
+    id,
+    epoch,
+    fileSaveProtocolVersion = null,
+    resourceProvenanceProtocolVersion = null,
+    fileViewerReadProtocolVersion = null,
+  ) => set({
+    activeWorkspaceId: id,
+    workspaceEpoch: epoch,
+    fileSaveProtocolVersion,
+    resourceProvenanceProtocolVersion,
+    fileViewerReadProtocolVersion,
+  }),
   setWorkspaceType: (type) => set({ workspaceType: type }),
+  setSourceMachineName: (name) => set({ sourceMachineName: name || 'local-machine' }),
   setHomePath: (p) => set({ homePath: p }),
-  beginInit: () => set({ hasReceivedInit: false }),
+  // Retire the transport-issued epoch immediately. Preserve the visible
+  // workspace id so reconnect does not erase navigation while the new bind
+  // frame is in flight.
+  beginInit: () => set({
+    hasReceivedInit: false,
+    workspaceEpoch: null,
+    resourceProvenanceProtocolVersion: null,
+    fileViewerReadProtocolVersion: null,
+  }),
   markInit: () => {
     console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
     set({ hasReceivedInit: true });

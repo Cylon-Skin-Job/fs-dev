@@ -7,6 +7,38 @@
  * @see lib/thread/README.md - Thread management documentation
  */
 
+const {
+  installEarlyIsolatedProvenanceGuards,
+} = require('./lib/testing/isolated-provenance-runtime');
+installEarlyIsolatedProvenanceGuards(process.env);
+
+if (process.env.FUSION_SECURE_OBSERVER_HEALTH_ONLY === '1') {
+  const observer = require('./native/secure-file-observer');
+  if (!observer.available) {
+    process.stderr.write('SECURE_FILE_OBSERVER_UNAVAILABLE\n');
+    process.exitCode = 1;
+  } else {
+    (async () => {
+      let fixture = 'load-only';
+      if (process.env.FUSION_SECURE_OBSERVER_SMOKE === 'descriptor-swap-v1') {
+        const { runSecureObserverRuntimeSmoke } = require('./native/secure-file-observer/runtime-smoke');
+        const result = await runSecureObserverRuntimeSmoke({
+          root: process.env.FUSION_PROVENANCE_TEST_ROOT,
+          nonce: process.env.FUSION_PROVENANCE_TEST_NONCE,
+        });
+        fixture = result.fixture;
+      }
+      process.stdout.write(
+        `SECURE_FILE_OBSERVER_READY:${process.platform}:${process.arch}:${process.versions.modules}:${fixture}\n`,
+      );
+    })().catch(() => {
+      process.stderr.write('SECURE_FILE_OBSERVER_SMOKE_FAILED\n');
+      process.exitCode = 1;
+    });
+  }
+  return;
+}
+
 const express = require('express');
 const path = require('path');
 const WebSocket = require('ws');
@@ -28,7 +60,7 @@ const { ThreadWebSocketHandler } = require('./lib/thread');
 const { createFileExplorerHandlers } = require('./lib/file-explorer');
 
 // Event bus for TRIGGERS.md automations
-const { emit, on } = require('./lib/event-bus');
+const { emit } = require('./lib/event-bus');
 const workspaceController = require('./lib/workspace/workspace-controller');
 
 // Harness compatibility layer for external CLI harnesses
@@ -68,7 +100,10 @@ const {
 
 // Initial connection payload builders (extracted per SPEC-01g)
 const { buildWorkspaceInit, buildPanelConfig } = require('./lib/ws/connection-init');
-const { applyWorkspaceSwitchToSession } = require('./lib/ws/workspace-session');
+const {
+  beginWorkspaceBind,
+  completeWorkspaceBind,
+} = require('./lib/ws/workspace-session');
 
 const app = express();
 const server = http.createServer(app);
@@ -147,20 +182,20 @@ wss.on('connection', async (ws) => {
     tokenUsage: null,    // Latest token usage from wire
     messageId: null,     // OpenAI message ID from StatusUpdate
     planMode: false,     // Whether turn was in plan mode
-    projectRoot,         // Mutable per-connection root; updated on workspace:switched. null when no active workspace.
-    currentWorkspaceId: activeWs ? activeWs.id : null,
+    projectRoot: null,
+    currentWorkspaceId: null,
+    workspaceEpoch: null,
+    workspaceBindingState: 'binding',
+    workspaceReplyFlushState: 'idle',
+    workspaceReplyBuffer: [],
+    workspaceReplyBufferBytes: 0,
     currentViewId: null  // CHAT_SCOPE_SPEC: reserved for view-bound scope strings (unused; single workspace chat)
   };
-  sessions.set(ws, session);
-
-  // Per-connection workspace switch listener: every connection tracks the
-  // server-wide active workspace and mirrors its repoPath into its own
-  // session so subsequent router/file/thread operations resolve against
-  // the new root. One-active-workspace-server-wide model (see plan §1).
-  const unsubscribeWorkspaceSwitched = on('workspace:switched', (event) => {
-    applyWorkspaceSwitchToSession(session, event);
+  const initialWorkspacePair = beginWorkspaceBind(session, {
+    workspaceId: activeWs ? activeWs.id : null,
+    repoPath: projectRoot,
   });
-  ws.on('close', unsubscribeWorkspaceSwitched);
+  sessions.set(ws, session);
 
   // Set up a default panel so ThreadManager exists for wire spawning.
   // Don't send the thread list yet — wait for the client's set_panel message.
@@ -224,6 +259,11 @@ wss.on('connection', async (ws) => {
     getThemeHandlers: () => themeHandlers,
     getSecretsHandlers: () => secretsHandlers,
     getScreenshotHandlers: () => screenshotHandlers,
+    getFileSaveRoute: () => fileSaveRoute,
+    getResourceProvenanceRoute: () => resourceProvenanceRoute,
+    getAgentActivityRoute: () => agentActivityRoute,
+    getFileViewerReadRoute: () => fileViewerReadRoute,
+    getAgentToolFixtureRoute: () => agentToolFixtureRoute,
     getBookmarksHandlers: () => bookmarksHandlers,
     getEmojiRecentsHandlers: () => emojiRecentsHandlers,
     handleCanonicalHarnessEvent,
@@ -245,11 +285,14 @@ wss.on('connection', async (ws) => {
   // Send current workspace registry and active workspace so the client
   // can gate its UI (empty state, switcher) before panel discovery runs.
   try {
-    const msg = await buildWorkspaceInit(getProjectRoot);
+    const msg = await buildWorkspaceInit(getProjectRoot, { ...initialWorkspacePair, repoPath: projectRoot });
     console.log('[WS] Sending workspace:init message');
-    ws.send(JSON.stringify(msg));
+    const bound = await completeWorkspaceBind(ws, session, msg, initialWorkspacePair);
+    if (!bound) return;
   } catch (err) {
     console.error('[WS] workspace:init failed:', err);
+    try { ws.close(1011, 'workspace initialization failed'); } catch (_closeError) {}
+    return;
   }
 
   // Send project root info without assuming a panel — the client will
@@ -274,12 +317,32 @@ let emojiRecentsHandlers = {};
 let themeHandlers = {};
 let secretsHandlers = {};
 let screenshotHandlers = {};
+// Slice 03d installs the coherently composed governed route here only after
+// durable publishers, ledger handler/provider, subscription, and grants exist.
+let fileSaveRoute = null;
+let resourceProvenanceRoute = null;
+let agentActivityRoute = null;
+let fileViewerReadRoute = null;
+let agentToolFixtureRoute = null;
 
 startServer({
   server,
   app,
   sessions,
   getProjectRoot,
+  installProtocolRoutes(routes) {
+    if (fileSaveRoute || resourceProvenanceRoute || agentActivityRoute || fileViewerReadRoute) {
+      throw new Error('Protocol routes are already installed');
+    }
+    if (!routes?.fileSaveRoute || !routes?.resourceProvenanceRoute || !routes?.agentActivityRoute || !routes?.fileViewerReadRoute) {
+      throw new Error('Complete governed protocol routes are required');
+    }
+    fileSaveRoute = routes.fileSaveRoute;
+    resourceProvenanceRoute = routes.resourceProvenanceRoute;
+    agentActivityRoute = routes.agentActivityRoute;
+    fileViewerReadRoute = routes.fileViewerReadRoute;
+    agentToolFixtureRoute = routes.agentToolFixtureRoute || null;
+  },
 })
   .then(result => {
     fusionHandlers = result.fusionHandlers;

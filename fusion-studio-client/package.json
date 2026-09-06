@@ -12,13 +12,13 @@
     "preview": "vite preview",
     "electron": "electron electron/main.cjs",
     "electron:dev": "npm run build && electron electron/main.cjs",
-    "restart": "./scripts/restart.sh",
+    "restart": "../restart-fusion.sh",
     "download-pandoc": "node scripts/download-pandoc.cjs",
     "download-gwen-model": "node scripts/download-gwen-model.cjs",
     "download-whisper-model": "node scripts/download-whisper-model.cjs",
     "generate-action-verbs": "node scripts/generate-action-verbs.cjs",
     "prepare-ai-resources": "node scripts/prepare-ai-resources.cjs",
-    "electron:prepare": "npm run build && npm run prepare-ai-resources && npm run download-pandoc",
+    "electron:prepare": "npm --prefix ../fusion-studio-server run build:native-observer && npm run build && npm run prepare-ai-resources && npm run download-pandoc",
     "electron:pack": "npm run electron:prepare && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --dir",
     "electron:dist": "npm run electron:prepare && electron-builder"
   },
@@ -57,6 +57,7 @@
           "config.js",
           "package.json",
           "lib/**/*",
+          "native/**/*",
           "!data/**/*",
           "!server-live.log",
           "!test/**/*",
@@ -68,7 +69,9 @@
         "to": "fusion-studio-server/node_modules",
         "filter": [
           "**/*",
-          "!nodejs-whisper/cpp/whisper.cpp/models/*.bin"
+          "!nodejs-whisper/cpp/whisper.cpp/models/*.bin",
+          "!onnxruntime-node/bin/napi-v6/linux/**/*",
+          "!onnxruntime-node/bin/napi-v6/win32/**/*"
         ]
       },
       {
