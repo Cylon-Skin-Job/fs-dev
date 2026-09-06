@@ -1,6 +1,6 @@
 # PROV-01 Integration Report
 
-Status: `SPEC_READY_FOR_OWNER_REVIEW`
+Status: `OWNER_ACCEPTED`
 
 Date: 2026-09-06
 
@@ -184,5 +184,5 @@ The integration was prepared in an isolated worktree. The five unrelated uncommi
 - Builder/reviewer chain: recorded in the accepted slice reports and current orchestration evidence.
 - Final independent reviewer: `/root/prov01_integration_final_review`, result `CLEAN`.
 - Residual risk: limited to the documented intermittent diagnostic-suite observation; repeated isolation and final full-suite evidence passed.
-- Downstream impact: `compatible deviation`+; Trusted Fusion Shell Authority is satisfied and SPEC-00 may proceed after owner review.
-+
+- Downstream impact: `compatible deviation`; Trusted Fusion Shell Authority is satisfied and SPEC-00 may proceed.
+- Owner acceptance: granted 2026-09-06 in the coordinating Chat Composition task.
