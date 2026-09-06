@@ -166,7 +166,15 @@ Accepted Capture evidence is byte-exact to the source commit. Its pre-existing M
 
 ## Workspace Preservation
 
-The integration was prepared in an isolated worktree. The five unrelated uncommitted destination files under System theme/state and Capture/File Viewer view state were excluded from every integration commit and are required to retain their pre-integration hashes through the final fast-forward.
+The integration was prepared in an isolated worktree. The five unrelated uncommitted destination files under System theme/state and Capture/File Viewer view state were excluded from every integration commit. Their hashes immediately before and after the destination fast-forward were identical:
+
+| Protected uncommitted path | SHA-256 before and after fast-forward |
+|---|---|
+| `ai/RC-MacAir-15/System/state/state.json` | `aee8053a87b74f3e00bbfe5ec3dba87cf66396b3b4bbffc5c1f2b028ac1eefb3` |
+| `ai/RC-MacAir-15/System/styles/themes.css` | `50a8fa64d59780bb0e13c09fe4a7bee050ceed37ba36e3f49b8505dabac8c8da` |
+| `ai/RC-MacAir-15/System/styles/themes.json` | `752fae20976dbc2d758973c732757b8cc6f96d5edc1e05fa0a94f9fd888c3500` |
+| `ai/RC-MacAir-15/Views/001-capture-viewer/state/state.json` | `20a26f991940386ac16aa6c3c6c2a02469faa669f9c23a3081493da49be1f98d` |
+| `ai/RC-MacAir-15/Views/002-file-viewer/state/state.json` | `9e9969bcb7cb32dfb28b9a522ca2ec0e1f228cb7528265e0305b55ef3872d42e` |
 
 ## Review Ledger
 
