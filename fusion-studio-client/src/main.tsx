@@ -12,12 +12,13 @@ import 'material-symbols/outlined.css';
 import App from './components/App';
 import { initializeClipboardMonitorFromConfig } from './clipboard';
 import { subscribeClipboardBroadcasts } from './clipboard/clipboard-api';
+import { reactRootErrorOptions } from './reactRootErrorPolicy';
 
 console.log('[main.tsx] Starting application bootstrap...');
 initializeClipboardMonitorFromConfig();
 subscribeClipboardBroadcasts();
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root')!, reactRootErrorOptions).render(
   <StrictMode>
     <App />
   </StrictMode>,

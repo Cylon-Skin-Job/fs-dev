@@ -368,7 +368,7 @@
       "path": "FUSION_HOME.md",
       "kind": "default_workspace_model",
       "authority": "analysis",
-      "description": "Broad model of Fusion Home's default role, addable workspace families, the System Manager bootstrap workspace, plugin principle and Wiki variants, grouped navigation, suite consolidation, thread density, and open questions.",
+      "description": "Broad model of Fusion Home's default role, addable workspace families, the System Manager bootstrap workspace, plugin principle and Wiki variants, the renamed Project Manager and project-first navigation, project creation and Launchpad composition, suite consolidation, thread density, and open questions.",
       "lifecycle": "develop_from_owner_direction_preserve_plugin_and_thread_management_open_choices",
       "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "PROPOSALS.md", "THREADS_AND_VIEWS.md"],
       "sections": [
@@ -395,7 +395,12 @@
         {
           "key": "left-navigation-structure",
           "heading": "Left Navigation Structure",
-          "description": "Develops the four grouped navigation areas and their constituent Fusion Home capabilities."
+          "description": "Develops the project-first hierarchy, plus-and-divider boundary, ordinary apps, and lower Routines and Plugins group."
+        },
+        {
+          "key": "project-creation-launchpad-composition",
+          "heading": "Project Creation and Launchpad Composition",
+          "description": "Explains template cloning, the universal folder pattern, Project Viewer registration, and Launchpad as an ordinary composition."
         },
         {
           "key": "suite-consolidation",
@@ -703,7 +708,7 @@
       "path": "PLUGINS_AND_SETTINGS.md",
       "kind": "plugin_settings_model",
       "authority": "analysis",
-      "description": "Broad model of lightweight core settings, workspace appearance, Theme Customization, operational plugins, opt-in personal-context Wiki variants, folder-based bundles, UEB hook toggles, registry-backed consent, the System Manager bootstrap, registry-authoritative configuration projection, installation defaults, composition examples, and open questions.",
+      "description": "Broad model of lightweight core settings, workspace appearance, Theme Customization, operational plugins, opt-in personal-context Wiki variants, folder-based bundles, permission-bearing UEB controls, dependencies and shared resources, registry-backed consent, the System Manager bootstrap, registry-authoritative configuration projection, installation defaults, composition examples, and open questions.",
       "lifecycle": "develop_from_owner_direction_preserve_manifest_scope_permission_update_removal_and_trust_open_choices",
       "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "FUSION_HOME.md", "SYSTEM_INBOX.md", "HEARTBEATS_AND_MONITORING.md", "AGENT_PROFILES.md", "TICKET_AUTOMATION.md"],
       "sections": [
@@ -740,7 +745,12 @@
         {
           "key": "universal-event-bus-hooks",
           "heading": "Universal Event Bus Hooks",
-          "description": "Requires inbound and outbound plugin hooks to appear as UI toggles."
+          "description": "Requires sectioned cards and separate trigger and output permission switches for plugin hooks."
+        },
+        {
+          "key": "dependencies-shared-resources",
+          "heading": "Dependencies and Shared Resources",
+          "description": "Develops explicit plugin dependencies, reusable local model resources, and the modular speech-to-text example."
         },
         {
           "key": "registry-consent-boundary",
@@ -771,6 +781,146 @@
           "key": "open-questions",
           "heading": "Open Questions",
           "description": "Preserves unresolved naming, core boundary, manifest, scope, conflicts, trust, updates, removal, editing, and installation choices."
+        }
+      ]
+    },
+    {
+      "path": "ROUTINES_AND_AUTOMATIONS.md",
+      "kind": "routine_automation_model",
+      "authority": "analysis",
+      "description": "Broad model of explicit routine creation, triggers.md-backed semantic graphs, authorized wake conditions, proportional heartbeat execution, visible fronting assistants, scriptable inputs and outputs, plugin dependencies, shared resources, speech-to-text composition, permissions, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_execution_permission_state_and_composition_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "HEARTBEATS_AND_MONITORING.md", "TICKET_AUTOMATION.md", "PLUGINS_AND_SETTINGS.md", "AGENT_PROFILES.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines Routines as the visible semantic surface for inspectable automation rather than invisible agents."
+        },
+        {
+          "key": "creation-conversation-boundary",
+          "heading": "Creation and Conversation Boundary",
+          "description": "Separates explicit routine-folder creation from opening or starting a routine conversation."
+        },
+        {
+          "key": "routine-definition",
+          "heading": "Routine Definition",
+          "description": "Defines triggers.md as the readable anchor for identity, categorization, triggers, connectors, outputs, and explanation."
+        },
+        {
+          "key": "visual-composition",
+          "heading": "Visual Composition",
+          "description": "Develops the connected node graph and direct inspection of scripts and resources."
+        },
+        {
+          "key": "wake-conditions",
+          "heading": "Wake Conditions",
+          "description": "Catalogs installed and authorized schedules, file changes, derived state, script status, heartbeats, and plugin outputs."
+        },
+        {
+          "key": "heartbeat-wait-strategy",
+          "heading": "Heartbeat and Wait Strategy",
+          "description": "Distinguishes short inline waits from longer inspect-repair-rerun-sleep cycles."
+        },
+        {
+          "key": "fronting-assistant",
+          "heading": "Fronting Assistant",
+          "description": "Defines the visible assistant and its semantic inventory of available automation capabilities."
+        },
+        {
+          "key": "inputs-outputs-conditional-logic",
+          "heading": "Inputs, Outputs, and Conditional Logic",
+          "description": "Develops JSON, scripts, regex, file matching, AI synthesis, reports, files, inbox items, and tickets."
+        },
+        {
+          "key": "plugin-dependencies-shared-resources",
+          "heading": "Plugin Dependencies and Shared Resources",
+          "description": "Explains explicit dependencies and reusable installed resources such as local model weights."
+        },
+        {
+          "key": "speech-to-text-example",
+          "heading": "Speech-to-Text Example",
+          "description": "Shows microphone, local STT, editable regex, composer, and video-transcription resource reuse."
+        },
+        {
+          "key": "permissions-inspection",
+          "heading": "Permissions and Inspection",
+          "description": "Keeps trigger and output authority visible and scripts inspectable under registry-backed consent."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved graph, schema, loop, retry, permission, dependency, state, and evidence choices."
+        }
+      ]
+    },
+    {
+      "path": "PROJECTS_AND_LAUNCHPAD.md",
+      "kind": "project_launchpad_model",
+      "authority": "analysis",
+      "description": "Broad model of Project Manager as the renamed Capture surface, project creation, universal template cloning, folder and view identity, the Markdown-first default tab, bulletin surfaces, view-configured guidance, conversation families, Launchpad composition, project-hosted tabs and side agents, and open questions.",
+      "lifecycle": "develop_from_owner_direction_preserve_template_bulletin_hosted_tab_and_capture_migration_open_choices",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "FUSION_HOME.md", "THREADS_AND_VIEWS.md", "THREAD_MANAGEMENT.md", "AGENT_PROFILES.md"],
+      "sections": [
+        {
+          "key": "product-role",
+          "heading": "Product Role",
+          "description": "Defines Projects as ordinary folder-backed views using a universal working-memory pattern."
+        },
+        {
+          "key": "default-projects-location",
+          "heading": "Default Projects Location",
+          "description": "Defines the default organizational destination for created projects."
+        },
+        {
+          "key": "create-project-flow",
+          "heading": "Create Project Flow",
+          "description": "Defines the side-navigation plus, name and icon pop-up, template clone, registration, and navigation placement."
+        },
+        {
+          "key": "project-template",
+          "heading": "Project Template",
+          "description": "Defines four universal starting files and discoverable guidance for additional files and subfolders."
+        },
+        {
+          "key": "view-folder-identity",
+          "heading": "View and Folder Identity",
+          "description": "Relates the cloned folder content root to stable Project Viewer identity."
+        },
+        {
+          "key": "default-folder-tab",
+          "heading": "Default Folder Tab",
+          "description": "Defines the Markdown-first, folders-below navigator and direct project-content surface."
+        },
+        {
+          "key": "bulletin-access",
+          "heading": "Bulletin Access",
+          "description": "Defines the slide-out bulletin and inspectable JSON representation."
+        },
+        {
+          "key": "conversation-families",
+          "heading": "Conversation Families",
+          "description": "Defines multiple visible threads, peer side chats, and visible side-agent tabs around one project folder."
+        },
+        {
+          "key": "launchpad-default-composition",
+          "heading": "Launchpad as a Default Composition",
+          "description": "Explains Launchpad as template files, Skills, orientation, and ordinary project conversation capabilities."
+        },
+        {
+          "key": "project-hosted-tabs",
+          "heading": "Project-Hosted Tabs",
+          "description": "Defines Project Viewer's exclusive ability to host unrestricted project-relevant surfaces as header tabs."
+        },
+        {
+          "key": "project-manager-identity",
+          "heading": "Project Manager Identity",
+          "description": "Defines Project Manager as the renamed Capture surface and relates created folder views to view-configured system guidance."
+        },
+        {
+          "key": "open-questions",
+          "heading": "Open Questions",
+          "description": "Preserves unresolved template, creation, bulletin, hosted-view, side-agent, Capture migration, and mobile choices."
         }
       ]
     },

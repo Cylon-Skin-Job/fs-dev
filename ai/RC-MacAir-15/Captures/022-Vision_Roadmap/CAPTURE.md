@@ -18,13 +18,44 @@ The longer-term substrate is an event-fed system rather than a set of isolated n
 
 The inbox also participates in the full work lifecycle: Launchpad work can generate a first-draft ticket, return here for shaping and review, route through issue resolution and separately authorized roadmap/SPEC creation, undergo later compliance, Wiki, issue, and blast-radius sweeps, and eventually proceed to autonomous construction. The inbox should make this activity observable and actionable without requiring the user to chase separate subsystems.
 
-Navigation and thread identity are also being reorganized around views. The current right-side navigation will move to the left beside the thread list. Threads, currently workspace-wide, will become bound to individual views. Chat, threads, and content are independently presentable parts of the shell: without chat, the thread list becomes a menu of saved content-worksurface states; without chat or threads, the view becomes a full-screen app. Each thread preserves only the content worksurface state needed to resume its work, including tabs, documents, locations, selections, and scroll positions. An assigned folder can anchor that worksurface without becoming a hard filesystem or reasoning boundary. View configuration defines the folder/tag choices in the thread dropdown, while thread metadata always retains multiple stable, ranked collection IDs. The default folder mode projects the highest-ranked valid assignment; optional tags mode projects them all. Changing folders raises a rank without discarding dormant memberships. A non-removable Archive collection catches any thread with no currently valid assignment, and its button clears all assignments instead of setting a separate archive status.
+Navigation and thread identity are also being reorganized around views. The current right-side navigation will move to the left beside the thread list. Threads, currently workspace-wide, will become bound to individual views. Chat, threads, and content are independently presentable parts of the shell: without chat, the thread list becomes a menu of saved content-worksurface states; without chat or threads, the view becomes a full-screen app. Each thread preserves only the content worksurface state needed to resume its work, including tabs, documents, locations, selections, and scroll positions. New tabs are generic containers for components rather than chat-owned surfaces. When a new thread has no saved worksurface, its view configuration chooses only the initial container content: load a registered landing/view target or begin Empty. Tab count universally determines centered versus tabbed identity, so configuration does not select alternate chrome for that first container. New Thread itself does not know which content choice the view made. The same configuration declares whether tab addition is available and which selector buttons appear. Every later `+` action has one behavior: open another empty selector container. Domain creation controls stay inside landing modules rather than becoming tab-launcher effects. Sidebars, landing modules, previews, and similar navigation sources can all ask the shared tab host to open a typed resource in the current tab or a new tab. Before applying either placement, the host checks the target's stable identity; if it is already open, Fusion activates that tab and asks its component to reveal or recenter the resource instead of opening a duplicate. **Open in Current Tab** is a non-destructive preference: if no match exists, Fusion fills the current tab only when it is empty and otherwise creates a new tab. A non-empty tab is never replaced by this flow. The target also identifies the view-owned presenter responsible for the resource rather than asking the tab host to infer appearance from a filename. Capture's landing surface is its own module, and Markdown opened from Capture uses Capture's rendered presentation. File Explorer uses its fullscreen syntax-highlighted file display and editor. Wiki links bypass popups: a right-click tab action opens an in-scope page with the Wiki presenter, while a file outside the Wiki root opens through File Explorer's single-file presenter without the File-tree drawer. This lets File Explorer use its File tree as a sidebar picker, lets Capture open a selected item from its landing surface in a new tab without a sidebar, and lets a Project Manager Bulletin sidebar open claimed work in new tabs while returning to an existing match. Project Viewer combines these ordinary capabilities into a unified workspace through its view configuration: slide-out launcher options can open the Wiki Guide, Capture landing surface, Browser, and other registered presenter targets in tabs, while linked files open beside them through their assigned presenter. The Project thread and its current chat remain the owning shell context. Project's broad catalog is a configured product privilege, not a separate tab system or nested-view runtime. Configured drawers receive individual right-edge icons instead of sharing one generic drawer control, and those controls reuse the top workspace header's action sizing and spacing. Files uses a folder icon; other drawer icons remain semantically specific and configurable. This container/launcher foundation is separate from modular chat and must exist before Send to Side Chat can place a chat component in a new tab. An assigned folder can anchor that worksurface without becoming a hard filesystem or reasoning boundary. View configuration defines the folder/tag choices in the thread dropdown, while thread metadata always retains multiple stable, ranked collection IDs. The default folder mode projects the highest-ranked valid assignment; optional tags mode projects them all. Changing folders raises a rank without discarding dormant memberships. A non-removable Archive collection catches any thread with no currently valid assignment, and its button clears all assignments instead of setting a separate archive status.
+
+The tab-container presentation now uses one universal two-row shell rather than Home and Content layout kinds. With one tab, the first row centers that tab's short name and view icon; with multiple tabs, the same identity appears in the ordinary tab rail. Every active tab then receives a second, breadcrumb-style location row on shell background before its presenter body begins. Optional Back and Forward controls sit before that breadcrumb and remain owned by the active presenter. Landing surfaces, addressed documents, and Empty tabs all provide a human-readable location: Capture may show `Capture Documents and Artifacts` for its landing surface and `Capture > Collection > Name` for an opened document, while Empty can show a neutral identifier such as `New Tab`. These strings are display only; stable placement continues to use explicit presenter and target identities. A future Wiki flag may omit `PAGE.md` from the displayed breadcrumb without changing the full target. “App Home” is therefore ordinary presenter behavior distinguished by previews or internal navigation, not a special shell mode. A view's future configuration chooses whether its first container loads a registered view target or begins Empty, but tab count alone controls centered versus tabbed identity and the location row is universal.
+
+The generic component-tab host, Empty reservation/fill lifecycle, and first
+Tab Shell Presentation Foundation have been implemented, independently
+reviewed, and accepted by the owner, while remaining uncommitted and
+deliberately unused by production views. Before target placement, a corrective
+TABS-02A package now replaces downstream use of the role-specific Home/Content
+presentation with the universal identity-and-location shell. Empty remains
+lifecycle state, landing behavior belongs to presenters, and one-versus-many
+layout remains derived without changing tab or component identity. Chat
+remains held until the owner-defined tab platform milestone is complete.
+Typed target placement and its Provenance-facing controller chokepoint follow
+the correction; declarative view configuration and production view adoption
+still wait for the registration/permission control-plane foundation.
+
+Email, Calendar, and comparable productivity capabilities will use the same landing-presenter pattern without changing the decision to group them inside Productivity Suite. Email begins with one landing surface and therefore receives the universal centered single-tab identity. Expanding a draft full-size reveals the tab rail, preserves the Email landing tab, and opens the draft as another loaded presenter target. The landing surface remains the only place to browse or open another message and to invoke Compose for new mail; the expanded draft tab is focused on that item rather than becoming another navigation or creation surface. Calendar and similar tools can apply the same landing-to-addressed-content division to their own domain items.
+
+The same primitives make productivity capabilities selectively composable across other views. A view can configure an Email Inbox drawer whose rows launch message targets, and it can expose an action that opens Email's landing presenter in a tab. The host view retains its thread, shell, and saved worksurface; it does not mount Email's thread list or navigate into a nested application. Drawer sources, registered landing and addressed targets, and shared find-or-open placement therefore provide broad configurability without adding a bespoke Email tab system.
+
+Because configured drawers exclusively launch tab targets, they no longer form a separately themed navigation system. The drawer shell uses Workspace Background, its ordinary controls follow Workspace Chrome, and its active icon uses Workspace Chrome Accent. Content styling reduces to four controls: Background, Foreground, Accent, and Content Contrast. Contrast jointly attenuates headers, body text, and content-derived borders, while Foreground attenuates structural content such as Home navigation or Wiki navigation. An open right-side drawer occupies layout space below the global top header and pushes the content container left rather than overlaying it. This makes the drawer's icon appear at its top in the unchanged header row. The active accented icon closes its drawer when clicked; another drawer icon switches the occupied region directly to that drawer.
+
+Capture and Tickets retain their preview modes but no longer need a separate fullscreen expand path. Their existing expand controls become **Open in New Tab** actions that submit the same typed open-target request used by sidebars. The shared host first looks for an existing presenter-and-resource match and activates and centers it; only when no match exists does it create another loaded tab. Capture remains differentiated as a lightweight Note experience by previewing on ordinary selection before the user explicitly opens the full tab. Office documents can later adopt direct-to-tab behavior, where ordinary selection invokes the same operation without a preview-first step. Preview policy therefore belongs to the originating view, while every full presentation is a registered presenter target and every tab-opening source shares one deduplicated placement behavior.
 
 The downloaded product will open with **Fusion Home** as its default folder. Users can add more specialized workspaces for code, bookkeeping, media production, research, or system management. Fusion Home adopts an “everything is a plugin” direction and presents a grouped left navigation spanning attention and project management, office and personal-productivity suites, health and household domains, core knowledge and browsing surfaces, extensibility tools, and settings. Lower-density capabilities such as email, calendar, tasks, notes, and contacts move from separate app identities into a consolidated Productivity Suite so thread binding occurs at a useful level of activity.
 
-Thread creation becomes a first-class, view-configurable action. Alongside Link and Send to Chat, content can start a new conversation or be sent into a side chat hosted as a content tab. A side chat remains a distinct conversation and can continue prior work through a bounded handoff prepared from the earlier chat. The visible New action can use any label and icon—such as New Chat, New Routine, New Agent, or New Plugin—but thread creation itself consumes an already-registered view context. It does not create project folders, copy starter content, or negotiate a folder binding. Domain-object creation remains a separate user action.
+Conversation creation is now deliberately thin. Alongside Link and Send to Chat, content can start a new conversation or be sent into a side chat hosted as a content tab. A side chat remains a distinct conversation and can continue prior work through a bounded handoff prepared from the earlier chat. Starting or opening a chat consumes an already-registered view context and never creates project folders, routine folders, or starter content. Fusion waits for the harness-side identity or accepted creation result before registering the durable conversation. Project, Routine, Agent Profile, and Plugin creation remain explicit domain actions rather than alternate labels for a filesystem-writing New Chat operation.
 
-View capsules form a machine-scoped control plane under `ai/<machine>/System/Views/`, while each capsule's declared content root remains independent and may live inside the machine AI tree or in a Git-tracked workspace folder. Their versioned JSON is the canonical configuration used by both purpose-built GUI editors and direct user editing, making view definitions and component assemblies portable and clonable. Portability does not transfer authority: imports and clones receive new identities and omit secrets, permission grants, consent, sessions, thread history, and local runtime or view state. The target protected-System policy lets OpenCode and later harnesses read effective configuration and guide the user, but reserves mutation for validated, user-mediated Fusion services. New-thread creation likewise requires a verified user action or separately user-authorized automation. The folder placement establishes the architecture; a later security implementation must enforce the boundary across every write path.
+View capsules form a machine-scoped control plane under `ai/<machine>/System/Views/`, while each capsule's declared content root remains independent and may live inside the machine AI tree or in a Git-tracked workspace folder. A workspace-level folder in System mirrors the orientation and configuration structure used by the view capsules. It provides the inherited base and explains how to navigate the workspace; the active view capsule specializes that base and explains how to navigate the view. The workspace README makes the whole convention self-describing by explaining the folder layout, inheritance order, prompt assembly, configuration locations, and navigation paths. Prompt assembly follows the same visible hierarchy: Fusion supplies the workspace `prompt.md` first, appends the active view's `prompt.md`, and passes the combined result through the configured harness/provider request. RC expects an OpenRouter request setting to support this combined system context, but the exact adapter field remains to be verified when implementation is scoped. Their versioned JSON is the canonical configuration used by both purpose-built GUI editors and direct user editing, making view definitions and component assemblies portable and clonable. Every capsule also carries a readable `README.md` that orients the active assistant to the view. A short common footer at the end points to the canonical configuration and view prompt, explains that sibling view capsules share the same navigable tree, and describes the read-only script used to list them. The assistant can then inspect another view's README, prompt, configuration, and declared source folder when the conversation needs cross-app knowledge, without loading every view into every prompt. A small shared System Wiki supplies the wider Fusion Studio and capability map, and view-panel packages contribute their own discoverable Wiki entries in the same repository. Portability does not transfer authority: imports and clones receive new identities and omit secrets, permission grants, consent, sessions, thread history, and local runtime or view state. The target protected-System policy lets the configured harness read effective configuration and guidance, run the bounded discovery needed to list and inspect views, and guide the user, but reserves mutation for validated, user-mediated Fusion services. New-thread creation likewise requires a verified user action or separately user-authorized automation. The folder placement establishes the architecture; a later security implementation must enforce the boundary across every write path.
+
+The Plugins experience now separates three things that had briefly been combined. Its view capsule remains under `ai/<machine>/System/Views/`; its locked Browse surface queries a curated SQLite catalog of Fusion-approved text-oriented packages; and its inspectable installed source lives under `ai/<machine>/System/plugins/`. The System Manager repository remains the approved upstream distribution source, while the registry remains authoritative for registration, activation, permissions, and consent. Clicking `+` in Plugins opens the Browse overlay and therefore enters the approved installation channel. A user may also download, author, receive, or share a compatible folder containing a view, workflow, Agent Profile, or other plugin resources and drag or copy it into the installed root. Fusion offers no visual sideload action and no approval badge. Folder presence permits discovery but not execution and never adds the package to Browse. After placement, the user provisions its settings and completes the applicable registration, permission, consent, and activation steps. Right-click Add View, Duplicate View, and `+ Project` consume only registered definitions through validated Fusion paths, and later Provenance work can help reduce more built-in views to declarative configurations over the same system.
+
+Templates and interface modules are themselves plugins and can declare dependencies on one another. A high-level **Code Space** offering can therefore require the File Tree Drawer, File Editor Content tab, Capture Home, Capture Content tab, Wiki Content tab, and its associated templates rather than duplicating each implementation. The Plugins Home can reuse a modular Capture Home layout: introductory text above a one-folder-deep hierarchy in which first-level folders become sections and files become cards in a scrolling grid. Card width and presentation remain configurable. Plugin cards borrow the Ticket interaction pattern, allowing a preview before opening a full Plugin Content tab. That detail presentation uses one Markdown document for its descriptive body, exposes basic switches and the plugin's source folder beneath it, and opens source files in additional tabs through the File Viewer Content presenter. The same reusable Home and list presenters can cross domains—for example, an Email-inbox layout can supply an Issues inbox—without merging their data or permissions.
+
+The emerging declarative chain is: an optional Home presenter, an optional preview presenter, a selected presenter for the expanded tab, then the data source and permissions or dependencies the surface requires. Exact field names and the unfinished choice behind “opens in tab as” remain for the configuration contract; it is a presenter reference rather than one universal renderer. Duplicate View does not need an exhaustive selective-copy dialog. If an instance starts from defaults and the user wants selected behavior from another view, the assistant can use the injected System hierarchy to compare the inspectable configurations and guide the user through Fusion's validated configuration UI without receiving direct write access to protected System files.
+
+This split also creates an explicit trust boundary. Browse is locked: arbitrary local or downloaded folders cannot write into it or make themselves appear Fusion approved. The installed root is intentionally open to both validated catalog installations and user-controlled filesystem sideloading, preserving the ability to share a view, workflow, Agent Profile, or other folder-shaped capability directly. The UI does not need badges to restate the distinction: Browse is the approved channel, while folder dragging occurs outside the Plugins interface. Both routes use the same plugin contract after discovery. Scripts stored in the catalog or found in a sideloaded folder remain inert until the relevant validation, registration, permission review, and authorization complete.
 
 Inside Issues, inbox items can expand in place or open into the full content area. Any item can start a new chat. Once a ticket has a view-bound thread, selecting that thread restores the exact ticket content in the Issues area and lets the user watch its work evolve. This creates a user-in-the-loop form of background agency: tickets may be generated automatically and queued, the user can choose when to run them, and an agent can monitor the inbox and surface significant changes rather than requiring constant manual inspection.
 
@@ -34,9 +65,17 @@ Scheduled work and assignment use tickets as the universal work object. The Sche
 
 The **Agent Profiles** view is a way to discover, define, and invoke capabilities already available through the configured harness rather than a system for managing persistent agent beings. A profile can be selected from the plus button, named in ticket frontmatter, loaded automatically as a workspace default, or invoked by another agent or workflow as a subagent. Profiles can range from lightweight orientation and tool awareness to elaborate gated workflows with role-specific subagents and validation. The governing philosophy is that the profile is a frozen capability container—a mask a thread wears when that set of abilities is needed. Schedules and triggers live outside the profile; durable state belongs to the ticket, workflow, project state, or event history; the user interacts with the work and its thread rather than managing an agent entity.
 
-The view family around that model is still being shaped. Routines organizes schedules and triggers around the question of what wakes a capability and causes it to act. Agent Profiles can project inspectable profile folders into a profile/Skills/subagent hierarchy. Plugins uses a browser-extension-style card library for installed and available bundles. Projects use the ordinary view model rather than an upper-level Project Manager exception: Create Project in side navigation adds a numbered Project Viewer capsule with its own immutable ID and content-root binding. That single project view can hold several primary threads, each with several side-chat peers, while reusing the same viewer and tab behavior as every other view.
+The surrounding view family is becoming more concrete. Routines presents an n8n-like semantic graph of triggers, scripts, heartbeats, reasoning steps, applications, and outputs backed by an inspectable `triggers.md` and supporting files. Its visible assistant explains the graph and available capabilities instead of representing an invisible persistent agent. After Provenance, installed and authorized schedules, file changes, derived folder conditions, script state, heartbeat intervals, and plugin outputs can wake the routine. Short work may wait inline; long work can sleep, wake to inspect and repair, rerun when needed, and sleep again. Routines can combine JSON, scripts, regex, file matching, AI synthesis, inbox reports, files, and tickets. Linking one routine to another remains a proposal pending loop, permission, and failure semantics.
 
-Settings follow the same plugin philosophy. Fusion's core provides useful but deliberately compact per-workspace palette controls: primary and secondary colors plus a handful of sliders. Installing a **Theme Customization** plugin adds a Custom mode between Light and Dark, granular color pickers, and context-menu entries for deeper control. Other plugins can enable Inbox Alerts, Heartbeats, Auto-Rename Chat Threads, or a Wiki Maintainer assembled from ticket schedules, Agent Profiles, triggers, and durable state. The auto-rename plugin owns deterministic attachment and ticket rules as well as optional LLM-assisted naming, keeping that policy outside the core conversation component. Plugins are folder-based bundles of Markdown, scripts, configurations, regex, and related resources. Any inbound or outbound Universal Event Bus hooks are surfaced as UI toggles with intelligent installation defaults that remain customizable.
+Projects use the ordinary view model rather than an upper-level Project Manager exception. The side-navigation plus opens a name-and-icon pop-up, clones the registered universal project template into the default Projects location, registers the folder as a Project Viewer, and places it above the plus and divider. Ordinary apps follow beneath; Routines and Plugins occupy a lower group after a gap. Conversation creation performs none of this domain work.
+
+The universal project template begins with four carefully shaped Markdown files and points to the available patterns for adding more files and subfolders as the work earns them. Project Viewer's frontmost tab is the folder itself: a left-side navigator places Markdown files above subfolders such as Transcripts and Research for rapid scanning and jumping. A slide-out bulletin preserves quick situational awareness, while the same bulletin remains inspectable as JSON in the folder view. This folder-and-guidance pattern can work in other folder-backed contexts.
+
+Project Viewer adds the exceptional ability to host other views and arbitrary project-relevant surfaces as header tabs. Tools, previews, research surfaces, and side agents can remain gathered around the project. Multiple visible threads share the project folder; each can contain a main chat and peer side chats. Relevant Skills and semantic orientation turn this ordinary composition into Launchpad by default rather than requiring a bespoke Launchpad runtime. A side agent remains visible within the project's thread family and uses an Agent Profile as a temporary capability mask.
+
+The existing Capture product surface will be renamed **Project Manager**. Its left-side plus asks for the folder name and icon, then creates and registers the resulting folder-backed view. This preserves Capture's useful note-taking, riffing, and brain-dump character while making the project role explicit; there is no separate promotion from Capture into Project Manager. Each bound view has configuration that contributes view-specific system guidance to its conversations. That configuration behavior is already being shaped in the in-progress SPEC and is only cataloged here, not redesigned.
+
+Settings follow the same plugin philosophy. Fusion's core provides useful but deliberately compact per-workspace palette controls: primary and secondary colors plus a handful of sliders. Installing a **Theme Customization** plugin adds a Custom mode between Light and Dark, granular color pickers, and context-menu entries for deeper control. Other plugins can enable Inbox Alerts, Heartbeats, Auto-Rename Chat Threads, or a Wiki Maintainer assembled from ticket schedules, Agent Profiles, triggers, and durable state. The auto-rename plugin owns deterministic attachment and ticket rules as well as optional LLM-assisted naming, keeping that policy outside the core conversation component. Plugins are folder-based bundles of Markdown, scripts, configurations, regex, and related resources. Installed plugins appear as sectioned browser-extension-style cards with right-side switches for trigger and output permissions. Plugins may request reusable dependencies such as local model weights, but downloads and activation remain explicit. The speech-to-text example composes microphone audio, reusable local STT weights, an editable regex formatter, and the chat input; video transcription can reuse that resource while requesting additional voice and timestamp capabilities.
 
 Plugins can also extend Wiki into personal-context surfaces. **Context Manager** is a planned semantic and indexable history that can include basic user data. It may appear as a second Wiki tab or as another Wiki type; that presentation remains open. **User Profile** is another candidate Wiki variant. Any extraction feeding these surfaces is opt-in, and the user retains control over what the system records and what it surfaces back into product context.
 
@@ -50,7 +89,7 @@ This capture is expected to branch into many future roadmaps and SPECs. The work
 
 The current documented chat architecture is thread-centered and server-owned: durable identity belongs to the thread, live routing uses `threadId`, completed exchanges hydrate from SQLite, and the renderer presents server-owned state. That is current-system context, not a constraint that predetermines the future vision. Later conversation can identify which existing concepts remain useful, which need to evolve, and which broader system relationships are missing.
 
-The inferred phase is **framing and shaping**. The first implementation SPEC covers the composable conversation/thread foundation. A second SPEC now covers relocation into `System/Views`, versioned `content.json` chat presentation, ranked collection persistence, derived Archive behavior, and shared thread-row menus with radio folders or checkbox tags. Ordinary Project Viewer instances remain created separately from their threads. Broader configuration precedence, protected-root enforcement, trusted user-presence mechanism, side-chat handoff, and Create Project confirmation rules remain open for later shaping.
+The inferred phase is **framing and shaping**. The first implementation SPEC covers the composable conversation/thread foundation. The earlier second SPEC has now been split under the approved single-domain rule: System View Capsule Control-Plane Foundation owns relocation and Fusion-route protection, while View-Configured Thread Collections owns only effective collection configuration, persistence, and thread-list/menu behavior. Workspace/view prompt composition remains a separate future SPEC. The current conversation is broader product shaping for Project Manager, Launchpad-as-composition, Routines, heartbeats, and plugin resources; it does not itself authorize those other implementation changes. Template contents, Capture rename/migration, bulletin authority, hosted-tab lifecycle, routine loops, and permission detail remain open for later bounded work.
 
 ## User Threads to Resume
 
@@ -222,8 +261,8 @@ The inferred phase is **framing and shaping**. The first implementation SPEC cov
 - **Type:** thread
 - **Status:** open
 - **Source:** RC's Routines, Agent Profiles, Plugins, and Project Manager host-surface description on 2026-09-02
-- **Summary:** Continue shaping the views that motivate the composable conversation model: Routines as schedules and triggers framed around what wakes a capability; Agent Profiles as inspectable folders projected into a profile/Skills/subagent hierarchy; Plugins as a browser-extension-style card library spanning trusted System Manager offerings and explicit untrusted-source installation; and individually created Project Viewer instances as ordinary Markdown-centered views that can own several threads and side chats.
-- **Related:** CAP-003, CAP-005, CAP-117, CAP-125, D-035, D-039, D-043, D-078, D-081, D-084, D-101
+- **Summary:** Continue shaping the views that motivate the composable conversation model: Routines as inspectable semantic automation graphs with visible assistants; Agent Profiles as invoked capability masks; Plugins as permission-bearing cards with reusable dependencies; and Project Manager as the renamed Capture surface that creates folder-backed views whose Markdown tab, bulletin, threads, side chats, hosted views, and side-agent tabs compose Launchpad. Resolve the remaining template contents, Capture rename/migration, bulletin authority, hosted-tab lifecycle, and routine-chain behavior without turning this umbrella capture into a roadmap.
+- **Related:** CAP-003, CAP-005, CAP-117, CAP-125, CAP-127, CAP-130, CAP-138, CAP-146, D-078, D-081, D-084, D-101, D-103, D-106, D-114, D-115, D-118, D-119, P-009, P-010
 
 ## Assistant Possibilities
 
@@ -248,6 +287,33 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Source:** RC's system-inbox description on 2026-08-22
 - **Summary:** Weigh inline artifact metadata against a separate JSON representation for icon state, alert classification, timestamps, controls, and other inbox-row presentation needs when the design is mature enough.
 - **Related:** CAP-010, CAP-012, CAP-013
+
+### CAP-154 — Reconcile the new-thread project field with Create Project
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** open
+- **Source:** RC's chat-routing function and project-name field example on 2026-09-02
+- **Summary:** Determine whether the default surface attached to every new thread merely collects a project name as appended chat text, creates or selects a Project Viewer, or replaces part of the existing side-navigation Create Project flow. The choice must preserve or explicitly revise the settled boundary that ordinary conversation creation consumes an existing view and does not itself create a project folder.
+- **Related:** D-082, D-101, D-104, D-114, D-125
+
+### CAP-155 — Define chat-assisted plugin setup versus installation
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** open
+- **Source:** RC's plugin repository, manual-download, Install, and Send to Chat example on 2026-09-02
+- **Summary:** Define whether the plugin card's Install action directly performs validated registration or instead routes the plugin location and its self-contained setup folder into a chat, and clarify the adjacent Send to Chat button's distinct behavior. In either case, loading the folder into chat must remain separate from granting registry-backed permissions or activation authority.
+- **Related:** D-045, D-046, D-096, D-125, CAP-075, CAP-122
+
+### CAP-157 — Define the tab-container component catalog and lifecycle
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** open
+- **Source:** RC's New Tabs as Containers direction on 2026-09-02
+- **Summary:** Capture and File Viewer now establish the first selector examples, and tab selectors no longer contain domain creation effects. Settle the remaining catalog and lifecycle questions: whether an unfilled tab survives restart, whether a filled tab can replace its component in place, how unavailable configured components appear, and which labels, icons, ordering, or defaults a view may override.
+- **Related:** D-118, D-126, D-127, CAP-142, CAP-156
 
 ## Routed Outcomes
 
@@ -962,6 +1028,456 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Summary:** Make chat, thread navigation, and content independently presentable; persist only a thread's content worksurface; treat assigned folders as contextual worksurfaces; host side chats in content tabs with bounded prior-chat handoff; let each view configure its New action, thread collections, instructions, working-directory override, and transcript behavior from the view folder; retain project root as the default working directory; and deliver automatic renaming as a plugin.
 - **Related:** D-078, D-079, D-080, D-081, D-082, D-083, D-084, D-085, D-086, D-087
 
+### CAP-127 — Separate conversation registration from domain creation
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's project, routine, and conversation simplification on 2026-09-02
+- **Summary:** Starting or opening a chat performs no folder or starter-file work, and Fusion waits for the harness-side creation result before registering the conversation. Projects and routines are created through explicit domain actions.
+- **Related:** D-103
+
+### CAP-128 — Create Project control and navigation hierarchy
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's side-navigation and project-creation direction on 2026-09-02
+- **Summary:** Use the side-navigation plus to collect a project name and icon, place created projects above it, separate ordinary apps with a divider, and place Routines and Plugins in a lower group after a gap.
+- **Related:** D-104
+
+### CAP-129 — Explicit Create Routine boundary
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's routine-folder clarification on 2026-09-02
+- **Summary:** Opening or discussing a routine does not create a folder; the explicit Create Routine action establishes the folder in which its definition and supporting materials are built.
+- **Related:** D-105
+
+### CAP-130 — Semantic routine graph and triggers document
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's node-based routine interface direction on 2026-09-02
+- **Summary:** Present routines as connected drag-and-drop blocks backed by a readable `triggers.md` with metadata, semantic explanation, triggers, scripts, heartbeats, and outputs; allow direct inspection of script-backed nodes.
+- **Related:** D-106
+
+### CAP-131 — Provenance-authorized routine wake conditions
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's heartbeat and trigger direction on 2026-09-02
+- **Summary:** After Provenance, allow installed and authorized schedules, file changes, derived folder conditions, script state, heartbeat intervals, and plugin outputs to wake a routine.
+- **Related:** D-107
+
+### CAP-132 — Proportional heartbeat execution
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's long- and short-running process examples on 2026-09-02
+- **Summary:** Let short work wait in the active process and let longer work sleep, wake later, inspect, repair, rerun, and sleep again; variables and defaults may be shaped by an assistant or provided by a plugin.
+- **Related:** D-108
+
+### CAP-133 — Visible fronting assistant for routines
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's routine-chat description on 2026-09-02
+- **Summary:** Give the Routines surface an assistant that explains the graph, available triggers and outputs, connected apps, documentation, installed plugins, and useful additions without representing a persistent invisible agent.
+- **Related:** D-109
+
+### CAP-134 — Scriptable conditions and routine outputs
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's routine composition examples on 2026-09-02
+- **Summary:** Allow routines to connect JSON, scripts, file and extension matching, regex, AI synthesis, inbox reports, files, and ticket creation while keeping the effects inspectable.
+- **Related:** D-110
+
+### CAP-135 — Permission-bearing plugin cards
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's installed-plugin UI direction on 2026-09-02
+- **Summary:** Present installed plugins as sectioned browser-extension-style cards with right-side switches for trigger permissions and output permissions.
+- **Related:** D-111
+
+### CAP-136 — Plugin dependencies and reusable resources
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's plugin-resource direction on 2026-09-02
+- **Summary:** Let plugins prompt for required plugin or resource dependencies and make explicitly installed local resources such as model weights reusable across compatible plugins and routines.
+- **Related:** D-112
+
+### CAP-137 — Modular local speech-to-text pipeline
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** routed
+- **Source:** RC's speech and video transcription example on 2026-09-02
+- **Summary:** Compose microphone audio through a reusable local STT capability and editable regex formatter into the input box; require explicit weight installation and allow video workflows to reuse it with additional dependencies.
+- **Related:** D-113
+
+### CAP-138 — Universal project template and guided extension
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's project-template refinement on 2026-09-02
+- **Summary:** Create a project by cloning a registered universal template with four carefully shaped starting files plus a discoverable way to add further files and subfolders as needed.
+- **Related:** D-114
+
+### CAP-139 — Launchpad as an ordinary project composition
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Launchpad unification on 2026-09-02
+- **Summary:** Compose Launchpad from the project folder, default files, semantic orientation, Skills, multiple threads, and peer side chats instead of maintaining a bespoke Launchpad runtime.
+- **Related:** D-115
+
+### CAP-140 — Markdown-first default project tab
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Project Viewer folder-navigation description on 2026-09-02
+- **Summary:** Make the project folder the frontmost tab, with a left-hand navigator that lists Markdown files first and subfolders such as Transcripts and Research below for rapid browsing.
+- **Related:** D-116
+
+### CAP-141 — Bulletin drawer and JSON representation
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's bulletin-access clarification on 2026-09-02
+- **Summary:** Make the project bulletin available through a slide-out bar and as inspectable JSON in the default folder view.
+- **Related:** D-117
+
+### CAP-142 — Project-hosted tabs and side agents
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's project-tab and side-agent clarification on 2026-09-02
+- **Summary:** Let only Project Viewer host unrestricted project-relevant tabs such as other views, tools, and side agents, while the underlying universal folder pattern remains usable elsewhere.
+- **Related:** D-118
+
+### CAP-143 — Capture as a progressive project on-ramp
+
+- **Origin:** user
+- **Type:** idea
+- **Status:** routed
+- **Source:** RC's Capture-as-hidden-Project-Manager idea on 2026-09-02
+- **Summary:** Consider teaching the universal working-memory pattern through low-ceremony Capture notes, riffs, and brain dumps before the plus action reveals or creates the fuller project experience.
+- **Related:** P-010
+
+### CAP-144 — Link routines together
+
+- **Origin:** user
+- **Type:** idea
+- **Status:** routed
+- **Source:** RC's routine-composition direction on 2026-09-02
+- **Summary:** Consider allowing routines to invoke other routines as reusable connected automation fragments, subject to later loop, permission, state, and failure semantics.
+- **Related:** P-009
+
+### CAP-146 — Rename Capture to Project Manager
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Project Manager naming and view-configuration clarification on 2026-09-02
+- **Summary:** Rename the Capture product surface Project Manager; use its left-side plus to name and icon a new folder; register and list that folder as a view; and rely on each bound view's configuration to contribute view-specific system guidance through the already in-progress SPEC.
+- **Related:** D-119
+
+
+### CAP-153 — Reusable chat-routing function checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** routed
+- **Source:** RC's explicit three-destination, optional-send, and appended-text scope on 2026-09-02
+- **Summary:** Settled a reusable chat-routing capability that can send content to a parent chat, a newly created side chat, or a newly created thread; each route may stop with the populated composer or send immediately and may append caller text after the attachment. Preserved the assistant's one-operation implementation shape as a proposal rather than owner-approved architecture. Identified project-name onboarding and plugin setup as immediate consumers whose domain-creation and permission boundaries still require clarification.
+- **Related:** D-125, P-012
+
+### CAP-156 — New tabs as view-configured component containers
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's New Tabs as Containers scope correction on 2026-09-02
+- **Summary:** Separated generic tab hosting from modular chat. A new tab is an empty component container whose launcher buttons come from configuration stored with the active view. The tab-container foundation becomes an explicit prerequisite for Send to Side Chat, while the component catalog and remaining empty/filled lifecycle choices stay open for this fork to shape.
+- **Related:** D-126, D-127
+
+### CAP-158 — View-owned default surfaces and tab-launch behavior
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's default-surface, preview, tab-launcher, Capture, and File Viewer refinement on 2026-09-02
+- **Summary:** Removed view-specific worksurface setup from New Thread. When a new thread has no saved content state, the owning view's canonical configuration supplies its default module and single-surface header, decides whether the plus action is present, and declares the buttons available in an empty tab. View-native items may open in a popup or preview and then open in a new tab through the same owning module. Picker-style entries such as Open File may open the shared File tree drawer and fill the waiting tab after selection. Capture and File Viewer will provide the first bounded examples while side chat remains the shared MVP hosted component.
+- **Related:** D-128, D-129, D-130, D-131
+
+### CAP-159 — Keep domain creation inside Home modules
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Capture launcher simplification on 2026-09-02
+- **Summary:** Resolved the earlier New Collection placement question by removing domain creation effects from empty-tab selectors. Frequent create controls belong to the configured Home module that owns their domain. A selector may open a module, open an existing resource through a picker, or instantiate a Side Chat, but it does not create Capture collections, projects, folders, files, or comparable domain objects.
+- **Related:** D-135
+
+### CAP-162 — Separate initial-container policy from later tab addition
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's File Explorer and Capture initial-container examples on 2026-09-02
+- **Summary:** Split view configuration into an initial-container choice and a universal later-tab behavior. File Explorer starts without a Home module, renders its first selector container as a visible tab, and offers Open File plus New Side Chat. Capture starts with its Home module under centered single-surface identity; pressing plus converts that worksurface to tabbed presentation and opens a new selector containing Capture Home plus New Side Chat. Every later plus action opens another selector container rather than rerunning the initial policy.
+- **Related:** D-134, D-136
+
+### CAP-163 — Give navigation sources shared current-tab and new-tab placement
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's File Explorer, Capture Home, and Project Manager Bulletin placement refinement on 2026-09-02
+- **Summary:** Generalized tab placement beyond previews and empty-tab launchers. A sidebar, Home module, preview, or other navigation source may pass a typed resource target to the shared tab host and request either the current tab or a new tab. The host checks stable target identity first; an existing match is activated and asked to reveal or recenter the resource instead of being duplicated. File Explorer's File tree fills the current tab by default and can offer Open in New Tab, Capture Home can replace the old fullscreen file route by opening Capture material in a new tab without a sidebar, and claimed Project Manager Bulletin items open in a new tab by default while returning to an existing matching tab.
+- **Related:** D-137, D-138, D-139
+
+### CAP-164 — Make Open in Current Tab non-destructive
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's exact Open in Current Tab precedence clarification on 2026-09-02
+- **Summary:** Defined Open in Current Tab as a safe placement preference rather than permission to replace content. The host first looks for the same target in another open tab and activates and recenters that match. If no match exists, it fills the current tab only when that tab is empty. If the current tab is non-empty, it is unavailable and the host opens a new tab. This removes the need for special replacement handling for Home, pinned, dirty, or other populated surfaces.
+- **Related:** D-140
+
+### CAP-165 — Preserve view-owned presentation when resources enter tabs
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Capture, File Explorer, and Wiki presentation clarification on 2026-09-02
+- **Summary:** Separated tab placement from resource presentation. Capture Home remains its own module, while Markdown originating from Capture opens through Capture's rendered document presentation. File Explorer opens files through its fullscreen, syntax-highlighted display and editing presentation. Wiki does not use the Capture-style popup or preview flow; a right-click link action may open an in-scope Wiki page in a Wiki tab, while a linked file outside the Wiki folder opens as a single-file File Explorer tab without revealing the File-tree drawer.
+- **Related:** D-141, D-142
+
+### CAP-166 — Compose Project Viewer as a configured unified workspace
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Project drawer and unified-workspace simplification on 2026-09-02
+- **Summary:** Defined Project Viewer as a broad configuration of the shared container, placement, presenter, and chat systems rather than a bespoke nested-view runtime. Its configured slide-out options can open other view Home modules, including Wiki Home and Capture Home, alongside Browser and standalone files linked from project material. These are content presentations inside the current Project thread and chat context. Project's unusually broad component catalog remains an intentional product privilege, but it is expressed through view configuration and the shared infrastructure rather than special Project tab mechanics.
+- **Related:** D-143
+
+### CAP-167 — Give each configured drawer its own header icon
+
+- **Origin:** mixed
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's per-drawer icon and workspace-header spacing direction, plus inspection of the current workspace-header action styling, on 2026-09-02
+- **Summary:** Replaced the single generic right-side drawer icon in the target experience with one semantic action icon per configured drawer. The drawer actions reuse the top workspace header's shared action sizing and spacing rather than introducing Project-specific measurements; the current implementation resolves those tokens to 32-pixel buttons, 18-pixel glyphs, a 4-pixel gap, and an 8-pixel trailing inset. Files uses a folder icon. Home-surface and Bulletin icons remain an owner-selectable detail; the assistant suggested `apps` for the available-Home-surfaces drawer and `campaign` for Bulletin.
+- **Related:** D-144
+
+### CAP-168 — Reduce container presentation to Empty, Home, and Content
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's shared title, location row, Wiki default, and three-paradigm clarification on 2026-09-02
+- **Summary:** Defined three configurable container presentation kinds. Empty shows the view's picker. Home shows an app-style landing module and omits the file-location row. Content shows an optional resource-location row above the view-owned renderer. Centered single-surface identity and tab-strip labels share the same icon size and typography. Any kind can be a view default: Wiki defaults to Content on the Wiki Guide with direct navigation and no separate Home depth, while Capture and Tickets can default to Home. Project Viewer can combine a Project Home default, configured Empty-tab options, Files and Bulletin drawers, and an app-launcher drawer limited to self-contained Home or Content targets that do not require another sidebar. Other views remain narrower through configuration rather than hardcoded exclusions.
+- **Related:** D-145, D-146, D-147
+
+### CAP-169 — Replace Capture and Ticket expansion with shared tab opening
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Capture and Ticket expand-button simplification on 2026-09-02
+- **Summary:** Replace the existing expand actions in Capture and Tickets with Open in New Tab. Both actions call the same typed open-target path used by a sidebar: first find an existing tab with the same presenter and resource and activate and center it; otherwise create a new Content tab. This removes a separate fullscreen-expansion path and keeps cards, previews, and drawer navigation on the same deduplicated placement contract.
+- **Related:** D-148
+
+### CAP-170 — Separate preview policy from full Content-tab presentation
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Capture, Ticket, and future Office document interaction clarification on 2026-09-02
+- **Summary:** Retain the existing preview modes for Capture and Tickets while making their full presentation a Content tab rather than a separate fullscreen route. Capture remains intentionally Note-like by previewing on ordinary selection before an explicit Open in New Tab action. Office documents can later use direct-to-tab behavior on ordinary selection, while still calling the same shared find-and-center-or-create operation. Preview is an originating-view interaction policy, not another container type.
+- **Related:** D-149
+
+### CAP-171 — Treat drawers as workspace chrome and make them push content
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's drawer theming, simplified Content settings, and push-layout interaction direction on 2026-09-02
+- **Summary:** Since drawer contents exclusively open tabs, eliminate a separate Nav theme category for them. Use Workspace Background for the drawer surface, Workspace Chrome for its ordinary treatment, and Workspace Chrome Accent for the active drawer button. Reduce Content settings to Background, Foreground, Accent, and Content Contrast; use Contrast to jointly attenuate headers, body text, and content-derived borders, and Foreground for structural elements such as Home or Wiki navigation. Place the open right drawer below the persistent top header and make it consume width so the content container shifts left rather than being overlaid. Clicking the accented active icon closes it; clicking another drawer icon switches directly to that drawer.
+- **Related:** D-150, D-151, D-152
+
+### CAP-172 — Define shell and presenter style ownership across container rows
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Kanban, Capture Home, tab-rail background, location-row, and Content ownership clarification on 2026-09-02
+- **Summary:** Defined vertical style ownership for the three container presentations. A single centered Home extends its own background through the full view area beneath the global header, including behind its centered identity, allowing Kanban and Capture Home color to reach the top. When tabs exist, the shared shell owns the tab rail and derives it from the owning view's Content Background. A Home presenter begins immediately below that rail. A Content presentation places its optional workspace-owned location row beneath the rail and begins presenter-owned Content below the location row. Empty places its picker beneath the same shell-owned rail.
+- **Related:** D-153
+
+### CAP-173 — Require identical shell rails for every Content tab
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's mandatory tab-and-path rail correction on 2026-09-02
+- **Summary:** Tightened the Content presentation from an optional location row to one invariant three-layer stack: shell-owned Tabs, shell-owned File Location and Path, then presenter-owned Content. Capture Markdown, Wiki pages, and File Explorer files use the same two top rails even when their originating view defaults to Home. Tabbed Empty remains entirely shell-owned. This supersedes the earlier optional-location wording while retaining the centered Home fill and tabbed Home body behavior.
+- **Related:** D-154
+
+### CAP-174 — Fix the reference configurations for Home, Content, and Empty
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Wiki, Capture, File Explorer, and Tickets presentation refinement on 2026-09-02
+- **Summary:** Fixed the three presentation examples and their transition behavior. Home is the centered presenter-owned canvas whose background reaches the top of its container. Content follows the universal shell-owned Tabs and File Location and Path rails. Empty is shell-owned. Wiki has no Home and starts as a visible Content tab at the Wiki Guide with plus on its right. Capture is the reference Home view and File Explorer the reference Empty view. Tickets will also start as Home; opening an expanded Ticket converts the centered Home into the left Home tab and opens the Ticket under the universal Content rules, matching Capture's transition when one of its documents opens.
+- **Related:** D-155
+
+### CAP-175 — Apply the Home-to-Content pattern to productivity apps
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Email, Calendar, and expanded-draft clarification on 2026-09-02
+- **Summary:** Extended the Home presentation to Email, Calendar, and comparable productivity capabilities. Email begins as Home. Expanding a draft full-size converts Email Home into the first tab and opens the draft as ordinary Content. Email Home remains the sole place to browse or open another message or invoke Compose for new mail, keeping navigation and domain creation out of the focused draft tab. This presentation pattern does not undo the decision to group these capabilities inside Productivity Suite.
+- **Related:** D-156
+
+### CAP-176 — Compose Email drawers and Home targets into other views
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's cross-view Email Inbox drawer and pop-out observation on 2026-09-02
+- **Summary:** Recognized the broader compositional payoff of the tab system. A view may configure an Email Inbox drawer that launches messages as Content and an action that opens Email Home as a hosted Home tab. The surrounding view retains its own thread, shell, and saved worksurface instead of mounting a nested Email view or thread list. This establishes the pattern as configuration over shared drawer sources and registered targets rather than an Email-specific integration.
+- **Related:** D-157
+
+### CAP-177 — Put the reusable view-plugin library inside System
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's plugin/view template hierarchy and protected-System placement correction on 2026-09-02
+- **Summary:** Established `ai/<machine>/System/plug-ins/views/` as the local reusable source library. It contains `view-templates/<type-name>/` plus `app-home-displays/`, `content-tab-displays/`, and `sidebar-modules/`. View templates provide copyable configuration for ready-to-use view instances; live view configuration references reusable displays and sidebar modules by stable identity. Right-click Add View, Duplicate View, and `+ Project` consume the library through validated Fusion flows. Live capsules remain under `System/Views/`, and later Provenance work can help reduce more built-in views to declarative configurations. A read-only repository check found no existing root plugin directory, so this records a target structure rather than current implementation.
+- **Related:** D-158
+
+### CAP-178 — Make the Plugins folder itself a protected view capsule
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's correction that the plugin source and Plugins view are the same folder on 2026-09-02
+- **Summary:** Replaced the intermediate `System/plug-ins/views/` layout with `ai/<machine>/System/Views/plug-ins/`. This one protected folder is both the Plugins view capsule and the source of truth for all local plugin material. Its view-oriented library remains under `views/view-templates/`, `views/app-home-displays/`, `views/content-tab-displays/`, and `views/sidebar-modules/`. Other live view capsules call those definitions by stable identity, while the registry retains separate authority over registration, activation, permissions, and consent.
+- **Related:** D-159
+
+### CAP-179 — Compose templates, presenters, and views as dependent plugins
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Code Space, modular Plugins Home, plugin-detail, and declarative presentation-chain refinement on 2026-09-02
+- **Summary:** Made templates and interface modules first-class plugins that can depend on one another. Code Space is the reference aggregate: it requires File Tree Drawer, File Editor Content tab, Capture Home, Capture Content tab, Wiki Content tab, and its templates. Plugins Home reuses a modular Capture-style layout with top text, one folder of sections, and configurable grid cards; plugin cards borrow Ticket preview-and-expand behavior. A full Plugin Content tab uses one Markdown description, basic switches, and a browsable source folder whose files open through File Viewer Content. View configuration selects an optional Home presenter, optional preview presenter, expanded-tab presenter, data source, permissions, and dependencies. Selective post-duplication copying remains an assistant-guided, validated configuration task rather than a bespoke cloning workflow or direct agent write.
+- **Related:** D-160, D-161, D-162, D-163
+
+### CAP-180 — Consider SQLite for Browse and protected files for Installed
+
+- **Origin:** user
+- **Type:** idea
+- **Status:** routed
+- **Source:** RC's SQLite-backed Browse catalog and `ai/System/plugins` installed-source idea on 2026-09-03
+- **Summary:** Proposed separating plugin discovery from installed source. Browse would query text-only plugin packages stored in SQLite, including Markdown, configurations, folder paths, and scripts but excluding images and nested database files. Installation would validate and materialize a readable package beneath `ai/<machine>/System/plugins/`. The Plugins view would present both sources without making catalog scripts executable, while the registry would remain authoritative for registration, activation, permissions, and consent. Adopting the split would supersede D-159's combined Plugins-view/source folder.
+- **Related:** P-013, D-164
+
+### CAP-181 — Lock Browse while preserving folder-based sideloading
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Fusion-approved Browse boundary and external-folder sharing refinement on 2026-09-03
+- **Summary:** Established Browse as a locked catalog containing only Fusion-approved packages rather than a general listing of folders in the installed root. Users may still author, download, receive, or share a compatible folder containing a view, workflow, Agent Profile, or other plugin resources and drag or copy it beneath `ai/<machine>/System/plugins/`. Fusion may discover, inspect, validate, register, and authorize those filesystem-sideloaded packages, but copying a folder neither activates it nor adds it to Browse nor grants Fusion-approved provenance.
+- **Related:** D-164
+
+### CAP-182 — Open approved Browse from Plus and keep sideloading in the filesystem
+
+- **Origin:** user
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's Browse-overlay, drag-to-sideload, and no-badge clarification on 2026-09-03
+- **Summary:** Defined the Plugins `+` action as opening the locked, approved Browse overlay. Fusion will not expose a visual sideload command, source picker, or approval badge. Users sideload through the ordinary filesystem by dragging or copying a compatible folder into `ai/<machine>/System/plugins/`, then provisioning its settings and completing the applicable registration, permission, consent, and activation steps. Browse membership itself communicates the approved route.
+- **Related:** D-165
+
+### CAP-183 — Carve the generic component-tab host out before chat extraction
+
+- **Origin:** mixed
+- **Type:** thread
+- **Status:** routed
+- **Source:** RC's first-SPEC scope and Provenance sequencing direction, plus inspection of the committed Universal View Tab Bar implementation on 2026-09-03
+- **Summary:** Fixed the next bounded implementation family: build only the generic tab-content host that accepts component-backed contents and defines new-empty-tab behavior on top of the completed Universal View Tab Bar. Do not relocate or convert view folders, build plugin configuration, or extract chat in this SPEC; chat and Side Chat consume the resulting contract next. Full plugin behavior and declarative conversion of existing views wait for Provenance so the product does not migrate views onto a temporary registry and then refactor them again. RC then approved the serializable component reference, injected first-party resolver, legacy-content fallback, correlated empty-to-filled transition, and inert unavailable-component state by authorizing `GENERIC_COMPONENT_TAB_HOST_SPEC.md`.
+- **Related:** D-166, D-167, P-014
+
+### CAP-184 — Split the earlier combined chat and Side Chat execution bundle
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** routed
+- **Source:** RC's instruction to extract earlier SPEC material that mixed chat-system extraction with Side Chat work on 2026-09-03
+- **Summary:** Replaced the earlier combined implementation bundle with three explicit gates. Generic Component Tab Host owns component-backed content and empty lifecycle. Composable Threaded Chat owns the portable ChatSurface, one-member view-bound groups, Pending New Chat integration, and content-only worksurface continuity without creating a Side Chat. Move Chat to Side Chat separately owns the multi-member transition, component-tab placement, recovery, and legacy Secondary Chat retirement. The former combined document remains only in `999-Archive` as provenance. View-Configured Thread Collections depends on Composable Chat and is independent of Move Chat to Side Chat.
+- **Related:** D-168
+
+### CAP-185 — Split capsule control-plane migration from thread collections
+
+- **Origin:** mixed
+- **Type:** decision_prompt
+- **Status:** routed
+- **Source:** RC's single-domain SPEC preference and authorization to repair the altered SPEC bundle until clean on 2026-09-03
+- **Summary:** Applied the approved single-domain rule to the former View-Configured Thread Collections bundle. A new System View Capsule Control-Plane Foundation SPEC exclusively owns canonical `System/Views` resolution, journaled quiescent relocation, registry cutover, and protection of Fusion-owned generic file routes. The reduced Collections SPEC consumes that accepted foundation and owns only effective thread presentation configuration, ranked assignments, synthetic Archive, filtering, and the shared row menu. Workspace/view prompt composition remains a separate future SPEC.
+- **Related:** D-169
+
+### CAP-186 — Accept the generic host and finish the tab platform before Chat
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** routed
+- **Source:** RC's owner acceptance and explicit pre-Chat tab sequencing on 2026-09-03, reconciled with `002-SPECs/TABS-PROVENANCE-COORDINATION/`
+- **Summary:** Accepted the implemented Generic Component Tab Host and kept its no-production-adopter boundary. Chat is now explicitly held until the owner-defined tab platform milestone is complete. The Provenance coordination handoff showed that the next safe slice is shell presentation, followed by a separate typed placement/controller slice; the latter supplies the first bounded tab-action chokepoint that BRIDGE-01 can consume. Declarative view configuration and adoption still require the future registration, validation, permission, consent, and revocation control plane rather than treating Agent Tool Provenance as that missing authority.
+- **Related:** D-170, D-171, TPC-D09, TPC-O02, TPC-O04, TPC-O05
+
+### CAP-187 — Accept the Tab Shell Presentation Foundation
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** routed
+- **Source:** RC's explicit owner authorization on 2026-09-04 after reviewing `TAB_SHELL_PRESENTATION_FOUNDATION_ORCHESTRATOR_REPORT.md`
+- **Summary:** Accepted the implemented Tab Shell Presentation Foundation, its reviewed repairs and compatible deviations, and its deliberate lack of a production adopter. Independent owner verification reran the 68-test integrated gate, TypeScript, targeted lint, production build, and whitespace check. RC explicitly classified the aggregate-fingerprint discrepancy as bookkeeping rather than a code, file-placement, branch, or acceptance failure. Both accepted tab foundations remain uncommitted; target placement is the next separate Tabs package.
+- **Related:** D-172, TPC-D10, TPC-O02
+
+### CAP-188 — Universalize tab identity and location chrome
+
+- **Origin:** user
+- **Type:** decision_prompt
+- **Status:** routed
+- **Source:** RC's 2026-09-04 riff refining the accepted presentation model before target placement
+- **Summary:** Every single tab now uses centered short identity and view icon; every active tab uses a second breadcrumb-style location row, with optional presenter-owned Back/Forward controls before it. Landing surfaces no longer require a Home shell kind: they provide meaningful locations such as `Capture Documents and Artifacts`, while addressed content may show `Capture > Collection > Name` and Empty supplies its own neutral identifier. Display policies such as omitting Wiki `PAGE.md` do not alter full target identity. Authorized TABS-02A as a corrective SPEC before TABS-03.
+- **Related:** D-173, TPC-D11
 
 ## Capture History
 
@@ -1198,3 +1714,84 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Source:** RC's second-SPEC boundary and shared-menu direction on 2026-09-02
 - **Summary:** Created the second composable-chat SPEC for relocating view capsules into `System/Views`, extending existing `content.json` chat configuration, projecting New-action and collection display behavior, storing ranked group-level collection metadata, filtering by configured collections plus derived Archive, and adopting the shared menu for thread right-click and kebab actions. The Collections/`sub_header` submenu uses radio semantics in default folder mode and adds correct checkbox semantics with keep-open interaction in advanced tag mode. The public New Chat request gains no project/content folder, path, or config fields.
 - **Related:** CAP-120, CAP-122, CAP-123, CAP-124, CAP-125, D-084, D-085, D-095, D-099, D-100, D-101, D-102
+
+### CAP-145 — Project, Routine, and plugin composition checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** Launchpad reconciliation on 2026-09-02
+- **Summary:** Separated conversation registration from project and routine creation; established the project-first navigation and universal template direction; defined Project Viewer's Markdown-first folder tab, bulletin surfaces, conversation families, hosted tabs, and side-agent visibility; reframed Launchpad as the default project composition; developed Routines as semantic `triggers.md`-backed graphs with proportional heartbeat execution; and added permission-bearing plugin cards, dependencies, reusable model resources, and the modular STT example. Preserved Capture as a progressive project on-ramp and routine-to-routine linking as proposals.
+- **Related:** CAP-127, CAP-128, CAP-129, CAP-130, CAP-131, CAP-132, CAP-133, CAP-134, CAP-135, CAP-136, CAP-137, CAP-138, CAP-139, CAP-140, CAP-141, CAP-142, CAP-143, CAP-144, D-103, D-104, D-105, D-106, D-107, D-108, D-109, D-110, D-111, D-112, D-113, D-114, D-115, D-116, D-117, D-118, P-009, P-010
+
+### CAP-147 — Project Manager naming checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** Launchpad reconciliation on 2026-09-02
+- **Summary:** Rejected the proposed Capture-to-Project promotion model. Capture is instead renamed Project Manager, whose plus creates a named and icon-bearing folder registered as a view. Confirmed that view folders contribute bound view-specific system guidance and kept the detailed configuration behavior within the existing in-progress SPEC.
+- **Related:** CAP-143, CAP-146, D-084, D-119, P-010
+
+### CAP-148 — Transparent view orientation and discovery checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's per-view system-message, README, sibling-discovery, navigable-tree, and System Wiki clarification on 2026-09-02
+- **Summary:** Made each view capsule's `README.md` the transparent orientation entry point for its bound conversations. A short common footer points to the canonical configuration and prompt, explains the sibling-view tree and read-only listing script, and enables selective inspection of another view's folder, prompt, and declared source folder. Added a small shared Fusion Studio Wiki for application and capability awareness and required view-panel packages to contribute discoverable Wiki documentation in their repository, while preserving user editability and the protected boundary against agents rewriting their own governing System policy.
+- **Related:** CAP-121, CAP-122, CAP-147, D-084, D-095, D-096, D-097, D-120, D-121
+
+### CAP-149 — Workspace-to-view inheritance checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's workspace-folder inheritance clarification on 2026-09-02
+- **Summary:** Added a workspace-level System folder whose orientation and configuration structure matches the view capsules. Its README explains the folder layout, inheritance, prompt assembly, configuration locations, and workspace-wide navigation. The workspace folder provides the inherited base; each view folder specializes it and explains how to navigate its own view. Exact path naming and per-field configuration merge behavior remain later contract work.
+- **Related:** CAP-148, D-084, D-095, D-120, D-121, D-122, D-123
+
+### CAP-150 — Workspace-first prompt composition checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's matching-folder and prompt-append clarification on 2026-09-02
+- **Summary:** Standardized on a `prompt.md` at workspace scope and a matching `prompt.md` in each view capsule. Fusion supplies the workspace prompt first and appends the active view prompt as the more specific tail layer before passing the combined system context through the configured harness/provider. The README explains this contract alongside the rest of the folder convention. RC identified an OpenRouter request setting as the likely delivery mechanism; the exact adapter field is an implementation fact to verify later rather than part of this conceptual decision.
+- **Related:** CAP-148, CAP-149, D-084, D-120, D-122, D-123
+
+### CAP-151 — Single-domain SPEC decomposition checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** routed
+- **Source:** RC's implementation-chunking preference plus the current code, standards, and harness survey on 2026-09-02
+- **Summary:** RC settled the process preference for focused, single-domain implementation SPECs because they give the implementation orchestrator and reviewer a clearer judgment boundary. The survey found that the current second SPEC combines three distinct domains: System-tree and capsule migration, workspace/view prompt composition through the harness, and ranked thread-collection persistence plus UI. It therefore proposed a capsule-foundation prerequisite followed by independent prompt-composition and reduced collection SPECs. RC later adopted the domain split in D-169; the prompt-composition SPEC remains future work.
+- **Related:** D-124, P-011, CAP-120, CAP-126, CAP-148, CAP-149, CAP-150
+
+### CAP-152 — OpenCode on-demand capability discovery checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's OpenCode discovery question, installed OpenCode `1.18.24`, and official OpenCode agent, Skill, command, CLI, and server documentation checked on 2026-09-02
+- **Summary:** Verified that OpenCode does not require Fusion to paste every Agent Profile or workflow into each view's system prompt. The selected primary agent owns its full system prompt and permissions; permitted subagents are exposed to the active model through a lightweight ID-and-description catalog and can also be invoked directly by the user. Skills expose names and descriptions before loading their full instructions on demand. Agents and commands are listable through the CLI and server API, while messages and commands can select an agent explicitly. OpenCode commands provide a natural user- or agent-invoked prompt-workflow primitive, but schedules, triggers, durable routine state, and product authority remain Fusion responsibilities. Stable and next-generation OpenCode documentation currently differ on command-created subtask behavior, so integration must capability-check the installed harness rather than assume that detail.
+- **Related:** CAP-066, CAP-119, CAP-130, CAP-150, D-075, D-111, D-123
+
+### CAP-160 — Main Chat and Side Chat terminology checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** closed
+- **Source:** RC's user-facing chat-designation clarification on 2026-09-02
+- **Summary:** Standardized user-facing vocabulary on **Main Chat** for the ordinary chat surface and **Side Chat** for a chat mounted in a content tab. Recorded that the existing internal `primary` role/history and `side-chat` projection discriminators remain unchanged, because the new names describe presentation rather than adding mutable membership roles. Updated deterministic tab fallbacks to `Side Chat 1`, `Side Chat 2`, and so on.
+- **Related:** CAP-120, CAP-153, D-089, D-090, D-125, D-132
+
+### CAP-161 — Tabs as Containers dependency checkpoint
+
+- **Origin:** user
+- **Type:** observation
+- **Status:** routed
+- **Source:** RC's parallel-fork and dependency-boundary clarification on 2026-09-02
+- **Summary:** Confirmed that a separate chat owns the Tabs as Containers work and that generic tab containers are removed from the threads domain. The composable-thread work may advance through its independent foundations, but **Move Chat to Side Chat** is hard-blocked until the separate container SPEC is implemented and accepted. The Side Chat slice consumes the resulting host contract and cannot recreate generic container creation, empty-tab behavior, launchers, component registration, or lifecycle locally.
+- **Related:** CAP-156, CAP-158, D-126, D-127, D-133

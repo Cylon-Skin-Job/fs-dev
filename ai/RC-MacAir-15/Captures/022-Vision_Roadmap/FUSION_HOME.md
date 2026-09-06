@@ -47,31 +47,48 @@ Wiki follows the composition principle as well. Plugins may add related knowledg
 
 ## Left Navigation Structure
 
-Fusion Home's left navigation is organized into four visual groups:
+The existing Capture surface is renamed **Project Manager**, and its navigation begins with the user's projects:
 
-1. **Attention and project work**
-   - Issues, including its workspace inbox
-   - Project Manager, formerly Launchpad
-2. **Office, personal, health, and household suites**
-   - Office Suite: Docs, Sheets, and a page/presentation-building capability
-   - Productivity Suite: Email, Calendar, To Do, Notes, and Contacts
-   - Health & Fitness Tracker
-   - Recipes, Meal Tracker & Shopping List
-3. **Knowledge, files, and browsing**
-   - Wiki
-   - File Explorer
-   - Browser
-4. **Extensibility and system configuration**
-   - Agent Profiles, represented by a brain/node-network icon
-   - Settings Manager, represented by a gears icon
+1. Individually created Project Viewer entries appear at the top.
+2. A plus control beneath them opens the Create Project pop-up for a name and icon.
+3. A divider separates project creation from the ordinary application views.
+4. Normal views follow, including Issues, Office Suite, Productivity Suite, Health & Fitness, Recipes/Meals/Shopping, Wiki, File Explorer, Browser, and other installed surfaces.
+5. A later visual gap separates the lower system-composition group, including Routines and Plugins.
 
-The grouping is the settled information architecture. Exact labels, sub-navigation, icons, and the Office Suite's presentation-builder naming can be refined later.
+Agent Profiles remains part of the overall system capability model, but its exact position within this revised hierarchy is still open. Settings may be presented through Plugins or retain a distinct entry as the product language settles.
+
+The earlier four-group list and use of Capture as a separate product identity are superseded by this Project Manager and project-first hierarchy. Exact ordering among ordinary apps, final labels, icons, and the Office Suite's presentation-builder naming can still be refined.
+
+## Project Creation and Launchpad Composition
+
+Create Project clones the registered default template into Fusion's Projects location, registers the resulting folder as its own Project Viewer, and places its chosen name and icon above the plus control.
+
+The template begins with four universally useful Markdown files and points to the available patterns for creating additional files and subfolders when the project needs them. In the Project Viewer's default folder tab, Markdown files appear first and folders such as Transcripts or Research appear below.
+
+The folder structure is broadly reusable in other folder-backed contexts. Project Viewer distinguishes itself by allowing other views and arbitrary project-relevant surfaces to open as header tabs. Combined with view-bound threads, peer side chats, Skills, and semantic orientation, this ordinary composition supplies Launchpad without a special Launchpad runtime.
+
+Each registered view folder has configuration that contributes view-specific system guidance to conversations bound to it. The detailed configuration and prompt behavior are already being handled by the in-progress conversation/view SPEC and remain outside this umbrella document.
 
 ## Suite Consolidation
 
 The current paradigm treats productivity capabilities as separate apps. The new direction consolidates Email, Calendar, To Do, Notes, and Contacts into a single Productivity Suite.
 
 This change is motivated partly by thread binding. Each individual productivity capability may not contain enough conversational or contextual density to justify its own left-navigation identity and separate population of view-bound threads. The suite provides a larger, coherent daily context while retaining the ability to present its internal tools distinctly.
+
+Those internal tools can still use the shared Home presentation. Email begins
+as a centered Home surface. When a draft is expanded full-size, Email Home
+becomes the first tab and the draft opens as an ordinary Content tab. Email Home
+remains the sole surface for browsing or opening another message and invoking
+Compose for new mail; the expanded draft is focused on that one item. Calendar
+and comparable tools can use the same Home-to-Content relationship without
+becoming separate left-navigation views or separate thread populations.
+
+Other views can selectively expose these capabilities without duplicating the
+suite. For example, a configured Email Inbox drawer can launch a message as
+Content, while a separate action opens Email Home as a hosted Home tab. The
+calling view keeps its own thread and shell. This uses the shared drawer,
+target, and tab contracts rather than embedding a second Productivity Suite
+runtime.
 
 The same density principle may apply to other grouped domains. It should guide the level at which a view becomes a durable conversational context without requiring every low-level tool to become its own isolated app.
 
@@ -86,9 +103,12 @@ The daily-thread pattern is not yet settled. Thread creation, reuse, rollover, a
 - What distinguishes Fusion Home as a folder from specialized workspaces in the user's mental model?
 - Which capabilities are present by default, and which are installed or enabled as plugins?
 - Can the user reorganize the default navigation groups or replace their constituent plugins?
+- Where should Agent Profiles sit in the revised project-first and lower-system navigation hierarchy?
 - Does the Settings Manager label remain the permanent navigation name, or does Plugins become the primary user-facing label?
 - How do suites expose internal tools without recreating separate-app fragmentation inside the suite?
 - What is the final name of the Office Suite's page/presentation-building capability?
 - How do daily suite threads relate to manually created, longer-lived, or task-specific threads?
 - Does each specialized workspace family ship as a template, plugin bundle, downloadable product profile, or another conceptual unit?
+- How does the user install, inspect, or replace the registered universal project template?
+- How is existing Capture content presented or migrated when Capture is renamed Project Manager?
 - How is the required System Manager download presented during first-run onboarding, recovery, and offline use?

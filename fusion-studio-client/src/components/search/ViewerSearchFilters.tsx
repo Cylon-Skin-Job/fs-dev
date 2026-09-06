@@ -17,6 +17,7 @@ interface ViewerSearchFiltersProps {
   locationOptions?: LocationOption[];
   showLocation?: boolean;
   showTitleOnly?: boolean;
+  showStarredOnly?: boolean;
   trailingControls?: ReactNode;
 }
 
@@ -31,9 +32,11 @@ export function ViewerSearchFilters({
   locationOptions = DEFAULT_LOCATION_OPTIONS,
   showLocation = true,
   showTitleOnly = true,
+  showStarredOnly = false,
   trailingControls,
 }: ViewerSearchFiltersProps) {
   const [titleOnly, setTitleOnly] = useState(false);
+  const [starredOnly, setStarredOnly] = useState(false);
   const rowClass = [
     'rv-viewer-search-filter-row',
     className ?? '',
@@ -78,6 +81,16 @@ export function ViewerSearchFilters({
           onClick={() => setTitleOnly((selected) => !selected)}
         >
           Title only
+        </button>
+      ) : null}
+      {showStarredOnly ? (
+        <button
+          type="button"
+          className={`rv-viewer-filter-toggle${starredOnly ? ' rv-viewer-filter-toggle--active' : ''}`}
+          aria-pressed={starredOnly}
+          onClick={() => setStarredOnly((selected) => !selected)}
+        >
+          Starred only
         </button>
       ) : null}
       {trailingControls}

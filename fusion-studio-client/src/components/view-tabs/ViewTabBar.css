@@ -1,12 +1,13 @@
 .rv-view-tab-rail {
   --interactive-surface-bg: var(--view-tab-rail-bg, var(--panel-chrome-bg, #1a1a1a));
   display: flex;
-  flex: 0 0 auto;
+  flex: 0 0 var(--view-tab-rail-height, 36px);
   min-width: 0;
   overflow: hidden;
   align-items: center;
   gap: 2px;
-  min-height: 36px;
+  min-height: var(--view-tab-rail-height, 36px);
+  box-sizing: border-box;
   padding: 4px 4px 0;
   background: var(--view-tab-rail-bg, var(--panel-chrome-bg, #1a1a1a));
   color: var(--workspace-foreground-color, var(--text-dim, rgba(255, 255, 255, 0.6)));
@@ -120,7 +121,7 @@
 
 .rv-view-tab-icon {
   flex: 0 0 auto;
-  font-size: 16px;
+  font-size: var(--view-tab-icon-size, 16px);
   color: inherit;
 }
 
@@ -128,8 +129,8 @@
   min-width: 0;
   flex: 1;
   overflow: hidden;
-  font-size: 12px;
-  line-height: 1;
+  font-size: var(--view-tab-label-size, 12px);
+  line-height: var(--view-tab-label-line-height, 1);
   white-space: nowrap;
   text-overflow: clip;
   color: inherit;

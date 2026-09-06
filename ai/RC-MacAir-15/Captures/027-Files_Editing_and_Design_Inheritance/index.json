@@ -1,0 +1,264 @@
+{
+  "schema_version": 2,
+  "name": "Files, Editing, and Design Inheritance",
+  "description": "Pre-roadmap working memory for a unified Files surface, reusable editing infrastructure, Code Editor identity, and conditional presentation logic.",
+  "repository_root": "../../../..",
+  "wiki_root": "../../Wiki",
+  "workflow": [
+    "exploring",
+    "framing",
+    "investigating",
+    "resolving",
+    "shaping",
+    "handoff-ready"
+  ],
+  "documents": [
+    {
+      "path": "CAPTURE.md",
+      "kind": "conversational_memory",
+      "authority": "context",
+      "description": "Readable synthesis, raw provenance, and active open loops.",
+      "lifecycle": "Refreshed at meaningful conversational checkpoints; records are routed when another document's threshold is met.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "working_synthesis",
+          "heading": "Working Synthesis",
+          "description": "Current re-entry summary and inferred working phase."
+        },
+        {
+          "key": "active_threads",
+          "heading": "Active Threads",
+          "description": "Unresolved owner ideas, questions, and contextual dependencies."
+        },
+        {
+          "key": "routed_outcomes",
+          "heading": "Routed Outcomes",
+          "description": "Compacted records whose memory responsibility moved to authoritative destinations."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["CAP"],
+        "required_fields": ["Origin", "Type", "Status", "Captured"],
+        "field_values": {
+          "Status": ["open", "parked", "routed", "closed"]
+        }
+      }
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "owner_intent",
+      "authority": "owner",
+      "description": "Owner purpose, desired outcomes, constraints, and non-goals.",
+      "lifecycle": "Updated when the owner clarifies enduring direction or scope.",
+      "read_before": ["CAPTURE.md"],
+      "sections": [
+        {
+          "key": "purpose",
+          "heading": "Purpose",
+          "description": "Why this body of work exists."
+        },
+        {
+          "key": "desired_outcomes",
+          "heading": "Desired Outcomes",
+          "description": "Results the owner wants this work to shape."
+        },
+        {
+          "key": "constraints",
+          "heading": "Constraints",
+          "description": "Boundaries that constrain exploration and later planning."
+        },
+        {
+          "key": "non_goals",
+          "heading": "Non-goals",
+          "description": "Work explicitly not authorized or not yet selected."
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "owner_decisions",
+      "authority": "owner",
+      "description": "Explicit owner choices only.",
+      "lifecycle": "Append-only decisions with explicit supersession when the owner changes direction.",
+      "read_before": ["CAPTURE.md", "INTENT.md"],
+      "sections": [
+        {
+          "key": "owner_decisions",
+          "heading": "Owner Decisions",
+          "description": "Explicit choices promoted from conversation with provenance."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["D"],
+        "required_fields": ["Authority", "Status", "Source"],
+        "field_values": {
+          "Status": ["active", "superseded"]
+        }
+      }
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "verified_issues",
+      "authority": "evidence",
+      "description": "Verified actionable problems and contradictions.",
+      "lifecycle": "Added after evidence verifies an issue; retained through resolution with outcome provenance.",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md"],
+      "sections": [
+        {
+          "key": "verified_issues",
+          "heading": "Verified Issues",
+          "description": "Evidence-backed problems requiring resolution."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["I"],
+        "required_fields": ["Evidence", "Status", "Source"],
+        "field_values": {
+          "Status": ["open", "resolved", "superseded"]
+        }
+      }
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "candidate_actions",
+      "authority": "proposal",
+      "description": "Unapproved candidate designs and actions.",
+      "lifecycle": "Added when an idea is concrete enough to evaluate; approval remains in DECISIONS.md.",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "ISSUES.md"],
+      "sections": [
+        {
+          "key": "candidate_proposals",
+          "heading": "Candidate Proposals",
+          "description": "Concrete alternatives awaiting evaluation or owner choice."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": ["P"],
+        "required_fields": ["Authority", "Status", "Source"],
+        "field_values": {
+          "Status": ["candidate", "accepted", "rejected", "superseded"]
+        }
+      }
+    },
+    {
+      "path": "LAYOUT_LOGIC.md",
+      "kind": "presentation_logic",
+      "authority": "analysis",
+      "description": "Conditional navigation, content-structure, folder-opening, and display logic derived from owner direction.",
+      "lifecycle": "Updated as conditional branches are clarified; settled outcomes remain authoritative in DECISIONS.md.",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "decision_flow",
+          "heading": "Decision Flow",
+          "description": "Ordered if/then presentation choices and their dependent options."
+        },
+        {
+          "key": "settings_entry_persistence",
+          "heading": "Settings Entry and Persistence",
+          "description": "User entry point, live application behavior, and view-owned JSON persistence boundary."
+        },
+        {
+          "key": "file_presentation_routing",
+          "heading": "File Presentation Routing",
+          "description": "Default semantic presenters and the Code Editor raw-source alternative."
+        },
+        {
+          "key": "creation_profile_logic",
+          "heading": "Creation and Profile Logic",
+          "description": "Configurable Create New affordances and named Files personalities that preserve broad content support."
+        },
+        {
+          "key": "collection_folder_semantics",
+          "heading": "Collection and Folder Semantics",
+          "description": "Stable relationship between top-level collection presentation and the ordinary folder tree."
+        },
+        {
+          "key": "open_configuration_branches",
+          "heading": "Open Configuration Branches",
+          "description": "Unsettled defaults and option boundaries requiring further owner direction."
+        }
+      ]
+    },
+    {
+      "path": "EDITING_MODEL.md",
+      "kind": "editing_model",
+      "authority": "analysis",
+      "description": "Pure-Markdown reuse boundary, shared mechanics, host policies, block interaction, and Office-preservation boundary.",
+      "lifecycle": "Updated as the Markdown dialect, reusable command set, block semantics, and Office/shared-core boundary are resolved.",
+      "read_before": ["CAPTURE.md", "INTENT.md", "DECISIONS.md", "ISSUES.md", "PROPOSALS.md"],
+      "sections": [
+        {
+          "key": "syntax_boundary",
+          "heading": "Syntax Boundary",
+          "description": "Pure-Markdown inclusion rule and explicit exclusion of special metadata/codecs."
+        },
+        {
+          "key": "shared_editor_core",
+          "heading": "Shared Editor Core",
+          "description": "Reusable Markdown-native parsing, editing, history, selection, and validation mechanisms."
+        },
+        {
+          "key": "host_policies",
+          "heading": "Host Policies",
+          "description": "Presentation and persistence boundaries for Code Editor, Files, block editing, and Docs."
+        },
+        {
+          "key": "block_scoped_interaction",
+          "heading": "Block-Scoped Interaction",
+          "description": "Logical block selection, decoration, commands, and bounded commit flow."
+        },
+        {
+          "key": "office_preservation_boundary",
+          "heading": "Office Preservation Boundary",
+          "description": "Office-only capabilities that remain intact while staying outside the reusable Files subset."
+        },
+        {
+          "key": "open_editing_semantics",
+          "heading": "Open Editing Semantics",
+          "description": "Unresolved dialect, command, block, lifecycle, and migration choices."
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "kind": "folder_contract",
+      "authority": "process",
+      "description": "Local authority, editing, and verification rules.",
+      "lifecycle": "Updated whenever document roles or routing rules change."
+    },
+    {
+      "path": "index.json",
+      "kind": "routing_index",
+      "authority": "process",
+      "description": "Static schema and dependency metadata.",
+      "lifecycle": "Updated with structural document or section changes."
+    },
+    {
+      "path": "BULLETIN.md",
+      "kind": "coordination_bulletin",
+      "authority": "coordination",
+      "description": "Volatile cross-chat coordination without content authority.",
+      "lifecycle": "Updated only when another chat would otherwise collide, duplicate work, or proceed with materially wrong context.",
+      "sections": [
+        {
+          "key": "active_coordination",
+          "heading": "Active Coordination",
+          "description": "Current assignments, blockers, and handoffs."
+        },
+        {
+          "key": "resolved_coordination",
+          "heading": "Resolved Coordination",
+          "description": "Resolved entries retained with outcomes."
+        }
+      ]
+    }
+  ]
+}

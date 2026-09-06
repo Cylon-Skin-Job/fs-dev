@@ -14,3 +14,7 @@ export function viewTabDomId(panelId: string, tabId: string): string {
 export function viewTabPanelDomId(panelId: string): string {
   return `rv-view-tabpanel-${stableDomPart(panelId)}`;
 }
+
+export function viewTabSingleIdentityDomId(panelId: string, tabId: string): string {
+  return `rv-view-tab-single-${stableDomPart(panelId)}-${stableDomPart(tabId)}`;
+}

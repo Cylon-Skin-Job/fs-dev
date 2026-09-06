@@ -33,7 +33,7 @@ The Workspace Settings **Foreground** control targets:
 - All ordinary header icons and navigation buttons.
 - Sidebar view icons that are not currently selected.
 
-## Workspace Accent Group
+## Workspace Accent GroupOkay
 
 The Workspace Settings **Accent** control targets:
 

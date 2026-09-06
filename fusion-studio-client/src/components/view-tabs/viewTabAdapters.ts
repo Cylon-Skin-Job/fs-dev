@@ -3,6 +3,7 @@ import { getFileIcon } from '../../lib/file-utils';
 import { usePanelStore } from '../../state/panelStore';
 import { useFileStore } from '../../state/fileStore';
 import type { DocViewerTab } from '../../types';
+import type { ViewTabContentAdapter } from './viewTabContentAdapter';
 import { normalizeCaptureTabs } from './captureTabDomain';
 import {
   activateCaptureTab,
@@ -16,6 +17,8 @@ import {
 } from './captureTabsController';
 import type { ViewTabAddAction, ViewTabDescriptor } from './ViewTabStrip';
 
+export type { ViewTabContentAdapter } from './viewTabContentAdapter';
+
 export interface ViewTabAdapterModel {
   panelId: string;
   label: string;
@@ -25,6 +28,7 @@ export interface ViewTabAdapterModel {
   onActivate: (id: string) => void;
   onClose: (id: string) => void;
   add?: ViewTabAddAction;
+  content?: ViewTabContentAdapter;
 }
 
 function useCaptureAdapter(enabled: boolean): ViewTabAdapterModel | null {

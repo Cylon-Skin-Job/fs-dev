@@ -10,13 +10,17 @@ The inspectable source form is folder-based. A profile can begin as a folder nam
 
 The view can project that folder as a simple hierarchy: the profile appears at the top, Skills and subagents branch beneath it with indentation and connector lines, and each item can open into a readable or editable detail surface. **New Agent** is the view-specific presentation of the shared New action.
 
-RC referenced OpenCode as the available harness foundation and OpenClaw as supporting role discovery and invocation. The exact product and integration boundary between those names should be verified later; the durable vision is that Fusion surfaces existing harness capabilities coherently.
+RC referenced OpenCode as the available harness foundation and OpenClaw as supporting role discovery and invocation. Current OpenCode `1.18.24` verification resolves a useful part of that boundary: OpenCode natively discovers configured primary agents, subagents, Skills, and commands. Fusion can surface and select those harness-owned capabilities instead of copying their full definitions into every view prompt. The remaining OpenClaw relationship and Fusion-owned configuration boundary still need separate verification.
 
 ## Harness-Backed Roles
 
 A user can find a role and invoke it as the persona present at the beginning of a chat, or treat the same role as a subagent used by another workflow. Fusion provides discoverability, organization, ticket binding, and product context around the underlying harness capability.
 
 The view should not imply that every role is a separately running process. A role is available to be invoked when a thread or workflow needs that set of abilities.
+
+This same boundary applies when a project opens a side agent as a header tab. The tab makes delegated work visible and conversationally accessible, while the selected profile remains an invoked capability associated with the project's thread family rather than a newly managed entity.
+
+OpenCode keeps the active identity and the available catalog separate. The selected primary agent contributes its own system prompt, model preference, and permissions. Other permitted subagents are advertised to the active model by ID and description through its delegation tool rather than concatenating every subagent prompt into the active system context. The user can also invoke a visible subagent directly by name. Skills follow the same progressive-disclosure pattern: OpenCode advertises their names and descriptions and loads a Skill's full instructions only when selected. This makes concise descriptions part of the capability-routing contract.
 
 ## Ticket Profile Selection
 
@@ -42,6 +46,8 @@ An Agent Profile can be invoked through several product paths:
 - **Workflow delegation:** a reusable workflow invokes one or more profiles for bounded roles or stages.
 
 These paths all apply a capability mask to a thread or subtask; none creates a persistent agent entity. Precedence among explicit selection, ticket metadata, view heuristics, and workspace defaults remains open.
+
+OpenCode already exposes list operations for agents and commands and accepts an agent identifier when a message or command is run. Its command files provide reusable named prompt workflows, can choose an agent or model, and can run as a delegated subtask in the current stable interface. Fusion can therefore treat OpenCode's registry as a discoverable harness catalog. Because OpenCode's next-generation documentation currently differs on some command-subtask semantics, Fusion should capability-check the installed harness version rather than make durable product behavior depend on one undocumented assumption.
 
 ## Workspace Default Profile
 
@@ -108,9 +114,11 @@ Agent profiles do not own schedules or triggers. Scheduled and Triggers create o
 
 This keeps timing and event policy in the ticket automation system, reusable capability in the Agent Profiles surface, and observable execution in the ticket thread.
 
+Routines provide a second visible invocation context. Their fronting assistant can explain and edit the routine, while a reasoning node can invoke an Agent Profile when the graph reaches work requiring that capability. The routine remains the inspectable automation identity; the profile supplies a temporary mask.
+
 ## Open Questions
 
-- What is the exact relationship among OpenCode, OpenClaw, Fusion Skills, profiles, and subagents?
+- What remains of the OpenClaw and Fusion-owned layer after mapping OpenCode agents, commands, and Skills into Agent Profiles?
 - Is the profile's primary instruction file standardized as `AGENTS.md`, `Prompt.md`, or selected through its manifest/configuration?
 - Which folder entries are first-class profile resources, and how does the GUI represent user-added resource types?
 - Which ticket metadata field selects a profile, and how is compatibility validated?
@@ -119,6 +127,7 @@ This keeps timing and event policy in the ticket automation system, reusable cap
 - How are profile versions frozen or upgraded for recurring scheduled tickets?
 - Can a thread change masks during execution, and how is that visible in its history?
 - What authority and context does a calling agent pass to an invoked Agent Profile?
+- How is a side-agent project tab related to its caller, thread family, invoked profile, and resulting artifacts?
 - When should workflow state be explicit JSON, reconstructed from the event ledger, or both?
 - How are workflow checkpoints, subagent results, validation evidence, and reports reflected in the inbox artifact?
 - How does Access permissions constrain the tools and subagents available to an invoked profile?

@@ -1,10 +1,15 @@
 # SPEC — View-Configured Thread Collections
 
-**Status:** Ready after `COMPOSABLE_THREADED_CHAT_SPEC.md`
-**Sequence:** Second composable-chat SPEC
-**Depends on:** `COMPOSABLE_THREADED_CHAT_SPEC.md`
-**Source:** Vision Roadmap decisions D-084, D-085, D-095 through D-101, and D-102
-**Scope:** View-capsule relocation, effective thread-display configuration, ranked collection metadata, collection filtering, and shared thread-row menu adoption
+**Status:** Ready after `COMPOSABLE_THREADED_CHAT_SPEC.md` and
+`SYSTEM_VIEW_CAPSULE_FOUNDATION_SPEC.md`
+**Sequence:** After both prerequisites; independent of the later Move Chat to
+Side Chat feature
+**Depends on:** `COMPOSABLE_THREADED_CHAT_SPEC.md` and
+`SYSTEM_VIEW_CAPSULE_FOUNDATION_SPEC.md`
+**Source:** Vision Roadmap decisions D-084, D-085, D-099, D-100, D-102, D-124,
+and D-169
+**Scope:** Effective thread-display configuration, ranked collection metadata,
+collection filtering, and shared thread-row menu adoption
 
 ---
 
@@ -12,20 +17,19 @@
 
 This SPEC does not add another project, folder, template, or CWD step to New
 Chat. A thread is created inside an already registered view exactly as defined
-by the first composable-chat SPEC.
+by `COMPOSABLE_THREADED_CHAT_SPEC.md`. It neither depends on nor implements
+`MOVE_CHAT_TO_SIDE_CHAT_SPEC.md`.
 
 This SPEC adds the layer around those threads:
 
-1. relocate view capsules from `ai/<machine>/Views/` to
-   `ai/<machine>/System/Views/` through the central view registry;
-2. extend each capsule's existing `content.json` with validated thread-display
+1. extend each capsule's existing `content.json` with validated thread-display
    configuration;
-3. make the thread rail read its New-action presentation and collection model
+2. make the thread rail read its New-action presentation and collection model
    from the effective view configuration;
-4. persist lossless, ranked collection assignments on visible thread groups;
-5. filter the rail through configured collections plus the synthetic Archive
+3. persist lossless, ranked collection assignments on visible thread groups;
+4. filter the rail through configured collections plus the synthetic Archive
    collection; and
-6. replace the thread row's bespoke dropdown with the shared menu module,
+5. replace the thread row's bespoke dropdown with the shared menu module,
    including a **Collections** right-opening submenu using the Material Symbol
    `sub_header`.
 
@@ -41,19 +45,17 @@ metadata.
 
 1. Give every view one portable, inspectable source for thread-rail display
    behavior.
-2. Move view definitions beneath the machine-scoped System tree without moving
-   or rewriting their declared content roots.
-3. Let users rename, add, remove, and reorder configured collections without
+2. Let users rename, add, remove, and reorder configured collections without
    losing threads or coupling identity to display labels.
-4. Preserve multiple collection memberships even when the view presents them
+3. Preserve multiple collection memberships even when the view presents them
    as a single folder.
-5. Keep the New Chat wire contract free of project/content folder IDs, paths,
+4. Keep the New Chat wire contract free of project/content folder IDs, paths,
    starter-file instructions, and config bodies.
-6. Use one shared menu implementation for pointer, kebab, keyboard, submenu,
+5. Use one shared menu implementation for pointer, kebab, keyboard, submenu,
    pending, error, and dismissal behavior.
-7. Use correct radio semantics for mutually exclusive folder projection and
+6. Use correct radio semantics for mutually exclusive folder projection and
    correct checkbox semantics for multi-select tags.
-8. Keep SQLite authoritative for visible-thread collection metadata and the
+7. Keep SQLite authoritative for visible-thread collection metadata and the
    view capsule authoritative for collection definitions and presentation.
 
 ## 2. Non-Goals
@@ -61,15 +63,17 @@ metadata.
 - Create Project or Project Viewer provisioning.
 - Project/content folder creation from New Chat.
 - Starter files, templates, AGENTS.md copying, or CWD selection.
-- Side-chat creation or chat-surface extraction; those belong to the first
-  SPEC.
+- Chat-surface extraction belongs to `COMPOSABLE_THREADED_CHAT_SPEC.md`;
+  Side Chat creation belongs to `MOVE_CHAT_TO_SIDE_CHAT_SPEC.md`. Neither is
+  implemented here.
 - Auto-Rename Chat Threads behavior.
 - Transcript export.
 - A GUI for editing view configuration.
 - Config package export, cloning, or marketplace installation.
-- Full protected-System enforcement against every harness/file path. This SPEC
-  centralizes access behind services but does not claim that relocation alone
-  is a security boundary.
+- Capsule relocation, canonical System paths, registry cutover, generic
+  Fusion-route protection, or direct harness/OS filesystem enforcement. Those
+  boundaries belong to `SYSTEM_VIEW_CAPSULE_FOUNDATION_SPEC.md` and later
+  permissions work.
 - Reusing the Office table-color policy as a thread-ranking module.
 
 ---
@@ -78,13 +82,15 @@ metadata.
 
 The implementation must begin from these current paths and behaviors:
 
-- `fusion-studio-server/lib/workspace/ai-paths.js` currently resolves the view
-  root as `ai/<machine>/Views/`.
 - `fusion-studio-server/lib/views/index.js` discovers capsules, reads
   `manifest.md`, `content.json`, icon/layout state, resolves content roots, and
   exposes view definitions.
 - Existing `content.json` files are version 1 and already contain a `chat`
   declaration such as `{ "type": "threaded", "position": "right" }`.
+- The current Issues, Wiki, and Agents capsules instead declare the legacy
+  `chat.type: "rolling-daily"`; current runtime propagates the label but has no
+  complete rollover lifecycle, and this roadmap explicitly does not preserve
+  that behavior.
 - `normalizeV2ContentConfig()` currently discards unknown top-level behavior
   instead of producing a complete validated chat projection.
 - `SidebarThreadList.tsx` currently renders a bespoke row dropdown and
@@ -106,64 +112,19 @@ reader, or collection metadata on individual member sessions.
 
 ---
 
-## 4. View-Capsule Relocation
+## 4. Consumed Foundation Contract
 
-### 4.1 Canonical path
+`SYSTEM_VIEW_CAPSULE_FOUNDATION_SPEC.md` exclusively owns capsule relocation,
+the canonical `System/Views` resolver, migration readiness, registry generation,
+and protected Fusion mutation routes. This SPEC begins only after that work is
+accepted and reads/writes view configuration through its registry and narrow
+versioned config service.
 
-After this SPEC, the only canonical capsule root is:
-
-```text
-ai/<machine>/System/Views/
-```
-
-Add one canonical resolver in `workspace/ai-paths.js` and route view discovery,
-content resolution, state, styles, CLI display overrides, registry updates,
-reorder, restore, workspace bootstrap, and default scaffolding through it.
-Consumers must not concatenate `Views` or `System/Views` themselves.
-
-### 4.2 Content-root independence
-
-Moving the capsule never moves its content. Existing `content.json.root`
-declarations continue to resolve independently, including:
-
-- `ai/${machine}/Wiki` or another machine-relative content folder;
-- workspace-root `Wiki/`, `docs/wiki`, or another Git-tracked path;
-- workspace/project root;
-- view-relative content;
-- selected-folder, absolute, SQLite, and none declarations already supported
-  by the resolver.
-
-The migration must not rewrite a valid content-root declaration merely because
-the capsule moved.
-
-### 4.3 Migration behavior
-
-The migration is server-owned, preflighted, lossless, resumable, and
-idempotent.
-
-For every attached workspace and bundled/default workspace material:
-
-1. inventory both old and new roots by immutable `metadata.view-id`;
-2. reject duplicate IDs, ambiguous folders, and target collisions before
-   moving an affected capsule;
-3. move the complete capsule, including manifest, content config, styles,
-   per-view config/state, and unknown user files;
-4. preserve the folder name and numeric order prefix;
-5. record enough migration state to resume after a partial process failure;
-6. verify the moved capsule through the canonical loader before marking it
-   complete; and
-7. leave an empty legacy root harmless. Do not create a permanent two-root
-   read path after successful migration.
-
-If the same immutable view ID exists in both roots, stop and report a visible
-repair diagnostic. Never merge, overwrite, or select one silently.
-
-### 4.4 Identity
-
-`metadata.view-id` remains durable identity. A folder such as
-`001-project-viewer` is ordering/presentation metadata, not the binding key.
-Renaming or reordering a capsule after relocation must preserve its threads,
-collection metadata, content root, config, styles, and saved worksurfaces.
+Collections never inspect the legacy root, move a capsule, coordinate registry
+cutover, authorize a generic file route, or duplicate protected-path logic. A
+missing/conflicted view arrives here as an authoritative registry diagnostic;
+the collection domain preserves its groups and waits for the same immutable
+view ID to become healthy.
 
 ---
 
@@ -210,7 +171,9 @@ presentation and may change freely.
 
 ### 5.2 Defaults
 
-For every existing threaded view, migration writes or resolves these defaults:
+For every existing chat-enabled view whose declaration is `threaded` or the
+legacy `rolling-daily`, migration first canonicalizes `chat.type` to `threaded`
+and then writes or resolves these defaults:
 
 - `newAction.label = "New Chat"`;
 - `newAction.icon = "edit_square"`;
@@ -222,14 +185,21 @@ For every existing threaded view, migration writes or resolves these defaults:
 thread groups. It may be `null`, in which case new groups intentionally begin
 in Archive. It is never supplied by the New Chat client request.
 
-Views without threaded chat do not receive a thread-collection UI merely
-because defaults exist.
+`rolling-daily` has no retained rollover behavior. It is migration input only,
+not an effective V2 enum value. The migration explicitly covers the current
+Issues, Wiki, and Agents capsules and removes the stale client/server enum,
+branches, fixtures, and tests once all bundled/default content is upgraded.
+Views without chat do not receive a thread-collection UI merely because
+defaults exist.
 
 ### 5.3 Validation
 
 The validated loader must enforce:
 
 - `version` is supported;
+- effective `chat.type` is exactly `threaded`; post-migration
+  `rolling-daily` is rejected with a visible repair diagnostic rather than
+  silently inventing rollover behavior;
 - `newAction.label` is a non-empty bounded string;
 - `newAction.icon` is a bounded Material Symbol name;
 - `collections.mode` is exactly `folders` or `tags`;
@@ -249,6 +219,23 @@ surfaces field-level diagnostics, and leaves the last-known-good effective
 projection active. If no last-known-good projection exists, use the safe
 threaded defaults above without executing unknown content.
 
+Every effective projection includes an opaque `configRevision` derived by the
+config service from the canonical validated source revision/hash. It changes
+whenever effective New-action/collection behavior changes, remains stable for
+the same effective bytes across restart, and accompanies config fan-out,
+thread-rail state, and collection-menu commands. Invalid edits that leave the
+last-known-good projection active do not invent a new effective revision.
+
+The view/config service is the sole owner of that effective projection and its
+last-known-good value. The last-known-good projection is an in-memory derived
+cache keyed by `{workspaceId, viewId}` and records the source revision/hash that
+produced it; a later invalid hash does not replace the valid entry. It is never
+written back into `content.json`, view state, renderer state, or thread-group
+metadata. It is discarded when the workspace detaches or the process restarts.
+After restart, invalid source config therefore resolves to the documented safe
+defaults until the canonical file validates again. Config watch/reload asks the
+service to rebuild and replaces the cached projection only after validation.
+
 ### 5.4 Authority
 
 Configuration is not authority. It can request presentation and collection
@@ -262,8 +249,10 @@ view/config service seam needed by the later protected-System implementation.
 
 ### 6.1 Ownership
 
-The visible thread group owns collection membership. An underlying primary or
-side-chat session does not own or duplicate it.
+The visible thread group owns collection membership. An underlying Main Chat
+or Side Chat session does not own or duplicate it. These are user-facing names;
+the prerequisite SPEC retains `primary` and `side-chat` only where they are
+internal persistence, protocol, or projection terms.
 
 SQLite is authoritative for assignments. `content.json` defines which
 collection IDs are currently valid and how they are presented; it does not
@@ -287,6 +276,19 @@ Constraints and indexes:
 - unique `{group_id, rank}`;
 - index `{collection_id, group_id}` for filtered lists; and
 - foreign key from `group_id` to `thread_groups` with cascade delete.
+
+The same migration adds `thread_groups.collection_revision INTEGER NOT NULL
+DEFAULT 0` and nullable `thread_groups.collection_initialized_at`. The timestamp
+is an initialization marker, not precedence: null means the group's immutable
+view was unavailable and default seeding has never run; non-null means seeding
+was conclusively processed even when `defaultId` was null and no assignment row
+was created. `collection_revision` is the server-owned monotonic compare-and-
+swap version for collection mutations; ranks are precedence, not a revision substitute.
+`collection_promote`, an effective `collection_remove`, and an effective
+`collections_clear` increment it in the same transaction as their assignment
+changes. A valid no-op returns the current projection and unchanged revision.
+Backfill/default seeding establishes assignments, initialization marker, and
+revision atomically.
 
 The public thread-group shape may expose:
 
@@ -343,9 +345,33 @@ valid configured assignments appears in Archive.
 
 ### 6.6 Existing and new groups
 
-Backfill every non-Legacy group to its owning view's server-resolved
-`defaultId`. Legacy groups without a view receive no collection assignment and
-remain in the separate Legacy Threads population.
+Backfill every non-Legacy group whose immutable view ID resolves through a
+unique registry entry to that view service's effective `defaultId`, then set
+`collection_initialized_at` in the same transaction. A null default inserts no
+assignment but still marks initialization complete. Legacy groups without a
+view receive no collection assignment and remain in the separate Legacy Threads
+population.
+
+“Effective” includes §5.3's safe threaded defaults. If source config is invalid
+and no in-memory last-known-good projection survives restart, the unique view
+remains available with visible repair diagnostics, existing uninitialized
+groups initialize to the safe `threads` default, and New Chat may commit with
+that same server projection. Invalid source never makes this path choose between
+skip and fallback, and the renderer never invents the fallback.
+
+A view-bound group whose capsule is missing or duplicate-ID conflicted is
+preserved but skipped: create no assignment,
+leave `collection_initialized_at` null, and keep the group unavailable with its
+existing orphan/registry diagnostic. It is treated as derived Archive only in
+bounded diagnostic projections; because its view is unavailable, it does not
+appear in another view's Archive rail. Never guess a default from another
+capsule or write a replacement view ID.
+
+When the registry later resolves that exact immutable view ID uniquely, the collection
+service reconciles only its groups with `collection_initialized_at IS NULL`,
+using the now-effective default and setting the marker atomically. Repeated
+registry events are idempotent. Groups already initialized—including groups the
+user later archived or whose assignments became dormant—are never reseeded.
 
 The public New Chat request, pending-intent object, and client payload do not
 gain collection, path, config, or folder fields. After the first SPEC's group
@@ -371,6 +397,22 @@ The selected rail collection is per-view navigation state, not per-thread
 worksurface state. If the selected configured ID disappears, fall back to
 Archive and persist that safe selection through the view-state service.
 
+Its exact durable path is:
+
+```ts
+viewStates[viewId].activity.threadCollectionSelection = {
+  schemaVersion: 1,
+  selectedCollectionId: 'archive' // or one configured stable ID
+}
+```
+
+`activity` is already a forced per-view namespace in the view-state writer, so
+do not add a new top-level key or store this selection in workspace-shared
+state. The view/config service validates the ID against the current effective
+projection, treats malformed/missing state as the configured default (or
+Archive), and persists Archive when a selected ID becomes unavailable. Two
+views may select different collections without affecting each other.
+
 The thread list query remains view-bound and adds one effective collection
 filter. A thread in tag mode may therefore appear in more than one configured
 grouping, while still producing only one row inside any selected grouping.
@@ -390,19 +432,44 @@ Required actions:
 | `collection_remove` | Remove one stored assignment. Used by tag-mode uncheck. |
 | `collections_clear` | Remove every assignment. Implements Archive. |
 
-Every action includes `threadGroupId`, `viewId`, and an expected collection
-revision. Promote/remove include `collectionId`. The server derives workspace
-from the connection, verifies group/view ownership, resolves current config,
-and rejects reserved or unknown IDs.
+Every action includes the common Composable Chat `requestId`, `threadGroupId`,
+an expected collection revision, and the exact `expectedConfigRevision` from
+the menu's effective projection. Promote/remove include `collectionId`.
+The server derives workspace from the
+connection and view binding from the authoritative group, verifies ownership,
+resolves current config through the registry, and rejects reserved or unknown
+IDs. `viewId` is not accepted as a redundant client assertion on a group action.
 
-Successful mutation commits before fan-out and returns the complete fresh
-assignment/effective projection plus a new revision. All mounted surfaces for
-that group and all rails for that view receive the committed update. A stale
-expected revision returns a conflict and current projection without partial
-mutation.
+After same-`requestId` replay resolution but before any new mutation, the server
+requires `expectedConfigRevision` to equal the current effective projection.
+`collection_remove` additionally requires the authoritative current mode to be
+`tags`; it is invalid in folder mode even when the collection ID and assignment
+revision still exist. Mismatch returns `stale_config` with the current effective
+projection/revision and changes no assignment, rank, or collection revision.
 
-Config changes also trigger a fresh effective projection. They do not rewrite
-assignment rows merely because IDs became dormant.
+Successful mutation commits before fan-out and returns
+`thread:action:completed` with the complete fresh assignment/effective
+projection plus its revision. Validation, authority, persistence, or conflict
+failure returns `thread:action:error`; a stale expected revision includes the
+current projection without partial mutation. All mounted surfaces for that
+group and all rails for its server-derived view receive the committed update.
+
+Requester acknowledgement, each workspace-recipient delivery, and optional
+post-commit UEB publication are mutually failure-isolated. A failed requester or
+one failed recipient cannot stop the remaining delivery attempts or change the
+commit. Clients that miss fan-out rehydrate authoritative collection state on
+reconnect/init; delivery failure never replays the mutation.
+
+The collection service records the common action-ledger result in the same
+transaction as its assignment/revision change. Same-ID/same-payload retry after
+a lost acknowledgement returns that stored projection and does not encounter a
+false stale-revision conflict or allocate another rank. Different-payload reuse
+returns `request_mismatch`. Completed/error responses echo `requestId`.
+
+Config changes also trigger a fresh effective projection and `configRevision`
+to every bound window. They do not rewrite assignment rows merely because IDs
+became dormant. A delayed old-mode command is judged against authoritative
+config at server receipt, never against the originating window's menu.
 
 ---
 
@@ -473,10 +540,8 @@ folder is selected.
 Extend the shared menu with:
 
 ```ts
-interface MenuCheckboxDescriptor {
+interface MenuCheckboxDescriptor extends MenuInteractiveDescriptorBase {
   kind: 'checkbox';
-  id: string;
-  label: string;
   checked: boolean;
   onSelect: (context: MenuActionContext) => MenuOutcome | Promise<MenuOutcome>;
 }
@@ -484,6 +549,11 @@ interface MenuCheckboxDescriptor {
 
 Render it with `role="menuitemcheckbox"` and `aria-checked`. It uses the same
 visual checkmark column as radio items but does not claim radio semantics.
+This is a first-class shared-menu descriptor, not a thread-only row type. It
+inherits the same stable ID, label, icon, secondary text, disabled state and
+reason, accessible label, and tone contract as the existing action and radio
+descriptors. Existing `heading` and `status` descriptors remain noninteractive
+menu content; they are not substitutes for radio or checkbox choices.
 
 Each valid configured collection is an independent checkbox:
 
@@ -515,65 +585,78 @@ assignment and closes the menu. It is not one checkbox among the tags.
 
 ## 11. Failure and Recovery Semantics
 
-1. A failed capsule migration never deletes the only complete copy.
-2. Old/new duplicate immutable IDs stop migration and surface repair details.
-3. Invalid config never becomes effective and never rewrites assignments.
-4. An unavailable configured collection turns assignments dormant; it does not
+1. Invalid config never becomes effective and never rewrites assignments.
+2. An unavailable configured collection turns assignments dormant; it does not
    delete them.
-5. A failed assignment mutation changes neither rank nor visible check state.
-6. A stale mutation receives a conflict projection and may retry only from the
+3. A failed assignment mutation changes neither rank nor visible check state.
+4. A stale mutation receives a conflict projection and may retry only from the
    refreshed state.
-7. A missing or corrupt assignment row cannot hide a group; projection falls
+5. A missing or corrupt assignment row cannot hide a group; projection falls
    back to Archive.
-8. Archive never deletes the thread group, member sessions, exchanges,
+6. Archive never deletes the thread group, member sessions, exchanges,
    transcript mirror, or worksurface state.
-9. Restart reconstructs effective projection from SQLite assignments plus the
+7. Restart reconstructs effective projection from SQLite assignments plus the
    current validated view config.
+8. A missing/conflicted capsule leaves its bound groups untouched and
+    uninitialized rather than failing the whole migration or borrowing another
+    view's config. Recovery of the same immutable ID initializes each skipped
+    group exactly once; already initialized/archive-cleared groups are not
+    reseeded.
 
 ---
 
 ## 12. Dependency-Ordered Implementation Slices
 
-### Slice 1 — Relocated capsules with unchanged content
-
-- Add the canonical System/Views resolver and idempotent migration.
-- Route every view consumer through the resolver.
-- Move current workspace/default capsules without losing unknown files or
-  state.
-- Prove all built-in views, styles, state, and independently rooted content
-  reopen after restart.
-
-### Slice 2 — Effective view thread presentation
+### Slice 1 — Effective view thread presentation
 
 - Add the version-2 `content.json.chat` validator and effective projection.
-- Upgrade existing threaded view configs with default New-action and collection
-  declarations.
-- Deliver the effective projection to the renderer.
+- Canonicalize every chat-enabled legacy `rolling-daily` config—including the
+  bundled/current Issues, Wiki, and Agents capsules—to `threaded`, remove the
+  stale enum/branches/tests, and upgrade all chat-enabled configs with default
+  New-action and collection declarations.
+- Deliver the effective projection and stable `configRevision` to the renderer
+  and fan every valid change to all bound windows.
 - Render the configured New label/icon and collection selector without changing
   New Chat's public request.
+- Open a threaded view through the public shell and prove valid, invalid,
+  live-edited, and post-restart config behavior uses only the config service's
+  effective projection.
 
-### Slice 3 — Durable folder-mode collections
+### Slice 2 — Durable folder-mode collections
 
 - Add ranked assignment persistence, backfill, revisions, and server actions.
+- Skip missing/conflicted-view groups without marking them initialized, and
+  reconcile them exactly once when the same immutable view ID becomes healthy.
 - Seed new groups from server-resolved `defaultId` in the existing group
   transaction without new client fields.
 - Filter the rail by collection plus derived Archive.
+- Persist the selected filter only at
+  `activity.threadCollectionSelection`, preserving independent selections in
+  two views across restart.
 - Replace the bespoke thread menu with the shared menu and ship the
   **Collections**/`sub_header` radio submenu.
+- Exercise promote and clear from the public row menu through
+  `thread:action:completed`/`:error`, two-window fan-out, and restart/readback
+  before proceeding. Every action proves both assignment revision and
+  `expectedConfigRevision` validation.
 
-### Slice 4 — Lossless tag mode
+### Slice 3 — Lossless tag mode
 
 - Add shared checkbox descriptors and accessibility behavior.
 - Implement multi-select promote/remove with keep-open updates.
 - Prove tag→folder→tag mode changes preserve lower-ranked assignments and that
   folder selection only reranks.
+- Delay a tag-mode `collection_remove` until folder mode becomes authoritative
+  and prove `stale_config` leaves every membership intact.
 
-### Slice 5 — Dormancy, Archive, and recovery
+### Slice 4 — Dormancy, Archive, and recovery
 
 - Preserve assignments across config removal/restoration.
 - Clear every assignment through Archive without deleting chat data.
 - Cover config edits, live fan-out, stale revisions, restart, partial migration,
   rank compaction, and menu-anchor removal.
+- Inject requester-send, individual-recipient, and optional UEB failures and
+  prove remaining delivery attempts plus reconnect hydration still converge.
 
 ---
 
@@ -583,15 +666,17 @@ assignment and closes the menu. It is not one checkbox among the tags.
 
 | Check | Required proof |
 |---|---|
-| Capsule migration | Old-only, already-migrated, partial, collision, and duplicate-ID workspaces behave deterministically and losslessly. |
-| Content roots | Machine-relative, workspace-relative, project-root, view-relative, selected-folder, absolute, SQLite, and none behavior does not change merely because the capsule moved. |
-| Config defaults | Existing threaded views resolve to New Chat/edit_square/folders/Threads; non-threaded views do not gain chat. |
-| Config validation | Duplicate/reserved IDs, invalid modes/defaults/icons/labels, and executable fields fail safely with last-known-good projection. |
-| Backfill | Every view-bound group receives the owning view's default assignment once; Legacy groups remain separate. |
+| Foundation consumption | Configuration resolves only through the accepted canonical registry/versioned config service. No legacy-root lookup, capsule move, migration coordinator, generic-path authorization, or protected-path logic enters this SPEC's diff. |
+| Config defaults | Existing chat-enabled views resolve to threaded/New Chat/edit_square/folders/Threads; views without chat do not gain it. |
+| Legacy chat type | Every bundled/workspace `rolling-daily` declaration migrates once to `threaded`; the stale enum/code/tests are removed, no rollover timer/grouping survives, and an unconverted post-migration value fails visibly instead of being skipped. |
+| Config validation | Duplicate/reserved IDs, invalid modes/defaults/icons/labels, and executable fields fail safely with last-known-good projection. Effective projections carry stable `configRevision`; valid changes update/fan it, while invalid edits retaining last-known-good do not invent a revision. After restart with no cache, a uniquely registered view uses the server's safe threaded defaults, surfaces diagnostics, initializes pending groups to `threads`, and gives New Chat the identical effective default. |
+| Selected filter state | `activity.threadCollectionSelection` routes to the owning view capsule, validates against the effective config, falls back durably to Archive when needed, and restores two different view selections independently after restart. No workspace-shared selection key exists. |
+| Backfill | Every healthy view-bound group processes the owning view's default once and records `collection_initialized_at`, including null-default/Archive results. Missing/conflicted-view groups remain preserved, without an assignment, and uninitialized; recovery of the same immutable ID seeds them once. Legacy groups remain separate, and archived/already-initialized groups are never reseeded. |
 | Ranking | Promote is newest-wins, folder projection selects one, tag projection selects all, and compaction preserves order. |
 | Dormancy | Removing a configured ID hides but does not delete its assignments; restoring the same ID restores membership. |
 | Archive | Clear removes all assignments and no chat, group, exchange, mirror, or worksurface data. |
-| Authorization | Wrong workspace/view/group, unknown ID, reserved Archive ID, and stale revision fail without mutation. |
+| Authorization | Wrong workspace/group, unresolved authoritative group view, unknown ID, reserved Archive ID, stale assignment revision, and stale config revision fail without mutation. `collection_remove` also fails unless authoritative current mode is `tags`; redundant client `viewId` is rejected. |
+| Request correlation | Completion/error echoes `requestId`; a dropped acknowledgement and same-ID retry returns the stored result without changing rank/revision, while different-payload reuse fails. Open a tag menu in window A, switch config to folders in B while delaying fan-out, then submit A's old remove: server returns `stale_config` and tag→folder→tag retains every assignment. |
 | New Chat boundary | No new client payload field or folder/config input is accepted; default assignment comes from server-resolved view config. |
 
 ### Shared menu
@@ -623,40 +708,53 @@ Prove through component/Electron coverage:
 9. long labels, empty configured collections, keyboard-only use, and narrow
    viewport positioning remain usable.
 
+Run a stale-symbol sweep proving the bespoke thread-row menu DOM, local
+`menuOpenId` dismissal path, and any superseded thread-only menu CSS are gone
+after both right-click and kebab use the shared descriptor tree.
+
 ---
 
 ## 14. Definition of Done
 
 This SPEC is complete only when:
 
-1. all active view capsules load exclusively from `System/Views/` through one
-   canonical resolver;
-2. capsule relocation is idempotent, lossless, and independent of content-root
-   location;
-3. every threaded view has a valid versioned New-action/collection config and
+1. the accepted System View Capsule foundation supplies the only registry and
+   versioned config-write boundary, with no relocation/security implementation
+   duplicated here;
+2. every chat-enabled view has canonical `chat.type: "threaded"` plus a valid
+   versioned New-action/collection config, with `rolling-daily` removed from
+   active enums/code/tests, and
    the renderer consumes only the server's effective projection;
-4. visible thread groups own durable ranked collection assignments in SQLite;
-5. folder mode defaults to the highest-ranked valid assignment while retaining
+3. visible thread groups own durable ranked collection assignments and one
+   monotonic collection revision in SQLite;
+4. folder mode defaults to the highest-ranked valid assignment while retaining
    all metadata;
-6. tag mode exposes all valid assignments with correct checkbox semantics;
-7. Archive is synthetic, non-removable, and implemented by clearing all
+5. tag mode exposes all valid assignments with correct checkbox semantics;
+6. Archive is synthetic, non-removable, and implemented by clearing all
    assignments rather than setting archive status;
-8. config removal/restoration makes assignments dormant/effective without data
+7. config removal/restoration makes assignments dormant/effective without data
    loss;
-9. thread right-click and kebab menus both use the shared menu module;
-10. **Collections** uses the `sub_header` icon and a shared right-opening
+8. thread right-click and kebab menus both use the shared menu module;
+9. **Collections** uses the `sub_header` icon and a shared right-opening
     submenu;
-11. the public New Chat payload and project/content file behavior remain
-    unchanged; and
+10. the public New Chat payload and project/content file behavior remain
+    unchanged;
+11. requester acknowledgement, per-window fan-out, reconnect hydration, and
+    optional UEB delivery remain failure-isolated after commit;
 12. automated server, shared-menu, renderer, restart, migration, and
-    accessibility checks pass.
+    accessibility checks pass; and
+13. a missing/conflicted view cannot fail collection migration or borrow another
+    default: its groups remain uninitialized and unavailable, then the same
+    immutable ID's recovery seeds them exactly once without reseeding any
+    previously initialized/archive-cleared group.
 
 ---
 
 ## 15. Deferred Follow-Ups
 
 - GUI editing for `content.json` thread settings.
-- Full protected-System write enforcement and user-presence authorization.
+- Enforceable direct harness/OS protection for `System/Views`, broader System
+  roots, and additional privileged editor surfaces.
 - Project Viewer creation and provisioning.
 - Import/export and clone flows.
 - Auto-Rename Chat Threads configuration.
