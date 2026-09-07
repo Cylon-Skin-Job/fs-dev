@@ -27,6 +27,27 @@
 
 const REDACTED = '[redacted]';
 
+const AUTH_DIAGNOSTIC_KEY_MARKERS = Object.freeze([
+  'master',
+  'generation',
+  'proof',
+  'challenge',
+  'nonce',
+  'authorization',
+  'authentication',
+  'authority',
+  'credential',
+  'signature',
+  'hmac',
+  'digest',
+  'bearer',
+  'secret',
+  'token',
+  'derivedkey',
+  'shellsecret',
+  'bootstrapsecret',
+]);
+
 const CHAT_TURN_NOTE_REDACTION_PATHS = [
   'note.body',
   'patch.note.body',
@@ -37,6 +58,9 @@ const CHAT_TURN_NOTE_REDACTION_PATHS = [
 ];
 
 const RULES = {
+  'shell-auth:challenge': { redactPaths: ['serverNonce'] },
+  'shell-auth:proof': { redactPaths: ['serverNonce', 'rendererNonce', 'proof'] },
+  client_log: { redactPaths: ['level', 'message', 'data'] },
   'clipboard:append': { redactPaths: ['text', 'value', 'item.text', 'item.value'] },
   'clipboard:use':    { redactPaths: ['text', 'value', 'item.text', 'item.value'] },
   'secrets:api-keys:set': { redactPaths: ['value'] },
@@ -47,6 +71,33 @@ const RULES = {
   'provenance:test:agent_tool': { redactPaths: ['nonce'] },
   file_save: { redactPaths: ['content'] },
 };
+
+function isAuthDiagnosticKey(key) {
+  if (typeof key !== 'string') return false;
+  const normalized = key.normalize('NFKC').toLowerCase().replace(/[^a-z0-9]/g, '');
+  return AUTH_DIAGNOSTIC_KEY_MARKERS.some((marker) => normalized.includes(marker));
+}
+
+function redactAuthDiagnosticFields(value, seen = new WeakMap()) {
+  if (value === null || typeof value !== 'object') return value;
+  if (seen.has(value)) return seen.get(value);
+  const clone = Array.isArray(value) ? [] : {};
+  seen.set(value, clone);
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  for (const key of Reflect.ownKeys(descriptors)) {
+    if (typeof key !== 'string') continue;
+    const descriptor = descriptors[key];
+    if (!descriptor.enumerable) continue;
+    if (isAuthDiagnosticKey(key)) {
+      clone[key] = REDACTED;
+    } else if (Object.prototype.hasOwnProperty.call(descriptor, 'value')) {
+      clone[key] = redactAuthDiagnosticFields(descriptor.value, seen);
+    } else {
+      clone[key] = REDACTED;
+    }
+  }
+  return clone;
+}
 
 function setAtPath(obj, path, value) {
   const parts = path.split('.');
@@ -70,13 +121,21 @@ function getRule(msg) {
 }
 
 function redactWsMessage(msg) {
+  if (!msg || typeof msg !== 'object') return msg;
+  const clone = redactAuthDiagnosticFields(msg);
   const rule = getRule(msg);
-  if (!rule) return msg;
-  const clone = JSON.parse(JSON.stringify(msg));
-  for (const path of rule.redactPaths) {
-    setAtPath(clone, path, REDACTED);
+  if (rule) {
+    for (const path of rule.redactPaths) {
+      setAtPath(clone, path, REDACTED);
+    }
   }
   return clone;
 }
 
-module.exports = { redactWsMessage, RULES, REDACTED };
+module.exports = {
+  AUTH_DIAGNOSTIC_KEY_MARKERS,
+  REDACTED,
+  RULES,
+  isAuthDiagnosticKey,
+  redactWsMessage,
+};

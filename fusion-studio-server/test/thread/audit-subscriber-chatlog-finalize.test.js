@@ -35,9 +35,11 @@ describe('audit subscriber chatlog finalization', () => {
   let modules;
   let previousUserData;
   let previousMachine;
+  let registeredDelivery;
 
   beforeEach(async () => {
     jest.resetModules();
+    registeredDelivery = null;
     tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-audit-chatlog-finalize-'));
     previousUserData = process.env.FUSION_APP_USER_DATA;
     previousMachine = process.env.FUSION_LOCAL_MACHINE;
@@ -49,11 +51,19 @@ describe('audit subscriber chatlog finalization', () => {
       eventBus: require('../../lib/event-bus'),
       auditSubscriber: require('../../lib/audit/audit-subscriber'),
       ThreadManager: require('../../lib/thread/ThreadManager').ThreadManager,
+      processManager: require('../../lib/wire/process-manager'),
+      createWireBroadcaster: require('../../lib/wire/wire-broadcaster').createWireBroadcaster,
     };
     await modules.db.initDb();
   });
 
   afterEach(async () => {
+    if (registeredDelivery) {
+      modules?.processManager.unregisterWire(
+        registeredDelivery.threadId, registeredDelivery.scope, registeredDelivery.wire,
+      );
+      registeredDelivery = null;
+    }
     modules?.auditSubscriber.stopAuditSubscriber();
     modules?.eventBus.bus.removeAllListeners();
     await modules?.db.closeDb();
@@ -84,6 +94,14 @@ describe('audit subscriber chatlog finalization', () => {
       { role: 'user', content: 'stale markdown', hasToolCalls: false },
     ]);
 
+    const workspaceEpoch = 'epoch-audit';
+    const ownerMessages = [];
+    const owner = { readyState: 1, send: raw => ownerMessages.push(JSON.parse(raw)) };
+    const wire = { pid: 1010, killed: false };
+    const deliveryScope = { workspaceId, projectRoot, workspaceEpoch };
+    modules.processManager.registerWire(threadId, wire, projectRoot, owner, deliveryScope);
+    registeredDelivery = { threadId, scope: deliveryScope, wire };
+    modules.createWireBroadcaster({ getClientForThread: modules.processManager.getClientForThread });
     modules.auditSubscriber.startAuditSubscriber();
     const savedPromise = waitForEvent(modules.eventBus.on, 'chat-turn:saved');
 
@@ -91,8 +109,10 @@ describe('audit subscriber chatlog finalization', () => {
       workspace: 'workspace:audit',
       workspaceId,
       projectRoot,
+      workspaceEpoch,
       scope: 'project',
       threadId,
+      turnId: 'turn-audit',
       messageId: 'msg-audit',
       planMode: true,
       contextUsage: 42,
@@ -103,6 +123,7 @@ describe('audit subscriber chatlog finalization', () => {
       workspace: 'workspace:audit',
       workspaceId,
       projectRoot,
+      workspaceEpoch,
       scope: 'project',
       threadId,
       turnId: 'turn-audit',
@@ -129,6 +150,8 @@ describe('audit subscriber chatlog finalization', () => {
     }, 'chatlog mirror rewrite');
 
     expect(saved).toMatchObject({
+      projectRoot,
+      workspaceEpoch,
       threadId,
       turnId: 'turn-audit',
       seq: 1,
@@ -163,6 +186,9 @@ describe('audit subscriber chatlog finalization', () => {
         turnId: 'turn-audit',
       },
     });
+    expect(ownerMessages.map(message => message.type)).toEqual([
+      'status_update', 'turn_end', 'exchange_metadata', 'chat-turn:saved',
+    ]);
     // SPEC-03 Slice B pinned shape: non-error metadata has NO terminalError key.
     expect('terminalError' in JSON.parse(row.metadata)).toBe(false);
   });

@@ -9,12 +9,8 @@
 
 const { logFailure } = require('./log');
 
-function messageFor(err) {
-  return err && err.message ? err.message : String(err);
-}
-
 function reportFailure(name, err) {
-  console.error(`[Background:${name}] failed:`, messageFor(err));
+  console.error('[Background] service_failed');
   logFailure(name, err);
 }
 

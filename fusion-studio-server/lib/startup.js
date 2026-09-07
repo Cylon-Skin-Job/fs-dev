@@ -42,7 +42,13 @@ const { loadComponents, getModalDefinition } = require('./components/component-l
 const views = require('./views');
 const { createShutdownHandler } = require('./shutdown');
 
-const PORT = parseInt(process.env.PORT ?? '3001', 10);
+const {
+  LOOPBACK_HOST,
+  parseLoopbackPort,
+  validateLoopbackHost,
+} = require('./startup-loopback');
+const PORT = parseLoopbackPort(process.env.PORT ?? '3001');
+const SERVER_HOST = validateLoopbackHost(LOOPBACK_HOST);
 const { createIsolatedProvenanceRuntime } = require('./testing/isolated-provenance-runtime');
 
 function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.promises.realpath } = {}) {
@@ -66,6 +72,7 @@ function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.prom
 function createAgentPhaseAOwner({
   shutdownActiveTurns,
   drainAuditSaves: drainAuditSaveOwner,
+  drainEventLedgerWrites = async () => Object.freeze({ drained: true }),
   shutdownActivityOwners,
   binderOwner,
   announcedOwner,
@@ -73,6 +80,7 @@ function createAgentPhaseAOwner({
   ledgerOwner,
   observationOwner,
   rendererProjectionOwner,
+  shutdownThreadManagers,
   closeReconciliationDatabase,
   monotonicNow = () => performance.now(),
 }) {
@@ -103,7 +111,10 @@ function createAgentPhaseAOwner({
     );
     const causalDrain = (async () => {
       if (!await runBeforeDeadline(shutdownActiveTurns, 5_000)) return false;
+      if (shutdownThreadManagers
+        && !await runBeforeDeadline(shutdownThreadManagers, 3_000)) return false;
       const auditDrain = runBeforeDeadline(drainAuditSaveOwner, 5_000);
+      const legacyLedgerDrain = runBeforeDeadline(drainEventLedgerWrites, 5_000);
       const binderDrain = binderOwner
         ? (async () => {
           if (!await auditDrain) return false;
@@ -115,6 +126,7 @@ function createAgentPhaseAOwner({
       const results = await Promise.allSettled([
         runBeforeDeadline(shutdownActivityOwners, 2_000),
         binderDrain,
+        legacyLedgerDrain,
         runBeforeDeadline(
           (boundedOptions) => admissionOwner.shutdown(boundedOptions), 2_000,
         ),
@@ -150,12 +162,33 @@ function createAgentPhaseAOwner({
  * @param {import('http').Server} deps.server
  * @param {import('express').Express} deps.app
  * @param {Map} deps.sessions
+ * @param {object} deps.productSessionRegistry
+ * @param {object} deps.transportConnectionRegistry
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  * @returns {Promise<{ fusionHandlers: object, clipboardHandlers: object, themeHandlers: object, secretsHandlers: object }>}
  */
-async function start({ server, app, sessions, getProjectRoot, installProtocolRoutes }) {
+async function start({
+  server,
+  app,
+  sessions,
+  productSessionRegistry,
+  transportConnectionRegistry,
+  getProjectRoot,
+  installProtocolRoutes,
+}) {
   if (typeof installProtocolRoutes !== 'function') {
     throw new TypeError('atomic protocol route installer is required');
+  }
+  if (
+    !productSessionRegistry
+    || typeof productSessionRegistry.getAllClients !== 'function'
+    || typeof productSessionRegistry.getClientByConnectionId !== 'function'
+    || typeof productSessionRegistry.getSessionForClient !== 'function'
+  ) {
+    throw new TypeError('product session registry is required');
+  }
+  if (!transportConnectionRegistry || typeof transportConnectionRegistry.terminateAll !== 'function') {
+    throw new TypeError('transport connection registry is required');
   }
   const isolatedProvenance = createIsolatedProvenanceRuntime({
     port: PORT,
@@ -438,10 +471,35 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
     registryAccess,
     writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
   });
+  const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
+  const localMachineName = await initializeLocalMachineIdentity();
+  console.log('[Workspace] local machine name: ' + localMachineName);
+
+  // The isolated provenance fixture gets a process-owned, provider-free
+  // thread before any public socket can connect. Fixture requests may select
+  // this exact existing thread, but can never create a durable session.
+  let fixtureThreadTarget = null;
+  const fixtureThreadId = await isolatedProvenance.provisionAgentToolThread(async (target) => {
+    fixtureThreadTarget = target;
+    const {
+      getProjectThreadManager,
+      awaitThreadManagerReady,
+    } = require('./thread/thread-manager-registry');
+    const manager = getProjectThreadManager(target.projectRoot, target.workspaceId);
+    await awaitThreadManagerReady(manager);
+    if (!await manager.getThread(target.threadId)) {
+      await manager.createThread(target.threadId, 'Agent provenance isolated fixture', {
+        harnessId: 'opencode',
+      });
+    }
+  });
   const agentToolFixtureRoute = createAgentToolFixtureRoute({
     db: getDb(),
     enabled: isolatedProvenance.enabled,
     nonce: process.env.FUSION_PROVENANCE_TEST_NONCE,
+    threadId: fixtureThreadId,
+    workspaceId: fixtureThreadTarget?.workspaceId,
+    projectRoot: fixtureThreadTarget?.projectRoot,
   });
   installProtocolRoutes(Object.freeze({
     fileSaveRoute,
@@ -451,16 +509,15 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
     agentToolFixtureRoute,
   }));
 
-  const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
-  const localMachineName = await initializeLocalMachineIdentity();
-  console.log('[Workspace] local machine name: ' + localMachineName);
-
   // 2. Handlers — depend on DB being ready
   const fusionHandlers = createFusionHandlers({ getDb, sessions, getProjectRoot });
 
   // 3. Audit subscriber — listens to event bus, persists exchange metadata
   startAuditSubscriber({ enableAgentExchangeBinding: true });
-  const { startEventLedgerSubscriber } = require('./ledger/event-ledger-subscriber');
+  const {
+    drainEventLedgerWrites,
+    startEventLedgerSubscriber,
+  } = require('./ledger/event-ledger-subscriber');
   startEventLedgerSubscriber();
 
   // 3.1. Transcription history subscriber — listens to transcription:* via bus,
@@ -482,20 +539,11 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
   // 3.7. Workspace broadcaster — bus → WebSocket fan-out for workspace
   // and thread lifecycle events. Must subscribe before listen() so boot-time
   // workspace availability events are delivered.
-  const getAllClients = () => {
-    const clients = [];
-    for (const [ws] of sessions) {
-      if (ws.readyState === 1) clients.push(ws);
-    }
-    return clients;
-  };
-  const getClientByConnectionId = (connectionId) => {
-    for (const [ws, session] of sessions) {
-      if (session.connectionId === connectionId && ws.readyState === 1) return ws;
-    }
-    return null;
-  };
-  const getSessionForClient = (ws) => sessions.get(ws) || null;
+  const {
+    getAllClients,
+    getClientByConnectionId,
+    getSessionForClient,
+  } = productSessionRegistry;
   const { createWorkspaceBroadcaster } = require('./ws/workspace-broadcaster');
   createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, getSessionForClient });
 
@@ -589,15 +637,18 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
 
   // 4. listen() — must come before watcher/hooks start, they broadcast to clients
   await new Promise((resolve, reject) => {
-    server.listen(PORT, () => {
+    server.listen(PORT, SERVER_HOST, () => {
       const boundPort = server.address().port;
-      console.log(`[Server] Running on http://localhost:${boundPort}`);
+      console.log(`[Server] Running on IPv4 loopback port=${boundPort}`);
       console.log(`[Server] Default CLI: ${process.env.KIMI_PATH || 'kimi'}`);
-      process.stdout.write(`SERVER_READY:${boundPort}\n`);
 
       try {
         isolatedProvenance.defineStartupEffect('workspace-watcher-trigger-pipeline', () => {
-          _startPipeline({ sessions, getProjectRoot });
+          _startPipeline({
+            sessions,
+            getProjectRoot,
+            getWorkspaceId: workspaceController.getActiveWorkspaceId,
+          });
         }).start();
       } catch (err) {
         // Don't crash the server if pipeline init fails — log and continue
@@ -620,10 +671,12 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
   const requestShutdown = createShutdownHandler({
     server,
     sessions,
+    terminateTransports: transportConnectionRegistry.terminateAll,
     beginQuiesce: () => subscriptionController.quiesce(),
     phaseAOwners: [createAgentPhaseAOwner({
       shutdownActiveTurns: shutdownActiveTurnLifecycles,
       drainAuditSaves,
+      drainEventLedgerWrites,
       shutdownActivityOwners: shutdownSharedAgentActivityOwners,
       binderOwner: agentExchangeBinder,
       announcedOwner: announcedActivityReconciler,
@@ -631,6 +684,7 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
       ledgerOwner: agentLedgerOwner,
       observationOwner,
       rendererProjectionOwner,
+      shutdownThreadManagers: require('./thread/thread-manager-registry').shutdownThreadManagers,
       closeReconciliationDatabase: () => agentReconciliationDb.destroy(),
     })],
     closeWatchers: () => {
@@ -678,8 +732,9 @@ async function start({ server, app, sessions, getProjectRoot, installProtocolRou
  *
  * @private
  */
-function _startPipeline({ sessions, getProjectRoot }) {
+function _startPipeline({ sessions, getProjectRoot, getWorkspaceId }) {
   const projectRoot = getProjectRoot();
+  const workspaceId = getWorkspaceId();
   if (!projectRoot) {
     console.log('[Server] No active workspace — pipeline skipped');
     return;
@@ -723,7 +778,7 @@ function _startPipeline({ sessions, getProjectRoot }) {
     return result;
   };
 
-  const projectWatcher = createWatcher(projectRoot);
+  const projectWatcher = createWatcher(projectRoot, { workspaceId });
 
   // Load declarative filters (.md) from filters/
   const filterDir = path.join(__dirname, 'watcher', 'filters');

@@ -2,6 +2,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const { EventEmitter } = require('events');
 const { platform } = require('os');
+const { buildHarnessChildEnvironment } = require('../child-environment');
 
 /**
  * @typedef {import('../types').HarnessConfig} HarnessConfig
@@ -62,6 +63,15 @@ class BaseCLIHarness extends EventEmitter {
     return scopeString;
   }
 
+  _createSessionKey(threadId, projectRoot, scopeContext = {}) {
+    const workspaceId = scopeContext.workspaceId || (projectRoot ? path.basename(projectRoot) : null);
+    if (!workspaceId || typeof threadId !== 'string' || !threadId
+      || typeof projectRoot !== 'string' || !projectRoot) {
+      throw new Error('Harness session requires exact workspace, root, and thread identity');
+    }
+    return JSON.stringify([workspaceId, path.resolve(projectRoot), threadId]);
+  }
+
   /**
    * CHAT_SCOPE_SPEC: read the captured scope for a thread, or a safe default.
    * @param {string} threadId
@@ -69,6 +79,60 @@ class BaseCLIHarness extends EventEmitter {
    */
   _getScopeString(threadId) {
     return this.threadScopes.get(threadId) || 'workspace:unknown';
+  }
+
+  /**
+   * Convert this adapter's canonical event emitter into one prompt-scoped
+   * async iterator. The listener is installed before the prompt is written,
+   * preventing a fast provider response from escaping the canonical drain.
+   */
+  async *_streamCanonicalEvents(threadId, startPrompt, sessionKey = null) {
+    const queued = [];
+    let wake = null;
+    let endedBeforeTerminal = false;
+    const eventHandler = ({ threadId: eventThreadId, sessionKey: eventSessionKey, event }) => {
+      if (eventThreadId !== threadId || (sessionKey && eventSessionKey !== sessionKey)) return;
+      queued.push(event);
+      if (wake) {
+        const resolve = wake;
+        wake = null;
+        resolve();
+      }
+    };
+    const exitHandler = ({ threadId: eventThreadId, sessionKey: eventSessionKey }) => {
+      if (eventThreadId !== threadId || (sessionKey && eventSessionKey !== sessionKey)) return;
+      endedBeforeTerminal = true;
+      if (wake) {
+        const resolve = wake;
+        wake = null;
+        resolve();
+      }
+    };
+
+    this.on('event', eventHandler);
+    this.on('exit', exitHandler);
+    try {
+      startPrompt();
+      while (true) {
+        if (queued.length === 0) {
+          if (endedBeforeTerminal) {
+            throw new Error('Harness session ended before terminal event');
+          }
+          await new Promise((resolve) => { wake = resolve; });
+        }
+        while (queued.length > 0) {
+          const event = queued.shift();
+          yield event;
+          if (event?.type === 'turn_end') return;
+        }
+        if (endedBeforeTerminal) {
+          throw new Error('Harness session ended before terminal event');
+        }
+      }
+    } finally {
+      this.off('event', eventHandler);
+      this.off('exit', exitHandler);
+    }
   }
 
   /**
@@ -83,7 +147,8 @@ class BaseCLIHarness extends EventEmitter {
       const whichCmd = this.isWindows ? 'where' : 'which';
       const proc = spawn(whichCmd, [this.cliName], {
         shell: true,
-        stdio: 'pipe'
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
       });
 
       let stdout = '';
@@ -121,7 +186,8 @@ class BaseCLIHarness extends EventEmitter {
     return new Promise((resolve, reject) => {
       const proc = spawn(this.cliName, ['--version'], {
         shell: true,
-        stdio: 'pipe'
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
       });
 
       let stdout = '';
@@ -167,7 +233,8 @@ class BaseCLIHarness extends EventEmitter {
       
       const proc = spawn(this.cliName, ['--version'], {
         shell: true,
-        stdio: 'pipe'
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
       });
 
       proc.stdout.on('data', (data) => {
@@ -207,7 +274,8 @@ class BaseCLIHarness extends EventEmitter {
       const whichCmd = this.isWindows ? 'where' : 'which';
       const proc = spawn(whichCmd, [this.cliName], {
         shell: true,
-        stdio: 'pipe'
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
       });
 
       let stdout = '';
@@ -314,7 +382,9 @@ class BaseCLIHarness extends EventEmitter {
     const proc = spawn(this.cliPath, args, {
       stdio: ['pipe', 'pipe', 'pipe'],
       cwd: projectRoot,
-      env: { ...process.env, TERM: 'xterm-256color' }
+      env: buildHarnessChildEnvironment(this.id, {
+        overrides: { TERM: 'xterm-256color' },
+      })
     });
 
     console.log(`[${this.name}] Spawned ${this.cliPath} (pid: ${proc.pid})`);
@@ -466,7 +536,10 @@ class BaseCLIHarness extends EventEmitter {
    * @returns {HarnessSession | undefined}
    */
   getSession(threadId) {
-    return this.sessions.get(threadId);
+    const exact = this.sessions.get(threadId);
+    if (exact) return exact;
+    const matches = [...this.sessions.values()].filter((session) => session.threadId === threadId);
+    return matches.length === 1 ? matches[0] : undefined;
   }
 
   /**

@@ -16,6 +16,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { spawnSync } = require('child_process');
+const { buildHarnessChildEnvironment } = require('./child-environment');
 
 const HOME = os.homedir();
 const IS_WINDOWS = os.platform() === 'win32';
@@ -69,14 +70,18 @@ function dynamicDirs() {
 
   // npm prefix -g
   try {
-    const r = spawnSync('npm', ['prefix', '-g'], { encoding: 'utf8', timeout: 1500 });
+    const r = spawnSync('npm', ['prefix', '-g'], {
+      encoding: 'utf8', timeout: 1500, env: buildHarnessChildEnvironment('locator'),
+    });
     const prefix = r.stdout && r.stdout.trim();
     if (prefix) dirs.push(path.join(prefix, 'bin'));
   } catch { /* npm unavailable */ }
 
   // brew --prefix
   try {
-    const r = spawnSync('brew', ['--prefix'], { encoding: 'utf8', timeout: 1500 });
+    const r = spawnSync('brew', ['--prefix'], {
+      encoding: 'utf8', timeout: 1500, env: buildHarnessChildEnvironment('locator'),
+    });
     const prefix = r.stdout && r.stdout.trim();
     if (prefix) dirs.push(path.join(prefix, 'bin'));
   } catch { /* brew unavailable */ }

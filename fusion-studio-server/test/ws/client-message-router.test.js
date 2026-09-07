@@ -6,13 +6,25 @@ jest.mock('uuid', () => ({
 
 jest.mock('../../lib/thread', () => ({
   ThreadWebSocketHandler: {
-    getState: jest.fn(() => null),
+    cleanup: jest.fn(() => Promise.resolve()),
+    captureActivationBinding: jest.fn(),
+    getState: jest.fn(() => ({
+      threadId: 'thread-1',
+      threadManager: { workspaceId: 'workspace-1', projectRoot: '/tmp/project' },
+    })),
+    isActivationBindingCurrent: jest.fn((ws, binding) => (
+      binding?.session?.workspaceBindingState === 'active'
+      && binding.session.currentWorkspaceId === binding.workspaceId
+      && binding.session.workspaceEpoch === binding.workspaceEpoch
+      && binding.session.projectRoot === binding.projectRoot
+    )),
     getCurrentThreadManager: jest.fn(() => null),
     handleMessageSend: jest.fn(() => Promise.resolve()),
   },
   threadRuntimeController: {
     acceptPromptThroughRuntime: jest.fn(() => Promise.resolve()),
     warmRuntimeForIntent: jest.fn(() => Promise.resolve()),
+    stopRuntimeTurn: jest.fn(() => Promise.resolve()),
   },
 }));
 
@@ -21,8 +33,10 @@ jest.mock('../../lib/wire/process-manager', () => ({
   sendToWire: jest.fn(),
 }));
 
+const mockThreadWarmHandler = jest.fn(() => Promise.resolve());
+
 jest.mock('../../lib/ws/thread-ws-handlers', () => ({
-  createThreadWsHandlers: jest.fn(() => ({})),
+  createThreadWsHandlers: jest.fn(() => ({ 'thread:warm': mockThreadWarmHandler })),
   spawnAndSetupWire: jest.fn(),
 }));
 
@@ -41,8 +55,9 @@ jest.mock('../../lib/views', () => ({
 
 const { createClientMessageRouter } = require('../../lib/ws/client-message-router');
 const { createFileViewerReadRoute } = require('../../lib/ws/file-viewer-read-route');
-const { threadRuntimeController } = require('../../lib/thread');
-const { getWireForThread } = require('../../lib/wire/process-manager');
+const { ThreadWebSocketHandler, threadRuntimeController } = require('../../lib/thread');
+const { getWireForThread, sendToWire } = require('../../lib/wire/process-manager');
+const { beginWorkspaceTransition } = require('../../lib/ws/workspace-operation-lease');
 
 function flushAsyncWork() {
   return new Promise(resolve => setImmediate(resolve));
@@ -50,6 +65,7 @@ function flushAsyncWork() {
 
 function makeRouter({
   wire,
+  role = 'trusted-shell',
   handleCanonicalHarnessEvent = jest.fn(),
   fileExplorer = {},
   fileSaveRoute = null,
@@ -61,8 +77,31 @@ function makeRouter({
   const session = {
     connectionId: 'connection-1',
     currentThreadId: 'thread-1',
+    currentWorkspaceId: 'workspace-1',
+    workspaceEpoch: 'workspace-epoch-1',
+    workspaceBindingState: 'active',
+    projectRoot: '/tmp/project',
     wire,
   };
+  const managedSession = { ws, wireProcess: wire };
+  const state = {
+    threadId: 'thread-1',
+    activatedThreadId: 'thread-1',
+    threadManager: {
+      workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      getSession: jest.fn(() => managedSession),
+    },
+  };
+  ThreadWebSocketHandler.getState.mockReturnValue(state);
+  ThreadWebSocketHandler.captureActivationBinding.mockReturnValue({
+    state,
+    session,
+    projectRoot: '/tmp/project',
+    workspaceId: 'workspace-1',
+    workspaceEpoch: 'workspace-epoch-1',
+  });
+  if (role) Object.defineProperty(session, 'connectionRole', { value: role, enumerable: false });
 
   const router = createClientMessageRouter({
     ws,
@@ -199,25 +238,156 @@ describe('createClientMessageRouter prompt harness routing', () => {
       threadId: 'thread-1',
     }));
 
-    expect(threadRuntimeController.warmRuntimeForIntent).toHaveBeenCalledWith(expect.objectContaining({
-      ws,
-      session,
-      clientMsg: expect.objectContaining({ type: 'thread:warm', threadId: 'thread-1' }),
+    expect(mockThreadWarmHandler).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'thread:warm', threadId: 'thread-1',
     }));
     expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
+  });
+
+  test('untrusted prompt cannot reach runtime lookup, persistence, or provider spawn', async () => {
+    const { router, ws } = makeRouter({ wire: null, role: 'untrusted' });
+    await router.handleClientMessage(JSON.stringify({
+      type: 'prompt', threadId: 'thread-1', user_input: 'forged', role: 'trusted-shell',
+    }));
+    expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'error', code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
+    });
+  });
+
+  test.each(['turn:stop', 'response'])('untrusted %s cannot reach the provider owner', async (type) => {
+    const wire = { stdin: { write: jest.fn() }, killed: false };
+    const { router, ws } = makeRouter({ wire, role: 'untrusted' });
+    getWireForThread.mockReturnValue(wire);
+
+    await router.handleClientMessage(JSON.stringify({
+      type,
+      threadId: 'thread-1',
+      payload: { answer: 'forged' },
+      requestId: 'request-1',
+    }));
+
+    expect(threadRuntimeController.stopRuntimeTurn).not.toHaveBeenCalled();
+    expect(wire.stdin.write).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'error', code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
+    });
+  });
+
+  test('trusted response reaches only the exact workspace-owned wire', async () => {
+    const wire = { stdin: { write: jest.fn() }, killed: false };
+    const { router } = makeRouter({ wire });
+    getWireForThread.mockImplementation((threadId, binding) => (
+      threadId === 'thread-1'
+      && binding?.workspaceId === 'workspace-1'
+      && binding?.projectRoot === '/tmp/project'
+      && binding?.workspaceEpoch === 'workspace-epoch-1' ? wire : null
+    ));
+
+    await router.handleClientMessage(JSON.stringify({
+      type: 'response', threadId: 'thread-1', payload: { answer: 'yes' }, requestId: 'request-1',
+    }));
+
+    expect(sendToWire).toHaveBeenCalledWith(wire, 'response', { answer: 'yes' }, 'request-1');
+    expect(getWireForThread).toHaveBeenCalledWith('thread-1', expect.objectContaining({
+      workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: 'workspace-epoch-1',
+    }));
+  });
+
+  test('trusted stop is denied after provider ownership transfers to another client', async () => {
+    const wire = { stdin: { write: jest.fn() }, killed: false };
+    const { router, ws } = makeRouter({ wire });
+    const state = ThreadWebSocketHandler.getState(ws);
+    state.threadManager.getSession.mockReturnValue({ ws: {}, wireProcess: wire });
+    getWireForThread.mockReturnValue(wire);
+
+    await router.handleClientMessage(JSON.stringify({ type: 'turn:stop', threadId: 'thread-1' }));
+
+    expect(threadRuntimeController.stopRuntimeTurn).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0]).code).toBe('THREAD_MUTATION_DENIED');
+  });
+
+  test('trusted prompt rejects Fork-era or unknown harness configuration before runtime effects', async () => {
+    const { router, ws } = makeRouter({ wire: null });
+    await router.handleClientMessage(JSON.stringify({
+      type: 'prompt', threadId: 'thread-1', user_input: 'forged',
+      harnessConfig: { opencodeSessionId: 'provider-session' },
+    }));
+    expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0]).code).toBe('THREAD_MUTATION_DENIED');
+  });
+
+  test('workspace binding waits for in-progress prompt persistence and provider admission', async () => {
+    const { router, ws, session } = makeRouter({ wire: {} });
+    const effects = [];
+    let releasePersistence;
+    const persistenceMayFinish = new Promise(resolve => { releasePersistence = resolve; });
+    let markPersistenceStarted;
+    const persistenceStarted = new Promise(resolve => { markPersistenceStarted = resolve; });
+    threadRuntimeController.acceptPromptThroughRuntime.mockImplementationOnce(async () => {
+      effects.push('persistence-start');
+      markPersistenceStarted();
+      await persistenceMayFinish;
+      effects.push('provider-admission');
+    });
+
+    const prompt = router.handleClientMessage(JSON.stringify({
+      type: 'prompt', threadId: 'thread-1', user_input: 'hello',
+    }));
+    await persistenceStarted;
+    const binding = beginWorkspaceTransition(ws, () => {
+      effects.push('workspace-binding');
+      session.workspaceBindingState = 'binding';
+      session.currentWorkspaceId = null;
+      session.workspaceEpoch = null;
+      session.projectRoot = null;
+    });
+    await Promise.resolve();
+    expect(effects).toEqual(['persistence-start']);
+
+    releasePersistence();
+    await Promise.all([prompt, binding]);
+    expect(effects).toEqual(['persistence-start', 'provider-admission', 'workspace-binding']);
+  });
+
+  test('prompt queued behind workspace binding denies before persistence or provider admission', async () => {
+    const { router, ws, session } = makeRouter({ wire: {} });
+    const binding = beginWorkspaceTransition(ws, () => {
+      session.workspaceBindingState = 'binding';
+      session.currentWorkspaceId = null;
+      session.workspaceEpoch = null;
+      session.projectRoot = null;
+    });
+    ThreadWebSocketHandler.isActivationBindingCurrent
+      .mockReturnValueOnce(true)
+      .mockReturnValueOnce(false);
+
+    await Promise.all([binding, router.handleClientMessage(JSON.stringify({
+      type: 'prompt', threadId: 'thread-1', user_input: 'hello',
+    }))]);
+
+    expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'error', code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
+    });
   });
 });
 
 describe('createClientMessageRouter text-frame and file_save privacy contract', () => {
   let logSpy;
+  let errorSpy;
 
   beforeEach(() => {
     jest.clearAllMocks();
     logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
     logSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 
   test('accepts a valid UTF-8 text frame, redacts logs, and gives the route the exact original content', async () => {
@@ -235,8 +405,133 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
     expect(handleFileSave).toHaveBeenCalledTimes(1);
     expect(handleFileSave.mock.calls[0][0].message.content).toBe(secret);
     const logged = logSpy.mock.calls.flat().map(String).join(' ');
-    expect(logged).toContain('[redacted]');
+    expect(logged).toContain('[declared]');
     expect(logged).not.toContain(secret);
+  });
+
+  test('client_log cannot relay authentication material through message or nested data', async () => {
+    const canaries = ['master-canary', 'generation-canary', 'proof-canary', 'nonce-canary'];
+    const { router } = makeRouter();
+
+    await router.handleClientMessage(Buffer.from(JSON.stringify({
+      type: 'client_log',
+      level: canaries[1],
+      message: canaries[0],
+      data: {
+        generation: canaries[1],
+        nested: { shellProof: canaries[2], renderer_nonce: canaries[3] },
+      },
+    })), false);
+
+    const logged = logSpy.mock.calls.flat().map(String).join(' ');
+    expect(logged).toContain('[redacted]');
+    expect(logged).toContain('[CLIENT LOG]');
+    for (const canary of canaries) expect(logged).not.toContain(canary);
+  });
+
+  test('malformed message type cannot relay nested authentication material through any diagnostic', async () => {
+    const canaries = ['master-canary', 'generation-canary', 'proof-canary', 'server-nonce-canary', 'renderer-nonce-canary'];
+    const { router, ws } = makeRouter();
+
+    await router.handleClientMessage(Buffer.from(JSON.stringify({
+      type: {
+        master: canaries[0],
+        generation: canaries[1],
+        proof: canaries[2],
+        serverNonce: canaries[3],
+        nested: { renderer_nonce: canaries[4] },
+      },
+    })), false);
+
+    const diagnostics = [...logSpy.mock.calls, ...errorSpy.mock.calls]
+      .flat()
+      .map(String)
+      .join(' ');
+    expect(diagnostics).toContain('[invalid]');
+    for (const canary of canaries) expect(diagnostics).not.toContain(canary);
+    expect(errorSpy).toHaveBeenCalledWith('[WS] Message handling error');
+    expect(ws.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'error',
+      message: 'Message handling failed',
+    }));
+  });
+
+  test('unknown message diagnostics never serialize secret material hidden under neutral keys', async () => {
+    const canaries = [
+      'proof-shaped-neutral-canary',
+      'nonce-shaped-neutral-canary',
+      'derived-signature-neutral-canary',
+    ];
+    const { router, ws } = makeRouter();
+
+    await router.handleClientMessage(Buffer.from(JSON.stringify({
+      type: 'unknown:diagnostic',
+      payload: canaries[0],
+      detail: { value: canaries[1], nested: [canaries[2]] },
+    })), false);
+
+    const diagnostics = [...logSpy.mock.calls, ...errorSpy.mock.calls]
+      .flat()
+      .map(String)
+      .join(' ');
+    expect(diagnostics).toContain('[declared]');
+    for (const canary of canaries) expect(diagnostics).not.toContain(canary);
+    expect(ws.send).not.toHaveBeenCalled();
+  });
+
+  test('close waits for thread cleanup and emits only fixed diagnostics', async () => {
+    const canary = 'THREAD_CLOSE_PAYLOAD_CANARY_00B';
+    let releaseCleanup;
+    const cleanupGate = new Promise((resolve) => { releaseCleanup = resolve; });
+    ThreadWebSocketHandler.cleanup.mockReturnValueOnce(cleanupGate);
+    const { router } = makeRouter({ wire: { pid: canary } });
+    let completed = false;
+
+    const closing = router.handleClientClose().then(() => { completed = true; });
+    await flushAsyncWork();
+    expect(completed).toBe(false);
+    releaseCleanup();
+    await closing;
+
+    const diagnostics = [...logSpy.mock.calls, ...errorSpy.mock.calls]
+      .flat()
+      .map(String)
+      .join(' ');
+    expect(diagnostics).not.toContain(canary);
+    expect(diagnostics).toContain('[WS] client_disconnected');
+    expect(diagnostics).toContain('[WS] wire_detached');
+  });
+
+  test('prompt resolution and general handler failures return fixed error values', async () => {
+    const canary = 'PROMPT_IDENTIFIER_PAYLOAD_CANARY_00B';
+    const { router: promptRouter, ws: promptWs } = makeRouter();
+    await promptRouter.handleClientMessage(JSON.stringify({
+      type: 'prompt:resolve',
+      promptId: canary,
+      payload: canary,
+    }));
+    expect(promptWs.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'prompt:resolve_error',
+      requestId: null,
+      promptId: null,
+      message: 'Prompt resolution failed',
+    }));
+    expect(promptWs.send.mock.calls.flat().join('')).not.toContain(canary);
+
+    const { router: failingRouter, ws: failingWs } = makeRouter({
+      fileExplorer: {
+        handleRecentFilesRequest: async () => { throw new Error(canary); },
+      },
+    });
+    await failingRouter.handleClientMessage(JSON.stringify({
+      type: 'recent_files_request',
+      payload: canary,
+    }));
+    expect(failingWs.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'error',
+      message: 'Message handling failed',
+    }));
+    expect(failingWs.send.mock.calls.flat().join('')).not.toContain(canary);
   });
 
   test('redacts agent activity selectors before logging while preserving the routed message', async () => {
@@ -256,7 +551,7 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
 
     expect(handleQuery.mock.calls[0][0].message).toEqual(message);
     const logged = logSpy.mock.calls.flat().map(String).join(' ');
-    expect(logged).toContain('[redacted]');
+    expect(logged).toContain('[declared]');
     expect(logged).not.toContain(selectors.path);
     expect(logged).not.toContain(selectors.folderPrefix);
     expect(logged).not.toContain(selectors.fileName);

@@ -3,7 +3,7 @@
  * @role Client-side emoji recents recording transport
  */
 
-import { onFusionMessage, sendFusionMessage } from '../lib/ws-client';
+import { onFusionResponse, sendFusionMessage } from '../lib/ws-client';
 
 export interface EmojiRecentItem {
   id: number;
@@ -62,20 +62,27 @@ export function recordEmojiRecent(emoji: string): void {
 
 export function listEmojiRecents(limit = 20): Promise<EmojiRecentItem[]> {
   return new Promise((resolve, reject) => {
-    const unsubscribeList = onFusionMessage('emoji_recents:list', (msg) => {
+    let settled = false;
+    const retire = () => {
+      cleanup();
+      reject(new Error('Connection retired while loading emoji recents'));
+    };
+    const unsubscribeList = onFusionResponse('emoji_recents:list', (msg) => {
       cleanup();
       resolve(Array.isArray(msg.items) ? msg.items : []);
-    });
-    const unsubscribeError = onFusionMessage('emoji_recents:error', (msg) => {
+    }, retire);
+    const unsubscribeError = onFusionResponse('emoji_recents:error', (msg) => {
       cleanup();
       reject(new Error(msg.error || 'Failed to load emoji recents'));
-    });
+    }, retire);
     const timeout = window.setTimeout(() => {
       cleanup();
       reject(new Error('Timeout waiting for emoji recents'));
     }, 5000);
 
     function cleanup() {
+      if (settled) return;
+      settled = true;
       window.clearTimeout(timeout);
       unsubscribeList();
       unsubscribeError();

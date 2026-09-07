@@ -110,7 +110,7 @@ describe('OpenCode pending fork compat smoke', () => {
     };
   });
 
-  it('consumes a restarted pending fork through compat on first _sendMessage', async () => {
+  it('makes restarted pending Fork state inert before provider arguments or persistence', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
 
@@ -128,25 +128,14 @@ describe('OpenCode pending fork compat smoke', () => {
     const events = await eventsPromise;
 
     expect(events.map((event) => event.type)).toEqual(['turn_begin', 'content', 'status_update', 'turn_end']);
-    expect(spawn).toHaveBeenCalledWith(
-      'opencode',
-      ['run', '--format', 'json', '--dir', '/project', '--session', 'ses_source', '--fork', 'first fork prompt'],
-      expect.objectContaining({ cwd: '/project' }),
-    );
+    expect(spawn).toHaveBeenCalledWith('opencode', [
+      'run', '--format', 'json', '--dir', '/project', 'first fork prompt',
+    ], expect.objectContaining({ cwd: '/project' }));
+    expect(spawn.mock.calls[0][1]).not.toContain('--fork');
+    expect(spawn.mock.calls[0][1]).not.toContain('ses_source');
     expect(mockDbUpdates).toHaveLength(1);
 
     const writtenConfig = JSON.parse(mockDbUpdates[0].harness_config);
-    expect(writtenConfig).toEqual(expect.objectContaining({
-      opencodeSessionId: 'ses_forked',
-      pendingFork: null,
-    }));
-    expect(writtenConfig.forkProvenance).toEqual(expect.objectContaining({
-      type: 'opencode-current-head',
-      status: 'created',
-      sourceThreadId: 'thread-source',
-      sourceOpenCodeSessionId: 'ses_source',
-      createdOpenCodeSessionId: 'ses_forked',
-      createdAt: expect.any(String),
-    }));
+    expect(writtenConfig).toEqual({ opencodeSessionId: 'ses_forked' });
   });
 });

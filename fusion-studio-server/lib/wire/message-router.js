@@ -106,13 +106,15 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce, activ
     if (!identity?.workspaceId || !identity?.threadId || !identity?.turnId) return null;
     const runtimeKey = {
       workspaceId: identity.workspaceId,
+      projectRoot: identity.canonicalRoot || session.projectRoot,
+      workspaceEpoch: identity.workspaceEpoch || session.workspaceEpoch,
       scope: 'project',
       threadId: identity.threadId,
     };
     const active = threadRuntimeManager.getActiveDrain(runtimeKey);
     if (active) return { route: active.routeContext, control: active.control };
     if (event?.type !== 'turn_begin') return null;
-    const capturedWire = getWireForThread(identity.threadId)
+    const capturedWire = getWireForThread(identity.threadId, runtimeKey)
       || (session.currentThreadId === identity.threadId ? session.wire : null);
     const control = createCanonicalDrainControl({
       drainId: generateId(),
@@ -135,6 +137,7 @@ function createWireMessageRouter({ session, ws, emit, checkSettingsBounce, activ
       workspaceId: identity.workspaceId,
       workspace: resolveScope({ currentWorkspaceId: identity.workspaceId, currentViewId: null }),
       projectRoot: identity.canonicalRoot || session.projectRoot,
+      workspaceEpoch: session.workspaceEpoch || null,
       scope: 'project',
       threadId: identity.threadId,
       acceptedUserInput: session.pendingUserInput || event.userInput,

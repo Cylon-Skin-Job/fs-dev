@@ -42,36 +42,48 @@ export function RecentFilesTrigger({ onInsert, triggerVariant = 'icon' }: Recent
     }
 
     return new Promise((resolve, reject) => {
+      let finished = false;
       const cleanup = () => {
         clearTimeout(timeout);
         ws.removeEventListener('message', handleMessage);
+        ws.removeEventListener('close', handleClose);
       };
+      const finish = (error: Error | null, result?: RecentFile[]) => {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        if (error) reject(error); else resolve(result ?? []);
+      };
+      const handleClose = () => finish(new Error('Connection retired while loading recent files'));
       const handleMessage = (event: MessageEvent) => {
         try {
           const msg = JSON.parse(event.data);
           if (msg.type !== 'recent_files_response' || msg.panel !== panel) return;
 
-          cleanup();
           if (msg.success) {
-            resolve(msg.files || []);
+            finish(null, msg.files || []);
           } else {
-            reject(new Error(msg.error || 'Failed to load recent files'));
+            finish(new Error(msg.error || 'Failed to load recent files'));
           }
         } catch {
           // Ignore unrelated non-JSON messages.
         }
       };
       const timeout = setTimeout(() => {
-        cleanup();
-        reject(new Error('Timed out loading recent files'));
+        finish(new Error('Timed out loading recent files'));
       }, 5000);
 
       ws.addEventListener('message', handleMessage);
-      ws.send(JSON.stringify({
-        type: 'recent_files_request',
-        panel,
-        limit,
-      }));
+      ws.addEventListener('close', handleClose, { once: true });
+      try {
+        ws.send(JSON.stringify({
+          type: 'recent_files_request',
+          panel,
+          limit,
+        }));
+      } catch (error) {
+        finish(error instanceof Error ? error : new Error('Failed to load recent files'));
+      }
     });
   }, [ws, panel]);
 

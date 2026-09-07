@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { fetchServer } from '../lib/runtime-transport';
 
 type RecorderState = 'checking_permission' | 'permission_needed' | 'permission_denied' | 'recording' | 'processing';
 
@@ -150,7 +151,7 @@ export function useAudioCapture({
       formData.append('language', 'auto');
       formData.append('duration', String(maxDuration - timeLeft));
 
-      const response = await fetch('/api/transcribe', {
+      const response = await fetchServer('/api/transcribe', {
         method: 'POST',
         body: formData
       });

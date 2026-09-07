@@ -7,6 +7,10 @@ const { OpenCodeJsonEventTranslator } = require('../harness/opencode/json-event-
 const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
 const { createAgentTurnAuthorityRef } = require('../agent-provenance/turn-authority');
 const ThreadWebSocketHandler = require('../thread/ThreadWebSocketHandler');
+const {
+  isWorkspaceOperationLeaseError,
+  runWorkspaceOperation,
+} = require('../ws/workspace-operation-lease');
 
 const FIXTURE_TYPE = 'provenance:test:agent_tool';
 const FIXTURE_VERSION = 1;
@@ -90,24 +94,45 @@ async function applyMutation(workspaceRoot, fixture) {
   }
 }
 
-function createAgentToolFixtureRoute({ db, enabled, nonce }) {
+function createAgentToolFixtureRoute({
+  db,
+  enabled,
+  nonce,
+  threadId: provisionedThreadId,
+  workspaceId: provisionedWorkspaceId,
+  projectRoot: provisionedProjectRoot,
+}) {
   if (!enabled) return null;
   if (!db || typeof db !== 'function') throw new TypeError('fixture route requires the isolated database');
   if (typeof nonce !== 'string' || !/^[0-9a-f-]{36}$/u.test(nonce)) {
     throw new TypeError('fixture route requires the isolated ownership nonce');
   }
+  if (typeof provisionedThreadId !== 'string' || !provisionedThreadId) {
+    throw new TypeError('fixture route requires its process-provisioned thread');
+  }
+  if (typeof provisionedWorkspaceId !== 'string' || !provisionedWorkspaceId
+    || typeof provisionedProjectRoot !== 'string' || !path.isAbsolute(provisionedProjectRoot)) {
+    throw new TypeError('fixture route requires its process-provisioned workspace');
+  }
   const activeSessions = new WeakSet();
+
+  function denyUnavailable(ws) {
+    ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+  }
 
   async function ensureThread(ws, session) {
     let threadId = ThreadWebSocketHandler.getCurrentThreadId(ws);
-    if (!threadId) {
-      await ThreadWebSocketHandler.handleThreadOpenAssistant(ws, {
-        name: 'Agent provenance isolated fixture',
-        harnessId: 'opencode',
+    if (threadId !== provisionedThreadId) {
+      // Selection is deliberately passive and fixed to the process-owned
+      // setup identity. No public fixture field can create or choose a thread.
+      await ThreadWebSocketHandler.handleThreadOpen(ws, {
+        threadId: provisionedThreadId,
       });
       threadId = ThreadWebSocketHandler.getCurrentThreadId(ws);
     }
-    if (!threadId) throw new Error('fixture thread could not be established');
+    if (threadId !== provisionedThreadId) {
+      throw new Error('fixture thread could not be established');
+    }
     session.currentThreadId = threadId;
     session.currentScope = 'project';
     session.currentViewId = null;
@@ -134,18 +159,32 @@ function createAgentToolFixtureRoute({ db, enabled, nonce }) {
       || typeof session.projectRoot !== 'string' || !path.isAbsolute(session.projectRoot)) {
       throw new Error('agent tool fixture workspace is unavailable');
     }
+    if (session.currentWorkspaceId !== provisionedWorkspaceId
+      || session.projectRoot !== provisionedProjectRoot) {
+      denyUnavailable(ws);
+      return;
+    }
+    const binding = ThreadWebSocketHandler.captureActivationBinding(ws, session);
+    if (!binding) {
+      denyUnavailable(ws);
+      return;
+    }
 
     activeSessions.add(session);
     try {
+      await runWorkspaceOperation(
+        ws,
+        () => ThreadWebSocketHandler.isActivationBindingCurrent(ws, binding),
+        async () => {
       const threadId = await ensureThread(ws, session);
       const turnId = randomUUID();
       const authority = await createAgentTurnAuthorityRef({
-        workspaceId: session.currentWorkspaceId,
+        workspaceId: binding.workspaceId,
         threadId,
         turnId,
         harnessId: 'opencode',
         provider: 'opencode',
-        workspaceRoot: session.projectRoot,
+        workspaceRoot: binding.projectRoot,
       });
       session.pendingAgentTurnAuthority = authority;
       session.pendingTurnId = turnId;
@@ -203,6 +242,11 @@ function createAgentToolFixtureRoute({ db, enabled, nonce }) {
         workspaceId: authority.workspaceId, threadId, turnId,
         toolCallId: fixture.callId,
       }));
+        },
+      );
+    } catch (error) {
+      if (!isWorkspaceOperationLeaseError(error)) throw error;
+      denyUnavailable(ws);
     } finally {
       activeSessions.delete(session);
     }

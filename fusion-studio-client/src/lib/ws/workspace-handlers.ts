@@ -129,7 +129,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const wsConn = panelStore.ws;
       if (wsConn && wsConn.readyState === WebSocket.OPEN) {
         void bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel).catch((error) => {
-          console.error('[WS] Panel discovery after workspace bind failed:', error);
+          void error;
+          console.error('[WS] workspace_bootstrap_failed');
         });
       }
       // Preload workspace icon SVGs from Fusion Home so the ribbon
@@ -234,7 +235,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
           // After discovery, load file tree in the background
           loadRootTree();
         }).catch((err) => {
-          console.error('[workspace] rediscover failed:', err);
+          void err;
+          console.error('[WS] workspace_rediscover_failed');
         });
       } else if (ws && workspaceId) {
         // Cached visit: panels already known; tell the server which panel we're on
@@ -242,7 +244,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
         if (panelStore.panelConfigs.length === 0) {
           // Edge case: cache exists but has no panels (shouldn't happen, but safe)
           rediscoverPanels(ws).catch((err) => {
-            console.error('[workspace] rediscover failed:', err);
+            void err;
+            console.error('[WS] workspace_rediscover_failed');
           });
         } else if (panelStore.currentPanel) {
           ws.send(JSON.stringify({ type: 'set_panel', panel: panelStore.currentPanel }));
@@ -342,7 +345,8 @@ export function handleWorkspaceMessage(msg: WebSocketMessage): boolean {
       const ws = panelStore.ws;
       if (ws) {
         rediscoverPanels(ws, { preserveCurrent: true, chooseNearestIfMissing: true }).catch((err) => {
-          console.error('[workspace] view registry rediscover failed:', err);
+          void err;
+          console.error('[WS] workspace_rediscover_failed');
           usePanelStore.getState().setViewRegistryUpdateError('View registry updated, but the rail did not refresh.');
         });
       }

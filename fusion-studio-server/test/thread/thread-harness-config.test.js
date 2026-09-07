@@ -22,8 +22,9 @@ describe('thread harness config persistence', () => {
       harness_id: 'opencode',
       harness_config: '{"opencodeSessionId":"ses_1"}',
     }));
-    const where = jest.fn(() => ({ update, first }));
-    getDb.mockReturnValue(jest.fn(() => ({ where })));
+    const query = { update, first };
+    query.where = jest.fn(() => query);
+    getDb.mockReturnValue(jest.fn(() => query));
 
     const index = new ThreadIndex('workspace-1', 'project', null);
     const entry = await index.update('thread-1', {

@@ -10,6 +10,8 @@ const {
 } = require('./json-event-translator');
 const { buildHarnessFailureMarker } = require('./failure-marker-builder');
 const { createConfiguredSecretsProvider } = require('./configured-secrets-provider');
+const { buildHarnessChildEnvironment } = require('../child-environment');
+const { sanitizeRuntimeHarnessConfig } = require('../../thread/thread-harness-config-policy');
 
 /**
  * Native OpenCode protocol error observation — adapter boundary ONLY
@@ -148,7 +150,15 @@ class OpenCodeHarness extends EventEmitter {
 
   async startThread(threadId, projectRoot, scopeContext = {}, threadOptions = {}) {
     const harness = this;
-    const harnessConfig = threadOptions.harnessConfig || {};
+    const sessionKey = threadOptions.sessionKey || threadId;
+    // The registry owns one adapter instance, but runtime policy is scoped to
+    // the workspace that created this session. Capture it now so a later
+    // workspace initialization cannot retarget this session's prompts.
+    const runtimeConfig = { ...(threadOptions.runtimeConfig || harness.config) };
+    const harnessConfig = sanitizeRuntimeHarnessConfig(
+      'opencode',
+      threadOptions.harnessConfig,
+    );
     const storedSessionId = harnessConfig.opencodeSessionId || null;
     const pendingFork = storedSessionId || !harnessConfig.pendingFork?.sourceOpenCodeSessionId
       ? null
@@ -156,6 +166,7 @@ class OpenCodeHarness extends EventEmitter {
     const updateHarnessConfig = threadOptions.updateHarnessConfig;
     const session = {
       threadId,
+      sessionKey,
       process: createProcessProxy(),
       activeProcess: null,
       activeProcessClose: null,
@@ -176,12 +187,12 @@ class OpenCodeHarness extends EventEmitter {
         const translator = new OpenCodeJsonEventTranslator();
         const events = [translator.beginTurn(message)];
         const parser = new JsonLineParser();
-        const cliPath = harness.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
+        const cliPath = runtimeConfig.cliPath || process.env.OPENCODE_PATH || 'opencode';
         const pendingForkForRun = session.openCodeSessionId || session.pendingForkConsumed
           ? null
           : session.pendingFork;
         const runConfig = {
-          ...harness.config,
+          ...runtimeConfig,
           // Live per-thread model + effort override the workspace defaults.
           ...(session.harnessConfig.model ? { model: session.harnessConfig.model } : {}),
           ...(session.harnessConfig.variant ? { variant: session.harnessConfig.variant } : {}),
@@ -201,9 +212,11 @@ class OpenCodeHarness extends EventEmitter {
         let failureDescriptor = null;
         let spawnFailure = null;
         let stderr = '';
-        const envSnapshot = { ...process.env };
-        const getConfiguredSecrets = typeof harness.config.getConfiguredSecrets === 'function'
-          ? harness.config.getConfiguredSecrets
+        const envSnapshot = buildHarnessChildEnvironment('opencode', {
+          overrides: { TERM: 'xterm-256color' },
+        });
+        const getConfiguredSecrets = typeof runtimeConfig.getConfiguredSecrets === 'function'
+          ? runtimeConfig.getConfiguredSecrets
           : harness.getConfiguredSecrets;
         let capturedOpenCodeSessionId = session.openCodeSessionId;
         let capturedSessionIdPatch = null;
@@ -220,7 +233,9 @@ class OpenCodeHarness extends EventEmitter {
         const proc = spawn(cliPath, args, {
           stdio: ['ignore', 'pipe', 'pipe'],
           cwd: projectRoot || process.cwd(),
-          env: { ...process.env, TERM: 'xterm-256color' },
+          env: buildHarnessChildEnvironment('opencode', {
+            overrides: { TERM: 'xterm-256color' },
+          }),
         });
 
         session.activeProcess = proc;
@@ -364,12 +379,15 @@ class OpenCodeHarness extends EventEmitter {
       },
     };
 
-    this.sessions.set(threadId, session);
+    this.sessions.set(sessionKey, session);
     return session;
   }
 
   getSession(threadId) {
-    return this.sessions.get(threadId);
+    const exact = this.sessions.get(threadId);
+    if (exact) return exact;
+    const matches = [...this.sessions.values()].filter((session) => session.threadId === threadId);
+    return matches.length === 1 ? matches[0] : undefined;
   }
 
   async dispose() {
@@ -382,7 +400,10 @@ class OpenCodeHarness extends EventEmitter {
   async isInstalled() {
     return new Promise((resolve) => {
       const cliPath = this.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
-      const proc = spawn(cliPath, ['--version'], { stdio: 'pipe' });
+      const proc = spawn(cliPath, ['--version'], {
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
+      });
       proc.on('error', () => resolve(false));
       proc.on('close', (code) => resolve(code === 0));
       proc.on('exit', (code) => resolve(code === 0));
@@ -392,7 +413,10 @@ class OpenCodeHarness extends EventEmitter {
   async getVersion() {
     return new Promise((resolve, reject) => {
       const cliPath = this.config.cliPath || process.env.OPENCODE_PATH || 'opencode';
-      const proc = spawn(cliPath, ['--version'], { stdio: 'pipe' });
+      const proc = spawn(cliPath, ['--version'], {
+        stdio: 'pipe',
+        env: buildHarnessChildEnvironment('probe'),
+      });
       let output = '';
 
       proc.stdout.on('data', (data) => { output += data.toString(); });

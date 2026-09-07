@@ -84,12 +84,23 @@ const { createWireMessageRouter } = require('./lib/wire/message-router');
 // Client message router — per-connection dispatch factory (extracted per SPEC-01f).
 const { createClientMessageRouter } = require('./lib/ws/client-message-router');
 const { createOfficePaletteDispatch } = require('./lib/ws/office-palette-dispatch');
+const { readBootstrapAuthority } = require('./lib/shell-bootstrap');
+const { createShellAuthOwner } = require('./lib/ws/shell-auth');
+const { createShellAuthDispatch } = require('./lib/ws/shell-auth-dispatch');
+const { createProductSessionRegistry } = require('./lib/ws/product-session-registry');
+const { createDeferredProductConnection } = require('./lib/ws/deferred-product-connection');
+const { createTransportConnectionRegistry } = require('./lib/ws/transport-connection-registry');
+const { createServerRuntimeActivation } = require('./lib/ws/server-runtime-activation');
+const {
+  MAX_SHELL_AUTH_FRAME_BYTES,
+  activateApplicationPayloadLimit,
+} = require('./lib/ws/websocket-payload-boundary');
 
 // View discovery and resolution (filesystem-driven, no database)
 
 // Panel path resolution + shared session registries (extracted per SPEC-01g).
-// `sessions` is the single server-wide Map — startup.js and the connection
-// handler below must both use this instance.
+// `sessions` is the product-visible server-wide Map. Managed sockets remain
+// outside it until shell proof and initialization both succeed.
 const {
   sessions,
   getProjectRoot,
@@ -97,6 +108,9 @@ const {
   clearSessionRoot,
   getPanelPath,
 } = require('./lib/views/panel-paths');
+const productSessionRegistry = createProductSessionRegistry({ sessions });
+const transportConnectionRegistry = createTransportConnectionRegistry();
+const serverRuntimeActivation = createServerRuntimeActivation();
 
 // Initial connection payload builders (extracted per SPEC-01g)
 const { buildWorkspaceInit, buildPanelConfig } = require('./lib/ws/connection-init');
@@ -107,8 +121,12 @@ const {
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server, maxPayload: MAX_SHELL_AUTH_FRAME_BYTES });
+let shellAuthOwner = null;
+const { createShellCorsMiddleware } = require('./lib/http/shell-cors');
 
+app.use('/api', createShellCorsMiddleware());
+app.use('/material-symbols', createShellCorsMiddleware());
 app.use(express.json({ limit: '1mb' }));
 
 // Serve static files from the React client dist folder
@@ -159,11 +177,9 @@ const fileExplorer = createFileExplorerHandlers({
 // WebSocket Connection Handler with Thread Support
 // ============================================================================
 
-wss.on('connection', async (ws) => {
+wss.on('connection', (ws, request) => {
+  ws.on('error', () => console.warn('[WS] transport_error'));
   console.log('[WS] Client connected (thread-enabled)');
-
-  const activeWs = workspaceController.getActiveWorkspaceSync();
-  const projectRoot = activeWs ? activeWs.repo_path : null;
   const connectionId = generateId();
 
   // Session state
@@ -185,120 +201,114 @@ wss.on('connection', async (ws) => {
     projectRoot: null,
     currentWorkspaceId: null,
     workspaceEpoch: null,
-    workspaceBindingState: 'binding',
+    workspaceBindingState: 'pending-auth',
     workspaceReplyFlushState: 'idle',
     workspaceReplyBuffer: [],
     workspaceReplyBufferBytes: 0,
     currentViewId: null  // CHAT_SCOPE_SPEC: reserved for view-bound scope strings (unused; single workspace chat)
   };
-  const initialWorkspacePair = beginWorkspaceBind(session, {
-    workspaceId: activeWs ? activeWs.id : null,
-    repoPath: projectRoot,
-  });
-  sessions.set(ws, session);
-
-  // Set up a default panel so ThreadManager exists for wire spawning.
-  // Don't send the thread list yet — wait for the client's set_panel message.
-  // RCC-0095: chat is a workspace-level feature — thread setup does not
-  // depend on any view's config or folders (storage is unified at
-  // ai/<machine>/Data/Chatlogs/threads/).
-  if (projectRoot) {
-    ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
-      projectRoot,
-      viewName: 'file-viewer',
-      workspaceId: activeWs ? activeWs.id : null,
-    });
-  }
-
-  // ==========================================================================
-  // Wire Process Handlers
-  // ==========================================================================
-
-  // Per-connection wire message router (extracted per SPEC-01d).
-  // Emits chat:* events to the bus (wire-broadcaster handles client
-  // delivery); sends non-chat events directly via ws.
-  const { handleMessage, handleCanonicalHarnessEvent } = createWireMessageRouter({
-    session,
+  let activeWs = null;
+  let projectRoot = null;
+  const productConnection = createDeferredProductConnection({
     ws,
-    threadWebSocketHandler: ThreadWebSocketHandler,
-    emit,
-    checkSettingsBounce,
+    build: async ({ ownCleanup }) => {
+      activeWs = workspaceController.getActiveWorkspaceSync();
+      projectRoot = activeWs ? activeWs.repo_path : null;
+      const { handleMessage, handleCanonicalHarnessEvent } = createWireMessageRouter({
+        session,
+        ws,
+        threadWebSocketHandler: ThreadWebSocketHandler,
+        emit,
+        checkSettingsBounce,
+      });
+      const { awaitHarnessReady, initializeWire, setupWireHandlers } = createWireLifecycle({
+        session,
+        ws,
+        connectionId,
+        onWireMessage: handleMessage,
+      });
+      const { handleClientMessage, handleClientClose } = createClientMessageRouter({
+        ws,
+        session,
+        connectionId,
+        projectRoot,
+        fileExplorer,
+        wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+        sessions,
+        setSessionRoot,
+        clearSessionRoot,
+        getProjectRoot,
+        getFusionHandlers: () => fusionHandlers,
+        getClipboardHandlers: () => clipboardHandlers,
+        getThemeHandlers: () => themeHandlers,
+        getSecretsHandlers: () => secretsHandlers,
+        getScreenshotHandlers: () => screenshotHandlers,
+        getFileSaveRoute: () => fileSaveRoute,
+        getResourceProvenanceRoute: () => resourceProvenanceRoute,
+        getAgentActivityRoute: () => agentActivityRoute,
+        getFileViewerReadRoute: () => fileViewerReadRoute,
+        getAgentToolFixtureRoute: () => agentToolFixtureRoute,
+        getBookmarksHandlers: () => bookmarksHandlers,
+        getEmojiRecentsHandlers: () => emojiRecentsHandlers,
+        handleCanonicalHarnessEvent,
+      });
+      ownCleanup(handleClientClose);
+      return Object.freeze({
+        handleMessage: createOfficePaletteDispatch({ ws, session, handleNext: handleClientMessage }),
+        handleClose: handleClientClose,
+      });
+    },
   });
-
-  // Per-connection wire lifecycle helpers.
-  const { awaitHarnessReady, initializeWire, setupWireHandlers } = createWireLifecycle({
-    session,
-    ws,
-    connectionId,
-    onWireMessage: handleMessage,
-  });
-
-  // ==========================================================================
-  // Client Message Router (SPEC-01f)
-  // ==========================================================================
-  //
-  // Per-connection client message router. Depends on the wire lifecycle
-  // and file explorer — must be created AFTER those factories.
-  // fusionHandlers / clipboardHandlers are injected as getter closures to
-  // preserve the mutable-reference pattern from SPEC-01b (the
-  // module-level `let` bindings are reassigned inside the
-  // startServer().then() callback).
-  const { handleClientMessage, handleClientClose } = createClientMessageRouter({
-    ws,
-    session,
-    connectionId,
-    projectRoot,
-    fileExplorer,
-    wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
-    sessions,
-    setSessionRoot,
-    clearSessionRoot,
-    getProjectRoot,
-    getFusionHandlers: () => fusionHandlers,
-    getClipboardHandlers: () => clipboardHandlers,
-    getThemeHandlers: () => themeHandlers,
-    getSecretsHandlers: () => secretsHandlers,
-    getScreenshotHandlers: () => screenshotHandlers,
-    getFileSaveRoute: () => fileSaveRoute,
-    getResourceProvenanceRoute: () => resourceProvenanceRoute,
-    getAgentActivityRoute: () => agentActivityRoute,
-    getFileViewerReadRoute: () => fileViewerReadRoute,
-    getAgentToolFixtureRoute: () => agentToolFixtureRoute,
-    getBookmarksHandlers: () => bookmarksHandlers,
-    getEmojiRecentsHandlers: () => emojiRecentsHandlers,
-    handleCanonicalHarnessEvent,
-  });
-
-  ws.on('message', createOfficePaletteDispatch({ ws, session, handleNext: handleClientMessage }));
-  ws.on('close', handleClientClose);
+  transportConnectionRegistry.track(ws, productConnection.waitForCleanup);
 
   // ==========================================================================
   // Initial Messages
   // ==========================================================================
 
-  ws.send(JSON.stringify({
-    type: 'connected',
-    connectionId,
-    message: 'Thread-enabled connection established'
-  }));
-
-  // Send current workspace registry and active workspace so the client
-  // can gate its UI (empty state, switcher) before panel discovery runs.
-  try {
+  const initializeConnection = async () => {
+    // Manager initialization can read and normalize durable thread state, so it
+    // belongs behind successful shell authentication. Standalone mode reaches
+    // this same boundary without ever receiving a trusted connection role.
+    await serverRuntimeActivation.wait();
+    await productConnection.initialize();
+    const initialWorkspacePair = beginWorkspaceBind(session, {
+      workspaceId: activeWs ? activeWs.id : null,
+      repoPath: projectRoot,
+    });
+    if (projectRoot) {
+      ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
+        projectRoot,
+        viewName: 'file-viewer',
+        workspaceId: activeWs ? activeWs.id : null,
+      });
+    }
+    ws.send(JSON.stringify({
+      type: 'connected',
+      connectionId,
+      message: 'Thread-enabled connection established',
+    }));
     const msg = await buildWorkspaceInit(getProjectRoot, { ...initialWorkspacePair, repoPath: projectRoot });
     console.log('[WS] Sending workspace:init message');
     const bound = await completeWorkspaceBind(ws, session, msg, initialWorkspacePair);
-    if (!bound) return;
-  } catch (err) {
-    console.error('[WS] workspace:init failed:', err);
-    try { ws.close(1011, 'workspace initialization failed'); } catch (_closeError) {}
-    return;
-  }
-
-  // Send project root info without assuming a panel — the client will
-  // send set_panel to identify itself. When no workspace is active,
-  // projectRoot is null and the client renders the empty state.
-  ws.send(JSON.stringify(buildPanelConfig(projectRoot)));
+    if (!bound) throw new Error('workspace_binding_retired');
+    ws.send(JSON.stringify(buildPanelConfig(projectRoot)));
+  };
+  const authenticatedDispatch = createShellAuthDispatch({
+    authOwner: shellAuthOwner,
+    ws,
+    session,
+    origin: request?.headers?.origin,
+    initialize: initializeConnection,
+    activate: () => productSessionRegistry.activate({
+      ws,
+      session,
+      managed: shellAuthOwner.available,
+    }),
+    activateTransport: () => activateApplicationPayloadLimit(ws),
+    handleNext: productConnection.handleMessage,
+    log: (code) => console.warn(`[WS] ${code}`),
+  });
+  ws.on('message', authenticatedDispatch);
 });
 
 
@@ -325,10 +335,18 @@ let agentActivityRoute = null;
 let fileViewerReadRoute = null;
 let agentToolFixtureRoute = null;
 
-startServer({
+readBootstrapAuthority()
+  .then((authority) => {
+    shellAuthOwner = createShellAuthOwner({
+      authority,
+      log: (code) => console.warn(`[WS] ${code}`),
+    });
+    return startServer({
   server,
   app,
   sessions,
+  productSessionRegistry,
+  transportConnectionRegistry,
   getProjectRoot,
   installProtocolRoutes(routes) {
     if (fileSaveRoute || resourceProvenanceRoute || agentActivityRoute || fileViewerReadRoute) {
@@ -343,7 +361,8 @@ startServer({
     fileViewerReadRoute = routes.fileViewerReadRoute;
     agentToolFixtureRoute = routes.agentToolFixtureRoute || null;
   },
-})
+    });
+  })
   .then(result => {
     fusionHandlers = result.fusionHandlers;
     clipboardHandlers = result.clipboardHandlers;
@@ -352,8 +371,15 @@ startServer({
     themeHandlers = result.themeHandlers;
     secretsHandlers = result.secretsHandlers;
     screenshotHandlers = result.screenshotHandlers || {};
+    const boundPort = server.address()?.port;
+    if (!Number.isSafeInteger(boundPort) || boundPort < 1 || boundPort > 65_535) {
+      throw new Error('Server runtime endpoint is unavailable');
+    }
+    process.stdout.write(`SERVER_READY:${boundPort}\n`);
+    serverRuntimeActivation.activate();
   })
   .catch(err => {
+    serverRuntimeActivation.fail();
     console.error('[Server] Startup failed:', err);
     process.exit(1);
   });

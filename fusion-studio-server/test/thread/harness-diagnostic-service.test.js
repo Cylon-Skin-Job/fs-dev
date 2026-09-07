@@ -22,6 +22,8 @@ function validCandidate(overrides = {}) {
 function binding(overrides = {}) {
   return {
     workspaceId: 'ws-1',
+    projectRoot: '/tmp/ws-1-root',
+    workspaceEpoch: 'epoch-ws-1',
     threadId: 'thread-1',
     turnId: 'turn-1',
     ...overrides,
@@ -74,6 +76,8 @@ describe('harness diagnostic service (SPEC-03 Slice C)', () => {
     return {
       diagnostic_id: overrides.diagnostic_id || `seed-${Math.random().toString(36).slice(2)}`,
       workspace_id: overrides.workspace_id || 'ws-1',
+      project_root: overrides.project_root || '/tmp/ws-1-root',
+      workspace_epoch: overrides.workspace_epoch || 'epoch-ws-1',
       thread_id: overrides.thread_id || 'thread-1',
       turn_id: overrides.turn_id || 'turn-1',
       report_json: JSON.stringify(candidate),
@@ -89,9 +93,11 @@ describe('harness diagnostic service (SPEC-03 Slice C)', () => {
       'created_at',
       'diagnostic_id',
       'expires_at',
+      'project_root',
       'report_json',
       'thread_id',
       'turn_id',
+      'workspace_epoch',
       'workspace_id',
     ]);
   });
@@ -105,6 +111,8 @@ describe('harness diagnostic service (SPEC-03 Slice C)', () => {
     const row = await db()('harness_error_diagnostics').where('diagnostic_id', diagnosticId).first();
     expect(row).toMatchObject({
       workspace_id: 'ws-1',
+      project_root: '/tmp/ws-1-root',
+      workspace_epoch: 'epoch-ws-1',
       thread_id: 'thread-1',
       turn_id: 'turn-1',
     });
@@ -287,12 +295,24 @@ describe('harness diagnostic service (SPEC-03 Slice C)', () => {
     // contents.
     expect(JSON.stringify(warn.mock.calls)).not.toContain(canary);
 
-    await expect(modules.service.cleanupHarnessDiagnostics()).rejects.toThrow();
-    await expect(modules.service.runStartupDiagnosticCleanup()).resolves.toBe(false);
+    // Give cleanup its own deterministic database-failure boundary. A
+    // dropped-table oracle is not stable in the aggregate suite because an
+    // independently loaded migration owner can recreate that schema.
+    jest.resetModules();
+    jest.doMock('../../lib/db', () => ({
+      getDb: () => ({
+        transaction: async () => { throw new Error('cleanup transaction unavailable'); },
+      }),
+    }));
+    const failureService = require('../../lib/thread/harness-diagnostic-service');
+    await expect(failureService.cleanupHarnessDiagnostics())
+      .rejects.toThrow('cleanup transaction unavailable');
+    await expect(failureService.runStartupDiagnosticCleanup()).resolves.toBe(false);
     expect(warn.mock.calls.at(-1)).toEqual([
       '[HarnessDiagnostics] Startup cleanup failed',
       { marker: 'HARNESS_DIAGNOSTIC_STARTUP_CLEANUP_FAILED' },
     ]);
+    jest.dontMock('../../lib/db');
   });
 
   test('startup cleanup runs the same purge + evict to both caps', async () => {

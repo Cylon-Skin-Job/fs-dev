@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Calendar, CalendarEvent, EventFormData } from '../types/calendar';
+import { fetchServer } from '../lib/runtime-transport';
 
 interface CalendarState {
   calendars: Calendar[];
@@ -138,7 +139,7 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
 
   fetchCalendars: async () => {
     try {
-      const res = await fetch('/api/calendar/calendars');
+      const res = await fetchServer('/api/calendar/calendars');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       set({ calendars: data.map(apiCalToStore), error: null });
@@ -156,7 +157,7 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
         start: String(Math.floor(start.getTime() / 1000)),
         end: String(Math.floor(end.getTime() / 1000)),
       });
-      const res = await fetch(`/api/calendar/events?${params}`);
+      const res = await fetchServer(`/api/calendar/events?${params}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       set({

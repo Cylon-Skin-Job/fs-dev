@@ -4,13 +4,18 @@
  */
 
 const { v4: generateId } = require('uuid');
+const path = require('path');
 const { resolveScope } = require('../chat-scope');
 const { checkSettingsBounce } = require('../enforcement');
 const { emit } = require('../event-bus');
 const { spawnThreadWire } = require('../harness/compat');
 const { createCanonicalChatEventApplier } = require('../wire/canonical-chat-event-applier');
 const { createCanonicalHarnessEventBridge } = require('../wire/canonical-harness-event-bridge');
-const { getWireForThread, registerWire } = require('../wire/process-manager');
+const {
+  attachClientToWire,
+  getWireForThread,
+  unregisterWire,
+} = require('../wire/process-manager');
 const { getDb } = require('../db');
 const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
 const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
@@ -20,6 +25,7 @@ const {
 } = require('../agent-provenance/turn-authority');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 const { isHarnessRuntimeError } = require('../harness/errors');
+const { terminateProviderProcessAndWait } = require('./session-manager');
 const { normalizeTurnTerminalError } = require('./turn-terminal-error');
 const { persistDiagnosticReport } = require('./harness-diagnostic-service');
 const { persistTerminalDiagnosticSafely } = require('./terminal-diagnostic-boundary');
@@ -39,7 +45,9 @@ function normalizeTarget(target) {
   // RCC-0095: all threads are workspace-scoped ('project').
   return {
     workspaceId: target.workspaceId,
-    projectRoot: target.projectRoot,
+    projectRoot: path.resolve(target.projectRoot),
+    workspaceEpoch: target.workspaceEpoch
+      || `automation:${target.workspaceId}:${path.resolve(target.projectRoot)}`,
     scope: 'project',
     viewId: null,
     threadId: target.threadId,
@@ -49,6 +57,8 @@ function normalizeTarget(target) {
 function getRuntimeKey(target) {
   return {
     workspaceId: target.workspaceId,
+    projectRoot: target.projectRoot,
+    workspaceEpoch: target.workspaceEpoch,
     scope: 'project',
     threadId: target.threadId,
   };
@@ -152,20 +162,36 @@ function createAutomationBridge(turnAuthority = null) {
 async function warmAutomationRuntime(target, manager, runtimeKey) {
   const scopeContext = {
     workspaceId: target.workspaceId,
+    projectRoot: target.projectRoot,
+    workspaceEpoch: target.workspaceEpoch,
     viewId: target.viewId,
   };
   const warmPromise = (async () => {
     const wire = spawnThreadWire(target.threadId, target.projectRoot, scopeContext);
-    registerWire(target.threadId, wire, target.projectRoot, null, scopeContext);
-    if (wire._harnessPromise) await wire._harnessPromise;
-    if (!wire._sendMessage) {
-      throw new Error('Wire does not support ACP sendMessage. Legacy wire format has been retired.');
+    try {
+      if (wire._harnessPromise) await wire._harnessPromise;
+      if (!wire._sendMessage) {
+        throw new Error('Wire does not support ACP sendMessage. Legacy wire format has been retired.');
+      }
+      if (!wire._usesDirectCanonicalEvents) {
+        throw new Error('Wire does not support direct canonical event delivery. Legacy wire format has been retired.');
+      }
+      await manager.openSession(target.threadId, wire, null, {
+        workspaceEpoch: target.workspaceEpoch,
+      });
+      attachClientToWire(target.threadId, wire, target.projectRoot, null, scopeContext);
+      return wire;
+    } catch (error) {
+      const managedSession = typeof manager.getSession === 'function'
+        ? manager.getSession(target.threadId)
+        : null;
+      if (managedSession?.wireProcess === wire) {
+        await manager.closeSession(target.threadId);
+      } else {
+        await terminateProviderProcessAndWait(wire);
+      }
+      throw error;
     }
-    if (!wire._usesDirectCanonicalEvents) {
-      throw new Error('Wire does not support direct canonical event delivery. Legacy wire format has been retired.');
-    }
-    await manager.openSession(target.threadId, wire, null);
-    return wire;
   })();
 
   threadRuntimeManager.markWarming(runtimeKey, warmPromise);
@@ -184,7 +210,7 @@ async function warmAutomationRuntime(target, manager, runtimeKey) {
 async function ensureAutomationWire(target, manager, runtimeKey) {
   const state = threadRuntimeManager.getRuntimeState(runtimeKey);
   if (state === RUNTIME_STATES.READY) {
-    const wire = getWireForThread(target.threadId);
+    const wire = getWireForThread(target.threadId, target);
     if (wire) return { wire, deferReason: null };
     threadRuntimeManager.markCold(runtimeKey);
   } else {
@@ -355,6 +381,7 @@ async function sendAutomationPrompt(rawTarget, input) {
       workspaceId: target.workspaceId,
       workspace: resolveScope({ currentWorkspaceId: target.workspaceId, currentViewId: null }),
       projectRoot: turnAuthority?.canonicalRoot || target.projectRoot,
+      workspaceEpoch: target.workspaceEpoch,
       scope: 'project',
       threadId: target.threadId,
       acceptedUserInput: input,
@@ -368,19 +395,14 @@ async function sendAutomationPrompt(rawTarget, input) {
       touchThreadSession: () => manager.touchSession(target.threadId),
       stopHarness: async () => {
         try {
-          if (wire._stopSession) {
-            await wire._stopSession();
-          } else if (wire.stop) {
-            await wire.stop();
-          } else if (wire.kill) {
-            wire.kill('SIGTERM');
-          }
+          await terminateProviderProcessAndWait(wire, 2_000, 1_000);
         } catch {
           console.warn('[ThreadRuntime] Automation harness stop failed', {
             threadId: target.threadId,
             drainId,
             marker: 'AUTOMATION_HARNESS_STOP_FAILED',
           });
+          throw new Error('Automation provider termination failed');
         }
       },
     });
@@ -404,6 +426,69 @@ async function sendAutomationPrompt(rawTarget, input) {
   }
 
   const drainContext = { route: claimedRecord.routeContext, control: claimedRecord.control };
+  let resolveDrainCompletion;
+  const drainCompletion = new Promise(resolve => {
+    resolveDrainCompletion = resolve;
+  });
+  let retirementRequested = false;
+
+  try {
+    threadRuntimeManager.bindActiveDrainLifecycle(runtimeKey, claimedRecord.drainId, {
+      completion: drainCompletion,
+      retire: async () => {
+        retirementRequested = true;
+        threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+        const boundTurnId = threadRuntimeManager.resolveBoundTurnId(
+          runtimeKey,
+          claimedRecord.drainId,
+        );
+        if (boundTurnId) {
+          try {
+            await bridge.applyHarnessEvent({
+              type: 'turn_end',
+              reason: 'interrupted',
+              partial: true,
+            }, null, drainContext);
+          } catch {
+            console.error('[ThreadRuntime] Automation interruption synthesis failed', {
+              threadId: target.threadId,
+              drainId: claimedRecord.drainId,
+              marker: 'AUTOMATION_INTERRUPTION_SYNTHESIS_FAILED',
+            });
+          }
+        }
+        try {
+          await claimedRecord.control.stopHarness();
+        } catch {
+          threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+          return false;
+        }
+        unregisterWire(target.threadId, target, wire);
+        threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, claimedRecord.drainId);
+        if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING) {
+          threadRuntimeManager.markCold(runtimeKey);
+        }
+        return true;
+      },
+    });
+  } catch {
+    threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, claimedRecord.drainId);
+    threadRuntimeManager.markReady(runtimeKey);
+    resolveDrainCompletion();
+    releaseAgentTurnAuthorityRef(turnAuthority);
+    disposeTurnApplicationContext(turnApplicationContext);
+    console.error('[ThreadRuntime] Automation prompt drain lifecycle failed', {
+      threadId: target.threadId,
+      marker: 'AUTOMATION_PROMPT_DRAIN_LIFECYCLE_FAILED',
+    });
+    return {
+      accepted: false,
+      deferred: false,
+      error: 'Prompt binding failed',
+      threadId: target.threadId,
+      scope: target.scope,
+    };
+  }
 
   // SPEC-01 Slice C stale guard (same contract as the interactive loop): a
   // DIFFERENT live drain on this runtime key proves this iterator is stale;
@@ -420,6 +505,15 @@ async function sendAutomationPrompt(rawTarget, input) {
       turnApplicationContext,
       finalizeOnError: false,
     });
+    if (retirementRequested) {
+      return {
+        accepted: false,
+        deferred: false,
+        error: 'Drain retired during iteration',
+        threadId: target.threadId,
+        scope: target.scope,
+      };
+    }
     if (isDrainSuperseded()) {
       console.warn(`[ThreadRuntime] Drain ${claimedRecord.drainId} superseded; automation completion is a diagnostic no-op`);
       return {
@@ -440,6 +534,15 @@ async function sendAutomationPrompt(rawTarget, input) {
       scope: target.scope,
     };
   } catch (err) {
+    if (retirementRequested) {
+      return {
+        accepted: false,
+        deferred: false,
+        error: 'Drain retired during iteration',
+        threadId: target.threadId,
+        scope: target.scope,
+      };
+    }
     if (isDrainSuperseded()) {
       console.warn('[ThreadRuntime] Ignoring superseded automation iterator failure', {
         threadId: target.threadId,
@@ -473,7 +576,13 @@ async function sendAutomationPrompt(rawTarget, input) {
       if (isHarnessRuntimeError(err) && err.candidate) {
         diagnosticId = await persistTerminalDiagnosticSafely(
           persistDiagnosticReport,
-          { workspaceId: target.workspaceId, threadId: target.threadId, turnId: boundTurnId },
+          {
+            workspaceId: target.workspaceId,
+            projectRoot: target.projectRoot,
+            workspaceEpoch: target.workspaceEpoch,
+            threadId: target.threadId,
+            turnId: boundTurnId,
+          },
           err.candidate,
         );
       }
@@ -516,11 +625,12 @@ async function sendAutomationPrompt(rawTarget, input) {
   } finally {
     releaseAgentTurnAuthorityRef(turnAuthority);
     disposeTurnApplicationContext(turnApplicationContext);
+    resolveDrainCompletion();
   }
 }
 
 module.exports = {
   getAutomationRuntimeStatus,
   sendAutomationPrompt,
-  _getRuntimeKey: getRuntimeKey,
+  _getRuntimeKey: target => getRuntimeKey(normalizeTarget(target)),
 };

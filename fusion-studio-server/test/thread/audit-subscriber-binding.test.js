@@ -90,6 +90,26 @@ describe('audit subscriber exchange-binding adapter', () => {
     expect(signal).toHaveBeenCalledTimes(1);
   });
 
+  test('status metadata correlation is exact across same-id workspace turns', () => {
+    auditSubscriber.startAuditSubscriber({ enableAgentExchangeBinding: true });
+    eventBus.emit('chat:status_update', {
+      workspaceId: 'workspace-1', projectRoot: '/workspace-1', workspaceEpoch: 'epoch-a',
+      threadId: 'same-id', turnId: 'turn-a', messageId: 'message-a',
+    });
+    eventBus.emit('chat:status_update', {
+      workspaceId: 'workspace-2', projectRoot: '/workspace-2', workspaceEpoch: 'epoch-b',
+      threadId: 'same-id', turnId: 'turn-b', messageId: 'message-b',
+    });
+    expect(auditSubscriber.getPendingForThread(
+      'workspace-1', '/workspace-1', 'epoch-a', 'same-id', 'turn-a',
+    ))
+      .toMatchObject({ messageId: 'message-a' });
+    expect(auditSubscriber.getPendingForThread(
+      'workspace-2', '/workspace-2', 'epoch-b', 'same-id', 'turn-b',
+    ))
+      .toMatchObject({ messageId: 'message-b' });
+  });
+
   test.each([
     ['normal', { reason: 'complete', partial: false }],
     ['interrupted', { reason: 'interrupted', partial: true }],

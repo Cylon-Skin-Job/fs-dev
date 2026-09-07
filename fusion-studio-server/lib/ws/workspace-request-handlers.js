@@ -196,10 +196,10 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           type: 'workspace:create_manifest',
           manifest: createService.readManifest(),
         }));
-      } catch (err) {
+      } catch (_error) {
         ws.send(JSON.stringify({
           type: 'workspace:create_rejected',
-          message: 'Unable to load view templates: ' + err.message,
+          message: 'Unable to load view templates',
         }));
       }
     },
@@ -260,7 +260,7 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           type: 'folder:browse_result',
           path: browsePath,
           success: false,
-          error: err.message,
+          error: 'Unable to browse folder',
         }));
       }
     },
@@ -287,13 +287,13 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           ...correlation,
           state,
         }));
-      } catch (err) {
-        console.error('[state:get] failed:', err);
+      } catch (_error) {
+        console.error('[state:get] failed');
         ws.send(JSON.stringify({
           type: 'state:error',
           view: clientMsg.view,
           ...correlation,
-          message: err.message,
+          message: 'Unable to read state',
         }));
       }
     },
@@ -320,14 +320,14 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           clientMutationId: clientMsg.clientMutationId,
           state: merged,
         }));
-      } catch (err) {
-        console.error('[state:set] failed:', err);
+      } catch (_error) {
+        console.error('[state:set] failed');
         ws.send(JSON.stringify({
           type: 'state:error',
           view: clientMsg.view,
           ...correlation,
           clientMutationId: clientMsg.clientMutationId,
-          message: err.message,
+          message: 'Unable to write state',
         }));
       }
     },
@@ -381,12 +381,12 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           targetPath: targetRef?.path,
           sourceIsDirectory,
         }));
-      } catch (err) {
-        console.error(`[FileMove] ${err.message}`);
+      } catch (_error) {
+        console.error('[FileMove] failed');
         ws.send(JSON.stringify({
           type: 'file:move_error',
           ...correlation,
-          error: err.message,
+          error: 'Unable to move file',
         }));
       }
     },
@@ -454,9 +454,9 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           targetPath: targetRef?.path,
           sourceIsDirectory,
         }));
-      } catch (err) {
-        console.error(`[FileRename] ${err.message}`);
-        ws.send(JSON.stringify({ type: 'file:rename_error', ...correlation, error: err.message }));
+      } catch (_error) {
+        console.error('[FileRename] failed');
+        ws.send(JSON.stringify({ type: 'file:rename_error', ...correlation, error: 'Unable to rename file' }));
       }
     },
 
@@ -511,9 +511,9 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           sourcePath: sourceRef?.path,
           sourceIsDirectory,
         }));
-      } catch (err) {
-        console.error(`[FileDelete] ${err.message}`);
-        ws.send(JSON.stringify({ type: 'file:delete_error', ...correlation, error: err.message }));
+      } catch (_error) {
+        console.error('[FileDelete] failed');
+        ws.send(JSON.stringify({ type: 'file:delete_error', ...correlation, error: 'Unable to delete file' }));
       }
     },
 
@@ -589,11 +589,11 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           thumbnailPath: path.relative(basePath, thumbnailPath).split(path.sep).join('/'),
           savedAt,
         }));
-      } catch (err) {
+      } catch (_error) {
         ws.send(JSON.stringify({
           type: 'office:thumbnail_error',
           documentPath,
-          error: err.message,
+          error: 'Unable to save thumbnail',
         }));
       }
     },

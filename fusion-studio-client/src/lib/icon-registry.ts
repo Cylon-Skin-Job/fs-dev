@@ -10,6 +10,8 @@
  * Only workspace icons and future customizable surfaces use this registry.
  */
 
+import { fetchServer } from './runtime-transport';
+
 const SVG_CACHE = new Map<string, string>();
 const PENDING = new Map<string, Promise<string | null>>();
 
@@ -33,7 +35,7 @@ async function fetchSvg(name: string, style: string, filled: boolean): Promise<s
 
   const url = svgUrl(name, style, filled);
   try {
-    const res = await fetch(url);
+    const res = await fetchServer(url);
     if (!res.ok) return null;
     const svg = await res.text();
     SVG_CACHE.set(key, svg);

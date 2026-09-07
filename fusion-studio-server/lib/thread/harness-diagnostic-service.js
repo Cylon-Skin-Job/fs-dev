@@ -37,6 +37,7 @@
  */
 
 const { randomUUID } = require('crypto');
+const path = require('path');
 
 const { getDb } = require('../db');
 const { HARNESS_DIAGNOSTIC_CATEGORIES } = require('../harness/errors');
@@ -259,16 +260,20 @@ async function cleanupHarnessDiagnostics() {
  * failure (validation, migration availability, cleanup, insertion). Never
  * throws into the terminalization path.
  *
- * @param {{workspaceId?: unknown, threadId?: unknown, turnId?: unknown}} binding
+ * @param {{workspaceId?: unknown, projectRoot?: unknown, workspaceEpoch?: unknown, threadId?: unknown, turnId?: unknown}} binding
  * @param {unknown} candidate - already-redacted HarnessDiagnosticCandidateV1
  * @returns {Promise<string|null>}
  */
 async function persistDiagnosticReport(binding, candidate) {
   const workspaceId = binding?.workspaceId;
+  const projectRoot = binding?.projectRoot;
+  const workspaceEpoch = binding?.workspaceEpoch;
   const threadId = binding?.threadId;
   const turnId = binding?.turnId;
   try {
-    if (!isNonEmptyString(workspaceId) || !isNonEmptyString(threadId) || !isNonEmptyString(turnId)) {
+    if (!isNonEmptyString(workspaceId) || !isNonEmptyString(projectRoot)
+      || !isNonEmptyString(workspaceEpoch) || !isNonEmptyString(threadId)
+      || !isNonEmptyString(turnId)) {
       return null;
     }
     const report = revalidateCandidate(candidate);
@@ -286,6 +291,8 @@ async function persistDiagnosticReport(binding, candidate) {
       await trx(TABLE).insert({
         diagnostic_id: diagnosticId,
         workspace_id: workspaceId,
+        project_root: path.resolve(projectRoot),
+        workspace_epoch: workspaceEpoch,
         thread_id: threadId,
         turn_id: turnId,
         report_json: serialized,
@@ -314,13 +321,14 @@ async function persistDiagnosticReport(binding, candidate) {
  * ONE fixed value-free unavailable outcome (no distinguishing details).
  * Never throws.
  *
- * @param {{workspaceId?: unknown, threadId?: unknown, turnId?: unknown, diagnosticId?: unknown}} query
+ * @param {{workspaceId?: unknown, projectRoot?: unknown, workspaceEpoch?: unknown, threadId?: unknown, turnId?: unknown, diagnosticId?: unknown}} query
  * @returns {Promise<Readonly<{status:'available', report:object, reportJson:string}>|Readonly<{status:'unavailable'}>>}
  */
 async function getDiagnosticReport(query) {
   try {
-    const { workspaceId, threadId, turnId, diagnosticId } = query || {};
-    if (![workspaceId, threadId, turnId, diagnosticId].every(isNonEmptyString)) {
+    const { workspaceId, projectRoot, workspaceEpoch, threadId, turnId, diagnosticId } = query || {};
+    if (![workspaceId, projectRoot, workspaceEpoch, threadId, turnId, diagnosticId]
+      .every(isNonEmptyString)) {
       return DIAGNOSTIC_UNAVAILABLE;
     }
     const db = getDb();
@@ -328,6 +336,8 @@ async function getDiagnosticReport(query) {
       .where({
         diagnostic_id: diagnosticId,
         workspace_id: workspaceId,
+        project_root: path.resolve(projectRoot),
+        workspace_epoch: workspaceEpoch,
         thread_id: threadId,
         turn_id: turnId,
       })

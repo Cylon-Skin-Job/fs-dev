@@ -20,6 +20,10 @@ const { KimiHarness } = require('./kimi');
 const { registry } = require('./registry');
 const { getDb } = require('../db');
 const { resolveCliPolicy } = require('../cli-config');
+const {
+  mergeRuntimeHarnessConfig,
+  sanitizeRuntimeHarnessConfig,
+} = require('../thread/thread-harness-config-policy');
 
 // Singleton harness instance (lazy-loaded)
 /** @type {KimiHarness | null} */
@@ -75,7 +79,10 @@ async function getHarnessInfoForThread(threadId) {
       .first();
     return {
       harnessId: row?.harness_id || 'kimi',
-      harnessConfig: parseHarnessConfig(row?.harness_config),
+      harnessConfig: sanitizeRuntimeHarnessConfig(
+        row?.harness_id || 'kimi',
+        parseHarnessConfig(row?.harness_config),
+      ),
     };
   } catch (err) {
     // If DB not ready or thread not found, default to kimi
@@ -83,7 +90,7 @@ async function getHarnessInfoForThread(threadId) {
   }
 }
 
-async function updateThreadHarnessConfig(threadId, patch) {
+async function updateThreadHarnessConfig(threadId, harnessId, patch) {
   const db = getDb();
   const row = await db('threads')
     .where('thread_id', threadId)
@@ -91,7 +98,11 @@ async function updateThreadHarnessConfig(threadId, patch) {
     .first();
   if (!row) return null;
 
-  const harnessConfig = { ...parseHarnessConfig(row.harness_config), ...patch };
+  const harnessConfig = mergeRuntimeHarnessConfig(
+    harnessId,
+    parseHarnessConfig(row.harness_config),
+    patch,
+  );
   await db('threads')
     .where('thread_id', threadId)
     .update({ harness_config: JSON.stringify(harnessConfig) });
@@ -156,6 +167,62 @@ function createDeferredProcessProxy() {
   return proc;
 }
 
+function createRealProcessCloseWaiter(realProc) {
+  if (!realProc || typeof realProc.once !== 'function') return null;
+  if ((realProc.exitCode !== undefined && realProc.exitCode !== null)
+    || (realProc.signalCode !== undefined && realProc.signalCode !== null)) {
+    return { promise: Promise.resolve(), cancel() {} };
+  }
+
+  let settled = false;
+  let resolveWait;
+  const promise = new Promise((resolve) => { resolveWait = resolve; });
+  const cleanup = () => {
+    realProc.removeListener?.('exit', finish);
+    realProc.removeListener?.('close', finish);
+  };
+  const finish = () => {
+    if (settled) return;
+    settled = true;
+    cleanup();
+    resolveWait();
+  };
+  realProc.once('exit', finish);
+  realProc.once('close', finish);
+  return {
+    promise,
+    cancel() {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolveWait();
+    },
+  };
+}
+
+async function stopHarnessSessionAndWait(session, signal) {
+  // OpenCode's exposed process is a placeholder; its explicit-signal stop
+  // contract awaits the actual per-turn child. Other adapters expose their
+  // real long-lived provider process, whose exit/close must also be observed.
+  const realProcessWaiter = session._fusionHarnessId === 'opencode'
+    ? null
+    : createRealProcessCloseWaiter(session.process);
+  try {
+    // Legacy adapters ignore the stop(signal) argument. Send the escalation
+    // to their real provider child directly, while retaining stop() for
+    // adapter-owned cleanup. OpenCode implements the explicit signal contract
+    // itself because its exposed process is only a placeholder.
+    if (signal === 'SIGKILL' && session._fusionHarnessId !== 'opencode') {
+      session.process?.kill?.('SIGKILL');
+    }
+    await session.stop?.(signal);
+    if (realProcessWaiter) await realProcessWaiter.promise;
+  } catch (error) {
+    realProcessWaiter?.cancel();
+    throw error;
+  }
+}
+
 // ============================================================================
 // PUBLIC API (exported functions)
 // ============================================================================
@@ -183,6 +250,34 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
   console.log(`[Compat] Using NEW harness for thread ${threadId.slice(0, 8)}...`);
 
   const dummyProc = createDeferredProcessProxy();
+  let sessionPromise;
+  let terminationPromise = null;
+  let exitEmitted = false;
+  const emitExitOnce = (code = null, signal = null) => {
+    if (exitEmitted) return;
+    exitEmitted = true;
+    dummyProc.killed = true;
+    dummyProc.emit('exit', code, signal);
+    dummyProc.emit('close', code, signal);
+  };
+
+  // Provider retirement is awaitable even when the async harness has not
+  // finished starting. ChildProcess.kill keeps its boolean contract while
+  // SessionManager uses this private waiter before admitting a new workspace.
+  dummyProc.kill = (signal = 'SIGTERM') => {
+    if (exitEmitted || (dummyProc.killed && signal !== 'SIGKILL')) return false;
+    dummyProc.killed = true;
+    terminationPromise = Promise.resolve(sessionPromise)
+      .then((session) => stopHarnessSessionAndWait(session, signal));
+    // Keep fire-and-forget close callers free of unhandled rejections while
+    // preserving the rejection for the workspace retirement waiter.
+    terminationPromise.then(
+      () => emitExitOnce(null, signal),
+      (err) => console.error('[Compat] Failed to stop harness session:', err),
+    );
+    return true;
+  };
+  dummyProc._waitForTermination = () => terminationPromise || Promise.resolve();
 
   const startHarness = async () => {
     const { harnessId, harnessConfig } = await getHarnessInfoForThread(threadId);
@@ -194,9 +289,12 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
 
     const runtimeConfig = await resolveRuntimeConfigForHarness(projectRoot, harnessId);
     await harness.initialize(runtimeConfig);
+    const sessionKey = JSON.stringify([workspaceId, path.resolve(projectRoot), threadId]);
     const session = await harness.startThread(threadId, projectRoot, resolvedScope, {
+      sessionKey,
+      runtimeConfig,
       harnessConfig,
-      updateHarnessConfig: (patch) => updateThreadHarnessConfig(threadId, patch),
+      updateHarnessConfig: (patch) => updateThreadHarnessConfig(threadId, harnessId, patch),
     });
     Object.defineProperties(session, {
       _fusionHarnessId: { value: harnessId, enumerable: false },
@@ -205,7 +303,7 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     return session;
   };
 
-  const sessionPromise = startHarness();
+  sessionPromise = startHarness();
 
   // Store the promise so callers can wait if needed
   /** @ts-ignore */
@@ -215,9 +313,7 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     const harnessId = session._fusionHarnessId;
     const provider = session._fusionProvider;
     if (dummyProc.killed) {
-      session.stop?.().catch(err => {
-        console.error('[Compat] Failed to stop cancelled harness session:', err);
-      });
+      // kill() already chained provider stop to this startup promise.
       return;
     }
 
@@ -245,26 +341,6 @@ function spawnThreadWire(threadId, projectRoot, scopeContext = {}) {
     // process used for an individual turn (OpenCode is one example). Keep the
     // outer wire's lifecycle authoritative so SessionManager idle expiry is
     // visible to the wire registry and runtime controller.
-    let exitEmitted = false;
-    const emitExitOnce = (code = null, signal = null) => {
-      if (exitEmitted) return;
-      exitEmitted = true;
-      dummyProc.killed = true;
-      dummyProc.emit('exit', code, signal);
-      dummyProc.emit('close', code, signal);
-    };
-
-    dummyProc.killed = false;
-    dummyProc.kill = (signal = 'SIGTERM') => {
-      if (dummyProc.killed) return false;
-      dummyProc.killed = true;
-      Promise.resolve(session.stop?.(signal)).catch(err => {
-        console.error('[Compat] Failed to stop harness session:', err);
-      });
-      process.nextTick(() => emitExitOnce(null, signal));
-      return true;
-    };
-
     // Re-emit events from real process
     realProc.on('error', (err) => dummyProc.emit('error', err));
     realProc.on('exit', (code, signal) => emitExitOnce(code, signal));

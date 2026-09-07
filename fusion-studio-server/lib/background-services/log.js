@@ -26,16 +26,16 @@ function write(entry) {
   fs.appendFileSync(LOG_PATH, JSON.stringify(record) + '\n', 'utf8');
 }
 
-function logFailure(service, err) {
+function logFailure(_service, _err) {
   try {
     write({
       level: 'error',
-      service,
-      message: err && err.message ? err.message : String(err),
-      code: err && err.code ? err.code : null,
+      service: 'background_service',
+      message: 'background_service_failed',
+      code: null,
     });
-  } catch (logErr) {
-    console.error('[Background:log] failed:', logErr.message);
+  } catch (_logError) {
+    console.error('[Background] log_failed');
   }
 }
 

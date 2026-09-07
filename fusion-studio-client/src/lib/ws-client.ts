@@ -16,6 +16,7 @@ import {
   handleResourceProvenanceResponse,
   retirePendingResourceProvenanceQueries,
 } from './ws/resource-provenance-protocol';
+import { retirePendingChatDiagnosticRequests } from './ws/chat-diagnostic-handlers';
 import { handleWorkspaceMessage } from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
@@ -48,16 +49,33 @@ import {
 import type { ModalConfig } from '../lib/modal';
 import type { ApiKeyIndexEntry, ApiKeysErrorCode } from '../state/secretsStore';
 import type { ViewUIState, WebSocketMessage } from '../types';
+import {
+  createServerWebSocket,
+  getRuntimeTransportSnapshot,
+  startRuntimeTransport,
+  subscribeRuntimeTransport,
+} from './runtime-transport';
+import { createShellSocketAuthenticator } from './shell-auth-client';
+import { runWithRendererMessageDiagnosticBoundary } from './ws/renderer-diagnostic-boundary';
 
 // --- Module state ---
-
-const WS_URL = `ws://${window.location.host}`;
 
 let socket: WebSocket | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let officePaletteWorkspaceSubscriptionStarted = false;
+let runtimeUnsubscribe: (() => void) | null = null;
+let connectionRequested = false;
+let connectedGeneration: string | null = null;
+let connectionAuthenticator: {
+  ws: WebSocket;
+  generation: string | null;
+  sendProduct: (serialized: string) => boolean;
+  retire: () => void;
+} | null = null;
 
 export function abandonWsResponseTracking(): void {
+  retireFusionResponseListeners();
+  retirePendingChatDiagnosticRequests();
   abandonViewStateMutations();
   abandonWorkspaceRequests();
 }
@@ -77,7 +95,11 @@ function ensureOfficePaletteWorkspaceSubscription(): void {
 
 type FusionListener = (msg: unknown) => void;
 type FusionMessagePayload = WebSocketMessage & Record<string, unknown>;
-const fusionListeners: Map<string, Set<FusionListener>> = new Map();
+interface FusionListenerEntry {
+  listener: FusionListener;
+  onConnectionRetired: (() => void) | null;
+}
+const fusionListeners: Map<string, Set<FusionListenerEntry>> = new Map();
 
 interface StateResultMessage extends WebSocketMessage {
   type: 'state:result';
@@ -121,23 +143,11 @@ function isWebSocketMessage(value: unknown): value is WebSocketMessage {
     && typeof value.type === 'string';
 }
 
-function redactNoteBody(value: unknown): unknown {
-  if (!value || typeof value !== 'object') return value;
-  const clone = { ...(value as Record<string, unknown>) };
-  if (typeof clone.body === 'string') {
-    clone.body = '[redacted]';
-  }
-  const note = clone.note;
-  if (note && typeof note === 'object' && 'body' in note) {
-    clone.note = { ...(note as Record<string, unknown>), body: '[redacted]' };
-  }
-  return clone;
-}
-
 /**
  * Reduce an inbound frame to its loggable form. Exported as the single
- * suppression-boundary seam (roadmap §5.5) so browser fixtures can prove
- * report-field containment; called before every inbound console.log above.
+ * suppression-boundary seam (roadmap §5.5). Ordinary product frames expose
+ * only their declared type to diagnostics. The two accepted PROV diagnostic
+ * response types retain their established fixed identifier allowlists.
  */
 export function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {
   // MANDATORY diagnostic log suppression (roadmap §5.5 sentence 2; parent
@@ -167,53 +177,73 @@ export function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {
     };
   }
 
-  const safeMessage = sanitizeTerminalErrorsAtIngress(msg);
-
-  if (
-    safeMessage.type !== 'chat-turn:metadata:update' &&
-    safeMessage.type !== 'chat-turn:metadata:updated' &&
-    safeMessage.type !== 'chat-turn:metadata:error'
-  ) {
-    return safeMessage;
-  }
-
-  return {
-    ...safeMessage,
-    metadata: redactNoteBody(safeMessage.metadata) as Record<string, unknown> | undefined,
-    patch: safeMessage.patch
-      ? {
-        ...safeMessage.patch,
-        note: redactNoteBody(safeMessage.patch.note) as { body: string } | null | undefined,
-      }
-      : safeMessage.patch,
-  };
+  return { type: msg.type };
 }
 
 export function sendFusionMessage(msg: Record<string, unknown>) {
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify(msg));
-  }
+  const owner = connectionAuthenticator;
+  if (!socket || socket.readyState !== WebSocket.OPEN || !owner) return;
+  if (owner.ws !== socket || owner.generation !== connectedGeneration) return;
+  owner.sendProduct(JSON.stringify(msg));
 }
 
 export function onFusionMessage<T = FusionMessagePayload>(type: string, listener: (msg: T) => void): () => void {
   if (!fusionListeners.has(type)) fusionListeners.set(type, new Set());
-  const wrapped: FusionListener = (msg) => listener(msg as T);
-  fusionListeners.get(type)!.add(wrapped);
-  return () => { fusionListeners.get(type)?.delete(wrapped); };
+  const entry: FusionListenerEntry = {
+    listener: (msg) => listener(msg as T),
+    onConnectionRetired: null,
+  };
+  fusionListeners.get(type)!.add(entry);
+  return () => { fusionListeners.get(type)?.delete(entry); };
+}
+
+/** A response listener whose request belongs to exactly the current socket. */
+export function onFusionResponse<T = FusionMessagePayload>(
+  type: string,
+  listener: (msg: T) => void,
+  onConnectionRetired: () => void,
+): () => void {
+  if (!fusionListeners.has(type)) fusionListeners.set(type, new Set());
+  const entry: FusionListenerEntry = {
+    listener: (msg) => listener(msg as T),
+    onConnectionRetired,
+  };
+  fusionListeners.get(type)!.add(entry);
+  return () => { fusionListeners.get(type)?.delete(entry); };
 }
 
 function emitFusion(type: string, msg: WebSocketMessage) {
   const listeners = fusionListeners.get(type);
   if (listeners) {
-    for (const fn of listeners) fn(msg);
+    for (const entry of listeners) entry.listener(msg);
   }
+}
+
+function retireFusionResponseListeners(): void {
+  const retirements = new Set<() => void>();
+  for (const entries of fusionListeners.values()) {
+    for (const entry of entries) {
+      if (!entry.onConnectionRetired) continue;
+      entries.delete(entry);
+      retirements.add(entry.onConnectionRetired);
+    }
+  }
+  for (const retire of retirements) retire();
 }
 
 // --- Public API ---
 
-export function connectWs() {
+function retireConnectionState(): void {
+  abandonWsResponseTracking();
+  useWorkspaceStore.getState().beginInit();
+  useFileDataStore.getState().retireConnectionGeneration();
+  retirePendingResourceProvenanceQueries();
+  usePanelStore.getState().setWs(null);
+  setLoggerWs(null);
+}
+
+function connectCurrentRuntime() {
   ensureOfficePaletteWorkspaceSubscription();
-  // Guard against double-connect (HMR, React Strict Mode)
   if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
     return;
   }
@@ -227,14 +257,29 @@ export function connectWs() {
   // its workspace-scoped state, so they must not activate a thread yet.
   useWorkspaceStore.getState().beginInit();
   abandonWsResponseTracking();
-  useFileDataStore.getState().retirePendingSaves();
+  useFileDataStore.getState().retireConnectionGeneration();
   retirePendingResourceProvenanceQueries();
   console.log('[WS] Connecting...');
-  const ws = new WebSocket(WS_URL);
+  let ws: WebSocket;
+  try {
+    ws = createServerWebSocket();
+  } catch {
+    retireConnectionState();
+    return;
+  }
   socket = ws;
+  const generation = getRuntimeTransportSnapshot().descriptor?.generation ?? null;
+  connectedGeneration = generation;
+  const isCurrentConnection = () => socket === ws
+    && connectedGeneration === generation
+    && getRuntimeTransportSnapshot().descriptor?.generation === generation;
 
-  ws.onopen = () => {
-    console.log('[WS] Connected');
+  let connectionActivated = false;
+  const activateConnection = () => {
+    if (connectionActivated || !isCurrentConnection()) return;
+    connectionActivated = true;
+    if (!isCurrentConnection()) return;
+    console.log('[WS] Authenticated');
     resetStreamState();
     const store = usePanelStore.getState();
     store.setWs(ws);
@@ -245,53 +290,121 @@ export function connectWs() {
     handleOfficePaletteSocketOpen(ws, { requestImmediately: false });
   };
 
+  const deliverApplicationMessage = (value: unknown) => {
+    if (!isCurrentConnection() || !isWebSocketMessage(value)) return;
+    const msg = sanitizeTerminalErrorsAtIngress(value);
+    console.log('[WS] Message received:', msg.type, redactMessageForLog(msg));
+    handleMessage(msg);
+  };
+  const authenticator = createShellSocketAuthenticator({
+    generation: generation || '',
+    electronApi: window.electronAPI,
+    send: (value) => ws.send(value),
+    close: () => ws.close(),
+    authenticated: activateConnection,
+    deliver: deliverApplicationMessage,
+  });
+  connectionAuthenticator = {
+    ws,
+    generation,
+    sendProduct: authenticator.sendProduct,
+    retire: authenticator.retire,
+  };
+
+  ws.onopen = () => {
+    if (!isCurrentConnection()) return;
+    console.log('[WS] Connected; authenticating');
+  };
+
   ws.onmessage = (event) => {
+    if (!isCurrentConnection()) return;
     try {
       const parsed: unknown = JSON.parse(event.data);
-      if (!isWebSocketMessage(parsed)) {
-        throw new Error('WebSocket message missing type');
-      }
-      const msg = sanitizeTerminalErrorsAtIngress(parsed);
-      console.log('[WS] Message received:', msg.type, redactMessageForLog(msg));
-      handleMessage(msg);
-    } catch (err) {
-      console.error('[WS] Parse error:', err);
+      void authenticator.receive(parsed);
+    } catch {
+      console.error('[WS] Invalid server frame');
+      authenticator.retire();
+      ws.close();
     }
   };
 
   ws.onclose = () => {
     console.log('[WS] Disconnected');
-    handleOfficePaletteSocketClose(ws);
+    authenticator.retire();
     if (socket !== ws) return;
-    abandonWsResponseTracking();
+    if (connectionAuthenticator?.ws === ws) connectionAuthenticator = null;
+    handleOfficePaletteSocketClose(ws);
     socket = null;
-    useWorkspaceStore.getState().beginInit();
-    useFileDataStore.getState().retirePendingSaves();
-    retirePendingResourceProvenanceQueries();
-    usePanelStore.getState().setWs(null);
-    reconnectTimer = setTimeout(connectWs, 3000);
+    connectedGeneration = null;
+    retireConnectionState();
+    if (connectionRequested && getRuntimeTransportSnapshot().status === 'ready') {
+      reconnectTimer = setTimeout(connectCurrentRuntime, 3000);
+    }
   };
 
   ws.onerror = (err) => {
+    if (!isCurrentConnection()) return;
     console.error('[WS] Error:', err);
   };
 }
 
+function handleRuntimeTransportChange(): void {
+  if (!connectionRequested) return;
+  const runtime = getRuntimeTransportSnapshot();
+  const nextGeneration = runtime.descriptor?.generation ?? null;
+  if (runtime.status === 'ready' && socket && connectedGeneration === nextGeneration) return;
+
+  if (reconnectTimer) {
+    clearTimeout(reconnectTimer);
+    reconnectTimer = null;
+  }
+  const previous = socket;
+  const previousAuthenticator = connectionAuthenticator;
+  socket = null;
+  connectedGeneration = null;
+  connectionAuthenticator = null;
+  previousAuthenticator?.retire();
+  if (previous) {
+    handleOfficePaletteSocketClose(previous);
+    previous.close();
+  }
+  resetStreamState();
+  retireConnectionState();
+  if (runtime.status === 'ready') connectCurrentRuntime();
+}
+
+export function connectWs() {
+  connectionRequested = true;
+  if (!runtimeUnsubscribe) runtimeUnsubscribe = subscribeRuntimeTransport(handleRuntimeTransportChange);
+  void startRuntimeTransport().then(handleRuntimeTransportChange);
+}
+
 export function disconnectWs() {
+  connectionRequested = false;
+  runtimeUnsubscribe?.();
+  runtimeUnsubscribe = null;
   if (reconnectTimer) {
     clearTimeout(reconnectTimer);
     reconnectTimer = null;
   }
   if (socket) {
     abandonWsResponseTracking();
-    socket.close();
+    const previous = socket;
+    const previousAuthenticator = connectionAuthenticator;
+    socket = null;
+    connectedGeneration = null;
+    connectionAuthenticator = null;
+    previousAuthenticator?.retire();
+    previous.close();
   }
+  connectionAuthenticator = null;
+  retireConnectionState();
 }
 
 // --- Message handling ---
 // Every store read uses getState() — always fresh, no stale closures.
 
-export function handleMessage(msg: WebSocketMessage) {
+function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
   if (
     msg.type === 'chat-turn:metadata:updated' ||
     msg.type === 'chat-turn:metadata:error' ||
@@ -483,4 +596,10 @@ export function handleMessage(msg: WebSocketMessage) {
     default:
       break;
   }
+}
+
+export function handleMessage(msg: WebSocketMessage) {
+  return runWithRendererMessageDiagnosticBoundary(
+    () => handleMessageWithinDiagnosticBoundary(msg),
+  );
 }

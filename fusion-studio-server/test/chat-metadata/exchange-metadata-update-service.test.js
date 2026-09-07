@@ -79,6 +79,7 @@ describe('updateExchangeMetadata', () => {
     }));
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { bookmark: { type: 'star' } },
@@ -105,6 +106,7 @@ describe('updateExchangeMetadata', () => {
     }));
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { bookmark: null },
@@ -125,6 +127,7 @@ describe('updateExchangeMetadata', () => {
     }));
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { note: { body: 'new note' } },
@@ -145,6 +148,7 @@ describe('updateExchangeMetadata', () => {
     }));
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { note: { body: '   ' } },
@@ -161,6 +165,7 @@ describe('updateExchangeMetadata', () => {
     const exchangeId = await insertExchange(threadId, '[]');
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { note: { body: 'fresh' } },
@@ -178,6 +183,7 @@ describe('updateExchangeMetadata', () => {
     const exchangeId = await insertExchange(threadId, '{not-json');
 
     const result = await updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId,
       exchangeId,
       patch: { bookmark: { type: 'heart' } },
@@ -197,6 +203,7 @@ describe('updateExchangeMetadata', () => {
     }));
 
     await expect(updateExchangeMetadata({
+      workspaceId: 'workspace-test',
       threadId: 'metadata-thread-other',
       exchangeId,
       patch: { bookmark: { type: 'flag' } },
@@ -205,6 +212,26 @@ describe('updateExchangeMetadata', () => {
 
     await expect(readMetadata(exchangeId)).resolves.toEqual({
       attachments: [{ path: 'keep.md' }],
+    });
+  });
+
+  test('workspace ownership is required for reads and updates', async () => {
+    const threadId = 'metadata-thread-workspace-owner';
+    await insertThread(threadId);
+    const exchangeId = await insertExchange(threadId, JSON.stringify({
+      note: { body: 'preserve', createdAt: 1000, updatedAt: 1000 },
+    }));
+
+    await expect(updateExchangeMetadata({
+      workspaceId: 'workspace-other',
+      threadId,
+      exchangeId,
+      patch: { note: { body: 'cross-workspace mutation' } },
+      now: 5000,
+    })).rejects.toThrow('Exchange not found');
+
+    await expect(readMetadata(exchangeId)).resolves.toEqual({
+      note: { body: 'preserve', createdAt: 1000, updatedAt: 1000 },
     });
   });
 });

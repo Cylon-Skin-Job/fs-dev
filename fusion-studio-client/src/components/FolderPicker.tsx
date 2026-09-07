@@ -47,26 +47,40 @@ function getSocketId(ws: WebSocket): number {
 
 function browsePath(ws: WebSocket, dirPath: string): Promise<BrowseFolder[]> {
   return new Promise((resolve, reject) => {
+    let finished = false;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const cleanup = () => {
+      ws.removeEventListener('message', handleMessage);
+      ws.removeEventListener('close', handleClose);
+      if (timer) clearTimeout(timer);
+    };
+    const finish = (error: Error | null, folders?: BrowseFolder[]) => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (error) reject(error); else resolve(folders ?? []);
+    };
+    const handleClose = () => finish(new Error('Connection retired while browsing folders'));
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
         if (msg.type === 'folder:browse_result' && msg.path === dirPath) {
-          ws.removeEventListener('message', handleMessage);
-          clearTimeout(timer);
           if (msg.success) {
-            resolve(msg.folders ?? []);
+            finish(null, msg.folders ?? []);
           } else {
-            reject(new Error(msg.error || 'Browse failed'));
+            finish(new Error(msg.error || 'Browse failed'));
           }
         }
       } catch { /* ignore */ }
     };
     ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({ type: 'folder:browse', path: dirPath }));
-    const timer = setTimeout(() => {
-      ws.removeEventListener('message', handleMessage);
-      reject(new Error('Timeout'));
-    }, 5000);
+    ws.addEventListener('close', handleClose, { once: true });
+    try {
+      ws.send(JSON.stringify({ type: 'folder:browse', path: dirPath }));
+      timer = setTimeout(() => finish(new Error('Timeout')), 5000);
+    } catch (error) {
+      finish(error instanceof Error ? error : new Error('Browse failed'));
+    }
   });
 }
 

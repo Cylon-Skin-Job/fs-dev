@@ -10,6 +10,7 @@ const DATABASE_PHASE_DEADLINE_MS = 7_000;
 function createShutdownHandler({
   server,
   sessions,
+  terminateTransports,
   closeWatchers,
   beginQuiesce = () => {},
   phaseAOwners = [],
@@ -27,6 +28,9 @@ function createShutdownHandler({
 }) {
   if (!Array.isArray(phaseAOwners) || phaseAOwners.some((owner) => typeof owner !== 'function')) {
     throw new TypeError('phase A owners must be functions');
+  }
+  if (typeof terminateTransports !== 'function') {
+    throw new TypeError('transport terminator must be a function');
   }
   let shutdownPromise = null;
 
@@ -76,9 +80,7 @@ function createShutdownHandler({
         try { server.closeIdleConnections?.(); } catch {}
         try { server.closeAllConnections?.(); } catch {}
         logger.log('[Shutdown] HTTP listener closed');
-        for (const [ws] of sessions) {
-          try { ws.terminate?.(); } catch {}
-        }
+        await terminateTransports();
         sessions.clear();
         logger.log('[Shutdown] renderer clients disconnected');
         try { beginQuiesce(); } catch {}

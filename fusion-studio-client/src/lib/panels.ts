@@ -10,6 +10,7 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
+import { getServerResourceUrl } from './runtime-transport';
 
 // --- Types ---
 
@@ -137,7 +138,7 @@ export function getPanelFileUrl(panel: string, pathUnderContent: string): string
     .split('/')
     .filter(Boolean)
     .map((s) => encodeURIComponent(s));
-  return `/api/panel-file/${encodeURIComponent(panel)}/${segments.join('/')}`;
+  return getServerResourceUrl(`/api/panel-file/${encodeURIComponent(panel)}/${segments.join('/')}`);
 }
 
 /**
@@ -156,8 +157,22 @@ let nextPanelFileRequestId = 0;
 
 export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
+    let finished = false;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
     nextPanelFileRequestId += 1;
     const requestId = `panel-file-${nextPanelFileRequestId}`;
+    const cleanup = () => {
+      ws.removeEventListener('message', handleMessage);
+      ws.removeEventListener('close', handleClose);
+      if (timeout) clearTimeout(timeout);
+    };
+    const finish = (error: Error | null, content?: string) => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (error) reject(error); else resolve(content ?? '');
+    };
+    const handleClose = () => finish(new Error(`Connection retired while loading ${panel}/${filePath}`));
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
@@ -167,28 +182,28 @@ export function fetchPanelFile(ws: WebSocket, panel: string, filePath: string): 
           && msg.path === filePath
           && msg.requestId === requestId
         ) {
-          ws.removeEventListener('message', handleMessage);
           if (msg.success) {
-            resolve(msg.content);
+            finish(null, msg.content);
           } else {
-            reject(new Error(msg.error || `Failed to load ${panel}/${filePath}`));
+            finish(new Error(msg.error || `Failed to load ${panel}/${filePath}`));
           }
         }
       } catch { /* ignore */ }
     };
 
     ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({
-      type: 'file_content_request',
-      panel,
-      path: filePath,
-      requestId,
-    }));
-
-    setTimeout(() => {
-      ws.removeEventListener('message', handleMessage);
-      reject(new Error(`Timeout loading ${panel}/${filePath}`));
-    }, 5000);
+    ws.addEventListener('close', handleClose, { once: true });
+    try {
+      ws.send(JSON.stringify({
+        type: 'file_content_request',
+        panel,
+        path: filePath,
+        requestId,
+      }));
+      timeout = setTimeout(() => finish(new Error(`Timeout loading ${panel}/${filePath}`)), 5000);
+    } catch (error) {
+      finish(error instanceof Error ? error : new Error(`Failed to load ${panel}/${filePath}`));
+    }
   });
 }
 
@@ -288,34 +303,48 @@ export async function loadPanelConfig(
  */
 export function discoverPanels(ws: WebSocket, panelAlias: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
+    let finished = false;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const cleanup = () => {
+      ws.removeEventListener('message', handleMessage);
+      ws.removeEventListener('close', handleClose);
+      if (timeout) clearTimeout(timeout);
+    };
+    const finish = (error: Error | null, panels?: string[]) => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (error) reject(error); else resolve(panels ?? []);
+    };
+    const handleClose = () => finish(new Error(`Connection retired while discovering ${panelAlias}`));
     const handleMessage = (event: MessageEvent) => {
       try {
         const msg = JSON.parse(event.data);
         if (msg.type === 'file_tree_response' && msg.panel === panelAlias) {
-          ws.removeEventListener('message', handleMessage);
           if (msg.success) {
             const folders = (msg.nodes || [])
               .filter((n: { type: string }) => n.type === 'directory' || n.type === 'folder')
               .map((n: { name: string }) => n.name);
-            resolve(folders);
+            finish(null, folders);
           } else {
-            reject(new Error(msg.error || 'Failed to discover panels'));
+            finish(new Error(msg.error || 'Failed to discover panels'));
           }
         }
       } catch { /* ignore */ }
     };
 
     ws.addEventListener('message', handleMessage);
-    ws.send(JSON.stringify({
-      type: 'file_tree_request',
-      panel: panelAlias,
-      path: '',
-    }));
-
-    setTimeout(() => {
-      ws.removeEventListener('message', handleMessage);
-      reject(new Error('Timeout discovering panels'));
-    }, 5000);
+    ws.addEventListener('close', handleClose, { once: true });
+    try {
+      ws.send(JSON.stringify({
+        type: 'file_tree_request',
+        panel: panelAlias,
+        path: '',
+      }));
+      timeout = setTimeout(() => finish(new Error('Timeout discovering panels')), 5000);
+    } catch (error) {
+      finish(error instanceof Error ? error : new Error('Failed to discover panels'));
+    }
   });
 }
 

@@ -3,6 +3,65 @@
 const { redactWsMessage, RULES, REDACTED } = require('../../lib/ws/redaction-map');
 
 describe('redactWsMessage', () => {
+  test('redacts every shell authentication secret and nonce field', () => {
+    expect(redactWsMessage({
+      type: 'shell-auth:proof', serverNonce: 'server', rendererNonce: 'renderer', proof: 'proof', generation: 'generation',
+    })).toEqual({
+      type: 'shell-auth:proof', serverNonce: REDACTED, rendererNonce: REDACTED, proof: REDACTED, generation: REDACTED,
+    });
+  });
+
+  test('recursively suppresses authentication aliases without inspecting their values', () => {
+    const canaries = {
+      master: 'master-canary',
+      generation: 'generation-canary',
+      proof: 'proof-canary',
+      challenge: 'challenge-canary',
+      nonce: 'nonce-canary',
+      authorization: 'authorization-canary',
+      signature: 'signature-canary',
+      hmac: 'hmac-canary',
+      digest: 'digest-canary',
+      secret: 'secret-canary',
+      token: 'token-canary',
+    };
+    const shared = {
+      bootstrap_master: canaries.master,
+      shellGeneration: canaries.generation,
+      nested: [{ renderer_nonce: canaries.nonce, derivedKey: canaries.hmac }],
+    };
+    const out = redactWsMessage({
+      type: 'unknown:diagnostic',
+      proof: canaries.proof,
+      challengePayload: canaries.challenge,
+      headers: { Authorization: canaries.authorization },
+      authToken: canaries.token,
+      secretMaterial: canaries.secret,
+      aliases: [shared, shared],
+      signature: canaries.signature,
+      proofDigest: canaries.digest,
+      keep: 'ordinary',
+    });
+    const serialized = JSON.stringify(out);
+    expect(serialized).toContain(REDACTED);
+    for (const canary of Object.values(canaries)) expect(serialized).not.toContain(canary);
+    expect(out.keep).toBe('ordinary');
+    expect(out.aliases[0]).toBe(out.aliases[1]);
+  });
+
+  test('client_log suppresses arbitrary message and data diagnostics', () => {
+    const canary = 'actual-auth-material-canary';
+    const out = redactWsMessage({
+      type: 'client_log',
+      level: 'warn',
+      message: canary,
+      data: { nested: { harmlessAlias: canary, serverNonce: canary } },
+    });
+    expect(out).toEqual({
+      type: 'client_log', level: REDACTED, message: REDACTED, data: REDACTED,
+    });
+    expect(JSON.stringify(out)).not.toContain(canary);
+  });
   test('clipboard:append redacts text, leaves other fields', () => {
     const input = { type: 'clipboard:append', text: 'sk_live_abc123', source: 'manual' };
     const out = redactWsMessage(input);
@@ -108,11 +167,11 @@ describe('redactWsMessage', () => {
     expect(out.metadata.attachments).toEqual([{ path: 'docs/spec.md' }]);
   });
 
-  test('unknown message type passes through unchanged (identity)', () => {
+  test('unknown non-sensitive message values are preserved in a diagnostic clone', () => {
     const input = { type: 'thread:create', title: 'hi', payload: { value: 'not-a-secret' } };
     const out = redactWsMessage(input);
     expect(out).toEqual(input);
-    expect(out).toBe(input);
+    expect(out).not.toBe(input);
   });
 
   test('does not mutate input', () => {

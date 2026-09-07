@@ -20,6 +20,7 @@ const {
 } = require('./turn-terminal-error');
 const { persistDiagnosticReport } = require('./harness-diagnostic-service');
 const { persistTerminalDiagnosticSafely } = require('./terminal-diagnostic-boundary');
+const { terminateProviderProcessAndWait } = require('./session-manager');
 const {
   createCanonicalDrainControl,
   createCanonicalRouteContext,
@@ -51,6 +52,8 @@ function extractSelectionPatch(harnessConfig) {
   }
   if (typeof harnessConfig.variant === 'string' && harnessConfig.variant.trim()) {
     patch.variant = harnessConfig.variant.trim();
+  } else if (harnessConfig.variant === null) {
+    patch.variant = null;
   }
   return Object.keys(patch).length > 0 ? patch : null;
 }
@@ -61,9 +64,11 @@ function serializeAttachmentsForHarness(userInput, attachments) {
   return `${userInput}\n\nAttached references:\n${lines.join('\n')}`;
 }
 
-function getRuntimeKey(manager, threadId) {
+function getRuntimeKey(manager, threadId, workspaceEpoch) {
   return {
     workspaceId: manager.workspaceId,
+    projectRoot: manager.projectRoot,
+    workspaceEpoch,
     scope: SCOPE,
     threadId,
   };
@@ -131,6 +136,25 @@ function reportLegacyStopFailure(threadId) {
   });
 }
 
+function reportSessionRetirementFailure(threadId) {
+  console.error('[ThreadRuntime] Provider session retirement failed', {
+    threadId,
+    marker: 'PROVIDER_SESSION_RETIREMENT_FAILED',
+  });
+}
+
+async function completeReservedSession(manager, threadId, retiringSession) {
+  if (!retiringSession || typeof manager.completeStoppedSession !== 'function') return true;
+  try {
+    return await manager.completeStoppedSession(
+      threadId,
+      retiringSession.wireProcess,
+    );
+  } catch {
+    return false;
+  }
+}
+
 function markReadyIfRuntimeStillActive(runtimeKey) {
   const state = threadRuntimeManager.getRuntimeState(runtimeKey);
   if (state === RUNTIME_STATES.IN_FLIGHT) {
@@ -190,6 +214,7 @@ function clearBaseTurnIfOwned(session, identity, ownership) {
 }
 
 function disposeTurnApplicationContext(context) {
+  delete context.connectionRole;
   context.pendingTurnId = null;
   context.pendingAgentTurnAuthority = null;
   context.pendingUserInput = null;
@@ -210,58 +235,151 @@ function disposeTurnApplicationContext(context) {
   context.projectRoot = null;
 }
 
-async function stopWire(wire, threadId) {
-  const bounded = (promise, timeoutMs) => new Promise((resolve) => {
-    let settled = false;
-    const timer = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      resolve('timeout');
-    }, timeoutMs);
-    timer.unref?.();
-    Promise.resolve(promise).then(() => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timer);
-      resolve('fulfilled');
-    }, () => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timer);
-      resolve('rejected');
-    });
-  });
-  try {
-    if (wire._stopSession) {
-      const stopped = await bounded(wire._stopSession('SIGTERM'), 2_000);
-      if (stopped === 'timeout') await bounded(wire._stopSession('SIGKILL'), 1_000);
-      if (stopped === 'rejected') throw new Error('legacy stop rejected');
-    } else if (wire.stop) {
-      const stopped = await bounded(wire.stop('SIGTERM'), 2_000);
-      if (stopped === 'timeout') await bounded(wire.stop('SIGKILL'), 1_000);
-      if (stopped === 'rejected') throw new Error('legacy stop rejected');
-    } else if (wire.kill) {
-      wire.kill('SIGTERM');
-      const closed = await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 2_000);
-      if (closed === 'timeout') {
-        wire.kill('SIGKILL');
-        await bounded(new Promise((resolve) => wire.once?.('close', resolve)), 1_000);
-      }
-    }
-  } finally {
-    unregisterWire(threadId);
+function projectSessionForTurn(session) {
+  const projected = {};
+  for (const key of Object.keys(session)) {
+    if (key === 'connectionRole') continue;
+    projected[key] = session[key];
   }
+  return projected;
 }
 
-async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spawnAndSetupWire, runtimeKey, threadId, suppressBusyError = false }) {
-  const state = threadRuntimeManager.getRuntimeState(runtimeKey);
+async function stopWire(wire, threadId, runtimeKey) {
+  await terminateProviderProcessAndWait(wire, 2_000, 1_000);
+  unregisterWire(threadId, runtimeKey, wire);
+}
+
+function captureActivationBinding(threadState, session, projectRoot) {
+  return {
+    state: threadState,
+    session,
+    projectRoot,
+    workspaceId: session.currentWorkspaceId,
+    workspaceEpoch: session.workspaceEpoch,
+  };
+}
+
+function activationBindingIsCurrent(ws, binding) {
+  const state = ThreadWebSocketHandler.getState(ws);
+  return state === binding.state
+    && state?.threadManager?.projectRoot === binding.projectRoot
+    && state?.threadManager?.workspaceId === binding.workspaceId
+    && binding.session.projectRoot === binding.projectRoot
+    && binding.session.currentWorkspaceId === binding.workspaceId
+    && binding.session.workspaceEpoch === binding.workspaceEpoch
+    && (binding.session.workspaceBindingState === undefined
+      || binding.session.workspaceBindingState === 'active');
+}
+
+async function ensureReadyRuntime({
+  ws,
+  session,
+  wireLifecycle,
+  projectRoot,
+  spawnAndSetupWire,
+  runtimeKey,
+  threadId,
+  workspaceBinding,
+  reserveForPrompt = false,
+  suppressBusyError = false,
+}) {
+  const ownedRuntime = threadRuntimeManager.adoptRuntimeIdentity(runtimeKey);
+  if (!ownedRuntime) {
+    if (!suppressBusyError) {
+      sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
+    }
+    return null;
+  }
+  const state = ownedRuntime.state;
+  const activationBinding = workspaceBinding || captureActivationBinding(
+    ThreadWebSocketHandler.getState(ws), session, projectRoot,
+  );
+  if (!activationBindingIsCurrent(ws, activationBinding)) {
+    reportWarmupFailure(ws, threadId);
+    return null;
+  }
+
+  const ownReadyRuntime = async (wire) => {
+    if (!wire) return wire;
+    const threadState = ThreadWebSocketHandler.getState(ws);
+    const activeThreadId = threadState && Object.prototype.hasOwnProperty.call(threadState, 'activatedThreadId')
+      ? threadState.activatedThreadId
+      : threadState?.threadId;
+    const managedSession = typeof threadState?.threadManager?.getSession === 'function'
+      ? threadState.threadManager.getSession(threadId)
+      : null;
+    const ownsExactSession = activeThreadId === threadId
+      && managedSession
+      && managedSession.ws === ws
+      && managedSession.wireProcess === wire;
+    if (!ownsExactSession) {
+      await ThreadWebSocketHandler.activateThreadSession(ws, threadId, wire, activationBinding);
+    }
+    attachClientToWire(threadId, wire, projectRoot, ws, {
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: runtimeKey.projectRoot,
+      workspaceEpoch: runtimeKey.workspaceEpoch,
+      viewId: null,
+    });
+    session.wire = wire;
+    session.currentThreadId = threadId;
+    session.currentScope = SCOPE;
+    session.currentViewId = null;
+    return wire;
+  };
+
+  const finishReadyRuntime = async (wire) => {
+    if (!wire) return wire;
+    if (reserveForPrompt) {
+      // This synchronous READY -> IN_FLIGHT reservation is the runtime CAS.
+      // It happens before any awaited ownership transfer, so concurrent
+      // WARMING/READY callers cannot both claim manager/delivery ownership.
+      if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
+        if (!suppressBusyError) {
+          sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
+        }
+        return null;
+      }
+      threadRuntimeManager.markInFlight(runtimeKey);
+      // Prompt acceptance owns the transfer after persistence succeeds. The
+      // IN_FLIGHT reservation blocks concurrent warm/prompt claimants while
+      // that server-owned acceptance is pending.
+      return wire;
+    }
+    try {
+      return await ownReadyRuntime(wire);
+    } catch {
+      if (reserveForPrompt) threadRuntimeManager.markReady(runtimeKey);
+      throw new Error('Thread runtime ownership transfer failed');
+    }
+  };
 
   if (state === RUNTIME_STATES.READY) {
-    const readyWire = getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
-    if (readyWire && !readyWire.killed) return readyWire;
+    const readyWire = getWireForThread(threadId, runtimeKey)
+      || (session.currentThreadId === threadId ? session.wire : null);
+    if (readyWire && !readyWire.killed) {
+      try {
+        return await finishReadyRuntime(readyWire);
+      } catch {
+        reportWarmupFailure(ws, threadId);
+        return null;
+      }
+    }
     if (readyWire?.killed) {
       console.warn(`[ThreadRuntime] Discarding closed ready wire for thread ${threadId}; warming a replacement`);
-      if (getWireForThread(threadId) === readyWire) unregisterWire(threadId);
+      const manager = activationBinding.state.threadManager;
+      const managedSession = typeof manager.getSession === 'function'
+        ? manager.getSession(threadId)
+        : null;
+      threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+      if (managedSession?.wireProcess === readyWire) {
+        await manager.closeSession(threadId);
+      } else {
+        await terminateProviderProcessAndWait(readyWire);
+      }
+      if (getWireForThread(threadId, runtimeKey) === readyWire) {
+        unregisterWire(threadId, runtimeKey, readyWire);
+      }
       if (session.wire === readyWire) session.wire = null;
     }
     threadRuntimeManager.markCold(runtimeKey);
@@ -270,7 +388,9 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
   if (state === RUNTIME_STATES.WARMING) {
     try {
       const warmedWire = await threadRuntimeManager.getWarmPromise(runtimeKey);
-      return warmedWire || getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
+      const readyWire = warmedWire || getWireForThread(threadId, runtimeKey)
+        || (session.currentThreadId === threadId ? session.wire : null);
+      return finishReadyRuntime(readyWire);
     } catch {
       threadRuntimeManager.markCold(runtimeKey);
       reportWarmupFailure(ws, threadId);
@@ -293,13 +413,14 @@ async function ensureReadyRuntime({ ws, session, wireLifecycle, projectRoot, spa
     wireLifecycle,
     threadId,
     projectRoot,
+    expectedBinding: activationBinding,
   }));
   threadRuntimeManager.markWarming(runtimeKey, warmPromise);
 
   try {
     const wire = await warmPromise;
     threadRuntimeManager.markReady(runtimeKey);
-    return wire;
+    return finishReadyRuntime(wire);
   } catch {
     threadRuntimeManager.markCold(runtimeKey);
     reportWarmupFailure(ws, threadId);
@@ -324,6 +445,11 @@ async function warmRuntimeForIntent({
     sendRuntimeError(ws, 'No active thread', threadId, false);
     return;
   }
+  const workspaceBinding = captureActivationBinding(threadState, session, projectRoot);
+  if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+    sendRuntimeError(ws, 'Workspace unavailable for thread activation', threadId, false);
+    return;
+  }
 
   let thread;
   try {
@@ -336,8 +462,12 @@ async function warmRuntimeForIntent({
     sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
   }
+  if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+    sendRuntimeError(ws, 'Workspace unavailable for thread activation', threadId, false);
+    return;
+  }
 
-  const runtimeKey = getRuntimeKey(manager, threadId);
+  const runtimeKey = getRuntimeKey(manager, threadId, workspaceBinding.workspaceEpoch);
   await ensureReadyRuntime({
     ws,
     session,
@@ -346,6 +476,7 @@ async function warmRuntimeForIntent({
     spawnAndSetupWire,
     runtimeKey,
     threadId,
+    workspaceBinding,
     suppressBusyError: true,
   });
 }
@@ -366,6 +497,11 @@ async function acceptPromptThroughRuntime({
   const manager = threadState?.threadManager;
   if (!threadId || !manager) {
     sendRuntimeError(ws, 'No active thread', threadId, false);
+    return;
+  }
+  const workspaceBinding = captureActivationBinding(threadState, session, projectRoot);
+  if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+    sendRuntimeError(ws, 'Workspace unavailable for thread activation', threadId, false);
     return;
   }
 
@@ -389,6 +525,10 @@ async function acceptPromptThroughRuntime({
     sendRuntimeError(ws, `Thread not found: ${threadId}`, threadId, false);
     return;
   }
+  if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+    sendRuntimeError(ws, 'Workspace unavailable for thread activation', threadId, false);
+    return;
+  }
 
   // Apply per-prompt model/effort selection to the thread before the turn.
   // Persists into harness_config so cold restarts keep the selection.
@@ -401,7 +541,7 @@ async function acceptPromptThroughRuntime({
     }
   }
 
-  const runtimeKey = getRuntimeKey(manager, threadId);
+  const runtimeKey = getRuntimeKey(manager, threadId, workspaceBinding.workspaceEpoch);
   const wire = await ensureReadyRuntime({
     ws,
     session,
@@ -410,20 +550,24 @@ async function acceptPromptThroughRuntime({
     spawnAndSetupWire,
     runtimeKey,
     threadId,
+    workspaceBinding,
+    reserveForPrompt: true,
   });
   if (!wire) return;
-
-  session.currentThreadId = threadId;
-  session.currentScope = SCOPE;
-  session.currentViewId = null;
-  threadState.threadId = threadId;
+  if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+    threadRuntimeManager.markReady(runtimeKey);
+    sendRuntimeError(ws, 'Workspace unavailable for thread activation', threadId, false);
+    return;
+  }
 
   if (!wire._sendMessage) {
+    threadRuntimeManager.markReady(runtimeKey);
     sendRuntimeError(ws, 'Wire does not support ACP sendMessage. Legacy wire format has been retired.', threadId, false);
     return;
   }
 
   if (!wire._usesDirectCanonicalEvents || !handleCanonicalHarnessEvent) {
+    threadRuntimeManager.markReady(runtimeKey);
     sendRuntimeError(ws, 'Wire does not support direct canonical event delivery. Legacy wire format has been retired.', threadId, false);
     return;
   }
@@ -434,12 +578,6 @@ async function acceptPromptThroughRuntime({
     wire._applyHarnessConfig(selectionPatch);
   }
 
-  if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
-    sendRuntimeError(ws, 'Thread runtime is busy. Wait for the current turn to finish.', threadId, true);
-    return;
-  }
-
-  threadRuntimeManager.markInFlight(runtimeKey);
   const attachments = normalizeRouteAttachments(clientMsg.attachments);
   const harnessInput = serializeAttachmentsForHarness(clientMsg.user_input, attachments);
   let accepted = false;
@@ -454,6 +592,41 @@ async function acceptPromptThroughRuntime({
   }
   if (!accepted) {
     threadRuntimeManager.markReady(runtimeKey);
+    return;
+  }
+
+  try {
+    const currentState = ThreadWebSocketHandler.getState(ws);
+    const activeThreadId = currentState && Object.prototype.hasOwnProperty.call(currentState, 'activatedThreadId')
+      ? currentState.activatedThreadId
+      : currentState?.threadId;
+    const managedSession = typeof currentState?.threadManager?.getSession === 'function'
+      ? currentState.threadManager.getSession(threadId)
+      : null;
+    const ownsExactSession = activeThreadId === threadId
+      && managedSession
+      && managedSession.ws === ws
+      && managedSession.wireProcess === wire;
+    if (!ownsExactSession) {
+      await ThreadWebSocketHandler.activateThreadSession(ws, threadId, wire, workspaceBinding);
+    }
+    if (!activationBindingIsCurrent(ws, workspaceBinding)) {
+      throw new Error('Workspace changed during prompt ownership transfer');
+    }
+    attachClientToWire(threadId, wire, projectRoot, ws, {
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: runtimeKey.projectRoot,
+      workspaceEpoch: runtimeKey.workspaceEpoch,
+      viewId: null,
+    });
+    session.wire = wire;
+    session.currentThreadId = threadId;
+    session.currentScope = SCOPE;
+    session.currentViewId = null;
+    threadState.threadId = threadId;
+  } catch {
+    threadRuntimeManager.markReady(runtimeKey);
+    reportWarmupFailure(ws, threadId);
     return;
   }
   console.log('[WS] Message accepted by runtime and tracked in thread');
@@ -479,11 +652,6 @@ async function acceptPromptThroughRuntime({
   }
   const turnAuthority = session.pendingAgentTurnAuthority;
 
-  attachClientToWire(threadId, wire, projectRoot, ws, {
-    workspaceId: session.currentWorkspaceId,
-    viewId: null,
-  });
-
   if (turnAuthority) {
     session.pendingUserInput = clientMsg.user_input;
     session.pendingAttachments = attachments;
@@ -495,7 +663,7 @@ async function acceptPromptThroughRuntime({
     attachments,
   } : null;
   const turnApplicationContext = {
-    ...session,
+    ...projectSessionForTurn(session),
     currentWorkspaceId: manager.workspaceId,
     currentThreadId: threadId,
     projectRoot: turnAuthority?.canonicalRoot || manager.projectRoot || projectRoot,
@@ -525,6 +693,7 @@ async function acceptPromptThroughRuntime({
       workspaceId: manager.workspaceId,
       workspace: resolveScope({ currentWorkspaceId: session.currentWorkspaceId, currentViewId: null }),
       projectRoot: turnAuthority?.canonicalRoot || projectRoot,
+      workspaceEpoch: workspaceBinding.workspaceEpoch,
       scope: SCOPE,
       threadId,
       acceptedUserInput: clientMsg.user_input,
@@ -538,15 +707,9 @@ async function acceptPromptThroughRuntime({
       touchThreadSession: () => manager.touchSession?.(threadId),
       stopHarness: async () => {
         try {
-          if (wire._stopSession) {
-            await wire._stopSession();
-          } else if (wire.stop) {
-            await wire.stop();
-          } else if (wire.kill) {
-            wire.kill('SIGTERM');
-          }
+          await terminateProviderProcessAndWait(wire, 2_000, 1_000);
         } catch {
-          reportHarnessStopFailure(threadId, drainId);
+          throw new Error('Provider termination failed');
         }
       },
     });
@@ -572,7 +735,7 @@ async function acceptPromptThroughRuntime({
     return Boolean(current && current.drainId !== drainId);
   }
 
-  (async () => {
+  const drainCompletion = (async () => {
     try {
       if (typeof handleCanonicalHarnessEvent.drainHarnessEvents === 'function') {
         await handleCanonicalHarnessEvent.drainHarnessEvents(wire._sendMessage(harnessInput, {}), ws, {
@@ -628,7 +791,13 @@ async function acceptPromptThroughRuntime({
         if (isHarnessRuntimeError(err) && err.candidate) {
           diagnosticId = await persistTerminalDiagnosticSafely(
             persistDiagnosticReport,
-            { workspaceId: manager.workspaceId, threadId, turnId: boundTurnId },
+            {
+              workspaceId: manager.workspaceId,
+              projectRoot: runtimeKey.projectRoot,
+              workspaceEpoch: runtimeKey.workspaceEpoch,
+              threadId,
+              turnId: boundTurnId,
+            },
             err.candidate,
           );
         }
@@ -696,41 +865,116 @@ async function acceptPromptThroughRuntime({
       disposeTurnApplicationContext(turnApplicationContext);
     }
   })();
+  threadRuntimeManager.bindActiveDrainLifecycle(runtimeKey, drainId, {
+    completion: drainCompletion,
+    retire: () => stopRuntimeTurn({
+      ws,
+      session,
+      clientMsg: { threadId },
+      handleCanonicalHarnessEvent,
+      allowInactiveDrain: true,
+      returnOutcome: true,
+      runtimeBinding: Object.freeze({ manager, wire, runtimeKey }),
+    }),
+  });
 }
 
-async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessEvent }) {
+async function stopRuntimeTurn({
+  ws,
+  session,
+  clientMsg,
+  handleCanonicalHarnessEvent,
+  allowInactiveDrain = false,
+  returnOutcome = false,
+  runtimeBinding = null,
+}) {
+  const outcome = value => (returnOutcome ? value : undefined);
   const threadId = clientMsg.threadId;
   const threadState = ThreadWebSocketHandler.getState(ws);
-  const manager = threadState?.threadManager;
+  const manager = runtimeBinding?.manager || threadState?.threadManager;
   if (!threadId || !manager) {
     sendRuntimeError(ws, 'No active thread', threadId, false);
     return;
   }
 
-  const runtimeKey = getRuntimeKey(manager, threadId);
+  const managedSessionForIdentity = typeof manager.getSession === 'function'
+    ? manager.getSession(threadId)
+    : null;
+  const runtimeKey = runtimeBinding?.runtimeKey || getRuntimeKey(
+    manager,
+    threadId,
+    managedSessionForIdentity?.workspaceEpoch || session.workspaceEpoch,
+  );
   const state = threadRuntimeManager.getRuntimeState(runtimeKey);
-  if (state === RUNTIME_STATES.STOPPING) return;
-  if (state !== RUNTIME_STATES.IN_FLIGHT) {
+  const activeDrain = threadRuntimeManager.getActiveDrain(runtimeKey);
+  if (state === RUNTIME_STATES.STOPPING) return outcome(false);
+  if (state !== RUNTIME_STATES.IN_FLIGHT && !(allowInactiveDrain && activeDrain)) {
     sendRuntimeError(ws, 'Thread runtime is not currently streaming.', threadId, true);
-    return;
+    return outcome(false);
   }
 
   const liveTurn = threadRuntimeManager.getLiveTurn(runtimeKey);
-  if (!liveTurn) {
+  if (!liveTurn && !(allowInactiveDrain && activeDrain)) {
     sendRuntimeError(ws, 'No live turn is available to stop.', threadId, true);
-    return;
+    return outcome(false);
+  }
+
+  const registeredWire = getWireForThread(threadId, runtimeKey);
+  const managedSessionBeforeStop = typeof manager.getSession === 'function'
+    ? manager.getSession(threadId)
+    : null;
+  if (runtimeBinding?.wire && managedSessionBeforeStop?.wireProcess
+    && runtimeBinding.wire !== managedSessionBeforeStop.wireProcess) {
+    sendRuntimeError(ws, 'Thread runtime is not currently streaming.', threadId, true);
+    return outcome(false);
+  }
+  if (registeredWire && managedSessionBeforeStop?.wireProcess
+    && registeredWire !== managedSessionBeforeStop.wireProcess) {
+    sendRuntimeError(ws, 'Thread runtime is not currently streaming.', threadId, true);
+    return outcome(false);
+  }
+  // Reserve the exact provider owner before any asynchronous finalization.
+  // Same-wire reconnect/resume and competing activations must both fail while
+  // Stop owns termination, even though runtime and session state have separate
+  // lifecycle stores.
+  const providerOwnerWs = managedSessionBeforeStop?.ws || ws;
+  const retiringSession = typeof manager.beginSessionRetirement === 'function'
+    ? manager.beginSessionRetirement(threadId, providerOwnerWs)
+    : null;
+  if (typeof manager.beginSessionRetirement === 'function' && !retiringSession) {
+    sendRuntimeError(ws, 'Thread runtime is not currently streaming.', threadId, true);
+    return outcome(false);
+  }
+
+  if (!liveTurn) {
+    threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+    try {
+      await activeDrain.control.stopHarness();
+    } catch {
+      reportHarnessStopFailure(threadId, activeDrain.drainId);
+      return outcome(false);
+    }
+    if (registeredWire) unregisterWire(threadId, runtimeKey, registeredWire);
+    threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, activeDrain.drainId);
+    if (!await completeReservedSession(manager, threadId, retiringSession)) {
+      reportSessionRetirementFailure(threadId);
+      return outcome(false);
+    }
+    threadRuntimeManager.markCold(runtimeKey);
+    return outcome(true);
   }
 
   // SPEC-01 Slice D: capture the bound drain identity BEFORE synthesizing the
   // interrupted turn_end. When a record exists, stopping goes ONLY through
   // that record's control — never through registry/session wire lookup.
-  const activeDrain = threadRuntimeManager.getActiveDrain(runtimeKey);
   const capturedDrain = activeDrain
     ? { drainId: activeDrain.drainId, routeContext: activeDrain.routeContext, control: activeDrain.control }
     : null;
   const wire = capturedDrain
     ? null
-    : getWireForThread(threadId) || (session.currentThreadId === threadId ? session.wire : null);
+    : retiringSession?.wireProcess
+      || getWireForThread(threadId, runtimeKey)
+      || (session.currentThreadId === threadId ? session.wire : null);
 
   const authority = getAgentTurnAuthorityRef({
     workspaceId: manager.workspaceId,
@@ -799,7 +1043,7 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
         finalization = Promise.resolve(
           handleCanonicalHarnessEvent.finalizeTurn(
             terminalEvent,
-            ws,
+            providerOwnerWs,
             stopIdentity,
             null,
             capturedDrain
@@ -810,7 +1054,7 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
       } else if (capturedDrain) {
         finalization = Promise.resolve(handleCanonicalHarnessEvent({
           ...terminalEvent,
-        }, ws, { route: capturedDrain.routeContext, control: capturedDrain.control }));
+        }, providerOwnerWs, { route: capturedDrain.routeContext, control: capturedDrain.control }));
       } else {
         // No active drain record: keep the historical 2-arg call shape so the
         // applier's defensive no-drain-context drop behaves unchanged.
@@ -827,13 +1071,21 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     await finalization.catch(() => {});
     // SPEC-01 Slice D item 2: stop only the bound harness through the matching
     // control capability.
+    let providerStopped = false;
     try {
       await capturedDrain.control.stopHarness();
+      providerStopped = true;
     } catch {
       // Controls are expected to contain their own provider failure, but the
       // controller defends the Promise<void> contract so an injected or
       // automation-owned control cannot escape into the router's raw catch.
       reportHarnessStopFailure(threadId, capturedDrain.drainId);
+    }
+
+    if (!providerStopped) {
+      threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+      releaseAgentTurnAuthorityRef(authority);
+      return outcome(false);
     }
 
     // SPEC-01 Slice D item 4 (supersession-safe completion): re-read the
@@ -848,14 +1100,19 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     if (superseded) {
       releaseAgentTurnAuthorityRef(authority);
       console.warn(`[ThreadRuntime] Drain ${capturedDrain.drainId} superseded during stop; cleanup is a diagnostic no-op`);
-      return;
+      return outcome(false);
     }
 
     // Registry hygiene for our own wire slot...
-    unregisterWire(threadId);
+    if (registeredWire) unregisterWire(threadId, runtimeKey, registeredWire);
     // ...then remove any orphaned never-begun record (idempotent no-op after
     // the applier's own terminal clear-if-current).
     threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, capturedDrain.drainId);
+    if (!await completeReservedSession(manager, threadId, retiringSession)) {
+      reportSessionRetirementFailure(threadId);
+      releaseAgentTurnAuthorityRef(authority);
+      return outcome(false);
+    }
     // Transition to cold only while still STOPPING — mirrors the
     // markReadyIfRuntimeStillActive precedent so a replacement drain's
     // IN_FLIGHT state is never stomped by a late stop completion.
@@ -872,18 +1129,18 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     // Bound path: session.wire can no longer be identity-compared to the
     // stopped harness; a stale reference is discarded by ensureReadyRuntime's
     // killed-wire logic instead.
-    return;
+    return outcome(true);
   }
 
   // No active drain record (pre-claim stop edge): keep the historical legacy
   // wire lookup + unconditional cold exactly as before Slice D.
   let stopping = Promise.resolve();
   if (wire) {
-    stopping = stopWire(wire, threadId).then(() => {
+    stopping = stopWire(wire, threadId, runtimeKey).then(() => {
       if (session.wire === wire) session.wire = null;
-    }).catch(() => reportLegacyStopFailure(threadId));
+    });
   }
-  await Promise.allSettled([finalization, stopping]);
+  const [, stopResult] = await Promise.allSettled([finalization, stopping]);
   if (pendingOwnership) clearAcceptedPromptIfOwned(session, pendingOwnership);
   clearBaseTurnIfOwned(session, {
     threadId,
@@ -891,7 +1148,18 @@ async function stopRuntimeTurn({ ws, session, clientMsg, handleCanonicalHarnessE
     authority,
   }, baseTurnOwnership);
   releaseAgentTurnAuthorityRef(authority);
+  if (stopResult.status === 'rejected') {
+    reportLegacyStopFailure(threadId);
+    threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+    return outcome(false);
+  }
+  if (!await completeReservedSession(manager, threadId, retiringSession)) {
+    reportSessionRetirementFailure(threadId);
+    threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+    return outcome(false);
+  }
   threadRuntimeManager.markCold(runtimeKey);
+  return outcome(true);
 }
 
 module.exports = {

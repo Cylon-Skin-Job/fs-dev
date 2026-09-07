@@ -2,6 +2,7 @@ const { spawn, execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { seedPackagedGlobalConfigs } = require('./system-manager-seed.cjs');
+const { createServerReadinessParser } = require('./server-readiness.cjs');
 
 // Resolve system node binary — Electron's process.execPath is the Electron
 // binary, not node. The server uses native modules (better-sqlite3) compiled
@@ -139,10 +140,10 @@ function pipeServerOutput(child, options = {}) {
   const handleStdout = (chunk) => {
     const text = chunk.toString();
     onStdout(text);
-    stdoutForwarder.write(`[server] ${text}`);
+    stdoutForwarder.write('[server] output\n');
   };
-  const handleStderr = (chunk) => {
-    stderrForwarder.write(`[server:err] ${chunk.toString()}`);
+  const handleStderr = (_chunk) => {
+    stderrForwarder.write('[server:err] output\n');
   };
   const cleanup = () => {
     child.stdout.removeListener('data', handleStdout);
@@ -187,6 +188,7 @@ function spawnServer({
   environment = process.env,
   port = 0,
   nativeObserverHealthOnly = false,
+  bootstrapAuthority = null,
 }) {
   return new Promise((resolve, reject) => {
     let ready = false;
@@ -202,22 +204,75 @@ function spawnServer({
     if (resourcesPath) env.FUSION_RESOURCES_PATH = resourcesPath;
     if (userDataPath) env.FUSION_APP_USER_DATA = userDataPath;
     if (packaged) env.FUSION_APP_PACKAGED = '1';
+    if (!nativeObserverHealthOnly) env.FUSION_ELECTRON_SERVER = '1';
     if (focusStatePath) env.FUSION_FOCUS_STATE_PATH = focusStatePath;
     if (nativeObserverHealthOnly) env.FUSION_SECURE_OBSERVER_HEALTH_ONLY = '1';
 
-    console.log(`[Resources] root=${env.FUSION_RESOURCES_PATH || ''} userData=${env.FUSION_APP_USER_DATA || ''}`);
+    console.log('[Resources] configured');
+
+    let bootstrapPayload = null;
+    if (!nativeObserverHealthOnly) {
+      try {
+        bootstrapPayload = bootstrapAuthority?.takeBootstrapPayload();
+      } catch {
+        reject(new Error('Shell bootstrap unavailable'));
+        return;
+      }
+      if (typeof bootstrapPayload !== 'string') {
+        reject(new Error('Shell bootstrap unavailable'));
+        return;
+      }
+    }
 
     const child = spawn(NODE_BINARY, [serverPath], {
       env,   // PORT=0 → OS assigns free port
-      stdio: ['ignore', 'pipe', 'pipe'],
+      stdio: nativeObserverHealthOnly
+        ? ['ignore', 'pipe', 'pipe']
+        : ['ignore', 'pipe', 'pipe', 'pipe'],
     });
+    let bootstrapWritten = nativeObserverHealthOnly;
+    let pendingReady = null;
+    let settled = false;
+    const fail = (error) => {
+      if (settled) return;
+      settled = true;
+      child.kill('SIGTERM');
+      reject(error);
+    };
+    const maybeResolve = (value) => {
+      if (settled || !bootstrapWritten) {
+        pendingReady = value;
+        return;
+      }
+      settled = true;
+      resolve(value);
+    };
+    if (!nativeObserverHealthOnly) {
+      const bootstrapPipe = child.stdio[3];
+      bootstrapPipe.once('error', () => fail(new Error('Shell bootstrap delivery failed')));
+      bootstrapPipe.end(bootstrapPayload, 'utf8', (error) => {
+        if (error) {
+          fail(new Error('Shell bootstrap delivery failed'));
+          return;
+        }
+        bootstrapWritten = true;
+        if (pendingReady) maybeResolve(pendingReady);
+      });
+    }
+    const readinessParser = createServerReadinessParser(
+      (readyPort) => {
+        ready = true;
+        maybeResolve({ port: readyPort, process: child });
+      },
+      fail,
+    );
 
     pipeServerOutput(child, {
       onStdout(text) {
         const observerMatch = text.match(/SECURE_FILE_OBSERVER_READY:(darwin):([^:\s]+):(\d+):([^:\s]+)/);
         if (nativeObserverHealthOnly && observerMatch) {
           ready = true;
-          resolve({
+          maybeResolve({
             port: null,
             process: child,
             nativeObserver: Object.freeze({
@@ -229,11 +284,7 @@ function spawnServer({
           });
           return;
         }
-        const match = text.match(/SERVER_READY:(\d+)/);
-        if (match) {
-          ready = true;
-          resolve({ port: parseInt(match[1], 10), process: child });
-        }
+        readinessParser.push(text);
       },
     });
 
@@ -244,7 +295,7 @@ function spawnServer({
         onExit(code, signal);
         return;
       }
-      reject(new Error(`Server exited with code ${code} before signalling ready`));
+      fail(new Error(`Server exited with code ${code} before signalling ready`));
     });
   });
 }

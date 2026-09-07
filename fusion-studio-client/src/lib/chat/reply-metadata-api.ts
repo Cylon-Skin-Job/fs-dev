@@ -1,4 +1,4 @@
-import { onFusionMessage, sendFusionMessage } from '../ws-client';
+import { onFusionResponse, sendFusionMessage } from '../ws-client';
 import type { ChatTurnMetadataPatch } from '../../types';
 import type { AssistantReplySourceRef } from './reply-text';
 
@@ -35,11 +35,13 @@ export function updateReplyMetadata(
   const timeoutMs = options.timeoutMs ?? 5000;
 
   return new Promise((resolve, reject) => {
-    let timeout: ReturnType<typeof setTimeout>;
+    let settled = false;
     let unsubscribeUpdated = () => {};
     let unsubscribeError = () => {};
 
     const cleanup = () => {
+      if (settled) return;
+      settled = true;
       unsubscribeUpdated();
       unsubscribeError();
       clearTimeout(timeout);
@@ -47,8 +49,12 @@ export function updateReplyMetadata(
 
     const matches = (msg: { threadId?: string; exchangeId?: number }) =>
       msg.threadId === source.threadId && msg.exchangeId === exchangeId;
+    const retire = () => {
+      cleanup();
+      reject(new Error('Connection retired while updating reply metadata'));
+    };
 
-    unsubscribeUpdated = onFusionMessage<ChatTurnMetadataUpdatedMessage>(
+    unsubscribeUpdated = onFusionResponse<ChatTurnMetadataUpdatedMessage>(
       'chat-turn:metadata:updated',
       (msg) => {
         if (!matches(msg)) return;
@@ -59,18 +65,20 @@ export function updateReplyMetadata(
           metadata: msg.metadata || {},
         });
       },
+      retire,
     );
 
-    unsubscribeError = onFusionMessage<ChatTurnMetadataErrorMessage>(
+    unsubscribeError = onFusionResponse<ChatTurnMetadataErrorMessage>(
       'chat-turn:metadata:error',
       (msg) => {
         if (!matches(msg)) return;
         cleanup();
         reject(new Error(msg.message || 'Metadata update failed'));
       },
+      retire,
     );
 
-    timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       cleanup();
       reject(new Error('Timeout waiting for chat-turn:metadata:updated'));
     }, timeoutMs);

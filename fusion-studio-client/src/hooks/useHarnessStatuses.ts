@@ -8,6 +8,7 @@
 import { useEffect } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import type { HarnessStatus } from '../types';
+import { fetchServer } from '../lib/runtime-transport';
 
 let seeded = false;
 let inflight: Promise<void> | null = null;
@@ -17,7 +18,7 @@ async function seedOnce() {
   if (inflight) return inflight;
   inflight = (async () => {
     try {
-      const res = await fetch('/api/harnesses');
+      const res = await fetchServer('/api/harnesses');
       if (!res.ok) return;
       const list: HarnessStatus[] = await res.json();
       const map = list.reduce((acc, s) => { acc[s.id] = s; return acc; }, {} as Record<string, HarnessStatus>);

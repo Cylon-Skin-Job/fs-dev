@@ -42,7 +42,35 @@ describe('WireBroadcaster', () => {
     return sent[0];
   }
 
-  const BASE = { scope: 'project', threadId: 'thread-1', turnId: 'turn-9', streamSeq: 4 };
+  const BASE = {
+    workspaceId: 'workspace-1', projectRoot: '/tmp/project-1', workspaceEpoch: 'epoch-1',
+    scope: 'project', threadId: 'thread-1', turnId: 'turn-9', streamSeq: 4,
+  };
+
+  test('resolves a recipient by workspace and thread identity', () => {
+    const getClientForThread = jest.fn(() => clientWs);
+    startBroadcaster({ getClientForThread });
+
+    emitAndCapture('chat:content', { ...BASE, activityRevision: 2, text: 'scoped' });
+
+    expect(getClientForThread).toHaveBeenCalledWith('thread-1', {
+      workspaceId: 'workspace-1', projectRoot: '/tmp/project-1', workspaceEpoch: 'epoch-1',
+    });
+  });
+
+  test('derives workspace identity from the canonical workspace field', () => {
+    const getClientForThread = jest.fn(() => clientWs);
+    startBroadcaster({ getClientForThread });
+
+    emitAndCapture('chat:content', {
+      ...BASE, workspaceId: undefined, workspace: 'workspace:workspace-2, view-1',
+      activityRevision: 2, text: 'scoped',
+    });
+
+    expect(getClientForThread).toHaveBeenCalledWith('thread-1', {
+      workspaceId: 'workspace-2', projectRoot: '/tmp/project-1', workspaceEpoch: 'epoch-1',
+    });
+  });
 
   // ─── in-flight shapes ────────────────────────────────────────────────
 
@@ -381,6 +409,108 @@ describe('WireBroadcaster', () => {
 
     expect(sent[0].type).toBe(wireType);
     expect(sent[0]).not.toHaveProperty('streamSeq');
+  });
+
+  test('real canonical applier reaches only the exact registered root and epoch', async () => {
+    jest.resetModules();
+    const eventBus = require('../../lib/event-bus');
+    const processManager = require('../../lib/wire/process-manager');
+    const { createWireBroadcaster: createRealBroadcaster } = require('../../lib/wire/wire-broadcaster');
+    const { createCanonicalChatEventApplier } = require('../../lib/wire/canonical-chat-event-applier');
+    const {
+      createCanonicalDrainControl,
+      createCanonicalRouteContext,
+    } = require('../../lib/thread/canonical-drain-context');
+    const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
+
+    const route = createCanonicalRouteContext({
+      workspaceId: 'workspace-real',
+      workspace: 'workspace:workspace-real',
+      projectRoot: '/tmp/canonical-delivery-real',
+      workspaceEpoch: 'epoch-real',
+      scope: 'project',
+      threadId: 'thread-real',
+      acceptedUserInput: 'exercise canonical delivery',
+      attachments: [],
+    });
+    const runtimeKey = {
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
+      scope: route.scope,
+      threadId: route.threadId,
+    };
+    const control = createCanonicalDrainControl({
+      drainId: 'drain-real', runtimeKey,
+      touchThreadSession: () => {}, stopHarness: async () => {},
+    });
+    const record = threadRuntimeManager.claimActiveDrain(runtimeKey, control, route);
+    const delivered = [];
+    const owner = {
+      readyState: 1,
+      send(raw) { delivered.push(JSON.parse(raw)); },
+    };
+    const wire = { pid: 1001, killed: false };
+    processManager.registerWire(route.threadId, wire, route.projectRoot, owner, route);
+    createRealBroadcaster({ getClientForThread: processManager.getClientForThread });
+    const applier = createCanonicalChatEventApplier({
+      emit: eventBus.emit,
+      checkSettingsBounce: () => null,
+      generateTurnId: () => 'turn-real',
+    });
+
+    try {
+      const drainContext = { route: record.routeContext, control: record.control };
+      const begin = applier.applyChatEvent({ type: 'turn_begin', payload: {} }, owner, drainContext);
+      expect(begin).toEqual({ accepted: true, turnId: 'turn-real' });
+      expect(threadRuntimeManager.bindTurnToDrain(runtimeKey, control.drainId, begin.turnId)).toBe(true);
+      applier.applyChatEvent({ type: 'content', payload: { text: 'hello' } }, owner, drainContext);
+      applier.applyChatEvent({ type: 'thinking', payload: { text: 'hmm' } }, owner, drainContext);
+      await applier.applyChatEvent({
+        type: 'tool_call', payload: { toolCallId: 'tool-1', toolName: 'read' },
+      }, owner, drainContext);
+      await applier.applyChatEvent({
+        type: 'tool_call_args',
+        payload: { toolCallId: 'tool-1', toolName: 'read', argsChunk: '{"path":"README.md"}' },
+      }, owner, drainContext);
+      await applier.applyChatEvent({
+        type: 'tool_result',
+        payload: { toolCallId: 'tool-1', toolName: 'read', result: { output: 'ok' } },
+      }, owner, drainContext);
+      applier.applyChatEvent({
+        type: 'subagent_event',
+        payload: { parentToolCallId: 'tool-1', agentId: 'agent-1', subagentType: 'reader' },
+      }, owner, drainContext);
+      applier.applyChatEvent({
+        type: 'status_update', payload: { contextUsage: 2, tokenUsage: { total: 3 } },
+      }, owner, drainContext);
+      applier.applyChatEvent({
+        type: 'step_begin', payload: { stepId: 'step-1', timestamp: Date.now() },
+      }, owner, drainContext);
+
+      expect(delivered.map((message) => message.type)).toEqual([
+        'turn_begin', 'content', 'thinking', 'tool_call', 'tool_call_args',
+        'tool_result', 'subagent_event', 'status_update', 'step_begin',
+      ]);
+
+      delivered.length = 0;
+      eventBus.emit('chat:content', {
+        workspaceId: route.workspaceId, projectRoot: route.projectRoot,
+        scope: route.scope, threadId: route.threadId, turnId: begin.turnId, text: 'epochless',
+      });
+      eventBus.emit('chat:content', {
+        workspaceId: route.workspaceId, projectRoot: route.projectRoot, workspaceEpoch: 'epoch-stale',
+        scope: route.scope, threadId: route.threadId, turnId: begin.turnId, text: 'stale',
+      });
+      expect(delivered).toEqual([]);
+      expect(processManager.getClientForThread(route.threadId, {
+        workspaceId: route.workspaceId, projectRoot: route.projectRoot,
+      })).toBeNull();
+    } finally {
+      processManager.unregisterWire(route.threadId, route, wire);
+      threadRuntimeManager.runtimes.clear();
+      eventBus.bus.removeAllListeners();
+    }
   });
 
   // ─── drop paths ──────────────────────────────────────────────────────

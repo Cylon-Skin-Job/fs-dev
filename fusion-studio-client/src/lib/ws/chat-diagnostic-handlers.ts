@@ -59,6 +59,13 @@ function settlePending(
   pending.resolve(report);
 }
 
+/** Retire every request owned by the socket generation that just closed. */
+export function retirePendingChatDiagnosticRequests(): void {
+  for (const diagnosticId of [...pendingDiagnosticRequests.keys()]) {
+    settlePending(diagnosticId, null);
+  }
+}
+
 export interface ChatDiagnosticRouteIds {
   threadId: string;
   turnId: string;

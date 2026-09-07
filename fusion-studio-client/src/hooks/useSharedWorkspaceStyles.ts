@@ -26,6 +26,7 @@ import {
   SETTINGS_STYLES_VARIABLES,
 } from '../lib/panels';
 import { scopePanelCss } from '../lib/scopePanelCss';
+import { fetchServer } from '../lib/runtime-transport';
 
 const SHARED_STYLE_PREFIX = 'ws-shared-styles-';
 
@@ -152,7 +153,7 @@ export function useViewLayoutStyles(panelId: string) {
       });
 
     // --- /api/view-config for per-view theme CSS + layout ---
-    fetch(`/api/view-config?panel=${panelId}`)
+    fetchServer(`/api/view-config?panel=${encodeURIComponent(panelId)}`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();

@@ -26,6 +26,85 @@ metadata:
 WebSocket messages are Fusion Studio application protocol, not raw harness
 protocol.
 
+## Runtime endpoint ownership
+
+The production renderer never constructs its WebSocket from `window.location`
+or a fixed host/port. Electron preload returns the exact current
+`{ generation, httpOrigin, webSocketUrl }` descriptor only to the committed
+`fusion-shell://app` main frame. `src/lib/runtime-transport.ts` validates and
+owns it, creates the socket, constructs every server-backed HTTP/resource URL,
+and aborts old-generation work. `ws-client.ts` remains the application-message
+router and consumes that transport owner.
+
+Endpoint possession is not connection authority. The 00A descriptor contains
+no secret. On each socket the server sends one bounded
+`shell-auth:challenge`; the current shell main frame obtains an exact
+generation-bound HMAC proof through guarded preload IPC and returns
+`shell-auth:proof`. The server validates origin, generation, connection and
+nonce binding, expiry, closed shapes, one-use state, and constant-time equality
+before recording `trusted-shell` only on its private connection session.
+Product initialization is released only after proof success and after the
+server startup audit, shutdown supervision, and application handler publication
+have all completed. The socket remains absent from broadcast and
+targeted-recipient lookup until initialization has completed and product-session
+activation succeeds. Only then does the server
+emit `shell-auth:authenticated`; buffered initialization is never releasable
+after activation failure or a close race. Before proof, connection setup creates
+no wire, message, workspace, manager, or application-router owner. Authentication messages
+are transport commands, not product facts, and never enter UEB, Provenance,
+persistence, or application stores. The thread-domain guard reads only this
+private live connection role. It rejects New Chat, assistant activation/resume,
+Rename, Delete, Touch, Warm, and prompt-triggered activation before their normal owners run; request fields, model or
+harness output, persisted values, and provenance/event metadata cannot grant
+authority. Exact assistant resume is included because the activation owner writes
+resumed/MRU metadata. Passive `thread:open` only hydrates history/live state and
+writes neither resume/MRU metadata nor delayed list fan-out. List, history,
+diagnostics, and other established reads retain standalone/untrusted compatibility.
+Search is passive only for the connection's exact current workspace binding;
+an explicit foreign or absent binding returns the fixed unavailable response.
+`thread:fork` is always unavailable and is not a trusted capability.
+After authority, thread identity is resolved only inside the connection's
+workspace and project scope. Foreign thread IDs cannot hydrate history or reach
+assistant upsert, Warm, prompt, Rename, Delete, Touch, mirror, or provider
+effects.
+Manager-backed passive open, list, link, and search reads likewise
+require the manager to match the active live session root, workspace id, and
+epoch. During binding or before the new panel installs its matching manager,
+they return a fixed unavailable response without lookup, history, reclaim, or
+list effects; a matching standalone/untrusted connection retains normal reads
+inside that exact current workspace.
+The isolated agent-tool test route applies that same live-pair and serialized
+lease rule and additionally accepts only its process-provisioned workspace,
+root, and thread identity before any fixture effect.
+Warm, prompt, and assistant-open activation also resolve the current live
+session root rather than the root captured when the socket was constructed.
+Create/resume, Rename, Delete, Touch, Warm, and prompt acceptance share one
+per-connection workspace-operation lease with workspace binding. An operation
+already admitted completes its bounded persistence, response, and provider
+admission before binding begins; an operation queued after binding revalidates
+the exact state, session root, workspace id, manager, and epoch and is denied
+before its owner. Binding-in-progress and superseded-epoch requests cannot
+fall back to the construction root. `wire_ready` follows the activation commit; failed or superseded new
+wires are stopped and unregistered before any readiness frame.
+Workspace transition retires the old selected/activated identity, delayed
+resume-list delivery, provider session, wire routing owner, and session wire
+reference before the new bind frame makes its workspace pair authoritative.
+
+Managed sockets begin with a 4 KiB WebSocket receiver and decoder ceiling, so
+an unauthenticated peer cannot make the server buffer or parse application-sized
+frames. Only successful initialization and transport activation restore the
+established application payload ceiling, before the authenticated acknowledgement.
+
+A deliberately standalone server has no launch master and cannot mint
+`trusted-shell`; its existing diagnostic/read behavior remains available as an
+untrusted development surface. Reconnect and server restart always require a
+fresh challenge, renderer nonce, proof, and launch generation.
+All upgraded sockets are separately owned by a transport lifecycle registry so
+normal shutdown terminates pending and active transports without publishing
+pending sockets to product fan-out. Shutdown awaits both transport close and
+the resulting asynchronous product cleanup before exiting, which preserves
+exactly-once activated cleanup through durable thread-session suspension.
+
 ## Client To Server
 
 | Message | Purpose |
@@ -33,7 +112,7 @@ protocol.
 | `thread:list` | Request MRU thread list for a scope |
 | `thread:open` | Passive browse/hydrate an existing thread |
 | `thread:open-assistant` | Activate/resume assistant thread or create new one |
-| `thread:warm` | Warm a cold runtime based on send intent |
+| `thread:warm` | Trusted-shell-only warm of a cold runtime based on send intent |
 | `thread:action` | Perform a canonical visible-thread or chat-session action |
 | `prompt` | Send user input and optional attachment metadata to a specific thread |
 | `turn:stop` | Interrupt an in-flight turn |
@@ -98,14 +177,23 @@ status_update
 turn_end
 ```
 
-The canonical bridge/applier owns mutation, event bus emission, persistence
-handoff, and live snapshot updates.
+The canonical bridge/applier is the only provider-output owner for mutation,
+event bus emission, persistence handoff, and live snapshot updates. CLI
+adapters yield canonical events to that owned iterator and never publish a
+second legacy status or terminal event directly. Adapter queues use the exact
+workspace/root/thread session key, and wire output, exit notification, and
+drain retirement follow the registry/manager's current client owner after a
+successful ownership transfer.
 
 Every accepted in-flight message from `turn_begin` through `turn_end` carries
 the prompt-bound `threadId`, `turnId`, and positive integer `streamSeq`.
 Messages that can change Working additionally carry `activityRevision`.
 Companion transport notifications remain unsequenced and cannot become a
 second transcript terminal source.
+
+Lifecycle fan-out carries the prompt-bound workspace id, canonical root, bind
+epoch, thread id, and turn id. The server delivers it only to clients whose
+active session and installed thread manager still match that exact tuple.
 
 ## Client Route And Frontier Gate
 
@@ -149,8 +237,10 @@ parts. Current chat metadata fields include:
 - `attachments` comes from `Send to chat` pills.
 - `mentions` contains repo-validated non-markdown file mentions from the just
   completed user/assistant text.
-- `fileMutations` contains turn-local file changes captured from event bus file
-  change events.
+- `fileMutations` contains file changes captured from event bus observations
+  that either carry the complete exact workspace/root/epoch/thread/turn tuple
+  or match exactly one live turn for their workspace and root. Ambiguous or
+  partially qualified observations are omitted rather than assigned causally.
 
 The harness receives a compact attached-reference block appended to the prompt,
 while SQLite keeps the structured metadata for UI and autocomplete hydration.
@@ -191,6 +281,27 @@ rejected server-side.
 
 Existing historical threads use their stored `harness_id` when resumed; do not
 migrate them by changing policy.
+
+Public creation and prompt-selection `harnessConfig` accepts only portable
+`model` as a non-empty string and `variant` as either a non-empty string or
+explicit `null`; null clears an earlier persisted/live variant. Provider session ids, Fork metadata, credentials,
+and unknown fields are rejected before lookup or persistence. Runtime loading
+also removes legacy Fork state before any adapter sees stored configuration;
+ordinary OpenCode session ids without Fork markers retain exact-session resume.
+
+All production harness launches and harness/CLI installation or version probes
+build their child environment through `lib/harness/child-environment.js`.
+Only common process/config/locale/network keys and explicit adapter credential
+keys are copied. Location and version probes receive no provider credentials;
+each runtime adapter receives only its own supported credential keys (with
+OpenCode retaining its explicit multi-provider set). Shell launch masters,
+bootstrap metadata, runtime generations,
+proof/challenge/nonces, connection roles, test injection, Electron descriptor
+data, and unknown host variables are excluded.
+The static inventory parses CommonJS and ESM syntax, rejects property/detached
+aliases, wrapper escapes, dynamic built-in-module acquisition, shadowed or
+prebuilt environments, and associates each launch call with its exact inline
+builder-owned environment instead of relying on a launch count.
 
 ## Terminal Events
 

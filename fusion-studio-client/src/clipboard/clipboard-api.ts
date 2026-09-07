@@ -9,7 +9,7 @@
  * server-live.log never see it.
  */
 
-import { sendFusionMessage, onFusionMessage } from '../lib/ws-client';
+import { sendFusionMessage, onFusionMessage, onFusionResponse } from '../lib/ws-client';
 import { showToast } from '../lib/toast';
 import { useClipboardStore } from './clipboard-store';
 import type {
@@ -63,6 +63,10 @@ function request<T extends { error?: string }>(
 
   return new Promise((resolve, reject) => {
     let settled = false;
+    const retire = () => {
+      cleanup();
+      reject(new Error(`Connection retired while waiting for ${type}`));
+    };
     const cleanup = () => {
       if (settled) return;
       settled = true;
@@ -70,7 +74,7 @@ function request<T extends { error?: string }>(
       unsubscribeError();
       clearTimeout(timeout);
     };
-    const unsubscribe = onFusionMessage(type, (msg: T) => {
+    const unsubscribe = onFusionResponse(type, (msg: T) => {
       if (!matches(msg)) return;
 
       cleanup();
@@ -79,14 +83,14 @@ function request<T extends { error?: string }>(
       } else {
         resolve(msg);
       }
-    });
-    const unsubscribeError = onFusionMessage('clipboard:error', (msg: ClipboardErrorFrame) => {
+    }, retire);
+    const unsubscribeError = onFusionResponse('clipboard:error', (msg: ClipboardErrorFrame) => {
       if (msg.requestType && msg.requestType !== type) return;
       if (typeof payload.id === 'number' && typeof msg.id === 'number' && msg.id !== payload.id) return;
 
       cleanup();
       reject(new Error(msg.message || msg.code || `Clipboard request failed: ${type}`));
-    });
+    }, retire);
     sendFusionMessage({ type, ...payload });
     const timeout = setTimeout(() => {
       cleanup();

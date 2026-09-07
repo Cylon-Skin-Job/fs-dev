@@ -81,6 +81,7 @@ function createCanonicalChatTerminalEvents({ emit }) {
       workspace: route.workspace,
       workspaceId: route.workspaceId,
       projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId,

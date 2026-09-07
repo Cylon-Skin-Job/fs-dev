@@ -22,7 +22,7 @@ function createDestination(write) {
   return destination;
 }
 
-test('server output forwarding preserves readiness and normal stdout/stderr bytes', async () => {
+test('server output forwarding preserves readiness but emits only fixed stdout/stderr markers', async () => {
   const child = createChildHarness();
   const stdoutWrites = [];
   const stderrWrites = [];
@@ -39,12 +39,15 @@ test('server output forwarding preserves readiness and normal stdout/stderr byte
   pipeServerOutput(child, { stdout, stderr, onStdout: (value) => readiness.push(value) });
   assert.equal(stdout.listenerCount('error'), 0);
   assert.equal(stderr.listenerCount('error'), 0);
-  child.stdout.emit('data', Buffer.from('boot\nSERVER_READY:4567\n'));
-  child.stderr.emit('data', Buffer.from('warning\n'));
+  const canary = 'REPOSITORY_PROMPT_PAYLOAD_CANARY_00B';
+  child.stdout.emit('data', Buffer.from(`${canary}\nSERVER_READY:4567\n`));
+  child.stderr.emit('data', Buffer.from(`${canary}\n`));
 
-  assert.deepEqual(readiness, ['boot\nSERVER_READY:4567\n']);
-  assert.deepEqual(stdoutWrites, ['[server] boot\nSERVER_READY:4567\n']);
-  assert.deepEqual(stderrWrites, ['[server:err] warning\n']);
+  assert.deepEqual(readiness, [`${canary}\nSERVER_READY:4567\n`]);
+  assert.deepEqual(stdoutWrites, ['[server] output\n']);
+  assert.deepEqual(stderrWrites, ['[server:err] output\n']);
+  assert.doesNotMatch(stdoutWrites.join(''), new RegExp(canary));
+  assert.doesNotMatch(stderrWrites.join(''), new RegExp(canary));
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(stdout.listenerCount('error'), 0);
   assert.equal(stderr.listenerCount('error'), 0);

@@ -1,12 +1,12 @@
 /**
- * Wire debug log — rotating append-only log of wire stdin/stdout traffic.
+ * Wire debug log — rotating append-only record of wire traffic occurrence.
  *
  * Extracted from server.js. Writes to fusion-studio-server/wire-debug.log,
  * rotating to wire-debug.log.old when size exceeds 10MB.
  *
- * Separate from server-live.log (which captures console.log output) —
- * the wire log is raw wire-protocol traffic for debugging handshake and
- * event-routing issues.
+ * Separate from server-live.log (which captures console.log output). Raw wire
+ * frames can contain prompts, payloads, and authentication-shaped canaries, so
+ * this diagnostic owner records only a fixed direction marker.
  */
 
 const fs = require('fs');
@@ -17,7 +17,7 @@ const path = require('path');
 const WIRE_LOG_FILE = path.join(__dirname, '..', '..', 'wire-debug.log');
 const MAX_WIRE_LOG_SIZE = 10 * 1024 * 1024; // 10MB
 
-function logWire(direction, data) {
+function logWire(direction, _data) {
   try {
     const stats = fs.statSync(WIRE_LOG_FILE);
     if (stats.size > MAX_WIRE_LOG_SIZE) {
@@ -27,7 +27,8 @@ function logWire(direction, data) {
   } catch {}
 
   const timestamp = new Date().toISOString();
-  const entry = `[${timestamp}] ${direction}: ${data}\n`;
+  const safeDirection = direction === 'WIRE_IN' ? 'WIRE_IN' : 'WIRE_EVENT';
+  const entry = `[${timestamp}] ${safeDirection}: [redacted]\n`;
   fs.appendFileSync(WIRE_LOG_FILE, entry);
 }
 

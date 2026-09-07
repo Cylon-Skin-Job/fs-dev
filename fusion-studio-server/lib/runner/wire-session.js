@@ -6,6 +6,7 @@
  */
 
 const { spawn } = require('child_process');
+const { buildHarnessChildEnvironment } = require('../harness/child-environment');
 
 let nextId = 1;
 function rpcId() {
@@ -46,7 +47,9 @@ function spawnSession(projectRoot) {
 
   const proc = spawn(kimiPath, args, {
     stdio: ['pipe', 'pipe', 'pipe'],
-    env: { ...process.env, TERM: 'xterm-256color' },
+    env: buildHarnessChildEnvironment('runner', {
+      overrides: { TERM: 'xterm-256color' },
+    }),
   });
 
   console.log(`[Runner:Wire] Spawned pid: ${proc.pid}`);

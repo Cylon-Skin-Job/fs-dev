@@ -5,7 +5,8 @@
  * event bus and routes each to the specific client whose connection
  * owns the thread that produced the event.
  *
- * Routing: uses getClientForThread(threadId), provided at init time.
+ * Routing uses exact workspace/root/epoch/thread identity, provided at init
+ * time. Thread IDs are only unique inside their owning workspace.
  * Today that resolves via wireRegistry in lib/wire/process-manager.js
  * (augmented in this spec to carry a ws reference per entry).
  *
@@ -28,15 +29,31 @@ const { on } = require('../event-bus');
  * owns the subscribers.
  *
  * @param {object} deps
- * @param {(threadId: string) => import('ws').WebSocket|null} deps.getClientForThread
+ * @param {(threadId: string, scope: object) => import('ws').WebSocket|null} deps.getClientForThread
  *        Called on every chat event; returns the ws that owns the thread,
  *        or null if the thread has no live wire.
  * @returns {{ started: boolean }}
  */
 function createWireBroadcaster({ getClientForThread }) {
 
-  function sendToThread(threadId, wireMessage) {
-    const ws = getClientForThread(threadId);
+  function workspaceIdForEvent(event) {
+    if (typeof event?.workspaceId === 'string' && event.workspaceId) {
+      return event.workspaceId;
+    }
+    if (typeof event?.workspace === 'string' && event.workspace.startsWith('workspace:')) {
+      return event.workspace.slice('workspace:'.length).split(',')[0].trim() || null;
+    }
+    return null;
+  }
+
+  function sendToThread(event, wireMessage) {
+    const threadId = event?.threadId;
+    const workspaceId = workspaceIdForEvent(event);
+    const ws = getClientForThread(threadId, {
+      workspaceId,
+      projectRoot: event?.projectRoot,
+      workspaceEpoch: event?.workspaceEpoch,
+    });
     const messageType = wireMessage?.type || 'unknown';
     const threadLabel = String(threadId || 'unknown');
 
@@ -73,7 +90,7 @@ function createWireBroadcaster({ getClientForThread }) {
   // (chat:exchange_metadata / chat-turn:saved) stay in their separate
   // lifecycle family without streamSeq.
   on('chat:turn_begin', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'turn_begin',
       scope: event.scope,
       threadId: event.threadId,
@@ -84,7 +101,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:step_begin', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'step_begin',
       scope: event.scope,
       threadId: event.threadId,
@@ -99,7 +116,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:content', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'content',
       scope: event.scope,
       threadId: event.threadId,
@@ -111,7 +128,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:thinking', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'thinking',
       scope: event.scope,
       threadId: event.threadId,
@@ -123,7 +140,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:tool_call', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'tool_call',
       scope: event.scope,
       threadId: event.threadId,
@@ -136,7 +153,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:tool_call_args', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'tool_call_args',
       scope: event.scope,
       threadId: event.threadId,
@@ -148,7 +165,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:tool_result', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'tool_result',
       scope: event.scope,
       threadId: event.threadId,
@@ -165,7 +182,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:subagent_event', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'subagent_event',
       scope: event.scope,
       threadId: event.threadId,
@@ -186,7 +203,7 @@ function createWireBroadcaster({ getClientForThread }) {
   // terminals OMIT the key entirely (pinned wire shape; the SPEC-02 wire
   // union table has no terminalError key on turn_end).
   on('chat:turn_end', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'turn_end',
       scope: event.scope,
       threadId: event.threadId,
@@ -204,7 +221,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:status_update', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'status_update',
       scope: event.scope,
       threadId: event.threadId,
@@ -216,7 +233,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat:exchange_metadata', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'exchange_metadata',
       scope: event.scope,
       threadId: event.threadId,
@@ -228,7 +245,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat-turn:saved', (event) => {
-    sendToThread(event.threadId, {
+    sendToThread(event, {
       type: 'chat-turn:saved',
       scope: event.scope,
       threadId: event.threadId,

@@ -169,6 +169,7 @@ interface FileDataState {
   // --- Workspace generation lifecycle ---
   beginWorkspaceGeneration: (workspaceId: string | null, workspaceEpoch?: string | null) => void;
   retirePendingSaves: () => void;
+  retireConnectionGeneration: () => void;
 
   // --- Full reset (e.g. on reconnect) ---
   clearAll: () => void;
@@ -963,6 +964,19 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
       pending.reject(saveFailure('The save connection closed before acknowledgment.'));
     }
     set({ pendingSaves: new Map(), retiredLegacySaveKeys: new Set() });
+  },
+
+  retireConnectionGeneration: () => {
+    for (const pending of get().pendingSaves.values()) {
+      pending.reject(saveFailure('The save connection closed before acknowledgment.'));
+    }
+    set((state) => ({
+      generation: state.generation + 1,
+      pendingTrees: new Map(),
+      pendingContents: new Map(),
+      pendingSaves: new Map(),
+      retiredLegacySaveKeys: new Set(),
+    }));
   },
 
   clearAll: () => set({

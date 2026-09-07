@@ -23,24 +23,32 @@
  * @param {object} deps
  * @param {Map} deps.wsState - Per-WS state map (shared with coordinator)
  * @param {Function} deps.sendThreadList - Send thread list to client
- * @param {Function} deps.closeThread - Close the active thread session
+ * @param {Function} deps.deleteThreadSession - Serialized durable delete owner
  * @param {Map} deps.pendingReorderTimers - Pending reorder timers (shared with coordinator)
  * @param {number} deps.REORDER_DELAY_MS - Delay for thread list refresh
  */
 const { search: searchExchanges } = require('./chat-search');
 const { threadRuntimeManager } = require('./thread-runtime-manager');
 const { resolveCliPolicy } = require('../cli-config');
-const { reclaimClientForWire } = require('../wire/process-manager');
 
-function getRuntimeKey(manager, threadId) {
+function getRuntimeKey(manager, threadId, workspaceEpoch) {
   return {
     workspaceId: manager.workspaceId,
+    projectRoot: manager.projectRoot,
+    workspaceEpoch,
     scope: 'project',
     threadId,
   };
 }
 
-function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReorderTimers, REORDER_DELAY_MS }) {
+function createCrudHandlers({
+  wsState,
+  sendThreadList,
+  deleteThreadSession,
+  pendingReorderTimers,
+  REORDER_DELAY_MS,
+  runDelayedThreadList = (_ws, _state, operation) => operation(),
+}) {
 
   /**
    * Generate a timestamp-based thread ID.
@@ -124,7 +132,11 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       await sendThreadList(ws);
 
       // Automatically open the new thread
-      await handleThreadOpen(ws, { threadId: createdId }, { closePrevious: true });
+      await handleThreadOpen(ws, { threadId: createdId }, {
+        recordActivationMetadata: true,
+      });
+
+      return createdId;
 
     } catch (err) {
       console.error('[ThreadWS] Create failed:', err);
@@ -138,7 +150,7 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {object} msg
    * @param {string} msg.threadId
    * @param {object} [options]
-   * @param {boolean} [options.closePrevious=false]
+   * @param {boolean} [options.recordActivationMetadata=false]
    */
   async function handleThreadOpen(ws, msg, options = {}) {
     const state = wsState.get(ws);
@@ -161,20 +173,15 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       return;
     }
 
-    // Activation opens preserve the old close behavior. Browse opens
-    // only select/hydrate and must not kill, cool, warm, or retarget runtimes.
-    if (options.closePrevious && state.threadId && state.threadId !== threadId) {
-      await closeThread(ws);
-    }
-
     // If this thread is already active elsewhere, that's fine (multiple tabs can view same thread)
     // But only one wire process per thread (managed by ThreadManager)
 
     state.threadId = threadId;
-    threadRuntimeManager.ensureRuntime(getRuntimeKey(manager, threadId));
+    threadRuntimeManager.ensureRuntime(getRuntimeKey(manager, threadId, state.workspaceEpoch));
 
-    // Mark as resumed in index
-    await manager.index.markResumed(threadId);
+    if (options.recordActivationMetadata) {
+      await manager.index.markResumed(threadId);
+    }
 
     // Send thread history (both formats during transition)
     const history = await manager.getHistory(threadId);
@@ -184,15 +191,13 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     const exchanges = richHistory?.exchanges || [];
     const lastExchange = exchanges.length > 0 ? exchanges[exchanges.length - 1] : null;
     const contextUsage = lastExchange?.metadata?.contextUsage ?? null;
-    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(manager, threadId));
+    const liveTurn = threadRuntimeManager.getLiveTurn(
+      getRuntimeKey(manager, threadId, state.workspaceEpoch),
+    );
 
-    // Passive open must not touch the harness lifecycle. It may only reclaim
-    // outbound routing when the active wire has lost its owning client.
-    // Keep this synchronous with thread:opened so the hydrated snapshot is
-    // queued before any subsequently delivered live events.
-    if (!options.closePrevious) {
-      reclaimClientForWire(threadId, ws);
-    }
+    // Passive open is a read: it hydrates persisted history plus the live
+    // snapshot without changing provider or delivery ownership. A trusted
+    // activation route is the only place allowed to transfer a live wire.
 
     console.log(`[ThreadWS] Opening thread ${threadId.slice(0,8)}, exchanges: ${exchanges.length}, lastExchange metadata:`, lastExchange?.metadata);
     console.log(`[ThreadWS] Sending contextUsage:`, contextUsage);
@@ -209,26 +214,23 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
       contextUsage  // Restore context usage from last exchange
     }));
 
-    // Update MRU order immediately (so other views see it as recently used)
-    await manager.index.touch(threadId);
-
-    // Delay the thread list reorder by 3 seconds when just clicking a thread
-    // (This gives the user time to see the thread before the list reorders)
-    const existingTimer = pendingReorderTimers.get(ws);
-    if (existingTimer) {
-      clearTimeout(existingTimer);
+    if (options.recordActivationMetadata) {
+      // Activation changes durable resume/MRU metadata. Passive browsing only
+      // hydrates history and live state and schedules no list/fan-out work.
+      await manager.index.touch(threadId);
+      const existingTimer = pendingReorderTimers.get(ws);
+      if (existingTimer) clearTimeout(existingTimer);
+      const timer = setTimeout(() => {
+        pendingReorderTimers.delete(ws);
+        runDelayedThreadList(ws, state, () => sendThreadList(ws)).catch(err => {
+          console.error('[ThreadWS] Delayed sendThreadList failed:', err);
+        });
+      }, REORDER_DELAY_MS);
+      pendingReorderTimers.set(ws, timer);
     }
 
-    const timer = setTimeout(() => {
-      pendingReorderTimers.delete(ws);
-      sendThreadList(ws).catch(err => {
-        console.error('[ThreadWS] Delayed sendThreadList failed:', err);
-      });
-    }, REORDER_DELAY_MS);
-
-    pendingReorderTimers.set(ws, timer);
-
-    console.log(`[ThreadWS] Opened thread ${threadId} (panel: ${state.panelId}, harness: ${thread.entry?.harnessId || 'unknown'}) - reorder in ${REORDER_DELAY_MS}ms`);
+    console.log(`[ThreadWS] Opened thread ${threadId} (panel: ${state.panelId}, harness: ${thread.entry?.harnessId || 'unknown'})`);
+    return threadId;
   }
 
   /**
@@ -270,7 +272,12 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     if (msg.threadId) {
       const existing = await manager.getThread(msg.threadId);
       if (existing) {
-        return handleThreadOpen(ws, msg, { closePrevious: true });
+        return handleThreadOpen(ws, msg, { recordActivationMetadata: true });
+      }
+      if (typeof manager.index?.existsOutsideWorkspace === 'function'
+        && await manager.index.existsOutsideWorkspace(msg.threadId)) {
+        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${msg.threadId}` }));
+        return null;
       }
       // threadId provided but thread doesn't exist — fall through to create.
       // This handles the race where a client tries to resume a freshly-deleted
@@ -349,14 +356,8 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
 
     const { threadId } = msg;
 
-    // If deleting the currently-active thread, close it first.
-    if (state.threadId === threadId) {
-      await closeThread(ws);
-      state.threadId = null;
-    }
-
     try {
-      const deleted = await manager.deleteThread(threadId);
+      const deleted = await deleteThreadSession(ws, threadId);
       if (!deleted) {
         ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${threadId}` }));
         return;
@@ -419,8 +420,8 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
 
   /**
    * Handle thread:touch — bump the thread's updated_at (MRU sort key) and
-   * re-broadcast the thread list. Purely cosmetic re-sort; no wire, no
-   * history. Used by the client to bump the primary thread back above a
+   * re-broadcast the thread list. This is a durable MRU mutation, though it
+   * has no wire or history effect. Used by the client to bump the primary thread back above a
    * just-closed secondary thread so the primary stays on top of the list.
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
@@ -432,7 +433,11 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
     const manager = state.threadManager;
     if (!manager) return;
     try {
-      await manager.index.touch(msg.threadId);
+      const touched = await manager.index.touch(msg.threadId);
+      if (!touched) {
+        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${msg.threadId}` }));
+        return;
+      }
       await sendThreadList(ws);
     } catch (err) {
       console.error('[ThreadWS] Touch failed:', err);
@@ -445,17 +450,18 @@ function createCrudHandlers({ wsState, sendThreadList, closeThread, pendingReord
    * @param {import('ws').WebSocket} ws
    * @param {object} msg
    * @param {string} msg.query
-   * @param {string|null} [msg.workspaceId] - Omit for current workspace; null for all
+   * @param {string} [msg.workspaceId] - When present, must match the current workspace
    * @param {number} [msg.limit]
    * @param {number} [msg.offset]
    */
   async function handleThreadSearch(ws, msg) {
     try {
-      let workspaceId = msg.workspaceId;
-      // Default to current workspace if omitted
-      if (workspaceId === undefined) {
-        const state = wsState.get(ws);
-        workspaceId = state?.threadManager?.workspaceId ?? null;
+      const state = wsState.get(ws);
+      const workspaceId = state?.threadManager?.workspaceId;
+      if (typeof workspaceId !== 'string' || !workspaceId
+        || (msg.workspaceId !== undefined && msg.workspaceId !== workspaceId)) {
+        ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+        return;
       }
 
       const { total, results } = await searchExchanges({

@@ -20,6 +20,12 @@ function outputIsClosed(output) {
     || output.writableFinished === true
 }
 
+function sanitizeRendererConsoleMessage(_message) {
+  // `console-message` includes arbitrary main-frame and child-frame text. No
+  // textual prefix is authority: persist only this fixed marker.
+  return '[renderer_console]'
+}
+
 function surfaceAsUncaught(error) {
   // A meaningful async stream error should retain normal fatal visibility,
   // but only after the write-scoped guard has had its settlement phase to
@@ -132,9 +138,10 @@ function createRendererConsoleLogger({
 
   return Object.freeze({
     forwarder,
-    log(level, message, line, sourceId) {
+    log(level, message, _line, _sourceId) {
       const tag = levels[level] ?? 'log'
-      const entry = `[renderer:${tag}] ${message}  (${sourceId}:${line})\n`
+      const safeMessage = sanitizeRendererConsoleMessage(message)
+      const entry = `[renderer:${tag}] ${safeMessage}\n`
       // File logging is the durable diagnostic path and must not depend on the
       // launcher's stdout pipe still being writable.
       try { appendFileSync(rendererLog, entry) } catch {}
@@ -149,4 +156,5 @@ module.exports = {
   createWriteScopedOutputForwarder,
   isClosedOutputError,
   outputIsClosed,
+  sanitizeRendererConsoleMessage,
 }

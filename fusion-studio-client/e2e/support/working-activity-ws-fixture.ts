@@ -50,6 +50,8 @@
  * changing its ops surface contract.
  */
 
+import { installTrustedShellBrowserFixture } from './trusted-shell-browser-fixture';
+
 /** Scenario reply table consulted by the intercepting outbound path. */
 export interface WaReplyConfig {
   /** Reply served for intercepted `thread:list` requests. */
@@ -112,10 +114,11 @@ const DISCOVERY_VIEWS_JSON = {
  * created in the context (Chromium WS interception requires the handler be
  * attached ahead of any extant page); drive it via the returned controller.
  */
-export function installWaFixture(
+export async function installWaFixture(
   context: import('@playwright/test').BrowserContext,
   initialReplies?: WaReplyConfig,
-): WaFixture {
+): Promise<WaFixture> {
+  await installTrustedShellBrowserFixture(context);
   let replies: WaReplyConfig = JSON.parse(
     JSON.stringify(initialReplies ?? {}),
   ) as WaReplyConfig;
@@ -171,16 +174,13 @@ export function installWaFixture(
     return null;
   }
 
-  // Both the APP socket (`ws://${location.host}/`) and Vite's HMR socket
-  // share that exact URL, so EVERY matched connection starts as neutral
-  // passthrough and self-identifies on its FIRST outbound frame: only the
-  // one opening with `{type:'set_panel'}` becomes the intercepted app
-  // channel (per-socket closure state keeps multi-socket order sane).
+  // The test-owned runtime descriptor uses the exact 127.0.0.1 production
+  // host, while any browser-tool socket remains on the page's localhost
+  // origin. The matched connection is therefore the app channel directly.
   // Installed on the CONTEXT: page-level routeWebSocket does not fire in the
   // current Playwright build, context-level does (verified by probe).
-  void context.routeWebSocket(/^ws:\/\/localhost:\d+\/$/, (route) => {
+  await context.routeWebSocket(/^ws:\/\/127\.0\.0\.1:\d+(?:\/.*)?$/, (route) => {
     let isAppSocket = false;
-    let identified = false;
     const downstreamQueue: FramePayload[] = [];
 
     function becomeAppChannel(): void {
@@ -191,20 +191,10 @@ export function installWaFixture(
     }
 
     const server = route.connectToServer();
+    becomeAppChannel();
 
     route.onMessage((message: FramePayload) => {
       const text = typeof message === 'string' ? message : String(message);
-      if (!identified) {
-        identified = true;
-        let firstType = '';
-        try {
-          const value: unknown = JSON.parse(text);
-          if (value && typeof value === 'object') {
-            firstType = String((value as Record<string, unknown>).type ?? '');
-          }
-        } catch { /* binary/non-JSON ⇒ never the app */ }
-        if (firstType === 'set_panel') becomeAppChannel();
-      }
       if (!isAppSocket) {
         server.send(text);
         return;

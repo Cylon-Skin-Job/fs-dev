@@ -20,6 +20,8 @@
 
 jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
   getState: jest.fn(),
+  captureActivationBinding: jest.fn(),
+  isActivationBindingCurrent: jest.fn(),
   handleMessageSend: jest.fn(),
   getCurrentThreadManager: jest.fn(() => null),
   getCurrentThreadId: jest.fn(() => null),
@@ -76,6 +78,7 @@ function validCandidate(overrides = {}) {
 
 describe('public chat-turn:diagnostic:get route (SPEC-03 Slice D)', () => {
   let ws;
+  let session;
   let router;
   let logSpy;
   let warnSpy;
@@ -102,23 +105,53 @@ describe('public chat-turn:diagnostic:get route (SPEC-03 Slice D)', () => {
     errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     ws = { readyState: 1, send: jest.fn() };
-    const session = {
+    session = {
       connectionId: 'conn-diag-route',
       currentWorkspaceId: WORKSPACE_ID,
       projectRoot: '/tmp/diag-route-project',
+      workspaceEpoch: 'epoch-diag-route',
+      workspaceBindingState: 'active',
       currentThreadId: null,
       currentScope: null,
       currentViewId: null,
       wire: null,
       buffer: '',
     };
+    Object.defineProperty(session, 'connectionRole', {
+      value: 'trusted-shell',
+      enumerable: false,
+      configurable: true,
+    });
     // Per-connection thread state: the thread manager carries the
     // server-authoritative workspace binding.
     ThreadWebSocketHandler.getState.mockReturnValue({
       panelId: 'panel-1',
       viewName: 'view-1',
       threadId: THREAD_ID,
-      threadManager: { workspaceId: WORKSPACE_ID },
+      threadManager: { workspaceId: WORKSPACE_ID, projectRoot: session.projectRoot },
+    });
+    ThreadWebSocketHandler.captureActivationBinding.mockImplementation((socket, liveSession) => {
+      const state = ThreadWebSocketHandler.getState(socket);
+      if (!state?.threadManager
+        || state.workspaceRetired === true
+        || liveSession.workspaceBindingState !== 'active'
+        || state.threadManager.projectRoot !== liveSession.projectRoot
+        || state.threadManager.workspaceId !== liveSession.currentWorkspaceId) return null;
+      return {
+        state,
+        session: liveSession,
+        projectRoot: liveSession.projectRoot,
+        workspaceId: liveSession.currentWorkspaceId,
+        workspaceEpoch: liveSession.workspaceEpoch,
+      };
+    });
+    ThreadWebSocketHandler.isActivationBindingCurrent.mockImplementation((socket, binding) => {
+      const state = ThreadWebSocketHandler.getState(socket);
+      return state === binding?.state
+        && binding.session.projectRoot === binding.projectRoot
+        && binding.session.currentWorkspaceId === binding.workspaceId
+        && binding.session.workspaceEpoch === binding.workspaceEpoch
+        && binding.session.workspaceBindingState === 'active';
     });
 
     router = createClientMessageRouter({
@@ -173,7 +206,13 @@ describe('public chat-turn:diagnostic:get route (SPEC-03 Slice D)', () => {
 
   async function seedReport(overrides = {}) {
     return diagnosticService.persistDiagnosticReport(
-      { workspaceId: WORKSPACE_ID, threadId: THREAD_ID, turnId: TURN_ID },
+      {
+        workspaceId: WORKSPACE_ID,
+        projectRoot: session.projectRoot,
+        workspaceEpoch: session.workspaceEpoch,
+        threadId: THREAD_ID,
+        turnId: TURN_ID,
+      },
       validCandidate(overrides),
     );
   }
@@ -205,6 +244,26 @@ describe('public chat-turn:diagnostic:get route (SPEC-03 Slice D)', () => {
     expect(Buffer.byteLength(JSON.stringify(messages[0].report), 'utf8')).toBeLessThanOrEqual(24576);
     // Report contents never reach server logs (roadmap §5.5).
     expect(consoleOutput()).not.toContain(CANARY);
+  });
+
+  test('workspace switch gap returns fixed unavailable and cannot read a stale manager report', async () => {
+    const diagnosticId = await seedReport();
+    session.currentWorkspaceId = 'ws-next';
+    session.projectRoot = '/tmp/diag-route-next';
+    session.workspaceEpoch = 'epoch-next';
+    session.workspaceBindingState = 'binding';
+
+    await send(getRequest({ diagnosticId, workspaceId: WORKSPACE_ID }));
+
+    expect(sentMessages()).toEqual([{
+      type: 'chat-turn:diagnostic:unavailable',
+      threadId: THREAD_ID,
+      turnId: TURN_ID,
+      diagnosticId,
+    }]);
+    expect(await dbModule.getDb()(diagnosticService.TABLE)
+      .where('diagnostic_id', diagnosticId)
+      .first()).toBeTruthy();
   });
 
   test('(c) missing and expired records yield the ONE fixed value-free unavailable response', async () => {
@@ -284,11 +343,35 @@ describe('public chat-turn:diagnostic:get route (SPEC-03 Slice D)', () => {
     });
 
     expect(updateExchangeMetadata).toHaveBeenCalledTimes(1);
+    expect(updateExchangeMetadata).toHaveBeenCalledWith({
+      workspaceId: WORKSPACE_ID,
+      threadId: THREAD_ID,
+      exchangeId: 'ex-1',
+      patch: { note: { body: 'hello' } },
+    });
     expect(sentMessages()).toEqual([{
       type: 'chat-turn:metadata:updated',
       threadId: THREAD_ID,
       exchangeId: 'ex-1',
       metadata: { note: { body: 'hello' } },
+    }]);
+  });
+
+  test('untrusted chat-turn metadata mutation is denied at central ingress before persistence', async () => {
+    delete session.connectionRole;
+
+    await send({
+      type: 'chat-turn:metadata:update',
+      threadId: THREAD_ID,
+      exchangeId: 'ex-1',
+      patch: { note: { body: 'blocked' } },
+    });
+
+    expect(updateExchangeMetadata).not.toHaveBeenCalled();
+    expect(sentMessages()).toEqual([{
+      type: 'error',
+      code: 'THREAD_MUTATION_DENIED',
+      message: 'Thread mutation denied',
     }]);
   });
 

@@ -51,7 +51,10 @@ function assertValidNotePatch(note) {
   }
 }
 
-function assertUpdateInput({ threadId, exchangeId, patch }) {
+function assertUpdateInput({ workspaceId, threadId, exchangeId, patch }) {
+  if (!workspaceId || typeof workspaceId !== 'string') {
+    throw new Error('workspaceId is required');
+  }
   if (!threadId || typeof threadId !== 'string') {
     throw new Error('threadId is required');
   }
@@ -68,12 +71,18 @@ function assertUpdateInput({ threadId, exchangeId, patch }) {
   return numericExchangeId;
 }
 
-async function updateExchangeMetadata({ threadId, exchangeId, patch, now = Date.now() }) {
-  const numericExchangeId = assertUpdateInput({ threadId, exchangeId, patch });
+async function updateExchangeMetadata({ workspaceId, threadId, exchangeId, patch, now = Date.now() }) {
+  const numericExchangeId = assertUpdateInput({ workspaceId, threadId, exchangeId, patch });
   const db = getDb();
 
-  const row = await db('exchanges')
-    .where({ id: numericExchangeId, thread_id: threadId })
+  const row = await db('exchanges as exchange')
+    .join('threads as thread', 'thread.thread_id', 'exchange.thread_id')
+    .where({
+      'exchange.id': numericExchangeId,
+      'exchange.thread_id': threadId,
+      'thread.workspace_id': workspaceId,
+    })
+    .select('exchange.*')
     .first();
 
   if (!row) {
@@ -112,9 +121,16 @@ async function updateExchangeMetadata({ threadId, exchangeId, patch, now = Date.
     }
   }
 
-  await db('exchanges')
+  const updated = await db('exchanges')
     .where({ id: numericExchangeId, thread_id: threadId })
+    .whereExists(function workspaceOwner() {
+      this.select(db.raw('1'))
+        .from('threads')
+        .whereRaw('threads.thread_id = exchanges.thread_id')
+        .where('threads.workspace_id', workspaceId);
+    })
     .update({ metadata: JSON.stringify(metadata) });
+  if (updated !== 1) throw new Error('Exchange not found');
 
   return {
     threadId,

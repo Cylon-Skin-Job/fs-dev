@@ -11,6 +11,7 @@
  */
 
 const { on, emit } = require('../event-bus');
+const path = require('path');
 const { setSafeTimeout } = require('../background-services/safety');
 
 const STATE_IDLE = 'idle';
@@ -18,7 +19,7 @@ const STATE_IN_FLIGHT = 'in_flight';
 
 const SETTINGS_KEY = 'enforcement.thread_idle_timeout_minutes';
 
-// threadId → { state, workspace, timer, lastTransition }
+// JSON([workspaceId, normalized root, workspaceEpoch, threadId]) → exact owner
 const threads = new Map();
 
 let idleTimeoutMinutes = 45;
@@ -44,26 +45,37 @@ function startThreadLifecycle(config = {}) {
 }
 
 function handleTurnBegin(event) {
-  const { threadId, workspace } = event;
-  if (!threadId) return;
+  const { threadId, workspace, workspaceId, projectRoot, workspaceEpoch, turnId } = event;
+  const key = lifecycleKey(event);
+  if (!key || typeof projectRoot !== 'string' || !projectRoot
+    || typeof workspaceEpoch !== 'string' || !workspaceEpoch
+    || typeof turnId !== 'string' || !turnId) return;
 
-  const existing = threads.get(threadId);
+  const existing = threads.get(key);
   let previousState;
 
   if (!existing) {
     previousState = null;
-  } else if (existing.state === STATE_IN_FLIGHT) {
+  } else if (existing.state === STATE_IN_FLIGHT
+    && existing.projectRoot === projectRoot
+    && existing.workspaceEpoch === workspaceEpoch
+    && existing.turnId === turnId) {
     return;
   } else {
-    previousState = STATE_IDLE;
+    previousState = existing.state;
     if (existing.timer) {
       clearTimeout(existing.timer);
     }
   }
 
-  threads.set(threadId, {
+  threads.set(key, {
     state: STATE_IN_FLIGHT,
     workspace,
+    workspaceId,
+    projectRoot,
+    workspaceEpoch,
+    threadId,
+    turnId,
     timer: null,
     lastTransition: Date.now(),
   });
@@ -71,6 +83,10 @@ function handleTurnBegin(event) {
   emit('thread:state_changed', {
     threadId,
     workspace,
+    workspaceId,
+    projectRoot,
+    workspaceEpoch,
+    turnId,
     state: STATE_IN_FLIGHT,
     previousState,
   });
@@ -78,21 +94,27 @@ function handleTurnBegin(event) {
 }
 
 function handleTurnEnd(event) {
-  const { threadId, workspace } = event;
-  if (!threadId) return;
+  const { threadId, workspace, workspaceId, projectRoot, workspaceEpoch, turnId } = event;
+  const key = lifecycleKey(event);
+  if (!key) return;
 
-  const entry = threads.get(threadId);
-  if (!entry) return;
+  const entry = threads.get(key);
+  if (!entry || entry.projectRoot !== projectRoot
+    || entry.workspaceEpoch !== workspaceEpoch || entry.turnId !== turnId) return;
 
   entry.state = STATE_IDLE;
   entry.workspace = workspace;
   entry.lastTransition = Date.now();
 
-  scheduleIdleTimer(threadId);
+  scheduleIdleTimer(key);
 
   emit('thread:state_changed', {
     threadId,
     workspace,
+    workspaceId,
+    projectRoot,
+    workspaceEpoch,
+    turnId,
     state: STATE_IDLE,
     previousState: STATE_IN_FLIGHT,
   });
@@ -105,7 +127,7 @@ function handleSettingsChanged(event) {
   idleTimeoutMinutes = event.value;
 
   let rebased = 0;
-  for (const [threadId, entry] of threads) {
+  for (const [key, entry] of threads) {
     if (entry.state !== STATE_IDLE) continue;
     if (entry.timer) {
       clearTimeout(entry.timer);
@@ -113,7 +135,7 @@ function handleSettingsChanged(event) {
     }
     entry.lastTransition = Date.now();
     if (idleTimeoutMinutes > 0) {
-      scheduleIdleTimer(threadId);
+      scheduleIdleTimer(key);
     }
     rebased++;
   }
@@ -123,30 +145,48 @@ function handleSettingsChanged(event) {
   );
 }
 
-function scheduleIdleTimer(threadId) {
+function scheduleIdleTimer(key) {
   if (idleTimeoutMinutes <= 0) return;
-  const entry = threads.get(threadId);
+  const entry = threads.get(key);
   if (!entry) return;
-  entry.timer = setSafeTimeout(`ThreadLifecycle:idle:${threadId}`, () => onIdleTimerFire(threadId), idleTimeoutMinutes * 60_000);
+  entry.timer = setSafeTimeout(`ThreadLifecycle:idle:${key}`, () => onIdleTimerFire(key), idleTimeoutMinutes * 60_000);
 }
 
-function onIdleTimerFire(threadId) {
-  const entry = threads.get(threadId);
+function onIdleTimerFire(key) {
+  const entry = threads.get(key);
   if (!entry || entry.state !== STATE_IDLE) return;
 
   const idleMs = Date.now() - entry.lastTransition;
-  const workspace = entry.workspace;
+  const { workspace, workspaceId, projectRoot, workspaceEpoch, threadId, turnId } = entry;
 
-  threads.delete(threadId);
+  threads.delete(key);
 
-  emit('thread:idle_expired', { threadId, workspace, idleMs });
+  emit('thread:idle_expired', {
+    threadId, workspace, workspaceId, projectRoot, workspaceEpoch, turnId, idleMs,
+  });
   console.log(
     '[ThreadLifecycle] Thread ' + threadId + ' idle expired after ' + Math.round(idleMs / 60000) + 'min'
   );
 }
 
-function getThreadState(threadId) {
-  return threads.get(threadId) ?? null;
+function lifecycleKey({ workspaceId, projectRoot, workspaceEpoch, threadId } = {}) {
+  if (typeof workspaceId !== 'string' || !workspaceId
+    || typeof projectRoot !== 'string' || !projectRoot
+    || typeof workspaceEpoch !== 'string' || !workspaceEpoch
+    || typeof threadId !== 'string' || !threadId) return null;
+  return JSON.stringify([workspaceId, path.resolve(projectRoot), workspaceEpoch, threadId]);
+}
+
+function getThreadState(workspaceId, threadId, projectRoot = null, workspaceEpoch = null) {
+  if (projectRoot && workspaceEpoch) {
+    return threads.get(lifecycleKey({ workspaceId, projectRoot, workspaceEpoch, threadId })) ?? null;
+  }
+  // Legacy diagnostics/tests may omit the newer identity only when exactly
+  // one live record matches; ambiguity is fail-closed.
+  const matches = [...threads.values()].filter((entry) => (
+    entry.workspaceId === workspaceId && entry.threadId === threadId
+  ));
+  return matches.length === 1 ? matches[0] : null;
 }
 
 function getTrackedCount() {

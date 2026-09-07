@@ -29,12 +29,11 @@ async function buildWorkspaceInit(getProjectRoot, workspacePair = {}) {
   const activeWorkspaceId = Object.prototype.hasOwnProperty.call(workspacePair, 'workspaceId')
     ? workspacePair.workspaceId
     : workspaceController.getActiveWorkspaceId();
-  console.log('[WS] activeWorkspaceId:', activeWorkspaceId, 'workspaces count:', workspaces.length);
+  console.log('[WS] workspace_init_building');
   const { resolveCliConfig } = require('../cli-config');
   const activeRoot = Object.prototype.hasOwnProperty.call(workspacePair, 'repoPath')
     ? workspacePair.repoPath
     : getProjectRoot();
-  console.log('[WS] activeRoot:', activeRoot);
   const cliConfig = activeRoot ? await resolveCliConfig(activeRoot, null) : {};
   let themes = [];
   let activeThemeId = null;

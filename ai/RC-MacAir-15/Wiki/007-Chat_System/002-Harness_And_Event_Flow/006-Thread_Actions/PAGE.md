@@ -23,6 +23,16 @@ Thread actions are user-initiated operations on a visible thread group or one
 underlying chat session. They are not ordinary prompt text and they are not
 provider-native protocol.
 
+Before Thread Groups replace the current route vocabulary, New Chat,
+assistant activation/resume, Rename, Delete, Touch, Warm, and prompt-triggered
+runtime activation are admitted only for a live
+server-private `trusted-shell` connection. This transport guard does not trust
+request fields or event/provenance metadata and does not replace the normal
+workspace/thread ownership checks. Legacy Fork/context cloning is unavailable
+for trusted and untrusted clients and is not part of the action taxonomy.
+Public creation configuration is closed to portable `model` and `variant`
+selection; stored Fork-era provider state is inert at runtime activation.
+
 Examples:
 
 - `move_chat_to_side`

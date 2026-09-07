@@ -2,8 +2,7 @@ const { BaseCLIHarness } = require('../base-cli-harness');
 const { AcpWireParser } = require('./acp-wire-parser');
 const { CodexEventTranslator } = require('./acp-event-translator');
 const { CodexSessionState } = require('./session-state');
-const { emit } = require('../../../event-bus');
-const { normalizeTokenUsage } = require('../../model-catalog');
+const { buildHarnessChildEnvironment } = require('../../child-environment');
 
 /**
  * @typedef {import('../../types').HarnessConfig} HarnessConfig
@@ -75,10 +74,10 @@ class CodexHarness extends BaseCLIHarness {
    * @param {string} projectRoot
    * @returns {string[]}
    */
-  getSpawnArgs(threadId, projectRoot) {
+  getSpawnArgs(threadId, projectRoot, runtimeConfig = this.config) {
     const args = [
-      '--mode', this.config.mode || this.defaultMode,
-      '--model', this.config.model || this.defaultModel
+      '--mode', runtimeConfig.mode || this.defaultMode,
+      '--model', runtimeConfig.model || this.defaultModel
     ];
 
     // Note: codex-acp might not need --acp flag as it IS the acp adapter
@@ -105,29 +104,35 @@ class CodexHarness extends BaseCLIHarness {
    * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<HarnessSession>}
    */
-  async startThread(threadId, projectRoot, scopeContext = {}) {
-    if (!this.cliPath) {
+  async startThread(threadId, projectRoot, scopeContext = {}, threadOptions = {}) {
+    const runtimeConfig = { ...(threadOptions.runtimeConfig || this.config) };
+    const cliPath = runtimeConfig.cliPath || this.cliPath;
+    if (!cliPath) {
       throw new Error(`Harness not initialized. Call initialize() first.`);
     }
 
-    this._captureScope(threadId, projectRoot, scopeContext);
-    const args = this.getSpawnArgs(threadId, projectRoot);
+    const sessionKey = threadOptions.sessionKey
+      || this._createSessionKey(threadId, projectRoot, scopeContext);
+    this._captureScope(sessionKey, projectRoot, scopeContext);
+    const args = this.getSpawnArgs(threadId, projectRoot, runtimeConfig);
     
     const { spawn } = require('child_process');
-    const proc = spawn(this.cliPath, args, {
+    const proc = spawn(cliPath, args, {
       stdio: ['pipe', 'pipe', 'pipe'],
       cwd: projectRoot,
-      env: { ...process.env, TERM: 'xterm-256color' }
+      env: buildHarnessChildEnvironment('codex', {
+        overrides: { TERM: 'xterm-256color' },
+      })
     });
 
-    console.log(`[${this.name}] Spawned ${this.cliPath} (pid: ${proc.pid})`);
+    console.log(`[${this.name}] Spawned ${cliPath} (pid: ${proc.pid})`);
 
     // Set up session state and translator
     const state = new CodexSessionState();
-    this.sessionStates.set(threadId, state);
+    this.sessionStates.set(sessionKey, state);
     
     const translator = new CodexEventTranslator(state);
-    this.translators.set(threadId, translator);
+    this.translators.set(sessionKey, translator);
 
     // Set up wire parsing
     const parser = this.createWireParser();
@@ -143,16 +148,11 @@ class CodexHarness extends BaseCLIHarness {
 
     // Handle parser events
     parser.on('message', (msg) => {
-      const events = this.translateMessage(msg, threadId);
+      const events = this.translateMessage(msg, sessionKey);
       if (events) {
         const eventArray = Array.isArray(events) ? events : [events];
         for (const event of eventArray) {
-          this.emit('event', { threadId, event });
-
-          // Bridge to event bus for turn_end and status updates
-          if (event.type === 'turn_end') {
-            this.bridgeToEventBus(threadId, event);
-          }
+          this.emit('event', { threadId, sessionKey, event });
 
           const kimiMsg = this.serializeToKimiWire(event);
           if (kimiMsg) {
@@ -164,19 +164,19 @@ class CodexHarness extends BaseCLIHarness {
 
     parser.on('parse_error', (line, err, lineNum) => {
       console.error(`[${this.name}] Parse error at line ${lineNum}:`, err.message);
-      this.emit('parse_error', { threadId, line, error: err, lineNum });
+      this.emit('parse_error', { threadId, sessionKey, line, error: err, lineNum });
     });
 
     // Handle process events
     proc.on('error', (err) => {
       console.error(`[${this.name}] Process error (pid: ${proc.pid}):`, err.message);
-      this.emit('error', { threadId, error: err });
+      this.emit('error', { threadId, sessionKey, error: err });
     });
 
     proc.on('exit', (code) => {
       console.log(`[${this.name}] Process exited (pid: ${proc.pid}, code: ${code})`);
-      this.cleanupSession(threadId);
-      this.emit('exit', { threadId, code });
+      this.cleanupSession(sessionKey);
+      this.emit('exit', { threadId, sessionKey, code });
     });
 
     proc.stderr.on('data', (data) => {
@@ -184,12 +184,13 @@ class CodexHarness extends BaseCLIHarness {
     });
 
     // Initialize ACP session
-    await this.initializeAcpSession(proc, threadId, projectRoot);
+    await this.initializeAcpSession(proc, sessionKey, projectRoot);
 
     const self = this;
     /** @type {HarnessSession} */
     const session = {
       threadId,
+      sessionKey,
       process: proc,
       compatibleStdout,
       async *sendMessage(message, options = {}) {
@@ -204,43 +205,18 @@ class CodexHarness extends BaseCLIHarness {
           }
         };
 
-        proc.stdin.write(JSON.stringify(acpRequest) + '\n');
-
-        // Yield events as they arrive
-        const events = [];
-        const eventHandler = ({ threadId: tid, event }) => {
-          if (tid === threadId) {
-            events.push(event);
-          }
-        };
-        
-        self.on('event', eventHandler);
-        
-        try {
-          while (true) {
-            await new Promise(resolve => setTimeout(resolve, 50));
-            const turnEndIndex = events.findIndex(e => e.type === 'turn_end');
-            if (turnEndIndex >= 0) {
-              yield* events;
-              break;
-            }
-            if (events.length > 0) {
-              yield* events.splice(0, events.length);
-            }
-          }
-        } finally {
-          self.off('event', eventHandler);
-        }
+        yield* self._streamCanonicalEvents(threadId, () => {
+          proc.stdin.write(JSON.stringify(acpRequest) + '\n');
+        }, sessionKey);
       },
-      async stop() {
+      async stop(signal = 'SIGTERM') {
         if (!proc.killed) {
-          proc.kill('SIGTERM');
+          proc.kill(signal);
         }
-        self.cleanupSession(threadId);
       }
     };
 
-    this.sessions.set(threadId, session);
+    this.sessions.set(sessionKey, session);
     return session;
   }
 
@@ -248,7 +224,7 @@ class CodexHarness extends BaseCLIHarness {
    * Initialize the ACP session by sending initialize and session/new requests.
    * @private
    */
-  async initializeAcpSession(proc, threadId, projectRoot) {
+  async initializeAcpSession(proc, sessionKey, projectRoot) {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error('Codex ACP initialization timeout'));
@@ -277,7 +253,7 @@ class CodexHarness extends BaseCLIHarness {
             }
             
             if (msg.id === 2 && msg.result?.sessionId) {
-              const state = this.sessionStates.get(threadId);
+              const state = this.sessionStates.get(sessionKey);
               if (state) {
                 state.setSessionInfo(
                   msg.result.sessionId,
@@ -328,8 +304,8 @@ class CodexHarness extends BaseCLIHarness {
    * @param {string} threadId
    * @returns {import('../../types').CanonicalEvent | import('../../types').CanonicalEvent[] | null}
    */
-  translateMessage(msg, threadId) {
-    const translator = this.translators.get(threadId);
+  translateMessage(msg, sessionKey) {
+    const translator = this.translators.get(sessionKey);
     if (!translator) {
       return null;
     }
@@ -337,45 +313,14 @@ class CodexHarness extends BaseCLIHarness {
   }
 
   /**
-   * Bridge canonical events to the shared event bus for audit persistence.
-   * @private
-   */
-  bridgeToEventBus(threadId, event) {
-    if (event.type !== 'turn_end') return;
-
-    const state = this.sessionStates.get(threadId);
-    if (!state) return;
-
-    const meta = event._meta || {};
-    const normalized = normalizeTokenUsage(
-      'codex', meta.model, meta.tokenUsage, null
-    );
-
-    emit('chat:status_update', {
-      threadId,
-      tokenUsage: normalized,
-    });
-
-    emit('chat:turn_end', {
-      workspace: this._getScopeString(threadId),
-      threadId,
-      turnId: event.turnId,
-      userInput: state.currentTurn?.userInput || '',
-      parts: [...state.assistantParts],
-      fullText: event.fullText,
-      hasToolCalls: event.hasToolCalls,
-    });
-  }
-
-  /**
    * Clean up session resources.
    * @private
    */
-  cleanupSession(threadId) {
-    this.sessionStates.delete(threadId);
-    this.translators.delete(threadId);
-    this.sessions.delete(threadId);
-    this.threadScopes.delete(threadId);
+  cleanupSession(sessionKey) {
+    this.sessionStates.delete(sessionKey);
+    this.translators.delete(sessionKey);
+    this.sessions.delete(sessionKey);
+    this.threadScopes.delete(sessionKey);
   }
 
   /**

@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { installTrustedShellBrowserFixture } from '../support/trusted-shell-browser-fixture';
 
 type WireMessage = Record<string, unknown> & { type: string };
 
@@ -154,13 +155,17 @@ async function installBrowserObserver(page: Page) {
         super(url, protocols);
         window.__agentProofSockets.push(this);
         this.addEventListener('message', (event) => {
-          try { window.__agentProofIncoming.push(JSON.parse(String(event.data)) as WireMessage); } catch {}
+          try { window.__agentProofIncoming.push(JSON.parse(String(event.data)) as WireMessage); } catch {
+            // Binary and non-JSON application traffic is outside this observer.
+          }
         });
       }
 
       send(data: string | ArrayBufferLike | Blob | ArrayBufferView) {
         if (typeof data === 'string') {
-          try { window.__agentProofOutgoing.push(JSON.parse(data) as WireMessage); } catch {}
+          try { window.__agentProofOutgoing.push(JSON.parse(data) as WireMessage); } catch {
+            // Binary and non-JSON application traffic is outside this observer.
+          }
         }
         super.send(data);
       }
@@ -186,6 +191,7 @@ async function openFile(page: Page, fileName: string) {
 }
 
 async function preparePage(page: Page) {
+  await installTrustedShellBrowserFixture(page.context());
   await installBrowserObserver(page);
   await page.goto('/');
   await expect(page.locator('button[title="Files"]')).toBeVisible();
@@ -213,6 +219,9 @@ test('agent tool provenance reaches the open File Viewer through v2 and survives
   const fixture = await fixtureConnection();
   try {
     const firstResult = await runAgentFixture(fixture, 'edit-first-a');
+    // The raw standalone fixture connection may select only startup's exact
+    // process-provisioned thread; it cannot create or request a session ID.
+    expect(firstResult.threadId).toBe('isolated-agent-tool-fixture');
     const firstEdge = await waitForEdge(fixture, firstResult.toolCallId as string, 'first_observation');
     const firstActivity = await waitForTool(fixture, firstResult.toolCallId as string, 'completed');
     const firstProjection = await waitForPageMessage(page, (message) => (
@@ -368,6 +377,8 @@ test('agent tool provenance reaches the open File Viewer through v2 and survives
     const Database = require('../../../fusion-studio-server/node_modules/better-sqlite3');
     const db = new Database(path.join(appData, 'server-data', 'fusion.db'), { readonly: true });
     try {
+      expect(db.prepare('SELECT thread_id FROM threads ORDER BY thread_id').all())
+        .toEqual([{ thread_id: 'isolated-agent-tool-fixture' }]);
       await expect.poll(() => db.prepare("SELECT COUNT(*) AS count FROM event_log WHERE event_type='agent.tool_completed'").get().count)
         .toBe(7);
       await expect.poll(() => db.prepare("SELECT COUNT(*) AS count FROM event_log WHERE event_type='resource.state_observed'").get().count)
@@ -379,6 +390,75 @@ test('agent tool provenance reaches the open File Viewer through v2 and survives
     } finally {
       db.close();
     }
+
+    // A workspace switch activates the new server-owned session pair before
+    // this raw fixture socket installs a new panel/ThreadManager. The fixture
+    // must reject that stale-manager window before thread hydration, turn
+    // authority, filesystem mutation, canonical publication, or fan-out.
+    const workspaces = JSON.parse(process.env.FUSION_PROVENANCE_TEST_WORKSPACES || '[]') as Array<{
+      id: string;
+      repoPath: string;
+    }>;
+    const workspaceB = workspaces[1];
+    expect(workspaceB).toEqual({
+      id: expect.any(String),
+      repoPath: expect.any(String),
+      label: expect.any(String),
+    });
+    const switchStart = fixture.messages.length;
+    fixture.socket.send(JSON.stringify({
+      type: 'workspace:switch_requested',
+      workspaceId: workspaceB.id,
+    }));
+    await waitForMessage(fixture.messages, (message) => (
+      message.type === 'workspace:switched' && message.workspaceId === workspaceB.id
+    ), switchStart);
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    const snapshotEffects = () => {
+      const reader = new Database(path.join(appData, 'server-data', 'fusion.db'), { readonly: true });
+      try {
+        return {
+          threads: reader.prepare('SELECT thread_id, workspace_id, status, resumed_at, updated_at FROM threads ORDER BY thread_id').all(),
+          exchanges: reader.prepare('SELECT COUNT(*) AS count FROM exchanges').get().count,
+          ledger: reader.prepare('SELECT COUNT(*) AS count FROM event_log').get().count,
+          activities: reader.prepare('SELECT COUNT(*) AS count FROM agent_tool_activities').get().count,
+          edges: reader.prepare('SELECT COUNT(*) AS count FROM agent_tool_resource_edges').get().count,
+          snapshots: reader.prepare('SELECT COUNT(*) AS count FROM agent_resource_snapshots').get().count,
+          provenance: reader.prepare('SELECT COUNT(*) AS count FROM resource_provenance_events').get().count,
+        };
+      } finally {
+        reader.close();
+      }
+    };
+    const aPath = path.join(workspaces[0].repoPath, 'target', 'live.txt');
+    const bPath = path.join(workspaceB.repoPath, 'target', 'live.txt');
+    const effectsBefore = snapshotEffects();
+    const filesBefore = [fs.readFileSync(aPath, 'utf8'), fs.readFileSync(bPath, 'utf8')];
+    const fixtureFramesBefore = fixture.messages.length;
+    const pageFramesBefore = await page.evaluate(() => window.__agentProofIncoming.length);
+    const denied = await sendAndWait(fixture, {
+      type: 'provenance:test:agent_tool',
+      version: 1,
+      requestId: 'fixture-after-workspace-switch',
+      nonce,
+      fixture: 'edit-first-a',
+    }, (message) => message.type === 'error' && message.message === 'No active workspace');
+    expect(denied).toEqual({ type: 'error', message: 'No active workspace' });
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    expect(snapshotEffects()).toEqual(effectsBefore);
+    expect([fs.readFileSync(aPath, 'utf8'), fs.readFileSync(bPath, 'utf8')]).toEqual(filesBefore);
+    expect(fixture.messages.slice(fixtureFramesBefore).some((message) => (
+      message.type === 'provenance:test:agent_tool_result'
+      || message.type === 'agent:activity'
+      || message.type === 'resource:changed'
+    ))).toBe(false);
+    expect((await page.evaluate((start) => (
+      window.__agentProofIncoming.slice(start)
+    ), pageFramesBefore)).some((message) => (
+      message.type === 'agent:activity' || message.type === 'resource:changed'
+    ))).toBe(false);
 
     const incoming = await page.evaluate(() => window.__agentProofIncoming);
     expect(incoming.some((message) => message.type === 'file_changed')).toBe(false);
@@ -394,6 +474,7 @@ test('agent tool provenance reaches the open File Viewer through v2 and survives
 
 test('same database restart retains activity and exact locked authority', async ({ page }) => {
   test.skip(scenario !== 'agent-tool-restart');
+  await installTrustedShellBrowserFixture(page.context());
   await installBrowserObserver(page);
   await page.goto('/');
   await assertStartupAudit();

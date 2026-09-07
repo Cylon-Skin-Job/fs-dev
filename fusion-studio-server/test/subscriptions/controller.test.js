@@ -421,6 +421,7 @@ describe('governed subscription controller lifecycle and delivery', () => {
       const requestShutdown = createShutdownHandler({
         server: { close() {}, closeIdleConnections() {}, closeAllConnections() {} },
         sessions: new Map(),
+        terminateTransports() {},
         closeWatchers: async () => true,
         beginQuiesce: () => harness.controller.quiesce(),
         stopSubscriptions: () => harness.controller.stop(),

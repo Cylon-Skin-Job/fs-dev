@@ -11,13 +11,21 @@
  *             -> real event bus chat:* publications
  *
  * Mocked infrastructure edges ONLY:
- *   - ThreadWebSocketHandler getState/handleMessageSend (persistence edge)
+ *   - ThreadWebSocketHandler state/activation/message persistence edges
  *   - spawnAndSetupWire (child-process edge; returns fake canonical wires)
  * The process-manager registry and event bus are REAL.
  */
 
 jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
+  captureActivationBinding: jest.fn(),
   getState: jest.fn(),
+  isActivationBindingCurrent: jest.fn((ws, binding) => (
+    binding?.session?.workspaceBindingState === 'active'
+    && binding.session.currentWorkspaceId === binding.workspaceId
+    && binding.session.workspaceEpoch === binding.workspaceEpoch
+    && binding.session.projectRoot === binding.projectRoot
+  )),
+  activateThreadSession: jest.fn(() => Promise.resolve()),
   handleMessageSend: jest.fn(),
   getCurrentThreadManager: jest.fn(() => null),
   getCurrentThreadId: jest.fn(() => null),
@@ -121,6 +129,8 @@ describe('public prompt route with canonical drain ownership', () => {
     session = {
       connectionId: 'conn-integration',
       currentWorkspaceId: WORKSPACE_ID,
+      workspaceEpoch: 'workspace-epoch-integration',
+      workspaceBindingState: 'active',
       projectRoot: PROJECT_ROOT,
       currentThreadId: null,
       currentScope: null,
@@ -128,14 +138,20 @@ describe('public prompt route with canonical drain ownership', () => {
       wire: null,
       buffer: '',
     };
+    Object.defineProperty(session, 'connectionRole', {
+      value: 'trusted-shell',
+      enumerable: false,
+    });
 
     const manager = {
       workspaceId: WORKSPACE_ID,
+      projectRoot: PROJECT_ROOT,
       getThread: jest.fn(async id => ({ threadId: id, entry: { name: 'Thread' } })),
       touchSession: jest.fn(),
       addMessage: jest.fn(async () => ({})),
       openSession: jest.fn(async () => ({})),
       closeSession: jest.fn(async () => ({})),
+      getSession: jest.fn(),
       recordSavedExchange: jest.fn(async () => ({})),
       syncChatlogMirrorFromHistory: jest.fn(async () => ({})),
       index: { touch: jest.fn(async () => ({})) },
@@ -150,6 +166,20 @@ describe('public prompt route with canonical drain ownership', () => {
     };
     ThreadWebSocketHandler.getState.mockReturnValue(wsState);
     ThreadWebSocketHandler.handleMessageSend.mockResolvedValue(true);
+    const managerSessions = new Map();
+    manager.getSession.mockImplementation(threadId => managerSessions.get(threadId) || null);
+    ThreadWebSocketHandler.activateThreadSession.mockImplementation(async (owner, threadId, wire) => {
+      managerSessions.set(threadId, { ws: owner, wireProcess: wire });
+      wsState.threadId = threadId;
+      wsState.activatedThreadId = threadId;
+    });
+    ThreadWebSocketHandler.captureActivationBinding.mockImplementation((owner, ownerSession) => ({
+      state: wsState,
+      session: ownerSession,
+      projectRoot: PROJECT_ROOT,
+      workspaceId: WORKSPACE_ID,
+      workspaceEpoch: ownerSession.workspaceEpoch,
+    }));
 
     fakeWires = new Map([
       [THREAD_A, makeGatedHarnessWire('A')],
@@ -206,11 +236,21 @@ describe('public prompt route with canonical drain ownership', () => {
   afterEach(() => {
     for (const unsubscribe of unsubscribeFns || []) unsubscribe();
     unsubscribeFns = [];
-    for (const threadId of fakeWires?.keys() || []) unregisterWire(threadId);
+    for (const threadId of fakeWires?.keys() || []) unregisterWire(threadId, {
+      workspaceId: WORKSPACE_ID,
+      projectRoot: PROJECT_ROOT,
+      workspaceEpoch: session?.workspaceEpoch,
+    });
   });
 
   function runtimeKey(threadId) {
-    return { workspaceId: WORKSPACE_ID, scope: 'project', threadId };
+    return {
+      workspaceId: WORKSPACE_ID,
+      projectRoot: PROJECT_ROOT,
+      workspaceEpoch: session.workspaceEpoch,
+      scope: 'project',
+      threadId,
+    };
   }
 
   async function sendPrompt(payload) {

@@ -38,6 +38,7 @@ Current file/module map for chat work.
 | `fusion-studio-server/lib/thread/thread-crud.js` | `thread:open`, `thread:open-assistant`, create/open policy |
 | `fusion-studio-server/lib/thread/thread-runtime-controller.js` | prompt acceptance, warm/send, stop |
 | `fusion-studio-server/lib/thread/thread-runtime-manager.js` | runtime state and live turn ownership |
+| `fusion-studio-server/lib/thread/thread-lifecycle-controller.js` | exact workspace/thread/turn lifecycle state and idle timers |
 | `fusion-studio-server/lib/thread/live-turn-snapshot.js` | in-memory live turn snapshot |
 | `fusion-studio-server/lib/thread/canonical-drain-context.js` | immutable accepted route data and exact non-serializable drain control |
 | `fusion-studio-server/lib/thread/turn-terminal-error.js` | fixed safe terminal-error catalog and validator |
@@ -58,14 +59,35 @@ Current file/module map for chat work.
 | `fusion-studio-server/lib/wire/canonical-harness-event-bridge.js` | canonical harness event bridge |
 | `fusion-studio-server/lib/wire/canonical-chat-event-applier.js` | chat mutation, event bus, live snapshot, persistence handoff |
 | `fusion-studio-server/lib/wire/wire-broadcaster.js` | event bus to WebSocket routing |
+| `fusion-studio-server/lib/ws/workspace-broadcaster.js` | exact-bound workspace and thread-lifecycle fan-out |
+| `fusion-studio-server/lib/event-bus.js` | legacy bus plus bounded exact-turn asynchronous-effect drain |
 | `fusion-studio-server/lib/ws/client-message-router.js` | client message dispatch |
 | `fusion-studio-server/lib/ws/thread-ws-handlers.js` | thread websocket handlers |
 | `fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js` | explicit diagnostic request route and fixed unavailable response |
+| `fusion-studio-server/lib/shell-bootstrap.js` | bounded one-read inherited launch-master bootstrap owner |
+| `fusion-studio-server/lib/ws/shell-auth.js` | per-connection challenge, HMAC verification, and private role owner |
+| `fusion-studio-server/lib/ws/shell-auth-dispatch.js` | authentication-before-initialization transport boundary |
+| `fusion-studio-server/lib/ws/deferred-product-connection.js` | proof-gated product graph construction and exactly-once close cleanup |
+| `fusion-studio-server/lib/ws/product-session-registry.js` | post-initialization product-recipient publication boundary |
+| `fusion-studio-server/lib/ws/server-runtime-activation.js` | startup-complete barrier before per-connection product initialization |
+| `fusion-studio-server/lib/ws/transport-connection-registry.js` | all-upgraded-socket lifecycle and shutdown owner, separate from product recipients |
+| `fusion-studio-server/lib/ws/redaction-map.js` | recursive authentication-field and diagnostic-ingress suppression |
+| `fusion-studio-server/lib/ws/privileged-thread-guard.js` | private live-role admission for current privileged thread routes and unconditional Fork denial |
+| `fusion-studio-server/lib/harness/child-environment.js` | closed common plus adapter-specific environment policy for every harness/CLI child |
+| `fusion-studio-server/lib/thread/thread-harness-config-policy.js` | portable public selection validation and stored Fork-state runtime sanitization |
 
 ## Client
 
 | File | Role |
 |---|---|
+| `fusion-studio-client/electron/runtime-descriptor.cjs` | immutable launch-generation endpoint descriptor |
+| `fusion-studio-client/electron/shell-protocol.cjs` | exact `fusion-shell://app` asset and CSP owner |
+| `fusion-studio-client/electron/shell-navigation-policy.cjs` | main/subframe/popup shell-origin boundary |
+| `fusion-studio-client/electron/runtime-ipc.cjs` | current-main-frame-only descriptor IPC |
+| `fusion-studio-client/electron/shell-launch-authority.cjs` | per-launch master, generation, and one-use proof signer |
+| `fusion-studio-client/electron/shell-proof-ipc.cjs` | guarded current-main-frame signing IPC |
+| `fusion-studio-client/src/lib/runtime-transport.ts` | validated renderer endpoint, socket, HTTP/resource, and generation-cancellation owner |
+| `fusion-studio-client/src/lib/shell-auth-client.ts` | transient renderer challenge/proof handshake and pre-auth initialization buffer |
 | `fusion-studio-client/src/components/chat/useChatArea.ts` | chat handlers, send/stop state, warm intent |
 | `fusion-studio-client/src/components/chat/ChatLinkAttachments.tsx` | pending send-to-chat attachment pills |
 | `fusion-studio-client/src/components/ChatInput.tsx` | textarea, send key handling, filename autocomplete acceptance |
@@ -100,6 +122,11 @@ Current file/module map for chat work.
 | `fusion-studio-client/src/lib/reveal/` | reveal engine |
 | `fusion-studio-client/src/lib/text/` | markdown/text rendering |
 | `fusion-studio-client/src/lib/timing.ts` | timing profile defaults |
+
+`fusion-studio-server/lib/startup-loopback.js` validates the exact listener
+host/port boundary. `fusion-studio-server/lib/http/shell-cors.js` is the sole
+HTTP CORS grant for the shell origin. Connection authentication is separate
+from both, and no authentication owner publishes a fact.
 
 ## Removed Paths
 

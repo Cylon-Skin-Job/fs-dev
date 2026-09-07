@@ -49,8 +49,27 @@ class ThreadIndex {
    */
   async get(threadId) {
     const db = getDb();
-    const row = await db('threads').where('thread_id', threadId).first();
+    const row = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .first();
     return row ? this._toEntry(row) : null;
+  }
+
+  /**
+   * Distinguish a stale ID from an ID owned by another workspace without
+   * returning any foreign thread data to the caller.
+   * @param {string} threadId
+   * @returns {Promise<boolean>}
+   */
+  async existsOutsideWorkspace(threadId) {
+    const db = getDb();
+    const row = await db('threads')
+      .select('workspace_id', 'scope')
+      .where('thread_id', threadId)
+      .first();
+    return Boolean(row && (row.workspace_id !== this.workspaceId || row.scope !== 'project'));
   }
 
   /**
@@ -117,7 +136,11 @@ class ThreadIndex {
 
     if (Object.keys(dbUpdates).length === 0) return this.get(threadId);
 
-    const count = await db('threads').where('thread_id', threadId).update(dbUpdates);
+    const count = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .update(dbUpdates);
     if (count === 0) return null;
 
     return this.get(threadId);
@@ -156,6 +179,8 @@ class ThreadIndex {
     const db = getDb();
     const count = await db('threads')
       .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
       .increment('message_count', 1);
     if (count === 0) return null;
     return this.get(threadId);
@@ -176,7 +201,11 @@ class ThreadIndex {
    */
   async delete(threadId) {
     const db = getDb();
-    const count = await db('threads').where('thread_id', threadId).del();
+    const count = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .del();
     return count > 0;
   }
 

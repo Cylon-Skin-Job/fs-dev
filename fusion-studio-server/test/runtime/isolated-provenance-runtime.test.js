@@ -8,6 +8,7 @@ const childProcess = require('child_process');
 const {
   EXPECTED_RUNTIME_EFFECTS,
   EXPECTED_STARTUP_EFFECTS,
+  AGENT_TOOL_FIXTURE_THREAD_ID,
   MARKER,
   createIsolatedProvenanceRuntime,
   installEarlyIsolatedProvenanceGuards,
@@ -80,7 +81,30 @@ test('production-default path is inert and preserves the owner', async () => {
   expect(starts).toBe(2);
   runtime.restoreObservationGuards();
   await expect(runtime.initializeProfile()).resolves.toBeUndefined();
+  await expect(runtime.provisionAgentToolThread()).resolves.toBeNull();
   await expect(runtime.finalizeStartupAudit()).resolves.toBeUndefined();
+});
+
+test('isolated agent-tool thread identity is process-owned and not request-selected', async () => {
+  const input = fixture();
+  const runtime = createIsolatedProvenanceRuntime({
+    environment: input.environment,
+    port: 43127,
+    dbPath: input.dbPath,
+    repositoryRoot: '/definitely-separate/repository',
+    applicationSupport: '/definitely-separate/Application Support',
+  });
+  const provision = jest.fn().mockResolvedValue(undefined);
+
+  await expect(runtime.provisionAgentToolThread(provision))
+    .resolves.toBe(AGENT_TOOL_FIXTURE_THREAD_ID);
+  expect(provision).toHaveBeenCalledWith({
+    workspaceId: 'A',
+    projectRoot: expect.stringMatching(/workspace-a$/),
+    threadId: AGENT_TOOL_FIXTURE_THREAD_ID,
+  });
+  await expect(runtime.provisionAgentToolThread())
+    .rejects.toThrow('thread provisioner is required');
 });
 
 test('isolated mode records every routed startup factory and proves zero invocation', async () => {

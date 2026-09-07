@@ -32,6 +32,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
   sendDocumentEmail: (payload) => invokeDocumentChannel('send-document-email', 'email', payload),
   printDocument: (payload) => invokeDocumentChannel('print-document', 'print', payload),
   showEmojiPanel: () => ipcRenderer.invoke('show-emoji-panel'),
+  getRuntimeDescriptor: () => ipcRenderer.invoke('fusion-runtime:get'),
+  authorizeShellChallenge: (challenge, rendererNonce) => ipcRenderer.invoke('fusion-shell-auth:sign', { challenge, rendererNonce }),
+  onRuntimeDescriptorChanged: (callback) => {
+    const listener = (_event, descriptor) => callback(descriptor);
+    ipcRenderer.on('fusion-runtime:changed', listener);
+    return () => ipcRenderer.removeListener('fusion-runtime:changed', listener);
+  },
   onMenuAction: (callback) => {
     const listener = (_event, payload) => callback(payload);
     ipcRenderer.on('menu-action', listener);

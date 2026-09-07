@@ -3,8 +3,7 @@ const { AcpWireParser } = require('./acp-wire-parser');
 const { AcpEventTranslator } = require('./acp-event-translator');
 const { GeminiSessionState } = require('./session-state');
 const { PassThrough } = require('stream');
-const { emit } = require('../../../event-bus');
-const { normalizeTokenUsage } = require('../../model-catalog');
+const { buildHarnessChildEnvironment } = require('../../child-environment');
 
 /**
  * @typedef {import('../../types').HarnessConfig} HarnessConfig
@@ -73,14 +72,14 @@ class GeminiHarness extends BaseCLIHarness {
    * @param {string} projectRoot
    * @returns {string[]}
    */
-  getSpawnArgs(threadId, projectRoot) {
+  getSpawnArgs(threadId, projectRoot, runtimeConfig = this.config) {
     const args = [
       '--acp',
-      '--approval-mode', this.config.mode || this.defaultMode
+      '--approval-mode', runtimeConfig.mode || this.defaultMode
     ];
 
-    if (this.config.model) {
-      args.push('--model', this.config.model);
+    if (runtimeConfig.model) {
+      args.push('--model', runtimeConfig.model);
     }
 
     return args;
@@ -103,29 +102,35 @@ class GeminiHarness extends BaseCLIHarness {
    * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<HarnessSession>}
    */
-  async startThread(threadId, projectRoot, scopeContext = {}) {
-    if (!this.cliPath) {
+  async startThread(threadId, projectRoot, scopeContext = {}, threadOptions = {}) {
+    const runtimeConfig = { ...(threadOptions.runtimeConfig || this.config) };
+    const cliPath = runtimeConfig.cliPath || this.cliPath;
+    if (!cliPath) {
       throw new Error(`Harness not initialized. Call initialize() first.`);
     }
 
-    this._captureScope(threadId, projectRoot, scopeContext);
-    const args = this.getSpawnArgs(threadId, projectRoot);
+    const sessionKey = threadOptions.sessionKey
+      || this._createSessionKey(threadId, projectRoot, scopeContext);
+    this._captureScope(sessionKey, projectRoot, scopeContext);
+    const args = this.getSpawnArgs(threadId, projectRoot, runtimeConfig);
     
     const { spawn } = require('child_process');
-    const proc = spawn(this.cliPath, args, {
+    const proc = spawn(cliPath, args, {
       stdio: ['pipe', 'pipe', 'pipe'],
       cwd: projectRoot,
-      env: { ...process.env, TERM: 'xterm-256color' }
+      env: buildHarnessChildEnvironment('gemini', {
+        overrides: { TERM: 'xterm-256color' },
+      })
     });
 
-    console.log(`[${this.name}] Spawned ${this.cliPath} (pid: ${proc.pid})`);
+    console.log(`[${this.name}] Spawned ${cliPath} (pid: ${proc.pid})`);
 
     // Set up session state and translator
     const state = new GeminiSessionState();
-    this.sessionStates.set(threadId, state);
+    this.sessionStates.set(sessionKey, state);
     
     const translator = new AcpEventTranslator(state);
-    this.translators.set(threadId, translator);
+    this.translators.set(sessionKey, translator);
 
     // Set up wire parsing
     const parser = this.createWireParser();
@@ -140,13 +145,11 @@ class GeminiHarness extends BaseCLIHarness {
 
     // Handle parser events
     parser.on('message', (msg) => {
-      const events = this.translateMessage(msg, threadId);
+      const events = this.translateMessage(msg, sessionKey);
       if (events) {
         const eventArray = Array.isArray(events) ? events : [events];
         for (const event of eventArray) {
-          this.emit('event', { threadId, event });
-          this.bridgeToEventBus(threadId, event);
-
+          this.emit('event', { threadId, sessionKey, event });
           // Emit Kimi-compatible JSON on compatibleStdout for server.js
           const kimiMsg = this.serializeToKimiWire(event);
           if (kimiMsg) {
@@ -158,19 +161,19 @@ class GeminiHarness extends BaseCLIHarness {
 
     parser.on('parse_error', (line, err, lineNum) => {
       console.error(`[${this.name}] Parse error at line ${lineNum}:`, err.message);
-      this.emit('parse_error', { threadId, line, error: err, lineNum });
+      this.emit('parse_error', { threadId, sessionKey, line, error: err, lineNum });
     });
 
     // Handle process events
     proc.on('error', (err) => {
       console.error(`[${this.name}] Process error (pid: ${proc.pid}):`, err.message);
-      this.emit('error', { threadId, error: err });
+      this.emit('error', { threadId, sessionKey, error: err });
     });
 
     proc.on('exit', (code) => {
       console.log(`[${this.name}] Process exited (pid: ${proc.pid}, code: ${code})`);
-      this.cleanupSession(threadId);
-      this.emit('exit', { threadId, code });
+      this.cleanupSession(sessionKey);
+      this.emit('exit', { threadId, sessionKey, code });
     });
 
     proc.stderr.on('data', (data) => {
@@ -182,11 +185,13 @@ class GeminiHarness extends BaseCLIHarness {
     });
 
     // Initialize ACP session
-    await this.initializeAcpSession(proc, threadId, projectRoot);
+    await this.initializeAcpSession(proc, sessionKey, projectRoot);
 
+    const self = this;
     /** @type {HarnessSession} */
     const session = {
       threadId,
+      sessionKey,
       process: proc,
       compatibleStdout,
       async *sendMessage(message, options = {}) {
@@ -202,43 +207,18 @@ class GeminiHarness extends BaseCLIHarness {
           }
         };
 
-        proc.stdin.write(JSON.stringify(acpRequest) + '\n');
-
-        // Yield events as they arrive via the 'event' emitter
-        // This is handled by the parent through the event bus
-        // The session returns an async iterator that collects events
-        const events = [];
-        const eventHandler = ({ threadId: tid, event }) => {
-          if (tid === threadId) {
-            events.push(event);
-          }
-        };
-        
-        this.on('event', eventHandler);
-        
-        try {
-          // Simple implementation: wait for turn_end
-          while (true) {
-            await new Promise(resolve => setTimeout(resolve, 100));
-            const turnEndIndex = events.findIndex(e => e.type === 'turn_end');
-            if (turnEndIndex >= 0) {
-              yield* events;
-              break;
-            }
-          }
-        } finally {
-          this.off('event', eventHandler);
-        }
+        yield* self._streamCanonicalEvents(threadId, () => {
+          proc.stdin.write(JSON.stringify(acpRequest) + '\n');
+        }, sessionKey);
       },
-      async stop() {
+      async stop(signal = 'SIGTERM') {
         if (!proc.killed) {
-          proc.kill('SIGTERM');
+          proc.kill(signal);
         }
-        this.cleanupSession(threadId);
       }
     };
 
-    this.sessions.set(threadId, session);
+    this.sessions.set(sessionKey, session);
     return session;
   }
 
@@ -246,7 +226,7 @@ class GeminiHarness extends BaseCLIHarness {
    * Initialize the ACP session by sending initialize and session/new requests.
    * @private
    */
-  async initializeAcpSession(proc, threadId, projectRoot) {
+  async initializeAcpSession(proc, sessionKey, projectRoot) {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error('ACP initialization timeout'));
@@ -276,7 +256,7 @@ class GeminiHarness extends BaseCLIHarness {
             }
             
             if (msg.id === 2 && msg.result?.sessionId) {
-              const state = this.sessionStates.get(threadId);
+              const state = this.sessionStates.get(sessionKey);
               if (state) {
                 state.setSessionInfo(
                   msg.result.sessionId,
@@ -332,8 +312,8 @@ class GeminiHarness extends BaseCLIHarness {
    * @param {string} threadId
    * @returns {import('../../types').CanonicalEvent | import('../../types').CanonicalEvent[] | null}
    */
-  translateMessage(msg, threadId) {
-    const translator = this.translators.get(threadId);
+  translateMessage(msg, sessionKey) {
+    const translator = this.translators.get(sessionKey);
     if (!translator) {
       console.warn(`[${this.name}] No translator found for thread ${threadId}`);
       return null;
@@ -342,45 +322,14 @@ class GeminiHarness extends BaseCLIHarness {
   }
 
   /**
-   * Bridge canonical events to the shared event bus for audit persistence.
-   * @private
-   */
-  bridgeToEventBus(threadId, event) {
-    if (event.type !== 'turn_end') return;
-
-    const state = this.sessionStates.get(threadId);
-    if (!state) return;
-
-    const meta = event._meta || {};
-    const normalized = normalizeTokenUsage(
-      'gemini', meta.model, meta.tokenUsage, null
-    );
-
-    emit('chat:status_update', {
-      threadId,
-      tokenUsage: normalized,
-    });
-
-    emit('chat:turn_end', {
-      workspace: this._getScopeString(threadId),
-      threadId,
-      turnId: event.turnId,
-      userInput: state.currentTurn?.userInput || '',
-      parts: [...state.assistantParts],
-      fullText: event.fullText,
-      hasToolCalls: event.hasToolCalls,
-    });
-  }
-
-  /**
    * Clean up session resources.
    * @private
    */
-  cleanupSession(threadId) {
-    this.sessionStates.delete(threadId);
-    this.translators.delete(threadId);
-    this.sessions.delete(threadId);
-    this.threadScopes.delete(threadId);
+  cleanupSession(sessionKey) {
+    this.sessionStates.delete(sessionKey);
+    this.translators.delete(sessionKey);
+    this.sessions.delete(sessionKey);
+    this.threadScopes.delete(sessionKey);
   }
 
   /**
@@ -389,7 +338,12 @@ class GeminiHarness extends BaseCLIHarness {
    * @returns {GeminiSessionState | undefined}
    */
   getSessionState(threadId) {
-    return this.sessionStates.get(threadId);
+    const exact = this.sessionStates.get(threadId);
+    if (exact) return exact;
+    const matches = [...this.sessions.entries()]
+      .filter(([, session]) => session.threadId === threadId)
+      .map(([sessionKey]) => this.sessionStates.get(sessionKey));
+    return matches.length === 1 ? matches[0] : undefined;
   }
 
   /**

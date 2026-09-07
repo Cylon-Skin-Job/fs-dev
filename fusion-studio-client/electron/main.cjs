@@ -16,6 +16,16 @@ const { stopChildProcess } = require('./process-shutdown.cjs');
 const { writePort, clearPort } = require('./port-file.cjs');
 const { registerScheme, registerHandler, setWorkspaceRoot } = require('./protocol-handler.cjs');
 const { createRendererConsoleLogger } = require('./renderer-console-logging.cjs');
+const { createRuntimeDescriptorOwner } = require('./runtime-descriptor.cjs');
+const { registerRuntimeDescriptorIpc } = require('./runtime-ipc.cjs');
+const { createAuthorizedIpcMain } = require('./authorized-ipc.cjs');
+const { createShellLaunchAuthority } = require('./shell-launch-authority.cjs');
+const { registerShellProofIpc } = require('./shell-proof-ipc.cjs');
+const { SHELL_URL, registerShellHandler, resolveShellRoot } = require('./shell-protocol.cjs');
+const {
+  attachShellNavigationPolicy,
+  installSubframeHeaderPolicy,
+} = require('./shell-navigation-policy.cjs');
 
 // MUST be called before app is ready — registers scheme privileges
 registerScheme();
@@ -32,6 +42,9 @@ let documentHandlers = null;
 let cleanupPromise = null;
 let quitCleanupComplete = false;
 let isQuitting = false;
+const runtimeDescriptorOwner = createRuntimeDescriptorOwner();
+let runtimeDescriptorIpc = null;
+let shellLaunchAuthority = null;
 let workspaceMenuState = {
   workspaces: [],
   activeWorkspaceId: null,
@@ -88,27 +101,23 @@ function logElectron(level, message) {
 /** Log navigation failures with Chromium net error codes (e.g. ERR_CONNECTION_REFUSED = -102). */
 function attachNavigationDiagnostics(webContents) {
   webContents.on('did-start-loading', () => {
-    logElectron('info', `did-start-loading url=${webContents.getURL()}`);
+    logElectron('info', 'navigation-load-started');
   });
 
   webContents.on('did-finish-load', () => {
-    logElectron('info', `did-finish-load url=${webContents.getURL()}`);
+    logElectron('info', 'navigation-load-finished');
   });
 
   webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL, isMainFrame) => {
     if (!isMainFrame) return;
-    logElectron(
-      'error',
-      `did-fail-load code=${errorCode} (${errorDescription}) url=${validatedURL}`,
-    );
+    const boundedCode = Number.isInteger(errorCode) ? errorCode : 'unknown';
+    logElectron('error', `navigation-load-failed stage=committed code=${boundedCode}`);
   });
 
   webContents.on('did-fail-provisional-load', (event, errorCode, errorDescription, validatedURL, isMainFrame) => {
     if (!isMainFrame) return;
-    logElectron(
-      'error',
-      `did-fail-provisional-load code=${errorCode} (${errorDescription}) url=${validatedURL}`,
-    );
+    const boundedCode = Number.isInteger(errorCode) ? errorCode : 'unknown';
+    logElectron('error', `navigation-load-failed stage=provisional code=${boundedCode}`);
   });
 }
 
@@ -126,23 +135,29 @@ function nudgeRendererRepaint(win) {
 function handleServerExit(code) {
   if (isQuitting) return;
   // Called on unexpected crash after ready signal
-  const win = BrowserWindow.getFocusedWindow() || mainWindow;
-  if (!win || win.isDestroyed()) return;
+  const win = mainWindow && !mainWindow.isDestroyed() ? mainWindow : null;
 
-  dialog.showMessageBox(win, {
-    type: 'info',
-    title: 'Fusion Studio',
-    message: 'Server crashed, restarting…',
-    buttons: [],
-    noLink: true,
-  });
+  if (win) {
+    dialog.showMessageBox(win, {
+      type: 'info',
+      title: 'Fusion Studio',
+      message: 'Server crashed, restarting…',
+      buttons: [],
+      noLink: true,
+    });
+  }
 
   clearPort();
+  runtimeDescriptorIpc?.publish(null);
+  runtimeDescriptorIpc?.clearMainFrame();
+  runtimeDescriptorOwner.clear();
+  shellLaunchAuthority = createShellLaunchAuthority();
 
   spawnServer({
     onExit: handleServerExit,
     resourcesPath: getElectronResourcesRoot(),
     userDataPath: getServerUserDataPath(),
+    bootstrapAuthority: shellLaunchAuthority,
   })
     .then(async ({ port, process: proc }) => {
       if (isQuitting) {
@@ -153,7 +168,9 @@ function handleServerExit(code) {
       }
       serverProcess = proc;
       writePort(port);
-      win.webContents.loadURL(`http://localhost:${port}`);
+      runtimeDescriptorOwner.activate(port, shellLaunchAuthority.generation);
+      const reloadWindow = mainWindow && !mainWindow.isDestroyed() ? mainWindow : null;
+      if (reloadWindow) reloadWindow.webContents.loadURL(SHELL_URL);
       // Close the dialog — Electron dialogs auto-close when parent navigates
     })
     .catch((err) => {
@@ -179,7 +196,7 @@ function getServerUserDataPath() {
   return null;
 }
 
-function createWindow(port) {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
     height: 1000,
@@ -218,32 +235,19 @@ function createWindow(port) {
 
   const wc = mainWindow.webContents;
   attachNavigationDiagnostics(wc);
+  attachShellNavigationPolicy(wc, {
+    log: (code) => logElectron('error', code),
+    onMainFrameNavigation: () => runtimeDescriptorIpc?.clearMainFrame(),
+  });
+  wc.on('did-finish-load', () => {
+    const descriptor = runtimeDescriptorOwner.getCurrent();
+    if (!descriptor || !runtimeDescriptorIpc?.commitMainFrame()) return;
+    runtimeDescriptorIpc.publish(descriptor);
+  });
 
   // Allow any website to render inside iframes by stripping frame-blocking headers.
   // This only affects <iframe> subframe requests, not the main app window.
-  wc.session.webRequest.onHeadersReceived(
-    { urls: ['<all_urls>'] },
-    (details, callback) => {
-      if (details.resourceType !== 'subFrame') {
-        callback({ responseHeaders: details.responseHeaders });
-        return;
-      }
-      const headers = { ...details.responseHeaders };
-      delete headers['X-Frame-Options'];
-      delete headers['x-frame-options'];
-      if (headers['Content-Security-Policy']) {
-        headers['Content-Security-Policy'] = headers['Content-Security-Policy'].map(
-          (policy) => policy.replace(/frame-ancestors[^;]*;?/gi, '').trim()
-        ).filter(Boolean);
-      }
-      if (headers['content-security-policy']) {
-        headers['content-security-policy'] = headers['content-security-policy'].map(
-          (policy) => policy.replace(/frame-ancestors[^;]*;?/gi, '').trim()
-        ).filter(Boolean);
-      }
-      callback({ responseHeaders: headers });
-    }
-  );
+  installSubframeHeaderPolicy(wc);
 
   wc.on('render-process-gone', (_event, details) => {
     logElectron('error', `render-process-gone reason=${details.reason} exitCode=${details.exitCode}`);
@@ -259,9 +263,8 @@ function createWindow(port) {
     rendererConsoleLogger.log(level, message, line, sourceId);
   });
 
-  const appUrl = `http://localhost:${port}`;
-  logElectron('info', `loadURL ${appUrl}`);
-  wc.loadURL(appUrl);
+  logElectron('info', `loadURL ${SHELL_URL}`);
+  wc.loadURL(SHELL_URL);
 
   // Track browser iframe navigations so the address bar updates for cross-origin sites.
   // The browser iframe is the only direct child frame of the main webContents.
@@ -270,7 +273,7 @@ function createWindow(port) {
     if (!url || url === 'about:blank') return;
     try {
       const frame = webFrameMain.fromId(frameProcessId, frameRoutingId);
-      if (frame && frame.parent === wc.mainFrame) {
+      if (frame && frame.parent === wc.mainFrame && runtimeDescriptorIpc?.hasCommittedShellAuthority()) {
         wc.send('browser:url-changed', { url });
       }
     } catch {
@@ -291,8 +294,8 @@ function createWindow(port) {
 }
 
 function sendMenuAction(payload) {
-  const win = BrowserWindow.getFocusedWindow() || mainWindow;
-  if (win && !win.isDestroyed()) {
+  const win = mainWindow && !mainWindow.isDestroyed() ? mainWindow : null;
+  if (win && runtimeDescriptorIpc?.hasCommittedShellAuthority()) {
     win.webContents.send('menu-action', payload);
   }
 }
@@ -540,9 +543,6 @@ function buildMenu() {
   Menu.setApplicationMenu(menu);
 }
 
-registerCaptureHandlers(ipcMain);
-registerScreenshotHandlers(ipcMain);
-
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 if (!gotSingleInstanceLock) {
   logElectron('info', 'second instance blocked — quitting');
@@ -557,11 +557,13 @@ if (!gotSingleInstanceLock) {
 
   app.whenReady().then(async () => {
     // 1. Spawn server — resolves when SERVER_READY received
+    shellLaunchAuthority = createShellLaunchAuthority();
     const { port, process: proc } = await spawnServer({
       onExit: handleServerExit,
       resourcesPath: getElectronResourcesRoot(),
       userDataPath: getServerUserDataPath(),
       focusStatePath: focusState.getStateFilePath(),
+      bootstrapAuthority: shellLaunchAuthority,
     });
     if (isQuitting) {
       await stopChildProcess(proc, {
@@ -571,20 +573,48 @@ if (!gotSingleInstanceLock) {
     }
     serverProcess = proc;
     writePort(port);
+    runtimeDescriptorOwner.activate(port, shellLaunchAuthority.generation);
     logElectron('info', `server ready port=${port}`);
 
     // 2. Register protocol request handler (scheme was registered before ready)
     registerHandler();
-    ipcMain.on('workspace:set-root', (_, repoPath) => setWorkspaceRoot(repoPath));
-    ipcMain.on('workspace-menu:set-state', (_, state) => setWorkspaceMenuState(state));
+    registerShellHandler({
+      protocol: require('electron').protocol,
+      net: require('electron').net,
+      shellRoot: resolveShellRoot({
+        isPackaged: app.isPackaged,
+        resourcesPath: process.resourcesPath,
+        moduleDirectory: __dirname,
+      }),
+      getRuntimeDescriptor: () => runtimeDescriptorOwner.getCurrent(),
+    });
+    runtimeDescriptorIpc = registerRuntimeDescriptorIpc({
+      ipcMain,
+      getMainWindow: () => mainWindow,
+      getRuntimeDescriptor: () => runtimeDescriptorOwner.getCurrent(),
+      log: (code) => logElectron('error', code),
+    });
+    const authorizedIpcMain = createAuthorizedIpcMain(ipcMain, {
+      authorize: (event) => runtimeDescriptorIpc.authorize(event),
+      log: (code) => logElectron('error', code),
+    });
+    registerShellProofIpc({
+      authorizedIpcMain,
+      getLaunchAuthority: () => shellLaunchAuthority,
+      log: (code) => logElectron('error', code),
+    });
+    registerCaptureHandlers(authorizedIpcMain);
+    registerScreenshotHandlers(authorizedIpcMain);
+    authorizedIpcMain.on('workspace:set-root', (_, repoPath) => setWorkspaceRoot(repoPath));
+    authorizedIpcMain.on('workspace-menu:set-state', (_, state) => setWorkspaceMenuState(state));
 
     // 3. Register IPC handlers
-    ipcMain.handle('show-emoji-panel', () => {
+    authorizedIpcMain.handle('show-emoji-panel', () => {
       app.showEmojiPanel();
       return { success: true };
     });
 
-    documentHandlers = registerDocumentHandlers(ipcMain, { exportController });
+    documentHandlers = registerDocumentHandlers(authorizedIpcMain, { exportController });
 
     
     exportController.register('document', createDocumentSubmodule({ getPandocPath: documentHandlers.getPandocPath }));
@@ -592,12 +622,12 @@ if (!gotSingleInstanceLock) {
     exportController.register('spreadsheet', spreadsheetSubmodule);
 
     // 4. Create window — now uses dynamic port
-    createWindow(port);
+    createWindow();
     buildMenu();
 
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow(port);
+        createWindow();
       } else if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.focus();
       }

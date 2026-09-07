@@ -159,6 +159,24 @@ describe('workspace folder mutations', () => {
     ]);
   });
 
+  test('folder browse failures do not reflect requester-controlled paths in diagnostics', async () => {
+    const canaryPath = path.join(tempRoot, 'SHELL_AUTH_PROOF_NONCE_CANARY', 'missing');
+    const { ws, handlers } = createHandlers();
+
+    await handlers['folder:browse']({
+      type: 'folder:browse',
+      path: canaryPath,
+    });
+
+    const [reply] = messagesOf(ws, 'folder:browse_result');
+    expect(reply).toMatchObject({
+      path: canaryPath,
+      success: false,
+      error: 'Unable to browse folder',
+    });
+    expect(reply.error).not.toContain(canaryPath);
+  });
+
   test('archives Office folders with directory mutation metadata', () => {
     writeFile(path.join(officeRoot, 'assets', 'README.md'), '# Assets\n');
     const broadcastWs = createWs();

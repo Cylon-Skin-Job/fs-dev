@@ -18,22 +18,75 @@
  *   - Wire spawning (that's in lib/harness/compat.js)
  */
 
-const path = require('path');
 const { randomUUID: generateId } = require('crypto');
+const path = require('path');
 const { logWire } = require('./wire-log');
 
 // ── Registry ────────────────────────────────────────────────────────────────
 
 // Module-private Map. Do not export.
-// threadId → { wire, projectRoot, ws, workspaceId, viewId }
+// JSON([workspaceId, normalized projectRoot, threadId]) → exact provider resource.
+// workspaceEpoch is mutable delivery ownership on that root-scoped provider.
 const wireRegistry = new Map();
+// The stdout/exit listeners are installed once, when a provider is spawned,
+// but a live provider can later be reclaimed by another product connection.
+// Resolve the current connection lifecycle at delivery time so those
+// listeners never remain owned by the spawning connection.
+const clientWireLifecycles = new WeakMap();
 
-function getWireForThread(threadId) {
-  return wireRegistry.get(threadId)?.wire || null;
+function normalizedRoot(projectRoot) {
+  return typeof projectRoot === 'string' && projectRoot ? path.resolve(projectRoot) : null;
 }
 
-function getClientForThread(threadId) {
-  return wireRegistry.get(threadId)?.ws || null;
+function wireKey(threadId, workspaceId, projectRoot) {
+  if (typeof threadId !== 'string' || !threadId
+    || typeof workspaceId !== 'string' || !workspaceId
+    || !normalizedRoot(projectRoot)) return null;
+  return JSON.stringify([workspaceId, normalizedRoot(projectRoot), threadId]);
+}
+
+function exactScope(scopeContext, projectRoot = null) {
+  if (!scopeContext || typeof scopeContext !== 'object') return null;
+  const root = normalizedRoot(scopeContext.projectRoot || projectRoot);
+  if (typeof scopeContext.workspaceId !== 'string' || !scopeContext.workspaceId || !root) return null;
+  return {
+    workspaceId: scopeContext.workspaceId,
+    projectRoot: root,
+    workspaceEpoch: typeof scopeContext.workspaceEpoch === 'string' && scopeContext.workspaceEpoch
+      ? scopeContext.workspaceEpoch
+      : null,
+  };
+}
+
+function getWireEntry(threadId, scopeContext) {
+  const scope = exactScope(scopeContext);
+  if (scope) {
+    return wireRegistry.get(wireKey(threadId, scope.workspaceId, scope.projectRoot)) || null;
+  }
+  // Backward-compatible diagnostic/test lookup: a workspace-only query is
+  // accepted only when it resolves to one unambiguous root-scoped provider.
+  if (typeof scopeContext !== 'string' || !scopeContext) return null;
+  const matches = [...wireRegistry.values()].filter((entry) => (
+    entry.threadId === threadId && entry.workspaceId === scopeContext
+  ));
+  return matches.length === 1 ? matches[0] : null;
+}
+
+function getWireForThread(threadId, scopeContext) {
+  return getWireEntry(threadId, scopeContext)?.wire || null;
+}
+
+function getClientForThread(threadId, scopeContext) {
+  const scope = exactScope(scopeContext);
+  // Client delivery is connection-generation scoped. Provider-resource
+  // lookups may deliberately omit an epoch for explicit idle adoption, but
+  // an outbound event without the exact epoch must never inherit the current
+  // renderer binding.
+  if (!scope?.workspaceEpoch) return null;
+  const entry = getWireEntry(threadId, scopeContext);
+  if (!entry) return null;
+  if (entry.workspaceEpoch !== scope.workspaceEpoch) return null;
+  return entry.ws || null;
 }
 
 /**
@@ -49,9 +102,13 @@ function getClientForThread(threadId) {
  * @param {import('ws').WebSocket} ws
  * @returns {boolean} true when delivery ownership was reclaimed
  */
-function reclaimClientForWire(threadId, ws) {
-  const existing = wireRegistry.get(threadId);
+function reclaimClientForWire(threadId, ws, scopeContext = {}) {
+  const scope = exactScope(scopeContext);
+  const key = scope && wireKey(threadId, scope.workspaceId, scope.projectRoot);
+  if (!key) return false;
+  const existing = wireRegistry.get(key);
   if (!existing?.wire) return false;
+  if (existing.projectRoot !== scope.projectRoot) return false;
 
   const currentClient = existing.ws;
   if (currentClient?.readyState === 1) return false;
@@ -63,7 +120,8 @@ function reclaimClientForWire(threadId, ws) {
     return false;
   }
 
-  wireRegistry.set(threadId, { ...existing, ws });
+  clearTransferredClientWire(existing, ws);
+  wireRegistry.set(key, { ...existing, ws, workspaceEpoch: scope.workspaceEpoch });
   const previousState = currentClient ? `readyState=${currentClient.readyState}` : 'absent';
   console.warn(
     `[WireRegistry] Reclaimed live delivery for thread ${threadId} from ${previousState}`
@@ -71,30 +129,73 @@ function reclaimClientForWire(threadId, ws) {
   return true;
 }
 
+function clearTransferredClientWire(existing, nextWs) {
+  if (!existing?.wire || !existing.ws || existing.ws === nextWs) return;
+  const previousLifecycle = clientWireLifecycles.get(existing.ws);
+  if (previousLifecycle?.session?.wire === existing.wire) {
+    previousLifecycle.session.wire = null;
+  }
+}
+
+function assertWireResourceIdentity(key, wire) {
+  if (!wire) return;
+  for (const [existingKey, entry] of wireRegistry.entries()) {
+    if (existingKey !== key && entry?.wire === wire) {
+      throw new Error('Provider wire belongs to a different workspace root');
+    }
+  }
+}
+
 function registerWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
-  const workspaceId = scopeContext.workspaceId || path.basename(projectRoot);
+  const scope = exactScope(scopeContext, projectRoot);
+  const workspaceId = scope?.workspaceId;
   const viewId = scopeContext.viewId || null;
-  wireRegistry.set(threadId, { wire, projectRoot, ws, workspaceId, viewId });
+  const key = scope && wireKey(threadId, workspaceId, scope.projectRoot);
+  if (!key) throw new Error('Workspace-scoped wire identity is required');
+  const existing = wireRegistry.get(key);
+  if (existing?.wire && existing.wire !== wire) {
+    throw new Error('A live provider already owns this workspace thread');
+  }
+  assertWireResourceIdentity(key, wire);
+  wireRegistry.set(key, {
+    threadId,
+    wire,
+    projectRoot: scope.projectRoot,
+    workspaceEpoch: scope.workspaceEpoch,
+    ws,
+    workspaceId,
+    viewId,
+  });
   console.log(`[WireRegistry] Registered wire for thread ${threadId.slice(0,8)}, pid: ${wire?.pid}, scope: ${viewId ? `${workspaceId}/${viewId}` : workspaceId}`);
 }
 
 function attachClientToWire(threadId, wire, projectRoot, ws, scopeContext = {}) {
-  const existing = wireRegistry.get(threadId);
+  const scope = exactScope(scopeContext, projectRoot);
+  const workspaceId = scope?.workspaceId;
+  const key = scope && wireKey(threadId, workspaceId, scope.projectRoot);
+  if (!key) return false;
+  const existing = wireRegistry.get(key);
   const nextWire = wire || existing?.wire || null;
-  const nextProjectRoot = projectRoot || existing?.projectRoot || null;
+  const nextProjectRoot = scope?.projectRoot || null;
 
   if (!nextWire || !nextProjectRoot) {
     return false;
   }
 
-  const workspaceId = scopeContext.workspaceId || existing?.workspaceId || path.basename(nextProjectRoot);
   const viewId = Object.prototype.hasOwnProperty.call(scopeContext, 'viewId')
     ? scopeContext.viewId
     : (existing?.viewId || null);
 
-  wireRegistry.set(threadId, {
+  if (existing?.wire && existing.wire !== nextWire) {
+    throw new Error('A live provider already owns this workspace thread');
+  }
+  assertWireResourceIdentity(key, nextWire);
+  clearTransferredClientWire(existing, ws);
+  wireRegistry.set(key, {
+    threadId,
     wire: nextWire,
     projectRoot: nextProjectRoot,
+    workspaceEpoch: scope.workspaceEpoch,
     ws,
     workspaceId,
     viewId,
@@ -107,9 +208,31 @@ function attachClientToWire(threadId, wire, projectRoot, ws, scopeContext = {}) 
   return true;
 }
 
-function unregisterWire(threadId) {
-  wireRegistry.delete(threadId);
+function unregisterWire(threadId, scopeContext, expectedWire = null) {
+  const entry = getWireEntry(threadId, scopeContext);
+  if (!entry || (expectedWire && entry.wire !== expectedWire)) return false;
+  const key = wireKey(threadId, entry.workspaceId, entry.projectRoot);
+  if (!key) return false;
+  wireRegistry.delete(key);
   console.log(`[WireRegistry] Unregistered wire for thread ${threadId.slice(0,8)}`);
+  return true;
+}
+
+/**
+ * Remove outbound delivery for an exact connection-owned wire. Workspace
+ * retirement uses this before awaiting durable session suspension so stale
+ * provider output cannot cross the new workspace bind.
+ */
+function unregisterWireForClient(threadId, scopeContext, ws) {
+  const scope = exactScope(scopeContext);
+  const key = scope && wireKey(threadId, scope.workspaceId, scope.projectRoot);
+  if (!key) return false;
+  const existing = wireRegistry.get(key);
+  if (!existing || existing.ws !== ws
+    || (scope.workspaceEpoch && existing.workspaceEpoch !== scope.workspaceEpoch)) return false;
+  wireRegistry.delete(key);
+  console.log(`[WireRegistry] Unregistered retired client wire for thread ${threadId.slice(0,8)}`);
+  return true;
 }
 
 /**
@@ -117,12 +240,14 @@ function unregisterWire(threadId) {
  * wire by reading the registry, for callers that don't have `session` access.
  * Returns null if the thread isn't registered.
  */
-function getScopeForThread(threadId) {
-  const entry = wireRegistry.get(threadId);
+function getScopeForThread(threadId, scopeContext) {
+  const entry = getWireEntry(threadId, scopeContext);
   if (!entry) return null;
-  const { workspaceId, viewId } = entry;
-  if (!workspaceId) return 'workspace:unknown';
-  return viewId ? `workspace:${workspaceId}, ${viewId}` : `workspace:${workspaceId}`;
+  const { workspaceId: entryWorkspaceId, viewId } = entry;
+  if (!entryWorkspaceId) return 'workspace:unknown';
+  return viewId
+    ? `workspace:${entryWorkspaceId}, ${viewId}`
+    : `workspace:${entryWorkspaceId}`;
 }
 
 // ── Marshalling ─────────────────────────────────────────────────────────────
@@ -163,6 +288,8 @@ function sendToWire(wire, method, params, id = null) {
  * @returns {{ awaitHarnessReady, initializeWire, setupWireHandlers }}
  */
 function createWireLifecycle({ session, ws, connectionId, onWireMessage }) {
+  const lifecycle = Object.freeze({ session, ws, connectionId, onWireMessage });
+  clientWireLifecycles.set(ws, lifecycle);
 
   /**
    * If wire was spawned via the new harness (has _harnessPromise), wait for
@@ -193,12 +320,24 @@ function createWireLifecycle({ session, ws, connectionId, onWireMessage }) {
     console.log('[Wire] Initialize sent with id:', id);
   }
 
-  function setupWireHandlers(wire, threadId) {
+  function setupWireHandlers(wire, threadId, scopeContext = {}) {
+    const scope = exactScope(scopeContext);
+    if (!scope) throw new Error('Wire handlers require exact workspace/root identity');
+    let buffer = '';
     wire.stdout.on('data', (data) => {
-      session.buffer += data.toString();
+      const entry = getWireEntry(threadId, scope);
+      // Before registration, the spawning lifecycle is authoritative. After
+      // registration, only the registry's exact current client may consume
+      // provider output.
+      const currentLifecycle = entry?.wire === wire
+        ? clientWireLifecycles.get(entry.ws)
+        : (!entry ? lifecycle : null);
+      if (!currentLifecycle) return;
 
-      let lines = session.buffer.split('\n');
-      session.buffer = lines.pop();
+      buffer += data.toString();
+
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
 
       for (const line of lines) {
         if (!line.trim()) continue;
@@ -208,24 +347,32 @@ function createWireLifecycle({ session, ws, connectionId, onWireMessage }) {
 
         try {
           const msg = JSON.parse(line);
-          onWireMessage(msg);
+          currentLifecycle.onWireMessage(msg);
         } catch (err) {
           console.error('[Wire] Parse error:', err.message);
-          ws.send(JSON.stringify({ type: 'parse_error', line: line.slice(0, 200) }));
+          if (currentLifecycle.ws.readyState === 1) {
+            currentLifecycle.ws.send(JSON.stringify({ type: 'parse_error', line: line.slice(0, 200) }));
+          }
         }
       }
     });
 
     wire.on('exit', (code) => {
       console.log(`[Wire] Session ${connectionId} exited with code ${code}`);
-      if (session.wire === wire) session.wire = null;
-      // Only unregister if this wire is still the one in the registry.
-      // A new wire may have already been registered for this threadId
-      // (e.g. when the client reopens the same thread quickly).
-      if (threadId && getWireForThread(threadId) === wire) unregisterWire(threadId);
-      // Only notify if WebSocket is still open
-      if (ws.readyState === 1) {
-        ws.send(JSON.stringify({ type: 'wire_disconnected', code }));
+      const entry = getWireEntry(threadId, scope);
+      const ownerLifecycle = entry?.wire === wire
+        ? clientWireLifecycles.get(entry.ws)
+        : null;
+      const ownerStillOwnsWire = ownerLifecycle?.session?.wire === wire;
+      if (ownerStillOwnsWire) ownerLifecycle.session.wire = null;
+      // Only unregister and notify the exact current registry owner. A wire
+      // exit after retirement, replacement, or transfer must not mutate or
+      // notify the spawning connection.
+      if (entry?.wire === wire) {
+        unregisterWire(threadId, scope, wire);
+      }
+      if (ownerStillOwnsWire && ownerLifecycle.ws.readyState === 1) {
+        ownerLifecycle.ws.send(JSON.stringify({ type: 'wire_disconnected', code }));
       }
     });
   }
@@ -241,6 +388,7 @@ module.exports = {
   registerWire,
   attachClientToWire,
   unregisterWire,
+  unregisterWireForClient,
   getScopeForThread,
   // Marshalling
   sendToWire,

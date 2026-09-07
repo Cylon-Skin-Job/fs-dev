@@ -10,6 +10,7 @@ const { Writable } = require('node:stream')
 const {
   createRendererConsoleLogger,
   createWriteScopedOutputForwarder,
+  sanitizeRendererConsoleMessage,
 } = require('./renderer-console-logging.cjs')
 
 class ControlledOutput extends EventEmitter {
@@ -43,6 +44,47 @@ test('renderer file logging continues when stdout is already closed and stays di
   assert.equal(appended.length, 2)
   assert.equal(stdout.writes.length, 0)
   assert.equal(logger.forwarder.disabled, true)
+})
+
+test('ordinary WebSocket receive diagnostics cannot persist frame fields', () => {
+  const canary = 'PROMPT_PROOF_NONCE_CANARY_00B'
+  const message = `[WS] Message received: thread:opened {type: thread:opened, history: ${canary}}`
+  assert.equal(
+    sanitizeRendererConsoleMessage(message),
+    '[renderer_console]',
+  )
+
+  const appended = []
+  const stdout = new ControlledOutput()
+  const logger = createRendererConsoleLogger({
+    appendFileSync: (_path, entry) => appended.push(entry),
+    rendererLog: '/owned/electron-renderer.log',
+    stdout,
+  })
+  logger.log(1, message, 12, 'ws-client.ts')
+
+  assert.equal(appended.length, 1)
+  assert.doesNotMatch(appended[0], new RegExp(canary))
+  assert.doesNotMatch(stdout.writes[0], new RegExp(canary))
+  assert.match(appended[0], /\[renderer_console\]/)
+})
+
+test('spoofed PROV prefix and child-frame source cannot authorize durable values', () => {
+  const canary = 'SUBFRAME_PROOF_NONCE_CANARY_00B'
+  const message = `[WS] Message received: chat-turn:diagnostic:report {diagnosticId: ${canary}}`
+  const appended = []
+  const stdout = new ControlledOutput()
+  const logger = createRendererConsoleLogger({
+    appendFileSync: (_path, entry) => appended.push(entry),
+    rendererLog: '/owned/electron-renderer.log',
+    stdout,
+  })
+  logger.log(1, message, 99, `fusion-studio://view/frame.html?proof=${canary}`)
+
+  assert.equal(sanitizeRendererConsoleMessage(message), '[renderer_console]')
+  assert.doesNotMatch(appended[0], new RegExp(canary))
+  assert.doesNotMatch(stdout.writes[0], new RegExp(canary))
+  assert.equal(appended[0], '[renderer:info] [renderer_console]\n')
 })
 
 test('synchronous EPIPE disables stdout without interrupting durable file logging', () => {

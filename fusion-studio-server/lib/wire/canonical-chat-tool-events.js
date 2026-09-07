@@ -98,6 +98,9 @@ function createCanonicalChatToolEvents({
 
     emit('chat:tool_result', {
       workspace: route.workspace,
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId: identity.turnId,
@@ -160,6 +163,9 @@ function createCanonicalChatToolEvents({
 
     emit('chat:tool_call', {
       workspace: route.workspace,
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId: identity.turnId,
@@ -222,6 +228,9 @@ function createCanonicalChatToolEvents({
 
     emit('chat:tool_call_args', {
       workspace: route.workspace,
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId: identity.turnId,
@@ -331,6 +340,9 @@ function createCanonicalChatToolEvents({
       });
       emit('chat:tool_result', {
         workspace: route.workspace,
+        workspaceId: route.workspaceId,
+        projectRoot: route.projectRoot,
+        workspaceEpoch: route.workspaceEpoch,
         scope: route.scope,
         threadId: route.threadId,
         turnId: identity.turnId,
@@ -357,6 +369,9 @@ function createCanonicalChatToolEvents({
 
     emit('chat:tool_result', {
       workspace: route.workspace,
+      workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId: identity.turnId,

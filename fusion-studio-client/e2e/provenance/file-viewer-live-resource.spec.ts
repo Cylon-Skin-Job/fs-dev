@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { installTrustedShellBrowserFixture } from '../support/trusted-shell-browser-fixture';
 
 type WireMessage = Record<string, unknown> & { type: string };
 
@@ -81,7 +82,9 @@ function installBrowserWireObserver(page: Page) {
             )) {
               if (typeof payload.requestId === 'string') window.__provenanceHeldRequestIds.add(payload.requestId);
             }
-          } catch {}
+          } catch {
+            // Binary and non-JSON application traffic is outside this observer.
+          }
         }
         super.send(data);
       }
@@ -224,6 +227,7 @@ async function assertStartupAudit() {
 }
 
 async function prepareFileViewer(page: Page) {
+  await installTrustedShellBrowserFixture(page.context());
   await installBrowserWireObserver(page);
   await page.goto('/');
   await expect(page.locator('button[title="Files"]')).toBeVisible();

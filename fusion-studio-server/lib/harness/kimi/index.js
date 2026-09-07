@@ -4,6 +4,7 @@ const { EventEmitter } = require('events');
 const { WireParser } = require('./wire-parser');
 const { EventTranslator } = require('./event-translator');
 const { KimiSessionState } = require('./session-state');
+const { buildHarnessChildEnvironment } = require('../child-environment');
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -66,11 +67,14 @@ class KimiHarness extends EventEmitter {
    * @param {{ workspaceId?: string, viewId?: string|null }} [scopeContext]
    * @returns {Promise<import('../types').HarnessSession>}
    */
-  async startThread(threadId, projectRoot, scopeContext = {}) {
+  async startThread(threadId, projectRoot, scopeContext = {}, threadOptions = {}) {
     const workspaceId = scopeContext.workspaceId || (projectRoot ? path.basename(projectRoot) : null);
     const viewId = scopeContext.viewId || null;
     const scopeString = buildScopeString(workspaceId, viewId);
-    const robinPath = this.config.cliPath || process.env.KIMI_PATH || 'kimi';
+    const sessionKey = threadOptions.sessionKey
+      || JSON.stringify([workspaceId, path.resolve(projectRoot), threadId]);
+    const runtimeConfig = { ...(threadOptions.runtimeConfig || this.config) };
+    const robinPath = runtimeConfig.cliPath || process.env.KIMI_PATH || 'kimi';
     const args = ['--wire', '--yolo', '--session', threadId];
 
     if (projectRoot) {
@@ -79,7 +83,9 @@ class KimiHarness extends EventEmitter {
 
     const proc = spawn(robinPath, args, {
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, TERM: 'xterm-256color' }
+      env: buildHarnessChildEnvironment('kimi', {
+        overrides: { TERM: 'xterm-256color' },
+      })
     });
 
     // Log spawn for debugging
@@ -96,6 +102,7 @@ class KimiHarness extends EventEmitter {
 
     const session = {
       threadId,
+      sessionKey,
       process: proc,
       state,
       parser,
@@ -106,20 +113,20 @@ class KimiHarness extends EventEmitter {
         let done = false;
         let failure = null;
 
-        const onEvent = ({ threadId: tid, event }) => {
-          if (tid !== threadId) return;
+        const onEvent = ({ threadId: tid, sessionKey: key, event }) => {
+          if (tid !== threadId || key !== sessionKey) return;
           events.push(event);
           if (event.type === 'turn_end') done = true;
         };
 
-        const onError = ({ threadId: tid, id, error }) => {
-          if (tid !== threadId) return;
+        const onError = ({ threadId: tid, sessionKey: key, id, error }) => {
+          if (tid !== threadId || key !== sessionKey) return;
           failure = makeWireError(error);
           done = true;
         };
 
-        const onExit = ({ threadId: tid, code }) => {
-          if (tid !== threadId) return;
+        const onExit = ({ threadId: tid, sessionKey: key, code }) => {
+          if (tid !== threadId || key !== sessionKey) return;
           if (!session.stopRequested) {
             failure = new Error(`Kimi process exited during active send (code: ${code ?? 'unknown'})`);
           }
@@ -132,14 +139,14 @@ class KimiHarness extends EventEmitter {
 
         try {
           // Send initialize once per session
-          if (!initializedSessions.has(threadId)) {
+          if (!initializedSessions.has(sessionKey)) {
             const initId = String(nextRequestId++);
-            harness.sendToThread(threadId, 'initialize', {
+            harness.sendToThread(sessionKey, 'initialize', {
               protocol_version: '1.4',
               client: { name: 'fusion-studio', version: '0.1.0' },
               capabilities: { supports_question: true }
             }, initId);
-            initializedSessions.add(threadId);
+            initializedSessions.add(sessionKey);
           }
 
           // Send prompt
@@ -148,7 +155,7 @@ class KimiHarness extends EventEmitter {
           if (options.system !== undefined) {
             params.system = options.system;
           }
-          harness.sendToThread(threadId, 'prompt', params, promptId);
+          harness.sendToThread(sessionKey, 'prompt', params, promptId);
 
           while (!done || events.length > 0) {
             while (events.length > 0) yield events.shift();
@@ -178,7 +185,7 @@ class KimiHarness extends EventEmitter {
     // Handle parse errors
     parser.on('parse_error', (line, err, lineNum) => {
       console.error(`[KimiHarness] Parse error at line ${lineNum}:`, err.message);
-      this.emit('parse_error', { threadId, line, error: err, lineNum });
+      this.emit('parse_error', { threadId, sessionKey, line, error: err, lineNum });
     });
 
     // Handle wire messages
@@ -188,39 +195,39 @@ class KimiHarness extends EventEmitter {
         if (events) {
           const eventArray = Array.isArray(events) ? events : [events];
           for (const event of eventArray) {
-            this.emit('event', { threadId, event });
+            this.emit('event', { threadId, sessionKey, event });
           }
         }
         return;
       }
 
       if (msg.id !== undefined && msg.error) {
-        this.emit('response_error', { threadId, id: msg.id, error: msg.error });
+        this.emit('response_error', { threadId, sessionKey, id: msg.id, error: msg.error });
         return;
       }
 
       if (msg.id !== undefined && msg.result !== undefined) {
-        this.emit('response_result', { threadId, id: msg.id, result: msg.result });
+        this.emit('response_result', { threadId, sessionKey, id: msg.id, result: msg.result });
       }
     });
 
     // Handle process events
     proc.on('error', (err) => {
       console.error(`[KimiHarness] Process error (pid: ${proc.pid}):`, err.message);
-      this.emit('error', { threadId, error: err });
+      this.emit('error', { threadId, sessionKey, error: err });
     });
 
     proc.on('exit', (code) => {
       console.log(`[KimiHarness] Process exited (pid: ${proc.pid}, code: ${code})`);
-      this.sessions.delete(threadId);
-      this.emit('exit', { threadId, code });
+      if (this.sessions.get(sessionKey) === session) this.sessions.delete(sessionKey);
+      this.emit('exit', { threadId, sessionKey, code });
     });
 
     proc.stderr.on('data', (data) => {
       console.error(`[KimiHarness:stderr] ${data.toString().trim()}`);
     });
 
-    this.sessions.set(threadId, session);
+    this.sessions.set(sessionKey, session);
     return session;
   }
 
@@ -238,7 +245,10 @@ class KimiHarness extends EventEmitter {
    * @returns {RobinSession | undefined}
    */
   getSession(threadId) {
-    return this.sessions.get(threadId);
+    const exact = this.sessions.get(threadId);
+    if (exact) return exact;
+    const matches = [...this.sessions.values()].filter((session) => session.threadId === threadId);
+    return matches.length === 1 ? matches[0] : undefined;
   }
 
   /**
@@ -250,8 +260,8 @@ class KimiHarness extends EventEmitter {
    * @param {string} [id]
    * @returns {boolean}
    */
-  sendToThread(threadId, method, params, id) {
-    const session = this.sessions.get(threadId);
+  sendToThread(sessionKey, method, params, id) {
+    const session = this.getSession(sessionKey);
     if (!session || session.process.killed) {
       return false;
     }

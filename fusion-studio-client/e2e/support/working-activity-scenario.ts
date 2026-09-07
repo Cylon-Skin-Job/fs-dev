@@ -65,7 +65,7 @@ export async function startWaSession(
   const context = await browser.newContext(contextOptions);
   const alpha = spec.alpha ?? { threadId: THREAD_A };
   const beta = spec.beta ?? { threadId: THREAD_B };
-  const fixture = installWaFixture(context, {
+  const fixture = await installWaFixture(context, {
     list: {
       threads: [THREAD_A, THREAD_B].map((id, index) => ({
         threadId: id,

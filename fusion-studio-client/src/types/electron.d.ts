@@ -57,6 +57,22 @@ export type PrintDocumentPayload = {
   filename: string;
 } & OfficePresentationMode);
 
+export interface FusionRuntimeDescriptor {
+  generation: string;
+  httpOrigin: `http://127.0.0.1:${number}`;
+  webSocketUrl: `ws://127.0.0.1:${number}`;
+}
+
+export interface ShellAuthChallenge {
+  type: 'shell-auth:challenge';
+  version: 1;
+  connectionId: string;
+  serverNonce: string;
+  generation: string;
+  issuedAt: number;
+  expiresAt: number;
+}
+
 export interface ElectronAPI {
   capturePage: () => Promise<string | null>;
   captureRect: (rect: {
@@ -71,6 +87,9 @@ export interface ElectronAPI {
   sendDocumentEmail: (payload: SendDocumentEmailPayload) => Promise<SendEmailResult>;
   printDocument: (payload: PrintDocumentPayload) => Promise<{ success: boolean; error?: string }>;
   showEmojiPanel: () => Promise<{ success: boolean; error?: string }>;
+  getRuntimeDescriptor: () => Promise<unknown>;
+  authorizeShellChallenge: (challenge: ShellAuthChallenge, rendererNonce: string) => Promise<unknown>;
+  onRuntimeDescriptorChanged: (callback: (descriptor: unknown) => void) => (() => void);
   listCalendars: () => Promise<{ success: boolean; calendars?: Array<{ id: string; name: string; color: string; account: string }>; error?: string }>;
   listEvents: (payload: { startDate: string; endDate: string }) => Promise<{ success: boolean; events?: Array<{ uid: string; title: string; startDate: string; endDate: string; allDay: boolean; calendar: string; location?: string; notes?: string }>; error?: string }>;
   createEvent: (payload: { calendarName: string; title: string; startDate: string; endDate: string; allDay: boolean; location?: string; notes?: string }) => Promise<{ success: boolean; uid?: string; error?: string }>;

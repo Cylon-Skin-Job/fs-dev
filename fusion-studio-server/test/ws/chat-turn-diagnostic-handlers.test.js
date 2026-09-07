@@ -11,6 +11,7 @@
  */
 
 const { createChatTurnDiagnosticHandlers } = require('../../lib/ws/chat-turn-diagnostic-handlers');
+const ThreadWebSocketHandler = require('../../lib/thread/ThreadWebSocketHandler');
 
 const WORKSPACE_ID = 'ws-server';
 const THREAD_ID = 'thread-1';
@@ -36,13 +37,49 @@ function makeHarness(options = {}) {
   const ws = { readyState: 1, send: jest.fn() };
   const reportStub = options.getReport || jest.fn(async () => Object.freeze({ status: 'unavailable' }));
   const hasState = Object.prototype.hasOwnProperty.call(options, 'state');
-  const stateStub = jest.fn(() => (hasState ? options.state : { threadManager: { workspaceId: WORKSPACE_ID } }));
+  const session = options.session || {
+    projectRoot: '/tmp/ws-server',
+    currentWorkspaceId: WORKSPACE_ID,
+    workspaceEpoch: 'epoch-server',
+    workspaceBindingState: 'active',
+  };
+  const defaultState = {
+    threadManager: { workspaceId: WORKSPACE_ID, projectRoot: session.projectRoot },
+  };
+  const stateStub = jest.fn(() => (hasState ? options.state : defaultState));
+  const captureBinding = () => {
+    const state = stateStub();
+    const manager = state?.threadManager;
+    if (!manager || state.workspaceRetired === true
+      || manager.projectRoot !== session.projectRoot
+      || manager.workspaceId !== session.currentWorkspaceId
+      || typeof session.workspaceEpoch !== 'string'
+      || !session.workspaceEpoch
+      || session.workspaceBindingState !== 'active') return null;
+    return {
+      state,
+      session,
+      projectRoot: session.projectRoot,
+      workspaceId: session.currentWorkspaceId,
+      workspaceEpoch: session.workspaceEpoch,
+    };
+  };
+  const isBindingCurrent = (_socket, binding) => (
+    stateStub() === binding?.state
+    && binding.session.projectRoot === binding.projectRoot
+    && binding.session.currentWorkspaceId === binding.workspaceId
+    && binding.session.workspaceEpoch === binding.workspaceEpoch
+    && binding.session.workspaceBindingState === 'active'
+    && binding.state.workspaceRetired !== true
+  );
   const handlers = createChatTurnDiagnosticHandlers({
     ws,
-    getThreadState: stateStub,
+    session,
+    captureBinding,
+    isBindingCurrent,
     getReport: reportStub,
   });
-  return { ws, handlers, reportStub, stateStub };
+  return { ws, session, handlers, reportStub, stateStub };
 }
 
 function sentMessages(ws) {
@@ -76,6 +113,8 @@ describe('chat-turn diagnostic handlers (SPEC-03 Slice D)', () => {
 
     expect(reportStub).toHaveBeenCalledWith({
       workspaceId: WORKSPACE_ID, // server-resolved, not client-supplied
+      projectRoot: '/tmp/ws-server',
+      workspaceEpoch: 'epoch-server',
       threadId: THREAD_ID,
       turnId: TURN_ID,
       diagnosticId: DIAGNOSTIC_ID,
@@ -165,6 +204,71 @@ describe('chat-turn diagnostic handlers (SPEC-03 Slice D)', () => {
     expect(sentMessages(ws)).toEqual([fixedUnavailable]);
   });
 
+  test('stale workspace manager cannot disclose after the live session begins binding another workspace', async () => {
+    const staleState = {
+      threadManager: { workspaceId: WORKSPACE_ID, projectRoot: '/tmp/ws-server' },
+    };
+    const { ws, handlers, reportStub } = makeHarness({
+      state: staleState,
+      session: {
+        projectRoot: '/tmp/ws-b',
+        currentWorkspaceId: 'ws-b',
+        workspaceEpoch: 'epoch-b',
+        workspaceBindingState: 'binding',
+      },
+      getReport: jest.fn(async () => Object.freeze({
+        status: 'available', report: validReport(), reportJson: JSON.stringify(validReport()),
+      })),
+    });
+
+    await handlers['chat-turn:diagnostic:get'](getRequest({ workspaceId: WORKSPACE_ID }));
+
+    expect(reportStub).not.toHaveBeenCalled();
+    expect(sentMessages(ws)).toEqual([fixedUnavailable]);
+  });
+
+  test('a retired workspace state is unavailable before diagnostic persistence lookup', async () => {
+    const { ws, handlers, reportStub } = makeHarness({
+      state: {
+        workspaceRetired: true,
+        threadManager: { workspaceId: WORKSPACE_ID, projectRoot: '/tmp/ws-server' },
+      },
+    });
+
+    await handlers['chat-turn:diagnostic:get'](getRequest());
+
+    expect(reportStub).not.toHaveBeenCalled();
+    expect(sentMessages(ws)).toEqual([fixedUnavailable]);
+  });
+
+  test('production binding owner admits the exact live pair and denies it after session transfer', async () => {
+    const ws = { readyState: 1, send: jest.fn() };
+    const session = {
+      projectRoot: '/tmp/diagnostic-binding-owner-a',
+      currentWorkspaceId: 'diagnostic-binding-owner-a',
+      workspaceEpoch: 'diagnostic-epoch-a',
+      workspaceBindingState: 'active',
+    };
+    ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
+      projectRoot: session.projectRoot,
+      workspaceId: session.currentWorkspaceId,
+    });
+    const getReport = jest.fn(async () => Object.freeze({ status: 'unavailable' }));
+    const handlers = createChatTurnDiagnosticHandlers({ ws, session, getReport });
+
+    await handlers['chat-turn:diagnostic:get'](getRequest());
+    session.projectRoot = '/tmp/diagnostic-binding-owner-b';
+    session.currentWorkspaceId = 'diagnostic-binding-owner-b';
+    session.workspaceEpoch = 'diagnostic-epoch-b';
+    session.workspaceBindingState = 'binding';
+    await handlers['chat-turn:diagnostic:get'](getRequest({ workspaceId: 'diagnostic-binding-owner-a' }));
+
+    expect(getReport).toHaveBeenCalledTimes(1);
+    expect(getReport.mock.calls[0][0].workspaceId).toBe('diagnostic-binding-owner-a');
+    expect(sentMessages(ws)).toEqual([fixedUnavailable, fixedUnavailable]);
+    await ThreadWebSocketHandler.cleanup(ws);
+  });
+
   test('service failure (throw) collapses to the same fixed unavailable response', async () => {
     const { ws, handlers } = makeHarness({
       getReport: jest.fn(async () => { throw new Error(`db exploded with ${CANARY}`); }),
@@ -189,18 +293,40 @@ describe('chat-turn diagnostic handlers (SPEC-03 Slice D)', () => {
 
   test('thread state is resolved per request (workspace switch is honored)', async () => {
     let workspaceId = 'ws-a';
+    const session = {
+      projectRoot: '/tmp/ws-a',
+      currentWorkspaceId: workspaceId,
+      workspaceEpoch: 'epoch-a',
+      workspaceBindingState: 'active',
+    };
+    let state = { threadManager: { workspaceId, projectRoot: session.projectRoot } };
     const { ws, handlers, reportStub } = makeHarness({
       getReport: jest.fn(async () => Object.freeze({ status: 'unavailable' })),
     });
     // Rebuild with a live state reader.
     const liveHandlers = createChatTurnDiagnosticHandlers({
       ws,
-      getThreadState: () => ({ threadManager: { workspaceId } }),
+      session,
+      captureBinding: () => ({
+        state,
+        session,
+        projectRoot: session.projectRoot,
+        workspaceId: session.currentWorkspaceId,
+        workspaceEpoch: session.workspaceEpoch,
+      }),
+      isBindingCurrent: (_socket, binding) => state === binding.state
+        && session.projectRoot === binding.projectRoot
+        && session.currentWorkspaceId === binding.workspaceId
+        && session.workspaceEpoch === binding.workspaceEpoch,
       getReport: reportStub,
     });
     void handlers;
     await liveHandlers['chat-turn:diagnostic:get'](getRequest());
     workspaceId = 'ws-b';
+    session.projectRoot = '/tmp/ws-b';
+    session.currentWorkspaceId = workspaceId;
+    session.workspaceEpoch = 'epoch-b';
+    state = { threadManager: { workspaceId, projectRoot: session.projectRoot } };
     await liveHandlers['chat-turn:diagnostic:get'](getRequest());
     expect(reportStub.mock.calls[0][0].workspaceId).toBe('ws-a');
     expect(reportStub.mock.calls[1][0].workspaceId).toBe('ws-b');

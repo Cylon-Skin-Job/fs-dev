@@ -21,15 +21,27 @@ function getWorkspaceRoot() {
  * at the module level of main.cjs, before app.whenReady().
  */
 function registerScheme() {
-  protocol.registerSchemesAsPrivileged([{
-    scheme: 'fusion-studio',
-    privileges: {
-      standard: true,       // relative URLs within served HTML resolve correctly
-      secure: true,         // treated as a secure origin (WebCrypto, etc.)
-      supportFetchAPI: true, // iframes can fetch() back to localhost server
-      corsEnabled: true,    // CORS requests from these iframes are allowed
+  protocol.registerSchemesAsPrivileged([
+    {
+      scheme: 'fusion-shell',
+      privileges: {
+        standard: true,
+        secure: true,
+        supportFetchAPI: true,
+        corsEnabled: true,
+        codeCache: true,
+      },
     },
-  }]);
+    {
+      scheme: 'fusion-studio',
+      privileges: {
+        standard: true,       // relative URLs within served HTML resolve correctly
+        secure: true,         // treated as a secure origin (WebCrypto, etc.)
+        supportFetchAPI: true,
+        corsEnabled: true,
+      },
+    },
+  ]);
 }
 
 /**

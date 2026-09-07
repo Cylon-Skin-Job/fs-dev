@@ -12,10 +12,24 @@ const RUNTIME_STATES = Object.freeze({
 });
 
 const liveTurnSnapshot = require('./live-turn-snapshot');
+const path = require('path');
 const {
   createTurnAccumulator,
   settleAccumulatorForTerminal,
 } = require('./canonical-turn-accumulator');
+
+const DRAIN_RETIRE_TIMEOUT_MS = 5_000;
+
+function awaitBoundedDrainCompletion(completion, timeoutMs = DRAIN_RETIRE_TIMEOUT_MS) {
+  let timeout;
+  return Promise.race([
+    Promise.resolve(completion),
+    new Promise((_, reject) => {
+      timeout = setTimeout(() => reject(new Error('Canonical drain did not retire in time')), timeoutMs);
+      timeout.unref?.();
+    }),
+  ]).finally(() => clearTimeout(timeout));
+}
 
 class ThreadRuntimeManager {
   constructor() {
@@ -32,7 +46,63 @@ class ThreadRuntimeManager {
       throw new Error(`Unsupported thread runtime scope: ${key.scope}`);
     }
 
-    return `project:${key.workspaceId}:${key.threadId}`;
+    // Production callers provide both fields. The legacy sentinels retain
+    // compatibility for older isolated unit fixtures without weakening live
+    // root/epoch identity, because no production owner constructs them.
+    const projectRoot = typeof key.projectRoot === 'string' && key.projectRoot
+      ? path.resolve(key.projectRoot)
+      : `legacy-root:${key.workspaceId}`;
+    const workspaceEpoch = typeof key.workspaceEpoch === 'string' && key.workspaceEpoch
+      ? key.workspaceEpoch
+      : `legacy-epoch:${projectRoot}`;
+    return JSON.stringify(['project', key.workspaceId, projectRoot, workspaceEpoch, key.threadId]);
+  }
+
+  _resourceRuntimes(key) {
+    const root = typeof key?.projectRoot === 'string' && key.projectRoot
+      ? path.resolve(key.projectRoot)
+      : `legacy-root:${key?.workspaceId}`;
+    return [...this.runtimes.entries()].filter(([, runtime]) => (
+      runtime.key.workspaceId === key?.workspaceId
+      && runtime.key.threadId === key?.threadId
+      && (typeof runtime.key.projectRoot === 'string' && runtime.key.projectRoot
+        ? path.resolve(runtime.key.projectRoot)
+        : `legacy-root:${runtime.key.workspaceId}`) === root
+    ));
+  }
+
+  getRuntimeForResource(key) {
+    const matches = this._resourceRuntimes(key);
+    return matches.length === 1 ? matches[0][1] : null;
+  }
+
+  async retireResourceDrains(key) {
+    const matches = this._resourceRuntimes(key);
+    for (const [, runtime] of matches) {
+      if (runtime.activeDrain) await this.retireActiveDrain(runtime.key);
+    }
+    return matches.length;
+  }
+
+  /**
+   * Move an idle/ready provider runtime to a replacement connection epoch.
+   * Busy drains and warmups remain immutably owned by their accepting epoch.
+   */
+  adoptRuntimeIdentity(key) {
+    const exactKey = this.makeKey(key);
+    const exact = this.runtimes.get(exactKey);
+    if (exact) return exact;
+    const matches = this._resourceRuntimes(key);
+    if (matches.length === 0) return this.ensureRuntime(key);
+    if (matches.length !== 1) return null;
+    const [previousKey, runtime] = matches[0];
+    if (runtime.activeDrain || runtime.warmPromise
+      || ![RUNTIME_STATES.COLD, RUNTIME_STATES.READY].includes(runtime.state)) return null;
+    this.runtimes.delete(previousKey);
+    runtime.key = { ...key };
+    runtime.updatedAt = Date.now();
+    this.runtimes.set(exactKey, runtime);
+    return runtime;
   }
 
   ensureRuntime(key) {
@@ -201,6 +271,9 @@ class ThreadRuntimeManager {
       turnId: null,
       control,
       routeContext: routeContext || null,
+      completion: null,
+      retire: null,
+      retirementPromise: null,
     };
     runtime.updatedAt = Date.now();
     return runtime.activeDrain;
@@ -215,12 +288,55 @@ class ThreadRuntimeManager {
     return runtime?.activeDrain || null;
   }
 
+  /**
+   * Bind the non-serializable lifecycle owned by the interactive iterator.
+   * Workspace retirement uses this exact record to stop/finalize the admitted
+   * turn and then await iterator quiescence before installing another binding.
+   */
+  bindActiveDrainLifecycle(key, drainId, { completion, retire }) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record || record.drainId !== drainId) return false;
+    if (!completion || typeof completion.then !== 'function' || typeof retire !== 'function') {
+      throw new Error('Active drain lifecycle requires completion and retire capabilities');
+    }
+    if (record.completion || record.retire) {
+      throw new Error('Active drain lifecycle is already bound');
+    }
+    record.completion = completion;
+    record.retire = retire;
+    runtime.updatedAt = Date.now();
+    return true;
+  }
+
+  /**
+   * Retire one exact interactive drain and wait until its iterator can no
+   * longer publish canonical events. A missing drain is already quiescent.
+   */
+  async retireActiveDrain(key) {
+    const runtime = this.runtimes.get(this.makeKey(key));
+    const record = runtime?.activeDrain;
+    if (!record) return false;
+    if (typeof record.retire !== 'function' || !record.completion) {
+      throw new Error('Active drain has no retirement lifecycle');
+    }
+    if (!record.retirementPromise) {
+      record.retirementPromise = (async () => {
+        const retired = await record.retire();
+        if (retired !== true) throw new Error('Canonical drain retirement failed');
+        await awaitBoundedDrainCompletion(record.completion);
+        return true;
+      })();
+    }
+    return record.retirementPromise;
+  }
+
   // ─── SPEC-01 Slice C: runtime drain authority API ────────────────────
   // ThreadRuntimeManager is the SOLE mutable canonical turn owner. Every
   // canonical mutation below compares the current drain (and, after bind,
   // the bound server turnId). The active drain record shape is:
   //   { drainId, turnId: string|null, control, routeContext,
-  //     turn: <accumulator>|null }
+  //     turn: <accumulator>|null, completion, retire, retirementPromise }
   // where `turn` is created by beginCanonicalTurn and holds the
   // non-serializable mutable accumulator beside the serializable snapshot.
 

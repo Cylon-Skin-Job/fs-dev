@@ -33,6 +33,8 @@ const {
   beginWorkspaceBind,
   completeWorkspaceBind,
 } = require('./workspace-session');
+const { beginWorkspaceTransition } = require('./workspace-operation-lease');
+const ThreadWebSocketHandler = require('../thread/ThreadWebSocketHandler');
 
 const STYLE_FILES = [
   'variables.css',
@@ -92,17 +94,60 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, ge
     ws.send(JSON.stringify(wireMessage));
   }
 
+  function broadcastThreadLifecycle(event) {
+    if (typeof event.workspaceId !== 'string' || !event.workspaceId
+      || typeof event.projectRoot !== 'string' || !event.projectRoot
+      || typeof event.workspaceEpoch !== 'string' || !event.workspaceEpoch) return;
+    const payload = JSON.stringify({
+      type: 'thread:state_changed',
+      threadId: event.threadId,
+      workspace: event.workspace,
+      workspaceId: event.workspaceId,
+      projectRoot: event.projectRoot,
+      workspaceEpoch: event.workspaceEpoch,
+      turnId: event.turnId,
+      state: event.state,
+      previousState: event.previousState,
+    });
+    for (const ws of getAllClients()) {
+      if (ws.readyState !== 1) continue;
+      const session = getSessionForClient?.(ws);
+      const threadState = ThreadWebSocketHandler.getState?.(ws);
+      if (!session || session.workspaceBindingState !== 'active'
+        || session.currentWorkspaceId !== event.workspaceId
+        || session.projectRoot !== event.projectRoot
+        || session.workspaceEpoch !== event.workspaceEpoch
+        || !threadState || threadState.workspaceRetired === true
+        || threadState.threadManager?.workspaceId !== event.workspaceId
+        || threadState.threadManager?.projectRoot !== event.projectRoot) continue;
+      ws.send(payload);
+    }
+  }
+
   async function broadcastWorkspaceSwitched(event) {
     const clients = getAllClients().filter((ws) => ws.readyState === 1);
-    const bindings = clients.map((ws) => {
+    const bindings = (await Promise.all(clients.map(async (ws) => {
       const session = getSessionForClient?.(ws);
       if (!session) return null;
-      return Object.freeze({
-        ws,
-        session,
-        pair: beginWorkspaceBind(session, { workspaceId: event.to, repoPath: event.repoPath }),
-      });
-    }).filter(Boolean);
+      try {
+        return Object.freeze({
+          ws,
+          session,
+          pair: await beginWorkspaceTransition(ws, async () => {
+            const workspaceChanges = session.currentWorkspaceId !== event.to
+              || session.projectRoot !== event.repoPath;
+            if (workspaceChanges) await ThreadWebSocketHandler.retireWorkspaceBinding(ws, session);
+            return beginWorkspaceBind(session, {
+              workspaceId: event.to,
+              repoPath: event.repoPath,
+            });
+          }),
+        });
+      } catch (_error) {
+        try { ws.close(1011, 'workspace retirement failed'); } catch (_closeError) {}
+        return null;
+      }
+    }))).filter(Boolean);
     let baseMessage;
     try {
       const target = event.to ? await registry.getById(event.to) : null;
@@ -214,13 +259,7 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, ge
   });
 
   on('thread:state_changed', (event) => {
-    broadcastAll({
-      type: 'thread:state_changed',
-      threadId: event.threadId,
-      workspace: event.workspace,
-      state: event.state,
-      previousState: event.previousState,
-    });
+    broadcastThreadLifecycle(event);
   });
 
   // --- Targeted subscriptions ---

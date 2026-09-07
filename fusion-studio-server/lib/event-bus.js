@@ -17,6 +17,7 @@
  */
 
 const EventEmitter = require('events');
+const { performance } = require('perf_hooks');
 const { runSafely } = require('./background-services/safety');
 
 const bus = new EventEmitter();
@@ -24,6 +25,7 @@ bus.setMaxListeners(200);
 
 const MAX_CHAIN_DEPTH = 5;
 let currentDepth = 0;
+const inFlightEffects = new Map();
 
 // Same-event suppression: track the triggering event in the current chain
 let currentTrigger = null;
@@ -82,7 +84,65 @@ function emit(type, data = {}) {
 
 function emitSafely(type, event) {
   for (const listener of bus.listeners(type)) {
-    runSafely(`EventBus:${type}`, () => listener(event));
+    const result = runSafely(`EventBus:${type}`, () => listener(event));
+    trackEffect(event, result);
+  }
+}
+
+function exactEffectKey(event) {
+  if (!event || typeof event.workspaceId !== 'string' || !event.workspaceId
+    || typeof event.projectRoot !== 'string' || !event.projectRoot
+    || typeof event.workspaceEpoch !== 'string' || !event.workspaceEpoch
+    || typeof event.threadId !== 'string' || !event.threadId
+    || typeof event.turnId !== 'string' || !event.turnId) return null;
+  return JSON.stringify([
+    event.workspaceId, event.projectRoot, event.workspaceEpoch, event.threadId, event.turnId,
+  ]);
+}
+
+function trackEffect(event, result) {
+  if (!result || typeof result.then !== 'function') return;
+  const key = exactEffectKey(event);
+  if (!key) return;
+  let effects = inFlightEffects.get(key);
+  if (!effects) {
+    effects = new Set();
+    inFlightEffects.set(key, effects);
+  }
+  const tracked = Promise.resolve(result).then(() => true, () => false);
+  effects.add(tracked);
+  tracked.finally(() => {
+    effects.delete(tracked);
+    if (effects.size === 0 && inFlightEffects.get(key) === effects) {
+      inFlightEffects.delete(key);
+    }
+  });
+}
+
+async function drainEventEffects(identity, {
+  timeoutMs = 3_000,
+  monotonicNow = () => performance.now(),
+  setTimer = setTimeout,
+  clearTimer = clearTimeout,
+} = {}) {
+  const key = exactEffectKey(identity);
+  if (!key) return Object.freeze({ drained: false });
+  const deadline = monotonicNow() + Math.max(0, timeoutMs);
+  while (true) {
+    const effects = inFlightEffects.get(key);
+    if (!effects || effects.size === 0) return Object.freeze({ drained: true });
+    const remaining = Math.max(0, deadline - monotonicNow());
+    if (remaining <= 0) return Object.freeze({ drained: false });
+    let timer;
+    const completed = await Promise.race([
+      Promise.allSettled([...effects]).then(() => true),
+      new Promise((resolve) => {
+        timer = setTimer(() => resolve(false), remaining);
+        timer?.unref?.();
+      }),
+    ]);
+    if (timer) clearTimer(timer);
+    if (!completed) return Object.freeze({ drained: false });
   }
 }
 
@@ -98,4 +158,9 @@ function on(type, handler) {
   return () => bus.off(type, handler);
 }
 
-module.exports = { emit, on, bus };
+const publicApi = { emit, on, bus };
+Object.defineProperty(publicApi, 'drainEventEffects', {
+  value: drainEventEffects,
+  enumerable: false,
+});
+module.exports = publicApi;

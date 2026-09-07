@@ -156,7 +156,7 @@ function PanelWrapper({ panelId, isActive }: {
 function App() {
   // WebSocket connection — must run BEFORE the loading gate
   // so discovery can complete and populate configs
-  useWebSocket();
+  const runtimeStatus = useWebSocket();
   useWorkspaceKeyboard();
   useScreenshotCapture();
   useElectronMenu();
@@ -254,6 +254,23 @@ function App() {
     if (currentTints.borders.threads) body.dataset.tintBorderThreads = 'true'; else delete body.dataset.tintBorderThreads;
     if (themeChatBorder) body.dataset.tintBorderChat = 'true'; else delete body.dataset.tintBorderChat;
   }, [currentTints, themeChatBorder]);
+
+  if (runtimeStatus === 'disconnected') {
+    return (
+      <div ref={containerRef} className="rv-app-container">
+        <header className="rv-header rv-interaction-context">
+          <div className="rv-header-left">
+            <div className="rv-connection-status">Disconnected</div>
+          </div>
+          <WorkspaceTitle />
+          <div className="rv-header-right" />
+        </header>
+        <div className="rv-panel-container rv-panel-container--loading">
+          Fusion server disconnected.
+        </div>
+      </div>
+    );
+  }
 
   // Waiting for workspace:init from server. Brief flash on first connect.
   if (isConnected && !hasReceivedWorkspaceInit) {

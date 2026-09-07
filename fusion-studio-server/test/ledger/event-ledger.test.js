@@ -5,7 +5,10 @@ const { emit } = require('../../lib/event-bus');
 const initialMigration = require('../../lib/db/migrations/001_initial');
 const ledgerMigration = require('../../lib/db/migrations/029_event_ledger');
 const { recordEvent, listRecentEvents } = require('../../lib/ledger/event-ledger');
-const { startEventLedgerSubscriber } = require('../../lib/ledger/event-ledger-subscriber');
+const {
+  drainEventLedgerWrites,
+  startEventLedgerSubscriber,
+} = require('../../lib/ledger/event-ledger-subscriber');
 
 function createDb() {
   return knex({
@@ -128,5 +131,39 @@ describe('event ledger', () => {
     expect(rows[0].event_type).toBe('workspace:switched');
     expect(rows[0].workspace_id).toBe('fusion-home');
     expect(logger.warn).not.toHaveBeenCalled();
+  });
+
+  test('shutdown drain owns a held legacy ledger write before database close', async () => {
+    let releaseWrite;
+    let writeStarted;
+    const started = new Promise((resolve) => { writeStarted = resolve; });
+    const logger = { log: jest.fn(), warn: jest.fn() };
+    const heldDb = jest.fn(() => ({
+      where: () => ({
+        first: async () => {
+          writeStarted();
+          await new Promise((resolve) => { releaseWrite = resolve; });
+          throw new Error('intentional held write failure');
+        },
+      }),
+    }));
+    stopSubscriber = startEventLedgerSubscriber({
+      getDb: () => heldDb,
+      logger,
+    });
+    emit('thread:state_changed', {
+      workspaceId: 'workspace-1', threadId: 'thread-1', turnId: 'turn-1', state: 'idle',
+    });
+    await started;
+    let settled = false;
+    const draining = drainEventLedgerWrites({ timeoutMs: 1_000 })
+      .then((result) => { settled = true; return result; });
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    releaseWrite();
+    await expect(draining).resolves.toEqual({ drained: true });
+    expect(logger.warn).toHaveBeenCalledWith(
+      '[EventLedger] write failed:', 'intentional held write failure',
+    );
   });
 });

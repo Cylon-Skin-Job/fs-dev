@@ -11,8 +11,9 @@ jest.mock('../../lib/harness/compat', () => ({
 }));
 
 jest.mock('../../lib/wire/process-manager', () => ({
+  attachClientToWire: jest.fn(() => true),
   getWireForThread: jest.fn(),
-  registerWire: jest.fn(),
+  unregisterWire: jest.fn(),
 }));
 
 jest.mock('../../lib/event-bus', () => ({
@@ -32,7 +33,11 @@ jest.mock('../../lib/thread/harness-diagnostic-service', () => ({
 
 const { emit } = require('../../lib/event-bus');
 const { spawnThreadWire } = require('../../lib/harness/compat');
-const { getWireForThread, registerWire } = require('../../lib/wire/process-manager');
+const {
+  attachClientToWire,
+  getWireForThread,
+  unregisterWire,
+} = require('../../lib/wire/process-manager');
 const { RUNTIME_STATES, threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
 const registry = require('../../lib/thread/thread-manager-registry');
 const {
@@ -200,13 +205,19 @@ describe('thread runtime automation', () => {
     });
     expect(spawnThreadWire).toHaveBeenCalledWith('thread-1', '/tmp/project', {
       workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: 'automation:workspace-1:/tmp/project',
       viewId: null,
     });
-    expect(registerWire).toHaveBeenCalledWith('thread-1', wire, '/tmp/project', null, {
+    expect(attachClientToWire).toHaveBeenCalledWith('thread-1', wire, '/tmp/project', null, {
       workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: 'automation:workspace-1:/tmp/project',
       viewId: null,
     });
-    expect(manager.openSession).toHaveBeenCalledWith('thread-1', wire, null);
+    expect(manager.openSession).toHaveBeenCalledWith('thread-1', wire, null, {
+      workspaceEpoch: 'automation:workspace-1:/tmp/project',
+    });
     expect(sendOrder).toEqual([
       ['user', 'hello'],
       ['send', 'hello'],
@@ -450,9 +461,9 @@ describe('canonical drain binding (SPEC-01 Slice B)', () => {
     await expect(sendAutomationPrompt(makeTarget(), 'hello')).resolves.toMatchObject({ accepted: true });
     const record = threadRuntimeManager.getActiveDrain(_getRuntimeKey(makeTarget()));
 
-    await expect(record.control.stopHarness()).resolves.toBeUndefined();
+    await expect(record.control.stopHarness()).rejects.toThrow('Automation provider termination failed');
 
-    expect(stopSession).toHaveBeenCalledTimes(1);
+    expect(stopSession).toHaveBeenCalledTimes(2);
     expect(warnSpy.mock.calls).toContainEqual([
       '[ThreadRuntime] Automation harness stop failed',
       {
@@ -800,6 +811,69 @@ describe('failure-path canonical terminalization — headless parity (SPEC-03 Sl
     expect(serialized).not.toContain('REDACTED-TAIL-MARKER');
   });
 
+  test('automation drain retirement stops its exact provider and awaits iterator quiescence', async () => {
+    const target = makeTarget();
+    const manager = makeManager();
+    registry.getThreadManagerForTarget.mockReturnValue(manager);
+    let releaseIterator;
+    const iteratorMayFinish = new Promise(resolve => { releaseIterator = resolve; });
+    let markIteratorWaiting;
+    const iteratorWaiting = new Promise(resolve => { markIteratorWaiting = resolve; });
+    let finishProviderStop;
+    const providerMayStop = new Promise(resolve => { finishProviderStop = resolve; });
+    const stopSession = jest.fn(async () => providerMayStop);
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      _harnessPromise: Promise.resolve(),
+      _stopSession: stopSession,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        markIteratorWaiting();
+        await iteratorMayFinish;
+        yield { type: 'content', text: 'stale content' };
+        yield { type: 'turn_end', reason: 'complete' };
+      },
+    };
+    spawnThreadWire.mockReturnValue(wire);
+
+    const sending = sendAutomationPrompt(target, 'hello');
+    await iteratorWaiting;
+    const runtimeKey = _getRuntimeKey(target);
+    let retirementResolved = false;
+    const retiring = threadRuntimeManager.retireActiveDrain(runtimeKey).then(value => {
+      retirementResolved = true;
+      return value;
+    });
+    await flushAsyncWork();
+
+    expect(stopSession).toHaveBeenCalledWith('SIGTERM');
+    expect(retirementResolved).toBe(false);
+
+    finishProviderStop();
+    await flushAsyncWork();
+    expect(retirementResolved).toBe(false);
+    releaseIterator();
+    await expect(retiring).resolves.toBe(true);
+    await expect(sending).resolves.toMatchObject({
+      accepted: false,
+      deferred: false,
+      error: 'Drain retired during iteration',
+    });
+    expect(unregisterWire).toHaveBeenCalledWith('thread-1', {
+      workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: 'automation:workspace-1:/tmp/project',
+      scope: 'project',
+      viewId: null,
+      threadId: 'thread-1',
+    }, wire);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    const terminals = emit.mock.calls.filter(([type]) => type === 'chat:turn_end');
+    expect(terminals).toHaveLength(1);
+    expect(terminals[0][1]).toMatchObject({ partial: true, reason: 'interrupted' });
+  });
+
   test('superseded drains remain diagnostic no-ops — no synthesized error terminal at all', async () => {
     const target = makeTarget();
     const manager = makeManager();
@@ -921,6 +995,8 @@ describe('diagnosticId wiring — headless parity (SPEC-03 Slice C)', () => {
     expect(persistDiagnosticReport).toHaveBeenCalledTimes(1);
     expect(persistDiagnosticReport.mock.calls[0][0]).toEqual({
       workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: 'automation:workspace-1:/tmp/project',
       threadId: 'thread-1',
       turnId: 'turn-1', // uuid mocked file-wide; bound turnId
     });

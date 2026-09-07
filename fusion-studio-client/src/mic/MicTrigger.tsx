@@ -12,6 +12,7 @@ import {
   HoverIconModalList,
 } from '../components/hover-icon-modal';
 import { VoiceRecorder } from './VoiceRecorder';
+import { fetchServer } from '../lib/runtime-transport';
 import './VoiceRecorder.css';
 
 interface MicTriggerProps {
@@ -43,7 +44,7 @@ export function MicTrigger({ onInsert }: MicTriggerProps) {
   const warmTranscription = useCallback(() => {
     if (warmStartedRef.current) return;
     warmStartedRef.current = true;
-    fetch('/api/transcription/warm', { method: 'POST' }).catch((error) => {
+    fetchServer('/api/transcription/warm', { method: 'POST' }).catch((error) => {
       console.warn('[VoiceRecorder] Warm-up failed:', error);
       warmStartedRef.current = false;
     });
@@ -105,7 +106,7 @@ export function MicTrigger({ onInsert }: MicTriggerProps) {
     setPromptError(null);
 
     try {
-      const response = await fetch('/api/capabilities/prompts/stt');
+      const response = await fetchServer('/api/capabilities/prompts/stt');
       const result = await response.json();
       if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to load prompt');
@@ -126,7 +127,7 @@ export function MicTrigger({ onInsert }: MicTriggerProps) {
     setPromptSavedMessage(null);
 
     try {
-      const response = await fetch('/api/capabilities/prompts/stt', {
+      const response = await fetchServer('/api/capabilities/prompts/stt', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: promptText }),

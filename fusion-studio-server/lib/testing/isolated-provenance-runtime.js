@@ -8,6 +8,7 @@ const childProcess = require('child_process');
 const MODE = 'isolated-v1';
 const MACHINE = 'Test-Provenance';
 const MARKER = '.fusion-provenance-test-owned';
+const AGENT_TOOL_FIXTURE_THREAD_ID = 'isolated-agent-tool-fixture';
 const EXPECTED_STARTUP_EFFECTS = Object.freeze([
   'calendar-adapters',
   'calendar-broadcaster',
@@ -245,6 +246,7 @@ function createDisabledRuntime() {
     installObservationGuards: observationGuards.install,
     restoreObservationGuards: observationGuards.restore,
     wrapFileSaveOwner(owner) { return owner; },
+    async provisionAgentToolThread() { return null; },
     async initializeProfile() {},
     async finalizeStartupAudit() {},
   });
@@ -344,6 +346,18 @@ function createIsolatedProvenanceRuntime({
         key: 'local_machine_name', value: MACHINE, updated_at: now,
       }).onConflict('key').merge(['value', 'updated_at']);
     });
+  }
+
+  async function provisionAgentToolThread(provision) {
+    if (typeof provision !== 'function') {
+      throw new TypeError('isolated provenance thread provisioner is required');
+    }
+    await provision(Object.freeze({
+      workspaceId: workspaces[0].id,
+      projectRoot: workspaces[0].repoPath,
+      threadId: AGENT_TOOL_FIXTURE_THREAD_ID,
+    }));
+    return AGENT_TOOL_FIXTURE_THREAD_ID;
   }
 
   function wrapFileSaveOwner(owner) {
@@ -461,6 +475,7 @@ function createIsolatedProvenanceRuntime({
     installObservationGuards: observationGuards.install,
     restoreObservationGuards: observationGuards.restore,
     wrapFileSaveOwner,
+    provisionAgentToolThread,
     initializeProfile,
     finalizeStartupAudit,
   });
@@ -469,6 +484,7 @@ function createIsolatedProvenanceRuntime({
 module.exports = {
   EXPECTED_RUNTIME_EFFECTS,
   EXPECTED_STARTUP_EFFECTS,
+  AGENT_TOOL_FIXTURE_THREAD_ID,
   MACHINE,
   MARKER,
   MODE,

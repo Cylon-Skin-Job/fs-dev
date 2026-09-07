@@ -33,10 +33,15 @@ const DEFAULT_EXCLUDES = [
  *
  * @param {string} projectRoot - Absolute path to the project root
  * @param {object} [options]
+ * @param {string} options.workspaceId - Exact owning workspace id
  * @param {string[]} [options.excludes] - Additional exclusion patterns
  * @returns {{ close: Function, addFilter: Function }}
  */
 function createWatcher(projectRoot, options = {}) {
+  if (typeof options.workspaceId !== 'string' || !options.workspaceId) {
+    throw new Error('Workspace watcher requires an exact workspaceId');
+  }
+  const workspaceId = options.workspaceId;
   const excludes = DEFAULT_EXCLUDES.concat(options.excludes || []);
   const filters = [];
 
@@ -76,10 +81,14 @@ function createWatcher(projectRoot, options = {}) {
     if (event === 'rename') {
       const oldCtx = buildContext(projectRoot, extra.oldPath, 'delete');
       const newCtx = buildContext(projectRoot, extra.newPath, 'create');
-      emit('file:changed', { filePath: extra.oldPath, event: 'delete', context: oldCtx });
-      emit('file:changed', { filePath: extra.newPath, event: 'create', context: newCtx });
+      emit('file:changed', {
+        workspaceId, projectRoot, filePath: extra.oldPath, event: 'delete', context: oldCtx,
+      });
+      emit('file:changed', {
+        workspaceId, projectRoot, filePath: extra.newPath, event: 'create', context: newCtx,
+      });
     } else {
-      emit('file:changed', { filePath, event, context: ctx });
+      emit('file:changed', { workspaceId, projectRoot, filePath, event, context: ctx });
     }
   }
 

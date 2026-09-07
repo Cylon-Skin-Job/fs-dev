@@ -15,6 +15,37 @@ Chat is a core system, not just a view. It crosses SQLite persistence, thread id
 
 Fusion Studio chat is thread-centered and server-owned. The thread is the durable conversational identity; live stream routing uses `threadId`. Completed history hydrates from SQLite `exchanges`. Harness output is translated into canonical chat events before it reaches application state. The renderer presents state and sends user intents; it does not own persistence.
 
+The Electron renderer shell loads only at `fusion-shell://app`. Electron gives
+that exact current main frame a public runtime descriptor for one server launch
+generation. The renderer's runtime transport validates that descriptor and is
+the sole owner of WebSocket, HTTP API, and server-resource endpoints. A missing
+or malformed descriptor leaves the shell visibly disconnected; it never falls
+back to the page URL, `localhost`, or a fixed development port. This public
+descriptor is endpoint information only. Each Electron server launch also owns
+an in-memory master delivered once over inherited pipe fd 3. Every renderer
+socket must complete the bounded `shell-auth:*` challenge/HMAC exchange before
+any per-connection product/router factory runs, initialization is released, or
+the socket enters any product recipient map.
+The server first completes its startup audit, installs shutdown supervision,
+publishes application handler owners, and opens a runtime-activation barrier.
+It publishes the authenticated acknowledgement only after product session
+activation succeeds beyond that barrier. A separate transport-only registry
+owns every upgraded socket for expiry, abnormal close, restart, and shutdown without
+making pending sockets product recipients. Graceful shutdown awaits every
+owned close event before process exit, so activated product cleanup completes.
+Only the server records the resulting
+`trusted-shell` connection role; authentication never enters app stores,
+SQLite, Provenance, or the UEB. The thread WebSocket domain consumes only that
+private live role before New Chat, assistant activation/resume, Rename, Delete,
+Touch, Warm, or prompt-triggered runtime activation can reach their manager,
+provider, persistence, mirror, or fan-out owners. Passive `thread:open` only
+hydrates and does not write resume/MRU state. Legacy `thread:fork` is
+unconditionally unavailable to every role, including through stored provider
+configuration.
+Every production harness/CLI launch receives a closed, family-specific
+allowlisted environment from the server-owned child-environment builder;
+unknown host variables and shell-authority material never transit by default.
+
 The live-turn contract is also turn- and sequence-bound. Each accepted prompt owns one immutable canonical route context and unique drain, every accepted in-flight publication carries the bound `threadId`, `turnId`, and authoritative `streamSeq`, and the client rejects or buffers frames before mutation according to that frontier. Provider-neutral `step_begin` drives a transient Working row; readable thinking remains actual model output. Failed accepted turns finalize through one safe catalog error, while detailed redacted diagnostics are retrieved only after an explicit user action.
 
 Orient with [Runtime Model](../006-Runtime_Model/PAGE.md) and [Structure](../007-Structure/PAGE.md) before diving into the subsystem articles.

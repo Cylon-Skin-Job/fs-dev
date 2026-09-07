@@ -93,6 +93,7 @@ function requireNonEmptyString(value, fieldName) {
  * @param {string} params.workspaceId - owning workspace id (required)
  * @param {string} params.workspace - resolved workspace string (required)
  * @param {string} params.projectRoot - project root path (required)
+ * @param {string|null} [params.workspaceEpoch] - exact renderer binding epoch
  * @param {string} params.scope - must be 'project' (RCC-0095)
  * @param {string} params.threadId - accepted thread id (required)
  * @param {string} params.acceptedUserInput - accepted user text (required)
@@ -103,6 +104,7 @@ function createCanonicalRouteContext({
   workspaceId,
   workspace,
   projectRoot,
+  workspaceEpoch = null,
   scope,
   threadId,
   acceptedUserInput,
@@ -111,6 +113,7 @@ function createCanonicalRouteContext({
   requireNonEmptyString(workspaceId, 'workspaceId');
   requireNonEmptyString(workspace, 'workspace');
   requireNonEmptyString(projectRoot, 'projectRoot');
+  if (workspaceEpoch !== null) requireNonEmptyString(workspaceEpoch, 'workspaceEpoch');
   requireNonEmptyString(threadId, 'threadId');
   requireNonEmptyString(acceptedUserInput, 'acceptedUserInput');
   if (scope !== 'project') {
@@ -121,6 +124,7 @@ function createCanonicalRouteContext({
     workspaceId,
     workspace,
     projectRoot,
+    workspaceEpoch,
     scope,
     threadId,
     acceptedUserInput,

@@ -103,6 +103,7 @@ function createDrainDrivenCanonicalChatEventApplier({
       workspace: route.workspace,
       workspaceId: route.workspaceId,
       projectRoot: authority?.canonicalRoot || route.projectRoot,
+      workspaceEpoch: route.workspaceEpoch,
       scope: route.scope,
       threadId: route.threadId,
       turnId,
@@ -282,6 +283,9 @@ function createDrainDrivenCanonicalChatEventApplier({
       if (seq !== null) {
         emit('chat:tool_call_args', {
           workspace: route.workspace,
+          workspaceId: route.workspaceId,
+          projectRoot: authority?.canonicalRoot || route.projectRoot,
+          workspaceEpoch: route.workspaceEpoch,
           scope: route.scope,
           threadId: route.threadId,
           turnId: active.turnId,
@@ -325,7 +329,9 @@ function createDrainDrivenCanonicalChatEventApplier({
     );
     if (seq === null) return;
     emit('chat:subagent_event', {
-      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      workspace: route.workspace, workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot, workspaceEpoch: route.workspaceEpoch,
+      scope: route.scope, threadId: route.threadId,
       turnId, streamSeq: seq, parentToolCallId: payload?.parentToolCallId || '',
       agentId: payload?.agentId || '', subagentType: payload?.subagentType || '',
       eventType: payload?.subagentEventType || '', eventPayload: payload?.subagentPayload || {},
@@ -349,7 +355,9 @@ function createDrainDrivenCanonicalChatEventApplier({
     );
     if (seq === null) return;
     emit('chat:status_update', {
-      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      workspace: route.workspace, workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot, workspaceEpoch: route.workspaceEpoch,
+      scope: route.scope, threadId: route.threadId,
       turnId, streamSeq: seq, contextUsage: payload?.contextUsage,
       tokenUsage: payload?.tokenUsage, messageId: payload?.messageId, planMode: payload?.planMode,
     });
@@ -393,7 +401,9 @@ function createDrainDrivenCanonicalChatEventApplier({
     );
     if (streamSeq === null || activityRevision === null) return;
     emit('chat:step_begin', {
-      workspace: route.workspace, scope: route.scope, threadId: route.threadId,
+      workspace: route.workspace, workspaceId: route.workspaceId,
+      projectRoot: route.projectRoot, workspaceEpoch: route.workspaceEpoch,
+      scope: route.scope, threadId: route.threadId,
       turnId, streamSeq, identity, ...(stepId ? { stepId } : {}),
       ...(messageId ? { messageId } : {}), startedAt, activityRevision,
     });

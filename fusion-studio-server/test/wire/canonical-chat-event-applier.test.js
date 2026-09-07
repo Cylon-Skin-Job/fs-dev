@@ -1563,8 +1563,9 @@ describe('CanonicalChatEventApplier (drain-driven)', () => {
       const event = stepEvents()[0];
       expect(event.type).toBe('chat:step_begin');
       expect(Object.keys(event.payload).sort()).toEqual([
-        'activityRevision', 'identity', 'messageId', 'scope', 'startedAt',
-        'stepId', 'streamSeq', 'threadId', 'turnId', 'workspace',
+        'activityRevision', 'identity', 'messageId', 'projectRoot', 'scope', 'startedAt',
+        'stepId', 'streamSeq', 'threadId', 'turnId', 'workspace', 'workspaceEpoch',
+        'workspaceId',
       ]);
       expect(event.payload).toMatchObject({
         workspace: 'workspace:code',

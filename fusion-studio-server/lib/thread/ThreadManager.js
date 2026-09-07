@@ -16,6 +16,7 @@ const { ThreadIndex } = require('./ThreadIndex');
 const { ChatFile } = require('./ChatFile');
 const { HistoryFile } = require('./HistoryFile');
 const { SessionManager } = require('./session-manager');
+const { threadRuntimeManager } = require('./thread-runtime-manager');
 const aiPaths = require('../workspace/ai-paths');
 
 function asPlainObject(value) {
@@ -358,17 +359,70 @@ class ThreadManager {
    * @param {import('child_process').ChildProcess} wireProcess
    * @param {import('ws').WebSocket} [ws]
    */
-  async openSession(threadId, wireProcess, ws = null) {
-    // Check for FIFO eviction
-    await this._enforceSessionLimit();
+  async openSession(threadId, wireProcess, ws = null, options = {}) {
+    // Claim the in-memory provider owner synchronously before metadata awaits
+    // or capacity eviction can admit/destroy the wrong provider for the same
+    // workspace-scoped thread.
+    const previousSession = this.sessionManager.getSession(threadId);
+    const activationToken = {};
+    let resolveActivation;
+    const activationCompletion = new Promise((resolve) => {
+      resolveActivation = resolve;
+    });
+    const session = this.sessionManager.openSession(threadId, null, wireProcess, ws, {
+      activationToken,
+      activationCompletion,
+      workspaceEpoch: options.workspaceEpoch || null,
+      projectRoot: this.projectRoot,
+    });
+    let activationFinished = false;
+    const finishActivation = () => {
+      if (activationFinished) return;
+      activationFinished = true;
+      this.sessionManager.finishSessionActivation(threadId, session, activationToken);
+      resolveActivation();
+    };
+    if (!session.threadManagerExitObserverInstalled && typeof wireProcess?.once === 'function') {
+      Object.defineProperty(session, 'threadManagerExitObserverInstalled', {
+        value: true,
+        enumerable: false,
+      });
+      wireProcess.once('exit', () => {
+        const current = this.sessionManager.getSession(threadId);
+        if (current !== session || current.wireProcess !== wireProcess) return;
+        void this.closeSession(threadId).catch(() => {
+          console.error(`[ThreadManager] Provider exit cleanup failed for ${threadId}`);
+        });
+      });
+    }
 
-    // Mark as active in index
-    await this.index.activate(threadId);
-    await this.index.markResumed(threadId);
-
-    // Delegate session state to SessionManager. The second arg is the retired
-    // viewId slot; SessionManager stores it but never reads it.
-    const session = this.sessionManager.openSession(threadId, null, wireProcess, ws);
+    try {
+      if (previousSession !== session) {
+        // A new target is already CAS-owned. Enforce capacity only after that
+        // acceptance, excluding the target itself from LRU retirement.
+        await this._enforceSessionLimit({ afterSessionClaim: true, excludeThreadId: threadId });
+      }
+      // Mark as active in index only after the exact provider owner is held.
+      await this.index.activate(threadId);
+      await this.index.markResumed(threadId);
+      if (!this.sessionManager.commitSessionActivation(threadId, session, activationToken)) {
+        throw new Error('Thread activation ownership changed');
+      }
+      finishActivation();
+    } catch (error) {
+      if (previousSession === session) {
+        this.sessionManager.rollbackSessionActivation(threadId, session, activationToken);
+      } else if (this.sessionManager.getSession(threadId) === session) {
+        // Resolve the activation barrier before waiting on a close that may
+        // already be owned by a concurrent workspace retirement.
+        finishActivation();
+        await this.sessionManager.closeSessionAndWait(threadId);
+      }
+      finishActivation();
+      throw error;
+    } finally {
+      finishActivation();
+    }
 
     return session;
   }
@@ -377,13 +431,60 @@ class ThreadManager {
    * Close a session (kill process, mark suspended)
    * @param {string} threadId
    */
-  async closeSession(threadId) {
-    const closed = this.sessionManager.closeSession(threadId);
+  async closeSession(threadId, options = {}) {
+    const activeSession = this.sessionManager.getSession(threadId);
+    const runtimeIdentity = {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+      workspaceEpoch: activeSession?.workspaceEpoch || null,
+      scope: 'project',
+      threadId,
+    };
+    if (runtimeIdentity.workspaceEpoch) {
+      await threadRuntimeManager.retireActiveDrain(runtimeIdentity);
+    } else {
+      await threadRuntimeManager.retireResourceDrains(runtimeIdentity);
+    }
+    const closed = await this.sessionManager.closeSessionAndWait(threadId, options);
     if (!closed) return false;
 
     // Mark as suspended in index
     await this.index.suspend(threadId);
     return true;
+  }
+
+  /**
+   * Explicit alias for callers whose control flow names the termination wait.
+   * All close paths now share the same drain-and-provider quiescence contract.
+   *
+   * @param {string} threadId
+   */
+  async closeSessionAndWait(threadId, options = {}) {
+    return this.closeSession(threadId, options);
+  }
+
+  /**
+   * Retire every provider owned by this workspace manager during process
+   * shutdown. Providers close concurrently under one bounded shared budget.
+   */
+  async shutdownSessions({ timeoutMs = 3_000, signal } = {}) {
+    if (signal?.aborted) return false;
+    const threadIds = [...this.sessionManager.activeSessions.keys()];
+    if (threadIds.length === 0) return true;
+    const requestedBudget = Math.max(2, Number(timeoutMs) || 3_000);
+    // Leave the Phase-A owner a small completion margin after provider exit;
+    // the outer owner treats equality with its deadline as a failed drain.
+    const budget = Math.max(2, Math.min(2_500,
+      requestedBudget > 10 ? requestedBudget - 10 : requestedBudget));
+    const providerCloseGraceMs = Math.max(1, Math.floor(budget * 2 / 3));
+    const providerCloseForceMs = Math.max(1, budget - providerCloseGraceMs);
+    const results = await Promise.allSettled(threadIds.map((threadId) => this.closeSession(threadId, {
+      providerCloseGraceMs,
+      providerCloseForceMs,
+    })));
+    const rejected = results.find((result) => result.status === 'rejected');
+    if (rejected) throw rejected.reason;
+    return !signal?.aborted && this.sessionManager.activeSessions.size === 0;
   }
 
   /**
@@ -393,6 +494,37 @@ class ThreadManager {
    */
   getSession(threadId) {
     return this.sessionManager.getSession(threadId);
+  }
+
+  beginSessionRetirement(threadId, ws) {
+    return this.sessionManager.beginSessionRetirement(threadId, ws);
+  }
+
+  restoreSessionOwner(threadId, expectedSession, expectedWire, expectedWs, previous) {
+    return this.sessionManager.restoreSessionOwner(
+      threadId, expectedSession, expectedWire, expectedWs, previous,
+    );
+  }
+
+  /**
+   * Complete a session reserved by Stop after the bound provider control has
+   * proved exit. Pending activation metadata must settle before the final
+   * suspended write, and the exact wire must still own the reserved session.
+   */
+  async completeStoppedSession(threadId, expectedWire) {
+    const session = this.sessionManager.getSession(threadId);
+    if (!session
+      || session.state !== 'stopping'
+      || !expectedWire
+      || session.wireProcess !== expectedWire) return false;
+    if (session.pendingActivation?.completion) {
+      await session.pendingActivation.completion;
+    }
+    if (this.sessionManager.getSession(threadId) !== session
+      || session.state !== 'stopping'
+      || session.wireProcess !== expectedWire) return false;
+    await this.index.suspend(threadId);
+    return this.sessionManager.completeStoppedSession(threadId, expectedWire);
   }
 
   /**
@@ -439,11 +571,17 @@ class ThreadManager {
    * Enforce max active sessions limit (FIFO eviction)
    * @private
    */
-  async _enforceSessionLimit() {
-    if (this.sessionManager.getActiveSessionCount() >= this.sessionManager.maxActiveSessions) {
+  async _enforceSessionLimit({ afterSessionClaim = false, excludeThreadId = null } = {}) {
+    const activeCount = this.sessionManager.getActiveSessionCount();
+    const overLimit = afterSessionClaim
+      ? activeCount > this.sessionManager.maxActiveSessions
+      : activeCount >= this.sessionManager.maxActiveSessions;
+    if (overLimit) {
       // Find oldest active session by MRU order (last in list = least recently used)
       const threads = await this.index.list();
-      const activeThreads = threads.filter(t => this.sessionManager.isActive(t.threadId));
+      const activeThreads = threads.filter(t => (
+        t.threadId !== excludeThreadId && this.sessionManager.isActive(t.threadId)
+      ));
       const oldest = activeThreads[activeThreads.length - 1];
       if (oldest) {
         console.log(`[ThreadManager] LRU eviction: closing ${oldest.threadId}`);

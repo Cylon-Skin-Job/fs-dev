@@ -16,8 +16,7 @@ const { getProjectThreadManager, awaitThreadManagerReady } = require('../thread/
 const { aggregateExchangeMetadata } = require('../chat-metadata/exchange-metadata-aggregator');
 const { resolveTerminalErrorForReason } = require('../thread/turn-terminal-error');
 
-// Pending audit data keyed by threadId
-// Map<threadId, { messageId, planMode, contextUsage, tokenUsage, timestamp }>
+// Pending audit data keyed by exact workspace/thread/turn identity.
 const pendingAuditData = new Map();
 
 // TTL for pending data (5 minutes) — prevents memory leaks
@@ -36,6 +35,17 @@ function bindingAuthorityFor(event) {
     || typeof event?.turnId !== 'string'
     || event.turnId.length === 0) return null;
   return Object.freeze({ workspaceId: event.workspaceId, turnId: event.turnId });
+}
+
+function pendingKey(event) {
+  if (typeof event?.workspaceId !== 'string' || !event.workspaceId
+    || typeof event?.projectRoot !== 'string' || !event.projectRoot
+    || typeof event?.workspaceEpoch !== 'string' || !event.workspaceEpoch
+    || typeof event?.threadId !== 'string' || !event.threadId
+    || typeof event?.turnId !== 'string' || !event.turnId) return null;
+  return JSON.stringify([
+    event.workspaceId, event.projectRoot, event.workspaceEpoch, event.threadId, event.turnId,
+  ]);
 }
 
 /**
@@ -134,9 +144,10 @@ async function drainAuditSaves({
  * @param {Object} event.tokenUsage
  */
 function handleStatusUpdate(event) {
-  if (!event.threadId) return;
+  const key = pendingKey(event);
+  if (!key) return;
 
-  pendingAuditData.set(event.threadId, {
+  pendingAuditData.set(key, {
     messageId: event.messageId ?? null,
     planMode: event.planMode ?? false,
     contextUsage: event.contextUsage ?? null,
@@ -158,7 +169,8 @@ function handleStatusUpdate(event) {
 async function handleTurnEnd(event) {
   if (!event.threadId) return;
 
-  const auditData = pendingAuditData.get(event.threadId);
+  const key = pendingKey(event);
+  const auditData = key ? pendingAuditData.get(key) : null;
 
   // Build metadata object (works even if no status_update was received)
   const auditMetadata = {
@@ -197,6 +209,7 @@ async function handleTurnEnd(event) {
         workspace: event.workspace,
         workspaceId: event.workspaceId,
         projectRoot: event.projectRoot,
+        workspaceEpoch: event.workspaceEpoch,
         userInput: event.userInput,
         assistantParts: event.parts,
         attachments: event.attachments || [],
@@ -216,6 +229,8 @@ async function handleTurnEnd(event) {
       emit('chat:exchange_metadata', {
         workspace: event.workspace,
         workspaceId: event.workspaceId,
+        projectRoot: event.projectRoot,
+        workspaceEpoch: event.workspaceEpoch,
         scope: event.scope || 'project',
         threadId: event.threadId,
         turnId: event.turnId,
@@ -226,6 +241,8 @@ async function handleTurnEnd(event) {
       emit('chat-turn:saved', {
         workspace: event.workspace,
         workspaceId: event.workspaceId,
+        projectRoot: event.projectRoot,
+        workspaceEpoch: event.workspaceEpoch,
         scope: event.scope || 'project',
         threadId: event.threadId,
         turnId: event.turnId,
@@ -239,13 +256,13 @@ async function handleTurnEnd(event) {
       await finalizeSavedExchange(event, savedExchange);
     } catch (err) {
       console.error('[AuditSubscriber] Failed to save exchange:', err);
-      pendingAuditData.delete(event.threadId);
+      if (key) pendingAuditData.delete(key);
       throw err;
     }
   }
 
   // Clean up pending data for this thread
-  pendingAuditData.delete(event.threadId);
+  if (key) pendingAuditData.delete(key);
 }
 
 async function finalizeSavedExchange(event, savedExchange) {
@@ -266,9 +283,9 @@ async function finalizeSavedExchange(event, savedExchange) {
  */
 function cleanupStalePendingData() {
   const now = Date.now();
-  for (const [threadId, data] of pendingAuditData.entries()) {
+  for (const [key, data] of pendingAuditData.entries()) {
     if (now - data.timestamp > PENDING_TTL_MS) {
-      pendingAuditData.delete(threadId);
+      pendingAuditData.delete(key);
     }
   }
 }
@@ -286,8 +303,10 @@ function getPendingCount() {
  * @param {string} threadId
  * @returns {Object|null}
  */
-function getPendingForThread(threadId) {
-  return pendingAuditData.get(threadId) ?? null;
+function getPendingForThread(workspaceId, projectRoot, workspaceEpoch, threadId, turnId) {
+  return pendingAuditData.get(pendingKey({
+    workspaceId, projectRoot, workspaceEpoch, threadId, turnId,
+  })) ?? null;
 }
 
 module.exports = {

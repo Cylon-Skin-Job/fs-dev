@@ -39,6 +39,10 @@
 
 const ThreadWebSocketHandler = require('../thread/ThreadWebSocketHandler');
 const { getDiagnosticReport } = require('../thread/harness-diagnostic-service');
+const {
+  isWorkspaceOperationLeaseError,
+  runWorkspaceOperation,
+} = require('./workspace-operation-lease');
 
 function nonEmptyStringOrNull(value) {
   return typeof value === 'string' && value.length > 0 ? value : null;
@@ -47,9 +51,9 @@ function nonEmptyStringOrNull(value) {
 /**
  * @param {object} deps
  * @param {import('ws').WebSocket} deps.ws
- * @param {(socket: import('ws').WebSocket) => object|undefined} [deps.getThreadState]
- *        Per-connection thread state reader (defaults to
- *        ThreadWebSocketHandler.getState); injectable for focused tests.
+ * @param {object} deps.session - live per-connection workspace binding
+ * @param {Function} [deps.captureBinding] - exact central live binding capture.
+ * @param {Function} [deps.isBindingCurrent] - exact central binding recheck.
  * @param {Function} [deps.getReport] - defaults to the real
  *        harness-diagnostic-service getDiagnosticReport; injectable for
  *        focused tests.
@@ -57,7 +61,13 @@ function nonEmptyStringOrNull(value) {
  */
 function createChatTurnDiagnosticHandlers({
   ws,
-  getThreadState = (socket) => ThreadWebSocketHandler.getState(socket),
+  session,
+  captureBinding = (socket, liveSession) => (
+    ThreadWebSocketHandler.captureActivationBinding(socket, liveSession)
+  ),
+  isBindingCurrent = (socket, binding) => (
+    ThreadWebSocketHandler.isActivationBindingCurrent(socket, binding)
+  ),
   getReport = getDiagnosticReport,
 }) {
   return {
@@ -66,50 +76,62 @@ function createChatTurnDiagnosticHandlers({
       const turnId = nonEmptyStringOrNull(clientMsg?.turnId);
       const diagnosticId = nonEmptyStringOrNull(clientMsg?.diagnosticId);
 
-      let outcome = null;
+      const unavailable = {
+        type: 'chat-turn:diagnostic:unavailable',
+        threadId,
+        turnId,
+        diagnosticId,
+      };
+      let responded = false;
       try {
         if (threadId && turnId && diagnosticId) {
-          // Server-side authoritative workspace resolution. The thread
-          // manager is bound at panel/workspace selection time and can
-          // change across switches, so resolve it per request.
-          const workspaceId = nonEmptyStringOrNull(
-            getThreadState(ws)?.threadManager?.workspaceId,
-          );
+          // Capture the exact live session/root/manager/epoch tuple, then
+          // serialize lookup and delivery against workspace replacement.
+          // A retired manager must never disclose its workspace after the
+          // session has begun binding another workspace.
+          const binding = captureBinding(ws, session);
+          const workspaceId = binding?.workspaceId || null;
           // A supplied client workspaceId must AGREE with the
           // server-resolved value; any disagreement (or a missing
           // server-side binding) is unavailable.
           const clientWorkspaceId = clientMsg?.workspaceId;
           const workspaceAgrees = workspaceId !== null
             && (clientWorkspaceId === undefined || clientWorkspaceId === workspaceId);
-          if (workspaceAgrees) {
-            outcome = await getReport({ workspaceId, threadId, turnId, diagnosticId });
+          if (binding && workspaceAgrees) {
+            await runWorkspaceOperation(ws, () => isBindingCurrent(ws, binding), async () => {
+              const outcome = await getReport({
+                workspaceId,
+                projectRoot: binding.projectRoot,
+                workspaceEpoch: binding.workspaceEpoch,
+                threadId,
+                turnId,
+                diagnosticId,
+              });
+              const response = outcome && outcome.status === 'available'
+                ? {
+                    type: 'chat-turn:diagnostic:report',
+                    threadId,
+                    turnId,
+                    diagnosticId,
+                    report: outcome.report,
+                  }
+                : unavailable;
+              responded = true;
+              ws.send(JSON.stringify(response));
+            });
           }
         }
-      } catch {
+      } catch (error) {
         // Defensive: getDiagnosticReport never throws by contract, but ANY
         // failure on this path collapses to the same fixed unavailable
         // response — never a generic error frame, never a reason string.
-        outcome = null;
-      }
-
-      if (outcome && outcome.status === 'available') {
-        ws.send(JSON.stringify({
-          type: 'chat-turn:diagnostic:report',
-          threadId,
-          turnId,
-          diagnosticId,
-          report: outcome.report,
-        }));
-        return;
+        if (!isWorkspaceOperationLeaseError(error)) {
+          // Deliberately collapse service and transport-independent failures.
+        }
       }
 
       // ONE fixed value-free unavailable response for every denial class.
-      ws.send(JSON.stringify({
-        type: 'chat-turn:diagnostic:unavailable',
-        threadId,
-        turnId,
-        diagnosticId,
-      }));
+      if (!responded) ws.send(JSON.stringify(unavailable));
     },
   };
 }

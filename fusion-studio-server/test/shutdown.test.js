@@ -17,6 +17,7 @@ function createHarness(overrides = {}) {
   const logs = [];
   const ws = { terminate: jest.fn() };
   const sessions = new Map([[ws, {}]]);
+  const terminateTransports = jest.fn(() => ws.terminate());
   const server = {
     close: jest.fn(),
     closeIdleConnections: jest.fn(),
@@ -32,6 +33,7 @@ function createHarness(overrides = {}) {
   const requestShutdown = createShutdownHandler({
     server,
     sessions,
+    terminateTransports,
     closeWatchers,
     stopSubscriptions,
     closeDatabase,
@@ -41,7 +43,7 @@ function createHarness(overrides = {}) {
     ...overrides,
   });
   return {
-    requestShutdown, server, sessions, ws, closeWatchers, stopSubscriptions,
+    requestShutdown, server, sessions, ws, terminateTransports, closeWatchers, stopSubscriptions,
     closeDatabase, exits, logs,
   };
 }
@@ -65,6 +67,7 @@ function runIsolatedShutdown(mode) {
     const requestShutdown = createShutdownHandler({
       server: { close() {}, closeIdleConnections() {}, closeAllConnections() {} },
       sessions: new Map(),
+      terminateTransports() {},
       closeWatchers: async () => true,
       phaseAOwners: [owner],
       stopSubscriptions: async () => true,
@@ -108,6 +111,7 @@ test('shutdown closes network clients, watchers, and database before exiting', a
   expect(harness.server.closeIdleConnections).toHaveBeenCalledTimes(1);
   expect(harness.server.closeAllConnections).toHaveBeenCalledTimes(1);
   expect(harness.ws.terminate).toHaveBeenCalledTimes(1);
+  expect(harness.terminateTransports).toHaveBeenCalledTimes(1);
   expect(harness.sessions.size).toBe(0);
   expect(harness.stopSubscriptions).toHaveBeenCalledTimes(1);
   expect(harness.closeWatchers).toHaveBeenCalledTimes(1);
@@ -272,6 +276,28 @@ test('failed real active-wire shutdown blocks Phase-A dependents and all later p
   } finally {
     jest.useRealTimers();
   }
+});
+
+test('Phase-A retires thread-manager providers after active turns and before durable dependents', async () => {
+  const sequence = [];
+  const owner = createAgentPhaseAOwner({
+    shutdownActiveTurns: async () => { sequence.push('turns'); return true; },
+    shutdownThreadManagers: async () => { sequence.push('thread-managers'); return true; },
+    drainAuditSaves: async () => { sequence.push('audit'); return true; },
+    shutdownActivityOwners: async () => { sequence.push('activity'); return true; },
+    announcedOwner: { shutdown: async () => true },
+    admissionOwner: { shutdown: async () => { sequence.push('admission'); return true; } },
+    ledgerOwner: { shutdown: async () => { sequence.push('ledger'); return true; } },
+    closeReconciliationDatabase: async () => { sequence.push('reconciliation-db'); },
+    monotonicNow: () => 0,
+  });
+
+  await expect(owner({ deadline: 1_000, timeoutMs: 1_000 })).resolves.toBe(true);
+
+  expect(sequence.indexOf('turns')).toBeLessThan(sequence.indexOf('thread-managers'));
+  expect(sequence.indexOf('thread-managers')).toBeLessThan(sequence.indexOf('audit'));
+  expect(sequence.indexOf('thread-managers')).toBeLessThan(sequence.indexOf('activity'));
+  expect(sequence.at(-1)).toBe('reconciliation-db');
 });
 
 test.each([
