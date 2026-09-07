@@ -1,12 +1,17 @@
 # SPEC-00 Trusted Fusion Shell Authority — Implementation Report
 
-**Status:** `READY_FOR_OWNER_REVIEW`
+**Status:** `OWNER_ACCEPTED — INTEGRATED`
 
 **Approved candidate:** `CHAT-COMPOSITION-e3d2c49f044cd7f7`
 
 **Normative aggregate:** `e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7`
 
 **Starting implementation baseline:** `39a694f7f766d2d4d8405953294526e698c75d15`
+
+**Implementation commit:** `1baaffa1c785fdb762fb63948cb02a600c957f71`
+
+**Owner acceptance:** granted and integrated into `agent/exact-workspace-paths`
+on 2026-09-07.
 
 ## Preflight
 
