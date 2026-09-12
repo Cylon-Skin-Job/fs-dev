@@ -40,7 +40,7 @@ describe('legacy panel path compatibility', () => {
     return ws;
   }
 
-  test('resolves legacy workspace panel roots when V2 views are absent', () => {
+  test('retains unrelated system compatibility without reviving retired view roots', () => {
     const projectRoot = path.join(tempRoot, 'legacy-workspace');
     writeJson(path.join(projectRoot, 'ai', 'system', 'workspace', 'views.json'), {
       version: 1,
@@ -61,19 +61,17 @@ describe('legacy panel path compatibility', () => {
 
     const ws = bindProjectRoot(projectRoot);
 
-    expect(modules.panelPaths.getPanelPath('__panels__', ws)).toBe(path.join(projectRoot, 'ai', 'views'));
+    expect(modules.panelPaths.getPanelPath('__panels__', ws)).toBeNull();
     expect(modules.panelPaths.getPanelPath('__workspace__', ws)).toBe(path.join(projectRoot, 'ai', 'system', 'workspace'));
     expect(modules.panelPaths.getPanelPath('__settings__', ws)).toBe(path.join(projectRoot, 'ai', 'system', 'styles'));
-    expect(modules.panelPaths.getPanelPath('file-viewer', ws)).toBe(projectRoot);
-    expect(modules.panelPaths.getPanelPath('wiki-viewer', ws)).toBe(
-      path.join(projectRoot, 'ai', 'views', 'wiki-viewer', 'Wiki')
-    );
+    expect(modules.panelPaths.getPanelPath('file-viewer', ws)).toBeNull();
+    expect(modules.panelPaths.getPanelPath('wiki-viewer', ws)).toBeNull();
   });
 
-  test('prefers machine-scoped V2 panel roots over legacy roots', () => {
+  test('resolves the canonical machine-scoped System/Views root', () => {
     const projectRoot = path.join(tempRoot, 'mixed-workspace');
     writeFile(path.join(projectRoot, 'ai', 'views', 'wiki-viewer', 'Wiki', 'PAGE.md'), '# Legacy\n');
-    writeFile(path.join(projectRoot, 'ai', 'Test-Machine', 'Views', '001-wiki-viewer', 'manifest.md'), [
+    writeFile(path.join(projectRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-wiki-viewer', 'manifest.md'), [
       '---',
       'view-id: wiki-viewer',
       '---',
@@ -84,7 +82,7 @@ describe('legacy panel path compatibility', () => {
     const ws = bindProjectRoot(projectRoot);
 
     expect(modules.panelPaths.getPanelPath('__panels__', ws)).toBe(
-      path.join(projectRoot, 'ai', 'Test-Machine', 'Views')
+      path.join(projectRoot, 'ai', 'Test-Machine', 'System', 'Views')
     );
   });
 });

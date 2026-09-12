@@ -79,7 +79,8 @@ async function run() {
       const methods = [
         'capturePage', 'captureRect', 'exportDocument', 'sendDocumentEmail',
         'printDocument', 'showEmojiPanel', 'onMenuAction', 'onBrowserUrlChanged',
-        'setWorkspaceRoot', 'setWorkspaceMenuState', 'listScreenshots', 'readScreenshot',
+        'setWorkspaceBinding', 'replaceViewCapsuleProjection', 'setWorkspaceMenuState',
+        'listScreenshots', 'readScreenshot',
       ];
       const remover = api?.onMenuAction(() => {});
       remover?.();

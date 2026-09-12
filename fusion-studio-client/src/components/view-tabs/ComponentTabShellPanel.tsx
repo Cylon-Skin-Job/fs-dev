@@ -3,7 +3,6 @@ import {
   ComponentTabPanel,
   type ComponentTabPanelProps,
 } from './ComponentTabPanel';
-import { SingleTabIdentity } from './SingleTabIdentity';
 import {
   TabLocationRail,
   type TabLocationNavigation,
@@ -12,21 +11,16 @@ import type {
   ComponentTabShellMode,
 } from './componentTabPresentationDomain';
 import { validateComponentTabShellProjection } from './componentTabPresentationValidation';
-import type { ViewTabAddAction, ViewTabDescriptor } from './ViewTabStrip';
+import type { ViewTabDescriptor } from './ViewTabStrip';
 import './componentTabShell.css';
 
 type PresentedShellMode = Exclude<ComponentTabShellMode, 'legacy'>;
 
 export interface ComponentTabShellPanelProps extends ComponentTabPanelProps {
   mode: PresentedShellMode;
-  panelId: string;
   descriptor: ViewTabDescriptor;
   shell: unknown;
   navigation?: TabLocationNavigation;
-  add?: ViewTabAddAction;
-  onClose: (tabId: string) => void;
-  onFocusAddedTab?: (tabId: string) => void;
-  onRecoverCloseFocus?: (closedTabId: string, origin: HTMLElement) => void;
 }
 
 function readShellLifecycle(
@@ -84,14 +78,9 @@ function readShellLifecycle(
 /** Composes universal tab chrome around one stable generic component-panel body. */
 export function ComponentTabShellPanel({
   mode,
-  panelId,
   descriptor,
   shell,
   navigation,
-  add,
-  onClose,
-  onFocusAddedTab,
-  onRecoverCloseFocus,
   active,
   expectedActiveTabId,
   ...componentPanelProps
@@ -118,16 +107,6 @@ export function ComponentTabShellPanel({
 
   return (
     <div className={`rv-component-tab-shell rv-component-tab-shell--${effectiveMode}`}>
-      {effectiveMode === 'single' ? (
-        <SingleTabIdentity
-          panelId={panelId}
-          descriptor={descriptor}
-          add={add}
-          onClose={onClose}
-          onFocusAddedTab={onFocusAddedTab}
-          onRecoverCloseFocus={onRecoverCloseFocus}
-        />
-      ) : null}
       {stackValid && canonicalShell ? (
         <TabLocationRail
           tabId={canonicalShell.tabId}

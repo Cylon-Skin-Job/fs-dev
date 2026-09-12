@@ -41,12 +41,13 @@ function createWorkspaceRibbonHandlers({
     }
 
     const nextId = next ? next.id : null;
-    setActiveWorkspace(nextId, next);
+    const bindingRevision = setActiveWorkspace(nextId, next);
     await writeLastActive(nextId);
     emit('workspace:switched', {
       from,
       to: nextId,
       repoPath: next ? next.repo_path : null,
+      bindingRevision,
     });
     emit('workspace:ribbon_removed', { workspaceId });
   }
@@ -79,12 +80,13 @@ function createWorkspaceRibbonHandlers({
     const restored =
       workspaces.find((workspace) => workspace.id === workspaceId) ||
       await registry.getById(workspaceId);
-    setActiveWorkspace(workspaceId, restored);
+    const bindingRevision = setActiveWorkspace(workspaceId, restored);
     await writeLastActive(workspaceId);
     emit('workspace:switched', {
       from: null,
       to: workspaceId,
       repoPath: restored ? restored.repo_path : null,
+      bindingRevision,
     });
   }
 

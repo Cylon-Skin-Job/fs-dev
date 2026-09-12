@@ -3,7 +3,7 @@
  * @role View discovery and resolution
  *
  * Reads the machine-scoped V2 folder structure:
- * ai/<machine>/Views/<prefix>-<view-id>/.
+ * ai/<machine>/System/Views/<prefix>-<view-id>/.
  *
  * Nothing in this module touches the database. Everything comes from the
  * filesystem (manifest.md, content.json, styles/icon.md, styles/layout.json).
@@ -14,6 +14,14 @@ const fs = require('fs');
 const registryWriter = require('./workspace-registry-writer');
 const aiPaths = require('../workspace/ai-paths');
 const { classifyEntrySync } = require('../fs/dirents');
+const {
+  parseCanonicalViewId,
+  canonicalViewIdsEqual,
+  assertUniqueCanonicalViewIds,
+} = require('./view-id');
+const { buildViewCapsulesProjection: assembleViewCapsulesProjection } = require('./view-capsules-projection');
+const { buildTabPolicyWireEntry, MAX_TAB_POLICY_PROJECTION_ENTRIES } = require('./tab-policy');
+const { parseSimpleYaml } = require('./simple-yaml');
 
 const V2_TOP_LEVEL_CONTENT_ROOTS = new Set(['Wiki', 'Captures', 'Issues', 'Agents', 'Office', 'Email']);
 const V2_OPERATIONAL_FALLBACKS = {
@@ -52,12 +60,12 @@ function hasV2Views(projectRoot, { strictFilesystemErrors = false } = {}) {
 }
 
 /**
- * List all view IDs from the machine-scoped Views folder.
+ * List all view IDs from the machine-scoped System/Views folder.
  * @param {string} projectRoot
  * @returns {string[]}
  */
-function listViews(projectRoot) {
-  return listV2Views(projectRoot).map(view => view.id);
+function listViews(projectRoot, options = {}) {
+  return listV2Views(projectRoot, options).map(view => view.id);
 }
 
 /**
@@ -83,7 +91,7 @@ function loadContentConfig(projectRoot, viewId, options = {}) {
 }
 
 /**
- * Load a view's layout settings from Views/<prefix>-<viewId>/styles/layout.json.
+ * Load a view's layout settings from System/Views/<prefix>-<viewId>/styles/layout.json.
  * @param {string} projectRoot
  * @param {string} viewId
  * @returns {object|null}
@@ -143,6 +151,7 @@ function resolveViewRoot(projectRoot, viewId, options = {}) {
   const view = loadView(projectRoot, viewId, {
     includeHidden: options.includeHidden === true,
     strictFilesystemErrors: options.strictFilesystemErrors === true,
+    strictReadiness: options.strictReadiness === true,
   });
   if (view) return view.viewRoot;
   return null;
@@ -279,10 +288,10 @@ function resolveAbsoluteContentPath(projectRoot, view, rawPath) {
   return path.resolve(expanded);
 }
 
-function listV2Views(projectRoot) {
-  if (!hasV2Views(projectRoot)) return [];
+function listV2Views(projectRoot, options = {}) {
+  if (!hasV2Views(projectRoot, options)) return [];
   const hiddenIds = registryWriter.getV2HiddenViewIds(projectRoot);
-  return listV2ViewFolders(projectRoot)
+  return listV2ViewFolders(projectRoot, options)
     .filter((entry) => !hiddenIds.has(entry.id))
     .map((entry) => loadV2ViewShellFromEntry(projectRoot, entry))
     .filter(Boolean)
@@ -291,19 +300,31 @@ function listV2Views(projectRoot) {
 
 function loadV2ViewShell(projectRoot, viewId, options = {}) {
   if (!hasV2Views(projectRoot, options)) return null;
+  const parsedViewId = parseCanonicalViewId(viewId, 'requested view');
   if (!options.includeHidden) {
     const hiddenIds = registryWriter.getV2HiddenViewIds(projectRoot);
-    if (hiddenIds.has(viewId)) return null;
+    if (hiddenIds.has(parsedViewId)) return null;
   }
-  const entry = listV2ViewFolders(projectRoot, options).find((candidate) => candidate.id === viewId);
+  const entry = listV2ViewFolders(projectRoot, options).find((candidate) => (
+    canonicalViewIdsEqual(candidate.id, parsedViewId)
+  ));
   if (!entry) return null;
   return loadV2ViewShellFromEntry(projectRoot, entry, options);
 }
 
-function listV2ViewFolders(projectRoot, { strictFilesystemErrors = false } = {}) {
+function listV2ViewFolders(projectRoot, {
+  strictFilesystemErrors = false,
+} = {}) {
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  let dirents;
   try {
-    return fs.readdirSync(viewsRoot, { withFileTypes: true })
+    dirents = fs.readdirSync(viewsRoot, { withFileTypes: true });
+  } catch (error) {
+    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
+    return [];
+  }
+
+  const entries = dirents
       .filter((entry) => classifyEntrySync(
         viewsRoot,
         entry,
@@ -312,13 +333,18 @@ function listV2ViewFolders(projectRoot, { strictFilesystemErrors = false } = {})
       .map((entry) => {
         const match = entry.name.match(/^(\d+)-(.+)$/);
         const order = match ? Number(match[1]) : 999;
-        const fallbackId = match ? match[2] : entry.name;
         const viewRoot = path.join(viewsRoot, entry.name);
         const manifest = readFrontmatter(
           path.join(viewRoot, 'manifest.md'),
           { strictFilesystemErrors },
         );
-        const id = manifest.metadata?.['view-id'] || fallbackId;
+        const metadata = Object.hasOwn(manifest, 'metadata') && isPlainObject(manifest.metadata)
+          ? manifest.metadata
+          : null;
+        const manifestId = metadata && Object.hasOwn(metadata, 'view-id')
+          ? metadata['view-id']
+          : undefined;
+        const id = parseCanonicalViewId(manifestId, `View capsule ${entry.name}`);
         return {
           id,
           folderName: entry.name,
@@ -332,10 +358,8 @@ function listV2ViewFolders(projectRoot, { strictFilesystemErrors = false } = {})
         if (orderDiff !== 0) return orderDiff;
         return a.folderName.localeCompare(b.folderName);
       });
-  } catch (error) {
-    if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
-    return [];
-  }
+  assertUniqueCanonicalViewIds(entries);
+  return entries;
 }
 
 function loadV2ViewShellFromEntry(projectRoot, entry, { strictFilesystemErrors = false } = {}) {
@@ -344,7 +368,7 @@ function loadV2ViewShellFromEntry(projectRoot, entry, { strictFilesystemErrors =
     { strictFilesystemErrors },
   );
   const metadata = entry.manifest.metadata || {};
-  const id = metadata['view-id'] || entry.id;
+  const id = entry.id;
   const contentConfig = readJsonObject(
     path.join(entry.viewRoot, 'content.json'),
     `View content config is invalid for ${id}`
@@ -366,10 +390,72 @@ function loadV2ViewShellFromEntry(projectRoot, entry, { strictFilesystemErrors =
       ...viewSettings,
     },
     content: normalizeV2ContentConfig(contentConfig, metadata),
+    // Raw optional `tabs` object from content.json (undefined when absent).
+    // Parsed strictly by tab-policy.js at projection time; a malformed value
+    // never fails view discovery — see buildTabPoliciesProjection.
+    tabsRaw: contentConfig.tabs,
     layout: layoutConfig,
     viewRoot: entry.viewRoot,
     v2: true,
   };
+}
+
+/**
+ * Build the path-free capsule correlation record forwarded to Electron.
+ * Canonical discovery is mandatory for every caller, so an invalid or
+ * duplicate manifest identity can never become path authority.
+ */
+function buildViewCapsulesProjection(projectRoot, workspaceId, options = {}) {
+  const machineIdentity = Object.prototype.hasOwnProperty.call(options, 'machineIdentity')
+    ? options.machineIdentity
+    : aiPaths.getLocalMachineName();
+
+  if (!hasV2Views(projectRoot, { strictFilesystemErrors: true })) {
+    throw new Error('View capsule root is unavailable');
+  }
+
+  const entries = listV2ViewFolders(projectRoot, {
+    strictFilesystemErrors: true,
+    strictReadiness: true,
+  });
+  return assembleViewCapsulesProjection({
+    workspaceId,
+    machineIdentity,
+    entries,
+  });
+}
+
+/**
+ * Build the frozen path-free `tabPolicies` projection for the given canonical
+ * view ids (SPEC-02 §4). One entry per view that HAS a `tabs` object in its
+ * content.json:
+ *   - valid config   → {schemaVersion: 1, status: "ready", policy};
+ *   - invalid config → {schemaVersion: 1, status: "unavailable",
+ *                       code: "tab_configuration_unavailable"};
+ *   - no `tabs` key  → no entry at all (absence = legacy renderer path).
+ *
+ * A malformed `tabs` object never throws here: only that view's entry becomes
+ * unavailable. Whole-file content.json parse failures still surface as the
+ * existing viewRegistryUnavailable degradation upstream (readJsonObject
+ * throws during shell loading).
+ *
+ * @param {string} projectRoot
+ * @param {string[]} viewIds - canonical visible view ids from strict discovery
+ * @returns {object} frozen map viewId → frozen wire entry
+ */
+function buildTabPoliciesProjection(projectRoot, viewIds) {
+  if (!Array.isArray(viewIds) || viewIds.length > MAX_TAB_POLICY_PROJECTION_ENTRIES) {
+    throw new Error('Tab policy projection exceeds the supported entry limit');
+  }
+  const entries = {};
+  for (const viewId of viewIds) {
+    const canonicalViewId = parseCanonicalViewId(viewId, 'tab policy projection');
+    const view = loadV2ViewShell(projectRoot, canonicalViewId, { strictFilesystemErrors: true });
+    if (!view) continue;
+    const wireEntry = buildTabPolicyWireEntry(view.tabsRaw, canonicalViewId);
+    if (wireEntry) entries[canonicalViewId] = wireEntry;
+  }
+  return Object.freeze(entries);
 }
 
 function extractV2ViewSettings(metadata) {
@@ -429,41 +515,6 @@ function readFrontmatter(filePath, { strictFilesystemErrors = false } = {}) {
   return parseSimpleYaml(match[1]);
 }
 
-function parseSimpleYaml(yamlText) {
-  const result = {};
-  let currentObject = result;
-  for (const rawLine of yamlText.split(/\r?\n/)) {
-    if (!rawLine.trim() || rawLine.trim().startsWith('#')) continue;
-    const indent = rawLine.match(/^\s*/)[0].length;
-    const line = rawLine.trim();
-    const separator = line.indexOf(':');
-    if (separator === -1) continue;
-    const key = line.slice(0, separator).trim();
-    const rawValue = line.slice(separator + 1).trim();
-    if (indent === 0) {
-      if (rawValue === '') {
-        result[key] = {};
-        currentObject = result[key];
-      } else {
-        result[key] = parseYamlScalar(rawValue);
-        currentObject = result;
-      }
-      continue;
-    }
-    if (currentObject && typeof currentObject === 'object') {
-      currentObject[key] = parseYamlScalar(rawValue);
-    }
-  }
-  return result;
-}
-
-function parseYamlScalar(value) {
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (value === 'null') return null;
-  return value.replace(/^['"]|['"]$/g, '');
-}
-
 function displayLabelFromId(id) {
   return String(id || '')
     .replace(/-viewer$/, '')
@@ -512,4 +563,6 @@ module.exports = {
   resolveOperationalViewRoot,
   resolveContentPath,
   resolveChatConfig,
+  buildViewCapsulesProjection,
+  buildTabPoliciesProjection,
 };

@@ -1,12 +1,12 @@
 /**
  * @module useSharedWorkspaceStyles
  * @role Load workspace shared CSS (themes + components + views) and optional
- *       per-view layout CSS from machine-scoped Views over WebSocket.
+ *       per-view layout CSS from machine-scoped System/Views over WebSocket.
  *
  * - useSharedWorkspaceStyles(): loads themes + components + views globally
  *   (unscoped, since chat chrome applies app-wide). Call once from App.
- * - useViewLayoutStyles(panelId): loads optional Views/{prefix}-{panelId}/styles/layout.css
- *   + optional Views/{prefix}-{panelId}/styles/themes.css (per-view theme override)
+ * - useViewLayoutStyles(panelId): loads optional System/Views/{prefix}-{panelId}/styles/layout.css
+ *   + optional System/Views/{prefix}-{panelId}/styles/themes.css (per-view theme override)
  *   scoped to [data-panel="{panelId}"]. Silently no-ops on ENOENT/timeout.
  * - resetSharedStyles(): clears the shared-load guard + style tags so the next
  *   render reloads from a newly-switched workspace.

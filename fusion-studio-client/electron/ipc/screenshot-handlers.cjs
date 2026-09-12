@@ -21,8 +21,7 @@ function getMachineAiRoot(workspaceRoot) {
     const entries = fs.readdirSync(aiRoot, { withFileTypes: true });
     const match = entries.find((entry) => {
       if (!entry.isDirectory() || entry.name.startsWith('.')) return false;
-      return fs.existsSync(path.join(aiRoot, entry.name, 'Views'))
-        || fs.existsSync(path.join(aiRoot, entry.name, 'System'));
+      return fs.existsSync(path.join(aiRoot, entry.name, 'System'));
     });
     return match ? path.join(aiRoot, match.name) : null;
   } catch {

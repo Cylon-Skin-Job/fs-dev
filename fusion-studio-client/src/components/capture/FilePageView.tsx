@@ -13,7 +13,6 @@ import { CodeView } from '../CodeView';
 import { FloatingPathActions } from '../FloatingPathActions';
 import { getPanelFileUrl } from '../../lib/panels';
 import { getFileIcon } from '../../lib/file-utils';
-import { useActiveResourceStore } from '../../state/activeResourceStore';
 import { DOC_VIEWER_ARCHIVE_FOLDER } from '../../hooks/useDocViewerState';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { IframeSurface, useCacheBusterUrl } from '../iframe';
@@ -91,12 +90,7 @@ export function FilePageView({
     [file.content, file.name, isMarkdown],
   );
   const documentTitle = markdownDocument?.title ?? titleLabel;
-  const setActiveResource = useActiveResourceStore((s) => s.setActiveResource);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setActiveResource(panel, file.path);
-  }, [panel, file.path, setActiveResource]);
 
   useEffect(() => {
     const el = contentRef.current;

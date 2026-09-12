@@ -13,7 +13,7 @@ test('File tabs are shell-hosted and retain shared responsive geometry', () => {
   const browserTabsCss = read('src/components/browser/BrowserTabs.css');
   const strip = read('src/components/view-tabs/ViewTabStrip.tsx');
   const css = read('src/components/view-tabs/ViewTabBar.css');
-  const fileLayout = read('../ai/RC-MacAir-15/Views/002-file-viewer/styles/layout.css');
+  const fileLayout = read('../ai/RC-MacAir-15/System/Views/002-file-viewer/styles/layout.css');
   const fileTheme = read('../ai/RC-MacAir-15/System/styles/file-viewer.css');
   const documentCss = read('src/styles/document.css');
 
@@ -68,7 +68,9 @@ test('File tabs are shell-hosted and retain shared responsive geometry', () => {
 
 test('File zero/first/home flow is pathless-session-safe', () => {
   const store = read('src/state/fileStore.ts');
-  const adapter = read('src/components/view-tabs/viewTabAdapters.ts');
+  // VIEW-02 Slice 2 moved the legacy File adapter into fileViewTabAdapter.ts;
+  // viewTabAdapters.ts stays the thin registry boundary.
+  const adapter = read('src/components/view-tabs/fileViewTabAdapter.ts');
   const viewer = read('src/components/file-explorer/FileViewer.tsx');
 
   expect(adapter).toContain("tabs.length === 0");

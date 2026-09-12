@@ -1,5 +1,9 @@
 'use strict';
 
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
 jest.mock('uuid', () => ({
   v4: jest.fn(() => 'test-id'),
 }));
@@ -48,39 +52,83 @@ jest.mock('../../lib/ws/workspace-request-handlers', () => ({
   createWorkspaceRequestHandlers: jest.fn(() => ({})),
 }));
 
+jest.mock('../../lib/workspace/registry-service', () => ({
+  getById: jest.fn(),
+  list: jest.fn(),
+}));
+
 jest.mock('../../lib/views', () => ({
   resolveChatConfig: jest.fn(() => null),
   loadView: jest.fn(() => null),
+  updateWorkspaceViewRegistry: jest.fn(() => ({ version: 2, views: [] })),
+  getWorkspaceViewOptions: jest.fn(() => ({ hiddenViews: [], availableTemplates: [] })),
+  restoreWorkspaceView: jest.fn(() => ({ version: 2, views: [] })),
+  addWorkspaceView: jest.fn(() => ({ version: 2, views: [] })),
+  buildViewCapsulesProjection: jest.fn(() => ({ version: 1, entries: [] })),
+  listViews: jest.fn(() => []),
 }));
 
 const { createClientMessageRouter } = require('../../lib/ws/client-message-router');
+const views = require('../../lib/views');
 const { createFileViewerReadRoute } = require('../../lib/ws/file-viewer-read-route');
 const { ThreadWebSocketHandler, threadRuntimeController } = require('../../lib/thread');
 const { getWireForThread, sendToWire } = require('../../lib/wire/process-manager');
 const { beginWorkspaceTransition } = require('../../lib/ws/workspace-operation-lease');
+const registry = require('../../lib/workspace/registry-service');
+const viewReadiness = require('../../lib/views/readiness-runtime');
+const { installHistoricalReadinessFixture } = require('../views/historical-readiness-fixture');
+const workspaceState = require('../../lib/workspace/workspace-state');
+
+beforeEach(() => {
+  // The production owner is process-scoped; isolate workspace identity
+  // registrations between unit cases that intentionally reuse fixture IDs.
+  installHistoricalReadinessFixture();
+});
 
 function flushAsyncWork() {
   return new Promise(resolve => setImmediate(resolve));
 }
 
+function installReadyViewOwner(projectRoot) {
+  viewReadiness.installViewReadinessOwner({
+    ensureReady: async ({ workspaceId }) => ({
+      status: 'verified',
+      phase: 'journal_verified',
+      verified: true,
+      workspaceId,
+      projectRoot,
+    }),
+    acquireLease: () => ({
+      phase: 'journal_verified',
+      verified: true,
+      projectRoot,
+      release() {},
+    }),
+    getStatus: () => ({ status: 'ready', verified: true }),
+  });
+}
+
 function makeRouter({
   wire,
   role = 'trusted-shell',
+  workspaceId = 'workspace-1',
+  projectRoot = '/tmp/project',
   handleCanonicalHarnessEvent = jest.fn(),
   fileExplorer = {},
   fileSaveRoute = null,
   resourceProvenanceRoute = null,
   agentActivityRoute = null,
   fileViewerReadRoute = null,
+  additionalSessions = [],
 } = {}) {
-  const ws = { send: jest.fn(), close: jest.fn() };
+  const ws = { readyState: 1, send: jest.fn(), close: jest.fn() };
   const session = {
     connectionId: 'connection-1',
     currentThreadId: 'thread-1',
-    currentWorkspaceId: 'workspace-1',
+    currentWorkspaceId: workspaceId,
     workspaceEpoch: 'workspace-epoch-1',
     workspaceBindingState: 'active',
-    projectRoot: '/tmp/project',
+    projectRoot,
     wire,
   };
   const managedSession = { ws, wireProcess: wire };
@@ -88,8 +136,8 @@ function makeRouter({
     threadId: 'thread-1',
     activatedThreadId: 'thread-1',
     threadManager: {
-      workspaceId: 'workspace-1',
-      projectRoot: '/tmp/project',
+      workspaceId,
+      projectRoot,
       getSession: jest.fn(() => managedSession),
     },
   };
@@ -97,8 +145,8 @@ function makeRouter({
   ThreadWebSocketHandler.captureActivationBinding.mockReturnValue({
     state,
     session,
-    projectRoot: '/tmp/project',
-    workspaceId: 'workspace-1',
+    projectRoot,
+    workspaceId,
     workspaceEpoch: 'workspace-epoch-1',
   });
   if (role) Object.defineProperty(session, 'connectionRole', { value: role, enumerable: false });
@@ -107,17 +155,17 @@ function makeRouter({
     ws,
     session,
     connectionId: 'connection-1',
-    projectRoot: '/tmp/project',
+    projectRoot,
     fileExplorer,
     wireLifecycle: {
       awaitHarnessReady: jest.fn(),
       initializeWire: jest.fn(),
       setupWireHandlers: jest.fn(),
     },
-    sessions: new Map(),
+    sessions: new Map([[ws, session], ...additionalSessions]),
     setSessionRoot: jest.fn(),
     clearSessionRoot: jest.fn(),
-    getProjectRoot: jest.fn(() => '/tmp/project'),
+    getProjectRoot: jest.fn(() => projectRoot),
     getFusionHandlers: () => ({}),
     getClipboardHandlers: () => ({}),
     getBookmarksHandlers: () => ({}),
@@ -375,6 +423,654 @@ describe('createClientMessageRouter prompt harness routing', () => {
   });
 });
 
+describe('createClientMessageRouter protected generated workspace state', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('workspace:state_push denies a System/state symlink into a protected capsule', async () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-router-protected-state-'));
+    process.env.FUSION_LOCAL_MACHINE = 'Test Machine';
+    try {
+      const protectedState = path.join(
+        root, 'ai', 'Test-Machine', 'System', 'Views', '001-capture', 'state',
+      );
+      fs.mkdirSync(protectedState, { recursive: true });
+      const systemRoot = path.join(root, 'ai', 'Test-Machine', 'System');
+      fs.symlinkSync(protectedState, path.join(systemRoot, 'state'), 'dir');
+      registry.getById.mockResolvedValue({ id: 'workspace-1', repoPath: root, ribbonVisible: true });
+      registry.list.mockResolvedValue([{ id: 'workspace-1', repoPath: root }]);
+      views.listViews.mockReturnValue(['capture-viewer']);
+      const { router } = makeRouter();
+
+      await router.handleClientMessage(JSON.stringify({
+        type: 'workspace:state_push',
+        workspaceId: 'workspace-1',
+        state: { currentPanel: 'capture-viewer' },
+      }));
+
+      expect(fs.readdirSync(protectedState)).toEqual([]);
+    } finally {
+      delete process.env.FUSION_LOCAL_MACHINE;
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test.each(['untrusted', null])(
+    'workspace:state_push rejects forged authority for connection role %p before effects',
+    async (role) => {
+      const ensureReady = jest.fn(async () => ({ status: 'staged' }));
+      viewReadiness.installViewReadinessOwner({
+        ensureReady,
+        acquireLease: jest.fn(() => ({
+          phase: 'precutover_staged', projectRoot: '/tmp/project', release() {},
+        })),
+        getStatus: () => ({ status: 'staged', verified: false }),
+      });
+      const save = jest.spyOn(workspaceState, 'save').mockResolvedValue(undefined);
+      try {
+        const { router, ws } = makeRouter({ role });
+        await router.handleClientMessage(JSON.stringify({
+          type: 'workspace:state_push',
+          workspaceId: 'workspace-1',
+          state: { currentPanel: 'capture-viewer' },
+          connectionRole: 'trusted-shell',
+          role: 'trusted-shell',
+          authority: true,
+          actor: 'owner',
+        }));
+
+        expect(registry.getById).not.toHaveBeenCalled();
+        expect(ensureReady).not.toHaveBeenCalled();
+        expect(views.listViews).not.toHaveBeenCalled();
+        expect(save).not.toHaveBeenCalled();
+        expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+          type: 'error', code: 'VIEW_MUTATION_DENIED', message: 'View mutation denied',
+        });
+      } finally {
+        save.mockRestore();
+      }
+    },
+  );
+
+  test('trusted workspace:state_push saves only after readiness and strict registry discovery', async () => {
+    const ensureReady = jest.fn(async () => ({
+      status: 'staged', phase: 'precutover_staged', verified: false,
+    }));
+    const release = jest.fn();
+    const acquireLease = jest.fn(() => ({
+      phase: 'precutover_staged', verified: false, projectRoot: '/tmp/project', release,
+    }));
+    viewReadiness.installViewReadinessOwner({
+      ensureReady,
+      acquireLease,
+      getStatus: () => ({ status: 'staged', verified: false }),
+    });
+    registry.getById.mockResolvedValue({
+      id: 'workspace-1', repoPath: '/tmp/project', ribbonVisible: true,
+    });
+    views.listViews.mockReturnValue(['capture-viewer']);
+    const save = jest.spyOn(workspaceState, 'save').mockResolvedValue(undefined);
+    try {
+      const { router, ws } = makeRouter({ role: 'trusted-shell' });
+      await router.handleClientMessage(JSON.stringify({
+        type: 'workspace:state_push',
+        workspaceId: 'workspace-1',
+        state: { currentPanel: 'capture-viewer' },
+      }));
+
+      const context = { workspaceId: 'workspace-1', projectRoot: '/tmp/project' };
+      expect(ensureReady).toHaveBeenCalledWith(context);
+      expect(acquireLease).toHaveBeenCalledWith(context);
+      expect(views.listViews).toHaveBeenCalledWith('/tmp/project', { strictReadiness: true });
+      expect(save).toHaveBeenCalledWith(
+        'workspace-1',
+        { currentPanel: 'capture-viewer' },
+        { repoPath: '/tmp/project', allowedViewIds: ['capture-viewer'] },
+      );
+      expect(release).toHaveBeenCalledTimes(1);
+      expect(ws.send).not.toHaveBeenCalled();
+    } finally {
+      save.mockRestore();
+    }
+  });
+
+  test('trusted workspace:state_push exposes bounded conflict without mutation', async () => {
+    const { ViewRelocationError } = require('../../lib/views/relocation-errors');
+    const ensureReady = jest.fn(async () => { throw new ViewRelocationError('root_conflict'); });
+    viewReadiness.installViewReadinessOwner({
+      ensureReady,
+      acquireLease: jest.fn(() => { throw new Error('unreachable'); }),
+      getStatus: () => ({ status: 'unavailable', verified: false }),
+    });
+    registry.getById.mockResolvedValue({
+      id: 'workspace-1', repoPath: '/tmp/project', ribbonVisible: true,
+    });
+    const save = jest.spyOn(workspaceState, 'save').mockResolvedValue(undefined);
+    try {
+      const { router, ws } = makeRouter({ role: 'trusted-shell' });
+      await router.handleClientMessage(JSON.stringify({
+        type: 'workspace:state_push',
+        workspaceId: 'workspace-1',
+        state: { currentPanel: 'capture-viewer' },
+      }));
+
+      expect(ensureReady).toHaveBeenCalledWith({
+        workspaceId: 'workspace-1', projectRoot: '/tmp/project',
+      });
+      expect(views.listViews).not.toHaveBeenCalled();
+      expect(save).not.toHaveBeenCalled();
+      expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+        type: 'error', code: 'view_registry_unavailable', message: 'View registry unavailable',
+      });
+    } finally {
+      save.mockRestore();
+    }
+  });
+});
+
+describe('createClientMessageRouter trusted view mutations', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    views.updateWorkspaceViewRegistry.mockReset().mockReturnValue({ version: 2, views: [] });
+    views.restoreWorkspaceView.mockReset().mockReturnValue({ version: 2, views: [] });
+    views.addWorkspaceView.mockReset().mockReturnValue({ version: 2, views: [] });
+    views.getWorkspaceViewOptions.mockReset().mockReturnValue({
+      hiddenViews: [], availableTemplates: [],
+    });
+  });
+
+  test.each([
+    ['workspace:view_update_requested', 'updateWorkspaceViewRegistry', { viewId: 'file-viewer', patch: { label: 'Files' } }],
+    ['workspace:view_restore_requested', 'restoreWorkspaceView', { viewId: 'file-viewer' }],
+    ['workspace:view_add_requested', 'addWorkspaceView', { templateId: 'file-viewer' }],
+  ])('%s rejects request-supplied authority on an untrusted connection before effects', async (type, method, payload) => {
+    const { router, ws } = makeRouter({ role: 'untrusted' });
+    await router.handleClientMessage(JSON.stringify({
+      type,
+      ...payload,
+      role: 'trusted-shell',
+      origin: 'fusion-shell://app',
+      authority: true,
+      projectRoot: '/forged',
+      actor: 'owner',
+    }));
+
+    expect(views[method]).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'error', code: 'VIEW_MUTATION_DENIED', message: 'View mutation denied',
+    });
+  });
+
+  test.each([
+    ['workspace:view_update_requested', 'updateWorkspaceViewRegistry', { viewId: 'file-viewer', patch: { label: 'Files' } }],
+    ['workspace:view_restore_requested', 'restoreWorkspaceView', { viewId: 'file-viewer' }],
+    ['workspace:view_add_requested', 'addWorkspaceView', { templateId: 'file-viewer' }],
+  ])('%s remains functional for the connection-owned trusted role', async (type, method, payload) => {
+    installReadyViewOwner('/tmp/project');
+    const { router, ws } = makeRouter({ role: 'trusted-shell' });
+    await router.handleClientMessage(JSON.stringify({ type, ...payload }));
+
+    expect(views[method]).toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'workspace:view_registry_updated',
+      registry: { version: 2, views: [] },
+    });
+    expect(views.buildViewCapsulesProjection).toHaveBeenCalledWith('/tmp/project', 'workspace-1');
+  });
+
+  test.each([
+    ['workspace:view_update_requested', 'updateWorkspaceViewRegistry', { viewId: 'file-viewer', patch: { label: 'Files' } }],
+    ['workspace:view_restore_requested', 'restoreWorkspaceView', { viewId: 'file-viewer' }],
+    ['workspace:view_add_requested', 'addWorkspaceView', { templateId: 'file-viewer' }],
+  ])('%s acknowledges a durable mutation without re-entering its readiness lease', async (
+    type,
+    method,
+    payload,
+  ) => {
+    const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-router-view-ack-')));
+    const machine = 'Test-Machine';
+    const previousMachine = process.env.FUSION_LOCAL_MACHINE;
+    process.env.FUSION_LOCAL_MACHINE = machine;
+    try {
+      const capsule = path.join(root, 'ai', machine, 'System', 'Views', '001-file-viewer');
+      fs.mkdirSync(path.join(capsule, 'state'), { recursive: true });
+      fs.writeFileSync(
+        path.join(capsule, 'manifest.md'),
+        '---\nname: Files\nmetadata:\n  view-id: file-viewer\n  data-source: none\n---\n',
+      );
+      fs.writeFileSync(
+        path.join(capsule, 'content.json'),
+        `${JSON.stringify({ version: 1, dataSource: 'none', root: { type: 'none' } }, null, 2)}\n`,
+      );
+      const marker = path.join(root, 'durable-registry-marker');
+      installReadyViewOwner(root);
+      views[method].mockImplementationOnce(() => {
+        fs.writeFileSync(marker, type, 'utf8');
+        return { version: 2, views: ['file-viewer'] };
+      });
+      const { router, ws } = makeRouter({ role: 'trusted-shell', projectRoot: root });
+
+      await router.handleClientMessage(JSON.stringify({ type, ...payload }));
+
+      expect(fs.readFileSync(marker, 'utf8')).toBe(type);
+      expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+        type: 'workspace:view_registry_updated',
+        workspaceId: 'workspace-1',
+        workspaceEpoch: 'workspace-epoch-1',
+        registry: { version: 2, views: ['file-viewer'] },
+        viewCapsules: { version: 1, entries: [] },
+      });
+    } finally {
+      if (previousMachine === undefined) delete process.env.FUSION_LOCAL_MACHINE;
+      else process.env.FUSION_LOCAL_MACHINE = previousMachine;
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test('successful view mutation fans a fresh projection with each bound client epoch', async () => {
+    installReadyViewOwner('/tmp/project');
+    const peer = { readyState: 1, send: jest.fn() };
+    const distinctEpochPeer = { readyState: 1, send: jest.fn() };
+    const failedPeer = { readyState: 1, send: jest.fn(() => { throw new Error('closed during send'); }) };
+    const peerSession = {
+      workspaceBindingState: 'active',
+      currentWorkspaceId: 'workspace-1',
+      workspaceEpoch: 'workspace-epoch-1',
+      projectRoot: '/tmp/project',
+    };
+    const { router, ws } = makeRouter({
+      role: 'trusted-shell',
+      additionalSessions: [
+        [peer, peerSession],
+        [failedPeer, { ...peerSession }],
+        [distinctEpochPeer, { ...peerSession, workspaceEpoch: 'workspace-epoch-2' }],
+      ],
+    });
+
+    await router.handleClientMessage(JSON.stringify({
+      type: 'workspace:view_update_requested',
+      viewId: 'file-viewer',
+      patch: { label: 'Files' },
+    }));
+
+    const expected = JSON.stringify({
+      type: 'workspace:view_registry_updated',
+      workspaceId: 'workspace-1',
+      workspaceEpoch: 'workspace-epoch-1',
+      registry: { version: 2, views: [] },
+      viewCapsules: { version: 1, entries: [] },
+    });
+    expect(ws.send).toHaveBeenCalledWith(expected);
+    expect(peer.send).toHaveBeenCalledWith(expected);
+    expect(failedPeer.send).toHaveBeenCalledWith(expected);
+    expect(distinctEpochPeer.send).toHaveBeenCalledWith(JSON.stringify({
+      type: 'workspace:view_registry_updated',
+      workspaceId: 'workspace-1',
+      workspaceEpoch: 'workspace-epoch-2',
+      registry: { version: 2, views: [] },
+      viewCapsules: { version: 1, entries: [] },
+    }));
+  });
+
+  test('readiness failure leaves the prior registry bytes intact and returns bounded rejection', async () => {
+    const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-router-view-conflict-')));
+    const machine = 'Test-Machine';
+    const previousMachine = process.env.FUSION_LOCAL_MACHINE;
+    process.env.FUSION_LOCAL_MACHINE = machine;
+    try {
+      const marker = path.join(root, 'registry-state.json');
+      fs.writeFileSync(marker, '{"version":1}\n', 'utf8');
+      fs.mkdirSync(path.join(root, 'ai', machine, 'Views'), { recursive: true });
+      fs.mkdirSync(path.join(root, 'ai', machine, 'System', 'Views'), { recursive: true });
+      installHistoricalReadinessFixture(machine);
+      views.updateWorkspaceViewRegistry.mockImplementationOnce(() => {
+        fs.writeFileSync(marker, '{"version":2}\n', 'utf8');
+        return { version: 2 };
+      });
+      const { router, ws } = makeRouter({ role: 'trusted-shell', projectRoot: root });
+
+      await router.handleClientMessage(JSON.stringify({
+        type: 'workspace:view_update_requested',
+        viewId: 'file-viewer',
+        patch: { label: 'Files' },
+      }));
+
+      expect(views.updateWorkspaceViewRegistry).not.toHaveBeenCalled();
+      expect(fs.readFileSync(marker, 'utf8')).toBe('{"version":1}\n');
+      expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+        type: 'workspace:view_update_rejected',
+        workspaceId: 'workspace-1',
+        workspaceEpoch: 'workspace-epoch-1',
+        code: 'view_registry_unavailable',
+        message: 'Unable to update view',
+      });
+    } finally {
+      if (previousMachine === undefined) delete process.env.FUSION_LOCAL_MACHINE;
+      else process.env.FUSION_LOCAL_MACHINE = previousMachine;
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test('readiness conflict rejects trusted view mutation with only bounded unavailable', async () => {
+    const { ViewRelocationError } = require('../../lib/views/relocation-errors');
+    viewReadiness.installViewReadinessOwner({
+      ensureReady: async () => { throw new ViewRelocationError('root_conflict'); },
+      acquireLease: () => { throw new Error('unreachable'); },
+      getStatus: () => ({ status: 'unavailable', verified: false }),
+    });
+    const { router, ws } = makeRouter({ role: 'trusted-shell' });
+    await router.handleClientMessage(JSON.stringify({
+      type: 'workspace:view_update_requested',
+      viewId: 'file-viewer',
+      patch: { label: 'Files' },
+    }));
+    expect(views.updateWorkspaceViewRegistry).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'workspace:view_update_rejected',
+      workspaceId: 'workspace-1',
+      workspaceEpoch: 'workspace-epoch-1',
+      code: 'view_registry_unavailable',
+      message: 'Unable to update view',
+    });
+  });
+
+  test.each([
+    [
+      'workspace:view_update_requested',
+      'updateWorkspaceViewRegistry',
+      { viewId: 'file-viewer', patch: { label: 'Files' } },
+      'workspace:view_registry_updated',
+    ],
+    [
+      'workspace:view_restore_requested',
+      'restoreWorkspaceView',
+      { viewId: 'file-viewer' },
+      'workspace:view_registry_updated',
+    ],
+    [
+      'workspace:view_add_requested',
+      'addWorkspaceView',
+      { templateId: 'file-viewer' },
+      'workspace:view_registry_updated',
+    ],
+    [
+      'workspace:view_options_requested',
+      'getWorkspaceViewOptions',
+      {},
+      'workspace:view_options',
+    ],
+  ])('%s stays bound to its captured workspace while readiness awaits a workspace switch', async (
+    type,
+    method,
+    payload,
+    responseType,
+  ) => {
+    let signalReadinessStarted;
+    let releaseReadiness;
+    const readinessStarted = new Promise(resolve => { signalReadinessStarted = resolve; });
+    const readinessMayFinish = new Promise(resolve => { releaseReadiness = resolve; });
+    const effects = [];
+    viewReadiness.installViewReadinessOwner({
+      ensureReady: async (context) => {
+        effects.push(`readiness:${context.workspaceId}:${context.projectRoot}`);
+        signalReadinessStarted();
+        await readinessMayFinish;
+        return { status: 'verified', phase: 'journal_verified', verified: true };
+      },
+      acquireLease: ({ projectRoot }) => ({
+        phase: 'journal_verified',
+        verified: true,
+        projectRoot,
+        release() { effects.push('readiness-release'); },
+      }),
+      getStatus: () => ({ status: 'staged', phase: 'precutover_staged', verified: false }),
+    });
+    views[method].mockImplementationOnce((root) => {
+      effects.push(`operation:${root}`);
+      if (method === 'getWorkspaceViewOptions') {
+        return { hiddenViews: ['hidden-view'], availableTemplates: ['template-view'] };
+      }
+      return { version: 2, views: ['file-viewer'] };
+    });
+    const { router, ws, session } = makeRouter({
+      role: 'trusted-shell',
+      workspaceId: 'workspace-a',
+      projectRoot: '/workspace/A',
+    });
+
+    const request = router.handleClientMessage(JSON.stringify({ type, ...payload }));
+    await readinessStarted;
+    const switching = beginWorkspaceTransition(ws, async () => {
+      effects.push('workspace-switch');
+      session.currentWorkspaceId = 'workspace-b';
+      session.projectRoot = '/workspace/B';
+      session.workspaceEpoch = 'workspace-epoch-2';
+    });
+    await flushAsyncWork();
+
+    expect(views[method]).not.toHaveBeenCalled();
+    expect(session.currentWorkspaceId).toBe('workspace-a');
+    releaseReadiness();
+    await request;
+    await switching;
+
+    expect(views[method]).toHaveBeenCalledWith(
+      '/workspace/A',
+      ...(method === 'updateWorkspaceViewRegistry'
+        ? [expect.objectContaining(payload)]
+        : method === 'restoreWorkspaceView'
+          ? ['file-viewer']
+          : method === 'addWorkspaceView'
+            ? ['file-viewer']
+            : []),
+    );
+    expect(effects).toEqual([
+      'readiness:workspace-a:/workspace/A',
+      'operation:/workspace/A',
+      'readiness-release',
+      'workspace-switch',
+    ]);
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toMatchObject({
+      type: responseType,
+      workspaceId: 'workspace-a',
+      workspaceEpoch: 'workspace-epoch-1',
+    });
+    expect(session.currentWorkspaceId).toBe('workspace-b');
+    expect(session.projectRoot).toBe('/workspace/B');
+  });
+});
+
+describe('createClientMessageRouter view discovery readiness', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test.each([
+    ['file_content_request', 'file_content_response', 'handleFileContentRequest', '__workspace__', 'views.json'],
+    ['file_tree_request', 'file_tree_response', 'handleFileTreeRequest', '__panels__', ''],
+    ['file_content_request', 'file_content_response', 'handleFileContentRequest', 'capture-viewer', 'content.json'],
+    ['file_tree_request', 'file_tree_response', 'handleFileTreeRequest', 'capture-viewer', ''],
+  ])('fails closed for %s while the registry is unavailable', async (
+    requestType,
+    responseType,
+    method,
+    panel,
+    requestPath,
+  ) => {
+    const { ViewRelocationError } = require('../../lib/views/relocation-errors');
+    viewReadiness.installViewReadinessOwner({
+      ensureReady: async () => { throw new ViewRelocationError('root_conflict'); },
+      acquireLease: () => { throw new Error('unreachable'); },
+      getStatus: () => ({ status: 'unavailable', verified: false }),
+    });
+    const handler = jest.fn();
+    const { router, ws } = makeRouter({ fileExplorer: { [method]: handler } });
+    await router.handleClientMessage(JSON.stringify({
+      type: requestType,
+      panel,
+      path: requestPath,
+      requestId: 'discovery-1',
+      workspaceId: 'workspace-1',
+      generation: 7,
+    }));
+
+    expect(handler).not.toHaveBeenCalled();
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: responseType,
+      panel,
+      path: requestPath,
+      requestId: 'discovery-1',
+      workspaceId: 'workspace-1',
+      generation: 7,
+      success: false,
+      error: 'View registry unavailable',
+      code: 'view_registry_unavailable',
+    });
+  });
+
+  test.each(['__panels__', 'capture-viewer'])(
+    'fails closed for %s recent-file discovery while the registry is unavailable',
+    async (panel) => {
+      const { ViewRelocationError } = require('../../lib/views/relocation-errors');
+      viewReadiness.installViewReadinessOwner({
+        ensureReady: async () => { throw new ViewRelocationError('root_conflict'); },
+        acquireLease: () => { throw new Error('unreachable'); },
+        getStatus: () => ({ status: 'unavailable', verified: false }),
+      });
+      const handleRecentFilesRequest = jest.fn();
+      const { router, ws } = makeRouter({ fileExplorer: { handleRecentFilesRequest } });
+      await router.handleClientMessage(JSON.stringify({
+        type: 'recent_files_request',
+        panel,
+        requestId: 'recent-1',
+        workspaceId: 'workspace-1',
+        generation: 8,
+      }));
+
+      expect(handleRecentFilesRequest).not.toHaveBeenCalled();
+      expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+        type: 'recent_files_response',
+        panel,
+        requestId: 'recent-1',
+        workspaceId: 'workspace-1',
+        generation: 8,
+        success: false,
+        error: 'View registry unavailable',
+        code: 'view_registry_unavailable',
+      });
+    },
+  );
+
+  test.each([
+    ['file_content_request', 'handleFileContentRequest', '__workspace__', 'views.json'],
+    ['file_tree_request', 'handleFileTreeRequest', '__panels__', ''],
+    ['recent_files_request', 'handleRecentFilesRequest', '__panels__', ''],
+    ['file_content_request', 'handleFileContentRequest', 'capture-viewer', 'content.json'],
+    ['file_tree_request', 'handleFileTreeRequest', 'capture-viewer', ''],
+    ['recent_files_request', 'handleRecentFilesRequest', 'capture-viewer', ''],
+  ])('holds readiness while serving %s', async (requestType, method, panel, requestPath) => {
+    const release = jest.fn();
+    viewReadiness.installViewReadinessOwner({
+      ensureReady: async () => ({ status: 'staged', phase: 'precutover_staged', verified: false }),
+      acquireLease: () => ({ phase: 'precutover_staged', verified: false, release }),
+      getStatus: () => ({ status: 'staged', phase: 'precutover_staged', verified: false }),
+    });
+    const handler = jest.fn();
+    const { router, ws } = makeRouter({ fileExplorer: { [method]: handler } });
+    const message = { type: requestType, panel, path: requestPath };
+
+    await router.handleClientMessage(JSON.stringify(message));
+
+    expect(handler).toHaveBeenCalledWith(ws, message);
+    expect(release).toHaveBeenCalledTimes(1);
+  });
+
+  test.each([
+    ['__apps__', 'file_content_request', 'handleFileContentRequest'],
+    ['__apps__', 'file_tree_request', 'handleFileTreeRequest'],
+    ['__apps__', 'recent_files_request', 'handleRecentFilesRequest'],
+    ['__settings__', 'file_content_request', 'handleFileContentRequest'],
+    ['__settings__', 'file_tree_request', 'handleFileTreeRequest'],
+    ['__settings__', 'recent_files_request', 'handleRecentFilesRequest'],
+  ])('keeps registry-independent %s available for %s during a view conflict', async (
+    panel,
+    requestType,
+    method,
+  ) => {
+    const ensureReady = jest.fn(async () => { throw new Error('must not be consulted'); });
+    viewReadiness.installViewReadinessOwner({
+      ensureReady,
+      acquireLease: () => { throw new Error('must not be acquired'); },
+      getStatus: () => ({ status: 'unavailable', verified: false }),
+    });
+    const handler = jest.fn();
+    const { router, ws } = makeRouter({ fileExplorer: { [method]: handler } });
+    const message = { type: requestType, panel, path: 'asset.txt' };
+
+    await router.handleClientMessage(JSON.stringify(message));
+
+    expect(handler).toHaveBeenCalledWith(ws, message);
+    expect(ensureReady).not.toHaveBeenCalled();
+  });
+
+  test('serializes a normal-panel read with workspace switching and gates the replacement workspace', async () => {
+    const { ViewRelocationError } = require('../../lib/views/relocation-errors');
+    let signalEntered;
+    let releaseReadiness;
+    const entered = new Promise(resolve => { signalEntered = resolve; });
+    const readiness = new Promise(resolve => { releaseReadiness = resolve; });
+    const ensureReady = jest.fn(async (context) => {
+      if (context.workspaceId === 'workspace-2') throw new ViewRelocationError('root_conflict');
+      signalEntered();
+      await readiness;
+      return { status: 'staged', phase: 'precutover_staged', verified: false };
+    });
+    const release = jest.fn();
+    viewReadiness.installViewReadinessOwner({
+      ensureReady,
+      acquireLease: () => ({ phase: 'precutover_staged', verified: false, release }),
+      getStatus: () => ({ status: 'staged', verified: false }),
+    });
+    const observedRoots = [];
+    const handleFileContentRequest = jest.fn(() => {
+      observedRoots.push(session.projectRoot);
+    });
+    const { router, ws, session } = makeRouter({ fileExplorer: { handleFileContentRequest } });
+    const message = { type: 'file_content_request', panel: 'capture-viewer', path: 'content.json' };
+
+    const firstRead = router.handleClientMessage(JSON.stringify(message));
+    await entered;
+    const switching = beginWorkspaceTransition(ws, async () => {
+      session.currentWorkspaceId = 'workspace-2';
+      session.projectRoot = '/tmp/project-2';
+      session.workspaceEpoch = 'workspace-epoch-2';
+    });
+    await flushAsyncWork();
+    expect(observedRoots).toEqual([]);
+
+    releaseReadiness();
+    await firstRead;
+    await switching;
+    expect(observedRoots).toEqual(['/tmp/project']);
+    expect(release).toHaveBeenCalledTimes(1);
+
+    ws.send.mockClear();
+    await router.handleClientMessage(JSON.stringify(message));
+    expect(handleFileContentRequest).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'file_content_response',
+      panel: 'capture-viewer',
+      success: false,
+      code: 'view_registry_unavailable',
+    });
+    expect(ensureReady).toHaveBeenLastCalledWith({
+      workspaceId: 'workspace-2',
+      projectRoot: '/tmp/project-2',
+    });
+  });
+});
+
 describe('createClientMessageRouter text-frame and file_save privacy contract', () => {
   let logSpy;
   let errorSpy;
@@ -525,6 +1221,7 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
     });
     await failingRouter.handleClientMessage(JSON.stringify({
       type: 'recent_files_request',
+      panel: '__apps__',
       payload: canary,
     }));
     expect(failingWs.send).toHaveBeenCalledWith(JSON.stringify({
@@ -633,6 +1330,11 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
   });
 
   test('keeps a named unversioned non-File-Viewer panel on compatibility routing', async () => {
+    viewReadiness.installViewReadinessOwner({
+      ensureReady: async () => ({ status: 'staged', phase: 'precutover_staged', verified: false }),
+      acquireLease: () => ({ phase: 'precutover_staged', verified: false, release() {} }),
+      getStatus: () => ({ status: 'staged', phase: 'precutover_staged', verified: false }),
+    });
     const legacy = jest.fn();
     const canonical = jest.fn();
     const { router, ws } = makeRouter({

@@ -23,6 +23,74 @@ function runGit(contentRoot, args) {
   return execFileAsync('git', ['-C', contentRoot, ...args]);
 }
 
+function readGitDirectoryPointer(gitFile) {
+  const raw = fs.readFileSync(gitFile, 'utf8').trim();
+  const match = raw.match(/^gitdir:\s*(.+)$/i);
+  if (!match || !match[1] || match[1].includes('\0')) {
+    throw new Error('Invalid Git directory pointer');
+  }
+  return path.resolve(path.dirname(gitFile), match[1]);
+}
+
+function resolveExistingDirectory(candidate, label) {
+  let real;
+  try {
+    real = fs.realpathSync(candidate);
+  } catch {
+    throw new Error(`${label} is unavailable`);
+  }
+  if (!fs.statSync(real).isDirectory()) throw new Error(`${label} is not a directory`);
+  return real;
+}
+
+/**
+ * Enumerate the actual repository destinations Git can mutate. Linked
+ * worktrees and `git init --separate-git-dir` use a regular `.git` pointer;
+ * linked worktree gitdirs can in turn name a separate common directory.
+ */
+function resolveGitMutationPaths(contentRoot) {
+  const root = path.resolve(contentRoot);
+  const dotGit = path.join(root, '.git');
+  let dotGitStat;
+  try {
+    dotGitStat = fs.lstatSync(dotGit);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return [dotGit];
+    throw error;
+  }
+
+  const gitDirCandidate = dotGitStat.isFile()
+    ? readGitDirectoryPointer(dotGit)
+    : dotGit;
+  const gitDir = resolveExistingDirectory(gitDirCandidate, 'Git directory');
+  const commonPointer = path.join(gitDir, 'commondir');
+  let commonDir = gitDir;
+  try {
+    const raw = fs.readFileSync(commonPointer, 'utf8').trim();
+    if (!raw || raw.includes('\0')) throw new Error('Invalid Git common directory pointer');
+    commonDir = resolveExistingDirectory(path.resolve(gitDir, raw), 'Git common directory');
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+
+  return [...new Set([
+    dotGit,
+    gitDir,
+    path.join(gitDir, 'index'),
+    path.join(gitDir, 'index.lock'),
+    path.join(gitDir, 'HEAD'),
+    path.join(gitDir, 'COMMIT_EDITMSG'),
+    path.join(gitDir, 'config'),
+    path.join(gitDir, 'config.lock'),
+    commonDir,
+    path.join(commonDir, 'objects'),
+    path.join(commonDir, 'refs'),
+    path.join(commonDir, 'logs'),
+    path.join(commonDir, 'packed-refs'),
+    path.join(commonDir, 'packed-refs.lock'),
+  ])];
+}
+
 /**
  * Ensure the content directory is a Git repository.
  * If missing, initializes it and sets default user config.
@@ -105,4 +173,4 @@ async function commitIfChanged(contentRoot, relativePath, message) {
   return true;
 }
 
-module.exports = { ensureRepo, commitIfChanged };
+module.exports = { ensureRepo, commitIfChanged, resolveGitMutationPaths };

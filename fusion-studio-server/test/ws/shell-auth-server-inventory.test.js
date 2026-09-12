@@ -18,9 +18,10 @@ describe('production shell authentication wiring', () => {
     const officeRouterStart = source.indexOf('createOfficePaletteDispatch({', productBuildStart);
     const initializeStart = source.indexOf('const initializeConnection = async () =>', connectionStart);
     const runtimeWaitStart = source.indexOf('await serverRuntimeActivation.wait()', initializeStart);
+    const workspaceLaneStart = source.indexOf('await workspaceController.runInWorkspaceLifecycle', initializeStart);
     const productInitializeStart = source.indexOf('await productConnection.initialize()', initializeStart);
     const managerStart = source.indexOf('ThreadWebSocketHandler.setPanel', connectionStart);
-    const activateStart = source.indexOf('activate: () => productSessionRegistry.activate', connectionStart);
+    const activateStart = source.indexOf('productSessionRegistry.activate({', initializeStart);
     const authDispatchStart = source.indexOf('const authenticatedDispatch = createShellAuthDispatch', connectionStart);
 
     expect(connectionStart).toBeGreaterThan(-1);
@@ -39,10 +40,12 @@ describe('production shell authentication wiring', () => {
     expect(transportTrackStart).toBeLessThan(initializeStart);
     expect(initializeStart).toBeGreaterThan(connectionStart);
     expect(runtimeWaitStart).toBeGreaterThan(initializeStart);
+    expect(workspaceLaneStart).toBeGreaterThan(runtimeWaitStart);
     expect(productInitializeStart).toBeGreaterThan(runtimeWaitStart);
     expect(managerStart).toBeGreaterThan(initializeStart);
     expect(managerStart).toBeLessThan(authDispatchStart);
-    expect(activateStart).toBeGreaterThan(authDispatchStart);
+    expect(activateStart).toBeGreaterThan(productInitializeStart);
+    expect(activateStart).toBeLessThan(authDispatchStart);
     expect(source.slice(connectionStart, initializeStart)).not.toContain('ThreadWebSocketHandler.setPanel');
     expect(source.slice(connectionStart, initializeStart)).not.toContain('sessions.set(');
     expect(source.slice(connectionStart, initializeStart)).not.toContain('beginWorkspaceBind(');

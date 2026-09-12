@@ -17,11 +17,17 @@ const path = require('path');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const { emit } = require('../event-bus');
-const { resolveViewState, writeViewStatePatch } = require('../view-state');
+const {
+  resolveViewState,
+  writeViewStatePatchUnderLease,
+} = require('../view-state');
 const { moveFileWithArchive } = require('../file-ops');
 const createService = require('../workspace/create-service');
 const { getPanelPath } = require('../views/panel-paths');
 const { classifyEntry } = require('../fs/dirents');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
+const { requireTrustedViewAuthority } = require('./trusted-shell-authority');
+const viewReadiness = require('../views/readiness-runtime');
 
 const OFFICE_PANEL = 'office-viewer';
 const OFFICE_THUMBNAIL_FOLDER = '.thumbnails';
@@ -77,6 +83,24 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     }
   }
 
+  async function runReadyViewOperation(operation) {
+    const readinessContext = Object.freeze({
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: session.projectRoot,
+    });
+    try {
+      await viewReadiness.ensureWorkspaceViewReadiness(readinessContext);
+      return await viewReadiness.withViewReadinessLease(readinessContext, operation);
+    } catch (error) {
+      if (error?.name === 'ViewRelocationError') {
+        const unavailable = new Error('View registry unavailable');
+        unavailable.code = 'view_registry_unavailable';
+        throw unavailable;
+      }
+      throw error;
+    }
+  }
+
   function relativeToPanel(absPath) {
     const resolvedPath = path.resolve(absPath);
     for (const panel of mutationPanels) {
@@ -100,6 +124,7 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
 
     'workspace:add_requested'(clientMsg) {
+      if (!requireTrustedViewAuthority(ws, session)) return;
       if (typeof clientMsg.repoPath !== 'string' || clientMsg.repoPath.trim() === '') {
         ws.send(JSON.stringify({
           type: 'error',
@@ -205,6 +230,7 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
     },
 
     'workspace:create_requested'(clientMsg) {
+      if (!requireTrustedViewAuthority(ws, session)) return;
       if (typeof clientMsg.projectPath !== 'string' || clientMsg.projectPath.trim() === '') {
         ws.send(JSON.stringify({
           type: 'workspace:create_rejected',
@@ -280,26 +306,32 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           }));
           return;
         }
-        const state = await resolveViewState(projectRoot, clientMsg.view);
+        const state = await runReadyViewOperation(() => resolveViewState(projectRoot, clientMsg.view));
         ws.send(JSON.stringify({
           type: 'state:result',
           view: clientMsg.view,
           ...correlation,
           state,
         }));
-      } catch (_error) {
+      } catch (error) {
         console.error('[state:get] failed');
         ws.send(JSON.stringify({
           type: 'state:error',
           view: clientMsg.view,
           ...correlation,
-          message: 'Unable to read state',
+          ...(error?.code === 'view_registry_unavailable'
+            ? { code: 'view_registry_unavailable' }
+            : {}),
+          message: error?.code === 'view_registry_unavailable'
+            ? 'view_registry_unavailable'
+            : 'Unable to read state',
         }));
       }
     },
 
     async 'state:set'(clientMsg) {
       const correlation = captureRequestCorrelation(clientMsg);
+      if (!requireTrustedViewAuthority(ws, session)) return;
       try {
         const projectRoot = session.projectRoot;
         if (!projectRoot) {
@@ -312,7 +344,14 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           }));
           return;
         }
-        const merged = await writeViewStatePatch(projectRoot, clientMsg.view, clientMsg.state);
+        const merged = await runReadyViewOperation(
+          (lease) => writeViewStatePatchUnderLease(
+            projectRoot,
+            clientMsg.view,
+            clientMsg.state,
+            lease,
+          ),
+        );
         ws.send(JSON.stringify({
           type: 'state:result',
           view: clientMsg.view,
@@ -320,14 +359,19 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           clientMutationId: clientMsg.clientMutationId,
           state: merged,
         }));
-      } catch (_error) {
+      } catch (error) {
         console.error('[state:set] failed');
         ws.send(JSON.stringify({
           type: 'state:error',
           view: clientMsg.view,
           ...correlation,
           clientMutationId: clientMsg.clientMutationId,
-          message: 'Unable to write state',
+          ...(error?.code === 'view_registry_unavailable'
+            ? { code: 'view_registry_unavailable' }
+            : {}),
+          message: error?.code === 'view_registry_unavailable'
+            ? 'view_registry_unavailable'
+            : 'Unable to write state',
         }));
       }
     },
@@ -355,17 +399,41 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           }));
           return;
         }
-        const sourceStat = fs.statSync(source);
+        const resolvedSource = path.resolve(source);
+        const resolvedTarget = path.resolve(target);
+        const destination = path.join(resolvedTarget, path.basename(resolvedSource));
+        const moveTime = new Date();
+        const extension = path.extname(destination);
+        const archiveName = `${path.basename(destination, extension)}-${moveTime.toISOString().replace(/[:.]/g, '-').slice(0, 19)}${extension}`;
+        const archivePath = path.join(resolvedTarget, 'archive', archiveName);
+        const sourceRef = relativeToPanel(resolvedSource);
+        const targetRef = relativeToPanel(destination);
+        const sourceStat = fs.statSync(resolvedSource);
         const sourceIsDirectory = sourceStat.isDirectory();
-        const result = moveFileWithArchive(source, target, projectRoot);
+        const protectedPaths = [resolvedSource, destination];
+        const pathMappings = [{ source: resolvedSource, destination }];
+        if (fs.existsSync(destination)) {
+          protectedPaths.push(archivePath);
+          pathMappings.push({ source: destination, destination: archivePath });
+        }
+        if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
+          const sourceThumbnail = officeThumbnailPathForDocument(resolvedSource);
+          const targetThumbnail = officeThumbnailPathForDocument(destination);
+          protectedPaths.push(sourceThumbnail, path.dirname(targetThumbnail), targetThumbnail);
+          pathMappings.push({ source: sourceThumbnail, destination: targetThumbnail });
+        }
+        await assertGenericViewMutationAllowed({
+          projectRoot,
+          paths: protectedPaths,
+          pathMappings,
+        });
+        const result = moveFileWithArchive(resolvedSource, resolvedTarget, projectRoot, { now: moveTime });
         emit('system:file_deployed', {
           source,
           target,
           archived: result.archived,
           moved: result.moved,
         });
-        const sourceRef = relativeToPanel(source);
-        const targetRef = relativeToPanel(result.moved);
         if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
           await moveOfficeThumbnail(source, result.moved);
         }
@@ -428,6 +496,19 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
         const targetRef = relativeToPanel(target);
         const sourceStat = await fsPromises.stat(resolvedSource);
         const sourceIsDirectory = sourceStat.isDirectory();
+        const protectedPaths = [resolvedSource, target];
+        const pathMappings = [{ source: resolvedSource, destination: target }];
+        if (!sourceIsDirectory && sourceRef?.panel === OFFICE_PANEL && targetRef?.panel === OFFICE_PANEL) {
+          const sourceThumbnail = officeThumbnailPathForDocument(resolvedSource);
+          const targetThumbnail = officeThumbnailPathForDocument(target);
+          protectedPaths.push(sourceThumbnail, path.dirname(targetThumbnail), targetThumbnail);
+          pathMappings.push({ source: sourceThumbnail, destination: targetThumbnail });
+        }
+        await assertGenericViewMutationAllowed({
+          projectRoot,
+          paths: protectedPaths,
+          pathMappings,
+        });
         if (fs.existsSync(target)) {
           ws.send(JSON.stringify({
             type: 'file:rename_error',
@@ -492,6 +573,14 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           return;
         }
         const sourceRef = relativeToPanel(resolvedSource);
+        const protectedPaths = [resolvedSource];
+        if (sourceRef?.panel === OFFICE_PANEL) {
+          protectedPaths.push(officeThumbnailPathForDocument(resolvedSource));
+        }
+        await assertGenericViewMutationAllowed({
+          projectRoot,
+          paths: protectedPaths,
+        });
         const sourceStat = await fsPromises.stat(resolvedSource);
         const sourceIsDirectory = sourceStat.isDirectory();
         if (sourceIsDirectory) {
@@ -578,6 +667,11 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
           }));
           return;
         }
+
+        await assertGenericViewMutationAllowed({
+          projectRoot: session.projectRoot,
+          paths: [resolvedDocument, path.dirname(thumbnailPath), thumbnailPath],
+        });
 
         const buffer = Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64');
         await fsPromises.mkdir(path.dirname(thumbnailPath), { recursive: true });

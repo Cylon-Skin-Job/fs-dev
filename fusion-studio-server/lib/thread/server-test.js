@@ -10,6 +10,7 @@
 const WebSocket = require('ws');
 const path = require('path');
 const fs = require('fs').promises;
+const aiPaths = require('../workspace/ai-paths');
 
 const SERVER_URL = 'ws://localhost:3001';
 const TEST_TIMEOUT = 30000;
@@ -215,7 +216,8 @@ async function runTests() {
 
 // Cleanup function for test data
 async function cleanup() {
-  const testDir = path.join(__dirname, '..', '..', '..', '..', 'ai', 'views', 'default');
+  const projectRoot = path.resolve(__dirname, '..', '..', '..');
+  const testDir = path.join(aiPaths.getMachineViewsRoot(projectRoot), 'default');
   try {
     await fs.rm(testDir, { recursive: true, force: true });
     console.log('🧹 Cleaned up test data');

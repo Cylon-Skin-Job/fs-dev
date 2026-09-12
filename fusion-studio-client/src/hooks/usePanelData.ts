@@ -12,7 +12,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { usePanelStore } from '../state/panelStore';
 
 interface UsePanelDataOptions {
-  /** Panel ID (view-id from ai/<machine>/Views/) */
+  /** Panel ID (view-id from ai/<machine>/System/Views/) */
   panel: string;
   /** Path to the index file to load on connect (default: 'index.json') */
   indexPath?: string;

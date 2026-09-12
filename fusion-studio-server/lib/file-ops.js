@@ -18,10 +18,11 @@ const path = require('path');
  * @param {string} source - Absolute path to the source file
  * @param {string} targetDir - Absolute path to the destination directory
  * @param {string} projectRoot - Absolute path to project root (for validation)
+ * @param {{now?: Date}} [options] - Preflight-captured archive timestamp
  * @returns {{ archived: string|null, moved: string }} Paths of archived and moved files
  * @throws {Error} If paths are outside project root or source doesn't exist
  */
-function moveFileWithArchive(source, targetDir, projectRoot) {
+function moveFileWithArchive(source, targetDir, projectRoot, { now = new Date() } = {}) {
   const resolvedSource = path.resolve(source);
   const resolvedTarget = path.resolve(targetDir);
   const resolvedRoot = path.resolve(projectRoot);
@@ -49,7 +50,7 @@ function moveFileWithArchive(source, targetDir, projectRoot) {
 
     const ext = path.extname(filename);
     const base = path.basename(filename, ext);
-    const date = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const date = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
     const archiveName = `${base}-${date}${ext}`;
     archived = path.join(archiveDir, archiveName);
 

@@ -10,8 +10,7 @@
 
 const path = require('path');
 const fsSync = require('fs');
-const aiPaths = require('../workspace/ai-paths');
-const { classifyEntrySync } = require('../fs/dirents');
+const views = require('../views');
 
 const HARDCODED_DEFAULTS = {
   collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
@@ -47,9 +46,8 @@ const HARDCODED_DEFAULTS = {
 
 function getDefaults(projectRoot, viewId) {
   const v2Folder = findV2ViewFolder(projectRoot, viewId);
-  const layoutPath = v2Folder
-    ? path.join(v2Folder, 'styles', 'layout.json')
-    : path.join(projectRoot, 'ai', 'views', viewId, 'settings', 'layout.json');
+  if (!v2Folder) return HARDCODED_DEFAULTS;
+  const layoutPath = path.join(v2Folder, 'styles', 'layout.json');
   let layout = null;
   try {
     layout = JSON.parse(fsSync.readFileSync(layoutPath, 'utf8'));
@@ -87,16 +85,11 @@ function getDefaults(projectRoot, viewId) {
 }
 
 function findV2ViewFolder(projectRoot, viewId) {
-  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
-  try {
-    const entries = fsSync.readdirSync(viewsRoot, { withFileTypes: true });
-    const match = entries.find((entry) => classifyEntrySync(viewsRoot, entry).isDir && (
-      entry.name === viewId || entry.name.endsWith(`-${viewId}`)
-    ));
-    return match ? path.join(viewsRoot, match.name) : null;
-  } catch {
-    return null;
-  }
+  return views.resolveViewRoot(projectRoot, viewId, {
+    includeHidden: true,
+    strictFilesystemErrors: true,
+    strictReadiness: true,
+  });
 }
 
 module.exports = {

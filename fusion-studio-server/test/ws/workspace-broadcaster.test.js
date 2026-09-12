@@ -15,7 +15,7 @@ jest.mock('../../lib/theme/themes-service', () => ({
   list: jest.fn(async () => []),
 }));
 jest.mock('../../lib/ws/connection-init', () => ({
-  buildPanelConfig: jest.fn((projectRoot) => ({ type: 'panel_config', projectRoot })),
+  buildPanelConfig: jest.fn((projectRoot, workspaceId) => ({ type: 'panel_config', projectRoot, workspaceId })),
 }));
 jest.mock('../../lib/workspace/ai-paths', () => ({
   getSystemStylesRoot: jest.fn((root) => `${root}/ai/styles`),
@@ -98,16 +98,16 @@ describe('workspace broadcaster bind integration', () => {
       getClientByConnectionId: () => null,
       getSessionForClient: () => state,
     });
-    await mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+    await mockListeners.get('workspace:switched')({ bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B' });
 
     const sent = ws.sent.map((value) => JSON.parse(value));
     expect(sent[0]).toMatchObject({
-      type: 'workspace:switched', from: 'A', to: 'B', repoPath: '/B',
+      type: 'workspace:switched', bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B',
       workspaceId: 'B', fileSaveProtocolVersion: 1, resourceProvenanceProtocolVersion: 1,
       fileViewerReadProtocolVersion: 1,
     });
     expect(sent[0].workspaceEpoch).toMatch(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/);
-    expect(sent[1]).toEqual({ type: 'panel_config', projectRoot: '/B' });
+    expect(sent[1]).toEqual({ type: 'panel_config', projectRoot: '/B', workspaceId: 'B' });
     expect(state).toMatchObject({
       currentWorkspaceId: 'B', workspaceEpoch: sent[0].workspaceEpoch,
       projectRoot: '/B', workspaceBindingState: 'active',
@@ -123,7 +123,7 @@ describe('workspace broadcaster bind integration', () => {
       getClientByConnectionId: () => null,
       getSessionForClient: () => state,
     });
-    await mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+    await mockListeners.get('workspace:switched')({ bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B' });
     expect(ws.sent).toHaveLength(1);
     expect(ws.closes[0][0]).toBe(1011);
     expect(state.workspaceBindingState).toBe('binding');
@@ -150,7 +150,7 @@ describe('workspace broadcaster bind integration', () => {
     });
     await started;
 
-    const switched = mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+    const switched = mockListeners.get('workspace:switched')({ bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B' });
     await Promise.resolve();
     expect(state.workspaceBindingState).toBe('active');
     expect(effects).toEqual(['operation-start']);
@@ -175,7 +175,7 @@ describe('workspace broadcaster bind integration', () => {
       getSessionForClient: () => state,
     });
 
-    const switched = mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+    const switched = mockListeners.get('workspace:switched')({ bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B' });
     await new Promise(resolve => setImmediate(resolve));
 
     expect(ws.sent).toEqual([]);
@@ -184,7 +184,7 @@ describe('workspace broadcaster bind integration', () => {
     finishRetirement(true);
     await switched;
     expect(JSON.parse(ws.sent[0])).toMatchObject({
-      type: 'workspace:switched', to: 'B', repoPath: '/B',
+      type: 'workspace:switched', bindingRevision: 1, to: 'B', repoPath: '/B',
     });
     expect(state).toMatchObject({ currentWorkspaceId: 'B', projectRoot: '/B' });
   });

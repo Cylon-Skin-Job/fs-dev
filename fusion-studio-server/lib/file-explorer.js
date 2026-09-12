@@ -14,12 +14,13 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
-const { commitIfChanged } = require('./versioning');
+const { commitIfChanged, resolveGitMutationPaths } = require('./versioning');
 const views = require('./views');
 const { getPanelArchiveFolder, isPanelArchiveRoot } = require('./view-folders');
 const { classifyEntry, isInsidePath } = require('./fs/dirents');
 const { createCycleGuard } = require('./fs/cycle-guard');
 const { resolveSymlinkInfo } = require('./fs/symlinks');
+const { assertGenericViewMutationAllowed } = require('./views/protected-path-policy');
 
 /**
  * @param {object} deps
@@ -27,6 +28,12 @@ const { resolveSymlinkInfo } = require('./fs/symlinks');
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
  */
 function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
+
+  async function assertMutationAllowed(ws, paths) {
+    const projectRoot = getProjectRoot(ws);
+    if (!projectRoot) throw Object.assign(new Error('No active workspace'), { code: 'ENOENT' });
+    await assertGenericViewMutationAllowed({ projectRoot, paths });
+  }
 
   function mapFileErrorCode(err) {
     if (err.code === 'ENOENT') return 'ENOENT';
@@ -597,11 +604,43 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
       }
 
       const tmpPath = writePath + '.tmp';
-      fs.writeFileSync(tmpPath, content, 'utf8');
-      fs.renameSync(tmpPath, writePath);
+      const reason = msg.reason || 'autosave';
+      const mutationPaths = [targetPath, writePath, tmpPath];
+      if (reason === 'session_end' || reason === 'checkpoint' || reason === 'milestone') {
+        const projectRoot = getProjectRoot(ws);
+        if (!projectRoot) throw Object.assign(new Error('No active workspace'), { code: 'ENOENT' });
+        mutationPaths.push(
+          ...resolveGitMutationPaths(basePath),
+          path.join(basePath, '.gitignore'),
+        );
+      }
+      await assertMutationAllowed(ws, mutationPaths);
+      let descriptor = null;
+      let ownsTemp = false;
+      try {
+        descriptor = fs.openSync(
+          tmpPath,
+          fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_NOFOLLOW,
+          0o600,
+        );
+        ownsTemp = true;
+        fs.writeFileSync(descriptor, content, 'utf8');
+        fs.fsyncSync(descriptor);
+        fs.closeSync(descriptor);
+        descriptor = null;
+        fs.renameSync(tmpPath, writePath);
+        ownsTemp = false;
+      } catch (error) {
+        if (descriptor !== null) {
+          try { fs.closeSync(descriptor); } catch (_closeError) {}
+        }
+        if (ownsTemp) {
+          try { fs.unlinkSync(tmpPath); } catch (_cleanupError) {}
+        }
+        throw error;
+      }
 
       // Versioning: commit on session_end, checkpoint, or milestone
-      const reason = msg.reason || 'autosave';
       if (reason === 'session_end' || reason === 'checkpoint' || reason === 'milestone') {
         const milestone = msg.milestone;
         const fileName = path.basename(requestPath);
@@ -686,6 +725,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
     }
 
     try {
+      await assertMutationAllowed(ws, [targetPath]);
       const parentStat = await fsPromises.stat(parentAbsolutePath);
       if (!parentStat.isDirectory()) {
         ws.send(JSON.stringify({
@@ -775,6 +815,7 @@ function createFileExplorerHandlers({ getPanelPath, getProjectRoot }) {
     }
 
     try {
+      await assertMutationAllowed(ws, [targetPath]);
       const parentStat = await fsPromises.stat(parentAbsolutePath);
       if (!parentStat.isDirectory()) {
         ws.send(JSON.stringify({

@@ -37,6 +37,17 @@ import './CaptureTiles.css';
 const ORDERED_DOCS_FOLDER = /^\d{3}-(.+)$/;
 const DOC_VIEWER_PANEL = 'capture-viewer';
 
+/**
+ * VIEW-02 §4.1/§4.3: the single Capture open entry point, SUPPLIED by the
+ * connected adapter's landing registration. The open/disposition policy lives
+ * in the connected layer (captureConnectedTabs, the view-side entry-point
+ * module). The presenter never selects dispositions, branches to the connected
+ * lane, or falls back itself.
+ */
+export interface CaptureTilesProps {
+  onOpenDocument?: (request: { folder: string; path: string; name: string }) => void;
+}
+
 function isDocsFolder(node: { name: string; type: string }): boolean {
   return (
     (node.type === 'folder' || node.type === 'directory') &&
@@ -51,7 +62,7 @@ function docsFolderLabel(folderName: string): string {
   return label.replace(/[-_]+/g, ' ');
 }
 
-export function CaptureTiles() {
+export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
   useViewLayoutStyles(DOC_VIEWER_PANEL);
   const scrollRef = useRef<HTMLDivElement>(null);
   const suppressGridScrollPersistRef = useRef(false);
@@ -162,6 +173,18 @@ export function CaptureTiles() {
   };
 
   const openDocFullScreen = (folder: string, file: FileWithContent) => {
+    // VIEW-02 §4.1/§4.3: when the connected adapter supplied the open handler,
+    // the presenter just calls it — no disposition selection, no classic
+    // fallback, no legacy tabs branch on this (public action) path.
+    if (onOpenDocument) {
+      onOpenDocument({ folder, path: file.path, name: file.name });
+      return;
+    }
+    // Classic (unready-policy) lifecycle only: no connected handler exists.
+    // VIEW-02 §5 fill contract: in-app opens (preview-modal expand and any
+    // non-drawer open) NEVER fill an Empty tab — TABS-03 `new` (exact
+    // targetKey match → activate/reveal; else append). Only the slide-out
+    // drawer path keeps the `current` disposition.
     if (isTabsMode) {
       openDocumentInCaptureTabs({ folder, path: file.path, name: file.name });
       selectFile(folder, file);
@@ -171,6 +194,17 @@ export function CaptureTiles() {
     setIsFullPageSelected(true);
   };
 
+  // VIEW-02 Slice 3: the preview's Open-in-New-Tab action uses disposition
+  // `new` through TABS-03 (SPEC-02 §9). §4.3: the disposition decision lives
+  // in the supplied connected handler; the presenter only names the action.
+  const openDocInNewTab = (folder: string, file: FileWithContent) => {
+    if (onOpenDocument) {
+      onOpenDocument({ folder, path: file.path, name: file.name });
+      return;
+    }
+    openDocFullScreen(folder, file);
+  };
+
   const openFileFullScreen = (
     event: React.MouseEvent,
     folder: string,
@@ -178,6 +212,12 @@ export function CaptureTiles() {
   ) => {
     event.preventDefault();
     event.stopPropagation();
+    // VIEW-02 §4.1/§4.3: connected opens route through the supplied handler
+    // only (the rail carries the full path: Capture > Collection > Name).
+    if (onOpenDocument) {
+      onOpenDocument({ folder, path: file.path, name: file.name });
+      return;
+    }
     openDocFullScreen(folder, file);
   };
 
@@ -505,6 +545,7 @@ export function CaptureTiles() {
             clearSelection();
           }}
           onOpenFullScreen={() => openDocFullScreen(selected.folder, selected.file)}
+          onOpenInNewTab={() => openDocInNewTab(selected.folder, selected.file)}
           onRename={() => renameFile(selected.file, selected.folder)}
           onArchive={archiveSelectedFile}
           onDelete={() => deleteFile(selected.file, selected.folder)}

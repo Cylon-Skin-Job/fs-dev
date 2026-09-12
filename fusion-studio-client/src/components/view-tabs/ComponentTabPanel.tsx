@@ -7,17 +7,19 @@ import {
   type ResolveTabComponent,
   normalizeComponentResolution,
 } from './componentTabResolver';
-import { EmptyTabPanel, type EmptyTabLauncherItem } from './EmptyTabPanel';
+import { EmptyTabPanel } from './EmptyTabPanel';
 import { PresenterErrorBoundary } from './PresenterErrorBoundary';
 import './componentTabPanel.css';
 
 export interface ComponentTabPanelProps {
   active: unknown;
   expectedActiveTabId?: string;
-  launchers: readonly EmptyTabLauncherItem[];
   reservation: EmptyTabReservation | null;
+  /** Bounded display label for the active tab's reserved launcher (connected layer). */
+  reservationLabel?: string;
+  /** VIEW-02 §6: optional view-supplied Empty-body presenter (connected layer). */
+  renderEmptyBody?: (tabId: string) => ReactNode;
   resolve: ResolveTabComponent;
-  onSelectLauncher: (tabId: string, launcherId: string) => void;
   onRetryLauncher: (tabId: string) => void;
   onCancelLauncher: (tabId: string) => void;
 }
@@ -99,10 +101,10 @@ function presenterResetKey(
 export function ComponentTabPanel({
   active,
   expectedActiveTabId,
-  launchers,
   reservation,
+  reservationLabel,
+  renderEmptyBody,
   resolve,
-  onSelectLauncher,
   onRetryLauncher,
   onCancelLauncher,
 }: ComponentTabPanelProps) {
@@ -169,9 +171,9 @@ export function ComponentTabPanel({
     content = (
       <EmptyTabPanel
         tabId={validated.value.tabId}
-        items={launchers}
         reservation={reservation?.tabId === validated.value.tabId ? reservation : null}
-        onSelect={onSelectLauncher}
+        renderEmptyBody={renderEmptyBody}
+        reservationLabel={reservationLabel}
         onRetry={onRetryLauncher}
         onCancel={onCancelLauncher}
       />

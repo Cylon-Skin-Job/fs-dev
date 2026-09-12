@@ -15,7 +15,6 @@ import { ViewTabStrip } from './ViewTabStrip';
 import {
   viewTabDomId,
   viewTabPanelDomId,
-  viewTabSingleIdentityDomId,
 } from './viewTabDomIds';
 import './ViewTabBar.css';
 
@@ -54,47 +53,6 @@ const unavailableResolution: ViewTabContentAdapter['resolve'] = () => ({
   label: 'Component unavailable',
 });
 const ignoreTabIntent = () => undefined;
-
-function focusAddedTab(panelId: string, tabId: string) {
-  requestAnimationFrame(() => {
-    document.getElementById(viewTabDomId(panelId, tabId))?.focus();
-  });
-}
-
-function recoverConnectedCloseFocus(
-  panelId: string,
-  origin: HTMLElement,
-) {
-  requestAnimationFrame(() => {
-    const ownerDocument = origin.ownerDocument;
-    const activeElement = ownerDocument.activeElement;
-    if (activeElement
-      && activeElement !== ownerDocument.body
-      && activeElement !== origin) {
-      return;
-    }
-    const panelDomId = viewTabPanelDomId(panelId);
-    const selectedTab = Array.from(ownerDocument.querySelectorAll<HTMLElement>('[role="tab"]'))
-      .find((candidate) => (
-        candidate.getAttribute('aria-controls') === panelDomId
-        && candidate.getAttribute('aria-selected') === 'true'
-      ));
-    if (selectedTab) {
-      selectedTab.focus();
-      return;
-    }
-    const singleIdentity = ownerDocument
-      .getElementById(panelDomId)
-      ?.querySelector<HTMLElement>('.rv-component-tab-single-label');
-    if (singleIdentity) {
-      singleIdentity.focus();
-      return;
-    }
-    ownerDocument.querySelector<HTMLElement>(
-      `.rv-panel[data-panel="${CSS.escape(panelId)}"].active .rv-content-area`,
-    )?.focus();
-  });
-}
 
 /** Shell-owned host: resolves one connected adapter and supplies the tabpanel relationship. */
 export function ViewTabBar({ panel, children }: ViewTabBarProps) {
@@ -135,38 +93,33 @@ export function ViewTabBar({ panel, children }: ViewTabBarProps) {
     console.assert(false, 'ViewTabBar shell projection must match the active connected tab.');
   }
   const activeDescriptor = adapter.tabs.find((tab) => tab.id === adapter.activeId);
-  const showStrip = mode !== 'single';
-  const panelLabelId = mode === 'single'
-    ? viewTabSingleIdentityDomId(adapter.panelId, adapter.activeId)
-    : viewTabDomId(adapter.panelId, adapter.activeId);
+  const panelLabelId = viewTabDomId(adapter.panelId, adapter.activeId);
   const connectedActive = shellOptedIn && mode === 'invalid'
     ? null
     : content?.active ?? null;
   const invalidShellOptIn = shellOptedIn && mode === 'invalid';
 
   const componentPanelProps = {
-    launchers: content?.launchers ?? [],
     reservation: content?.reservation ?? null,
+    reservationLabel: content?.reservationLabel,
+    renderEmptyBody: content?.renderEmptyBody,
     resolve: content?.resolve ?? unavailableResolution,
-    onSelectLauncher: content?.selectLauncher ?? ignoreTabIntent,
     onRetryLauncher: content?.retryLauncher ?? ignoreTabIntent,
     onCancelLauncher: content?.cancelLauncher ?? ignoreTabIntent,
   };
 
   return (
     <>
-      {showStrip ? (
-        <ViewTabStrip
-          key="view-tab-strip"
-          panelId={adapter.panelId}
-          label={adapter.label}
-          tabs={adapter.tabs}
-          activeId={adapter.activeId}
-          onActivate={invalidShellOptIn ? ignoreTabIntent : adapter.onActivate}
-          onClose={invalidShellOptIn ? ignoreTabIntent : adapter.onClose}
-          add={invalidShellOptIn ? undefined : adapter.add}
-        />
-      ) : null}
+      <ViewTabStrip
+        key="view-tab-strip"
+        panelId={adapter.panelId}
+        label={adapter.label}
+        tabs={adapter.tabs}
+        activeId={adapter.activeId}
+        onActivate={invalidShellOptIn ? ignoreTabIntent : adapter.onActivate}
+        onClose={invalidShellOptIn ? ignoreTabIntent : adapter.onClose}
+        add={invalidShellOptIn ? undefined : adapter.add}
+      />
       <div
         key="view-tab-panel"
         id={viewTabPanelDomId(adapter.panelId)}
@@ -179,16 +132,9 @@ export function ViewTabBar({ panel, children }: ViewTabBarProps) {
         {hasContent && shellOptedIn && activeDescriptor ? (
           <ComponentTabShellPanel
             mode={mode === 'legacy' ? 'invalid' : mode}
-            panelId={adapter.panelId}
             descriptor={activeDescriptor}
             shell={content?.shell ?? null}
             navigation={content?.navigation}
-            add={invalidShellOptIn ? undefined : adapter.add}
-            onClose={invalidShellOptIn ? ignoreTabIntent : adapter.onClose}
-            onFocusAddedTab={(tabId) => focusAddedTab(adapter.panelId, tabId)}
-            onRecoverCloseFocus={(_closedTabId, origin) => {
-              recoverConnectedCloseFocus(adapter.panelId, origin);
-            }}
             active={connectedActive}
             expectedActiveTabId={adapter.activeId}
             {...componentPanelProps}

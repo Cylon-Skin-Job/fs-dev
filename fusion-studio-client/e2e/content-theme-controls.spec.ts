@@ -10,7 +10,7 @@ test('content background is fixed while File Viewer and Wiki borders follow the 
   const pickerSource = read('src/components/ThemePicker.tsx');
   const livePreviewSource = read('src/lib/theme/live-preview.ts');
   const documentCss = read('src/styles/document.css');
-  const wikiCss = read('../ai/RC-MacAir-15/Views/004-wiki-viewer/styles/layout.css');
+  const wikiCss = read('../ai/RC-MacAir-15/System/Views/004-wiki-viewer/styles/layout.css');
   const fileViewerCss = read('../ai/RC-MacAir-15/System/styles/file-viewer.css');
   const tintCss = read('../ai/RC-MacAir-15/System/styles/tints.css');
   const captureCss = read('../ai/RC-MacAir-15/System/styles/capture-viewer.css');

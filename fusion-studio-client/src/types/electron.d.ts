@@ -73,6 +73,13 @@ export interface ShellAuthChallenge {
   expiresAt: number;
 }
 
+export interface ElectronViewCapsuleProjection {
+  version: 1;
+  workspaceId: string;
+  machineIdentity: string;
+  entries: ReadonlyArray<Readonly<{ viewId: string; folderName: string }>>;
+}
+
 export interface ElectronAPI {
   capturePage: () => Promise<string | null>;
   captureRect: (rect: {
@@ -97,7 +104,15 @@ export interface ElectronAPI {
   deleteEvent: (payload: { uid: string }) => Promise<{ success: boolean; error?: string }>;
   onMenuAction: (callback: (payload: ElectronMenuAction) => void) => (() => void);
   onBrowserUrlChanged: (callback: (payload: { url: string }) => void) => (() => void);
-  setWorkspaceRoot: (repoPath: string | null) => void;
+  setWorkspaceBinding: (
+    workspaceId: string | null,
+    bindingRevision: number,
+    runtimeGeneration: string,
+  ) => Promise<boolean>;
+  replaceViewCapsuleProjection: (
+    projection: ElectronViewCapsuleProjection | null,
+    runtimeGeneration: string,
+  ) => Promise<boolean>;
   setWorkspaceMenuState: (state: WorkspaceMenuState) => void;
   listScreenshots: () => Promise<Array<{ name: string; path: string }>>;
   readScreenshot: (filename: string) => Promise<{ base64: string; mimeType: string }>;

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { seedPackagedGlobalConfigs } = require('./system-manager-seed.cjs');
 const { createServerReadinessParser } = require('./server-readiness.cjs');
+const { createServerWorkspaceBindingParser } = require('./server-workspace-binding.cjs');
 
 // Resolve system node binary — Electron's process.execPath is the Electron
 // binary, not node. The server uses native modules (better-sqlite3) compiled
@@ -168,6 +169,64 @@ function resolveServerPath(resourcesPath) {
   return path.join(__dirname, '..', '..', 'fusion-studio-server', 'server.js');
 }
 
+function attachServerWorkspaceBindingChannel({
+  child,
+  workspaceBindingPipe,
+  onBinding,
+  isStartupSettled,
+  onStartupFailure,
+  onEstablishedFailure,
+}) {
+  let failed = false;
+  let detached = false;
+
+  const reportFailure = (error) => {
+    if (failed) return;
+    failed = true;
+    if (child.killed) return;
+    if (isStartupSettled()) {
+      onEstablishedFailure(error);
+      return;
+    }
+    onStartupFailure(new Error('Server workspace binding channel failed'));
+  };
+  const workspaceBindingParser = createServerWorkspaceBindingParser({
+    onBinding,
+    onError: reportFailure,
+  });
+  const handleData = (chunk) => {
+    if (!failed) workspaceBindingParser.push(chunk);
+  };
+  const handleEnd = () => {
+    workspaceBindingParser.end();
+    reportFailure(new Error('server_workspace_binding_closed'));
+  };
+  const handleClose = () => {
+    reportFailure(new Error('server_workspace_binding_closed'));
+    detach();
+  };
+  const handleError = (error) => {
+    reportFailure(error instanceof Error ? error : new Error('server_workspace_binding_stream_error'));
+  };
+  const handleChildClose = () => detach();
+  const detach = () => {
+    if (detached) return;
+    detached = true;
+    workspaceBindingPipe.removeListener('data', handleData);
+    workspaceBindingPipe.removeListener('end', handleEnd);
+    workspaceBindingPipe.removeListener('close', handleClose);
+    workspaceBindingPipe.removeListener('error', handleError);
+    child.removeListener('close', handleChildClose);
+  };
+
+  workspaceBindingPipe.on('data', handleData);
+  workspaceBindingPipe.once('end', handleEnd);
+  workspaceBindingPipe.once('close', handleClose);
+  workspaceBindingPipe.on('error', handleError);
+  child.once('close', handleChildClose);
+  return detach;
+}
+
 /**
  * Spawns fusion-studio-server/server.js as a child process.
  * Resolves with the port once the server emits SERVER_READY:{port} on stdout.
@@ -189,6 +248,8 @@ function spawnServer({
   port = 0,
   nativeObserverHealthOnly = false,
   bootstrapAuthority = null,
+  onWorkspaceBinding = () => {},
+  onWorkspaceBindingError = () => {},
 }) {
   return new Promise((resolve, reject) => {
     let ready = false;
@@ -228,9 +289,10 @@ function spawnServer({
       env,   // PORT=0 → OS assigns free port
       stdio: nativeObserverHealthOnly
         ? ['ignore', 'pipe', 'pipe']
-        : ['ignore', 'pipe', 'pipe', 'pipe'],
+        : ['ignore', 'pipe', 'pipe', 'pipe', 'pipe'],
     });
     let bootstrapWritten = nativeObserverHealthOnly;
+    let workspaceBindingReceived = nativeObserverHealthOnly;
     let pendingReady = null;
     let settled = false;
     const fail = (error) => {
@@ -240,7 +302,7 @@ function spawnServer({
       reject(error);
     };
     const maybeResolve = (value) => {
-      if (settled || !bootstrapWritten) {
+      if (settled || !bootstrapWritten || !workspaceBindingReceived) {
         pendingReady = value;
         return;
       }
@@ -257,6 +319,19 @@ function spawnServer({
         }
         bootstrapWritten = true;
         if (pendingReady) maybeResolve(pendingReady);
+      });
+      const workspaceBindingPipe = child.stdio[4];
+      attachServerWorkspaceBindingChannel({
+        child,
+        workspaceBindingPipe,
+        onBinding(binding) {
+          onWorkspaceBinding(binding, bootstrapAuthority.generation);
+          workspaceBindingReceived = true;
+          if (pendingReady) maybeResolve(pendingReady);
+        },
+        isStartupSettled: () => settled,
+        onStartupFailure: fail,
+        onEstablishedFailure: onWorkspaceBindingError,
       });
     }
     const readinessParser = createServerReadinessParser(
@@ -300,4 +375,4 @@ function spawnServer({
   });
 }
 
-module.exports = { pipeServerOutput, spawnServer };
+module.exports = { attachServerWorkspaceBindingChannel, pipeServerOutput, spawnServer };

@@ -7,6 +7,8 @@ const test = require('node:test');
 
 test('every preload-exposed native authority channel is registered through the shell guard', () => {
   const preload = fs.readFileSync(path.join(__dirname, 'preload-source.cjs'), 'utf8');
+  assert.match(preload, /setWorkspaceBinding: \(workspaceId, bindingRevision, runtimeGeneration\)/);
+  assert.doesNotMatch(preload, /setWorkspaceBinding[^\n]*repoPath/);
   const direct = [...preload.matchAll(/ipcRenderer\.(?:invoke|send)\('([^']+)'/g)].map((match) => match[1]);
   const documents = [...preload.matchAll(/invokeDocumentChannel\('([^']+)'/g)].map((match) => match[1]);
   const exposed = new Set([...direct, ...documents]);
@@ -22,7 +24,8 @@ test('every preload-exposed native authority channel is registered through the s
     'send-document-email',
     'show-emoji-panel',
     'workspace-menu:set-state',
-    'workspace:set-root',
+    'workspace:set-binding',
+    'workspace:set-view-capsules',
   ]);
 
   const main = fs.readFileSync(path.join(__dirname, 'main.cjs'), 'utf8');
@@ -31,7 +34,14 @@ test('every preload-exposed native authority channel is registered through the s
   assert.match(main, /registerCaptureHandlers\(authorizedIpcMain\)/);
   assert.match(main, /registerScreenshotHandlers\(authorizedIpcMain\)/);
   assert.match(main, /registerDocumentHandlers\(authorizedIpcMain,/);
-  assert.match(main, /authorizedIpcMain\.on\('workspace:set-root'/);
+  assert.match(main, /authorizedIpcMain\.handle\('workspace:set-binding'/);
+  assert.match(main, /authorizedIpcMain\.handle\('workspace:set-view-capsules'/);
+  assert.match(main, /serverWorkspaceBindingAuthority\.correlate\(/);
+  assert.doesNotMatch(main, /request\.repoPath/);
+  assert.match(main, /onWorkspaceBinding:/);
+  assert.doesNotMatch(main, /setWorkspaceRoot\(accepted\?\.repoPath \|\| null\)/);
+  assert.match(main, /replace\(request\.projection, request\.runtimeGeneration\)/);
+  assert.match(main, /viewCapsuleRegistryOwner\.retire\(\)/);
   assert.match(main, /authorizedIpcMain\.on\('workspace-menu:set-state'/);
   assert.match(main, /authorizedIpcMain\.handle\('show-emoji-panel'/);
   assert.match(main, /registerShellProofIpc\(\{/);

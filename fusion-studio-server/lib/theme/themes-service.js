@@ -15,6 +15,7 @@ const path = require('path');
 const fs   = require('fs').promises;
 const themeCssGenerator = require('./theme-css-generator');
 const aiPaths = require('../workspace/ai-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 function themesPath(projectRoot) {
   return path.join(aiPaths.getSystemStylesRoot(projectRoot), 'themes.json');
@@ -33,6 +34,10 @@ async function readThemesJson(projectRoot) {
 async function writeThemesJson(projectRoot, themes) {
   const file = themesPath(projectRoot);
   const tmp  = `${file}.tmp.${process.pid}.${process.hrtime.bigint()}`;
+  await assertGenericViewMutationAllowed({
+    projectRoot,
+    paths: [path.dirname(file), file, tmp],
+  });
   await fs.writeFile(tmp, JSON.stringify({ version: '1.0', schema: '2.0', themes }, null, 2));
   await fs.rename(tmp, file);
 }
@@ -101,6 +106,10 @@ async function generateCssUnlocked(projectRoot, id, knownThemes) {
   const css  = themeCssGenerator.render(entry);
   const file = cssPath(projectRoot);
   const tmp  = `${file}.tmp.${process.pid}.${process.hrtime.bigint()}`;
+  await assertGenericViewMutationAllowed({
+    projectRoot,
+    paths: [path.dirname(file), file, tmp],
+  });
   await fs.writeFile(tmp, css);
   await fs.rename(tmp, file);
 }

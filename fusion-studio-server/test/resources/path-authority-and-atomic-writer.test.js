@@ -75,9 +75,9 @@ describe('authoritative save paths and atomic replacement', () => {
     expect(alias.fingerprint).toEqual(exact.fingerprint);
   });
 
-  test('the production panel resolver derives legacy file-viewer authority from the registry root', () => {
+  test('the production panel resolver does not derive authority from retired unscoped view folders', () => {
     fs.mkdirSync(path.join(root, 'ai', 'views', 'file-viewer'), { recursive: true });
-    expect(getAuthoritativePanelPath(root, 'file-viewer')).toBe(root);
+    expect(getAuthoritativePanelPath(root, 'file-viewer')).toBeNull();
     expect(getAuthoritativePanelPath(root, 'unknown-panel')).toBeNull();
   });
 
@@ -129,6 +129,31 @@ describe('authoritative save paths and atomic replacement', () => {
     expect(fs.readFileSync(targetPath, 'utf8')).toBe('competing');
   });
 
+  test('cleanup refuses protected hard-link and broken-symlink operation sidecars', async () => {
+    const target = await authority().resolve({
+      workspaceId: 'workspace-1', panel: 'file-viewer', ingressPath: 'ordinary.md',
+    });
+    const protectedFile = path.join(root, 'ai', 'Machine-A', 'System', 'Views', '001-files', 'content.json');
+    fs.mkdirSync(path.dirname(protectedFile), { recursive: true });
+    fs.writeFileSync(protectedFile, 'protected', 'utf8');
+    const writer = createAtomicWriter();
+    const hardLinkOperation = '123e4567-e89b-42d3-a456-000000000030';
+    const symlinkOperation = '123e4567-e89b-42d3-a456-000000000031';
+    const hardLinkTemp = writer.tempPathFor(target, hardLinkOperation);
+    const symlinkTemp = writer.tempPathFor(target, symlinkOperation);
+    const protectedFutureFile = path.join(path.dirname(protectedFile), 'future.md');
+    fs.linkSync(protectedFile, hardLinkTemp);
+    fs.symlinkSync(protectedFutureFile, symlinkTemp);
+
+    await expect(writer.cleanup({ target, operationId: hardLinkOperation })).rejects.toBeTruthy();
+    await expect(writer.cleanup({ target, operationId: symlinkOperation })).rejects.toBeTruthy();
+
+    expect(fs.existsSync(hardLinkTemp)).toBe(true);
+    expect(fs.lstatSync(symlinkTemp).isSymbolicLink()).toBe(true);
+    expect(fs.readFileSync(protectedFile, 'utf8')).toBe('protected');
+    expect(fs.existsSync(protectedFutureFile)).toBe(false);
+  });
+
   test('rejects a same-byte target replacement with a different physical inode', async () => {
     const targetPath = path.join(root, 'doc.md');
     fs.writeFileSync(targetPath, 'old');
@@ -156,6 +181,10 @@ describe('authoritative save paths and atomic replacement', () => {
     const wrapped = Object.create(fs.promises);
     wrapped.lstat = async (filePath) => {
       if (filePath === tempPath && !substituted) {
+        // The protected-path preflight probes the not-yet-created operation
+        // temp. Preserve that ENOENT and substitute only after the writer has
+        // created the pathname under test.
+        await fs.promises.lstat(tempPath);
         substituted = true;
         await fs.promises.unlink(tempPath);
         await fs.promises.writeFile(tempPath, 'attacker bytes');

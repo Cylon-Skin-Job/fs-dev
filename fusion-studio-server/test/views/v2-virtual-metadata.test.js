@@ -11,7 +11,7 @@ function writeFile(filePath, content) {
 }
 
 function writeV2View(projectRoot, folderName, { id, label, icon, viewType = 'captures', dataSource = 'Captures' }) {
-  const viewRoot = path.join(projectRoot, 'ai', 'Test-Machine', 'Views', folderName);
+  const viewRoot = path.join(projectRoot, 'ai', 'Test-Machine', 'System', 'Views', folderName);
   writeFile(path.join(viewRoot, 'manifest.md'), `---
 name: ${label}
 metadata:
@@ -125,7 +125,7 @@ describe('v2 virtual view metadata', () => {
 
   test('serves arbitrary v2 view capsule files through the view id alias', async () => {
     writeFile(
-      path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-capture-viewer', 'ui', 'module.js'),
+      path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-capture-viewer', 'ui', 'module.js'),
       'export default {};\n'
     );
     const ws = createWs();

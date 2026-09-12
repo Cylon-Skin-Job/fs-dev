@@ -34,13 +34,13 @@ describe('workspace state access', () => {
     jest.resetModules();
   });
 
-  test('save persists currentPanel into workspace System state', () => {
+  test('save persists currentPanel into workspace System state', async () => {
     writeJson(stateFile, {
       widths: { leftSidebar: 277, leftChat: 413 },
       workspace: { currentPanel: 'wiki-viewer' },
     });
 
-    workspaceState.save('fs-dev', {
+    await workspaceState.save('fs-dev', {
       currentPanel: 'office-viewer',
       viewStates: {
         'office-viewer': { shouldNotPersistHere: true },
@@ -69,12 +69,12 @@ describe('workspace state access', () => {
     });
   });
 
-  test('save drops currentPanel when it is not an allowed view', () => {
+  test('save drops currentPanel when it is not an allowed view', async () => {
     writeJson(stateFile, {
       workspace: { currentPanel: 'office-viewer' },
     });
 
-    workspaceState.save('fs-dev', {
+    await workspaceState.save('fs-dev', {
       currentPanel: 'old-viewer',
     }, {
       repoPath,
@@ -84,6 +84,25 @@ describe('workspace state access', () => {
     expect(readJson(stateFile)).toEqual({
       workspace: {},
     });
+  });
+
+  test('save denies a System state symlink into a protected capsule before temp or final writes', async () => {
+    const protectedStateRoot = path.join(
+      repoPath, 'ai', 'Test-Machine', 'System', 'Views', '001-capture', 'state',
+    );
+    fs.mkdirSync(protectedStateRoot, { recursive: true });
+    fs.mkdirSync(path.dirname(path.dirname(stateFile)), { recursive: true });
+    fs.symlinkSync(protectedStateRoot, path.dirname(stateFile), 'dir');
+
+    await expect(workspaceState.save('fs-dev', {
+      currentPanel: 'capture-viewer',
+    }, {
+      repoPath,
+      allowedViewIds: ['capture-viewer'],
+    })).rejects.toMatchObject({ code: 'PROTECTED_VIEW_PATH' });
+
+    expect(fs.existsSync(path.join(protectedStateRoot, 'state.json'))).toBe(false);
+    expect(fs.readdirSync(protectedStateRoot)).toEqual([]);
   });
 
   test('loadAll reads active panels from workspace-local state files', () => {

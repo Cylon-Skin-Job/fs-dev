@@ -7,10 +7,11 @@
  * events that workspace-broadcaster fans out to clients.
  *
  * At `start()` time:
- *   1. auditRegistryAvailability() — warn about unavailable registered rows.
- *   2. restoreLastActive() — read system_config.last_active_workspace_id
+ *   1. Gate every registered workspace through the view-readiness owner.
+ *   2. auditRegistryAvailability() — warn about unavailable registered rows.
+ *   3. restoreLastActive() — read system_config.last_active_workspace_id
  *      and set module-level activeWorkspaceId.
- *   3. Subscribe request handlers.
+ *   4. Subscribe request handlers.
  *
  * Module-level activeWorkspaceId is sufficient for today's single-tab
  * reality (see WORKSPACE_CONTROLLER_SPEC §6). Per-connection active state
@@ -32,9 +33,13 @@ const registry = require('./registry-service');
 const bootstrap = require('./bootstrap-service');
 const createService = require('./create-service');
 const { createWorkspaceRibbonHandlers } = require('./workspace-ribbon');
+const viewReadiness = require('../views/readiness-runtime');
+const { publishElectronWorkspaceBinding } = require('./electron-binding-channel');
 
 let activeWorkspaceId = null;
 let activeWorkspace = null; // cached registry row, kept in lockstep with activeWorkspaceId so sync callers (HTTP routes, file-explorer symlink check, boot pipeline) can resolve repo_path without awaiting a DB query
+let activeWorkspaceBindingRevision = 0;
+let lifecycleTail = Promise.resolve();
 
 const ribbonHandlers = createWorkspaceRibbonHandlers({
   registry,
@@ -45,19 +50,59 @@ const ribbonHandlers = createWorkspaceRibbonHandlers({
 });
 
 async function start() {
+  if (!viewReadiness.hasInstalledViewReadinessOwner()) {
+    const { createViewReadinessCoordinator } = require('../views/readiness-coordinator');
+    const { createViewRelocationService } = require('../views/relocation-service');
+    const { getLocalMachineName } = require('./ai-paths');
+    viewReadiness.installViewReadinessOwner(createViewReadinessCoordinator({
+      migrationService: createViewRelocationService({ db: getDb() }),
+      machineIdentity: getLocalMachineName(),
+    }));
+  }
+  await viewReadiness.ensureRegisteredWorkspaceReadiness(await registry.list());
   await auditRegistryAvailability();
   await restoreLastActive();
+  publishActiveWorkspaceBinding();
 
-  on('workspace:add_requested', handleAddRequested);
-  on('workspace:switch_requested', handleSwitchRequested);
-  on('workspace:remove_requested', handleRemoveRequested);
-  on('workspace:ribbon_remove_requested', ribbonHandlers.handleRibbonRemoveRequested);
-  on('workspace:ribbon_add_requested', ribbonHandlers.handleRibbonAddRequested);
-  on('workspace:ribbon_reorder_requested', ribbonHandlers.handleRibbonReorderRequested);
-  on('workspace:create_requested', handleCreateRequested);
+  on('workspace:add_requested', (event) => enqueueWorkspaceLifecycle(
+    () => handleAddRequested(event),
+  ));
+  on('workspace:switch_requested', (event) => enqueueWorkspaceLifecycle(
+    () => handleSwitchRequested(event),
+  ));
+  on('workspace:remove_requested', (event) => enqueueWorkspaceLifecycle(
+    () => handleRemoveRequested(event),
+  ));
+  on('workspace:ribbon_remove_requested', (event) => enqueueWorkspaceLifecycle(
+    () => ribbonHandlers.handleRibbonRemoveRequested(event),
+  ));
+  on('workspace:ribbon_add_requested', (event) => enqueueWorkspaceLifecycle(
+    () => ribbonHandlers.handleRibbonAddRequested(event),
+  ));
+  on('workspace:ribbon_reorder_requested', (event) => enqueueWorkspaceLifecycle(
+    () => ribbonHandlers.handleRibbonReorderRequested(event),
+  ));
+  on('workspace:create_requested', (event) => enqueueWorkspaceLifecycle(
+    () => handleCreateRequested(event),
+  ));
 
   console.log('[WorkspaceController] Started (active: ' + (activeWorkspaceId || 'none') + ')');
   emit('workspace:controller_ready');
+}
+
+function enqueueWorkspaceLifecycle(operation) {
+  const current = lifecycleTail
+    .catch(() => undefined)
+    .then(operation);
+  lifecycleTail = current;
+  return current;
+}
+
+function runInWorkspaceLifecycle(operation) {
+  if (typeof operation !== 'function') {
+    return Promise.reject(new TypeError('workspace lifecycle operation is required'));
+  }
+  return enqueueWorkspaceLifecycle(operation);
 }
 
 function getLaunchStatus(workspace) {
@@ -158,6 +203,20 @@ async function writeLastActive(workspaceId) {
 function setActiveWorkspace(workspaceId, workspace) {
   activeWorkspaceId = workspaceId;
   activeWorkspace = workspace;
+  return publishActiveWorkspaceBinding();
+}
+
+function publishActiveWorkspaceBinding() {
+  if (activeWorkspaceBindingRevision >= Number.MAX_SAFE_INTEGER) {
+    throw new Error('electron_workspace_binding_revision_exhausted');
+  }
+  activeWorkspaceBindingRevision += 1;
+  publishElectronWorkspaceBinding(
+    activeWorkspaceId,
+    activeWorkspace ? activeWorkspace.repoPath || activeWorkspace.repo_path : null,
+    activeWorkspaceBindingRevision,
+  );
+  return activeWorkspaceBindingRevision;
 }
 
 async function findRegisteredWorkspaceByPath(repoPath) {
@@ -202,13 +261,6 @@ async function handleAddRequested(event) {
     return;
   }
 
-  try {
-    bootstrap.bootstrap(canonical);
-  } catch (err) {
-    console.warn('[WorkspaceController] add_requested: bootstrap failed — ' + err.message);
-    return;
-  }
-
   const id = await generateUniqueId(canonical);
   const label = toTitleCase(path.basename(canonical));
   const nextSortOrder = (await registry.maxSortOrder()) + 1;
@@ -229,7 +281,24 @@ async function handleAddRequested(event) {
     ribbonSortOrder: nextSortOrder,
   });
 
-  emit('workspace:added', { workspace });
+  let viewAvailability = await prepareWorkspaceViews(workspace, { allowViewless: true });
+  if (viewAvailability.status !== 'unavailable') {
+    try {
+      bootstrap.bootstrap(canonical);
+    } catch (err) {
+      console.warn('[WorkspaceController] add_requested: bootstrap failed — ' + err.message);
+      viewAvailability = {
+        status: 'unavailable',
+        verified: false,
+        code: 'view_registry_unavailable',
+      };
+    }
+  }
+
+  emit('workspace:added', {
+    workspace,
+    viewRegistryUnavailable: viewAvailability.status === 'unavailable',
+  });
   emit('workspace:registry_changed', { workspaces: await registry.list() });
 }
 
@@ -242,12 +311,19 @@ async function handleSwitchRequested(event) {
   }
   if (workspaceId === activeWorkspaceId) return;
 
+  const viewAvailability = await prepareWorkspaceViews(target);
+
   const from = activeWorkspaceId;
-  activeWorkspaceId = workspaceId;
-  activeWorkspace = target;
+  const bindingRevision = setActiveWorkspace(workspaceId, target);
   await writeLastActive(workspaceId);
 
-  emit('workspace:switched', { from, to: workspaceId, repoPath: target.repo_path });
+  emit('workspace:switched', {
+    from,
+    to: workspaceId,
+    repoPath: target.repo_path,
+    bindingRevision,
+    viewRegistryUnavailable: viewAvailability.status === 'unavailable',
+  });
 }
 
 async function handleRemoveRequested(event) {
@@ -259,7 +335,13 @@ async function handleRemoveRequested(event) {
   }
 
   const wasActive = workspaceId === activeWorkspaceId;
-  await registry.remove(workspaceId);
+  await viewReadiness.retireWorkspaceViewReadiness(
+    {
+      workspaceId,
+      projectRoot: target.repoPath || target.repo_path,
+    },
+    () => registry.remove(workspaceId),
+  );
 
   emit('workspace:removed', { workspaceId });
   emit('workspace:registry_changed', { workspaces: await registry.list() });
@@ -268,10 +350,14 @@ async function handleRemoveRequested(event) {
     const remaining = await registry.list();
     const next = remaining.length > 0 ? remaining[0] : null;
     const nextId = next ? next.id : null;
-    activeWorkspaceId = nextId;
-    activeWorkspace = next;
+    const bindingRevision = setActiveWorkspace(nextId, next);
     await writeLastActive(nextId);
-    emit('workspace:switched', { from: workspaceId, to: nextId, repoPath: next ? next.repo_path : null });
+    emit('workspace:switched', {
+      from: workspaceId,
+      to: nextId,
+      repoPath: next ? next.repo_path : null,
+      bindingRevision,
+    });
   }
 }
 
@@ -327,15 +413,34 @@ async function handleCreateRequested(event) {
     ribbonSortOrder: nextSortOrder,
   });
 
+  const viewAvailability = await prepareWorkspaceViews(workspace);
+
   const from = activeWorkspaceId;
-  activeWorkspaceId = id;
-  activeWorkspace = workspace;
+  const bindingRevision = setActiveWorkspace(id, workspace);
   await writeLastActive(id);
 
   emit('workspace:created', { workspace, connectionId });
   emit('workspace:added', { workspace });
   emit('workspace:registry_changed', { workspaces: await registry.list() });
-  emit('workspace:switched', { from, to: id, repoPath: canonical });
+  emit('workspace:switched', {
+    from,
+    to: id,
+    repoPath: canonical,
+    bindingRevision,
+    viewRegistryUnavailable: viewAvailability.status === 'unavailable',
+  });
+}
+
+async function prepareWorkspaceViews(workspace, options = {}) {
+  try {
+    return await viewReadiness.ensureWorkspaceViewReadiness({
+      workspaceId: workspace.id,
+      projectRoot: workspace.repoPath || workspace.repo_path,
+      allowViewless: options.allowViewless === true,
+    });
+  } catch (_error) {
+    return { status: 'unavailable', verified: false, code: 'view_registry_unavailable' };
+  }
 }
 
 function rejectCreate(connectionId, message) {
@@ -387,6 +492,10 @@ function getActiveWorkspaceId() {
   return activeWorkspaceId;
 }
 
+function getActiveWorkspaceBindingRevision() {
+  return activeWorkspaceBindingRevision;
+}
+
 async function getActiveWorkspace() {
   if (!activeWorkspaceId) return null;
   return registry.getById(activeWorkspaceId);
@@ -403,7 +512,9 @@ async function listWorkspaces() {
 module.exports = {
   start,
   getActiveWorkspaceId,
+  getActiveWorkspaceBindingRevision,
   getActiveWorkspace,
   getActiveWorkspaceSync,
+  runInWorkspaceLifecycle,
   listWorkspaces,
 };

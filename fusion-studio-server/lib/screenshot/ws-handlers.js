@@ -13,21 +13,27 @@ const workspaceController = require('../workspace/workspace-controller');
 const aiPaths = require('../workspace/ai-paths');
 const sourceFolderService = require('./source-folder-service');
 const hotkeyScreenshotWatcher = require('./hotkey-screenshot-watcher');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
-async function saveFileScreenshot(workspaceId, dataUrl) {
+async function prepareFileScreenshot(workspaceId) {
   const activeWorkspace = workspaceController.getActiveWorkspaceSync();
   if (!activeWorkspace || activeWorkspace.id !== workspaceId || !activeWorkspace.repo_path) {
     throw new Error('Workspace mismatch or no active workspace');
   }
-
-  const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
-  const buffer = Buffer.from(base64, 'base64');
-
   const targetDir = path.join(aiPaths.getMachineAiRoot(activeWorkspace.repo_path), 'Data', 'Screenshots');
-  await fs.promises.mkdir(targetDir, { recursive: true });
-
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const targetPath = path.join(targetDir, `fusion-capture-${timestamp}.png`);
+  await assertGenericViewMutationAllowed({
+    projectRoot: activeWorkspace.repo_path,
+    paths: [targetDir, targetPath],
+  });
+  return { targetDir, targetPath };
+}
+
+async function saveFileScreenshot(dataUrl, { targetDir, targetPath }) {
+  const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
+  const buffer = Buffer.from(base64, 'base64');
+  await fs.promises.mkdir(targetDir, { recursive: true });
   await fs.promises.writeFile(targetPath, buffer);
 
   return targetPath;
@@ -123,9 +129,10 @@ function createScreenshotHandlers({ getAllClients }) {
       }
 
       try {
+        const prepared = await prepareFileScreenshot(workspaceId);
         await sourceFolderService.refresh();
         await hotkeyScreenshotWatcher.refresh();
-        const savedPath = await saveFileScreenshot(workspaceId, dataUrl);
+        const savedPath = await saveFileScreenshot(dataUrl, prepared);
         ws.send(JSON.stringify({
           type: 'screenshot:file-captured',
           ...(requestId ? { requestId } : {}),

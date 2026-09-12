@@ -74,7 +74,7 @@ function writeOwnedMarker(directory, nonce) {
 }
 
 function writeView(workspaceRoot, folder, { id, name, type, dataSource, root }) {
-  const viewRoot = path.join(workspaceRoot, 'ai', 'Test-Provenance', 'Views', folder);
+  const viewRoot = path.join(workspaceRoot, 'ai', 'Test-Provenance', 'System', 'Views', folder);
   fs.mkdirSync(path.join(viewRoot, 'styles'), { recursive: true });
   fs.mkdirSync(path.join(viewRoot, 'state'), { recursive: true });
   fs.writeFileSync(path.join(viewRoot, 'manifest.md'), `---\nname: ${name}\ndescription: Isolated provenance fixture.\nmetadata:\n  view-id: ${id}\n  view-type: ${type}\n  data-source: ${dataSource}\n  enabled: true\n---\n`, 'utf8');

@@ -1,6 +1,6 @@
  /*
   * wiki-viewer per-view theme override.
- * ai/<machine>/Views/<view-folder>/styles/themes.css
+ * ai/<machine>/System/Views/<view-folder>/styles/themes.css
  *
  * Loaded at runtime by useSharedWorkspaceStyles and scoped to
  * [data-panel="wiki-viewer"]. Only add rules here that must override

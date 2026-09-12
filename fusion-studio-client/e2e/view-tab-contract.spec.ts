@@ -239,8 +239,12 @@ test('shared tab DOM implements the complete manual-activation keyboard and focu
   expect(strip).toContain('CSS.escape(panelId)');
   expect(strip).toContain('.active .rv-content-area');
   expect(host).toContain('role="tabpanel"');
-  expect(host).toContain("mode === 'single'");
-  expect(host).toContain('viewTabSingleIdentityDomId(adapter.panelId, adapter.activeId)');
+  // VIEW-02 §3: one strip, always — the strip is the only tab chrome and the
+  // centered SingleTabIdentity path is retired from the host.
+  expect(host).toContain('<ViewTabStrip');
+  expect(host).not.toContain('SingleTabIdentity');
+  expect(host).not.toContain('viewTabSingleIdentityDomId');
+  expect(host).not.toContain('.rv-component-tab-single-');
   expect(host).toContain('viewTabDomId(adapter.panelId, adapter.activeId)');
   expect(host).toContain('aria-labelledby={activeDescriptor ? panelLabelId : undefined}');
   expect(host).toContain("aria-label={activeDescriptor ? undefined : 'Content unavailable'}");
@@ -268,7 +272,11 @@ test('Capture persistence has one tab-key chokepoint and ordered acknowledged ha
   expect(controller).not.toContain('commitTabs([survivor], survivor.id)');
   expect(tiles).toContain("captureHandoffStatus !== 'failed'");
   expect(tiles).toContain('aria-busy="true"');
-  const adapters = read('src/components/view-tabs/viewTabAdapters.ts');
+  // VIEW-02 Slice 2 split the view-specific legacy adapters into focused
+  // files; the Capture legacy hook (and its handoff recovery contract) now
+  // lives in captureViewTabAdapter.ts, with viewTabAdapters.ts as the thin
+  // registry boundary.
+  const adapters = read('src/components/view-tabs/captureViewTabAdapter.ts');
   expect(adapters).toContain("handoffStatus === 'failed'");
   expect(adapters).toContain('recoveryVisible ? undefined');
   expect(hook).toContain("if (updateCaptureTabUi(patch, { throttled: true })) return;");
@@ -996,7 +1004,7 @@ test('shared rail owns interaction tokens and no consumer owns tab selectors', (
 
   const consumerCss = [
     '../ai/RC-MacAir-15/System/styles/file-viewer.css',
-    '../ai/RC-MacAir-15/Views/002-file-viewer/styles/layout.css',
+    '../ai/RC-MacAir-15/System/Views/002-file-viewer/styles/layout.css',
     'src/styles/document.css',
     'src/components/capture/CaptureTiles.css',
   ].map(read).join('\n');

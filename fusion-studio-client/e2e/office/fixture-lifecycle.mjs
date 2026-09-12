@@ -218,6 +218,23 @@ function resetServerModules() {
   }
 }
 
+function scaffoldOfficeProject({ projectPath, viewIds, machineName }) {
+  const readiness = require(path.join(serverRoot, 'lib', 'views', 'readiness-runtime.js'))
+  const { createViewReadinessCoordinator } = require(
+    path.join(serverRoot, 'lib', 'views', 'readiness-coordinator.js'),
+  )
+  readiness.installViewReadinessOwner(createViewReadinessCoordinator({
+    machineIdentity: machineName,
+    migrationService: {
+      ensureReady: async () => {
+        throw new Error('Office fixture registered readiness is installed by its isolated server')
+      },
+    },
+  }))
+  const createService = require(path.join(serverRoot, 'lib', 'workspace', 'create-service.js'))
+  return createService.scaffoldProject({ projectPath, viewIds, machineName })
+}
+
 export function createOfficePlaywrightRunPaths(requestedRoot) {
   const safeTemporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
   const root = requestedRoot
@@ -355,6 +372,7 @@ function resetOfficeScenarioFiles(fixtureRoot, appUserData, workspaceRoots, scen
         workspaceRoot,
         'ai',
         machineName,
+        'System',
         'Views',
         '001-office-viewer',
         'state',
@@ -521,14 +539,13 @@ export async function createOfficeFixture(options = {}) {
     process.env.FUSION_LOCAL_MACHINE = OFFICE_E2E_MACHINE
     for (const workspace of selectedWorkspaces) {
       assertOfficeFixturePathSafe(paths[workspace.suffix])
-      const createService = require(path.join(serverRoot, 'lib', 'workspace', 'create-service.js'))
-      createService.scaffoldProject({
+      scaffoldOfficeProject({
         projectPath: paths[workspace.suffix],
         viewIds: ['office-viewer'],
         machineName: OFFICE_E2E_MACHINE,
       })
       if (scenarioId === 'palette' && validated.variant === 'machine-move') {
-        createService.scaffoldProject({
+        scaffoldOfficeProject({
           projectPath: paths[workspace.suffix],
           viewIds: ['office-viewer'],
           machineName: OFFICE_E2E_OTHER_MACHINE,

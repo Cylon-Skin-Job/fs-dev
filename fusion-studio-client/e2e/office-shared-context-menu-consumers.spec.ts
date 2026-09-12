@@ -80,7 +80,7 @@ test('Office file and folder menus preserve descriptors, anchors, focus, collect
   await expect(panel.getByRole('button', { name: OFFICE_FOLDER, exact: true })).toBeVisible()
   expect(sent.filter(({ type }) => type === 'state:set')).toHaveLength(1)
   const officeStatePath = path.join(
-    fixtureWorkspaceRoot(), 'Views', '001-office-viewer', 'state', 'state.json',
+    fixtureWorkspaceRoot(), 'System', 'Views', '001-office-viewer', 'state', 'state.json',
   )
   await expect.poll(() => (
     JSON.parse(fs.readFileSync(officeStatePath, 'utf8')).collections?.pinnedFolders?.length

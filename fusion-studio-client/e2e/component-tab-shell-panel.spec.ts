@@ -23,10 +23,7 @@ async function buildHarness() {
       import { createFirstPartyComponentResolver } from ${JSON.stringify(resolverPath)};
       import { ViewTabStrip } from ${JSON.stringify(stripPath)};
       import { reactRootErrorOptions } from ${JSON.stringify(rootErrorPolicyPath)};
-      import {
-        viewTabDomId,
-        viewTabSingleIdentityDomId,
-      } from ${JSON.stringify(domIdsPath)};
+      import { viewTabDomId } from ${JSON.stringify(domIdsPath)};
       import ${JSON.stringify(railCssPath)};
 
       const evidence = {
@@ -95,7 +92,6 @@ async function buildHarness() {
         ...registration,
         render: () => React.createElement(ThrowingPresenter),
       }]);
-      const launchers = [{ id: 'capture', label: 'Capture', icon: 'capture' }];
       const noIntent = () => {};
       const add = {
         label: 'New fixture tab',
@@ -181,10 +177,10 @@ async function buildHarness() {
             }
           : null;
         root.render(React.createElement(React.Fragment, null,
-          tabbed ? React.createElement(ViewTabStrip, {
+          single || tabbed ? React.createElement(ViewTabStrip, {
             panelId: 'fixture-panel',
             label: 'Fixture tabs',
-            tabs: [descriptor(), otherDescriptor],
+            tabs: single ? [descriptor()] : [descriptor(), otherDescriptor],
             activeId: 'tab-active',
             onActivate: noIntent,
             onClose: (tabId) => evidence.closes.push(tabId),
@@ -193,31 +189,20 @@ async function buildHarness() {
           React.createElement('div', {
             className: 'rv-fixture-outer-panel',
             role: 'tabpanel',
-            'aria-labelledby': single
-              ? viewTabSingleIdentityDomId('fixture-panel', 'tab-active')
-              : tabbed
-                ? viewTabDomId('fixture-panel', 'tab-active')
-                : undefined,
+            'aria-labelledby': single || tabbed
+              ? viewTabDomId('fixture-panel', 'tab-active')
+              : undefined,
             'aria-label': options.mode === 'invalid' ? 'Content unavailable' : undefined,
-          }, React.createElement(ComponentTabShellPanel, {
+          },           React.createElement(ComponentTabShellPanel, {
             mode: options.mode,
-            panelId: 'fixture-panel',
             descriptor: descriptor(),
             shell: model.shell,
             navigation: navigationModel(),
-            add,
-            onClose: (tabId) => evidence.closes.push(tabId),
-            onFocusAddedTab: (tabId) => evidence.addedFocus.push(tabId),
-            onRecoverCloseFocus: (tabId) => {
-              evidence.closeFocus.push(tabId);
-              document.getElementById(viewTabSingleIdentityDomId('fixture-panel', tabId))?.focus();
-            },
             active: model.active,
             expectedActiveTabId: 'tab-active',
-            launchers,
             reservation,
+            reservationLabel: reservation ? 'Capture' : undefined,
             resolve: resolver,
-            onSelectLauncher: noIntent,
             onRetryLauncher: noIntent,
             onCancelLauncher: noIntent,
           }))));
@@ -262,16 +247,18 @@ async function mount(page: Page, options: Record<string, unknown> = {}) {
   }
 }
 
-test('single layout gives ready, landing, addressed, Empty, loading, and unavailable bodies universal rows', async ({ page }) => {
+test('single layout renders the universal strip and gives ready, landing, addressed, Empty, loading, and unavailable bodies universal rows', async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text());
   });
   await mount(page);
-  await expect(page.getByRole('tablist')).toHaveCount(0);
+  const selectedTab = page.locator('.rv-view-tab-item.is-selected .rv-view-tab');
+  await expect(page.getByRole('tablist', { name: 'Fixture tabs' })).toBeVisible();
+  await expect(page.getByRole('tab')).toHaveCount(1);
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
-  await expect(page.locator('.rv-component-tab-single-identity')).toContainText('CAPTURE');
-  await expect(page.locator('.rv-component-tab-single-icon')).toHaveText('capture');
+  await expect(selectedTab).toContainText('CAPTURE');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-icon')).toHaveText('capture');
   await expect(page.getByRole('navigation', { name: 'Location: Capture Documents and Artifacts' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Presenter count 0' })).toBeVisible();
 
@@ -279,9 +266,11 @@ test('single layout gives ready, landing, addressed, Empty, loading, and unavail
   await expect(page.getByRole('navigation', { name: /Location: Capture > Collection/ })).toBeVisible();
 
   await page.evaluate(() => window.__componentTabShellHarness.set({ body: 'empty', location: 'empty' }));
-  await expect(page.getByRole('heading', { name: 'Add content' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Add content' })).toHaveCount(0);
+  await expect(page.locator('.rv-empty-tab-launcher')).toHaveCount(0);
+  await expect(page.locator('.rv-empty-tab-neutral')).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Location: New Tab' })).toBeVisible();
-  await expect(page.locator('.rv-component-tab-single-identity')).toContainText('CAPTURE');
+  await expect(selectedTab).toContainText('CAPTURE');
 
   await page.evaluate(() => window.__componentTabShellHarness.set({ body: 'pending' }));
   await expect(page.getByRole('status')).toContainText('Opening Capture');
@@ -290,7 +279,7 @@ test('single layout gives ready, landing, addressed, Empty, loading, and unavail
   for (const body of ['disabled', 'unknown', 'unsupported', 'invalid', 'throwing']) {
     await page.evaluate((value) => window.__componentTabShellHarness.set({ body: value, location: 'addressed' }), body);
     await expect(page.locator('.rv-component-tab-unavailable')).toBeVisible();
-    await expect(page.locator('.rv-component-tab-single-identity')).toContainText('CAPTURE');
+    await expect(selectedTab).toContainText('CAPTURE');
     await expect(page.getByRole('navigation', { name: /Location: Capture > Collection/ })).toBeVisible();
     await expect(page.getByText('/Users/private/presenter-stack')).toHaveCount(0);
   }
@@ -303,9 +292,9 @@ test('tabbed layout keeps the ordinary rail and gives active Empty and component
   await expect(page.getByRole('tablist', { name: 'Fixture tabs' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
-  await expect(page.locator('.rv-component-tab-single-identity')).toHaveCount(0);
+  await expect(page.locator('[class*="rv-component-tab-single-"]')).toHaveCount(0);
   await expect(page.getByRole('navigation', { name: 'Location: New Tab' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Add content' })).toBeVisible();
+  await expect(page.locator('.rv-empty-tab-neutral')).toBeVisible();
 
   await page.evaluate(() => window.__componentTabShellHarness.set({ body: 'disabled', location: 'landing' }));
   await expect(page.locator('.rv-component-tab-unavailable')).toHaveAttribute('data-unavailable-code', 'disabled');
@@ -389,22 +378,22 @@ test('36/54 shell geometry, backgrounds, row order, and body mount continuity su
   await mount(page, { location: 'addressed' });
   const presenter = page.getByRole('button', { name: 'Presenter count 0' });
   await presenter.click();
-  const singleGeometry = await page.locator('.rv-component-tab-shell').evaluate((shell) => {
-    const identity = shell.querySelector<HTMLElement>('.rv-component-tab-single-chrome')!;
-    const location = shell.querySelector<HTMLElement>('.rv-component-tab-location-rail')!;
-    const body = shell.querySelector<HTMLElement>('.rv-component-tab-shell-body')!;
+  const singleGeometry = await page.evaluate(() => {
+    const strip = document.querySelector<HTMLElement>('.rv-view-tab-rail')!;
+    const location = document.querySelector<HTMLElement>('.rv-component-tab-location-rail')!;
+    const body = document.querySelector<HTMLElement>('.rv-component-tab-shell-body')!;
     return {
-      identityHeight: identity.getBoundingClientRect().height,
+      stripHeight: strip.getBoundingClientRect().height,
       locationHeight: location.getBoundingClientRect().height,
-      identityBackground: getComputedStyle(identity).backgroundColor,
+      stripBackground: getComputedStyle(strip).backgroundColor,
       locationBackground: getComputedStyle(location).backgroundColor,
       bodyBelowLocation: body.getBoundingClientRect().top >= location.getBoundingClientRect().bottom - 0.5,
     };
   });
   expect(singleGeometry).toEqual({
-    identityHeight: 36,
+    stripHeight: 36,
     locationHeight: 54,
-    identityBackground: 'rgb(17, 23, 31)',
+    stripBackground: 'rgb(17, 23, 31)',
     locationBackground: 'rgb(17, 23, 31)',
     bodyBelowLocation: true,
   });
@@ -415,28 +404,29 @@ test('36/54 shell geometry, backgrounds, row order, and body mount continuity su
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
   await expect(page.locator('.rv-view-tab-rail')).toHaveCSS('height', '36px');
   await expect(page.locator('.rv-component-tab-location-rail')).toHaveCSS('height', '54px');
+  await expect(page.getByRole('tab')).toHaveCount(2);
   await expect.poll(() => page.evaluate(() => window.__componentTabShellHarness.evidence().mounts)).toBe(1);
 
   await page.evaluate(() => window.__componentTabShellHarness.set({ mode: 'single' }));
   await expect(page.getByRole('button', { name: 'Presenter count 1' })).toBeVisible();
+  await expect(page.getByRole('tab')).toHaveCount(1);
   await expect.poll(() => page.evaluate(() => window.__componentTabShellHarness.evidence().mounts)).toBe(1);
 });
 
-test('single add and close retain callback, disabled, accessibility, and focus contracts', async ({ page }) => {
+test('the strip owns single-tab add and close callbacks, disabled state, and accessibility contracts', async ({ page }) => {
   await mount(page);
   const panel = page.getByRole('tabpanel');
-  const identityLabel = page.locator('.rv-component-tab-single-label');
-  await expect(panel).toHaveAttribute('aria-labelledby', await identityLabel.getAttribute('id') ?? '');
+  const selectedTab = page.locator('.rv-view-tab-item.is-selected .rv-view-tab');
+  await expect(panel).toHaveAttribute('aria-labelledby', await selectedTab.getAttribute('id') ?? '');
   await expect(panel).toHaveAccessibleName('CAPTURE');
-  const add = page.getByRole('button', { name: 'New fixture tab' });
+  const add = page.locator('.rv-view-tab-add');
   await add.click();
   await expect.poll(() => page.evaluate(() => window.__componentTabShellHarness.evidence())).toMatchObject({
     adds: 1,
-    addedFocus: ['tab-added'],
   });
+  await expect(add).toBeFocused();
 
   await page.evaluate(() => window.__componentTabShellHarness.setAddResult(null));
-  await add.focus();
   await page.keyboard.press('Enter');
   await expect(add).toBeFocused();
   await expect.poll(() => page.evaluate(() => window.__componentTabShellHarness.evidence().adds)).toBe(2);
@@ -445,9 +435,7 @@ test('single add and close retain callback, disabled, accessibility, and focus c
   await close.click();
   await expect.poll(() => page.evaluate(() => window.__componentTabShellHarness.evidence())).toMatchObject({
     closes: ['tab-active'],
-    closeFocus: ['tab-active'],
   });
-  await expect(identityLabel).toBeFocused();
   await page.evaluate(() => window.__componentTabShellHarness.set({ closeDisabled: true }));
   await expect(page.getByRole('button', { name: 'Close CAPTURE' })).toBeDisabled();
   await page.getByRole('button', { name: 'Close CAPTURE' }).evaluate((button: HTMLButtonElement) => button.click());
@@ -468,7 +456,6 @@ test('invalid shell is bounded and portable files contain no private-state impor
 
   const read = (relativePath: string) => fs.readFileSync(path.resolve(relativePath), 'utf8');
   const portableFiles = [
-    'src/components/view-tabs/SingleTabIdentity.tsx',
     'src/components/view-tabs/TabLocationRail.tsx',
     'src/components/view-tabs/ComponentTabShellPanel.tsx',
   ];

@@ -1,5 +1,7 @@
 'use strict';
 
+const { hasTrustedShellAuthority } = require('./trusted-shell-authority');
+
 const THREAD_MUTATION_DENIED = Object.freeze({
   type: 'error',
   code: 'THREAD_MUTATION_DENIED',
@@ -13,9 +15,7 @@ const THREAD_FORK_UNAVAILABLE = Object.freeze({
 });
 
 function hasTrustedThreadAuthority(session) {
-  if (!session || typeof session !== 'object') return false;
-  const role = Object.getOwnPropertyDescriptor(session, 'connectionRole');
-  return Boolean(role && role.enumerable === false && role.value === 'trusted-shell');
+  return hasTrustedShellAuthority(session);
 }
 
 function sendBoundedError(ws, error) {

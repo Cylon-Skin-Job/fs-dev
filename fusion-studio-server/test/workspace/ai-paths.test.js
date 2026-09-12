@@ -56,6 +56,7 @@ describe('ai path helpers', () => {
   test('sanitizes machine names for filesystem folders', () => {
     expect(aiPaths.sanitizeMachineName(' RC Test Mac!! ')).toBe('RC-Test-Mac');
     expect(aiPaths.sanitizeMachineName('')).toBe('local-machine');
+    expect(aiPaths.sanitizeMachineName('..')).toBe('local-machine');
   });
 
   test('initializes and caches local machine name from system_config', async () => {

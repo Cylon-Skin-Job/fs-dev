@@ -4,7 +4,7 @@ const { EventEmitter } = require('node:events');
 const { Writable } = require('node:stream');
 const test = require('node:test');
 
-const { pipeServerOutput } = require('./server-spawn.cjs');
+const { attachServerWorkspaceBindingChannel, pipeServerOutput } = require('./server-spawn.cjs');
 
 function createChildHarness() {
   const child = new EventEmitter();
@@ -21,6 +21,55 @@ function createDestination(write) {
   destination.writableEnded = false;
   return destination;
 }
+
+function createWorkspaceBindingChannelHarness({ settled = false, killed = false } = {}) {
+  const child = new EventEmitter();
+  child.killed = killed;
+  const workspaceBindingPipe = new EventEmitter();
+  const bindings = [];
+  const startupFailures = [];
+  const establishedFailures = [];
+  attachServerWorkspaceBindingChannel({
+    child,
+    workspaceBindingPipe,
+    onBinding: (binding) => bindings.push(binding),
+    isStartupSettled: () => settled,
+    onStartupFailure: (error) => startupFailures.push(error),
+    onEstablishedFailure: (error) => establishedFailures.push(error),
+  });
+  return { child, workspaceBindingPipe, bindings, startupFailures, establishedFailures };
+}
+
+test('fd4 close and error fail startup before settlement and retire authority afterward', () => {
+  for (const event of ['end', 'close', 'error']) {
+    const before = createWorkspaceBindingChannelHarness();
+    const error = new Error(`before ${event}`);
+    assert.doesNotThrow(() => before.workspaceBindingPipe.emit(event, error));
+    assert.equal(before.startupFailures.length, 1, `${event} must fail startup once`);
+    assert.match(before.startupFailures[0].message, /workspace binding channel failed/i);
+    assert.equal(before.establishedFailures.length, 0);
+
+    const after = createWorkspaceBindingChannelHarness({ settled: true });
+    after.workspaceBindingPipe.emit('data', Buffer.from(
+      '{"version":1,"bindingRevision":1,"workspaceId":"workspace-a","repoPath":"/tmp/workspace-a"}\n',
+    ));
+    assert.equal(after.bindings.length, 1);
+    assert.doesNotThrow(() => after.workspaceBindingPipe.emit(event, error));
+    assert.equal(after.startupFailures.length, 0);
+    assert.equal(after.establishedFailures.length, 1, `${event} must retire established authority once`);
+    after.workspaceBindingPipe.emit('close');
+    assert.equal(after.establishedFailures.length, 1);
+  }
+});
+
+test('fd4 lifecycle ignores closure caused by intentional child termination', () => {
+  for (const event of ['end', 'close', 'error']) {
+    const harness = createWorkspaceBindingChannelHarness({ killed: true });
+    assert.doesNotThrow(() => harness.workspaceBindingPipe.emit(event, new Error(event)));
+    assert.equal(harness.startupFailures.length, 0);
+    assert.equal(harness.establishedFailures.length, 0);
+  }
+});
 
 test('server output forwarding preserves readiness but emits only fixed stdout/stderr markers', async () => {
   const child = createChildHarness();

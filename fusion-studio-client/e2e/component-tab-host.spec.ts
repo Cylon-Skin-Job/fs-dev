@@ -19,10 +19,8 @@ function directConnectedAdapter(active: unknown, shellTabId = 'tab-direct') {
         segments: [{ label: 'Fixture' }, { label: 'Direct' }],
       },
     },
-    launchers: [],
     reservation: null,
     resolve: () => ({ status: 'unavailable', code: 'unknown', label: 'Unavailable' }),
-    selectLauncher: () => undefined,
     retryLauncher: () => undefined,
     cancelLauncher: () => undefined,
   };
@@ -181,6 +179,11 @@ async function buildHarness(mode: 'test' | 'production') {
         { id: 'disabled-launcher', label: 'Disabled launcher', icon: 'block', disabled: true },
         { id: 'unknown', label: 'Unknown component', icon: 'question_mark' },
       ];
+      // VIEW-02 §6: the grid is retired; the catalog label survives only as
+      // bounded pending/retry copy on the reservation surface.
+      const reservationLabelFor = (launcherId) => (
+        launcherItems.find((item) => item.id === launcherId)?.label ?? null
+      );
       let sequence = 0;
       let unknownEnabled = false;
       let activeOverride = null;
@@ -531,13 +534,15 @@ async function buildHarness(mode: 'test' | 'production') {
         if (document.body.dataset.mode === 'legacy') return common;
         const validContent = {
           active: hasActiveOverride ? activeOverride : { ...active, content: { ...active.content } },
-          launchers: launcherItems,
           reservation: currentReservation(active.tabId),
           resolve,
-          selectLauncher,
           retryLauncher,
           cancelLauncher,
         };
+        const activeReservationLabel = reservationLabelFor(
+          currentReservation(active.tabId)?.launcherId ?? null,
+        );
+        if (activeReservationLabel) validContent.reservationLabel = activeReservationLabel;
         if (document.body.dataset.shell === 'true') {
           const title = active.content.kind === 'empty'
             ? (rail.find((tab) => tab.id === active.tabId)?.label ?? 'New Tab')
@@ -636,8 +641,8 @@ async function buildHarness(mode: 'test' | 'production') {
           ...common,
           content: malformedContent
             ? null
-            : malformedNested === 'launcher'
-              ? { ...validContent, launchers: [null] }
+            : malformedNested === 'empty-body'
+              ? { ...validContent, renderEmptyBody: 'PRIVATE PROVIDER /Users/private/empty-body' }
               : malformedNested === 'reservation'
                 ? { ...validContent, reservation: {} }
                 : malformedNested === 'active'
@@ -917,11 +922,9 @@ async function mount(page: Page, options: {
   );
   await page.addScriptTag({ content: await buildHarness(mode) });
   try {
+    await expect(page.getByRole('tablist', { name: 'Fixture component tabs' })).toBeVisible();
     if (options.shell) {
-      await expect(page.locator('.rv-component-tab-single-label')).toBeVisible();
       await expect(page.getByRole('navigation', { name: /Location:/ })).toBeVisible();
-    } else {
-      await expect(page.getByRole('tablist', { name: 'Fixture component tabs' })).toBeVisible();
     }
   } catch (error) {
     if (pageErrors.length > 0) throw new Error(pageErrors.join('\n'));
@@ -937,7 +940,7 @@ function currentOperation(page: Page, tabId: string) {
   return page.evaluate((id) => window.__componentTabHostController.currentOperation(id), tabId);
 }
 
-test('real shell route creates unique empties and fills synchronous and asynchronous launchers in place', async ({ page }) => {
+test('real shell route creates unique empties and fills controller-driven launchers in place', async ({ page }) => {
   await mount(page);
   const tablist = page.getByRole('tablist', { name: 'Fixture component tabs' });
   const panel = page.getByRole('tabpanel');
@@ -964,30 +967,23 @@ test('real shell route creates unique empties and fills synchronous and asynchro
   await expect(newestTab).toHaveAttribute('aria-selected', 'true');
   await expect(newestTab).toBeFocused();
 
-  const launcherLabels = await panel.locator('.rv-empty-tab-launcher-text').allTextContents();
-  expect(launcherLabels.map((label) => label.trim())).toEqual([
-    'Synchronous fixtureOpens immediately.',
-    'Asynchronous fixtureWaits for completion.',
-    'Failure fixtureCan fail and retry.',
-    'Disabled component',
-    'Disabled launcher',
-    'Unknown component',
-  ]);
-  await expect(panel.locator('.rv-empty-tab-launcher-icon')).toHaveText([
-    'bolt',
-    'hourglass_top',
-    'error',
-    'extension_off',
-    'block',
-    'question_mark',
-  ]);
-  await expect(panel.getByRole('button', { name: 'Disabled launcher' })).toBeDisabled();
+  // VIEW-02 §6: the Empty surface presents no launcher menu — the neutral
+  // container only (no grid, no launch buttons).
+  await expect(panel.locator('.rv-empty-tab-launcher')).toHaveCount(0);
+  await expect(panel.locator('.rv-empty-tab-neutral')).toBeVisible();
 
   const panelId = await panel.getAttribute('id');
   const newestTabId = await newestTab.getAttribute('id');
   await expect(newestTab).toHaveAttribute('aria-controls', panelId ?? 'missing');
   await expect(panel).toHaveAttribute('aria-labelledby', newestTabId ?? 'missing');
-  await panel.getByRole('button', { name: /Synchronous fixture/ }).click();
+  // The launcher lifecycle is owner/controller-driven (no menu UI): the
+  // synchronous fixture fills THIS empty tab in place. Focus starts inside
+  // the panel (as an in-panel interaction would leave it), so the empty →
+  // component replacement preserves focus onto the new body.
+  await panel.locator('.rv-component-tab-panel').focus();
+  await page.evaluate((id) => (
+    window.__componentTabHostController.selectLauncher(id, 'sync')
+  ), newestId);
   await expect(panel.getByRole('button', { name: 'Resolved Container 2' })).toBeVisible();
   await expect(panel.locator('.rv-component-tab-panel')).toBeFocused();
   const syncFilled = await controllerState(page);
@@ -1020,7 +1016,9 @@ test('real shell route creates unique empties and fills synchronous and asynchro
   const firstEmptyTab = tablist.locator(`[data-tab-id="${firstEmptyId}"]`);
   await expect(firstEmptyTab).toHaveAttribute('aria-selected', 'true');
   await expect(firstEmptyTab).toBeFocused();
-  await panel.getByRole('button', { name: /Asynchronous fixture/ }).click();
+  await page.evaluate((id) => (
+    window.__componentTabHostController.selectLauncher(id, 'async')
+  ), firstEmptyId);
   const operationId = await currentOperation(page, firstEmptyId);
   expect(operationId).toMatch(/^[0-9a-f]{8}-[0-9a-f-]{27}$/i);
   await expect(panel.getByRole('status')).toContainText('Opening Asynchronous fixture');
@@ -1047,7 +1045,7 @@ test('rendered owner rejects close, cancel, re-reserve, retry, prior-fill, and f
 
   await add.click();
   let tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Asynchronous fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'async'), tabId);
   let oldOperation = await currentOperation(page, tabId);
   await tablist.getByRole('button', { name: 'Close Container 1' }).click();
   const afterClose = await controllerState(page);
@@ -1056,7 +1054,7 @@ test('rendered owner rejects close, cancel, re-reserve, retry, prior-fill, and f
 
   await add.click();
   tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Asynchronous fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'async'), tabId);
   oldOperation = await currentOperation(page, tabId);
   await panel.getByRole('button', { name: 'Cancel' }).click();
   const afterCancel = await controllerState(page);
@@ -1065,7 +1063,7 @@ test('rendered owner rejects close, cancel, re-reserve, retry, prior-fill, and f
 
   await add.click();
   tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Asynchronous fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'async'), tabId);
   oldOperation = await currentOperation(page, tabId);
   await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'failure'), tabId);
   const replacementOperation = await currentOperation(page, tabId);
@@ -1078,7 +1076,7 @@ test('rendered owner rejects close, cancel, re-reserve, retry, prior-fill, and f
 
   await add.click();
   tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Failure fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'failure'), tabId);
   oldOperation = await currentOperation(page, tabId);
   await page.evaluate((id) => window.__componentTabHostController.fail(id!), oldOperation);
   await expect(panel.getByRole('alert')).toHaveText('The component could not be opened. Try again.');
@@ -1102,7 +1100,7 @@ test('rendered owner rejects close, cancel, re-reserve, retry, prior-fill, and f
 
   await add.click();
   tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Asynchronous fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'async'), tabId);
   oldOperation = await currentOperation(page, tabId);
   await page.locator('#outside-surface').click();
   await expect(page.locator('body')).toBeFocused();
@@ -1126,7 +1124,7 @@ test('unknown, invalid, disabled, and unsupported content stay inert, closable, 
 
   await add.click();
   let tabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: 'Unknown component' }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'unknown'), tabId);
   await expect(panel.locator('.rv-component-tab-unavailable')).toHaveAttribute('data-unavailable-code', 'unknown');
   await expect(panel.getByRole('button', { name: /Resolved/ })).toHaveCount(0);
   const unknownState = await controllerState(page);
@@ -1140,7 +1138,8 @@ test('unknown, invalid, disabled, and unsupported content stay inert, closable, 
   await tablist.getByRole('button', { name: 'Close Container 1' }).click();
 
   await add.click();
-  await panel.getByRole('button', { name: 'Disabled component' }).click();
+  tabId = (await controllerState(page)).state.activeTabId;
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'disabled-component'), tabId);
   await expect(panel.locator('.rv-component-tab-unavailable')).toHaveAttribute('data-unavailable-code', 'disabled');
   await expect(tablist.getByRole('button', { name: 'Close Container 2' })).toBeEnabled();
   await tablist.getByRole('button', { name: 'Close Container 2' }).click();
@@ -1172,8 +1171,8 @@ for (const [kind, code] of [
     );
     await page.evaluate((value) => window.__componentTabHostController.injectUnavailable(value), kind);
 
-    await expect(page.getByRole('tablist')).toHaveCount(0);
-    await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Initial fixture');
+    await expect(page.getByRole('tablist')).toHaveCount(1);
+    await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Initial fixture');
     await expect(page.getByRole('navigation', { name: `Location: Fixture > ${kind}` })).toBeVisible();
     await expect(page.locator('.rv-component-tab-unavailable')).toHaveAttribute(
       'data-unavailable-code',
@@ -1222,8 +1221,8 @@ for (const slotKind of ['accessor', 'non-enumerable'] as const) {
       slotKind,
     );
 
-    await expect(page.getByRole('tablist')).toHaveCount(0);
-    await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Initial fixture');
+    await expect(page.getByRole('tablist')).toHaveCount(1);
+    await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Initial fixture');
     await expect(page.getByRole('navigation', { name: 'Location: Fixture > Initial' })).toBeVisible();
     await expect(page.locator('.rv-component-tab-unavailable')).toHaveAttribute(
       'data-unavailable-code',
@@ -1317,7 +1316,7 @@ test('active-content mismatch asserts in test and never renders component or leg
   previousAssertionCount = assertions.length;
   await page.getByRole('button', { name: 'New component tab' }).click();
   for (const kind of [
-    'launcher',
+    'empty-body',
     'reservation',
     'active',
     'diagnostic',
@@ -1376,7 +1375,7 @@ test('production mismatch is an inert unavailable state', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Exact legacy child' })).toHaveCount(0);
   await page.getByRole('button', { name: 'New component tab' }).click();
   for (const kind of [
-    'launcher',
+    'empty-body',
     'reservation',
     'active',
     'diagnostic',
@@ -1393,19 +1392,22 @@ test('production mismatch is an inert unavailable state', async ({ page }) => {
   expect(pageErrors).toEqual([]);
 });
 
-test('connected shell derives centered to tabbed Empty to tabbed component to centered without identity or mount churn', async ({ page }) => {
+test('connected shell derives single-strip to tabbed Empty to tabbed component to single-strip without identity or mount churn', async ({ page }) => {
   await mount(page, { shell: true });
   const panel = page.getByRole('tabpanel');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
+  const tablist = page.getByRole('tablist', { name: 'Fixture component tabs' });
+  const selectedLabel = page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label');
+  const selectedTab = page.locator('.rv-view-tab-item.is-selected .rv-view-tab');
+  await expect(tablist).toBeVisible();
+  await expect(tablist.getByRole('tab')).toHaveCount(1);
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
   await expect(panel.getByRole('tabpanel')).toHaveCount(0);
-  const singleLabel = page.locator('.rv-component-tab-single-label');
-  await expect(panel).toHaveAttribute('aria-labelledby', await singleLabel.getAttribute('id') ?? '');
+  await expect(panel).toHaveAttribute('aria-labelledby', await selectedTab.getAttribute('id') ?? '');
   await expect(panel).toHaveAccessibleName('Initial fixture');
   await expect(page.getByRole('button', { name: 'New component tab' })).toHaveCount(1);
-  await expect(page.locator('.rv-view-tab-add')).toHaveCount(0);
+  await expect(page.locator('.rv-view-tab-add')).toHaveCount(1);
 
-  const singleAdd = page.getByRole('button', { name: 'New component tab' });
+  const singleAdd = page.locator('.rv-view-tab-add');
   await page.evaluate(() => window.__componentTabHostController.setAddReturnsNull(true));
   await singleAdd.click();
   await expect(singleAdd).toBeFocused();
@@ -1420,14 +1422,13 @@ test('connected shell derives centered to tabbed Empty to tabbed component to ce
   await expect(panel.getByRole('button', { name: 'Initial presenter state 1' })).toBeVisible();
 
   const backgroundId = await page.evaluate(() => window.__componentTabHostController.addBackgroundTab());
-  const tablist = page.getByRole('tablist', { name: 'Fixture component tabs' });
   await expect(tablist).toBeVisible();
   await expect(tablist.getByRole('tab')).toHaveCount(2);
   await expect(tablist.getByRole('tab', { name: /Initial fixture/ })).toHaveAttribute('aria-selected', 'true');
   await expect(panel.getByRole('button', { name: 'Initial presenter state 1' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Location: Fixture > Initial' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'New component tab' })).toHaveCount(1);
-  await expect(page.locator('.rv-component-tab-single-add')).toHaveCount(0);
+  await expect(page.locator('.rv-view-tab-add')).toHaveCount(1);
   expect(await page.evaluate(() => window.__componentTabHostController.evidence())).toMatchObject({
     presenterMounts: 1,
     presenterUnmounts: 0,
@@ -1436,8 +1437,8 @@ test('connected shell derives centered to tabbed Empty to tabbed component to ce
   const backgroundClose = tablist.getByRole('button', { name: 'Close Container 1' });
   await backgroundClose.focus();
   await backgroundClose.click();
-  await expect(page.getByRole('tablist')).toHaveCount(0);
-  await expect(singleLabel).toBeFocused();
+  await expect(tablist.getByRole('tab')).toHaveCount(1);
+  await expect(selectedTab).toBeFocused();
   await expect(panel.getByRole('button', { name: 'Initial presenter state 1' })).toBeVisible();
   expect(await page.evaluate(() => window.__componentTabHostController.evidence())).toMatchObject({
     presenterMounts: 1,
@@ -1471,8 +1472,9 @@ test('connected shell derives centered to tabbed Empty to tabbed component to ce
   const finalEmptyClose = tablist.getByRole('button', { name: 'Close Container 2' });
   await finalEmptyClose.focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
-  await expect(singleLabel).toBeFocused();
+  await expect(tablist.getByRole('tab')).toHaveCount(1);
+  await expect(selectedTab).toBeFocused();
+  await expect(selectedLabel).toHaveText('Initial fixture');
   const finalState = await controllerState(page);
   expect(finalState.state.tabs).toEqual([initialTabSnapshot]);
   expect(finalState.rail).toEqual([initialRail]);
@@ -1491,7 +1493,7 @@ test('connected component and Empty stacks retain shell chrome through unavailab
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
 
   const emptyTabId = (await controllerState(page)).state.activeTabId;
-  await panel.getByRole('button', { name: /Synchronous fixture/ }).click();
+  await page.evaluate((id) => window.__componentTabHostController.selectLauncher(id, 'sync'), emptyTabId);
   const locationRail = page.getByRole('navigation', { name: 'Location: Fixture > Container 1' });
   const resolved = panel.getByRole('button', { name: 'Resolved Container 1' });
   await expect(locationRail).toContainText('Fixture');
@@ -1521,8 +1523,8 @@ test('connected component and Empty stacks retain shell chrome through unavailab
   const initialClose = tablist.getByRole('button', { name: 'Close Initial fixture' });
   await initialClose.focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Container 1');
+  await expect(tablist.getByRole('tab')).toHaveCount(1);
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Container 1');
   await expect(locationRail).toBeVisible();
   await expect(panel.getByRole('tabpanel')).toHaveCount(0);
 });
@@ -1541,7 +1543,7 @@ test('connected descendant render failures stay body-scoped, private, stable, an
   const initialState = await controllerState(page);
   const initialTabId = initialState.state.activeTabId;
   const initialBody = structuredClone(initialState.state.tabs[0]);
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Initial fixture');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Initial fixture');
   await expect(page.getByRole('navigation', { name: 'Location: Fixture > Initial' })).toBeVisible();
   await expect(panel.getByRole('button', { name: 'Initial presenter state 0' })).toBeVisible();
 
@@ -1567,7 +1569,7 @@ test('connected descendant render failures stay body-scoped, private, stable, an
   expect(healthyBackgroundId).not.toBeNull();
   await tablist.getByRole('button', { name: 'Close Container 1' })
     .evaluate((button: HTMLButtonElement) => button.click());
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Initial fixture');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Initial fixture');
   expect(await page.evaluate(() => window.__componentTabHostController.evidence())).toMatchObject({
     presenterMounts: 1,
     presenterUnmounts: 0,
@@ -1590,7 +1592,7 @@ test('connected descendant render failures stay body-scoped, private, stable, an
   await expect(unavailable.getByRole('heading')).toHaveText('Component unavailable');
   await expect(unavailable.getByText('This content is not available right now.')).toBeVisible();
   await expect(panel.locator('.rv-component-tab-resolved')).toHaveCount(0);
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Initial fixture');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Initial fixture');
   await expect(page.getByRole('navigation', { name: 'Location: Fixture > Render failure' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'New component tab' })).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Close Initial fixture' })).toBeEnabled();
@@ -1629,7 +1631,7 @@ test('connected descendant render failures stay body-scoped, private, stable, an
   expect(failureBackgroundId).not.toBeNull();
   await tablist.getByRole('button', { name: 'Close Container 2' })
     .evaluate((button: HTMLButtonElement) => button.click());
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Failure-safe fixture');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Failure-safe fixture');
   await expect(unavailable).toBeVisible();
   expect((await controllerState(page)).state.tabs[0]).toEqual(failedBody);
   expect(consoleErrors).toEqual([caughtReport]);
@@ -1784,7 +1786,7 @@ test('display identity and index-document omission do not replace machine or run
       ['Wiki', 'Chat System'],
     );
   });
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('WIKI');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('WIKI');
   await expect(page.getByRole('navigation', { name: 'Location: Wiki > Chat System' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Initial presenter state 1' })).toBeVisible();
   expect((await controllerState(page)).state.tabs[0]).toEqual(activeBefore);
@@ -1859,12 +1861,12 @@ test('a sole Empty uses the universal single layout with one add control and loc
   const initialClose = tablist.getByRole('button', { name: 'Close Initial fixture' });
   await initialClose.focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
+  await expect(page.getByRole('tablist')).toHaveCount(1);
   await expect(page.locator('.rv-empty-tab-panel')).toBeVisible();
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('Container 1');
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('Container 1');
   await expect(page.getByRole('navigation', { name: 'Location: New Tab' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'New component tab' })).toHaveCount(1);
-  await expect(page.locator('.rv-component-tab-single-add')).toHaveCount(1);
+  await expect(page.locator('.rv-view-tab-add')).toHaveCount(1);
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
 });
 
@@ -1872,7 +1874,7 @@ test('single close honors descriptor metadata, unavailable bodies, owner results
   await mount(page, { shell: true });
   await page.evaluate(() => window.__componentTabHostController.resolutionOverride('disabled'));
   await expect(page.locator('.rv-component-tab-unavailable')).toHaveAttribute('data-unavailable-code', 'disabled');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
+  await expect(page.getByRole('tablist')).toHaveCount(1);
   const close = page.getByRole('button', { name: 'Close Initial fixture' });
   await expect(close).toBeEnabled();
 
@@ -1892,9 +1894,9 @@ test('single close honors descriptor metadata, unavailable bodies, owner results
     window.__componentTabHostController.setCloseOutcome('replacement');
   });
   await page.getByRole('button', { name: 'Close Initial fixture' }).click();
-  const replacementLabel = page.locator('.rv-component-tab-single-label');
+  const replacementLabel = page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label');
   await expect(replacementLabel).toHaveText('Replacement');
-  await expect(replacementLabel).toBeFocused();
+  await expect(page.locator('.rv-content-area')).toBeFocused();
   expect((await page.evaluate(() => window.__componentTabHostController.evidence())).closes).toHaveLength(1);
 
   await page.evaluate(() => window.__componentTabHostController.setCloseOutcome('replacement', true));
@@ -1939,7 +1941,7 @@ test('every malformed present shell fails closed without accessors, callbacks, l
     await expect.poll(() => assertions.length).toBeGreaterThan(before);
     expect(assertions.slice(before).join('\n')).not.toMatch(/private|provider|users/i);
     await page.evaluate(() => window.__componentTabHostController.shellFault(null));
-    await expect(page.getByRole('tablist')).toHaveCount(0);
+    await expect(page.getByRole('tablist')).toHaveCount(1);
   }
   expect(await page.evaluate(() => window.__componentTabHostController.evidence())).toMatchObject({
     shellGetterCalls: 0,

@@ -132,7 +132,9 @@ describe('pending shell recipient isolation', () => {
       const pendingSnapshots = pendingSessions.map((session) => JSON.stringify(session));
 
       mockListeners.get('harness:status_changed')({ id: 'opencode', installed: true });
-      await mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+      await mockListeners.get('workspace:switched')({
+        bindingRevision: 1, from: 'A', to: 'B', repoPath: '/B',
+      });
 
       expect(rawMessages).toHaveLength(1);
       expect(customMessages).toHaveLength(1);
@@ -153,7 +155,9 @@ describe('pending shell recipient isolation', () => {
       });
 
       mockListeners.get('harness:status_changed')({ id: 'opencode', installed: false });
-      await mockListeners.get('workspace:switched')({ from: 'A', to: 'B', repoPath: '/B' });
+      await mockListeners.get('workspace:switched')({
+        bindingRevision: 2, from: 'A', to: 'B', repoPath: '/B',
+      });
       await waitFor(() => trustedMessages.some((message) => message.type === 'panel_config'));
       expect(trustedMessages).toEqual(expect.arrayContaining([
         expect.objectContaining({ type: 'harness:status_changed', id: 'opencode', installed: false }),

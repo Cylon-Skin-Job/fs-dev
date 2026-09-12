@@ -19,6 +19,7 @@ function makeHarness(initialWorkspaces, initialActiveId = null) {
   let workspaces = initialWorkspaces.map(workspace => ({ ...workspace }));
   let activeWorkspaceId = initialActiveId;
   let activeWorkspace = workspaces.find(workspace => workspace.id === activeWorkspaceId) || null;
+  let bindingRevision = 0;
   const emitted = [];
 
   const registry = {
@@ -57,6 +58,8 @@ function makeHarness(initialWorkspaces, initialActiveId = null) {
     setActiveWorkspace: (id, workspace) => {
       activeWorkspaceId = id;
       activeWorkspace = workspace;
+      bindingRevision += 1;
+      return bindingRevision;
     },
     writeLastActive,
   });
@@ -112,7 +115,7 @@ describe('workspace ribbon handlers', () => {
     expect(harness.emitted).toEqual(expect.arrayContaining([
       expect.objectContaining({
         type: 'workspace:switched',
-        payload: { from: 'beta', to: 'gamma', repoPath: '/repo/gamma' },
+        payload: { bindingRevision: 1, from: 'beta', to: 'gamma', repoPath: '/repo/gamma' },
       }),
       expect.objectContaining({
         type: 'workspace:ribbon_removed',
@@ -133,7 +136,7 @@ describe('workspace ribbon handlers', () => {
     expect(harness.emitted).toEqual(expect.arrayContaining([
       expect.objectContaining({
         type: 'workspace:switched',
-        payload: { from: 'alpha', to: null, repoPath: null },
+        payload: { bindingRevision: 1, from: 'alpha', to: null, repoPath: null },
       }),
     ]));
   });

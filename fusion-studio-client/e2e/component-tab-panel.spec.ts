@@ -26,7 +26,7 @@ async function buildHarness() {
         path.resolve('src/components/view-tabs/componentTabResolver.ts'),
       )};
 
-      const evidence = { selected: [], retries: [], cancellations: [], actions: [], renders: [] };
+      const evidence = { retries: [], cancellations: [], actions: [], renders: [] };
       const readyRegistration = {
         componentTypeId: 'fixture.card',
         label: 'Fixture card',
@@ -77,21 +77,41 @@ async function buildHarness() {
         targetKey: 'fixture:target',
       };
       const component = { tabId: 'tab-fixture', content: { kind: 'component', revision: 1, component: descriptor } };
-      const launchers = [
-        { id: 'first', label: 'First item', icon: 'dashboard', description: 'First description' },
-        { id: 'disabled', label: 'Disabled item', icon: 'block', disabled: true },
-        { id: 'third', label: 'Third item', icon: 'view_agenda' },
-      ];
+      // VIEW-02 §6: the launcher grid is retired. The Empty surface renders an
+      // optional view-supplied body (bounded) or the neutral fallback.
+      const emptyBody = () => React.createElement(
+        'div',
+        { 'data-fixture-empty-body': 'true' },
+        React.createElement('button', {
+          type: 'button',
+          className: 'rv-empty-tab-fixture-body-button',
+          onClick: () => evidence.actions.push('body'),
+        }, 'Fixture empty body'),
+      );
+      const throwingBody = () => React.createElement(ThrowingPresenter);
       let root = createRoot(document.querySelector('#consumer-root'), reactRootErrorOptions);
 
       function model(mode) {
         if (mode === 'empty') return { active: empty, reservation: null, resolve: readyResolver };
+        if (mode === 'empty-body') return {
+          active: empty,
+          reservation: null,
+          resolve: readyResolver,
+          renderEmptyBody: emptyBody,
+        };
+        if (mode === 'empty-body-throwing') return {
+          active: empty,
+          reservation: null,
+          resolve: readyResolver,
+          renderEmptyBody: throwingBody,
+        };
         if (mode === 'pending') return {
           active: empty,
           reservation: {
             tabId: 'tab-fixture', operationId: 'operation-pending', expectedRevision: 0,
             launcherId: 'first', status: 'pending',
           },
+          reservationLabel: 'First item',
           resolve: readyResolver,
         };
         if (mode === 'failed') return {
@@ -101,6 +121,7 @@ async function buildHarness() {
             launcherId: 'third', status: 'failed',
             error: { code: 'launch_failed', message: 'The content could not be opened. Try again.' },
           },
+          reservationLabel: 'Third item',
           resolve: readyResolver,
         };
         if (mode === 'unknown') return {
@@ -155,8 +176,6 @@ async function buildHarness() {
         const current = model(mode);
         root.render(React.createElement(ComponentTabPanel, {
           ...current,
-          launchers,
-          onSelectLauncher: (tabId, launcherId) => evidence.selected.push([tabId, launcherId]),
           onRetryLauncher: (tabId) => evidence.retries.push(tabId),
           onCancelLauncher: (tabId) => evidence.cancellations.push(tabId),
         }));
@@ -280,48 +299,51 @@ test('resolver projections require exact bounded data properties before render e
   }
 });
 
-test('empty presentation preserves adapter order and native keyboard button activation', async ({ page }) => {
+test('empty presentation presents no menu; the view body renders bounded with a neutral fallback', async ({ page }) => {
+  const consoleErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  // No view-supplied body: the minimal neutral surface, no menu, no buttons.
   await mount(page, 'empty');
-  await expect(page.getByRole('heading', { name: 'Add content' })).toBeVisible();
-  await expect(page.getByText('Choose an available item for this tab.')).toBeVisible();
-  const launchers = page.locator('.rv-empty-tab-launcher');
-  await expect(launchers).toHaveCount(3);
-  await expect(launchers).toHaveText([/First item/, /Disabled item/, /Third item/]);
-  await expect(page.getByRole('button', { name: /Disabled item/ })).toBeDisabled();
+  await expect(page.getByRole('heading', { name: 'Add content' })).toHaveCount(0);
+  await expect(page.locator('.rv-empty-tab-launcher')).toHaveCount(0);
+  await expect(page.locator('.rv-empty-tab-panel')).toBeVisible();
+  await expect(page.locator('.rv-empty-tab-neutral')).toBeVisible();
+  await expect(page.locator('.rv-empty-tab-panel').getByRole('button')).toHaveCount(0);
   await expect(page.getByRole('tablist')).toHaveCount(0);
   await expect(page.getByRole('tabpanel')).toHaveCount(0);
 
-  await page.getByRole('button', { name: /First item/ }).focus();
-  await page.keyboard.press('Enter');
-  await page.getByRole('button', { name: /Third item/ }).focus();
-  await page.keyboard.press('Space');
-  await expect.poll(() => page.evaluate(() => window.__componentTabHarness.evidence().selected)).toEqual([
-    ['tab-fixture', 'first'],
-    ['tab-fixture', 'third'],
-  ]);
+  // A view-supplied Empty-body presenter renders inside the generic surface.
+  await page.evaluate(() => window.__componentTabHarness.set('empty-body'));
+  await expect(page.locator('[data-fixture-empty-body]')).toBeVisible();
+  await page.locator('.rv-empty-tab-fixture-body-button').click();
+  await expect.poll(() => page.evaluate(() => window.__componentTabHarness.evidence().actions))
+    .toEqual(['body']);
+
+  // A body presenter whose render throws is error-bounded to the neutral
+  // surface (private stacks never surface).
+  await page.evaluate(() => window.__componentTabHarness.set('empty-body-throwing'));
+  await expect(page.locator('.rv-empty-tab-neutral')).toBeVisible();
+  await expect(page.locator('[data-fixture-empty-body]')).toHaveCount(0);
+  await expect(page.getByText(/PRIVATE|secret-presenter/i)).toHaveCount(0);
+  expect(consoleErrors).toEqual(['[Fusion Studio] A component error was contained.']);
 });
 
 test('pending and failed reservations expose only deterministic safe controls', async ({ page }) => {
   await mount(page, 'pending');
   await expect(page.locator('.rv-empty-tab-panel')).toHaveAttribute('aria-busy', 'true');
   await expect(page.getByRole('status')).toContainText('Opening First item');
-  for (const launcher of await page.locator('.rv-empty-tab-launcher').all()) {
-    await expect(launcher).toBeDisabled();
-  }
   await expect(page.getByRole('button', { name: /Retry/ })).toHaveCount(0);
   await page.getByRole('button', { name: 'Cancel' }).click();
 
   await page.evaluate(() => window.__componentTabHarness.set('failed'));
   await expect(page.getByRole('alert')).toHaveText('The content could not be opened. Try again.');
-  for (const launcher of await page.locator('.rv-empty-tab-launcher').all()) {
-    await expect(launcher).toBeDisabled();
-  }
   await page.getByRole('button', { name: 'Retry Third item' }).click();
   await page.getByRole('button', { name: 'Cancel' }).click();
   await expect.poll(() => page.evaluate(() => window.__componentTabHarness.evidence())).toMatchObject({
     retries: ['tab-fixture'],
     cancellations: ['tab-fixture', 'tab-fixture'],
-    selected: [],
   });
 });
 
@@ -402,18 +424,18 @@ test('descendant render and lifecycle errors stay inside the body and reset for 
 });
 
 test('replacement preserves focus only when focus was inside the empty panel', async ({ page }) => {
-  await mount(page, 'empty');
-  await page.getByRole('button', { name: /First item/ }).focus();
+  await mount(page, 'empty-body');
+  await page.locator('.rv-empty-tab-fixture-body-button').focus();
   await page.evaluate(() => window.__componentTabHarness.set('ready'));
   await expect(page.locator('.rv-component-tab-panel')).toBeFocused();
 
-  await page.evaluate(() => window.__componentTabHarness.set('empty'));
+  await page.evaluate(() => window.__componentTabHarness.set('empty-body'));
   await page.locator('#outside').focus();
   await page.evaluate(() => window.__componentTabHarness.set('ready'));
   await expect(page.locator('#outside')).toBeFocused();
 
-  await page.evaluate(() => window.__componentTabHarness.set('empty'));
-  await page.getByRole('button', { name: /First item/ }).focus();
+  await page.evaluate(() => window.__componentTabHarness.set('empty-body'));
+  await page.locator('.rv-empty-tab-fixture-body-button').focus();
   await page.locator('#outside-surface').click();
   await expect(page.locator('body')).toBeFocused();
   await page.evaluate(() => window.__componentTabHarness.set('ready'));
@@ -454,7 +476,6 @@ declare global {
       set: (mode: string) => void;
       throwUncaught: () => void;
       evidence: () => {
-        selected: string[][];
         retries: string[];
         cancellations: string[];
         actions: string[];

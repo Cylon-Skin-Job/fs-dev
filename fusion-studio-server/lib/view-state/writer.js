@@ -16,14 +16,17 @@
 const path = require('path');
 
 const {
-  resolveViewState,
+  resolveViewStateUnderLease,
+  assertCallerHeldViewReadinessLease,
   workspacePath,
   viewOverridePath,
-  atomicWriteJson,
+  atomicWriteJsonBatch,
   readJsonOrNull,
   deepMerge,
   isPlainObject,
+  HARDCODED_DEFAULTS,
 } = require('./resolver');
+const { acquireViewReadinessLease } = require('../views/readiness-runtime');
 
 const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
   'activity',
@@ -35,6 +38,9 @@ const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
   'officePaperBrightness',
   'docViewerTabs',
   'docViewerActiveTabId',
+  // VIEW-02 Slice 3: the connected Capture tab collection persists as one
+  // versioned field inside the same per-view state document.
+  'captureTabRecords',
 ]);
 
 const FORCE_VIEW_OVERRIDE_PATHS = new Set([
@@ -87,55 +93,73 @@ function* leafEntries(patch, prefix = []) {
   }
 }
 
-async function writeViewStatePatchNow(projectRoot, viewId, patch) {
-  const wsFile       = workspacePath(projectRoot);
-  const overrideFile = viewOverridePath(projectRoot, viewId);
+async function writeViewStatePatchNow(projectRoot, viewId, patch, callerLease = null) {
+  const lease = callerLease || acquireViewReadinessLease({ projectRoot });
+  try {
+    assertCallerHeldViewReadinessLease(projectRoot, lease);
+    const wsFile       = workspacePath(projectRoot);
+    const overrideFile = viewOverridePath(projectRoot, viewId);
+    const registeredViewRoot = path.dirname(path.dirname(overrideFile));
 
-  // Snapshot current files.
-  const workspace      = (await readJsonOrNull(wsFile))       || {};
-  const overrideBefore = await readJsonOrNull(overrideFile);
-  const overrideExists = overrideBefore !== null;
+    // Snapshot current files.
+    const workspaceBefore = await readJsonOrNull(wsFile);
+    const workspace      = workspaceBefore || JSON.parse(JSON.stringify(HARDCODED_DEFAULTS));
+    const overrideBefore = await readJsonOrNull(overrideFile);
+    const overrideExists = overrideBefore !== null;
 
-  // Accumulate routed patches.
-  const workspaceUpdates = {};
-  const overrideUpdates  = {};
-  let overrideTouched = false;
+    // Accumulate routed patches.
+    const workspaceUpdates = {};
+    const overrideUpdates  = {};
+    let overrideTouched = false;
 
-  for (const [keyPath, value] of leafEntries(patch)) {
-    const pathKey = keyPath.join('.');
-    if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0]) || FORCE_VIEW_OVERRIDE_PATHS.has(pathKey)) {
-      setKeyPath(overrideUpdates, keyPath, value);
-      overrideTouched = true;
-    } else if (overrideExists && hasKeyPath(overrideBefore, keyPath)) {
-      setKeyPath(overrideUpdates, keyPath, value);
-      overrideTouched = true;
-    } else {
-      setKeyPath(workspaceUpdates, keyPath, value);
+    for (const [keyPath, value] of leafEntries(patch)) {
+      const pathKey = keyPath.join('.');
+      if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0]) || FORCE_VIEW_OVERRIDE_PATHS.has(pathKey)) {
+        setKeyPath(overrideUpdates, keyPath, value);
+        overrideTouched = true;
+      } else if (overrideExists && hasKeyPath(overrideBefore, keyPath)) {
+        setKeyPath(overrideUpdates, keyPath, value);
+        overrideTouched = true;
+      } else {
+        setKeyPath(workspaceUpdates, keyPath, value);
+      }
     }
-  }
 
-  // Apply workspace updates.
-  if (Object.keys(workspaceUpdates).length > 0) {
-    const nextWorkspace = deepMerge(workspace, workspaceUpdates);
-    await atomicWriteJson(wsFile, nextWorkspace);
-  }
+    const writes = [];
+    if (workspaceBefore === null || Object.keys(workspaceUpdates).length > 0) {
+      writes.push({
+        filePath: wsFile,
+        obj: deepMerge(workspace, workspaceUpdates),
+        projectRoot,
+      });
+    }
 
-  // Apply override updates. Runtime activity is explicitly per-view state, so
-  // it can create the override file even when no user override existed yet.
-  if (overrideTouched) {
-    const nextOverride = deepMerge(overrideBefore || {}, overrideUpdates);
-    await atomicWriteJson(overrideFile, nextOverride);
-  }
+    // Apply override updates. Runtime activity is explicitly per-view state, so
+    // it can create the override file even when no user override existed yet.
+    if (overrideTouched) {
+      const nextOverride = deepMerge(overrideBefore || {}, overrideUpdates);
+      writes.push({
+        filePath: overrideFile,
+        obj: nextOverride,
+        projectRoot,
+        trustedViewRoot: registeredViewRoot,
+      });
+    }
 
-  return resolveViewState(projectRoot, viewId);
+    await atomicWriteJsonBatch(writes);
+
+    return resolveViewStateUnderLease(projectRoot, viewId, lease);
+  } finally {
+    if (!callerLease) lease.release();
+  }
 }
 
-function writeViewStatePatch(projectRoot, viewId, patch) {
+function enqueueViewStatePatch(projectRoot, viewId, performWrite) {
   const key = writeQueueKey(projectRoot, viewId);
   const previous = writeQueues.get(key) || Promise.resolve();
   const operation = previous
     .catch(() => undefined)
-    .then(() => writeViewStatePatchNow(projectRoot, viewId, patch));
+    .then(performWrite);
 
   writeQueues.set(key, operation);
   operation
@@ -149,8 +173,25 @@ function writeViewStatePatch(projectRoot, viewId, patch) {
   return operation;
 }
 
+function writeViewStatePatch(projectRoot, viewId, patch) {
+  return enqueueViewStatePatch(
+    projectRoot,
+    viewId,
+    () => writeViewStatePatchNow(projectRoot, viewId, patch),
+  );
+}
+
+function writeViewStatePatchUnderLease(projectRoot, viewId, patch, lease) {
+  return enqueueViewStatePatch(
+    projectRoot,
+    viewId,
+    () => writeViewStatePatchNow(projectRoot, viewId, patch, lease),
+  );
+}
+
 module.exports = {
   writeViewStatePatch,
+  writeViewStatePatchUnderLease,
   // exported for tests
   hasKeyPath,
   setKeyPath,

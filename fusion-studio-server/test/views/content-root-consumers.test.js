@@ -5,10 +5,14 @@ const os = require('os');
 const path = require('path');
 
 const createService = require('../../lib/workspace/create-service');
+const aiPaths = require('../../lib/workspace/ai-paths');
 const wikiTree = require('../../lib/wiki/wiki-tree');
 const { createRunFolder } = require('../../lib/runner/run-folder');
 const { buildContext } = require('../../lib/runner/prompt-builder');
-const { buildPanelConfig } = require('../../lib/ws/connection-init');
+const { buildPanelConfig, buildViewRegistryUpdated } = require('../../lib/ws/connection-init');
+const viewReadiness = require('../../lib/views/readiness-runtime');
+const { installHistoricalReadinessFixture } = require('./historical-readiness-fixture');
+const { createViewReadinessCoordinator } = require('../../lib/views/readiness-coordinator');
 
 function writeJson(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -20,13 +24,38 @@ function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
+function scaffoldProject(options) {
+  const machineIdentity = aiPaths.sanitizeMachineName(options.machineName || aiPaths.getLocalMachineName());
+  const projectRoot = path.resolve(options.projectPath);
+  const coordinator = createViewReadinessCoordinator({
+    machineIdentity,
+    migrationService: { ensureReady: async () => { throw new Error('not used by scaffold fixture'); } },
+  });
+  viewReadiness.installViewReadinessOwner(coordinator);
+  const result = createService.scaffoldProject(options);
+  viewReadiness.installViewReadinessOwner({
+    ensureReady: async ({ workspaceId }) => ({
+      status: 'verified', phase: 'journal_verified', verified: true, workspaceId, projectRoot,
+    }),
+    acquireLease: () => ({
+      phase: 'journal_verified',
+      verified: true,
+      projectRoot,
+      viewsRoot: aiPaths.getMachineViewsRoot(projectRoot, machineIdentity),
+      release() {},
+    }),
+    getStatus: () => ({ status: 'ready', verified: true }),
+  });
+  return result;
+}
+
 describe('content root consumers', () => {
   let tempRoot;
   let oldFusionLocalMachine;
 
   beforeEach(() => {
     oldFusionLocalMachine = process.env.FUSION_LOCAL_MACHINE;
-    tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-content-consumers-'));
+    tempRoot = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-content-consumers-')));
   });
 
   afterEach(() => {
@@ -35,12 +64,13 @@ describe('content root consumers', () => {
     } else {
       process.env.FUSION_LOCAL_MACHINE = oldFusionLocalMachine;
     }
+    installHistoricalReadinessFixture();
     fs.rmSync(tempRoot, { recursive: true, force: true });
   });
 
   test('wiki tree resolves an edited v2 wiki content root', () => {
     const projectPath = path.join(tempRoot, 'wiki-shared-root');
-    createService.scaffoldProject({
+    scaffoldProject({
       projectPath,
       machineName: 'WikiConsumerBox',
       viewIds: ['wiki-viewer'],
@@ -48,7 +78,7 @@ describe('content root consumers', () => {
     process.env.FUSION_LOCAL_MACHINE = 'WikiConsumerBox';
 
     const machineRoot = path.join(projectPath, 'ai', 'WikiConsumerBox');
-    writeJson(path.join(machineRoot, 'Views', '001-wiki-viewer', 'content.json'), {
+    writeJson(path.join(machineRoot, 'System', 'Views', '001-wiki-viewer', 'content.json'), {
       version: 1,
       dataSource: 'Wiki',
       root: {
@@ -75,17 +105,17 @@ describe('content root consumers', () => {
     });
   });
 
-  test('wiki tree discovers a machine-scoped v2 wiki root without local machine env', () => {
+  test('wiki tree resolves the established machine identity without cross-machine discovery', () => {
     const projectPath = path.join(tempRoot, 'wiki-discovered-root');
-    createService.scaffoldProject({
+    scaffoldProject({
       projectPath,
       machineName: 'DiscoveredWikiBox',
       viewIds: ['wiki-viewer'],
     });
-    delete process.env.FUSION_LOCAL_MACHINE;
+    process.env.FUSION_LOCAL_MACHINE = 'DiscoveredWikiBox';
 
     const machineRoot = path.join(projectPath, 'ai', 'DiscoveredWikiBox');
-    writeJson(path.join(machineRoot, 'Views', '001-wiki-viewer', 'content.json'), {
+    writeJson(path.join(machineRoot, 'System', 'Views', '001-wiki-viewer', 'content.json'), {
       version: 1,
       dataSource: 'Wiki',
       root: {
@@ -112,17 +142,56 @@ describe('content root consumers', () => {
     ]);
   });
 
-  test('panel config exposes content.json-resolved view roots for link consumers', () => {
+  test('wiki tree does not revive an unscoped ai/views fallback', () => {
+    const projectPath = path.join(tempRoot, 'wiki-no-retired-fallback');
+    process.env.FUSION_LOCAL_MACHINE = 'WikiFallbackBox';
+    const machineWiki = path.join(projectPath, 'ai', 'WikiFallbackBox', 'Wiki');
+    const retiredWiki = path.join(projectPath, 'ai', 'views', 'wiki-viewer', 'Wiki');
+    writeFile(path.join(machineWiki, '001-Canonical', 'PAGE.md'), '# Canonical\n');
+    writeFile(path.join(retiredWiki, '001-Retired', 'PAGE.md'), '# Retired\n');
+
+    const context = wikiTree.resolveWikiRoot(projectPath);
+    expect(context.wikiRoot).toBe(machineWiki);
+    const { nodes } = wikiTree.queryWiki(projectPath, { limit: 10 });
+    expect(nodes.map((node) => node.label)).toContain('Canonical');
+    expect(nodes.map((node) => node.label)).not.toContain('Retired');
+  });
+
+  test('wiki tree does not infer identity from a misleading folder suffix', () => {
+    const projectPath = path.join(tempRoot, 'wiki-folder-is-presentation');
+    process.env.FUSION_LOCAL_MACHINE = 'WikiIdentityBox';
+    const machineRoot = path.join(projectPath, 'ai', 'WikiIdentityBox');
+    const misleadingCapsule = path.join(machineRoot, 'System', 'Views', '001-wiki-viewer');
+    writeFile(path.join(misleadingCapsule, 'manifest.md'), [
+      '---',
+      'metadata:',
+      '  view-id: capture-viewer',
+      '---',
+      '',
+    ].join('\n'));
+    writeJson(path.join(misleadingCapsule, 'content.json'), {
+      root: { type: 'workspace-relative', path: 'misleading/wiki' },
+    });
+    writeFile(path.join(projectPath, 'misleading', 'wiki', '001-Wrong', 'PAGE.md'), '# Wrong\n');
+    writeFile(path.join(machineRoot, 'Wiki', '001-Canonical', 'PAGE.md'), '# Canonical\n');
+
+    const context = wikiTree.resolveWikiRoot(projectPath);
+    expect(context.wikiRoot).toBe(path.join(machineRoot, 'Wiki'));
+    const { nodes } = wikiTree.queryWiki(projectPath, { limit: 10 });
+    expect(nodes.map((node) => node.label)).toContain('Canonical');
+    expect(nodes.map((node) => node.label)).not.toContain('Wrong');
+  });
+
+  test('panel config exposes content.json-resolved view roots for link consumers', async () => {
     const projectPath = path.join(tempRoot, 'panel-config-roots');
-    createService.scaffoldProject({
+    scaffoldProject({
       projectPath,
       machineName: 'PanelRootBox',
       viewIds: ['capture-viewer'],
     });
     process.env.FUSION_LOCAL_MACHINE = 'PanelRootBox';
-
     const machineRoot = path.join(projectPath, 'ai', 'PanelRootBox');
-    writeJson(path.join(machineRoot, 'Views', '001-capture-viewer', 'content.json'), {
+    writeJson(path.join(machineRoot, 'System', 'Views', '001-capture-viewer', 'content.json'), {
       version: 1,
       dataSource: 'Captures',
       root: {
@@ -132,14 +201,28 @@ describe('content root consumers', () => {
     });
     writeFile(path.join(projectPath, 'shared', 'captures', '001-Captures', 'note.md'), '# Note\n');
 
-    const msg = buildPanelConfig(projectPath);
+    const msg = await buildPanelConfig(projectPath, 'workspace-123', 'epoch-123');
 
     expect(msg.panelRoots['capture-viewer']).toBe(path.join(projectPath, 'shared', 'captures'));
+    expect(msg).toMatchObject({ workspaceId: 'workspace-123', workspaceEpoch: 'epoch-123' });
+    expect(msg.viewCapsules).toMatchObject({
+      version: 1,
+      workspaceId: 'workspace-123',
+      machineIdentity: 'PanelRootBox',
+    });
+
+    const update = await buildViewRegistryUpdated(projectPath, 'workspace-123', { version: 2 });
+    expect(update).toEqual({
+      type: 'workspace:view_registry_updated',
+      workspaceId: 'workspace-123',
+      registry: { version: 2 },
+      viewCapsules: msg.viewCapsules,
+    });
   });
 
   test('runner and prompt builder read v2 Agents and Issues content roots', () => {
     const projectPath = path.join(tempRoot, 'runner-content-roots');
-    createService.scaffoldProject({
+    scaffoldProject({
       projectPath,
       machineName: 'RunnerConsumerBox',
       viewIds: ['agents-viewer', 'issues-viewer'],

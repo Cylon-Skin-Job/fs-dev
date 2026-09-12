@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const registryService = require('../workspace/registry-service');
 const { getAuthoritativePanelPath } = require('../views/panel-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 const { normalizeCanonicalPath } = require('./provenance-values');
 
 class PathAuthorityError extends Error {
@@ -168,6 +169,11 @@ function createPathAuthority({
     const canonicalPath = normalizeCanonicalPath(canonicalNative.split(path.sep).join('/'));
     const canonicalParent = path.posix.dirname(canonicalPath);
     const targetFingerprint = targetLstat ? fingerprint(targetLstat) : null;
+    await assertGenericViewMutationAllowed({
+      projectRoot: workspaceRoot,
+      paths: [logicalTarget, targetPath],
+      fsPromises,
+    });
     return Object.freeze({
       workspaceRoot,
       workspaceReal,
@@ -208,13 +214,19 @@ function createPathAuthority({
     if (parentStat.isSymbolicLink() || !parentStat.isDirectory()) {
       throw new PathAuthorityError('Canonical parent is not an authorized directory.');
     }
+    const targetPath = path.join(parentReal, path.basename(logicalTarget));
+    await assertGenericViewMutationAllowed({
+      projectRoot: workspaceRoot,
+      paths: [logicalTarget, targetPath],
+      fsPromises,
+    });
     return Object.freeze({
       workspaceRoot,
       workspaceReal,
       panelReal: workspaceReal,
       parentReal,
       parentFingerprint: fingerprint(parentStat),
-      targetPath: path.join(parentReal, path.basename(logicalTarget)),
+      targetPath,
       canonicalPath,
     });
   }

@@ -77,7 +77,7 @@ describe('WebSocket payload boundary', () => {
         FUSION_ELECTRON_SERVER: '1',
         PORT: '0',
       },
-      stdio: ['ignore', 'pipe', 'pipe', 'pipe'],
+      stdio: ['ignore', 'pipe', 'pipe', 'pipe', 'pipe'],
     });
     const bootstrap = `${JSON.stringify({
       version: 1,
@@ -85,6 +85,9 @@ describe('WebSocket payload boundary', () => {
       master: Buffer.alloc(32, 7).toString('base64url'),
     })}\n`;
     child.stdio[3].end(bootstrap);
+    let workspaceBinding = '';
+    child.stdio[4].setEncoding('utf8');
+    child.stdio[4].on('data', (chunk) => { workspaceBinding += chunk; });
     let stdout = '';
     let stderr = '';
     child.stdout.setEncoding('utf8');
@@ -108,6 +111,7 @@ describe('WebSocket payload boundary', () => {
           reject(new Error(`managed server exited before readiness: ${code}: ${stderr}`));
         });
       });
+      expect(JSON.parse(workspaceBinding.trim())).toEqual(expect.objectContaining({ version: 1 }));
       const client = new WebSocket(`ws://127.0.0.1:${port}`, {
         origin: 'fusion-shell://app',
       });

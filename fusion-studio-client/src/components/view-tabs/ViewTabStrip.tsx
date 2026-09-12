@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from
 import {
   viewTabDomId,
   viewTabPanelDomId,
-  viewTabSingleIdentityDomId,
 } from './viewTabDomIds';
 
 export interface ViewTabDescriptor {
@@ -84,13 +83,6 @@ export function ViewTabStrip({
         if (button) {
           setRovingId(id);
           button.focus();
-          return;
-        }
-        const singleIdentity = document.getElementById(
-          viewTabSingleIdentityDomId(panelId, id),
-        );
-        if (singleIdentity) {
-          singleIdentity.focus();
           return;
         }
       }

@@ -72,7 +72,7 @@ function hashTree(root) {
 }
 
 function writeView(workspaceRoot) {
-  const viewRoot = path.join(workspaceRoot, 'ai', 'Test-Provenance', 'Views', '001-file-viewer');
+  const viewRoot = path.join(workspaceRoot, 'ai', 'Test-Provenance', 'System', 'Views', '001-file-viewer');
   fs.mkdirSync(path.join(viewRoot, 'styles'), { recursive: true });
   fs.mkdirSync(path.join(viewRoot, 'state'), { recursive: true });
   fs.writeFileSync(path.join(viewRoot, 'manifest.md'), '---\nname: Files\ndescription: Isolated agent provenance fixture.\nmetadata:\n  view-id: file-viewer\n  view-type: file-explorer\n  data-source: project-root\n  enabled: true\n---\n', 'utf8');

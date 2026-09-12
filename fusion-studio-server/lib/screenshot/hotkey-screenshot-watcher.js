@@ -13,6 +13,7 @@ const { subscribe, unsubscribe } = require('../watch/core');
 const sourceFolderService = require('./source-folder-service');
 const workspaceController = require('../workspace/workspace-controller');
 const aiPaths = require('../workspace/ai-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 const SUBSCRIBER_ID = 'macos-screenshots';
 const SCREENSHOT_NAME_REGEX = /^Screenshot .*\.(png|jpg|jpeg)$/i;
@@ -35,8 +36,7 @@ function readAppFocused() {
   }
 }
 
-function getWorkspaceScreenshotsDir() {
-  const activeWorkspace = workspaceController.getActiveWorkspaceSync();
+function getWorkspaceScreenshotsDir(activeWorkspace = workspaceController.getActiveWorkspaceSync()) {
   if (!activeWorkspace || !activeWorkspace.repo_path) return null;
   return path.join(aiPaths.getMachineAiRoot(activeWorkspace.repo_path), 'Data', 'Screenshots');
 }
@@ -47,7 +47,8 @@ async function ensureDir(dir) {
 }
 
 async function copyToWorkspace(sourcePath) {
-  const targetDir = getWorkspaceScreenshotsDir();
+  const activeWorkspace = workspaceController.getActiveWorkspaceSync();
+  const targetDir = getWorkspaceScreenshotsDir(activeWorkspace);
   if (!targetDir) {
     console.log('[ScreenshotWatcher] No active workspace — skipping screenshot');
     return;
@@ -61,6 +62,10 @@ async function copyToWorkspace(sourcePath) {
   const fileName = path.basename(sourcePath);
   const targetPath = path.join(targetDir, fileName);
 
+  await assertGenericViewMutationAllowed({
+    projectRoot: activeWorkspace.repo_path,
+    paths: [targetDir, targetPath],
+  });
   await ensureDir(targetDir);
   await fs.promises.copyFile(sourcePath, targetPath);
   console.log(`[ScreenshotWatcher] Copied ${fileName} to workspace screenshots`);
@@ -112,6 +117,7 @@ function stop() {
 }
 
 module.exports = {
+  copyToWorkspace,
   start,
   refresh,
   stop,

@@ -259,6 +259,48 @@ describe('file-save restart reconciliation', () => {
     });
   });
 
+  test('restart cleanup never unlinks a protected file through a hard-linked operation temp', async () => {
+    let operation = await operations.reserve(input(125, 'failed-protected-alias.md'));
+    operation = await operations.prepare({
+      operationId: operation.operationId, preimage: { kind: 'absent' },
+      intendedAfterSha256: operation.intendedAfterSha256,
+      intendedAfterByteLength: operation.intendedAfterByteLength, preparedAt: clock(),
+    });
+    await operations.markAttempted(operation.operationId, clock());
+    operation = await operations.markFailed({
+      operationId: operation.operationId, failureCode: 'replace_failed', completedAt: clock(),
+    });
+    operation = await operations.markCommandFactAdmitted(operation.operationId, clock());
+    const target = await authority().resolveCanonical({
+      workspaceId: operation.workspaceId, canonicalPath: operation.canonicalPath,
+    });
+    const protectedFile = path.join(
+      workspaceRoot, 'ai', 'Machine-A', 'System', 'Views', '001-files', 'content.json',
+    );
+    fs.mkdirSync(path.dirname(protectedFile), { recursive: true });
+    fs.writeFileSync(protectedFile, 'protected bytes');
+    const tempPath = createAtomicWriter().tempPathFor(target, operation.operationId);
+    fs.linkSync(protectedFile, tempPath);
+
+    await db.destroy();
+    db = createDb(dbPath);
+    operations = createFileOperationRepository(db);
+    reservations = createDurableReservationAuthority(db);
+    const diagnostics = [];
+    const results = await createFileSaveReconciler({
+      operations, reservations, publishers: publishers([]), pathAuthority: authority(), clock,
+      writeDiagnostic: (code) => diagnostics.push(code),
+    }).reconcile();
+
+    expect(results).toHaveLength(1);
+    expect(fs.existsSync(tempPath)).toBe(true);
+    expect(fs.readFileSync(protectedFile, 'utf8')).toBe('protected bytes');
+    await expect(operations.getById(operation.operationId)).resolves.toMatchObject({
+      state: 'failed', tempCleanupState: 'pending', commandFactAdmissionState: 'admitted',
+    });
+    expect(diagnostics).toContain('file_operation_temp_cleanup_pending');
+  });
+
   test('owner accepts one exact publisher injection without exposing publisher closures', async () => {
     const calls = [];
     const owner = createFileSaveOwner({

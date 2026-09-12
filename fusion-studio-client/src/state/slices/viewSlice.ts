@@ -52,6 +52,9 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
   docViewerArchiveDocScroll: 0,
   docViewerTabs: [],
   docViewerActiveTabId: null,
+  // VIEW-02 Slice 3: generic Capture tab records live in this same state
+  // document; null until the connected owner commits its first collection.
+  captureTabRecords: null,
   officeViewerMode: 'home',
   officeViewerCurrentFolder: null,
   officeViewerSelectedPath: null,
@@ -105,6 +108,7 @@ export function clampPaneWidth(pane: Pane, n: number, maxOverride?: number): num
 export function createViewSlice(set: Set, get: Get) {
   return {
     viewStates: {} as Record<string, ViewUIState>,
+    viewStateLoadPending: {} as Record<string, boolean>,
     cliPickerOpen: {} as Record<string, boolean>,
     threadDropdownOpen: {} as Record<string, boolean>,
     composerModelConfig: {} as Record<string, ComposerModelSelection>,
@@ -132,6 +136,24 @@ export function createViewSlice(set: Set, get: Get) {
           hadPendingMutation: hasPendingViewStateMutation(view, workspaceId),
         }),
       }));
+      // VIEW-02 §9: the persisted state is in flight — the connected adapters
+      // hold the initial policy until it lands (settleViewStateLoad).
+      set((s) => (
+        s.viewStateLoadPending[view]
+          ? {}
+          : { viewStateLoadPending: { ...s.viewStateLoadPending, [view]: true } }
+      ));
+    },
+
+    // Called by the ws layer when a `state:get` response (result or error)
+    // settles for a view; re-opens the connected adapters' initial-policy gate.
+    settleViewStateLoad: (view: string) => {
+      if (!get().viewStateLoadPending[view]) return;
+      set((s) => {
+        const next = { ...s.viewStateLoadPending };
+        delete next[view];
+        return { viewStateLoadPending: next };
+      });
     },
 
     // STATE_OVERRIDE_SPEC: send a minimal state:set patch for the given view.

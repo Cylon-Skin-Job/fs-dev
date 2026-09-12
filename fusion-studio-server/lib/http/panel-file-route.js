@@ -9,6 +9,8 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const viewReadiness = require('../views/readiness-runtime');
+const { panelPathRequiresViewReadiness } = require('../views/panel-paths');
 
 const ALLOWED_DOT_DIRECTORIES = new Set(['.thumbnails']);
 
@@ -36,27 +38,42 @@ function sendPanelFile(res, absolutePath, requestPath) {
 /**
  * @param {object} deps
  * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
- * @param {(panel: string, ws?: import('ws').WebSocket) => string|null} deps.getPanelPath
+ * @param {(projectRoot: string, panel: string) => string|null} deps.getPanelPathForRoot
+ * @param {() => string|null} deps.getWorkspaceId
  */
-function createRouter({ getProjectRoot, getPanelPath }) {
+function createRouter({ getProjectRoot, getPanelPathForRoot, getWorkspaceId = () => null }) {
+  if (typeof getPanelPathForRoot !== 'function') {
+    throw new TypeError('root-bound panel path resolver is required');
+  }
   const router = express.Router();
 
-  router.get('/:panel/*splat', (req, res) => {
+  router.get('/:panel/*splat', async (req, res) => {
     const panel = req.params.panel;
     // Express 5: *splat is an array of path segments; Express 4 used a string.
     const splat = req.params.splat;
     const filePath = Array.isArray(splat) ? splat.join('/') : String(splat ?? '');
     const root = getProjectRoot();
     if (!root) return res.status(503).send('No active workspace');
+    let readinessLease = null;
+    if (panelPathRequiresViewReadiness(panel)) {
+      const workspaceId = getWorkspaceId();
+      if (!workspaceId) return res.status(503).send('view_registry_unavailable');
+      try {
+        const context = { workspaceId, projectRoot: root };
+        await viewReadiness.ensureWorkspaceViewReadiness(context);
+        readinessLease = viewReadiness.acquireViewReadinessLease(context);
+      } catch (_error) {
+        return res.status(503).send('view_registry_unavailable');
+      }
+    }
     // Resolve via the same view resolver the file-tree WS handler uses, so
     // views point at their V2 content root rather than their view capsule.
-    const panelPath = getPanelPath(panel);
-    if (!panelPath) return res.status(404).send('Not found');
-    const baseDir = panelPath;
-    const dirPath = path.join(baseDir, path.dirname(filePath));
-    const fileName = path.basename(filePath);
-
     try {
+      const panelPath = getPanelPathForRoot(root, panel);
+      if (!panelPath) return res.status(404).send('Not found');
+      const baseDir = panelPath;
+      const dirPath = path.join(baseDir, path.dirname(filePath));
+      const fileName = path.basename(filePath);
       const realDir = fs.realpathSync(dirPath);
       // Try direct match first
       const directPath = path.join(realDir, fileName);
@@ -75,7 +92,9 @@ function createRouter({ getProjectRoot, getPanelPath }) {
 
       res.status(404).send('Not found');
     } catch {
-      res.status(404).send('Not found');
+      return res.status(404).send('Not found');
+    } finally {
+      if (readinessLease) readinessLease.release();
     }
   });
 

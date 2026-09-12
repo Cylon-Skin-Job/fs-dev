@@ -14,6 +14,8 @@ interface DocumentPreviewModalProps {
   starred: boolean;
   onClose: () => void;
   onOpenFullScreen: () => void;
+  /** VIEW-02 Slice 3: TABS-03 `new` disposition (adopted Capture path). */
+  onOpenInNewTab?: () => void;
   onRename: () => void;
   onArchive: () => void;
   onDelete: () => void;
@@ -26,6 +28,7 @@ export function DocumentPreviewModal({
   starred,
   onClose,
   onOpenFullScreen,
+  onOpenInNewTab,
   onRename,
   onArchive,
   onDelete,
@@ -84,6 +87,17 @@ export function DocumentPreviewModal({
               onArchive={onArchive}
               onDelete={onDelete}
             />
+            {onOpenInNewTab && (
+              <button
+                type="button"
+                className="rv-document-preview-header-action rv-document-preview-open-new-tab"
+                onClick={onOpenInNewTab}
+                aria-label={`Open ${file.name} in new tab`}
+                title="Open in new tab"
+              >
+                <span className="material-symbols-outlined" aria-hidden="true">tab</span>
+              </button>
+            )}
             <button
               type="button"
               className="rv-document-preview-header-action rv-document-preview-expand"

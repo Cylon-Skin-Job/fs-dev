@@ -31,6 +31,7 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
     tokenUsage: null,
     panelConfigs: [],
     panelRoots: {},
+    tabPolicies: null,
     viewStates: {},
   };
 }
@@ -58,7 +59,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
 
     // Keep full runtime state in memory for same-session workspace switches,
     // but persist only view UI state plus the active view id. Panel configs
-    // and panel roots are filesystem-derived from ai/<machine>/Views.
+    // and panel roots are filesystem-derived from ai/<machine>/System/Views.
     const nextWorkspaceState = { ...state.workspaceState };
     if (oldId) {
       if (oldId !== workspaceId) {
@@ -76,6 +77,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
         tokenUsage: null,
         panelConfigs: state.panelConfigs,
         panelRoots: state.panelRoots,
+        tabPolicies: state.tabPolicies,
         viewStates: state.viewStates,
       };
       nextWorkspaceState[oldId] = oldState;
@@ -97,6 +99,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
       !oldId && loaded.panelConfigs.length === 0 && state.panelConfigs.length > 0;
     const panelConfigs = preserveInitialDiscovery ? state.panelConfigs : loaded.panelConfigs;
     const panelRoots = preserveInitialDiscovery ? state.panelRoots : loaded.panelRoots;
+    const tabPolicies = preserveInitialDiscovery ? state.tabPolicies : loaded.tabPolicies;
     const currentPanelCandidate = preserveInitialDiscovery ? state.currentPanel : loaded.currentPanel;
 
     // Validate currentPanel against discovered panelConfigs when available.
@@ -123,7 +126,11 @@ export const usePanelStore = create<AppState>((set, get) => ({
       tokenUsage: null,
       panelConfigs,
       panelRoots,
+      tabPolicies,
       viewStates: loaded.viewStates,
+      // Workspace switch replaces the per-view state documents; any in-flight
+      // load markers belong to the previous workspace's reads.
+      viewStateLoadPending: {},
       _prefetchAbort: null,
     });
 
@@ -170,6 +177,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
         tokenUsage: emptyState.tokenUsage,
         panelConfigs: emptyState.panelConfigs,
         panelRoots: emptyState.panelRoots,
+        tabPolicies: emptyState.tabPolicies,
         viewStates: emptyState.viewStates,
         secondary: null,
         cliPickerOpen: {},
@@ -278,6 +286,10 @@ export const usePanelStore = create<AppState>((set, get) => ({
 
   panelRoots: {},
   setPanelRoots: (roots) => set({ panelRoots: roots }),
+
+  // ── Tab policy projection (SPEC-02 §4) ──
+  tabPolicies: null,
+  setTabPolicies: (policies) => set({ tabPolicies: policies }),
 
   // ── Thread management (RCC-0095: single workspace chat) ───────────────────
   threads: [],

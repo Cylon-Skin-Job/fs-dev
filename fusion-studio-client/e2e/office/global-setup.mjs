@@ -56,9 +56,9 @@ function fixtureOptionsFromEnvironment() {
 function seedCaptureRehydrationFixtures(fixture) {
   for (const [suffix, workspaceRoot] of Object.entries(fixture.workspaceRoots)) {
     const machineRoot = path.join(workspaceRoot, 'ai', fixture.machineName)
-    const viewRoot = path.join(machineRoot, 'Views', '002-capture-viewer')
+    const viewRoot = path.join(machineRoot, 'System', 'Views', '002-capture-viewer')
     const capturesRoot = path.join(machineRoot, 'Captures', '001-Fixtures')
-    const emailViewRoot = path.join(machineRoot, 'Views', '003-email-viewer')
+    const emailViewRoot = path.join(machineRoot, 'System', 'Views', '003-email-viewer')
     const emailRoot = path.join(machineRoot, 'Email', '009-Email-Fixture')
     fs.mkdirSync(path.join(viewRoot, 'styles'), { recursive: true })
     fs.mkdirSync(path.join(viewRoot, 'state'), { recursive: true })
@@ -98,7 +98,7 @@ function seedCaptureRehydrationFixtures(fixture) {
       `# Capture ${suffix.toUpperCase()} Second\n`,
     )
 
-    const fileViewRoot = path.join(machineRoot, 'Views', '005-file-viewer')
+    const fileViewRoot = path.join(machineRoot, 'System', 'Views', '005-file-viewer')
     fs.mkdirSync(path.join(fileViewRoot, 'styles'), { recursive: true })
     fs.mkdirSync(path.join(fileViewRoot, 'state'), { recursive: true })
     fs.writeFileSync(path.join(fileViewRoot, 'manifest.md'), [
@@ -168,7 +168,7 @@ function seedCaptureRehydrationFixtures(fixture) {
       `# Email ${suffix.toUpperCase()}\n`,
     )
 
-    const issuesViewRoot = path.join(machineRoot, 'Views', '004-issues-viewer')
+    const issuesViewRoot = path.join(machineRoot, 'System', 'Views', '004-issues-viewer')
     const issuesRoot = path.join(machineRoot, 'Issues')
     fs.mkdirSync(path.join(issuesViewRoot, 'styles'), { recursive: true })
     fs.mkdirSync(path.join(issuesViewRoot, 'state'), { recursive: true })

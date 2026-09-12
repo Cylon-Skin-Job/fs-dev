@@ -28,16 +28,47 @@ function clone(value) {
   return value === null ? null : JSON.parse(JSON.stringify(value));
 }
 
+function writeManifest(folder, viewId) {
+  fs.writeFileSync(path.join(folder, 'manifest.md'), [
+    '---',
+    `name: ${viewId}`,
+    'metadata:',
+    `  view-id: ${viewId}`,
+    '---',
+    '',
+  ].join('\n'));
+}
+
 describe('view-state writer', () => {
   let tempRoot;
   let previousMachine;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     previousMachine = process.env.FUSION_LOCAL_MACHINE;
     process.env.FUSION_LOCAL_MACHINE = 'Test-Machine';
-    tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-view-state-'));
-    fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer'), { recursive: true });
+    tempRoot = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-view-state-')));
+    const officeView = path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer');
+    fs.mkdirSync(officeView, { recursive: true });
+    writeManifest(officeView, 'office-viewer');
     jest.resetModules();
+    const readiness = require('../../lib/views/readiness-runtime');
+    const { createViewReadinessCoordinator } = require('../../lib/views/readiness-coordinator');
+    readiness.installViewReadinessOwner(createViewReadinessCoordinator({
+      machineIdentity: 'Test-Machine',
+      migrationService: {
+        ensureReady: async ({ workspaceId, machineIdentity, projectRoot }) => ({
+          status: 'verified',
+          workspaceId,
+          machineIdentity,
+          projectRoot,
+          destinationRoot: path.join(projectRoot, 'ai', machineIdentity, 'System', 'Views'),
+        }),
+      },
+    }));
+    await readiness.ensureWorkspaceViewReadiness({
+      workspaceId: 'view-state-writer-test',
+      projectRoot: tempRoot,
+    });
   });
 
   afterEach(() => {
@@ -58,7 +89,7 @@ describe('view-state writer', () => {
     });
 
     const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
-    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer', 'state', 'state.json'));
 
     expect(resolved.officePaperBrightness).toBe(42);
     expect(workspaceState.officePaperBrightness).toBe(100);
@@ -66,7 +97,9 @@ describe('view-state writer', () => {
   });
 
   test('stores Capture tab records and active identity in Capture view state', async () => {
-    fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-capture-viewer'), { recursive: true });
+    const captureView = path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-capture-viewer');
+    fs.mkdirSync(captureView, { recursive: true });
+    writeManifest(captureView, 'capture-viewer');
     const { writeViewStatePatch } = require('../../lib/view-state/writer');
     const tabs = [{ id: 'cvt-one', kind: 'doc', path: '001-Captures/note.md' }];
 
@@ -76,7 +109,7 @@ describe('view-state writer', () => {
     });
 
     const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
-    const captureState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-capture-viewer', 'state', 'state.json'));
+    const captureState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-capture-viewer', 'state', 'state.json'));
 
     expect(resolved.docViewerTabs).toEqual(tabs);
     expect(resolved.docViewerActiveTabId).toBe('cvt-one');
@@ -84,6 +117,43 @@ describe('view-state writer', () => {
     expect(workspaceState.docViewerActiveTabId).toBeUndefined();
     expect(captureState.docViewerTabs).toEqual(tabs);
     expect(captureState.docViewerActiveTabId).toBe('cvt-one');
+  });
+
+  test('stores the VIEW-02 connected Capture tab records in the same view override document', async () => {
+    const captureView = path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-capture-viewer');
+    fs.mkdirSync(captureView, { recursive: true });
+    writeManifest(captureView, 'capture-viewer');
+    const { writeViewStatePatch } = require('../../lib/view-state/writer');
+    const records = {
+      schemaVersion: 1,
+      tabs: [{
+        tabId: 'cvt-records-one',
+        content: {
+          kind: 'component',
+          revision: 0,
+          component: {
+            schemaVersion: 1,
+            componentTypeId: 'capture.landing',
+            componentInstanceId: 'cvi-records-one',
+            input: { title: 'CAPTURE', locationLabels: ['Capture', 'Documents and Artifacts'] },
+            targetKey: 'capture:home',
+          },
+        },
+      }],
+      activeTabId: 'cvt-records-one',
+      reservations: [],
+    };
+
+    const resolved = await writeViewStatePatch(tempRoot, 'capture-viewer', {
+      captureTabRecords: records,
+    });
+
+    const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
+    const captureState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-capture-viewer', 'state', 'state.json'));
+
+    expect(resolved.captureTabRecords).toEqual(records);
+    expect(workspaceState.captureTabRecords).toBeUndefined();
+    expect(captureState.captureTabRecords).toEqual(records);
   });
 
   test('stores right-column collapse state in the view override', async () => {
@@ -96,7 +166,7 @@ describe('view-state writer', () => {
     });
 
     const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
-    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer', 'state', 'state.json'));
 
     expect(resolved.collapsed.rightCol).toBe(true);
     expect(workspaceState.collapsed.rightCol).toBe(false);
@@ -113,7 +183,7 @@ describe('view-state writer', () => {
     });
 
     const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
-    const fileState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+    const fileState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer', 'state', 'state.json'));
 
     expect(resolved.collapsed.contentArea).toBe(true);
     expect(workspaceState.collapsed.contentArea).toBe(false);
@@ -131,7 +201,7 @@ describe('view-state writer', () => {
     });
 
     const workspaceState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'state', 'state.json'));
-    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-office-viewer', 'state', 'state.json'));
+    const officeState = readJson(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer', 'state', 'state.json'));
 
     expect(resolved.widths.contentNavLeft).toBe(284);
     expect(resolved.widths.contentNavRight).toBe(316);
@@ -139,6 +209,51 @@ describe('view-state writer', () => {
     expect(workspaceState.widths.contentNavRight).toBe(220);
     expect(officeState.widths.contentNavLeft).toBe(284);
     expect(officeState.widths.contentNavRight).toBe(316);
+  });
+
+  test('cached journal-verified readiness cannot turn a committed write into a failed result', async () => {
+    const readiness = require('../../lib/views/readiness-runtime');
+    const fsPromises = require('fs').promises;
+    const originalRename = fsPromises.rename;
+    let signalRename;
+    let finishRename;
+    let renamePaused = false;
+    const renameStarted = new Promise(resolve => { signalRename = resolve; });
+    const renamePending = new Promise(resolve => { finishRename = resolve; });
+    const renameSpy = jest.spyOn(fsPromises, 'rename').mockImplementation(async (...args) => {
+      if (!renamePaused) {
+        renamePaused = true;
+        signalRename();
+        await renamePending;
+      }
+      return originalRename(...args);
+    });
+
+    try {
+      const { writeViewStatePatch } = require('../../lib/view-state/writer');
+      const writing = writeViewStatePatch(tempRoot, 'office-viewer', {
+        officePaperBrightness: 61,
+      });
+      await renameStarted;
+      const revalidation = readiness.ensureWorkspaceViewReadiness({
+        workspaceId: 'view-state-writer-test',
+        projectRoot: tempRoot,
+      });
+
+      finishRename();
+      await expect(writing).resolves.toMatchObject({ officePaperBrightness: 61 });
+      await expect(revalidation).resolves.toMatchObject({
+        status: 'verified',
+        phase: 'journal_verified',
+        verified: true,
+      });
+      expect(readJson(
+        path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-office-viewer', 'state', 'state.json'),
+      )).toMatchObject({ officePaperBrightness: 61 });
+    } finally {
+      renameSpy.mockRestore();
+      finishRename();
+    }
   });
 
   test('serializes concurrent patches for the same view', async () => {
@@ -150,6 +265,7 @@ describe('view-state writer', () => {
     jest.doMock('../../lib/view-state/resolver', () => ({
       workspacePath: () => 'workspace-state',
       viewOverridePath: () => 'office-override',
+      HARDCODED_DEFAULTS: {},
       readJsonOrNull: async (filePath) => {
         await delay();
         if (filePath === 'office-override') {
@@ -158,15 +274,18 @@ describe('view-state writer', () => {
         }
         return clone(workspace);
       },
-      atomicWriteJson: async (filePath, obj) => {
-        await delay();
-        if (filePath === 'office-override') {
-          override = clone(obj);
-        } else {
-          workspace = clone(obj);
+      atomicWriteJsonBatch: async (writes) => {
+        for (const { filePath, obj } of writes) {
+          await delay();
+          if (filePath === 'office-override') {
+            override = clone(obj);
+          } else {
+            workspace = clone(obj);
+          }
         }
       },
-      resolveViewState: async () => deepMerge(workspace, override || {}),
+      assertCallerHeldViewReadinessLease: () => undefined,
+      resolveViewStateUnderLease: async () => deepMerge(workspace, override || {}),
       deepMerge,
       isPlainObject,
     }));

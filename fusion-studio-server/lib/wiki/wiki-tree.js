@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const views = require('../views');
+const aiPaths = require('../workspace/ai-paths');
 const { createCycleGuard } = require('../fs/cycle-guard');
 const { classifyEntrySync } = require('../fs/dirents');
 
@@ -27,135 +28,26 @@ function wikiFolderNameToLabel(folderName) {
 
 function workspaceRootFromWikiRoot(wikiRoot) {
   const normalized = path.normalize(wikiRoot);
-  const legacySuffix = path.join('ai', 'views', 'wiki-viewer', 'Wiki');
-
-  if (normalized.endsWith(legacySuffix)) {
-    return normalized.slice(0, normalized.length - legacySuffix.length - 1);
-  }
-
   const parts = normalized.split(path.sep);
   const aiIndex = parts.lastIndexOf('ai');
   if (aiIndex !== -1 && parts[aiIndex + 2] === 'Wiki' && aiIndex + 3 === parts.length) {
+    return parts.slice(0, aiIndex).join(path.sep) || path.sep;
+  }
+  if (
+    aiIndex !== -1
+    && parts[aiIndex + 2] === 'System'
+    && parts[aiIndex + 3] === 'Views'
+    && parts[aiIndex + 5] === 'Wiki'
+    && aiIndex + 6 === parts.length
+  ) {
     return parts.slice(0, aiIndex).join(path.sep) || path.sep;
   }
 
   return path.dirname(normalized);
 }
 
-function defaultLegacyWikiRoot(workspacePath) {
-  return path.join(workspacePath, 'ai', 'views', 'wiki-viewer', 'Wiki');
-}
-
-function readJsonObject(filePath) {
-  try {
-    const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
-  } catch {
-    // Missing or invalid optional content config falls back to the machine wiki root.
-  }
-  return null;
-}
-
-function isPathInside(candidate, rootPath) {
-  const root = path.resolve(rootPath);
-  const resolved = path.resolve(candidate);
-  const relative = path.relative(root, resolved);
-  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
-}
-
-function expandContentPathVariables(value, workspacePath, machineName) {
-  return String(value || '')
-    .replace(/\$\{machine\}/g, machineName)
-    .replace(/\$\{workspace\}/g, path.basename(workspacePath));
-}
-
-function resolveRelativeContentPath(rootPath, rawPath, workspacePath, machineName) {
-  const expanded = expandContentPathVariables(rawPath, workspacePath, machineName);
-  if (!expanded || path.isAbsolute(expanded)) return null;
-  const resolved = path.resolve(rootPath, expanded);
-  return isPathInside(resolved, rootPath) ? resolved : null;
-}
-
-function resolveAbsoluteContentPath(rawPath, workspacePath, machineName) {
-  const expanded = expandContentPathVariables(rawPath, workspacePath, machineName);
-  if (!expanded || !path.isAbsolute(expanded)) return null;
-  return path.resolve(expanded);
-}
-
-function resolveDeclaredWikiRoot(workspacePath, machineName, viewRoot, declaration) {
-  if (typeof declaration === 'string') {
-    return resolveRelativeContentPath(workspacePath, declaration, workspacePath, machineName);
-  }
-  if (!declaration || typeof declaration !== 'object' || Array.isArray(declaration)) {
-    return null;
-  }
-
-  const machineRoot = path.join(workspacePath, 'ai', machineName);
-  const type = declaration.type || 'workspace-relative';
-  if (type === 'workspace-relative') {
-    return resolveRelativeContentPath(workspacePath, declaration.path, workspacePath, machineName);
-  }
-  if (type === 'machine-relative') {
-    return resolveRelativeContentPath(machineRoot, declaration.path, workspacePath, machineName);
-  }
-  if (type === 'view-relative') {
-    return resolveRelativeContentPath(viewRoot, declaration.path, workspacePath, machineName);
-  }
-  if (type === 'project-root') {
-    return workspacePath;
-  }
-  if (type === 'absolute') {
-    return resolveAbsoluteContentPath(declaration.path, workspacePath, machineName);
-  }
-  if (type === 'selected-folder') {
-    return declaration.path
-      ? resolveRelativeContentPath(workspacePath, declaration.path, workspacePath, machineName)
-      : viewRoot;
-  }
-  if (type === 'sqlite' || type === 'none') {
-    return viewRoot;
-  }
-  return null;
-}
-
-function isWikiViewerFolder(viewRoot) {
-  const folderId = path.basename(viewRoot).replace(/^\d+[-_\s]+/, '');
-  if (folderId === 'wiki-viewer') return true;
-  try {
-    const manifest = fs.readFileSync(path.join(viewRoot, 'manifest.md'), 'utf8');
-    return /^\s*view-id:\s*wiki-viewer\s*$/m.test(manifest);
-  } catch {
-    return false;
-  }
-}
-
-function discoverMachineScopedWikiRoot(workspacePath) {
-  const aiRoot = path.join(workspacePath, 'ai');
-  if (!directoryExists(aiRoot)) return null;
-
-  for (const machineEntry of fs.readdirSync(aiRoot, { withFileTypes: true })) {
-    if (!machineEntry.isDirectory()) continue;
-    const machineName = machineEntry.name;
-    const viewsRoot = path.join(aiRoot, machineName, 'Views');
-    if (!directoryExists(viewsRoot)) continue;
-
-    const viewEntries = fs.readdirSync(viewsRoot, { withFileTypes: true })
-      .filter(entry => entry.isDirectory())
-      .sort((a, b) => a.name.localeCompare(b.name));
-
-    for (const viewEntry of viewEntries) {
-      const viewRoot = path.join(viewsRoot, viewEntry.name);
-      if (!isWikiViewerFolder(viewRoot)) continue;
-
-      const config = readJsonObject(path.join(viewRoot, 'content.json'));
-      const declaredRoot = config && config.root !== undefined
-        ? resolveDeclaredWikiRoot(workspacePath, machineName, viewRoot, config.root)
-        : null;
-      return declaredRoot || path.join(aiRoot, machineName, 'Wiki');
-    }
-  }
-
-  return null;
+function defaultMachineWikiRoot(workspacePath) {
+  return path.join(aiPaths.getMachineAiRoot(workspacePath), 'Wiki');
 }
 
 function resolveWikiRoot(inputPath) {
@@ -166,9 +58,12 @@ function resolveWikiRoot(inputPath) {
     : absoluteInput;
   const wikiRoot = inputIsWikiRoot
     ? absoluteInput
-    : views.resolveContentPath(workspacePath, 'wiki-viewer', { includeHidden: true })
-      || discoverMachineScopedWikiRoot(workspacePath)
-      || defaultLegacyWikiRoot(workspacePath);
+    : views.resolveContentPath(workspacePath, 'wiki-viewer', {
+      includeHidden: true,
+      strictFilesystemErrors: true,
+      strictReadiness: true,
+    })
+      || defaultMachineWikiRoot(workspacePath);
 
   return {
     workspaceId: path.basename(workspacePath),

@@ -3,6 +3,14 @@ const fs = require('fs');
 const createService = require('../workspace/create-service');
 const aiPaths = require('../workspace/ai-paths');
 const { classifyEntrySync } = require('../fs/dirents');
+const {
+  parseCanonicalViewId,
+  canonicalViewIdsEqual,
+  assertUniqueCanonicalViewIds,
+} = require('./view-id');
+const { MAX_VIEW_CAPSULE_PROJECTION_ENTRIES } = require('./view-capsules-projection');
+const { parseSimpleYaml } = require('./simple-yaml');
+const { acquireViewReadinessLease } = require('./readiness-runtime');
 
 function isPlainObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -34,43 +42,7 @@ function writeJsonFile(filePath, state) {
 
 function quoteYamlScalar(value) {
   const raw = String(value || '');
-  if (/^[A-Za-z0-9._ -]+$/.test(raw)) return raw;
   return JSON.stringify(raw);
-}
-
-function parseYamlScalar(value) {
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (value === 'null') return null;
-  return value.replace(/^['"]|['"]$/g, '');
-}
-
-function parseSimpleYaml(yamlText) {
-  const result = {};
-  let currentObject = result;
-  for (const rawLine of String(yamlText || '').split(/\r?\n/)) {
-    if (!rawLine.trim() || rawLine.trim().startsWith('#')) continue;
-    const indent = rawLine.match(/^\s*/)[0].length;
-    const line = rawLine.trim();
-    const separator = line.indexOf(':');
-    if (separator === -1) continue;
-    const key = line.slice(0, separator).trim();
-    const rawValue = line.slice(separator + 1).trim();
-    if (indent === 0) {
-      if (rawValue === '') {
-        result[key] = {};
-        currentObject = result[key];
-      } else {
-        result[key] = parseYamlScalar(rawValue);
-        currentObject = result;
-      }
-      continue;
-    }
-    if (currentObject && typeof currentObject === 'object') {
-      currentObject[key] = parseYamlScalar(rawValue);
-    }
-  }
-  return result;
 }
 
 function readFrontmatter(filePath) {
@@ -218,12 +190,12 @@ function getWorkspaceHiddenViewIds(projectRoot) {
   const state = readV2WorkspaceState(projectRoot);
   const hidden = state.views && state.views.hidden;
   if (Array.isArray(hidden)) {
-    return new Set(hidden.filter((id) => typeof id === 'string' && id.trim()).map((id) => id.trim()));
+    return new Set(hidden.map((id) => parseCanonicalViewId(id, 'Workspace hidden view state')));
   }
   if (isPlainObject(hidden)) {
     return new Set(Object.entries(hidden)
       .filter(([, value]) => value !== false)
-      .map(([id]) => id));
+      .map(([id]) => parseCanonicalViewId(id, 'Workspace hidden view state')));
   }
   return new Set();
 }
@@ -261,7 +233,12 @@ function updateWorkspaceViewRegistry(projectRoot, request) {
     throw new Error('No active workspace');
   }
 
-  return updateV2WorkspaceViews(projectRoot, request);
+  const lease = acquireViewReadinessLease({ projectRoot });
+  try {
+    return updateV2WorkspaceViews(projectRoot, request);
+  } finally {
+    lease.release();
+  }
 }
 
 function isTemplateFolderAvailable(template) {
@@ -285,28 +262,33 @@ function getWorkspaceViewOptions(projectRoot) {
     throw new Error('No active workspace');
   }
 
-  const entries = listV2ViewFolders(projectRoot);
-  const hiddenIds = getV2HiddenViewIds(projectRoot);
-  const installedBaseViewIds = new Set(entries.map((view) => view.id));
-  const manifest = createService.readManifest();
-  const templatesById = new Map(manifest.views.map((view) => [view.id, view]));
+  const lease = acquireViewReadinessLease({ projectRoot });
+  try {
+    const entries = listV2ViewFolders(projectRoot);
+    const hiddenIds = getV2HiddenViewIds(projectRoot);
+    const installedBaseViewIds = new Set(entries.map((view) => view.id));
+    const manifestViews = getValidatedTemplateManifestViews();
+    const templatesById = new Map(manifestViews.map((view) => [view.id, view]));
 
-  return {
-    hiddenViews: entries
-      .filter((entry) => hiddenIds.has(entry.id))
-      .map((entry) => {
-        const template = templatesById.get(entry.id) || {};
-        return {
-          id: entry.id,
-          baseViewId: entry.id,
-          label: getV2ViewLabel(entry, template.label || entry.id),
-          icon: getV2ViewIcon(entry, template.icon || 'folder'),
-        };
-      }),
-    availableTemplates: manifest.views
-      .filter(template => template && !installedBaseViewIds.has(template.baseViewId || template.id))
-      .filter(isTemplateFolderAvailable),
-  };
+    return {
+      hiddenViews: entries
+        .filter((entry) => hiddenIds.has(entry.id))
+        .map((entry) => {
+          const template = templatesById.get(entry.id) || {};
+          return {
+            id: entry.id,
+            baseViewId: entry.id,
+            label: getV2ViewLabel(entry, template.label || entry.id),
+            icon: getV2ViewIcon(entry, template.icon || 'folder'),
+          };
+        }),
+      availableTemplates: manifestViews
+        .filter(template => template && !installedBaseViewIds.has(template.baseViewId || template.id))
+        .filter(isTemplateFolderAvailable),
+    };
+  } finally {
+    lease.release();
+  }
 }
 
 function restoreWorkspaceView(projectRoot, viewId) {
@@ -314,7 +296,12 @@ function restoreWorkspaceView(projectRoot, viewId) {
     throw new Error('No active workspace');
   }
 
-  return restoreV2WorkspaceView(projectRoot, viewId);
+  const lease = acquireViewReadinessLease({ projectRoot });
+  try {
+    return restoreV2WorkspaceView(projectRoot, viewId);
+  } finally {
+    lease.release();
+  }
 }
 
 function addWorkspaceView(projectRoot, templateId) {
@@ -322,7 +309,12 @@ function addWorkspaceView(projectRoot, templateId) {
     throw new Error('No active workspace');
   }
 
-  return addV2WorkspaceView(projectRoot, templateId);
+  const lease = acquireViewReadinessLease({ projectRoot });
+  try {
+    return addV2WorkspaceView(projectRoot, templateId);
+  } finally {
+    lease.release();
+  }
 }
 
 function hasV2Views(projectRoot) {
@@ -334,10 +326,7 @@ function hasV2Views(projectRoot) {
 }
 
 function updateV2WorkspaceViews(projectRoot, request) {
-  const viewId = typeof request?.viewId === 'string' ? request.viewId.trim() : '';
-  if (!viewId) {
-    throw new Error('View id is required');
-  }
+  const viewId = parseCanonicalViewId(request?.viewId, 'Requested view');
 
   const patch = request.patch || null;
   const move = request.move || null;
@@ -368,7 +357,7 @@ function updateV2WorkspaceViews(projectRoot, request) {
   }
 
   const entries = listV2ViewFolders(projectRoot);
-  const targetIndex = entries.findIndex((entry) => entry.id === viewId);
+  const targetIndex = entries.findIndex((entry) => canonicalViewIdsEqual(entry.id, viewId));
   if (targetIndex === -1) {
     throw new Error('View not found');
   }
@@ -413,12 +402,9 @@ function updateV2WorkspaceViews(projectRoot, request) {
 }
 
 function restoreV2WorkspaceView(projectRoot, viewId) {
-  const id = typeof viewId === 'string' ? viewId.trim() : '';
-  if (!id) {
-    throw new Error('View id is required');
-  }
+  const id = parseCanonicalViewId(viewId, 'Requested view');
   const entries = listV2ViewFolders(projectRoot);
-  if (!entries.some((entry) => entry.id === id)) {
+  if (!entries.some((entry) => canonicalViewIdsEqual(entry.id, id))) {
     throw new Error('View not found');
   }
   const hiddenIds = getV2HiddenViewIds(projectRoot);
@@ -428,13 +414,11 @@ function restoreV2WorkspaceView(projectRoot, viewId) {
 }
 
 function addV2WorkspaceView(projectRoot, templateId) {
-  const id = typeof templateId === 'string' ? templateId.trim() : '';
-  if (!id) {
-    throw new Error('Template id is required');
-  }
+  const id = parseCanonicalViewId(templateId, 'Requested view template');
 
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
-  const installedIds = new Set(listV2ViewFolders(projectRoot).map((entry) => entry.id));
+  const installedEntries = listV2ViewFolders(projectRoot);
+  const installedIds = new Set(installedEntries.map((entry) => entry.id));
   if (installedIds.has(id)) {
     const hiddenIds = getV2HiddenViewIds(projectRoot);
     if (hiddenIds.has(id)) {
@@ -444,9 +428,12 @@ function addV2WorkspaceView(projectRoot, templateId) {
     }
     throw new Error('View template is already installed');
   }
+  if (installedEntries.length >= MAX_VIEW_CAPSULE_PROJECTION_ENTRIES) {
+    throw new Error('View capsule limit reached');
+  }
 
-  const manifest = createService.readManifest();
-  const template = manifest.views.find((view) => view && view.id === id);
+  const template = getValidatedTemplateManifestViews()
+    .find((view) => canonicalViewIdsEqual(view.id, id));
   if (!template) {
     throw new Error('Unknown view template');
   }
@@ -460,7 +447,7 @@ function addV2WorkspaceView(projectRoot, templateId) {
     throw new Error('Template path escapes ai-template/Views');
   }
 
-  const nextIndex = listV2ViewFolders(projectRoot).length + 1;
+  const nextIndex = installedEntries.length + 1;
   const destination = path.join(viewsRoot, `${String(nextIndex).padStart(3, '0')}-${id}`);
   const destinationRelative = path.relative(viewsRoot, destination);
   if (destinationRelative.startsWith('..') || path.isAbsolute(destinationRelative)) {
@@ -514,8 +501,15 @@ function rewriteV2ViewFolderOrder(projectRoot, orderedEntries) {
 
 function listV2ViewFolders(projectRoot) {
   const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
+  let dirents;
   try {
-    return fs.readdirSync(viewsRoot, { withFileTypes: true })
+    dirents = fs.readdirSync(viewsRoot, { withFileTypes: true });
+  } catch (error) {
+    if (['ENOENT', 'ENOTDIR'].includes(error?.code)) return [];
+    throw error;
+  }
+
+  const entries = dirents
       .filter((entry) => classifyEntrySync(viewsRoot, entry).isDir && !entry.name.startsWith('.'))
       .map((entry) => {
         const match = entry.name.match(/^(\d+)-(.+)$/);
@@ -526,9 +520,7 @@ function listV2ViewFolders(projectRoot) {
           folderName: entry.name,
           folderPath,
           order: match ? Number(match[1]) : 999,
-          id: typeof manifestId === 'string' && manifestId.trim()
-            ? manifestId.trim()
-            : (match ? match[2] : entry.name),
+          id: parseCanonicalViewId(manifestId, `View capsule ${entry.name}`),
           manifest,
         };
       })
@@ -537,14 +529,29 @@ function listV2ViewFolders(projectRoot) {
         if (orderDiff !== 0) return orderDiff;
         return a.folderName.localeCompare(b.folderName);
       });
-  } catch {
-    return [];
+  assertUniqueCanonicalViewIds(entries);
+  return entries;
+}
+
+function getValidatedTemplateManifestViews() {
+  const manifest = createService.readManifest();
+  if (!manifest || !Array.isArray(manifest.views)) {
+    throw new Error('View template manifest is invalid');
   }
+  const views = manifest.views.map((view, index) => {
+    if (!isPlainObject(view)) throw new Error(`View template ${index} is invalid`);
+    const id = parseCanonicalViewId(view.id, `View template ${index}`);
+    const baseViewId = view.baseViewId === undefined
+      ? id
+      : parseCanonicalViewId(view.baseViewId, `View template ${index} base identity`);
+    return { ...view, id, baseViewId };
+  });
+  assertUniqueCanonicalViewIds(views);
+  return views;
 }
 
 function toV2Registry(projectRoot) {
-  const manifest = createService.readManifest();
-  const templatesById = new Map(manifest.views.map((view) => [view.id, view]));
+  const templatesById = new Map(getValidatedTemplateManifestViews().map((view) => [view.id, view]));
   const hiddenIds = getV2HiddenViewIds(projectRoot);
   return {
     version: 2,
@@ -559,7 +566,10 @@ function toV2Registry(projectRoot) {
         rank: index + 1,
         enabled: !hiddenIds.has(entry.id),
         source: template.group === 'default' ? 'default' : 'optional',
-        viewPath: path.join('ai', aiPaths.getLocalMachineName(), 'Views', `${String(index + 1).padStart(3, '0')}-${entry.id}`),
+        viewPath: path.relative(projectRoot, path.join(
+          aiPaths.getMachineViewsRoot(projectRoot),
+          `${String(index + 1).padStart(3, '0')}-${entry.id}`,
+        )),
       };
     }),
   };

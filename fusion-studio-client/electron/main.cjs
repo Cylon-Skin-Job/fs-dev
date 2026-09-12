@@ -19,6 +19,8 @@ const { createRendererConsoleLogger } = require('./renderer-console-logging.cjs'
 const { createRuntimeDescriptorOwner } = require('./runtime-descriptor.cjs');
 const { registerRuntimeDescriptorIpc } = require('./runtime-ipc.cjs');
 const { createAuthorizedIpcMain } = require('./authorized-ipc.cjs');
+const { createViewCapsuleRegistryOwner } = require('./view-capsule-registry.cjs');
+const { createServerWorkspaceBindingAuthority } = require('./server-workspace-binding.cjs');
 const { createShellLaunchAuthority } = require('./shell-launch-authority.cjs');
 const { registerShellProofIpc } = require('./shell-proof-ipc.cjs');
 const { SHELL_URL, registerShellHandler, resolveShellRoot } = require('./shell-protocol.cjs');
@@ -43,8 +45,19 @@ let cleanupPromise = null;
 let quitCleanupComplete = false;
 let isQuitting = false;
 const runtimeDescriptorOwner = createRuntimeDescriptorOwner();
+const viewCapsuleRegistryOwner = createViewCapsuleRegistryOwner({
+  getRuntimeGeneration: () => runtimeDescriptorOwner.getCurrent()?.generation || null,
+});
 let runtimeDescriptorIpc = null;
 let shellLaunchAuthority = null;
+const serverWorkspaceBindingAuthority = createServerWorkspaceBindingAuthority({
+  getRuntimeGeneration: () => runtimeDescriptorOwner.getCurrent()?.generation || null,
+  getExpectedGeneration: () => shellLaunchAuthority?.generation || null,
+  installBinding: (binding, generation) => viewCapsuleRegistryOwner.setWorkspaceBinding(binding, generation),
+  revokeBinding: (generation) => viewCapsuleRegistryOwner.clearWorkspaceBindingForGeneration(generation),
+  getInstalledBinding: () => viewCapsuleRegistryOwner.getWorkspaceBinding(),
+  setWorkspaceRoot,
+});
 let workspaceMenuState = {
   workspaces: [],
   activeWorkspaceId: null,
@@ -96,6 +109,12 @@ function logElectron(level, message) {
     console.log(entry.trimEnd());
   }
   try { fs.appendFileSync(ELECTRON_DIAG_LOG, entry); } catch {}
+}
+
+function handleWorkspaceBindingChannelError() {
+  viewCapsuleRegistryOwner.retire();
+  serverWorkspaceBindingAuthority.retire();
+  logElectron('error', 'server workspace binding channel invalid');
 }
 
 /** Log navigation failures with Chromium net error codes (e.g. ERR_CONNECTION_REFUSED = -102). */
@@ -151,6 +170,8 @@ function handleServerExit(code) {
   runtimeDescriptorIpc?.publish(null);
   runtimeDescriptorIpc?.clearMainFrame();
   runtimeDescriptorOwner.clear();
+  viewCapsuleRegistryOwner.retire();
+  serverWorkspaceBindingAuthority.retire();
   shellLaunchAuthority = createShellLaunchAuthority();
 
   spawnServer({
@@ -158,6 +179,10 @@ function handleServerExit(code) {
     resourcesPath: getElectronResourcesRoot(),
     userDataPath: getServerUserDataPath(),
     bootstrapAuthority: shellLaunchAuthority,
+    onWorkspaceBinding: (binding, generation) => {
+      serverWorkspaceBindingAuthority.accept(binding, generation);
+    },
+    onWorkspaceBindingError: handleWorkspaceBindingChannelError,
   })
     .then(async ({ port, process: proc }) => {
       if (isQuitting) {
@@ -169,6 +194,7 @@ function handleServerExit(code) {
       serverProcess = proc;
       writePort(port);
       runtimeDescriptorOwner.activate(port, shellLaunchAuthority.generation);
+      await serverWorkspaceBindingAuthority.activate(shellLaunchAuthority.generation);
       const reloadWindow = mainWindow && !mainWindow.isDestroyed() ? mainWindow : null;
       if (reloadWindow) reloadWindow.webContents.loadURL(SHELL_URL);
       // Close the dialog — Electron dialogs auto-close when parent navigates
@@ -237,7 +263,11 @@ function createWindow() {
   attachNavigationDiagnostics(wc);
   attachShellNavigationPolicy(wc, {
     log: (code) => logElectron('error', code),
-    onMainFrameNavigation: () => runtimeDescriptorIpc?.clearMainFrame(),
+    onMainFrameNavigation: () => {
+      runtimeDescriptorIpc?.clearMainFrame();
+      viewCapsuleRegistryOwner.retire();
+      serverWorkspaceBindingAuthority.invalidateInstallation();
+    },
   });
   wc.on('did-finish-load', () => {
     const descriptor = runtimeDescriptorOwner.getCurrent();
@@ -250,6 +280,8 @@ function createWindow() {
   installSubframeHeaderPolicy(wc);
 
   wc.on('render-process-gone', (_event, details) => {
+    viewCapsuleRegistryOwner.retire();
+    serverWorkspaceBindingAuthority.invalidateInstallation();
     logElectron('error', `render-process-gone reason=${details.reason} exitCode=${details.exitCode}`);
     if (mainWindow.isDestroyed()) return;
     if (details.reason !== 'clean-exit') {
@@ -564,6 +596,10 @@ if (!gotSingleInstanceLock) {
       userDataPath: getServerUserDataPath(),
       focusStatePath: focusState.getStateFilePath(),
       bootstrapAuthority: shellLaunchAuthority,
+      onWorkspaceBinding: (binding, generation) => {
+        serverWorkspaceBindingAuthority.accept(binding, generation);
+      },
+      onWorkspaceBindingError: handleWorkspaceBindingChannelError,
     });
     if (isQuitting) {
       await stopChildProcess(proc, {
@@ -574,10 +610,11 @@ if (!gotSingleInstanceLock) {
     serverProcess = proc;
     writePort(port);
     runtimeDescriptorOwner.activate(port, shellLaunchAuthority.generation);
+    await serverWorkspaceBindingAuthority.activate(shellLaunchAuthority.generation);
     logElectron('info', `server ready port=${port}`);
 
     // 2. Register protocol request handler (scheme was registered before ready)
-    registerHandler();
+    registerHandler({ getViewCapsuleRegistry: () => viewCapsuleRegistryOwner.getCurrent() });
     registerShellHandler({
       protocol: require('electron').protocol,
       net: require('electron').net,
@@ -605,7 +642,29 @@ if (!gotSingleInstanceLock) {
     });
     registerCaptureHandlers(authorizedIpcMain);
     registerScreenshotHandlers(authorizedIpcMain);
-    authorizedIpcMain.on('workspace:set-root', (_, repoPath) => setWorkspaceRoot(repoPath));
+    authorizedIpcMain.handle('workspace:set-binding', async (_, request) => {
+      const validRequest = request && typeof request === 'object' && !Array.isArray(request)
+        && Object.keys(request).sort().join(',') === 'bindingRevision,runtimeGeneration,workspaceId'
+        && Number.isSafeInteger(request.bindingRevision) && request.bindingRevision >= 1;
+      if (!validRequest) return false;
+      if (runtimeDescriptorOwner.getCurrent()?.generation !== request.runtimeGeneration) return false;
+      const accepted = await serverWorkspaceBindingAuthority.correlate(
+        request.workspaceId,
+        request.bindingRevision,
+        request.runtimeGeneration,
+      );
+      if (runtimeDescriptorOwner.getCurrent()?.generation !== request.runtimeGeneration) return false;
+      return accepted;
+    });
+    authorizedIpcMain.handle('workspace:set-view-capsules', async (_, request) => {
+      const validRequest = request && typeof request === 'object' && !Array.isArray(request)
+        && Object.keys(request).sort().join(',') === 'projection,runtimeGeneration';
+      if (!validRequest) return false;
+      if (request.projection === null) {
+        return viewCapsuleRegistryOwner.clearForGeneration(request.runtimeGeneration);
+      }
+      return viewCapsuleRegistryOwner.replace(request.projection, request.runtimeGeneration);
+    });
     authorizedIpcMain.on('workspace-menu:set-state', (_, state) => setWorkspaceMenuState(state));
 
     // 3. Register IPC handlers

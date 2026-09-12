@@ -2,7 +2,7 @@
  * CLI-config file loaders (CLI_CONFIG_SPEC §7b).
  *
  * Reads `ai/<machine>/System/config/cli.json` (workspace policy) and
- * `ai/<machine>/Views/<prefix>-<viewId>/state/cli.json` (per-view display overrides).
+ * `ai/<machine>/System/Views/<prefix>-<viewId>/state/cli.json` (per-view display overrides).
  * Missing or malformed files return `{}`; the resolver maps empty workspace
  * policy to OpenCode-only.
  */
@@ -10,6 +10,8 @@
 const path = require('path');
 const fs = require('fs').promises;
 const aiPaths = require('../workspace/ai-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
+const views = require('../views');
 
 const OPENCODE_ONLY_CONFIG = Object.freeze({
   defaultHarness: 'opencode',
@@ -42,21 +44,12 @@ function openCodeModelsPath(projectRoot) {
 }
 
 function viewPath(projectRoot, viewId) {
-  const viewFolder = findV2ViewFolder(projectRoot, viewId);
-  return path.join(viewFolder || aiPaths.getMachineViewsRoot(projectRoot), 'state', 'cli.json');
-}
-
-function findV2ViewFolder(projectRoot, viewId) {
-  const viewsRoot = aiPaths.getMachineViewsRoot(projectRoot);
-  try {
-    const entries = require('fs').readdirSync(viewsRoot, { withFileTypes: true });
-    const match = entries.find((entry) => entry.isDirectory() && (
-      entry.name === viewId || entry.name.endsWith(`-${viewId}`)
-    ));
-    return match ? path.join(viewsRoot, match.name) : null;
-  } catch {
-    return null;
-  }
+  const viewFolder = views.resolveViewRoot(projectRoot, viewId, {
+    includeHidden: true,
+    strictFilesystemErrors: true,
+    strictReadiness: true,
+  });
+  return viewFolder ? path.join(viewFolder, 'state', 'cli.json') : null;
 }
 
 async function readJsonOrEmpty(filePath, label) {
@@ -79,7 +72,8 @@ async function loadWorkspaceConfig(projectRoot) {
 
 async function loadViewConfig(projectRoot, viewId) {
   if (!viewId) return {};
-  return readJsonOrEmpty(viewPath(projectRoot, viewId), `per-view cli.json (${viewId})`);
+  const filePath = viewPath(projectRoot, viewId);
+  return filePath ? readJsonOrEmpty(filePath, `per-view cli.json (${viewId})`) : {};
 }
 
 /**
@@ -129,8 +123,12 @@ async function ensureWorkspaceFile(projectRoot) {
   try {
     await fs.access(file);
   } catch {
-    await fs.mkdir(path.dirname(file), { recursive: true });
     const tmp = file + '.tmp';
+    await assertGenericViewMutationAllowed({
+      projectRoot,
+      paths: [path.dirname(file), file, tmp],
+    });
+    await fs.mkdir(path.dirname(file), { recursive: true });
     await fs.writeFile(tmp, `${JSON.stringify(defaultWorkspaceConfig(), null, 2)}\n`);
     await fs.rename(tmp, file);
   }

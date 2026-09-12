@@ -42,7 +42,7 @@
  * @typedef {Object} ThreadManagerConfig
  * @property {number} maxActiveSessions - Max active sessions before FIFO eviction (default: 10)
  * @property {number} idleTimeoutMinutes - Minutes before idle session is killed (default: 9)
- * @property {string} aiPanelsPath - Path to ai/<machine>/Views directory
+ * @property {string} aiPanelsPath - Path to ai/<machine>/System/Views directory
  */
 
 /**

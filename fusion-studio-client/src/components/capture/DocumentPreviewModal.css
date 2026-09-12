@@ -1,6 +1,7 @@
-.rv-capture-viewer-grid {
-  position: relative;
-}
+/* The preview backdrop anchors to the nearest positioned ancestor, which is the
+ * shell's `.rv-content-area` (position: relative, overflow: hidden) — the visible
+ * content container. The blur and the centered modal therefore scope to the
+ * content area only; shell, chat, and thread chrome stay visible and unblurred. */
 
 .rv-document-preview-backdrop {
   position: absolute;

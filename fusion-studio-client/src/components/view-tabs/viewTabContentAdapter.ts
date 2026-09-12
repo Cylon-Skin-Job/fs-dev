@@ -2,7 +2,7 @@ import type { ResolveTabComponent } from './componentTabResolver';
 import type { ComponentTabShellProjection } from './componentTabPresentationDomain';
 import { validateComponentTabShellProjection } from './componentTabPresentationValidation';
 import type { TabLocationNavigation } from './TabLocationRail';
-import type { EmptyTabLauncherItem } from './EmptyTabPanel';
+import type { ReactNode } from 'react';
 import { getProductSafeReservationError } from './componentTabLifecycle';
 import {
   COMPONENT_TAB_LIMITS,
@@ -18,10 +18,15 @@ export interface ViewTabContentAdapter {
   active: TabContentRecord;
   shell?: ComponentTabShellProjection;
   navigation?: ViewTabNavigationAdapter;
-  launchers: readonly EmptyTabLauncherItem[];
   reservation: EmptyTabReservation | null;
+  /** Bounded display label for the active tab's reserved launcher (connected layer). */
+  reservationLabel?: string;
+  /**
+   * VIEW-02 §6: optional view-supplied Empty-body presenter from the connected
+   * owner layer (bounded, function-typed; the panel error-bounds its result).
+   */
+  renderEmptyBody?: (tabId: string) => ReactNode;
   resolve: ResolveTabComponent;
-  selectLauncher: (tabId: string, launcherId: string) => void;
   retryLauncher: (tabId: string) => void;
   cancelLauncher: (tabId: string) => void;
 }
@@ -117,50 +122,6 @@ function boundedText(value: unknown, maxBytes: number): value is string {
     });
 }
 
-function normalizeLaunchers(value: unknown): EmptyTabLauncherItem[] | null {
-  if (!Array.isArray(value)
-    || value.length > COMPONENT_TAB_LIMITS.maxContainerEntries
-    || Object.keys(value).length !== value.length) {
-    return null;
-  }
-  const ownKeys = Reflect.ownKeys(value);
-  const allowedKeys = new Set([
-    'length',
-    ...Array.from({ length: value.length }, (_, index) => String(index)),
-  ]);
-  if (ownKeys.some((key) => typeof key !== 'string' || !allowedKeys.has(key))) return null;
-  const launchers: EmptyTabLauncherItem[] = [];
-  const ids = new Set<string>();
-  for (let index = 0; index < value.length; index += 1) {
-    const descriptor = Object.getOwnPropertyDescriptor(value, String(index));
-    if (!descriptor?.enumerable || !('value' in descriptor)) return null;
-    const item = exactDataProperties(
-      descriptor.value,
-      ['id', 'label', 'icon', 'description', 'disabled'],
-      ['id', 'label', 'icon'],
-    );
-    if (!item
-      || !isBoundedOpaqueId(item.id)
-      || !boundedText(item.label, COMPONENT_TAB_LIMITS.maxTargetKeyBytes)
-      || !boundedText(item.icon, COMPONENT_TAB_LIMITS.maxIdBytes)
-      || (Object.hasOwn(item, 'description')
-        && !boundedText(item.description, COMPONENT_TAB_LIMITS.maxErrorMessageBytes))
-      || (Object.hasOwn(item, 'disabled') && typeof item.disabled !== 'boolean')
-      || ids.has(item.id)) {
-      return null;
-    }
-    ids.add(item.id);
-    launchers.push({
-      id: item.id,
-      label: item.label,
-      icon: item.icon,
-      ...(typeof item.description === 'string' ? { description: item.description } : {}),
-      ...(typeof item.disabled === 'boolean' ? { disabled: item.disabled } : {}),
-    });
-  }
-  return launchers;
-}
-
 function normalizeReservationError(value: unknown): EmptyTabReservation['error'] | null {
   const error = exactDataProperties(value, ['code', 'message'], ['code', 'message']);
   if (!error || typeof error.code !== 'string' || typeof error.message !== 'string') {
@@ -174,7 +135,6 @@ function normalizeReservationError(value: unknown): EmptyTabReservation['error']
 function normalizeReservation(
   value: unknown,
   active: TabContentRecord,
-  launcherIds: ReadonlySet<string>,
 ): EmptyTabReservation | null | undefined {
   if (value === null) return null;
   const reservation = exactDataProperties(
@@ -192,8 +152,7 @@ function normalizeReservation(
     || reservation.expectedRevision < 0
     || (reservation.status !== 'pending' && reservation.status !== 'failed')
     || reservation.tabId !== active.tabId
-    || reservation.expectedRevision !== active.content.revision
-    || !launcherIds.has(reservation.launcherId)) {
+    || reservation.expectedRevision !== active.content.revision) {
     return undefined;
   }
   const hasError = Object.hasOwn(reservation, 'error');
@@ -248,28 +207,29 @@ export function normalizeViewTabContentAdapter(candidate: unknown): ViewTabConte
         'active',
         'shell',
         'navigation',
-        'launchers',
         'reservation',
+        'reservationLabel',
+        'renderEmptyBody',
         'resolve',
-        'selectLauncher',
         'retryLauncher',
         'cancelLauncher',
       ],
       [
         'active',
-        'launchers',
         'reservation',
         'resolve',
-        'selectLauncher',
         'retryLauncher',
         'cancelLauncher',
       ],
     );
     if (!content
       || typeof content.resolve !== 'function'
-      || typeof content.selectLauncher !== 'function'
       || typeof content.retryLauncher !== 'function'
-      || typeof content.cancelLauncher !== 'function') {
+      || typeof content.cancelLauncher !== 'function'
+      || (Object.hasOwn(content, 'renderEmptyBody')
+        && typeof content.renderEmptyBody !== 'function')
+      || (Object.hasOwn(content, 'reservationLabel')
+        && !boundedText(content.reservationLabel, COMPONENT_TAB_LIMITS.maxTargetKeyBytes))) {
       return null;
     }
     const activeLifecycle = readViewTabContentLifecycle(content.active);
@@ -292,26 +252,24 @@ export function normalizeViewTabContentAdapter(candidate: unknown): ViewTabConte
     if (hasNavigation && (!navigation || !shell?.ok || navigation.tabId !== shell.value.tabId)) {
       return null;
     }
-    const launchers = normalizeLaunchers(content.launchers);
-    if (!launchers) return null;
     const reservation = content.reservation === null
       ? null
       : active.ok
-        ? normalizeReservation(
-          content.reservation,
-          active.value,
-          new Set(launchers.map((launcher) => launcher.id)),
-        )
+        ? normalizeReservation(content.reservation, active.value)
         : undefined;
     if (reservation === undefined) return null;
     return {
       active: (active.ok ? active.value : content.active) as TabContentRecord,
       ...(shell?.ok ? { shell: shell.value } : {}),
       ...(navigation ? { navigation } : {}),
-      launchers,
       reservation,
+      ...(Object.hasOwn(content, 'reservationLabel')
+        ? { reservationLabel: content.reservationLabel as string }
+        : {}),
+      ...(Object.hasOwn(content, 'renderEmptyBody')
+        ? { renderEmptyBody: content.renderEmptyBody as ViewTabContentAdapter['renderEmptyBody'] }
+        : {}),
       resolve: content.resolve as ResolveTabComponent,
-      selectLauncher: content.selectLauncher as ViewTabContentAdapter['selectLauncher'],
       retryLauncher: content.retryLauncher as ViewTabContentAdapter['retryLauncher'],
       cancelLauncher: content.cancelLauncher as ViewTabContentAdapter['cancelLauncher'],
     };

@@ -6,6 +6,7 @@ const { fingerprint, isInside } = require('./path-authority');
 const { sha256 } = require('./text-codec');
 const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');
 const { readFileHandleBounded } = require('./bounded-file-read');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 class AtomicWriteError extends Error {
   constructor(message, { code, renamed = false, tempPath = null } = {}) {
@@ -156,6 +157,11 @@ function createAtomicWriter({ fsPromises = fs.promises } = {}) {
     let renamed = false;
     let writtenFingerprint = null;
     try {
+      await assertGenericViewMutationAllowed({
+        projectRoot: target.workspaceRoot,
+        paths: [tempPath],
+        fsPromises,
+      });
       await verifyParent(target);
       directory = await fsPromises.open(target.parentReal, 'r');
       await verifyParent(target, directory);
@@ -236,7 +242,18 @@ function createAtomicWriter({ fsPromises = fs.promises } = {}) {
   async function cleanup({ target, operationId }) {
     const tempPath = tempPathFor(target, operationId);
     try {
+      await assertGenericViewMutationAllowed({
+        projectRoot: target.workspaceRoot,
+        paths: [tempPath],
+        fsPromises,
+      });
       await verifyParent(target);
+      const tempStat = await fsPromises.lstat(tempPath);
+      if (tempStat.isSymbolicLink() || !tempStat.isFile() || tempStat.nlink !== 1) {
+        throw new AtomicWriteError('Operation temp identity is not cleanup-safe.', {
+          code: 'preimage_conflict', tempPath,
+        });
+      }
       await fsPromises.unlink(tempPath);
       return true;
     } catch (error) {

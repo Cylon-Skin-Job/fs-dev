@@ -8,6 +8,8 @@
  * Pure type surface plus the TIMING constants; no other runtime logic.
  */
 
+import type { ComponentTabCollectionState } from '../components/view-tabs/componentTabTypes';
+
 // Panel Types — PanelId is now a string alias (panels are discovered dynamically)
 export type PanelId = string;
 
@@ -182,6 +184,10 @@ export interface ViewUIState {
   docViewerFullPage?: boolean;
   docViewerTabs?: DocViewerTab[];
   docViewerActiveTabId?: string | null;
+  // VIEW-02 Slice 3: connected Capture tab collection (generic tab records) —
+  // a versioned field inside this SAME view-state document (VRT-013), not a
+  // second store. Null/absent = no generic records yet (classic state rules).
+  captureTabRecords?: CaptureTabRecordsDocument | null;
   officeViewerMode?: 'home' | 'recent' | 'starred' | 'archive';
   officeViewerCurrentFolder?: string | null;
   officeViewerSelectedPath?: string | null;
@@ -232,6 +238,14 @@ export interface DocViewerCaptureTab extends DocViewerTabBase {
 
 /** A future transportable-view variant is reserved by the Universal Tab SPEC. */
 export type DocViewerTab = DocViewerDocumentTab | DocViewerCaptureTab;
+
+/**
+ * VIEW-02 Slice 3: the durable generic Capture tab collection. Stored as one
+ * versioned field (`captureTabRecords`) inside the existing per-view state
+ * document; the shape mirrors the connected owner's runtime collection
+ * (`ComponentTabCollectionState`) without adding a second store (VRT-013).
+ */
+export type CaptureTabRecordsDocument = { schemaVersion: 1 } & ComponentTabCollectionState;
 
 export interface ViewStateTints {
   leftPanel:     boolean;

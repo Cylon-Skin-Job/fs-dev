@@ -495,9 +495,11 @@ test('[slice 00.1] seeds only canonical workspace A, its active ID, V2 Office vi
 
     const machineRoot = path.join(fixture.workspaceRoots.a, 'ai', OFFICE_E2E_MACHINE)
     const officeRoot = path.join(machineRoot, 'Office')
-    const viewRoot = path.join(machineRoot, 'Views', '001-office-viewer')
+    const viewRoot = path.join(machineRoot, 'System', 'Views', '001-office-viewer')
     assert.ok(fs.statSync(machineRoot).isDirectory())
     assert.ok(fs.statSync(officeRoot).isDirectory())
+    assert.equal(fs.existsSync(path.join(machineRoot, 'Views')), false)
+    assert.equal(fs.existsSync(path.join(viewRoot, 'state', 'state.json')), true)
     assert.equal(fs.readFileSync(path.join(viewRoot, 'manifest.md'), 'utf8'), `---
 name: Office
 description: Office document viewer and editor surface.
@@ -762,6 +764,7 @@ test('[slice 05S.3] selector variants seed exact local, global, and transported-
             fixture.workspaceRoots[suffix],
             'ai',
             OFFICE_E2E_OTHER_MACHINE,
+            'System',
             'Views',
             '001-office-viewer',
             'manifest.md',
@@ -2064,6 +2067,7 @@ test('[slice 00.2] reusable Playwright reset recreates the catalog scenario on e
     lifecycle.fixture.workspaceRoots.a,
     'ai',
     OFFICE_E2E_MACHINE,
+    'System',
     'Views',
     '001-office-viewer',
     'state',

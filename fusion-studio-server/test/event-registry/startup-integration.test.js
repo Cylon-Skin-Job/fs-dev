@@ -6,12 +6,29 @@ jest.mock('../../lib/screenshot/ws-handlers', () => jest.fn());
 const {
   createAgentPhaseAOwner,
   createAgentWorkspaceRootResolver,
+  initializeRuntimeMachineIdentity,
 } = require('../../lib/startup');
 const {
   createAgentFactAdmissionReconciler,
 } = require('../../lib/agent-provenance/fact-admission-reconciler');
 
 describe('event registry startup integration', () => {
+  test('binds startup readiness to the effective runtime machine after persistence initializes', async () => {
+    const order = [];
+    const initializeIdentity = jest.fn(async () => {
+      order.push('initialized');
+      return 'Stored-Machine';
+    });
+    const resolveIdentity = jest.fn(() => {
+      order.push('resolved');
+      return 'Env-Machine';
+    });
+
+    await expect(initializeRuntimeMachineIdentity({ initializeIdentity, resolveIdentity }))
+      .resolves.toBe('Env-Machine');
+    expect(order).toEqual(['initialized', 'resolved']);
+  });
+
   test('workspace-root host adapter exposes only exact lookup and realpath capabilities', async () => {
     const getWorkspaceById = jest.fn(async (workspaceId) => (
       workspaceId === 'workspace-1' ? { repo_path: '/declared/root' } : null

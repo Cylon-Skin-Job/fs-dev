@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const { UUID_PATTERN } = require('./validation-patterns');
 const { createAtomicWriter, AtomicWriteError } = require('./atomic-writer');
 const { createCheckpointAdapter } = require('./checkpoint-adapter');
@@ -16,6 +17,8 @@ const {
 const { intentFromInput, originFromInput, requestBindingHash } = require('./fact-reservation-bindings');
 const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');
 const { FileReadLimitError, readFileHandleBounded } = require('./bounded-file-read');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
+const { resolveGitMutationPaths } = require('../versioning');
 
 const FIXED_ERRORS = Object.freeze({
   invalid_request: 'The save request is invalid.',
@@ -466,6 +469,15 @@ function createFileSaveController({
         try {
           target = await pathAuthority.resolve({ workspaceId: pair.workspaceId, panel, ingressPath });
           if (target.lockPath !== firstTarget.lockPath) throw new PathAuthorityError('Alias changed.');
+          if (['session_end', 'checkpoint', 'milestone'].includes(intent.saveReason)) {
+            await assertGenericViewMutationAllowed({
+              projectRoot: target.workspaceRoot,
+              paths: [
+                ...resolveGitMutationPaths(target.panelReal),
+                path.join(target.panelReal, '.gitignore'),
+              ],
+            });
+          }
         } catch (_error) {
           return rejected('path_not_allowed', { requestId, ...pair, panel, path: ingressPath });
         }

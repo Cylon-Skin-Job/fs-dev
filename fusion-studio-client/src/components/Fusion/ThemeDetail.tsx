@@ -179,7 +179,7 @@ export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onAp
           that view's styles folder:
         </p>
         <p>
-          <code>ai/&lt;machine&gt;/Views/&#123;view-folder&#125;/styles/themes.css</code>
+          <code>ai/&lt;machine&gt;/System/Views/&#123;view-folder&#125;/styles/themes.css</code>
         </p>
         <p>
           The theme override goes in the view capsule's <code>styles/</code> folder.

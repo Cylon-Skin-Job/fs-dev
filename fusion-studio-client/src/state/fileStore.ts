@@ -57,6 +57,17 @@ interface FileState {
   closeTab: (idOrPath: string) => void;
   hydrateTabsFromActivity: (activity: ViewActivityState) => void;
   refreshPersistedTabMetadata: () => void;
+  /**
+   * VIEW-02 Slice 4 (VRT-013): ONE atomic acknowledged owner commit for the
+   * connected tab surface. The connected owner translates its planned generic
+   * collection into presentation tabs and commits them through THIS owner —
+   * the store keeps its private persistence semantics (activity persistence,
+   * autocomplete candidates, dirty-protected content release, error clearing)
+   * and re-derives `activeTabPath`/`viewMode` itself. This is the store's own
+   * commit primitive, not competing tab logic: placement decisions are made
+   * by TABS-03 before this action is ever called.
+   */
+  applyConnectedTabCommit: (next: { tabs: EditorTab[]; activeTabId: string | null }) => void;
   reset: () => void;
 }
 
@@ -380,6 +391,33 @@ export const useFileStore = create<FileState>((set, get) => ({
   refreshPersistedTabMetadata: () => {
     const state = get();
     persistFileTabs(state.tabs, state.activeTabId);
+  },
+
+  applyConnectedTabCommit: ({ tabs, activeTabId }) => {
+    const state = get();
+    // Error clearing mirrors the established open/close lifecycle: a commit
+    // that changes the tab set (add/remove/fill) clears bounded viewer
+    // errors; a pure focus change does not (setActiveTab never clears).
+    const structureChanged = tabs.length !== state.tabs.length
+      || tabs.some((tab, index) => {
+        const previous = state.tabs[index];
+        return previous?.id !== tab.id || previous?.kind !== tab.kind;
+      });
+    if (structureChanged) useFileDataStore.getState().clearFileViewerErrors();
+    const previousPaths = new Set(state.tabs.filter(isFileEditorTab).map((tab) => tab.file.path));
+    for (const tab of tabs) {
+      if (isFileEditorTab(tab) && !previousPaths.has(tab.file.path)) {
+        upsertOpenTabAutocompleteCandidate(tab.file.path);
+      }
+    }
+    persistFileTabs(tabs, activeTabId);
+    set({
+      tabs,
+      activeTabId,
+      activeTabPath: activePathForId(tabs, activeTabId),
+      viewMode: tabs.length > 0 ? 'viewer' : 'tree',
+    });
+    releaseRemovedFilePaths(state.tabs, tabs);
   },
 
   reset: () => {

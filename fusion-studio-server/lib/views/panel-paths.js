@@ -26,6 +26,16 @@ const aiPaths = require('../workspace/ai-paths');
 const sessions = new Map();
 
 const sessionRoots = new Map();
+const REGISTRY_INDEPENDENT_PANEL_IDS = new Set(['__apps__', '__settings__']);
+
+/**
+ * Whether getPanelPath() may consult the workspace view registry for this ID.
+ * Keep registry-independent pseudo-panels explicit so callers can avoid
+ * blocking unrelated app/settings reads when view readiness is unavailable.
+ */
+function panelPathRequiresViewReadiness(panel) {
+  return !REGISTRY_INDEPENDENT_PANEL_IDS.has(panel);
+}
 
 function isDirectory(targetPath, { strictFilesystemErrors = false } = {}) {
   try {
@@ -34,19 +44,6 @@ function isDirectory(targetPath, { strictFilesystemErrors = false } = {}) {
     if (strictFilesystemErrors && !['ENOENT', 'ENOTDIR'].includes(error?.code)) throw error;
     return false;
   }
-}
-
-function readJson(filePath, { strictFilesystemErrors = false } = {}) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (error) {
-    if (strictFilesystemErrors && error?.code && error.code !== 'ENOENT') throw error;
-    return null;
-  }
-}
-
-function getLegacyViewsRoot(projectRoot) {
-  return path.join(projectRoot, 'ai', 'views');
 }
 
 function getLegacySystemRoot(projectRoot) {
@@ -59,55 +56,6 @@ function getLegacyWorkspaceRoot(projectRoot) {
 
 function getLegacySettingsRoot(projectRoot) {
   return path.join(getLegacySystemRoot(projectRoot), 'styles');
-}
-
-function resolveLegacyRelativePath(projectRoot, relativePath) {
-  if (!relativePath || path.isAbsolute(relativePath)) return null;
-  const resolved = path.resolve(projectRoot, relativePath);
-  const relative = path.relative(path.resolve(projectRoot), resolved);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
-  return resolved;
-}
-
-function resolveLegacyPanelContentPath(
-  projectRoot,
-  panel,
-  context = {},
-  { strictFilesystemErrors = false } = {},
-) {
-  const directory = (target) => isDirectory(target, { strictFilesystemErrors });
-  const hasV2Views = strictFilesystemErrors
-    ? directory(views.getViewsRoot(projectRoot))
-    : views.hasV2Views(projectRoot);
-  if (hasV2Views) return null;
-
-  const legacyViewRoot = path.join(getLegacyViewsRoot(projectRoot), panel);
-  if (!directory(legacyViewRoot)) return null;
-
-  const readOptions = { strictFilesystemErrors };
-  const contentConfig = readJson(path.join(legacyViewRoot, 'content.json'), readOptions) || {};
-  const indexConfig = readJson(path.join(legacyViewRoot, 'index.json'), readOptions) || {};
-  const display = contentConfig.display || indexConfig.type;
-
-  if (panel === 'file-viewer' || display === 'file-explorer') {
-    return context.sessionRoot || projectRoot;
-  }
-
-  const declaredRoot = contentConfig.root || indexConfig.settings?.contentDir || indexConfig.settings?.systemWikiDir;
-  if (typeof declaredRoot === 'string') {
-    const resolved = resolveLegacyRelativePath(projectRoot, declaredRoot);
-    if (resolved && directory(resolved)) return resolved;
-  }
-
-  const wikiRoot = path.join(legacyViewRoot, 'Wiki');
-  if ((panel === 'wiki-viewer' || display === 'wiki' || display === 'navigation') && directory(wikiRoot)) {
-    return wikiRoot;
-  }
-
-  const contentRoot = path.join(legacyViewRoot, 'content');
-  if (directory(contentRoot)) return contentRoot;
-
-  return legacyViewRoot;
 }
 
 /**
@@ -148,16 +96,11 @@ function clearSessionRoot(ws) {
   sessionRoots.delete(ws);
 }
 
-function getPanelPath(panel, ws) {
-  const projectRoot = getProjectRoot(ws);
-  if (!projectRoot) return null;
-
-  // __panels__ pseudo-panel: resolves to ai/<machine>/Views/ (for client discovery)
+function resolveReadablePanelPath(projectRoot, panel, sessionRoot) {
+  // __panels__ pseudo-panel: resolves to ai/<machine>/System/Views/ (for client discovery)
   if (panel === '__panels__') {
     const viewsRoot = views.getViewsRoot(projectRoot);
     if (isDirectory(viewsRoot)) return viewsRoot;
-    const legacyViewsRoot = getLegacyViewsRoot(projectRoot);
-    if (isDirectory(legacyViewsRoot)) return legacyViewsRoot;
     return null;
   }
 
@@ -190,13 +133,27 @@ function getPanelPath(panel, ws) {
   // Delegate to the view resolver system.
   // Each display type has its own resolver module that knows where
   // the content root is for that view type.
-  const context = { sessionRoot: getSessionRoot(ws, panel) };
+  const context = { sessionRoot };
   const resolved = views.resolveContentPath(projectRoot, panel, context);
   if (resolved && fs.existsSync(resolved)) return resolved;
-  const legacyResolved = resolveLegacyPanelContentPath(projectRoot, panel, context);
-  if (legacyResolved && fs.existsSync(legacyResolved)) return legacyResolved;
-
   return null;
+}
+
+function getPanelPath(panel, ws) {
+  const projectRoot = getProjectRoot(ws);
+  if (!projectRoot) return null;
+  return resolveReadablePanelPath(projectRoot, panel, getSessionRoot(ws, panel));
+}
+
+/**
+ * Resolve a read-only panel path against an already captured project root.
+ * HTTP callers have no per-connection selected-folder state, so this retains
+ * getPanelPath(panel)'s null session-root semantics without consulting the
+ * mutable global active-workspace cache again.
+ */
+function getRootBoundPanelPath(projectRoot, panel) {
+  if (typeof projectRoot !== 'string' || !path.isAbsolute(projectRoot)) return null;
+  return resolveReadablePanelPath(projectRoot, panel, null);
 }
 
 /**
@@ -210,9 +167,7 @@ function getAuthoritativePanelPath(projectRoot, panel, { strictFilesystemErrors 
 
   if (panel === '__panels__') {
     const viewsRoot = views.getViewsRoot(projectRoot);
-    if (directory(viewsRoot)) return viewsRoot;
-    const legacyViewsRoot = getLegacyViewsRoot(projectRoot);
-    return directory(legacyViewsRoot) ? legacyViewsRoot : null;
+    return directory(viewsRoot) ? viewsRoot : null;
   }
   if (panel === '__apps__') {
     const appsRoot = path.join(projectRoot, 'ai', 'apps');
@@ -237,13 +192,7 @@ function getAuthoritativePanelPath(projectRoot, panel, { strictFilesystemErrors 
     strictFilesystemErrors,
   });
   if (resolved && directory(resolved)) return resolved;
-  const legacyResolved = resolveLegacyPanelContentPath(
-    projectRoot,
-    panel,
-    { sessionRoot: projectRoot },
-    { strictFilesystemErrors },
-  );
-  return legacyResolved && directory(legacyResolved) ? legacyResolved : null;
+  return null;
 }
 
 module.exports = {
@@ -253,5 +202,7 @@ module.exports = {
   getSessionRoot,
   clearSessionRoot,
   getPanelPath,
+  getRootBoundPanelPath,
   getAuthoritativePanelPath,
+  panelPathRequiresViewReadiness,
 };

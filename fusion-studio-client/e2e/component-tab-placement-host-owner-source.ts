@@ -278,10 +278,8 @@ export function placementHostOwnerSource(
           content: {
             active: { tabId: active.tabId, content: active.content },
             shell: active.shell,
-            launchers: [{ id: 'fixture-launcher', label: 'Fixture launcher', icon: 'add' }],
             reservation: state.reservations.find((item) => item.tabId === active.tabId) ?? null,
             resolve: resolveForRender,
-            selectLauncher: () => undefined,
             retryLauncher: () => undefined,
             cancelLauncher: () => undefined,
           },

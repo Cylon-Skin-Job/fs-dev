@@ -1,6 +1,10 @@
 import type { DocViewerTab, DocViewerTabUi } from '../../types';
 import { canonicalCapturePath } from './captureTabDomain';
 import { CAPTURE_PANEL, transitionCaptureTabPaths } from './captureTabsController';
+import {
+  removeCaptureConnectedPathReferences,
+  rewriteCaptureConnectedPathReferences,
+} from './captureConnectedTabs';
 
 interface CapturePathMutation {
   sourcePanel: string;
@@ -80,10 +84,33 @@ export function rewriteCaptureTabPathReferences(mutation: CapturePathRewrite): b
     ? canonicalCapturePath(mutation.targetPath)
     : null;
   if (mutation.targetPanel === CAPTURE_PANEL && !target) return false;
-  return transformCapturePaths(mutation, target);
+  let changed = transformCapturePaths(mutation, target);
+  // VIEW-02 Slice 3: the connected tab collection rewrites its document
+  // identities too (removal when the file moved out of the Capture panel).
+  if (mutation.sourcePanel === CAPTURE_PANEL) {
+    const connectedChanged = target
+      ? rewriteCaptureConnectedPathReferences({
+        sourcePath: mutation.sourcePath,
+        targetPath: mutation.targetPath,
+        includeDescendants: mutation.includeDescendants,
+      })
+      : removeCaptureConnectedPathReferences({
+        sourcePath: mutation.sourcePath,
+        includeDescendants: mutation.includeDescendants,
+      });
+    changed = changed || connectedChanged;
+  }
+  return changed;
 }
 
 /** Remove durable Capture identities after a public delete event. */
 export function removeCaptureTabPathReferences(mutation: CapturePathMutation): boolean {
-  return transformCapturePaths(mutation, null);
+  const changed = transformCapturePaths(mutation, null);
+  const connectedChanged = mutation.sourcePanel === CAPTURE_PANEL
+    ? removeCaptureConnectedPathReferences({
+      sourcePath: mutation.sourcePath,
+      includeDescendants: mutation.includeDescendants,
+    })
+    : false;
+  return changed || connectedChanged;
 }

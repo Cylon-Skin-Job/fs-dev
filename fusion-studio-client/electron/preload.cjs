@@ -17925,7 +17925,15 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.on("browser:url-changed", listener);
     return () => ipcRenderer.removeListener("browser:url-changed", listener);
   },
-  setWorkspaceRoot: (repoPath) => ipcRenderer.send("workspace:set-root", repoPath),
+  setWorkspaceBinding: (workspaceId, bindingRevision, runtimeGeneration) => ipcRenderer.invoke("workspace:set-binding", {
+    workspaceId,
+    bindingRevision,
+    runtimeGeneration
+  }),
+  replaceViewCapsuleProjection: (projection, runtimeGeneration) => ipcRenderer.invoke("workspace:set-view-capsules", {
+    projection,
+    runtimeGeneration
+  }),
   setWorkspaceMenuState: (state) => ipcRenderer.send("workspace-menu:set-state", state),
   listScreenshots: () => ipcRenderer.invoke("screenshots:list"),
   readScreenshot: (filename) => ipcRenderer.invoke("screenshots:read", filename)

@@ -10,7 +10,7 @@ test('reselecting File Explorer toggles its persisted file tree pane', () => {
   const appSource = read('src/components/App.tsx');
   const typesSource = read('src/types/index.ts');
   const viewSliceSource = read('src/state/slices/viewSlice.ts');
-  const layoutCss = read('../ai/RC-MacAir-15/Views/002-file-viewer/styles/layout.css');
+  const layoutCss = read('../ai/RC-MacAir-15/System/Views/002-file-viewer/styles/layout.css');
   const serverDefaults = read('../fusion-studio-server/lib/view-state/resolver.js');
 
   expect(appSource).toMatch(/if \(panelId === 'file-viewer' && currentPanel === panelId\) \{\s*toggleCollapsed\(panelId, 'rightCol'\);\s*return;/s);

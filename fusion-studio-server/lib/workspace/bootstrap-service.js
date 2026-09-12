@@ -12,6 +12,8 @@ const fs = require('fs');
 const path = require('path');
 
 const aiPaths = require('./ai-paths');
+const { acquireViewReadinessLease } = require('../views/readiness-runtime');
+const { ViewRelocationError } = require('../views/relocation-errors');
 
 /**
  * Ensure the minimum structure exists under repoPath/ai. Only creates what's
@@ -20,6 +22,20 @@ const aiPaths = require('./ai-paths');
  * @param {string} repoPath - absolute, canonicalized
  */
 function bootstrap(repoPath) {
+  const lease = acquireViewReadinessLease({ projectRoot: repoPath });
+  try {
+    const expectedViewsRoot = path.resolve(aiPaths.getMachineViewsRoot(repoPath));
+    if (typeof lease.viewsRoot !== 'string' || path.resolve(lease.viewsRoot) !== expectedViewsRoot) {
+      throw new ViewRelocationError('view_registry_unavailable', undefined, { journalFailure: false });
+    }
+    const result = bootstrapUnchecked(repoPath);
+    return result;
+  } finally {
+    lease.release();
+  }
+}
+
+function bootstrapUnchecked(repoPath) {
   const aiDir = path.join(repoPath, 'ai');
   if (!fs.existsSync(aiDir) || !fs.statSync(aiDir).isDirectory()) {
     throw new Error('Add Project requires an existing /ai directory');
@@ -27,7 +43,7 @@ function bootstrap(repoPath) {
 
   const machineRoot = aiPaths.getMachineAiRoot(repoPath);
   for (const full of [
-    path.join(machineRoot, 'Views'),
+    aiPaths.getMachineViewsRoot(repoPath),
     path.join(machineRoot, 'System', 'config'),
     path.join(machineRoot, 'System', 'state'),
     path.join(machineRoot, 'System', 'styles'),
@@ -47,10 +63,7 @@ function bootstrap(repoPath) {
 function isValidWorkspaceRoot(repoPath) {
   const aiDir = path.join(repoPath, 'ai');
   try {
-    const hasV2Views = fs.readdirSync(aiDir, { withFileTypes: true }).some((entry) => {
-      if (!entry.isDirectory() || entry.name.startsWith('.')) return false;
-      return fs.existsSync(path.join(aiDir, entry.name, 'Views'));
-    });
+    const hasV2Views = fs.existsSync(aiPaths.getMachineViewsRoot(repoPath));
     if (hasV2Views) return true;
     return fs.existsSync(path.join(aiDir, 'views')) ||
       fs.existsSync(path.join(aiDir, 'system', 'workspace', 'views.json'));

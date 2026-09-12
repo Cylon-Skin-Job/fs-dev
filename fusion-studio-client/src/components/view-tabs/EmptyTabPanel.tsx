@@ -1,91 +1,84 @@
-import { useId } from 'react';
+import { type ReactNode } from 'react';
 import type { EmptyTabReservation } from './componentTabTypes';
-
-export interface EmptyTabLauncherItem {
-  id: string;
-  label: string;
-  icon: string;
-  description?: string;
-  disabled?: boolean;
-}
+import { PresenterErrorBoundary } from './PresenterErrorBoundary';
 
 export interface EmptyTabPanelProps {
   tabId: string;
-  items: readonly EmptyTabLauncherItem[];
   reservation: EmptyTabReservation | null;
-  onSelect: (tabId: string, launcherId: string) => void;
+  /**
+   * VIEW-02 §6: the "Add content" launcher grid is retired — an Empty tab
+   * presents no menu. The reservation machinery survives as the container/
+   * lifecycle mechanism and bounded failure surface (pending, failed/retry/
+   * cancel remain, generically).
+   *
+   * A view may supply a bounded Empty-body presenter (resolved by its
+   * connected owner layer, analogous to first-party component
+   * registrations). Absent (or failed) presenters fall back to a minimal
+   * neutral surface with no menu and no launch actions.
+   */
+  renderEmptyBody?: (tabId: string) => ReactNode;
+  /** Bounded display label of the reserved launcher, from the connected layer. */
+  reservationLabel?: string;
   onRetry: (tabId: string) => void;
   onCancel: (tabId: string) => void;
 }
 
-/** Neutral launcher presentation for one explicitly supplied empty container. */
+function NeutralEmptySurface() {
+  return (
+    <p className="rv-empty-tab-copy rv-empty-tab-neutral">
+      This tab is empty.
+    </p>
+  );
+}
+
+function EmptyBodySurface({
+  tabId,
+  renderEmptyBody,
+}: {
+  tabId: string;
+  renderEmptyBody?: (tabId: string) => ReactNode;
+}) {
+  if (!renderEmptyBody) return <NeutralEmptySurface />;
+  let body: ReactNode = null;
+  try {
+    body = renderEmptyBody(tabId);
+  } catch {
+    return <NeutralEmptySurface />;
+  }
+  return (
+    <PresenterErrorBoundary resetKey={tabId} fallback={<NeutralEmptySurface />}>
+      {body}
+    </PresenterErrorBoundary>
+  );
+}
+
+/** Neutral Empty-tab container: no menu; reservation lifecycle surface only. */
 export function EmptyTabPanel({
   tabId,
-  items,
   reservation,
-  onSelect,
+  renderEmptyBody,
+  reservationLabel,
   onRetry,
   onCancel,
 }: EmptyTabPanelProps) {
-  const headingId = useId();
-  const descriptionIdPrefix = useId();
   const pending = reservation?.status === 'pending';
   const failed = reservation?.status === 'failed';
-  const selectedItem = items.find((item) => item.id === reservation?.launcherId);
+  const safeLabel = typeof reservationLabel === 'string' && reservationLabel.trim()
+    ? reservationLabel
+    : 'content';
 
   return (
     <section
       className="rv-empty-tab-panel"
-      aria-labelledby={headingId}
       aria-busy={pending || undefined}
     >
       <div className="rv-empty-tab-content">
-        <header className="rv-empty-tab-header">
-          <h2 id={headingId} className="rv-empty-tab-heading">Add content</h2>
-          <p className="rv-empty-tab-copy">Choose an available item for this tab.</p>
-        </header>
-
-        {items.length > 0 ? (
-          <div className="rv-empty-tab-launchers">
-            {items.map((item, index) => {
-              const descriptionId = item.description
-                ? `${descriptionIdPrefix}-${index}`
-                : undefined;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  className="rv-empty-tab-launcher"
-                  disabled={Boolean(item.disabled || reservation)}
-                  aria-describedby={descriptionId}
-                  onClick={() => onSelect(tabId, item.id)}
-                >
-                  <span
-                    className="material-symbols-outlined rv-empty-tab-launcher-icon"
-                    aria-hidden="true"
-                  >
-                    {item.icon}
-                  </span>
-                  <span className="rv-empty-tab-launcher-text">
-                    <span className="rv-empty-tab-launcher-label">{item.label}</span>
-                    {item.description ? (
-                      <span id={descriptionId} className="rv-empty-tab-launcher-description">
-                        {item.description}
-                      </span>
-                    ) : null}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="rv-empty-tab-copy">No content is available to add.</p>
-        )}
+        <EmptyBodySurface tabId={tabId} renderEmptyBody={renderEmptyBody} />
 
         {pending ? (
           <div className="rv-empty-tab-reservation" role="status" aria-live="polite">
             <span className="rv-empty-tab-reservation-message">
-              Opening {selectedItem?.label ?? 'content'}…
+              Opening {safeLabel}…
             </span>
             <button
               type="button"
@@ -108,7 +101,7 @@ export function EmptyTabPanel({
                 className="rv-empty-tab-action"
                 onClick={() => onRetry(tabId)}
               >
-                Retry {selectedItem?.label ?? 'content'}
+                Retry {safeLabel}
               </button>
               <button
                 type="button"

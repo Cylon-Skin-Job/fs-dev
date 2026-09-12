@@ -125,26 +125,26 @@ function buildFilter(def, actionHandlers) {
     onDelete(filePath, ctx) {
       if (!events.includes('delete')) return;
       if (!evaluateCondition(condition, { ...ctx, filePath })) return;
-      executeAction(def, 'delete', filePath, ctx, actionHandlers);
+      return executeAction(def, 'delete', filePath, ctx, actionHandlers);
     },
 
     onCreate(filePath, ctx) {
       if (!events.includes('create')) return;
       if (!evaluateCondition(condition, { ...ctx, filePath })) return;
-      executeAction(def, 'create', filePath, ctx, actionHandlers);
+      return executeAction(def, 'create', filePath, ctx, actionHandlers);
     },
 
     onModify(filePath, ctx) {
       if (!events.includes('modify')) return;
       if (!evaluateCondition(condition, { ...ctx, filePath })) return;
-      executeAction(def, 'modify', filePath, ctx, actionHandlers);
+      return executeAction(def, 'modify', filePath, ctx, actionHandlers);
     },
 
     onRename(oldPath, newPath, oldCtx, newCtx) {
       if (!events.includes('rename')) return;
       const ctx = { ...oldCtx, newPath, oldPath };
       if (!evaluateCondition(condition, { ...ctx, filePath: oldPath })) return;
-      executeAction(def, 'rename', oldPath, ctx, actionHandlers);
+      return executeAction(def, 'rename', oldPath, ctx, actionHandlers);
     },
   };
 }
@@ -175,7 +175,13 @@ function executeAction(def, event, filePath, ctx, handlers) {
 
   const handler = handlers[action];
   if (typeof handler === 'function') {
-    handler(def, vars);
+    const result = handler(def, vars);
+    if (result && typeof result.catch === 'function') {
+      return result.catch((error) => {
+        console.error(`[Filter:${def.name || 'unnamed'}] action ${action} failed: ${error.message}`);
+      });
+    }
+    return result;
   } else {
     console.warn(`[Filter:${def.name}] Unknown action: ${action}`);
   }

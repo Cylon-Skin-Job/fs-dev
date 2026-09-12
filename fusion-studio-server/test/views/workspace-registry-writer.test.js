@@ -22,7 +22,7 @@ function writeV2View(projectRoot, folderName, options = {}) {
   const id = options.id || folderName.replace(/^\d+-/, '');
   const label = options.label || id;
   const icon = options.icon || 'folder';
-  const viewRoot = path.join(projectRoot, 'ai', 'Test-Machine', 'Views', folderName);
+  const viewRoot = path.join(projectRoot, 'ai', 'Test-Machine', 'System', 'Views', folderName);
   fs.mkdirSync(path.join(viewRoot, 'styles'), { recursive: true });
   fs.writeFileSync(path.join(viewRoot, 'manifest.md'), `---
 name: ${label}
@@ -68,10 +68,10 @@ describe('workspace view registry writer', () => {
   let aiTemplateViewsRoot;
   let oldFusionLocalMachine;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     oldFusionLocalMachine = process.env.FUSION_LOCAL_MACHINE;
     process.env.FUSION_LOCAL_MACHINE = 'Test Machine';
-    tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-view-registry-'));
+    tempRoot = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-view-registry-')));
     systemSourceRoot = path.join(tempRoot, 'system');
     aiTemplateViewsRoot = path.join(systemSourceRoot, 'ai-template', 'templates', 'view-templates');
     fs.mkdirSync(aiTemplateViewsRoot, { recursive: true });
@@ -80,6 +80,23 @@ describe('workspace view registry writer', () => {
     createService.readManifest.mockReturnValue({ views: [] });
     createService.copyTemplateDirectory.mockImplementation((source, destination) => {
       fs.cpSync(source, destination, { recursive: true });
+    });
+    fs.mkdirSync(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views'), { recursive: true });
+    const readiness = require('../../lib/views/readiness-runtime');
+    readiness.installViewReadinessOwner({
+      ensureReady: async () => ({ status: 'verified', phase: 'journal_verified', verified: true }),
+      acquireLease: () => ({
+        phase: 'journal_verified',
+        verified: true,
+        projectRoot: tempRoot,
+        viewsRoot: path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views'),
+        release() {},
+      }),
+      getStatus: () => ({ status: 'ready', verified: true }),
+    });
+    await readiness.ensureWorkspaceViewReadiness({
+      workspaceId: 'workspace-registry-writer-test',
+      projectRoot: tempRoot,
     });
   });
 
@@ -132,9 +149,9 @@ describe('workspace view registry writer', () => {
     expect(registry.views.find(view => view.id === 'file-viewer')).toMatchObject({ rank: 2, enabled: true });
     expect(registry.views.find(view => view.id === 'notes-viewer')).toMatchObject({ enabled: false });
     expect(fs.existsSync(notesView)).toBe(true);
-    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '001-wiki-viewer'))).toBe(true);
-    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-file-viewer'))).toBe(true);
-    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '003-notes-viewer'))).toBe(true);
+    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '001-wiki-viewer'))).toBe(true);
+    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-file-viewer'))).toBe(true);
+    expect(fs.existsSync(path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '003-notes-viewer'))).toBe(true);
   });
 
   test('updates v2 view labels and icons in the view capsule files', () => {
@@ -160,8 +177,49 @@ describe('workspace view registry writer', () => {
       label: 'Documents',
       icon: 'article',
     });
-    expect(fs.readFileSync(path.join(docView, 'manifest.md'), 'utf-8')).toContain('name: Documents');
-    expect(fs.readFileSync(path.join(docView, 'styles', 'icon.md'), 'utf-8')).toContain('icon-name: article');
+    expect(fs.readFileSync(path.join(docView, 'manifest.md'), 'utf-8')).toContain('name: "Documents"');
+    expect(fs.readFileSync(path.join(docView, 'styles', 'icon.md'), 'utf-8')).toContain('icon-name: "article"');
+  });
+
+  test('quotes and decodes scalar-like or escaped label and icon strings exactly', () => {
+    const viewRoot = writeV2View(tempRoot, '001-capture-viewer', {
+      id: 'capture-viewer',
+      label: 'Captures',
+      icon: 'open_run',
+    });
+
+    const roundTripValues = [
+      '123',
+      '0x10',
+      '0o10',
+      'true',
+      'false',
+      'null',
+      'A"B',
+      'C\\D',
+      'Line\nBreak',
+      'Control\u0000Character',
+      '-',
+      '- foo',
+      'TRUE',
+      'NULL',
+      '.inf',
+      '2026-09-08',
+    ];
+    for (const value of roundTripValues) {
+      const registry = views.updateWorkspaceViewRegistry(tempRoot, {
+        viewId: 'capture-viewer',
+        patch: { label: value, icon: value },
+      });
+      expect(registry.views.find((view) => view.id === 'capture-viewer')).toMatchObject({
+        label: value,
+        icon: value,
+      });
+      expect(fs.readFileSync(path.join(viewRoot, 'manifest.md'), 'utf-8'))
+        .toContain(`name: ${JSON.stringify(value)}`);
+      expect(fs.readFileSync(path.join(viewRoot, 'styles', 'icon.md'), 'utf-8'))
+        .toContain(`icon-name: ${JSON.stringify(value)}`);
+    }
   });
 
   test('uses v2 styles/icon.md instead of manifest icon metadata', () => {
@@ -273,7 +331,7 @@ describe('workspace view registry writer', () => {
     });
 
     const registry = views.addWorkspaceView(tempRoot, 'browser-viewer');
-    const destination = path.join(tempRoot, 'ai', 'Test-Machine', 'Views', '002-browser-viewer');
+    const destination = path.join(tempRoot, 'ai', 'Test-Machine', 'System', 'Views', '002-browser-viewer');
 
     expect(createService.copyTemplateDirectory).toHaveBeenCalledWith(source, destination);
     expect(fs.existsSync(path.join(destination, 'manifest.md'))).toBe(true);
@@ -298,5 +356,39 @@ describe('workspace view registry writer', () => {
 
     expect(() => views.addWorkspaceView(tempRoot, 'extras-viewer')).toThrow('View template is already installed');
     expect(createService.copyTemplateDirectory).not.toHaveBeenCalled();
+  });
+
+  test('rejects noncanonical template manifest identities without rewriting them', () => {
+    writeV2View(tempRoot, '001-file-viewer', { id: 'file-viewer', label: 'Files' });
+    createService.readManifest.mockReturnValue({
+      views: [{ id: ' Browser-Viewer ', label: 'Browser' }],
+    });
+
+    expect(() => views.getWorkspaceViewOptions(tempRoot)).toThrow('invalid metadata.view-id');
+  });
+
+  test('registry reads reject duplicate direct manifest identity keys', () => {
+    const viewRoot = writeV2View(tempRoot, '001-file-viewer', {
+      id: 'file-viewer',
+      label: 'Files',
+    });
+    fs.writeFileSync(
+      path.join(viewRoot, 'manifest.md'),
+      '---\nmetadata:\n  view-id: file-viewer\n  view-id: capture-viewer\n---\n',
+    );
+    expect(() => views.getWorkspaceViewOptions(tempRoot)).toThrow('invalid metadata.view-id');
+  });
+
+  test.each([
+    ['decimal', 123, '123'],
+    ['hexadecimal', 16, '0x10'],
+    ['octal', 8, '0o10'],
+  ])('rejects %s numeric template identities while accepting the quoted-string result', (_kind, numericId, stringId) => {
+    writeV2View(tempRoot, '001-file-viewer', { id: 'file-viewer', label: 'Files' });
+    createService.readManifest.mockReturnValue({ views: [{ id: numericId, label: 'Numeric' }] });
+    expect(() => views.getWorkspaceViewOptions(tempRoot)).toThrow('invalid metadata.view-id');
+
+    createService.readManifest.mockReturnValue({ views: [{ id: stringId, label: 'Quoted' }] });
+    expect(() => views.getWorkspaceViewOptions(tempRoot)).not.toThrow();
   });
 });

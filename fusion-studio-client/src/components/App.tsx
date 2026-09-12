@@ -199,7 +199,7 @@ function App() {
 
   // Per-panel runtime theming was retired: theme tokens now live in
   // ai/<machine>/System/styles/themes.css (workspace) with optional overrides at
-  // ai/<machine>/Views/<view>/styles/themes.css. No JS setProperty.
+  // ai/<machine>/System/Views/<view>/styles/themes.css. No JS setProperty.
 
   // Once discovery completes, set currentPanel to first available if current isn't valid
   useEffect(() => {

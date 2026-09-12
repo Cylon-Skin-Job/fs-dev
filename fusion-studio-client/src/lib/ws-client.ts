@@ -17,7 +17,10 @@ import {
   retirePendingResourceProvenanceQueries,
 } from './ws/resource-provenance-protocol';
 import { retirePendingChatDiagnosticRequests } from './ws/chat-diagnostic-handlers';
-import { handleWorkspaceMessage } from './ws/workspace-handlers';
+import {
+  handleWorkspaceMessage,
+  retirePendingWorkspaceExposure,
+} from './ws/workspace-handlers';
 import { handleHarnessMessage } from './ws/harness-handlers';
 import { handleThemeMessage } from './ws/theme-handlers';
 import { handleScreenshotMessage } from './ws/screenshot-handlers';
@@ -57,6 +60,9 @@ import {
 } from './runtime-transport';
 import { createShellSocketAuthenticator } from './shell-auth-client';
 import { runWithRendererMessageDiagnosticBoundary } from './ws/renderer-diagnostic-boundary';
+import {
+  retireViewCapsuleProjectionInstallations,
+} from './view-capsule-projection';
 
 // --- Module state ---
 
@@ -117,12 +123,6 @@ interface StateErrorMessage extends WebSocketMessage {
   clientMutationId?: number;
   requestId?: string;
   workspaceId?: string | null;
-}
-
-interface PanelConfigMessage extends WebSocketMessage {
-  type: 'panel_config';
-  projectRoot?: string | null;
-  panelRoots?: Record<string, string>;
 }
 
 interface ApiKeysStateMessage extends WebSocketMessage {
@@ -234,6 +234,8 @@ function retireFusionResponseListeners(): void {
 // --- Public API ---
 
 function retireConnectionState(): void {
+  retireViewCapsuleProjectionInstallations();
+  retirePendingWorkspaceExposure();
   abandonWsResponseTracking();
   useWorkspaceStore.getState().beginInit();
   useFileDataStore.getState().retireConnectionGeneration();
@@ -294,7 +296,7 @@ function connectCurrentRuntime() {
     if (!isCurrentConnection() || !isWebSocketMessage(value)) return;
     const msg = sanitizeTerminalErrorsAtIngress(value);
     console.log('[WS] Message received:', msg.type, redactMessageForLog(msg));
-    handleMessage(msg);
+    handleMessage(msg, isCurrentConnection, generation);
   };
   const authenticator = createShellSocketAuthenticator({
     generation: generation || '',
@@ -404,7 +406,11 @@ export function disconnectWs() {
 // --- Message handling ---
 // Every store read uses getState() — always fresh, no stale closures.
 
-function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
+function handleMessageWithinDiagnosticBoundary(
+  msg: WebSocketMessage,
+  isStillCurrent: () => boolean,
+  runtimeGeneration: string | null,
+) {
   if (
     msg.type === 'chat-turn:metadata:updated' ||
     msg.type === 'chat-turn:metadata:error' ||
@@ -417,7 +423,7 @@ function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
   if (handleThreadMessage(msg)) return;
   if (handleFileMessage(msg)) return;
   if (handleResourceProvenanceResponse(msg)) return;
-  if (handleWorkspaceMessage(msg)) return;
+  if (handleWorkspaceMessage(msg, { runtimeGeneration, isStillCurrent })) return;
   if (handleHarnessMessage(msg)) return;
   if (handleThemeMessage(msg)) return;
   if (handleScreenshotMessage(msg)) return;
@@ -473,6 +479,9 @@ function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
     // keep the optimistic local state until the pending mutation settles.
     const stateToApply = hasPendingMutation ? { ...incoming, ...current } : incoming;
     store.setViewState(view, stateToApply);
+    // VIEW-02 §9: a persisted state document landed for this view — the
+    // connected adapters' initial-policy gate may open.
+    store.settleViewStateLoad(view);
     if (clientMutationId !== null) {
       settleViewStateMutation(clientMutationId);
     }
@@ -520,6 +529,11 @@ function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
       }
       settleViewStateMutation(stateMsg.clientMutationId);
     }
+    // VIEW-02 §9: the state read settled (with an error) — release the
+    // connected adapters' initial-policy gate for this view.
+    if (typeof stateMsg.view === 'string') {
+      usePanelStore.getState().settleViewStateLoad(stateMsg.view);
+    }
     console.error('[state] error:', stateMsg.message);
     return;
   }
@@ -536,13 +550,6 @@ function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
       break;
 
     case 'panel_config': {
-      const panelMsg = msg as PanelConfigMessage;
-      if (panelMsg.projectRoot) {
-        store.setProjectRoot(panelMsg.projectRoot);
-      }
-      if (panelMsg.panelRoots) {
-        store.setPanelRoots(panelMsg.panelRoots);
-      }
       break;
     }
 
@@ -598,8 +605,12 @@ function handleMessageWithinDiagnosticBoundary(msg: WebSocketMessage) {
   }
 }
 
-export function handleMessage(msg: WebSocketMessage) {
+export function handleMessage(
+  msg: WebSocketMessage,
+  isStillCurrent: () => boolean = () => true,
+  runtimeGeneration: string | null = connectedGeneration,
+) {
   return runWithRendererMessageDiagnosticBoundary(
-    () => handleMessageWithinDiagnosticBoundary(msg),
+    () => handleMessageWithinDiagnosticBoundary(msg, isStillCurrent, runtimeGeneration),
   );
 }

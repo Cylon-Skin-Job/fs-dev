@@ -6,6 +6,7 @@ import {
   type ReservationError,
   type ReservationFailureKind,
   type ReservationIdentity,
+  type TabContentDescriptor,
   type TabContentRecord,
 } from './componentTabTypes';
 import { isBoundedOpaqueId, validateComponentDescriptor } from './componentTabValidation';
@@ -312,6 +313,96 @@ export function closeComponentTab(
       tabs,
       activeTabId,
       reservations: withoutReservation(state.reservations, tabId),
+    },
+  };
+}
+
+/** The view's configured §7 blank kind: `home` (Home tab) or `empty` (Empty tab). */
+export type BlankTabKind = 'home' | 'empty';
+
+export type DedupeConfiguredBlankTabsResult = {
+  ok: true;
+  /** The input state unchanged when there is no dedupe to perform. */
+  state: ComponentTabCollectionState;
+  keptTabId: string | null;
+  removedTabIds: readonly string[];
+};
+
+function blankReservationRank(
+  state: ComponentTabCollectionState,
+  tabId: string,
+): 0 | 1 | 2 {
+  const reservation = state.reservations.find((candidate) => candidate.tabId === tabId);
+  if (!reservation) return 0;
+  return reservation.status === 'pending' ? 2 : 1;
+}
+
+/**
+ * VIEW-02 §4/§9 per-view blank-kind dedupe: after hydration/conversion a view
+ * never holds two blanks OF ITS CONFIGURED BLANK KIND. Deterministic rules:
+ *  - `empty` blanks (Empty tabs): keep exactly one — the first
+ *    reservation-carrying blank in tab order (pending before failed; a plain
+ *    duplicate never displaces a reserved one), otherwise the first in tab
+ *    order.
+ *  - `home` blanks (component tabs matching the view's Home target): keep the
+ *    first in tab order.
+ *  - A tab carrying a PENDING reservation is never removed; if pathological
+ *    duplicates make that impossible, the extra blank is left in place rather
+ *    than silently killing a pending launch (the reservation semantics
+ *    survive; dedupe stays bounded and idempotent).
+ *  - When the removed set contained the active tab, the kept blank is
+ *    activated (the §4 recenter contract).
+ * Idempotent: with at most one blank of the kind (a valid lone sentinel) the
+ * input state is returned unchanged — never eaten, never resurrected.
+ */
+export function dedupeConfiguredBlankTabs(
+  state: ComponentTabCollectionState,
+  blankKind: BlankTabKind,
+  isHomeBlank: (content: TabContentDescriptor) => boolean,
+): DedupeConfiguredBlankTabsResult {
+  const isBlank = (tab: TabContentRecord): boolean => (
+    blankKind === 'empty' ? tab.content.kind === 'empty' : isHomeBlank(tab.content)
+  );
+  const blanks = state.tabs.filter(isBlank);
+  if (blanks.length <= 1) {
+    return { ok: true, state, keptTabId: blanks[0]?.tabId ?? null, removedTabIds: [] };
+  }
+  let keptTabId: string | null = null;
+  if (blankKind === 'empty') {
+    // Prefer pending, then failed, then the first plain blank in tab order.
+    let bestRank = 0;
+    for (const blank of blanks) {
+      const rank = blankReservationRank(state, blank.tabId);
+      if (rank > bestRank) {
+        bestRank = rank;
+        keptTabId = blank.tabId;
+        if (rank === 2) break; // a pending reservation always wins
+      }
+    }
+  }
+  if (!keptTabId) {
+    keptTabId = blanks.find((blank) => blankReservationRank(state, blank.tabId) !== 2)?.tabId
+      ?? blanks[0].tabId;
+  }
+  const removedTabIds = blanks
+    .map((blank) => blank.tabId)
+    .filter((tabId) => tabId !== keptTabId)
+    // A pending reservation is never dropped: leave the extra blank in place.
+    .filter((tabId) => blankReservationRank(state, tabId) !== 2);
+  if (removedTabIds.length === 0) {
+    return { ok: true, state, keptTabId, removedTabIds };
+  }
+  const removed = new Set(removedTabIds);
+  return {
+    ok: true,
+    keptTabId,
+    removedTabIds,
+    state: {
+      tabs: state.tabs.filter((tab) => !removed.has(tab.tabId)),
+      activeTabId: state.activeTabId !== null && removed.has(state.activeTabId)
+        ? keptTabId
+        : state.activeTabId,
+      reservations: state.reservations.filter((reservation) => !removed.has(reservation.tabId)),
     },
   };
 }

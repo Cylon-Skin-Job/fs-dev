@@ -29,20 +29,20 @@ export function resetSupportingFixtures() {
   fs.mkdirSync(path.join(emailRoot, '999-Archive'), { recursive: true })
   fs.writeFileSync(path.join(captureRoot, '001-Fixtures', 'Capture-A.md'), '# Capture A\n')
   fs.writeFileSync(path.join(emailRoot, '009-Email-Fixture', 'Email-A.md'), '# Email A\n')
-  writeJson(path.join(machineRoot, 'Views', '002-capture-viewer', 'state', 'state.json'), {
+  writeJson(path.join(machineRoot, 'System', 'Views', '002-capture-viewer', 'state', 'state.json'), {
     docViewerMode: 'active',
     docViewerActiveSelectedPath: null,
     docViewerArchiveSelectedPath: null,
     docViewerFullPage: false,
     collections: { starred: [], pinnedFolders: [] },
   })
-  writeJson(path.join(machineRoot, 'Views', '003-email-viewer', 'state', 'state.json'), {
+  writeJson(path.join(machineRoot, 'System', 'Views', '003-email-viewer', 'state', 'state.json'), {
     emailViewerMode: 'home',
     emailViewerCurrentFolder: null,
     emailViewerSelectedPath: null,
     collections: { starred: [], pinnedFolders: [] },
   })
-  const officeStatePath = path.join(machineRoot, 'Views', '001-office-viewer', 'state', 'state.json')
+  const officeStatePath = path.join(machineRoot, 'System', 'Views', '001-office-viewer', 'state', 'state.json')
   const officeState = JSON.parse(fs.readFileSync(officeStatePath, 'utf8'))
   writeJson(officeStatePath, {
     ...officeState,

@@ -26,6 +26,7 @@ import type {
 } from '../types';
 import type { PanelConfig } from '../lib/panels';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
+import type { TabPolicyProjection } from '../lib/tab-policy-projection';
 
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 export type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
@@ -51,7 +52,8 @@ export interface ComposerModelSelection {
 
 // Per-workspace runtime state. currentPanel is persisted as workspace shell
 // state; viewStates are loaded through the view-state resolver. panelConfigs
-// and panelRoots are discovered from Views/.
+// and panelRoots are discovered from System/Views/. tabPolicies is the strict
+// wire projection from panel_config (SPEC-02 §4): null = legacy/unavailable.
 export interface WorkspacePanelState {
   projectRoot: string | null;
   currentPanel: string;
@@ -64,6 +66,7 @@ export interface WorkspacePanelState {
   tokenUsage: TokenUsage | null;
   panelConfigs: PanelConfig[];
   panelRoots: Record<string, string>;
+  tabPolicies: TabPolicyProjection | null;
   viewStates: Record<string, ViewUIState>;
 }
 
@@ -162,6 +165,11 @@ export interface AppState {
   panelRoots: Record<string, string>;
   setPanelRoots: (roots: Record<string, string>) => void;
 
+  // ── Tab policy projection (SPEC-02 §4, VIEW-02 Slice 1) ──
+  // Strict wire projection of panel_config.tabPolicies; null = legacy.
+  tabPolicies: TabPolicyProjection | null;
+  setTabPolicies: (policies: TabPolicyProjection | null) => void;
+
   // ── Context usage ──
   contextUsage: number;
   setContextUsage: (usage: number) => void;
@@ -186,7 +194,15 @@ export interface AppState {
 
   // ── Per-view UI state (SPEC-26c-2) ──
   viewStates: Record<string, ViewUIState>;
+  /**
+   * VIEW-02 §9 hydration reconciliation: views with an outstanding
+   * `state:get` (persisted state in flight). The connected adapters gate the
+   * initial-policy blank on this so a session blank is never created (or
+   * persisted) before the persisted view state lands.
+   */
+  viewStateLoadPending: Record<string, boolean>;
   loadViewState: (view: string) => void;
+  settleViewStateLoad: (view: string) => void;
   setViewState: (view: string, state: Partial<ViewUIState>) => void;
   _persistViewPatch: (
     view: string,

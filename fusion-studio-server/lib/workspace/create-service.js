@@ -2,14 +2,26 @@
  * create-service — filesystem scaffolding for newly created workspaces.
  *
  * Reads System_Manager/ai-template, validates selected V2 view templates, and
- * copies them into a new project's ai/<machine>/Views tree. Pure filesystem,
+ * copies them into a new project's ai/<machine>/System/Views tree. Pure filesystem,
  * no events, no DB.
  */
 
 const fs = require('fs');
 const path = require('path');
 const Database = require('better-sqlite3');
-const { getLocalMachineName, sanitizeMachineName } = require('./ai-paths');
+const {
+  getLocalMachineName,
+  getMachineAiRoot,
+  getMachineViewsRoot,
+  sanitizeMachineName,
+} = require('./ai-paths');
+const {
+  parseCanonicalViewId,
+  assertUniqueCanonicalViewIds,
+} = require('../views/view-id');
+const { parseSimpleYaml } = require('../views/simple-yaml');
+const { acquireViewlessScaffoldLease } = require('../views/readiness-runtime');
+const { ViewRelocationError } = require('../views/relocation-errors');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const SYSTEM_SOURCE_ROOT = path.join(REPO_ROOT, 'System_Manager');
@@ -29,14 +41,37 @@ function scaffoldProject({ projectPath, viewIds, workspaceTemplateId, machineNam
   return scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineName });
 }
 
-function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineName }) {
+function scaffoldProjectV2(options) {
+  const machineIdentity = sanitizeMachineName(options.machineName || getLocalMachineName());
+  const lease = acquireViewlessScaffoldLease({
+    projectRoot: options.projectPath,
+    machineIdentity,
+  });
+  try {
+    const expectedViewsRoot = getMachineViewsRoot(path.resolve(options.projectPath), machineIdentity);
+    if (typeof lease.viewsRoot !== 'string' || path.resolve(lease.viewsRoot) !== expectedViewsRoot) {
+      throw new ViewRelocationError('view_registry_unavailable', undefined, { journalFailure: false });
+    }
+    const result = scaffoldProjectV2Unchecked(options);
+    if (typeof lease.complete !== 'function' || lease.complete() !== true) {
+      throw new ViewRelocationError('view_registry_unavailable', undefined, { journalFailure: false });
+    }
+    return result;
+  } finally {
+    lease.release();
+  }
+}
+
+function scaffoldProjectV2Unchecked({ projectPath, viewIds, workspaceTemplateId, machineName }) {
   const workspaceTemplate = readWorkspaceTemplate(workspaceTemplateId || DEFAULT_WORKSPACE_TEMPLATE_ID);
   const selectedViewIds = Array.isArray(viewIds) && viewIds.length > 0
     ? viewIds
     : workspaceTemplate.selectedViewIds;
   const manifest = readV2Manifest();
   const viewsById = new Map(manifest.views.map((view) => [view.id, view]));
-  const requestedIds = Array.from(new Set(selectedViewIds));
+  const requestedIds = Array.from(new Set(selectedViewIds.map((viewId) => (
+    parseCanonicalViewId(viewId, 'Requested view template')
+  ))));
   const unknownViewId = requestedIds.find((viewId) => !viewsById.has(viewId));
   if (unknownViewId) {
     throw new Error('Unknown view template: ' + unknownViewId);
@@ -50,8 +85,7 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
   }
 
   try {
-    const aiRoot = path.join(projectPath, 'ai');
-    const machineRoot = path.join(aiRoot, safeMachineName);
+    const machineRoot = getMachineAiRoot(projectPath, safeMachineName);
     fs.mkdirSync(machineRoot, { recursive: true });
 
     const rootsToCopy = getV2TemplateRootsForViews(selectedViews);
@@ -64,7 +98,7 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
       copyTemplateEntry(sourcePath, destinationPath);
     }
 
-    const destinationViewsRoot = path.join(machineRoot, 'Views');
+    const destinationViewsRoot = getMachineViewsRoot(projectPath, safeMachineName);
     fs.mkdirSync(destinationViewsRoot, { recursive: true });
     const viewTemplatesRoot = getAiTemplateViewsRoot();
     selectedViews.forEach((view, index) => {
@@ -82,7 +116,10 @@ function scaffoldProjectV2({ projectPath, viewIds, workspaceTemplateId, machineN
       selectedViews: selectedViews.map((view, index) => ({
         ...view,
         rank: index + 1,
-        viewPath: path.join('ai', safeMachineName, 'Views', `${String(index + 1).padStart(3, '0')}-${view.id}`),
+        viewPath: path.relative(
+          projectPath,
+          path.join(destinationViewsRoot, `${String(index + 1).padStart(3, '0')}-${view.id}`),
+        ),
       })),
       machineName: safeMachineName,
       machineRoot,
@@ -225,7 +262,6 @@ function readV2Manifest() {
       return {
         folderName: entry.name,
         order: match ? Number(match[1]) : 999,
-        fallbackId: match ? match[2] : entry.name,
       };
     })
     .sort((a, b) => {
@@ -234,33 +270,39 @@ function readV2Manifest() {
       return a.folderName.localeCompare(b.folderName);
     });
 
+  const views = entries.map((entry) => {
+    const viewRoot = path.join(viewTemplatesRoot, entry.folderName);
+    const manifest = readFrontmatter(path.join(viewRoot, 'manifest.md'));
+    const icon = readFrontmatter(path.join(viewRoot, 'styles', 'icon.md'));
+    const id = parseCanonicalViewId(
+      manifest.metadata?.['view-id'],
+      `View template ${entry.folderName}`,
+    );
+    const enabled = manifest.metadata?.enabled !== false;
+    return {
+      id,
+      baseViewId: id,
+      label: manifest.name || displayLabelFromId(id),
+      description: manifest.description || '',
+      group: DEFAULT_SELECTED_VIEW_IDS.has(id) ? 'default' : 'optional',
+      status: enabled ? (manifest.metadata?.availability || 'ready') : 'hidden',
+      icon: icon.metadata?.['icon-name'] || 'folder',
+      templatePath: path.relative(SYSTEM_SOURCE_ROOT, viewRoot),
+      folderName: entry.folderName,
+      order: entry.order,
+      enabled,
+      availability: manifest.metadata?.availability || 'stable',
+      dataSource: manifest.metadata?.['data-source'] || null,
+    };
+  });
+  assertUniqueCanonicalViewIds(views);
+
   return {
     version: 2,
     templateRoot: path.relative(REPO_ROOT, AI_TEMPLATE_ROOT),
     viewTemplatesRoot: path.relative(REPO_ROOT, viewTemplatesRoot),
     workspaceTemplates: listWorkspaceTemplates(),
-    views: entries.map((entry) => {
-      const viewRoot = path.join(viewTemplatesRoot, entry.folderName);
-      const manifest = readFrontmatter(path.join(viewRoot, 'manifest.md'));
-      const icon = readFrontmatter(path.join(viewRoot, 'styles', 'icon.md'));
-      const id = manifest.metadata?.['view-id'] || entry.fallbackId;
-      const enabled = manifest.metadata?.enabled !== false;
-      return {
-        id,
-        baseViewId: id,
-        label: manifest.name || displayLabelFromId(id),
-        description: manifest.description || '',
-        group: DEFAULT_SELECTED_VIEW_IDS.has(id) ? 'default' : 'optional',
-        status: enabled ? (manifest.metadata?.availability || 'ready') : 'hidden',
-        icon: icon.metadata?.['icon-name'] || 'folder',
-        templatePath: path.relative(SYSTEM_SOURCE_ROOT, viewRoot),
-        folderName: entry.folderName,
-        order: entry.order,
-        enabled,
-        availability: manifest.metadata?.availability || 'stable',
-        dataSource: manifest.metadata?.['data-source'] || null,
-      };
-    }),
+    views,
   };
 }
 
@@ -350,41 +392,6 @@ function readFrontmatter(filePath) {
   const match = text.match(/^---\s*\n([\s\S]*?)\n---/);
   if (!match) return {};
   return parseSimpleYaml(match[1]);
-}
-
-function parseSimpleYaml(yamlText) {
-  const result = {};
-  let currentObject = result;
-  for (const rawLine of yamlText.split(/\r?\n/)) {
-    if (!rawLine.trim() || rawLine.trim().startsWith('#')) continue;
-    const indent = rawLine.match(/^\s*/)[0].length;
-    const line = rawLine.trim();
-    const separator = line.indexOf(':');
-    if (separator === -1) continue;
-    const key = line.slice(0, separator).trim();
-    const rawValue = line.slice(separator + 1).trim();
-    if (indent === 0) {
-      if (rawValue === '') {
-        result[key] = {};
-        currentObject = result[key];
-      } else {
-        result[key] = parseYamlScalar(rawValue);
-        currentObject = result;
-      }
-      continue;
-    }
-    if (currentObject && typeof currentObject === 'object') {
-      currentObject[key] = parseYamlScalar(rawValue);
-    }
-  }
-  return result;
-}
-
-function parseYamlScalar(value) {
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (value === 'null') return null;
-  return value.replace(/^['"]|['"]$/g, '');
 }
 
 function displayLabelFromId(id) {

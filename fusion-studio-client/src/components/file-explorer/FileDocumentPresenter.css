@@ -1,0 +1,54 @@
+/*
+ * VIEW-02 Slice 4 — File document presenter layout (owner direction
+ * 2026-09-10: the shell location rail is the single path row; the presenter
+ * renders content structure only — no duplicate breadcrumb/filename bar).
+ *
+ * Mirrors the accepted picker-layer geometry: the drawer overlays the right
+ * edge of the layout and its width follows the shell-owned --file-tree-w
+ * variable, so the dock toggle (panelStore rightCol) collapses it.
+ */
+
+.rv-file-explorer-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.rv-file-explorer-main {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-file-explorer-layout .rv-file-viewer {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-file-explorer-layout .rv-file-viewer-content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.rv-file-explorer-layout .rv-file-tree-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--file-tree-w, var(--right-col-w, 220px));
+  overflow: hidden;
+  z-index: 8;
+}
+
+.rv-file-doc-dock {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  z-index: 9;
+}

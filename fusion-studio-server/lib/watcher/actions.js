@@ -1,13 +1,14 @@
 /**
  * Built-in action handlers for declarative filters.
  *
- * Each action is a function: (filterDef, vars) => void
+ * Each action is a function: (filterDef, vars) => void | Promise<void>
  * where vars contains the template variables from the event context.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { applyTemplate } = require('./filter-loader');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 /**
  * Create the default action handlers.
@@ -169,7 +170,7 @@ function createActionHandlers(deps = {}) {
      * Write template-expanded content to a file path.
      * Path must be within the project root.
      */
-    'drop-file'(def, vars) {
+    async 'drop-file'(def, vars) {
       const filePath = applyTemplate(def.path || '', vars);
       const content = applyTemplate(def.content || '', vars);
       const projectRoot = deps.projectRoot;
@@ -179,16 +180,29 @@ function createActionHandlers(deps = {}) {
         return;
       }
 
-      if (projectRoot && !path.resolve(filePath).startsWith(path.resolve(projectRoot))) {
+      if (!projectRoot) {
+        console.warn('[Action:drop-file] No project root, skipping');
+        return;
+      }
+      const resolvedRoot = path.resolve(projectRoot);
+      const resolvedFilePath = path.isAbsolute(filePath)
+        ? path.resolve(filePath)
+        : path.resolve(resolvedRoot, filePath);
+      const relative = path.relative(resolvedRoot, resolvedFilePath);
+      if (relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
         console.warn(`[Action:drop-file] Path outside project root, skipping: ${filePath}`);
         return;
       }
 
-      const dir = path.dirname(filePath);
+      await assertGenericViewMutationAllowed({
+        projectRoot: resolvedRoot,
+        paths: [resolvedFilePath],
+      });
+      const dir = path.dirname(resolvedFilePath);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-      fs.writeFileSync(filePath, content, 'utf8');
-      console.log(`[Action:drop-file] ${filePath}`);
+      fs.writeFileSync(resolvedFilePath, content, 'utf8');
+      console.log(`[Action:drop-file] ${resolvedFilePath}`);
     },
   };
 }

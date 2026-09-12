@@ -1,6 +1,6 @@
  /*
   * capture-viewer panel layout.
- * ai/<machine>/Views/<view-folder>/styles/layout.css
+ * ai/<machine>/System/Views/<view-folder>/styles/layout.css
  *
  * Tile grid + file page view with bottom ribbon.
  * Loaded at runtime by useViewLayoutStyles('capture-viewer').

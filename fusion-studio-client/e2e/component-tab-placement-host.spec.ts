@@ -71,8 +71,8 @@ test('Empty selector current fills one Empty in place with centered identity and
   ));
 
   await expect(resultPanel(page)).toContainText('filled_current; tab tab-empty');
-  await expect(page.getByRole('tablist')).toHaveCount(0);
-  await expect(page.locator('.rv-component-tab-single-label')).toHaveText('ALPHA');
+  await expect(page.getByRole('tablist')).toHaveCount(1);
+  await expect(page.locator('.rv-view-tab-item.is-selected .rv-view-tab-label')).toHaveText('ALPHA');
   await expect(page.getByRole('navigation', { name: 'Location: Documents > ALPHA' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'ALPHA' })).toBeVisible();
   await expect(page.getByTestId('active-identity')).toHaveText(
@@ -276,8 +276,9 @@ test('unavailable, throwing, and hostile creation resolution expose only canonic
     await expect(page.getByRole('alert')).toHaveText(
       'Placement failed: target_unavailable; The requested target is currently unavailable.',
     );
-    await expect(page.getByRole('tablist')).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Add content' })).toBeVisible();
+    await expect(page.getByRole('tablist')).toHaveCount(1);
+    await expect(page.locator('.rv-empty-tab-panel')).toBeVisible();
+    await expect(page.locator('.rv-empty-tab-launcher')).toHaveCount(0);
     await expect(page.getByTestId('active-identity')).toContainText('Active tab tab-empty');
     expect(await summary(page)).toMatchObject({ activeTabId: 'tab-empty', order: ['tab-empty'] });
     const proof = await evidence(page);

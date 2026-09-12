@@ -5,7 +5,6 @@
  * Extracted from ws-client.ts (spec 05b) so file logic is isolated.
  */
 
-import { useActiveResourceStore } from '../../state/activeResourceStore';
 import { useFileDataStore, type FileNode, type FileResourceMetadata } from '../../state/fileDataStore';
 import { useFileStore } from '../../state/fileStore';
 import { usePanelStore } from '../../state/panelStore';
@@ -207,12 +206,6 @@ export function handleFileMessage(msg: WebSocketMessage): boolean {
       const changedPanel = m.panel;
       if (changedPanel && changedPath) {
         fileData.invalidate(changedPanel, changedPath);
-      }
-
-      // Also re-fetch if the active resource matches (page view live update)
-      const activeRes = useActiveResourceStore.getState().activeResource;
-      if (activeRes && changedPath.endsWith(activeRes.relativePath)) {
-        fileData.requestContent(activeRes.panel, activeRes.relativePath);
       }
       return true;
     }

@@ -12,6 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const aiPaths = require('./ai-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 function isPlainObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -45,11 +46,15 @@ function readSystemState(repoPath) {
   }
 }
 
-function writeSystemState(repoPath, state) {
+async function writeSystemState(repoPath, state) {
   const file = stateFileForRepo(repoPath);
   if (!file) return;
-  fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = `${file}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`;
+  await assertGenericViewMutationAllowed({
+    projectRoot: repoPath,
+    paths: [path.dirname(file), file, tmp],
+  });
+  fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(tmp, JSON.stringify(state, null, 2));
   fs.renameSync(tmp, file);
 }
@@ -66,7 +71,7 @@ function getWorkspaceStateFromSystem(repoPath, options = {}) {
   return sanitizeState(workspaceState, options);
 }
 
-function save(_workspaceId, state, options = {}) {
+async function save(_workspaceId, state, options = {}) {
   const repoPath = options.repoPath;
   if (!repoPath) return;
 
@@ -82,7 +87,7 @@ function save(_workspaceId, state, options = {}) {
     delete workspaceState.currentPanel;
   }
 
-  writeSystemState(repoPath, {
+  await writeSystemState(repoPath, {
     ...systemState,
     workspace: workspaceState,
   });

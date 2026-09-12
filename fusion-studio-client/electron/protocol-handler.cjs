@@ -1,82 +1,65 @@
-const path = require('path');
-const { protocol, net } = require('electron');
-const { pathToFileURL } = require('url');
+'use strict';
+
+const fs = require('node:fs');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 
 let activeWorkspacePath = null;
+function setWorkspaceRoot(repoPath) { activeWorkspacePath = repoPath || null; }
+function getWorkspaceRoot() { return activeWorkspacePath; }
 
-/**
- * Called by main.cjs IPC handler when the renderer signals a workspace change.
- * @param {string} repoPath - Absolute path to the workspace root.
- */
-function setWorkspaceRoot(repoPath) {
-  activeWorkspacePath = repoPath || null;
-}
-
-function getWorkspaceRoot() {
-  return activeWorkspacePath;
-}
-
-/**
- * Register scheme privileges. MUST be called before app is ready — call this
- * at the module level of main.cjs, before app.whenReady().
- */
 function registerScheme() {
+  const { protocol } = require('electron');
   protocol.registerSchemesAsPrivileged([
-    {
-      scheme: 'fusion-shell',
-      privileges: {
-        standard: true,
-        secure: true,
-        supportFetchAPI: true,
-        corsEnabled: true,
-        codeCache: true,
-      },
-    },
-    {
-      scheme: 'fusion-studio',
-      privileges: {
-        standard: true,       // relative URLs within served HTML resolve correctly
-        secure: true,         // treated as a secure origin (WebCrypto, etc.)
-        supportFetchAPI: true,
-        corsEnabled: true,
-      },
-    },
+    { scheme: 'fusion-shell', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, codeCache: true } },
+    { scheme: 'fusion-studio', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } },
   ]);
 }
 
-/**
- * Register the request handler. Call inside app.whenReady().
- */
-function registerHandler() {
-  protocol.handle('fusion-studio', async (request) => {
-    if (!activeWorkspacePath) {
-      return new Response('No active workspace', { status: 503 });
-    }
-
-    let url;
-    try {
-      url = new URL(request.url);
-    } catch {
-      return new Response('Invalid URL', { status: 400 });
-    }
-
-    const viewId = url.hostname;          // e.g. "wiki-viewer"
-    const relPath = decodeURIComponent(url.pathname).replace(/^\//, '');
-
-    if (!viewId) {
-      return new Response('Missing view ID', { status: 400 });
-    }
-
-    const viewRoot = path.join(activeWorkspacePath, 'ai', 'views', viewId);
-    const target = path.resolve(viewRoot, relPath || 'index.html');
-
-    // Path traversal guard — target must stay inside viewRoot
-    if (!target.startsWith(viewRoot + path.sep) && target !== viewRoot) {
-      return new Response('Forbidden', { status: 403 });
-    }
-
-    return net.fetch(pathToFileURL(target).toString());
-  });
+function decodeRequestPath(url) {
+  if (url.username || url.password || url.port || url.search || url.hash) return null;
+  let decoded;
+  try { decoded = decodeURIComponent(url.pathname); } catch { return null; }
+  if (decoded.includes('\0') || decoded.includes('\\') || decoded.includes('%')) return null;
+  const relative = decoded.replace(/^\//, '') || 'index.html';
+  if (path.isAbsolute(relative)) return null;
+  const segments = relative.split('/');
+  if (segments.some((segment) => !segment || segment === '.' || segment === '..')) return null;
+  return segments.join(path.sep);
 }
 
-module.exports = { registerScheme, registerHandler, setWorkspaceRoot, getWorkspaceRoot };
+function createProtocolRequestHandler({ getViewCapsuleRegistry, fetch }) {
+  const fetchAsset = fetch || require('electron').net.fetch;
+  return async function handle(request) {
+    let url;
+    try { url = new URL(request.url); } catch { return new Response('Invalid URL', { status: 400 }); }
+    const registry = getViewCapsuleRegistry();
+    if (!registry) return new Response('View registry unavailable', { status: 503 });
+    const capsuleRoot = registry.capsules.get(url.hostname);
+    const relative = decodeRequestPath(url);
+    if (!capsuleRoot || !relative) return new Response('Unavailable', { status: 404 });
+    const declaredTarget = path.resolve(capsuleRoot, relative);
+    const lexicalRelative = path.relative(capsuleRoot, declaredTarget);
+    if (lexicalRelative === '..' || lexicalRelative.startsWith(`..${path.sep}`) || path.isAbsolute(lexicalRelative)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+    try {
+      const target = path.resolve(await fs.promises.realpath(declaredTarget));
+      const physicalRelative = path.relative(capsuleRoot, target);
+      if (physicalRelative === '..' || physicalRelative.startsWith(`..${path.sep}`) || path.isAbsolute(physicalRelative)) {
+        return new Response('Forbidden', { status: 403 });
+      }
+      return fetchAsset(pathToFileURL(target).toString());
+    } catch {
+      return new Response('Unavailable', { status: 404 });
+    }
+  };
+}
+
+function registerHandler({ getViewCapsuleRegistry } = {}) {
+  if (typeof getViewCapsuleRegistry !== 'function') throw new TypeError('view capsule registry owner is required');
+  const { protocol } = require('electron');
+  protocol.handle('fusion-studio', createProtocolRequestHandler({ getViewCapsuleRegistry }));
+}
+
+module.exports = { registerScheme, registerHandler, createProtocolRequestHandler, decodeRequestPath, setWorkspaceRoot, getWorkspaceRoot };

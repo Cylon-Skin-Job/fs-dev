@@ -40,6 +40,10 @@ const { drainAuditSaves, startAuditSubscriber } = require('./audit/audit-subscri
 const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller');
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 const views = require('./views');
+const viewReadiness = require('./views/readiness-runtime');
+const { createViewReadinessCoordinator } = require('./views/readiness-coordinator');
+const { createViewRelocationService } = require('./views/relocation-service');
+const { startWorkspacePipelineWhenReady } = require('./views/readiness-startup');
 const { createShutdownHandler } = require('./shutdown');
 
 const {
@@ -50,6 +54,18 @@ const {
 const PORT = parseLoopbackPort(process.env.PORT ?? '3001');
 const SERVER_HOST = validateLoopbackHost(LOOPBACK_HOST);
 const { createIsolatedProvenanceRuntime } = require('./testing/isolated-provenance-runtime');
+
+async function initializeRuntimeMachineIdentity({ initializeIdentity, resolveIdentity } = {}) {
+  if (typeof initializeIdentity !== 'function' || typeof resolveIdentity !== 'function') {
+    throw new TypeError('machine identity initialization capabilities are required');
+  }
+  // Persistence must be initialized before registry policy runs, but the
+  // effective runtime identity can be an explicit FUSION_LOCAL_MACHINE
+  // override (notably the isolated Alpha profile). Bind readiness to the same
+  // resolver used by every ordinary workspace path consumer.
+  await initializeIdentity();
+  return resolveIdentity();
+}
 
 function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.promises.realpath } = {}) {
   if (typeof getWorkspaceById !== 'function' || typeof realpath !== 'function') {
@@ -471,8 +487,18 @@ async function start({
     registryAccess,
     writeDiagnostic: (code) => writeGovernedDiagnostic({ code }),
   });
-  const { initializeLocalMachineIdentity } = require('./workspace/ai-paths');
-  const localMachineName = await initializeLocalMachineIdentity();
+  const {
+    getLocalMachineName,
+    initializeLocalMachineIdentity,
+  } = require('./workspace/ai-paths');
+  const localMachineName = await initializeRuntimeMachineIdentity({
+    initializeIdentity: initializeLocalMachineIdentity,
+    resolveIdentity: getLocalMachineName,
+  });
+  viewReadiness.installViewReadinessOwner(createViewReadinessCoordinator({
+    migrationService: createViewRelocationService({ db: getDb() }),
+    machineIdentity: localMachineName,
+  }));
   console.log('[Workspace] local machine name: ' + localMachineName);
 
   // The isolated provenance fixture gets a process-owned, provider-free
@@ -637,19 +663,20 @@ async function start({
 
   // 4. listen() — must come before watcher/hooks start, they broadcast to clients
   await new Promise((resolve, reject) => {
-    server.listen(PORT, SERVER_HOST, () => {
+    server.listen(PORT, SERVER_HOST, async () => {
       const boundPort = server.address().port;
       console.log(`[Server] Running on IPv4 loopback port=${boundPort}`);
       console.log(`[Server] Default CLI: ${process.env.KIMI_PATH || 'kimi'}`);
 
       try {
-        isolatedProvenance.defineStartupEffect('workspace-watcher-trigger-pipeline', () => {
-          _startPipeline({
+        await isolatedProvenance.defineStartupEffect('workspace-watcher-trigger-pipeline', () => (
+          startWorkspacePipelineWhenReady({
             sessions,
             getProjectRoot,
             getWorkspaceId: workspaceController.getActiveWorkspaceId,
-          });
-        }).start();
+            startPipeline: _startPipeline,
+          })
+        )).start();
       } catch (err) {
         // Don't crash the server if pipeline init fails — log and continue
         console.error('[Server] Pipeline init error:', err);
@@ -732,9 +759,7 @@ async function start({
  *
  * @private
  */
-function _startPipeline({ sessions, getProjectRoot, getWorkspaceId }) {
-  const projectRoot = getProjectRoot();
-  const workspaceId = getWorkspaceId();
+function _startPipeline({ sessions, projectRoot, workspaceId }) {
   if (!projectRoot) {
     console.log('[Server] No active workspace — pipeline skipped');
     return;
@@ -851,4 +876,9 @@ function _startPipeline({ sessions, getProjectRoot, getWorkspaceId }) {
   checkHeartbeats(projectRoot);
 }
 
-module.exports = { createAgentPhaseAOwner, createAgentWorkspaceRootResolver, start };
+module.exports = {
+  createAgentPhaseAOwner,
+  createAgentWorkspaceRootResolver,
+  initializeRuntimeMachineIdentity,
+  start,
+};

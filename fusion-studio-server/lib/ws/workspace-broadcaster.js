@@ -125,6 +125,9 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, ge
   }
 
   async function broadcastWorkspaceSwitched(event) {
+    if (!Number.isSafeInteger(event.bindingRevision) || event.bindingRevision < 1) {
+      throw new Error('workspace_binding_revision_unavailable');
+    }
     const clients = getAllClients().filter((ws) => ws.readyState === 1);
     const bindings = (await Promise.all(clients.map(async (ws) => {
       const session = getSessionForClient?.(ws);
@@ -157,6 +160,7 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, ge
         resourceProvenanceProtocolVersion: 1,
         agentActivityProtocolVersion: 1,
         fileViewerReadProtocolVersion: 1,
+        bindingRevision: event.bindingRevision,
         from: event.from,
         to: event.to,
         repoPath: event.repoPath,
@@ -205,8 +209,14 @@ function createWorkspaceBroadcaster({ getAllClients, getClientByConnectionId, ge
       // new workspace on that message, which clears old per-workspace roots.
       // Link/copy/send-to-chat actions consume these resolved content roots
       // through the shared resource-path module.
-      for (const { ws } of completed) {
-        if (ws.readyState === 1) ws.send(JSON.stringify(buildPanelConfig(event.repoPath)));
+      for (const { ws, pair } of completed) {
+        if (ws.readyState === 1) {
+          ws.send(JSON.stringify(await buildPanelConfig(
+            event.repoPath,
+            pair.workspaceId,
+            pair.workspaceEpoch,
+          )));
+        }
       }
     }
   }

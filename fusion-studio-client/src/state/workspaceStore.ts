@@ -17,6 +17,7 @@ interface WorkspaceStoreState {
   workspaces: Workspace[];
   activeWorkspaceId: string | null;
   workspaceEpoch: string | null;
+  bindingRevision: number | null;
   /** Null keeps first-party saves on the legacy path until SPEC-03d activates v1. */
   fileSaveProtocolVersion: 1 | null;
   /** Null prevents provenance queries until the active server bind advertises v1. */
@@ -49,6 +50,7 @@ interface WorkspaceStoreState {
     fileSaveProtocolVersion?: 1 | null,
     resourceProvenanceProtocolVersion?: 1 | null,
     fileViewerReadProtocolVersion?: 1 | null,
+    bindingRevision?: number | null,
   ) => void;
   setWorkspaceType: (type: 'code' | 'app') => void;
   setSourceMachineName: (name: string) => void;
@@ -116,6 +118,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   workspaces: [],
   activeWorkspaceId: null,
   workspaceEpoch: null,
+  bindingRevision: null,
   fileSaveProtocolVersion: null,
   resourceProvenanceProtocolVersion: null,
   fileViewerReadProtocolVersion: null,
@@ -142,9 +145,11 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
     fileSaveProtocolVersion = null,
     resourceProvenanceProtocolVersion = null,
     fileViewerReadProtocolVersion = null,
+    bindingRevision = null,
   ) => set({
     activeWorkspaceId: id,
     workspaceEpoch: epoch,
+    bindingRevision,
     fileSaveProtocolVersion,
     resourceProvenanceProtocolVersion,
     fileViewerReadProtocolVersion,
@@ -158,6 +163,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   beginInit: () => set({
     hasReceivedInit: false,
     workspaceEpoch: null,
+    bindingRevision: null,
     resourceProvenanceProtocolVersion: null,
     fileViewerReadProtocolVersion: null,
   }),

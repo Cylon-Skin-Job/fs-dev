@@ -1,8 +1,8 @@
 /**
  * @module panels
  * @role Shared panel discovery and config loading
- * @reads generated V2 view metadata from ai/<machine>/Views/{prefix}-{id}/
- * Workspace CSS: fetchPanelWorkspaceFile (__panels__ → ai/<machine>/Views/…).
+ * @reads generated V2 view metadata from ai/<machine>/System/Views/{prefix}-{id}/
+ * Workspace CSS: fetchPanelWorkspaceFile (__panels__ → ai/<machine>/System/Views/…).
  *
  * Loads panel definitions from the repo filesystem via WebSocket.
  * Knows nothing about any specific panel type — content.json declares
@@ -84,6 +84,8 @@ interface WorkspaceViewRegistryEntry {
 interface RediscoverPanelsOptions {
   preserveCurrent?: boolean;
   chooseNearestIfMissing?: boolean;
+  /** Revalidate an async caller before discovered panel state becomes visible. */
+  shouldCommit?: () => boolean;
 }
 
 // --- Helpers ---
@@ -142,7 +144,7 @@ export function getPanelFileUrl(panel: string, pathUnderContent: string): string
 }
 
 /**
- * Read a file from under ai/<machine>/Views/{prefix}-{panelId}/ regardless of display type.
+ * Read a file from under ai/<machine>/System/Views/{prefix}-{panelId}/ regardless of display type.
  * Use this for generated view metadata, styles/themes.css, etc. (Not for browsing project files on file-viewer.)
  */
 export function fetchPanelWorkspaceFile(
@@ -349,7 +351,7 @@ export function discoverPanels(ws: WebSocket, panelAlias: string): Promise<strin
 }
 
 /**
- * Load all panel configs from machine-scoped Views (tools) and ai/apps/ (apps).
+ * Load all panel configs from machine-scoped System/Views (tools) and ai/apps/ (apps).
  * Returns sorted by rank within each category.
  */
 export async function loadAllPanels(ws: WebSocket): Promise<PanelConfig[]> {
@@ -394,6 +396,7 @@ export async function rediscoverPanels(ws: WebSocket, options: RediscoverPanelsO
   const previousConfigs = previousStore.panelConfigs;
   previousStore.setPanelConfigs([]);
   const configs = await loadAllPanels(ws);
+  if (options.shouldCommit && !options.shouldCommit()) return;
   usePanelStore.getState().setPanelConfigs(configs);
 
   if (configs.length === 0) return;

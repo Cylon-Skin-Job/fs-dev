@@ -107,6 +107,7 @@ const {
   setSessionRoot,
   clearSessionRoot,
   getPanelPath,
+  getRootBoundPanelPath,
 } = require('./lib/views/panel-paths');
 const productSessionRegistry = createProductSessionRegistry({ sessions });
 const transportConnectionRegistry = createTransportConnectionRegistry();
@@ -156,9 +157,16 @@ app.use(
 app.use('/api/screenshot', require('./lib/screenshot/router').createRouter());
 app.use('/api/capabilities', require('./lib/http/capabilities-routes').createRouter());
 app.use('/api', require('./lib/transcription').createRouter());
-app.use('/api/panel-file', require('./lib/http/panel-file-route').createRouter({ getProjectRoot, getPanelPath }));
+app.use('/api/panel-file', require('./lib/http/panel-file-route').createRouter({
+  getProjectRoot,
+  getPanelPathForRoot: getRootBoundPanelPath,
+  getWorkspaceId: workspaceController.getActiveWorkspaceId,
+}));
 app.use('/api/harnesses', require('./lib/http/harness-routes').createRouter());
-app.use('/api/view-config', require('./lib/http/view-config-route').createRouter({ getProjectRoot }));
+app.use('/api/view-config', require('./lib/http/view-config-route').createRouter({
+  getProjectRoot,
+  getWorkspaceId: workspaceController.getActiveWorkspaceId,
+}));
 app.use('/api/calendar', require('./lib/http/calendar-routes').createRouter());
 
 // Fallback to index.html for SPA routing
@@ -212,8 +220,6 @@ wss.on('connection', (ws, request) => {
   const productConnection = createDeferredProductConnection({
     ws,
     build: async ({ ownCleanup }) => {
-      activeWs = workspaceController.getActiveWorkspaceSync();
-      projectRoot = activeWs ? activeWs.repo_path : null;
       const { handleMessage, handleCanonicalHarnessEvent } = createWireMessageRouter({
         session,
         ws,
@@ -270,28 +276,49 @@ wss.on('connection', (ws, request) => {
     // belongs behind successful shell authentication. Standalone mode reaches
     // this same boundary without ever receiving a trusted connection role.
     await serverRuntimeActivation.wait();
-    await productConnection.initialize();
-    const initialWorkspacePair = beginWorkspaceBind(session, {
-      workspaceId: activeWs ? activeWs.id : null,
-      repoPath: projectRoot,
-    });
-    if (projectRoot) {
-      ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
-        projectRoot,
-        viewName: 'file-viewer',
+    await workspaceController.runInWorkspaceLifecycle(async () => {
+      // Initial publication and session visibility share the controller's
+      // lifecycle lane. A switch therefore occurs wholly before this snapshot
+      // or wholly after the initialized client is visible to its broadcast.
+      activeWs = workspaceController.getActiveWorkspaceSync();
+      projectRoot = activeWs ? activeWs.repo_path : null;
+      const bindingRevision = workspaceController.getActiveWorkspaceBindingRevision();
+      await productConnection.initialize();
+      const initialWorkspacePair = beginWorkspaceBind(session, {
         workspaceId: activeWs ? activeWs.id : null,
+        repoPath: projectRoot,
       });
-    }
-    ws.send(JSON.stringify({
-      type: 'connected',
-      connectionId,
-      message: 'Thread-enabled connection established',
-    }));
-    const msg = await buildWorkspaceInit(getProjectRoot, { ...initialWorkspacePair, repoPath: projectRoot });
-    console.log('[WS] Sending workspace:init message');
-    const bound = await completeWorkspaceBind(ws, session, msg, initialWorkspacePair);
-    if (!bound) throw new Error('workspace_binding_retired');
-    ws.send(JSON.stringify(buildPanelConfig(projectRoot)));
+      if (projectRoot) {
+        ThreadWebSocketHandler.setPanel(ws, 'file-viewer', {
+          projectRoot,
+          viewName: 'file-viewer',
+          workspaceId: activeWs ? activeWs.id : null,
+        });
+      }
+      ws.send(JSON.stringify({
+        type: 'connected',
+        connectionId,
+        message: 'Thread-enabled connection established',
+      }));
+      const msg = await buildWorkspaceInit(getProjectRoot, {
+        ...initialWorkspacePair,
+        repoPath: projectRoot,
+        bindingRevision,
+      });
+      console.log('[WS] Sending workspace:init message');
+      const bound = await completeWorkspaceBind(ws, session, msg, initialWorkspacePair);
+      if (!bound) throw new Error('workspace_binding_retired');
+      ws.send(JSON.stringify(await buildPanelConfig(
+        projectRoot,
+        initialWorkspacePair.workspaceId,
+        initialWorkspacePair.workspaceEpoch,
+      )));
+      productSessionRegistry.activate({
+        ws,
+        session,
+        managed: shellAuthOwner.available,
+      });
+    });
   };
   const authenticatedDispatch = createShellAuthDispatch({
     authOwner: shellAuthOwner,
@@ -299,11 +326,7 @@ wss.on('connection', (ws, request) => {
     session,
     origin: request?.headers?.origin,
     initialize: initializeConnection,
-    activate: () => productSessionRegistry.activate({
-      ws,
-      session,
-      managed: shellAuthOwner.available,
-    }),
+    activate: async () => {},
     activateTransport: () => activateApplicationPayloadLimit(ws),
     handleNext: productConnection.handleMessage,
     log: (code) => console.warn(`[WS] ${code}`),

@@ -3,6 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { createAtomicWriter, AtomicWriteError } = require('../../lib/file-mutations/atomic-writer');
 const { createDurableReservationAuthority } = require('../../lib/file-mutations/durable-reservations');
 const { createFileOperationRepository } = require('../../lib/file-mutations/file-operation-repository');
@@ -93,6 +94,85 @@ describe('mediated file-save controller', () => {
     await expect(operations.versions.getMetadata(result.fileVersionId)).resolves.toMatchObject({
       kind: 'absent', byteLength: 0,
     });
+  });
+
+  test('rejects canonical, retired, pseudo-panel, symlink, hard-link, encoded, and non-existing protected saves before reservation', async () => {
+    const canonical = path.join(root, 'ai', 'Machine-A', 'System', 'Views', '001-files');
+    const retired = path.join(root, 'ai', 'Machine-A', 'Views', '001-files');
+    fs.mkdirSync(canonical, { recursive: true });
+    fs.mkdirSync(retired, { recursive: true });
+    fs.writeFileSync(path.join(canonical, 'content.json'), 'protected');
+    fs.writeFileSync(path.join(retired, 'content.json'), 'retired');
+    fs.symlinkSync(canonical, path.join(root, 'view-alias'), 'dir');
+    fs.linkSync(path.join(canonical, 'content.json'), path.join(root, 'hard-link.json'));
+
+    const protectedAuthority = createPathAuthority({
+      getWorkspaceById: async () => ({ id: 'workspace-1', repoPath: root }),
+      resolvePanelRoot: (workspaceRoot, panel) => panel === '__panels__'
+        ? path.join(workspaceRoot, 'ai', 'Machine-A', 'Views')
+        : workspaceRoot,
+    });
+    const c = controller({ pathAuthority: protectedAuthority });
+    const attempts = [
+      { requestId: 'canonical', path: 'ai/Machine-A/System/Views/001-files/content.json' },
+      { requestId: 'retired', path: 'ai/Machine-A/Views/001-files/content.json' },
+      { requestId: 'nonexisting', path: 'ai/New-Machine/System/Views/new/state.json' },
+      { requestId: 'encoded', path: 'ai%2fMachine-A%2fViews%2fnew.json' },
+      { requestId: 'symlink', path: 'view-alias/content.json' },
+      { requestId: 'hardlink', path: 'hard-link.json' },
+      { requestId: 'pseudo', panel: '__panels__', path: '001-files/content.json' },
+    ];
+
+    for (const attempt of attempts) {
+      await expect(c.save({ session: session(), intent: intent(attempt) })).resolves.toMatchObject({
+        success: false,
+        outcome: 'rejected',
+        errorCode: 'path_not_allowed',
+      });
+    }
+    await expect(db('file_operations').count({ count: '*' }).first()).resolves.toMatchObject({ count: 0 });
+    expect(fs.readFileSync(path.join(canonical, 'content.json'), 'utf8')).toBe('protected');
+    expect(fs.readFileSync(path.join(retired, 'content.json'), 'utf8')).toBe('retired');
+  });
+
+  test('checkpoint saves preflight generated Git paths before reservation or file effects', async () => {
+    const canonical = path.join(root, 'ai', 'Machine-A', 'System', 'Views', '001-files');
+    fs.mkdirSync(canonical, { recursive: true });
+    fs.symlinkSync(canonical, path.join(root, '.git'), 'dir');
+    fs.writeFileSync(path.join(root, 'doc.md'), 'ordinary');
+
+    const result = await controller().save({
+      session: session(),
+      intent: intent({ requestId: 'checkpoint-protected-git', saveReason: 'checkpoint' }),
+    });
+
+    expect(result).toMatchObject({
+      success: false, outcome: 'rejected', errorCode: 'path_not_allowed',
+    });
+    await expect(db('file_operations').count({ count: '*' }).first()).resolves.toMatchObject({ count: 0 });
+    expect(fs.readFileSync(path.join(root, 'doc.md'), 'utf8')).toBe('ordinary');
+    expect(fs.readdirSync(canonical)).toEqual([]);
+  });
+
+  test('checkpoint saves reject a protected separate Git directory before reservation', async () => {
+    const canonical = path.join(root, 'ai', 'Machine-A', 'System', 'Views', '001-files');
+    const protectedGitDir = path.join(canonical, 'git-metadata');
+    fs.mkdirSync(canonical, { recursive: true });
+    fs.writeFileSync(path.join(root, 'doc.md'), 'ordinary');
+    execFileSync('git', ['init', '--separate-git-dir', protectedGitDir, root], { stdio: 'ignore' });
+    const before = fs.readdirSync(protectedGitDir).sort();
+
+    const result = await controller().save({
+      session: session(),
+      intent: intent({ requestId: 'checkpoint-protected-gitfile', saveReason: 'checkpoint' }),
+    });
+
+    expect(result).toMatchObject({
+      success: false, outcome: 'rejected', errorCode: 'path_not_allowed',
+    });
+    await expect(db('file_operations').count({ count: '*' }).first()).resolves.toMatchObject({ count: 0 });
+    expect(fs.readFileSync(path.join(root, 'doc.md'), 'utf8')).toBe('ordinary');
+    expect(fs.readdirSync(protectedGitDir).sort()).toEqual(before);
   });
 
   test('captures exact old bytes and aliases reuse canonical resource identity', async () => {

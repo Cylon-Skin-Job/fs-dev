@@ -10,7 +10,7 @@ function sanitizeMachineName(value) {
     .trim()
     .replace(/[^A-Za-z0-9._-]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return sanitized || fallback;
+  return !sanitized || sanitized === '.' || sanitized === '..' ? fallback : sanitized;
 }
 
 function getLocalMachineName() {
@@ -62,6 +62,19 @@ function getMachineAiRoot(projectRoot, machineName = getLocalMachineName()) {
 }
 
 function getMachineViewsRoot(projectRoot, machineName = getLocalMachineName()) {
+  return getCanonicalMachineViewsRoot(projectRoot, machineName);
+}
+
+/** Canonical VIEW-01 capsule root. This is not a legacy fallback. */
+function getCanonicalMachineViewsRoot(projectRoot, machineName = getLocalMachineName()) {
+  return path.join(getSystemRoot(projectRoot, machineName), 'Views');
+}
+
+/**
+ * Retired capsule root. Only migration/protection code may import this helper
+ * after the VIEW-01 cutover; it is named explicitly to prevent fallback use.
+ */
+function getMigrationSourceViewsRoot(projectRoot, machineName = getLocalMachineName()) {
   return path.join(getMachineAiRoot(projectRoot, machineName), 'Views');
 }
 
@@ -98,6 +111,8 @@ module.exports = {
   setLocalMachineName,
   getMachineAiRoot,
   getMachineViewsRoot,
+  getCanonicalMachineViewsRoot,
+  getMigrationSourceViewsRoot,
   hasMachineAiRoot,
   getSystemRoot,
   getSystemConfigRoot,
