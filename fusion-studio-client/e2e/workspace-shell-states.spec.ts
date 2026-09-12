@@ -84,7 +84,7 @@ test('publishes one canonical interaction context and matching live-preview owne
   expect(variables.slice(0, variables.indexOf('.rv-interaction-context'))).not.toContain('--interactive-hover-bg');
   expect(livePreview).toContain("'--interactive-contrast-foreground'");
   expect(livePreview).toContain("root.setProperty('--interactive-contrast-foreground', isLight ? '#000000' : '#ffffff')");
-  expect(appSource.match(/<header className="rv-header rv-interaction-context">/g)).toHaveLength(3);
+  expect(appSource.match(/<header className="rv-header rv-interaction-context">/g)).toHaveLength(4);
   expect(toolsSource.match(/<nav className="[^"]*rv-interaction-context[^"]*"/g)).toHaveLength(2);
   expect(selectorCss).not.toContain('--workspace-accent-color');
   expect(selectorCss).toMatch(/\.rv-ai-source-selector__trigger:hover\s*\{[^}]*background: var\(--interactive-hover-bg,/s);
@@ -97,7 +97,12 @@ test('publishes one canonical interaction context and matching live-preview owne
   expect(fusionCss).not.toMatch(/\.rv-fusion-icon-btn\s*\{[^}]*transition:\s*all/s);
 });
 
-test('workspace shell derives dark and light states from each mounted surface', async ({ page }) => {
+// SKIP-I-12: architecturally unrunnable as a browser test since VIEW-01 shell
+// auth. A standalone server never sends shell-auth:challenge (the client fails
+// on the first non-challenge frame), and an authority server requires the
+// electron preload API a browser cannot provide. Needs a designed browser
+// auth story before this live-surface coverage can return.
+test.skip('workspace shell derives dark and light states from each mounted surface', async ({ page }) => {
   const generatedThemesBefore = snapshotGeneratedThemes();
 
   await page.goto('/');
