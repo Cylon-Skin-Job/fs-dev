@@ -32,6 +32,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  width: var(--view-tab-item-width, 140px);
   max-width: 140px;
   min-width: 0;
   height: var(--view-tab-item-height, 28px);
