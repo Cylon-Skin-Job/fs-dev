@@ -272,12 +272,13 @@ export function useCaptureConnectedAdapter(enabled: boolean): ViewTabAdapterMode
   const connectedEnabled = enabled && policy !== null && !postCloseEstablished;
 
   // Register the runtime for view-side entry points (placement from
-  // CaptureTiles, document presenter actions, path rewrites).
+  // CaptureTiles, document presenter actions, path rewrites). I-11: every
+  // mounted panel renders this adapter with `enabled: false`; a disabled
+  // instance must never clear the module registration slot — only the
+  // enabled instance owns it (last-writer-wins otherwise breaks every
+  // panel mounted after an enabled one).
   useEffect(() => {
-    if (!connectedEnabled) {
-      setActiveCaptureConnectedRuntime(null, null);
-      return undefined;
-    }
+    if (!connectedEnabled) return undefined;
     setActiveCaptureConnectedRuntime(runtimeRef.current, workspaceId);
     return () => {
       setActiveCaptureConnectedRuntime(null, null);

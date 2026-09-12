@@ -171,11 +171,10 @@ export function useFileConnectedAdapter(enabled: boolean): ViewTabAdapterModel |
 
   // Register the runtime for view-side entry points (the public file-open
   // path in lib/file-tree.ts routes through the serialized intent lane).
+  // I-11: disabled sibling instances must never clear the module
+  // registration slot — only the enabled instance owns it.
   useEffect(() => {
-    if (!connectedEnabled) {
-      setActiveFileConnectedRuntime(null, null);
-      return undefined;
-    }
+    if (!connectedEnabled) return undefined;
     setActiveFileConnectedRuntime(runtimeRef.current, workspaceId);
     return () => {
       setActiveFileConnectedRuntime(null, null);
