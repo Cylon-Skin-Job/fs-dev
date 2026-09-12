@@ -86,3 +86,53 @@ The orchestrator stops for owner direction rather than improvising if:
 - a migration repair would require choosing, merging, overwriting, or deleting
   one of two plausible complete copies.
 
+
+---
+
+## I-9 (2026-09-11): Relocation journal orphans when the workspace folder moves
+
+**Symptom.** After the accepted candidate moved from the `9572` worktree back to
+the primary checkout, the acceptance-profile app hung forever on
+"Discovering panels..." (Connected; `panel_config` delivered with
+`viewRegistryUnavailable`, `panelRoots` absent).
+
+**Root cause.** `buildPanelConfig`/`buildWorkspaceInit` gate on view readiness;
+readiness verifies the relocation journal
+(`view_capsule_relocations`). `source/destination_root_identity_sha256` are
+computed by `relocation-identity.rootIdentity(path, role)` — **path-derived** —
+and `directory_inode` is the recorded physical directory identity. Moving the
+workspace's backing checkout (or restoring/re-cloning it) changes both; journal
+verification throws (`root_identity_mismatch` / `directory_identity_mismatch`)
+and every view registry becomes unavailable. The journal cannot follow the
+workspace it successfully relocated.
+
+**Recovery applied (data fix, acceptance profile).** Recomputed with the
+server's own modules (`rootIdentity`, `collectInventory`) against the new root
+and updated the row: both identity hashes, `directory_inode`; inventory digest
+recomputed (content changed legitimately post-cutover). Verified: panels load.
+**Backlog (product fix):** readiness should detect a path-moved workspace
+(content-identical tree at a new root) and re-derive journal identity instead
+of failing closed. Recovery recipe: run the identity/inventory modules, UPDATE
+the journal row, restart.
+
+## I-10 (2026-09-11): Alpha update flow must run `npm install` in both packages
+
+**Symptom.** After the post-acceptance Alpha pull/repack, the installed app
+booted to a dead shell: the bundled server exited after two log lines (error
+content sanitized by the log tee), no `server.port`, main process hung waiting.
+
+**Root cause.** The Alpha source checkout's `fusion-studio-server/node_modules`
+predated the pulled code: `ajv` (needed as `ajv/dist/2020` by
+`lib/event-registry/schema-validator.js`) was absent from the packaged bundle.
+
+**Fix applied.** `npm install` in `fusion-studio-server` (ajv 8.20.0),
+re-pack, reinstall, relaunch. Healthy (port file written, request traffic
+flowing).
+
+**Rule.** The Alpha update flow is: pull → **`npm install` in
+`fusion-studio-server` AND `fusion-studio-client`** → `electron:pack` →
+install. The log tee (`lib/logging.js`) sanitizes all server console output to
+bare labels; to diagnose a silent packaged-server death, run the bundled
+`server.js` with a `NODE_OPTIONS --require` patch that traces `process.exit`
+and raw-writes `err.stack` to fd 2 (console content is unrecoverable by
+design).
