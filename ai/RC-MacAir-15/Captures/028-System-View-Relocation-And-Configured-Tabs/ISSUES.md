@@ -136,3 +136,31 @@ bare labels; to diagnose a silent packaged-server death, run the bundled
 `server.js` with a `NODE_OPTIONS --require` patch that traces `process.exit`
 and raw-writes `err.stack` to fd 2 (console content is unrecoverable by
 design).
+
+## I-11 (2026-09-12): Disabled sibling adapters clobbered the connected runtime registration
+
+**Symptom.** In the Alpha dogfood build, expanding any Capture preview failed
+with the bounded-failure toast; no tab appended, zero WS frames (failure was
+pre-persist, client-side). Dev masked it.
+
+**Root cause.** Every mounted panel calls `useViewTabAdapter(panelId)`, so the
+capture/file connected adapters mount once per panel — mostly with
+`enabled: false`. Their registration effects ran the
+`setActive…ConnectedRuntime(null, null)` branch on mount, and the module-level
+registration slot is a singleton: last writer wins. Panel mount order decided
+ownership — Alpha mounted capture-viewer first, so a later disabled sibling
+cleared the capture runtime registration and every external open entry point
+gated off (`isCaptureConnectedActive()` false: `rt=NULL ws=null store=fs-dev`).
+
+**Fix (4b83927).** Disabled sibling instances no longer touch the registration
+slot; only the enabled instance registers, and its own cleanup clears it.
+Applied symmetrically to `captureViewTabAdapter.ts` and
+`fileConnectedAdapter.ts`. Verified: expand appends in both checkouts; tab
+adoption specs green.
+
+**Diagnostic note.** The bounded-failure toast text is uniform across four
+distinct failure sites, and both the server log tee and the renderer console
+pipe redact content. The decisive technique: patch the installed renderer
+bundle's toast call sites with discriminating messages (plain-file
+`dist/assets/index-*.js` under the .app's Resources — no asar needed), hard
+reload, and reproduce over CDP. Revert by reinstalling from a clean pack.
