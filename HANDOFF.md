@@ -87,7 +87,7 @@ Coverage includes:
 - Default `new` profile selects Files, Wiki, Issues, Agents.
 - `fusion-home` startup profile selects Office plus Files, Issues, Wiki, Agents.
 - Unknown profile IDs reject.
-- V2 view discovery resolves machine-specific `ai/<machine>/Views`.
+- V2 view discovery resolves machine-specific `ai/<machine>/System/Views`.
 - Controller/request smoke verifies `workspaceTemplateId` reaches scaffold/register/switch flow.
 
 Browser smoke passed:

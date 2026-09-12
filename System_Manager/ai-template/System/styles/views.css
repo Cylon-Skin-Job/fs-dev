@@ -1483,7 +1483,7 @@
 /* ───────────────────────────────────────────────────────────────────────────
    File-page action button — shared across views
    ───────────────────────────────────────────────────────────────────────────
-   Lifted out of ai/<machine>/Views/<view-folder>/styles/layout.css so any view that
+   Lifted out of ai/<machine>/System/Views/<view-folder>/styles/layout.css so any view that
    renders a .rv-file-page-action button gets the base reset for free
    (used by Capture's FilePageView header AND the wiki page nav).
 */

@@ -92,7 +92,7 @@ Add Project uses `workspace-controller.handleAddRequested()`:
 
 Bootstrap is intentionally minimal. It creates missing folders under the existing `ai` tree:
 
-- `ai/<machine>/Views`
+- `ai/<machine>/System/Views`
 - `ai/<machine>/System/config`
 - `ai/<machine>/System/state`
 - `ai/<machine>/System/styles`
@@ -120,7 +120,7 @@ Create New uses `workspace-controller.handleCreateRequested()`:
 - `issues-viewer`
 - `agents-viewer`
 
-Scaffolding always copies the template `System` root. It also copies data roots only when selected views need them: `Captures`, `Wiki`, `Issues`, `Agents`, and `Office`. Selected view templates are copied from `System_Manager/ai-template/templates/view-templates` into `ai/<machine>/Views/NNN-view-id/`, numbered by selected order. It also creates `ai/<machine>/Data/Workspace-db/workspace.db` with mirror/audit tables.
+Scaffolding always copies the template `System` root. It also copies data roots only when selected views need them: `Captures`, `Wiki`, `Issues`, `Agents`, and `Office`. Selected view templates are copied from `System_Manager/ai-template/templates/view-templates` into `ai/<machine>/System/Views/NNN-view-id/`, numbered by selected order. It also creates `ai/<machine>/Data/Workspace-db/workspace.db` with mirror/audit tables.
 
 The template catalog folder numbers define catalog ordering. Created workspace view folders are numbered from the selected view order for that workspace.
 

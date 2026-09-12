@@ -1,6 +1,6 @@
  /*
   * agents-viewer panel layout.
- * ai/<machine>/Views/<view-folder>/styles/layout.css
+ * ai/<machine>/System/Views/<view-folder>/styles/layout.css
  *
  * Responsive tile grid + agent detail overlay with chat.
  * Loaded at runtime by useViewLayoutStyles('agents-viewer').

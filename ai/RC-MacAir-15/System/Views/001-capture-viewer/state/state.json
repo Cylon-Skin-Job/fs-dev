@@ -1,7 +1,7 @@
 {
   "widths": {
     "leftSidebar": 237.9921875,
-    "leftChat": 509.58203125,
+    "leftChat": 438.73828125,
     "rightSecondary": 400,
     "rightCol": 220
   },
@@ -32,12 +32,62 @@
   "activity": {
     "recents": [
       {
-        "id": "capture-viewer:001-Captures/view-onboarding-front-pages.md",
+        "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
         "panel": "capture-viewer",
-        "path": "001-Captures/view-onboarding-front-pages.md",
-        "title": "view-onboarding-front-pages.md",
+        "path": "001-Captures/machine-sync-sharing-model.md",
+        "title": "machine-sync-sharing-model.md",
         "kind": "document",
-        "openedAt": 1788347836865,
+        "openedAt": 1789171102080,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/responsive-breakpoints.md",
+        "title": "responsive-breakpoints.md",
+        "kind": "document",
+        "openedAt": 1789100046264,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/Email_Workspace_HANDOFF.md",
+        "title": "Email_Workspace_HANDOFF.md",
+        "kind": "document",
+        "openedAt": 1789090661435,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/STYLE_GUIDE.md",
+        "title": "STYLE_GUIDE.md",
+        "kind": "document",
+        "openedAt": 1789090645090,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/full-permissions-safety-architecture.md",
+        "title": "full-permissions-safety-architecture.md",
+        "kind": "document",
+        "openedAt": 1789088418444,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/discovery-gated-ceilings.md",
+        "title": "discovery-gated-ceilings.md",
+        "kind": "document",
+        "openedAt": 1789086054788,
         "folder": "001-Captures",
         "extension": "md"
       },
@@ -47,27 +97,47 @@
         "path": "001-Captures/wiki-audit-decisions.md",
         "title": "wiki-audit-decisions.md",
         "kind": "document",
-        "openedAt": 1787875098733,
+        "openedAt": 1788589885834,
         "folder": "001-Captures",
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+        "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
         "panel": "capture-viewer",
-        "path": "001-Captures/templates-repo-architecture.md",
-        "title": "templates-repo-architecture.md",
+        "path": "001-Captures/agent-registry-redundancy.md",
+        "title": "agent-registry-redundancy.md",
         "kind": "document",
-        "openedAt": 1787875089389,
+        "openedAt": 1788589871418,
         "folder": "001-Captures",
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/TRIGGERS.md",
+        "id": "capture-viewer:001-Captures/file-mutation-injection.md",
         "panel": "capture-viewer",
-        "path": "001-Captures/TRIGGERS.md",
-        "title": "TRIGGERS.md",
+        "path": "001-Captures/file-mutation-injection.md",
+        "title": "file-mutation-injection.md",
         "kind": "document",
-        "openedAt": 1787829675488,
+        "openedAt": 1788499208629,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+        "panel": "capture-viewer",
+        "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+        "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+        "kind": "document",
+        "openedAt": 1788444301316,
+        "folder": "002-SPECs",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/codebase-exploration-report.md",
+        "title": "codebase-exploration-report.md",
+        "kind": "document",
+        "openedAt": 1788350205518,
         "folder": "001-Captures",
         "extension": "md"
       },
@@ -92,26 +162,6 @@
         "extension": "html"
       },
       {
-        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/workspace-as-distributable.md",
-        "title": "workspace-as-distributable.md",
-        "kind": "document",
-        "openedAt": 1787645738577,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/STYLE_GUIDE.md",
-        "title": "STYLE_GUIDE.md",
-        "kind": "document",
-        "openedAt": 1787644627558,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
         "panel": "capture-viewer",
         "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
@@ -132,26 +182,6 @@
         "extension": "html"
       },
       {
-        "id": "capture-viewer:001-Captures/system-manager-hub.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/system-manager-hub.md",
-        "title": "system-manager-hub.md",
-        "kind": "document",
-        "openedAt": 1787635699822,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/opencode-harness-integration.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/opencode-harness-integration.md",
-        "title": "opencode-harness-integration.md",
-        "kind": "document",
-        "openedAt": 1787635348734,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
         "panel": "capture-viewer",
         "path": "002-SPECs/VIEW-TABLE.md",
@@ -159,16 +189,6 @@
         "kind": "document",
         "openedAt": 1787627154982,
         "folder": "002-SPECs",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/agent-registry-redundancy.md",
-        "title": "agent-registry-redundancy.md",
-        "kind": "document",
-        "openedAt": 1787626311153,
-        "folder": "001-Captures",
         "extension": "md"
       },
       {
@@ -560,46 +580,6 @@
         "openedAt": 1783747719225,
         "folder": "009-Office-Editor-Temp",
         "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/discovery-gated-ceilings.md",
-        "title": "discovery-gated-ceilings.md",
-        "kind": "document",
-        "openedAt": 1783239352271,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/codebase-exploration-report.md",
-        "title": "codebase-exploration-report.md",
-        "kind": "document",
-        "openedAt": 1783239256187,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/file-mutation-injection.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/file-mutation-injection.md",
-        "title": "file-mutation-injection.md",
-        "kind": "document",
-        "openedAt": 1783239254971,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/full-permissions-safety-architecture.md",
-        "title": "full-permissions-safety-architecture.md",
-        "kind": "document",
-        "openedAt": 1783239254453,
-        "folder": "001-Captures",
-        "extension": "md"
       }
     ],
     "navigation": {
@@ -612,26 +592,137 @@
   "collections": {
     "starred": [
       {
-        "id": "capture-viewer:001-Captures/workspace-as-distributable.md",
+        "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
         "panel": "capture-viewer",
-        "path": "001-Captures/workspace-as-distributable.md",
-        "title": "workspace-as-distributable.md",
+        "path": "001-Captures/responsive-breakpoints.md",
+        "title": "responsive-breakpoints.md",
         "kind": "document",
-        "savedAt": 1787645084836,
+        "savedAt": 1788499079299,
         "folder": "001-Captures",
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/templates-repo-architecture.md",
+        "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
         "panel": "capture-viewer",
-        "path": "001-Captures/templates-repo-architecture.md",
-        "title": "templates-repo-architecture.md",
+        "path": "001-Captures/STYLE_GUIDE.md",
+        "title": "STYLE_GUIDE.md",
         "kind": "document",
-        "savedAt": 1787627263472,
+        "savedAt": 1788499066521,
         "folder": "001-Captures",
         "extension": "md"
       }
     ],
     "pinnedFolders": []
+  },
+  "docViewerTabs": [
+    {
+      "id": "cvt-mtxma449-0-9g7sh",
+      "kind": "doc",
+      "path": "001-Captures/machine-sync-sharing-model.md",
+      "name": "machine-sync-sharing-model.md",
+      "extension": "md",
+      "ui": {
+        "mode": "active",
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "byMode": {
+          "active": {
+            "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+            "gridScroll": 0,
+            "docScroll": 0
+          },
+          "archive": {
+            "selectedPath": null,
+            "gridScroll": 0,
+            "docScroll": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "cvt-mtxma449-1-unekk",
+      "kind": "capture",
+      "ui": {
+        "mode": "active",
+        "lastOpenedPath": null,
+        "byMode": {
+          "active": {
+            "selectedPath": null,
+            "gridScroll": 0,
+            "docScroll": 0
+          },
+          "archive": {
+            "selectedPath": null,
+            "gridScroll": 0,
+            "docScroll": 0
+          }
+        }
+      }
+    }
+  ],
+  "docViewerActiveTabId": "cvt-mtxma449-1-unekk",
+  "captureTabRecords": {
+    "schemaVersion": 1,
+    "tabs": [
+      {
+        "tabId": "cvt-mtwy5avr-0-w1sft",
+        "content": {
+          "kind": "component",
+          "revision": 0,
+          "component": {
+            "schemaVersion": 1,
+            "componentTypeId": "capture.document",
+            "componentInstanceId": "cvi-mtwy5avr-1-ifcj5",
+            "input": {
+              "title": "responsive-breakpoints.md",
+              "locationLabels": [
+                "Capture",
+                "Captures",
+                "responsive-breakpoints.md"
+              ],
+              "icon": "description",
+              "iconClassName": "file-icon-md",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "name": "responsive-breakpoints.md",
+              "extension": "md",
+              "mode": "active",
+              "docScroll": 0,
+              "gridScroll": 0,
+              "selectedPath": "001-Captures/responsive-breakpoints.md",
+              "lastOpenedPath": "001-Captures/responsive-breakpoints.md"
+            },
+            "targetKey": "capture:doc:001-Captures/responsive-breakpoints.md"
+          }
+        }
+      },
+      {
+        "tabId": "cvt-mtwy5avr-2-kuukj",
+        "content": {
+          "kind": "component",
+          "revision": 0,
+          "component": {
+            "schemaVersion": 1,
+            "componentTypeId": "capture.landing",
+            "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+            "input": {
+              "title": "CAPTURE",
+              "locationLabels": [
+                "Capture",
+                "Documents and Artifacts"
+              ],
+              "classic": {
+                "mode": "active",
+                "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                "selectedPath": "001-Captures/responsive-breakpoints.md",
+                "gridScroll": 0,
+                "docScroll": 0
+              }
+            },
+            "targetKey": "capture:home"
+          }
+        }
+      }
+    ],
+    "activeTabId": "cvt-mtwy5avr-0-w1sft",
+    "reservations": []
   }
 }

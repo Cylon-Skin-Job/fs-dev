@@ -2,7 +2,7 @@
 
 Workspace capture work product: captures, draft specs, todos, playground notes, assets, screenshots, and other document-like material displayed by document-oriented views.
 
-This folder is data/work product. View layout and UI state belong under `Views/`.
+This folder is data/work product. View layout and UI state belong under `System/Views/`.
 
 Folders directly inside `Captures/` become tiled rows in `doc-viewer`.
 

@@ -31,7 +31,7 @@ Use this page for persisted per-view activity and saved-item collections. This i
 Per-view activity and collections live in the view capsule state file:
 
 ```text
-ai/<machine>/Views/<view-folder>/state/state.json
+ai/<machine>/System/Views/<view-folder>/state/state.json
 ```
 
 The client writes minimal `state:set` patches through `usePanelStore._persistViewPatch`. The server state writer treats `activity`, `collections`, and `officeDocumentSidePanel` as forced view-override keys so they stay view-local instead of being folded into workspace defaults.

@@ -1,0 +1,112 @@
+{
+  "widths": {
+    "leftSidebar": 279.61328125,
+    "leftChat": 486.78515625,
+    "rightSecondary": 400,
+    "rightCol": 238.796875
+  },
+  "collapsed": {
+    "leftSidebar": false,
+    "leftChat": false,
+    "rightCol": false,
+    "contentArea": false
+  },
+  "popup": {
+    "open": false,
+    "x": -1,
+    "y": -1,
+    "width": 420,
+    "height": 520,
+    "threadId": null
+  },
+  "tints": {
+    "leftPanel": false,
+    "rightPanel": false,
+    "cards": false,
+    "contentPanels": false,
+    "borders": {
+      "threads": false,
+      "chat": false
+    }
+  },
+  "activity": {
+    "recents": [],
+    "navigation": {
+      "stack": [],
+      "index": -1
+    },
+    "tabs": [
+      {
+        "id": "file-viewer:MESSAGE_ID_AUDIT_SPEC.md",
+        "panel": "file-viewer",
+        "path": "MESSAGE_ID_AUDIT_SPEC.md",
+        "title": "MESSAGE_ID_AUDIT_SPEC.md",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "md",
+        "tabIndex": 0
+      },
+      {
+        "id": "file-viewer:AGENTS.md",
+        "panel": "file-viewer",
+        "path": "AGENTS.md",
+        "title": "AGENTS.md",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "md",
+        "tabIndex": 1
+      },
+      {
+        "id": "file-viewer:HANDOFF.md",
+        "panel": "file-viewer",
+        "path": "HANDOFF.md",
+        "title": "HANDOFF.md",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "md",
+        "tabIndex": 2
+      },
+      {
+        "id": "file-viewer:restart-fusion.sh",
+        "panel": "file-viewer",
+        "path": "restart-fusion.sh",
+        "title": "restart-fusion.sh",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "sh",
+        "tabIndex": 3
+      },
+      {
+        "id": "file-viewer:wiki-fallback-debug-report.md",
+        "panel": "file-viewer",
+        "path": "wiki-fallback-debug-report.md",
+        "title": "wiki-fallback-debug-report.md",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "md",
+        "tabIndex": 4
+      },
+      {
+        "id": "file-viewer:fusion-studio-server/package.json",
+        "panel": "file-viewer",
+        "path": "fusion-studio-server/package.json",
+        "title": "package.json",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "json",
+        "tabIndex": 5
+      },
+      {
+        "id": "file-viewer:fusion-studio-server/REFACTOR-PLAN.md",
+        "panel": "file-viewer",
+        "path": "fusion-studio-server/REFACTOR-PLAN.md",
+        "title": "REFACTOR-PLAN.md",
+        "kind": "file",
+        "openedAt": 1789173374304,
+        "extension": "md",
+        "tabIndex": 6
+      }
+    ],
+    "activeTabId": "file-viewer:AGENTS.md"
+  }
+}

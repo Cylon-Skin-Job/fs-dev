@@ -39,7 +39,7 @@ At runtime, a view has a durable view id, a numbered capsule root, and a resolve
 
 ## View Capsules
 
-Machine-scoped view folders under `ai/<machine>/Views/NNN-view-id/` are active view capsules. The numeric prefix controls display order. The folder owns view-local metadata, display state, UI state, styles, scripts, and future view-specific extensions.
+Machine-scoped view folders under `ai/<machine>/System/Views/NNN-view-id/` are active view capsules. The numeric prefix controls display order. The folder owns view-local metadata, display state, UI state, styles, scripts, and future view-specific extensions.
 
 Hide/show state belongs in the capsule state file at `state/state.json` as `display.hidden`. If a view capsule folder is missing, the view is absent; the server should not depend on separate system state that points at a deleted view folder.
 
@@ -116,9 +116,9 @@ View identity is loaded from the numbered V2 capsule folder. `manifest.md`, `con
 
 The file explorer exposes compatibility aliases for client metadata reads:
 
-- `__workspace__/views.json` is virtual V2 metadata generated from `ai/<machine>/Views/NNN-view-id/` folders.
+- `__workspace__/views.json` is virtual V2 metadata generated from `ai/<machine>/System/Views/NNN-view-id/` folders.
 - `__panels__/<view-id>/index.json`, `content.json`, `styles/layout.json`, `styles/icon.md`, `styles/layout.css`, and other existing capsule files resolve through the numbered V2 folder.
-- Missing `__panels__/<view-id>/...` files return not found once the V2 view id is recognized; only workspaces with no V2 `ai/<machine>/Views/` root use the legacy `ai/views/<view-id>/` compatibility fallback.
+- Missing `__panels__/<view-id>/...` files return not found. Runtime view discovery and panel routing use only the canonical `ai/<machine>/System/Views/` registry.
 - `__settings__` resolves to `ai/<machine>/System/styles` for workspace-level style files.
 
 HTTP panel-file routes use the same resolved panel path as the WebSocket file tree/content handlers. They serve content roots, not raw view capsule folders, unless a view explicitly declares a view-relative content root.

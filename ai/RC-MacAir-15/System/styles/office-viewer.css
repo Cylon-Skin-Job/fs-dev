@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    Capture-viewer chrome — color/background/border layer for FilePageView
    ═══════════════════════════════════════════════════════════════════════════
-   Lifted out of ai/<machine>/Views/<view-folder>/styles/layout.css per the
+   Lifted out of ai/<machine>/System/Views/<view-folder>/styles/layout.css per the
    themes-and-state spec ("per-view files are layout-only"). Every value here
    resolves to a theme variable; nothing is hardcoded.
 

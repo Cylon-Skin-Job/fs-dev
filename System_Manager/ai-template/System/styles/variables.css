@@ -102,4 +102,4 @@
 /* Theme tokens live in ai/<machine>/System/styles/themes.css (loaded at runtime
  * by useSharedWorkspaceStyles). That file is the workspace-level home for every
  * theme-editable CSS custom property. Per-view overrides go in
- * ai/<machine>/Views/<view-folder>/styles/themes.css and win via the cascade. */
+ * ai/<machine>/System/Views/<view-folder>/styles/themes.css and win via the cascade. */
