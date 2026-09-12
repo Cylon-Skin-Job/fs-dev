@@ -8,7 +8,7 @@ You are inside **Fusion Studio**, a desktop IDE built on Electron + React. This 
 fs-dev/
 ├── ai/
 │   └── <machine>/
-│       ├── Views/                ← View capsules and sidebar icons
+│       ├── System/Views/         ← View capsules and sidebar icons
 │       ├── Wiki/                 ← Living reference layer
 │       ├── Issues/               ← Ticket board (dispatch source)
 │       └── Agents/               ← You are here

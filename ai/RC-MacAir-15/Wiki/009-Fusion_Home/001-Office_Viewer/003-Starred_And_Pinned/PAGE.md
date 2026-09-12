@@ -19,7 +19,7 @@ metadata:
 > dedicated build pass will pull it down here.
 
 Covers how the Office view categorizes and persists collection state in the
-numbered view capsule (`ai/<machine>/Views/<office-view-folder>/state/state.json`):
+numbered view capsule (`ai/<machine>/System/Views/<office-view-folder>/state/state.json`):
 
 - `collections.starred` — starred files; a filled `kid_star` glyph renders only when starred (no empty star space reserved);
 - `collections.pinnedFolders` — pinned Office folders; "Pinned Folders" is a non-clickable header with clickable rows beneath;

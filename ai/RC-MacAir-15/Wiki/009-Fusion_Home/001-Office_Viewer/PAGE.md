@@ -100,7 +100,7 @@ See [Viewer Search](../../001-Workspaces_And_Views/012-Viewer_Search/PAGE.md) fo
 Office uses the shared per-view state model in the numbered view capsule:
 
 ```text
-ai/<machine>/Views/<office-view-folder>/state/state.json
+ai/<machine>/System/Views/<office-view-folder>/state/state.json
 ```
 
 Office records opened documents in `activity.recents`. Recents are grouped by Today, Yesterday, Earlier This Week, Earlier This Month, Last Month, then month/year. The old Recent Docs SQLite path is retired for this UI.

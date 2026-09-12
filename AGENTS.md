@@ -107,7 +107,7 @@ Built-in Fusion Studio views are React components mounted by the renderer. Ifram
 
 The V2 workspace layout is:
 
-- `ai/<machine>/Views/<prefix>-<view-id>/` for view capsules, including `manifest.md`, `content.json`, `state/state.json`, and `styles/icon.md`.
+- `ai/<machine>/System/Views/<prefix>-<view-id>/` for view capsules, including `manifest.md`, `content.json`, `state/state.json`, and `styles/icon.md`.
 - `ai/<machine>/Wiki`, `Captures`, `Issues`, and `Agents` for top-level product content.
 - `ai/<machine>/System/{config,state,styles}` for workspace policy, state, and shared CSS.
 - `ai/<machine>/Data` for generated/local runtime data such as chatlog mirrors and screenshots.

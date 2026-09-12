@@ -2240,6 +2240,26 @@ omitting Wiki `PAGE.md` are display-only; exact placement continues to use full
 explicit presenter and target identities. A corrective TABS-02A SPEC precedes
 Tab Target Placement.
 
+### D-174 — Finish the view platform with relocation and configured adopters
+
+- **Date:** 2026-09-07
+- **Category:** process
+- **Status:** active
+- **Source:** CAP-189
+
+Before beginning the Tabs↔Provenance bridge or Composable Chat, complete two
+focused, dependency-ordered view-platform SPECs. First move complete view
+capsules into canonical `ai/<machine>/System/Views/` through a journaled,
+quiescent control-plane cutover. Then let relocated view configuration select
+safe code-owned initial/Empty tab behavior and adopt the accepted generic tab
+platform in Capture and File Explorer. The second package requires an explicit
+owner visual acceptance. Side Chat, dynamic plug-ins, thread storage, prompts,
+and Bridge events remain outside both SPECs.
+
+This supersedes only D-169's former sequencing statement that the capsule
+control-plane migration follows Composable Chat. D-169's domain split and
+control-plane ownership remain active.
+
 ### D-047 — Use Provenance as the project name
 
 - **Date:** 2026-08-23

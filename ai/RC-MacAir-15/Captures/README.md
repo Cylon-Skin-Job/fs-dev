@@ -22,6 +22,7 @@ If you're an AI session that landed here without the `capture-artifacts-and-docs
 | Screenshots | `006-Screenshots/` |
 | Historical/preserved AI tooling | `011-Skills/` |
 | Multi-agent process/convergence lessons | `013-Convergence_Loops/` |
+| The Composable Views vision/configurable-views platform track | `029-Composable_Views/` |
 | Retired or superseded docs | `999-Archive/` |
 
 `NNN-*-Temp` folders (e.g. `008-Provenance-Temp`) are scoped working areas for active roadmaps — don't add unrelated files to them.

@@ -45,5 +45,5 @@ metadata:
 
 - `ai/<machine>/Wiki/000-Wiki_Guidance/PAGE.md` is the root front page (the root's `000-` heading article); there is no folder-level `Wiki/PAGE.md`.
 - `ai/<machine>/Wiki/**/PAGE.md` are navigable pages.
-- `ai/<machine>/Views/<wiki-view-folder>/content.json` declares the wiki content root.
-- `ai/<machine>/Views/<wiki-view-folder>/styles/layout.css` styles wiki layout, sidebars, frontmatter headers, and metadata footers.
+- `ai/<machine>/System/Views/<wiki-view-folder>/content.json` declares the wiki content root.
+- `ai/<machine>/System/Views/<wiki-view-folder>/styles/layout.css` styles wiki layout, sidebars, frontmatter headers, and metadata footers.

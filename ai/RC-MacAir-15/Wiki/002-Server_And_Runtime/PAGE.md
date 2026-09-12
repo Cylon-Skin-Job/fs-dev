@@ -50,8 +50,8 @@ For the full user and code path, see [Workspaces And Views > Adding Workspaces](
 
 ## Current View Path Runtime
 
-- `fusion-studio-server/lib/views/index.js` is the V2 view resolver. It discovers `ai/<machine>/Views/NNN-view-id/` capsules, loads `manifest.md`, `content.json`, `styles/icon.md`, and `styles/layout.json`, and resolves declared content roots.
-- `fusion-studio-server/lib/views/panel-paths.js` maps panels to the resolved content root. V2 paths win; if a registered workspace has no V2 `ai/<machine>/Views/` root, it can still read legacy `ai/views/<id>/`, `ai/system/workspace`, and `ai/system/styles` so older registered workspaces remain switchable.
+- `fusion-studio-server/lib/views/index.js` is the V2 view resolver. It discovers `ai/<machine>/System/Views/NNN-view-id/` capsules, loads `manifest.md`, `content.json`, `styles/icon.md`, and `styles/layout.json`, and resolves declared content roots.
+- `fusion-studio-server/lib/views/panel-paths.js` maps view panels only through the canonical `ai/<machine>/System/Views/` registry. The unrelated legacy System workspace/styles readers remain limited to their non-view compatibility surfaces.
 - `fusion-studio-server/lib/file-explorer.js` serves WebSocket tree/content requests and virtual V2 metadata aliases such as `__workspace__/views.json` and `__panels__/<view-id>/...`.
 - `fusion-studio-server/lib/http/panel-file-route.js` serves files from the same resolved panel path as the WebSocket file explorer.
 - `doc-viewer` resolves to `ai/${machine}/Captures`; normal root listings hide `999-Archive`, while Archive mode lists that folder directly.

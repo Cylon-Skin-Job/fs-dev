@@ -35,10 +35,10 @@ This page defines the V2 filesystem boundary for styling and layout state. The s
 | Shared workspace CSS layers | `ai/<machine>/System/styles/*.css` | Whole workspace |
 | Workspace default state | `ai/<machine>/System/state/state.json` | Whole workspace fallback |
 | Workspace shell state | `ai/<machine>/System/state/state.json` under `workspace` | Whole workspace |
-| Per-view layout CSS | `ai/<machine>/Views/<view-folder>/styles/layout.css` | One view |
-| Per-view theme override | `ai/<machine>/Views/<view-folder>/styles/themes.css` | One view |
-| Sidebar icon | `ai/<machine>/Views/<view-folder>/styles/icon.md` | One view |
-| Per-view state override | `ai/<machine>/Views/<view-folder>/state/state.json` | One view |
+| Per-view layout CSS | `ai/<machine>/System/Views/<view-folder>/styles/layout.css` | One view |
+| Per-view theme override | `ai/<machine>/System/Views/<view-folder>/styles/themes.css` | One view |
+| Sidebar icon | `ai/<machine>/System/Views/<view-folder>/styles/icon.md` | One view |
+| Per-view state override | `ai/<machine>/System/Views/<view-folder>/state/state.json` | One view |
 | CLI policy | `ai/<machine>/System/config/cli.json` | Whole workspace |
 
 Do not use retired non-machine-scoped view, settings, or system paths. V2 is machine-scoped under `ai/<machine>/`.
@@ -57,14 +57,14 @@ Global CSS is fetched from `ai/<machine>/System/styles/`. The client injects the
 4. `views.css`
 5. `tints.css`
 
-Per-view CSS is fetched from the active view capsule under `ai/<machine>/Views/<view-folder>/styles/`. `layout.css` is for geometry and structure. `themes.css` is an optional manual override for one view. Icon selection comes from `styles/icon.md`.
+Per-view CSS is fetched from the active view capsule under `ai/<machine>/System/Views/<view-folder>/styles/`. `layout.css` is for geometry and structure. `themes.css` is an optional manual override for one view. Icon selection comes from `styles/icon.md`.
 
 ## State Loading
 
 State is resolved per view:
 
 1. Load workspace defaults from `ai/<machine>/System/state/state.json`.
-2. Load the view override from `ai/<machine>/Views/<view-folder>/state/state.json` when it exists.
+2. Load the view override from `ai/<machine>/System/Views/<view-folder>/state/state.json` when it exists.
 3. Deep-merge workspace defaults with the view override.
 
 Workspace shell state also lives in `ai/<machine>/System/state/state.json`. The `workspace.currentPanel` field stores the active view panel for that workspace, so switching away and back returns to the same built-in or custom view. Do not store this in server-global runtime files.
@@ -101,8 +101,8 @@ Use `viewActivity.ts` and `viewCollections.ts` for these mutations. Do not creat
 | Last active workspace view panel | `ai/<machine>/System/state/state.json` under `workspace.currentPanel` |
 | Generated theme CSS | `ai/<machine>/System/styles/themes.css` |
 | Shared chrome/component CSS | `ai/<machine>/System/styles/views.css` or `components.css` |
-| A view's layout CSS | `ai/<machine>/Views/<view-folder>/styles/layout.css` |
-| A view's sidebar icon | `ai/<machine>/Views/<view-folder>/styles/icon.md` |
-| A view's UI state override | `ai/<machine>/Views/<view-folder>/state/state.json` |
-| View recents, stars, pins, tabs | `ai/<machine>/Views/<view-folder>/state/state.json` |
+| A view's layout CSS | `ai/<machine>/System/Views/<view-folder>/styles/layout.css` |
+| A view's sidebar icon | `ai/<machine>/System/Views/<view-folder>/styles/icon.md` |
+| A view's UI state override | `ai/<machine>/System/Views/<view-folder>/state/state.json` |
+| View recents, stars, pins, tabs | `ai/<machine>/System/Views/<view-folder>/state/state.json` |
 | Harness defaults and allow-list | `ai/<machine>/System/config/cli.json` |

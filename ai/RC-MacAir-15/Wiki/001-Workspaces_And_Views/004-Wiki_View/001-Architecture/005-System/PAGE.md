@@ -22,7 +22,7 @@ The wiki system is local-first and folder-first.
 ## Current Contract
 
 ```text
-ai/<machine>/Views/<wiki-view-folder>/
+ai/<machine>/System/Views/<wiki-view-folder>/
   manifest.md
   content.json
   styles/
@@ -42,11 +42,11 @@ ai/<machine>/Wiki/
 
 - `wiki-viewer` resolves through its capsule `content.json`.
 - The default wiki content root is `ai/${machine}/Wiki`.
-- Wiki content is not nested under the numbered `Views/<wiki-view-folder>/` capsule.
+- Wiki content is not nested under the numbered `System/Views/<wiki-view-folder>/` capsule.
 - Copy/send-to-chat paths use `ai/<machine>/Wiki`.
 - The client discovers folders using `file_tree_request`.
 - The client loads pages using `file_content_request` for `PAGE.md`.
-- The terminal query path uses `fusion-studio-server/lib/wiki/wiki-tree.js`; outside server startup it can discover the machine-scoped V2 wiki capsule under `ai/*/Views` before scanning the resolved wiki root.
+- The terminal query path uses `fusion-studio-server/lib/wiki/wiki-tree.js`; it resolves the established machine identity's V2 wiki capsule under `ai/<machine>/System/Views` before scanning the resolved wiki root.
 
 ## Terminal Access
 

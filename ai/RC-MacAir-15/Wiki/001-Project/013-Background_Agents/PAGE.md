@@ -87,7 +87,7 @@ name: source-file-change
 type: file-change
 events: [modify, create, delete]
 match: "fusion-studio-server/lib/**/*.js"
-exclude: ["ai/<machine>/Views/*-doc-viewer/**"]
+exclude: ["ai/<machine>/System/Views/*-doc-viewer/**"]
 prompt: PROMPT_01.md
 message: |
   Source file changed: {{filePath}} ({{event}})

@@ -1795,3 +1795,12 @@ No assistant-originated product direction has been adopted or queued yet.
 - **Source:** RC's parallel-fork and dependency-boundary clarification on 2026-09-02
 - **Summary:** Confirmed that a separate chat owns the Tabs as Containers work and that generic tab containers are removed from the threads domain. The composable-thread work may advance through its independent foundations, but **Move Chat to Side Chat** is hard-blocked until the separate container SPEC is implemented and accepted. The Side Chat slice consumes the resulting host contract and cannot recreate generic container creation, empty-tab behavior, launchers, component registration, or lifecycle locally.
 - **Related:** CAP-156, CAP-158, D-126, D-127, D-133
+
+### CAP-189 — System view relocation and configured tab-adoption checkpoint
+
+- **Origin:** mixed
+- **Type:** observation
+- **Status:** routed
+- **Source:** RC's 2026-09-07 sequencing decision plus reconciliation of the accepted tab, trusted-shell, Provenance, code-standards, and active-code contracts
+- **Summary:** Closed the remaining pre-Bridge view-platform boundary as two focused SPECs. The first relocates the entire machine-scoped view capsule tree into `System/Views` through a startup-gated, journaled atomic move and protects the canonical and retired namespaces across Fusion-owned generic mutations. The second extends the existing view `content.json` with closed, code-owned initial/Empty tab policy and makes Capture and File Explorer the first production adopters of universal tab chrome and TABS-03 placement. It deliberately excludes Chat, Side Chat, dynamic plug-ins, prompts, collections, and Provenance events, and requires an owner visual pass before Bridge begins.
+- **Related:** CAP-121, CAP-126, CAP-151, CAP-161, D-095, D-096, D-124, D-137, D-169, D-171, D-173, D-174
