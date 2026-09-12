@@ -32,6 +32,26 @@
   "activity": {
     "recents": [
       {
+        "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/wiki-audit-decisions.md",
+        "title": "wiki-audit-decisions.md",
+        "kind": "document",
+        "openedAt": 1789200430432,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
+        "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+        "panel": "capture-viewer",
+        "path": "001-Captures/codebase-exploration-report.md",
+        "title": "codebase-exploration-report.md",
+        "kind": "document",
+        "openedAt": 1789198397168,
+        "folder": "001-Captures",
+        "extension": "md"
+      },
+      {
         "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
         "panel": "capture-viewer",
         "path": "001-Captures/machine-sync-sharing-model.md",
@@ -92,16 +112,6 @@
         "extension": "md"
       },
       {
-        "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/wiki-audit-decisions.md",
-        "title": "wiki-audit-decisions.md",
-        "kind": "document",
-        "openedAt": 1788589885834,
-        "folder": "001-Captures",
-        "extension": "md"
-      },
-      {
         "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
         "panel": "capture-viewer",
         "path": "001-Captures/agent-registry-redundancy.md",
@@ -129,16 +139,6 @@
         "kind": "document",
         "openedAt": 1788444301316,
         "folder": "002-SPECs",
-        "extension": "md"
-      },
-      {
-        "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
-        "panel": "capture-viewer",
-        "path": "001-Captures/codebase-exploration-report.md",
-        "title": "codebase-exploration-report.md",
-        "kind": "document",
-        "openedAt": 1788350205518,
-        "folder": "001-Captures",
         "extension": "md"
       },
       {
@@ -643,10 +643,10 @@
       "kind": "capture",
       "ui": {
         "mode": "active",
-        "lastOpenedPath": null,
+        "lastOpenedPath": "001-Captures/wiki-audit-decisions.md",
         "byMode": {
           "active": {
-            "selectedPath": null,
+            "selectedPath": "001-Captures/wiki-audit-decisions.md",
             "gridScroll": 0,
             "docScroll": 0
           },
@@ -720,9 +720,39 @@
             "targetKey": "capture:home"
           }
         }
+      },
+      {
+        "tabId": "cvt-mty3qoth-0-yk0i8",
+        "content": {
+          "kind": "component",
+          "revision": 0,
+          "component": {
+            "schemaVersion": 1,
+            "componentTypeId": "capture.document",
+            "componentInstanceId": "cvi-mty3qoth-1-iwr56",
+            "input": {
+              "title": "wiki-audit-decisions.md",
+              "locationLabels": [
+                "Capture",
+                "Captures",
+                "wiki-audit-decisions.md"
+              ],
+              "icon": "description",
+              "iconClassName": "file-icon-md",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "name": "wiki-audit-decisions.md",
+              "extension": "md",
+              "mode": "active",
+              "docScroll": 0,
+              "selectedPath": "001-Captures/wiki-audit-decisions.md",
+              "lastOpenedPath": "001-Captures/wiki-audit-decisions.md"
+            },
+            "targetKey": "capture:doc:001-Captures/wiki-audit-decisions.md"
+          }
+        }
       }
     ],
-    "activeTabId": "cvt-mtwy5avr-0-w1sft",
+    "activeTabId": "cvt-mty3qoth-0-yk0i8",
     "reservations": []
   }
 }
