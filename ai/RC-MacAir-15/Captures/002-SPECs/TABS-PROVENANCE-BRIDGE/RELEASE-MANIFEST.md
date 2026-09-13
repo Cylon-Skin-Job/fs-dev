@@ -1,7 +1,7 @@
 # Release Manifest
 
-**Status:** `APPROVED`
-**Candidate ID:** `BRIDGE-d13b0d39d691ec58`
+**Status:** `BRIDGE-01 ACCEPTED (COMMITTED 16ccecf); BRIDGE-02 APPROVED (LIVING CANDIDATE) — CHAT-01 DISPATCH GATE SATISFIED`
+**Candidate ID:** living `BRIDGE-1e722a9c6d30f6b5`; previously approved `BRIDGE-d13b0d39d691ec58` (BRIDGE-01)
 **Prepared:** 2026-09-12
 **Bundle:** `TABS-PROVENANCE-BRIDGE`
 
@@ -42,7 +42,10 @@ for file in "${paths[@]}"; do
 done | shasum -a 256
 ```
 
-**Expected aggregate:**
+**Expected aggregate (living candidate):**
+`1e722a9c6d30f6b514a98830c6e3ac7eb25d4563f3db1ef14e78ed54d6c9a4ab`
+
+**Previously approved aggregate (BRIDGE-01 candidate):**
 `d13b0d39d691ec588db6866efcb986f0e60193b5b6d9c40c5b368d560a4948e8`
 
 Candidate identity is `BRIDGE-` plus the first 16 hexadecimal characters of the
@@ -50,6 +53,15 @@ expected aggregate. A mismatch means the bytes differ; it is a reconciliation
 signal, not evidence that behavior is broken. Any normative change after
 approval updates the living candidate and requires only the affected review
 again.
+
+## Living candidate history
+
+- `BRIDGE-d13b0d39d691ec58` — owner-approved 2026-09-12; BRIDGE-01 implemented,
+  accepted, and committed at `16ccecf`.
+- `BRIDGE-1e722a9c6d30f6b5` — current living candidate after the BRIDGE-02
+  conformance corrections; `SPEC-02` sha256
+  `6bc118c95926af01a86ef21aeaa35c7c7e123bc2632676e5e83a38e93668dd09`; `SPEC-01`
+  bytes unchanged; owner approval pending.
 
 ## Dependency order and gates
 
@@ -90,6 +102,24 @@ not authorize chat, view, plug-in, or retention work.
   (b) HANDOFF's "immediate next action" phrasing could be read as skipping the
   clean-pass gate that this record now satisfies. Advisories coexist with
   `CLEAN` and are non-blocking.
+- Pass 4 (BRIDGE-02 conformance round, 2026-09-13): validation findings V-01
+  (Legacy `viewId: null` semantics), V-02 (`surfaceId` derivation for
+  non-component hosts), V-03 (coordination surface-context narrowing
+  reconciliation), V-04 (identity-table projection declaration), V-05 (ambiguous
+  citation fix); `SPEC-02` corrected. The `025` packet is overlaid via
+  `../../025-Chat_Composition_Roadmap/BRIDGE-02-CONFORMANCE-OVERLAY.md`. Slice
+  02A builder gate CLEAN (reviewer `ses_f663c6443ffeAP9SL44T9QCtKK` pass 1, then
+  repairs R-1 path-depth and F-1 attribution with fresh passes
+  `ses_f663c8167affe7zYVZNp772DspY` and `ses_f6630f19affeAMfWfe2J41mJ3c`, all
+  CLEAN) and orchestrator acceptance CLEAN
+  (`ses_f662df32cffe5UfRZDb7wKPbc6`); Slice 02B builder gate CLEAN (reviewer
+  `ses_f66267494ffe452Ig3uqqf6xiC`) and orchestrator acceptance CLEAN
+  (`ses_f662489e1ffenrqDcChOqDmEDM`); no product code; final integration
+  clean-room verdict CLEAN — one fresh independent read-only reviewer
+  (`ses_f6615c595ffetDxYDbCdRl98vA`, GLM 5.3 Flash, high reasoning effort),
+  first materially clean pass, no material findings; two non-blocking
+  advisories (prerequisite gate phrasing; before-state dead-path quotes in the
+  R-1 narrative). Both candidate identities reproduced by the final reviewer.
 
 ## Owner approval record
 
@@ -102,6 +132,16 @@ not authorize chat, view, plug-in, or retention work.
   work; this bundle is the handoff, and this manifest is the approval ledger.
   The approved normative bytes are unchanged by this record (the manifest is
   excluded from the candidate identity).
+- **BRIDGE-02 conformance round (2026-09-13):** the corrected BRIDGE-02 contract
+  and the `025` conformance overlay were prepared; builder, orchestrator, final
+  integration, and independent owner-side reviews were all clean (the owner-side
+  reviewer found and repaired one stale evidence statement in
+  `BRIDGE-02-CONFORMANCE-REPORT.md` §5; excluded from candidate identity).
+- **BRIDGE-02 APPROVED — 2026-09-13.** Owner statement: “Approve.” The living
+  candidate `BRIDGE-1e722a9c6d30f6b5` and the overlaid `025` candidate
+  `CHAT-COMPOSITION-2d34f8b45562f8f3` are owner-approved. The CHAT-01 dispatch
+  gate is satisfied; nothing beyond the approved bridge/overlay scope is
+  authorized.
 
 ## Implementation acceptance ledger
 
@@ -135,3 +175,6 @@ not authorize chat, view, plug-in, or retention work.
     owner approval; the `025` chat packet must be overlaid against it before
     CHAT dispatch. The implementation remains uncommitted; commit/publication
     are the owner's call.
+- **BRIDGE-01 COMMIT:** implementation committed at `16ccecf` (owner-directed),
+  branch `agent/exact-workspace-paths` (pushed); the earlier "remains
+  uncommitted" note is superseded.

@@ -1,6 +1,7 @@
 # BRIDGE-01 (SPEC-01) — Implementation Report
 
 **Status:** `ORCHESTRATOR COMPLETE — READY FOR INDEPENDENT OWNER-SIDE REVIEW` (not owner-accepted)
+**Acceptance update (2026-09-13):** owner-accepted 2026-09-12 per `RELEASE-MANIFEST.md` §Implementation acceptance ledger; implementation committed at `16ccecf`. The subsequent BRIDGE-02 conformance round updated `SPEC-02` only (living candidate in `RELEASE-MANIFEST.md`); BRIDGE-01 bytes and acceptance are unchanged.
 **Bundle:** TABS-PROVENANCE-BRIDGE
 **SPEC:** `SPEC-01-COMPONENT-TAB-ACTION-CONTEXT.md` (BRIDGE-01)
 **Approved candidate:** `BRIDGE-d13b0d39d691ec58` (owner-approved 2026-09-12)

@@ -2,7 +2,7 @@
 
 **Status:** `DRAFT_CANDIDATE`  
 **Domain owner:** renderer chat composition and chat-state projection  
-**Prerequisites:** accepted SPEC-01 and independently accepted Generic Component Tab Host  
+**Prerequisites:** accepted SPEC-01, independently accepted Generic Component Tab Host, and the packet `BRIDGE-02-CONFORMANCE-OVERLAY.md` (owner-accepted BRIDGE-01 and owner-approved BRIDGE-02)  
 **Blocks:** SPEC-03 and every production Side Chat placement
 
 ## 1. Objective
@@ -33,7 +33,9 @@ Read before implementation:
   Structure, and Testing And Operations pages;
 - the accepted SPEC-01 report and exact group protocol/types;
 - the final accepted Generic Component Tab Host SPEC, report, commit, tests, and
-  public exports; and
+  public exports;
+- the approved BRIDGE-01/BRIDGE-02 contracts and the packet-local
+  `BRIDGE-02-CONFORMANCE-OVERLAY.md`; and
 - current App, Sidebar, ChatArea/useChatArea, chat state slices, thread/stream
   handlers, draft/attachment stores, full-screen controls, and Secondary Chat.
 
@@ -97,6 +99,12 @@ type ChatMountIdentity = {
 No identity is reconstructed from panel selection, title, folder, tab, DOM ID,
 or another identity's string shape. `surfaceId` is never persisted or sent as
 session authority.
+
+Bridge conformance: `surfaceId` is minted by the connected host at mount — a
+component-backed mount derives it from `componentInstanceId` + mount generation;
+a non-component host (`main`/`legacy-main`) mints it from its own mount
+generation; it is never persisted and never session authority
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §2/§4.3; `CHAT-H03`).
 
 ## 5. Component Boundaries
 
@@ -234,6 +242,12 @@ The connected resolver:
    mount generation; and
 5. returns the ready or accepted inert-unavailable projection.
 
+Registration conformance: the JSON-safe descriptor input carries durable
+identities only and no transient `surfaceId`; the resolver mints the transient
+`surfaceId` per the BRIDGE-02 contract and never persists it; persisted tab
+descriptors contain durable identities only (`BRIDGE-02-CONFORMANCE-OVERLAY.md`
+§4.3).
+
 `tabId`, `componentInstanceId`, `threadGroupId`, `threadId`, and `surfaceId`
 remain distinct. The registration is proven with fixture rendering but is not
 placed in a production tab here.
@@ -317,7 +331,9 @@ Required scenarios:
 - the known component descriptor resolves with explicit props;
 - invalid/disabled/unknown descriptors remain inert under the accepted host;
 - no component resolver or `ChatSurface` derives identity from global current
-  panel/thread; and
+  panel/thread;
+- no persisted descriptor, action envelope, action result, or fan-out payload
+  contains `surfaceId`; and
 - existing chat foreground, message layout, prompt ownership, working activity,
   bootstrap, hover-peek, and component-tab tests remain green.
 

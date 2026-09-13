@@ -1,9 +1,10 @@
 # Chat Composition Roadmap — Release Manifest
 
-**Candidate ID:** `CHAT-COMPOSITION-e3d2c49f044cd7f7`
-**Candidate status:** `OWNER APPROVED — SPEC-00 READY FOR IMPLEMENTATION`
+**Candidate ID:** `CHAT-COMPOSITION-2d34f8b45562f8f3`
+**Candidate status:** `SPEC-00 ACCEPTED — OVERLAID CANDIDATE OWNER-APPROVED; CHAT-01 DISPATCH AUTHORIZED`
 **Prepared:** 2026-09-05
-**Clean-room verdict:** `CLEAN — 1 fresh independent pass`
+**Overlay round:** 2026-09-13
+**Clean-room verdict:** `PRIOR CANDIDATE CLEAN (2026-09-05); OVERLAID CANDIDATE CLEAN (2026-09-13)`
 
 ## 1. Candidate Identity
 
@@ -12,37 +13,52 @@ SHA-256 of the ordered lines `<artifact-sha256><two spaces><artifact-path>`, wit
 paths relative to this bundle. The complete aggregate is:
 
 ```text
-e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7
+2d34f8b45562f8f3034c6801c3409bc48bf3af56c13af4ad015ead9297713505
 ```
+
+**Previous candidate:** `CHAT-COMPOSITION-e3d2c49f044cd7f7` (owner-approved
+2026-09-05; aggregate `e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7`)
+remains the basis under which SPEC-00 was accepted. The overlaid candidate adds
+`BRIDGE-02-CONFORMANCE-OVERLAY.md`, updates `ISSUES.md`, `BUNDLE-INDEX.md`,
+`ROADMAP.md`, and `SPEC-01`–`SPEC-04`, and leaves `SPEC-00`, `DECISIONS.md`, and
+`GUIDANCE.md` byte-unchanged.
 
 Ordered normative artifacts:
 
 | Order | Artifact | SHA-256 |
 |---:|---|---|
-| 01 | `BUNDLE-INDEX.md` | `9d957a85d2a66ae72440b8b55b6c5d07fd5d7c35015f8d464a017cb2bbb1438b` |
+| 01 | `BUNDLE-INDEX.md` | `11a4844d31fd7f6f619b4d1f992d42bca2518282a2512f472067e1f87fb6ea0b` |
 | 02 | `DECISIONS.md` | `6c34943a9b53ef81e3020660313dabcd4697babd60e77287fc1b9928bfec2f7b` |
-| 03 | `ISSUES.md` | `48924a4de82c8995b763ac7914a15fc84433f1921b31d77a2e5dd3849fec548b` |
+| 03 | `ISSUES.md` | `2e68120f5aa32f612b00c4469c32b0f224cebf0f66e9c2704e683d7748cd4e9a` |
 | 04 | `GUIDANCE.md` | `60df8af9b089b14af10ae2eb82d726fc58e0f12b7f18f122a0f1b1ef35800405` |
-| 05 | `ROADMAP.md` | `7af19e9ce1650aeb3d982d86fe93191b3ccca5d878cf8e9f62d36e535659df4f` |
-| 06 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | `154c47db9f7181993751390468267e376470727937cdc8595d827e45b0b5ab0b` |
-| 07 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | `85daec5193dc5693c9e842f09f19a4f8e474e1af1060a341447b4ad9c46afe39` |
-| 08 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | `34c4cd1fbd4cffd949be25a3bdcd3ca2870ee1bede523a1f9bcd66069f956b7c` |
-| 09 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | `e18ba9f4231245792f4d958ab90951c7ed8c19f7a84a9f6674e49a7b08ceb966` |
-| 10 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | `4ee617394aacf7e882f8e48c6b022a787cfea81f1964dbfb920d21a7de48c3a3` |
+| 05 | `BRIDGE-02-CONFORMANCE-OVERLAY.md` | `21978c82b67e01dcfc94fb53b926d56b45166774d34a72eb731b55384167842b` |
+| 06 | `ROADMAP.md` | `6318e881db4bffb1d3610ff2170a3c59e37c14944c3f68db8d8cd3630fe7d72c` |
+| 07 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | `154c47db9f7181993751390468267e376470727937cdc8595d827e45b0b5ab0b` |
+| 08 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | `df2b3cc8ef7f9eaea49b9e74f382d91ab69e36c8f0ed29e0e8bccddaa0013ade` |
+| 09 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | `106e9468def9e6943e370357af2285f3d996f79fa63df2f1e009b9ce64b01721` |
+| 10 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | `807f4350a201dcd148256aa2a472cf509c8b4b3c4d065f18b416588b017f002a` |
+| 11 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | `fae72715b29796dd4142f866ff757cc57b0a593062bc91734ede39a354ccfe87` |
+
+The 11-file aggregate above is the SHA-256 of these eleven ordered
+`<sha256><two spaces><path>` lines. The pre-overlay 10-file aggregate
+`e3d2c49f044cd7f7…` was reproduced over the original ten-artifact list as a
+sanity check before this overlay edit.
 
 `CLEAN-ROOM-REVIEW.md` and this manifest are evidence/identification artifacts,
 not normative inputs to their own candidate hash.
 
 ## 2. Ordered Roadmap
 
-1. **SPEC-00 — Trusted Fusion Shell Authority**
+1. **SPEC-00 — Trusted Fusion Shell Authority** — owner-accepted and integrated
+   (commit `1baaffa`, acceptance `7f0d3c8`, 2026-09-07).
    Gate: owner-accepted Agent Tool Provenance product bytes integrated into the
    implementation baseline.
    Outcome: secure Electron shell origin, centralized runtime endpoint,
    one-use connection proof, trusted-shell route guard, and child-process
    secret isolation without Thread Group or bridge behavior.
 2. **SPEC-01 — Thread Group Foundation**
-   Gates: accepted SPEC-00, approved BRIDGE-01 and BRIDGE-02, and the
+   Gates: accepted SPEC-00, owner-accepted BRIDGE-01 (`16ccecf`) and
+   owner-approved BRIDGE-02 through `BRIDGE-02-CONFORMANCE-OVERLAY.md`, and the
    owner-released accepted Tab Platform milestone.
    Outcome: stable view IDs, consumption of accepted shell authority, durable one-member Thread
    Groups, migration, public lifecycle, group actions, and Fork retirement.
@@ -59,6 +75,10 @@ not normative inputs to their own candidate hash.
    Gate: owner-accepted SPEC-03.  
    Outcome: unchanged old chat in a recoverable Side Chat tab, new empty Main
    Chat peer, repeated Move, member access, and Secondary Chat retirement.
+
+The `BRIDGE-02-CONFORMANCE-OVERLAY.md` overlay is packet-wide: it binds
+SPEC-01 through SPEC-04 as the consuming instrument of the BRIDGE-02
+`ChatActionContext` contract.
 
 No following SPEC may begin before the preceding SPEC is explicitly accepted by
 the owner.
@@ -125,7 +145,15 @@ close-without-resurrection, and absence of Fork/old Secondary Chat paths.
 Candidate `CHAT-COMPOSITION-e3d2c49f044cd7f7` completed a fresh independent
 read-only clean-room pass on 2026-09-05. The reviewer reproduced the exact
 aggregate and all ten artifact hashes and reported `CLEAN — no material
-findings`. See `CLEAN-ROOM-REVIEW.md` for the scope, verified contracts, and
+findings`. That pass covered the pre-overlay candidate only. The overlaid
+candidate `CHAT-COMPOSITION-2d34f8b45562f8f3` (aggregate
+`2d34f8b45562f8f3034c6801c3409bc48bf3af56c13af4ad015ead9297713505`) completed a
+fresh independent read-only clean-room pass on 2026-09-13 (reviewer
+`ses_f6615c595ffetDxYDbCdRl98vA`, GLM 5.3 Flash high reasoning effort); the
+reviewer reproduced the aggregate and all eleven artifact hashes and reported
+`CLEAN — no material findings`; two non-blocking advisories were recorded
+(prerequisite gate phrasing; before-state dead-path quotes in the BRIDGE-02 R-1
+narrative). See `CLEAN-ROOM-REVIEW.md` for the scope, verified contracts, and
 remaining execution gates.
 
 ## 7. Approval Record
@@ -137,6 +165,20 @@ remaining execution gates.
   `d31fc8aeab0eae9cd622cad7b6db7b81a3498e87`, with integration acceptance
   recorded in `3110bd0`
 - **Implementation before approval:** prohibited
+- **Overlay round (2026-09-13):** the BRIDGE-02 conformance overlay
+  (`BRIDGE-02-CONFORMANCE-OVERLAY.md`) was applied to this packet. SPEC-00
+  acceptance and bytes are unchanged. Owner re-approval of this overlaid
+  candidate — and owner approval of the BRIDGE-02 candidate — is required before
+  CHAT-01 dispatch. No implementation is authorized by the overlay.
+- **OVERLAID CANDIDATE OWNER-APPROVED — 2026-09-13.** Owner statement:
+  “Approve.” The overlaid candidate `CHAT-COMPOSITION-2d34f8b45562f8f3` and the
+  BRIDGE-02 living candidate `BRIDGE-1e722a9c6d30f6b5` are owner-approved. This
+  satisfies the remaining owner-approval gate recorded in `ISSUES.md`
+  `CHAT-I-035`; the packet's normative bytes are unchanged by this approval
+  record (the manifest is excluded from its own candidate hash). CHAT-01
+  (SPEC-01 Thread Group Foundation) may now dispatch through a fresh
+  orchestrator; each following SPEC still requires explicit owner acceptance of
+  its predecessor.
 
 After approval, execution may begin through either:
 

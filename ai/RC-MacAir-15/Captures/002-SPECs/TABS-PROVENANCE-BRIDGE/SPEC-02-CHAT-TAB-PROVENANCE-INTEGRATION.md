@@ -75,6 +75,12 @@ type ChatActionContext = ComponentActionContext & {
 required; tab/component/presenter/target optional). `threadGroupId`, `threadId`,
 and `surfaceId` are chat-domain identities, not tab or provenance identities.
 
+`viewId` keeps the base contract's server-validated, non-null view binding. A
+group bound to Legacy (`viewId: null`) has no view-bound context and therefore
+attaches no `ComponentActionContext`; its chat identities travel in the chat
+vocabulary itself (§6 rule 4). No chat identity widens, substitutes, or
+reinterprets a SPEC-01 field.
+
 ## 5. Identity Ownership And Non-Collapse Rules
 
 | Identity | Owner | Meaning | Must not be treated as |
@@ -95,9 +101,13 @@ Rules:
    Main/Side presentation, tab placement, and group deletion never rewrite a
    recorded tool activity's workspace/thread/turn authority
    (`CHAT-RD-009`; SPEC-01 §4). `threadGroupId` is query context only.
-3. **`surfaceId` is never durable.** It is derived at mount from
-   `componentInstanceId` + a runtime mount generation, is never persisted, and
-   is never sent as session authority (`CHAT-H03`; SPEC-02 §4/§8).
+3. **`surfaceId` is never durable.** The connected Chat host mints it at mount.
+   A component-backed mount derives it from `componentInstanceId` + a runtime
+   mount generation (`CHAT-H03`; `025` `SPEC-02-COMPOSABLE-CHAT-SURFACES.md`
+   §4/§8). A non-component connected host (`main`/`legacy-main`) mints it from
+   that host's runtime mount generation alone and never invents a component
+   instance. In every case it is transient, is never persisted, and is never
+   sent as session authority.
 4. **Close is not delete.** Closing a tab or unmounting a surface never deletes a
    thread, transcript, activity, resource history, snapshot, or group membership
    (`CHAT-H06`; `INTERFACE-CONTRACT.md` #9).
@@ -107,6 +117,13 @@ Rules:
 6. **No identity is reconstructed from another's string**, title, folder name,
    panel selection, or current global chat (`CHAT-RD-004`).
 
+The table is the chat-domain projection of `INTERFACE-CONTRACT.md` §Identity
+ownership. `componentTypeId`, `presenterId`, and `targetKey` keep their
+coordination owners and are consumed through SPEC-01's context; `requestId` and
+`projectionId` keep their owners in the chat action vocabulary (`025` SPEC-01
+§8.2) and the worksurface/projection contract (`025` SPEC-03 §7/§8) and are
+not restated here.
+
 ## 6. Attachment Rules
 
 1. When chat emits an action/mutation fact, it attaches the durable portion
@@ -115,10 +132,21 @@ Rules:
 2. `surfaceId` is transient presentation identity: it may scope a live action
    but must not appear in a durable fact's identity fields; where a fact records
    "where it was mounted," it uses the durable `componentInstanceId` (or omits),
-   never `surfaceId` as membership.
+   never `surfaceId` as membership. **Reconciliation:** `INTERFACE-CONTRACT.md`
+   §Shared boundaries #2 permits provenance to retain surface identifiers as
+   opaque context; this SPEC narrows that permission for chat — `surfaceId` is
+   never persisted at all, and durable mount provenance uses the durable
+   `componentInstanceId` or is omitted. Recorded here per the coordination
+   change rule; the coordination bundle is not edited into authority.
 3. Chat facts use the same actor taxonomy (BRG-D05) and the same
    omit-and-continue failure posture; a missing group/surface never blocks
    prompt acceptance or a mutation.
+4. **Legacy carries no view-bound context.** A group bound to `viewId: null`
+   has no `ComponentActionContext`. Its actions and facts carry `workspaceId`,
+   `threadGroupId`, `threadId` (and `turnId` where applicable) through the chat
+   vocabulary itself; they never synthesize a `viewId`, tab, or component
+   identity, and the omission never blocks prompt acceptance or a mutation
+   (SPEC-01 §4/§6 fail-open; `025` SPEC-01 §9).
 
 ## 7. Conformance Requirement For Chat
 
@@ -149,6 +177,11 @@ out of contract.
   returns clean.
 - Confirm no `025` packet claims this contract is implemented; confirm the
   overlay requirement is explicit.
+- A recorded conformance validation against `INTERFACE-CONTRACT.md`
+  §BRIDGE-02/§Identity ownership, the `025` SPEC-01/02/03 identity surfaces, and
+  `CHAT-H01`–`CHAT-H07`, with every divergence and disposition recorded in
+  `BRIDGE-02-CONFORMANCE-REPORT.md`; the `025` conformance overlay artifact is
+  `../../025-Chat_Composition_Roadmap/BRIDGE-02-CONFORMANCE-OVERLAY.md`.
 
 No build/test gates apply (no code). The parent bundle's SPEC-01 owns all
 runtime gates.
@@ -168,4 +201,6 @@ SPEC-02 is complete when the owner approves this exact contract, the `025` chat
 packet is updated to consume it (or has an explicit, owner-approved overlay), a
 fresh clean-room review is clean on the current bytes, and the bundle roadmap
 records BRIDGE-02 as approved. No implementation follows from this SPEC by
-itself.
+itself. The conformance evidence is `BRIDGE-02-CONFORMANCE-REPORT.md`; the `025`
+overlay artifact is
+`../../025-Chat_Composition_Roadmap/BRIDGE-02-CONFORMANCE-OVERLAY.md`.

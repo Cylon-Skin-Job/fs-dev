@@ -2,7 +2,7 @@
 
 **Status:** `DRAFT_CANDIDATE`  
 **Domain owner:** server Thread Group domain with ThreadManager integration  
-**Prerequisites:** accepted SPEC-00; integrated owner-accepted Agent Tool Provenance; approved BRIDGE-01 and BRIDGE-02; owner-released accepted Tab Platform milestone
+**Prerequisites:** accepted SPEC-00; integrated owner-accepted Agent Tool Provenance; owner-accepted BRIDGE-01 (`16ccecf`) and owner-approved BRIDGE-02, consumed through `BRIDGE-02-CONFORMANCE-OVERLAY.md`; owner-released accepted Tab Platform milestone
 **Blocks:** SPEC-02, Pending New Chat, Collections, and every multi-member thread action
 
 ## 1. Objective
@@ -37,8 +37,9 @@ Read before implementation:
   changed-path evidence, and accepted regression commands; and
 - the accepted `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` report and exported
   server connection-authority guard;
-- the approved BRIDGE-01 and BRIDGE-02 contracts, consumed without local
-  additions or reinterpretation;
+- the approved BRIDGE-01 and BRIDGE-02 contracts and the packet-local
+  `BRIDGE-02-CONFORMANCE-OVERLAY.md`, consumed without local additions or
+  reinterpretation;
 - the accepted TABS-03 report, implementation commits, exact fingerprint, and
   exported placement boundary as a protected non-owned baseline; and
 - the current `threads`, `exchanges`, ThreadManager, ThreadIndex, thread runtime,
@@ -101,6 +102,12 @@ edit an accepted prerequisite migration.
 the same legacy string to both. New groups and new sessions receive independently
 minted opaque host IDs. Live frames, Stop, exchanges, provider state, and Agent
 Tool Provenance continue to use `threadId`/`turnId`, never group identity.
+
+Bridge conformance: `threadId` is the Provenance identity; grouping, view
+navigation, Main/Side presentation, placement, and group deletion never rewrite
+a recorded tool activity's workspace/thread/turn authority, and `threadGroupId`
+is query/worksurface context only. `surfaceId` is transient and never persisted
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §2; `CHAT-RD-009`).
 
 The group owns its title, view binding, membership, current-primary cache and
 history, visible-list MRU, and group actions. The session continues to own its
@@ -277,6 +284,11 @@ This SPEC always returns `memberCount === 1`; the numeric field is deliberately
 forward-compatible because SPEC-04 activates multi-member groups. It does not
 expose a member collection in this SPEC.
 
+Projection conformance: the projection carries durable identities only; no
+transient `surfaceId`; `threadGroupId` is the visible-row/worksurface key, not a
+chat-runtime or Provenance identity; Legacy is the explicit null-view population
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.4).
+
 Workspace comes from the bound server session. A requested view is validated
 through the registry and is never authority to switch workspace. Legacy is an
 explicit null-view query, not a fallback to whichever panel is active.
@@ -305,6 +317,14 @@ Same-request/same-input returns the stored result. Different-input reuse returns
 `request_mismatch`. Responses are `thread:action:completed|error` and echo the
 request/action/authoritative identifiers.
 
+Envelope conformance: durable actions carry the available `ChatActionContext`
+durable portion — server-derived workspace, validated view (Legacy is `null` with
+no view-bound context), `threadGroupId`, exact `threadId` where member-scoped,
+plus tab/component context only when a component-backed host supplied it.
+`surfaceId` never appears in envelopes, persisted action results, idempotency
+records, or fan-out; missing context is fail-open and never gates the action
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.2; `CHAT-H07`).
+
 Remove superseded public Rename/Delete/Copy-Link routes rather than keeping
 aliases. In this one-member SPEC, `copy_link` returns a versioned application
 URI for the group with an optional validated sole/current member, and
@@ -330,6 +350,10 @@ state and never replays the mutation.
 
 Commands are not UEB events. Optional facts cannot gate, roll back, or rewrite
 the command result.
+
+Fan-out conformance: delivery carries qualified durable identities only;
+`surfaceId` is never delivered or persisted (`BRIDGE-02-CONFORMANCE-OVERLAY.md`
+§4.5).
 
 ### 8.4 Accepted Fusion-shell authority dependency
 
@@ -478,7 +502,11 @@ Required proof:
 - Delete busy/fence/late-frame/mirror-failure/restart behavior is deterministic;
 - deleting sessions clears only allowed Provenance exchange binding and retains
   every durable Provenance fact;
-- search returns group plus exact session/exchange identities; and
+- search returns group plus exact session/exchange identities;
+- durable `thread:action` envelopes, results, and fan-out carry the conformance
+  durable identities and never `surfaceId`, and Legacy actions carry no
+  view-bound context while still succeeding (`BRIDGE-02-CONFORMANCE-OVERLAY.md`
+  §4.2); and
 - stale-symbol sweeps find no Fork route/service/UI/type/config/provider flag,
   old group-mutation route, or public `thread:touch`.
 
