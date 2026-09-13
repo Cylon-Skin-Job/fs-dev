@@ -2,6 +2,10 @@
 
 const { sha256CanonicalJson } = require('../event-registry/canonical-json');
 const { assertBoundedString, assertNonemptyBoundedString } = require('./provenance-values');
+const {
+  reportedUiContextFromRow,
+  sanitizeReportedUiContext,
+} = require('./reported-ui-context');
 
 const PRODUCER_ID = 'system.file-save-controller';
 const SAVE_REASONS = new Set(['autosave', 'manual', 'session_end', 'checkpoint', 'milestone']);
@@ -10,29 +14,21 @@ function omitUndefined(object) {
   return Object.fromEntries(Object.entries(object).filter(([, value]) => value !== undefined));
 }
 
-function originFromInput(origin) {
+function originFromInput(origin, serverWorkspaceId, onDiagnostic = () => {}) {
   if (!origin || typeof origin !== 'object' || Array.isArray(origin)) throw new TypeError('origin is required');
   if (origin.kind !== 'local_client' || origin.assurance !== 'transport_only') {
     throw new TypeError('origin must truthfully identify the transport-only local client');
   }
   const connectionId = assertNonemptyBoundedString(origin.connectionId, 128, 'origin.connectionId');
-  let reportedUiContext;
-  if (origin.reportedUiContext != null) {
-    const context = origin.reportedUiContext;
-    if (!context || typeof context !== 'object' || Array.isArray(context)) {
-      throw new TypeError('reportedUiContext must be an object');
-    }
-    const allowed = new Set(['viewId', 'viewInstanceId']);
-    if (Object.keys(context).some((key) => !allowed.has(key))) {
-      throw new TypeError('reportedUiContext contains an unknown field');
-    }
-    reportedUiContext = omitUndefined({
-      viewId: context.viewId == null ? undefined : assertNonemptyBoundedString(context.viewId, 128, 'viewId'),
-      viewInstanceId: context.viewInstanceId == null
-        ? undefined
-        : assertNonemptyBoundedString(context.viewInstanceId, 128, 'viewInstanceId'),
-    });
-    if (Object.keys(reportedUiContext).length === 0) reportedUiContext = undefined;
+  // Provenance context is observational, never authorization: sanitize it
+  // fail-open so a malformed/oversized/stale renderer echo can never gate a
+  // valid save (Metadata Must Not Gate Valid Work).
+  const { context: reportedUiContext, diagnostic } = sanitizeReportedUiContext(
+    origin.reportedUiContext,
+    serverWorkspaceId,
+  );
+  if (diagnostic) {
+    try { onDiagnostic(diagnostic); } catch (_error) {}
   }
   return Object.freeze(omitUndefined({
     kind: 'local_client', connectionId, assurance: 'transport_only', reportedUiContext,
@@ -75,10 +71,7 @@ function commandBody(input, ids, resourceId, origin, intent) {
 }
 
 function resourceBody(row) {
-  const reportedUiContext = omitUndefined({
-    viewId: row.reported_view_id ?? undefined,
-    viewInstanceId: row.reported_view_instance_id ?? undefined,
-  });
+  const reportedUiContext = reportedUiContextFromRow(row);
   return {
     commandId: row.command_id,
     commandAcceptedEventId: row.command_accepted_event_id,
@@ -86,7 +79,7 @@ function resourceBody(row) {
       kind: row.origin_kind,
       connectionId: row.origin_connection_id,
       assurance: row.origin_assurance,
-      reportedUiContext: Object.keys(reportedUiContext).length ? reportedUiContext : undefined,
+      reportedUiContext,
     }),
     resource: {
       resourceId: row.resource_id,
@@ -112,12 +105,7 @@ function commandBodyFromRow(row) {
     kind: row.origin_kind,
     connectionId: row.origin_connection_id,
     assurance: row.origin_assurance,
-    reportedUiContext: row.reported_view_id || row.reported_view_instance_id
-      ? omitUndefined({
-        viewId: row.reported_view_id ?? undefined,
-        viewInstanceId: row.reported_view_instance_id ?? undefined,
-      })
-      : undefined,
+    reportedUiContext: reportedUiContextFromRow(row),
   }), omitUndefined({
     kind: 'save',
     saveReason: row.save_reason ?? undefined,

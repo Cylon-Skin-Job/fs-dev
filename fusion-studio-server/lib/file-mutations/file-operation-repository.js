@@ -15,6 +15,10 @@ const {
 } = require('./fact-reservation-bindings');
 const { runBoundedSqliteRetry } = require('./sqlite-contention');
 const {
+  reportedUiContextColumns,
+  reportedUiContextFromRow,
+} = require('./reported-ui-context');
+const {
   ProvenanceConflictError,
   assertNonemptyBoundedString,
   assertSha256,
@@ -66,12 +70,7 @@ function mapOperation(row, { idempotentReplay = false } = {}) {
       kind: row.origin_kind,
       connectionId: row.origin_connection_id,
       assurance: row.origin_assurance,
-      reportedUiContext: row.reported_view_id || row.reported_view_instance_id
-        ? Object.freeze({
-          ...(row.reported_view_id ? { viewId: row.reported_view_id } : {}),
-          ...(row.reported_view_instance_id ? { viewInstanceId: row.reported_view_instance_id } : {}),
-        })
-        : undefined,
+      reportedUiContext: reportedUiContextFromRow(row),
     }),
     intent: Object.freeze({
       kind: 'save',
@@ -141,7 +140,7 @@ function createFileOperationRepository(db, options = {}) {
     const ingressPath = normalizeCanonicalPath(input.ingressPath, 'ingressPath');
     const acceptedAt = assertTimestamp(input.acceptedAt, 'acceptedAt');
     const currentFingerprint = normalizeFingerprint(input.currentFingerprint, { allowNull: true });
-    const origin = originFromInput(input.origin);
+    const origin = originFromInput(input.origin, workspaceId);
     const intent = intentFromInput(input);
     const intendedAfterSha256 = assertSha256(input.intendedAfterSha256, 'intendedAfterSha256');
     const intendedAfterByteLength = input.intendedAfterByteLength;
@@ -220,8 +219,7 @@ function createFileOperationRepository(db, options = {}) {
         origin_kind: origin.kind,
         origin_connection_id: origin.connectionId,
         origin_assurance: origin.assurance,
-        reported_view_id: origin.reportedUiContext?.viewId ?? null,
-        reported_view_instance_id: origin.reportedUiContext?.viewInstanceId ?? null,
+        ...reportedUiContextColumns(origin.reportedUiContext),
         save_reason: intent.saveReason ?? null,
         milestone: intent.milestone ?? null,
         client_action_id: intent.clientActionId ?? null,

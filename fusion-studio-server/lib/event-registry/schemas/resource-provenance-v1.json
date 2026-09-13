@@ -17,7 +17,22 @@
     },
     "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "boundedTargetKey": { "type": "string", "minLength": 1, "maxLength": 512 },
     "boundedPath": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "reportedUiContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "viewId": { "$ref": "#/$defs/boundedId" },
+        "viewInstanceId": { "$ref": "#/$defs/boundedId" },
+        "tabId": { "$ref": "#/$defs/boundedId" },
+        "componentTypeId": { "$ref": "#/$defs/boundedId" },
+        "componentInstanceId": { "$ref": "#/$defs/boundedId" },
+        "presenterId": { "$ref": "#/$defs/boundedId" },
+        "targetKey": { "$ref": "#/$defs/boundedTargetKey" }
+      }
+    },
     "request": {
       "type": "object",
       "additionalProperties": false,
@@ -33,6 +48,12 @@
         "fileName": { "type": "string", "minLength": 1, "maxLength": 255 },
         "folderPrefix": { "type": "string", "maxLength": 4096 },
         "operationId": { "$ref": "#/$defs/uuid" },
+        "viewId": { "$ref": "#/$defs/boundedId" },
+        "tabId": { "$ref": "#/$defs/boundedId" },
+        "componentTypeId": { "$ref": "#/$defs/boundedId" },
+        "componentInstanceId": { "$ref": "#/$defs/boundedId" },
+        "presenterId": { "$ref": "#/$defs/boundedId" },
+        "targetKey": { "$ref": "#/$defs/boundedTargetKey" },
         "since": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
         "limit": { "type": "integer", "minimum": 1, "maximum": 200 }
       }
@@ -90,7 +111,8 @@
           "properties": {
             "kind": { "const": "local_client" },
             "assurance": { "const": "transport_only" },
-            "connectionId": { "$ref": "#/$defs/boundedId" }
+            "connectionId": { "$ref": "#/$defs/boundedId" },
+            "reportedUiContext": { "$ref": "#/$defs/reportedUiContext" }
           }
         },
         "snapshot": {

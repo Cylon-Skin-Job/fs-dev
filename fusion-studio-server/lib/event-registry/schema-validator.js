@@ -42,6 +42,18 @@ function validateNulFreeString(value, instancePath, errors) {
   }
 }
 
+function validateReportedUiContextSemantics(context, basePath, errors) {
+  if (context == null) return;
+  validateUnicodeString(context.workspaceId, `${basePath}/workspaceId`, 128, errors);
+  validateUnicodeString(context.viewId, `${basePath}/viewId`, 128, errors);
+  validateUnicodeString(context.viewInstanceId, `${basePath}/viewInstanceId`, 128, errors);
+  validateUnicodeString(context.tabId, `${basePath}/tabId`, 128, errors);
+  validateUnicodeString(context.componentTypeId, `${basePath}/componentTypeId`, 128, errors);
+  validateUnicodeString(context.componentInstanceId, `${basePath}/componentInstanceId`, 128, errors);
+  validateUnicodeString(context.presenterId, `${basePath}/presenterId`, 128, errors);
+  validateUnicodeString(context.targetKey, `${basePath}/targetKey`, 512, errors);
+}
+
 function validateNormalizedPath(value, instancePath, errors, { allowEmpty = false } = {}) {
   validateUnicodeString(value, instancePath, 4096, errors, { nonempty: !allowEmpty });
   if (typeof value !== 'string' || value.length === 0) return;
@@ -275,10 +287,11 @@ function validateKnownSemantics(schemaKey, value) {
     validateUnicodeString(value.workspaceId, '/workspaceId', 128, errors);
     if (value.origin) {
       validateUnicodeString(value.origin.connectionId, '/origin/connectionId', 128, errors);
-      if (value.origin.reportedUiContext) {
-        validateUnicodeString(value.origin.reportedUiContext.viewId, '/origin/reportedUiContext/viewId', 128, errors);
-        validateUnicodeString(value.origin.reportedUiContext.viewInstanceId, '/origin/reportedUiContext/viewInstanceId', 128, errors);
-      }
+      validateReportedUiContextSemantics(
+        value.origin.reportedUiContext,
+        '/origin/reportedUiContext',
+        errors,
+      );
     }
     if (value.resource) {
       validateNormalizedPath(value.resource.path, '/resource/path', errors);
@@ -307,10 +320,7 @@ function validateKnownSemantics(schemaKey, value) {
       validateNulFreeString(value.content, '/content', errors);
       validateUnicodeString(value.milestone, '/milestone', 256, errors, { nonempty: false });
       validateUnicodeString(value.clientActionId, '/clientActionId', 128, errors);
-      if (value.reportedUiContext) {
-        validateUnicodeString(value.reportedUiContext.viewId, '/reportedUiContext/viewId', 128, errors);
-        validateUnicodeString(value.reportedUiContext.viewInstanceId, '/reportedUiContext/viewInstanceId', 128, errors);
-      }
+      validateReportedUiContextSemantics(value.reportedUiContext, '/reportedUiContext', errors);
     } else if (value.type === 'file_save_response') {
       validateUnicodeString(value.requestId, '/requestId', 128, errors);
       validateUnicodeString(value.workspaceId, '/workspaceId', 128, errors);
@@ -326,6 +336,12 @@ function validateKnownSemantics(schemaKey, value) {
       validateUnicodeString(value.panel, '/panel', 128, errors);
       validateNormalizedPath(value.path, '/path', errors);
       validateUnicodeString(value.fileName, '/fileName', 255, errors);
+      validateUnicodeString(value.viewId, '/viewId', 128, errors);
+      validateUnicodeString(value.tabId, '/tabId', 128, errors);
+      validateUnicodeString(value.componentTypeId, '/componentTypeId', 128, errors);
+      validateUnicodeString(value.componentInstanceId, '/componentInstanceId', 128, errors);
+      validateUnicodeString(value.presenterId, '/presenterId', 128, errors);
+      validateUnicodeString(value.targetKey, '/targetKey', 512, errors);
       if (typeof value.since === 'number' && !Number.isSafeInteger(value.since)) {
         errors.push(semanticError('/since', 'safe_integer_required'));
       }
@@ -349,6 +365,11 @@ function validateKnownSemantics(schemaKey, value) {
         validateUnicodeString(item?.ingress?.panel, `/items/${index}/ingress/panel`, 128, errors);
         validateNormalizedPath(item?.ingress?.path, `/items/${index}/ingress/path`, errors);
         validateUnicodeString(item?.origin?.connectionId, `/items/${index}/origin/connectionId`, 128, errors);
+        validateReportedUiContextSemantics(
+          item?.origin?.reportedUiContext,
+          `/items/${index}/origin/reportedUiContext`,
+          errors,
+        );
       }
     }
   } else if (schemaKey === 'agent:activity') {

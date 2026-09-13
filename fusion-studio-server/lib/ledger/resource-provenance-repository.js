@@ -3,6 +3,10 @@
 const path = require('path');
 const { canonicalizeJson, sha256CanonicalJson } = require('../event-registry/canonical-json');
 const { resourceBody } = require('../file-mutations/fact-reservation-bindings');
+const {
+  assertCanonicalReportedUiContext,
+  reportedUiContextFromRow,
+} = require('../file-mutations/reported-ui-context');
 const { runBoundedSqliteRetry } = require('../file-mutations/sqlite-contention');
 const {
   ProvenanceConflictError,
@@ -33,6 +37,7 @@ function validateFact(fact) {
     || fact.origin?.assurance !== 'transport_only'
   ) throw new TypeError('invalid origin');
   assertNonemptyBoundedString(fact.origin.connectionId, 128, 'origin.connectionId');
+  assertCanonicalReportedUiContext(fact.origin.reportedUiContext, fact.workspaceId);
   assertNonemptyBoundedString(fact.resource?.access?.panel, 128, 'resource.access.panel');
   normalizeCanonicalPath(fact.resource?.access?.path, 'resource.access.path');
 }
@@ -92,6 +97,7 @@ function mapQueryRow(row) {
       kind: row.origin_kind,
       assurance: row.origin_assurance,
       connectionId: row.origin_connection_id,
+      reportedUiContext: reportedUiContextFromRow(row),
     }),
     snapshot,
   });
@@ -179,6 +185,13 @@ function createResourceProvenanceRepository(db) {
         origin_kind: fact.origin.kind,
         origin_connection_id: fact.origin.connectionId,
         origin_assurance: fact.origin.assurance,
+        reported_view_id: fact.origin.reportedUiContext?.viewId ?? null,
+        reported_view_instance_id: fact.origin.reportedUiContext?.viewInstanceId ?? null,
+        reported_tab_id: fact.origin.reportedUiContext?.tabId ?? null,
+        reported_component_type_id: fact.origin.reportedUiContext?.componentTypeId ?? null,
+        reported_component_instance_id: fact.origin.reportedUiContext?.componentInstanceId ?? null,
+        reported_presenter_id: fact.origin.reportedUiContext?.presenterId ?? null,
+        reported_target_key: fact.origin.reportedUiContext?.targetKey ?? null,
       });
       await trx('file_operations').where({ operation_id: fact.operationId }).update({
         ledger_projection_state: 'stored',
@@ -236,6 +249,42 @@ function createResourceProvenanceRepository(db) {
     }
     if (options.operationId != null) {
       builder = builder.where('provenance.operation_id', assertUuid(options.operationId, 'operationId'));
+    }
+    if (options.viewId != null) {
+      builder = builder.where(
+        'provenance.reported_view_id',
+        assertNonemptyBoundedString(options.viewId, 128, 'viewId'),
+      );
+    }
+    if (options.tabId != null) {
+      builder = builder.where(
+        'provenance.reported_tab_id',
+        assertNonemptyBoundedString(options.tabId, 128, 'tabId'),
+      );
+    }
+    if (options.componentTypeId != null) {
+      builder = builder.where(
+        'provenance.reported_component_type_id',
+        assertNonemptyBoundedString(options.componentTypeId, 128, 'componentTypeId'),
+      );
+    }
+    if (options.componentInstanceId != null) {
+      builder = builder.where(
+        'provenance.reported_component_instance_id',
+        assertNonemptyBoundedString(options.componentInstanceId, 128, 'componentInstanceId'),
+      );
+    }
+    if (options.presenterId != null) {
+      builder = builder.where(
+        'provenance.reported_presenter_id',
+        assertNonemptyBoundedString(options.presenterId, 128, 'presenterId'),
+      );
+    }
+    if (options.targetKey != null) {
+      builder = builder.where(
+        'provenance.reported_target_key',
+        assertNonemptyBoundedString(options.targetKey, 512, 'targetKey'),
+      );
     }
     if (options.since != null) {
       builder = builder.where('provenance.occurred_at', '>=', assertTimestamp(options.since, 'since'));

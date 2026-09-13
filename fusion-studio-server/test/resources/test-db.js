@@ -6,6 +6,7 @@ const ledgerMigration = require('../../lib/db/migrations/029_event_ledger');
 const registryMigration = require('../../lib/db/migrations/034_event_registry_authority');
 const provenanceMigration = require('../../lib/db/migrations/035_file_provenance');
 const agentToolProvenanceMigration = require('../../lib/db/migrations/036_agent_tool_provenance');
+const reportedUiContextMigration = require('../../lib/db/migrations/040_reported_ui_context');
 
 function createDb(filename = ':memory:') {
   return knex({
@@ -30,6 +31,7 @@ async function migrate(db) {
   await registryMigration.up(db);
   await provenanceMigration.up(db);
   await agentToolProvenanceMigration.up(db);
+  await reportedUiContextMigration.up(db);
   return db;
 }
 

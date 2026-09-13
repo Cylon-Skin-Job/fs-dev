@@ -5,6 +5,7 @@ export default defineConfig({
   testDir: './e2e',
   testMatch: [
     'file-save-protocol-source.spec.ts',
+    'component-action-context-source.spec.ts',
     'resource-provenance-protocol-source.spec.ts',
     'file-viewer-read-projection-source.spec.ts',
     'file-viewer-central-cutover-source.spec.ts',

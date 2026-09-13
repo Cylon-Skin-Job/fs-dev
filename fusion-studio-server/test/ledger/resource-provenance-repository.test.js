@@ -187,6 +187,58 @@ describe('resource provenance ledger repository', () => {
     await expect(ledger.query({ workspaceId: 'workspace-1', limit: 200 })).resolves.toHaveLength(51);
   });
 
+  test('filters by view/tab/component/presenter/target and echoes the validated context', async () => {
+    db = await migrate(createDb());
+    const operations = createFileOperationRepository(db);
+    const ledger = createResourceProvenanceRepository(db);
+    const contextA = {
+      workspaceId: 'workspace-1', viewId: 'file-viewer', viewInstanceId: 'mount-a',
+      tabId: 'tab-a', componentTypeId: 'file-viewer', componentInstanceId: 'component-a',
+      presenterId: 'markdown', targetKey: 'docs/a.md',
+    };
+    const contextB = {
+      ...contextA, viewInstanceId: 'mount-b', tabId: 'tab-b',
+      componentInstanceId: 'component-b', targetKey: 'docs/b.md',
+    };
+    for (const [number, canonicalPath, context] of [[900, 'docs/a.md', contextA], [910, 'docs/b.md', contextB]]) {
+      const base = input(number, canonicalPath, 9000 + number);
+      const operation = await operations.reserve({
+        ...base,
+        origin: { ...base.origin, reportedUiContext: context },
+      });
+      await operations.prepare({
+        operationId: operation.operationId,
+        preimage: { kind: 'absent' },
+        intendedAfterSha256: operation.intendedAfterSha256,
+        intendedAfterByteLength: operation.intendedAfterByteLength,
+        preparedAt: 9000 + number + 1,
+      });
+      await operations.markAttempted(operation.operationId, 9000 + number + 2);
+      await operations.markSucceeded({
+        operationId: operation.operationId,
+        occurredAt: 9500 + number,
+        completedAt: 9500 + number,
+        fingerprint: { ...FINGERPRINT, ino: number },
+      });
+      await ledger.appendResourceFact(
+        await factFor(db, operations, operation.operationId),
+        { projectedAt: 9600 + number },
+      );
+    }
+
+    expect(await ledger.query({ workspaceId: 'workspace-1', viewId: 'file-viewer' })).toHaveLength(2);
+    expect(await ledger.query({ workspaceId: 'workspace-1', componentTypeId: 'file-viewer' })).toHaveLength(2);
+    expect(await ledger.query({ workspaceId: 'workspace-1', presenterId: 'markdown' })).toHaveLength(2);
+    expect(await ledger.query({ workspaceId: 'workspace-1', tabId: 'tab-a' })).toHaveLength(1);
+    expect(await ledger.query({ workspaceId: 'workspace-1', componentInstanceId: 'component-b' })).toHaveLength(1);
+    expect(await ledger.query({ workspaceId: 'workspace-1', targetKey: 'docs/a.md' })).toHaveLength(1);
+    expect((await ledger.query({ workspaceId: 'workspace-1', tabId: 'tab-b' }))[0]
+      .origin.reportedUiContext).toEqual(contextB);
+    expect(await ledger.query({ workspaceId: 'workspace-1', tabId: 'missing' })).toHaveLength(0);
+    await expect(ledger.query({ workspaceId: 'workspace-1', targetKey: 'x'.repeat(513) }))
+      .rejects.toThrow(/targetKey/u);
+  });
+
   test('retries concurrent exact duplicate append across two connections without raw contention', async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-ledger-contention-'));
     const filename = path.join(tempRoot, 'fixture.db');

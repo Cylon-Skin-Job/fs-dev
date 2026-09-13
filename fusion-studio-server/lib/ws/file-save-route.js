@@ -2,6 +2,7 @@
 
 const { FIXED_ERRORS } = require('../file-mutations/save-controller');
 const { UUID_PATTERN } = require('../file-mutations/validation-patterns');
+const { sanitizeReportedUiContext } = require('../file-mutations/reported-ui-context');
 const {
   currentWorkspacePair,
   sendWorkspaceBoundReply,
@@ -58,6 +59,11 @@ function response(errorCode, extra = {}) {
 
 function hasInactiveSchema(errors) {
   return errors?.some((error) => error?.code === 'schema_inactive');
+}
+
+function omitReportedUiContext(message) {
+  const { reportedUiContext: _omitted, ...rest } = message;
+  return rest;
 }
 
 function classifyContentError(errors) {
@@ -120,7 +126,17 @@ function createFileSaveRoute({
       }));
     }
 
-    const validation = await registryAccess.validatePayload(SCHEMA_REFERENCE, message);
+    // Provenance context is never authorization. Sanitize the untrusted
+    // renderer echo against the server-derived workspace before schema
+    // validation so malformed/oversized/unknown/stale context degrades the
+    // context instead of rejecting an otherwise valid save.
+    const sanitizedContext = sanitizeReportedUiContext(message.reportedUiContext, pair.workspaceId);
+    if (sanitizedContext.diagnostic) diagnose(sanitizedContext.diagnostic);
+    const candidateMessage = sanitizedContext.context
+      ? { ...message, reportedUiContext: sanitizedContext.context }
+      : omitReportedUiContext(message);
+
+    const validation = await registryAccess.validatePayload(SCHEMA_REFERENCE, candidateMessage);
     if (!validation.valid) {
       if (hasInactiveSchema(validation.errors)) {
         closeInvalidAuthority(ws);
@@ -132,7 +148,7 @@ function createFileSaveRoute({
         // locked registry authority before returning its more precise code.
         const withoutInvalidContent = await registryAccess.validatePayload(
           SCHEMA_REFERENCE,
-          { ...message, content: '' },
+          { ...candidateMessage, content: '' },
         );
         if (hasInactiveSchema(withoutInvalidContent.errors)) {
           closeInvalidAuthority(ws);
@@ -166,7 +182,7 @@ function createFileSaveRoute({
         saveReason: message.reason,
         milestone: message.milestone,
         clientActionId: message.clientActionId,
-        reportedUiContext: message.reportedUiContext,
+        reportedUiContext: sanitizedContext.context,
       },
     });
     return sendValidated(ws, session, result);

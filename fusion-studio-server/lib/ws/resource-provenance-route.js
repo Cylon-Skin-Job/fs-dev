@@ -170,6 +170,14 @@ function createResourceProvenanceRoute({
         ...normalizedPaths,
         ...(message.fileName == null ? {} : { fileName: message.fileName }),
         ...(message.operationId == null ? {} : { operationId: message.operationId }),
+        ...(message.viewId == null ? {} : { viewId: message.viewId }),
+        ...(message.tabId == null ? {} : { tabId: message.tabId }),
+        ...(message.componentTypeId == null ? {} : { componentTypeId: message.componentTypeId }),
+        ...(message.componentInstanceId == null
+          ? {}
+          : { componentInstanceId: message.componentInstanceId }),
+        ...(message.presenterId == null ? {} : { presenterId: message.presenterId }),
+        ...(message.targetKey == null ? {} : { targetKey: message.targetKey }),
         ...(message.since == null ? {} : { since: message.since }),
         ...(message.limit == null ? {} : { limit: message.limit }),
       });

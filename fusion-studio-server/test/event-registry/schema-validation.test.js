@@ -371,6 +371,54 @@ describe('literal MVP JSON Schema 2020-12 documents and semantic bounds', () => 
     })).valid).toBe(false);
   });
 
+  test('bounds the extended reportedUiContext in facts, commands, and queries', async () => {
+    const fullContext = {
+      workspaceId: 'workspace-1', viewId: 'view-1', viewInstanceId: 'instance-1',
+      tabId: 'tab-1', componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+      presenterId: 'markdown', targetKey: 'x'.repeat(512),
+    };
+
+    const extended = commandAccepted();
+    extended.origin.reportedUiContext = { ...fullContext };
+    await expect(validate('file.command_accepted', 'event', extended))
+      .resolves.toMatchObject({ valid: true, errors: [] });
+
+    const unknownContext = commandAccepted();
+    unknownContext.origin.reportedUiContext = { ...fullContext, secret: true };
+    expect((await validate('file.command_accepted', 'event', unknownContext)).valid).toBe(false);
+
+    const oversizedTarget = commandAccepted();
+    oversizedTarget.origin.reportedUiContext = { ...fullContext, targetKey: 'x'.repeat(513) };
+    expect((await validate('file.command_accepted', 'event', oversizedTarget)).valid).toBe(false);
+
+    const byteHeavy = commandAccepted();
+    byteHeavy.origin.reportedUiContext = { ...fullContext, tabId: '\u{1f98a}'.repeat(40) };
+    const byteResult = await validate('file.command_accepted', 'event', byteHeavy);
+    expect(byteResult.errors).toContainEqual(expect.objectContaining({
+      instancePath: '/origin/reportedUiContext/tabId', code: 'utf8_bytes_exceed_128',
+    }));
+
+    const mutated = resourceMutated();
+    mutated.origin.reportedUiContext = { ...fullContext };
+    await expect(validate('resource.mutated', 'event', mutated))
+      .resolves.toMatchObject({ valid: true, errors: [] });
+
+    const fileSave = { ...fileSaveRequest(), reportedUiContext: { ...fullContext } };
+    await expect(validate('file_save', 'command', fileSave))
+      .resolves.toMatchObject({ valid: true, errors: [] });
+
+    const query = {
+      type: 'resource:provenance:query', version: 1, requestId: 'request-1',
+      workspaceId: 'workspace-1', workspaceEpoch: UUID,
+      viewId: 'view-1', tabId: 'tab-1', componentTypeId: 'file-viewer',
+      componentInstanceId: 'component-1', presenterId: 'markdown', targetKey: 'docs/a.md',
+    };
+    await expect(validate('resource:provenance', 'query', query))
+      .resolves.toMatchObject({ valid: true, errors: [] });
+    expect((await validate('resource:provenance', 'query', { ...query, targetKey: 'x'.repeat(513) })).valid)
+      .toBe(false);
+  });
+
   test('literal documents retain the exact SPEC field sets and object closure', () => {
     const byKey = new Map(SYSTEM_SCHEMA_SEEDS.map((seed) => [
       `${seed.schemaKey}@${seed.schemaVersion}`,

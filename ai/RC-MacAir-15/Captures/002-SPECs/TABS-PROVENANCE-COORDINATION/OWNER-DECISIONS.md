@@ -1,6 +1,6 @@
 # Owner Decisions and Open Rulings
 
-**Updated:** 2026-09-04  
+**Updated:** 2026-09-12  
 **Purpose:** record cross-lane direction without rewriting owning SPECs
 
 ## Active owner direction
@@ -32,7 +32,7 @@
 |---|---|---|---|---|
 | TPC-O01 | Should Composable Chat remain the first production consumer after the generic host, or should Wiki become the first tab-native view? | TPC-D12 removes Chat from first-consumer consideration. Exact ordering among Wiki, File Explorer, Capture, and other tab adopters is tracked separately from this superseded binary question. | VIEW-WIKI / CHAT-01 execution order | superseded by TPC-D12 |
 | TPC-O02 | Is `centered` formally derived layout while `home|content` are component presentation roles and `empty` is lifecycle state? | TPC-D10 records the accepted historical implementation; TPC-D11 removes Home/Content roles, derives single/tabbed identity from tab count, and retains Empty as lifecycle state. | TABS-02 / TABS-02A | superseded by TPC-D11 |
-| TPC-O03 | Which tab/placement/navigation events require durable ledger history, versus remaining transient UI state? | Prevents high-volume focus/reorder events from overwhelming meaningful resource and action provenance. | BRIDGE-01 | open |
+| TPC-O03 | Which tab/placement/navigation events require durable ledger history, versus remaining transient UI state? | Prevents high-volume focus/reorder events from overwhelming meaningful resource and action provenance. | BRIDGE-01 | settled 2026-09-12 — see `../TABS-PROVENANCE-BRIDGE/DECISIONS.md` BRG-D03: T1 mutations + T2 action context durable; T3 ambient bus-only, not retained; bus and ledger are independent |
 | TPC-O04 | What is the first bounded registration/permission package that satisfies the Provenance gate for declarative view conversion? | Agent Tool Provenance intentionally does not deliver component trust, consent, or dynamic registration. | PROV-02 and every declarative VIEW-* package | open |
 | TPC-O05 | Which exact first-party adoption packages must be accepted before the owner considers the Tab Platform complete and releases Chat? | TPC-D12 fixes the ordering boundary but does not yet enumerate whether Wiki, File Explorer, Capture, or additional configured-view work is inside that milestone. | Pre-CHAT-01 acceptance gate | open |
 

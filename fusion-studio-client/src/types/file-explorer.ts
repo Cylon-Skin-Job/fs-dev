@@ -225,6 +225,26 @@ export interface LegacyFileSaveRequest {
   milestone?: string;
 }
 
+/**
+ * Canonical UI action context for a mediated save (BRIDGE-01 SPEC-01 §4).
+ *
+ * `workspaceId`/`viewId` are required on the canonical object but remain
+ * server-authoritative by derivation/validation; the renderer value is
+ * comparison evidence only. The tab/component/presenter/target fields are
+ * present only when the initiating tab is component-backed — absence is a
+ * valid state and no value is invented (SPEC-01 §4 rule 2).
+ */
+export type ComponentActionContext = {
+  workspaceId: string;
+  viewId: string;
+  viewInstanceId?: string;
+  tabId?: string;
+  componentTypeId?: string;
+  componentInstanceId?: string;
+  presenterId?: string;
+  targetKey?: string;
+};
+
 interface FileSaveRequestBaseV1 {
   type: 'file_save';
   version: 1;
@@ -235,10 +255,13 @@ interface FileSaveRequestBaseV1 {
   path: string;
   content: string;
   clientActionId?: string;
-  reportedUiContext?: {
-    viewId?: string;
-    viewInstanceId?: string;
-  };
+  /**
+   * Renderer snapshot of the initiating UI context (SPEC-01 §6.1). Every field
+   * is optional on the wire for backward compatibility; the client emits only
+   * trustworthy fields. This reuses the existing `reportedUiContext`
+   * vocabulary — no second UI context field is introduced.
+   */
+  reportedUiContext?: Partial<ComponentActionContext>;
 }
 
 export type FileSaveRequestV1 = FileSaveRequestBaseV1 & (
@@ -274,7 +297,17 @@ export interface ResourceProvenanceItemV1 {
   mutationKind: 'create' | 'modify';
   canonicalPath: string;
   ingress: { panel: string; path: string };
-  origin: { kind: 'local_client'; assurance: 'transport_only'; connectionId: string };
+  origin: {
+    kind: 'local_client';
+    assurance: 'transport_only';
+    connectionId: string;
+    /**
+     * BRIDGE-01 SPEC-01 §6.3 — the durable fact echoes the validated
+     * `ComponentActionContext` snapshot when the save carried one. Optional:
+     * saves without an available context omit it entirely.
+     */
+    reportedUiContext?: ComponentActionContext;
+  };
   snapshot:
     | { kind: 'bytes'; sha256: string; byteLength: number; capturedAt: number }
     | { kind: 'absent'; byteLength: 0; capturedAt: number };

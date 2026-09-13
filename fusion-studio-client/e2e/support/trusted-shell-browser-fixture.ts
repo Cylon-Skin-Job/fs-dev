@@ -157,6 +157,19 @@ export async function installTrustedShellBrowserFixture(context: BrowserContext)
           proof: 'P'.repeat(43),
         }),
         setWorkspaceRoot: () => {},
+        // The renderer now gates workspace exposure on the Electron-owned
+        // binding/view-capsule registry before it commits panel configs.
+        // Emulate the accepted registry surface (bind/install/clear) for the
+        // fixture generation only; every other generation fails closed.
+        setWorkspaceBinding: async (
+          _workspaceId: string | null,
+          _bindingRevision: number,
+          generation: string,
+        ) => generation === descriptor.generation,
+        replaceViewCapsuleProjection: async (
+          _projection: unknown,
+          generation: string,
+        ) => generation === descriptor.generation,
       }),
     });
   });

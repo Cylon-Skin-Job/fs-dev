@@ -48,6 +48,57 @@ export function isFileConnectedActive(): boolean {
 
 let requestSequence = 0;
 
+/** One component-backed active tab's still-live identity (SPEC-01 §5). */
+export interface ActiveFileConnectedTabComponent {
+  tabId: string;
+  componentTypeId: string;
+  componentInstanceId: string;
+  presenterId: string;
+  targetKey?: string;
+}
+
+/** Read-only view of the active connected File owner's live tab context. */
+export interface ActiveFileConnectedTabContext {
+  workspaceId: string;
+  viewId: string;
+  activeTabId: string | null;
+  activeComponent: ActiveFileConnectedTabComponent | null;
+}
+
+/**
+ * BRIDGE-01 SPEC-01 §5 read-only accessor: a fresh translation of the active
+ * connected File owner's current state, used by the mediated-save context
+ * adapter. It exposes no runtime and mutates nothing. Returns null when no
+ * runtime is registered. Values are raw owner reads; the adapter owns the
+ * fixed caps and fail-open omission.
+ */
+export function readActiveFileConnectedTabContext(): ActiveFileConnectedTabContext | null {
+  if (!activeRuntime || activeWorkspaceId === null) return null;
+  const collection = activeRuntime.readCollection();
+  const activeTab = collection.activeTabId === null
+    ? undefined
+    : collection.tabs.find((tab) => tab.tabId === collection.activeTabId);
+  let activeComponent: ActiveFileConnectedTabComponent | null = null;
+  if (activeTab && activeTab.content.kind === 'component') {
+    const descriptor = activeTab.content.component;
+    activeComponent = {
+      tabId: activeTab.tabId,
+      componentTypeId: descriptor.componentTypeId,
+      componentInstanceId: descriptor.componentInstanceId,
+      // File presenter IDs are code-owned and equal their component type IDs
+      // (fileConnectedPresenterTargets), matching the accepted describer.
+      presenterId: descriptor.componentTypeId,
+      ...(typeof descriptor.targetKey === 'string' ? { targetKey: descriptor.targetKey } : {}),
+    };
+  }
+  return {
+    workspaceId: activeWorkspaceId,
+    viewId: activeRuntime.viewId,
+    activeTabId: collection.activeTabId,
+    activeComponent,
+  };
+}
+
 /**
  * Routes one file open through TABS-03 from the connected owner's serialized
  * lane. Returns false when the connected path is not active, so the caller can

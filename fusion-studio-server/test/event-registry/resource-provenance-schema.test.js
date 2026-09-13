@@ -60,4 +60,22 @@ describe('resource:provenance@1 locked schema', () => {
     ];
     for (const value of invalid) expect(validate(value).valid).toBe(false);
   });
+
+  test('accepts the extended context echo and rejects an unknown context field', () => {
+    const base = {
+      type: 'resource:provenance:result', version: 1, requestId: 'request-1',
+      workspaceId: 'workspace-1', workspaceEpoch: id(7),
+    };
+    const withContext = item({ kind: 'absent', byteLength: 0, capturedAt: 9 });
+    withContext.origin.reportedUiContext = {
+      workspaceId: 'workspace-1', viewId: 'file-viewer', tabId: 'tab-1',
+      componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+      presenterId: 'markdown', targetKey: 'docs/a.md',
+    };
+    expect(validate({ ...base, items: [withContext] }).valid).toBe(true);
+    expect(validate({
+      ...base,
+      items: [{ ...withContext, origin: { ...withContext.origin, reportedUiContext: { ...withContext.origin.reportedUiContext, secret: true } } }],
+    }).valid).toBe(false);
+  });
 });

@@ -38,14 +38,21 @@
       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "boundedTargetKey": { "type": "string", "minLength": 1, "maxLength": 512 },
     "path": { "type": "string", "minLength": 1, "maxLength": 4096 },
     "timestamp": { "type": "integer", "minimum": 0 },
     "reportedUiContext": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
         "viewId": { "$ref": "#/$defs/boundedId" },
-        "viewInstanceId": { "$ref": "#/$defs/boundedId" }
+        "viewInstanceId": { "$ref": "#/$defs/boundedId" },
+        "tabId": { "$ref": "#/$defs/boundedId" },
+        "componentTypeId": { "$ref": "#/$defs/boundedId" },
+        "componentInstanceId": { "$ref": "#/$defs/boundedId" },
+        "presenterId": { "$ref": "#/$defs/boundedId" },
+        "targetKey": { "$ref": "#/$defs/boundedTargetKey" }
       }
     },
     "origin": {
