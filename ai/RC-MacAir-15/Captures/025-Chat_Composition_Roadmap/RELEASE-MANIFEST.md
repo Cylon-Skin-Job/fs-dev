@@ -1,7 +1,7 @@
 # Chat Composition Roadmap — Release Manifest
 
 **Candidate ID:** `CHAT-COMPOSITION-2d34f8b45562f8f3`
-**Candidate status:** `SPEC-00 ACCEPTED — OVERLAID CANDIDATE OWNER-APPROVED; CHAT-01 DISPATCH AUTHORIZED`
+**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 (CHAT-01) ACCEPTED — SPEC-02 DISPATCH AUTHORIZED`
 **Prepared:** 2026-09-05
 **Overlay round:** 2026-09-13
 **Clean-room verdict:** `PRIOR CANDIDATE CLEAN (2026-09-05); OVERLAID CANDIDATE CLEAN (2026-09-13)`
@@ -179,6 +179,19 @@ remaining execution gates.
   (SPEC-01 Thread Group Foundation) may now dispatch through a fresh
   orchestrator; each following SPEC still requires explicit owner acceptance of
   its predecessor.
+- **SPEC-01 (CHAT-01) ACCEPTED — 2026-09-13.** Owner statement: “Accepted.
+  Let's continue.” Independent owner-side review `CLEAN` (no blocking findings,
+  no unresolved deviations) on product digest
+  `2a4ba090c7d82dc9411057a3495f23b7c10201db3bddf0beb0014b633bae2ce0` (61 paths;
+  migration head `042`; 6 Fork-era deletions; union list `b178762b…`). Gates
+  reproduced by reviewer and owner-side: server `npx jest --runInBand` 203
+  suites / 2975 passed / 1 skipped; client build passed; isolated thread-group
+  Playwright 7 passed; source suite 65 passed; both PROV live launchers exit 0.
+  All 33 recorded deviations ratified; four advisories non-blocking. Evidence:
+  `SPEC-01-IMPLEMENTATION-REPORT.md`, `CHAT-01-EXECUTION-LEDGER.md`. **SPEC-02
+  (Composable Chat Surfaces) is now unblocked** subject to its independently
+  accepted Generic Component Tab Host prerequisite and an owner-authorized
+  dispatch; worktree commit is a separate owner call.
 
 After approval, execution may begin through either:
 

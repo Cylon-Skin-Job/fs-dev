@@ -35,8 +35,13 @@ Current file/module map for chat work.
 
 | File | Role |
 |---|---|
-| `fusion-studio-server/lib/thread/thread-crud.js` | `thread:open`, `thread:open-assistant`, create/open policy |
-| `fusion-studio-server/lib/thread/thread-runtime-controller.js` | prompt acceptance, warm/send, stop |
+| `fusion-studio-server/lib/thread/thread-crud.js` | `thread:open`, `thread:open-assistant`, create/open policy, group-joined search |
+| `fusion-studio-server/lib/thread/thread-runtime-controller.js` | prompt acceptance (activity before `message:sent`), warm/send, stop |
+| `fusion-studio-server/lib/thread-groups/service.js` | Thread Group domain: listing/open resolution, activity/MRU, canonical `thread:action` actions |
+| `fusion-studio-server/lib/thread-groups/repository.js` | pure Thread Group persistence and the atomic activity/MRU transaction |
+| `fusion-studio-server/lib/thread-groups/action-identity.js` | canonical action target hashing and durable `ChatActionContext` sanitization |
+| `fusion-studio-server/lib/thread-groups/application-link.js` | versioned group application URI build/parse with durable identities only |
+| `fusion-studio-server/lib/thread-groups/group-mutation-lease.js` | per-group exclusive mutation serialization |
 | `fusion-studio-server/lib/thread/thread-runtime-manager.js` | runtime state and live turn ownership |
 | `fusion-studio-server/lib/thread/thread-lifecycle-controller.js` | exact workspace/thread/turn lifecycle state and idle timers |
 | `fusion-studio-server/lib/thread/live-turn-snapshot.js` | in-memory live turn snapshot |
@@ -102,7 +107,8 @@ Current file/module map for chat work.
 | `fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx` | explicit View/Copy/Ask AI diagnostic controls |
 | `fusion-studio-client/src/components/InstantSegmentRenderer.tsx` | completed history render |
 | `fusion-studio-client/src/components/ToolCallBlock.tsx` | shared tool shell |
-| `fusion-studio-client/src/lib/ws/thread-handlers.ts` | thread list/open/hydration handlers |
+| `fusion-studio-client/src/lib/ws/thread-handlers.ts` | thread list/open/hydration handlers plus acknowledged `thread:action` results (link/Markdown) |
+| `fusion-studio-client/src/lib/ws/threadGroupRows.ts` | group projection → row mapping and canonical `thread:action` intent builders |
 | `fusion-studio-client/src/lib/ws/stream-handlers.ts` | live stream event routing |
 | `fusion-studio-client/src/lib/ws/activity-stream-handler.ts` | seen-ledger/revision-gated Working transitions and snapshot restoration |
 | `fusion-studio-client/src/lib/ws/frontier.ts` | per-thread/turn snapshot/live stream frontier |

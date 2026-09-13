@@ -156,6 +156,9 @@ describe('public prompt route with canonical drain ownership', () => {
       syncChatlogMirrorFromHistory: jest.fn(async () => ({})),
       index: { touch: jest.fn(async () => ({})) },
       listThreads: jest.fn(async () => []),
+      // SPEC-01 §5.4: prompt acceptance records the group activity before
+      // message:sent. Production managers always own the Thread Group service.
+      threadGroups: { recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
     };
     // One stable per-ws state object: the controller mutates state.threadId.
     const wsState = {

@@ -73,13 +73,9 @@ export function createSecondarySlice(set: Set, get: Get) {
           threadId: null,
         },
       });
-      // Bump the primary's MRU on the server so the thread list re-sorts
-      // with primary on top — opening the secondary had bumped *its* updated_at.
-      const ws = s.ws;
-      const primaryId = s.currentThreadId;
-      if (primaryId && ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'thread:touch', threadId: primaryId }));
-      }
+      // Closing a Side Chat is presentation-only. Group `updated_at` is the
+      // sole visible-list MRU owner and only creation plus accepted prompts
+      // advance it, so no client touch/MRU write is sent (`SPEC-01 §5.4/§7`).
     },
 
     minimizeSecondary: () => set((s) => {

@@ -5,14 +5,18 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { usePanelStore } from '../../state/panelStore';
-import { loadFileContent } from '../../lib/file-tree';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
-import { threadLinkIntent } from '../../lib/thread-link-intent';
-import { showToast } from '../../lib/toast';
 import { useResolvedHarnessResolver, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { reorderWithSecondary } from './threadOrderUtils';
 import { useThreadAnimation } from './useThreadAnimation';
+import {
+  threadActionCopyLink,
+  threadActionDelete,
+  threadActionRename,
+  threadActionViewMarkdown,
+  threadOpenRequest,
+} from '../../lib/ws/threadGroupRows';
 
 export interface UseSidebarOptions {
   panel: string;
@@ -54,48 +58,11 @@ export function useSidebar({ panel }: UseSidebarOptions) {
 
   useEffect(() => {
     if (ws?.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:list' }));
+      // The current rail is the workspace Legacy host: query the explicit
+      // null-view population rather than relying on an active-panel fallback.
+      ws.send(JSON.stringify({ type: 'thread:list', viewId: null }));
     }
   }, [ws, panel]);
-
-  useEffect(() => {
-    if (!ws) return;
-
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const msg = JSON.parse(event.data);
-        if (msg.type === 'thread:link') {
-          if (!msg.filePath) return;
-          const intent = threadLinkIntent.consume();
-          if (intent === 'view') {
-            const aiIdx = msg.filePath.indexOf('ai/');
-            const relPath = aiIdx >= 0 ? msg.filePath.slice(aiIdx) : msg.filePath;
-            const store = usePanelStore.getState();
-            store.setCurrentPanel('file-viewer');
-            const name = relPath.split('/').pop() || relPath;
-            loadFileContent({
-              path: relPath,
-              name,
-              type: 'file',
-              extension: 'md',
-            });
-          } else {
-            navigator.clipboard.writeText(msg.filePath).then(() => {
-              console.log('[Sidebar] Copied link to clipboard:', msg.filePath);
-              showToast('Thread link copied');
-            }).catch((err) => {
-              console.error('[Sidebar] Failed to copy link:', err);
-            });
-          }
-        }
-      } catch {
-        // Ignore non-JSON messages
-      }
-    };
-
-    ws.addEventListener('message', handleMessage);
-    return () => ws.removeEventListener('message', handleMessage);
-  }, [ws]);
 
   const sendMessage = useCallback((msg: object) => {
     console.log('[Sidebar] Sending:', msg, 'WS state:', ws?.readyState);
@@ -118,8 +85,10 @@ export function useSidebar({ panel }: UseSidebarOptions) {
     selectHarness(harnessId, modelId);
   }, [selectHarness]);
 
-  const handleOpenThread = useCallback((threadId: string) => {
-    sendMessage({ type: 'thread:open', threadId });
+  const handleOpenThread = useCallback((threadId: string, threadGroupId?: string) => {
+    // Rows are groups: open by the visible-row identity when available; the
+    // server resolves the authoritative current primary.
+    sendMessage(threadOpenRequest(threadGroupId, threadId));
   }, [sendMessage]);
 
   const handleRenameStart = useCallback((threadId: string, currentName: string) => {
@@ -129,15 +98,18 @@ export function useSidebar({ panel }: UseSidebarOptions) {
 
   const handleRenameSubmit = useCallback((threadId: string) => {
     if (renameValue.trim()) {
-      sendMessage({
-        type: 'thread:rename',
+      const thread = threads.find((candidate) => candidate.threadId === threadId);
+      // Canonical group action with a durable retry identity. The server owns
+      // the title change and acknowledges; no optimistic local rename.
+      sendMessage(threadActionRename({
+        threadGroupId: thread?.threadGroupId,
         threadId,
         name: renameValue.trim(),
-      });
+      }));
     }
     setRenamingId(null);
     setRenameValue('');
-  }, [renameValue, sendMessage]);
+  }, [renameValue, sendMessage, threads]);
 
   const handleRenameCancel = useCallback(() => {
     setRenamingId(null);
@@ -146,18 +118,33 @@ export function useSidebar({ panel }: UseSidebarOptions) {
 
   const handleDeleteThread = useCallback((threadId: string) => {
     if (confirm('Delete this conversation?')) {
-      sendMessage({ type: 'thread:delete', threadId });
+      const thread = threads.find((candidate) => candidate.threadId === threadId);
+      sendMessage(threadActionDelete({
+        threadGroupId: thread?.threadGroupId,
+        threadId,
+      }));
     }
-  }, [sendMessage]);
+  }, [sendMessage, threads]);
 
   const handleCopyLink = useCallback((threadId: string) => {
-    sendMessage({ type: 'thread:copyLink', threadId });
-  }, [sendMessage]);
+    const thread = threads.find((candidate) => candidate.threadId === threadId);
+    // Canonical group action; the server returns the versioned URI and the
+    // shared thread:action:completed handler copies the acknowledged value.
+    sendMessage(threadActionCopyLink({
+      threadGroupId: thread?.threadGroupId,
+      threadId,
+    }));
+  }, [sendMessage, threads]);
 
   const handleViewMarkdown = useCallback((threadId: string) => {
-    threadLinkIntent.set('view');
-    sendMessage({ type: 'thread:copyLink', threadId });
-  }, [sendMessage]);
+    const thread = threads.find((candidate) => candidate.threadId === threadId);
+    // Canonical exact-member action; the server returns the validated mirror
+    // path and the shared handler opens it in the File Viewer.
+    sendMessage(threadActionViewMarkdown({
+      threadGroupId: thread?.threadGroupId,
+      threadId,
+    }));
+  }, [sendMessage, threads]);
 
   const isActive = chatActive;
   const headerLabel = 'Project';

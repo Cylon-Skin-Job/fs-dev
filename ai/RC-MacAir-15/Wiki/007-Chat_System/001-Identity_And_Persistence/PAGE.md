@@ -14,6 +14,8 @@ metadata:
     - fusion-studio-server/lib/thread/ChatFile.js
     - fusion-studio-server/lib/thread/HistoryFile.js
     - fusion-studio-server/lib/thread/ThreadIndex.js
+    - fusion-studio-server/lib/thread-groups/service.js
+    - fusion-studio-server/lib/thread-groups/repository.js
     - fusion-studio-server/lib/db/migrations/001_initial.js
     - fusion-studio-client/src/types/index.ts
   connected-skills: []
@@ -27,11 +29,42 @@ or mutate a chat turn.
 
 | Identity | Owner | Purpose |
 |---|---|---|
+| `workspaceId` | workspace registry | Durable workspace owner; never a path or basename |
+| `viewId` | view registry | Immutable view binding; `null` only for Legacy |
+| `threadGroupId` | Thread Group domain | Visible Thread/body of work and visible-list MRU owner |
 | `threadId` | Fusion Studio | Durable conversation and live stream routing |
 | `turnId` | Fusion Studio runtime/client state | In-flight turn correlation before SQLite save is known |
 | `exchangeId` | SQLite `exchanges.id` | Saved chat pair id; this is the Chat ID shown in turn chrome |
 | `seq` | SQLite per-thread sequence | Stable ordering within a thread |
 | Harness session id | Harness adapter/provider | Adapter detail; not user-facing chat identity |
+
+`threadGroupId` and `threadId` are different types even when migration assigns
+the same legacy string to both. Live frames, Stop, exchanges, provider state,
+and Agent Tool Provenance continue to use `threadId`/`turnId`; they are never
+rekeyed to group identity. No identity is reconstructed from another's string,
+title, folder name, panel selection, or current global chat.
+
+## Thread Group Activity And Visible-List MRU
+
+The group owns its `updated_at`, the sole visible-list MRU clock. Permanently,
+only two causes advance it: group creation (`initial` activity) and an accepted
+user prompt. Each cause inserts one durable activity row and advances
+`updated_at` in one transaction:
+
+- `initial:{threadGroupId}` with `kind='initial'`; and
+- `prompt:{threadId}:{turnId}` with `kind='prompt-accepted'`.
+
+The activity insert is idempotent on `event_key`, so a retry of the same
+thread/turn never advances MRU twice. Open, warm, provider completion, Stop,
+Rename, view navigation, and Side Chat close never advance the clock. The
+visible population is ordered `updated_at DESC, group_id ASC`, so equal clocks
+remain deterministic.
+
+Prompt acceptance records the `prompt-accepted` activity before `message:sent`
+or provider dispatch, using the immutable workspace/thread/turn authority
+accepted by Provenance. It never re-reads the current panel to retarget the
+turn, and a failed activity persist rejects the prompt through the normal
+acceptance path (`SPEC-01 §5.4/§7`).
 
 ## Persistence Rule
 

@@ -85,6 +85,32 @@ class ThreadRuntimeManager {
   }
 
   /**
+   * Terminalize and remove every runtime generation owned by one resource
+   * `{workspaceId, projectRoot, threadId}` for a committed group deletion.
+   * Callers must already have proven the resource terminal (no active drain,
+   * warmup, in-flight, or stopping generation) and retired provider delivery.
+   * Removing the records is the fence: late event frames compare-current
+   * against a missing record and are dropped, and the mutation APIs never
+   * recreate a record for an already-fenced identity.
+   *
+   * @param {object} key - structured thread runtime key (epoch ignored)
+   * @returns {number} number of runtime generations removed
+   */
+  fenceResource(key) {
+    const matches = this._resourceRuntimes(key);
+    for (const [serializedKey, runtime] of matches) {
+      runtime.state = RUNTIME_STATES.STOPPING;
+      runtime.activeDrain = null;
+      runtime.warmPromise = null;
+      runtime.liveTurn = null;
+      runtime.liveToolArgs.clear();
+      runtime.updatedAt = Date.now();
+      this.runtimes.delete(serializedKey);
+    }
+    return matches.length;
+  }
+
+  /**
    * Move an idle/ready provider runtime to a replacement connection epoch.
    * Busy drains and warmups remain immutably owned by their accepting epoch.
    */

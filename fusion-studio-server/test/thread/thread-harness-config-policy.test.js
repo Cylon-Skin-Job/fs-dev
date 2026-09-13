@@ -46,23 +46,25 @@ test('prompt selection configuration rejects provider-session, credential, and u
   }
 });
 
-test('stored Fork state is inert while ordinary exact OpenCode session resume remains supported', () => {
+test('ordinary exact OpenCode session resume remains supported after Fork removal', () => {
   expect(sanitizeRuntimeHarnessConfig('opencode', {
     model: 'm', opencodeSessionId: 'ordinary-session',
   })).toEqual({ model: 'm', opencodeSessionId: 'ordinary-session' });
   expect(sanitizeRuntimeHarnessConfig('opencode', {
+    model: 'm', variant: null, opencodeSessionId: 'ordinary-session',
+  })).toEqual({ model: 'm', variant: null, opencodeSessionId: 'ordinary-session' });
+  // Fork-era markers are no longer part of the harness contract; unknown fields
+  // are dropped and stored fork-era sessions are retired by migration 041.
+  expect(sanitizeRuntimeHarnessConfig('opencode', {
     model: 'm',
-    opencodeSessionId: 'forked-session',
+    opencodeSessionId: 'ordinary-session',
     pendingFork: { sourceOpenCodeSessionId: 'source-session' },
     forkProvenance: { status: 'created' },
     apiKey: 'secret',
-  })).toEqual({ model: 'm' });
-  expect(sanitizeRuntimeHarnessConfig('opencode', {
-    model: 'm', variant: null, opencodeSessionId: 'ordinary-session',
-  })).toEqual({ model: 'm', variant: null, opencodeSessionId: 'ordinary-session' });
+  })).toEqual({ model: 'm', opencodeSessionId: 'ordinary-session' });
 });
 
-test('provider-owned updates purge legacy Fork state instead of merging it forward', () => {
+test('provider-owned updates drop unknown legacy fields instead of merging them forward', () => {
   expect(mergeRuntimeHarnessConfig('opencode', {
     variant: 'high', pendingFork: { sourceOpenCodeSessionId: 'source-session' },
   }, { opencodeSessionId: 'new-session' })).toEqual({

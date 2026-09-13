@@ -6,9 +6,11 @@
  * Returns a handler map keyed by message type. The router dispatches
  * any clientMsg.type that starts with 'thread:' through this map.
  *
- * Owns the wire-spawn sequence for thread:open-assistant. Thin
- * delegations to ThreadWebSocketHandler for rename/delete/copyLink/
- * touch/search/list.
+ * Owns the wire-spawn sequence for thread:open-assistant. Thin delegations to
+ * ThreadWebSocketHandler for list/search, plus the canonical `thread:action`
+ * route (rename/delete/copy_link/resolve_link/view_markdown/
+ * set_harness_selection). The raw `thread:copyLink` and `thread:touch` routes
+ * were removed with no aliases (slices 01B/01C).
  */
 
 const {
@@ -35,15 +37,101 @@ const {
   runWorkspaceOperation,
 } = require('./workspace-operation-lease');
 
+function boundedActionError(code) {
+  switch (code) {
+    case 'group_busy': return 'Thread has an active conversation';
+    case 'request_mismatch': return 'Request reused with different input';
+    case 'not_found': return 'Thread not found';
+    case 'invalid_name': return 'Thread name is invalid';
+    case 'invalid_action': return 'Unsupported thread action';
+    case 'invalid_link': return 'Thread link is invalid';
+    case 'invalid_selection': return 'Model selection is not available';
+    case 'selection_unavailable': return 'Model selection is not available';
+    case 'request_invalid': return 'Action requires a bounded requestId';
+    case 'view_id_preflight_repair_required': return 'View identity repair required';
+    default: return 'Thread action failed';
+  }
+}
+
+function buildActionErrorFrame(clientMsg, code) {
+  return {
+    type: 'thread:action:error',
+    requestId: typeof clientMsg?.requestId === 'string' ? clientMsg.requestId : null,
+    action: clientMsg?.action ?? null,
+    threadGroupId: clientMsg?.threadGroupId ?? null,
+    ...(clientMsg?.threadId ? { threadId: clientMsg.threadId } : {}),
+    code,
+    message: boundedActionError(code),
+  };
+}
+
+/**
+ * One canonical completion envelope. Durable identities only; `surfaceId` is
+ * never built, persisted, echoed, or fanned out (`BRIDGE-02` §4.2/§4.5).
+ */
+function buildActionCompletedFrame(outcome, { requestId, action, fanOut = false }) {
+  const result = outcome?.result || {};
+  return {
+    type: 'thread:action:completed',
+    requestId,
+    action,
+    threadGroupId: result.threadGroupId ?? null,
+    threadId: result.threadId ?? null,
+    workspaceId: result.workspaceId ?? null,
+    viewId: result.viewId ?? null,
+    context: result.context ?? null,
+    ...(fanOut ? { fanOut: true } : {}),
+    ...(action === 'rename' ? { name: result.name ?? null } : {}),
+    ...(action === 'delete'
+      ? {
+        deleted: true,
+        recovered: Boolean(outcome?.recovered || result.recovered),
+        replayed: Boolean(outcome?.replayed || result.replayed),
+        cleanup: result.cleanup ?? null,
+        members: result.members ?? [],
+      }
+      : {}),
+    ...(action === 'copy_link'
+      ? { link: result.link ?? null }
+      : {}),
+    ...(action === 'resolve_link'
+      ? { resolved: true }
+      : {}),
+    ...(action === 'view_markdown'
+      ? { markdownPath: result.markdownPath ?? null }
+      : {}),
+    ...(action === 'set_harness_selection'
+      ? {
+        harnessId: result.harnessId ?? null,
+        model: result.model ?? null,
+        variant: result.variant ?? null,
+      }
+      : {}),
+  };
+}
+
+/** Canonical durable `thread:action` names owned by this route. */
+const DURABLE_THREAD_ACTIONS = Object.freeze(new Set([
+  'rename',
+  'delete',
+  'copy_link',
+  'resolve_link',
+  'view_markdown',
+  'set_harness_selection',
+]));
+
 /**
  * @param {object} deps
  * @param {import('ws').WebSocket} deps.ws
  * @param {object} deps.session
  * @param {{ awaitHarnessReady: Function, initializeWire: Function, setupWireHandlers: Function }} deps.wireLifecycle
  * @param {string} deps.projectRoot
+ * @param {Function} [deps.getWorkspaceRecipients] - other-window delivery provider
  * @returns {Record<string, (msg: object) => Promise<void>>}
  */
-function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
+function createThreadWsHandlers({
+  ws, session, wireLifecycle, projectRoot, getWorkspaceRecipients = () => [],
+}) {
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
 
   const currentBinding = () => {
@@ -225,28 +313,110 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       });
     },
 
-    async 'thread:rename'(clientMsg) {
+    async 'thread:action'(clientMsg = {}) {
+      // Durable group mutations require the accepted trusted-shell role in
+      // addition to server-derived workspace and validated group ownership.
       if (!requireTrustedThreadAuthority(ws, session)) return;
+      const action = clientMsg.action;
+      const requestId = clientMsg.requestId;
+      if (!DURABLE_THREAD_ACTIONS.has(action)) {
+        ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'invalid_action')));
+        return;
+      }
+      if (typeof requestId !== 'string' || !requestId
+        || Buffer.byteLength(requestId, 'utf8') > 128) {
+        ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'request_invalid')));
+        return;
+      }
       const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadRename(ws, clientMsg));
-    },
+      if (!binding) {
+        denyThreadMutation(ws);
+        return;
+      }
+      await runBoundMutation(binding, async () => {
+        const service = binding.state.threadManager?.threadGroups;
+        if (!service || typeof service.performAction !== 'function') {
+          ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'action_unavailable')));
+          return;
+        }
+        let outcome;
+        try {
+          outcome = await service.performAction(action, {
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            threadId: clientMsg.threadId ?? null,
+            name: clientMsg.name,
+            uri: clientMsg.uri ?? null,
+            model: clientMsg.model ?? null,
+            variant: clientMsg.variant === undefined ? null : clientMsg.variant,
+            requestId,
+            componentContext: clientMsg.context ?? null,
+            workspaceEpoch: binding.workspaceEpoch,
+          });
+        } catch (_error) {
+          ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'action_failed')));
+          return;
+        }
+        if (!outcome?.ok) {
+          ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, outcome?.code || 'action_failed')));
+          return;
+        }
 
-    async 'thread:delete'(clientMsg) {
-      if (!requireTrustedThreadAuthority(ws, session)) return;
-      const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadDelete(ws, clientMsg));
-    },
+        // Resolve Link opens Main Chat: the authoritative current primary is
+        // hydrated through the canonical open path only on the original,
+        // committed invocation (never on a replay). Legacy opens its explicit
+        // null-view host through the same path.
+        if (action === 'resolve_link' && !outcome.replayed) {
+          try {
+            await ThreadWebSocketHandler.handleThreadOpen(ws, {
+              threadGroupId: outcome.result?.threadGroupId ?? clientMsg.threadGroupId ?? null,
+              threadId: outcome.result?.threadId ?? null,
+            });
+          } catch (_error) {
+            // The resolve result is already durable; a failed open is a
+            // requester-side read failure, not a mutation rollback.
+          }
+        }
 
-    async 'thread:copyLink'(clientMsg) {
-      const binding = currentBinding();
-      await runBoundRead(binding, () => ThreadWebSocketHandler.handleThreadCopyLink(ws, clientMsg));
+        // Requester acknowledgement, then each other workspace window, then
+        // any optional fact — separately failure-isolated so one failed
+        // recipient cannot block another or rewrite the command result.
+        try {
+          ws.send(JSON.stringify(buildActionCompletedFrame(outcome, { requestId, action })));
+        } catch (_error) {
+          // The command is already committed; a dead requester socket cannot
+          // roll it back or block peer delivery.
+        }
+        const fanOutFrame = buildActionCompletedFrame(outcome, {
+          requestId, action, fanOut: true,
+        });
+        let recipients = [];
+        try {
+          recipients = getWorkspaceRecipients({
+            workspaceId: binding.workspaceId,
+            projectRoot: binding.projectRoot,
+            workspaceEpoch: binding.workspaceEpoch,
+            excludeWs: ws,
+          }) || [];
+        } catch (_error) {
+          recipients = [];
+        }
+        for (const recipient of recipients) {
+          try {
+            if (recipient?.ws && recipient.ws !== ws) {
+              recipient.ws.send(JSON.stringify(fanOutFrame));
+            }
+          } catch (_error) {
+            // A failed recipient cannot block another delivery.
+          }
+        }
+      });
     },
 
     async 'thread:fork'() {
-      // Fork is not a trusted capability. Keep the baseline public symbol
-      // bounded and inert until SPEC-01 removes the remaining stale surfaces.
+      // SPEC-00 owns the unconditional unavailability of Fork. Thread Group
+      // Foundation removes every Fork capability, composer, service, config,
+      // and provider argument while this accepted denial remains the sole
+      // bounded response and never reaches a service effect.
       denyThreadFork(ws);
     },
 
@@ -267,13 +437,6 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       }));
     },
 
-    async 'thread:touch'(clientMsg) {
-      if (!requireTrustedThreadAuthority(ws, session)) return;
-      const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadTouch(ws, clientMsg));
-    },
-
     async 'thread:search'(clientMsg) {
       const binding = currentBinding();
       if (!binding) {
@@ -291,9 +454,24 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       }));
     },
 
-    async 'thread:list'() {
+    async 'thread:list'(clientMsg = {}) {
       const binding = currentBinding();
-      await runBoundRead(binding, () => ThreadWebSocketHandler.sendThreadList(ws));
+      await runBoundRead(binding, () => {
+        let viewId = null;
+        if (clientMsg.viewId !== undefined && clientMsg.viewId !== null) {
+          const target = binding?.state?.threadManager?.threadGroups?.resolveViewTarget(clientMsg.viewId);
+          if (!target || !target.ok) {
+            ws.send(JSON.stringify({
+              type: 'error',
+              code: 'view_not_found',
+              message: 'Requested view is not available',
+            }));
+            return;
+          }
+          viewId = target.viewId;
+        }
+        return ThreadWebSocketHandler.sendThreadList(ws, viewId);
+      });
     },
   };
 }

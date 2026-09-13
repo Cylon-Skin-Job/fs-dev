@@ -2,8 +2,10 @@
  * Thread CRUD Handlers
  *
  * Extracted from ThreadWebSocketHandler.js — exposes handleThreadOpenAssistant
- * (the unified create-or-resume dispatcher), handleThreadRename,
- * handleThreadDelete, and handleThreadCopyLink.
+ * (the unified create-or-resume dispatcher) and handleThreadSearch. Group
+ * Rename/Delete/Copy Link/View Markdown moved to the canonical `thread:action`
+ * route (slices 01B/01C); the raw `thread:copyLink` route and the obsolete
+ * `thread:touch` MRU bump were removed with no aliases.
  *
  * handleThreadCreate and handleThreadOpen remain as private helpers inside
  * the factory, called only by handleThreadOpenAssistant. They are not
@@ -23,7 +25,6 @@
  * @param {object} deps
  * @param {Map} deps.wsState - Per-WS state map (shared with coordinator)
  * @param {Function} deps.sendThreadList - Send thread list to client
- * @param {Function} deps.deleteThreadSession - Serialized durable delete owner
  * @param {Map} deps.pendingReorderTimers - Pending reorder timers (shared with coordinator)
  * @param {number} deps.REORDER_DELAY_MS - Delay for thread list refresh
  */
@@ -41,10 +42,36 @@ function getRuntimeKey(manager, threadId, workspaceEpoch) {
   };
 }
 
+/**
+ * Resolve a visible open/rename/delete target through the Thread Group service.
+ *
+ * Production ThreadManagers always own `threadGroups`; the fallback only keeps
+ * direct handler fixtures that inject a minimal manager working. It is a test
+ * adapter, not a production bypass: the real service verifies group membership.
+ */
+async function resolveVisibleTarget(manager, { threadGroupId = null, threadId = null } = {}) {
+  const service = manager.threadGroups;
+  if (!service || typeof service.resolveOpenTarget !== 'function') {
+    if (!threadId) return { ok: true, target: null };
+    return {
+      ok: true,
+      target: {
+        threadId,
+        projection: {
+          threadGroupId: null,
+          workspaceId: manager.workspaceId ?? null,
+          viewId: null,
+          currentPrimaryThreadId: threadId,
+        },
+      },
+    };
+  }
+  return service.resolveOpenTarget({ threadGroupId, threadId });
+}
+
 function createCrudHandlers({
   wsState,
   sendThreadList,
-  deleteThreadSession,
   pendingReorderTimers,
   REORDER_DELAY_MS,
   runDelayedThreadList = (_ws, _state, operation) => operation(),
@@ -106,23 +133,64 @@ function createCrudHandlers({
     // sortable. See generateThreadId() above for format.
     const threadId = generateThreadId();
     const name = msg.name || null;
+    const { mintThreadGroupId } = require('../thread-groups/ids');
+    // Groups and sessions receive independently minted opaque host IDs (§4).
+    const groupId = mintThreadGroupId();
 
     try {
+      // No group binding may happen before the registry-owned stable view-ID
+      // preflight succeeds (§6/CHAT-RD-013).
+      if (typeof manager.ensureGroupsActivated === 'function') {
+        const activation = await manager.ensureGroupsActivated();
+        if (!activation.ok) {
+          ws.send(JSON.stringify({
+            type: 'error',
+            code: 'view_id_preflight_repair_required',
+            message: 'View identity repair required',
+            diagnostics: activation.diagnostics || [],
+          }));
+          return null;
+        }
+      }
+
       const policy = await resolveCliPolicy(manager.projectRoot);
       if (msg.harnessId && !policy.allowedHarnesses.includes(msg.harnessId)) {
         throw new Error(`Harness '${msg.harnessId}' is not allowed by ai/<machine>/System/config/cli.json`);
       }
       const harnessId = msg.harnessId || policy.defaultHarness;
 
-      // Create thread with harness selection
+      // An optional already-resolved view target is validated through the
+      // registry; absent/valid-less → Legacy `view_id = NULL`. The target never
+      // creates a file, folder, project, view, template, or CWD binding.
+      let viewTarget = { ok: true, viewId: null };
+      if (msg.viewId !== undefined && msg.viewId !== null) {
+        viewTarget = manager.threadGroups.resolveViewTarget(msg.viewId);
+      }
+      if (!viewTarget.ok) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          code: 'view_not_found',
+          message: 'Requested view is not available',
+        }));
+        return null;
+      }
+
+      // Create thread + one-member group atomically with harness selection.
       const { threadId: createdId, entry } = await manager.createThread(threadId, name, {
         harnessId,
-        harnessConfig: msg.harnessConfig
+        harnessConfig: msg.harnessConfig,
+        groupId,
+        viewId: viewTarget.viewId,
+        requestId: msg.requestId,
+        action: msg.requestId ? 'create' : undefined,
+        targetHash: groupId,
+        actionResult: { threadGroupId: groupId, threadId },
       });
 
       ws.send(JSON.stringify({
         type: 'thread:created',
         threadId: createdId,
+        threadGroupId: groupId,
         panel: state.viewName,
         scope: 'project',
         thread: entry
@@ -132,7 +200,7 @@ function createCrudHandlers({
       await sendThreadList(ws);
 
       // Automatically open the new thread
-      await handleThreadOpen(ws, { threadId: createdId }, {
+      await handleThreadOpen(ws, { threadId: createdId, threadGroupId: groupId }, {
         recordActivationMetadata: true,
       });
 
@@ -159,18 +227,49 @@ function createCrudHandlers({
       return;
     }
 
-    const { threadId } = msg;
     const manager = state.threadManager;
     if (!manager) {
       ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
       return;
     }
 
+    // Visible-row open carries `threadGroupId`; the server resolves and returns
+    // the authoritative current primary plus both identities. An exact-member
+    // open may carry `threadId`, but membership is verified. Unknown explicit
+    // group/member IDs return not_found and never create a replacement.
+    const resolved = await resolveVisibleTarget(manager, {
+      threadGroupId: msg.threadGroupId || null,
+      threadId: msg.threadId || null,
+    });
+    if (!resolved.ok) {
+      ws.send(JSON.stringify({
+        type: 'error',
+        code: 'view_id_preflight_repair_required',
+        message: 'View identity repair required',
+        diagnostics: resolved.diagnostics || [],
+      }));
+      return null;
+    }
+    if (!resolved.target) {
+      ws.send(JSON.stringify({
+        type: 'error',
+        code: 'not_found',
+        message: `Thread not found: ${msg.threadGroupId || msg.threadId || ''}`,
+      }));
+      return null;
+    }
+    const { projection } = resolved.target;
+    const threadId = projection.currentPrimaryThreadId;
+
     // Check if thread exists
     const thread = await manager.getThread(threadId);
     if (!thread) {
-      ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${threadId}` }));
-      return;
+      ws.send(JSON.stringify({
+        type: 'error',
+        code: 'not_found',
+        message: `Thread not found: ${threadId}`,
+      }));
+      return null;
     }
 
     // If this thread is already active elsewhere, that's fine (multiple tabs can view same thread)
@@ -205,6 +304,9 @@ function createCrudHandlers({
     ws.send(JSON.stringify({
       type: 'thread:opened',
       threadId,
+      threadGroupId: projection.threadGroupId,
+      workspaceId: projection.workspaceId,
+      viewId: projection.viewId,
       panel: state.viewName,
       scope: 'project',
       thread: thread.entry,
@@ -267,6 +369,33 @@ function createCrudHandlers({
       return;
     }
 
+    // A visible-row resume carries `threadGroupId`. Unknown explicit IDs return
+    // not_found and never create a replacement.
+    if (msg.threadGroupId) {
+      const resolved = await resolveVisibleTarget(manager, {
+        threadGroupId: msg.threadGroupId,
+        threadId: msg.threadId || null,
+      });
+      if (!resolved.ok) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          code: 'view_id_preflight_repair_required',
+          message: 'View identity repair required',
+          diagnostics: resolved.diagnostics || [],
+        }));
+        return null;
+      }
+      if (!resolved.target) {
+        ws.send(JSON.stringify({ type: 'error', code: 'not_found', message: `Thread not found: ${msg.threadGroupId}` }));
+        return null;
+      }
+      return handleThreadOpen(
+        ws,
+        { threadGroupId: msg.threadGroupId, threadId: resolved.target.threadId },
+        { recordActivationMetadata: true },
+      );
+    }
+
     // Upsert: if client supplied a threadId and it exists, resume it.
     // Otherwise create a new thread.
     if (msg.threadId) {
@@ -289,159 +418,6 @@ function createCrudHandlers({
 
     // No threadId, or threadId not found → create a new thread.
     return handleThreadCreate(ws, msg);
-  }
-
-  /**
-   * Handle thread:rename message.
-   * @param {import('ws').WebSocket} ws
-   * @param {object} msg
-   * @param {string} msg.threadId
-   * @param {string} msg.name
-   */
-  async function handleThreadRename(ws, msg) {
-    const state = wsState.get(ws);
-    if (!state) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
-      return;
-    }
-
-    const manager = state.threadManager;
-    if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
-      return;
-    }
-
-    const { threadId, name } = msg;
-
-    try {
-      const result = await manager.renameThread(threadId, name);
-      if (!result) {
-        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${threadId}` }));
-        return;
-      }
-
-      ws.send(JSON.stringify({
-        type: 'thread:renamed',
-        threadId,
-        scope: 'project',
-        name
-      }));
-
-      await sendThreadList(ws);
-
-    } catch (err) {
-      console.error('[ThreadWS] Rename failed:', err);
-      ws.send(JSON.stringify({ type: 'error', message: err.message }));
-    }
-  }
-
-  /**
-   * Handle thread:delete message.
-   * @param {import('ws').WebSocket} ws
-   * @param {object} msg
-   * @param {string} msg.threadId
-   */
-  async function handleThreadDelete(ws, msg) {
-    const state = wsState.get(ws);
-    if (!state) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
-      return;
-    }
-
-    const manager = state.threadManager;
-    if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
-      return;
-    }
-
-    const { threadId } = msg;
-
-    try {
-      const deleted = await deleteThreadSession(ws, threadId);
-      if (!deleted) {
-        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${threadId}` }));
-        return;
-      }
-
-      ws.send(JSON.stringify({
-        type: 'thread:deleted',
-        threadId,
-        scope: 'project'
-      }));
-
-      await sendThreadList(ws);
-
-    } catch (err) {
-      console.error('[ThreadWS] Delete failed:', err);
-      ws.send(JSON.stringify({ type: 'error', message: err.message }));
-    }
-  }
-
-  /**
-   * Handle thread:copyLink message.
-   * @param {import('ws').WebSocket} ws
-   * @param {object} msg
-   * @param {string} msg.threadId
-   */
-  async function handleThreadCopyLink(ws, msg) {
-    const state = wsState.get(ws);
-    if (!state) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No panel set' }));
-      return;
-    }
-
-    const manager = state.threadManager;
-    if (!manager) {
-      ws.send(JSON.stringify({ type: 'error', message: 'No ThreadManager' }));
-      return;
-    }
-
-    const { threadId } = msg;
-
-    try {
-      const thread = await manager.getThread(threadId);
-      if (!thread) {
-        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${threadId}` }));
-        return;
-      }
-
-      ws.send(JSON.stringify({
-        type: 'thread:link',
-        threadId,
-        scope: 'project',
-        filePath: thread.filePath
-      }));
-
-    } catch (err) {
-      console.error('[ThreadWS] Copy link failed:', err);
-      ws.send(JSON.stringify({ type: 'error', message: err.message }));
-    }
-  }
-
-  /**
-   * Handle thread:touch — bump the thread's updated_at (MRU sort key) and
-   * re-broadcast the thread list. This is a durable MRU mutation, though it
-   * has no wire or history effect. Used by the client to bump the primary thread back above a
-   * just-closed secondary thread so the primary stays on top of the list.
-   * @param {import('ws').WebSocket} ws
-   * @param {object} msg
-   * @param {string} msg.threadId
-   */
-  async function handleThreadTouch(ws, msg) {
-    const state = wsState.get(ws);
-    if (!state) return;
-    const manager = state.threadManager;
-    if (!manager) return;
-    try {
-      const touched = await manager.index.touch(msg.threadId);
-      if (!touched) {
-        ws.send(JSON.stringify({ type: 'error', message: `Thread not found: ${msg.threadId}` }));
-        return;
-      }
-      await sendThreadList(ws);
-    } catch (err) {
-      console.error('[ThreadWS] Touch failed:', err);
-    }
   }
 
   /**
@@ -494,10 +470,6 @@ function createCrudHandlers({
   return {
     handleThreadOpen,
     handleThreadOpenAssistant,
-    handleThreadRename,
-    handleThreadDelete,
-    handleThreadCopyLink,
-    handleThreadTouch,
     handleThreadSearch,
   };
 }

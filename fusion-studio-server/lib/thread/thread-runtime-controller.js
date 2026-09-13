@@ -580,6 +580,26 @@ async function acceptPromptThroughRuntime({
 
   const attachments = normalizeRouteAttachments(clientMsg.attachments);
   const harnessInput = serializeAttachmentsForHarness(clientMsg.user_input, attachments);
+
+  // SPEC-01 §5.4/§7: mint the turn identity and durably record the idempotent
+  // prompt-accepted group activity BEFORE `message:sent` or provider dispatch.
+  // The activity resolves the exact session's owning group from the immutable
+  // thread identity; it never reads the active panel to retarget the turn. A
+  // failed persist rejects the prompt through the normal acceptance path.
+  const turnId = randomUUID();
+  let activityRecorded = false;
+  try {
+    const activity = await manager.threadGroups?.recordPromptAccepted?.({ threadId, turnId });
+    activityRecorded = Boolean(activity?.ok);
+  } catch (_error) {
+    activityRecorded = false;
+  }
+  if (!activityRecorded) {
+    threadRuntimeManager.markReady(runtimeKey);
+    reportPromptAcceptanceFailure(ws, threadId);
+    return;
+  }
+
   let accepted = false;
   try {
     accepted = await ThreadWebSocketHandler.handleMessageSend(ws, {
@@ -631,7 +651,6 @@ async function acceptPromptThroughRuntime({
   }
   console.log('[WS] Message accepted by runtime and tracked in thread');
 
-  const turnId = randomUUID();
   session.pendingTurnId = turnId;
   let authorityAttempted = false;
   try {

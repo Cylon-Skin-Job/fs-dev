@@ -54,7 +54,8 @@ no wire, message, workspace, manager, or application-router owner. Authenticatio
 are transport commands, not product facts, and never enter UEB, Provenance,
 persistence, or application stores. The thread-domain guard reads only this
 private live connection role. It rejects New Chat, assistant activation/resume,
-Rename, Delete, Touch, Warm, and prompt-triggered activation before their normal owners run; request fields, model or
+Rename, Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm,
+and prompt-triggered activation before their normal owners run; request fields, model or
 harness output, persisted values, and provenance/event metadata cannot grant
 authority. Exact assistant resume is included because the activation owner writes
 resumed/MRU metadata. Passive `thread:open` only hydrates history/live state and
@@ -65,9 +66,9 @@ an explicit foreign or absent binding returns the fixed unavailable response.
 `thread:fork` is always unavailable and is not a trusted capability.
 After authority, thread identity is resolved only inside the connection's
 workspace and project scope. Foreign thread IDs cannot hydrate history or reach
-assistant upsert, Warm, prompt, Rename, Delete, Touch, mirror, or provider
-effects.
-Manager-backed passive open, list, link, and search reads likewise
+assistant upsert, Warm, prompt, Rename, Delete, Copy Link, Resolve Link, View
+Markdown, model selection, mirror, or provider effects.
+Manager-backed passive open, list, and search reads likewise
 require the manager to match the active live session root, workspace id, and
 epoch. During binding or before the new panel installs its matching manager,
 they return a fixed unavailable response without lookup, history, reclaim, or
@@ -78,7 +79,8 @@ lease rule and additionally accepts only its process-provisioned workspace,
 root, and thread identity before any fixture effect.
 Warm, prompt, and assistant-open activation also resolve the current live
 session root rather than the root captured when the socket was constructed.
-Create/resume, Rename, Delete, Touch, Warm, and prompt acceptance share one
+Create/resume, Rename, Delete, Copy Link, Resolve Link, View Markdown, model
+selection, Warm, and prompt acceptance share one
 per-connection workspace-operation lease with workspace binding. An operation
 already admitted completes its bounded persistence, response, and provider
 admission before binding begins; an operation queued after binding revalidates
@@ -256,16 +258,51 @@ key.
 
 ## Visible-thread and session actions
 
-Keep one `thread:action` command family. A group action such as
-`move_chat_to_side` carries `threadGroupId` and
-`expectedPrimaryThreadId`. A provider-backed session action such as `compact`
-carries `threadId`. The handler validates whichever identity set the action
-requires; do not create a separate `thread-group:*` transport family.
+Keep one `thread:action` command family. A group action such as `rename`,
+`delete`, or `copy_link` carries `requestId`, `threadGroupId`, and optionally
+the exact `threadId`; a provider-backed session action such as `compact` carries
+`threadId`. The handler validates whichever identity set the action requires;
+do not create a separate `thread-group:*` transport family. The superseded raw
+`thread:rename`, `thread:delete`, `thread:copyLink`, and `thread:touch` routes
+are removed with no aliases.
+
+Implemented canonical actions in SPEC-01:
+
+- `rename` — group title only;
+- `delete` — runtime-safe, Provenance-safe group delete;
+- `copy_link` — group scope; returns the version-1 application URI
+  `fusion-thread-group:v1?workspaceId=…&threadGroupId=…[&viewId=…][&threadId=…]`
+  with the validated sole/current member and no `surfaceId`;
+- `resolve_link` — validates the URI/ids and resolves the authoritative group +
+  current primary, opening Main Chat either way; Legacy resolves to its explicit
+  null-view host and never borrows the active view;
+- `view_markdown` — exact member; returns the validated canonical
+  `Data/Chatlogs/threads/<threadId>.md` mirror path resolved through
+  ThreadManager; and
+- `set_harness_selection` — exact member; accepts only portable
+  `{model, variant}`, validates both against current server policy, reads the
+  harness binding from immutable server session state, persists by `threadId`,
+  and returns/fans out the acknowledged value. Rejection leaves the prior value
+  authoritative.
+
+The versioned link URI carries durable identities only. Unknown versions,
+unknown query keys (including any `surfaceId`), duplicate keys, and
+malformed/out-of-bounds identities are rejected; `resolve_link` is never
+authority to switch workspace or view.
+
+Durable actions are idempotent per `{workspaceId, requestId}`: same
+request/same input replays the stored result, different input returns
+`request_mismatch`. Delete returns non-mutating `group_busy` while a member
+runtime is mid-operation, fences runtime generations once terminal, records a
+bounded group cleanup tombstone before canonical rows vanish, and recovers the
+retained aggregate for a new `requestId` while that tombstone holds.
 
 Durable action responses go to the requester after commit. The server also
 fans the authoritative result out to every open window in the workspace. An
 optional UEB fact such as `thread:primary_changed` is post-commit and cannot
-gate the response, persistence, or fan-out.
+gate the response, persistence, or fan-out. Durable envelopes, persisted
+action results, idempotency records, and fan-out carry qualified durable
+identities only and never `surfaceId`.
 
 Requester acknowledgement, each workspace-recipient send, and UEB publication
 run as separate failure-isolated post-commit deliveries. Failure or closure of

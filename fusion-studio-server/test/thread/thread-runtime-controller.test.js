@@ -80,6 +80,9 @@ function makeDeps(overrides = {}) {
     workspaceId: 'workspace-1',
     projectRoot: '/tmp/project',
     getThread: jest.fn(() => Promise.resolve({ entry: {} })),
+    // SPEC-01 §5.4: prompt acceptance records the group activity before
+    // message:sent. Production managers always own the Thread Group service.
+    threadGroups: { recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
   };
   ThreadWebSocketHandler.getState.mockReturnValue({
     panelId: 'view-1',
@@ -138,6 +141,45 @@ describe('thread runtime prompt controller', () => {
     // runtime to READY.
     expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
       .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('prompt activity is recorded before message:sent with the accepted turn identity', async () => {
+    const deps = makeDeps();
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.manager.threadGroups.recordPromptAccepted).toHaveBeenCalledTimes(1);
+    const [activityArgs] = deps.manager.threadGroups.recordPromptAccepted.mock.calls[0];
+    expect(activityArgs).toMatchObject({ threadId: 'thread-1' });
+    expect(typeof activityArgs.turnId).toBe('string');
+    expect(activityArgs.turnId.length).toBeGreaterThan(0);
+    // The durable activity lands before the user-message commit / message:sent.
+    expect(deps.manager.threadGroups.recordPromptAccepted.mock.invocationCallOrder[0])
+      .toBeLessThan(ThreadWebSocketHandler.handleMessageSend.mock.invocationCallOrder[0]);
+  });
+
+  test('a failed activity persist rejects the prompt before message:sent or dispatch', async () => {
+    const deps = makeDeps();
+    deps.manager.threadGroups.recordPromptAccepted.mockResolvedValue({ ok: false, code: 'not_found' });
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(parsedFrames(deps).some((frame) => frame.type === 'error'
+      && frame.threadId === 'thread-1')).toBe(true);
+  });
+
+  test('an activity write failure rejects the prompt through the normal acceptance path', async () => {
+    const deps = makeDeps();
+    deps.manager.threadGroups.recordPromptAccepted.mockRejectedValue(new Error('write failed'));
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(parsedFrames(deps).some((frame) => frame.type === 'error'
+      && frame.threadId === 'thread-1')).toBe(true);
   });
 
   test('an explicit nullable variant clears the persisted prompt selection', async () => {
@@ -379,6 +421,7 @@ describe('thread runtime prompt controller', () => {
       const manager = {
         workspaceId: 'workspace-1', projectRoot: temporaryRoot,
         getThread: jest.fn(async threadId => ({ threadId, entry: { harnessId: 'opencode' } })),
+        threadGroups: { recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
       };
       ThreadWebSocketHandler.getState.mockReturnValue({
         panelId: 'view-1', viewName: 'view-1', threadId: 'thread-A', threadManager: manager,

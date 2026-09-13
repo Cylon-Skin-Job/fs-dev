@@ -514,8 +514,12 @@ async function start({
     const manager = getProjectThreadManager(target.projectRoot, target.workspaceId);
     await awaitThreadManagerReady(manager);
     if (!await manager.getThread(target.threadId)) {
+      const { mintThreadGroupId } = require('./thread-groups/ids');
       await manager.createThread(target.threadId, 'Agent provenance isolated fixture', {
         harnessId: 'opencode',
+        // §4: a new group receives an independently minted opaque ID; the
+        // session identity is never reused as the group identity.
+        groupId: mintThreadGroupId(),
       });
     }
   });

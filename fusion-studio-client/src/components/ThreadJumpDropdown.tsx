@@ -2,9 +2,13 @@ import '../styles/dropdown.css';
 import './ThreadJumpDropdown.css';
 import { useEffect, useState } from 'react';
 import { usePanelStore } from '../state/panelStore';
-import { threadLinkIntent } from '../lib/thread-link-intent';
 import { useCliAccentResolver } from '../hooks/useCliAccentStyle';
 import { formatThreadDisplayName, reorderWithSecondary } from './sidebar/threadOrderUtils';
+import {
+  threadActionCopyLink,
+  threadActionDelete,
+  threadActionViewMarkdown,
+} from '../lib/ws/threadGroupRows';
 
 interface ThreadJumpDropdownProps {
   panel: string;
@@ -50,13 +54,17 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
     closeThreadDropdown(panel);
   };
 
-  const handleCopyLink = (threadId: string) => {
-    sendMessage({ type: 'thread:copyLink', threadId });
+  const handleCopyLink = (threadId: string, threadGroupId?: string) => {
+    sendMessage(threadActionCopyLink({ threadGroupId, threadId }));
   };
 
-  const handleDelete = (threadId: string) => {
+  const handleViewMarkdown = (threadId: string, threadGroupId?: string) => {
+    sendMessage(threadActionViewMarkdown({ threadGroupId, threadId }));
+  };
+
+  const handleDelete = (threadId: string, threadGroupId?: string) => {
     if (confirm('Delete this conversation?')) {
-      sendMessage({ type: 'thread:delete', threadId });
+      sendMessage(threadActionDelete({ threadGroupId, threadId }));
     }
   };
 
@@ -133,7 +141,7 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
                   <button
                     className="rv-dropdown-item"
                     onClick={() => {
-                      handleCopyLink(t.threadId);
+                      handleCopyLink(t.threadId, t.threadGroupId);
                       setMenuOpenId(null);
                     }}
                   >
@@ -143,8 +151,7 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
                   <button
                     className="rv-dropdown-item"
                     onClick={() => {
-                      threadLinkIntent.set('view');
-                      sendMessage({ type: 'thread:copyLink', threadId: t.threadId });
+                      handleViewMarkdown(t.threadId, t.threadGroupId);
                       setMenuOpenId(null);
                     }}
                   >
@@ -154,7 +161,7 @@ export function ThreadJumpDropdown({ panel }: ThreadJumpDropdownProps) {
                   <button
                     className="rv-dropdown-item"
                     onClick={() => {
-                      handleDelete(t.threadId);
+                      handleDelete(t.threadId, t.threadGroupId);
                       setMenuOpenId(null);
                     }}
                   >

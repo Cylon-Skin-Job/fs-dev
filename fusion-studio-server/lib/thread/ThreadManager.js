@@ -16,8 +16,12 @@ const { ThreadIndex } = require('./ThreadIndex');
 const { ChatFile } = require('./ChatFile');
 const { HistoryFile } = require('./HistoryFile');
 const { SessionManager } = require('./session-manager');
-const { threadRuntimeManager } = require('./thread-runtime-manager');
+const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
 const aiPaths = require('../workspace/ai-paths');
+const { getDb } = require('../db');
+const repository = require('../thread-groups/repository');
+const { createThreadGroupService } = require('../thread-groups/service');
+const { runStableViewIdPreflight } = require('../views/stable-view-id-preflight');
 
 function asPlainObject(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
@@ -81,6 +85,11 @@ const DEFAULT_CONFIG = {
   idleTimeoutMinutes: 9
 };
 
+// Bounded recovery window for a deleted group's cleanup tombstone. Durable
+// action results survive independently, so replay of an already-recorded
+// request keeps working after tombstone expiry (`SPEC-01 §9`).
+const DEFAULT_DELETE_TOMBSTONE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
 class ThreadManager {
   /**
    * @param {object} config
@@ -110,6 +119,10 @@ class ThreadManager {
       },
       (threadId) => this.index.suspend(threadId)
     );
+
+    /** @type {import('../thread-groups/service').ThreadGroupService} */
+    this.threadGroups = createThreadGroupService({ manager: this });
+    this._groupsActivationPromise = null;
   }
 
   /**
@@ -151,30 +164,293 @@ class ThreadManager {
     }
   }
 
+  /** Deterministic, bounded mirror identity for the mirror-recovery record. */
+  _mirrorKey(threadId) {
+    return `chatlog:${threadId}`;
+  }
+
+  async _insertSessionRow(trx, threadId, name, options = {}) {
+    const createdAt = new Date().toISOString();
+    await trx('threads').insert({
+      thread_id: threadId,
+      workspace_id: this.workspaceId,
+      project_id: options.projectId || this.projectId || null,
+      scope: 'project',
+      view_id: null,
+      name,
+      created_at: createdAt,
+      message_count: 0,
+      status: 'suspended',
+      updated_at: Date.now(),
+      harness_id: options.harnessId || 'kimi',
+      harness_config: options.harnessConfig ? JSON.stringify(options.harnessConfig) : null,
+    });
+    return createdAt;
+  }
+
   /**
-   * Create a new thread
-   * @param {string} threadId - Thread ID (should be Kimi session ID)
+   * Create a new thread and its one-member Thread Group in one transaction.
+   *
+   * The Thread Group service supplies the group identity/view/action intent;
+   * this primitive owns the session row and the mirror instruction so the
+   * group service never clones ThreadManager's session/mirror rules.
+   *
+   * @param {string} threadId
    * @param {string|null} [name=null]
    * @param {object} [options]
-   * @param {string} [options.harnessId='kimi']
-   * @param {object} [options.harnessConfig]
    * @returns {Promise<{threadId: string, entry: import('./types').ThreadEntry}>}
    */
   async createThread(threadId, name = null, options = {}) {
     // Check for FIFO eviction
     await this._enforceSessionLimit();
 
-    // Create index entry (SQLite)
-    const entry = await this.index.create(threadId, name, {
-      ...options,
-      projectId: this.projectId, // backward compat
+    const db = getDb();
+    const now = Date.now();
+    const groupId = options.groupId || threadId;
+    const viewId = options.viewId === undefined ? null : options.viewId;
+    const mirrorKey = this._mirrorKey(threadId);
+
+    await db.transaction(async (trx) => {
+      const createdAt = await this._insertSessionRow(trx, threadId, name, options);
+      const createdAtMs = repository.epochFromIso(createdAt, now);
+      await repository.insertGroup(trx, {
+        groupId,
+        workspaceId: this.workspaceId,
+        viewId,
+        name,
+        currentPrimaryThreadId: threadId,
+        createdAt: createdAtMs,
+        updatedAt: now,
+      });
+      await repository.insertMember(trx, {
+        groupId,
+        threadId,
+        ordinal: 1,
+        originKind: 'initial',
+        joinedAt: createdAtMs,
+      });
+      await repository.insertPrimaryEvent(trx, {
+        groupId,
+        sequence: 1,
+        previousThreadId: null,
+        nextThreadId: threadId,
+        reason: 'initial',
+        occurredAt: createdAtMs,
+      });
+      await repository.insertActivityEvent(trx, {
+        eventKey: `initial:${groupId}`,
+        groupId,
+        threadId,
+        turnId: null,
+        kind: 'initial',
+        occurredAt: createdAtMs,
+      });
+      await repository.insertMirrorRecovery(trx, {
+        workspaceId: this.workspaceId,
+        groupId,
+        threadId,
+        mirrorKey,
+        operation: 'create',
+        status: 'pending',
+        createdAt: now,
+        updatedAt: now,
+      });
+      if (options.requestId && options.action) {
+        await repository.insertActionResult(trx, {
+          workspaceId: this.workspaceId,
+          requestId: options.requestId,
+          action: options.action,
+          targetHash: options.targetHash || 'creation',
+          resultJson: JSON.stringify(options.actionResult || { threadId, threadGroupId: groupId }),
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
     });
 
-    // Create chat markdown file
+    // Mirror creation is a post-commit, recoverable instruction.
     const chatFile = this._createChatFile(threadId);
-    await chatFile.write(name, []);
+    try {
+      await chatFile.write(name, []);
+      await repository.markMirrorRecovery(db, {
+        workspaceId: this.workspaceId,
+        mirrorKey,
+        operation: 'create',
+        status: 'complete',
+        now: Date.now(),
+      });
+    } catch (error) {
+      console.error(`[ThreadManager] Chat mirror creation failed for ${threadId}:`, error?.message || error);
+      await repository.markMirrorRecovery(db, {
+        workspaceId: this.workspaceId,
+        mirrorKey,
+        operation: 'create',
+        status: 'failed',
+        failureCode: 'mirror_write_failed',
+        now: Date.now(),
+      });
+    }
 
+    const entry = await this.index.get(threadId);
     return { threadId, entry };
+  }
+
+  /**
+   * Idempotent preflight + group reconciliation. Runs the stable view-ID
+   * preflight and, only when it succeeds, binds every remaining ungrouped
+   * session to exactly one group. No group-backed list is exposed before this
+   * succeeds (`SPEC-01 §6`).
+   */
+  async ensureGroupsActivated() {
+    if (!this._groupsActivationPromise) {
+      this._groupsActivationPromise = this._activateGroups().catch((error) => {
+        this._groupsActivationPromise = null;
+        throw error;
+      });
+    }
+    return this._groupsActivationPromise;
+  }
+
+  async _activateGroups() {
+    const preflight = runStableViewIdPreflight(this.projectRoot);
+    if (!preflight.ok) {
+      return { ok: false, diagnostics: preflight.diagnostics };
+    }
+    // `init()` is owned by the manager registry at manager creation; calling it
+    // here would re-suspend every active row on first activation.
+
+    const db = getDb();
+    const allowed = new Set(preflight.viewIds);
+    const ungrouped = await repository.listThreadIdsWithoutGroup(db, this.workspaceId);
+    for (const row of ungrouped) {
+      const resolvedViewId = typeof row.view_id === 'string' && allowed.has(row.view_id)
+        ? row.view_id
+        : null;
+      await this._attachGroupToSession({
+        threadId: row.thread_id,
+        name: row.name,
+        viewId: resolvedViewId,
+        createdAt: repository.epochFromIso(row.created_at, Date.now()),
+        updatedAt: Number(row.updated_at) || Date.now(),
+      });
+    }
+    await this._retryPendingMirrorRecovery();
+    await this._reconcileRetiredMirrors();
+    return { ok: true, diagnostics: [] };
+  }
+
+  /**
+   * Remove generated Markdown mirrors for thread/exchange pairs the authorized
+   * migration retirement branch removed. Only bounded recorded IDs are used;
+   * the sweep is idempotent and never touches SQLite or user files.
+   */
+  async _reconcileRetiredMirrors() {
+    const db = getDb();
+    const record = await db('system_config')
+      .where('key', 'thread_group.retirement.041')
+      .first();
+    if (!record) return;
+    let parsed;
+    try {
+      parsed = JSON.parse(record.value);
+    } catch {
+      return;
+    }
+    const threadIds = Array.isArray(parsed?.threadIds) ? parsed.threadIds.slice(0, 100) : [];
+    const fsPromises = require('fs').promises;
+    for (const threadId of threadIds) {
+      if (typeof threadId !== 'string' || !threadId) continue;
+      const chatFile = this._createChatFile(threadId);
+      await fsPromises.rm(chatFile.filePath, { force: true }).catch(() => {});
+    }
+  }
+
+  async _attachGroupToSession({ threadId, name, viewId, createdAt, updatedAt }) {
+    const db = getDb();
+    const now = Date.now();
+    await db.transaction(async (trx) => {
+      const existing = await repository.getGroupForThread(trx, threadId);
+      if (existing) return;
+      await repository.insertGroup(trx, {
+        groupId: threadId,
+        workspaceId: this.workspaceId,
+        viewId,
+        name: name ?? null,
+        currentPrimaryThreadId: threadId,
+        createdAt,
+        updatedAt,
+      });
+      await repository.insertMember(trx, {
+        groupId: threadId,
+        threadId,
+        ordinal: 1,
+        originKind: 'initial',
+        joinedAt: createdAt,
+      });
+      await repository.insertPrimaryEvent(trx, {
+        groupId: threadId,
+        sequence: 1,
+        previousThreadId: null,
+        nextThreadId: threadId,
+        reason: 'initial',
+        occurredAt: createdAt,
+      });
+      await repository.insertActivityEvent(trx, {
+        eventKey: `initial:${threadId}`,
+        groupId: threadId,
+        threadId,
+        turnId: null,
+        kind: 'initial',
+        occurredAt: createdAt,
+      });
+      await repository.insertMirrorRecovery(trx, {
+        workspaceId: this.workspaceId,
+        groupId: threadId,
+        threadId,
+        mirrorKey: this._mirrorKey(threadId),
+        operation: 'create',
+        status: 'pending',
+        createdAt: now,
+        updatedAt: now,
+      });
+    });
+  }
+
+  async _retryPendingMirrorRecovery() {
+    const db = getDb();
+    const pending = await repository.listPendingMirrorRecovery(db, this.workspaceId);
+    const fsPromises = require('fs').promises;
+    for (const record of pending) {
+      try {
+        if (record.operation === 'create') {
+          await this.syncChatlogMirrorFromHistory(record.thread_id);
+        } else {
+          const chatFile = this._createChatFile(record.thread_id);
+          await fsPromises.rm(chatFile.filePath, { force: true });
+        }
+        await repository.markMirrorRecovery(db, {
+          workspaceId: this.workspaceId,
+          mirrorKey: record.mirror_key,
+          operation: record.operation,
+          status: 'complete',
+          now: Date.now(),
+        });
+      } catch (error) {
+        await repository.markMirrorRecovery(db, {
+          workspaceId: this.workspaceId,
+          mirrorKey: record.mirror_key,
+          operation: record.operation,
+          status: 'failed',
+          failureCode: 'mirror_unavailable',
+          now: Date.now(),
+        });
+      }
+    }
+  }
+
+  /** Group-backed visible population for one exact {workspaceId, viewId}. */
+  async listGroups(viewId = null) {
+    return this.threadGroups.listGroups({ viewId });
   }
 
   /**
@@ -224,6 +500,14 @@ class ThreadManager {
     const entry = await this.index.rename(threadId, newName);
     if (!entry) return null;
 
+    // The group owns the visible title (§9). Keep SQLite's session mirror of
+    // the title in sync so legacy reads do not become a second title owner.
+    const db = getDb();
+    const groupRow = await repository.getGroupForThread(db, threadId);
+    if (groupRow) {
+      await repository.renameGroup(db, groupRow.group_id, newName);
+    }
+
     // Rewrite the frontmatter name in place — filename is immutable in SPEC-24b.
     const chatFile = this._createChatFile(threadId);
     const parsed = await chatFile.read();
@@ -241,12 +525,49 @@ class ThreadManager {
    * @param {string} threadId
    */
   async deleteThread(threadId) {
+    const db = getDb();
+    // A raw session delete must never orphan a group (§5.6). A session belongs
+    // to exactly one group; with more than one member (SPEC-04 and later) a
+    // raw session delete is rejected and only the group service may retire it.
+    const groupRow = await repository.getGroupForThread(db, threadId);
+    if (groupRow) {
+      const members = await repository.listMembers(db, groupRow.group_id);
+      if (members.length > 1) return false;
+    }
+
     // Kill active session if any
     await this.closeSession(threadId);
+
+    const now = Date.now();
+    const mirrorKey = this._mirrorKey(threadId);
+
+    // Record every member mirror before canonical rows vanish (§5.5).
+    if (groupRow) {
+      try {
+        await repository.insertMirrorRecovery(db, {
+          workspaceId: this.workspaceId,
+          groupId: groupRow.group_id,
+          threadId,
+          mirrorKey,
+          operation: 'delete',
+          status: 'pending',
+          createdAt: now,
+          updatedAt: now,
+        });
+      } catch (_error) {
+        // Duplicate delete-recovery record from a retry is benign.
+      }
+    }
 
     // Remove from index (CASCADE deletes exchanges)
     const deleted = await this.index.delete(threadId);
     if (!deleted) return false;
+
+    // A raw session delete must never orphan a group (§5.6). 01A groups are
+    // one-member, so the whole group retires with its only member.
+    if (groupRow) {
+      await repository.deleteGroup(db, groupRow.group_id);
+    }
 
     // Remove the markdown file. Filename is ${threadId}.md — no need to fetch
     // the entry or look up the name.
@@ -254,14 +575,199 @@ class ThreadManager {
     try {
       const chatFile = this._createChatFile(threadId);
       await fsPromises.rm(chatFile.filePath, { force: true });
+      if (groupRow) {
+        await repository.markMirrorRecovery(db, {
+          workspaceId: this.workspaceId,
+          mirrorKey,
+          operation: 'delete',
+          status: 'complete',
+          now: Date.now(),
+        });
+      }
     } catch (err) {
       // ENOENT is fine — file may not exist yet for zero-message threads
       if (err.code !== 'ENOENT') {
         console.error(`Failed to delete chat file for ${threadId}:`, err);
+        if (groupRow) {
+          await repository.markMirrorRecovery(db, {
+            workspaceId: this.workspaceId,
+            mirrorKey,
+            operation: 'delete',
+            status: 'failed',
+            failureCode: 'mirror_delete_failed',
+            now: Date.now(),
+          });
+        }
       }
     }
 
     return true;
+  }
+
+  /** Resource-scoped runtime identity (workspace + root + thread, epoch-free). */
+  _resourceRuntimeKey(threadId) {
+    return {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+      threadId,
+    };
+  }
+
+  /**
+   * True when any member runtime generation is mid-operation. A merely warm
+   * (READY) provider is idle, not busy: Delete may fence and retire it. Busy is
+   * the turn/runtime lifecycle in progress — accepting/warming, an in-flight
+   * turn, finalizing/draining, or stopping (`SPEC-01 §9`).
+   *
+   * @param {string} threadId
+   * @returns {string|null} bounded busy state, or null when terminal
+   */
+  _groupMemberBusy(threadId) {
+    const session = this.sessionManager.getSession(threadId);
+    if (session?.pendingActivation) return 'accepting';
+    if (session?.state === 'stopping') return 'stopping';
+    const runtime = threadRuntimeManager.getRuntimeForResource(this._resourceRuntimeKey(threadId));
+    if (runtime?.activeDrain) return 'draining';
+    if (runtime?.state === RUNTIME_STATES.WARMING) return 'accepting';
+    if (runtime?.state === RUNTIME_STATES.IN_FLIGHT) return 'active';
+    if (runtime?.state === RUNTIME_STATES.STOPPING) return 'stopping';
+    return null;
+  }
+
+  /**
+   * Fence one exact member resource before its canonical rows vanish: retire
+   * any residual drain, terminate the provider, and remove every runtime
+   * generation so a late provider/event frame compares-current against a
+   * missing record and is dropped rather than appending an exchange or
+   * recreating runtime state.
+   */
+  async _fenceGroupMember(threadId) {
+    const resourceKey = this._resourceRuntimeKey(threadId);
+    try {
+      await threadRuntimeManager.retireResourceDrains(resourceKey);
+    } catch (_error) {
+      // Provider termination below still owns the hard fence.
+    }
+    const session = this.sessionManager.getSession(threadId);
+    if (session) {
+      try {
+        await this.closeSessionAndWait(threadId);
+      } catch (_error) {
+        // A failed provider close must not be treated as a successful fence;
+        // the caller still proceeds only after the busy check proved terminal.
+      }
+    }
+    threadRuntimeManager.fenceResource(resourceKey);
+  }
+
+  /**
+   * Delete one whole Thread Group: session rows (exchanges cascade), the group,
+   * members, primary/activity events, plus the durable mirror-deletion and
+   * group-cleanup recovery records. The tombstone and mirror instructions are
+   * committed in the same transaction, before canonical rows vanish
+   * (`SPEC-01 §5.5/§9`).
+   *
+   * Non-mutating `group_busy` is returned while any member runtime is
+   * mid-operation. Unknown groups return `not_found` and never create.
+   *
+   * @param {string} groupId
+   * @param {{ tombstoneExpiresAt?: number, context?: object|null }} [options]
+   * @returns {Promise<{deleted: boolean, reason?: string, busy?: Array,
+   *   result?: object, members?: Array}>}
+   */
+  async deleteGroup(groupId, { tombstoneExpiresAt = null, context = null } = {}) {
+    const db = getDb();
+    const groupRow = await repository.getGroup(db, groupId);
+    if (!groupRow || groupRow.workspace_id !== this.workspaceId) {
+      return { deleted: false, reason: 'not_found' };
+    }
+    const members = await repository.listMembers(db, groupId);
+    if (members.length === 0) return { deleted: false, reason: 'not_found' };
+
+    const busy = [];
+    for (const member of members) {
+      const state = this._groupMemberBusy(member.thread_id);
+      if (state) busy.push({ threadId: member.thread_id, state });
+    }
+    if (busy.length > 0) return { deleted: false, reason: 'group_busy', busy };
+
+    for (const member of members) {
+      await this._fenceGroupMember(member.thread_id);
+    }
+
+    const projection = await repository.getGroupProjection(db, groupId);
+    const now = Date.now();
+    const memberRecords = members.map((member) => ({
+      threadId: member.thread_id,
+      mirrorKey: this._mirrorKey(member.thread_id),
+    }));
+    const cleanup = {
+      status: 'pending',
+      mirrors: memberRecords.map((member) => ({
+        threadId: member.threadId,
+        mirrorKey: member.mirrorKey,
+        status: 'pending',
+        failureCode: null,
+      })),
+    };
+    const result = {
+      action: 'delete',
+      threadGroupId: groupId,
+      threadId: projection?.currentPrimaryThreadId ?? memberRecords[0]?.threadId ?? null,
+      workspaceId: this.workspaceId,
+      viewId: projection?.viewId ?? null,
+      members: memberRecords,
+      deleted: true,
+      cleanup,
+      context: context || null,
+    };
+    const expiresAt = Number.isFinite(tombstoneExpiresAt) && tombstoneExpiresAt > now
+      ? tombstoneExpiresAt
+      : now + DEFAULT_DELETE_TOMBSTONE_TTL_MS;
+
+    await db.transaction(async (trx) => {
+      for (const member of memberRecords) {
+        try {
+          await repository.insertMirrorRecovery(trx, {
+            workspaceId: this.workspaceId,
+            groupId,
+            threadId: member.threadId,
+            mirrorKey: member.mirrorKey,
+            operation: 'delete',
+            status: 'pending',
+            createdAt: now,
+            updatedAt: now,
+          });
+        } catch (_error) {
+          // A duplicate delete-recovery record from a retry is benign.
+        }
+      }
+      await repository.insertDeleteTombstone(trx, {
+        groupId,
+        workspaceId: this.workspaceId,
+        resultJson: JSON.stringify(result),
+        cleanupJson: JSON.stringify(cleanup),
+        createdAt: now,
+        updatedAt: now,
+        expiresAt,
+      });
+      await trx('threads')
+        .whereIn('thread_id', memberRecords.map((member) => member.threadId))
+        .where('workspace_id', this.workspaceId)
+        .del();
+      await repository.deleteGroup(trx, groupId);
+    });
+
+    return { deleted: true, result, members: memberRecords };
+  }
+
+  /**
+   * Resume idempotent mirror cleanup for one deleted group by replaying the
+   * workspace pending-delete instructions. Used by new-request recovery and by
+   * startup/workspace reattach.
+   */
+  async retryMirrorCleanupForGroup() {
+    await this._retryPendingMirrorRecovery();
   }
 
   /**

@@ -76,6 +76,9 @@ function makeManager() {
     }),
     deleteThread: jest.fn(() => Promise.resolve(true)),
     listThreads: jest.fn(() => Promise.resolve([])),
+    // SPEC-01 §5.4: prompt acceptance records the group activity before
+    // message:sent. Production managers always own the Thread Group service.
+    threadGroups: { recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
   };
   manager._sessions = sessions;
   return manager;
@@ -540,7 +543,7 @@ test('deleting passive B preserves unrelated active A', async () => {
   const manager = makeManager();
   setState(ws, manager, 'thread-b', 'thread-a');
 
-  await ThreadWebSocketHandler.handleThreadDelete(ws, { threadId: 'thread-b' });
+  await ThreadWebSocketHandler.deleteThreadSession(ws, 'thread-b');
 
   expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.deleteThread).toHaveBeenCalledWith('thread-b');
@@ -555,7 +558,7 @@ test('deleting active A closes A while preserving passive B selection', async ()
   const manager = makeManager();
   setState(ws, manager, 'thread-b', 'thread-a');
 
-  await ThreadWebSocketHandler.handleThreadDelete(ws, { threadId: 'thread-a' });
+  await ThreadWebSocketHandler.deleteThreadSession(ws, 'thread-a');
 
   expect(manager.closeSession).toHaveBeenCalledWith('thread-a');
   expect(manager.deleteThread).toHaveBeenCalledWith('thread-a');

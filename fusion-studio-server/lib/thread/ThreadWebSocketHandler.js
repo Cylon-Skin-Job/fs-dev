@@ -509,7 +509,7 @@ async function deleteThreadSession(ws, threadId) {
  * Send thread list to client.
  * @param {import('ws').WebSocket} ws
  */
-async function sendThreadList(ws) {
+async function sendThreadList(ws, viewId = null) {
   const state = wsState.get(ws);
   if (!state) {
     console.log('[ThreadWS] No state for ws, skipping sendThreadList');
@@ -522,16 +522,26 @@ async function sendThreadList(ws) {
     return;
   }
 
-  const threads = await manager.listThreads();
-  console.log(`[ThreadWS] Sending ${threads.length} threads`);
+  const result = await manager.listGroups(viewId);
+  if (!result.ok) {
+    // Preflight/repair failure stops group-backed activation; the client keeps
+    // the last known list and sees the bounded repair diagnostic.
+    console.log('[ThreadWS] Group activation blocked by view-identity repair');
+    ws.send(JSON.stringify({
+      type: 'error',
+      code: 'view_id_preflight_repair_required',
+      message: 'View identity repair required',
+      diagnostics: result.diagnostics || [],
+    }));
+    return;
+  }
 
+  console.log(`[ThreadWS] Sending ${result.groups.length} thread groups`);
   ws.send(JSON.stringify({
     type: 'thread:list',
     scope: 'project', // protocol field kept for wire compatibility
-    threads: threads.map(t => ({
-      threadId: t.threadId,
-      entry: t.entry
-    }))
+    viewId: result.viewId,
+    threads: result.groups,
   }));
 }
 
@@ -557,7 +567,6 @@ function getCurrentThreadManager(ws) {
 const crud = createCrudHandlers({
   wsState,
   sendThreadList,
-  deleteThreadSession,
   pendingReorderTimers,
   REORDER_DELAY_MS,
   runDelayedThreadList,

@@ -21,7 +21,6 @@ import type {
   ResolvedCliEntry,
   Thread,
   ThreadEntry,
-  ThreadForkMetadata,
   Workspace,
   WorkspaceCreateManifest,
   WorkspaceHiddenView,
@@ -40,9 +39,10 @@ export type WebSocketMessageType =
   // Requests / errors / tools
   | 'request' | 'response' | 'error'
   | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event'
-  // Thread messages
-  | 'thread:list' | 'thread:created' | 'thread:forked' | 'thread:opened'
-  | 'thread:renamed' | 'thread:deleted' | 'message:sent' | 'auth_error'
+  // Thread messages (Rename/Delete now use the canonical thread:action family)
+  | 'thread:list' | 'thread:created' | 'thread:opened'
+  | 'thread:action:completed' | 'thread:action:error'
+  | 'message:sent' | 'auth_error'
   | 'thread:create:confirm' | 'thread:state_changed'
   // Modal messages
   | 'modal:show' | 'file:moved' | 'file:move_error' | 'file:renamed'
@@ -132,6 +132,26 @@ export interface WebSocketMessage {
   // Thread fields
   panel?: string;
   threadId?: string;
+  threadGroupId?: string;
+  action?: 'rename' | 'delete' | 'copy_link' | 'resolve_link' | 'view_markdown' | 'set_harness_selection' | string;
+  code?: string;
+  deleted?: boolean;
+  recovered?: boolean;
+  replayed?: boolean;
+  fanOut?: boolean;
+  cleanup?: { status: string; mirrors?: unknown[] } | null;
+  members?: unknown[];
+  context?: Record<string, unknown> | null;
+  /** Versioned application URI returned by an acknowledged `copy_link`. */
+  link?: string | null;
+  /** Validated exact-member mirror path returned by `view_markdown`. */
+  markdownPath?: string | null;
+  /** Server-owned harness identity echoed by `set_harness_selection`. */
+  harnessId?: string | null;
+  /** Acknowledged portable selection returned by `set_harness_selection`. */
+  model?: string | null;
+  variant?: string | null;
+  resolved?: boolean;
   thread?: ThreadEntry;
   threads?: Thread[];
   history?: { role: 'user' | 'assistant'; content: string; hasToolCalls?: boolean }[];
@@ -140,7 +160,6 @@ export interface WebSocketMessage {
   name?: string;
   content?: string;
   metadata?: Record<string, unknown>;
-  fork?: ThreadForkMetadata | null;
   exchangeId?: number;
   seq?: number;
   message?: string;

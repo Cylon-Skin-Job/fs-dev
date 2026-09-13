@@ -12,13 +12,15 @@ import { useWorkspaceStore } from '../../state/workspaceStore';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
 import { useFileStore } from '../../state/fileStore';
-import { loadRootTree } from '../file-tree';
+import { loadRootTree, loadFileContent } from '../file-tree';
 import { secondaryTracker } from '../secondary-tracker';
 import { readTokenUsage } from '../chat/context-usage';
 import { sanitizeTerminalErrorMetadata } from '../chat/terminal-error';
+import { showToast } from '../toast';
 import { convertPartToSegment } from './assistant-parts';
 import { installLiveTurnSnapshot } from './snapshot-restore';
-import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot } from '../../types';
+import { threadRowsFromProjections } from './threadGroupRows';
+import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot, Thread } from '../../types';
 
 /**
  * Handle thread-related WebSocket messages.
@@ -41,9 +43,15 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
 
   switch (msg.type) {
     case 'thread:list':
-      console.log('[WS] thread:list received:', msg.threads?.length, 'threads');
+      console.log('[WS] thread:list received:', msg.threads?.length, 'thread groups');
       if (msg.threads) {
-        store.setThreads(msg.threads);
+        // The server's visible population is Thread Group projections. The
+        // current renderer rail is the workspace Legacy host (explicit
+        // `viewId: null`), so each row keeps the authoritative current-primary
+        // `threadId` for chat routing and gains the group identity for row
+        // open/rename/delete.
+        const rows: Thread[] = threadRowsFromProjections(msg.threads);
+        store.setThreads(rows);
         if (!useWorkspaceStore.getState().hasReceivedInit) {
           console.log('[WS] Deferring MRU thread open until workspace:init');
           return true;
@@ -51,18 +59,18 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         // Auto-open the MRU (top) thread when none is active. Fills the chat
         // on refresh even when the threads sidebar is hidden.
         const hasActive = store.currentThreadId;
-        if (!hasActive && msg.threads.length > 0) {
-          const mru = msg.threads[0];
+        if (!hasActive && rows.length > 0) {
+          const mru = rows[0];
           const ws = store.ws;
-          if (ws && ws.readyState === WebSocket.OPEN && mru.threadId) {
-            console.log('[WS] Auto-opening MRU thread:', mru.threadId.slice(0, 8));
+          if (ws && ws.readyState === WebSocket.OPEN && mru.threadGroupId) {
+            console.log('[WS] Auto-opening MRU thread group:', mru.threadGroupId.slice(0, 12));
             // Multiple panels request the same thread list during boot.
             // Mark the MRU as active before the server responds so only the
             // first list response sends thread:open.
             store.setCurrentThreadId(mru.threadId);
             ws.send(JSON.stringify({
               type: 'thread:open',
-              threadId: mru.threadId,
+              threadGroupId: mru.threadGroupId,
             }));
           }
         }
@@ -72,7 +80,11 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'thread:created':
       console.log('[WS] thread:created received:', msg.threadId);
       if (msg.thread && msg.threadId) {
-        store.addThread({ threadId: msg.threadId, entry: msg.thread });
+        store.addThread({
+          threadId: msg.threadId,
+          threadGroupId: msg.threadGroupId,
+          entry: msg.thread,
+        });
         store.setCurrentThreadId(msg.threadId);
         store.setChatActive(true);
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
@@ -83,27 +95,6 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         loadRootTree();
       } else {
         console.error('[WS] thread:created missing data:', msg);
-      }
-      return true;
-
-    case 'thread:forked':
-      console.log('[WS] thread:forked received:', msg.threadId, 'exchanges:', msg.exchanges?.length);
-      if (msg.thread && msg.threadId) {
-        upsertThreadAtTop(msg.threadId, msg.thread);
-        store.setCurrentThreadId(msg.threadId);
-        store.setChatActive(true);
-        store.clearChat(msg.threadId);
-        hydrateThreadCandidates(msg.exchanges || []);
-
-        if (msg.exchanges && msg.exchanges.length > 0) {
-          convertExchangesToMessages(msg.threadId, msg.exchanges);
-        } else if (msg.history && msg.history.length > 0) {
-          convertHistoryToMessages(msg.threadId, msg.history);
-        }
-        overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-        restoreContextSnapshot(msg.exchanges, msg.contextUsage, msg.tokenUsage);
-      } else {
-        console.error('[WS] thread:forked missing data:', msg);
       }
       return true;
 
@@ -157,17 +148,47 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       store.setWireReady(true);
       return true;
 
-    case 'thread:renamed':
-      if (msg.threadId && msg.name) {
+    case 'thread:action:completed':
+      // The server acknowledgement is authoritative; the renderer reflects it
+      // and never commits an optimistic rename/delete. The same frame arrives
+      // from workspace fan-out in other windows.
+      if (msg.action === 'rename' && msg.threadId && typeof msg.name === 'string') {
         store.updateThread(msg.threadId, { name: msg.name });
+      } else if (msg.action === 'delete' && msg.threadId) {
+        store.removeThread(msg.threadId);
+      } else if (msg.action === 'copy_link' && !msg.fanOut
+        && typeof msg.link === 'string' && msg.link) {
+        // The versioned application URI is copied only after the server
+        // acknowledgement; no optimistic or fabricated link. A fan-out frame
+        // is another window's result and must never touch this clipboard.
+        navigator.clipboard.writeText(msg.link).then(() => {
+          showToast('Thread link copied');
+        }).catch((err) => {
+          console.error('[WS] Failed to copy thread link:', err);
+          showToast('Could not copy thread link');
+        });
+      } else if (msg.action === 'view_markdown' && !msg.fanOut
+        && typeof msg.markdownPath === 'string' && msg.markdownPath) {
+        openThreadMarkdown(msg.markdownPath);
       }
       return true;
 
-    case 'thread:deleted':
-      if (msg.threadId) {
-        store.removeThread(msg.threadId);
+    case 'thread:action:error': {
+      // Bounded, non-optimistic failure surfacing. group_busy/request_mismatch
+      // keep the existing row and explain why nothing changed.
+      const action = msg.action === 'rename' ? 'Rename' : msg.action === 'delete' ? 'Delete' : 'Thread action';
+      let detail = 'Thread action failed';
+      if (msg.code === 'group_busy') detail = 'Thread has an active conversation. Stop it before deleting.';
+      else if (msg.code === 'request_mismatch') detail = 'That request was already used with different input.';
+      else if (msg.code === 'not_found') detail = 'Thread no longer exists.';
+      else if (msg.code === 'invalid_name') detail = 'Thread name is invalid.';
+      else if (msg.code === 'invalid_link') detail = 'Thread link is invalid.';
+      else if (msg.code === 'invalid_selection' || msg.code === 'selection_unavailable') {
+        detail = 'That model or effort is not available.';
       }
+      showToast(`${action} failed: ${detail}`);
       return true;
+    }
 
     case 'message:sent':
       console.log('[WS] Message accepted and saved to thread');
@@ -227,12 +248,24 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
 
 // --- History conversion helpers (private to this module) ---
 
-function upsertThreadAtTop(threadId: string, entry: NonNullable<WebSocketMessage['thread']>) {
-  const store = usePanelStore.getState();
-  store.setThreads([
-    { threadId, entry },
-    ...store.threads.filter((thread) => thread.threadId !== threadId),
-  ]);
+/**
+ * Open the server-acknowledged exact-member mirror path in the File Viewer.
+ * The server resolved the canonical `Data/Chatlogs/threads/<threadId>.md`
+ * through ThreadManager; the renderer only translates the workspace-relative
+ * `ai/` path for the existing file viewer.
+ */
+function openThreadMarkdown(filePath: string): void {
+  const aiIdx = filePath.indexOf('ai/');
+  const relPath = aiIdx >= 0 ? filePath.slice(aiIdx) : filePath;
+  const panelStore = usePanelStore.getState();
+  panelStore.setCurrentPanel('file-viewer');
+  const name = relPath.split('/').pop() || relPath;
+  loadFileContent({
+    path: relPath,
+    name,
+    type: 'file',
+    extension: 'md',
+  });
 }
 
 function convertExchangesToMessages(threadId: string, exchanges: ExchangeData[]) {
@@ -300,11 +333,11 @@ function restoreContextSnapshot(
 }
 
 /**
- * Overlay the served live turn onto the hydrated chat slot (thread:opened /
- * thread:forked). Slice C delegates ALL restoration semantics to
- * snapshot-restore.ts: status routing, monotone per-pair authority, atomic
- * in-flight already-revealed install, terminal instant path, and retained
- * terminal-error envelopes live there now.
+ * Overlay the served live turn onto the hydrated chat slot (thread:opened).
+ * Slice C delegates all restoration semantics to snapshot-restore.ts: status
+ * routing, monotone per-pair authority, atomic in-flight already-revealed
+ * install, terminal instant path, and retained terminal-error envelopes live
+ * there now.
  */
 function overlayLiveTurn(
   threadId: string,

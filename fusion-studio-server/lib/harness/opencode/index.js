@@ -40,7 +40,7 @@ function createProcessProxy() {
   return proc;
 }
 
-function buildRunArgs(config, projectRoot, openCodeSessionId, message, pendingFork = null) {
+function buildRunArgs(config, projectRoot, openCodeSessionId, message) {
   const args = ['run', '--format', 'json'];
 
   if (projectRoot) {
@@ -65,30 +65,14 @@ function buildRunArgs(config, projectRoot, openCodeSessionId, message, pendingFo
 
   if (openCodeSessionId) {
     args.push('--session', openCodeSessionId);
-  } else if (pendingFork?.sourceOpenCodeSessionId) {
-    args.push('--session', pendingFork.sourceOpenCodeSessionId, '--fork');
   }
 
   args.push(String(message || ''));
   return args;
 }
 
-function createSessionIdPatch(openCodeSessionId, pendingFork, existingForkProvenance = null) {
-  if (!pendingFork) {
-    return { opencodeSessionId: openCodeSessionId };
-  }
-
-  return {
-    opencodeSessionId: openCodeSessionId,
-    pendingFork: null,
-    forkProvenance: {
-      ...(existingForkProvenance || {}),
-      ...pendingFork,
-      status: 'created',
-      createdOpenCodeSessionId: openCodeSessionId,
-      createdAt: new Date().toISOString(),
-    },
-  };
+function createSessionIdPatch(openCodeSessionId) {
+  return { opencodeSessionId: openCodeSessionId };
 }
 
 function getEventSessionId(event) {
@@ -160,9 +144,6 @@ class OpenCodeHarness extends EventEmitter {
       threadOptions.harnessConfig,
     );
     const storedSessionId = harnessConfig.opencodeSessionId || null;
-    const pendingFork = storedSessionId || !harnessConfig.pendingFork?.sourceOpenCodeSessionId
-      ? null
-      : harnessConfig.pendingFork;
     const updateHarnessConfig = threadOptions.updateHarnessConfig;
     const session = {
       threadId,
@@ -171,9 +152,6 @@ class OpenCodeHarness extends EventEmitter {
       activeProcess: null,
       activeProcessClose: null,
       openCodeSessionId: storedSessionId,
-      pendingFork,
-      forkProvenance: harnessConfig.forkProvenance || null,
-      pendingForkConsumed: false,
       stopRequested: false,
       projectRoot,
       scopeContext,
@@ -188,16 +166,13 @@ class OpenCodeHarness extends EventEmitter {
         const events = [translator.beginTurn(message)];
         const parser = new JsonLineParser();
         const cliPath = runtimeConfig.cliPath || process.env.OPENCODE_PATH || 'opencode';
-        const pendingForkForRun = session.openCodeSessionId || session.pendingForkConsumed
-          ? null
-          : session.pendingFork;
         const runConfig = {
           ...runtimeConfig,
           // Live per-thread model + effort override the workspace defaults.
           ...(session.harnessConfig.model ? { model: session.harnessConfig.model } : {}),
           ...(session.harnessConfig.variant ? { variant: session.harnessConfig.variant } : {}),
         };
-        const args = buildRunArgs(runConfig, projectRoot, session.openCodeSessionId, message, pendingForkForRun);
+        const args = buildRunArgs(runConfig, projectRoot, session.openCodeSessionId, message);
         let done = false;
         let sawTurnEnd = false;
         let sawUsefulAssistantEvent = false;
@@ -221,13 +196,8 @@ class OpenCodeHarness extends EventEmitter {
         let capturedOpenCodeSessionId = session.openCodeSessionId;
         let capturedSessionIdPatch = null;
 
-        const commitSessionIdPatch = (openCodeSessionId, sessionIdPatch) => {
+        const commitSessionIdPatch = (openCodeSessionId) => {
           session.openCodeSessionId = openCodeSessionId;
-          if (pendingForkForRun) {
-            session.pendingFork = null;
-            session.pendingForkConsumed = true;
-            session.forkProvenance = sessionIdPatch.forkProvenance;
-          }
         };
 
         const proc = spawn(cliPath, args, {
@@ -251,16 +221,12 @@ class OpenCodeHarness extends EventEmitter {
           }
           const openCodeSessionId = getEventSessionId(openCodeEvent);
           if (!capturedOpenCodeSessionId && openCodeSessionId) {
-            const sessionIdPatch = createSessionIdPatch(
-              openCodeSessionId,
-              pendingForkForRun,
-              session.forkProvenance,
-            );
+            const sessionIdPatch = createSessionIdPatch(openCodeSessionId);
             capturedOpenCodeSessionId = openCodeSessionId;
             if (typeof updateHarnessConfig === 'function') {
               capturedSessionIdPatch = sessionIdPatch;
             } else {
-              commitSessionIdPatch(openCodeSessionId, sessionIdPatch);
+              commitSessionIdPatch(openCodeSessionId);
             }
           }
 
@@ -326,7 +292,7 @@ class OpenCodeHarness extends EventEmitter {
           }
           if (capturedSessionIdPatch && !session.openCodeSessionId) {
             await updateHarnessConfig(capturedSessionIdPatch);
-            commitSessionIdPatch(capturedOpenCodeSessionId, capturedSessionIdPatch);
+            commitSessionIdPatch(capturedOpenCodeSessionId);
           }
           if (spawnFailure) throw spawnFailure;
           if (failureDescriptor) {

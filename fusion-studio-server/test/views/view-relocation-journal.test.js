@@ -19,7 +19,7 @@ describe('view capsule relocation journal migration', () => {
     const fixture = await createFixture();
     try {
       const completed = await fixture.db('knex_migrations').orderBy('id').pluck('name');
-      expect(completed.at(-1)).toBe('040_reported_ui_context.js');
+      expect(completed.at(-1)).toBe('042_thread_group_action_recovery.js');
       const base = {
         workspace_id: fixture.workspaceId,
         machine_identity: fixture.machineIdentity,

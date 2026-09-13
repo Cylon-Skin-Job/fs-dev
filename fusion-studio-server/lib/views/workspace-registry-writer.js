@@ -55,6 +55,72 @@ function readFrontmatter(filePath) {
   }
 }
 
+/**
+ * Atomically replace one nested frontmatter field (`parent: { child: value }`)
+ * while preserving every unrelated key, the mapping order, and the body.
+ * Used by the stable view-ID preflight to assign `metadata.view-id` without
+ * rewriting any other manifest byte.
+ */
+function replaceNestedFrontmatterField(filePath, parentKey, childKey, value) {
+  const nextLine = `  ${childKey}: ${quoteYamlScalar(value)}`;
+  let text = '';
+  try {
+    text = fs.readFileSync(filePath, 'utf8');
+  } catch {
+    text = '';
+  }
+
+  const match = text.match(/^---\s*\n([\s\S]*?)\n---([\s\S]*)$/);
+  if (!match) {
+    writeFileAtomic(filePath, `---\n${parentKey}:\n${nextLine}\n---\n${text}`);
+    return;
+  }
+
+  const frontmatterLines = match[1].split(/\r?\n/);
+  const parentIndex = frontmatterLines.findIndex((line) => line.match(new RegExp(`^${parentKey}:\\s*$`)));
+  if (parentIndex === -1) {
+    // A flow-style parent (`metadata: { ... }`) cannot be safely nested into
+    // without a full YAML rewrite. Stop rather than emit a duplicate key.
+    const flowParent = frontmatterLines.some((line) => line.match(new RegExp(`^${parentKey}:\\s*\\S`)));
+    if (flowParent) {
+      throw new Error(`Cannot assign nested frontmatter field under a non-block mapping: ${parentKey}`);
+    }
+    frontmatterLines.push(`${parentKey}:`, nextLine);
+  } else {
+    // Replace an existing direct child in place so a re-run is a true no-op and
+    // an invalid pre-existing value is never duplicated into a second key.
+    const parentIndent = frontmatterLines[parentIndex].match(/^\s*/)[0].length;
+    let childIndex = -1;
+    for (let index = parentIndex + 1; index < frontmatterLines.length; index += 1) {
+      const line = frontmatterLines[index];
+      if (!line.trim()) continue;
+      const indent = line.match(/^\s*/)[0].length;
+      if (indent <= parentIndent) break;
+      if (line.match(new RegExp(`^\\s+${childKey}:\\s*`))) {
+        childIndex = index;
+        break;
+      }
+    }
+    if (childIndex >= 0) {
+      frontmatterLines[childIndex] = nextLine;
+    } else {
+      frontmatterLines.splice(parentIndex + 1, 0, nextLine);
+    }
+  }
+  writeFileAtomic(filePath, `---\n${frontmatterLines.join('\n')}\n---${match[2]}`);
+}
+
+/** Write bytes to a sibling temp file and rename into place (atomic on POSIX). */
+function writeFileAtomic(filePath, bytes) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  const tempPath = path.join(
+    path.dirname(filePath),
+    `.${path.basename(filePath)}.${process.pid}.${Date.now()}.tmp`,
+  );
+  fs.writeFileSync(tempPath, bytes, 'utf-8');
+  fs.renameSync(tempPath, filePath);
+}
+
 function replaceTopLevelFrontmatterField(filePath, key, value, fallbackBody) {
   const nextLine = `${key}: ${quoteYamlScalar(value)}`;
   let text = '';
@@ -66,8 +132,7 @@ function replaceTopLevelFrontmatterField(filePath, key, value, fallbackBody) {
 
   const match = text.match(/^---\s*\n([\s\S]*?)\n---([\s\S]*)$/);
   if (!match) {
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, `---\n${nextLine}\n---\n`, 'utf-8');
+    writeFileAtomic(filePath, `---\n${nextLine}\n---\n`);
     return;
   }
 
@@ -78,8 +143,7 @@ function replaceTopLevelFrontmatterField(filePath, key, value, fallbackBody) {
   } else {
     lines.unshift(nextLine);
   }
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, `---\n${lines.join('\n')}\n---${match[2]}`, 'utf-8');
+  writeFileAtomic(filePath, `---\n${lines.join('\n')}\n---${match[2]}`);
 }
 
 function replaceIconFrontmatter(filePath, iconName, fallbackLabel) {
@@ -582,4 +646,6 @@ module.exports = {
   getWorkspaceViewOptions,
   restoreWorkspaceView,
   addWorkspaceView,
+  replaceNestedFrontmatterField,
+  writeFileAtomic,
 };

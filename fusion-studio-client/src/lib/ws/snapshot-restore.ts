@@ -1,7 +1,7 @@
 /**
  * @module snapshot-restore
  * @role Authoritative live-turn snapshot restoration (SPEC-04 Slice C) — the
- *       overlay path for thread:opened / thread:forked.
+ *       overlay path for thread:opened.
  *
  * One job: install a served LiveTurnSnapshot for an addressed thread/turn so
  * the client resumes from authoritative server progress, never from renderer

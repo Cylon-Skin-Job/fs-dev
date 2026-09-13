@@ -67,18 +67,19 @@ harness frames.
 
 Privileged-thread changes additionally prove the decoded public route through
 the thread-domain guard: trusted New Chat, exact-session resume, Rename,
-Delete, Touch, Warm, and prompt-triggered activation reach their existing
+Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm, and
+prompt-triggered activation reach their existing
 owners; raw/standalone/request-asserted authority
 receives one fixed denial before manager, provider, persistence, mirror, UEB,
 or fan-out effects; and passive open is asserted against real SQLite and mirror
 bytes to prove it does not write resume/MRU or list state. Public-route tests
 also submit foreign-workspace IDs to passive open, assistant activation, Warm,
-prompt, Rename, Delete, and Touch and assert no foreign data or durable/provider
-effect. A deterministic A-to-B window canary proves passive open/list/link and
-search cannot use A's manager after B binds and resume normally only
+prompt, Rename, Delete, Copy Link, and model selection and assert no foreign
+data or durable/provider effect. A deterministic A-to-B window canary proves
+passive open/list/search cannot use A's manager after B binds and resume normally only
 after B's matching panel manager is installed. Deterministic lifecycle tests cover post-switch live-root resolution,
 concurrent B/C activation ordering, workspace switching during an awaited
-activation, binding-time Rename/Delete/Touch, binding during awaited
+activation, binding-time Rename/Delete/Copy Link/model selection, binding during awaited
 Create/Resume, prompt persistence/provider admission ordering, and injected
 session-open failure. They also exercise same workspace/thread identifiers at
 different roots and epochs, explicit idle-owner epoch adoption, same-wire
@@ -115,6 +116,20 @@ process-provisioned workspace. A real two-workspace switch canary omits the new
 panel installation and proves the stale-manager window returns the fixed
 unavailable response with no history, authority, filesystem, database, UEB,
 ledger, result, or fan-out effect.
+
+Thread Group activity/MRU coverage proves one accepted prompt writes exactly one
+`prompt:{threadId}:{turnId}` activity and advances the group clock once; a retry
+of the same thread/turn never advances twice; open/warm/completion/Stop/Rename
+never advance; a failed activity persist rejects the prompt through the normal
+acceptance path; and Legacy (`viewId: null`) population ordering stays
+deterministic. Canonical `thread:action` coverage proves Copy Link/Resolve
+Link/View Markdown/model selection traverse the registered route with
+same-request replay, different-input `request_mismatch`, versioned-URI
+round-trip, Legacy resolution without borrowing the active view, mirror-path
+validation, model/variant acceptance and rejection, fan-out, restart survival,
+and `surfaceId`-free envelopes. Search tests prove the group join returns
+`threadGroupId`, visible group name, and authoritative view binding without
+replacing exact exchange/session identity.
 
 <!-- children:start -->
 ## Children

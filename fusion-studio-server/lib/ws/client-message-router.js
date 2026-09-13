@@ -110,7 +110,25 @@ function createClientMessageRouter({
     ))
     .map(([client]) => client);
 
-  const threadHandlers = createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot });
+  // Per-recipient, workspace-qualified delivery for committed thread:action
+  // fan-out. Each recipient send is attempted independently by the handler.
+  const getWorkspaceRecipients = ({ workspaceId, projectRoot, workspaceEpoch, excludeWs } = {}) => {
+    const recipients = [];
+    for (const [client, clientSession] of sessions.entries()) {
+      if (client === excludeWs || client.readyState !== 1) continue;
+      if (clientSession.workspaceBindingState !== 'active') continue;
+      if (clientSession.currentWorkspaceId !== workspaceId) continue;
+      if (clientSession.projectRoot !== projectRoot) continue;
+      if (typeof workspaceEpoch === 'string'
+        && clientSession.workspaceEpoch !== workspaceEpoch) continue;
+      recipients.push({ ws: client, session: clientSession });
+    }
+    return recipients;
+  };
+
+  const threadHandlers = createThreadWsHandlers({
+    ws, session, wireLifecycle, projectRoot, getWorkspaceRecipients,
+  });
   const harnessHandlers = createHarnessWsHandlers({ ws });
   const chatTurnMetadataHandlers = createChatTurnMetadataHandlers({ ws, session });
   const chatTurnDiagnosticHandlers = createChatTurnDiagnosticHandlers({ ws, session });

@@ -320,43 +320,6 @@ describe('OpenCodeHarness', () => {
     ]);
   });
 
-  it('makes direct legacy Fork configuration inert before provider arguments', async () => {
-    const proc = createFakeProcess();
-    spawn.mockReturnValue(proc);
-    const updateHarnessConfig = jest.fn(async () => {});
-    const harness = new OpenCodeHarness();
-    const pendingFork = {
-      type: 'opencode-current-head',
-      status: 'pending',
-      sourceThreadId: 'thread-source',
-      sourceOpenCodeSessionId: 'ses_source',
-    };
-    const session = await harness.startThread('thread-fork', '/project', {}, {
-      harnessConfig: {
-        opencodeSessionId: 'ses_legacy_fork',
-        pendingFork,
-        forkProvenance: { ...pendingFork, status: 'created' },
-      },
-      updateHarnessConfig,
-    });
-
-    const eventsPromise = collect(session.sendMessage('fork prompt'));
-    expect(session.openCodeSessionId).toBeNull();
-    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_fresh'));
-    await eventsPromise;
-
-    expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project', 'fork prompt',
-    ]);
-    expect(spawn.mock.calls[0][1]).not.toContain('--fork');
-    expect(spawn.mock.calls[0][1]).not.toContain('ses_source');
-    expect(spawn.mock.calls[0][1]).not.toContain('ses_legacy_fork');
-    expect(updateHarnessConfig).toHaveBeenCalledTimes(1);
-    expect(updateHarnessConfig).toHaveBeenCalledWith({ opencodeSessionId: 'ses_fresh' });
-    expect(session.openCodeSessionId).toBe('ses_fresh');
-    expect(session.pendingFork).toBeNull();
-  });
-
   it('persists the first captured OpenCode session id once', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);

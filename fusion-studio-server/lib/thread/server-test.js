@@ -99,18 +99,20 @@ async function testThreadCreate() {
 }
 
 async function testThreadRename(threadId) {
-  console.log('\n✏️ Testing thread:rename...');
+  console.log('\n✏️ Testing thread:action rename...');
   
   const ws = await createWebSocket();
   await waitForMessage(ws, 'connected');
   
   ws.send(JSON.stringify({
-    type: 'thread:rename',
+    type: 'thread:action',
+    action: 'rename',
+    requestId: `smoke-rename-${Date.now()}`,
     threadId,
     name: 'Renamed Thread'
   }));
   
-  const renamed = await waitForMessage(ws, 'thread:renamed');
+  const renamed = await waitForMessage(ws, 'thread:action:completed');
   if (renamed.name !== 'Renamed Thread') {
     throw new Error('Rename failed');
   }
@@ -167,14 +169,19 @@ async function testMessageSend(threadId) {
 }
 
 async function testThreadDelete(threadId) {
-  console.log('\n🗑️ Testing thread:delete...');
+  console.log('\n🗑️ Testing thread:action delete...');
   
   const ws = await createWebSocket();
   await waitForMessage(ws, 'connected');
   
-  ws.send(JSON.stringify({ type: 'thread:delete', threadId }));
+  ws.send(JSON.stringify({
+    type: 'thread:action',
+    action: 'delete',
+    requestId: `smoke-delete-${Date.now()}`,
+    threadId
+  }));
   
-  const deleted = await waitForMessage(ws, 'thread:deleted');
+  const deleted = await waitForMessage(ws, 'thread:action:completed');
   if (deleted.threadId !== threadId) {
     throw new Error('Wrong thread deleted');
   }

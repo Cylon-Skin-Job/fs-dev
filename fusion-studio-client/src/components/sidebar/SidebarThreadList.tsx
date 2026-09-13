@@ -74,7 +74,7 @@ export function SidebarThreadList(props: SidebarThreadListProps) {
             ref={(el) => setThreadRef(thread.threadId, el)}
             className={rowClass}
             style={resolveCliAccent(thread.entry?.harnessId)}
-            onClick={() => handleOpenThread(thread.threadId)}
+            onClick={() => handleOpenThread(thread.threadId, thread.threadGroupId)}
           >
             {renamingId === thread.threadId ? (
               <input

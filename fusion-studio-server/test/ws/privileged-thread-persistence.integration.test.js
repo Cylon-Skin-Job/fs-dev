@@ -241,6 +241,9 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
     const db = modules.getDb();
     const createdRow = await db('threads').where({ thread_id: threadId }).first();
     expect(createdRow).toMatchObject({ workspace_id: WORKSPACE_ID, harness_id: 'opencode' });
+    const groupAtCreation = await db('thread_groups')
+      .where({ current_primary_thread_id: threadId })
+      .first();
     mirror = path.join(
       projectRoot, 'ai', 'Test-Thread-Authority', 'Data', 'Chatlogs', 'threads', `${threadId}.md`,
     );
@@ -264,9 +267,6 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
     for (const foreignRequest of [
       { type: 'thread:open', threadId: foreignThreadId },
       { type: 'thread:open-assistant', threadId: foreignThreadId },
-      { type: 'thread:rename', threadId: foreignThreadId, name: 'Cross-workspace rename' },
-      { type: 'thread:delete', threadId: foreignThreadId },
-      { type: 'thread:touch', threadId: foreignThreadId },
       { type: 'thread:warm', threadId: foreignThreadId },
       { type: 'prompt', threadId: foreignThreadId, user_input: 'cross-workspace prompt' },
     ]) {
@@ -274,6 +274,21 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
         foreignRequest,
         (value) => value.type === 'error',
       )).resolves.toMatchObject({ type: 'error' });
+    }
+    for (const foreignAction of [
+      {
+        type: 'thread:action', action: 'rename', requestId: 'foreign-rename',
+        threadId: foreignThreadId, name: 'Cross-workspace rename',
+      },
+      {
+        type: 'thread:action', action: 'delete', requestId: 'foreign-delete',
+        threadId: foreignThreadId,
+      },
+    ]) {
+      await expect(firstClient.send(
+        foreignAction,
+        (value) => value.type === 'thread:action:error',
+      )).resolves.toMatchObject({ type: 'thread:action:error', code: 'not_found' });
     }
     expect(await db('threads').where({ thread_id: foreignThreadId }).first()).toEqual(foreignSnapshot);
     expect(await db('threads').count({ count: '*' }).first()).toEqual(crossWorkspaceSnapshot.threadCount);
@@ -319,7 +334,6 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
       expect(fs.readFileSync(mirror, 'utf8')).toBe(passiveMirror);
 
       for (const denied of [
-        { type: 'thread:touch', threadId, role: 'trusted-shell' },
         { type: 'thread:warm', threadId, proof: 'forged' },
       ]) {
         await expect(standalone.send(denied, (value) => value.type === 'error')).resolves.toMatchObject({
@@ -347,13 +361,14 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
     expect(resumedRow.resumed_at).toEqual(expect.any(String));
     expect(resumedRow.updated_at).toBeGreaterThan(createdRow.updated_at);
 
-    await new Promise((resolve) => setTimeout(resolve, 5));
-    await firstClient.send(
-      { type: 'thread:touch', threadId },
-      (value) => value.type === 'thread:list',
-    );
-    const touchedRow = await db('threads').where({ thread_id: threadId }).first();
-    expect(touchedRow.updated_at).toBeGreaterThan(resumedRow.updated_at);
+    // `thread:touch` no longer exists; the visible-list MRU clock is the group
+    // `updated_at` and is advanced only by creation and accepted prompts. An
+    // assistant resume is an open, not an accepted prompt, so it must not
+    // advance the group clock.
+    const groupAfterResume = await db('thread_groups')
+      .where({ current_primary_thread_id: threadId })
+      .first();
+    expect(groupAfterResume.updated_at).toBe(groupAtCreation.updated_at);
 
   } finally {
     await closeClient(firstClient.ws);
@@ -371,7 +386,7 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
       { type: 'thread:list' },
       (value) => value.type === 'thread:list',
     );
-    expect(listed.threads.map((thread) => thread.threadId)).toContain(threadId);
+    expect(listed.threads.map((thread) => thread.currentPrimaryThreadId)).toContain(threadId);
     await secondClient.send(
       { type: 'thread:open-assistant', threadId },
       (value) => value.type === 'thread:opened' && value.threadId === threadId,
@@ -379,8 +394,12 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
     await secondClient.waitFor((value) => value.type === 'wire_ready' && value.threadId === threadId);
 
     await secondClient.send(
-      { type: 'thread:rename', threadId, name: 'Trusted persisted rename' },
-      (value) => value.type === 'thread:renamed' && value.threadId === threadId,
+      {
+        type: 'thread:action', action: 'rename', requestId: 'persist-rename',
+        threadId, name: 'Trusted persisted rename',
+      },
+      (value) => value.type === 'thread:action:completed'
+        && value.action === 'rename' && value.threadId === threadId,
     );
     const db = modules.getDb();
     expect(await db('threads').where({ thread_id: threadId }).first()).toMatchObject({
@@ -402,8 +421,12 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
     expect(providerSpawns).toEqual(beforeFork.spawns);
 
     await secondClient.send(
-      { type: 'thread:delete', threadId },
-      (value) => value.type === 'thread:deleted' && value.threadId === threadId,
+      {
+        type: 'thread:action', action: 'delete', requestId: 'persist-delete',
+        threadId,
+      },
+      (value) => value.type === 'thread:action:completed'
+        && value.action === 'delete' && value.threadId === threadId,
     );
     expect(await db('threads').where({ thread_id: threadId }).first()).toBeUndefined();
     expect(fs.existsSync(mirror)).toBe(false);

@@ -24,9 +24,14 @@ async function search({ workspaceId, query, limit = 50, offset = 0 }) {
   const db = getDb();
   const likePattern = `%${query}%`;
 
-  // Build base query joining exchanges to threads
+  // Build base query joining exchanges to threads, plus the Thread Group
+  // ownership. Search stays exchange/session-backed: `threadId` and
+  // `exchangeId` remain the identities; the group join only adds query
+  // context (`SPEC-01 §8.5`).
   let baseQuery = db('exchanges')
     .join('threads', 'exchanges.thread_id', 'threads.thread_id')
+    .leftJoin('thread_group_members as tgm', 'tgm.thread_id', 'threads.thread_id')
+    .leftJoin('thread_groups as tg', 'tg.group_id', 'tgm.group_id')
     .where(function () {
       this.whereLike('exchanges.user_input', likePattern)
         .orWhereLike('exchanges.assistant', likePattern);
@@ -58,7 +63,10 @@ async function search({ workspaceId, query, limit = 50, offset = 0 }) {
       'threads.name as thread_name',
       'threads.workspace_id',
       'threads.scope',
-      'threads.view_id'
+      'threads.view_id',
+      'tg.group_id as thread_group_id',
+      'tg.name as thread_group_name',
+      'tg.view_id as thread_group_view_id'
     )
     .orderBy('exchanges.ts', 'desc')
     .limit(limit)
@@ -87,6 +95,11 @@ async function search({ workspaceId, query, limit = 50, offset = 0 }) {
       workspaceId: row.workspace_id,
       scope: row.scope,
       viewId: row.view_id,
+      // Group context is joined for query/worksurface only; it never replaces
+      // the exact exchange/session identity.
+      threadGroupId: row.thread_group_id ?? null,
+      threadGroupName: row.thread_group_name ?? null,
+      groupViewId: row.thread_group_view_id ?? null,
       seq: row.seq,
       timestamp: row.ts,
       userInput: row.user_input,

@@ -15,12 +15,15 @@ import {
 } from '../../state/chatComposerDraftStore';
 import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
-import { threadLinkIntent } from '../../lib/thread-link-intent';
+import {
+  threadActionCopyLink,
+  threadActionRename,
+  threadActionViewMarkdown,
+} from '../../lib/ws/threadGroupRows';
 import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { ChatInputRef } from '../ChatInput';
 import { EMPTY_MESSAGES, EMPTY_SEGMENTS, selectChatState } from './chatAreaConstants';
-import { useComposerForkAction } from './useComposerForkAction';
 import {
   requestChatTurnDiagnostic,
   type ChatDiagnosticRouteIds,
@@ -256,8 +259,11 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     const tid = store.currentThreadId;
     const socket = store.ws;
     if (tid && socket && socket.readyState === WebSocket.OPEN) {
-      threadLinkIntent.set('copy');
-      socket.send(JSON.stringify({ type: 'thread:copyLink', threadId: tid }));
+      const current = store.threads.find((t) => t.threadId === tid);
+      socket.send(JSON.stringify(threadActionCopyLink({
+        threadGroupId: current?.threadGroupId,
+        threadId: tid,
+      })));
     }
     setMoreMenuOpen(false);
   }, []);
@@ -273,11 +279,11 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     const next = window.prompt('Rename thread:', currentName);
     const trimmed = next?.trim();
     if (trimmed && trimmed !== currentName) {
-      socket.send(JSON.stringify({
-        type: 'thread:rename',
+      socket.send(JSON.stringify(threadActionRename({
+        threadGroupId: current?.threadGroupId,
         threadId: tid,
         name: trimmed,
-      }));
+      })));
     }
   }, []);
 
@@ -286,8 +292,11 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     const tid = store.currentThreadId;
     const socket = store.ws;
     if (tid && socket && socket.readyState === WebSocket.OPEN) {
-      threadLinkIntent.set('view');
-      socket.send(JSON.stringify({ type: 'thread:copyLink', threadId: tid }));
+      const current = store.threads.find((t) => t.threadId === tid);
+      socket.send(JSON.stringify(threadActionViewMarkdown({
+        threadGroupId: current?.threadGroupId,
+        threadId: tid,
+      })));
     }
     setMoreMenuOpen(false);
   }, []);
@@ -391,16 +400,7 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
   const isTurnFinalizing = Boolean(pendingTurnEnd || pendingExchangeSaveTurnId);
   const showOrb = (isSendingForCurrentThread || currentTurn?.status === 'streaming') && segments.length === 0 && !isTurnFinalizing;
   const isTurnActive = (!!currentTurn || isSendingForCurrentThread) && !isTurnFinalizing;
-  const { isForkThreadDisabled, handleForkThread } = useComposerForkAction({
-    currentThreadId,
-    currentThread,
-    isActive,
-    noThread,
-    isAcceptancePending,
-    isTurnActive,
-    isTurnFinalizing,
-    messageCount: messages.length,
-  });
+
 
   const sendToThread = useCallback((threadId: string, text: string) => {
     if (hasPendingAcceptance(threadId)) return;
@@ -590,8 +590,6 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     handleStop,
     warmCurrentThread,
     isAcceptancePending,
-    isForkThreadDisabled,
-    handleForkThread,
     inputPlaceholder,
     activeWorkspaceId,
     composerDraft,

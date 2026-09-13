@@ -72,10 +72,11 @@ asynchronous product cleanup before process exit so each activated connection
 completes durable session suspension.
 
 At the decoded thread-message boundary, New Chat, assistant activation/resume,
-Rename, Delete, Touch, Warm, and prompt-triggered runtime activation require
+Rename, Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm,
+and prompt-triggered runtime activation require
 that exact private role before their current owners
 run. Assistant resume is privileged because its current implementation writes
-resumed and MRU metadata in addition to launching the stored provider session.
+resumed metadata in addition to launching the stored provider session.
 Passive `thread:open` retains standalone hydration without writing `resumed_at`,
 `updated_at`, or delayed list state. Legacy Fork is always denied before
 thread-manager or provider work, and stored Fork-era provider state is removed
@@ -101,7 +102,8 @@ the shared adapter for another workspace cannot retarget an existing session's
 CLI, model, mode, or configured-secret provider. Ownership transfers and
 deletion are serialized per connection across close/open and workspace-switch
 boundaries. A separate per-connection workspace-operation lease linearizes
-workspace binding with Create/Resume, Rename, Delete, Touch, Warm, and prompt
+workspace binding with Create/Resume, Rename, Delete, Copy Link, Resolve Link,
+View Markdown, model selection, Warm, and prompt
 acceptance through persistence and provider admission. If the action wins it
 finishes that bounded admission before binding begins; if binding wins, the
 action is denied before manager, database, list, event, or provider effects.
@@ -128,7 +130,7 @@ client/epoch owner. If the target exits while predecessor retirement is
 awaited, activation rolls back and emits no readiness or delivery ownership.
 Passive manager-backed reads use the same live pair check without requiring
 trusted mutation authority. After an A-to-B bind, A's retained manager cannot
-serve open/list/link/search data while B's panel manager is pending;
+serve open/list/search data while B's panel manager is pending;
 normal B reads resume after the exact B manager is installed.
 The isolated agent-tool fixture is bound to its startup-provisioned thread,
 workspace, and root and holds the same workspace-operation lease across passive
@@ -141,11 +143,22 @@ The persistent unit is a thread.
 
 | Table | Purpose |
 |---|---|
-| `threads` | Metadata: id, workspace, scope, view, name, harness, status, MRU |
+| `threads` | Session metadata: id, workspace, scope, view, name, harness, status, per-session MRU |
+| `thread_groups` | Visible Thread: workspace, immutable view binding (`null` = Legacy), name, current primary, `updated_at` visible-list MRU |
+| `thread_group_members` | Exactly one group per session (`thread_id` globally unique) |
+| `thread_group_activity_events` | Durable idempotent `initial` / `prompt-accepted` MRU causes |
 | `exchanges` | Rich turn history: user input, assistant parts, metadata, sequence |
 
 Markdown chat files still exist for compatibility and link/view workflows. The
 rich renderer hydrates from SQLite exchanges.
+
+Prompt acceptance mints the turn identity and records
+`prompt:{threadId}:{turnId}` plus the group `updated_at` advance in one
+transaction **before** `message:sent` or provider dispatch. The activity uses
+the immutable workspace/thread/turn authority and never re-reads the current
+panel to retarget the turn; a failed persist rejects the prompt through the
+normal acceptance path. The visible-list MRU clock belongs to the group, not to
+`threads.updated_at`, and only creation and accepted prompts advance it.
 
 ## Workspace Open
 

@@ -12,6 +12,22 @@ const mockState = {
     workspaceId: 'workspace-1',
     projectRoot: '/repo',
     openSession: jest.fn(() => Promise.resolve()),
+    threadGroups: {
+      performAction: jest.fn(async (action, params) => {
+        mockOwnerEffects.push([action, params.threadGroupId ?? null]);
+        return {
+          ok: true,
+          result: {
+            action,
+            threadGroupId: params.threadGroupId ?? null,
+            threadId: params.threadId ?? null,
+            workspaceId: 'workspace-1',
+            viewId: null,
+            ...(action === 'rename' ? { name: params.name } : {}),
+          },
+        };
+      }),
+    },
   },
 };
 
@@ -34,22 +50,9 @@ jest.mock('../../lib/thread', () => ({
       }));
       return mockState.threadId;
     }),
-    handleThreadRename: jest.fn(async (ws, message) => {
-      mockOwnerEffects.push(['rename', message.threadId]);
-      ws.send(JSON.stringify({ type: 'thread:renamed', threadId: message.threadId, name: message.name }));
-    }),
-    handleThreadDelete: jest.fn(async (ws, message) => {
-      mockOwnerEffects.push(['delete', message.threadId]);
-      ws.send(JSON.stringify({ type: 'thread:deleted', threadId: message.threadId }));
-    }),
     handleThreadOpen: jest.fn(async (ws, message) => {
       mockOwnerEffects.push(['open', message.threadId]);
       ws.send(JSON.stringify({ type: 'thread:opened', threadId: message.threadId }));
-    }),
-    handleThreadCopyLink: jest.fn(),
-    handleThreadTouch: jest.fn(async (ws, message) => {
-      mockOwnerEffects.push(['touch', message.threadId]);
-      ws.send(JSON.stringify({ type: 'thread:list', threads: [] }));
     }),
     handleThreadSearch: jest.fn(),
     sendThreadList: jest.fn(async (ws) => {
@@ -250,11 +253,26 @@ describe('public privileged thread route', () => {
       expect.objectContaining({ type: 'thread:opened', threadId: 'thread-created' }),
       expect.objectContaining({ type: 'wire_ready', threadId: 'thread-created' }),
     ]));
-    await expect(request(ws, { type: 'thread:rename', threadId: 'thread-created', name: 'Renamed' })).resolves.toMatchObject({ type: 'thread:renamed' });
-    await expect(request(ws, { type: 'thread:touch', threadId: 'thread-created' })).resolves.toMatchObject({ type: 'thread:list' });
+    await expect(request(ws, {
+      type: 'thread:action', action: 'rename', requestId: 'req-rename',
+      threadGroupId: 'tg-created', threadId: 'thread-created', name: 'Renamed',
+    })).resolves.toMatchObject({
+      type: 'thread:action:completed', action: 'rename', threadGroupId: 'tg-created', name: 'Renamed',
+    });
+    await expect(request(ws, {
+      type: 'thread:action', action: 'copy_link', requestId: 'req-link',
+      threadGroupId: 'tg-created', threadId: 'thread-created',
+    })).resolves.toMatchObject({
+      type: 'thread:action:completed', action: 'copy_link', threadGroupId: 'tg-created',
+    });
     ws.send(JSON.stringify({ type: 'thread:warm', threadId: 'thread-created' }));
     await new Promise((resolve) => setImmediate(resolve));
-    await expect(request(ws, { type: 'thread:delete', threadId: 'thread-created' })).resolves.toMatchObject({ type: 'thread:deleted' });
+    await expect(request(ws, {
+      type: 'thread:action', action: 'delete', requestId: 'req-delete',
+      threadGroupId: 'tg-created', threadId: 'thread-created',
+    })).resolves.toMatchObject({
+      type: 'thread:action:completed', action: 'delete', threadGroupId: 'tg-created', deleted: true,
+    });
     const beforeFork = [...mockOwnerEffects];
     await expect(request(ws, { type: 'thread:fork', sourceThreadId: 'thread-created' })).resolves.toEqual({
       type: 'error', code: 'THREAD_FORK_UNAVAILABLE', message: 'Thread fork is unavailable',
@@ -263,10 +281,10 @@ describe('public privileged thread route', () => {
     expect(mockOwnerEffects).toEqual(expect.arrayContaining([
       ['open-assistant', null],
       ['open-assistant', 'thread-created'],
-      ['rename', 'thread-created'],
-      ['touch', 'thread-created'],
+      ['rename', 'tg-created'],
+      ['copy_link', 'tg-created'],
       ['warm', 'thread-created'],
-      ['delete', 'thread-created'],
+      ['delete', 'tg-created'],
       ['provider', 'thread-created'],
     ]));
     await closeClient(ws);
@@ -284,9 +302,14 @@ describe('public privileged thread route', () => {
     const readEffects = [...mockOwnerEffects];
     for (const message of [
       { type: 'thread:open-assistant', role: 'trusted-shell', model: { permission: 'all' } },
-      { type: 'thread:rename', threadId: 'thread-existing', name: 'No', proof: 'forged' },
-      { type: 'thread:delete', threadId: 'thread-existing', trusted: true },
-      { type: 'thread:touch', threadId: 'thread-existing', role: 'trusted-shell' },
+      {
+        type: 'thread:action', action: 'rename', requestId: 'req-forged',
+        threadGroupId: 'tg-existing', name: 'No', proof: 'forged',
+      },
+      {
+        type: 'thread:action', action: 'delete', requestId: 'req-forged',
+        threadGroupId: 'tg-existing', trusted: true,
+      },
       { type: 'thread:warm', threadId: 'thread-existing', proof: 'forged' },
     ]) {
       await expect(request(ws, message)).resolves.toEqual({

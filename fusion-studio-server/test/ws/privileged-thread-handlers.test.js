@@ -1,5 +1,7 @@
 'use strict';
 
+const mockPerformAction = jest.fn();
+
 jest.mock('../../lib/thread', () => ({
   RUNTIME_STATES: {
     COLD: 'cold',
@@ -13,16 +15,17 @@ jest.mock('../../lib/thread', () => ({
     handleThreadOpenAssistant: jest.fn((ws, message) => Promise.resolve(
       message.threadId || 'thread-created',
     )),
-    handleThreadRename: jest.fn(() => Promise.resolve()),
-    handleThreadDelete: jest.fn(() => Promise.resolve()),
-    handleThreadCopyLink: jest.fn(() => Promise.resolve()),
-    handleThreadTouch: jest.fn(() => Promise.resolve()),
     handleThreadSearch: jest.fn(() => Promise.resolve()),
     activateThreadSession: jest.fn(() => Promise.resolve()),
     isActivationBindingCurrent: jest.fn(() => true),
     getState: jest.fn(() => ({
       threadId: 'thread-created',
-      threadManager: { workspaceId: 'workspace-1', projectRoot: '/repo', openSession: jest.fn() },
+      threadManager: {
+        workspaceId: 'workspace-1',
+        projectRoot: '/repo',
+        openSession: jest.fn(),
+        threadGroups: { performAction: mockPerformAction },
+      },
     })),
     sendThreadList: jest.fn(() => Promise.resolve()),
   },
@@ -67,15 +70,32 @@ function make(role, sessionPatch = {}) {
 describe('privileged thread route gate', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockPerformAction.mockReset();
+    mockPerformAction.mockImplementation(async (action, params) => ({
+      ok: true,
+      result: {
+        action,
+        threadGroupId: params.threadGroupId ?? null,
+        threadId: params.threadId ?? null,
+        workspaceId: 'workspace-1',
+        viewId: null,
+        name: params.name,
+      },
+    }));
     ThreadWebSocketHandler.getState.mockReturnValue({
       threadId: 'thread-created',
-      threadManager: { workspaceId: 'workspace-1', projectRoot: '/repo', openSession: jest.fn() },
+      threadManager: {
+        workspaceId: 'workspace-1',
+        projectRoot: '/repo',
+        openSession: jest.fn(),
+        threadGroups: { performAction: mockPerformAction },
+      },
     });
     ThreadWebSocketHandler.isActivationBindingCurrent.mockReturnValue(true);
     threadRuntimeManager.getRuntimeState.mockReturnValue('cold');
   });
 
-  for (const type of ['thread:open-assistant', 'thread:rename', 'thread:delete', 'thread:touch', 'thread:warm']) {
+  for (const type of ['thread:open-assistant', 'thread:action', 'thread:warm']) {
     test(`${type} denies untrusted/request-asserted authority before all effects`, async () => {
       const existingWire = { kill: jest.fn() };
       const { handlers, session, ws } = make('untrusted', { wire: existingWire });
@@ -95,18 +115,18 @@ describe('privileged thread route gate', () => {
       expect(existingWire.kill).not.toHaveBeenCalled();
       expect(ThreadWebSocketHandler.getState).not.toHaveBeenCalled();
       expect(ThreadWebSocketHandler.handleThreadOpenAssistant).not.toHaveBeenCalled();
-      expect(ThreadWebSocketHandler.handleThreadRename).not.toHaveBeenCalled();
-      expect(ThreadWebSocketHandler.handleThreadDelete).not.toHaveBeenCalled();
-      expect(ThreadWebSocketHandler.handleThreadTouch).not.toHaveBeenCalled();
+      expect(mockPerformAction).not.toHaveBeenCalled();
       expect(spawnThreadWire).not.toHaveBeenCalled();
     });
   }
 
   test('an enumerable role copied into server state cannot authorize', async () => {
     const { handlers, ws } = make(null, { connectionRole: 'trusted-shell' });
-    await handlers['thread:rename']({ threadId: 'thread-1', name: 'Nope' });
+    await handlers['thread:action']({
+      action: 'rename', requestId: 'req-1', threadGroupId: 'tg-1', name: 'Nope',
+    });
     expect(JSON.parse(ws.send.mock.calls[0][0]).code).toBe('THREAD_MUTATION_DENIED');
-    expect(ThreadWebSocketHandler.handleThreadRename).not.toHaveBeenCalled();
+    expect(mockPerformAction).not.toHaveBeenCalled();
   });
 
   test('trusted New Chat crosses the route and launches its provider', async () => {
@@ -166,34 +186,54 @@ describe('privileged thread route gate', () => {
     expect(spawnThreadWire).toHaveBeenCalledTimes(1);
   });
 
-  test('trusted Rename and Delete cross the existing owning handlers', async () => {
+  test('trusted Rename and Delete cross the canonical thread:action owner', async () => {
     const { handlers, ws } = make('trusted-shell');
-    const rename = { threadId: 'thread-1', name: 'Renamed' };
-    const remove = { threadId: 'thread-1' };
-    await handlers['thread:rename'](rename);
-    await handlers['thread:delete'](remove);
-    expect(ThreadWebSocketHandler.handleThreadRename).toHaveBeenCalledWith(ws, rename);
-    expect(ThreadWebSocketHandler.handleThreadDelete).toHaveBeenCalledWith(ws, remove);
+    await handlers['thread:action']({
+      action: 'rename', requestId: 'req-r', threadGroupId: 'tg-1', threadId: 'thread-1', name: 'Renamed',
+    });
+    await handlers['thread:action']({
+      action: 'delete', requestId: 'req-d', threadGroupId: 'tg-1', threadId: 'thread-1',
+    });
+    expect(mockPerformAction).toHaveBeenNthCalledWith(1, 'rename', expect.objectContaining({
+      threadGroupId: 'tg-1', threadId: 'thread-1', name: 'Renamed', requestId: 'req-r',
+    }));
+    expect(mockPerformAction).toHaveBeenNthCalledWith(2, 'delete', expect.objectContaining({
+      threadGroupId: 'tg-1', threadId: 'thread-1', requestId: 'req-d',
+    }));
+    const frames = ws.send.mock.calls.map((call) => JSON.parse(call[0]));
+    expect(frames.filter((frame) => frame.type === 'thread:action:completed')).toHaveLength(2);
   });
 
-  test('trusted Touch and Warm cross their owners', async () => {
+  test('thread:action validates action and requestId before the group owner', async () => {
+    const { handlers, ws } = make('trusted-shell');
+    await handlers['thread:action']({ action: 'compact', requestId: 'req-x', threadId: 'thread-1' });
+    await handlers['thread:action']({ action: 'rename', threadGroupId: 'tg-1', name: 'Nope' });
+    const frames = ws.send.mock.calls.map((call) => JSON.parse(call[0]));
+    expect(frames[0]).toMatchObject({ type: 'thread:action:error', code: 'invalid_action' });
+    expect(frames[1]).toMatchObject({ type: 'thread:action:error', code: 'request_invalid' });
+    expect(mockPerformAction).not.toHaveBeenCalled();
+  });
+
+  test('trusted Warm crosses its owner', async () => {
     const { threadRuntimeController } = require('../../lib/thread');
     const { handlers, ws, session } = make('trusted-shell');
-    await handlers['thread:touch']({ type: 'thread:touch', threadId: 'thread-1' });
     await handlers['thread:warm']({ type: 'thread:warm', threadId: 'thread-1' });
-    expect(ThreadWebSocketHandler.handleThreadTouch).toHaveBeenCalledWith(ws, {
-      type: 'thread:touch', threadId: 'thread-1',
-    });
     expect(threadRuntimeController.warmRuntimeForIntent).toHaveBeenCalledWith(expect.objectContaining({
       ws, session, clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
     }));
   });
 
+  test('the removed thread:touch and thread:copyLink routes leave no handler', () => {
+    const { handlers } = make('trusted-shell');
+    expect(handlers['thread:touch']).toBeUndefined();
+    expect(handlers['thread:copyLink']).toBeUndefined();
+  });
+
   test.each([
-    ['thread:rename', 'handleThreadRename', { type: 'thread:rename', threadId: 'thread-1', name: 'Nope' }],
-    ['thread:delete', 'handleThreadDelete', { type: 'thread:delete', threadId: 'thread-1' }],
-    ['thread:touch', 'handleThreadTouch', { type: 'thread:touch', threadId: 'thread-1' }],
-  ])('%s queued behind workspace binding denies before its durable owner', async (type, owner, message) => {
+    ['thread:action', {
+      action: 'rename', requestId: 'req-q', threadGroupId: 'tg-1', name: 'Nope',
+    }],
+  ])('%s queued behind workspace binding denies before its durable owner', async (type, message) => {
     const { handlers, session, ws } = make('trusted-shell', {
       workspaceBindingState: 'active',
       workspaceEpoch: 'epoch-a',
@@ -208,7 +248,7 @@ describe('privileged thread route gate', () => {
 
     await Promise.all([binding, handlers[type](message)]);
 
-    expect(ThreadWebSocketHandler[owner]).not.toHaveBeenCalled();
+    expect(mockPerformAction).not.toHaveBeenCalled();
     expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
       type: 'error', code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
     });
@@ -351,11 +391,9 @@ describe('privileged thread route gate', () => {
   test('standalone untrusted read-only thread routes remain available', async () => {
     const { handlers, ws } = make('untrusted');
     await handlers['thread:open']({ threadId: 'thread-1' });
-    await handlers['thread:copyLink']({ threadId: 'thread-1' });
     await handlers['thread:search']({ query: 'term' });
     await handlers['thread:list']();
     expect(ThreadWebSocketHandler.handleThreadOpen).toHaveBeenCalled();
-    expect(ThreadWebSocketHandler.handleThreadCopyLink).toHaveBeenCalled();
     expect(ThreadWebSocketHandler.handleThreadSearch).toHaveBeenCalled();
     expect(ThreadWebSocketHandler.sendThreadList).toHaveBeenCalled();
     expect(ws.send).not.toHaveBeenCalled();
@@ -395,15 +433,13 @@ describe('privileged thread route gate', () => {
     ThreadWebSocketHandler.getState.mockReturnValue(state);
 
     await handlers['thread:open']({ type: 'thread:open', threadId: 'thread-a' });
-    await handlers['thread:copyLink']({ type: 'thread:copyLink', threadId: 'thread-a' });
     await handlers['thread:list']({ type: 'thread:list' });
     await handlers['thread:search']({ type: 'thread:search', query: 'secret' });
 
     expect(ThreadWebSocketHandler.handleThreadOpen).not.toHaveBeenCalled();
-    expect(ThreadWebSocketHandler.handleThreadCopyLink).not.toHaveBeenCalled();
     expect(ThreadWebSocketHandler.sendThreadList).not.toHaveBeenCalled();
     expect(ThreadWebSocketHandler.handleThreadSearch).not.toHaveBeenCalled();
-    expect(ws.send).toHaveBeenCalledTimes(4);
+    expect(ws.send).toHaveBeenCalledTimes(3);
     for (const [raw] of ws.send.mock.calls) {
       expect(JSON.parse(raw)).toEqual({ type: 'error', message: 'No active workspace' });
     }
@@ -411,12 +447,10 @@ describe('privileged thread route gate', () => {
     ws.send.mockClear();
     state.threadManager = { workspaceId: 'workspace-b', projectRoot: '/repo-b' };
     await handlers['thread:open']({ type: 'thread:open', threadId: 'thread-b' });
-    await handlers['thread:copyLink']({ type: 'thread:copyLink', threadId: 'thread-b' });
     await handlers['thread:list']({ type: 'thread:list' });
     await handlers['thread:search']({ type: 'thread:search', query: 'current' });
 
     expect(ThreadWebSocketHandler.handleThreadOpen).toHaveBeenCalledTimes(1);
-    expect(ThreadWebSocketHandler.handleThreadCopyLink).toHaveBeenCalledTimes(1);
     expect(ThreadWebSocketHandler.sendThreadList).toHaveBeenCalledTimes(1);
     expect(ThreadWebSocketHandler.handleThreadSearch).toHaveBeenCalledTimes(1);
     expect(session.workspaceBindingState).toBe('active');
