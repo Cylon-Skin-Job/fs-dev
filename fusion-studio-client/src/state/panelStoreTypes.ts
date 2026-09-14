@@ -27,6 +27,29 @@ import type {
 import type { PanelConfig } from '../lib/panels';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
 import type { TabPolicyProjection } from '../lib/tab-policy-projection';
+import type {
+  ChatPopulationAddress,
+  HarnessSelectionAck,
+  PendingHarnessSelection,
+  PendingThreadOpenRequest,
+  ThreadHarnessSelection,
+  ThreadOpenResponseMatch,
+} from './slices/chatSurfaceSlice';
+
+/** Portable `{model, variant}` snapshot supplied by an exact-session surface. */
+export interface SendHarnessConfig {
+  model: string;
+  variant?: string | null;
+}
+
+export interface SendMessageOptions {
+  /**
+   * Exact-session acknowledged selection. Present (possibly with `undefined`
+   * harnessConfig) when a SPEC-02 surface drives Send; absent for the legacy
+   * panel-global path.
+   */
+  harnessConfig?: SendHarnessConfig;
+}
 
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 export type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
@@ -155,7 +178,12 @@ export interface AppState {
   // ── WebSocket ──
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
-  sendMessage: (text: string, threadId?: string | null, attachments?: ChatLinkAttachment[]) => void;
+  sendMessage: (
+    text: string,
+    threadId?: string | null,
+    attachments?: ChatLinkAttachment[],
+    options?: SendMessageOptions,
+  ) => void;
   warmThread: (threadId?: string | null) => void;
 
   // ── Project root ──
@@ -170,11 +198,66 @@ export interface AppState {
   tabPolicies: TabPolicyProjection | null;
   setTabPolicies: (policies: TabPolicyProjection | null) => void;
 
-  // ── Context usage ──
+  // ── Context usage (legacy workspace-global compatibility mirror) ──
   contextUsage: number;
   setContextUsage: (usage: number) => void;
   tokenUsage: TokenUsage | null;
   setTokenUsage: (usage: TokenUsage | null) => void;
+
+  // ── Chat surface session facts keyed by exact threadId (SPEC-02 §6.2) ──
+  contextUsageByThread: Record<string, number>;
+  setThreadContextUsage: (threadId: string, usage: number) => void;
+  tokenUsageByThread: Record<string, TokenUsage | null>;
+  setThreadTokenUsage: (threadId: string, usage: TokenUsage | null) => void;
+  clearThreadUsage: (threadId: string) => void;
+  wireReadyByThread: Record<string, boolean>;
+  setThreadWireReady: (threadId: string, ready: boolean) => void;
+  clearThreadWireReady: (threadId: string) => void;
+  /** Acknowledged + optimistic harness selection keyed by exact threadId. */
+  harnessSelectionByThread: Record<string, ThreadHarnessSelection>;
+  hydrateHarnessSelection: (
+    threadId: string,
+    harnessConfig: Record<string, unknown> | null | undefined,
+    harnessId?: string | null,
+  ) => void;
+  beginHarnessSelection: (threadId: string, pending: PendingHarnessSelection) => void;
+  ackHarnessSelection: (
+    threadId: string,
+    requestId: string | null | undefined,
+    ack: HarnessSelectionAck,
+  ) => void;
+  rejectHarnessSelection: (threadId: string, requestId: string | null | undefined) => void;
+  clearThreadHarnessSelection: (threadId: string) => void;
+  // ── Group populations and selection keyed by {workspaceId, viewId} (§6.1) ──
+  // Legacy is the explicit `viewId: null` population; view populations are
+  // keyed by their real view id. A view id alone never addresses a population.
+  threadGroupsByWorkspaceAndView: Record<string, Record<string, Thread[]>>;
+  currentThreadGroupIdByWorkspaceAndView: Record<string, Record<string, string | null>>;
+  legacyThreadGroupsByWorkspaceId: Record<string, Thread[]>;
+  currentLegacyThreadGroupIdByWorkspaceId: Record<string, string | null>;
+  setThreadGroupPopulation: (
+    workspaceId: string,
+    viewId: string | null,
+    rows: Thread[],
+  ) => void;
+  setCurrentThreadGroupId: (
+    workspaceId: string,
+    viewId: string | null,
+    threadGroupId: string | null,
+  ) => void;
+
+  /**
+   * Correlated `thread:open` requests: a late `thread:opened` response may only
+   * change the visible selection of its own `{workspaceId, viewId}` population
+   * when it matches a recorded request or the already selected group (§6.1
+   * late-response discipline).
+   */
+  pendingThreadOpens: PendingThreadOpenRequest[];
+  requestThreadOpen: (target: PendingThreadOpenRequest) => void;
+  consumeThreadOpen: (
+    address: ChatPopulationAddress,
+    match: ThreadOpenResponseMatch,
+  ) => void;
 
   // ── Thread management (RCC-0095: single workspace chat) ──
   threads: Thread[];
@@ -190,7 +273,16 @@ export interface AppState {
   setWireReady: (ready: boolean) => void;
   addThread: (thread: Thread) => void;
   updateThread: (threadId: string, updates: Partial<Thread['entry']>) => void;
-  removeThread: (threadId: string) => void;
+  /**
+   * Remove one exact session. Optional `threadGroupId`/`viewId` come from the
+   * accepted delete ack so the qualified population selection is cleared even
+   * when the row is absent from the read model.
+   */
+  removeThread: (
+    threadId: string,
+    threadGroupId?: string | null,
+    viewId?: string | null,
+  ) => void;
 
   // ── Per-view UI state (SPEC-26c-2) ──
   viewStates: Record<string, ViewUIState>;
@@ -264,6 +356,17 @@ export interface AppState {
   setConnectingHarnessId: (id: string | null) => void;
   selectHarness: (harnessId: string, modelId?: string) => void;
   createDefaultAssistantThread: () => void;
+  /**
+   * SPEC-02 §6.2 / 02A-D2 (resolved in 02C): the pending new-thread
+   * `connecting` state has no `threadId` yet. `connectingHarnessId` remains
+   * the workspace-global mirror for the single production Legacy host, while
+   * `connectingHarnessBySurface` is the surface-owned truth for explicit
+   * mounts (keyed by the transient `surfaceId`). Two mounted surfaces can
+   * never display each other's connecting state.
+   */
+  connectingHarnessBySurface: Record<string, string>;
+  setConnectingHarnessForSurface: (surfaceId: string, harnessId: string) => void;
+  clearConnectingHarnessForSurface: (surfaceId: string) => void;
 
   // ── Secondary chat (SECONDARY_CHAT_SPEC) ──
   secondary: SecondaryState | null;

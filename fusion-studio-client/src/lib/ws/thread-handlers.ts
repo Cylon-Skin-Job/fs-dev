@@ -20,6 +20,10 @@ import { showToast } from '../toast';
 import { convertPartToSegment } from './assistant-parts';
 import { installLiveTurnSnapshot } from './snapshot-restore';
 import { threadRowsFromProjections } from './threadGroupRows';
+import {
+  getCurrentThreadGroupId,
+  matchesPendingThreadOpen,
+} from '../../state/slices/chatSurfaceSlice';
 import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot, Thread } from '../../types';
 
 /**
@@ -46,32 +50,67 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       console.log('[WS] thread:list received:', msg.threads?.length, 'thread groups');
       if (msg.threads) {
         // The server's visible population is Thread Group projections. The
-        // current renderer rail is the workspace Legacy host (explicit
-        // `viewId: null`), so each row keeps the authoritative current-primary
-        // `threadId` for chat routing and gains the group identity for row
-        // open/rename/delete.
+        // echoed `viewId` addresses exactly one population: `null` is the
+        // explicit Legacy population; a view id fills only that
+        // `{workspaceId, viewId}` pair and never the Legacy backing store.
         const rows: Thread[] = threadRowsFromProjections(msg.threads);
-        store.setThreads(rows);
+        const responseViewId: string | null = msg.viewId ?? null;
+        const workspaceId = store.activeWorkspaceId;
+        if (workspaceId) {
+          // Drop rows bound to another workspace; a stale/foreign response
+          // cannot fill this workspace's population.
+          const scoped = rows.filter(
+            (row) => !row.workspaceId || row.workspaceId === workspaceId,
+          );
+          store.setThreadGroupPopulation(workspaceId, responseViewId, scoped);
+          if (responseViewId === null) {
+            // Legacy backing store for pre-SPEC-02 consumers; all new reads are
+            // qualified through the composite map.
+            store.setThreads(scoped);
+          }
+        }
+        // SPEC-02 §6.2: hydrate each session's server-acknowledged portable
+        // selection from its own `entry.harnessConfig`. Rows without an entry
+        // leave the acknowledged value untouched. Session hydration is safe
+        // regardless of population.
+        for (const row of rows) {
+          if (row.entry) {
+            store.hydrateHarnessSelection(
+              row.threadId,
+              row.entry.harnessConfig,
+              row.entry.harnessId ?? null,
+            );
+          }
+        }
         if (!useWorkspaceStore.getState().hasReceivedInit) {
           console.log('[WS] Deferring MRU thread open until workspace:init');
           return true;
         }
-        // Auto-open the MRU (top) thread when none is active. Fills the chat
-        // on refresh even when the threads sidebar is hidden.
-        const hasActive = store.currentThreadId;
-        if (!hasActive && rows.length > 0) {
-          const mru = rows[0];
-          const ws = store.ws;
-          if (ws && ws.readyState === WebSocket.OPEN && mru.threadGroupId) {
-            console.log('[WS] Auto-opening MRU thread group:', mru.threadGroupId.slice(0, 12));
-            // Multiple panels request the same thread list during boot.
-            // Mark the MRU as active before the server responds so only the
-            // first list response sends thread:open.
-            store.setCurrentThreadId(mru.threadId);
-            ws.send(JSON.stringify({
-              type: 'thread:open',
-              threadGroupId: mru.threadGroupId,
-            }));
+        // Auto-open the MRU (top) group only for the explicit Legacy
+        // population; a view population is opened by its own active host
+        // (SPEC-02 §6.1 request ownership).
+        if (responseViewId === null) {
+          const hasActive = store.currentThreadId;
+          if (!hasActive && rows.length > 0) {
+            const mru = rows[0];
+            const ws = store.ws;
+            if (ws && ws.readyState === WebSocket.OPEN && mru.threadGroupId && workspaceId) {
+              console.log('[WS] Auto-opening MRU thread group:', mru.threadGroupId.slice(0, 12));
+              // Mark the MRU as active before the server responds so only the
+              // first list response sends thread:open.
+              store.setCurrentThreadId(mru.threadId);
+              store.setCurrentThreadGroupId(workspaceId, null, mru.threadGroupId);
+              store.requestThreadOpen({
+                workspaceId,
+                viewId: null,
+                threadId: mru.threadId,
+                threadGroupId: mru.threadGroupId,
+              });
+              ws.send(JSON.stringify({
+                type: 'thread:open',
+                threadGroupId: mru.threadGroupId,
+              }));
+            }
           }
         }
       }
@@ -89,6 +128,12 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         store.setChatActive(true);
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
         store.clearChat(msg.threadId);
+        store.clearThreadUsage(msg.threadId);
+        store.hydrateHarnessSelection(
+          msg.threadId,
+          msg.thread?.harnessConfig,
+          msg.thread?.harnessId ?? null,
+        );
         store.setContextUsage(0);
         store.setTokenUsage(null);
         hydrateThreadCandidates([]);
@@ -121,13 +166,65 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
             convertHistoryToMessages(msg.threadId, msg.history);
           }
           overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
+          restoreContextSnapshot(msg.threadId, msg.exchanges, msg.contextUsage, msg.tokenUsage);
           return true;
         }
 
-        store.setCurrentThreadId(msg.threadId);
-        store.setChatActive(true);
-        // PER_THREAD_CHAT_STATE: clear then hydrate this thread's slot.
+        // SPEC-02 §6.1/§6.2 late-response discipline: a `thread:opened` may
+        // change only its own population's visible selection, and only when it
+        // matches this client's correlated open request or the already-selected
+        // group. A late response for another population still hydrates THAT
+        // session's slot precisely (all mutations below are keyed by
+        // `msg.threadId`) but can never steal another population's selection.
+        const responseWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
+          ? msg.workspaceId
+          : store.activeWorkspaceId;
+        const responseViewId: string | null = msg.viewId ?? null;
+        const matchesPendingOpen = matchesPendingThreadOpen(
+          store,
+          { workspaceId: responseWorkspaceId, viewId: responseViewId },
+          { threadId: msg.threadId, threadGroupId: msg.threadGroupId },
+        );
+        if (responseViewId === null) {
+          const shouldSelectLegacy = store.currentThreadId === msg.threadId
+            || matchesPendingOpen
+            || !store.currentThreadId;
+          if (shouldSelectLegacy) {
+            store.setCurrentThreadId(msg.threadId);
+            store.setChatActive(true);
+            if (responseWorkspaceId && msg.threadGroupId) {
+              store.setCurrentThreadGroupId(responseWorkspaceId, null, msg.threadGroupId);
+            }
+          }
+        } else if (responseWorkspaceId) {
+          const currentGroupId = getCurrentThreadGroupId(
+            store,
+            responseWorkspaceId,
+            responseViewId,
+          );
+          const shouldSelectView = (!!msg.threadGroupId && currentGroupId === msg.threadGroupId)
+            || matchesPendingOpen
+            || !currentGroupId;
+          if (shouldSelectView && msg.threadGroupId) {
+            store.setCurrentThreadGroupId(
+              responseWorkspaceId,
+              responseViewId,
+              msg.threadGroupId,
+            );
+          }
+        }
+        store.consumeThreadOpen(
+          { workspaceId: responseWorkspaceId, viewId: responseViewId },
+          { threadId: msg.threadId, threadGroupId: msg.threadGroupId },
+        );
+
+        // PER_THREAD_CHAT_STATE: clear then hydrate this exact thread's slot.
         store.clearChat(msg.threadId);
+        store.hydrateHarnessSelection(
+          msg.threadId,
+          msg.thread?.harnessConfig,
+          msg.thread?.harnessId ?? null,
+        );
         hydrateThreadCandidates(msg.exchanges || []);
 
         if (msg.exchanges && msg.exchanges.length > 0) {
@@ -138,7 +235,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           convertHistoryToMessages(msg.threadId, msg.history);
         }
         overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-        restoreContextSnapshot(msg.exchanges, msg.contextUsage, msg.tokenUsage);
+        restoreContextSnapshot(msg.threadId, msg.exchanges, msg.contextUsage, msg.tokenUsage);
       }
       return true;
     }
@@ -146,6 +243,7 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'wire_ready':
       store.setChatActive(true);
       store.setWireReady(true);
+      if (msg.threadId) store.setThreadWireReady(msg.threadId, true);
       return true;
 
     case 'thread:action:completed':
@@ -153,9 +251,25 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       // and never commits an optimistic rename/delete. The same frame arrives
       // from workspace fan-out in other windows.
       if (msg.action === 'rename' && msg.threadId && typeof msg.name === 'string') {
+        // SPEC-02 §6.1: the accepted rename updates the Legacy backing store
+        // and every composite population containing this exact thread.
         store.updateThread(msg.threadId, { name: msg.name });
       } else if (msg.action === 'delete' && msg.threadId) {
-        store.removeThread(msg.threadId);
+        // The ack's own population clears the qualified selection even when
+        // the row is absent from the current read model.
+        store.removeThread(
+          msg.threadId,
+          typeof msg.threadGroupId === 'string' ? msg.threadGroupId : null,
+          typeof msg.viewId === 'string' ? msg.viewId : null,
+        );
+      } else if (msg.action === 'set_harness_selection' && msg.threadId) {
+        // SPEC-02 §6.2: only the exact-session response promotes the pending
+        // optimistic value to acknowledged Send authority.
+        store.ackHarnessSelection(msg.threadId, msg.requestId, {
+          model: typeof msg.model === 'string' ? msg.model : null,
+          variant: typeof msg.variant === 'string' ? msg.variant : null,
+          harnessId: typeof msg.harnessId === 'string' ? msg.harnessId : null,
+        });
       } else if (msg.action === 'copy_link' && !msg.fanOut
         && typeof msg.link === 'string' && msg.link) {
         // The versioned application URI is copied only after the server
@@ -176,6 +290,11 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'thread:action:error': {
       // Bounded, non-optimistic failure surfacing. group_busy/request_mismatch
       // keep the existing row and explain why nothing changed.
+      if (msg.action === 'set_harness_selection' && msg.threadId) {
+        // Rejection restores the prior acknowledged value; the optimistic
+        // pending value never became Send authority.
+        store.rejectHarnessSelection(msg.threadId, msg.requestId);
+      }
       const action = msg.action === 'rename' ? 'Rename' : msg.action === 'delete' ? 'Delete' : 'Thread action';
       let detail = 'Thread action failed';
       if (msg.code === 'group_busy') detail = 'Thread has an active conversation. Stop it before deleting.';
@@ -313,6 +432,7 @@ function convertHistoryToMessages(
 }
 
 function restoreContextSnapshot(
+  threadId: string,
   exchanges: ExchangeData[] | undefined,
   messageContextUsage?: number,
   messageTokenUsage?: unknown,
@@ -327,9 +447,16 @@ function restoreContextSnapshot(
   const tokenUsage = readTokenUsage(messageTokenUsage)
     ?? readTokenUsage(lastExchange?.metadata?.tokenUsage);
   const store = usePanelStore.getState();
-  console.log('[WS] Restoring context snapshot:', { contextUsage, tokenUsage });
-  store.setContextUsage(contextUsage);
-  store.setTokenUsage(tokenUsage);
+  console.log('[WS] Restoring context snapshot:', { threadId, contextUsage, tokenUsage });
+  // SPEC-02 §6.2: usage is session-owned by exact threadId. The workspace
+  // global fields remain only as a compatibility mirror for the currently
+  // selected session.
+  store.setThreadContextUsage(threadId, contextUsage);
+  store.setThreadTokenUsage(threadId, tokenUsage);
+  if (store.currentThreadId === threadId) {
+    store.setContextUsage(contextUsage);
+    store.setTokenUsage(tokenUsage);
+  }
 }
 
 /**

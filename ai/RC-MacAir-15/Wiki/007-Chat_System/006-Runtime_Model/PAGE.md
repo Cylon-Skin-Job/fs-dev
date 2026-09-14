@@ -137,6 +137,71 @@ workspace, and root and holds the same workspace-operation lease across passive
 selection, authority creation, filesystem work, canonical events, and result
 delivery. It cannot use a retained manager after another workspace binds.
 
+## Renderer Chat Surfaces
+
+The renderer composes one explicit chat surface from an addressed identity
+rather than a global current thread. `ChatSurface` (`SPEC-02 §5.1`) renders one
+session model and emits explicit actions; a connected host owns store reads,
+WebSocket actions, and application services and passes no store, socket,
+controller, service, or mutable global into the surface.
+
+Identity domains stay separate:
+
+- `threadId` keys transcript, live-turn frontier, readiness/wire state,
+  context/token usage, acknowledged/pending model selection, draft, and
+  attachments;
+- `surfaceId` keys transient mounted DOM/menu/focus state and is minted by the
+  connected host at mount from its own runtime mount generation. It is never
+  persisted, sent, or used as session authority;
+- shell visibility/collapse is not session state and never clears or reassigns
+  a chat identity;
+- a component-backed mount derives `surfaceId` from its unique
+  `componentInstanceId` + runtime mount generation; the pending new-thread
+  connecting state is surface-owned (keyed by `surfaceId`) so two mounted
+  surfaces never display each other's connecting state.
+
+Model/variant selection is the last server-acknowledged exact-session value.
+The composer emits only portable `{model, variant}` through
+`thread:action set_harness_selection` with a fresh `requestId`; the optimistic
+value stays pending by `threadId` and never becomes Send authority. The exact
+session's acknowledgement promotes the acknowledged value, a rejection restores
+the prior acknowledged value, and restart/open hydrates the acknowledged value
+from the server-owned `entry.harnessConfig`. Send snapshots the acknowledged
+value for that exact `threadId`.
+
+`thread:opened`, `wire_ready`, status/usage, and `thread:action:*` results
+validate their exact session before mutation. A late `thread:opened` for
+another session hydrates that session's own slot but cannot change the visible
+selection.
+
+Group lists and their selected visible group are keyed by the composite
+`{workspaceId, viewId}`; `viewId: null` is the explicit Legacy population and
+never a fallback to the active panel. `ThreadRail` (`SPEC-02 §5.3`) is a
+portable presentation boundary: it receives one population, its selected group,
+and callbacks and emits canonical row intents; it does not request a list,
+inspect a panel, or mutate a store. `ThreadedChat` composes one rail with the
+selected group's Main Chat `ChatSurface`; the production workspace composition
+stays the Legacy host (`viewId: null`) and an explicit view population is
+mounted only through a connected view host.
+
+Only the active connected host requests or opens its own population. Fusion
+keeps inactive panels mounted, but they render cached state and issue no
+duplicate unqualified `thread:list`; each `thread:open` request is recorded per
+request and per population so a late response can only mutate its own
+population's selection. A reconnected socket re-issues its qualified
+`thread:list` (the request dedupe is generation-aware).
+
+`fusion.chat-surface` is registered as a code-owned first-party component
+through the accepted Generic Host resolver seam (`SPEC-02 §8`). The JSON-safe
+descriptor input carries durable identities only — workspace, nullable view,
+group, session, and presentation host — and no transient `surfaceId`, store,
+socket, callback, path, React element, import, or authority claim. The
+connected resolver validates the descriptor/schema and the
+workspace/view/group/member tuple against hydrated authority before binding
+established state/actions, then mints the transient `surfaceId` and never
+persists it. This remains a fixture-proven seam: the slice places no production
+tab, launcher, or Side Chat descriptor.
+
 ## Persistent Unit
 
 The persistent unit is a thread.

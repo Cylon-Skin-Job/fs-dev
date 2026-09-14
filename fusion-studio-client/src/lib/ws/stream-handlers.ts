@@ -332,10 +332,17 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       if (!threadId) return true;
       return routeAndApply(msg, threadId, () => {
         const tokenUsage = readTokenUsage(msg.tokenUsage);
-        // Context/status projections that affect visible chat are selected
-        // by thread rather than overwritten from an unrelated background
-        // thread (parent §4.12): only the SELECTED thread projects onto the
-        // panel-level usage fields; other turns consume their update.
+        // SPEC-02 §6.2: usage is session-owned by exact threadId. A frame for
+        // thread B can never overwrite another session's displayed usage; the
+        // workspace-global fields mirror only the currently selected session.
+        if (msg.tokenUsage !== undefined) {
+          store.setThreadTokenUsage(threadId, tokenUsage);
+        }
+        if (msg.contextUsage !== undefined) {
+          store.setThreadContextUsage(threadId, msg.contextUsage);
+        } else if (typeof tokenUsage?.context_pct === 'number') {
+          store.setThreadContextUsage(threadId, tokenUsage.context_pct);
+        }
         if (usePanelStore.getState().currentThreadId === threadId) {
           if (msg.tokenUsage !== undefined) {
             store.setTokenUsage(tokenUsage);

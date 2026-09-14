@@ -11,12 +11,10 @@ test('collapsed thread rail peeks over chat from the header dock control', async
     path.resolve(process.cwd(), 'src/components/Sidebar.tsx'),
     'utf8',
   );
+  // SPEC-02 §5.3: the rail rows/menus and rail-header chrome now live in the
+  // portable ThreadRail; the behavioral peeking lane below is unchanged.
   const threadListSource = fs.readFileSync(
-    path.resolve(process.cwd(), 'src/components/sidebar/SidebarThreadList.tsx'),
-    'utf8',
-  );
-  const threadJumpSource = fs.readFileSync(
-    path.resolve(process.cwd(), 'src/components/ThreadJumpDropdown.tsx'),
+    path.resolve(process.cwd(), 'src/components/chat/ThreadRail.tsx'),
     'utf8',
   );
   const sidebarCss = fs.readFileSync(
@@ -37,32 +35,30 @@ test('collapsed thread rail peeks over chat from the header dock control', async
   expect(headerSource).toContain('onClick={handleToggleThreads}');
   expect(headerSource).not.toContain('playlist_add');
   expect(headerSource).not.toContain('>subject</span>');
-  expect(sidebarSource).toContain('<span className="material-symbols-outlined">edit_square</span>');
-  expect(sidebarSource).toContain('<span>New chat</span>');
-  expect(sidebarSource).toContain('<option value="active">Active Threads</option>');
-  expect(sidebarSource).toContain('<option value="archive">Archive</option>');
-  expect(sidebarSource).toContain('No archived threads');
-  expect(sidebarSource).not.toContain('arrow_menu_close');
-  expect(sidebarSource).not.toContain('rv-thread-sidebar-close');
-  expect(sidebarSource).toContain("aria-label={preview ? 'Pin threads open' : 'Hide threads'}");
+  expect(threadListSource).toContain('<span className="material-symbols-outlined">edit_square</span>');
+  expect(threadListSource).toContain('<span>New chat</span>');
+  expect(threadListSource).toContain('<option value="active">Active Threads</option>');
+  expect(threadListSource).toContain('<option value="archive">Archive</option>');
+  expect(threadListSource).toContain('No archived threads');
+  expect(threadListSource).not.toContain('arrow_menu_close');
+  expect(threadListSource).not.toContain('rv-thread-sidebar-close');
+  expect(threadListSource).toContain("aria-label={preview ? 'Pin threads open' : 'Hide threads'}");
   expect(headerSource).toContain('{sidebarCollapsed && (');
   expect(headerSource).toContain('aria-label="Show threads"');
   expect(threadListSource).toContain('<span className="material-symbols-outlined">more_vert</span>');
   expect(threadListSource).not.toContain('rv-thread-row-icon');
   expect(threadListSource).not.toContain('resolveHarness');
-  expect(threadJumpSource).not.toContain('rv-thread-row-icon');
-  expect(threadJumpSource).not.toContain('resolveHarness');
   expect(threadListSource).not.toContain('                    ⋮');
   expect(sidebarSource).toContain("toggleCollapsed(panel, 'leftSidebar')");
-  expect(sidebarSource.match(/<ThreadRailContents/g)).toHaveLength(2);
+  expect(sidebarSource.match(/<ThreadRail\b/g)).toHaveLength(1);
   expect(sidebarCss).toMatch(/\.rv-thread-view-select\s*\{[^}]*font-size: 18px;[^}]*font-weight: 700;/s);
   expect(sidebarCss).toMatch(/\.rv-thread-sidebar-header\s*\{[^}]*min-height: 47px;/s);
   expect(sidebarCss).toMatch(/\.rv-thread-view-select\s*\{[^}]*margin: 15px 0 0 7px;[^}]*text-align: left;/s);
-  expect(sidebarSource).toContain('className="rv-thread-list-divider" role="separator"');
+  expect(threadListSource).toContain('className="rv-thread-list-divider" role="separator"');
   expect(sidebarCss).toMatch(/\.rv-thread-list-divider\s*\{[^}]*background:\s*var\(--thread-foreground-color,/s);
   expect(sidebarCss).toMatch(/\.rv-sidebar \.rv-thread-menu-btn,[\s\S]*color:\s*var\(--thread-foreground-color,/s);
-  expect(sidebarSource.indexOf('rv-thread-list-divider')).toBeLessThan(
-    sidebarSource.indexOf('<div className="rv-thread-list">', sidebarSource.indexOf('rv-thread-list-divider')),
+  expect(threadListSource.indexOf('rv-thread-list-divider')).toBeLessThan(
+    threadListSource.indexOf('<div className="rv-thread-list">', threadListSource.indexOf('rv-thread-list-divider')),
   );
 
   await page.setContent(`

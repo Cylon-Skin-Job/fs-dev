@@ -63,15 +63,19 @@ interface PanelContentProps {
   collapsedChat: boolean;
   collapsedContent: boolean;
   secondarySticky: boolean;
+  /** Whether this panel is the shell's active panel. */
+  isActive: boolean;
 }
-const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, collapsedContent, secondarySticky }: PanelContentProps) {
+const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, collapsedContent, secondarySticky, isActive }: PanelContentProps) {
   // SPEC-26c-2: [workspace sidebar][handle][workspace chat][handle][content]
   // SECONDARY_CHAT_SPEC §7c: when secondary is sticky-right, it overlays
   // the view's right column via absolute positioning + z-index. Grid stays
   // at 5 tracks; sticky chat sits on top of the existing content.
+  // SPEC-02 §6.1: only the active panel's rail/chat solicit list/open and
+  // claim global insert/send intents; inactive mounted panels render cache.
   return (
     <>
-      <Sidebar panel={panel} collapsed={collapsedSidebar} />
+      <Sidebar panel={panel} collapsed={collapsedSidebar} isActive={isActive} />
       <LeftSidebarResize panel={panel} />
       <ChatArea
         panel={panel}
@@ -79,6 +83,7 @@ const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, colla
         sidebarCollapsed={collapsedSidebar}
         contentCollapsed={collapsedContent}
         hideCollapsedRail
+        isActive={isActive}
       />
       <LeftChatResize panel={panel} />
       <ContentArea panel={panel} />
@@ -148,6 +153,7 @@ function PanelWrapper({ panelId, isActive }: {
         collapsedChat={collapsed.leftChat}
         collapsedContent={collapsedContent}
         secondarySticky={secondarySticky}
+        isActive={isActive}
       />
     </div>
   );

@@ -683,7 +683,9 @@ export function handleWorkspaceMessage(
       // opening a thread whose state activation would immediately erase.
       const wsConn2 = usePanelStore.getState().ws;
       if (wsConn2 && wsConn2.readyState === WebSocket.OPEN) {
-        wsConn2.send(JSON.stringify({ type: 'thread:list' }));
+        // SPEC-02 §6.1: the explicit Legacy population, not an active-panel
+        // fallback. This is the workspace-lifecycle re-read after bind.
+        wsConn2.send(JSON.stringify({ type: 'thread:list', viewId: null }));
         // Request existing screenshots so the ribbon can show thumbnails immediately
         wsConn2.send(JSON.stringify({ type: 'screenshot:list' }));
       }

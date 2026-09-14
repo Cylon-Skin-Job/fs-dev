@@ -94,12 +94,26 @@ Current file/module map for chat work.
 | `fusion-studio-client/src/lib/runtime-transport.ts` | validated renderer endpoint, socket, HTTP/resource, and generation-cancellation owner |
 | `fusion-studio-client/src/lib/shell-auth-client.ts` | transient renderer challenge/proof handshake and pre-auth initialization buffer |
 | `fusion-studio-client/src/components/chat/useChatArea.ts` | chat handlers, send/stop state, warm intent |
+| `fusion-studio-client/src/components/chat/ChatSurface.tsx` | portable composable chat presentation boundary (SPEC-02 §5.1): explicit `ChatMountIdentity` + session model + action contract; imports no store/socket/controller/service |
+| `fusion-studio-client/src/components/chat/chatSurfaceContract.ts` | `ChatMountIdentity`, `ChatSurfaceModel`, `ChatSurfaceActions`, and transient `surfaceId` minting (never persisted/sent) |
+| `fusion-studio-client/src/components/chat/useChatSurfaceIdentity.ts` | mount-time `surfaceId` minting for a connected host (runtime mount generation) |
+| `fusion-studio-client/src/components/chat/LegacyChatHost.tsx` | connected workspace Legacy host (`viewId: null`, `host: 'legacy-main'`); validates workspace/thread relation and projects store state into `ChatSurface` |
+| `fusion-studio-client/src/components/chat/useLegacyChatHost.ts` | connected host hook: per-thread session reads, exact-target action adaptation, exact-session model pending/acknowledged correlation, surface-owned pending-new-thread connecting state, and an optional component-backed `surfaceId` override |
+| `fusion-studio-client/src/components/chat/ThreadRail.tsx` | portable rail presentation (SPEC-02 §5.3): explicit population + selected group + row/menu callbacks; imports no store/socket/controller/service |
+| `fusion-studio-client/src/components/chat/ThreadedChat.tsx` | one explicit `ThreadRail` + selected group's Main Chat `ChatSurface` composition |
+| `fusion-studio-client/src/components/chat/useViewChatHost.ts` | connected host for one explicit `{workspaceId, viewId}` population: qualified list/open, correlated requests, selected group → `ChatSurface` session |
+| `fusion-studio-client/src/components/chat/ViewChatHost.tsx` | connected view-bound `ThreadedChat` host (explicit fixture/future view lane; not placed in production view chrome) |
+| `fusion-studio-client/src/components/chat/chatComponentRegistration.tsx` | code-owned first-party `fusion.chat-surface` registration through the accepted Generic Host resolver seam (SPEC-02 §8); adds no production tab/launcher/placement |
+| `fusion-studio-client/src/components/chat/chatSurfaceRegistrationContract.ts` | dependency-free descriptor-input contract: durable identities only, strict parse that rejects `surfaceId`/unknown/authority fields, and the component-backed `surfaceId` mint |
+| `fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx` | connected `fusion.chat-surface` mount: hydrated workspace/view/group/member tuple validation, inert unavailable body, then the explicit-identity `ChatSurface` mount |
+| `fusion-studio-client/src/state/slices/chatSurfaceSlice.ts` | per-`threadId` usage/readiness/harness-selection state, composite `{workspaceId, viewId}` group populations/selection, and per-request `thread:open` correlation |
 | `fusion-studio-client/src/components/chat/ChatLinkAttachments.tsx` | pending send-to-chat attachment pills |
 | `fusion-studio-client/src/components/ChatInput.tsx` | textarea, send key handling, filename autocomplete acceptance |
 | `fusion-studio-client/src/components/ChatArea.css` | chat layout plus autocomplete ghost overlay geometry |
 | `fusion-studio-client/src/hooks/useFileAutocomplete.ts` | filename autocomplete hook |
 | `fusion-studio-client/src/components/chat/ChatAreaHeader.tsx` | compact header actions |
-| `fusion-studio-client/src/components/Sidebar.tsx` | thread list and New Thread surface |
+| `fusion-studio-client/src/components/Sidebar.tsx` | connected Legacy rail host: reads the explicit `{activeWorkspaceId, viewId: null}` population and projects it into `ThreadRail` |
+| `fusion-studio-client/src/components/sidebar/useSidebar.ts` | Legacy rail store/WebSocket actions; only the active panel issues the qualified `thread:list` |
 | `fusion-studio-client/src/components/CliPickerDropdown.tsx` | multi-harness picker when policy enables 2+ harnesses |
 | `fusion-studio-client/src/components/LiveSegmentRenderer.tsx` | sequential live reveal |
 | `fusion-studio-client/src/components/chat/WorkingActivity.tsx` | transient elapsed Working presentation and stable accessibility status |

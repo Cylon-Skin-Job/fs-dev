@@ -1,8 +1,14 @@
 /**
  * @module ChatAreaFooter
  * @role Chat composer — input, tool triggers, send/stop, context usage bar.
+ *
+ * Portable presentation: explicit state/callbacks from the mount host. The
+ * composer model menu receives the exact `threadId`/`surfaceId` so a selection
+ * and its pending/acknowledged state can never be read from a different mount
+ * (§6.2/§6.3).
  */
 
+import type { RefObject } from 'react';
 import { ChatInput } from '../ChatInput';
 import { MicTrigger } from '../../mic';
 import { SendButtonGroup } from './SendButtonGroup';
@@ -11,83 +17,99 @@ import { ChatComposerAddMenu } from './ChatComposerAddMenu';
 import { ChatComposerModeMenu } from './ChatComposerModeMenu';
 import { ChatComposerModelMenu } from './ChatComposerModelMenu';
 import { ChatComposerContextMeter } from './ChatComposerContextMeter';
-import type { useChatArea } from './useChatArea';
+import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+import type { TokenUsage } from '../../types';
+import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+import type { ChatSurfaceInputHandle, ChatSurfaceModelSelection } from './chatSurfaceContract';
 
-type ChatAreaFooterProps = Pick<
-  ReturnType<typeof useChatArea>,
-  | 'panel'
-  | 'chatInputRef'
-  | 'handleSend'
-  | 'handleStop'
-  | 'noThread'
-  | 'isActive'
-  | 'inputPlaceholder'
-  | 'isTurnActive'
-  | 'isTurnFinalizing'
-  | 'isAcceptancePending'
-  | 'handleInsertText'
-  | 'handleAddAttachment'
-  | 'warmCurrentThread'
-  | 'contextUsage'
-  | 'tokenUsage'
-  | 'activeWorkspaceId'
-  | 'currentThreadId'
-  | 'composerDraft'
-  | 'handleComposerDraftChange'
-  | 'screenshotOwner'
->;
+export interface ChatAreaFooterProps {
+  mountId: string;
+  panel: string;
+  inputRef: RefObject<ChatSurfaceInputHandle | null>;
+  onSend: (text: string) => void;
+  onStop: () => void;
+  noThread: boolean;
+  isActive: boolean;
+  inputPlaceholder?: string;
+  isTurnActive: boolean;
+  isTurnFinalizing: boolean;
+  isAcceptancePending: boolean;
+  onInsertText: (text: string) => void;
+  onAddAttachment: (attachment: ChatLinkAttachment) => void;
+  onWarmIntent: () => void;
+  contextUsage: number;
+  tokenUsage: TokenUsage | null;
+  workspaceId: string | null;
+  threadId: string | null;
+  composerDraft: string;
+  onComposerDraftChange: (text: string) => void;
+  modelSelection: ChatSurfaceModelSelection;
+  onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
+  screenshotOwner: ScreenshotAttachmentOwner | null;
+}
 
 export function ChatAreaFooter({
+  mountId,
   panel,
-  chatInputRef,
-  handleSend,
-  handleStop,
+  inputRef,
+  onSend,
+  onStop,
   noThread,
   isActive,
   inputPlaceholder,
   isTurnActive,
   isTurnFinalizing,
   isAcceptancePending,
-  handleInsertText,
-  handleAddAttachment,
-  warmCurrentThread,
+  onInsertText,
+  onAddAttachment,
+  onWarmIntent,
   contextUsage,
   tokenUsage,
-  activeWorkspaceId,
-  currentThreadId,
+  workspaceId,
+  threadId,
   composerDraft,
-  handleComposerDraftChange,
+  onComposerDraftChange,
+  modelSelection,
+  onModelSelectionChange,
   screenshotOwner,
 }: ChatAreaFooterProps) {
   return (
-    <div className={`rv-chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}>
+    <div
+      className={`rv-chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}
+      data-chat-mount-id={mountId}
+    >
       <div className="rv-chat-composer-shell">
-        <ChatLinkAttachments workspaceId={activeWorkspaceId} threadId={currentThreadId} />
+        <ChatLinkAttachments workspaceId={workspaceId} threadId={threadId} />
         <ChatInput
-          ref={chatInputRef}
-          onSend={handleSend}
-          onStop={handleStop}
+          ref={inputRef}
+          onSend={onSend}
+          onStop={onStop}
           disabled={noThread || !isActive || isAcceptancePending || isTurnFinalizing}
           placeholder={inputPlaceholder}
           panel={panel}
           isTurnActive={isTurnActive}
-          onWarmIntent={warmCurrentThread}
+          onWarmIntent={onWarmIntent}
           draftText={composerDraft}
-          onDraftChange={handleComposerDraftChange}
+          onDraftChange={onComposerDraftChange}
         />
         <div className="rv-chat-composer-meta-row">
           <div className="rv-chat-composer-tools-left">
             <ChatComposerAddMenu
-              onAttach={handleAddAttachment}
-              onInsert={handleInsertText}
+              onAttach={onAddAttachment}
+              onInsert={onInsertText}
               screenshotOwner={screenshotOwner}
             />
             <ChatComposerModeMenu />
           </div>
           <div className="rv-chat-composer-actions">
             <ChatComposerContextMeter contextUsage={contextUsage} tokenUsage={tokenUsage} />
-            <ChatComposerModelMenu />
-            <MicTrigger onInsert={handleInsertText} />
+            <ChatComposerModelMenu
+              threadId={threadId}
+              mountId={mountId}
+              selection={modelSelection}
+              onChangeSelection={onModelSelectionChange}
+            />
+            <MicTrigger onInsert={onInsertText} />
             {isTurnFinalizing ? (
               <div
                 className="rv-chat-completing-indicator"
@@ -99,7 +121,7 @@ export function ChatAreaFooter({
             ) : isTurnActive ? (
               <button
                 className="rv-chat-footer-btn rv-stop-btn"
-                onClick={handleStop}
+                onClick={onStop}
                 title="Stop generating"
               >
                 <span className="material-symbols-outlined rv-icon-md">
@@ -108,8 +130,8 @@ export function ChatAreaFooter({
               </button>
             ) : (
               <SendButtonGroup
-                chatInputRef={chatInputRef}
-                onSend={handleSend}
+                chatInputRef={inputRef}
+                onSend={onSend}
                 disabled={isAcceptancePending}
                 warming={isAcceptancePending}
               />

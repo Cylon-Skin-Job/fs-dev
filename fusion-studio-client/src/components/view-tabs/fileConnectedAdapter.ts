@@ -52,6 +52,7 @@ import {
   protectFileModelForPendingClose,
 } from './fileConnectedOwnerPorts';
 import { setActiveFileConnectedRuntime } from './fileConnectedTabs';
+import { chatConnectedRegistrations } from '../chat/chatComponentRegistration';
 
 // The real presenters carry view CSS; they load lazily so pure/spec consumers
 // of the registry chain stay CSS-free.
@@ -102,7 +103,13 @@ function boundedUnavailableSurface() {
   );
 }
 
-const FILE_CONNECTED_REGISTRATIONS = fileConnectedPresenterRegistrations();
+// SPEC-02 §8: the chat domain registers `fusion.chat-surface` through the same
+// closed resolver seam. Composition only makes the seam real — no production
+// chat descriptor, launcher, or placement is added by this slice.
+const FILE_CONNECTED_REGISTRATIONS = [
+  ...fileConnectedPresenterRegistrations(),
+  ...chatConnectedRegistrations(),
+];
 
 /**
  * Stand-in policy used ONLY while the connected path is disabled (no ready

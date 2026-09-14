@@ -6,13 +6,18 @@
  * resolved opencode harness entry (`cliConfig.opencode.models`). Selecting a
  * provider loads its default model; effort defaults to 'high' on every change
  * and can then be adjusted from the chosen model's variant list.
+ *
+ * SPEC-02 §6.2: the menu renders one explicit session's selection. It receives
+ * the exact `threadId`/`surfaceId` and the last server-acknowledged value; an
+ * optimistic change is emitted through `onChangeSelection` and never becomes
+ * Send authority until the exact-session acknowledgement promotes it.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { usePanelStore } from '../../state/panelStore';
 import { useResolvedHarness } from '../../config/harness';
 import type { ResolvedCliEntry } from '../../types';
+import type { ChatSurfaceModelSelection } from './chatSurfaceContract';
 
 const DEFAULT_EFFORT = 'high';
 const FLYOUT_GAP = 6;
@@ -60,9 +65,21 @@ function findProvider(models: OpenCodeModels | null, providerId: string | null):
   return models.providers.find((p) => p.id === providerId) ?? null;
 }
 
+function findProviderForModel(models: OpenCodeModels | null, modelId: string | null): ProviderMenuEntry | null {
+  if (!models || !modelId) return null;
+  return models.providers.find((p) => p.models.some((m) => m.id === modelId)) ?? null;
+}
+
 function findModel(provider: ProviderMenuEntry | null, modelId: string | null): ModelMenuEntry | null {
   if (!provider || !modelId) return null;
   return provider.models.find((m) => m.id === modelId) ?? null;
+}
+
+function defaultEffortFor(model: ModelMenuEntry | null): string | null {
+  if (!model) return null;
+  return model.variants.includes(DEFAULT_EFFORT)
+    ? DEFAULT_EFFORT
+    : model.variants[0] ?? null;
 }
 
 function currentModelLabel(
@@ -77,7 +94,19 @@ function currentModelLabel(
   return models?.providers[0]?.models[0]?.name ?? 'DeepSeek V4 Flash';
 }
 
-export function ChatComposerModelMenu() {
+export interface ChatComposerModelMenuProps {
+  threadId: string | null;
+  mountId: string;
+  selection: ChatSurfaceModelSelection;
+  onChangeSelection: (patch: { modelId?: string | null; variant?: string | null }) => void;
+}
+
+export function ChatComposerModelMenu({
+  threadId,
+  mountId,
+  selection,
+  onChangeSelection,
+}: ChatComposerModelMenuProps) {
   const [open, setOpen] = useState(false);
   const [level, setLevel] = useState<MenuLevel>('root');
   const [hoverProvider, setHoverProvider] = useState<string | null>(null);
@@ -87,37 +116,17 @@ export function ChatComposerModelMenu() {
   const flyoutCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const harness = useResolvedHarness('opencode');
-  const composerModelConfig = usePanelStore((s) => s.composerModelConfig);
-  const setComposerModelConfig = usePanelStore((s) => s.setComposerModelConfig);
-  const currentPanel = usePanelStore((s) => s.currentPanel);
-
   const models = useMemo(() => getModels(harness), [harness]);
-  const selection = composerModelConfig[currentPanel] ?? { providerId: null, modelId: null, effort: null };
 
-  // Seed the initial selection (default provider → default model → effort high)
-  // once models hydrate, so the first prompt already carries the defaults and
-  // the Effort item reflects 'high' without requiring an interaction.
-  useEffect(() => {
-    if (!models || !models.providers.length) return;
-    if (composerModelConfig[currentPanel]) return;
-    const defaultProvider = models.defaultProvider
-      ? models.providers.find((p) => p.id === models.defaultProvider) ?? models.providers[0]
-      : models.providers[0];
-    const defaultModelId = defaultProvider?.defaultModel ?? defaultProvider?.models?.[0]?.id ?? null;
-    const defaultModelEntry = defaultProvider?.models?.find((m) => m.id === defaultModelId) ?? null;
-    const seedEffort = defaultModelEntry?.variants?.includes(DEFAULT_EFFORT)
-      ? DEFAULT_EFFORT
-      : defaultModelEntry?.variants?.[0] ?? null;
-    setComposerModelConfig(currentPanel, {
-      providerId: defaultProvider?.id ?? null,
-      modelId: defaultModelId,
-      effort: seedEffort,
-    });
-  }, [models, composerModelConfig, currentPanel, setComposerModelConfig]);
-
+  // The provider is derived from the acknowledged/optimistic model id; a null
+  // model falls back to the catalog default for display only. Nothing is
+  // written to the session until the user changes the selection.
   const provider = useMemo(
-    () => findProvider(models, selection.providerId ?? models?.defaultProvider ?? null),
-    [models, selection.providerId],
+    () => findProviderForModel(models, selection.modelId)
+      ?? findProvider(models, models?.defaultProvider ?? null)
+      ?? models?.providers[0]
+      ?? null,
+    [models, selection.modelId],
   );
   const model = useMemo(
     () => findModel(provider, selection.modelId ?? provider?.defaultModel ?? null),
@@ -193,44 +202,38 @@ export function ChatComposerModelMenu() {
     };
   }, [open, level, changeLevel]);
 
-  const resetToDefaultEffort = (patch: { providerId?: string | null; modelId?: string | null }) => {
-    const nextProvider = patch.providerId !== undefined
-      ? findProvider(models, patch.providerId)
-      : provider;
-    const nextModel = patch.modelId !== undefined
-      ? findModel(nextProvider, patch.modelId)
-      : model;
-    const defaultEffort = nextModel?.variants?.includes(DEFAULT_EFFORT)
-      ? DEFAULT_EFFORT
-      : nextModel?.variants?.[0] ?? null;
-    setComposerModelConfig(currentPanel, { ...patch, effort: defaultEffort });
-  };
-
   const handleSelectProvider = (providerId: string) => {
     const providerEntry = findProvider(models, providerId);
-    resetToDefaultEffort({
-      providerId,
-      modelId: providerEntry?.defaultModel ?? null,
-    });
+    const nextModelId = providerEntry?.defaultModel ?? providerEntry?.models?.[0]?.id ?? null;
+    const nextModel = findModel(providerEntry, nextModelId);
+    onChangeSelection({ modelId: nextModelId, variant: defaultEffortFor(nextModel) });
     changeLevel('root');
   };
 
   const handleSelectModel = (modelId: string) => {
-    resetToDefaultEffort({ modelId });
+    const nextModel = findModel(provider, modelId);
+    onChangeSelection({ modelId, variant: defaultEffortFor(nextModel) });
     changeLevel('root');
   };
 
   const handleSelectEffort = (effort: string) => {
-    setComposerModelConfig(currentPanel, { effort });
+    onChangeSelection({ variant: effort });
     changeLevel('root');
   };
 
   const selectableProviders = models?.providers ?? [];
   const currentModelId = selection.modelId ?? provider?.defaultModel ?? null;
+  const currentEffort = selection.variant ?? defaultEffortFor(model);
   const effortOptions = model?.variants?.length ? model.variants : [];
 
   return (
-    <div className="rv-chat-composer-model" ref={rootRef}>
+    <div
+      className="rv-chat-composer-model"
+      ref={rootRef}
+      data-chat-mount-id={mountId}
+      data-thread-id={threadId ?? ''}
+      data-model-pending={selection.pending ? 'true' : 'false'}
+    >
       <button
         type="button"
         className={`rv-chat-composer-model-trigger${open ? ' open' : ''}`}
@@ -242,6 +245,7 @@ export function ChatComposerModelMenu() {
         aria-label={currentModelLabel(models, provider, model)}
         aria-haspopup="menu"
         aria-expanded={open}
+        aria-busy={selection.pending || undefined}
       >
         <span>{currentModelLabel(models, provider, model)}</span>
         <span className="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
@@ -359,7 +363,7 @@ export function ChatComposerModelMenu() {
                 <button
                   key={effort}
                   type="button"
-                  className={`rv-chat-composer-model-option${effort === selection.effort ? ' rv-chat-composer-model-option-active' : ''}`}
+                  className={`rv-chat-composer-model-option${effort === currentEffort ? ' rv-chat-composer-model-option-active' : ''}`}
                   role="menuitem"
                   onClick={() => handleSelectEffort(effort)}
                 >

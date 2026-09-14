@@ -1,7 +1,7 @@
 # Chat Composition Roadmap — Release Manifest
 
 **Candidate ID:** `CHAT-COMPOSITION-2d34f8b45562f8f3`
-**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 (CHAT-01) ACCEPTED — SPEC-02 DISPATCH AUTHORIZED`
+**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 ACCEPTED; SPEC-02 (CHAT-02) ACCEPTED — SPEC-03 DISPATCH AUTHORIZED`
 **Prepared:** 2026-09-05
 **Overlay round:** 2026-09-13
 **Clean-room verdict:** `PRIOR CANDIDATE CLEAN (2026-09-05); OVERLAID CANDIDATE CLEAN (2026-09-13)`
@@ -192,6 +192,21 @@ remaining execution gates.
   (Composable Chat Surfaces) is now unblocked** subject to its independently
   accepted Generic Component Tab Host prerequisite and an owner-authorized
   dispatch; worktree commit is a separate owner call.
+- **SPEC-02 (CHAT-02) ACCEPTED — 2026-09-13.** Owner statement: “Yes.”
+  Independent owner-side review `CLEAN` (no blocking findings; two documented
+  owner-visibility items, no repair required) on product digest
+  `ca7c23e66a0a7d7d4a12447a0da29e2cd4f96d417b35101232bf561669aa6a50` (43 paths
+  + 3 deletions; migration head `042`; union list `5c8c3de0…`). Gates
+  reproduced by reviewer and owner-side: server `npx jest --runInBand` 203
+  suites / 2975 passed / 1 skipped; client build passed; four focused specs 49
+  passed; source 65; thread-group 7; component-tab + action-context 142;
+  hover/composer 2; Electron smoke `CHAT_SURFACE_CONCURRENCY_SMOKE_OK` with two
+  stop frames. The 02A-D7 baseline-red set (five source/CSS specs,
+  `prompt-ownership.slice-c`, 56/59 `working-activity` cases) was independently
+  reproduced at clean baseline `5f46d1a` and is carried as an **owner
+  re-baseline item**. Evidence: `SPEC-02-IMPLEMENTATION-REPORT.md`,
+  `CHAT-02-EXECUTION-LEDGER.md`. **SPEC-03 (Thread Worksurface Continuity) is
+  now unblocked**; worktree commit is a separate owner call.
 
 After approval, execution may begin through either:
 

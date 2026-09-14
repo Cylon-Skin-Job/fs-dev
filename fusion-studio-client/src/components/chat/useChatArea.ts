@@ -83,10 +83,17 @@ export function useChatArea({ panel, threadIdOverride }: UseChatAreaOptions) {
     (state) => selector(state)?.retryPromptDraft ?? null,
   );
   const activeWorkspaceId = usePanelStore((state) => state.activeWorkspaceId);
-  const contextUsage = usePanelStore((state) => state.contextUsage);
-  const tokenUsage = usePanelStore((state) => state.tokenUsage);
+  // SPEC-02 §6.2: secondary reads its exact thread's session usage.
+  const contextUsage = usePanelStore((state) =>
+    currentThreadId ? (state.contextUsageByThread[currentThreadId] ?? 0) : 0,
+  );
+  const tokenUsage = usePanelStore((state) =>
+    currentThreadId ? (state.tokenUsageByThread[currentThreadId] ?? null) : null,
+  );
   const chatActive = usePanelStore((state) => state.chatActive);
-  const wireReady = usePanelStore((state) => state.wireReady);
+  const wireReady = usePanelStore((state) =>
+    currentThreadId ? (state.wireReadyByThread[currentThreadId] ?? state.wireReady) : state.wireReady,
+  );
   const threads = usePanelStore((state) => state.threads);
   const currentThread = threads.find((t) => t.threadId === currentThreadId);
   const connectingHarness = useResolvedHarness(connectingHarnessId);

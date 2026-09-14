@@ -8,6 +8,12 @@ import { create } from 'zustand';
 import type { ThemeEntry, Thread } from '../types';
 import type { AppState, WorkspacePanelState, ConnectorId, ConnectorState } from './panelStoreTypes';
 import { createChatSlice } from './slices/chatSlice';
+import {
+  addThreadToPopulations,
+  createChatSurfaceSlice,
+  removeThreadFromPopulations,
+  renameThreadInPopulations,
+} from './slices/chatSurfaceSlice';
 import { createChatActivitySlice } from './slices/chatActivityState';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createSecondarySlice } from './slices/secondarySlice';
@@ -39,6 +45,7 @@ function createEmptyWorkspaceState(): WorkspacePanelState {
 export const usePanelStore = create<AppState>((set, get) => ({
   // ── Slice composition ─────────────────────────────────────────────────────
   ...createChatSlice(set, get),
+  ...createChatSurfaceSlice(set, get),
   ...createChatActivitySlice(set),
   ...createViewSlice(set, get),
   ...createSecondarySlice(set, get),
@@ -131,6 +138,19 @@ export const usePanelStore = create<AppState>((set, get) => ({
       // Workspace switch replaces the per-view state documents; any in-flight
       // load markers belong to the previous workspace's reads.
       viewStateLoadPending: {},
+      // SPEC-02 §6.2: session facts are keyed by exact threadId; a workspace
+      // switch retires the previous workspace's per-session state.
+      contextUsageByThread: {},
+      tokenUsageByThread: {},
+      wireReadyByThread: {},
+      harnessSelectionByThread: {},
+      // SPEC-02 §6.1: a workspace switch retires every population and pending
+      // open request; view populations are never carried across workspaces.
+      threadGroupsByWorkspaceAndView: {},
+      currentThreadGroupIdByWorkspaceAndView: {},
+      legacyThreadGroupsByWorkspaceId: {},
+      currentLegacyThreadGroupIdByWorkspaceId: {},
+      pendingThreadOpens: [],
       _prefetchAbort: null,
     });
 
@@ -182,6 +202,15 @@ export const usePanelStore = create<AppState>((set, get) => ({
         secondary: null,
         cliPickerOpen: {},
         threadDropdownOpen: {},
+        contextUsageByThread: {},
+        tokenUsageByThread: {},
+        wireReadyByThread: {},
+        harnessSelectionByThread: {},
+        threadGroupsByWorkspaceAndView: {},
+        currentThreadGroupIdByWorkspaceAndView: {},
+        legacyThreadGroupsByWorkspaceId: {},
+        currentLegacyThreadGroupIdByWorkspaceId: {},
+        pendingThreadOpens: [],
       });
     } else {
       set({ workspaceState: nextWorkspaceState });
@@ -307,6 +336,20 @@ export const usePanelStore = create<AppState>((set, get) => ({
     }
     set((s) => {
       const base: Partial<AppState> = { currentThreadId: threadId };
+      // SPEC-02 §6.1: `currentThreadId` remains the Legacy population's backing
+      // store; keep the qualified Legacy selected-group mirror in lockstep so
+      // qualified readers never need to reconstruct it.
+      if (s.activeWorkspaceId) {
+        const row = threadId
+          ? s.legacyThreadGroupsByWorkspaceId[s.activeWorkspaceId]?.find(
+              (t) => t.threadId === threadId,
+            ) ?? s.threads.find((t) => t.threadId === threadId)
+          : null;
+        base.currentLegacyThreadGroupIdByWorkspaceId = {
+          ...s.currentLegacyThreadGroupIdByWorkspaceId,
+          [s.activeWorkspaceId]: row?.threadGroupId ?? null,
+        };
+      }
       // SECONDARY_CHAT_SPEC §3c: if primary is being switched to secondary's
       // thread, secondary auto-closes (switch wins).
       if (s.secondary && threadId === s.secondary.threadId) {
@@ -320,20 +363,27 @@ export const usePanelStore = create<AppState>((set, get) => ({
   setWireReady: (ready) => set({ wireReady: ready }),
 
   addThread: (thread) => set((state) => ({
+    // SPEC-02 §6.1: keep the composite Legacy population initialized from the
+    // list in lockstep with the backing store; idempotent against the list
+    // that may follow a create.
+    ...addThreadToPopulations(state, thread),
     threads: [thread, ...state.threads],
   })),
 
   updateThread: (threadId, updates) => set((state) => ({
+    // SPEC-02 §6.1: an accepted rename must appear in every population that
+    // contains the exact thread, not only the Legacy backing store.
+    ...renameThreadInPopulations(state, threadId, updates),
     threads: state.threads.map(t =>
       t.threadId === threadId ? { ...t, entry: { ...t.entry, ...updates } } : t
     ),
   })),
 
-  removeThread: (threadId) => {
-    const workspaceId = get().activeWorkspaceId;
-    if (workspaceId) {
-      useChatFileLinkStore.getState().clearPendingAttachments(workspaceId, threadId);
-      useChatComposerDraftStore.getState().clearDraft(workspaceId, threadId);
+  removeThread: (threadId, threadGroupId = null, viewIdProp = null) => {
+    const activeWorkspace = get().activeWorkspaceId;
+    if (activeWorkspace) {
+      useChatFileLinkStore.getState().clearPendingAttachments(activeWorkspace, threadId);
+      useChatComposerDraftStore.getState().clearDraft(activeWorkspace, threadId);
     }
     set((state) => {
       // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
@@ -341,10 +391,31 @@ export const usePanelStore = create<AppState>((set, get) => ({
       // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
       const nextProjectChats = { ...state.projectChats };
       delete nextProjectChats[threadId];
+      const nextContextUsage = { ...state.contextUsageByThread };
+      const nextTokenUsage = { ...state.tokenUsageByThread };
+      const nextWireReady = { ...state.wireReadyByThread };
+      const nextHarnessSelection = { ...state.harnessSelectionByThread };
+      delete nextContextUsage[threadId];
+      delete nextTokenUsage[threadId];
+      delete nextWireReady[threadId];
+      delete nextHarnessSelection[threadId];
+      const fallbackViewId = state.threads.find((t) => t.threadId === threadId)?.viewId ?? null;
+      const viewId = viewIdProp ?? fallbackViewId;
       return {
+        // SPEC-02 §6.1: remove the row from every composite population and
+        // clear the qualified selection when it pointed at the removed group.
+        ...removeThreadFromPopulations(state, threadId, {
+          workspaceId: state.activeWorkspaceId,
+          viewId,
+          threadGroupId,
+        }),
         threads: state.threads.filter(t => t.threadId !== threadId),
         currentThreadId: state.currentThreadId === threadId ? null : state.currentThreadId,
         projectChats: nextProjectChats,
+        contextUsageByThread: nextContextUsage,
+        tokenUsageByThread: nextTokenUsage,
+        wireReadyByThread: nextWireReady,
+        harnessSelectionByThread: nextHarnessSelection,
         ...(dropSecondary ? { secondary: null } : {}),
       };
     });
@@ -439,6 +510,21 @@ export const usePanelStore = create<AppState>((set, get) => ({
   // ── Harness connection state ───────────────────────────────────────────────
   connectingHarnessId: null,
   setConnectingHarnessId: (id) => set({ connectingHarnessId: id }),
+  // SPEC-02 §6.2 / 02A-D2: surface-owned pending-connecting state for explicit
+  // mounts; the global mirror above stays for the single production host.
+  connectingHarnessBySurface: {},
+  setConnectingHarnessForSurface: (surfaceId, harnessId) => set((state) => ({
+    connectingHarnessBySurface: {
+      ...state.connectingHarnessBySurface,
+      [surfaceId]: harnessId,
+    },
+  })),
+  clearConnectingHarnessForSurface: (surfaceId) => set((state) => {
+    if (!(surfaceId in state.connectingHarnessBySurface)) return state;
+    const connectingHarnessBySurface = { ...state.connectingHarnessBySurface };
+    delete connectingHarnessBySurface[surfaceId];
+    return { connectingHarnessBySurface };
+  }),
   selectHarness: (harnessId, modelId) => {
     const s = get();
     set({

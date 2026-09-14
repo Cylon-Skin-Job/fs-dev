@@ -1,54 +1,63 @@
 /**
  * @module ChatAreaHeader
  * @role Primary chat header — identity, CLI/thread dropdowns, more menu.
+ *
+ * Portable presentation: receives explicit state and callbacks from the mount
+ * host (SPEC-02 §5.1). All DOM ids are scoped by the transient `surfaceId`
+ * (§6.3) so two mounts never share header/menu identity.
  */
 
+import type { RefObject } from 'react';
 import { CliPickerDropdown } from '../CliPickerDropdown';
-import type { useChatArea } from './useChatArea';
+import { chatSurfaceDomId } from './chatSurfaceContract';
+import type { HarnessStatus } from '../../types';
 
-type ChatAreaHeaderProps = Pick<
-  ReturnType<typeof useChatArea>,
-  | 'panel'
-  | 'chatHeaderRef'
-  | 'currentThreadId'
-  | 'cliPickerOpen'
-  | 'moreMenuOpen'
-  | 'setMoreMenuOpen'
-  | 'harnessStatuses'
-  | 'showCliPicker'
-  | 'handleHarnessSelect'
-  | 'handleCreateThread'
-  | 'handleToggleThreads'
-  | 'handleRename'
-  | 'handleCopyLink'
-  | 'handleViewMarkdown'
->;
-
-export function ChatAreaHeader({
-  panel,
-  chatHeaderRef,
-  currentThreadId,
-  sidebarCollapsed,
-  cliPickerOpen,
-  moreMenuOpen,
-  setMoreMenuOpen,
-  harnessStatuses,
-  showCliPicker,
-  handleHarnessSelect,
-  handleCreateThread,
-  handleToggleThreads,
-  handleRename,
-  handleCopyLink,
-  handleViewMarkdown,
-  contentCollapsed,
-  handleToggleContent,
-}: ChatAreaHeaderProps & {
+export interface ChatAreaHeaderProps {
+  mountId: string;
+  panel: string;
+  headerRef: RefObject<HTMLDivElement | null>;
+  hasThread: boolean;
   sidebarCollapsed?: boolean;
   contentCollapsed?: boolean;
-  handleToggleContent?: () => void;
-}) {
+  cliPickerOpen: boolean;
+  moreMenuOpen: boolean;
+  harnessStatuses: Record<string, HarnessStatus>;
+  showCliPicker: boolean;
+  onHarnessSelect: (harnessId: string, modelId?: string) => void;
+  onCreateThread: () => void;
+  handleToggleThreads: () => void;
+  onToggleContent?: () => void;
+  onRename: () => void;
+  onCopyLink: () => void;
+  onViewMarkdown: () => void;
+  onSetMoreMenuOpen: (open: boolean) => void;
+  onCloseCliPicker: () => void;
+}
+
+export function ChatAreaHeader({
+  mountId,
+  panel,
+  headerRef,
+  hasThread,
+  sidebarCollapsed,
+  contentCollapsed,
+  cliPickerOpen,
+  moreMenuOpen,
+  harnessStatuses,
+  showCliPicker,
+  onHarnessSelect,
+  onCreateThread,
+  handleToggleThreads,
+  onRename,
+  onCopyLink,
+  onViewMarkdown,
+  onSetMoreMenuOpen,
+  onCloseCliPicker,
+  onToggleContent,
+}: ChatAreaHeaderProps) {
+  const domId = chatSurfaceDomId(mountId);
   return (
-    <div className="rv-chat-header" ref={chatHeaderRef}>
+    <div className="rv-chat-header" ref={headerRef} data-chat-mount-id={mountId}>
       {sidebarCollapsed && (
         <div className="rv-chat-header-left-controls">
           <button
@@ -61,10 +70,10 @@ export function ChatAreaHeader({
           </button>
           <button
             className="rv-chat-header-btn rv-chat-new-thread"
-            onClick={handleCreateThread}
+            onClick={onCreateThread}
             aria-haspopup={showCliPicker ? 'menu' : undefined}
             aria-expanded={showCliPicker ? cliPickerOpen : undefined}
-            aria-controls={showCliPicker ? `cli-picker-${panel}` : undefined}
+            aria-controls={showCliPicker ? `cli-picker-${domId}` : undefined}
             aria-label="New chat"
             title="New chat"
           >
@@ -75,19 +84,19 @@ export function ChatAreaHeader({
       <div className="rv-chat-header-right">
         <button
           className="rv-chat-header-btn"
-          onClick={() => setMoreMenuOpen((o) => !o)}
+          onClick={() => onSetMoreMenuOpen(!moreMenuOpen)}
           aria-haspopup="menu"
           aria-expanded={moreMenuOpen}
-          aria-controls={`chat-more-${panel}`}
+          aria-controls={`chat-more-${domId}`}
           aria-label="More options"
           title="More options"
         >
           <span className="material-symbols-outlined">event_list</span>
         </button>
-        {contentCollapsed && handleToggleContent && (
+        {contentCollapsed && onToggleContent && (
           <button
             className="rv-chat-header-btn"
-            onClick={handleToggleContent}
+            onClick={onToggleContent}
             aria-label="Show content"
             title="Show content"
           >
@@ -100,8 +109,11 @@ export function ChatAreaHeader({
           {showCliPicker && (
             <CliPickerDropdown
               panel={panel}
+              instanceKey={domId}
+              open={cliPickerOpen}
+              onRequestClose={onCloseCliPicker}
               statuses={harnessStatuses}
-              onSelect={handleHarnessSelect}
+              onSelect={onHarnessSelect}
             />
           )}
         </>
@@ -109,7 +121,7 @@ export function ChatAreaHeader({
       <div
         className="rv-dropdown rv-chat-more-dropdown"
         role="menu"
-        id={`chat-more-${panel}`}
+        id={`chat-more-${domId}`}
         data-open={moreMenuOpen}
       >
         <button
@@ -125,8 +137,8 @@ export function ChatAreaHeader({
         <button
           className="rv-dropdown-item"
           role="menuitem"
-          onClick={handleRename}
-          disabled={!currentThreadId}
+          onClick={onRename}
+          disabled={!hasThread}
         >
           <span className="material-symbols-outlined">edit</span>
           <span>Rename</span>
@@ -134,9 +146,9 @@ export function ChatAreaHeader({
         <button
           className="rv-dropdown-item"
           role="menuitem"
-          onClick={handleCopyLink}
-          disabled={!currentThreadId}
-          title={currentThreadId ? 'Copy link to this thread' : 'No active thread'}
+          onClick={onCopyLink}
+          disabled={!hasThread}
+          title={hasThread ? 'Copy link to this thread' : 'No active thread'}
         >
           <span className="material-symbols-outlined">link_2</span>
           <span>Copy Link</span>
@@ -144,8 +156,8 @@ export function ChatAreaHeader({
         <button
           className="rv-dropdown-item"
           role="menuitem"
-          onClick={handleViewMarkdown}
-          disabled={!currentThreadId}
+          onClick={onViewMarkdown}
+          disabled={!hasThread}
         >
           <span className="material-symbols-outlined">docs</span>
           <span>View Markdown</span>

@@ -112,6 +112,17 @@ export interface ThreadActionViewMarkdown {
   threadId?: string;
 }
 
+export interface ThreadActionSetHarnessSelection {
+  type: 'thread:action';
+  action: 'set_harness_selection';
+  requestId: string;
+  threadGroupId?: string;
+  threadId?: string;
+  /** Portable model only; never a harness id, provider session, or unknown key. */
+  model: string;
+  variant: string | null;
+}
+
 /**
  * Canonical group action intent. Rename/Delete are group scope and prefer
  * `threadGroupId`; the exact `threadId` rides along as member context and the
@@ -171,5 +182,30 @@ export function threadActionViewMarkdown(
     requestId: makeThreadActionRequestId(),
     ...(threadGroupId ? { threadGroupId } : {}),
     ...(threadId ? { threadId } : {}),
+  };
+}
+
+/**
+ * `set_harness_selection` is the exact-member session action. The envelope
+ * carries only portable `model` and nullable `variant`; the session's harness
+ * binding stays server-owned and immutable through this action (§6.2,
+ * CHAT-I-031). A fresh `requestId` correlates the exact-session acknowledgement.
+ */
+export function threadActionSetHarnessSelection(
+  {
+    threadGroupId,
+    threadId,
+    model,
+    variant,
+  }: { threadGroupId?: string; threadId: string; model: string; variant: string | null },
+): ThreadActionSetHarnessSelection {
+  return {
+    type: 'thread:action',
+    action: 'set_harness_selection',
+    requestId: makeThreadActionRequestId(),
+    ...(threadGroupId ? { threadGroupId } : {}),
+    ...(threadId ? { threadId } : {}),
+    model,
+    variant,
   };
 }

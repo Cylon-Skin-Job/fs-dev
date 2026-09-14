@@ -53,6 +53,14 @@ The sidebar owns thread list actions. The chat header owns compact/collapsed
 actions. Both should respect the same harness policy and not invent separate
 selection behavior.
 
+The thread rows and kebab menus render through the portable `ThreadRail`
+(`SPEC-02 §5.3`). It receives one explicit `{workspaceId, viewId}` population,
+its selected visible group, and callbacks, and emits canonical row intents
+(open by `threadGroupId`; rename/delete/copy-link/view-markdown through
+`thread:action`). It requests no list and touches no store; only the active
+connected host solicits its population. Preserve row `aria-label`, title,
+keyboard, and focus behavior and the existing rail CSS variables.
+
 Thread row clicks are passive browse actions. They should hydrate the selected
 thread without warming or spawning a harness.
 

@@ -361,7 +361,12 @@ export function createChatSlice(set: Set, get: Get) {
       });
     }),
 
-    sendMessage: (text: string, threadIdOpt?: string | null, attachments?: ChatLinkAttachment[]) => {
+    sendMessage: (
+      text: string,
+      threadIdOpt?: string | null,
+      attachments?: ChatLinkAttachment[],
+      options?: import('../panelStoreTypes').SendMessageOptions,
+    ) => {
       const state = get();
       const socket = state.ws;
       if (!socket || socket.readyState !== WebSocket.OPEN) return;
@@ -373,13 +378,20 @@ export function createChatSlice(set: Set, get: Get) {
       const now = performance.now();
       (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
       console.log(`[TIMING] SEND at ${now.toFixed(1)}ms threadId=${threadId.slice(0, 8)}`);
-      const composerModelConfig = state.composerModelConfig?.[state.currentPanel];
-      const harnessConfig = composerModelConfig
-        ? {
-            ...(composerModelConfig.modelId ? { model: composerModelConfig.modelId } : {}),
-            ...(composerModelConfig.effort ? { variant: composerModelConfig.effort } : {}),
-          }
-        : undefined;
+      // SPEC-02 §6.2: an exact-session surface supplies the last
+      // server-acknowledged portable selection it owns. Only the legacy
+      // panel-global path falls back to `composerModelConfig[currentPanel]`.
+      const harnessConfig = options
+        ? options.harnessConfig
+        : (() => {
+            const composerModelConfig = state.composerModelConfig?.[state.currentPanel];
+            return composerModelConfig
+              ? {
+                  ...(composerModelConfig.modelId ? { model: composerModelConfig.modelId } : {}),
+                  ...(composerModelConfig.effort ? { variant: composerModelConfig.effort } : {}),
+                }
+              : undefined;
+          })();
       socket.send(JSON.stringify({
         type: 'prompt',
         threadId,

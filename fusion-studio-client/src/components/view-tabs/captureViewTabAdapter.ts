@@ -61,6 +61,7 @@ import {
   createCaptureConnectedOwnerPorts,
   describeCaptureComponent,
 } from './captureConnectedOwnerPorts';
+import { chatConnectedRegistrations } from '../chat/chatComponentRegistration';
 
 export {
   CAPTURE_DOCUMENT_PRESENTER_ID,
@@ -214,7 +215,13 @@ function boundedUnavailableSurface() {
   );
 }
 
-const CAPTURE_CONNECTED_REGISTRATIONS = captureConnectedPresenterRegistrations();
+// SPEC-02 §8: the chat domain registers `fusion.chat-surface` through the same
+// closed resolver seam. Composition only makes the seam real — no production
+// chat descriptor, launcher, or placement is added by this slice.
+const CAPTURE_CONNECTED_REGISTRATIONS = [
+  ...captureConnectedPresenterRegistrations(),
+  ...chatConnectedRegistrations(),
+];
 
 /**
  * Stand-in policy used ONLY while the connected path is disabled (no ready
