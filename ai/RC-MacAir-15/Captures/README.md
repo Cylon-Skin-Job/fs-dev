@@ -23,6 +23,8 @@ If you're an AI session that landed here without the `capture-artifacts-and-docs
 | Historical/preserved AI tooling | `011-Skills/` |
 | Multi-agent process/convergence lessons | `013-Convergence_Loops/` |
 | The Composable Views vision/configurable-views platform track | `029-Composable_Views/` |
+| The plugin-system track (root vision + capture system) | `030-Plugin_System/` |
+| Plugin-system backend architecture (child capture) | `032-Plugin_Backend/` |
 | Retired or superseded docs | `999-Archive/` |
 
 `NNN-*-Temp` folders (e.g. `008-Provenance-Temp`) are scoped working areas for active roadmaps — don't add unrelated files to them.
