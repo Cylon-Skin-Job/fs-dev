@@ -17,6 +17,7 @@ import { EmailDocumentTile } from './EmailDocumentTile';
 import { showToast } from '../../lib/toast';
 import { activityId, normalizeViewActivity } from '../../lib/viewActivity';
 import { normalizeViewCollections } from '../../lib/viewCollections';
+import { persistEmailViewPatch } from './emailViewerPersistence';
 import './EmailDocumentPage.css';
 import {
   parseDocumentSettings,
@@ -77,8 +78,6 @@ export function EmailDocumentPage({
   const rawEmailActivity = usePanelStore((s) => s.viewStates[PANEL]?.activity);
   const rawEmailCollections = usePanelStore((s) => s.viewStates[PANEL]?.collections);
   const sidePanel = usePanelStore((s) => s.viewStates[PANEL]?.emailDocumentSidePanel ?? 'none');
-  const setViewState = usePanelStore((s) => s.setViewState);
-  const persistViewPatch = usePanelStore((s) => s._persistViewPatch);
   const recentDocs = useMemo(
     () => normalizeViewActivity(rawEmailActivity).recents,
     [rawEmailActivity]
@@ -200,9 +199,9 @@ export function EmailDocumentPage({
 
   const handleToggleRecentPanel = useCallback(() => {
     const nextSidePanel = sidePanel === 'files' ? 'none' : 'files';
-    setViewState(PANEL, { emailDocumentSidePanel: nextSidePanel });
-    persistViewPatch(PANEL, { emailDocumentSidePanel: nextSidePanel });
-  }, [persistViewPatch, setViewState, sidePanel]);
+    // CHAT-03 / SPEC-03 §5: workspace-owned persistence (not the panel-global writer).
+    persistEmailViewPatch({ emailDocumentSidePanel: nextSidePanel });
+  }, [sidePanel]);
 
   const requestNavigation = useCallback(async (navigation: PendingNavigation) => {
     if (autoSaveTimerRef.current) {

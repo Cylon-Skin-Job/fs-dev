@@ -66,7 +66,11 @@ export interface ChatSurfaceModel {
   showCliPicker: boolean;
   cliPickerOpen: boolean;
   moreMenuOpen: boolean;
-  isSecondary: boolean;
+  /**
+   * SPEC-04 §4 eligibility projection for the visible Move action. The server
+   * remains authoritative; this only gates what the menu offers.
+   */
+  canMoveToSideChat: boolean;
 }
 
 /** Explicit user intents emitted by one mounted `ChatSurface`. */
@@ -86,6 +90,8 @@ export interface ChatSurfaceActions {
   onRename: () => void;
   onCopyLink: () => void;
   onViewMarkdown: () => void;
+  /** SPEC-04 §4: move the current Main Chat into a Side Chat tab. */
+  onMoveToSideChat: () => void;
   onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
   onRequestDiagnostic: (
     route: ChatDiagnosticRouteIds,

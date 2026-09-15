@@ -112,6 +112,25 @@ export interface ThreadActionViewMarkdown {
   threadId?: string;
 }
 
+export interface ThreadActionMoveChatToSide {
+  type: 'thread:action';
+  action: 'move_chat_to_side';
+  requestId: string;
+  threadGroupId: string;
+  threadId: string;
+  /** Exact current-primary sequence the caller observed (SPEC-04 §4/§9). */
+  expectedPrimarySequence: number;
+}
+
+/** SPEC-04 §8 idempotent explicit access to one non-primary member's Side Chat. */
+export interface ThreadActionOpenMemberInSide {
+  type: 'thread:action';
+  action: 'open_member_in_side';
+  requestId: string;
+  threadGroupId: string;
+  threadId: string;
+}
+
 export interface ThreadActionSetHarnessSelection {
   type: 'thread:action';
   action: 'set_harness_selection';
@@ -121,6 +140,30 @@ export interface ThreadActionSetHarnessSelection {
   /** Portable model only; never a harness id, provider session, or unknown key. */
   model: string;
   variant: string | null;
+}
+
+/**
+ * `open_member_in_side` is the SPEC-04 §8 idempotent member-access action. It
+ * carries only durable group/member identities; workspace/view are
+ * server-derived and no placement identity is ever supplied by the caller.
+ */
+export function threadActionOpenMemberInSide(
+  { threadGroupId, threadId }: { threadGroupId: string; threadId: string },
+): ThreadActionOpenMemberInSide {
+  return {
+    type: 'thread:action',
+    action: 'open_member_in_side',
+    requestId: makeThreadActionRequestId(),
+    threadGroupId,
+    threadId,
+  };
+}
+
+/** Qualified `thread:members` read for one validated group (SPEC-04 §8). */
+export function threadMembersRequest(
+  threadGroupId: string,
+): { type: 'thread:members'; threadGroupId: string } {
+  return { type: 'thread:members', threadGroupId };
 }
 
 /**
@@ -182,6 +225,26 @@ export function threadActionViewMarkdown(
     requestId: makeThreadActionRequestId(),
     ...(threadGroupId ? { threadGroupId } : {}),
     ...(threadId ? { threadId } : {}),
+  };
+}
+
+/**
+ * `move_chat_to_side` is the SPEC-04 group action. It carries only durable
+ * group/member identities plus the exact observed primary sequence; workspace
+ * is server-derived and view comes from the group, so no authority field is
+ * sent (SPEC-04 §4).
+ */
+export function threadActionMoveChatToSide(
+  { threadGroupId, threadId, expectedPrimarySequence }:
+  { threadGroupId: string; threadId: string; expectedPrimarySequence: number },
+): ThreadActionMoveChatToSide {
+  return {
+    type: 'thread:action',
+    action: 'move_chat_to_side',
+    requestId: makeThreadActionRequestId(),
+    threadGroupId,
+    threadId,
+    expectedPrimarySequence,
   };
 }
 

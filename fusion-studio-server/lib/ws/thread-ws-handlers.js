@@ -48,6 +48,12 @@ function boundedActionError(code) {
     case 'invalid_selection': return 'Model selection is not available';
     case 'selection_unavailable': return 'Model selection is not available';
     case 'request_invalid': return 'Action requires a bounded requestId';
+    case 'invalid_request': return 'Action request is invalid';
+    case 'not_primary': return 'Only the current Main Chat can be moved';
+    case 'stale_primary': return 'The conversation changed; try again';
+    case 'view_not_supported': return 'This view cannot host a Side Chat';
+    case 'member_unavailable': return 'That Side Chat is not available';
+    case 'placement_unavailable': return 'The Side Chat could not be opened';
     case 'view_id_preflight_repair_required': return 'View identity repair required';
     default: return 'Thread action failed';
   }
@@ -88,6 +94,7 @@ function buildActionCompletedFrame(outcome, { requestId, action, fanOut = false 
         recovered: Boolean(outcome?.recovered || result.recovered),
         replayed: Boolean(outcome?.replayed || result.replayed),
         cleanup: result.cleanup ?? null,
+        viewStateCleanup: result.viewStateCleanup ?? null,
         members: result.members ?? [],
       }
       : {}),
@@ -95,7 +102,16 @@ function buildActionCompletedFrame(outcome, { requestId, action, fanOut = false 
       ? { link: result.link ?? null }
       : {}),
     ...(action === 'resolve_link'
-      ? { resolved: true }
+      ? {
+        resolved: true,
+        ...(result.targetMemberThreadId
+          ? {
+            targetMemberThreadId: result.targetMemberThreadId,
+            sideChatPlacementId: result.sideChatPlacementId ?? null,
+            placementStatus: result.placementStatus ?? null,
+          }
+          : {}),
+      }
       : {}),
     ...(action === 'view_markdown'
       ? { markdownPath: result.markdownPath ?? null }
@@ -105,6 +121,25 @@ function buildActionCompletedFrame(outcome, { requestId, action, fanOut = false 
         harnessId: result.harnessId ?? null,
         model: result.model ?? null,
         variant: result.variant ?? null,
+      }
+      : {}),
+    ...(action === 'move_chat_to_side'
+      ? {
+        movedThreadId: result.movedThreadId ?? null,
+        newMainThreadId: result.newMainThreadId ?? null,
+        currentPrimarySequence: result.currentPrimarySequence ?? null,
+        sideChatPlacementId: result.sideChatPlacementId ?? null,
+        placementStatus: result.placementStatus ?? null,
+        placement: result.placement ?? null,
+        replayed: Boolean(outcome?.replayed || result.replayed),
+      }
+      : {}),
+    ...(action === 'open_member_in_side'
+      ? {
+        sideChatPlacementId: result.sideChatPlacementId ?? null,
+        placementStatus: result.placementStatus ?? null,
+        focused: Boolean(result.focused),
+        replayed: Boolean(outcome?.replayed || result.replayed),
       }
       : {}),
   };
@@ -118,7 +153,37 @@ const DURABLE_THREAD_ACTIONS = Object.freeze(new Set([
   'resolve_link',
   'view_markdown',
   'set_harness_selection',
+  'move_chat_to_side',
+  'open_member_in_side',
 ]));
+
+/**
+ * Exact allowed payload key set for one member access (`SPEC-04 §8`). Like
+ * Move, workspace and view authority are server-derived; only durable
+ * group/member identities plus the fail-open `context` are accepted.
+ */
+const OPEN_MEMBER_ACTION_KEYS = Object.freeze(new Set([
+  'type', 'action', 'requestId', 'threadGroupId', 'threadId', 'context',
+]));
+
+/**
+ * Exact allowed payload key set for one Move (`SPEC-04 §4`). Redundant client
+ * workspace/view authority fields are schema-rejected: workspace is
+ * server-derived from the bound connection and view from the group. `context`
+ * is the fail-open durable `ChatActionContext` portion only.
+ */
+const MOVE_ACTION_KEYS = Object.freeze(new Set([
+  'type', 'action', 'requestId', 'threadGroupId', 'threadId',
+  'expectedPrimarySequence', 'context',
+]));
+
+function hasRedundantMoveAuthority(clientMsg) {
+  return Object.keys(clientMsg).some((key) => !MOVE_ACTION_KEYS.has(key));
+}
+
+function hasRedundantMemberAuthority(clientMsg) {
+  return Object.keys(clientMsg).some((key) => !OPEN_MEMBER_ACTION_KEYS.has(key));
+}
 
 /**
  * @param {object} deps
@@ -328,6 +393,14 @@ function createThreadWsHandlers({
         ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'request_invalid')));
         return;
       }
+      if (action === 'move_chat_to_side' && hasRedundantMoveAuthority(clientMsg)) {
+        ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'invalid_request')));
+        return;
+      }
+      if (action === 'open_member_in_side' && hasRedundantMemberAuthority(clientMsg)) {
+        ws.send(JSON.stringify(buildActionErrorFrame(clientMsg, 'invalid_request')));
+        return;
+      }
       const binding = currentBinding();
       if (!binding) {
         denyThreadMutation(ws);
@@ -348,6 +421,7 @@ function createThreadWsHandlers({
             uri: clientMsg.uri ?? null,
             model: clientMsg.model ?? null,
             variant: clientMsg.variant === undefined ? null : clientMsg.variant,
+            expectedPrimarySequence: clientMsg.expectedPrimarySequence ?? null,
             requestId,
             componentContext: clientMsg.context ?? null,
             workspaceEpoch: binding.workspaceEpoch,
@@ -363,9 +437,12 @@ function createThreadWsHandlers({
 
         // Resolve Link opens Main Chat: the authoritative current primary is
         // hydrated through the canonical open path only on the original,
-        // committed invocation (never on a replay). Legacy opens its explicit
-        // null-view host through the same path.
-        if (action === 'resolve_link' && !outcome.replayed) {
+        // committed invocation (never on a replay). A URI that named an exact
+        // non-primary member instead reopens/focuses its Side Chat placement
+        // (server-side) and never promotes that member as Main Chat
+        // (`SPEC-04 §8`). Legacy opens its explicit null-view host.
+        if (action === 'resolve_link' && !outcome.replayed
+          && !outcome.result?.targetMemberThreadId) {
           try {
             await ThreadWebSocketHandler.handleThreadOpen(ws, {
               threadGroupId: outcome.result?.threadGroupId ?? clientMsg.threadGroupId ?? null,
@@ -471,6 +548,60 @@ function createThreadWsHandlers({
           viewId = target.viewId;
         }
         return ThreadWebSocketHandler.sendThreadList(ws, viewId);
+      });
+    },
+
+    /**
+     * `thread:members` — the registered qualified read for one validated group
+     * (`SPEC-04 §8`). Workspace is server-derived from the bound connection and
+     * the server returns the group's authoritative nullable view. It returns
+     * ordered member projections only; transcript content is never included.
+     */
+    async 'thread:members'(clientMsg = {}) {
+      if (!requireTrustedThreadAuthority(ws, session)) return;
+      const binding = currentBinding();
+      await runBoundRead(binding, async () => {
+        const service = binding?.state?.threadManager?.threadGroups;
+        if (!service || typeof service.listGroupMembers !== 'function') {
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code: 'action_unavailable',
+            message: 'Thread members are unavailable',
+          }));
+          return;
+        }
+        let outcome;
+        try {
+          outcome = await service.listGroupMembers({
+            threadGroupId: clientMsg.threadGroupId ?? null,
+          });
+        } catch (_error) {
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code: 'members_failed',
+            message: 'Thread members are unavailable',
+          }));
+          return;
+        }
+        if (!outcome?.ok) {
+          const code = outcome?.code || 'not_found';
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code,
+            message: boundedActionError(code),
+          }));
+          return;
+        }
+        ws.send(JSON.stringify({
+          type: 'thread:members',
+          threadGroupId: outcome.result.threadGroupId,
+          workspaceId: outcome.result.workspaceId,
+          viewId: outcome.result.viewId,
+          members: outcome.result.members,
+        }));
       });
     },
   };

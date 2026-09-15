@@ -379,19 +379,10 @@ export function createChatSlice(set: Set, get: Get) {
       (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
       console.log(`[TIMING] SEND at ${now.toFixed(1)}ms threadId=${threadId.slice(0, 8)}`);
       // SPEC-02 §6.2: an exact-session surface supplies the last
-      // server-acknowledged portable selection it owns. Only the legacy
-      // panel-global path falls back to `composerModelConfig[currentPanel]`.
-      const harnessConfig = options
-        ? options.harnessConfig
-        : (() => {
-            const composerModelConfig = state.composerModelConfig?.[state.currentPanel];
-            return composerModelConfig
-              ? {
-                  ...(composerModelConfig.modelId ? { model: composerModelConfig.modelId } : {}),
-                  ...(composerModelConfig.effort ? { variant: composerModelConfig.effort } : {}),
-                }
-              : undefined;
-          })();
+      // server-acknowledged portable selection it owns. There is no
+      // panel-global fallback; the legacy `composerModelConfig` mirror was
+      // inert (zero writers) and was retired in SPEC-04 Slice 04D.
+      const harnessConfig = options?.harnessConfig;
       socket.send(JSON.stringify({
         type: 'prompt',
         threadId,

@@ -5,6 +5,10 @@ import {
   settleViewStateMutation,
 } from '../../lib/viewStateMutationTracker';
 import {
+  isViewWorksurfaceBound,
+  onViewContentChanged,
+} from '../../lib/worksurface/worksurfaceController';
+import {
   canonicalCapturePath,
   captureTabsEqual,
   classicGridProjectionFor,
@@ -117,6 +121,12 @@ function persistTabs(
   activeId: string | null,
   context = currentOperationContext(),
 ): void {
+  // CHAT-03 / SPEC-03 §5 cutover: while the Capture Viewer is bound to a Thread
+  // Group its worksurface adapter/controller is the only writer of the tab
+  // collection. Ordinary navigation routes into the selected group's content
+  // lane; the classic-conversion handoff (`persistedStateResult`) remains the
+  // explicit non-group/Legacy compatibility writer.
+  if (isCurrentOperationContext(context) && onViewContentChanged(CAPTURE_PANEL)) return;
   persistPatch(context, {
     docViewerTabs: tabs,
     docViewerActiveTabId: activeId,
@@ -220,6 +230,11 @@ async function handoffToClassic(
   } = {},
 ): Promise<void> {
   const context = currentOperationContext();
+  // CHAT-03 / SPEC-03 §5: the classic handoff is an explicit non-group/Legacy
+  // compatibility transition. While the Capture Viewer is group-bound the
+  // adapter/controller owns the elected classic keys, so the handoff (which
+  // persists them through the global writer) does not run.
+  if (isViewWorksurfaceBound(context.workspaceId, CAPTURE_PANEL)) return;
   const key = workspaceOperationKey(context.workspaceId);
   const existing = handoffByWorkspace.get(key);
   if (existing) return existing.promise;

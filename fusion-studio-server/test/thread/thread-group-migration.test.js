@@ -92,11 +92,12 @@ describe('migration 041 thread group foundation', () => {
     db = createDb();
     const [batch, migrations] = await db.migrate.latest();
     expect(batch).toBe(1);
-    expect(migrations.at(-1)).toMatch(/042_thread_group_action_recovery\.js$/);
+    expect(migrations.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/);
     for (const table of [
       'thread_groups', 'thread_group_members', 'thread_group_primary_events',
       'thread_group_activity_events', 'thread_group_action_results',
       'thread_group_mirror_recovery', 'thread_group_delete_tombstones',
+      'thread_group_worksurface_cleanup',
     ]) {
       await expect(db.schema.hasTable(table)).resolves.toBe(true);
     }

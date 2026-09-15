@@ -7,11 +7,14 @@
  */
 
 import { usePanelStore } from '../state/panelStore';
+import { getWorksurfaceBinding } from '../state/slices/worksurfaceSlice';
+import { boundViewContentKeys } from './worksurface/worksurfaceController';
 import { useFileDataStore } from '../state/fileDataStore';
 import { useSecretsStore } from '../state/secretsStore';
 import { handleStreamMessage, resetStreamState } from './ws/stream-handlers';
 import { handleThreadMessage } from './ws/thread-handlers';
 import { handleFileMessage } from './ws/file-handlers';
+import { handleWorksurfaceMessage } from './ws/worksurface-handlers';
 import {
   handleResourceProvenanceResponse,
   retirePendingResourceProvenanceQueries,
@@ -421,6 +424,7 @@ function handleMessageWithinDiagnosticBoundary(
 
   if (handleStreamMessage(msg)) return;
   if (handleThreadMessage(msg)) return;
+  if (handleWorksurfaceMessage(msg)) return;
   if (handleFileMessage(msg)) return;
   if (handleResourceProvenanceResponse(msg)) return;
   if (handleWorkspaceMessage(msg, { runtimeGeneration, isStillCurrent })) return;
@@ -477,7 +481,22 @@ function handleMessageWithinDiagnosticBoundary(
     // state:set responses contain a full server state. When multiple patches
     // are in flight, a later echo can be based on an older disk snapshot, so
     // keep the optimistic local state until the pending mutation settles.
-    const stateToApply = hasPendingMutation ? { ...incoming, ...current } : incoming;
+    const stateToApply = hasPendingMutation ? { ...incoming, ...current } : { ...incoming };
+    // CHAT-03 / SPEC-03 §5: while a view is bound to a Thread Group, the global
+    // `activity` document is not the content owner. A global state response may
+    // update non-content facts (widths, collapse, tints) but must never hydrate
+    // over the selected group's authoritative content.
+    if (getWorksurfaceBinding(store, workspaceId, view) && current) {
+      stateToApply.activity = current.activity;
+      // The document viewers also elect top-level ViewUIState keys; pin them so
+      // a global echo can never hydrate over the selected group's content.
+      const contentKeys = boundViewContentKeys(view);
+      if (contentKeys) {
+        const apply = stateToApply as unknown as Record<string, unknown>;
+        const live = current as unknown as Record<string, unknown>;
+        for (const key of contentKeys) apply[key] = live[key];
+      }
+    }
     store.setViewState(view, stateToApply);
     // VIEW-02 §9: a persisted state document landed for this view — the
     // connected adapters' initial-policy gate may open.

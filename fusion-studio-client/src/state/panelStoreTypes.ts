@@ -12,7 +12,6 @@ import type {
   ViewUIState,
   Pane,
   CollapsablePane,
-  SecondaryState,
   HarnessStatus,
   ResolvedCliEntry,
   CliEntryOverride,
@@ -35,6 +34,14 @@ import type {
   ThreadHarnessSelection,
   ThreadOpenResponseMatch,
 } from './slices/chatSurfaceSlice';
+import type {
+  PendingWorksurfaceCapture,
+  RemoteWorksurfaceRevision,
+  ThreadMemberProjection,
+  WorksurfaceBinding,
+  WorksurfaceConflict,
+} from './slices/worksurfaceSlice';
+import type { ThreadWorksurfaceEntry } from '../lib/worksurface/types';
 
 /** Portable `{model, variant}` snapshot supplied by an exact-session surface. */
 export interface SendHarnessConfig {
@@ -62,15 +69,6 @@ export interface ConnectorState {
   enabled: boolean;
   status: ConnectorStatusColor;
   lastSync: string | null;
-}
-
-// Composer provider/model/effort selection, per panel. Effort is the opencode
-// `--variant` string for the chosen model (e.g. 'high'); it defaults to 'high'
-// whenever the provider or model changes.
-export interface ComposerModelSelection {
-  providerId: string | null;
-  modelId: string | null;
-  effort: string | null;
 }
 
 // Per-workspace runtime state. currentPanel is persisted as workspace shell
@@ -245,6 +243,15 @@ export interface AppState {
     viewId: string | null,
     threadGroupId: string | null,
   ) => void;
+  /** SPEC-04 §5: apply one accepted Move to the exact population row. */
+  applyThreadGroupMove: (input: {
+    workspaceId: string;
+    viewId: string | null;
+    threadGroupId: string;
+    newThreadId: string;
+    currentPrimarySequence?: number;
+    memberCount?: number;
+  }) => void;
 
   /**
    * Correlated `thread:open` requests: a late `thread:opened` response may only
@@ -306,6 +313,69 @@ export interface AppState {
   commitPaneWidths: (view: string, pane?: Pane) => void;
   setTint: (view: string, path: TintPath, value: boolean) => void;
 
+  // ── Group-keyed content worksurface (CHAT-03 / SPEC-03 §6) ──
+  worksurfaceBindings: Record<string, WorksurfaceBinding>;
+  worksurfacePendingCaptures: Record<string, PendingWorksurfaceCapture>;
+  worksurfaceEntries: Record<string, ThreadWorksurfaceEntry | null>;
+  worksurfaceRemoteRevisions: Record<string, RemoteWorksurfaceRevision>;
+  worksurfaceConflicts: Record<string, WorksurfaceConflict>;
+  worksurfaceWarnings: string[];
+  setWorksurfaceBinding: (binding: WorksurfaceBinding) => void;
+  updateWorksurfaceBinding: (
+    workspaceId: string,
+    viewId: string,
+    patch: Partial<WorksurfaceBinding>,
+  ) => void;
+  clearWorksurfaceBinding: (workspaceId: string, viewId: string) => void;
+  setWorksurfacePendingCapture: (
+    workspaceId: string,
+    viewId: string,
+    capture: PendingWorksurfaceCapture,
+  ) => void;
+  clearWorksurfacePendingCapture: (workspaceId: string, viewId: string) => void;
+  setWorksurfaceConflict: (
+    workspaceId: string,
+    viewId: string,
+    conflict: WorksurfaceConflict,
+  ) => void;
+  clearWorksurfaceConflict: (workspaceId: string, viewId: string) => void;
+  setWorksurfaceEntry: (
+    workspaceId: string,
+    viewId: string,
+    threadGroupId: string,
+    entry: ThreadWorksurfaceEntry | null,
+  ) => void;
+  setWorksurfaceRemoteRevision: (
+    workspaceId: string,
+    viewId: string,
+    threadGroupId: string,
+    revision: RemoteWorksurfaceRevision,
+  ) => void;
+  removeWorksurfaceEntry: (
+    workspaceId: string,
+    viewId: string,
+    threadGroupId: string,
+  ) => void;
+  pushWorksurfaceWarning: (warning: string) => void;
+  clearWorksurfaceWarnings: () => void;
+  /** SPEC-04 §6/§7: focused Side Chat placement per `{workspaceId, viewId}`. */
+  sideChatActivePlacementByView: Record<string, string | null>;
+  setActiveSideChatPlacement: (
+    workspaceId: string,
+    viewId: string,
+    placementId: string | null,
+  ) => void;
+  /** SPEC-04 §3: outer owning view's ThreadRail dock state. */
+  worksurfaceDockOpenByView: Record<string, boolean>;
+  setWorksurfaceDockOpen: (workspaceId: string, viewId: string, open: boolean) => void;
+  /** SPEC-04 §8: ordered `thread:members` projections by `{workspaceId, groupId}`. */
+  threadMembersByGroup: Record<string, ThreadMemberProjection[]>;
+  setThreadMembers: (
+    workspaceId: string,
+    threadGroupId: string,
+    members: ThreadMemberProjection[],
+  ) => void;
+
   // ── Chat-header dropdown UI state (transient) ──
   cliPickerOpen: Record<string, boolean>;
   threadDropdownOpen: Record<string, boolean>;
@@ -314,10 +384,6 @@ export interface AppState {
   toggleThreadDropdown: (panel: string) => void;
   closeThreadDropdown: (panel: string) => void;
   closeAllChatHeaderDropdowns: (panel: string) => void;
-
-  // ── Composer model selection (provider/model/effort) per panel ──
-  composerModelConfig: Record<string, ComposerModelSelection>;
-  setComposerModelConfig: (panel: string, patch: Partial<ComposerModelSelection>) => void;
 
   // ── Harness status cache (HARNESS_STATUS_CACHE_SPEC) ──
   harnessStatuses: Record<string, HarnessStatus>;
@@ -367,16 +433,4 @@ export interface AppState {
   connectingHarnessBySurface: Record<string, string>;
   setConnectingHarnessForSurface: (surfaceId: string, harnessId: string) => void;
   clearConnectingHarnessForSurface: (surfaceId: string) => void;
-
-  // ── Secondary chat (SECONDARY_CHAT_SPEC) ──
-  secondary: SecondaryState | null;
-  openSecondary: (threadId: string) => void;
-  closeSecondary: () => void;
-  minimizeSecondary: () => void;
-  restoreSecondary: () => void;
-  clearJustRestored: () => void;
-  dockSecondary: () => void;
-  undockSecondary: () => void;
-  setSecondaryFloat: (x: number, y: number, width: number, height: number) => void;
-  setSecondaryStickyWidth: (width: number) => void;
 }

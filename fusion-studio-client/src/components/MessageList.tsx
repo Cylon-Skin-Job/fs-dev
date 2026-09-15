@@ -43,8 +43,7 @@ import type { ChatDiagnosticRouteIds } from '../lib/ws/chat-diagnostic-handlers'
 import type { ValidatedChatTurnDiagnosticReport } from '../lib/chat/diagnostic-report';
 
 interface MessageListProps {
-  // PER_THREAD_CHAT_STATE: primary passes the current workspace thread;
-  // secondary passes secondary.threadId.
+  // PER_THREAD_CHAT_STATE: the mounted host passes its exact session's threadId.
   threadId: string | null;
   messages: Message[];
   currentTurn: AssistantTurn | null;

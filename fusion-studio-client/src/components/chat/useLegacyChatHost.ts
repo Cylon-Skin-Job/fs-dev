@@ -23,6 +23,7 @@ import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import {
   threadActionCopyLink,
+  threadActionMoveChatToSide,
   threadActionRename,
   threadActionSetHarnessSelection,
   threadActionViewMarkdown,
@@ -37,6 +38,7 @@ import {
 } from '../../lib/ws/chat-diagnostic-handlers';
 import { writeAndRecord } from '../../clipboard/clipboard-api';
 import { acknowledgedHarnessConfigForThread, selectionForThread } from '../../state/slices/chatSurfaceSlice';
+import { getWorksurfaceDockOpen } from '../../state/slices/worksurfaceSlice';
 import { useChatSurfaceIdentity } from './useChatSurfaceIdentity';
 import type {
   ChatMountIdentity,
@@ -68,6 +70,12 @@ export interface UseLegacyChatHostOptions {
   workspaceId?: string | null;
   /** Explicit visible-group binding (view hosts resolve it from the rail). */
   threadGroupId?: string | null;
+  /**
+   * Exact current-primary sequence the connected population observed. View
+   * hosts pass it from their own rail row; the workspace-global `threads`
+   * mirror may not carry the view-bound row (SPEC-04 §4).
+   */
+  expectedPrimarySequence?: number | null;
   /**
    * When true the host never falls back to the workspace-global
    * `currentThreadId`; an absent explicit target renders the empty surface.
@@ -106,6 +114,7 @@ export function useLegacyChatHost({
   viewId: viewIdProp = null,
   workspaceId: workspaceIdProp = null,
   threadGroupId: threadGroupIdProp = null,
+  expectedPrimarySequence: expectedPrimarySequenceProp = null,
   explicitTarget = false,
   isActive: isActivePanel = true,
   surfaceId: surfaceIdProp,
@@ -160,6 +169,9 @@ export function useLegacyChatHost({
     [threads, threadId],
   );
   const threadGroupId = threadGroupIdProp ?? threadRow?.threadGroupId ?? '';
+  const expectedPrimarySequence = expectedPrimarySequenceProp
+    ?? threadRow?.currentPrimarySequence
+    ?? null;
 
   const selector = selectChatState(hasThread ? threadId : null);
   const messages = usePanelStore((s) => selector(s)?.messages ?? EMPTY_MESSAGES);
@@ -343,6 +355,18 @@ export function useLegacyChatHost({
     setMoreMenuOpen(false);
   }, [threadGroupId, threadId]);
 
+  const handleMoveToSideChat = useCallback(() => {
+    setMoreMenuOpen(false);
+    const socket = usePanelStore.getState().ws;
+    if (!threadId || !threadGroupId || !Number.isInteger(expectedPrimarySequence)
+      || !socket || socket.readyState !== WebSocket.OPEN) return;
+    socket.send(JSON.stringify(threadActionMoveChatToSide({
+      threadGroupId,
+      threadId,
+      expectedPrimarySequence: expectedPrimarySequence as number,
+    })));
+  }, [expectedPrimarySequence, threadGroupId, threadId]);
+
   const handleStop = useCallback(() => {
     const state = usePanelStore.getState();
     if (!threadId || !state.ws || state.ws.readyState !== WebSocket.OPEN) return;
@@ -391,10 +415,22 @@ export function useLegacyChatHost({
     setCliPickerOpen(false);
   }, [explicitMount, selectHarness, setConnectingHarnessForSurface, surfaceId]);
 
+  // SPEC-04 §3: a Side Chat has no nested list; its list button operates the
+  // outer owning view's ThreadRail dock instead of a local/global sidebar.
+  const sideTabHost = host === 'side-tab';
   const handleToggleThreads = useCallback(() => {
-    toggleCollapsed(panel, 'leftSidebar');
     setMoreMenuOpen(false);
-  }, [panel, toggleCollapsed]);
+    if (sideTabHost && workspaceId && viewIdProp) {
+      const state = usePanelStore.getState();
+      state.setWorksurfaceDockOpen(
+        workspaceId,
+        viewIdProp,
+        !getWorksurfaceDockOpen(state, workspaceId, viewIdProp),
+      );
+      return;
+    }
+    toggleCollapsed(panel, 'leftSidebar');
+  }, [panel, sideTabHost, toggleCollapsed, viewIdProp, workspaceId]);
 
   const handleToggleContent = useCallback(() => {
     toggleCollapsed(panel, 'contentArea');
@@ -677,12 +713,21 @@ export function useLegacyChatHost({
       pending: harnessSelection.pending !== null,
     },
     harnessStatuses,
-    isThreadsCollapsed: sidebarCollapsed,
+    isThreadsCollapsed: sidebarCollapsed || sideTabHost,
     isContentCollapsed: contentCollapsed,
     showCliPicker: selectableHarnesses.length > 1,
     cliPickerOpen,
     moreMenuOpen,
-    isSecondary: false,
+    canMoveToSideChat: host === 'main'
+      && Boolean(viewIdProp)
+      && Boolean(threadGroupId)
+      && hasThread
+      && Number.isInteger(expectedPrimarySequence)
+      && !isTurnActive
+      && !isAcceptancePending
+      // SPEC-04 §4: no active/accepting turn AND no unresolved Stop boundary.
+      && !isTurnFinalizing
+      && harnessSelection.pending === null,
   };
 
   const actions: ChatSurfaceActions = {
@@ -701,6 +746,7 @@ export function useLegacyChatHost({
     onRename: handleRename,
     onCopyLink: handleCopyLink,
     onViewMarkdown: handleViewMarkdown,
+    onMoveToSideChat: handleMoveToSideChat,
     onModelSelectionChange: handleModelSelectionChange,
     onRequestDiagnostic: handleRequestDiagnostic,
     onCopyDiagnostic: handleCopyDiagnostic,

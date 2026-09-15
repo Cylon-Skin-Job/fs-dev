@@ -13,7 +13,6 @@ import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
 import { useFileStore } from '../../state/fileStore';
 import { loadRootTree, loadFileContent } from '../file-tree';
-import { secondaryTracker } from '../secondary-tracker';
 import { readTokenUsage } from '../chat/context-usage';
 import { sanitizeTerminalErrorMetadata } from '../chat/terminal-error';
 import { showToast } from '../toast';
@@ -24,7 +23,31 @@ import {
   getCurrentThreadGroupId,
   matchesPendingThreadOpen,
 } from '../../state/slices/chatSurfaceSlice';
+import { requestWorksurfaceEntryRead } from '../worksurface/worksurfaceController';
+import { isSideChatCapableView } from '../worksurface/sideChatViews';
 import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot, Thread } from '../../types';
+
+/**
+ * True when any visible group population names `threadId` as its current
+ * primary (the replacement Main Chat of an accepted Move). Used only to admit a
+ * live frame for an exact owned session; it never invents state.
+ */
+function isGroupPrimaryThread(
+  store: ReturnType<typeof usePanelStore.getState>,
+  threadId: string,
+): boolean {
+  const composite = store.threadGroupsByWorkspaceAndView ?? {};
+  for (const byView of Object.values(composite)) {
+    for (const rows of Object.values(byView ?? {})) {
+      if ((rows ?? []).some((row) => row.threadId === threadId)) return true;
+    }
+  }
+  const legacy = store.legacyThreadGroupsByWorkspaceId ?? {};
+  for (const rows of Object.values(legacy)) {
+    if ((rows ?? []).some((row) => row.threadId === threadId)) return true;
+  }
+  return false;
+}
 
 /**
  * Handle thread-related WebSocket messages.
@@ -63,6 +86,16 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
             (row) => !row.workspaceId || row.workspaceId === workspaceId,
           );
           store.setThreadGroupPopulation(workspaceId, responseViewId, scoped);
+          // SPEC-04 §7 restart/readback: a qualified view list also triggers the
+          // exact per-group entry read, so a persisted open Side Chat placement
+          // materializes for an unbound/dockless host without an action frame.
+          if (responseViewId !== null && isSideChatCapableView(responseViewId)) {
+            for (const row of scoped) {
+              if (row.threadGroupId) {
+                requestWorksurfaceEntryRead(workspaceId, responseViewId, row.threadGroupId);
+              }
+            }
+          }
           if (responseViewId === null) {
             // Legacy backing store for pre-SPEC-02 consumers; all new reads are
             // qualified through the composite map.
@@ -116,12 +149,38 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       }
       return true;
 
+    case 'thread:members': {
+      // SPEC-04 §8: the qualified ordered-member read. Ordered projections
+      // only; never transcript content. Hydrate the exact group's list.
+      const membersWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
+        ? msg.workspaceId
+        : store.activeWorkspaceId;
+      if (membersWorkspaceId
+        && typeof msg.threadGroupId === 'string' && msg.threadGroupId
+        && Array.isArray(msg.members)) {
+        store.setThreadMembers(
+          membersWorkspaceId,
+          msg.threadGroupId,
+          msg.members as Parameters<typeof store.setThreadMembers>[2],
+        );
+      }
+      return true;
+    }
+
+    case 'thread:members:error':
+      // Inert classified failure: nothing to hydrate; the existing member list
+      // (if any) is retained rather than replaced with a fabricated one.
+      return true;
+
     case 'thread:created':
       console.log('[WS] thread:created received:', msg.threadId);
       if (msg.thread && msg.threadId) {
         store.addThread({
           threadId: msg.threadId,
           threadGroupId: msg.threadGroupId,
+          // Durable view binding of the created group (`null` = explicit
+          // Legacy); the client never infers it from the active panel.
+          viewId: typeof msg.viewId === 'string' && msg.viewId ? msg.viewId : null,
           entry: msg.thread,
         });
         store.setCurrentThreadId(msg.threadId);
@@ -146,30 +205,6 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     case 'thread:opened': {
       console.log('[WS] thread:opened:', msg.threadId?.slice(0, 8), 'exchanges:', msg.exchanges?.length, 'history:', msg.history?.length, 'contextUsage:', msg.contextUsage);
       if (msg.threadId && msg.thread) {
-        // SECONDARY_CHAT_SPEC: if this thread:opened is for the secondary's
-        // thread, hydrate its chat slot but do NOT touch primary state.
-        // Check both the live secondary state AND the secondary tracker —
-        // the tracker catches the race where the user clicks red before the
-        // server's response arrives (secondary is already null, but the
-        // response was originally intended for the secondary and must not
-        // hijack the primary's current thread).
-        const isForSecondary =
-          store.secondary?.threadId === msg.threadId ||
-          secondaryTracker.has(msg.threadId);
-
-        if (isForSecondary) {
-          secondaryTracker.unmark(msg.threadId);
-          store.clearChat(msg.threadId);
-          if (msg.exchanges && msg.exchanges.length > 0) {
-            convertExchangesToMessages(msg.threadId, msg.exchanges);
-          } else if (msg.history && msg.history.length > 0) {
-            convertHistoryToMessages(msg.threadId, msg.history);
-          }
-          overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-          restoreContextSnapshot(msg.threadId, msg.exchanges, msg.contextUsage, msg.tokenUsage);
-          return true;
-        }
-
         // SPEC-02 §6.1/§6.2 late-response discipline: a `thread:opened` may
         // change only its own population's visible selection, and only when it
         // matches this client's correlated open request or the already-selected
@@ -262,6 +297,73 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           typeof msg.threadGroupId === 'string' ? msg.threadGroupId : null,
           typeof msg.viewId === 'string' ? msg.viewId : null,
         );
+        // SPEC-03 §8 / 03B-D10: a group delete removes exactly its server
+        // worksurface entry, so every live window drops a cached copy of the
+        // deleted group. This never touches a pending capture, binding, or
+        // conflict. Legacy (`viewId: null`) has no worksurface entry.
+        const deletedWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
+          ? msg.workspaceId
+          : store.activeWorkspaceId;
+        if (deletedWorkspaceId
+          && typeof msg.viewId === 'string' && msg.viewId
+          && typeof msg.threadGroupId === 'string' && msg.threadGroupId) {
+          store.removeWorksurfaceEntry(deletedWorkspaceId, msg.viewId, msg.threadGroupId);
+        }
+      } else if (msg.action === 'move_chat_to_side'
+        && typeof msg.threadGroupId === 'string' && msg.threadGroupId
+        && typeof msg.newMainThreadId === 'string' && msg.newMainThreadId) {
+        // SPEC-04 §5: the visible row keeps its group identity and now names
+        // the new empty Main Chat. The moved member is addressed only through
+        // the placement lane, never reconstructed from primary history.
+        const moveWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
+          ? msg.workspaceId
+          : store.activeWorkspaceId;
+        const moveViewId = typeof msg.viewId === 'string' && msg.viewId ? msg.viewId : null;
+        if (moveWorkspaceId) {
+          store.applyThreadGroupMove({
+            workspaceId: moveWorkspaceId,
+            viewId: moveViewId,
+            threadGroupId: msg.threadGroupId,
+            newThreadId: msg.newMainThreadId,
+            ...(typeof msg.currentPrimarySequence === 'number'
+              ? { currentPrimarySequence: msg.currentPrimarySequence }
+              : {}),
+          });
+          if (moveViewId) {
+            requestWorksurfaceEntryRead(moveWorkspaceId, moveViewId, msg.threadGroupId);
+          }
+        }
+        if (!msg.fanOut && typeof msg.sideChatPlacementId === 'string') {
+          // SPEC-04 §7: never claim the tab opened when delivery did not apply;
+          // a failed/pending placement stays truthful and retryable.
+          if (msg.placementStatus === 'applied') {
+            showToast('Moved to a Side Chat');
+          } else {
+            showToast('Moved. The Side Chat tab is pending retry.');
+          }
+        }
+      } else if (msg.action === 'open_member_in_side'
+        && typeof msg.threadGroupId === 'string' && msg.threadGroupId
+        && typeof msg.sideChatPlacementId === 'string' && msg.sideChatPlacementId) {
+        // SPEC-04 §8: the member's lifetime placement is reopened/focused by
+        // the server. This window focuses that exact placement (never promotes
+        // the member, never treats the broadcast as the request ack) and
+        // re-reads acknowledged server truth so the tab materializes.
+        const openWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
+          ? msg.workspaceId
+          : store.activeWorkspaceId;
+        const openViewId = typeof msg.viewId === 'string' && msg.viewId ? msg.viewId : null;
+        if (openWorkspaceId && openViewId) {
+          store.setActiveSideChatPlacement(
+            openWorkspaceId,
+            openViewId,
+            msg.sideChatPlacementId,
+          );
+          requestWorksurfaceEntryRead(openWorkspaceId, openViewId, msg.threadGroupId);
+        }
+        if (!msg.fanOut && msg.placementStatus === 'applied') {
+          showToast('Opened the Side Chat');
+        }
       } else if (msg.action === 'set_harness_selection' && msg.threadId) {
         // SPEC-02 §6.2: only the exact-session response promotes the pending
         // optimistic value to acknowledged Send authority.
@@ -295,14 +397,28 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         // pending value never became Send authority.
         store.rejectHarnessSelection(msg.threadId, msg.requestId);
       }
-      const action = msg.action === 'rename' ? 'Rename' : msg.action === 'delete' ? 'Delete' : 'Thread action';
+      const action = msg.action === 'rename'
+        ? 'Rename'
+        : msg.action === 'delete'
+          ? 'Delete'
+          : msg.action === 'move_chat_to_side'
+            ? 'Move'
+            : 'Thread action';
       let detail = 'Thread action failed';
-      if (msg.code === 'group_busy') detail = 'Thread has an active conversation. Stop it before deleting.';
+      if (msg.code === 'group_busy') {
+        detail = msg.action === 'move_chat_to_side'
+          ? 'Thread has an active conversation. Stop it before moving.'
+          : 'Thread has an active conversation. Stop it before deleting.';
+      }
       else if (msg.code === 'request_mismatch') detail = 'That request was already used with different input.';
       else if (msg.code === 'not_found') detail = 'Thread no longer exists.';
       else if (msg.code === 'invalid_name') detail = 'Thread name is invalid.';
       else if (msg.code === 'invalid_link') detail = 'Thread link is invalid.';
-      else if (msg.code === 'invalid_selection' || msg.code === 'selection_unavailable') {
+      else if (msg.code === 'not_primary' || msg.code === 'stale_primary') {
+        detail = 'Only the current Main Chat can be moved, and the conversation must be up to date.';
+      } else if (msg.code === 'view_not_supported') {
+        detail = 'This view cannot host a Side Chat.';
+      } else if (msg.code === 'invalid_selection' || msg.code === 'selection_unavailable') {
         detail = 'That model or effort is not available.';
       }
       showToast(`${action} failed: ${detail}`);
@@ -313,8 +429,15 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       console.log('[WS] Message accepted and saved to thread');
       if (msg.threadId && typeof msg.content === 'string') {
         const isOwnedThread = store.currentThreadId === msg.threadId
-          || store.secondary?.threadId === msg.threadId
-          || store.threads.some((thread) => thread.threadId === msg.threadId);
+          || store.threads.some((thread) => thread.threadId === msg.threadId)
+          // SPEC-04 §7/§8: a mounted Side Chat member is a non-primary peer, so
+          // it is not in `threads`; its exact mounted chat slot is the owner.
+          // A deleted thread's slot is removed by `removeThread`, so this never
+          // recreates chat state for a deleted or foreign thread.
+          || store.projectChats?.[msg.threadId] !== undefined
+          // A group's current primary (the replacement Main Chat B) is a live
+          // owner even before its chat slot hydrates.
+          || isGroupPrimaryThread(store, msg.threadId);
         // A late acknowledgement for a deleted or previous-workspace thread
         // must not recreate chat state in the active workspace. Legitimate
         // current threads still commit their server-owned user bubble even

@@ -1,5 +1,6 @@
 import { usePanelStore } from '../state/panelStore';
 import { DEFAULT_VIEW_UI_STATE } from '../state/slices/viewSlice';
+import { onViewContentChanged } from './worksurface/worksurfaceController';
 import type {
   ViewActivityItem,
   ViewActivityKind,
@@ -138,7 +139,14 @@ function persistActivity(view: string, activity: ViewActivityState) {
     activity,
   };
   store.setViewState(view, nextState);
-  store._persistViewPatch(view, { activity });
+  // CHAT-03 / SPEC-03 §5 cutover: while a view is bound to a Thread Group its
+  // adapter/controller is the only writer for every content fact in `content`.
+  // The global/top-level `activity` write-through is skipped and routed into the
+  // selected group's content lane instead. A non-group/Legacy view keeps the
+  // exact existing `state:set` persistence.
+  if (!onViewContentChanged(view)) {
+    store._persistViewPatch(view, { activity });
+  }
 }
 
 export function recordViewRecent(view: string, itemInput: ViewActivityInput): ViewActivityState {

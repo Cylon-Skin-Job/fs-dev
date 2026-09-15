@@ -340,6 +340,57 @@ export function removeThreadFromPopulations(
   return result;
 }
 
+/**
+ * SPEC-04 §5: apply one accepted Move to the exact population. The visible row
+ * keeps its `threadGroupId` (still one Thread row) and now names the new empty
+ * Main Chat; the moved member remains addressable only through the Side Chat
+ * placement. Never touches another population or group.
+ */
+export function applyThreadGroupMove(
+  state: AppState,
+  input: {
+    workspaceId: string;
+    viewId: string | null;
+    threadGroupId: string;
+    newThreadId: string;
+    currentPrimarySequence?: number;
+    memberCount?: number;
+  },
+): Partial<AppState> {
+  const { workspaceId, viewId, threadGroupId, newThreadId } = input;
+  const patchRow = (row: Thread): Thread => (row.threadGroupId === threadGroupId
+    ? {
+      ...row,
+      threadId: newThreadId,
+      currentPrimaryThreadId: newThreadId,
+      ...(input.currentPrimarySequence !== undefined
+        ? { currentPrimarySequence: input.currentPrimarySequence }
+        : {}),
+      ...(input.memberCount !== undefined ? { memberCount: input.memberCount } : {}),
+    }
+    : row);
+
+  if (viewId === null) {
+    const rows = state.legacyThreadGroupsByWorkspaceId?.[workspaceId];
+    if (!rows) return {};
+    return {
+      legacyThreadGroupsByWorkspaceId: {
+        ...state.legacyThreadGroupsByWorkspaceId,
+        [workspaceId]: rows.map(patchRow),
+      },
+    };
+  }
+  const byView = state.threadGroupsByWorkspaceAndView?.[workspaceId];
+  const rows = byView?.[viewId];
+  if (!byView || !rows) return {};
+  return {
+    threadGroupsByWorkspaceAndView: {
+      ...state.threadGroupsByWorkspaceAndView,
+      [workspaceId]: { ...byView, [viewId]: rows.map(patchRow) },
+    },
+  };
+}
+
 /** Stable empty selection so selectors never return a fresh object. */
 export const EMPTY_THREAD_SELECTION: ThreadHarnessSelection = Object.freeze({
   acknowledged: Object.freeze({ ...EMPTY_ACK }) as HarnessSelectionAck,
@@ -444,6 +495,16 @@ export function createChatSurfaceSlice(set: Set, _get: Get) {
         },
       };
     }),
+
+    /** Apply one accepted SPEC-04 Move to the exact population row. */
+    applyThreadGroupMove: (input: {
+      workspaceId: string;
+      viewId: string | null;
+      threadGroupId: string;
+      newThreadId: string;
+      currentPrimarySequence?: number;
+      memberCount?: number;
+    }) => set((state) => applyThreadGroupMove(state, input)),
 
     /** Set the selected visible group for exactly one population. */
     setCurrentThreadGroupId: (

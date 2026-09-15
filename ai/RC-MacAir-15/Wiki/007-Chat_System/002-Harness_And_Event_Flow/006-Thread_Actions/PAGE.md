@@ -41,8 +41,16 @@ Implemented actions:
 - `resolve_link` — group or exact current-member target, opens Main Chat, Legacy-safe;
 - `view_markdown` — exact member, validated ThreadManager mirror path;
 - `set_harness_selection` — exact member, portable `{model, variant}` only;
-- `move_chat_to_side` — SPEC-04;
+- `move_chat_to_side` — group scope, moves the current Main Chat into a Side Chat tab and creates a cold empty peer (SPEC-04);
+- `open_member_in_side` — group + exact non-primary member, reopens/focuses the member's lifetime Side Chat placement (SPEC-04);
 - `compact` — exact session.
+
+`thread:members` is a qualified read in the same client message family
+(workspace from the bound connection, one validated `threadGroupId`) returning
+ordered member projections only — `threadId`, ordinal, `isPrimary`, created
+time, a bounded display label, and the current placement disposition. It is not
+a `thread:action` mutation, creates no `thread-group:*` transport family, and
+never returns transcript content.
 
 The obsolete `thread:touch` MRU bump was removed end to end: group `updated_at`
 is the sole visible-list MRU owner and is advanced only by creation and accepted
@@ -69,6 +77,12 @@ Use canonical Fusion Studio action names. Do not name messages after provider
 flags or command syntax. The superseded public `thread:rename` and
 `thread:delete` routes were removed with no aliases; Rename/Delete are reachable
 only through `thread:action`.
+
+`move_chat_to_side` carries `threadGroupId`, the exact current-primary
+`threadId`, and the observed `expectedPrimarySequence`; `open_member_in_side`
+carries `threadGroupId` and the exact non-primary member `threadId`. Workspace
+is server-derived and the view comes from the group, so neither action accepts
+client workspace/view authority fields.
 
 ## Ownership
 
@@ -107,6 +121,15 @@ Backend thread action handler:
   canonical rows vanish, deletes session/group/member/exchange state in one
   transaction, and retries mirror cleanup after commit and across restart.
   Provenance facts are retained; only the optional exchange binding clears.
+- A view-bound Delete also records exactly one durable
+  `remove-group-worksurface` projection/outbox instruction in that same
+  transaction. The trusted in-process view-state consumer removes only the exact
+  `{workspaceId, viewId, threadGroupId}` worksurface entry through the normal
+  view-state writer and acknowledges it; a failed or unapplied delivery stays
+  observable as `viewStateCleanup` on the committed result and is retried on
+  restart or explicit retry. Legacy groups (`viewId: null`) own no worksurface
+  and record none. This instruction is not a snapshot and does not replace the
+  manager-owned transcript-mirror cleanup journal.
 - While the bounded tombstone holds, a Delete with a new `requestId` resolves
   the retained aggregate (not `not_found`, not a rerun), resumes idempotent
   repair, and records the aggregate under the new `requestId` so replay survives
@@ -124,17 +147,44 @@ Harness adapter:
 | Action | Product scope | OpenCode translation |
 |---|---|---|
 | `rename` | Change the group title only; never rewrites session/provider identity, historical Provenance, or the visible-list MRU clock | none; Fusion-owned |
-| `delete` | Fence every member runtime, retain Provenance facts, delete group/member/session/exchange state, and recover mirror cleanup through a bounded tombstone | none; Fusion-owned |
+| `delete` | Fence every member runtime, retain Provenance facts, delete group/member/session/exchange state, recover mirror cleanup through a bounded tombstone, and (for a view-bound group) deliver the durable worksurface-cleanup outbox instruction | none; Fusion-owned |
 | `copy_link` | Return the version-1 `fusion-thread-group:` application URI for the group with the validated sole/current member | none; Fusion-owned |
 | `resolve_link` | Validate the URI/ids, resolve the authoritative group + current primary, and open Main Chat; Legacy resolves to the null-view host | none; Fusion-owned |
 | `view_markdown` | Return the validated exact-member `Data/Chatlogs/threads/<threadId>.md` mirror path through ThreadManager | none; Fusion-owned |
 | `set_harness_selection` | Validate `{model, variant}` against current server policy, persist by `threadId`, and fan out the acknowledged value; harness binding stays server-owned | none; Fusion-owned |
-| `move_chat_to_side` | Move the current primary session into a content tab and create a cold, empty primary peer in the same visible thread | none; Fusion-owned |
+| `move_chat_to_side` | Move the current primary session into a content tab and create a cold, empty primary peer in the same visible thread; write one idempotent activity and one durable placement instruction, then deliver placement separately | none; Fusion-owned |
+| `open_member_in_side` | Reopen (if closed) or focus (if open) one validated non-primary member's lifetime Side Chat placement; create no session, primary event, MRU activity, or transcript effect | none; Fusion-owned |
 | `compact` | Compact provider context for future turns; visible Fusion history remains | `opencode run --session <id> --command compact` |
 
 Group actions carry `threadGroupId`. Session actions carry `threadId` and may
 also carry `threadGroupId` when membership must be checked. Live chat output
 continues to route by `threadId`.
+
+## Move, Member Access, And Side Chat Placement
+
+`move_chat_to_side` commits one atomic group transition under a single mutation
+lease shared with Rename/Delete: the new empty session `B` and its mirror
+instruction (ThreadManager-owned), the next peer membership with
+`origin_kind='move-to-side-chat-primary'`, the appended primary event with
+reason `move-to-side-chat`, the transactional primary cache, one idempotent
+`move:{requestId}` `move-chat-to-side` activity that advances group MRU exactly
+once, and a durable `open-side-chat-tab` placement outbox row for `A`. `B`
+inherits only the server-owned harness binding and the source session's last
+server-acknowledged portable `{model, variant}`; no transcript, runtime, draft,
+usage, turn, or Provenance is copied. Move is never a Fork.
+
+Placement delivery is a separate retryable step through SPEC-03's
+service-managed placement lane. It uses a stable independently minted
+`sideChatPlacementId` (never a `projectionId`, `surfaceId`, `threadId`, or
+`threadGroupId`). Ordinary outbox replay focuses/acknowledges an existing live
+or persisted placement and creates no duplicate; it never reopens a closed
+disposition. Closing a Side Chat records a durable closed disposition through
+the owning view contract before the descriptor is removed, so restart/outbox
+replay cannot resurrect it; an explicit `open_member_in_side` (or an exact-member
+link resolution) is the only reopen path and reuses the lifetime placement
+without warming or creating a session. Move-first then Delete removes both
+members and placements; Delete-first makes Move return deleting/not-found and
+creates nothing. Member access never promotes a member or advances MRU.
 
 ## Events
 
@@ -151,7 +201,9 @@ subscribers. Fact publication never gates the action response or fan-out.
 - provider CLI flags in frontend code
 - direct DB mutation that skips thread managers or metadata paths
 - treating compact as a per-reply action
-- routing `move_chat_to_side` through a harness adapter
+- routing `move_chat_to_side` or `open_member_in_side` through a harness adapter
+- reconstructing Side Chat placement by scanning primary history
+- reopening a closed Side Chat placement through ordinary outbox replay
 
 ## Required Tests
 
@@ -162,6 +214,12 @@ subscribers. Fact publication never gates the action response or fan-out.
 - unsupported harness/action returns visible canonical error
 - restart/hydration behavior is covered when durable state changes
 - multi-window clients receive the same committed primary transition
+- Move commits one idempotent activity and advances MRU once; retry, close,
+  placement repair, and member reopen do not
+- `thread:members` returns ordered durable projections only, with the current
+  placement disposition and no transcript content
+- close records a durable disposition and does not reopen after restart;
+  explicit member access reuses the lifetime placement id
 
 ## Related Pages
 

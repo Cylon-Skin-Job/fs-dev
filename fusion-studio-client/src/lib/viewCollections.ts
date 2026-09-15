@@ -10,6 +10,7 @@
 import { usePanelStore } from '../state/panelStore';
 import { DEFAULT_VIEW_UI_STATE } from '../state/slices/viewSlice';
 import { activityId, normalizeViewActivity } from './viewActivity';
+import { onViewContentChanged } from './worksurface/worksurfaceController';
 import type {
   ViewActivityItem,
   ViewActivityKind,
@@ -160,6 +161,18 @@ function rewriteCollectionItem(item: ViewCollectionItem, reference: RewritePathR
 function persistViewPatch(view: string, patch: Partial<ViewUIState>) {
   const store = usePanelStore.getState();
   store.setViewState(view, patch);
+  // CHAT-03 / SPEC-03 §5: `activity` is elected content for every adapter-
+  // registered view. While the view is group-bound its adapter/controller is
+  // the sole writer, so a path-reference rewrite of `activity` is routed into
+  // the selected group's content lane. `collections` is a shared curation fact
+  // (out of SPEC-03 content scope) and keeps the exact global write.
+  if (patch.activity !== undefined && onViewContentChanged(view)) {
+    const { activity: _electedActivity, ...globalPatch } = patch;
+    if (Object.keys(globalPatch).length > 0) {
+      store._persistViewPatch(view, globalPatch);
+    }
+    return;
+  }
   store._persistViewPatch(view, patch);
 }
 

@@ -215,8 +215,8 @@ function markFirstToken(type: 'content' | 'thinking'): void {
  * Handle stream-related WebSocket messages.
  * Returns true if the message was handled, false if not recognized.
  *
- * PER_THREAD_CHAT_STATE: every write is routed via msg.threadId so primary
- * and secondary streams stay isolated into their own chat slots. Server
+ * PER_THREAD_CHAT_STATE: every write is routed via msg.threadId so each
+ * mounted chat's streams stay isolated into their own chat slots. Server
  * stamps threadId on every outbound chat:* event (wire-broadcaster.js).
  */
 export function handleStreamMessage(msg: WebSocketMessage): boolean {

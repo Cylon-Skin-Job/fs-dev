@@ -31,7 +31,9 @@ import { Icon } from '../Icon';
 import { FloatingPathActions } from '../FloatingPathActions';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { EMAIL_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
-import type { ViewUIState } from '../../types';
+import { persistEmailViewPatch } from './emailViewerPersistence';
+import { ViewWorksurfaceDock } from '../chat/ViewWorksurfaceDock';
+import { worksurfaceAdapterForView } from '../../lib/worksurface/worksurfaceController';
 import {
   normalizeViewCollections,
 } from '../../lib/viewCollections';
@@ -46,12 +48,6 @@ import './EmailGrid.css';
 
 const PANEL = 'email-viewer';
 const ROOT_PATH = '';
-
-function persistEmailViewPatch(patch: Partial<ViewUIState>) {
-  const store = usePanelStore.getState();
-  store.setViewState(PANEL, patch);
-  store._persistViewPatch(PANEL, patch);
-}
 
 function folderPathForFile(filePath: string): string {
   const lastSlash = filePath.lastIndexOf('/');
@@ -894,6 +890,8 @@ export function EmailGrid() {
   const contents = useFileDataStore((s) => s.contents);
   const contentErrors = useFileDataStore((s) => s.contentErrors);
   const fileDataGeneration = useFileDataStore((s) => s.generation);
+  const activeWorkspaceId = usePanelStore((s) => s.activeWorkspaceId);
+  const currentPanel = usePanelStore((s) => s.currentPanel);
   const emailMode = usePanelStore((s) => s.viewStates[PANEL]?.emailViewerMode ?? 'inbox');
   const openCompose = useEmailComposeStore((s) => s.openCompose);
   const emailPaperBrightness = normalizeOfficePaperBrightness(
@@ -1199,34 +1197,48 @@ export function EmailGrid() {
     '--rv-email-paper-mute-alpha': officePaperMuteAlpha(emailPaperBrightness),
   } as React.CSSProperties;
 
+  // CHAT-03 / SPEC-03 §10 03D: view-bound group selection path. Collapsed by
+  // default so the existing Email composition and visual language are preserved.
+  const worksurfaceDock = activeWorkspaceId && worksurfaceAdapterForView(PANEL) ? (
+    <ViewWorksurfaceDock
+      panel={PANEL}
+      workspaceId={activeWorkspaceId}
+      viewId={PANEL}
+      isActive={currentPanel === PANEL}
+    />
+  ) : null;
+
   const renderEmailShell = (content: ReactNode, mainClassName = 'rv-email-grid', showSidebar = true) => (
-    <div
-      className={`rv-email-shell rv-email-view-transition${showSidebar ? '' : ' rv-email-shell--no-sidebar'}`}
-      style={emailPaperStyle}
-    >
-      {showSidebar ? (
-        <EmailSidebar
-          activeAction={emailMode}
-          onAction={handleSidebarAction}
-          onCompose={openCompose}
-        />
-      ) : null}
-      <main className={mainClassName}>
-        {content}
-      </main>
-      <EmailComposeLayer />
-      {rulesOpen ? (
-        <EmailRulesPopover onClose={() => setRulesOpen(false)} />
-      ) : null}
-      {createModalKind ? (
-        <EmailCreateModal
-          kind={createModalKind}
-          name={createName}
-          onNameChange={setCreateName}
-          onCancel={handleCloseCreateModal}
-          onSave={handleSaveCreateItem}
-        />
-      ) : null}
+    <div className="rv-worksurface-view-layout">
+      {worksurfaceDock}
+      <div
+        className={`rv-email-shell rv-email-view-transition${showSidebar ? '' : ' rv-email-shell--no-sidebar'}`}
+        style={emailPaperStyle}
+      >
+        {showSidebar ? (
+          <EmailSidebar
+            activeAction={emailMode}
+            onAction={handleSidebarAction}
+            onCompose={openCompose}
+          />
+        ) : null}
+        <main className={mainClassName}>
+          {content}
+        </main>
+        <EmailComposeLayer />
+        {rulesOpen ? (
+          <EmailRulesPopover onClose={() => setRulesOpen(false)} />
+        ) : null}
+        {createModalKind ? (
+          <EmailCreateModal
+            kind={createModalKind}
+            name={createName}
+            onNameChange={setCreateName}
+            onCancel={handleCloseCreateModal}
+            onSave={handleSaveCreateItem}
+          />
+        ) : null}
+      </div>
     </div>
   );
 

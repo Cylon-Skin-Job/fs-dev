@@ -434,20 +434,6 @@ main.rv-content-area:has(> .rv-browser-viewer) {
   margin-right: auto;
 }
 
-/* SECONDARY_CHAT_SPEC §7c: when the secondary chat is sticky-right, it
- * overlays the view's existing right column via z-index. The grid stays
- * at 5 tracks — no extra track added. The chat's width is bound to
- * --right-col-w, which is also read by the view's right-column CSS
- * (e.g. file-tree-sidebar in file-viewer), so both resize together. */
-.rv-secondary-sticky {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--right-col-w, 300px);
-  z-index: 10;
-}
-
 .rv-layout-dual-chat .rv-content-area {
   padding: 0;
 }
@@ -485,11 +471,11 @@ main.rv-content-area:has(> .rv-browser-viewer) {
 }
 
 /* Right-column resize handle: lives on the left edge of either the file
- * tree rv-sidebar (file-viewer → pane="rightCol") or the sticky secondary
- * chat (pane="rightSecondary"). Both parents use position: relative so
- * this sits absolutely over the left edge. Visible strip is 1px to match
- * the in-grid chat handle; hit target comes from the base ::before (±4px). */
-.rv-resize-handle[data-pane="rightSecondary"],
+ * tree rv-sidebar (file-viewer → pane="rightCol") or a content-owned
+ * right navigation (pane="contentNavRight"). Both parents use
+ * position: relative so this sits absolutely over the left edge. Visible
+ * strip is 1px to match the in-grid chat handle; hit target comes from the
+ * base ::before (±4px). */
 .rv-resize-handle[data-pane="rightCol"],
 .rv-resize-handle[data-pane="contentNavRight"] {
   position: absolute;

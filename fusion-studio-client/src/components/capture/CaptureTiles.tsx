@@ -6,7 +6,7 @@
  * useDocViewerState; this component only wires presentation to that state.
  */
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { DOC_VIEWER_ARCHIVE_FOLDER, type DocViewerMode, useDocViewerState } from '../../hooks/useDocViewerState';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
@@ -29,6 +29,8 @@ import {
 } from '../view-tabs/captureTabsController';
 import { useFileDataStore } from '../../state/fileDataStore';
 import { usePanelStore } from '../../state/panelStore';
+import { ViewWorksurfaceDock } from '../chat/ViewWorksurfaceDock';
+import { worksurfaceAdapterForView } from '../../lib/worksurface/worksurfaceController';
 import { useCaptureViewerSearch } from './useCaptureViewerSearch';
 import { normalizeViewCollections } from '../../lib/viewCollections';
 import { activityId, groupActivityByDate, normalizeViewActivity } from '../../lib/viewActivity';
@@ -97,6 +99,8 @@ export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
   const contents = useFileDataStore((s) => s.contents);
   const contentErrors = useFileDataStore((s) => s.contentErrors);
   const requestContent = useFileDataStore((s) => s.requestContent);
+  const activeWorkspaceId = usePanelStore((s) => s.activeWorkspaceId);
+  const currentPanel = usePanelStore((s) => s.currentPanel);
   const rawDocActivity = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.activity);
   const rawDocCollections = usePanelStore((s) => s.viewStates[DOC_VIEWER_PANEL]?.collections);
   const docActivity = useMemo(
@@ -301,12 +305,30 @@ export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
     && docTabs[0]?.kind === 'capture'
     && captureHandoffStatus !== 'failed';
 
+  // CHAT-03 / SPEC-03 §10 03D: view-bound group selection path. Collapsed by
+  // default so the existing Capture composition and visual language are preserved.
+  const worksurfaceDock = activeWorkspaceId && worksurfaceAdapterForView(DOC_VIEWER_PANEL) ? (
+    <ViewWorksurfaceDock
+      panel={DOC_VIEWER_PANEL}
+      workspaceId={activeWorkspaceId}
+      viewId={DOC_VIEWER_PANEL}
+      isActive={currentPanel === DOC_VIEWER_PANEL}
+    />
+  ) : null;
+
+  const withWorksurfaceDock = (node: ReactNode) => (
+    <div className="rv-worksurface-view-layout">
+      {worksurfaceDock}
+      {node}
+    </div>
+  );
+
   if (loneCaptureIsHandingOff) {
-    return <div className="rv-tile-grid rv-capture-viewer-grid" aria-busy="true" />;
+    return withWorksurfaceDock(<div className="rv-tile-grid rv-capture-viewer-grid" aria-busy="true" />);
   }
 
   if (selected && isFullPageSelected) {
-    return (
+    return withWorksurfaceDock(
       <FilePageView
         file={selected.file}
         panel={DOC_VIEWER_PANEL}
@@ -332,7 +354,7 @@ export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
     );
   }
 
-  return (
+  return withWorksurfaceDock(
     <div className="rv-tile-grid rv-capture-viewer-grid">
       <DocViewerHeader
         mode={mode}

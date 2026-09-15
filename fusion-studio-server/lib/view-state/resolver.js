@@ -25,7 +25,6 @@ const HARDCODED_DEFAULTS = Object.freeze({
   widths: {
     leftSidebar:    220,
     leftChat:       320,
-    rightSecondary: 400,
     rightCol:       220,
     contentNavLeft: 200,
     contentNavRight: 220,
@@ -36,16 +35,7 @@ const HARDCODED_DEFAULTS = Object.freeze({
     rightCol:    false,
     contentArea: false,
   },
-  popup: {
-    open:     false,
-    x:        -1,
-    y:        -1,
-    width:    420,
-    height:   520,
-    threadId: null,
-  },
   currentThreadId:   null,
-  secondaryThreadId: null,
   // TINTS_SPEC §3: per-surface tint toggles. All default false (neutral).
   tints: {
     leftPanel:     false,
@@ -302,12 +292,9 @@ function normalize(state) {
   const out = deepMerge(HARDCODED_DEFAULTS, state);
   out.widths.leftSidebar    = clampNum(out.widths.leftSidebar,    120, 600);
   out.widths.leftChat       = clampNum(out.widths.leftChat,       120, 600);
-  out.widths.rightSecondary = clampNum(out.widths.rightSecondary, 120, 600);
   out.widths.rightCol       = clampNum(out.widths.rightCol,       120, 600);
   out.widths.contentNavLeft = clampNum(out.widths.contentNavLeft, 160, 600);
   out.widths.contentNavRight = clampNum(out.widths.contentNavRight, 160, 600);
-  out.popup.width  = clampNum(out.popup.width,  280, 1200);
-  out.popup.height = clampNum(out.popup.height, 240, 1200);
   const paperBrightness = typeof out.officePaperBrightness === 'number'
     ? out.officePaperBrightness
     : Number(out.officePaperBrightness);

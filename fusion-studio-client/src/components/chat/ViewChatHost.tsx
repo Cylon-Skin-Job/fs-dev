@@ -3,8 +3,9 @@
  * @role Connected view-bound ThreadedChat host (SPEC-02 §5.2/§5.3, Slice 02B).
  *
  * Wraps one explicit `{workspaceId, viewId}` population in `ThreadedChat`.
- * This is the explicit view-host lane used by rendered fixtures and future
- * view chrome; it is NOT placed into production view chrome by this slice.
+ * This is the explicit view-host lane; it is mounted into production view
+ * chrome by `ViewWorksurfaceDock` (SPEC-03/SPEC-04) while preserving the
+ * accepted SPEC-02 population/selection contract.
  */
 
 import { useState } from 'react';

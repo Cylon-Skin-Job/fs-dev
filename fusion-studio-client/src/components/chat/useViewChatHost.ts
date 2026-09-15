@@ -26,10 +26,18 @@ import {
 import {
   threadActionCopyLink,
   threadActionDelete,
+  threadActionOpenMemberInSide,
   threadActionRename,
   threadActionViewMarkdown,
+  threadMembersRequest,
   threadOpenRequest,
 } from '../../lib/ws/threadGroupRows';
+import { getThreadMembers } from '../../state/slices/worksurfaceSlice';
+import type { ThreadMemberProjection } from '../../state/slices/worksurfaceSlice';
+import {
+  requestGroupSelection,
+  worksurfaceAdapterForView,
+} from '../../lib/worksurface/worksurfaceController';
 import { useLegacyChatHost, type LegacyChatHostProjection } from './useLegacyChatHost';
 import type { ThreadRailProps } from './ThreadRail';
 import type { HarnessStatus, Thread } from '../../types';
@@ -69,6 +77,9 @@ export function useViewChatHost({
   const selectedThreadGroupId = usePanelStore(
     (state) => getCurrentThreadGroupId(state, workspaceId, viewId),
   );
+  // Subscribe to the ordered member projections so a menu opened before the
+  // `thread:members` response lands re-renders with the member list.
+  const threadMembersByGroup = usePanelStore((state) => state.threadMembersByGroup);
   const selectedRow = useMemo(
     () => rows.find((row) => row.threadGroupId === selectedThreadGroupId) ?? null,
     [rows, selectedThreadGroupId],
@@ -82,6 +93,7 @@ export function useViewChatHost({
     viewId,
     workspaceId,
     threadGroupId: selectedRow?.threadGroupId ?? null,
+    expectedPrimarySequence: selectedRow?.currentPrimarySequence ?? null,
     explicitTarget: true,
     isActive,
   });
@@ -119,13 +131,19 @@ export function useViewChatHost({
     ws.send(JSON.stringify({ type: 'thread:list', viewId }));
   }, [isActive, ws, workspaceId, viewId]);
 
-  // MRU auto-open for this exact population, active host only.
+  // MRU auto-open for this exact population, active host only. A view with a
+  // registered worksurface adapter routes first selection through the
+  // acknowledgement-gated group switch so the exact stored content is restored.
   useEffect(() => {
     if (!isActive) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     if (selectedThreadGroupId || rows.length === 0) return;
     const mru = rows[0];
     if (!mru.threadGroupId) return;
+    if (worksurfaceAdapterForView(viewId)
+      && requestGroupSelection(workspaceId, viewId, mru.threadGroupId)) {
+      return;
+    }
     usePanelStore.getState().requestThreadOpen({
       workspaceId,
       viewId,
@@ -136,6 +154,14 @@ export function useViewChatHost({
   }, [isActive, ws, workspaceId, viewId, selectedThreadGroupId, rows]);
 
   const handleOpenThread = useCallback((row: Thread) => {
+    // CHAT-03 / SPEC-03 §6.1: when this view is worksurface-capable, selecting
+    // another group flushes the outgoing capture first and keeps the outgoing
+    // group selected until the correlated server acknowledgement lands.
+    if (worksurfaceAdapterForView(viewId)
+      && row.threadGroupId
+      && requestGroupSelection(workspaceId, viewId, row.threadGroupId)) {
+      return;
+    }
     usePanelStore.getState().requestThreadOpen({
       workspaceId,
       viewId,
@@ -144,6 +170,11 @@ export function useViewChatHost({
     });
     sendMessage(threadOpenRequest(row.threadGroupId, row.threadId));
   }, [sendMessage, workspaceId, viewId]);
+
+  const handleCreateThread = useCallback(() => {
+    // Bind the new group to this exact view, never the active panel.
+    sendMessage({ type: 'thread:open-assistant', viewId });
+  }, [sendMessage, viewId]);
 
   const handleStartRename = useCallback((row: Thread) => {
     setRenamingId(row.threadId);
@@ -190,6 +221,36 @@ export function useViewChatHost({
     }));
   }, [sendMessage]);
 
+  const handleRequestMembers = useCallback((row: Thread) => {
+    if (!row.threadGroupId) return;
+    sendMessage(threadMembersRequest(row.threadGroupId));
+  }, [sendMessage]);
+
+  const handleOpenMember = useCallback((row: Thread, member: ThreadMemberProjection) => {
+    if (!row.threadGroupId || !member?.threadId || member.isPrimary) return;
+    sendMessage(threadActionOpenMemberInSide({
+      threadGroupId: row.threadGroupId,
+      threadId: member.threadId,
+    }));
+  }, [sendMessage]);
+
+  const handleCopyLinkMember = useCallback((row: Thread, member: ThreadMemberProjection) => {
+    if (!row.threadGroupId || !member?.threadId) return;
+    sendMessage(threadActionCopyLink({
+      threadGroupId: row.threadGroupId,
+      threadId: member.threadId,
+    }));
+  }, [sendMessage]);
+
+  const membersForGroup = useCallback((row: Thread): ThreadMemberProjection[] => {
+    void threadMembersByGroup;
+    return getThreadMembers(
+      usePanelStore.getState(),
+      workspaceId,
+      row.threadGroupId ?? '',
+    );
+  }, [threadMembersByGroup, workspaceId]);
+
   const handleHarnessSelect = useCallback((harnessId: string, modelId?: string) => {
     usePanelStore.getState().selectHarness(harnessId, modelId);
   }, []);
@@ -199,11 +260,11 @@ export function useViewChatHost({
     rows,
     selectedThreadGroupId,
     selectedThreadId: displayThreadId || null,
-    secondaryThreadId: null,
     isActive,
     // Explicit view hosts own no shell rail-collapse; the rail still renders
     // the shared dock control and invokes the connected callback.
     onTogglePinned: () => undefined,
+    onCreateThread: handleCreateThread,
     resolveCliAccent,
     setThreadRef,
     renamingId,
@@ -218,6 +279,10 @@ export function useViewChatHost({
     onDelete: handleDelete,
     onCopyLink: handleCopyLink,
     onViewMarkdown: handleViewMarkdown,
+    membersForGroup,
+    onOpenMember: handleOpenMember,
+    onCopyLinkMember: handleCopyLinkMember,
+    onRequestMembers: handleRequestMembers,
   };
 
   return {

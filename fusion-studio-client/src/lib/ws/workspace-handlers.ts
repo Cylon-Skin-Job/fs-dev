@@ -38,6 +38,7 @@ import { showModal, onModalAction } from '../modal';
 import { resetSharedStyles, injectWorkspaceStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { handleOfficePaletteWorkspaceChanged } from './office-palette-handlers';
 import { retirePendingResourceProvenanceQueries } from './resource-provenance-protocol';
+import { reconcileWorksurfacesOnReconnect, reconcileSideChatPlacementsOnReconnect } from '../worksurface/worksurfaceController';
 import {
   clearViewCapsuleProjection,
   forwardViewCapsuleProjection,
@@ -179,7 +180,6 @@ function applyWorkspaceSwitch(
     workspaceMsg.themes ?? [],
     workspaceMsg.activeThemeId ?? null,
   );
-  panelStore.closeSecondary();
 
   const isCached = workspaceId && panelStore.workspaceState[workspaceId];
   const ws = panelStore.ws;
@@ -668,7 +668,17 @@ export function handleWorkspaceMessage(
       if (wsConn && wsConn.readyState === WebSocket.OPEN) {
         void bindingReady.then((accepted) => {
           if (!accepted) throw new Error('workspace_binding_unavailable');
-          return bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel);
+          // CHAT-03 / SPEC-03 §9: after the workspace bind is acknowledged,
+          // reconnect/init re-hydrates acknowledged worksurface truth for bound
+          // views and then reapplies the exact pending local capture. A fan-out
+          // is never treated as a write ack.
+          reconcileWorksurfacesOnReconnect();
+          return bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel).then(() => {
+            // SPEC-04 §7: after the registry is discovered, sweep the
+            // unbound/dockless chat-capable views so an existing open Side Chat
+            // placement materializes without an action frame.
+            reconcileSideChatPlacementsOnReconnect();
+          });
         }).catch(() => console.error('[WS] workspace_bootstrap_failed'));
       }
       // Preload workspace icon SVGs from Fusion Home so the ribbon

@@ -18,6 +18,7 @@ import { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 import { isImageFile } from '../components/tile-row/documentTileUtils';
 import { updateCaptureTabUi } from '../components/view-tabs/captureTabsController';
 import { nextWorkspaceRequestId } from '../lib/workspaceResponseTracker';
+import { onViewContentChanged } from '../lib/worksurface/worksurfaceController';
 
 export { DOC_VIEWER_ARCHIVE_FOLDER } from '../lib/viewFolders';
 
@@ -73,12 +74,16 @@ function persistViewPatch(patch: Partial<ViewUIState>) {
   if (updateCaptureTabUi(patch)) return;
   const state = usePanelStore.getState();
   state.setViewState(DOC_VIEWER_PANEL, patch);
+  // CHAT-03 / SPEC-03 §5 cutover: while bound to a Thread Group the Capture
+  // adapter/controller is the only writer of these classic document facts.
+  if (onViewContentChanged(DOC_VIEWER_PANEL)) return;
   state._persistViewPatch(DOC_VIEWER_PANEL, patch);
 }
 
 function persistClassicScrollPatch(patch: Partial<ViewUIState>) {
   const state = usePanelStore.getState();
   state.setViewState(DOC_VIEWER_PANEL, patch);
+  if (onViewContentChanged(DOC_VIEWER_PANEL)) return;
   state._persistViewPatch(DOC_VIEWER_PANEL, patch);
 }
 

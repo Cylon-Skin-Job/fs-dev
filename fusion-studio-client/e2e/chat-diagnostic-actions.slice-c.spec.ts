@@ -253,42 +253,6 @@ test('Slice C: Ask AI cannot race server-owned prompt acceptance', async ({ brow
   expect(fx.sentFrames().slice(beforeRetry).some((frame) => frame.type === 'prompt')).toBe(false);
   expect(diagnosticGets(fx.sentFrames())).toHaveLength(1);
 });
-test('Slice C: pending acceptance survives secondary-chat minimize and restore', async ({ browser }) => {
-  const { fx, page } = await startDiagnosticSession(browser);
-  await selectThread(fx, page, 'b');
-  const alphaRow = page.locator('.rv-chat-item').filter({ hasText: NAME_A }).first();
-  await alphaRow.hover();
-  await alphaRow.getByRole('button', { name: 'More options' }).click();
-  await page.getByRole('button', { name: 'Open a side chat' }).click();
-  await expect(page.locator('.rv-secondary-body')).toBeVisible();
-  let secondary = page.locator('.rv-secondary-body');
-  await secondary.getByRole('button', { name: 'Ask AI', exact: true }).click();
-  await expect.poll(() => diagnosticGets(fx.sentFrames()).length).toBe(1);
-  await secondary.locator('textarea').fill('SECONDARY-PENDING-DRAFT');
-  await secondary.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt').length).toBe(1);
-  await page.getByRole('button', { name: 'Minimize secondary chat' }).click();
-  await expect(page.getByRole('button', { name: 'Restore secondary chat' })).toBeVisible();
-  fx.push(reportFrame('MINIMIZE-STALE-REPORT'));
-  fx.push({ type: 'error', threadId: THREAD_A, error: 'Prompt failed' });
-  await page.getByRole('button', { name: 'Restore secondary chat' }).click();
-  secondary = page.locator('.rv-secondary-body');
-  await expect(secondary).toBeVisible();
-  await expect(secondary.locator('textarea')).toBeEnabled();
-  await expect(secondary.locator('textarea')).toHaveValue('SECONDARY-PENDING-DRAFT');
-  await expect(secondary.getByRole('button', { name: 'Ask AI', exact: true })).toBeEnabled();
-  await secondary.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt').length).toBe(2);
-  fx.push({ type: 'message:sent', threadId: THREAD_A, content: 'SECONDARY-PENDING-DRAFT' });
-  await expect(secondary.locator('textarea')).toHaveValue('');
-  const askAI = secondary.getByRole('button', { name: 'Ask AI', exact: true });
-  await expect(askAI).toBeEnabled();
-  await askAI.click();
-  await expect.poll(() => diagnosticGets(fx.sentFrames()).length).toBe(2);
-  fx.push(reportFrame('MINIMIZE-RESTORED-REPORT'));
-  await expect(secondary.locator('textarea')).toContainText('MINIMIZE-RESTORED-REPORT');
-  expect(fx.sentFrames().filter((frame) => frame.type === 'prompt')).toHaveLength(2);
-});
 
 test('Slice C: unavailable frames require the complete pending route tuple', async () => {
   const mod = await import('../src/lib/ws/chat-diagnostic-handlers');

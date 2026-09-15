@@ -169,6 +169,17 @@ async function getActionResult(db, workspaceId, requestId) {
 }
 
 /**
+ * Refresh a stored action result's aggregate (e.g. Side Chat placement
+ * delivery status) after a post-commit, failure-isolated step. The idempotency
+ * key is unchanged; only the recorded result body advances.
+ */
+async function updateActionResult(db, workspaceId, requestId, { resultJson, now }) {
+  await db('thread_group_action_results')
+    .where({ workspace_id: workspaceId, request_id: requestId })
+    .update({ result_json: resultJson, updated_at: now });
+}
+
+/**
  * Insert an action result if absent and return the durable row. Concurrent
  * retries of one requestId converge on the first committed winner; the unique
  * `{workspace_id, request_id}` constraint is the arbiter.
@@ -229,6 +240,83 @@ async function updateDeleteTombstone(db, groupId, {
     });
 }
 
+function toWorksurfaceCleanup(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    idempotencyKey: row.idempotency_key,
+    workspaceId: row.workspace_id,
+    viewId: row.view_id,
+    groupId: row.group_id,
+    status: row.status,
+    attempts: Number(row.attempts || 0),
+    failureCode: row.last_failure_code ?? null,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    appliedAt: row.applied_at ?? null,
+  };
+}
+
+/**
+ * Atomically record one `remove-group-worksurface` cleanup instruction. The
+ * unique `idempotency_key` makes a replay/duplicate consumption harmless: an
+ * existing instruction is never duplicated or rewritten. Runs in the caller's
+ * group-delete transaction.
+ */
+async function insertWorksurfaceCleanup(db, row) {
+  await db('thread_group_worksurface_cleanup')
+    .insert({
+      idempotency_key: row.idempotencyKey,
+      workspace_id: row.workspaceId,
+      view_id: row.viewId,
+      group_id: row.groupId,
+      status: row.status || 'pending',
+      attempts: row.attempts || 0,
+      last_failure_code: row.failureCode ?? null,
+      created_at: row.createdAt,
+      updated_at: row.updatedAt,
+      applied_at: row.appliedAt ?? null,
+    })
+    .onConflict('idempotency_key')
+    .ignore();
+}
+
+/** Latest cleanup instruction for one group, or null. */
+async function getWorksurfaceCleanup(db, groupId) {
+  const row = await db('thread_group_worksurface_cleanup')
+    .where('group_id', groupId)
+    .orderBy('id', 'desc')
+    .first();
+  return toWorksurfaceCleanup(row);
+}
+
+/** Every unapplied instruction for one exact workspace (retry/restart sweep). */
+async function listUnappliedWorksurfaceCleanup(db, workspaceId) {
+  const rows = await db('thread_group_worksurface_cleanup')
+    .where({ workspace_id: workspaceId })
+    .whereNot('status', 'applied')
+    .orderBy('id', 'asc');
+  return rows.map(toWorksurfaceCleanup);
+}
+
+/**
+ * Update one instruction's delivery state by idempotency key. `attempts` is
+ * incremented in SQL so concurrent consumers cannot clobber each other.
+ */
+async function markWorksurfaceCleanup(db, {
+  idempotencyKey, status, failureCode = null, appliedAt = null, now,
+}) {
+  await db('thread_group_worksurface_cleanup')
+    .where({ idempotency_key: idempotencyKey })
+    .update({
+      status,
+      attempts: db.raw('attempts + 1'),
+      last_failure_code: failureCode,
+      updated_at: now,
+      applied_at: appliedAt,
+    });
+}
+
 async function getMirrorRecovery(db, { workspaceId, mirrorKey, operation }) {
   return db('thread_group_mirror_recovery')
     .where({ workspace_id: workspaceId, mirror_key: mirrorKey, operation })
@@ -268,6 +356,96 @@ async function listPendingMirrorRecovery(db, workspaceId) {
     .where({ workspace_id: workspaceId })
     .whereIn('status', ['pending', 'failed'])
     .orderBy('id', 'asc');
+}
+
+function toPlacementOutbox(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    sideChatPlacementId: row.side_chat_placement_id,
+    idempotencyKey: row.idempotency_key,
+    workspaceId: row.workspace_id,
+    viewId: row.view_id,
+    groupId: row.group_id,
+    threadId: row.thread_id,
+    operation: row.operation,
+    status: row.status,
+    attempts: Number(row.attempts || 0),
+    failureCode: row.last_failure_code ?? null,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    appliedAt: row.applied_at ?? null,
+  };
+}
+
+/**
+ * Atomically record one `open-side-chat-tab` placement instruction. The unique
+ * `side_chat_placement_id`/`idempotency_key` make a replay/duplicate harmless:
+ * an existing instruction is never duplicated or rewritten. Runs in the
+ * caller's group-mutation transaction (`SPEC-04 §5`).
+ */
+async function insertPlacementOutbox(db, row) {
+  await db('thread_group_placement_outbox')
+    .insert({
+      side_chat_placement_id: row.sideChatPlacementId,
+      idempotency_key: row.idempotencyKey,
+      workspace_id: row.workspaceId,
+      view_id: row.viewId,
+      group_id: row.groupId,
+      thread_id: row.threadId,
+      operation: row.operation || 'open-side-chat-tab',
+      status: row.status || 'pending',
+      attempts: row.attempts || 0,
+      last_failure_code: row.failureCode ?? null,
+      created_at: row.createdAt,
+      updated_at: row.updatedAt,
+      applied_at: row.appliedAt ?? null,
+    })
+    .onConflict('idempotency_key')
+    .ignore();
+}
+
+async function getPlacementOutboxByIdempotencyKey(db, idempotencyKey) {
+  const row = await db('thread_group_placement_outbox')
+    .where('idempotency_key', idempotencyKey)
+    .first();
+  return toPlacementOutbox(row);
+}
+
+/** Latest placement instruction for one group, or null. */
+async function getPlacementOutboxForGroup(db, groupId) {
+  const row = await db('thread_group_placement_outbox')
+    .where('group_id', groupId)
+    .orderBy('id', 'desc')
+    .first();
+  return toPlacementOutbox(row);
+}
+
+/** Every unapplied instruction for one exact workspace (retry/restart sweep). */
+async function listUnappliedPlacementOutbox(db, workspaceId) {
+  const rows = await db('thread_group_placement_outbox')
+    .where({ workspace_id: workspaceId })
+    .whereNot('status', 'applied')
+    .orderBy('id', 'asc');
+  return rows.map(toPlacementOutbox);
+}
+
+/**
+ * Update one instruction's delivery state by idempotency key. `attempts` is
+ * incremented in SQL so concurrent consumers cannot clobber each other.
+ */
+async function markPlacementOutbox(db, {
+  idempotencyKey, status, failureCode = null, appliedAt = null, now,
+}) {
+  await db('thread_group_placement_outbox')
+    .where({ idempotency_key: idempotencyKey })
+    .update({
+      status,
+      attempts: db.raw('attempts + 1'),
+      last_failure_code: failureCode,
+      updated_at: now,
+      applied_at: appliedAt,
+    });
 }
 
 async function getGroup(db, groupId) {
@@ -366,6 +544,25 @@ async function getGroupProjection(db, groupId) {
   return { ...toProjection(row), entry: toEntry(row) };
 }
 
+/** Next peer ordinal for one group (ordinal 1 when empty). */
+async function nextOrdinal(db, groupId) {
+  const row = await db('thread_group_members')
+    .where('group_id', groupId)
+    .max('ordinal as ordinal')
+    .first();
+  return Number(row?.ordinal || 0) + 1;
+}
+
+/**
+ * Transactional primary-cache update for one group. The append-only primary
+ * event remains the history; this row is the current read model (`SPEC-04 §5`).
+ */
+async function setCurrentPrimary(db, groupId, threadId) {
+  await db('thread_groups')
+    .where('group_id', groupId)
+    .update({ current_primary_thread_id: threadId });
+}
+
 async function renameGroup(db, groupId, name) {
   // Rename changes the title only; the sole visible-list MRU clock advances
   // only for creation and accepted prompts (§5.4).
@@ -419,6 +616,9 @@ module.exports = {
   getLatestPrimarySequence,
   getMember,
   getMirrorRecovery,
+  getPlacementOutboxByIdempotencyKey,
+  getPlacementOutboxForGroup,
+  getWorksurfaceCleanup,
   hasGroupForThread,
   insertActionResult,
   insertActivityEvent,
@@ -426,17 +626,28 @@ module.exports = {
   insertGroup,
   insertMember,
   insertMirrorRecovery,
+  insertPlacementOutbox,
   insertPrimaryEvent,
+  insertWorksurfaceCleanup,
   listGroupProjections,
   listMembers,
   listMirrorRecoveryForGroup,
   listPendingMirrorRecovery,
   listThreadIdsWithoutGroup,
+  listUnappliedPlacementOutbox,
+  listUnappliedWorksurfaceCleanup,
   markMirrorRecovery,
+  markPlacementOutbox,
+  markWorksurfaceCleanup,
+  nextOrdinal,
   recordActivityAndAdvance,
   renameGroup,
+  setCurrentPrimary,
   toEntry,
+  toPlacementOutbox,
   toProjection,
+  toWorksurfaceCleanup,
+  updateActionResult,
   updateDeleteTombstone,
   upsertActionResult,
 };

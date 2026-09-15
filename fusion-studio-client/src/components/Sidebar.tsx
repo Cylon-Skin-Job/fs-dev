@@ -31,7 +31,6 @@ export function Sidebar({ panel, collapsed, isActive = true }: SidebarProps) {
       rows={sidebar.threads}
       selectedThreadGroupId={sidebar.selectedThreadGroupId}
       selectedThreadId={sidebar.currentThreadId}
-      secondaryThreadId={sidebar.secondary?.threadId ?? null}
       isActive={sidebar.isActive}
       threadView={threadView}
       onThreadViewChange={setThreadView}
@@ -58,8 +57,6 @@ export function Sidebar({ panel, collapsed, isActive = true }: SidebarProps) {
       onDelete={sidebar.handleDeleteThread}
       onCopyLink={sidebar.handleCopyLink}
       onViewMarkdown={sidebar.handleViewMarkdown}
-      onOpenSecondary={sidebar.handleOpenSecondary}
-      sideChatDisabledReason={sidebar.sideChatDisabledReason}
     />
   );
 }

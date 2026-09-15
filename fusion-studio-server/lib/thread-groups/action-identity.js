@@ -52,6 +52,7 @@ function scalarWithin(value, maxBytes) {
 function canonicalTargetHash({
   action, threadGroupId = null, threadId = null,
   name = null, uri = null, model = null, variant = null,
+  expectedPrimarySequence = null,
 }) {
   const payload = { action, threadGroupId, threadId };
   if (action === 'rename') payload.name = name;
@@ -60,6 +61,11 @@ function canonicalTargetHash({
     payload.model = model;
     payload.variant = variant;
   }
+  // SPEC-04 §4/§9: the exact current-primary sequence the caller observed is
+  // part of the Move input, so a same-requestId retry with a different
+  // sequence is `request_mismatch` and a different requestId from the same
+  // sequence cannot both commit.
+  if (action === 'move_chat_to_side') payload.expectedPrimarySequence = expectedPrimarySequence;
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 

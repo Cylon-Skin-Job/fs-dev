@@ -21,6 +21,15 @@ const aiPaths = require('../workspace/ai-paths');
 const { getDb } = require('../db');
 const repository = require('../thread-groups/repository');
 const { createThreadGroupService } = require('../thread-groups/service');
+const {
+  buildWorksurfaceCleanupKey,
+  consumePendingWorksurfaceCleanup,
+  consumeWorksurfaceCleanupForGroup,
+} = require('../thread-groups/worksurface-cleanup');
+const {
+  consumePendingPlacementOutbox,
+  consumePlacementOutboxForGroup,
+} = require('../thread-groups/placement-delivery');
 const { runStableViewIdPreflight } = require('../views/stable-view-id-preflight');
 
 function asPlainObject(value) {
@@ -189,6 +198,76 @@ class ThreadManager {
   }
 
   /**
+   * ThreadManager-owned durable session/mirror creation boundary for an
+   * existing group (`SPEC-04 §5` step 4). The Thread Group Move transaction
+   * invokes this with its transaction handle so the new Main Chat session row
+   * and its recoverable mirror instruction commit atomically with the group
+   * transition. The group service never clones session-limit, harness-config,
+   * or mirror rules.
+   *
+   * The session row keeps the accepted `view_id: null` convention: the group
+   * owns the view binding and the `thread:action:completed` envelope carries
+   * it, so a member session row never re-owns the view (R4).
+   *
+   * @param {object} trx active transaction handle
+   * @param {{ threadId: string, name?: string|null, harnessId: string,
+   *           harnessConfig?: object|null, groupId: string }} input
+   * @returns {Promise<number>} created-at epoch ms
+   */
+  async stageNewSession(trx, {
+    threadId, name = null, harnessId, harnessConfig = null, groupId = null,
+  }) {
+    if (!groupId) throw new Error('ThreadManager.stageNewSession: groupId is required');
+    const now = Date.now();
+    const createdAt = await this._insertSessionRow(trx, threadId, name, {
+      harnessId,
+      harnessConfig,
+    });
+    await repository.insertMirrorRecovery(trx, {
+      workspaceId: this.workspaceId,
+      groupId,
+      threadId,
+      mirrorKey: this._mirrorKey(threadId),
+      operation: 'create',
+      status: 'pending',
+      createdAt: now,
+      updatedAt: now,
+    });
+    return repository.epochFromIso(createdAt, now);
+  }
+
+  /**
+   * Post-commit completion of a staged session mirror. Failure-isolated: the
+   * pending mirror-recovery record keeps a failed write retryable on the next
+   * activation sweep.
+   */
+  async ensureSessionMirror(threadId) {
+    const db = getDb();
+    const mirrorKey = this._mirrorKey(threadId);
+    try {
+      await this.syncChatlogMirrorFromHistory(threadId);
+      await repository.markMirrorRecovery(db, {
+        workspaceId: this.workspaceId,
+        mirrorKey,
+        operation: 'create',
+        status: 'complete',
+        now: Date.now(),
+      });
+      return true;
+    } catch (error) {
+      await repository.markMirrorRecovery(db, {
+        workspaceId: this.workspaceId,
+        mirrorKey,
+        operation: 'create',
+        status: 'failed',
+        failureCode: 'mirror_write_failed',
+        now: Date.now(),
+      });
+      return false;
+    }
+  }
+
+  /**
    * Create a new thread and its one-member Thread Group in one transaction.
    *
    * The Thread Group service supplies the group identity/view/action intent;
@@ -335,6 +414,23 @@ class ThreadManager {
       });
     }
     await this._retryPendingMirrorRecovery();
+    // Cross-store recovery (`SPEC-03 §8`): converge any group deletion whose
+    // worksurface cleanup did not apply before the process stopped. This is
+    // independent of the manager-owned transcript-mirror journal.
+    try {
+      await this._retryPendingWorksurfaceCleanup();
+    } catch (_error) {
+      // A sweep-read failure must not block group activation; the unapplied
+      // instruction stays durable and retryable.
+    }
+    // SPEC-04 §7: recover committed Move placements that had not yet been
+    // materialized into the view-state lane when the process stopped. The
+    // committed group transition is already durable; delivery is idempotent.
+    try {
+      await this._retryPendingPlacementDelivery();
+    } catch (_error) {
+      // The unapplied instruction stays durable and retryable.
+    }
     await this._reconcileRetiredMirrors();
     return { ok: true, diagnostics: [] };
   }
@@ -446,6 +542,64 @@ class ThreadManager {
         });
       }
     }
+  }
+
+  /**
+   * Restart/recovery sweep for the durable worksurface-cleanup outbox
+   * (`SPEC-03 §8`). Drains every unapplied instruction for this exact
+   * workspace; each delivery is failure-isolated and remains retryable.
+   */
+  async _retryPendingWorksurfaceCleanup() {
+    return consumePendingWorksurfaceCleanup(getDb(), {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+    });
+  }
+
+  /**
+   * Explicit retry for one deleted group's unapplied cleanup instruction.
+   * Repeated delivery after success is harmless: an applied instruction is
+   * never re-run and removing an already-absent entry is an acknowledged no-op.
+   */
+  async retryWorksurfaceCleanupForGroup(groupId) {
+    return consumeWorksurfaceCleanupForGroup(getDb(), {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+      groupId,
+    });
+  }
+
+  /**
+   * Restart/recovery sweep for the durable Side Chat placement outbox
+   * (`SPEC-04 §7`). Each delivery is failure-isolated and remains retryable.
+   */
+  async _retryPendingPlacementDelivery() {
+    return consumePendingPlacementOutbox(getDb(), {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+    });
+  }
+
+  /**
+   * Explicit retry of one committed Move's placement delivery. Repeated
+   * delivery acknowledges/focuses the existing placement and creates no
+   * duplicate; it never rolls back the group transition.
+   */
+  async retryPlacementDeliveryForGroup(groupId) {
+    return consumePlacementOutboxForGroup(getDb(), {
+      workspaceId: this.workspaceId,
+      projectRoot: this.projectRoot,
+      groupId,
+    });
+  }
+
+  /**
+   * Public bounded busy check for one member session (`SPEC-04 §4/§9`). A
+   * merely warm provider is idle; an accepting, in-flight, draining, or
+   * stopping lifecycle is busy and Move must fail inertly.
+   */
+  isMemberBusy(threadId) {
+    return this._groupMemberBusy(threadId);
   }
 
   /** Group-backed visible population for one exact {workspaceId, viewId}. */
@@ -701,6 +855,7 @@ class ThreadManager {
       threadId: member.thread_id,
       mirrorKey: this._mirrorKey(member.thread_id),
     }));
+    const viewId = projection?.viewId ?? null;
     const cleanup = {
       status: 'pending',
       mirrors: memberRecords.map((member) => ({
@@ -710,15 +865,22 @@ class ThreadManager {
         failureCode: null,
       })),
     };
+    // A view-bound group records exactly one durable worksurface-cleanup
+    // instruction in the same transaction as the group deletion/tombstone.
+    // Legacy groups (`viewId: null`) own no worksurface and create no record.
+    const viewStateCleanup = viewId
+      ? { status: 'pending', attempts: 0 }
+      : { status: 'not_applicable', attempts: 0 };
     const result = {
       action: 'delete',
       threadGroupId: groupId,
       threadId: projection?.currentPrimaryThreadId ?? memberRecords[0]?.threadId ?? null,
       workspaceId: this.workspaceId,
-      viewId: projection?.viewId ?? null,
+      viewId,
       members: memberRecords,
       deleted: true,
       cleanup,
+      viewStateCleanup,
       context: context || null,
     };
     const expiresAt = Number.isFinite(tombstoneExpiresAt) && tombstoneExpiresAt > now
@@ -742,6 +904,22 @@ class ThreadManager {
           // A duplicate delete-recovery record from a retry is benign.
         }
       }
+      if (viewId) {
+        await repository.insertWorksurfaceCleanup(trx, {
+          idempotencyKey: buildWorksurfaceCleanupKey({
+            workspaceId: this.workspaceId,
+            viewId,
+            threadGroupId: groupId,
+          }),
+          workspaceId: this.workspaceId,
+          viewId,
+          groupId,
+          status: 'pending',
+          attempts: 0,
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
       await repository.insertDeleteTombstone(trx, {
         groupId,
         workspaceId: this.workspaceId,
@@ -758,7 +936,23 @@ class ThreadManager {
       await repository.deleteGroup(trx, groupId);
     });
 
-    return { deleted: true, result, members: memberRecords };
+    // Post-commit cross-store delivery. Failure-isolated: the group deletion is
+    // committed and success-shaped regardless; a failure leaves the instruction
+    // observable/retryable and never rolls back.
+    let committedViewStateCleanup = viewStateCleanup;
+    if (viewId) {
+      try {
+        committedViewStateCleanup = await this.retryWorksurfaceCleanupForGroup(groupId);
+      } catch (_error) {
+        committedViewStateCleanup = { status: 'failed', attempts: 0, failureCode: 'view_state_unavailable' };
+      }
+    }
+
+    return {
+      deleted: true,
+      result: { ...result, viewStateCleanup: committedViewStateCleanup },
+      members: memberRecords,
+    };
   }
 
   /**

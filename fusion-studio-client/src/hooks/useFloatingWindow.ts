@@ -4,7 +4,7 @@
  *       locally during a gesture and commits ONCE on mouse-up, so callers
  *       can persist in onCommit without per-mousemove write amplification.
  *
- * Consumers: SecondaryChat (chat popup), EmailComposeWindow (mail compose).
+ * Consumers: EmailComposeWindow (mail compose).
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';

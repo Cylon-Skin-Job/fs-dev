@@ -37,11 +37,19 @@ Current file/module map for chat work.
 |---|---|
 | `fusion-studio-server/lib/thread/thread-crud.js` | `thread:open`, `thread:open-assistant`, create/open policy, group-joined search |
 | `fusion-studio-server/lib/thread/thread-runtime-controller.js` | prompt acceptance (activity before `message:sent`), warm/send, stop |
-| `fusion-studio-server/lib/thread-groups/service.js` | Thread Group domain: listing/open resolution, activity/MRU, canonical `thread:action` actions |
+| `fusion-studio-server/lib/thread-groups/service.js` | Thread Group domain: listing/open resolution, activity/MRU, canonical `thread:action` actions; delegates Move and member access to focused modules |
+| `fusion-studio-server/lib/thread-groups/move-service.js` | SPEC-04 `move_chat_to_side` transaction and server-owned Move session-policy resolution |
+| `fusion-studio-server/lib/thread-groups/member-service.js` | SPEC-04 `thread:members` ordered read and idempotent `open_member_in_side` |
+| `fusion-studio-server/lib/thread-groups/placement-delivery.js` | SPEC-04 placement outbox consumer and member-placement coordinator |
+| `fusion-studio-server/lib/thread-groups/chat-capable-views.js` | Code-owned chat-capable view set that gates Move and member access before commit |
+| `fusion-studio-server/lib/thread-groups/ids.js` | Opaque id minting (thread id, group id, `sideChatPlacementId`) |
+| `fusion-studio-server/lib/db/migrations/044_thread_group_placement_outbox.js` | Durable `open-side-chat-tab` placement outbox (SPEC-04 head) |
 | `fusion-studio-server/lib/thread-groups/repository.js` | pure Thread Group persistence and the atomic activity/MRU transaction |
 | `fusion-studio-server/lib/thread-groups/action-identity.js` | canonical action target hashing and durable `ChatActionContext` sanitization |
 | `fusion-studio-server/lib/thread-groups/application-link.js` | versioned group application URI build/parse with durable identities only |
 | `fusion-studio-server/lib/thread-groups/group-mutation-lease.js` | per-group exclusive mutation serialization |
+| `fusion-studio-server/lib/view-state/thread-worksurface.js` | group-keyed worksurface entry reads/writes, CAS, lane merge, and exact-entry removal |
+| `fusion-studio-server/lib/thread-groups/worksurface-cleanup.js` | durable delete-cleanup outbox consumer that removes only the exact worksurface entry |
 | `fusion-studio-server/lib/thread/thread-runtime-manager.js` | runtime state and live turn ownership |
 | `fusion-studio-server/lib/thread/thread-lifecycle-controller.js` | exact workspace/thread/turn lifecycle state and idle timers |
 | `fusion-studio-server/lib/thread/live-turn-snapshot.js` | in-memory live turn snapshot |
@@ -93,16 +101,36 @@ Current file/module map for chat work.
 | `fusion-studio-client/electron/shell-proof-ipc.cjs` | guarded current-main-frame signing IPC |
 | `fusion-studio-client/src/lib/runtime-transport.ts` | validated renderer endpoint, socket, HTTP/resource, and generation-cancellation owner |
 | `fusion-studio-client/src/lib/shell-auth-client.ts` | transient renderer challenge/proof handshake and pre-auth initialization buffer |
-| `fusion-studio-client/src/components/chat/useChatArea.ts` | chat handlers, send/stop state, warm intent |
+| `fusion-studio-client/src/components/chat/sideChatBridge.ts` | code-owned Side Chat bridge: composes managed placements into the ordered view rail and owns close-disposition wiring (SPEC-04 §6/§7) |
+| `fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts` | single composition seam above the view adapter lookup: native adapters keep their tab owner, adapterless chat-capable views get a runtime-only root while a Side Chat is open |
+| `fusion-studio-client/src/types/threadGroupMember.ts` | portable `thread:members` projection contract (durable identities only) |
 | `fusion-studio-client/src/components/chat/ChatSurface.tsx` | portable composable chat presentation boundary (SPEC-02 §5.1): explicit `ChatMountIdentity` + session model + action contract; imports no store/socket/controller/service |
 | `fusion-studio-client/src/components/chat/chatSurfaceContract.ts` | `ChatMountIdentity`, `ChatSurfaceModel`, `ChatSurfaceActions`, and transient `surfaceId` minting (never persisted/sent) |
 | `fusion-studio-client/src/components/chat/useChatSurfaceIdentity.ts` | mount-time `surfaceId` minting for a connected host (runtime mount generation) |
 | `fusion-studio-client/src/components/chat/LegacyChatHost.tsx` | connected workspace Legacy host (`viewId: null`, `host: 'legacy-main'`); validates workspace/thread relation and projects store state into `ChatSurface` |
 | `fusion-studio-client/src/components/chat/useLegacyChatHost.ts` | connected host hook: per-thread session reads, exact-target action adaptation, exact-session model pending/acknowledged correlation, surface-owned pending-new-thread connecting state, and an optional component-backed `surfaceId` override |
-| `fusion-studio-client/src/components/chat/ThreadRail.tsx` | portable rail presentation (SPEC-02 §5.3): explicit population + selected group + row/menu callbacks; imports no store/socket/controller/service |
+| `fusion-studio-client/src/components/chat/ThreadRail.tsx` | portable rail presentation (SPEC-02 §5.3): explicit population + selected group + row/menu callbacks, including the SPEC-04 member submenu and exact-member Copy Link entry; imports no store/socket/controller/service |
 | `fusion-studio-client/src/components/chat/ThreadedChat.tsx` | one explicit `ThreadRail` + selected group's Main Chat `ChatSurface` composition |
 | `fusion-studio-client/src/components/chat/useViewChatHost.ts` | connected host for one explicit `{workspaceId, viewId}` population: qualified list/open, correlated requests, selected group → `ChatSurface` session |
-| `fusion-studio-client/src/components/chat/ViewChatHost.tsx` | connected view-bound `ThreadedChat` host (explicit fixture/future view lane; not placed in production view chrome) |
+| `fusion-studio-client/src/components/chat/ViewChatHost.tsx` | connected view-bound `ThreadedChat` host consumed by the production `ViewWorksurfaceDock` (group selection) and by rendered fixtures |
+| `fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx` | collapsed production group-selection dock mounted by each participating built-in view (SPEC-03 §10 03D) |
+| `fusion-studio-client/src/components/chat/WorksurfaceConflictBanner.tsx` | non-destructive conflict projection with Retry saving / Switch without saving |
+| `fusion-studio-client/src/lib/worksurface/types.ts` | versioned adapter contract, entry envelope, and registered `state:worksurface_*` frames |
+| `fusion-studio-client/src/lib/worksurface/registry.ts` | explicit code-owned adapter registry (`worksurfaceAdapterForView`) |
+| `fusion-studio-client/src/lib/worksurface/builtins.ts` | first-party adapter registration (`file-viewer`, `wiki-viewer`, `capture-viewer`, `office-viewer`, `email-viewer`) |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceController.ts` | stable public facade for the acknowledgement-gated group switch, cutover, conflict, and reconnect state machine |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceRuntime.ts` | shared request tracking, per-view serialization slots, and timeout seam |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceRequests.ts` | capture stamping and registered get/put emission |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceSwitch.ts` | selection, binding, flush, and deferred-intent execution |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceFrames.ts` | result/error/changed handling, retry/discard, and reconnect reconciliation |
+| `fusion-studio-client/src/lib/worksurface/worksurfaceFailures.ts` | conflict classification and non-destructive failure retention |
+| `fusion-studio-client/src/lib/worksurface/fileViewerWorksurfaceAdapter.ts` | File Viewer adapter (`activity` tabs/active/recents/navigation) |
+| `fusion-studio-client/src/lib/worksurface/wikiViewerWorksurfaceAdapter.ts` | Wiki Viewer adapter (`activity.navigation`) |
+| `fusion-studio-client/src/lib/worksurface/captureViewerWorksurfaceAdapter.ts` | Capture Viewer adapter (mode, selections, scrolls, classic tabs, activity) |
+| `fusion-studio-client/src/lib/worksurface/officeViewerWorksurfaceAdapter.ts` | Office Viewer adapter (mode, folder, selection, side panel, activity) |
+| `fusion-studio-client/src/lib/worksurface/emailViewerWorksurfaceAdapter.ts` | Email Viewer adapter (mode, folder, selection, side panel, activity) |
+| `fusion-studio-client/src/components/office/officeViewerPersistence.ts` | Office Viewer single persistence entry point (group-bound content vs display keys) |
+| `fusion-studio-client/src/components/email/emailViewerPersistence.ts` | Email Viewer single persistence entry point (group-bound content vs display keys) |
 | `fusion-studio-client/src/components/chat/chatComponentRegistration.tsx` | code-owned first-party `fusion.chat-surface` registration through the accepted Generic Host resolver seam (SPEC-02 §8); adds no production tab/launcher/placement |
 | `fusion-studio-client/src/components/chat/chatSurfaceRegistrationContract.ts` | dependency-free descriptor-input contract: durable identities only, strict parse that rejects `surfaceId`/unknown/authority fields, and the component-backed `surfaceId` mint |
 | `fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx` | connected `fusion.chat-surface` mount: hydrated workspace/view/group/member tuple validation, inert unavailable body, then the explicit-identity `ChatSurface` mount |
@@ -150,6 +178,11 @@ from both, and no authentication owner publishes a fact.
 
 ## Removed Paths
 
+- legacy singleton/floating Secondary Chat (SPEC-04 §10): `SecondaryChat.tsx`,
+  `SecondaryHeader.tsx`, `SecondaryDockButton.tsx`, `state/slices/secondarySlice.ts`,
+  `lib/secondary-tracker.ts`, the secondary `ChatArea` override, its
+  `rightSecondary`/`popup`/`secondaryThreadId` view-state fields, resize handle,
+  and its dedicated tests/styles. No compatibility alias remains.
 - visible typing cursor
 - `CURSOR_HTML`
 - `injectCursor`

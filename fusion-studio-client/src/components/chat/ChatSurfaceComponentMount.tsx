@@ -15,8 +15,10 @@
 import { useRef } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
+import { getWorksurfaceEntry } from '../../state/slices/worksurfaceSlice';
 import type { AppState } from '../../state/panelStoreTypes';
 import type { ComponentDescriptor } from '../view-tabs/componentTabTypes';
+import { readOpenSideChatPlacements } from './sideChatBridge';
 import { ChatSurface } from './ChatSurface';
 import { useLegacyChatHost } from './useLegacyChatHost';
 import { nextChatSurfaceMountGeneration } from './chatSurfaceContract';
@@ -58,8 +60,23 @@ export function ChatSurfaceUnavailableBody() {
 function isTupleHydrated(state: AppState, input: ChatSurfaceDescriptorInput): boolean {
   if (!state.activeWorkspaceId || state.activeWorkspaceId !== input.workspaceId) return false;
   const rows = getThreadGroupPopulation(state, input.workspaceId, input.viewId);
-  return rows.some(
-    (row) => row.threadGroupId === input.threadGroupId && row.threadId === input.threadId,
+  const row = rows.find((candidate) => candidate.threadGroupId === input.threadGroupId);
+  if (row && row.threadId === input.threadId) return true;
+  // SPEC-04 §6/§7: a Side Chat addresses a non-primary member of the group.
+  // Its authority is the server-persisted service-managed placement lane for
+  // this exact view, never primary history and never a client guess. This is
+  // also the adapterless-host path (SPEC-04 §11 04B): a view with no view-bound
+  // chat population still mounts the placed member because the durable
+  // placement lane is the authority.
+  if (input.host !== 'side-tab' || !input.viewId) return false;
+  const entry = getWorksurfaceEntry(
+    state,
+    input.workspaceId,
+    input.viewId,
+    input.threadGroupId,
+  );
+  return readOpenSideChatPlacements(entry, input.viewId).some(
+    (placement) => placement.threadId === input.threadId,
   );
 }
 

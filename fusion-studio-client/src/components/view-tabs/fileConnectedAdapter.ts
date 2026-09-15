@@ -104,8 +104,8 @@ function boundedUnavailableSurface() {
 }
 
 // SPEC-02 §8: the chat domain registers `fusion.chat-surface` through the same
-// closed resolver seam. Composition only makes the seam real — no production
-// chat descriptor, launcher, or placement is added by this slice.
+// closed resolver seam; SPEC-04 §6 composes open managed Side Chat placements
+// into this view's visible rail through `composeSideChatAdapter` below.
 const FILE_CONNECTED_REGISTRATIONS = [
   ...fileConnectedPresenterRegistrations(),
   ...chatConnectedRegistrations(),
@@ -302,6 +302,10 @@ export function useFileConnectedAdapter(enabled: boolean): ViewTabAdapterModel |
     };
   }, [pickerHostActive]);
 
+  // SPEC-04 §6: the code-owned Side Chat composition seam now runs once, above
+  // this adapter, in `useViewTabAdapter`/`useSideChatRailAdapter`. The File
+  // adapter stays the native-tab owner and returns its protected model
+  // unchanged; with no open placement the rail is byte-identical.
   return protectedModel;
 }
 

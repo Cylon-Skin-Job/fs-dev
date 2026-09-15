@@ -59,29 +59,29 @@ export function ChatSurface({
       data-chat-workspace-id={workspaceId}
       data-chat-view-id={viewId ?? ''}
     >
-      {!chat.isSecondary && (
-        <ChatAreaHeader
-          mountId={surfaceId}
-          panel={panel}
-          headerRef={refs.headerRef}
-          hasThread={chat.hasThread}
-          sidebarCollapsed={chat.isThreadsCollapsed}
-          contentCollapsed={chat.isContentCollapsed}
-          cliPickerOpen={chat.cliPickerOpen}
-          moreMenuOpen={chat.moreMenuOpen}
-          harnessStatuses={chat.harnessStatuses}
-          showCliPicker={chat.showCliPicker}
-          handleToggleThreads={onToggleThreads}
-          onHarnessSelect={actions.onHarnessSelect}
-          onCreateThread={actions.onCreateThread}
-          onRename={actions.onRename}
-          onCopyLink={actions.onCopyLink}
-          onViewMarkdown={actions.onViewMarkdown}
-          onSetMoreMenuOpen={actions.onSetMoreMenuOpen}
-          onCloseCliPicker={actions.onCloseCliPicker}
-          onToggleContent={onToggleContent}
-        />
-      )}
+      <ChatAreaHeader
+        mountId={surfaceId}
+        panel={panel}
+        headerRef={refs.headerRef}
+        hasThread={chat.hasThread}
+        sidebarCollapsed={chat.isThreadsCollapsed}
+        contentCollapsed={chat.isContentCollapsed}
+        cliPickerOpen={chat.cliPickerOpen}
+        moreMenuOpen={chat.moreMenuOpen}
+        harnessStatuses={chat.harnessStatuses}
+        showCliPicker={chat.showCliPicker}
+        handleToggleThreads={onToggleThreads}
+        onHarnessSelect={actions.onHarnessSelect}
+        onCreateThread={actions.onCreateThread}
+        onRename={actions.onRename}
+        onCopyLink={actions.onCopyLink}
+        onViewMarkdown={actions.onViewMarkdown}
+        canMoveToSideChat={chat.canMoveToSideChat}
+        onMoveToSideChat={actions.onMoveToSideChat}
+        onSetMoreMenuOpen={actions.onSetMoreMenuOpen}
+        onCloseCliPicker={actions.onCloseCliPicker}
+        onToggleContent={onToggleContent}
+      />
       <div className="rv-chat-messages">
         <div
           className="rv-chat-scroll-viewport"
@@ -143,7 +143,7 @@ export function ChatSurface({
         screenshotOwner={chat.hasThread ? {
           workspaceId,
           threadId,
-          surface: chat.isSecondary ? 'secondary' : 'primary',
+          surface: 'primary',
         } : null}
       />
     </section>

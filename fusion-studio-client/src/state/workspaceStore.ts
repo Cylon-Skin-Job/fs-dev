@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { Workspace, WorkspaceCreateManifest } from '../types';
 import { usePanelStore } from './panelStore';
+import { flushBoundWorkspaceViews } from '../lib/worksurface/worksurfaceController';
 import { createWorkspacePreviewActions } from './workspacePreview';
 
 /**
@@ -198,9 +199,14 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
     sendWorkspaceMessage({ type: 'workspace:add_requested', repoPath });
   },
   requestSwitch: (workspaceId) => {
+    // CHAT-03 / SPEC-03 §6.1: flush the outgoing workspace's bound views
+    // through the acknowledgement gate before the switch request is sent.
+    flushBoundWorkspaceViews(get().activeWorkspaceId, 'workspace-switch');
     sendWorkspaceMessage({ type: 'workspace:switch_requested', workspaceId });
   },
   requestRemove: (workspaceId) => {
+    // Detaching a workspace flushes the outgoing bound key the same way.
+    flushBoundWorkspaceViews(get().activeWorkspaceId, 'detach');
     sendWorkspaceMessage({ type: 'workspace:remove_requested', workspaceId });
   },
   requestRemoveFromRibbon: (workspaceId) => {

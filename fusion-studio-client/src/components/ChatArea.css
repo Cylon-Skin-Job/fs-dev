@@ -194,12 +194,6 @@
   color: var(--chat-accent-color, var(--theme-primary));
 }
 
-.rv-secondary-header-identity,
-.rv-secondary-header-identity .material-symbols-outlined,
-.rv-secondary-header-identity-name {
-  color: var(--chat-accent-color, var(--cli-accent, var(--text-primary)));
-}
-
 /* Mirror of .rv-collapse-btn: absolutely positioned, sized to its 20px icon. */
 .rv-chat-header-btn--left {
   position: absolute;

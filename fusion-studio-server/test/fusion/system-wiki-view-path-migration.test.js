@@ -69,7 +69,7 @@ describe('system wiki canonical view path migration', () => {
     db = createDb({ migrations: true });
     const [, completed] = await db.migrate.latest();
 
-    expect(completed.at(-1)).toMatch(/042_thread_group_action_recovery\.js$/u);
+    expect(completed.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/u);
     const page = await getWikiPage(db, 'customization');
     expect(page.context).toContain(migration.CANONICAL_VIEW_THEME_PATH);
     expect(page.context).not.toContain(migration.RETIRED_VIEW_THEME_PATH);

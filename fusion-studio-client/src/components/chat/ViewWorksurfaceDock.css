@@ -1,0 +1,119 @@
+/*
+ * ViewWorksurfaceDock — production group-selection chrome (CHAT-03 / SPEC-03).
+ * All values trace to CSS variables with fallbacks; class names are prefixed.
+ */
+
+.rv-worksurface-dock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.rv-worksurface-dock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  align-self: flex-start;
+  margin: var(--space-xs, 4px) 0 var(--space-xs, 4px) var(--space-xs, 4px);
+  padding: 2px var(--space-sm, 8px);
+  border: 1px solid var(--border-muted, rgba(128, 128, 128, 0.25));
+  border-radius: 6px;
+  background: var(--bg-surface, transparent);
+  color: var(--text-secondary, inherit);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.rv-worksurface-dock-toggle:hover {
+  color: var(--text-primary, inherit);
+  border-color: var(--palette-accent, rgba(128, 128, 128, 0.5));
+}
+
+.rv-worksurface-dock-toggle .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.rv-worksurface-dock-panel {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 var(--space-xs, 4px) var(--space-xs, 4px);
+  border: 1px solid var(--border-muted, rgba(128, 128, 128, 0.25));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rv-worksurface-dock-panel .rv-threaded-chat {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* --- Non-destructive conflict projection (SPEC-03 §6.1/§6.2) --- */
+
+.rv-worksurface-conflict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 4px);
+  margin: var(--space-xs, 4px);
+  padding: var(--space-sm, 8px);
+  border: 1px solid var(--palette-warning, var(--palette-accent, rgba(200, 150, 40, 0.6)));
+  border-radius: 8px;
+  background: var(--bg-warning, var(--bg-surface, transparent));
+  color: var(--text-primary, inherit);
+  font-size: 12px;
+}
+
+.rv-worksurface-conflict-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-worksurface-conflict-message .material-symbols-outlined {
+  font-size: 16px;
+  color: var(--palette-warning, var(--palette-accent, inherit));
+}
+
+.rv-worksurface-conflict-remote {
+  color: var(--text-secondary, inherit);
+}
+
+.rv-worksurface-conflict-loss {
+  color: var(--text-secondary, inherit);
+}
+
+.rv-worksurface-conflict-actions {
+  display: flex;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-worksurface-conflict-actions button {
+  padding: 2px var(--space-sm, 8px);
+  border: 1px solid var(--border-muted, rgba(128, 128, 128, 0.25));
+  border-radius: 6px;
+  background: var(--bg-surface, transparent);
+  color: var(--text-primary, inherit);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.rv-worksurface-conflict-discard {
+  border-color: var(--palette-danger, var(--palette-warning, rgba(200, 80, 80, 0.6))) !important;
+}
+
+/* Wiki view: a flex column so the grid layout below stays intact. */
+.rv-worksurface-view-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.rv-worksurface-view-layout > .rv-wiki-explorer,
+.rv-worksurface-view-layout > .rv-tile-grid,
+.rv-worksurface-view-layout > .rv-office-shell,
+.rv-worksurface-view-layout > .rv-email-shell {
+  flex: 1 1 auto;
+  min-height: 0;
+}

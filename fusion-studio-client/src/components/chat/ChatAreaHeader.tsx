@@ -30,6 +30,8 @@ export interface ChatAreaHeaderProps {
   onRename: () => void;
   onCopyLink: () => void;
   onViewMarkdown: () => void;
+  canMoveToSideChat: boolean;
+  onMoveToSideChat: () => void;
   onSetMoreMenuOpen: (open: boolean) => void;
   onCloseCliPicker: () => void;
 }
@@ -51,6 +53,8 @@ export function ChatAreaHeader({
   onRename,
   onCopyLink,
   onViewMarkdown,
+  canMoveToSideChat,
+  onMoveToSideChat,
   onSetMoreMenuOpen,
   onCloseCliPicker,
   onToggleContent,
@@ -161,6 +165,18 @@ export function ChatAreaHeader({
         >
           <span className="material-symbols-outlined">docs</span>
           <span>View Markdown</span>
+        </button>
+        <button
+          className="rv-dropdown-item"
+          role="menuitem"
+          onClick={onMoveToSideChat}
+          disabled={!canMoveToSideChat}
+          title={canMoveToSideChat
+            ? 'Move this chat to a Side Chat tab'
+            : 'Move is available for the current Main Chat in a view'}
+        >
+          <span className="material-symbols-outlined">open_in_new</span>
+          <span>Move Chat to Side Chat</span>
         </button>
       </div>
     </div>

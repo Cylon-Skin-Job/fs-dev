@@ -43,6 +43,58 @@ The persisted shape has two shared branches:
 
 Use `activityId(panel, path)` as the stable item id. Do not create another id format for starred, pinned, recent, or tab entries.
 
+## Thread Worksurfaces (CHAT-03 / SPEC-03)
+
+A view bound to a Thread Group remembers its content under the same view-state
+document:
+
+```text
+viewStates[viewId].threadWorksurfaces[threadGroupId]
+```
+
+Each entry has adapter-owned `content` and service-owned
+`managedComponentPlacements` lanes with independent opaque revisions. The
+logical key is always `{workspaceId, viewId, threadGroupId}`; `threadId` stays
+the transcript/routing/Provenance identity and is never the worksurface key.
+There is no Legacy (`viewId: null`) worksurface entry.
+
+Participating built-in views register one versioned adapter
+(`capture`/`sanitize`/`restore`) in
+`fusion-studio-client/src/lib/worksurface/builtins.ts`: `file-viewer`,
+`wiki-viewer`, `capture-viewer`, `office-viewer`, and `email-viewer`. Each
+participating view mounts the collapsed `ViewWorksurfaceDock` as its production
+group-selection path.
+
+While a view is group-bound, its adapter/controller
+(`worksurfaceController.ts`) is the sole writer and hydrator of the facts
+elected into `content`. The legacy global `state:set` write-through for those
+facts — `activity`, classic Capture document navigation and tabs, and Office
+document navigation — is skipped and routed into the selected group's content
+lane; the non-group/Legacy path keeps the exact existing persistence and cannot
+hydrate over a group entry. Content/placement writes use the registered
+`state:worksurface_get|put|placement` route inside the view-state family.
+
+Conflict handling is non-destructive: rejection, CAS mismatch, timeout, and
+unavailable views retain the exact pending capture, keep the outgoing group
+selected, and expose the owning view's warned retry / `Switch without saving`
+choice. Group deletion atomically records a durable cleanup outbox row that the
+view-state service consumes to remove only that exact entry.
+
+## Side Chat Placements (CHAT-04 / SPEC-04)
+
+A Move creates a durable `open-side-chat-tab` placement outbox row and delivers
+it into the same service-owned `managedComponentPlacements` lane under a stable
+independently minted `sideChatPlacementId`. Delivery is retryable and never
+rolls back the committed group transition; ordinary outbox replay focuses or
+acknowledges an existing placement and creates no duplicate, and it never
+reopens a closed disposition. Closing a Side Chat records a closed disposition
+through this lane before the descriptor is removed, so restart/outbox replay
+cannot resurrect it. An explicit `open_member_in_side` (or an exact-member link
+resolution) is the only reopen path and reuses the lifetime placement without
+warming or creating a session. The lane stays keyed by
+`{workspaceId, viewId, threadGroupId}` and never carries `surfaceId`,
+transcript, or chat-runtime state.
+
 ## Activity
 
 `viewActivity.ts` owns activity normalization and mutation.

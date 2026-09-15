@@ -191,13 +191,18 @@ function createCrudHandlers({
         type: 'thread:created',
         threadId: createdId,
         threadGroupId: groupId,
+        // Durable view binding of the new group; `null` is the explicit Legacy
+        // population (never inferred from the active panel).
+        viewId: viewTarget.viewId,
         panel: state.viewName,
         scope: 'project',
         thread: entry
       }));
 
-      // Send updated list
-      await sendThreadList(ws);
+      // Send updated list. A view-bound group must refresh its OWN population
+      // (viewId) so the production view chrome's rail shows the new group; a
+      // Legacy create keeps the exact existing Legacy list behavior.
+      await sendThreadList(ws, viewTarget.viewId);
 
       // Automatically open the new thread
       await handleThreadOpen(ws, { threadId: createdId, threadGroupId: groupId }, {

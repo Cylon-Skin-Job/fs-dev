@@ -61,7 +61,6 @@ test('ChatSurface module imports no app store, socket, controller, service, file
     'state/panelStore',
     'state/slices',
     'lib/ws',
-    'useChatArea',
     'useLegacyChatHost',
     'chatFileLinkStore',
     'chatComposerDraftStore',

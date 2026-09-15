@@ -19,6 +19,7 @@ import { activityId, normalizeViewActivity } from '../../lib/viewActivity';
 import { normalizeViewCollections } from '../../lib/viewCollections';
 import { sendFusionMessage } from '../../lib/ws-client';
 import { normalizeOfficePaperBrightness, officePaperMuteAlpha } from '../../lib/officePaperBrightness';
+import { persistOfficeViewPatch } from './officeViewerPersistence';
 import './OfficeDocumentPage.css';
 import {
   getDocumentTableLayouts,
@@ -96,8 +97,8 @@ export function OfficeDocumentPage({
   const sidePanel = usePanelStore((s) => s.viewStates[PANEL]?.officeDocumentSidePanel ?? 'none');
   const rawOfficePaperBrightness = usePanelStore((s) => s.viewStates[PANEL]?.officePaperBrightness);
   const officePaperBrightness = normalizeOfficePaperBrightness(rawOfficePaperBrightness);
-  const setViewState = usePanelStore((s) => s.setViewState);
-  const persistViewPatch = usePanelStore((s) => s._persistViewPatch);
+  // CHAT-03 / SPEC-03 §5: workspace-owned persistence (not the panel-global writer).
+
   const recentDocs = useMemo(
     () => normalizeViewActivity(rawOfficeActivity).recents,
     [rawOfficeActivity]
@@ -367,15 +368,12 @@ export function OfficeDocumentPage({
 
   const handleToggleRecentPanel = useCallback(() => {
     const nextSidePanel = sidePanel === 'files' ? 'none' : 'files';
-    setViewState(PANEL, { officeDocumentSidePanel: nextSidePanel });
-    persistViewPatch(PANEL, { officeDocumentSidePanel: nextSidePanel });
-  }, [persistViewPatch, setViewState, sidePanel]);
+    persistOfficeViewPatch({ officeDocumentSidePanel: nextSidePanel });
+  }, [sidePanel]);
 
   const handlePaperBrightnessChange = useCallback((nextValue: number) => {
-    const nextBrightness = normalizeOfficePaperBrightness(nextValue);
-    setViewState(PANEL, { officePaperBrightness: nextBrightness });
-    persistViewPatch(PANEL, { officePaperBrightness: nextBrightness });
-  }, [persistViewPatch, setViewState]);
+    persistOfficeViewPatch({ officePaperBrightness: normalizeOfficePaperBrightness(nextValue) });
+  }, []);
 
   const officePaperStyle = useMemo(() => ({
     '--rv-office-paper-mute-alpha': officePaperMuteAlpha(officePaperBrightness),

@@ -15,6 +15,8 @@ import type { FileTreeNode } from '../../types/file-explorer';
 import { TopicList } from './TopicList';
 import { PageViewer, WikiPageNav } from './PageViewer';
 import { EdgePanel } from './EdgePanel';
+import { ViewWorksurfaceDock } from '../chat/ViewWorksurfaceDock';
+import { worksurfaceAdapterForView } from '../../lib/worksurface/worksurfaceController';
 
 const MAX_WIKI_DEPTH = 4;
 
@@ -55,6 +57,7 @@ export function WikiExplorer() {
   useViewLayoutStyles('wiki-viewer');
   const ws = usePanelStore((s) => s.ws);
   const activeWorkspaceId = usePanelStore((s) => s.activeWorkspaceId);
+  const currentPanel = usePanelStore((s) => s.currentPanel);
   const wikiWidths = usePanelStore((s) => s.viewStates['wiki-viewer']?.widths);
   const wikiLayoutStyle = {
     '--wiki-topic-width': `${wikiWidths?.contentNavLeft ?? 200}px`,
@@ -174,22 +177,39 @@ export function WikiExplorer() {
     sendContentRequest(viewedPagePath);
   }, [viewedPagePath, ws, sendContentRequest, setLoading]);
 
+  // CHAT-03 / SPEC-03 §10 03B: view-bound group selection path. Collapsed by
+  // default so the existing wiki composition and visual language are preserved.
+  const worksurfaceDock = activeWorkspaceId && worksurfaceAdapterForView('wiki-viewer') ? (
+    <ViewWorksurfaceDock
+      panel="wiki-viewer"
+      workspaceId={activeWorkspaceId}
+      viewId="wiki-viewer"
+      isActive={currentPanel === 'wiki-viewer'}
+    />
+  ) : null;
+
   if (!root) {
     return (
-      <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
-        <div className="rv-wiki-loading">
-          <span className="rv-dim-label">Loading wiki...</span>
+      <div className="rv-worksurface-view-layout">
+        {worksurfaceDock}
+        <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
+          <div className="rv-wiki-loading">
+            <span className="rv-dim-label">Loading wiki...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
-      <WikiPageNav />
-      <TopicList />
-      <PageViewer />
-      <EdgePanel />
+    <div className="rv-worksurface-view-layout">
+      {worksurfaceDock}
+      <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
+        <WikiPageNav />
+        <TopicList />
+        <PageViewer />
+        <EdgePanel />
+      </div>
     </div>
   );
 }

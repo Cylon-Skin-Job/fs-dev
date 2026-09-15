@@ -1,6 +1,6 @@
 /**
  * @module panelStore
- * @role Root Zustand store. Composes chat, view, and secondary slices, then
+ * @role Root Zustand store. Composes chat, view, and worksurface slices, then
  *       adds workspace isolation, thread management, WebSocket, harness,
  *       theme, and CLI config state inline.
  */
@@ -16,7 +16,7 @@ import {
 } from './slices/chatSurfaceSlice';
 import { createChatActivitySlice } from './slices/chatActivityState';
 import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
-import { createSecondarySlice } from './slices/secondarySlice';
+import { createWorksurfaceSlice } from './slices/worksurfaceSlice';
 import { useChatFileLinkStore } from './chatFileLinkStore';
 import { useChatComposerDraftStore } from './chatComposerDraftStore';
 
@@ -48,7 +48,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
   ...createChatSurfaceSlice(set, get),
   ...createChatActivitySlice(set),
   ...createViewSlice(set, get),
-  ...createSecondarySlice(set, get),
+  ...createWorksurfaceSlice(set),
 
   // ── Workspace isolation (WORKSPACE_ISOLATION_SPEC) ────────────────────────
   activeWorkspaceId: null,
@@ -199,7 +199,6 @@ export const usePanelStore = create<AppState>((set, get) => ({
         panelRoots: emptyState.panelRoots,
         tabPolicies: emptyState.tabPolicies,
         viewStates: emptyState.viewStates,
-        secondary: null,
         cliPickerOpen: {},
         threadDropdownOpen: {},
         contextUsageByThread: {},
@@ -350,11 +349,6 @@ export const usePanelStore = create<AppState>((set, get) => ({
           [s.activeWorkspaceId]: row?.threadGroupId ?? null,
         };
       }
-      // SECONDARY_CHAT_SPEC §3c: if primary is being switched to secondary's
-      // thread, secondary auto-closes (switch wins).
-      if (s.secondary && threadId === s.secondary.threadId) {
-        base.secondary = null;
-      }
       return base;
     });
   },
@@ -386,8 +380,6 @@ export const usePanelStore = create<AppState>((set, get) => ({
       useChatComposerDraftStore.getState().clearDraft(activeWorkspace, threadId);
     }
     set((state) => {
-      // SECONDARY_CHAT_SPEC §7d: auto-close secondary if its thread is deleted.
-      const dropSecondary = state.secondary?.threadId === threadId;
       // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
       const nextProjectChats = { ...state.projectChats };
       delete nextProjectChats[threadId];
@@ -416,7 +408,6 @@ export const usePanelStore = create<AppState>((set, get) => ({
         tokenUsageByThread: nextTokenUsage,
         wireReadyByThread: nextWireReady,
         harnessSelectionByThread: nextHarnessSelection,
-        ...(dropSecondary ? { secondary: null } : {}),
       };
     });
   },

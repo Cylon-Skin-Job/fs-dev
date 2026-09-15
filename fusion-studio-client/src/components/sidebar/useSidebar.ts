@@ -14,7 +14,6 @@ import { usePanelStore } from '../../state/panelStore';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
 import { useResolvedHarnessResolver, useSelectableHarnesses } from '../../config/harness';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
-import { reorderWithSecondary } from './threadOrderUtils';
 import { useThreadAnimation } from './useThreadAnimation';
 import {
   EMPTY_THREAD_GROUP_POPULATION,
@@ -51,17 +50,11 @@ export function useSidebar({ panel, isActive = true }: UseSidebarOptions) {
     (state) => getCurrentThreadGroupId(state, state.activeWorkspaceId, null),
   );
   const chatActive = usePanelStore((state) => state.chatActive);
-  const secondary = usePanelStore((state) => state.secondary);
-  const openSecondary = usePanelStore((state) => state.openSecondary);
   const toggleCliPicker = usePanelStore((state) => state.toggleCliPicker);
   const selectHarness = usePanelStore((state) => state.selectHarness);
   const createDefaultAssistantThread = usePanelStore((state) => state.createDefaultAssistantThread);
 
-  const threads = reorderWithSecondary(
-    population.length > 0 ? population : rawThreads,
-    currentThreadId,
-    secondary?.threadId ?? null,
-  );
+  const threads = population.length > 0 ? population : rawThreads;
   const { setThreadRef } = useThreadAnimation(threads);
   const resolveCliAccent = useCliAccentResolver();
   const resolveHarness = useResolvedHarnessResolver();
@@ -130,16 +123,6 @@ export function useSidebar({ panel, isActive = true }: UseSidebarOptions) {
     sendMessage(threadOpenRequest(row.threadGroupId, row.threadId));
   }, [sendMessage, workspaceId]);
 
-  const handleOpenSecondary = useCallback((row: Thread) => {
-    openSecondary(row.threadId);
-  }, [openSecondary]);
-
-  const sideChatDisabledReason = useCallback((row: Thread): string | null => {
-    if (currentThreadId === row.threadId) return 'Already primary';
-    if (secondary) return 'Close the current secondary first';
-    return null;
-  }, [currentThreadId, secondary]);
-
   const handleRenameStart = useCallback((row: Thread) => {
     setRenamingId(row.threadId);
     setRenameValue(row.entry?.name || '');
@@ -199,7 +182,6 @@ export function useSidebar({ panel, isActive = true }: UseSidebarOptions) {
     threads,
     currentThreadId,
     selectedThreadGroupId,
-    secondary,
     setThreadRef,
     resolveCliAccent,
     resolveHarness,
@@ -213,8 +195,6 @@ export function useSidebar({ panel, isActive = true }: UseSidebarOptions) {
     menuOpenId,
     setMenuOpenId,
     handleOpenThread,
-    handleOpenSecondary,
-    sideChatDisabledReason,
     handleRenameStart,
     handleRenameSubmit,
     handleRenameCancel,
