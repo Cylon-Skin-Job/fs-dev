@@ -199,8 +199,12 @@ socket, callback, path, React element, import, or authority claim. The
 connected resolver validates the descriptor/schema and the
 workspace/view/group/member tuple against hydrated authority before binding
 established state/actions, then mints the transient `surfaceId` and never
-persists it. This remains a fixture-proven seam: the slice places no production
-tab, launcher, or Side Chat descriptor.
+persists it. The Generic Host stays chat-ignorant and provides no placement,
+target-matching, dedupe, or persistence command. SPEC-04 delivers a Side Chat
+descriptor only through SPEC-03's service-managed placement lane through the
+code-owned bridge; it does not use the empty-launcher lifecycle and does not
+widen the Generic Host contract. The descriptor carries the durable
+`sideChatPlacementId` (not the transient `surfaceId`).
 
 ## Persistent Unit
 
@@ -210,8 +214,10 @@ The persistent unit is a thread.
 |---|---|
 | `threads` | Session metadata: id, workspace, scope, view, name, harness, status, per-session MRU |
 | `thread_groups` | Visible Thread: workspace, immutable view binding (`null` = Legacy), name, current primary, `updated_at` visible-list MRU |
-| `thread_group_members` | Exactly one group per session (`thread_id` globally unique) |
-| `thread_group_activity_events` | Durable idempotent `initial` / `prompt-accepted` MRU causes |
+| `thread_group_members` | Exactly one group per session (`thread_id` globally unique); peer ordinal and `origin_kind` |
+| `thread_group_primary_events` | Append-only Main Chat primary history (`reason='move-to-side-chat'` for Move) |
+| `thread_group_activity_events` | Durable idempotent `initial` / `prompt-accepted` / `move-chat-to-side` MRU causes |
+| `thread_group_placement_outbox` | Durable `open-side-chat-tab` intent keyed by `sideChatPlacementId` (migration 044) |
 | `exchanges` | Rich turn history: user input, assistant parts, metadata, sequence |
 
 Markdown chat files still exist for compatibility and link/view workflows. The

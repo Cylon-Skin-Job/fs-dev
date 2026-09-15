@@ -114,6 +114,7 @@ exactly-once activated cleanup through durable thread-session suspension.
 | `thread:list` | Request MRU thread list for a scope |
 | `thread:open` | Passive browse/hydrate an existing thread |
 | `thread:open-assistant` | Activate/resume assistant thread or create new one |
+| `thread:members` | Qualified ordered-member read for one validated thread group |
 | `thread:warm` | Trusted-shell-only warm of a cold runtime based on send intent |
 | `thread:action` | Perform a canonical visible-thread or chat-session action |
 | `prompt` | Send user input and optional attachment metadata to a specific thread |
@@ -148,6 +149,8 @@ state until send.
 |---|---|
 | `thread:created` | New thread metadata was created |
 | `thread:opened` | Thread history and optional live turn are hydrated |
+| `thread:members` | Ordered durable member projections for one validated group (no transcript content) |
+| `thread:members:error` | Fixed value-free denial for an unknown/foreign/unavailable group read |
 | `thread:action:completed` | Canonical action completed with authoritative state |
 | `thread:action:error` | Canonical action failed or conflicted without ambiguous client state |
 | `wire_ready` | Runtime is ready for prompt delivery |
@@ -283,7 +286,20 @@ Implemented canonical actions in SPEC-01:
   `{model, variant}`, validates both against current server policy, reads the
   harness binding from immutable server session state, persists by `threadId`,
   and returns/fans out the acknowledged value. Rejection leaves the prior value
-  authoritative.
+  authoritative; and
+- SPEC-04 adds `move_chat_to_side` (group + exact current primary + observed
+  `expectedPrimarySequence`) and `open_member_in_side` (group + exact
+  non-primary member). Both derive workspace from the bound connection and view
+  from the group; neither accepts client workspace/view authority fields.
+  `thread:members` is the qualified ordered-member read for one validated group
+  (see the client/server tables above); it returns durable projections and the
+  current placement disposition, never transcript content.
+
+Move commits its SQLite group transition first and delivers the Side Chat
+placement as a separate durable, retryable step through SPEC-03's
+service-managed placement lane; a failed or unapplied delivery stays observable
+and never rolls back the transition. The durable placement key is the
+`sideChatPlacementId`; ordinary replay never reopens a closed disposition.
 
 The versioned link URI carries durable identities only. Unknown versions,
 unknown query keys (including any `surfaceId`), duplicate keys, and

@@ -1,7 +1,7 @@
 # Chat Composition Roadmap — Release Manifest
 
 **Candidate ID:** `CHAT-COMPOSITION-2d34f8b45562f8f3`
-**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 ACCEPTED; SPEC-02 (CHAT-02) ACCEPTED — SPEC-03 DISPATCH AUTHORIZED`
+**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 ACCEPTED; SPEC-02 ACCEPTED; SPEC-03 (CHAT-03) ACCEPTED; SPEC-04 (CHAT-04) ACCEPTED — ROADMAP COMPLETE; SPEC-05 (CHAT-05) ADVISORY REPAIRS ACCEPTED — READY FOR COMMIT/PUSH DECISION`
 **Prepared:** 2026-09-05
 **Overlay round:** 2026-09-13
 **Clean-room verdict:** `PRIOR CANDIDATE CLEAN (2026-09-05); OVERLAID CANDIDATE CLEAN (2026-09-13)`
@@ -207,6 +207,92 @@ remaining execution gates.
   re-baseline item**. Evidence: `SPEC-02-IMPLEMENTATION-REPORT.md`,
   `CHAT-02-EXECUTION-LEDGER.md`. **SPEC-03 (Thread Worksurface Continuity) is
   now unblocked**; worktree commit is a separate owner call.
+- **SPEC-03 (CHAT-03) ACCEPTED — 2026-09-14.** Owner statement: “Okay, let's
+  accept this and move on.” Independent owner-side review `CLEAN` (no blocking
+  findings; no deviation requiring an owner ruling) on product digest
+  `6b1e36ce28689121857200ddbd997a618596a37c00744c305b4896e8714b793d` (71 paths,
+  0 deletions; migration head `043`; union list `d2d04943…`). Gates reproduced
+  by reviewer and owner-side: server `npx jest --runInBand` 206 suites / 3003
+  passed / 1 skipped; client build passed; four chat03 specs 46 passed;
+  Electron smoke `CHAT_03_THREAD_WORKSURFACE_SMOKE_OK` (2 groups, delete
+  isolated, relaunch restored); regressions — thread-group 7, chat-surface 49,
+  source 65, component-tab + action-context 142, hover/composer 2. Advisories:
+  two stale comment drifts, a pre-existing size carry, and an owner-observed
+  Electron-smoke cold-launch timing sensitivity (loud-fail; passed on retry and
+  for the reviewer). Evidence: `SPEC-03-IMPLEMENTATION-REPORT.md`,
+  `CHAT-03-EXECUTION-LEDGER.md`. **SPEC-04 (Move Chat to Side Chat) is now
+  unblocked**; worktree commit is a separate owner call.
+- **SPEC-04 (CHAT-04) ACCEPTED — 2026-09-15.** Owner statement: “Accepted.”
+  Independent owner-side review `CLEAN` (no material findings; no deviation
+  requiring an owner ruling) on product digest
+  `03171a3954972dccf0abe19fbaa1513c12315b78fd4a34c6ab5de976285c24e7` (79 paths
+  + 6 deletions; migration head `044`; path-list digest `6c84b83b…`; deletions
+  digest `18ef01f2…`). Gates reproduced by reviewer and owner-side: server
+  `npx jest --runInBand` 209 suites / 3038 passed / 1 skipped; client build
+  passed (pre-existing chunk warning only); SPEC §12 e2e set 20 passed
+  (isolated port 3317, `/tmp` profile); Electron smoke all nine markers
+  including `CHAT_04D_SECONDARY_ABSENT=true`; regressions — chat03 worksurface
+  46, chat-surface 49 + component-tab/action-context 142 (191), thread-group 7,
+  source 65. The disclosed 77→79 manifest record repair (no product byte
+  changed) was independently verified consistent. Advisories (non-blocking):
+  `service.js` 857-line residual split plan, portal-menu adoption carry,
+  capability lockstep by convention, Electron smoke model-turn scope, and the
+  pre-existing 02A-D7 baseline-red set unchanged. Evidence:
+  `SPEC-04-IMPLEMENTATION-REPORT.md`, `CHAT-04-EXECUTION-LEDGER.md`. Roadmap
+  final integration gate now in progress; worktree commit remains a separate
+  owner call.
+- **ROADMAP FINAL INTEGRATION COMPLETE — 2026-09-15.** Fresh read-only
+  final-integration reviewer `ses_f5bdcbe75ffeh6xRIlaTaonCNn` (pinned GLM 5.3
+  Flash, high effort; no inherited parent conversation) returned **CLEAN** (no
+  material findings; three non-blocking advisories) on the accepted current
+  bytes. Independently reproduced: SPEC-04 product manifest 79/79 OK (digest
+  `03171a39…`); SPEC-03 supersede-check (29 changed paths — 26 superseded
+  inside the 79-list, 3 = SPEC-04 documentation Wiki pages; zero
+  non-documentation drift outside the 79-list); 11-artifact candidate aggregate
+  `2d34f8b45562f8f3…3505`; HEAD `5073b10` unchanged, nothing staged; migration
+  head `044`, nothing above, 001–042 tracked-frozen; dirty-worktree
+  classification with no unclassified entry. Combined checks: server 209
+  suites / 3038 passed / 1 skipped; client build passed (pre-existing chunk
+  warning only); SPEC §12 e2e 20; chat03 worksurface 46; chat-surface 49 +
+  component-tab/action-context 142 (191); thread-group 7; source 65;
+  side-chat smoke all nine markers; worksurface smoke
+  `CHAT_03_THREAD_WORKSURFACE_SMOKE_OK` (see advisory 1); chat-surface
+  concurrency smoke `CHAT_SURFACE_CONCURRENCY_SMOKE_OK` with
+  `STOP_EXERCISED=true`; trusted-shell smoke `TRUSTED_SHELL_AUTH_SMOKE_OK`.
+  All ROADMAP §6 completion criteria PASS. Advisories (non-blocking):
+  (1) the CHAT-03 worksurface Electron smoke now fails deterministically
+  without the same cold-start settle delay the SPEC-04 smoke carries
+  (`side-chat-electron-smoke.mjs:286-288`); with the identical settle in a
+  /tmp diagnostic copy (no repo byte touched) it passes with all four markers,
+  and the underlying product behavior is verified green — a test-only
+  back-port is recommended for a future slice; (2) SPEC-03 vs SPEC-04 manifest
+  documentation-scope convention differs (Wiki docs included vs excluded);
+  future convention pin; (3) carried advisories unchanged (`service.js`
+  857-line residual split plan, portal-menu adoption carry, capability
+  lockstep by convention, Electron smoke model-turn scope, inert `useChatArea`
+  forbidden-import token, pre-existing 02A-D7 baseline-red set).
+  **ROADMAP_COMPLETE declared** on the accepted current bytes; worktree commit
+  remains a separate owner call.
+- **SPEC-05 (CHAT-05) ADVISORY REPAIRS ACCEPTED — 2026-09-15.** Owner
+  statement: “Accepted.” Post-roadmap repair
+  (`SPEC-05-ADVISORY-REPAIRS.md`); receipt recorded on the frozen 7-path
+  product fingerprint (smoke `27886f57…`, service `3b1ea999…`, link
+  `cf622eff…`, selection `14eb23a5…`, delete `3854f65e…`, lockstep test
+  `00334824…`, identity spec `71e448e6…`). Gates reproduced by the reviewer
+  chain and owner-side: server `npx jest --runInBand` 210 suites / 3042
+  passed / 1 skipped / 0 failures; client build passed (pre-existing chunk
+  warning only); lanes 20 / 46 / 191 / 7 / 65; side-chat smoke all nine
+  markers; CHAT-03 worksurface smoke 3/3 consecutive green (cold-start settle
+  back-port); lockstep guard independently demonstrated to fail on induced
+  drift with byte-exact restore. `service.js` 857 → 391 lines (≤400, no
+  residual carry; `link-service.js`/`selection-service.js`/`delete-service.js`
+  added). Migration head stays `044`; no schema, transport, or user-visible
+  change. Deviations 05B-D1–D3 and 05C-D1 accepted; advisories 05A-A1
+  (pre-existing load-stage flake) and 05D-A1 (sentinel removal per SPEC
+  directive) carried. Evidence: `SPEC-05-IMPLEMENTATION-REPORT.md`,
+  `CHAT-05-EXECUTION-LEDGER.md`. Worktree remains uncommitted at HEAD
+  `5073b10` with nothing staged; the next step is the owner's commit/push
+  decision.
 
 After approval, execution may begin through either:
 

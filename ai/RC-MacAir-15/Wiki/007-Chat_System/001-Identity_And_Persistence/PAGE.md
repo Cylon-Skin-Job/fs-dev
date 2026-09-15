@@ -33,6 +33,7 @@ or mutate a chat turn.
 | `viewId` | view registry | Immutable view binding; `null` only for Legacy |
 | `threadGroupId` | Thread Group domain | Visible Thread/body of work and visible-list MRU owner |
 | `threadId` | Fusion Studio | Durable conversation and live stream routing |
+| `sideChatPlacementId` | SPEC-04 Move placement owner | Durable Side Chat placement key, distinct from `projectionId`, `surfaceId`, `threadId`, and `threadGroupId` |
 | `turnId` | Fusion Studio runtime/client state | In-flight turn correlation before SQLite save is known |
 | `exchangeId` | SQLite `exchanges.id` | Saved chat pair id; this is the Chat ID shown in turn chrome |
 | `seq` | SQLite per-thread sequence | Stable ordering within a thread |
@@ -41,8 +42,16 @@ or mutate a chat turn.
 `threadGroupId` and `threadId` are different types even when migration assigns
 the same legacy string to both. Live frames, Stop, exchanges, provider state,
 and Agent Tool Provenance continue to use `threadId`/`turnId`; they are never
-rekeyed to group identity. No identity is reconstructed from another's string,
-title, folder name, panel selection, or current global chat.
+rekeyed to group identity. `sideChatPlacementId` is the Move-specific durable
+placement key and is never a `projectionId`, transcript identity, or chat
+authority. No identity is reconstructed from another's string, title, folder
+name, panel selection, or current global chat.
+
+Move preserves identity: the moved session keeps its `threadId`, transcript,
+runtime, model history, usage, and Provenance, and the new Main Chat is a new
+`threadId` peer with `origin_kind='move-to-side-chat-primary'`. Closing or
+reopening a Side Chat changes only placement, never session identity or group
+membership.
 
 ## Thread Group Activity And Visible-List MRU
 

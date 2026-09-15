@@ -64,6 +64,29 @@ keyboard, and focus behavior and the existing rail CSS variables.
 Thread row clicks are passive browse actions. They should hydrate the selected
 thread without warming or spawning a harness.
 
+## Main Chat, Side Chat, And Move
+
+Main Chat and Side Chat are presentation terms for peer members of one thread
+group (`CHAT-RD-006`). The current primary member renders as the Main Chat; a
+non-primary member may render as a centered Side Chat in a view content tab
+through the composable `fusion.chat-surface` path. Neither role is stored on the
+session.
+
+The Main Chat header menu offers **Move Chat to Side Chat** only when the host is
+a view-bound `main` surface, the selected session is the group's current primary,
+the session has no active/accepting/finalizing turn or unresolved Stop boundary,
+no model selection is pending, and the owning view supports Side Chat placement.
+Legacy Main Chat, Side Chat, stale/non-primary, active-turn, disabled-component,
+and unsupported-policy callers get a classified inert failure; the action never
+silently falls back to another view, group, session, model, or component.
+
+A Side Chat uses the same composable surface, header, composer, list button, and
+menu behavior as the Main Chat. It has no nested thread list; its list button
+operates the outer owning view's ThreadRail. Closing its tab removes only the
+placement (recorded as a durable closed disposition) and never deletes the
+session or removes it from the group. The legacy singleton/floating Secondary
+Chat was removed in SPEC-04 §10 with no compatibility alias.
+
 ## Input And Warm Intent
 
 Cold threads warm on intent to send:

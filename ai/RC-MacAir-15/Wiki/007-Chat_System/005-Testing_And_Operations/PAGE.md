@@ -131,6 +131,22 @@ and `surfaceId`-free envelopes. Search tests prove the group join returns
 `threadGroupId`, visible group name, and authoritative view binding without
 replacing exact exchange/session identity.
 
+SPEC-04 Move/Side Chat coverage adds server integration for `move_chat_to_side`
+creation/group-commit/outbox/recovery and `thread:members`/`open_member_in_side`,
+plus the focused Playwright specs `e2e/move-chat-to-side-chat.spec.ts`,
+`e2e/side-chat-placement-recovery.spec.ts`, and
+`e2e/side-chat-isolation.spec.ts` (with `e2e/side-chat-adapterless-native.spec.ts`
+covering native and adapterless hosts). All run under the isolated
+`playwright.chat03.config.ts` (fresh port and `/tmp` profile, never port 3001 or
+the dev DB). `node e2e/side-chat-electron-smoke.mjs` exercises the real Electron
+shell on a throwaway profile and temp workspace: Move, empty replacement Main
+Chat, close/reopen with the same lifetime placement id, relaunch readback,
+repeated Move, outer-rail toggle from a Side Chat, and the hard assertion that
+the retired secondary chat is absent.
+
+The whole-SPEC minimum also runs `cd fusion-studio-server && npx jest --runInBand`
+and `cd fusion-studio-client && npm run build`.
+
 <!-- children:start -->
 ## Children
 
