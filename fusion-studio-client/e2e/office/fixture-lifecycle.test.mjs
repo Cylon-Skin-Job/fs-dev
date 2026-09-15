@@ -15,6 +15,7 @@ import {
   assertOfficeFixturePathSafe,
   captureOfficeFixtureMode,
   cleanupOfficePlaywrightRunRoot,
+  cloneFilePreservingMode,
   createOfficeFixture,
   createOfficePlaywrightRunPaths,
   createOfficeProcessLifecycle,
@@ -26,6 +27,7 @@ import {
   shouldCleanupOfficePlaywrightRunRoot,
   startOfficeOwnedProcess,
   stopOfficeOwnedProcesses,
+  sweepStaleOfficeFixtureRoots,
   withOfficeProcessLifecycle,
 } from './fixture-lifecycle.mjs'
 import {
@@ -2263,4 +2265,86 @@ test('[slice 00.2] lifecycle probe SIGTERM exits launcher and sentinel and remov
 
 test('[slice 00.2] signal during in-progress teardown waits for process-group and root cleanup', async () => {
   await runTeardownSignalProbe('SIGINT')
+})
+
+test('[slice 00.2] large-file staging uses the clone path and preserves content and mode', () => {
+  const sourceRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'office-clone-source-'))
+  const destinationRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'office-clone-dest-'))
+  try {
+    const payload = crypto.randomBytes(5 * 1024 * 1024)
+    const source = path.join(sourceRoot, 'large.bin')
+    const largeDestination = path.join(destinationRoot, 'large.bin')
+    fs.writeFileSync(source, payload, { mode: 0o640 })
+    const strategy = cloneFilePreservingMode(source, largeDestination, 0o640)
+    assert.deepEqual(fs.readFileSync(largeDestination), payload)
+    assert.equal(fs.lstatSync(largeDestination).mode & 0o7777, 0o640)
+    if (process.platform === 'darwin') {
+      assert.notEqual(strategy, 'copy', 'large-file staging must use an APFS clone strategy on darwin')
+    } else {
+      assert.equal(strategy, 'copy')
+    }
+
+    const smallSource = path.join(sourceRoot, 'small.bin')
+    const smallDestination = path.join(destinationRoot, 'small.bin')
+    fs.writeFileSync(smallSource, 'small payload', { mode: 0o600 })
+    assert.equal(cloneFilePreservingMode(smallSource, smallDestination, 0o600), 'copy')
+    assert.equal(fs.readFileSync(smallDestination, 'utf8'), 'small payload')
+    assert.equal(fs.lstatSync(smallDestination).mode & 0o7777, 0o600)
+  } finally {
+    fs.rmSync(sourceRoot, { recursive: true, force: true })
+    fs.rmSync(destinationRoot, { recursive: true, force: true })
+  }
+})
+
+test('[slice 00.2] stale-root sweep removes abandoned roots and preserves live, current, fresh, and non-matching entries', () => {
+  const prefix = 'fusion-office-e2e-sweeptest-'
+  const temporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
+  const created = []
+  const makeRoot = (name, { ageMs = 0, ownerPid = null } = {}) => {
+    const root = path.join(temporaryRoot, `${prefix}${name}`)
+    fs.mkdirSync(root, { mode: 0o700 })
+    fs.mkdirSync(path.join(root, 'runtime-staging-abandoned'))
+    fs.writeFileSync(path.join(root, 'runtime-staging-abandoned', 'payload.bin'), 'staged')
+    if (ownerPid !== null) {
+      fs.writeFileSync(
+        path.join(root, '.office-e2e-owner.json'),
+        `${JSON.stringify({ pid: ownerPid, startedAt: Date.now() })}\n`,
+      )
+    }
+    if (ageMs > 0) {
+      const past = new Date(Date.now() - ageMs)
+      fs.utimesSync(root, past, past)
+    }
+    created.push(root)
+    return root
+  }
+  try {
+    const stale = makeRoot('stale', { ageMs: 8 * 60 * 60 * 1000 })
+    const fresh = makeRoot('fresh')
+    const live = makeRoot('live', { ageMs: 8 * 60 * 60 * 1000, ownerPid: process.pid })
+    const current = makeRoot('current', { ageMs: 8 * 60 * 60 * 1000 })
+    const nonMatching = path.join(temporaryRoot, 'office-sweeptest-other')
+    fs.mkdirSync(nonMatching)
+    created.push(nonMatching)
+    const symlinked = path.join(temporaryRoot, `${prefix}symlinked`)
+    fs.symlinkSync(fresh, symlinked)
+    created.push(symlinked)
+
+    const result = sweepStaleOfficeFixtureRoots({
+      currentRoot: current,
+      namePrefix: prefix,
+      maxAgeMs: 60 * 60 * 1000,
+    })
+
+    assert.ok(result.removed.includes(stale), 'stale root is reported removed')
+    assert.equal(fs.existsSync(stale), false, 'stale root including its abandoned staging dir is gone')
+    assert.ok(fs.existsSync(fresh), 'fresh root is preserved')
+    assert.ok(fs.existsSync(live), 'live-owned root is preserved')
+    assert.ok(fs.existsSync(current), 'current run root is preserved')
+    assert.ok(fs.existsSync(nonMatching), 'non-matching entry is left alone')
+    assert.ok(fs.lstatSync(symlinked).isSymbolicLink(), 'symlinked entry is neither followed nor removed')
+    assert.ok(fs.existsSync(fresh), 'symlink target is intact')
+  } finally {
+    for (const candidate of created) fs.rmSync(candidate, { recursive: true, force: true })
+  }
 })

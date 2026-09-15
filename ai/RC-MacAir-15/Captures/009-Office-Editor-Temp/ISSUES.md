@@ -4,6 +4,42 @@ Unresolved questions that need decisions before implementation.
 
 ---
 
+## 2026-09-14 — Office browser lane blocked after Trusted Fusion Shell Authority
+
+**Status:** open — pre-existing (reproduced at clean baseline `5f46d1a`, before
+the clone/sweep harness change).
+
+**Symptom.** `npx playwright test --config=playwright.office.config.ts ...`
+fails in global setup with `Error: Office child exited before readiness:
+{"code":1,"signal":null}`; the isolated server's real error (log tee bypassed
+for diagnosis) is `Startup failed: Error: shell_bootstrap_unavailable`
+(`fusion-studio-server/lib/shell-bootstrap.js:77`).
+
+**Root cause.** `e2e/office/global-setup.mjs` starts the isolated server with
+`FUSION_APP_PACKAGED=1` (needed so the global Office palette resolves under the
+fixture's `FUSION_APP_USER_DATA`, per `lib/office/palette-paths.js`). Since the
+Trusted Fusion Shell Authority bundle (`SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY`),
+`readBootstrapAuthority` requires a bootstrap payload on inherited fd 3 whenever
+`FUSION_APP_PACKAGED=1` or `FUSION_ELECTRON_SERVER=1`. The browser lane never
+provides fd 3, so the server exits. Supplying a payload alone is insufficient:
+`product-session-registry.activate` then requires `connectionRole ===
+'trusted-shell'`, which a browser page cannot present (the existing
+`e2e/support/trusted-shell-browser-fixture.ts` is a renderer-side simulation
+that only works against a standalone server).
+
+**Impact.** All 18 `office*.spec.ts` suites and the harness probe tests cannot
+run; the office Electron lane independently times out waiting for the renderer
+page at the same baseline (separate, undiagnosed).
+
+**Options.** (a) make the global-palette user-data root independently
+overridable so the browser lane can run standalone (small product change,
+touches SPEC-05 path semantics); (b) implement a real browser shell-auth adapter
+that relays the server challenge and signs with a harness-held master (test-only,
+larger); (c) rule the browser lane deprecated in favor of the Electron lane once
+its renderer timeout is diagnosed.
+
+---
+
 ## Insert Row Above Bug
 
 - [ ] Does "Insert row below" on the bottom row also exhibit a similar bug (inserting a table below)?

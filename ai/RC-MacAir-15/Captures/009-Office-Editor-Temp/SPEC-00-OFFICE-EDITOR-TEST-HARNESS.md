@@ -262,6 +262,49 @@ node e2e/office/run-isolated-electron.mjs --scenario=basic --copies=1
 
 Open `Basic Tables.md`, make and save one unique edit, close Electron normally, and verify the launcher reports fixture cleanup. Pass requires the isolated workspace to be the only registered workspace in that process, the edit to exist only under its temporary root before cleanup, and the live repository/normal database hashes to remain unchanged.
 
+## Runtime Staging Clone And Stale-Root Sweep (2026-09-14)
+
+Runtime staging must not duplicate large owned bytes, and interrupted suites must
+not accumulate roots.
+
+**Clone contract.** `cloneOwnedTree` copies each owned file with mode parity.
+Files at or above 4 MiB are staged as genuine APFS copy-on-write clones:
+`COPYFILE_FICLONE_FORCE` first, then macOS `/bin/cp -c -- <src> <dst>`
+(`spawnSync`, darwin only), then an ordinary copy as the non-APFS fallback. On
+this machine Node returns `ENOSYS` for `COPYFILE_FICLONE_FORCE`, so the `cp -c`
+path is the load-bearing clone. Files below 4 MiB keep `fs.copyFileSync`. Every
+existing semantic is preserved: exclusions (`packagedServerNodeModuleExclusion`,
+`ownedCacheDirectories`), modes, symlink handling, `assertTreeSymlinksContained`,
+marker identity, and path-safety guards. Measured: all 52 staged large files
+(3.24 GB, including the 1.55 GB whisper model) consume 0 MB of new disk.
+
+**Owner lease.** `createFixtureRoot` writes `.office-e2e-owner.json`
+(`{pid, startedAt}`) at the root. The sweep treats a root as live when that pid
+is alive (`EPERM` counts as alive).
+
+**Stale-root sweep.** `playwright.office.config.ts` calls
+`sweepStaleOfficeFixtureRoots({ currentRoot })` at config load, before any
+fixture is created. A candidate must be a direct directory child of `os.tmpdir()`
+whose name starts with `fusion-office-e2e-`; symlinks are never followed and
+non-directory entries are ignored. A root is removed only when it is not the
+current run root, not owned by a live process, and older than the age threshold
+(default 6 h). Each removal logs `OFFICE_E2E_SWEPT_STALE_ROOT=<root>`; failures
+log `OFFICE_E2E_SWEEP_FAILED=...` and never block the run. Threshold override:
+`FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS`; disable: `FUSION_OFFICE_E2E_SWEEP=0`.
+Removing a stale root clears any abandoned `runtime-staging-*` inside it.
+
+Required proof: `node --test e2e/office/fixture-lifecycle.test.mjs` covers the
+clone strategy/content/mode for large and small files, stale-root removal,
+fresh/current/live/non-matching preservation, and symlink non-following. A
+hard-killed run leaves its root and the next suite start sweeps it.
+
+**Known integration constraint (2026-09-14).** The browser lane cannot currently
+start its isolated server: it sets `FUSION_APP_PACKAGED=1`, and since the
+Trusted Fusion Shell Authority bundle the server requires a shell bootstrap
+authority in packaged mode and then requires `trusted-shell` connections. See
+`ISSUES.md`. The clone/sweep contract above is independent and is proven by the
+harness tests.
+
 ## Non-Goals
 
 - Testing any feature from SPEC-01 onward.

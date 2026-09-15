@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
-import { createOfficePlaywrightRunPaths } from './e2e/office/fixture-lifecycle.mjs'
+import { createOfficePlaywrightRunPaths, sweepStaleOfficeFixtureRoots } from './e2e/office/fixture-lifecycle.mjs'
 
 const rawPort = process.env.FUSION_OFFICE_E2E_PORT ?? '3311'
 if (!/^(0|[1-9]\d*)$/.test(rawPort)) throw new Error('FUSION_OFFICE_E2E_PORT must be an integer')
@@ -9,6 +9,15 @@ if (port < 1024 || port > 65535 || port === 3001) {
 }
 const runPaths = createOfficePlaywrightRunPaths(process.env.FUSION_OFFICE_E2E_RUN_ROOT)
 process.env.FUSION_OFFICE_E2E_RUN_ROOT = runPaths.root
+
+// Remove abandoned run roots from interrupted suites before this suite stages
+// anything. A sweep failure never blocks the run.
+try {
+  const sweep = sweepStaleOfficeFixtureRoots({ currentRoot: runPaths.root })
+  if (sweep.removed.length > 0) console.log(`OFFICE_E2E_STALE_ROOTS_SWEPT=${sweep.removed.length}`)
+} catch (error) {
+  console.warn(`OFFICE_E2E_STALE_SWEEP_SKIPPED=${error?.message ?? 'error'}`)
+}
 
 export default defineConfig({
   testDir: './e2e',

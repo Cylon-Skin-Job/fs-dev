@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
 import { createHash, randomUUID } from 'node:crypto'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
@@ -258,12 +258,24 @@ function validateRequestedFixtureRoot(candidate) {
   return safeCandidate
 }
 
+// Ownership lease for the stale-root sweep: the run that created a root keeps
+// its pid here so a later suite start can distinguish an abandoned root from a
+// live one without following anything inside the directory.
+function writeOfficeFixtureOwnerFile(root) {
+  fs.writeFileSync(
+    path.join(root, officeE2eOwnerFileName),
+    `${JSON.stringify({ pid: process.pid, startedAt: Date.now() })}\n`,
+    { flag: 'w', mode: 0o600 },
+  )
+}
+
 function createFixtureRoot(requestedRoot) {
   const safeTemporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
   const root = requestedRoot
     ? validateRequestedFixtureRoot(requestedRoot)
     : fs.mkdtempSync(path.join(safeTemporaryRoot, 'fusion-office-e2e-'))
   if (requestedRoot) fs.mkdirSync(root, { mode: 0o700 })
+  writeOfficeFixtureOwnerFile(root)
   return assertOfficeFixturePathSafe(root)
 }
 
@@ -605,6 +617,49 @@ function isPackagedServerNodeModuleExclusion(relative) {
   return packagedServerNodeModuleExclusion.test(relative)
 }
 
+// Runtime staging must not duplicate large owned bytes. APFS copy-on-write is
+// requested explicitly for large files; Node's plain `COPYFILE_FICLONE` silently
+// falls back to a real byte copy on this platform, so the staged runtime grew by
+// gigabytes per run and interrupted runs left that behind. Small files keep the
+// ordinary copy path.
+const OFFICE_E2E_LARGE_CLONE_FILE_MIN_BYTES = 4 * 1024 * 1024
+const officeE2eOwnerFileName = '.office-e2e-owner.json'
+
+function removeDestinationFile(destination) {
+  try {
+    fs.rmSync(destination, { force: true })
+  } catch {
+    // Best-effort: the caller falls through to another copy strategy.
+  }
+}
+
+// Copy one owned file, preferring a genuine copy-on-write clone for large files:
+// `COPYFILE_FICLONE_FORCE`, then macOS `cp -c`, then an ordinary copy. The mode
+// is always applied explicitly so permission parity is preserved. Returns the
+// strategy used (observability/testing only; callers ignore it).
+export function cloneFilePreservingMode(source, destination, mode) {
+  if (fs.lstatSync(source).size >= OFFICE_E2E_LARGE_CLONE_FILE_MIN_BYTES) {
+    try {
+      fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE_FORCE)
+      fs.chmodSync(destination, mode)
+      return 'ficlone_force'
+    } catch {
+      removeDestinationFile(destination)
+    }
+    if (process.platform === 'darwin') {
+      const result = spawnSync('/bin/cp', ['-c', '--', source, destination], { stdio: 'ignore' })
+      if (result.status === 0 && fs.existsSync(destination)) {
+        fs.chmodSync(destination, mode)
+        return 'cp_c'
+      }
+      removeDestinationFile(destination)
+    }
+  }
+  fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE)
+  fs.chmodSync(destination, mode)
+  return 'copy'
+}
+
 function cloneOwnedTree(sourceRoot, destinationRoot, excludedPaths = new Set(), excludePath = () => false) {
   function cloneEntry(source, destination, relative) {
     const stat = fs.lstatSync(source)
@@ -624,8 +679,7 @@ function cloneOwnedTree(sourceRoot, destinationRoot, excludedPaths = new Set(), 
       return
     }
     if (!stat.isFile()) throw new Error(`Unsupported Office runtime clone entry: ${source}`)
-    fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE)
-    fs.chmodSync(destination, stat.mode)
+    cloneFilePreservingMode(source, destination, stat.mode)
   }
   cloneEntry(sourceRoot, destinationRoot, '')
 }
@@ -1302,6 +1356,96 @@ export function cleanupOfficePlaywrightRunRoot(root) {
 export function shouldCleanupOfficePlaywrightRunRoot(root) {
   const safeRoot = validateRequestedFixtureRoot(root)
   return process.env.FUSION_OFFICE_E2E_RETAIN !== '1' || !retainedOfficeRoots.has(safeRoot)
+}
+
+const officeE2eRootPrefix = 'fusion-office-e2e-'
+const OFFICE_E2E_DEFAULT_STALE_ROOT_MAX_AGE_MS = 6 * 60 * 60 * 1000
+
+function officeE2eStaleRootMaxAgeMs(environment) {
+  const raw = environment.FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS
+  if (raw === undefined || raw === '') return OFFICE_E2E_DEFAULT_STALE_ROOT_MAX_AGE_MS
+  if (!/^(0|[1-9]\d*)$/.test(raw)) {
+    throw new Error('FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS must be a non-negative integer')
+  }
+  return Number(raw)
+}
+
+function officeFixtureOwnerPid(root) {
+  try {
+    const owner = JSON.parse(fs.readFileSync(path.join(root, officeE2eOwnerFileName), 'utf8'))
+    return Number.isInteger(owner?.pid) && owner.pid > 0 ? owner.pid : null
+  } catch {
+    return null
+  }
+}
+
+function officeFixtureOwnerIsLive(pid) {
+  if (pid === null) return false
+  if (pid === process.pid) return true
+  try {
+    process.kill(pid, 0)
+    return true
+  } catch (error) {
+    // A process we may not signal still exists; only ESRCH means it is gone.
+    return error?.code === 'EPERM'
+  }
+}
+
+// Sweep abandoned `fusion-office-e2e-*` run roots left behind by interrupted
+// suites. A root is removed only when it is a direct directory child of the
+// temporary directory (never a symlink), older than the age threshold, not the
+// current run, and not owned by a live process. Set
+// FUSION_OFFICE_E2E_SWEEP=0 to disable, or FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS
+// to change the age threshold.
+export function sweepStaleOfficeFixtureRoots(options = {}) {
+  const environment = options.environment ?? process.env
+  if (environment.FUSION_OFFICE_E2E_SWEEP === '0') {
+    return Object.freeze({ removed: Object.freeze([]), skipped: Object.freeze([]) })
+  }
+  const temporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
+  const currentRoot = options.currentRoot ? validateRequestedFixtureRoot(options.currentRoot) : null
+  const maxAgeMs = options.maxAgeMs ?? officeE2eStaleRootMaxAgeMs(environment)
+  const now = options.now ?? Date.now()
+  const namePrefix = options.namePrefix ?? officeE2eRootPrefix
+  const removed = []
+  const skipped = []
+  for (const name of fs.readdirSync(temporaryRoot)) {
+    if (!name.startsWith(officeE2eRootPrefix) || !name.startsWith(namePrefix)) continue
+    const candidate = path.join(temporaryRoot, name)
+    let stat
+    try {
+      stat = fs.lstatSync(candidate)
+    } catch {
+      continue
+    }
+    if (stat.isSymbolicLink() || !stat.isDirectory()) continue
+    let safeCandidate
+    try {
+      safeCandidate = validateRequestedFixtureRoot(candidate)
+    } catch {
+      continue
+    }
+    if (currentRoot && safeCandidate === currentRoot) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    if (officeFixtureOwnerIsLive(officeFixtureOwnerPid(safeCandidate))) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    if (now - stat.mtimeMs < maxAgeMs) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    try {
+      fs.rmSync(safeCandidate, { recursive: true, force: true })
+      removed.push(safeCandidate)
+      console.log(`OFFICE_E2E_SWEPT_STALE_ROOT=${safeCandidate}`)
+    } catch (error) {
+      console.warn(`OFFICE_E2E_SWEEP_FAILED=${safeCandidate} (${error?.code ?? error?.message ?? 'error'})`)
+    }
+  }
+  return Object.freeze({ removed: Object.freeze(removed), skipped: Object.freeze(skipped) })
 }
 
 export async function withOfficeProcessLifecycle(options, action) {

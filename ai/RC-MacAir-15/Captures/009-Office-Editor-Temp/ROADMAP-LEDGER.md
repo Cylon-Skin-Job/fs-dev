@@ -191,3 +191,27 @@ SPEC-00 through SPEC-11 are accepted. The owner tested SPEC-11 in the normal Fus
 - Cleanup: detached runner reported graceful shutdown and exact-root removal; no owned process or CDP listener remained
 - Evidence: `/Users/rccurtrightjr./projects/Fusion-Home/oe009-run/SPEC-03/LIVE-SMOKE-RESULT.md` and `VERIFY-03-ELECTRON-EVIDENCE.md`
 - Downstream effect: SPEC-06 prerequisite satisfied
+
+## 2026-09-14 — Post-acceptance harness maintenance: clone staging + stale-root sweep
+
+- **Change (test-only):** `e2e/office/fixture-lifecycle.mjs` — `cloneOwnedTree`
+  stages files ≥4 MiB as real APFS clones (`COPYFILE_FICLONE_FORCE`, then
+  `/bin/cp -c`, then ordinary copy; `FICLONE_FORCE` returns `ENOSYS` on this
+  machine/Node 25.6.1, so `cp -c` is load-bearing); `.office-e2e-owner.json`
+  lease written at fixture-root creation; `sweepStaleOfficeFixtureRoots`
+  invoked from `playwright.office.config.ts` at config load (default 6 h age,
+  live-owner skip, direct-child and symlink-safe, overrides
+  `FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS` / `FUSION_OFFICE_E2E_SWEEP=0`); new tests
+  in `fixture-lifecycle.test.mjs`.
+- **Evidence:** all 52 staged large files (3.24 GB, including the 1.55 GB
+  whisper model) showed 0 MB `df` delta; `node --test
+  e2e/office/fixture-lifecycle.test.mjs` exercises the clone and sweep contracts;
+  a hard-killed run left its root and the next sweep removed it with
+  `OFFICE_E2E_SWEPT_STALE_ROOT=…`; orderly harness runs left zero roots.
+  `SPEC-00-OFFICE-EDITOR-TEST-HARNESS.md` updated.
+- **Blocker (pre-existing, reproduced at clean baseline `5f46d1a`):** the office
+  browser lane cannot start its isolated server (packaged mode now requires the
+  Trusted Fusion Shell Authority bootstrap; detail and options in `ISSUES.md`
+  2026-09-14), and the office Electron lane times out waiting for the renderer
+  page. The full Playwright acceptance run remains blocked by these lane
+  failures, not by the clone/sweep change. No owner acceptance is claimed.
