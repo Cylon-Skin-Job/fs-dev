@@ -2,22 +2,22 @@
 name: Chat Testing And Operations
 description: Vertical smoke tests, browser Playwright, Electron Playwright, and Fusion restart guidance for chat work.
 metadata:
-  incoming-edges:
-    - Chat System
-    - Chat Overview
-  outgoing-edges:
-    - Chat Smoke Tests
-    - Chat Browser Playwright
-    - Chat Electron Playwright
-    - Fusion Restart
+  last-modified: "2026-09-29T07:12:08Z"
   source-files:
     - fusion-studio-client/playwright.config.ts
+    - fusion-studio-client/e2e/chat-send-transport.spec.ts
+    - fusion-studio-client/e2e/trusted-shell-auth-smoke.mjs
+    - fusion-studio-client/e2e/chat-send-native-scenario.mjs
+    - fusion-studio-client/e2e/prompt-submission-recovery.spec.ts
+    - fusion-studio-client/e2e/chat-recovery-native-scenario.mjs
     - fusion-studio-server/server.js
-  connected-skills: []
-  related-trigger-files: []
 ---
 
 Use this section before validating chat changes.
+
+This page describes validation requirements and assertions in existing test sources, not current passing results. The September 19 documentation reconciliation inspected selected tests and source paths without running server suites, browser/Electron smoke, builds, or Alpha. Older “proves” and “coverage” wording below describes intended assertions; it does not certify this checkout or every listed test.
+
+Session resume coverage must distinguish stored provider-session reuse from public member selection. Current `thread:open` and existing-session `thread:open-assistant` hydrate the exact validated member; a group-only request resolves the current primary. Single-member/current-primary tests alone do not establish exact Side Chat hydration. Coverage must also open a non-primary member after Move, restore its exact history on reconnect, and verify that `historyOnly` does not change Main selection, pending Main opens, or provider ownership; see [Runtime Model](../006-Runtime_Model/PAGE.md#new-thread-and-activation). Server link success likewise does not establish renderer focus/reopening; see [Group and exact-member links](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links).
 
 Fusion Studio is a single-machine Electron workspace app with a browser
 renderer and a Node server. Browser Playwright is useful for focused renderer
@@ -65,87 +65,21 @@ persists only a fixed level marker; textual prefixes never authorize passthrough
 The rotating wire diagnostic records only fixed traffic markers, never raw
 harness frames.
 
-Privileged-thread changes additionally prove the decoded public route through
-the thread-domain guard: trusted New Chat, exact-session resume, Rename,
-Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm, and
-prompt-triggered activation reach their existing
-owners; raw/standalone/request-asserted authority
-receives one fixed denial before manager, provider, persistence, mirror, UEB,
-or fan-out effects; and passive open is asserted against real SQLite and mirror
-bytes to prove it does not write resume/MRU or list state. Public-route tests
-also submit foreign-workspace IDs to passive open, assistant activation, Warm,
-prompt, Rename, Delete, Copy Link, and model selection and assert no foreign
-data or durable/provider effect. A deterministic A-to-B window canary proves
-passive open/list/search cannot use A's manager after B binds and resume normally only
-after B's matching panel manager is installed. Deterministic lifecycle tests cover post-switch live-root resolution,
-concurrent B/C activation ordering, workspace switching during an awaited
-activation, binding-time Rename/Delete/Copy Link/model selection, binding during awaited
-Create/Resume, prompt persistence/provider admission ordering, and injected
-session-open failure. They also exercise same workspace/thread identifiers at
-different roots and epochs, explicit idle-owner epoch adoption, same-wire
-owner restoration when predecessor retirement fails, and target exit during
-an awaited predecessor close. Workspace-switch canaries also prove the old provider
-delivery owner is unregistered and suspended before the new bind frame, and
-that a delayed assistant-resume list cannot disclose the retired manager; they require one final owner,
-no orphan child, and no readiness frame before ownership commits. Fork is tested as an
-unconditional no-effect denial for public requests, inbound configuration, and
-stored legacy provider state. AST-based static spawn inventory and real child
-canaries cover every harness/CLI launch family,
-showing that required allowlisted values arrive while shell authority and
-unknown host values do not. The canaries also prove probes receive no provider
-credentials and Codex, Claude, Gemini, Qwen, Kimi, and multi-provider OpenCode
-runtime children receive only their documented adapter credential sets. The
-static gate fails closed on CommonJS and ESM imports, dynamic imports and
-built-in-module acquisition, detached or wrapped launch references, mutable or
-shadowed builder/environment bindings, prebuilt environment objects, and
-options spreads or computed properties that could replace the verified
-environment owner.
-Same-thread-id two-workspace canaries additionally cover lifecycle state,
-status/audit correlation, exact manager-root and adapter-session identity,
-exactly targeted watcher mutation collection, unique-active-turn attribution,
-ambiguous/partial watcher suppression, lifecycle fan-out, and provider
-output/exit/retirement after client ownership transfer. Executable adapter
-tests consume canonical iterators and exercise provider stop signals; prompt
-selection tests prove explicit nullable variants clear prior state.
-Held-effect canaries prove workspace retirement and shutdown do not outrun
-asynchronous audit or legacy event-ledger work.
-The isolated agent-tool provenance route never creates a thread from public
-input: startup provisions one fixed provider-free fixture thread before listen,
-and raw fixture requests can only passively select that exact identity in its
-process-provisioned workspace. A real two-workspace switch canary omits the new
-panel installation and proves the stale-manager window returns the fixed
-unavailable response with no history, authority, filesystem, database, UEB,
-ledger, result, or fan-out effect.
+Privileged-thread changes additionally prove the decoded public route through the thread-domain guard: trusted New Chat, current-primary session resume, Rename, Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm, and prompt-triggered activation reach their existing owners; raw/standalone/request-asserted authority receives one fixed denial before manager, provider, persistence, mirror, UEB, or fan-out effects; and passive open is asserted against real SQLite and mirror bytes to prove it does not write resume/MRU or list state. Public-route tests also submit foreign-workspace IDs to passive open, assistant activation, Warm, prompt, Rename, Delete, Copy Link, and model selection and assert no foreign data or durable/provider effect. A deterministic A-to-B window canary proves passive open/list/search cannot use A's manager after B binds and resume normally only after B's matching panel manager is installed. Deterministic lifecycle tests cover post-switch live-root resolution, concurrent B/C activation ordering, workspace switching during an awaited activation, binding-time Rename/Delete/Copy Link/model selection, binding during awaited Create/Resume, prompt persistence/provider admission ordering, and injected session-open failure. They also exercise same workspace/thread identifiers at different roots and epochs, explicit idle-owner epoch adoption, same-wire owner restoration when predecessor retirement fails, and target exit during an awaited predecessor close. Workspace-switch canaries also prove the old provider delivery owner is unregistered and suspended before the new bind frame, and that a delayed assistant-resume list cannot disclose the retired manager; they require one final owner, no orphan child, and no readiness frame before ownership commits. Fork is tested as an unconditional no-effect denial for public requests, inbound configuration, and stored legacy provider state. AST-based static spawn inventory and real child canaries cover every harness/CLI launch family, showing that required allowlisted values arrive while shell authority and unknown host values do not. The canaries also prove probes receive no provider credentials and Codex, Claude, Gemini, Qwen, Kimi, and multi-provider OpenCode runtime children receive only their documented adapter credential sets. The static gate fails closed on CommonJS and ESM imports, dynamic imports and built-in-module acquisition, detached or wrapped launch references, mutable or shadowed builder/environment bindings, prebuilt environment objects, and options spreads or computed properties that could replace the verified environment owner. Same-thread-id two-workspace canaries additionally cover lifecycle state, status/audit correlation, exact manager-root and adapter-session identity, exactly targeted watcher mutation collection, unique-active-turn attribution, ambiguous/partial watcher suppression, lifecycle fan-out, and provider output/exit/retirement after client ownership transfer. Executable adapter tests consume canonical iterators and exercise provider stop signals; prompt selection tests prove explicit nullable variants clear prior state. Held-effect canaries prove workspace retirement and shutdown do not outrun asynchronous audit or legacy event-ledger work. The isolated agent-tool provenance route never creates a thread from public input: startup provisions one fixed provider-free fixture thread before listen, and raw fixture requests can only passively select that exact identity in its process-provisioned workspace. A real two-workspace switch canary omits the new panel installation and proves the stale-manager window returns the fixed unavailable response with no history, authority, filesystem, database, UEB, ledger, result, or fan-out effect.
 
-Thread Group activity/MRU coverage proves one accepted prompt writes exactly one
-`prompt:{threadId}:{turnId}` activity and advances the group clock once; a retry
-of the same thread/turn never advances twice; open/warm/completion/Stop/Rename
-never advance; a failed activity persist rejects the prompt through the normal
-acceptance path; and Legacy (`viewId: null`) population ordering stays
-deterministic. Canonical `thread:action` coverage proves Copy Link/Resolve
-Link/View Markdown/model selection traverse the registered route with
-same-request replay, different-input `request_mismatch`, versioned-URI
-round-trip, Legacy resolution without borrowing the active view, mirror-path
-validation, model/variant acceptance and rejection, fan-out, restart survival,
-and `surfaceId`-free envelopes. Search tests prove the group join returns
-`threadGroupId`, visible group name, and authoritative view binding without
-replacing exact exchange/session identity.
+Existing Thread Group activity/MRU test assertions cover one accepted prompt writes exactly one `prompt:{threadId}:{turnId}` activity and advances the group clock once; a retry of the same thread/turn never advances twice; open/warm/completion/Stop/Rename never advance; a failed activity persist rejects the prompt through the normal acceptance path; and Legacy (`viewId: null`) population ordering stays deterministic. Canonical `thread:action` test assertions cover Copy Link/Resolve Link/View Markdown/model selection traverse the registered route with same-request replay, different-input `request_mismatch`, versioned-URI round-trip, Legacy resolution without borrowing the active view, mirror-path validation, model/variant acceptance and rejection, fan-out, restart survival, and `surfaceId`-free envelopes. Search tests prove the group join returns `threadGroupId`, visible group name, and authoritative view binding without replacing exact exchange/session identity.
 
-SPEC-04 Move/Side Chat coverage adds server integration for `move_chat_to_side`
-creation/group-commit/outbox/recovery and `thread:members`/`open_member_in_side`,
-plus the focused Playwright specs `e2e/move-chat-to-side-chat.spec.ts`,
-`e2e/side-chat-placement-recovery.spec.ts`, and
-`e2e/side-chat-isolation.spec.ts` (with `e2e/side-chat-adapterless-native.spec.ts`
-covering native and adapterless hosts). All run under the isolated
-`playwright.chat03.config.ts` (fresh port and `/tmp` profile, never port 3001 or
-the dev DB). `node e2e/side-chat-electron-smoke.mjs` exercises the real Electron
-shell on a throwaway profile and temp workspace: Move, empty replacement Main
-Chat, close/reopen with the same lifetime placement id, relaunch readback,
-repeated Move, outer-rail toggle from a Side Chat, and the hard assertion that
-the retired secondary chat is absent.
+Existing Move/Side Chat coverage includes server integration for `move_chat_to_side` creation/group-commit/outbox/recovery and `thread:members`/`open_member_in_side`, plus the focused Playwright specs `e2e/move-chat-to-side-chat.spec.ts`, `e2e/side-chat-placement-recovery.spec.ts`, and `e2e/side-chat-isolation.spec.ts` (with `e2e/side-chat-adapterless-native.spec.ts` covering native and adapterless hosts). All run under the isolated `playwright.chat03.config.ts` (fresh port and `/tmp` profile, never port 3001 or the dev DB). `node e2e/side-chat-electron-smoke.mjs` exercises the real Electron shell on a throwaway profile and temp workspace: Move, empty replacement Main Chat, close/reopen with the same lifetime placement id, relaunch readback, repeated Move, outer-rail toggle from a Side Chat, and the hard assertion that the retired secondary chat is absent.
 
-The whole-SPEC minimum also runs `cd fusion-studio-server && npx jest --runInBand`
-and `cd fusion-studio-client && npm run build`.
+The outer-rail assertion targets the current left-hand `dock_to_right` / Show threads control. It is evidence of the older implementation contract, not approval to retain that control: owner direction removes it and the sliding thread-panel behavior from Side Chat tabs while keeping the right-hand `event_list` / More options button. Future product work must update the corresponding assertions; the right button’s shared behavior remains undefined. See [Chat UI](../004-Chat_UI/PAGE.md#owner-direction-list-behavior-still-to-be-defined).
+
+For product implementation affecting these shared chat contracts, the broader validation minimum includes `cd fusion-studio-server && npx jest --runInBand` and `cd fusion-studio-client && npm run build`.
+
+For renderer chat-send changes, also exercise the production `ws/product-send.ts` entry and `shell-auth-client.ts` queue/socket machinery with `e2e/chat-send-transport.spec.ts`: caller policy, fixed local results, stale same-ID binding, queue retirement, and native throw uncertainty. The isolated `node e2e/trusted-shell-auth-smoke.mjs` entry includes a deterministic provider scenario through real Electron authentication and public routes; it checks exact Main and Side prompt acknowledgements and durable action/exchange readback in a disposable profile/workspace. Those send checks do not certify live OpenCode failure attribution or an Alpha installation.
+
+For receipt inquiry changes, build the client, then run `npx playwright test --config=playwright.chat-architecture.config.ts e2e/prompt-submission-recovery.spec.ts e2e/chat-send-transport.spec.ts e2e/prompt-ownership.slice-c.spec.ts e2e/thread-bootstrap-order.spec.ts e2e/visible-wait.spec.ts` from the client and `npm test -- --runInBand --runTestsByPath test/ws/prompt-submission-recovery.integration.test.js` from the server. The recovery spec uses the production send-result boundary for refusal, uncertainty and auth-queue cases, fake time for the 15-second start, five-second inquiry and bounded retries, and the isolated browser composer for scheduled/manual status and existing feedback. The default Playwright config is outside this isolated route and can contact a live development server.
+
+The default `node e2e/trusted-shell-auth-smoke.mjs` entry now also runs `chat-recovery-native-scenario.mjs` in a disposable profile, workspace and SQLite database. A staged test-only server fault drops `message:sent` while preserving durable acceptance; the browser's real authenticated socket then checks one refused inquiry, one manual receipt readback, and one uncertain post-enqueue inquiry. The native case checks exact status/prompt counts and one durable receipt/exchange per attempt; it does not prove live provider failure causes, eventual reconnect after the injected socket throw, or Alpha health. Temporary fixture data and owned processes are removed afterward.
 
 <!-- children:start -->
 ## Children

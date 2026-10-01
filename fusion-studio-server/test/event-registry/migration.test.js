@@ -91,7 +91,7 @@ describe('migration 034 event registry authority', () => {
     const [batch, migrations] = await db.migrate.latest();
 
     expect(batch).toBe(1);
-    expect(migrations.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/);
+    expect(migrations.at(-1)).toMatch(/045_prompt_submission_receipts\.js$/);
     await expect(db.schema.hasTable('event_schema_registry')).resolves.toBe(true);
     await expect(db.schema.hasTable('event_subscription_registry')).resolves.toBe(true);
     await expect(db.schema.hasTable('event_subscription_grants')).resolves.toBe(true);

@@ -1,3 +1,16 @@
+// Transport fixture aliases follow the extracted explicit module dependencies.
+jest.mock('../../lib/thread/ThreadWebSocketHandler', () => require('../../lib/thread').ThreadWebSocketHandler);
+jest.mock('../../lib/thread/thread-runtime-manager', () => ({
+  RUNTIME_STATES: require('../../lib/thread').RUNTIME_STATES,
+  threadRuntimeManager: require('../../lib/thread').threadRuntimeManager,
+}));
+// This transport-only fixture substitutes durable session admission. Real
+// lease/readback is exercised by the SQLite group/admission integration lane.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
 'use strict';
 
 const http = require('node:http');
@@ -66,6 +79,9 @@ jest.mock('../../lib/thread', () => ({
     }),
   },
   threadRuntimeManager: {
+    // Transport-only adapter; exact ownership is exercised by the real runtime suites.
+    adoptRuntimeIdentity: jest.fn(() => ({})), captureOwnership: jest.fn(() => ({})),
+    isOwnershipCurrent: jest.fn(() => true), markOwnedState: jest.fn(),
     getRuntimeState: jest.fn(() => 'cold'),
     markReady: jest.fn(),
   },
@@ -107,6 +123,7 @@ function nextMessage(ws) {
 async function createPublicServer(managed) {
   const server = http.createServer();
   const wss = new WebSocketServer({ server });
+  const sessions = new Set();
   const authOwner = managed
     ? createShellAuthOwner({
       authority: { version: 1, generation: GENERATION, master: MASTER },
@@ -124,6 +141,8 @@ async function createPublicServer(managed) {
       workspaceEpoch: 'workspace-epoch-1',
       projectRoot: '/repo',
     };
+    sessions.add(session);
+    ws.on('close', () => sessions.delete(session));
     const product = createDeferredProductConnection({
       ws,
       build: async () => {
@@ -167,6 +186,9 @@ async function createPublicServer(managed) {
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   return {
     url: `ws://127.0.0.1:${server.address().port}`,
+    setBindingState(value) {
+      for (const session of sessions) session.workspaceBindingState = value;
+    },
     async close() {
       for (const client of wss.clients) client.terminate();
       await new Promise((resolve) => wss.close(resolve));
@@ -301,7 +323,7 @@ describe('public privileged thread route', () => {
     });
     const readEffects = [...mockOwnerEffects];
     for (const message of [
-      { type: 'thread:open-assistant', role: 'trusted-shell', model: { permission: 'all' } },
+      { type: 'thread:open-assistant', role: 'trusted-shell', requestId: 'untrusted-leak-test', model: { permission: 'all' } },
       {
         type: 'thread:action', action: 'rename', requestId: 'req-forged',
         threadGroupId: 'tg-existing', name: 'No', proof: 'forged',
@@ -318,6 +340,23 @@ describe('public privileged thread route', () => {
     }
     expect(mockOwnerEffects).toEqual(readEffects);
     expect(mockOwnerEffects).toEqual([['list'], ['open', 'thread-existing']]);
+    await closeClient(ws);
+    await runtime.close();
+  });
+
+  test('trusted early Create receives matching bounded denial without creating a group', async () => {
+    const runtime = await createPublicServer(true);
+    const ws = await authenticate(runtime.url);
+    runtime.setBindingState('binding');
+    await expect(request(ws, {
+      type: 'thread:open-assistant', requestId: 'chat-action-early-system',
+      viewId: 'system-viewer', name: 'Early System workspace',
+    })).resolves.toEqual({
+      type: 'error', requestId: 'chat-action-early-system',
+      code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
+    });
+    expect(mockOwnerEffects).toEqual([]);
+    expect(mockState.threadId).toBeNull();
     await closeClient(ws);
     await runtime.close();
   });

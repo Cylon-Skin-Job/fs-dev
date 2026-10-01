@@ -98,7 +98,7 @@ function worksurfaceEntry(adapterId: string, content: unknown) {
 
 // ── Source sweeps ───────────────────────────────────────────────────────────
 
-test('the remaining built-in adapters are registered and the docks are mounted', () => {
+test('the remaining built-in adapters are registered without duplicate content docks', () => {
   const builtins = readSource('src/lib/worksurface/builtins.ts');
   expect(builtins).toContain('captureViewerWorksurfaceAdapter');
   expect(builtins).toContain('officeViewerWorksurfaceAdapter');
@@ -114,11 +114,14 @@ test('the remaining built-in adapters are registered and the docks are mounted',
   expect(officeAdapter).not.toContain('surfaceId');
 
   const capture = readSource('src/components/capture/CaptureTiles.tsx');
-  expect(capture).toContain('ViewWorksurfaceDock');
+  expect(capture).not.toContain('ViewWorksurfaceDock');
   const office = readSource('src/components/office/OfficeGrid.tsx');
-  expect(office).toContain('ViewWorksurfaceDock');
+  expect(office).not.toContain('ViewWorksurfaceDock');
   const email = readSource('src/components/email/EmailGrid.tsx');
-  expect(email).toContain('ViewWorksurfaceDock');
+  expect(email).not.toContain('ViewWorksurfaceDock');
+  const shell = readSource('src/components/WorkspacePanel.tsx');
+  expect(shell).toContain('useViewChatHost');
+  expect(shell).toContain('<ContentArea');
   const emailAdapter = readSource('src/lib/worksurface/emailViewerWorksurfaceAdapter.ts');
   expect(emailAdapter).toContain('sanitize');
   expect(emailAdapter).toContain('restore');

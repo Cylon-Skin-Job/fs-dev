@@ -1,0 +1,41 @@
+# SPEC-03 supervisor review
+
+Candidate: `CHAT-AR-4641ca5897f0`. Review date: 2026-09-21 PDT. State: `accepted`; the owner explicitly replied “Yes.” to the complete SPEC-03 acceptance request on 2026-09-22. This satisfies the prerequisite for SPEC-04 and does not waive the recorded Working Activity failure, downstream corrections, or later performance/native gates.
+
+## Contract and integrated result
+
+SPEC-03 was to replace ambient fire-and-forget chat actions with exact-target, truthful completion ownership; correlate System prompt resolution and eager New Chat; and move group/header commands and DOM interactions out of the aggregate host. Its ordered slices 03A–03C delivered those boundaries without claiming the SPEC-04 history/draft rendering split. The canonical handoff is `SPEC-03-IMPLEMENTATION-REPORT.md`; the slice reports, acceptance records and run receipts are under `evidence/spec-03/`. The development checkout remains uncommitted at HEAD `88637d11c65be53d4f2ad0f049f64a07fa3db1de` on `agent/exact-workspace-paths`, with unrelated owner/concurrent changes preserved.
+
+03A installed one application-lifetime action consumer and real result states. File, Wiki, Office and diagnostic callers capture the source view/group/session, and success follows draft/attachment or submission outcome, not event dispatch. Unknown SPEC-02 attempts remain editable for insertion while resend stays gated. 03B gave prompt resolution and `thread:open-assistant` one request-scoped operation outside DOM mounts, with workspace epoch/socket correlation, cancellation, timeouts and exact created/opened targeting. 03C moved group/header commands into a focused controller and refs, focus, scroll and menus into mount-local owners, preserving server ACK/error authority, eager view-bound New Chat, Side Chat and historical threadId-only action behavior. The single app-lifetime `fusion:chat-insert` compatibility bridge remains inventoried for SPEC-06; no per-mount global action listener remains.
+
+## Evidence inspected
+
+- Each of 03A, 03B and 03C has a current-byte clean builder-owned review and a separate clean orchestrator-owned review. Material findings in 03A and 03C were repaired through the owning builder with affected gates repeated. Fresh final reviewer `/root/review03_final_integration` returned CLEAN on the integrated 39-path source manifest, cross-slice behavior, raw gates and deviations.
+- Supervisor independently verified all 39 current source/fixture hashes against `evidence/spec-03/INTEGRATED-SOURCE-SHA256.txt` and scoped `git diff --check` on those paths. The source manifest digest is `dac814d04f48d5510b02a168bc64623457acdfdd99a3c3569528bfb0fe664516`. New production owners remain below 400 lines; the 497-line aggregate `useLegacyChatHost.ts` retains rendering projection work explicitly assigned to SPEC-04.
+- Independent final client build passed. Authenticated V-ACTIONS passed 6/6 (`chat-arch-1790052639249-cada17eee6`); V-SUBMIT passed 7/7 (`chat-arch-1790052836865-0875b81219`). Both owned-run results report cleanup and no lingering owned PID. Focused server tests passed 6 suites/67 tests under disposable profile with native pretest. Builder final-byte client tests passed 54/54 and Side Chat, worksurface and two-group concurrency Electron smokes passed. Independent server/client runs before the bounded final System denial repair were not misrepresented as final-byte proof; the repaired routes were covered by the final public suites, 67-test server run and 54-test client run.
+- The earlier independent System Create timeout and the fixture's nondiscriminating socket-listener count are retained as red diagnostic artifacts. The repair qualified trusted early-binding denial by request ID, surfaced its failure in System UI, and waited for the public `panel_changed` acknowledgement before the settled success path. Final tests still enforce exact no-group/no-wrong-target and R6 cancellation/lifetime outcomes; neither failure was hidden as a passing run.
+- No live dev/Alpha profile or database, port 3001, owner-window diagnostic, commit, push or Alpha operation was used. A whole-worktree whitespace check flags one unrelated dirty Office test file; the 39 SPEC-03 paths pass their scoped check.
+
+## Deviation decisions and downstream packet corrections
+
+The canonical report and slice reports provide original expectation, actual path, reason, tests, observable effect, risk and downstream impact for each touch. Supervisor disposition:
+
+| Departure | Classification | Downstream action |
+| --- | --- | --- |
+| App-owned action controller, App install, diagnostic result wiring and Side-member validation beyond the expected file list | `accepted_no_downstream_impact` | Necessary for one real consumer and exact eligible session; R5 readback and duplicate-mount checks pass. |
+| SPEC-02 unknown insertion/diagnostic guards initially blocked editable uncertainty | `accepted_no_downstream_impact` after current-SPEC repair | Preserve editable insertion and gated resend in SPEC-04/06; accepted SPEC-02 behavior was restored, not invalidated. |
+| Focused R5 selectors, hidden-panel exact path readback and System overlay/fixture readiness corrections | `accepted_no_downstream_impact` | Oracle changes retain result-before-success, exact target and visible failure assertions; retain the corrected fixture contract. |
+| App-owned prompt/create operation and request/workspace-epoch echoes in client/server beyond the expected action file | `accepted_update_downstream_packet` | SPEC-04/06 must preserve explicit workspace/request correlation and terminal operation cleanup; unrelated opens cannot complete a pending action. |
+| Focused group controller, mounted menu/interaction modules and explicit view-bound New Chat forwarding | `accepted_update_downstream_packet` | SPEC-04 must retain exact view/group/session identity and server ACK/error authority while splitting aggregate projection. |
+| Historical threadId-only group actions temporarily regressed in the first controller | `accepted_no_downstream_impact` after current-SPEC repair | Copy, Markdown, Rename, Delete and model actions retain exact thread fallback; Move/member still require group. |
+| Trusted early-binding denial omitted a request ID and System suppressed an unrequested cancellation | `accepted_update_downstream_packet` after current-SPEC repair | SPEC-04/06 must retain bounded request-qualified trusted denial, generic untrusted denial, visible failure and no unwanted group/prompt mutation. |
+| Retired per-mount R6 and socket DOM-listener oracles replaced with authenticated production operation assertions | `accepted_no_downstream_impact` | All original lifecycle outcomes remain enforced; internal listener-map inspection would be a stronger future diagnostic, not an acceptance gap. |
+| Remaining aggregate history/draft projection and source-less `fusion:chat-insert` bridge | `accepted_update_downstream_packet` | SPEC-04 owns the aggregate render/subscription split. SPEC-06 must inventory/retire the bridge or record why it remains, and reconcile older Chat Wiki Legacy-host wording with accepted view-bound direction. |
+
+No accepted prerequisite was invalidated and no new owner ruling is required. The approved normative candidate bytes remain unchanged; these are explicit downstream execution-packet corrections.
+
+## Residual risks and owner gate
+
+The report's R5 source-switch JSON includes one `successMutationObserved=false` observation despite exact source/attachment readback, passing result-before-success assertions and user-visible success; this is retained as an oracle advisory, not a waived product failure. Generic denials without a valid request ID remain uncorrelated by design, while trusted valid-ID commands receive exact denial. Full server suite, V-ALL, numeric performance, 45-minute soak and native owner symptom acceptance are later SPEC-05/06/program gates and were not claimed. The previously recorded Working Activity red case remains assigned to SPEC-04/06; SPEC-03's focused checks do not waive it.
+
+SPEC-03 meets its action-routing/host-responsibility acceptance boundary on current evidence. Owner acceptance was received on 2026-09-22; dispatch SPEC-04 in a fresh independent orchestrator task with the downstream corrections above.

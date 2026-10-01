@@ -2,25 +2,22 @@
 name: Chat Composer
 description: Composer behavior, send/stop/finalization button states, and attachment/input rules.
 metadata:
-  incoming-edges:
-    - Chat UI
-  outgoing-edges:
-    - Stop And Interrupted Turns
   source-files:
     - fusion-studio-client/src/components/ChatInput.tsx
     - fusion-studio-client/src/components/ChatArea.css
     - fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
-    - fusion-studio-client/src/components/chat/useChatArea.ts
+    - fusion-studio-client/src/components/chat/useChatSessionHost.ts
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+    - fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
     - fusion-studio-client/src/state/chatComposerDraftStore.ts
     - fusion-studio-client/src/state/chatFileLinkStore.ts
     - fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
     - fusion-studio-client/src/hooks/useFileAutocomplete.ts
     - fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-The composer is the user input and turn control surface.
+The composer is the user input and turn control surface. `ChatAreaFooter.tsx` presents the input and Send/Stop/finalization states. `useChatSessionHost.ts` composes the session identity and presentation; `useChatSessionActions.ts` supplies exact-session send, Stop, attachment and diagnostic Ask AI actions, and `ConnectedChatComposer.tsx` subscribes to the addressed draft, attachments and submission state; `chatComposerDraftStore.ts` and `chatFileLinkStore.ts` retain their respective owner-keyed data.
 
 ## Rules
 
@@ -29,7 +26,7 @@ The composer is the user input and turn control surface.
 - The textarea stays plain user text.
 - During finalization after output end or Stop, the button area can show a
   spinning pinwheel visual and remain unavailable until the saved exchange ack.
-- Send returns only after the turn is fully viable for the next prompt.
+- Send initiation is not acceptance or completion. Pending/unknown submission and finalization keep the composer gated; acknowledgements and exact-session recovery determine when another prompt is viable.
 
 The composer should not infer persistence success from the last visible token.
 

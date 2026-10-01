@@ -25,15 +25,16 @@ export function SendToChatButton({
   className = 'rv-file-page-action',
   title = 'Send path to chat',
 }: SendToChatButtonProps) {
-  const handleClick = () => {
+  const handleClick = async () => {
     const attachment = createResourceChatAttachment(panel, relativePath);
     if (attachment) {
-      dispatchChatAction({
+      const result = await dispatchChatAction({
         attachment,
         target: 'current',
         delivery: 'insert',
+        sourceViewId: panel,
       });
-      showToast('Link attached to chat');
+      showToast(result.status === 'applied' ? 'Link attached to chat' : 'Chat target unavailable');
     } else {
       showToast('Path not available');
     }

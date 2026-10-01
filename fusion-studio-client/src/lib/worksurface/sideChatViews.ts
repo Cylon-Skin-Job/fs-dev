@@ -4,11 +4,10 @@
  *       (SPEC-04 §6/§11 04B/04C).
  *
  * Keep in lockstep with `fusion-studio-server/lib/thread-groups/chat-capable-views.js`.
- * Used by the reconnect placement sweep so an existing open placement on an
- * unbound/dockless adapterless view (Issues/Agents/Browser) materializes after
- * relaunch without an action frame, through the accepted qualified
- * `thread:list` read plus per-group worksurface entry reads (`SPEC-04 §7`).
- * This is not a transport family and never widens the Generic Host.
+ * Used to admit exact per-group placement reads after the active view host's
+ * qualified population response. Inactive/unbound views do not run a hidden
+ * reconnect sweep; their persisted placement materializes when that exact view
+ * becomes active. This never widens the Generic Host.
  */
 
 export const SIDE_CHAT_CAPABLE_VIEW_IDS: ReadonlySet<string> = Object.freeze(new Set([

@@ -1,4 +1,5 @@
-import { onFusionResponse, sendFusionMessage } from '../ws-client';
+import { onFusionResponse } from '../ws-client';
+import { sendChatProduct } from '../ws/product-send';
 import type { ChatTurnMetadataPatch } from '../../types';
 import type { AssistantReplySourceRef } from './reply-text';
 
@@ -83,11 +84,15 @@ export function updateReplyMetadata(
       reject(new Error('Timeout waiting for chat-turn:metadata:updated'));
     }, timeoutMs);
 
-    sendFusionMessage({
+    const result = sendChatProduct({
       type: 'chat-turn:metadata:update',
       threadId: source.threadId,
       exchangeId,
       patch,
-    });
+    }, { workspaceId: source.workspaceId ?? '', policy: 'auth_queue_allowed' });
+    if (result.status === 'not_enqueued') {
+      cleanup();
+      reject(new Error('Metadata update was not enqueued'));
+    }
   });
 }

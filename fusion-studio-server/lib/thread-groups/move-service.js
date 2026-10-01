@@ -37,13 +37,13 @@ const { validatePortableSelection } = require('../thread/thread-harness-config-p
  *   | { ok: false, code: string }>}
  */
 async function resolveMoveSessionPolicy(service, sourceThreadId) {
-  const source = await service.manager.getThread(sourceThreadId);
+  const source = await service.operations.getThread(sourceThreadId);
   const harnessId = source?.entry?.harnessId;
   if (!source || !harnessId) return { ok: false, code: 'not_found' };
 
   let policy;
   try {
-    policy = await resolveCliPolicy(service.manager.projectRoot);
+    policy = await resolveCliPolicy(service.projectRoot);
   } catch (_error) {
     return { ok: false, code: 'selection_unavailable' };
   }
@@ -134,8 +134,8 @@ async function moveChatToSide(service, {
   if (Number(projection.currentPrimarySequence) !== expectedPrimarySequence) {
     return { ok: false, code: 'stale_primary' };
   }
-  const busy = typeof service.manager.isMemberBusy === 'function'
-    ? service.manager.isMemberBusy(threadId)
+  const busy = typeof service.operations.isMemberBusy === 'function'
+    ? service.operations.isMemberBusy(threadId)
     : null;
   if (busy) return { ok: false, code: 'group_busy', busy: [{ threadId, state: busy }] };
 
@@ -167,8 +167,8 @@ async function moveChatToSide(service, {
       if (Number(currentProjection.currentPrimarySequence) !== expectedPrimarySequence) {
         return { ok: false, code: 'stale_primary' };
       }
-      const busyRecheck = typeof service.manager.isMemberBusy === 'function'
-        ? service.manager.isMemberBusy(threadId)
+      const busyRecheck = typeof service.operations.isMemberBusy === 'function'
+        ? service.operations.isMemberBusy(threadId)
         : null;
       if (busyRecheck) {
         return { ok: false, code: 'group_busy', busy: [{ threadId, state: busyRecheck }] };
@@ -196,7 +196,7 @@ async function moveChatToSide(service, {
 
       try {
         await db.transaction(async (trx) => {
-          await service.manager.stageNewSession(trx, {
+          await service.operations.stageNewSession(trx, {
             threadId: newMainThreadId,
             name: null,
             harnessId: policy.harnessId,
@@ -268,15 +268,15 @@ async function moveChatToSide(service, {
       }
 
       // Post-commit mirror completion is recoverable and never rolls back.
-      if (typeof service.manager.ensureSessionMirror === 'function') {
-        await service.manager.ensureSessionMirror(newMainThreadId);
+      if (typeof service.operations.ensureSessionMirror === 'function') {
+        await service.operations.ensureSessionMirror(newMainThreadId);
       }
 
       // Separate retryable placement delivery (SPEC-04 §7).
       let placement = { status: 'pending', attempts: 0 };
-      if (typeof service.manager.retryPlacementDeliveryForGroup === 'function') {
+      if (typeof service.operations.retryPlacementDeliveryForGroup === 'function') {
         try {
-          placement = await service.manager.retryPlacementDeliveryForGroup(threadGroupId);
+          placement = await service.operations.retryPlacementDeliveryForGroup(threadGroupId);
         } catch (_error) {
           placement = { status: 'failed', attempts: 0, failureCode: 'view_state_unavailable' };
         }

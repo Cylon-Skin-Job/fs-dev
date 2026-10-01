@@ -16,11 +16,24 @@ interface ShellAuthDependencies {
   generation: string;
   electronApi: ShellAuthElectronApi | undefined;
   send: (value: string) => void;
+  bufferedAmount?: () => number;
   close: () => void;
   authenticated: () => void;
   deliver: (value: unknown) => void;
   now?: () => number;
   randomBytes?: (length: number) => Uint8Array;
+}
+
+export type ProductSendResult =
+  | { status: 'enqueued'; destination: 'socket' | 'auth_queue' }
+  | { status: 'uncertain'; reason: 'send_failed_after_enqueue' | 'send_outcome_unknown' }
+  | { status: 'not_enqueued'; reason: 'disconnected' | 'retired' | 'stale_connection' |
+      'binding_unavailable' | 'stale_binding' | 'auth_not_ready' | 'serialization_failed' |
+      'queue_refused' | 'send_failed_before_enqueue' };
+
+interface QueuedProductFrame {
+  serialized: string;
+  stillCurrent: () => boolean;
 }
 
 const NONCE_PATTERN = /^[A-Za-z0-9_-]{43}$/;
@@ -81,7 +94,7 @@ export function createShellSocketAuthenticator(dependencies: ShellAuthDependenci
   let lane = Promise.resolve();
   let buffered: unknown[] = [];
   let bufferedBytes = 0;
-  let outbound: string[] = [];
+  let outbound: QueuedProductFrame[] = [];
   let outboundBytes = 0;
 
   const fail = (close = true) => {
@@ -94,26 +107,49 @@ export function createShellSocketAuthenticator(dependencies: ShellAuthDependenci
     if (close) dependencies.close();
   };
 
-  const sendProduct = (serialized: string): boolean => {
-    if (phase === 'failed') return false;
-    if (phase === 'authenticated') {
-      try {
-        dependencies.send(serialized);
-        return true;
-      } catch {
-        fail();
-        return false;
+  const sendNativeProduct = (serialized: string): ProductSendResult => {
+    let before: number | undefined;
+    try { before = dependencies.bufferedAmount?.(); } catch { /* observation unavailable */ }
+    try {
+      dependencies.send(serialized);
+      return { status: 'enqueued', destination: 'socket' };
+    } catch {
+      let after: number | undefined;
+      try { after = dependencies.bufferedAmount?.(); } catch { /* observation unavailable */ }
+      fail();
+      if (Number.isFinite(before) && Number.isFinite(after)) {
+        if (after! > before!) return { status: 'uncertain', reason: 'send_failed_after_enqueue' };
       }
+      // bufferedAmount is a live unsent-byte count. Equal observations can
+      // follow an enqueue plus drain, so a caught native send cannot prove a
+      // prewrite failure without a separate reliable signal.
+      return { status: 'uncertain', reason: 'send_outcome_unknown' };
     }
+  };
+
+  const sendProductResult = (
+    serialized: string,
+    policy: 'socket_only' | 'auth_queue_allowed',
+    stillCurrent: () => boolean,
+  ): ProductSendResult => {
+    if (phase === 'failed') return { status: 'not_enqueued', reason: 'retired' };
+    if (!stillCurrent()) return { status: 'not_enqueued', reason: 'stale_binding' };
+    if (phase === 'authenticated') {
+      return sendNativeProduct(serialized);
+    }
+    if (policy === 'socket_only') return { status: 'not_enqueued', reason: 'auth_not_ready' };
     const frameBytes = new TextEncoder().encode(serialized).length;
     if (outbound.length >= MAX_OUTBOUND_FRAMES || outboundBytes + frameBytes > MAX_OUTBOUND_BYTES) {
       fail();
-      return false;
+      return { status: 'not_enqueued', reason: 'queue_refused' };
     }
-    outbound.push(serialized);
+    outbound.push({ serialized, stillCurrent });
     outboundBytes += frameBytes;
-    return true;
+    return { status: 'enqueued', destination: 'auth_queue' };
   };
+
+  const sendProduct = (serialized: string): boolean =>
+    sendProductResult(serialized, 'auth_queue_allowed', () => true).status !== 'not_enqueued';
 
   const consume = async (value: unknown) => {
     if (phase === 'failed') return;
@@ -169,12 +205,8 @@ export function createShellSocketAuthenticator(dependencies: ShellAuthDependenci
       outboundBytes = 0;
       for (const frame of pendingOutbound) {
         if (phase !== 'authenticated') return;
-        try {
-          dependencies.send(frame);
-        } catch {
-          fail();
-          return;
-        }
+        if (!frame.stillCurrent()) continue;
+        if (sendNativeProduct(frame.serialized).status !== 'enqueued') return;
       }
       return;
     }
@@ -209,6 +241,7 @@ export function createShellSocketAuthenticator(dependencies: ShellAuthDependenci
       return phase === 'authenticated';
     },
     sendProduct,
+    sendProductResult,
     retire(): void {
       fail(false);
     },

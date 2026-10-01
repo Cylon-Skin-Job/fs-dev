@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { escapeHtml, markdownToHtml } from '../lib/transforms';
 import { useFileDataStore, type FileNode } from '../state/fileDataStore';
 import { usePanelStore } from '../state/panelStore';
 import { useWorkspaceStore } from '../state/workspaceStore';
 import { dispatchChatAction } from '../lib/chat-action';
+import { showToast } from '../lib/toast';
 import { FolderPicker } from './FolderPicker';
 import './SystemViewer.css';
 
@@ -51,8 +52,13 @@ export const SystemViewer: React.FC = () => {
   const [workspaceName, setWorkspaceName] = useState('');
   const [isFolderPickerOpen, setFolderPickerOpen] = useState(false);
   const [selectedFolderPath, setSelectedFolderPath] = useState<string | null>(null);
+  const pendingChatAction = useRef<AbortController | null>(null);
+
+  useEffect(() => () => pendingChatAction.current?.abort(), []);
 
   function closeNewWorkspaceOverlay() {
+    pendingChatAction.current?.abort();
+    pendingChatAction.current = null;
     setNewWorkspaceOpen(false);
     setWorkspaceMode(null);
     setWorkspaceName('');
@@ -60,17 +66,21 @@ export const SystemViewer: React.FC = () => {
     setFolderPickerOpen(false);
   }
 
-  function createWorkspaceViaSystemAgent() {
+  async function createWorkspaceViaSystemAgent() {
     const name = workspaceName.trim();
     if (!name || !workspaceMode) return;
     if (workspaceMode === 'existing' && !selectedFolderPath) return;
+    if (pendingChatAction.current) return;
 
     if (activeWorkspaceId !== 'system-files') {
+      showToast('System workspace target unavailable');
       requestSwitch('system-files');
       return;
     }
 
-    dispatchChatAction({
+    const controller = new AbortController();
+    pendingChatAction.current = controller;
+    const result = await dispatchChatAction({
       promptId: 'workspace-manager.workspace-creation',
       variables: {
         workspaceName: name,
@@ -79,9 +89,18 @@ export const SystemViewer: React.FC = () => {
       },
       target: 'new',
       delivery: 'insert',
+      sourceViewId: 'system-viewer',
       threadName: `Create workspace: ${name}`,
+      signal: controller.signal,
     });
-    closeNewWorkspaceOverlay();
+    if (pendingChatAction.current !== controller) return;
+    pendingChatAction.current = null;
+    if (result.status === 'applied') closeNewWorkspaceOverlay();
+    else if (result.status !== 'cancelled' || !controller.signal.aborted) {
+      // A deadline or connection retirement can return cancelled without the
+      // user closing this overlay. Report that unavailable result visibly.
+      showToast('Chat action unavailable; workspace request not created');
+    }
   }
 
   useEffect(() => {

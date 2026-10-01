@@ -133,12 +133,17 @@ export function buildWorksurfaceHarness(): Promise<string> {
     const resolvedEntry = `\0${virtualEntry}`;
     const modulePaths = {
       panelStore: path.resolve('src/state/panelStore.ts'),
+      submissionStore: path.resolve('src/state/chatSubmissionStore.ts'),
       workspaceStore: path.resolve('src/state/workspaceStore.ts'),
+      productSend: path.resolve('src/lib/ws/product-send.ts'),
+      shellAuth: path.resolve('src/lib/shell-auth-client.ts'),
       fileStore: path.resolve('src/state/fileStore.ts'),
       fileDataStore: path.resolve('src/state/fileDataStore.ts'),
       wikiStore: path.resolve('src/state/wikiStore.ts'),
       viewActivity: path.resolve('src/lib/viewActivity.ts'),
-      host: path.resolve('src/components/chat/ViewWorksurfaceDock.tsx'),
+      host: path.resolve('src/components/chat/ViewChatHost.tsx'),
+      conflictBanner: path.resolve('src/components/chat/WorksurfaceConflictBanner.tsx'),
+      streamHandlers: path.resolve('src/lib/ws/stream-handlers.ts'),
       threadHandlers: path.resolve('src/lib/ws/thread-handlers.ts'),
       worksurfaceHandlers: path.resolve('src/lib/ws/worksurface-handlers.ts'),
       controller: path.resolve('src/lib/worksurface/worksurfaceController.ts'),
@@ -155,19 +160,24 @@ export function buildWorksurfaceHarness(): Promise<string> {
       import React from 'react';
       import { createRoot } from 'react-dom/client';
       import { usePanelStore } from ${JSON.stringify(modulePaths.panelStore)};
+      import { useChatSubmissionStore } from ${JSON.stringify(modulePaths.submissionStore)};
       import { useWorkspaceStore } from ${JSON.stringify(modulePaths.workspaceStore)};
+      import { installProductSendCapability, retireProductSendCapability } from ${JSON.stringify(modulePaths.productSend)};
+      import { createShellSocketAuthenticator } from ${JSON.stringify(modulePaths.shellAuth)};
       import { useFileStore } from ${JSON.stringify(modulePaths.fileStore)};
       import { useFileDataStore } from ${JSON.stringify(modulePaths.fileDataStore)};
       import {
         useWikiStore, createWikiRootNode, createWikiNode,
       } from ${JSON.stringify(modulePaths.wikiStore)};
       import { replaceViewTabs, getViewActivity } from ${JSON.stringify(modulePaths.viewActivity)};
-      import { ViewWorksurfaceDock } from ${JSON.stringify(modulePaths.host)};
+      import { ViewChatHost } from ${JSON.stringify(modulePaths.host)};
+      import { WorksurfaceConflictBanner } from ${JSON.stringify(modulePaths.conflictBanner)};
       import { handleThreadMessage } from ${JSON.stringify(modulePaths.threadHandlers)};
+      import { handleStreamMessage } from ${JSON.stringify(modulePaths.streamHandlers)};
       import { handleWorksurfaceMessage } from ${JSON.stringify(modulePaths.worksurfaceHandlers)};
       import {
         resetWorksurfaceController, setWorksurfaceRequestTimeout,
-        reconcileWorksurfacesOnReconnect, reconcileSideChatPlacementsOnReconnect,
+        reconcileWorksurfacesOnReconnect,
         retryPendingWorksurfaceCapture,
         discardPendingWorksurfaceConflict, flushBoundView, flushBoundWorkspaceViews,
         onViewContentChanged,
@@ -233,6 +243,7 @@ export function buildWorksurfaceHarness(): Promise<string> {
 
       function deliver(msg) {
         if (handleThreadMessage(msg)) return;
+        if (handleStreamMessage(msg)) return;
         handleWorksurfaceMessage(msg);
       }
       function replyLater(fn) { setTimeout(fn, 0); }
@@ -408,14 +419,66 @@ export function buildWorksurfaceHarness(): Promise<string> {
         }
       }
 
+      var immediateResponseMode = null;
       function makeWs() {
         return {
-          readyState: 1,
-          send: function (data) { var frame = JSON.parse(data); sent.push(frame); handleClientFrame(frame); },
+          readyState: 1, bufferedAmount: 0,
+          send: function (data) {
+            var frame = JSON.parse(data); sent.push(frame);
+            if (immediateResponseMode === 'prompt_ack' && frame.type === 'prompt') {
+              deliver({ type: 'message:sent', workspaceId: WS, threadId: frame.threadId,
+                requestId: frame.requestId, turnId: 'sync-accepted-turn', content: frame.user_input });
+            }
+            if (immediateResponseMode === 'stop_turn_begin' && frame.type === 'turn:stop') {
+              deliver({ type: 'turn_end', threadId: frame.threadId,
+                turnId: 'sync-accepted-turn', streamSeq: 2, reason: 'stopped' });
+              deliver({ type: 'chat-turn:saved', threadId: frame.threadId,
+                turnId: 'sync-accepted-turn', exchangeId: 1, seq: 1 });
+            }
+            handleClientFrame(frame);
+          },
           addEventListener: function () {}, removeEventListener: function () {}, close: function () {},
         };
       }
       var fakeWs = makeWs();
+      var fixtureCapability = null;
+      var fixtureAuthenticator = null;
+      var fixtureGeneration = 0;
+      var fixtureBindingAvailable = true;
+      async function installFixtureProductSender() {
+        if (fixtureCapability) retireProductSendCapability(fixtureCapability);
+        if (fixtureAuthenticator) fixtureAuthenticator.retire();
+        var socket = fakeWs;
+        var generation = 'fixture-gen-' + (++fixtureGeneration);
+        var authenticator = createShellSocketAuthenticator({ generation: generation,
+          electronApi: { authorizeShellChallenge: async function (challenge, rendererNonce) {
+            return { type: 'shell-auth:proof', version: 1, connectionId: challenge.connectionId,
+              serverNonce: challenge.serverNonce, rendererNonce: rendererNonce, generation: generation,
+              expiresAt: challenge.expiresAt, proof: 'p'.repeat(43) };
+          } }, send: function (value) { socket.send(value); }, close: function () { socket.readyState = 3; },
+          authenticated: function () {}, deliver: function () {}, bufferedAmount: function () { return socket.bufferedAmount; } });
+        fixtureAuthenticator = authenticator;
+        await authenticator.receive({ type: 'shell-auth:challenge', version: 1,
+          connectionId: 'fixture-connection', serverNonce: 'n'.repeat(43), generation: generation,
+          issuedAt: Date.now(), expiresAt: Date.now() + 30000 });
+        await authenticator.receive({ type: 'shell-auth:authenticated', version: 1 });
+        var capability = { socket: socket, generation: generation, isAuthenticated: authenticator.isAuthenticated,
+          captureBinding: function (workspaceId) {
+            var state = useWorkspaceStore.getState();
+            return fixtureBindingAvailable && workspaceId === WS && state.workspaceEpoch && Number.isSafeInteger(state.bindingRevision)
+              ? { workspaceId: workspaceId, workspaceEpoch: state.workspaceEpoch,
+                bindingRevision: state.bindingRevision, bindingSerial: state.bindingSerial } : null;
+          },
+          isBindingCurrent: function (binding) {
+            var state = useWorkspaceStore.getState();
+            return socket === fakeWs && state.activeWorkspaceId === binding.workspaceId
+              && state.workspaceEpoch === binding.workspaceEpoch
+              && state.bindingRevision === binding.bindingRevision
+              && state.bindingSerial === binding.bindingSerial;
+          }, sendProductResult: authenticator.sendProductResult };
+        fixtureCapability = capability;
+        installProductSendCapability(capability);
+      }
 
       function emptyChat(label) {
         return { messages: [{ id: label + '-u1', type: 'user', content: label, timestamp: 1 }],
@@ -490,6 +553,8 @@ export function buildWorksurfaceHarness(): Promise<string> {
           worksurfaceBindings: {}, worksurfacePendingCaptures: {}, worksurfaceEntries: {},
           worksurfaceRemoteRevisions: {}, worksurfaceConflicts: {}, worksurfaceWarnings: [],
         });
+        useWorkspaceStore.getState().beginInit();
+        useWorkspaceStore.getState().applyWorkspaceBinding(WS, 'fixture-epoch', null, null, null, 1);
         useWorkspaceStore.setState({ hasReceivedInit: true });
         useFileStore.getState().reset();
         useFileDataStore.getState().clearAll();
@@ -503,9 +568,10 @@ export function buildWorksurfaceHarness(): Promise<string> {
         return React.createElement('div', { id: 'worksurface-host' },
           mountedViews.map(function (view) {
             return React.createElement('div', { key: view.viewId, 'data-host-view': view.viewId },
-              React.createElement(ViewWorksurfaceDock, {
+              React.createElement(ViewChatHost, {
                 key: view.viewId, panel: view.viewId, workspaceId: WS, viewId: view.viewId, isActive: view.active,
-              }));
+              }),
+              React.createElement(WorksurfaceConflictBanner, { workspaceId: WS, viewId: view.viewId }));
           }),
           Object.keys(rails).map(function (viewId) {
             if (!rails[viewId]) return null;
@@ -542,15 +608,29 @@ export function buildWorksurfaceHarness(): Promise<string> {
         };
       }
 
-      function install() {
+      async function install() {
         setWorksurfaceRequestTimeout(1500);
         mountedViews = [{ viewId: FILE_VIEW, active: true }];
         resetStore();
+        await installFixtureProductSender();
         root = createRoot(document.querySelector('#root'));
         render();
         window.__wsFixture = {
+          seedSubmission: function (threadId, requestId, text) {
+            return useChatSubmissionStore.getState().begin({
+              workspaceId: usePanelStore.getState().activeWorkspaceId, threadId: threadId, requestId: requestId,
+              text: text, draftRevision: 0, attachmentIds: [], attachmentGenerations: {}, phase: 'pending',
+            });
+          },
           deliver: deliver,
           sentRaw: function () { return sent.slice(); },
+          setImmediateResponse: function (mode) { immediateResponseMode = mode; },
+          setBindingAvailable: function (available) { fixtureBindingAvailable = available; },
+          submission: function (threadId) {
+            var state = useChatSubmissionStore.getState();
+            return state.attemptsByOwner[JSON.stringify([WS, threadId])] || null;
+          },
+          chat: function (threadId) { return usePanelStore.getState().projectChats[threadId] || null; },
           clearSent: function () { sent.length = 0; },
           serverEntries: function () { return JSON.parse(JSON.stringify(server.entries)); },
           setEntry: function (viewId, groupId, entry) { server.entries[entryKey(viewId, groupId)] = entry; },
@@ -592,23 +672,20 @@ export function buildWorksurfaceHarness(): Promise<string> {
           flushWorkspace: function (reason) { return flushBoundWorkspaceViews(WS, reason); },
           retry: function (viewId) { return retryPendingWorksurfaceCapture(WS, viewId); },
           discard: function (viewId) { return discardPendingWorksurfaceConflict(WS, viewId); },
-          reconnect: function () {
+          reconnect: async function () {
             resetWorksurfaceController();
+            fakeWs = makeWs();
+            useWorkspaceStore.getState().beginInit();
+            useWorkspaceStore.getState().applyWorkspaceBinding(WS, 'fixture-epoch', null, null, null, fixtureGeneration + 1);
+            await installFixtureProductSender();
             usePanelStore.setState({ ws: fakeWs });
             reconcileWorksurfacesOnReconnect();
           },
-          // SPEC-04 §7 dockless restart trigger: seed the discovered panel
-          // configs and run the unbound chat-capable placement sweep exactly as
-          // the workspace-bind bootstrap does on relaunch.
-          setPanelConfigs: function (viewIds) {
-            usePanelStore.setState({
-              panelConfigs: (viewIds || []).map(function (id) {
-                return { id: id, name: id, icon: 'tab' };
-              }),
-            });
+          dropSocket: function () {
+            if (fixtureCapability) retireProductSendCapability(fixtureCapability);
+            if (fixtureAuthenticator) fixtureAuthenticator.retire();
+            usePanelStore.setState({ ws: null });
           },
-          reconcileSideChats: function () { reconcileSideChatPlacementsOnReconnect(); },
-          dropSocket: function () { usePanelStore.setState({ ws: null }); },
           resetController: function () { resetWorksurfaceController(); },
           store: storeSnapshot,
           replaceTabs: function (tabs, activeTabId) {
@@ -806,11 +883,11 @@ export function buildWorksurfaceHarness(): Promise<string> {
             mountedViews = mountedViews.map(function (v) { return v.viewId === viewId ? { viewId: viewId, active: active } : v; });
             render();
           },
-          remount: function () { resetStore(); render(); },
+          remount: async function () { resetStore(); await installFixtureProductSender(); render(); },
         };
       }
 
-      install();
+      void install();
     `;
     const result = await build({
       configFile: false,
@@ -853,7 +930,7 @@ type FixtureWindow = {
   };
 };
 
-/** Mount the shared harness and open the File Viewer dock (or another view). */
+/** Mount the shared harness and await the explicit view host rail. */
 export async function mountHarness(
   page: Page,
   viewId: string = FILE_VIEW,
@@ -864,8 +941,7 @@ export async function mountHarness(
   await page.setContent('<body><div id="root"></div></body>');
   await page.addScriptTag({ content: await buildWorksurfaceHarness() });
   await page.waitForFunction(() => Boolean((window as unknown as FixtureWindow).__wsFixture));
-  // An adapterless host (§6 Issues/Agents/Browser) has no SPEC-03 dock; the
-  // rail is mounted directly without a ViewWorksurfaceDock/ViewChatHost.
+  // An adapterless host has no view-bound population host in this fixture.
   if (options.dock === false) return;
   if (viewId !== FILE_VIEW) {
     await page.evaluate((target) => (
@@ -881,18 +957,16 @@ export async function mountHarness(
 }
 
 /**
- * The dock is collapsed by default in production; opening it is a real user
- * action that reveals the rail (the group-selection path).
+ * Compatibility helper retained for existing worksurface tests. The retired
+ * content dock no longer owns a second host; the explicit rail is already
+ * mounted by the fixture.
  */
 export async function openDock(page: Page, viewId: string): Promise<void> {
-  const dock = page.locator(`[data-worksurface-dock="${viewId}"]`);
-  const toggle = dock.locator('.rv-worksurface-dock-toggle');
-  // Idempotent: the dock may already be open (SPEC-04 §3 mirrors the outer
-  // rail's open state so a Side Chat's list button can operate it), so only
-  // click when it is actually closed.
-  if (await toggle.count() > 0 && await dock.getAttribute('data-open') !== 'true') {
-    await toggle.first().click();
-  }
+  const host = page.locator(`[data-host-view="${viewId}"]`);
+  // This source-only Vite harness does not emit the production CSS asset, so
+  // geometry is not an ownership oracle. The explicit host DOM and its
+  // interactive descendants are the contract under test.
+  await host.locator(`[data-thread-rail-panel="${viewId}"]`).waitFor({ state: 'attached' });
   await expect(page.locator('#worksurface-host [data-threaded-chat]').first()).toBeVisible();
 }
 

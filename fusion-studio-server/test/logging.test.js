@@ -2,7 +2,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const { installLogTee, resolveServerLogPath } = require('../lib/logging');
+const { installLogTee, resolveServerLogPath, logTemporaryChatBoundary } = require('../lib/logging');
 const { clearThreadMode } = require('../lib/harness/feature-flags');
 const { createHarnessWsHandlers } = require('../lib/ws/harness-ws-handlers');
 const { runWithRequestDiagnosticBoundary } = require('../lib/ws/request-diagnostic-context');
@@ -33,6 +33,46 @@ describe('resolveServerLogPath', () => {
 });
 
 describe('request diagnostic boundary', () => {
+  test('temporary chat boundary writes only closed, content-free fields', () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-chat-boundary-'));
+    const logPath = path.join(tmpDir, 'server-live.log');
+    const secret = 'PROMPT_AND_SECRET_CANARY';
+    const restoreLogTee = installLogTee(logPath);
+    try {
+      logTemporaryChatBoundary('spawn_error', {
+        threadId: '11111111-1111-4111-8111-111111111111',
+        turnId: '22222222-2222-4222-8222-222222222222',
+        harnessId: 'opencode', pid: 1234, errorCode: 'EMFILE',
+        prompt: secret, stderr: secret, cliPath: secret,
+      });
+      logTemporaryChatBoundary('spawn_error', { errorCode: secret, threadId: secret });
+      logTemporaryChatBoundary('spawn_throw', {
+        errorCode: 'ERR_INVALID_ARG_VALUE', errorName: 'TypeError', errno: -9,
+        environmentReady: true, prompt: secret,
+      });
+      logTemporaryChatBoundary('status_result', {
+        requestId: 'a'.repeat(32), receiptOutcome: 'accepted', hasThreadId: true,
+        prompt: secret, content: secret,
+      });
+      const lines = fs.readFileSync(logPath, 'utf8').trim().split('\n');
+      expect(lines).toHaveLength(4);
+      expect(lines[0]).toContain('"stage":"spawn_error"');
+      expect(lines[0]).toContain('"errorCode":"EMFILE"');
+      expect(lines[2]).toContain('"errorCode":"ERR_INVALID_ARG_VALUE"');
+      expect(lines[2]).toContain('"errorName":"TypeError"');
+      expect(lines[2]).toContain('"errno":-9');
+      expect(lines[2]).toContain('"environmentReady":true');
+      expect(lines[3]).toContain('"requestId":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"');
+      expect(lines[3]).toContain('"receiptOutcome":"accepted"');
+      expect(lines.join('\n')).not.toContain(secret);
+      expect(lines.join('\n')).not.toContain('prompt');
+      expect(lines.join('\n')).not.toContain('stderr');
+    } finally {
+      restoreLogTee();
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
+  });
+
   test('minimizes arbitrary startup and background diagnostics at the installed sink', () => {
     const canary = 'REPOSITORY_PROMPT_PAYLOAD_CANARY_00B';
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-global-log-'));

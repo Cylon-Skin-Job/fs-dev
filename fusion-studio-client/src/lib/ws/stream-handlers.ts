@@ -1,3 +1,5 @@
+import { handleDiagnosticStream, observeCanonicalDiagnostic } from '../diagnostics/stream';
+import type { DiagnosticStreamFrame } from '../diagnostics/types';
 /**
  * @module stream-handlers
  * @role Thin routed dispatcher for stream-related WebSocket messages
@@ -44,6 +46,8 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { chatSubmissionOwnerKey, useChatSubmissionStore } from '../../state/chatSubmissionStore';
+import { finishAcceptedPromptExecution, noteAcceptedExecutionFailure, settlePromptRecovery } from '../chat/prompt-submission-recovery';
 import { readTokenUsage } from '../chat/context-usage';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useFileStore } from '../../state/fileStore';
@@ -151,6 +155,7 @@ function routeAndApply(
   if (opts?.advanceBeforeBody) {
     advanceLiveFrontier(resolved.ns, resolved.streamSeq);
   }
+  observeCanonicalDiagnostic(msg);
   applyBody(resolved);
   if (!opts?.advanceBeforeBody) {
     advanceLiveFrontier(resolved.ns, resolved.streamSeq);
@@ -221,6 +226,10 @@ function markFirstToken(type: 'content' | 'thinking'): void {
  */
 export function handleStreamMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
+  if (msg.type === 'chat-turn:diagnostic:stream') {
+    handleDiagnosticStream(msg as DiagnosticStreamFrame);
+    return true;
+  }
 
   // ── Diagnostic retrieval frames — claimed AHEAD of metadata dispatch ──
   // Mirrors the server's client-message-router.js registration intent:
@@ -242,6 +251,11 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
     case 'turn_begin': {
       if (!threadId) return true;
       handleTurnBegin(msg, threadId);
+      if (store.activeWorkspaceId && typeof msg.turnId === 'string'
+        && readChatState(threadId)?.currentTurn?.id === msg.turnId) {
+        observeCanonicalDiagnostic(msg);
+        finishAcceptedPromptExecution(store.activeWorkspaceId, threadId, msg.turnId);
+      }
       return true;
     }
 
@@ -392,6 +406,7 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
         ts: msg.ts,
         metadata: msg.metadata,
       });
+      if (store.activeWorkspaceId) finishAcceptedPromptExecution(store.activeWorkspaceId, threadId, msg.turnId);
       return true;
     }
 
@@ -405,26 +420,38 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       console.log('[WS] Agent request:', msg.requestType);
       return true;
 
-    case 'auth_error':
+    case 'auth_error': {
+      const postBeginCompanion = threadId
+        ? consumeTerminalCompanion(threadId, 'auth_error', msg.requestId) : false;
+      if (!postBeginCompanion && msg.code === 'accepted_execution_failed'
+        && msg.workspaceId && msg.threadId && msg.requestId) {
+        noteAcceptedExecutionFailure(msg.workspaceId, msg.threadId, msg.requestId);
+        window.dispatchEvent(new CustomEvent('fusion:prompt-execution-failed', {
+          detail: { workspaceId: msg.workspaceId, threadId: msg.threadId, requestId: msg.requestId },
+        }));
+      }
       // A post-terminal identity-less companion retains its toast but MUST
       // NOT masquerade as a replacement prompt's acceptance failure. The
       // authoritative error turn_end arms the one-shot lifecycle marker.
       // Without that marker this is a true pre-begin failure and preserves
       // the existing acceptance cleanup event.
       if (!threadId) return true;
-      if (!consumeTerminalCompanion(threadId, 'auth_error')) {
-        const pendingPrompt = store.projectChats[threadId]?.pendingPromptAcceptance;
-        const pendingPromptMatched = pendingPrompt != null;
-        if (pendingPrompt) {
-          store.setPromptRetryDraft(threadId, pendingPrompt);
-          store.setPendingPromptAcceptance(threadId, null);
+      if (!postBeginCompanion) {
+        const workspaceId = store.activeWorkspaceId;
+        const attempt = workspaceId ? useChatSubmissionStore.getState().attemptsByOwner[
+          chatSubmissionOwnerKey(workspaceId, threadId)
+        ] : null;
+        if (msg.code !== 'accepted_execution_failed' && workspaceId && msg.workspaceId === workspaceId && attempt && msg.requestId === attempt.requestId
+          && useChatSubmissionStore.getState().reject(workspaceId, threadId, attempt.requestId, msg.message || 'Authentication failed')) {
+          settlePromptRecovery(workspaceId, threadId, attempt.requestId);
+          window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
+            detail: { workspaceId, threadId, requestId: attempt.requestId },
+          }));
         }
-        window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
-          detail: { threadId, message: msg.message || 'Authentication failed', pendingPromptMatched },
-        }));
       }
       showToast(msg.message || 'Authentication failed. Run `kimi login` in your terminal.');
       return true;
+    }
 
     case 'error':
       console.error('[WS] Wire error:', msg.error);
@@ -434,20 +461,35 @@ export function handleStreamMessage(msg: WebSocketMessage): boolean {
       if (typeof msg.threadId !== 'string' || msg.threadId.trim() === '') {
         return true;
       }
-      if (!consumeTerminalCompanion(msg.threadId, 'error')) {
-        const pendingPrompt = store.projectChats[msg.threadId]?.pendingPromptAcceptance;
-        const pendingPromptMatched = pendingPrompt != null;
-        if (pendingPrompt) {
-          store.setPromptRetryDraft(msg.threadId, pendingPrompt);
-          store.setPendingPromptAcceptance(msg.threadId, null);
+      // A conflicting duplicate packet is rejected on its own merits. It
+      // says nothing about the original same-key attempt, which may still be
+      // awaiting its server-owned acceptance.
+      if (msg.code === 'request_mismatch') return true;
+      const postBeginCompanion = consumeTerminalCompanion(msg.threadId, 'error', msg.requestId);
+      if (msg.code === 'accepted_execution_failed') {
+        // A matched post-begin terminal already owns the partial and safe
+        // error presentation. Only an unmatched pre-begin failure needs a
+        // local acceptance response.
+        if (!postBeginCompanion && msg.workspaceId && msg.requestId) {
+          noteAcceptedExecutionFailure(msg.workspaceId, msg.threadId, msg.requestId);
+          window.dispatchEvent(new CustomEvent('fusion:prompt-execution-failed', {
+            detail: { workspaceId: msg.workspaceId, threadId: msg.threadId, requestId: msg.requestId },
+          }));
         }
-        window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
-          detail: {
-            threadId: msg.threadId,
-            message: msg.message || msg.error || 'Prompt failed',
-            pendingPromptMatched,
-          },
-        }));
+        return true;
+      }
+      if (!postBeginCompanion) {
+        const workspaceId = store.activeWorkspaceId;
+        const attempt = workspaceId ? useChatSubmissionStore.getState().attemptsByOwner[
+          chatSubmissionOwnerKey(workspaceId, msg.threadId)
+        ] : null;
+        if (workspaceId && msg.workspaceId === workspaceId && attempt && msg.requestId === attempt.requestId
+          && useChatSubmissionStore.getState().reject(workspaceId, msg.threadId, attempt.requestId, msg.message || msg.error || 'Prompt failed')) {
+          settlePromptRecovery(workspaceId, msg.threadId, attempt.requestId);
+          window.dispatchEvent(new CustomEvent('fusion:prompt-acceptance-failed', {
+            detail: { workspaceId, threadId: msg.threadId, requestId: attempt.requestId },
+          }));
+        }
       }
       return true;
 

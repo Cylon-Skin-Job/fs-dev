@@ -11,8 +11,6 @@ import { FileTreeDrawer } from './FileTreeDrawer';
 import { FileViewer } from './FileViewer';
 import { normalizeViewActivity } from '../../lib/viewActivity';
 import { getWorksurfaceBinding } from '../../state/slices/worksurfaceSlice';
-import { worksurfaceAdapterForView } from '../../lib/worksurface/worksurfaceController';
-import { ViewWorksurfaceDock } from '../chat/ViewWorksurfaceDock';
 import { useWorkspaceStore } from '../../state/workspaceStore';
 
 export function FileExplorer() {
@@ -57,18 +55,6 @@ export function FileExplorer() {
 
   return (
     <div className="rv-file-explorer-layout">
-      {/* CHAT-03 / SPEC-03: view-bound group selection path consuming the
-       * accepted SPEC-02 `ViewChatHost`. Collapsed by default; Existing
-       * Legacy production composition is unchanged. */}
-      {workspaceId && worksurfaceAdapterForView('file-viewer') && (
-        <ViewWorksurfaceDock
-          panel="file-viewer"
-          workspaceId={workspaceId}
-          viewId="file-viewer"
-          isActive={currentPanel === 'file-viewer'}
-        />
-      )}
-
       {/* Main viewer area */}
       <div className="rv-file-explorer-main">
         {viewMode === 'viewer' ? (

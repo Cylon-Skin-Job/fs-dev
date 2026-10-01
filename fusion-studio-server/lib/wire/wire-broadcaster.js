@@ -21,6 +21,7 @@
  */
 
 const { on } = require('../event-bus');
+const { deliverSavedExchange } = require('./terminal-saved-delivery');
 
 /**
  * Initialize the wire broadcaster. Call once at server startup,
@@ -245,18 +246,7 @@ function createWireBroadcaster({ getClientForThread }) {
   });
 
   on('chat-turn:saved', (event) => {
-    sendToThread(event, {
-      type: 'chat-turn:saved',
-      scope: event.scope,
-      threadId: event.threadId,
-      turnId: event.turnId,
-      exchangeId: event.exchangeId,
-      seq: event.seq,
-      ts: event.ts,
-      partial: event.partial,
-      reason: event.reason,
-      metadata: event.metadata,
-    });
+    deliverSavedExchange(event, message => sendToThread(event, message));
   });
 
   console.log('[WireBroadcaster] Started');

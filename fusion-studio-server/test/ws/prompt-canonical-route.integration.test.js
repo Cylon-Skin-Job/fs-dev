@@ -1,3 +1,10 @@
+// Unit persistence adapter: real lease/row validation is covered by isolated
+// public-route deletion/admission and submission integration tests.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
 /**
  * Public prompt route → canonical drain ownership integration tests
  * (RCC-0108 SPEC-01 Slice C, SPEC §5 items a–d).
@@ -29,6 +36,20 @@ jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
   handleMessageSend: jest.fn(),
   getCurrentThreadManager: jest.fn(() => null),
   getCurrentThreadId: jest.fn(() => null),
+}));
+
+jest.mock('../../lib/thread/prompt-submission-service', () => ({
+  withAttemptLock: jest.fn((_identity, work) => work()),
+  begin: jest.fn(async () => ({ ok: true, replayed: false })),
+  isReserved: jest.fn(async () => true),
+  reject: jest.fn(async () => true),
+  accept: jest.fn(async (_identity, turnId, groups) => {
+    const activity = await groups.recordPromptAccepted({ threadId: _identity.threadId, turnId });
+    return { ok: activity.ok, receipt: { turnId, content: 'hello' } };
+  }),
+  claimDispatch: jest.fn(async () => true),
+  failBeforeDispatch: jest.fn(async () => true),
+  noteClaimedFailure: jest.fn(async () => true),
 }));
 
 jest.mock('../../lib/ws/thread-ws-handlers', () => ({
@@ -158,7 +179,7 @@ describe('public prompt route with canonical drain ownership', () => {
       listThreads: jest.fn(async () => []),
       // SPEC-01 §5.4: prompt acceptance records the group activity before
       // message:sent. Production managers always own the Thread Group service.
-      threadGroups: { recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
+      threadGroups: { activate: jest.fn(async () => ({ ok: true })), recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
     };
     // One stable per-ws state object: the controller mutates state.threadId.
     const wsState = {
@@ -257,7 +278,8 @@ describe('public prompt route with canonical drain ownership', () => {
   }
 
   async function sendPrompt(payload) {
-    await router.handleClientMessage(JSON.stringify({ type: 'prompt', ...payload }));
+    await router.handleClientMessage(JSON.stringify({ type: 'prompt',
+      requestId: `route-${Math.random().toString(36).slice(2, 14)}`, ...payload }));
     await flushAsyncWork();
   }
 

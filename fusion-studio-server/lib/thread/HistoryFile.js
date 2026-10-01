@@ -7,6 +7,7 @@
  */
 
 const { getDb } = require('../db');
+const mirrorJournal = require('./mirror-journal');
 
 const SCHEMA_VERSION = '1.0.0';
 let agentExchangeBinding = null;
@@ -106,6 +107,7 @@ class HistoryFile {
           now: exchangeTs,
         });
       }
+      await mirrorJournal.invalidate(trx, threadId);
       return Object.freeze({ exchangeId, seq, exchangeTs });
     });
     if (bindingAuthority) agentExchangeBinding.signal();

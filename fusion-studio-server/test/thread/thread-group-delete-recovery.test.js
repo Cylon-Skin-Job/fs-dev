@@ -322,6 +322,14 @@ describe('thread group delete recovery', () => {
       route: { threadId, workspaceId: WORKSPACE_ID },
       control: { runtimeKey, drainId: 'stale-drain' },
     });
+    const { createCanonicalChatEventApplier } = require('../../lib/wire/canonical-chat-event-applier');
+    const applier = createCanonicalChatEventApplier({ emit: (...args) => emitted.push(args),
+      checkSettingsBounce: () => null, generateTurnId: () => 'late-generated' });
+    applier.applyChatEvent({ type: 'status_update', payload: { tokenUsage: 100 } }, null, {
+      route: { threadId, workspaceId: WORKSPACE_ID },
+      control: { runtimeKey, drainId: 'stale-drain', touchThreadSession: () => manager.touchSession(threadId) },
+    });
+    expect(threadRuntimeManager.getRuntimeForResource(resourceKey)).toBeNull();
     expect(emitted).toHaveLength(0);
     expect(await db('exchanges').where({ thread_id: threadId })).toHaveLength(0);
   });
@@ -368,4 +376,76 @@ describe('thread group delete recovery', () => {
     expect(await db('thread_group_members').where({ thread_id: threadId })).toHaveLength(0);
     expect(await db('threads').where({ thread_id: threadId })).toHaveLength(0);
   });
+
+  test('delete journal insertion failure rolls back sessions, history and receipt; retry cascades the receipt', async () => {
+    const manager = makeManager();
+    const { threadId, groupId } = await seed(manager);
+    await insertExchange(threadId);
+    const db = getDb();
+    await db('prompt_submission_receipts').insert({ workspace_id: WORKSPACE_ID, thread_id: threadId,
+      request_id: 'accepted-before-delete', generation: EPOCH, outcome: 'accepted', execution: 'completed',
+      created_at: 1, updated_at: 1 });
+    const repo = require('../../lib/thread-groups/repository');
+    const stage = jest.spyOn(repo, 'insertMirrorRecovery').mockRejectedValue(new Error('journal unavailable'));
+    try {
+      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'journal-fail' }))
+        .rejects.toThrow('journal unavailable');
+    } finally { stage.mockRestore(); }
+    for (const table of ['threads', 'exchanges', 'prompt_submission_receipts']) {
+      expect(await db(table).where({ thread_id: threadId })).toHaveLength(1);
+    }
+    expect(await db('thread_group_delete_tombstones')).toHaveLength(0);
+    expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'journal-retry' }))
+      .toMatchObject({ ok: true });
+    expect(await db('prompt_submission_receipts').where({ thread_id: threadId })).toHaveLength(0);
+  });
+
+  test('failed drain retirement or provider close rejects deletion before SQL mutation', async () => {
+    const manager = makeManager();
+    const { threadId, groupId } = await seed(manager);
+    const retire = jest.spyOn(threadRuntimeManager, 'retireResourceDrains').mockRejectedValue(new Error('drain failed'));
+    try {
+      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId })).rejects.toThrow('drain failed');
+    } finally { retire.mockRestore(); }
+    const session = jest.spyOn(manager.sessionManager, 'getSession').mockReturnValue({ state: 'active' });
+    const close = jest.spyOn(manager.sessionLifecycle, 'closeSession').mockRejectedValue(new Error('close failed'));
+    try {
+      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId })).rejects.toThrow('close failed');
+    } finally { session.mockRestore(); close.mockRestore(); }
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
+    expect(await getDb()('thread_group_delete_tombstones')).toHaveLength(0);
+  });
+
+  test('delete file ACK failure remains recoverable after SQLite close and reopen', async () => {
+    const manager = makeManager();
+    const { threadId, groupId } = await seed(manager);
+    const repo = require('../../lib/thread-groups/repository');
+    const mark = jest.spyOn(repo, 'markMirrorRecovery').mockRejectedValue(new Error('ACK unavailable'));
+    try {
+      expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'delete-ack' }))
+        .toMatchObject({ ok: true, result: { deleted: true, cleanup: { status: 'pending' } } });
+    } finally { mark.mockRestore(); }
+    expect(fs.existsSync(manager.chatlogMirror.file(threadId).filePath)).toBe(false);
+    await closeDb(); await initDb();
+    const restarted = makeManager();
+    await restarted.ensureGroupsActivated();
+    expect(await restarted.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'delete-ack-retry' }))
+      .toMatchObject({ ok: true, result: { cleanup: { status: 'complete' } } });
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(0);
+  });
+
+  test('a cold passive epoch cannot hide another epoch busy during Delete', async () => {
+    const manager = makeManager();
+    const { threadId, groupId } = await seed(manager);
+    const resource = { workspaceId: WORKSPACE_ID, projectRoot, threadId, scope: 'project' };
+    threadRuntimeManager.markInFlight({ ...resource, workspaceEpoch: 'active-epoch' });
+    threadRuntimeManager.ensureRuntime({ ...resource, workspaceEpoch: 'passive-epoch' });
+    try {
+      expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'busy-epochs' }))
+        .toMatchObject({ ok: false, code: 'group_busy' });
+      expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
+      expect(threadRuntimeManager.getRuntimeState({ ...resource, workspaceEpoch: 'active-epoch' })).toBe('in_flight');
+    } finally { threadRuntimeManager.fenceResource(resource); }
+  });
+
 });

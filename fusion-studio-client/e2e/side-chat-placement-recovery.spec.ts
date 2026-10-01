@@ -141,7 +141,7 @@ test.describe('SPEC-04 04C Side Chat close disposition and recovery', () => {
 
     const row = page.locator(`[data-thread-group-id="${FILE_GROUP_A}"]`);
     await row.locator('.rv-thread-menu-btn').click();
-    const memberItem = page.locator(`[data-thread-member-id="${FILE_THREAD_A}"]`);
+    const memberItem = page.locator(`[data-menu-item-id="open-${FILE_THREAD_A}"]`);
     await expect(memberItem).toBeVisible();
     await memberItem.click();
 

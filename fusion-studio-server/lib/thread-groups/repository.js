@@ -1,14 +1,7 @@
 'use strict';
-
-/**
- * @module thread-groups/repository
- * @role Persistence for the Thread Group domain (§5). Pure data access.
- *
- * Every function takes the active knex handle (the database singleton or a
- * transaction). No service, WebSocket, or ThreadManager concern lives here.
- * Structural invariants are enforced by migration 041's deferred composite
- * foreign key; this module never commits a group without its member.
- */
+const { getMirrorRecovery, listMirrorRecoveryForGroup, insertMirrorRecovery, markMirrorRecovery, listPendingMirrorRecovery } = require('./mirror-repository');
+const { toWorksurfaceCleanup, insertWorksurfaceCleanup, getWorksurfaceCleanup, listUnappliedWorksurfaceCleanup, markWorksurfaceCleanup, toPlacementOutbox, insertPlacementOutbox, getPlacementOutboxByIdempotencyKey, getPlacementOutboxForGroup, listUnappliedPlacementOutbox, markPlacementOutbox } = require('./projection-outbox-repository');
+const { insertActionResult, getActionResult, updateActionResult, upsertActionResult, insertDeleteTombstone, getDeleteTombstone, updateDeleteTombstone } = require('./action-result-repository');
 
 function toIso(value) {
   if (typeof value === 'number' && Number.isFinite(value)) return new Date(value).toISOString();
@@ -16,7 +9,6 @@ function toIso(value) {
   return null;
 }
 
-/** Parse a stored ISO timestamp to epoch ms, or fall back. */
 function epochFromIso(value, fallback) {
   if (typeof value !== 'string' || !value) return fallback;
   const parsed = Date.parse(value);
@@ -83,11 +75,6 @@ async function insertPrimaryEvent(db, row) {
   });
 }
 
-/**
- * Insert the canonical activity event. Idempotent on `event_key`: a retry of
- * the same creation or accepted prompt never advances group MRU twice.
- * Returns true only when a new row was written.
- */
 async function insertActivityEvent(db, row) {
   const existing = await db('thread_group_activity_events')
     .where('event_key', row.eventKey)
@@ -104,24 +91,12 @@ async function insertActivityEvent(db, row) {
   return true;
 }
 
-/** Advance the sole visible-list MRU clock only when a new activity landed. */
 async function advanceGroupUpdatedAt(db, groupId, occurredAt) {
   await db('thread_groups')
     .where('group_id', groupId)
     .update({ updated_at: occurredAt });
 }
 
-/**
- * Insert one idempotent activity event and monotonically advance the group's
- * sole visible-list MRU clock in ONE transaction (`SPEC-01 §5.4`). A retry of
- * the same `event_key` never advances MRU twice. Returns true when a new
- * activity row was written and the clock advanced.
- *
- * @param {object} db knex handle or transaction
- * @param {{ eventKey: string, groupId: string, threadId: string,
- *           turnId?: string|null, kind: string, occurredAt: number }} row
- * @returns {Promise<boolean>}
- */
 async function recordActivityAndAdvance(db, row) {
   const run = async (trx) => {
     const inserted = await insertActivityEvent(trx, row);
@@ -138,314 +113,6 @@ async function recordActivityAndAdvance(db, row) {
   };
   if (db.isTransaction) return run(db);
   return db.transaction(run);
-}
-
-async function insertActionResult(db, row) {
-  await db('thread_group_action_results').insert({
-    workspace_id: row.workspaceId,
-    request_id: row.requestId,
-    action: row.action,
-    target_hash: row.targetHash,
-    result_json: row.resultJson,
-    created_at: row.createdAt,
-    updated_at: row.updatedAt,
-  });
-}
-
-async function getActionResult(db, workspaceId, requestId) {
-  const row = await db('thread_group_action_results')
-    .where({ workspace_id: workspaceId, request_id: requestId })
-    .first();
-  if (!row) return null;
-  return {
-    workspaceId: row.workspace_id,
-    requestId: row.request_id,
-    action: row.action,
-    targetHash: row.target_hash,
-    resultJson: row.result_json,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
-}
-
-/**
- * Refresh a stored action result's aggregate (e.g. Side Chat placement
- * delivery status) after a post-commit, failure-isolated step. The idempotency
- * key is unchanged; only the recorded result body advances.
- */
-async function updateActionResult(db, workspaceId, requestId, { resultJson, now }) {
-  await db('thread_group_action_results')
-    .where({ workspace_id: workspaceId, request_id: requestId })
-    .update({ result_json: resultJson, updated_at: now });
-}
-
-/**
- * Insert an action result if absent and return the durable row. Concurrent
- * retries of one requestId converge on the first committed winner; the unique
- * `{workspace_id, request_id}` constraint is the arbiter.
- */
-async function upsertActionResult(db, row) {
-  await db('thread_group_action_results')
-    .insert({
-      workspace_id: row.workspaceId,
-      request_id: row.requestId,
-      action: row.action,
-      target_hash: row.targetHash,
-      result_json: row.resultJson,
-      created_at: row.createdAt,
-      updated_at: row.updatedAt,
-    })
-    .onConflict(['workspace_id', 'request_id'])
-    .ignore();
-  return getActionResult(db, row.workspaceId, row.requestId);
-}
-
-async function insertDeleteTombstone(db, row) {
-  await db('thread_group_delete_tombstones').insert({
-    group_id: row.groupId,
-    workspace_id: row.workspaceId,
-    result_json: row.resultJson,
-    cleanup_json: row.cleanupJson,
-    created_at: row.createdAt,
-    updated_at: row.updatedAt,
-    expires_at: row.expiresAt,
-  });
-}
-
-async function getDeleteTombstone(db, groupId) {
-  const row = await db('thread_group_delete_tombstones')
-    .where('group_id', groupId)
-    .first();
-  if (!row) return null;
-  return {
-    groupId: row.group_id,
-    workspaceId: row.workspace_id,
-    resultJson: row.result_json,
-    cleanupJson: row.cleanup_json,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    expiresAt: row.expires_at,
-  };
-}
-
-async function updateDeleteTombstone(db, groupId, {
-  resultJson, cleanupJson, now,
-}) {
-  await db('thread_group_delete_tombstones')
-    .where('group_id', groupId)
-    .update({
-      result_json: resultJson,
-      cleanup_json: cleanupJson,
-      updated_at: now,
-    });
-}
-
-function toWorksurfaceCleanup(row) {
-  if (!row) return null;
-  return {
-    id: row.id,
-    idempotencyKey: row.idempotency_key,
-    workspaceId: row.workspace_id,
-    viewId: row.view_id,
-    groupId: row.group_id,
-    status: row.status,
-    attempts: Number(row.attempts || 0),
-    failureCode: row.last_failure_code ?? null,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    appliedAt: row.applied_at ?? null,
-  };
-}
-
-/**
- * Atomically record one `remove-group-worksurface` cleanup instruction. The
- * unique `idempotency_key` makes a replay/duplicate consumption harmless: an
- * existing instruction is never duplicated or rewritten. Runs in the caller's
- * group-delete transaction.
- */
-async function insertWorksurfaceCleanup(db, row) {
-  await db('thread_group_worksurface_cleanup')
-    .insert({
-      idempotency_key: row.idempotencyKey,
-      workspace_id: row.workspaceId,
-      view_id: row.viewId,
-      group_id: row.groupId,
-      status: row.status || 'pending',
-      attempts: row.attempts || 0,
-      last_failure_code: row.failureCode ?? null,
-      created_at: row.createdAt,
-      updated_at: row.updatedAt,
-      applied_at: row.appliedAt ?? null,
-    })
-    .onConflict('idempotency_key')
-    .ignore();
-}
-
-/** Latest cleanup instruction for one group, or null. */
-async function getWorksurfaceCleanup(db, groupId) {
-  const row = await db('thread_group_worksurface_cleanup')
-    .where('group_id', groupId)
-    .orderBy('id', 'desc')
-    .first();
-  return toWorksurfaceCleanup(row);
-}
-
-/** Every unapplied instruction for one exact workspace (retry/restart sweep). */
-async function listUnappliedWorksurfaceCleanup(db, workspaceId) {
-  const rows = await db('thread_group_worksurface_cleanup')
-    .where({ workspace_id: workspaceId })
-    .whereNot('status', 'applied')
-    .orderBy('id', 'asc');
-  return rows.map(toWorksurfaceCleanup);
-}
-
-/**
- * Update one instruction's delivery state by idempotency key. `attempts` is
- * incremented in SQL so concurrent consumers cannot clobber each other.
- */
-async function markWorksurfaceCleanup(db, {
-  idempotencyKey, status, failureCode = null, appliedAt = null, now,
-}) {
-  await db('thread_group_worksurface_cleanup')
-    .where({ idempotency_key: idempotencyKey })
-    .update({
-      status,
-      attempts: db.raw('attempts + 1'),
-      last_failure_code: failureCode,
-      updated_at: now,
-      applied_at: appliedAt,
-    });
-}
-
-async function getMirrorRecovery(db, { workspaceId, mirrorKey, operation }) {
-  return db('thread_group_mirror_recovery')
-    .where({ workspace_id: workspaceId, mirror_key: mirrorKey, operation })
-    .first() || null;
-}
-
-async function listMirrorRecoveryForGroup(db, groupId, operation) {
-  return db('thread_group_mirror_recovery')
-    .where({ group_id: groupId, operation })
-    .orderBy('id', 'asc');
-}
-
-async function insertMirrorRecovery(db, row) {
-  await db('thread_group_mirror_recovery').insert({
-    workspace_id: row.workspaceId,
-    group_id: row.groupId,
-    thread_id: row.threadId,
-    mirror_key: row.mirrorKey,
-    operation: row.operation,
-    status: row.status || 'pending',
-    failure_code: row.failureCode ?? null,
-    created_at: row.createdAt,
-    updated_at: row.updatedAt,
-  });
-}
-
-async function markMirrorRecovery(db, {
-  workspaceId, mirrorKey, operation, status, failureCode = null, now,
-}) {
-  await db('thread_group_mirror_recovery')
-    .where({ workspace_id: workspaceId, mirror_key: mirrorKey, operation })
-    .update({ status, failure_code: failureCode, updated_at: now });
-}
-
-async function listPendingMirrorRecovery(db, workspaceId) {
-  return db('thread_group_mirror_recovery')
-    .where({ workspace_id: workspaceId })
-    .whereIn('status', ['pending', 'failed'])
-    .orderBy('id', 'asc');
-}
-
-function toPlacementOutbox(row) {
-  if (!row) return null;
-  return {
-    id: row.id,
-    sideChatPlacementId: row.side_chat_placement_id,
-    idempotencyKey: row.idempotency_key,
-    workspaceId: row.workspace_id,
-    viewId: row.view_id,
-    groupId: row.group_id,
-    threadId: row.thread_id,
-    operation: row.operation,
-    status: row.status,
-    attempts: Number(row.attempts || 0),
-    failureCode: row.last_failure_code ?? null,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    appliedAt: row.applied_at ?? null,
-  };
-}
-
-/**
- * Atomically record one `open-side-chat-tab` placement instruction. The unique
- * `side_chat_placement_id`/`idempotency_key` make a replay/duplicate harmless:
- * an existing instruction is never duplicated or rewritten. Runs in the
- * caller's group-mutation transaction (`SPEC-04 §5`).
- */
-async function insertPlacementOutbox(db, row) {
-  await db('thread_group_placement_outbox')
-    .insert({
-      side_chat_placement_id: row.sideChatPlacementId,
-      idempotency_key: row.idempotencyKey,
-      workspace_id: row.workspaceId,
-      view_id: row.viewId,
-      group_id: row.groupId,
-      thread_id: row.threadId,
-      operation: row.operation || 'open-side-chat-tab',
-      status: row.status || 'pending',
-      attempts: row.attempts || 0,
-      last_failure_code: row.failureCode ?? null,
-      created_at: row.createdAt,
-      updated_at: row.updatedAt,
-      applied_at: row.appliedAt ?? null,
-    })
-    .onConflict('idempotency_key')
-    .ignore();
-}
-
-async function getPlacementOutboxByIdempotencyKey(db, idempotencyKey) {
-  const row = await db('thread_group_placement_outbox')
-    .where('idempotency_key', idempotencyKey)
-    .first();
-  return toPlacementOutbox(row);
-}
-
-/** Latest placement instruction for one group, or null. */
-async function getPlacementOutboxForGroup(db, groupId) {
-  const row = await db('thread_group_placement_outbox')
-    .where('group_id', groupId)
-    .orderBy('id', 'desc')
-    .first();
-  return toPlacementOutbox(row);
-}
-
-/** Every unapplied instruction for one exact workspace (retry/restart sweep). */
-async function listUnappliedPlacementOutbox(db, workspaceId) {
-  const rows = await db('thread_group_placement_outbox')
-    .where({ workspace_id: workspaceId })
-    .whereNot('status', 'applied')
-    .orderBy('id', 'asc');
-  return rows.map(toPlacementOutbox);
-}
-
-/**
- * Update one instruction's delivery state by idempotency key. `attempts` is
- * incremented in SQL so concurrent consumers cannot clobber each other.
- */
-async function markPlacementOutbox(db, {
-  idempotencyKey, status, failureCode = null, appliedAt = null, now,
-}) {
-  await db('thread_group_placement_outbox')
-    .where({ idempotency_key: idempotencyKey })
-    .update({
-      status,
-      attempts: db.raw('attempts + 1'),
-      last_failure_code: failureCode,
-      updated_at: now,
-      applied_at: appliedAt,
-    });
 }
 
 async function getGroup(db, groupId) {
@@ -544,7 +211,6 @@ async function getGroupProjection(db, groupId) {
   return { ...toProjection(row), entry: toEntry(row) };
 }
 
-/** Next peer ordinal for one group (ordinal 1 when empty). */
 async function nextOrdinal(db, groupId) {
   const row = await db('thread_group_members')
     .where('group_id', groupId)
@@ -553,10 +219,6 @@ async function nextOrdinal(db, groupId) {
   return Number(row?.ordinal || 0) + 1;
 }
 
-/**
- * Transactional primary-cache update for one group. The append-only primary
- * event remains the history; this row is the current read model (`SPEC-04 §5`).
- */
 async function setCurrentPrimary(db, groupId, threadId) {
   await db('thread_groups')
     .where('group_id', groupId)

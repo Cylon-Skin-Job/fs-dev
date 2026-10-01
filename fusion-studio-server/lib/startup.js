@@ -229,6 +229,9 @@ async function start({
   // chicken-and-egg. The DB is the registry's home; workspaces resolve
   // through it, not the other way around.
   await initDb();
+  // A reservation from an earlier server process can never own this launch's
+  // runtime. Fence it before sockets are admitted; accepted rows remain.
+  await require('./thread/prompt-submission-service').recoverInterrupted();
   await isolatedProvenance.initializeProfile(getDb());
   process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] fusion.db initialized');

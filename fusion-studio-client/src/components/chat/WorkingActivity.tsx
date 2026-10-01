@@ -7,11 +7,11 @@
  * tool rows (muted label, CSS variables with fallbacks only — §4.3).
  *
  * Label: the visible `Working… Ns` computes WHOLE elapsed seconds from the
- * server-authoritative `startedAt` as a clock delta — never an incrementing
+ * surface visible-wait `startedAt` as a clock delta — never an incrementing
  * counter (a backgrounded tab resyncs to the truthful value instead of
  * drifting) and never a forced initial `0s` (parent §4.10). The component is
- * remounted per step identity by the renderer (`key={identity}`), so every
- * step's first paint is truthful.
+ * remounted per visible-wait interval by the renderer (`key={waitingSince}`), so every
+ * wait's first paint is truthful.
  *
  * Accessibility (§4.10): the HourglassFlow live region carries ONE stable
  * "Model working" announcement mounted once per Working appearance. The
@@ -20,8 +20,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import type { TurnActivity } from '../../types';
-import { wholeElapsedSeconds } from '../../state/slices/chatActivityState';
 import { HourglassFlow } from './HourglassFlow';
 import './WorkingActivity.css';
 
@@ -32,18 +30,17 @@ const WORKING_STATUS_LABEL = 'Model working';
 const SECONDS_TICK_MS = 1000;
 
 interface WorkingActivityProps {
-  activity: TurnActivity;
+  startedAt: number;
 }
 
-export function WorkingActivity({ activity }: WorkingActivityProps) {
-  const startedAt = activity.startedAt;
+export function WorkingActivity({ startedAt }: WorkingActivityProps) {
   const [elapsedSeconds, setElapsedSeconds] = useState(() =>
-    wholeElapsedSeconds(startedAt, Date.now())
+    Math.max(0, Math.floor((Date.now() - startedAt) / 1000))
   );
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setElapsedSeconds(wholeElapsedSeconds(startedAt, Date.now()));
+      setElapsedSeconds(Math.max(0, Math.floor((Date.now() - startedAt) / 1000)));
     }, SECONDS_TICK_MS);
     return () => window.clearInterval(timer);
   }, [startedAt]);

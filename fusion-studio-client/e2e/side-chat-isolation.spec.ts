@@ -120,8 +120,14 @@ test.describe('SPEC-04 04C Main/Side isolation', () => {
     await expect(page.locator('.rv-chat-area[data-chat-host="side-tab"]')).toBeVisible();
     await openDock(page, FILE_VIEW);
 
-    await deliver(page, { type: 'message:sent', threadId: FILE_THREAD_A, content: 'to-side' });
-    await deliver(page, { type: 'message:sent', threadId: NEW_MAIN_THREAD, content: 'to-main' });
+    // The real ACK route requires one exact workspace/thread/request attempt.
+    // These server frames model two distinct admitted sends, not ambient text.
+    expect(await callFixture(page, 'seedSubmission', FILE_THREAD_A, 'attempt-side-1', 'to-side')).toBe(true);
+    expect(await callFixture(page, 'seedSubmission', NEW_MAIN_THREAD, 'attempt-main-1', 'to-main')).toBe(true);
+    await deliver(page, { type: 'message:sent', workspaceId: HARNESS_WORKSPACE,
+      threadId: FILE_THREAD_A, requestId: 'attempt-side-1', turnId: 'turn-side-1', content: 'to-side' });
+    await deliver(page, { type: 'message:sent', workspaceId: HARNESS_WORKSPACE,
+      threadId: NEW_MAIN_THREAD, requestId: 'attempt-main-1', turnId: 'turn-main-1', content: 'to-main' });
 
     const sideMessages = await callFixture(page, 'messages', FILE_THREAD_A) as Array<{ content?: string }>;
     const mainMessages = await callFixture(page, 'messages', NEW_MAIN_THREAD) as Array<{ content?: string }>;

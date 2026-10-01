@@ -11,6 +11,13 @@ metadata:
     - Turn Finalization
     - Stop And Interrupted Turns
   source-files:
+    - fusion-studio-client/src/lib/ws/thread-markdown.ts
+    - fusion-studio-client/src/lib/ws/thread-history.ts
+    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+    - fusion-studio-server/lib/thread/thread-crud.js
+    - fusion-studio-server/lib/thread/thread-open-handler.js
+    - fusion-studio-server/lib/thread/runtime-stop.js
+    - fusion-studio-server/lib/thread/runtime-dispatch.js
     - fusion-studio-client/src/components/MessageList.tsx
     - fusion-studio-client/src/components/LiveSegmentRenderer.tsx
     - fusion-studio-client/src/components/InstantSegmentRenderer.tsx
@@ -36,6 +43,12 @@ The last token rendering is not the same thing as a fully completed chat turn.
 A turn is viable for saved-exchange actions only after assistant output has
 ended, SQLite persistence has succeeded, and the client knows the saved
 `exchangeId`.
+
+Backend orchestration is split between `runtime-dispatch.js` and
+`runtime-stop.js`, with `ThreadRuntimeManager` as the sole state authority.
+Terminal cleanup compares the captured runtime object, generation, turn and
+drain revision; an old completion cannot clear a replacement. Persistence
+failure retains partial runtime state without fabricating `chat-turn:saved`.
 
 ## Rendering Paths
 
@@ -159,3 +172,20 @@ For OpenCode:
 - [Stop And Interrupted Turns](004-Stop_And_Interrupted_Turns/PAGE.md) - Server-owned stop behavior and persistence rules for partial assistant replies.
 - [Chat Reply Payloads](005-Reply_Payloads/PAGE.md) - Reply text extraction, tool output exclusion, clipboard policy, and TTS-ready payloads derived from finalized message segments.
 <!-- children:end -->
+
+### Restored component history (SPEC05D integration)
+
+A validated restored chat component issues `thread:open` with its explicit
+`threadGroupId`, exact `threadId`, a request ID, and `historyOnly: true`.
+`thread-open-handler.js` consumes captured read/metadata capabilities and reads
+the resolved member, rather than substituting the group's current Main Chat.
+The server echoes `historyOnly` and leaves connection selection/provider ownership
+alone. `thread-history.ts` hydrates that session's history/live snapshot without
+changing selected groups or consuming pending Main Chat opens. It is a read,
+not assistant activation. `thread-handlers.ts` remains the message dispatcher;
+`thread-markdown.ts` only opens the acknowledged mirror in File Viewer.
+
+The bounded affected-owner graph is enforced by `backend-owner-contract.mjs`.
+Unchanged dependencies outside its inventory (including the thread barrel,
+registry, and worksurface cleanup) are external boundaries; this check does not
+claim a complete repository dependency graph.

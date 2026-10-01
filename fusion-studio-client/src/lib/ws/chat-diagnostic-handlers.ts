@@ -25,6 +25,7 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { sendChatProduct } from './product-send';
 import type { WebSocketMessage } from '../../types';
 import { isValidDiagnosticId } from '../chat/terminal-error';
 import {
@@ -123,13 +124,15 @@ export function requestChatTurnDiagnostic(
     return promise;
   }
 
-  ws.send(JSON.stringify({
+  const outcome = sendChatProduct({
     type: 'chat-turn:diagnostic:get',
     threadId: request.threadId,
     turnId: request.turnId,
     diagnosticId: request.diagnosticId,
     ...(request.workspaceId !== undefined ? { workspaceId: request.workspaceId } : {}),
-  }));
+  }, { workspaceId: request.workspaceId ?? usePanelStore.getState().activeWorkspaceId ?? '',
+    policy: 'socket_only', expectedSocket: ws });
+  if (outcome.status === 'not_enqueued') settlePending(request.diagnosticId, null);
   return promise;
 }
 

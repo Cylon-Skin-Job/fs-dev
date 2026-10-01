@@ -51,7 +51,7 @@ export function ToolCallBlock({
   const hasContent = !!children;
 
   return (
-    <div className="rv-tool-fade-in">
+    <div className="rv-tool-fade-in" style={{ '--tool-collapse-ms': `${effectiveCollapse}ms` } as React.CSSProperties}>
       {/* Header */}
       <button
         type="button"
@@ -87,7 +87,6 @@ export function ToolCallBlock({
           className="rv-tool-content-area"
           data-expanded={expanded ? 'true' : undefined}
           style={{
-            '--tool-collapse-ms': `${effectiveCollapse}ms`,
             '--tool-border-w': visual.borderLeft?.width ?? '0px',
             '--tool-border-color': visual.borderLeft?.color ?? 'transparent',
             '--tool-border-pl': visual.borderLeft ? '12px' : '0px',

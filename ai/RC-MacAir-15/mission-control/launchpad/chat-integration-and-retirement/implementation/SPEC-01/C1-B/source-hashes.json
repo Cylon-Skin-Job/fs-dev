@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "file": "src/lib/ws-client.ts",
+      "sha256": "3fde5bc113c276523b7584e3bfdee027d27325ac746cde74cf2fce0e795aa411"
+    },
+    {
+      "file": "src/lib/ws/application-message-router.ts",
+      "sha256": "89a7eeef5eb889934b6a4241bec0484f75d0946aac2e173815d5cb20a096f0cc"
+    },
+    {
+      "file": "src/lib/ws/fusion-response-listeners.ts",
+      "sha256": "901af91eef1acb5374d0a12c69d102daccefc199f4b0c77417db02f2fa9ba754"
+    },
+    {
+      "file": "src/lib/ws/view-state-handlers.ts",
+      "sha256": "ae257e25f87e7c42305f1910695cdf671f0e978346f376830938f69b1dc2114c"
+    },
+    {
+      "file": "src/lib/ws/shell-message-handlers.ts",
+      "sha256": "d83c6a1038585586e5f7988c251fed89ef4c8b6cd11c4991b81d67076079cd27"
+    },
+    {
+      "file": "e2e/trusted-shell-auth-smoke.mjs",
+      "sha256": "633a44e39b0068fbc02cf3c6c073641b3bf77ee2fd9850f0b5379f3e068e6bba"
+    },
+    {
+      "file": "e2e/chat-transport-entry.spec.ts",
+      "sha256": "6e7db0f5baaf09b41956bd088fb8bd7a9b4d1ba226ce6050ab88fba8749fe528"
+    },
+    {
+      "file": "e2e/chat-transport-test-server.mjs",
+      "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5"
+    },
+    {
+      "file": "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "sha256": "b0b7f00c6b6cd1b94b075402a8b93340cce94fcbbe3134c1b06646efcc59f289"
+    },
+    {
+      "file": "playwright.chat-architecture.config.ts",
+      "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4"
+    }
+  ]
+}

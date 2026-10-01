@@ -176,7 +176,21 @@ function createCanonicalDrainControl({
   return Object.freeze(control);
 }
 
+const DRAIN_RETIRE_TIMEOUT_MS = 5_000;
+
+function awaitBoundedDrainCompletion(completion, timeoutMs = DRAIN_RETIRE_TIMEOUT_MS) {
+  let timeout;
+  return Promise.race([
+    Promise.resolve(completion),
+    new Promise((_, reject) => {
+      timeout = setTimeout(() => reject(new Error('Canonical drain did not retire in time')), timeoutMs);
+      timeout.unref?.();
+    }),
+  ]).finally(() => clearTimeout(timeout));
+}
+
 module.exports = {
+  awaitBoundedDrainCompletion,
   createCanonicalDrainControl,
   createCanonicalRouteContext,
   normalizeRouteAttachments,

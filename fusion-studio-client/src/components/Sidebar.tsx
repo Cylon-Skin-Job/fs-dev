@@ -3,60 +3,50 @@ import '../styles/dropdown.css';
 import './Sidebar.css';
 import { CliPickerDropdown } from './CliPickerDropdown';
 import { ThreadRail } from './chat/ThreadRail';
-import { useSidebar } from './sidebar/useSidebar';
 import { usePanelStore } from '../state/panelStore';
+import type { ViewChatRailProjection } from './chat/useViewChatHost';
+import type { HarnessStatus } from '../types';
 
 interface SidebarProps {
   panel: string;
   collapsed?: boolean;
-  /** Whether this panel is the shell's active panel (list-request ownership). */
-  isActive?: boolean;
+  /** Connected rail projection for this panel's view-bound population. */
+  rail: ViewChatRailProjection;
+  showCliPicker: boolean;
+  harnessStatuses: Record<string, HarnessStatus>;
+  onHarnessSelect: (harnessId: string, modelId?: string) => void;
 }
 
 /**
- * Connected Legacy rail host (SPEC-02 §5.2/§5.3). Reads the explicit
- * `{activeWorkspaceId, viewId: null}` population through `useSidebar` and
- * projects it into the portable `ThreadRail`; it owns every store/WebSocket
- * action and passes none of them into the rail.
+ * Production rail column. It renders the connected view-bound rail projection
+ * (owner direction 2026-09-19) into the portable `ThreadRail` and adds only
+ * shell chrome: the rail-collapse toggle and the CLI picker element.
  */
-export function Sidebar({ panel, collapsed, isActive = true }: SidebarProps) {
-  const sidebar = useSidebar({ panel, isActive });
+export function Sidebar({
+  panel,
+  collapsed,
+  rail,
+  showCliPicker,
+  harnessStatuses,
+  onHarnessSelect,
+}: SidebarProps) {
   const toggleCollapsed = usePanelStore((state) => state.toggleCollapsed);
   const [threadView, setThreadView] = useState<'active' | 'archive'>('active');
 
   return (
     <ThreadRail
-      panel={panel}
+      {...rail}
       collapsed={collapsed}
-      rows={sidebar.threads}
-      selectedThreadGroupId={sidebar.selectedThreadGroupId}
-      selectedThreadId={sidebar.currentThreadId}
-      isActive={sidebar.isActive}
       threadView={threadView}
       onThreadViewChange={setThreadView}
       onTogglePinned={() => toggleCollapsed(panel, 'leftSidebar')}
-      onCreateThread={sidebar.handleCreateThread}
-      cliPicker={sidebar.showCliPicker ? (
+      cliPicker={showCliPicker ? (
         <CliPickerDropdown
           panel={panel}
-          statuses={sidebar.harnessStatuses}
-          onSelect={sidebar.handleHarnessSelect}
+          statuses={harnessStatuses}
+          onSelect={onHarnessSelect}
         />
       ) : null}
-      resolveCliAccent={sidebar.resolveCliAccent}
-      setThreadRef={sidebar.setThreadRef}
-      renamingId={sidebar.renamingId}
-      renameValue={sidebar.renameValue}
-      setRenameValue={sidebar.setRenameValue}
-      menuOpenId={sidebar.menuOpenId}
-      setMenuOpenId={sidebar.setMenuOpenId}
-      onOpenThread={sidebar.handleOpenThread}
-      onStartRename={sidebar.handleRenameStart}
-      onSubmitRename={sidebar.handleRenameSubmit}
-      onCancelRename={sidebar.handleRenameCancel}
-      onDelete={sidebar.handleDeleteThread}
-      onCopyLink={sidebar.handleCopyLink}
-      onViewMarkdown={sidebar.handleViewMarkdown}
     />
   );
 }

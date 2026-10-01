@@ -198,37 +198,20 @@ async function waitForGroupCount(min) {
 
 async function selectCaptureView() {
   await page.locator('.rv-tool-btn[title="Captures"]').click();
-  await page.locator('.rv-panel[data-panel="capture-viewer"].active').waitFor({ timeout: 15_000 });
-  const dock = page.locator(
-    '.rv-panel[data-panel="capture-viewer"].active [data-worksurface-dock="capture-viewer"]',
-  );
-  const toggle = dock.locator('.rv-worksurface-dock-toggle');
-  if (await dock.getAttribute('data-open') === 'true') {
-    await toggle.click();
-    await page.waitForTimeout(250);
-  }
-  await toggle.click();
-  await page.locator('.rv-panel[data-panel="capture-viewer"].active [data-threaded-chat]').first()
+  const panel = page.locator('.rv-panel[data-panel="capture-viewer"].active');
+  await panel.waitFor({ timeout: 15_000 });
+  await panel.locator('[data-thread-rail-panel="capture-viewer"], .rv-sidebar--collapsed').first()
     .waitFor({ timeout: 15_000 });
-  return dock;
+  return panel;
 }
 
-async function waitForDockRows(dock, min) {
+async function waitForDockRows(panel, min) {
   const deadline = Date.now() + 45_000;
-  let lastRefresh = 0;
   while (Date.now() < deadline) {
-    if (await dock.locator('.rv-chat-item[data-thread-group-id]').count() >= min) return;
-    if (Date.now() - lastRefresh > 6000) {
-      lastRefresh = Date.now();
-      const toggle = dock.locator('.rv-worksurface-dock-toggle');
-      await toggle.click().catch(() => undefined);
-      await page.waitForTimeout(250);
-      await toggle.click().catch(() => undefined);
-      await page.waitForTimeout(400);
-    }
+    if (await panel.locator('.rv-chat-item[data-thread-group-id]').count() >= min) return;
     await page.waitForTimeout(150);
   }
-  throw new Error(`worksurface dock never listed ${min} group rows`);
+  throw new Error(`production shell rail never listed ${min} group rows`);
 }
 
 async function waitForAnySelection(dock) {
@@ -265,7 +248,7 @@ async function waitForSideTab() {
 async function mainChatMenuMove(dock) {
   const more = dock.locator('.rv-chat-header-btn[aria-label="More options"]').first();
   await more.click();
-  await dock.getByRole('menuitem', { name: 'Move Chat to Side Chat' }).click();
+  await page.getByRole('menu', { name: 'Chat options' }).getByRole('menuitem', { name: 'Move Chat to Side Chat' }).click();
 }
 
 try {
@@ -381,7 +364,7 @@ try {
   // Reopen through the member menu: same lifetime placement id, no new session.
   const row = dock.locator(`.rv-chat-item[data-thread-group-id="${groupId}"]`);
   await row.locator('.rv-thread-menu-btn').click();
-  const memberItem = row.locator(`[data-thread-member-id="${originalThreadId}"]`);
+  const memberItem = page.locator(`[data-menu-item-id="open-${originalThreadId}"]`);
   await memberItem.waitFor({ timeout: 15_000 });
   await memberItem.click();
   await waitForSideTab();
@@ -422,21 +405,15 @@ try {
   // outer-rail state.
   const nativeTab = page.locator('.rv-view-tab-list [role="tab"]').first();
   await nativeTab.click();
-  const outerDock = page.locator('[data-worksurface-dock="capture-viewer"]').first();
-  await outerDock.waitFor({ timeout: 15_000 });
-  assert.equal(
-    await outerDock.getAttribute('data-open'),
-    'false',
-    'Side Chat list button did not toggle the outer ThreadRail',
-  );
+  const outerRail = page.locator('.rv-panel[data-panel="capture-viewer"].active .rv-sidebar--collapsed').first();
+  await outerRail.waitFor({ state: 'attached', timeout: 15_000 });
 
   // ---- Repeat Move several times: ordered peers, one row, one placement each.
-  // The toggle above collapsed the dock; reopen it so the Main Chat host mounts.
-  await outerDock.locator('.rv-worksurface-dock-toggle').click();
-  await outerDock.locator('[data-threaded-chat]').first().waitFor({ timeout: 15_000 });
-  const dockForMove = page.locator(
-    '.rv-panel[data-panel="capture-viewer"].active [data-worksurface-dock="capture-viewer"]',
-  );
+  // The Side Chat button collapsed the real outer rail; reopen that shell
+  // state before the remaining row/menu interactions.
+  await outerRail.locator('button[aria-label="Pin threads open"]').evaluate((button) => button.click());
+  const dockForMove = page.locator('.rv-panel[data-panel="capture-viewer"].active');
+  await dockForMove.locator('[data-thread-rail-panel="capture-viewer"]').waitFor({ timeout: 15_000 });
   await mainChatMenuMove(dockForMove);
   const repeatDeadline = Date.now() + 30_000;
   while (Date.now() < repeatDeadline) {

@@ -173,15 +173,18 @@ test.describe('SPEC-04 04B Side Chat adapterless and native coverage', () => {
     await expect(sideMount).toHaveAttribute('data-chat-view-id', WIKI_VIEW);
     await expect(sideMount.locator('[data-threaded-chat]')).toHaveCount(0);
 
-    // SPEC-04 §3/§12: the Side Chat list button operates the outer owning
-    // view's ThreadRail dock, never a nested rail.
-    const dock = page.locator('[data-worksurface-dock="wiki-viewer"]');
-    await expect(dock).toHaveAttribute('data-open', 'true');
+    // SPEC-04 §3/§12: the Side Chat list button operates the owning shell
+    // view's real ThreadRail state, never a nested or content-local rail.
+    await expect(page.locator('[data-thread-rail-panel="wiki-viewer"]')).toBeAttached();
     const listButton = sideMount.locator('.rv-chat-thread-dock');
     await listButton.click();
-    await expect(dock).toHaveAttribute('data-open', 'false');
+    await expect.poll(() => page.evaluate(() => (
+      window as unknown as { __wsFixture: { viewState: (v: string) => { collapsed?: { leftSidebar?: boolean } } } }
+    ).__wsFixture.viewState('wiki-viewer')?.collapsed?.leftSidebar)).toBe(true);
     await listButton.click();
-    await expect(dock).toHaveAttribute('data-open', 'true');
+    await expect.poll(() => page.evaluate(() => (
+      window as unknown as { __wsFixture: { viewState: (v: string) => { collapsed?: { leftSidebar?: boolean } } } }
+    ).__wsFixture.viewState('wiki-viewer')?.collapsed?.leftSidebar)).toBe(false);
 
     // Returning to the root tab restores the children-only presentation.
     await rail.getByRole('tab').first().click();
@@ -252,15 +255,13 @@ test.describe('SPEC-04 04B Side Chat adapterless and native coverage', () => {
     await expect(rail.locator('.rv-native-file-viewer-children')).toBeVisible();
   });
 
-  test('dockless restart/readback materializes an unbound open placement without an action frame', async ({ page }) => {
-    // SPEC-04 §7 carried 04B trigger: after relaunch an unbound/dockless
-    // adapterless host has no worksurface binding. The bind bootstrap runs the
-    // bounded qualified `thread:list` sweep; the list response then issues the
-    // exact per-group entry read that carries the managed-placement lane, so a
-    // persisted open Side Chat materializes with no Move/member action frame.
+  test('dockless restart/readback materializes on active-view population without an action frame', async ({ page }) => {
+    // After relaunch an unbound/dockless adapterless host has no worksurface
+    // binding. Activating its explicit view host requests exactly that view's
+    // population; the list response then issues the exact per-group entry read
+    // carrying the managed-placement lane. Inactive views do no hidden sweep.
     await mountHarness(page, ISSUES_VIEW, { dock: false });
     await callFixture(page, 'mountRailFor', ISSUES_VIEW);
-    await callFixture(page, 'setPanelConfigs', [ISSUES_VIEW]);
     // Seed ONLY the server entry: no store seed, no binding, no action frame.
     await callFixture(page, 'seedServerPlacementIn', ISSUES_VIEW, ISSUES_GROUP_A, 'scp-issues-restart', ISSUES_THREAD_A);
 
@@ -268,15 +269,15 @@ test.describe('SPEC-04 04B Side Chat adapterless and native coverage', () => {
     await expect(rail.getByRole('tab', { name: 'Side Chat' })).toHaveCount(0);
     await expect(rail.locator('.rv-native-issues-viewer-children')).toBeVisible();
 
-    await callFixture(page, 'reconcileSideChats');
+    await callFixture(page, 'mountView', ISSUES_VIEW);
 
     await expect(rail.getByRole('tab', { name: 'Side Chat' })).toBeVisible();
     await rail.getByRole('tab', { name: 'Side Chat' }).click();
     const sideMount = page.locator('.rv-chat-area[data-chat-host="side-tab"]');
     await expect(sideMount).toHaveAttribute('data-chat-thread-id', ISSUES_THREAD_A);
     await expect(sideMount).toHaveAttribute('data-chat-view-id', ISSUES_VIEW);
-    // The unbound sweep never injects a root into a view with no placement and
-    // never carries surfaceId.
+    // The active-view read never injects a root into a view with no placement
+    // and never carries surfaceId.
     const frames = await sentFrames(page);
     expect(JSON.stringify(frames)).not.toContain('surfaceId');
   });

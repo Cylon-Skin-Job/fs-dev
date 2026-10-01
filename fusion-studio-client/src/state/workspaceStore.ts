@@ -19,6 +19,8 @@ interface WorkspaceStoreState {
   activeWorkspaceId: string | null;
   workspaceEpoch: string | null;
   bindingRevision: number | null;
+  /** Monotonic local invalidation, including same-ID workspace rebinds. */
+  bindingSerial: number;
   /** Null keeps first-party saves on the legacy path until SPEC-03d activates v1. */
   fileSaveProtocolVersion: 1 | null;
   /** Null prevents provenance queries until the active server bind advertises v1. */
@@ -120,6 +122,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   activeWorkspaceId: null,
   workspaceEpoch: null,
   bindingRevision: null,
+  bindingSerial: 0,
   fileSaveProtocolVersion: null,
   resourceProvenanceProtocolVersion: null,
   fileViewerReadProtocolVersion: null,
@@ -161,13 +164,14 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   // Retire the transport-issued epoch immediately. Preserve the visible
   // workspace id so reconnect does not erase navigation while the new bind
   // frame is in flight.
-  beginInit: () => set({
+  beginInit: () => set((state) => ({
     hasReceivedInit: false,
     workspaceEpoch: null,
     bindingRevision: null,
+    bindingSerial: state.bindingSerial + 1,
     resourceProvenanceProtocolVersion: null,
     fileViewerReadProtocolVersion: null,
-  }),
+  })),
   markInit: () => {
     console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
     set({ hasReceivedInit: true });

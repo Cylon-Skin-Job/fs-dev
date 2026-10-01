@@ -20,6 +20,7 @@ import {
 import type { WorksurfaceFlushReason } from '../../state/slices/worksurfaceSlice';
 import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
 import { threadOpenRequest } from '../ws/threadGroupRows';
+import { sendChatProduct } from '../ws/product-send';
 import { worksurfaceAdapterForView } from './registry';
 import {
   captureFor,
@@ -27,7 +28,7 @@ import {
   sendGetRequest,
   stampPendingCapture,
 } from './worksurfaceRequests';
-import { deferredByView, socketSend } from './worksurfaceRuntime';
+import { deferredByView } from './worksurfaceRuntime';
 
 /** Select the exact group in one population and open its Main Chat. */
 export function selectViewGroup(
@@ -40,13 +41,19 @@ export function selectViewGroup(
   const row = getThreadGroupPopulation(store, workspaceId, viewId)
     .find((candidate) => candidate.threadGroupId === threadGroupId);
   if (row) {
+    const alreadyPending = store.pendingThreadOpens.some((pending) => pending.workspaceId === workspaceId
+      && pending.viewId === viewId && pending.threadGroupId === threadGroupId
+      && pending.threadId === row.threadId);
     store.requestThreadOpen({
       workspaceId,
       viewId,
       threadId: row.threadId,
       threadGroupId,
     });
-    socketSend(threadOpenRequest(threadGroupId, row.threadId));
+    const outcome = sendChatProduct(threadOpenRequest(threadGroupId, row.threadId),
+      { workspaceId, policy: 'socket_only', expectedSocket: store.ws });
+    if (outcome.status === 'not_enqueued' && !alreadyPending) usePanelStore.getState().consumeThreadOpen(
+      { workspaceId, viewId }, { threadId: row.threadId, threadGroupId });
   }
 }
 

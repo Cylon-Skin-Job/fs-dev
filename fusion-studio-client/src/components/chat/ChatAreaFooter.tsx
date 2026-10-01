@@ -34,13 +34,18 @@ export interface ChatAreaFooterProps {
   isTurnActive: boolean;
   isTurnFinalizing: boolean;
   isAcceptancePending: boolean;
+  isSubmissionUnresolved: boolean;
+  submissionFeedback: string;
+  canCheckSubmissionStatus: boolean;
+  onCheckSubmissionStatus: () => void;
   onInsertText: (text: string) => void;
   onAddAttachment: (attachment: ChatLinkAttachment) => void;
   onWarmIntent: () => void;
   contextUsage: number;
   tokenUsage: TokenUsage | null;
-  workspaceId: string | null;
   threadId: string | null;
+  attachments: readonly ChatLinkAttachment[];
+  onRemoveAttachment: (id: string) => void;
   composerDraft: string;
   onComposerDraftChange: (text: string) => void;
   modelSelection: ChatSurfaceModelSelection;
@@ -60,13 +65,18 @@ export function ChatAreaFooter({
   isTurnActive,
   isTurnFinalizing,
   isAcceptancePending,
+  isSubmissionUnresolved,
+  submissionFeedback,
+  canCheckSubmissionStatus,
+  onCheckSubmissionStatus,
   onInsertText,
   onAddAttachment,
   onWarmIntent,
   contextUsage,
   tokenUsage,
-  workspaceId,
   threadId,
+  attachments,
+  onRemoveAttachment,
   composerDraft,
   onComposerDraftChange,
   modelSelection,
@@ -79,7 +89,12 @@ export function ChatAreaFooter({
       data-chat-mount-id={mountId}
     >
       <div className="rv-chat-composer-shell">
-        <ChatLinkAttachments workspaceId={workspaceId} threadId={threadId} />
+        <ChatLinkAttachments attachments={attachments} onRemove={onRemoveAttachment} />
+        {submissionFeedback && <div className="rv-chat-submission-feedback" role="status">
+          <span>{submissionFeedback}</span>
+          {canCheckSubmissionStatus && <button className="rv-chat-submission-check" type="button"
+            onClick={onCheckSubmissionStatus}>Check status</button>}
+        </div>}
         <ChatInput
           ref={inputRef}
           onSend={onSend}
@@ -132,7 +147,7 @@ export function ChatAreaFooter({
               <SendButtonGroup
                 chatInputRef={inputRef}
                 onSend={onSend}
-                disabled={isAcceptancePending}
+                disabled={isSubmissionUnresolved}
                 warming={isAcceptancePending}
               />
             )}

@@ -9,7 +9,7 @@
  * WebSocket client, controller, service, or filesystem API.
  *
  * `viewId`/`workspaceId` never appear here — the connected host owns the
- * population address. The rail is shared by the production Legacy rail and the
+ * population address. The rail is shared by the production shell rail and the
  * explicit view-bound `ThreadedChat` hosts.
  */
 
@@ -19,6 +19,7 @@ import '../Sidebar.css';
 import { formatThreadDisplayName, formatRelativeDate } from '../sidebar/threadOrderUtils';
 import type { Thread } from '../../types';
 import type { ThreadMemberProjection } from '../../types/threadGroupMember';
+import { ThreadRailRowMenu } from './ThreadRailRowMenu';
 
 export type ThreadRailView = 'active' | 'archive';
 
@@ -42,8 +43,6 @@ export interface ThreadRailProps {
   renamingId: string | null;
   renameValue: string;
   setRenameValue: (value: string) => void;
-  menuOpenId: string | null;
-  setMenuOpenId: (threadId: string | null) => void;
   onOpenThread: (row: Thread) => void;
   onStartRename: (row: Thread) => void;
   onSubmitRename: (row: Thread) => void;
@@ -86,8 +85,6 @@ function ThreadRailContents(props: ThreadRailProps & { preview: boolean }) {
     renamingId,
     renameValue,
     setRenameValue,
-    menuOpenId,
-    setMenuOpenId,
     onOpenThread,
     onStartRename,
     onSubmitRename,
@@ -188,118 +185,17 @@ function ThreadRailContents(props: ThreadRailProps & { preview: boolean }) {
                             <span className="rv-thread-status-dot--active">●</span>
                           )}
                         </span>
-                        <button
-                          className="rv-thread-menu-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const next = menuOpenId === thread.threadId ? null : thread.threadId;
-                            if (next) onRequestMembers?.(thread);
-                            setMenuOpenId(next);
-                          }}
-                          aria-label="More options"
-                          title="More options"
-                        >
-                          <span className="material-symbols-outlined">more_vert</span>
-                        </button>
-                        {menuOpenId === thread.threadId && (
-                          <div
-                            className="rv-thread-menu-dropdown"
-                            onClick={(e) => e.stopPropagation()}
-                            onMouseLeave={() => setMenuOpenId(null)}
-                          >
-                            {onOpenMember
-                              && (membersForGroup?.(thread) ?? []).filter((m) => m && !m.isPrimary).length > 0 && (
-                              <div
-                                className="rv-thread-menu-members"
-                                role="group"
-                                aria-label="Side chats"
-                              >
-                                <div className="rv-thread-menu-members-label">Side chats</div>
-                                {(membersForGroup?.(thread) ?? [])
-                                  .filter((m) => m && !m.isPrimary)
-                                  .map((member) => {
-                                    const memberName = member.label || member.threadId;
-                                    return (
-                                      <div
-                                        className="rv-thread-menu-member"
-                                        key={member.threadId}
-                                      >
-                                        <button
-                                          className="rv-dropdown-item"
-                                          data-thread-member-id={member.threadId}
-                                          onClick={() => {
-                                            onOpenMember(thread, member);
-                                            setMenuOpenId(null);
-                                          }}
-                                        >
-                                          <span className="material-symbols-outlined">
-                                            subdirectory_arrow_right
-                                          </span>
-                                          <span>
-                                            {memberName}
-                                            {member.placementDisposition === 'closed' ? ' (closed)' : ''}
-                                          </span>
-                                        </button>
-                                        {onCopyLinkMember && (
-                                          <button
-                                            className="rv-thread-menu-member-link"
-                                            data-thread-member-copy-id={member.threadId}
-                                            title={`Copy link to ${memberName}`}
-                                            aria-label={`Copy link to ${memberName}`}
-                                            onClick={() => {
-                                              onCopyLinkMember(thread, member);
-                                              setMenuOpenId(null);
-                                            }}
-                                          >
-                                            <span className="material-symbols-outlined">link_2</span>
-                                          </button>
-                                        )}
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-                            )}
-                            <button
-                              className="rv-dropdown-item"
-                              onClick={() => {
-                                onStartRename(thread);
-                                setMenuOpenId(null);
-                              }}
-                            >
-                              <span className="material-symbols-outlined">edit</span>
-                              <span>Rename</span>
-                            </button><button
-                              className="rv-dropdown-item"
-                              onClick={() => {
-                                onCopyLink(thread);
-                                setMenuOpenId(null);
-                              }}
-                            >
-                              <span className="material-symbols-outlined">link_2</span>
-                              <span>Copy Link</span>
-                            </button>
-                            <button
-                              className="rv-dropdown-item"
-                              onClick={() => {
-                                onViewMarkdown(thread);
-                                setMenuOpenId(null);
-                              }}
-                            >
-                              <span className="material-symbols-outlined">docs</span>
-                              <span>View Markdown</span>
-                            </button>
-                            <button
-                              className="rv-dropdown-item"
-                              onClick={() => {
-                                onDelete(thread);
-                                setMenuOpenId(null);
-                              }}
-                            >
-                              <span className="material-symbols-outlined">delete</span>
-                              <span>Delete</span>
-                            </button>
-                          </div>
-                        )}
+                        <ThreadRailRowMenu
+                          row={thread}
+                          members={membersForGroup?.(thread) ?? []}
+                          onOpenMember={onOpenMember}
+                          onCopyLinkMember={onCopyLinkMember}
+                          onRequestMembers={onRequestMembers}
+                          onStartRename={onStartRename}
+                          onCopyLink={onCopyLink}
+                          onViewMarkdown={onViewMarkdown}
+                          onDelete={onDelete}
+                        />
                       </div>
                       <div className="rv-thread-row rv-thread-row-bottom">
                         <span className="rv-chat-item-meta">

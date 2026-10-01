@@ -21,6 +21,40 @@ const SAFE_TERMINAL_ERROR = {
   diagnosticId: DIAGNOSTIC_ID,
 };
 
+async function installDiagnosticSendFixture() {
+  const { usePanelStore } = await import('../src/state/panelStore');
+  const { useWorkspaceStore } = await import('../src/state/workspaceStore');
+  const { installProductSendCapability, retireProductSendCapability } = await import('../src/lib/ws/product-send');
+  const { createShellSocketAuthenticator } = await import('../src/lib/shell-auth-client');
+  const socket = { readyState: WebSocket.OPEN, bufferedAmount: 0, send: (_value: string) => undefined } as WebSocket;
+  const generation = 'diagnostic-fixture';
+  const auth = createShellSocketAuthenticator({ generation, send: (value) => socket.send(value),
+    bufferedAmount: () => socket.bufferedAmount, close: () => undefined,
+    authenticated: () => undefined, deliver: () => undefined,
+    electronApi: { authorizeShellChallenge: async (challenge, rendererNonce) => ({
+      type: 'shell-auth:proof', version: 1, connectionId: challenge.connectionId,
+      serverNonce: challenge.serverNonce, rendererNonce, generation,
+      expiresAt: challenge.expiresAt, proof: 'p'.repeat(43),
+    }) },
+  });
+  const now = Date.now();
+  await auth.receive({ type: 'shell-auth:challenge', version: 1, connectionId: 'diagnostic-fixture',
+    serverNonce: 'n'.repeat(43), generation, issuedAt: now, expiresAt: now + 30_000 });
+  await auth.receive({ type: 'shell-auth:authenticated', version: 1 });
+  useWorkspaceStore.getState().beginInit();
+  useWorkspaceStore.getState().applyWorkspaceBinding('diagnostic-workspace', 'diagnostic-epoch', null, null, null, 1);
+  usePanelStore.setState({ activeWorkspaceId: 'diagnostic-workspace', ws: socket });
+  const serial = useWorkspaceStore.getState().bindingSerial;
+  const capability = { socket, generation, isAuthenticated: auth.isAuthenticated,
+    captureBinding: (workspaceId: string) => workspaceId === 'diagnostic-workspace'
+      ? { workspaceId, workspaceEpoch: 'diagnostic-epoch', bindingRevision: 1, bindingSerial: serial } : null,
+    isBindingCurrent: (binding: { bindingSerial: number }) =>
+      useWorkspaceStore.getState().bindingSerial === binding.bindingSerial,
+    sendProductResult: auth.sendProductResult };
+  installProductSendCapability(capability);
+  return () => { retireProductSendCapability(capability); auth.retire(); usePanelStore.setState({ ws: null }); };
+}
+
 function diagnosticHistory() {
   const saved = exchange('DIAGNOSTIC-PROMPT', [{ type: 'text', content: 'PARTIAL-OUTPUT' }], 41);
   saved.metadata = { turnId: TURN_ID, terminalError: SAFE_TERMINAL_ERROR };
@@ -55,6 +89,26 @@ function reportFrame(canary: string) {
 
 function diagnosticGets(frames: Array<Record<string, unknown>>) {
   return frames.filter((frame) => frame.type === 'chat-turn:diagnostic:get');
+}
+
+function acceptedPromptFrame(frames: Array<Record<string, unknown>>, content: string) {
+  const prompt = frames.find((frame) => frame.type === 'prompt' && frame.user_input === content);
+  if (!prompt || typeof prompt.requestId !== 'string') throw new Error('exact prompt request missing');
+  return { type: 'message:sent', workspaceId: 'boot-fixture', threadId: prompt.threadId,
+    requestId: prompt.requestId, turnId: `accepted-${prompt.requestId}`, content };
+}
+
+async function insertFixtureAttachment(page: import('@playwright/test').Page, threadId: string,
+  attachment: Record<string, unknown>) {
+  const status = await page.evaluate(({ threadId, attachment }) => new Promise<string>((resolve) => {
+    const address = { workspaceId: 'boot-fixture', viewId: 'wa-view',
+      threadGroupId: `wa-group-${threadId}`, threadId };
+    window.dispatchEvent(new CustomEvent('fusion:chat-action', {
+      detail: { target: 'current', delivery: 'insert', attachment, capturedAddress: address,
+        claim: () => {}, complete: (result: { status: string }) => resolve(result.status) },
+    }));
+  }), { threadId, attachment });
+  expect(status).toBe('applied');
 }
 
 async function expectDiagnosticLogsAllowlisted(tap: ConsoleTap, canaries: string[] = []) {
@@ -243,7 +297,7 @@ test('Slice C: Ask AI cannot race server-owned prompt acceptance', async ({ brow
     'Wait for the current message to be accepted, then try again.',
   );
   await expect(textarea).toHaveValue('ACCEPTANCE-OWNED-DRAFT');
-  fx.push({ type: 'message:sent', threadId: THREAD_A, content: 'ACCEPTANCE-OWNED-DRAFT' });
+  fx.push(acceptedPromptFrame(fx.sentFrames(), 'ACCEPTANCE-OWNED-DRAFT'));
   await expect(textarea).toHaveValue('');
   await expect(askAI).toBeEnabled();
 
@@ -256,10 +310,7 @@ test('Slice C: Ask AI cannot race server-owned prompt acceptance', async ({ brow
 
 test('Slice C: unavailable frames require the complete pending route tuple', async () => {
   const mod = await import('../src/lib/ws/chat-diagnostic-handlers');
-  const { usePanelStore } = await import('../src/state/panelStore');
-  usePanelStore.setState({
-    ws: { readyState: WebSocket.OPEN, send: () => undefined },
-  } as never);
+  const cleanup = await installDiagnosticSendFixture();
   let settled = false;
   const pending = mod.requestChatTurnDiagnostic({
     threadId: 'route-a',
@@ -305,14 +356,12 @@ test('Slice C: unavailable frames require the complete pending route tuple', asy
   } as never);
   await expect(pending).resolves.toBeNull();
   await expect(sharedPending).resolves.toBeNull();
+  cleanup();
 });
 
 test('Slice C: an unattributable null echo resolves only through the bounded timeout', async () => {
   const mod = await import('../src/lib/ws/chat-diagnostic-handlers');
-  const { usePanelStore } = await import('../src/state/panelStore');
-  usePanelStore.setState({
-    ws: { readyState: WebSocket.OPEN, send: () => undefined },
-  } as never);
+  const cleanup = await installDiagnosticSendFixture();
   const nativeSetTimeout = globalThis.setTimeout;
   const nativeClearTimeout = globalThis.clearTimeout;
   globalThis.setTimeout = ((callback: () => void) => {
@@ -334,6 +383,7 @@ test('Slice C: an unattributable null echo resolves only through the bounded tim
     } as never);
     await expect(pending).resolves.toBeNull();
   } finally {
+    cleanup();
     globalThis.setTimeout = nativeSetTimeout;
     globalThis.clearTimeout = nativeClearTimeout;
   }
@@ -349,16 +399,16 @@ test('Slice C: late acceptance cannot clear another thread draft', async ({ brow
   const { fx, page } = await startDiagnosticSession(browser);
   const textarea = page.locator('section textarea').first();
   const attachment = { id: 'same-file-id', kind: 'file', label: 'owner.txt', path: '/owner.txt', sourceName: 'owner.txt' };
-  await page.evaluate((value) => window.dispatchEvent(new CustomEvent('fusion:chat-action', { detail: { target: 'current', attachment: value } })), attachment);
+  await insertFixtureAttachment(page, THREAD_A, attachment);
   await textarea.fill('LATE-A-DRAFT');
   await page.getByRole('button', { name: 'Send message', exact: true }).first().click();
   await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt').length).toBe(1);
   await selectThread(fx, page, 'b');
   await expect(textarea).toHaveValue('');
   await expect(page.getByLabel('Chat attachments')).toHaveCount(0);
-  await page.evaluate((value) => window.dispatchEvent(new CustomEvent('fusion:chat-action', { detail: { target: 'current', attachment: value } })), attachment);
+  await insertFixtureAttachment(page, THREAD_B, attachment);
   await textarea.fill('KEEP-B-DRAFT');
-  fx.push({ type: 'message:sent', threadId: THREAD_A, content: 'LATE-A-DRAFT' });
+  fx.push(acceptedPromptFrame(fx.sentFrames(), 'LATE-A-DRAFT'));
   await expect(textarea).toHaveValue('KEEP-B-DRAFT');
   await expect(page.getByLabel('Chat attachments').first()).toContainText('owner.txt');
 });

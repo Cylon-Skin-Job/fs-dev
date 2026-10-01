@@ -46,15 +46,15 @@ async function setHarnessSelection(service, {
   const member = await repository.getMember(service.db, groupRow.group_id, memberThreadId);
   if (!member) return { ok: false, code: 'not_found' };
 
-  const thread = typeof service.manager.getThread === 'function'
-    ? await service.manager.getThread(memberThreadId)
+  const thread = typeof service.operations.getThread === 'function'
+    ? await service.operations.getThread(memberThreadId)
     : null;
   const harnessId = thread?.entry?.harnessId;
   if (!thread || !harnessId) return { ok: false, code: 'not_found' };
 
   let policy;
   try {
-    policy = await resolveCliPolicy(service.manager.projectRoot);
+    policy = await resolveCliPolicy(service.projectRoot);
   } catch (_error) {
     return { ok: false, code: 'selection_unavailable' };
   }
@@ -62,14 +62,14 @@ async function setHarnessSelection(service, {
   const selection = validatePortableSelection({ models, model, variant });
   if (!selection.ok) return { ok: false, code: selection.code };
 
-  if (typeof service.manager.updateHarnessConfig !== 'function') {
+  if (typeof service.operations.updateHarnessConfig !== 'function') {
     return { ok: false, code: 'selection_unavailable' };
   }
-  await service.manager.updateHarnessConfig(memberThreadId, {
+  await service.operations.updateHarnessConfig(memberThreadId, {
     model: selection.model,
     variant: selection.variant,
   });
-  const acknowledged = await service.manager.getThread(memberThreadId);
+  const acknowledged = await service.operations.getThread(memberThreadId);
   const acknowledgedConfig = acknowledged?.entry?.harnessConfig ?? {};
 
   const result = {

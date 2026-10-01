@@ -1,0 +1,5 @@
+# CHAT-SIMPLE-03 owner acceptance
+
+The owner accepted completed SPEC-03 through coordinating task `01a0e6c9-e4e0-7872-9268-9a77a76f0c57`. After that task relayed this supervisor's SPEC-03 `OWNER_REVIEW` status, clean reviews, checks, the pre-existing V8 failure, possible SPEC-02 port-3001 owner-state effect and uncertain-send reconnect limit, the owner's direct reply was: “Accept it on my behalf.” The reply was verified in that task's recent turn (user message `01a0ec66-600d-7443-ab42-c5aea4175391`) before this receipt was recorded.
+
+Immediately before recording acceptance, all 13 SPEC-03 source/doc/test and 130 generated build fingerprints matched the reviewed manifest, and all seven normative candidate files matched `CANDIDATE.json`. SPEC-03 is accepted on these current bytes. The V8 failure, possible port-3001 effect and native reconnect evidence limit remain unresolved and are not waived into passing evidence. This acceptance permits the final roadmap integration gate; it does not itself complete the roadmap, authorize Git/Alpha/live-app operations, or resume the deferred failure-map task.

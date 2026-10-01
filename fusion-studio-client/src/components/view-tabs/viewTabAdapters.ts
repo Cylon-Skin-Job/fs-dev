@@ -15,6 +15,7 @@
  * legacy behavior.
  */
 
+import { useDiagnosticTabAdapter } from '../diagnostics/useDiagnosticTabAdapter';
 import { usePanelStore } from '../../state/panelStore';
 import { useSideChatRailAdapter } from '../chat/useSideChatRailAdapter';
 import {
@@ -72,5 +73,6 @@ export function useViewTabAdapter(panelId: string): ViewTabAdapterModel | null {
   // only while an open managed placement exists. With no placement the base
   // model is returned unchanged (and `null` for adapterless views renders the
   // existing children byte-identically).
-  return useSideChatRailAdapter(panelId, nativeBase);
+  const withSideChats = useSideChatRailAdapter(panelId, nativeBase);
+  return useDiagnosticTabAdapter(panelId, withSideChats);
 }

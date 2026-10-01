@@ -15,11 +15,10 @@
  * focus restoration, or open-menu state.
  */
 
-import { MessageList } from '../MessageList';
-import { ConnectingOverlay } from '../ConnectingOverlay';
-import { ChatAreaHeader } from './ChatAreaHeader';
-import { ChatAreaFooter } from './ChatAreaFooter';
-import { TodoDrawer } from './TodoDrawer';
+import { memo } from 'react';
+import { ConnectedChatComposer } from './ConnectedChatComposer';
+import { ConnectedChatHeader } from './ConnectedChatHeader';
+import { ConnectedChatHistory } from './ConnectedChatHistory';
 import { chatSurfaceDomId, type ChatSurfaceProps, type ChatSurfaceRefs } from './chatSurfaceContract';
 
 export interface ChatSurfaceComponentProps extends ChatSurfaceProps {
@@ -29,14 +28,16 @@ export interface ChatSurfaceComponentProps extends ChatSurfaceProps {
   onToggleContent?: () => void;
 }
 
-export function ChatSurface({
+export const ChatSurface = memo(function ChatSurface({
   workspaceId,
   viewId,
   threadGroupId,
   threadId,
   surfaceId,
   host,
-  chat,
+  shell,
+  header,
+  composer,
   actions,
   refs,
   panel,
@@ -46,8 +47,7 @@ export function ChatSurface({
   void threadGroupId;
 
   const domId = chatSurfaceDomId(surfaceId);
-  const sectionClass = `rv-chat-area rv-chat-area--project${chat.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${!chat.hasThread ? ' rv-chat-area--no-thread' : ''}`;
-  const showEmptyState = chat.messages.length === 0 && !chat.currentTurn && !chat.showOrb;
+  const sectionClass = `rv-chat-area rv-chat-area--project${shell.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${!shell.hasThread ? ' rv-chat-area--no-thread' : ''}`;
 
   return (
     <section
@@ -59,93 +59,40 @@ export function ChatSurface({
       data-chat-workspace-id={workspaceId}
       data-chat-view-id={viewId ?? ''}
     >
-      <ChatAreaHeader
-        mountId={surfaceId}
+      <ConnectedChatHeader
+        workspaceId={workspaceId}
+        threadId={threadId}
+        surfaceId={surfaceId}
         panel={panel}
+        shell={shell}
+        header={header}
+        actions={actions}
         headerRef={refs.headerRef}
-        hasThread={chat.hasThread}
-        sidebarCollapsed={chat.isThreadsCollapsed}
-        contentCollapsed={chat.isContentCollapsed}
-        cliPickerOpen={chat.cliPickerOpen}
-        moreMenuOpen={chat.moreMenuOpen}
-        harnessStatuses={chat.harnessStatuses}
-        showCliPicker={chat.showCliPicker}
-        handleToggleThreads={onToggleThreads}
-        onHarnessSelect={actions.onHarnessSelect}
-        onCreateThread={actions.onCreateThread}
-        onRename={actions.onRename}
-        onCopyLink={actions.onCopyLink}
-        onViewMarkdown={actions.onViewMarkdown}
-        canMoveToSideChat={chat.canMoveToSideChat}
-        onMoveToSideChat={actions.onMoveToSideChat}
-        onSetMoreMenuOpen={actions.onSetMoreMenuOpen}
-        onCloseCliPicker={actions.onCloseCliPicker}
+        onToggleThreads={onToggleThreads}
         onToggleContent={onToggleContent}
       />
-      <div className="rv-chat-messages">
-        <div
-          className="rv-chat-scroll-viewport"
-          id={`chat-scroll-${domId}`}
-          ref={refs.scrollRef}
-        >
-          {chat.connectingHarnessName ? (
-            <ConnectingOverlay harnessName={chat.connectingHarnessName} />
-          ) : showEmptyState ? (
-            <div className="rv-message rv-message-system">
-              {chat.hasThread ? 'Start a conversation' : 'No thread selected'}
-            </div>
-          ) : (
-            <MessageList
-              threadId={threadId}
-              messages={chat.messages}
-              currentTurn={chat.currentTurn}
-              segments={chat.segments}
-              lastUserMsgRef={refs.lastUserMsgRef}
-              showOrb={chat.showOrb}
-              onRequestDiagnostic={actions.onRequestDiagnostic}
-              onCopyDiagnostic={actions.onCopyDiagnostic}
-              onAskAIWithDiagnostic={actions.onAskAIWithDiagnostic}
-              askAIWithDiagnosticEnabled={!chat.isAcceptancePending}
-            />
-          )}
-
-          {chat.hasThread && <div className="rv-chat-scroll-sentinel" />}
-        </div>
-
-        <TodoDrawer threadId={threadId} />
-      </div>
-
-      <ChatAreaFooter
-        mountId={surfaceId}
-        panel={panel}
-        inputRef={refs.inputRef}
-        onSend={actions.onSend}
-        onStop={actions.onStop}
-        noThread={!chat.hasThread}
-        isActive={chat.isActive}
-        inputPlaceholder={chat.hasThread
-          ? (chat.isActive ? undefined : 'Click a thread in this rv-sidebar to activate')
-          : ''}
-        isTurnActive={chat.isTurnActive}
-        isTurnFinalizing={chat.isTurnFinalizing}
-        isAcceptancePending={chat.isAcceptancePending}
-        onInsertText={actions.onInsertText}
-        onAddAttachment={actions.onAddAttachment}
-        onWarmIntent={actions.onWarmIntent}
-        contextUsage={chat.contextUsage}
-        tokenUsage={chat.tokenUsage}
+      <ConnectedChatHistory
         workspaceId={workspaceId}
-        threadId={chat.hasThread ? threadId : null}
-        composerDraft={chat.composerDraft}
-        onComposerDraftChange={actions.onComposerDraftChange}
-        modelSelection={chat.modelSelection}
-        onModelSelectionChange={actions.onModelSelectionChange}
-        screenshotOwner={chat.hasThread ? {
-          workspaceId,
-          threadId,
-          surface: 'primary',
-        } : null}
+        threadId={threadId}
+        hasThread={shell.hasThread}
+        connectingHarnessName={shell.connectingHarnessName}
+        isSendingForCurrentThread={shell.isSendingForCurrentThread}
+        actions={actions}
+        refs={refs}
+        scrollId={`chat-scroll-${domId}`}
+      />
+      <ConnectedChatComposer
+        workspaceId={workspaceId}
+        threadId={threadId}
+        surfaceId={surfaceId}
+        panel={panel}
+        hasThread={shell.hasThread}
+        isActive={shell.isActive}
+        isSendingForCurrentThread={shell.isSendingForCurrentThread}
+        composer={composer}
+        actions={actions}
+        inputRef={refs.inputRef}
       />
     </section>
   );
-}
+});

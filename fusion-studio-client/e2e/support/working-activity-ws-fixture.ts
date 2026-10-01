@@ -64,6 +64,12 @@ export interface WaReplyConfig {
 export interface WaFixture {
   /** Push one or more downstream server-shaped frames, in exact order. */
   push(frames: unknown | unknown[]): Promise<void>;
+  /** Close the active routed socket so the packaged client reconnects. */
+  disconnect(): Promise<void>;
+  /** Serve one exact authenticated receipt-status response after reconnect. */
+  setStatusReply(requestId: string, reply: Record<string, unknown>): void;
+  /** Capture this receipt inquiry without answering it until a test pushes a reply. */
+  holdStatusReply(requestId: string): void;
   /** Merge-replace parts of the scenario reply table (later wins). */
   setReplies(patch: WaReplyConfig): void;
   /** Drop the whole reply table (intercepted requests become silent). */
@@ -127,6 +133,12 @@ export async function installWaFixture(
   let notifyOpen: (() => void) | null = null;
   const whenOpen = new Promise<void>((resolve) => { notifyOpen = resolve; });
   let servedCount = 0;
+  let addressedViewId: string | null = null;
+  const groupIdFor = (threadId: string): string => `wa-group-${threadId}`;
+  const threadIdForGroup = (groupId: unknown): string => {
+    if (typeof groupId !== 'string' || !groupId.startsWith('wa-group-')) return '';
+    return groupId.slice('wa-group-'.length);
+  };
   const servedWaiters: Array<{ min: number; done: () => void }> = [];
   const opensHandledByThread = new Map<string, number>();
   const openWaiters: Array<{ threadId: string; count: number; done: () => void }> = [];
@@ -151,21 +163,39 @@ export async function installWaFixture(
   }
   /** Client-side send channel once the app's first socket is routed. */
   let clientSend: ((text: string) => void) | null = null;
+  let clientClose: (() => Promise<void>) | null = null;
+  const statusReplies = new Map<string, Record<string, unknown> | null>();
 
   function serveIntercepted(request: Record<string, unknown>): unknown | null {
     const type = String(request.type);
     servedCount += 1;
     notifyServed();
     if (type === 'thread:list') {
+      addressedViewId = typeof request.viewId === 'string' ? request.viewId : null;
       return replies.list
-        ? { type: 'thread:list', threads: replies.list.threads }
+        ? {
+          type: 'thread:list', viewId: addressedViewId,
+          threads: replies.list.threads.map((row) => ({
+            ...row,
+            threadGroupId: groupIdFor(String(row.threadId)),
+            currentPrimaryThreadId: row.threadId,
+            currentPrimarySequence: 1,
+            viewId: addressedViewId,
+            name: (row.entry as { name?: string } | undefined)?.name ?? '',
+          })),
+        }
         : null;
     }
     if (type === 'thread:open') {
-      const threadId = typeof request.threadId === 'string' ? request.threadId : '';
+      const threadId = typeof request.threadId === 'string'
+        ? request.threadId : threadIdForGroup(request.threadGroupId);
       const reply = threadId ? replies.openByThreadId?.[threadId] : undefined;
       // Round-trip so later pushes can never mutate served scenario sources.
-      const served = reply ? (JSON.parse(JSON.stringify(reply)) as Record<string, unknown>) : null;
+      const served = reply ? {
+        ...(JSON.parse(JSON.stringify(reply)) as Record<string, unknown>),
+        threadGroupId: groupIdFor(threadId),
+        viewId: addressedViewId,
+      } : null;
       noteOpenHandled(threadId);
       return served;
     }
@@ -187,6 +217,7 @@ export async function installWaFixture(
       isAppSocket = true;
       notifyOpen?.();
       clientSend = (text: string): void => route.send(text);
+      clientClose = (): Promise<void> => route.close({ code: 1012, reason: 'fixture server restart' });
       for (const text of downstreamQueue.splice(0)) route.send(typeof text === 'string' ? text : String(text));
     }
 
@@ -264,9 +295,18 @@ export async function installWaFixture(
         return;
       }
       if (parsed && INTERCEPTED_REQUEST_TYPES.has(String(parsed.type))) {
-        sentLog.push({ ...parsed });
+        sentLog.push(parsed.type === 'thread:open' && !parsed.threadId
+          ? { ...parsed, threadId: threadIdForGroup(parsed.threadGroupId) }
+          : { ...parsed });
         const reply = serveIntercepted(parsed);
         if (reply !== null) route.send(JSON.stringify(reply));
+        return;
+      }
+      if (parsed?.type === 'thread:action' && parsed.action === 'prompt_receipt_status'
+        && statusReplies.has(String(parsed.requestId))) {
+        sentLog.push({ ...parsed });
+        const reply = statusReplies.get(String(parsed.requestId));
+        if (reply) route.send(JSON.stringify(reply));
         return;
       }
       server.send(text);
@@ -296,6 +336,19 @@ export async function installWaFixture(
   });
 
   return {
+    async disconnect(): Promise<void> {
+      if (!clientClose) throw new Error('no active routed socket to disconnect');
+      const close = clientClose;
+      clientClose = null;
+      clientSend = null;
+      await close();
+    },
+    setStatusReply(requestId: string, reply: Record<string, unknown>): void {
+      statusReplies.set(requestId, { ...reply });
+    },
+    holdStatusReply(requestId: string): void {
+      statusReplies.set(requestId, null);
+    },
     push(frames: unknown | unknown[]): void {
       const list = Array.isArray(frames) ? frames : [frames];
       if (!clientSend) {

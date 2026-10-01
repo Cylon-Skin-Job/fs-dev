@@ -101,6 +101,9 @@ export function threadMembersKey(workspaceId: string, threadGroupId: string): st
   return `${workspaceId}::${threadGroupId}`;
 }
 
+/** Stable empty member projection for exact-key selectors. */
+export const EMPTY_THREAD_MEMBERS: ThreadMemberProjection[] = [];
+
 export function worksurfaceKey(workspaceId: string, viewId: string): string {
   return `${workspaceId}::${viewId}`;
 }
@@ -307,8 +310,9 @@ export function getThreadMembers(
   workspaceId: string | null,
   threadGroupId: string,
 ): ThreadMemberProjection[] {
-  if (!workspaceId) return [];
-  return state.threadMembersByGroup?.[threadMembersKey(workspaceId, threadGroupId)] ?? [];
+  if (!workspaceId) return EMPTY_THREAD_MEMBERS;
+  return state.threadMembersByGroup?.[threadMembersKey(workspaceId, threadGroupId)]
+    ?? EMPTY_THREAD_MEMBERS;
 }
 
 /** Read one binding (null when the view is not group-bound). */

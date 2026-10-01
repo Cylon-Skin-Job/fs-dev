@@ -2,14 +2,13 @@
 name: Chat Smoke Tests
 description: Vertical-slice smoke testing guidance for chat changes.
 metadata:
+  last-modified: "2026-09-19T10:34:31Z"
   incoming-edges:
     - Chat Testing And Operations
   outgoing-edges:
     - Chat Browser Playwright
     - Chat Electron Playwright
-  source-files:
-    - fusion-studio-server/package.json
-    - fusion-studio-client/package.json
+  source-files: []
   connected-skills: []
   related-trigger-files: []
 ---
@@ -27,6 +26,8 @@ slice.
    behavior matters.
 
 ## Commands
+
+The script definitions live in `fusion-studio-server/package.json` and `fusion-studio-client/package.json`. These are package configuration references, not code-source metadata.
 
 ```text
 cd fusion-studio-server && npm test

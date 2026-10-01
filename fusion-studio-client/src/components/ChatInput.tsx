@@ -11,6 +11,7 @@
  */
 
 import { useState, useRef, forwardRef, useImperativeHandle, useCallback, useEffect, useLayoutEffect } from 'react';
+import { isComposingKeyboardEvent } from '../lib/composition-key';
 import { usePanelStore } from '../state/panelStore';
 import { useFileAutocomplete } from '../hooks/useFileAutocomplete';
 import { EmojiTrigger } from '../emojis';
@@ -174,6 +175,7 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(function ChatI
   }, [text, disabled, onSend]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (isComposingKeyboardEvent(e.nativeEvent)) return;
     if (autocomplete.match && (e.key === 'Tab' || (e.key === 'Enter' && !e.shiftKey))) {
       e.preventDefault();
       const acceptedText = autocomplete.accept();

@@ -92,7 +92,7 @@ test('ThreadRail is a portable population/menu boundary with no store or socket 
     'state/slices',
     'lib/ws',
     'useSidebar',
-    'useLegacyChatHost',
+    'useChatSessionHost',
     'useViewChatHost',
     'chatFileLinkStore',
     'chatComposerDraftStore',
@@ -110,7 +110,10 @@ test('ThreadRail is a portable population/menu boundary with no store or socket 
   expect(rail).toContain('onOpenThread');
   expect(rail).toContain('data-selected');
   expect(rail).toContain('threadGroupId');
-  expect(rail).toContain('more_vert');
+  const rowMenu = readSource('src/components/chat/ThreadRailRowMenu.tsx');
+  expect(rail).toContain('ThreadRailRowMenu');
+  expect(rowMenu).toContain('more_vert');
+  expect(rowMenu).toContain('openMenuTree');
   expect(rail).not.toContain("type: 'thread:list'");
   expect(rail).not.toContain("type: 'thread:open'");
 });
@@ -132,7 +135,7 @@ test('the connected view host owns qualified list/open correlation and never tou
   expect(host).toContain('getThreadGroupPopulation');
   expect(host).toContain('getCurrentThreadGroupId');
   // A view host resolves its session through the shared ChatSurface machinery.
-  expect(host).toContain('useLegacyChatHost');
+  expect(host).toContain('useChatSessionHost');
   // It must not write the workspace-global current selection.
   expect(host).not.toContain('setCurrentThreadId');
 });
@@ -143,7 +146,6 @@ test('the dead un-gated ThreadJumpDropdown is removed', () => {
     'src/components/App.tsx',
     'src/components/Sidebar.tsx',
     'src/components/chat/ThreadRail.tsx',
-    'src/components/sidebar/useSidebar.ts',
   ].map(readSource).join('\n');
   expect(sources).not.toContain('ThreadJumpDropdown');
 });
@@ -190,6 +192,32 @@ async function freshStore() {
   } as never);
   return usePanelStore;
 }
+
+test('threadId-only historical commands keep the canonical server fallback', async () => {
+  const store = await freshStore();
+  const sent: Array<Record<string, unknown>> = [];
+  store.setState({ ws: {
+    readyState: 1,
+    send: (raw: string) => { sent.push(JSON.parse(raw) as Record<string, unknown>); },
+  } as WebSocket });
+  const commands = await import('../src/lib/chat/thread-group-command-controller');
+  const address = { workspaceId: WORKSPACE, threadGroupId: '', threadId: THREAD_A };
+  expect(commands.renameGroup(address, ' Historical ')).toBe(true);
+  expect(commands.copyGroupLink(address)).toBe(true);
+  expect(commands.viewGroupMarkdown(address)).toBe(true);
+  expect(commands.selectGroupModel(address, { modelId: 'portable-model', variant: null })).toBe(true);
+  expect(commands.deleteGroup(address)).toBe(true);
+  expect(sent.map((frame) => frame.action)).toEqual([
+    'rename', 'copy_link', 'view_markdown', 'set_harness_selection', 'delete',
+  ]);
+  for (const frame of sent) {
+    expect(frame).toMatchObject({ type: 'thread:action', threadId: THREAD_A });
+    expect(frame).not.toHaveProperty('threadGroupId');
+    expect(typeof frame.requestId).toBe('string');
+  }
+  expect(sent[0]).toHaveProperty('name', 'Historical');
+  expect(sent[3]).toMatchObject({ model: 'portable-model', variant: null });
+});
 
 async function loadHandlers() {
   const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
@@ -845,9 +873,9 @@ test('ThreadRail rows emit canonical thread:open and thread:action intents', asy
 
   // Kebab menu -> Copy Link and Delete are canonical thread:action intents.
   await page.locator('#host-a .rv-thread-menu-btn').first().click();
-  await page.locator('#host-a .rv-thread-menu-dropdown .rv-dropdown-item', { hasText: 'Copy Link' }).click();
+  await page.getByRole('menu', { name: 'Thread options' }).getByRole('menuitem', { name: 'Copy Link' }).click();
   await page.locator('#host-a .rv-thread-menu-btn').first().click();
-  await page.locator('#host-a .rv-thread-menu-dropdown .rv-dropdown-item', { hasText: 'Delete' }).click();
+  await page.getByRole('menu', { name: 'Thread options' }).getByRole('menuitem', { name: 'Delete' }).click();
 
   const sent = await page.evaluate(() => (
     window as unknown as { __threadedFixture: { sentRaw: () => Array<Record<string, unknown>> } }

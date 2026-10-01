@@ -6,7 +6,7 @@
  *       visibility.
  *
  * Proof strategy:
- *  - a real Vite-rendered fixture mounting the actual `LegacyChatHost` +
+ *  - a real Vite-rendered fixture mounting the actual `ChatSessionHost` +
  *    `ChatSurface` twice over two distinct explicit sessions and hosts;
  *  - the real store + WebSocket handler frames (`handleThreadMessage`,
  *    `handleStreamMessage`) with an injected OPEN fake socket capturing
@@ -24,8 +24,10 @@ import { build } from 'vite';
 const WS_ID = 'isolation-workspace';
 const GROUP_A = 'isolation-group-a';
 const GROUP_B = 'isolation-group-b';
+const GROUP_C = 'isolation-group-c';
 const THREAD_A = 'isolation-thread-a';
 const THREAD_B = 'isolation-thread-b';
+const THREAD_C = 'isolation-thread-c';
 
 const bundles = new Map<string, Promise<string>>();
 
@@ -38,7 +40,17 @@ async function buildHarness(): Promise<string> {
     const panelStorePath = path.resolve('src/state/panelStore.ts');
     const draftStorePath = path.resolve('src/state/chatComposerDraftStore.ts');
     const attachmentStorePath = path.resolve('src/state/chatFileLinkStore.ts');
-    const hostPath = path.resolve('src/components/chat/LegacyChatHost.tsx');
+    const hostPath = path.resolve('src/components/chat/ChatSessionHost.tsx');
+    const surfacePath = path.resolve('src/components/chat/ChatSurface.tsx');
+    const composerPath = path.resolve('src/components/chat/ConnectedChatComposer.tsx');
+    const historyPath = path.resolve('src/components/chat/ConnectedChatHistory.tsx');
+    const connectedHeaderPath = path.resolve('src/components/chat/ConnectedChatHeader.tsx');
+    const messageListPath = path.resolve('src/components/MessageList.tsx');
+    const instantRendererPath = path.resolve('src/components/InstantSegmentRenderer.tsx');
+    const headerPath = path.resolve('src/components/chat/ChatAreaHeader.tsx');
+    const railPath = path.resolve('src/components/chat/ThreadRail.tsx');
+    const contentAreaPath = path.resolve('src/components/ContentArea.tsx');
+    const textFormatterPath = path.resolve('src/lib/text/index.ts');
     const threadHandlersPath = path.resolve('src/lib/ws/thread-handlers.ts');
     const streamHandlersPath = path.resolve('src/lib/ws/stream-handlers.ts');
     const source = `
@@ -47,17 +59,24 @@ async function buildHarness(): Promise<string> {
       import { usePanelStore } from ${JSON.stringify(panelStorePath)};
       import { useChatComposerDraftStore } from ${JSON.stringify(draftStorePath)};
       import { useChatFileLinkStore } from ${JSON.stringify(attachmentStorePath)};
-      import { LegacyChatHost } from ${JSON.stringify(hostPath)};
+      import { ChatSessionHost } from ${JSON.stringify(hostPath)};
       import { handleThreadMessage } from ${JSON.stringify(threadHandlersPath)};
       import { handleStreamMessage } from ${JSON.stringify(streamHandlersPath)};
 
       var WS_ID = ${JSON.stringify(WS_ID)};
       var GROUP_A = ${JSON.stringify(GROUP_A)};
       var GROUP_B = ${JSON.stringify(GROUP_B)};
+      var GROUP_C = ${JSON.stringify(GROUP_C)};
       var THREAD_A = ${JSON.stringify(THREAD_A)};
       var THREAD_B = ${JSON.stringify(THREAD_B)};
+      var THREAD_C = ${JSON.stringify(THREAD_C)};
 
       var sent = [];
+      var renderProbe = { components: {}, formatters: {} };
+      window.__fusionChatArchitectureProbe = function (kind, name) {
+        var target = kind === 'formatter' ? renderProbe.formatters : renderProbe.components;
+        target[name] = (target[name] || 0) + 1;
+      };
       var fakeWs = {
         readyState: 1,
         send: function (data) { try { sent.push(JSON.parse(data)); } catch (e) {} },
@@ -105,7 +124,7 @@ async function buildHarness(): Promise<string> {
         currentThreadId: null,
         chatActive: true,
         ws: fakeWs,
-        threads: [row(THREAD_A, GROUP_A, 'Alpha', 'mA', 'high'), row(THREAD_B, GROUP_B, 'Beta', 'mB', 'low')],
+        threads: [row(THREAD_A, GROUP_A, 'Alpha', 'mA', 'high'), row(THREAD_B, GROUP_B, 'Beta', 'mB', 'low'), row(THREAD_C, GROUP_C, 'Gamma', 'mC', 'medium')],
         threadGroupsByWorkspaceAndView: {},
         currentThreadGroupIdByWorkspaceAndView: {},
         legacyThreadGroupsByWorkspaceId: { [WS_ID]: [row(THREAD_A, GROUP_A, 'Alpha', 'mA', 'high'), row(THREAD_B, GROUP_B, 'Beta', 'mB', 'low')] },
@@ -126,12 +145,23 @@ async function buildHarness(): Promise<string> {
         var [collapsedA, setCollapsedA] = React.useState(false);
         var [sidebarA, setSidebarA] = React.useState(false);
         var [contentA, setContentA] = React.useState(false);
+        var [sameSession, setSameSession] = React.useState(false);
         React.useEffect(function () {
           window.__chatSurfaceIsolation = {
             deliver: function (msg) { return handleThreadMessage(msg); },
             deliverStream: function (msg) { return handleStreamMessage(msg); },
             sentRaw: function () { return sent.slice(); },
+            resetRenderProbe: function () { renderProbe = { components: {}, formatters: {} }; },
+            renderProbe: function () { return JSON.stringify(renderProbe); },
             storeState: function () { return JSON.stringify(usePanelStore.getState()); },
+            replaceUnrelatedThread: function (name) {
+              var state = usePanelStore.getState();
+              usePanelStore.setState({ threads: state.threads.map(function (thread) {
+                return thread.threadId === THREAD_C
+                  ? Object.assign({}, thread, { entry: Object.assign({}, thread.entry, { name: name }) })
+                  : thread;
+              }) });
+            },
             setConnectingForSurface: function (surfaceId, harnessId) {
               usePanelStore.getState().setConnectingHarnessForSurface(surfaceId, harnessId);
             },
@@ -144,8 +174,47 @@ async function buildHarness(): Promise<string> {
             setDraft: function (workspaceId, threadId, text) {
               useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);
             },
+            seedCompletedHistory: function (threadId) {
+              var state = usePanelStore.getState();
+              var chat = state.projectChats[threadId];
+              usePanelStore.setState({ projectChats: Object.assign({}, state.projectChats, {
+                [threadId]: Object.assign({}, chat, { messages: [
+                  { id: 'history-user', type: 'user', content: 'fixture question', timestamp: 1 },
+                  { id: 'history-assistant', type: 'assistant', content: 'fixture answer', timestamp: 2,
+                    segments: [{ type: 'text', content: '**fixture answer**', complete: true }] },
+                ] })
+              }) });
+            },
+            seedCompletedHistoryPair: function (threadId) {
+              var store = usePanelStore.getState();
+              store.clearChat(threadId);
+              store.addMessage(threadId, { id: 'history-user-1', type: 'user', content: 'first question', timestamp: 1 });
+              store.addMessage(threadId, { id: 'history-assistant-1', type: 'assistant', content: 'first answer', timestamp: 2,
+                exchangeId: 101, exchangeSeq: 1, metadata: {},
+                segments: [{ type: 'text', content: 'FIRST **ANSWER** [history link](https://example.test/history)', complete: true }] });
+              store.addMessage(threadId, { id: 'history-user-2', type: 'user', content: 'second question', timestamp: 3 });
+              store.addMessage(threadId, { id: 'history-assistant-2', type: 'assistant', content: '', timestamp: 4,
+                exchangeId: 102, exchangeSeq: 2, metadata: { bookmark: { type: 'star' } },
+                segments: [{ type: 'read', content: 'TOOL HISTORY OUTPUT', toolCallId: 'history-tool',
+                  toolArgs: { path: 'history.txt' }, complete: true }] });
+            },
+            updateHistoryMetadata: function (threadId, exchangeId, metadata) {
+              usePanelStore.getState().updateMessageMetadata(threadId, exchangeId, metadata);
+            },
+            historyRevisions: function (threadId) {
+              return (usePanelStore.getState().projectChats[threadId]?.messages || [])
+                .filter(function (message) { return message.type === 'assistant'; })
+                .map(function (message) { return { id: message.id, contentRevision: message.contentRevision,
+                  metadataRevision: message.metadataRevision }; });
+            },
             addAttachment: function (workspaceId, threadId, attachment) {
               useChatFileLinkStore.getState().addPendingAttachment(workspaceId, threadId, attachment);
+            },
+            upsertAutocompleteCandidate: function (candidate) {
+              useChatFileLinkStore.getState().upsertAutocompleteCandidate(candidate);
+            },
+            removeAttachment: function (workspaceId, threadId, id) {
+              useChatFileLinkStore.getState().removePendingAttachment(workspaceId, threadId, id);
             },
             drafts: function () { return JSON.stringify(useChatComposerDraftStore.getState().draftsByOwner); },
             attachments: function () { return JSON.stringify(useChatFileLinkStore.getState().pendingAttachmentsByOwner); },
@@ -158,22 +227,31 @@ async function buildHarness(): Promise<string> {
             toggleCollapsedA: function () { setCollapsedA(function (v) { return !v; }); },
             setSidebarA: setSidebarA,
             setContentA: setContentA,
+            setSameSession: setSameSession,
           };
-        }, [collapsedA, sidebarA, contentA]);
+        }, [collapsedA, sidebarA, contentA, sameSession]);
         return React.createElement('div', null,
           React.createElement('div', { id: 'mount-a' },
-            React.createElement(LegacyChatHost, {
+            React.createElement(ChatSessionHost, {
               panel: 'isolation-a',
+              workspaceId: WS_ID,
               threadId: THREAD_A,
-              host: 'legacy-main',
+              host: 'main',
+              viewId: 'file-viewer',
+              threadGroupId: GROUP_A,
+              threadName: 'Alpha',
               collapsed: collapsedA,
               sidebarCollapsed: sidebarA,
               contentCollapsed: contentA,
             })),
           React.createElement('div', { id: 'mount-b' },
-            React.createElement(LegacyChatHost, {
+            React.createElement(ChatSessionHost, {
               panel: 'isolation-b',
-              threadId: THREAD_B,
+              workspaceId: WS_ID,
+              viewId: 'wiki-viewer',
+              threadGroupId: sameSession ? GROUP_A : GROUP_B,
+              threadId: sameSession ? THREAD_A : THREAD_B,
+              threadName: sameSession ? 'Alpha' : 'Beta',
               host: 'main',
             })),
         );
@@ -194,6 +272,26 @@ async function buildHarness(): Promise<string> {
         load(id) {
           if (id === resolvedEntry) return source;
           return null;
+        },
+        transform(code, id) {
+          const target = new Map([
+            [surfacePath, ['}: ChatSurfaceComponentProps) {', 'component', 'ChatSurface']],
+            [composerPath, ['}: ConnectedChatComposerProps) {', 'component', 'ConnectedChatComposer']],
+            [historyPath, ['}: ConnectedChatHistoryProps) {', 'component', 'ConnectedChatHistory']],
+            [connectedHeaderPath, ['}: ConnectedChatHeaderProps) {', 'component', 'ConnectedChatHeader']],
+            [messageListPath, ['}: MessageListProps) {', 'component', 'MessageList']],
+            [instantRendererPath, ['export function InstantSegmentRenderer({ segments }: InstantSegmentRendererProps) {', 'component', 'InstantSegmentRenderer']],
+            [headerPath, ['}: ChatAreaHeaderProps) {', 'component', 'ChatAreaHeader']],
+            [railPath, ['export function ThreadRail(props: ThreadRailProps) {', 'component', 'ThreadRail']],
+            [contentAreaPath, ['export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {', 'component', 'ContentArea']],
+            [textFormatterPath, ['export function renderTextInstant(content: string): string {', 'formatter', 'renderTextInstant']],
+          ]).get(id) as [string, string, string] | undefined;
+          if (!target) return null;
+          const [marker, kind, name] = target;
+          if (code.split(marker).length !== 2) {
+            throw new Error(`render probe expected one ${name} marker in ${id}`);
+          }
+          return code.replace(marker, `${marker}\n  globalThis.__fusionChatArchitectureProbe?.(${JSON.stringify(kind)}, ${JSON.stringify(name)});`);
         },
       }],
       build: {
@@ -261,7 +359,7 @@ async function surfaceIds(page: Page): Promise<{ a: string; b: string }> {
 test('two simultaneously mounted explicit surfaces have distinct transient surfaceIds and hosts', async ({ page }) => {
   await mountFixture(page);
   const ids = await surfaceIds(page);
-  expect(ids.a).toMatch(/^chat-surface:legacy-main:/);
+  expect(ids.a).toMatch(/^chat-surface:main:/);
   expect(ids.b).toMatch(/^chat-surface:main:/);
   expect(ids.a).not.toBe(ids.b);
   await expect(page.locator('#mount-a .rv-chat-area')).toHaveAttribute('data-chat-thread-id', THREAD_A);
@@ -295,6 +393,70 @@ test('Send in each surface emits a prompt frame with its exact threadId and ackn
   });
   expect(promptA?.harnessConfig).not.toEqual(promptB?.harnessConfig);
   expect(JSON.stringify(frames)).not.toContain('surfaceId');
+});
+
+test('two mounts of one session share one pending attempt and one accepted bubble', async ({ page }) => {
+  await mountFixture(page);
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    setSameSession: (same: boolean) => void,
+  } }).__chatSurfaceIsolation.setSameSession(true));
+  await expect(page.locator('#mount-b .rv-chat-area')).toHaveAttribute('data-chat-thread-id', THREAD_A);
+  await page.locator('#mount-a textarea.rv-chat-input').fill('SHARED-ATTEMPT');
+  await page.evaluate((workspaceId) => (window as unknown as { __chatSurfaceIsolation: {
+    addAttachment: (workspaceId: string, threadId: string, attachment: unknown) => void,
+  } }).__chatSurfaceIsolation.addAttachment(workspaceId, 'isolation-thread-a',
+    { id: 'same-file-stable-id', kind: 'file', path: 'a.md', name: 'a.md' }), WS_ID);
+  await expect(page.locator('#mount-b textarea.rv-chat-input')).toHaveValue('SHARED-ATTEMPT');
+  await page.locator('#mount-a textarea.rv-chat-input').press('Enter');
+  await expect(page.locator('#mount-b textarea.rv-chat-input')).toBeDisabled();
+  const prompts = (await sentFrames(page)).filter((frame) => frame.type === 'prompt' && frame.threadId === THREAD_A);
+  expect(prompts).toHaveLength(1);
+  expect(prompts[0].requestId).toMatch(/^[a-f0-9]{32}$/);
+  await deliver(page, { type: 'message:sent', workspaceId: WS_ID, threadId: THREAD_A,
+    requestId: prompts[0].requestId, turnId: 'shared-turn-1', content: 'SHARED-ATTEMPT' });
+  await expect(page.locator('#mount-a .rv-message-user')).toHaveCount(1);
+  await expect(page.locator('#mount-b .rv-message-user')).toHaveCount(1);
+  await page.evaluate((workspaceId) => (window as unknown as { __chatSurfaceIsolation: {
+    addAttachment: (workspaceId: string, threadId: string, attachment: unknown) => void,
+  } }).__chatSurfaceIsolation.addAttachment(workspaceId, 'isolation-thread-a',
+    { id: 'same-file-stable-id', kind: 'file', path: 'a.md', name: 'a.md' }), WS_ID);
+  await deliver(page, { type: 'message:sent', workspaceId: WS_ID, threadId: THREAD_A,
+    requestId: prompts[0].requestId, turnId: 'shared-turn-1', content: 'SHARED-ATTEMPT' });
+  await expect(page.locator('#mount-a .rv-message-user')).toHaveCount(1);
+  await expect(page.locator('#mount-a textarea.rv-chat-input')).toHaveValue('');
+  await expect(page.locator('#mount-b textarea.rv-chat-input')).toHaveValue('');
+  const pending = await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    attachments: () => string,
+  } }).__chatSurfaceIsolation.attachments());
+  expect(pending).toContain('same-file-stable-id');
+});
+
+test('ACK cleanup preserves a stable-ID attachment removed and readded while pending', async ({ page }) => {
+  await mountFixture(page);
+  const attachment = { id: 'saved-screenshot-stable-id', kind: 'file', path: 'same.png', name: 'same.png' };
+  await page.evaluate(({ workspaceId, attachment }) => (window as unknown as { __chatSurfaceIsolation: {
+    addAttachment: (workspaceId: string, threadId: string, attachment: unknown) => void,
+  } }).__chatSurfaceIsolation.addAttachment(workspaceId, 'isolation-thread-a', attachment),
+  { workspaceId: WS_ID, attachment });
+  await page.locator('#mount-a textarea.rv-chat-input').fill('ATTACHMENT-SNAPSHOT');
+  await page.locator('#mount-a textarea.rv-chat-input').press('Enter');
+  const prompt = (await sentFrames(page)).find((frame) => frame.type === 'prompt' && frame.threadId === THREAD_A);
+  expect(prompt?.attachments).toHaveLength(1);
+  await page.evaluate(({ workspaceId, attachment }) => {
+    const api = (window as unknown as { __chatSurfaceIsolation: {
+      removeAttachment: (workspaceId: string, threadId: string, id: string) => void,
+      addAttachment: (workspaceId: string, threadId: string, attachment: unknown) => void,
+    } }).__chatSurfaceIsolation;
+    api.removeAttachment(workspaceId, 'isolation-thread-a', attachment.id);
+    api.addAttachment(workspaceId, 'isolation-thread-a', attachment);
+  }, { workspaceId: WS_ID, attachment });
+  await deliver(page, { type: 'message:sent', workspaceId: WS_ID, threadId: THREAD_A,
+    requestId: prompt?.requestId, turnId: 'attachment-turn-1', content: 'ATTACHMENT-SNAPSHOT' });
+  const pending = await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    attachments: () => string,
+  } }).__chatSurfaceIsolation.attachments());
+  expect(pending).toContain('saved-screenshot-stable-id');
+  await expect(page.locator('#mount-a .rv-message-user')).toHaveCount(1);
 });
 
 test('interleaved live frames for both threads render only their own content, thinking, tools, usage, Todos, errors, and saved turns', async ({ page }) => {
@@ -546,6 +708,324 @@ test('drafts and attachments remain per workspace/thread owner stores and never 
   expect(attachments).toContain(THREAD_B);
 });
 
+test('duplicate mounts preserve exact draft input semantics while other sessions stay isolated', async ({ page }) => {
+  await mountFixture(page);
+  const inputA = page.locator('#mount-a textarea.rv-chat-input');
+  const inputB = page.locator('#mount-b textarea.rv-chat-input');
+
+  await inputA.fill('A-only');
+  await expect(inputB).toHaveValue('');
+  await inputB.fill('B-only');
+  await expect(inputA).toHaveValue('A-only');
+
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    setSameSession: (same: boolean) => void,
+  } }).__chatSurfaceIsolation.setSameSession(true));
+  await expect(inputB).toHaveValue('A-only');
+
+  await inputA.fill('alpha omega');
+  await inputA.evaluate((node: HTMLTextAreaElement) => node.setSelectionRange(6, 11));
+  await inputA.focus();
+  await page.keyboard.type('BETA');
+  await expect(inputA).toHaveValue('alpha BETA');
+  await expect(inputB).toHaveValue('alpha BETA');
+  expect(await inputA.evaluate((node: HTMLTextAreaElement) => [node.selectionStart, node.selectionEnd]))
+    .toEqual([10, 10]);
+
+  const insertByInputType = async (text: string, inputType: string, composition = false) => {
+    await inputA.evaluate((node: HTMLTextAreaElement, { text, inputType, composition }) => {
+      const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set;
+      const next = `${node.value}${text}`;
+      if (composition) node.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true, data: text }));
+      setter?.call(node, next);
+      node.setSelectionRange(next.length, next.length);
+      node.dispatchEvent(new InputEvent('input', {
+        bubbles: true,
+        data: text,
+        inputType,
+        isComposing: composition,
+      }));
+      if (composition) node.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true, data: text }));
+    }, { text, inputType, composition });
+  };
+
+  await insertByInputType(' 文', 'insertCompositionText', true);
+  await insertByInputType(' PASTE', 'insertFromPaste');
+  await insertByInputType(' DROP', 'insertFromDrop');
+  await inputA.focus();
+  await page.keyboard.insertText(' 😀');
+  await expect(inputB).toHaveValue('alpha BETA 文 PASTE DROP 😀');
+
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    upsertAutocompleteCandidate: (candidate: unknown) => void,
+  } }).__chatSurfaceIsolation.upsertAutocompleteCandidate({
+    id: 'open-tab:/tmp/notes.ts',
+    label: 'notes.ts',
+    path: '/tmp/notes.ts',
+    basename: 'notes.ts',
+    source: 'open-tab',
+    openedAt: 1,
+  }));
+  await inputA.fill('open notes');
+  await expect(page.locator('#mount-a .rv-chat-autocomplete-ghost')).toBeVisible();
+  await inputA.press('Tab');
+  await expect(inputA).toHaveValue('open notes.ts ');
+  await expect(inputB).toHaveValue('open notes.ts ');
+
+  const multiline = Array.from({ length: 14 }, (_, index) => `line-${index}`).join('\n');
+  await inputA.fill(multiline);
+  const resize = await inputA.evaluate((node: HTMLTextAreaElement) => ({
+    height: Number.parseFloat(node.style.height),
+    overflowY: node.style.overflowY,
+    exact: node.value,
+  }));
+  expect(resize.exact).toBe(multiline);
+  expect(resize.height).toBeGreaterThanOrEqual(42);
+  expect(['auto', 'hidden']).toContain(resize.overflowY);
+
+  await page.evaluate(({ workspaceId, threadId }) => (window as unknown as { __chatSurfaceIsolation: {
+    addAttachment: (workspaceId: string, threadId: string, attachment: unknown) => void,
+  } }).__chatSurfaceIsolation.addAttachment(workspaceId, threadId,
+    { id: 'shared-drop-file', kind: 'file', path: 'drop.md', label: 'drop.md' }),
+  { workspaceId: WS_ID, threadId: THREAD_A });
+  await expect(page.locator('#mount-a .rv-chat-attachment-pill')).toHaveCount(1);
+  await expect(page.locator('#mount-b .rv-chat-attachment-pill')).toHaveCount(1);
+});
+
+test('draft-only updates render the exact composer leaf without history, formatter, or header work', async ({ page }) => {
+  await mountFixture(page);
+  await page.evaluate((threadId) => {
+    const fixture = (window as unknown as { __chatSurfaceIsolation: {
+      seedCompletedHistory: (id: string) => void;
+      resetRenderProbe: () => void;
+    } }).__chatSurfaceIsolation;
+    fixture.seedCompletedHistory(threadId);
+  }, THREAD_A);
+  await expect(page.locator('#mount-a .rv-message')).toHaveCount(2);
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    resetRenderProbe: () => void;
+  } }).__chatSurfaceIsolation.resetRenderProbe());
+
+  const exact = 'draft stays local byte-for-byte 😀';
+  await page.locator('#mount-a textarea.rv-chat-input').fill(exact);
+  await expect(page.locator('#mount-a textarea.rv-chat-input')).toHaveValue(exact);
+  const probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  expect(probe.components.ConnectedChatComposer).toBeGreaterThan(0);
+  expect(probe.components.ConnectedChatHistory ?? 0).toBe(0);
+  expect(probe.components.MessageList ?? 0).toBe(0);
+  expect(probe.components.InstantSegmentRenderer ?? 0).toBe(0);
+  expect(probe.components.ChatAreaHeader ?? 0).toBe(0);
+  expect(Object.values(probe.formatters).reduce((sum, count) => sum + count, 0)).toBe(0);
+});
+
+test('20fps live frontier keeps completed formatting quiet and preserves public history UI state', async ({ page }) => {
+  await mountFixture(page);
+  await page.evaluate((threadId) => (window as unknown as { __chatSurfaceIsolation: {
+    seedCompletedHistoryPair: (id: string) => void;
+  } }).__chatSurfaceIsolation.seedCompletedHistoryPair(threadId), THREAD_A);
+  const mount = page.locator('#mount-a');
+  await expect(mount.locator('.rv-message')).toHaveCount(4);
+  const tool = mount.locator('.rv-tool-header-btn').first();
+  await tool.click();
+  await expect(tool).toHaveAttribute('data-expanded', 'true');
+  await expect(mount.getByRole('button', { name: 'Starred' })).toHaveCount(1);
+  await expect(mount.locator('a[href="https://example.test/history"]')).toHaveCount(1);
+
+  const before = await page.evaluate(() => {
+    const root = document.querySelector('#mount-a');
+    const text = root?.querySelector('.rv-message-assistant-content')?.firstChild;
+    const selection = window.getSelection();
+    if (text && selection) {
+      const range = document.createRange();
+      range.selectNodeContents(text);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    const viewport = root?.querySelector<HTMLElement>('.rv-chat-scroll-viewport');
+    if (viewport) viewport.scrollTop = 7;
+    (window as any).__historyStableNodes = Array.from(root?.querySelectorAll('.rv-message') ?? []);
+    return { selection: selection?.toString() ?? '', scrollTop: viewport?.scrollTop ?? null };
+  });
+  expect(before.selection).toContain('FIRST ANSWER');
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    resetRenderProbe: () => void;
+  } }).__chatSurfaceIsolation.resetRenderProbe());
+
+  await deliverStream(page, { type: 'turn_begin', threadId: THREAD_A, turnId: 'turn-20fps', streamSeq: 1 });
+  for (let index = 0; index < 20; index += 1) {
+    await deliverStream(page, {
+      type: 'content', threadId: THREAD_A, turnId: 'turn-20fps', streamSeq: index + 2,
+      activityRevision: index + 1, text: `frame-${index} `,
+    });
+    await page.waitForTimeout(50);
+  }
+
+  const probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  expect(probe.components.MessageList).toBeGreaterThan(0);
+  expect(probe.components.InstantSegmentRenderer ?? 0).toBe(0);
+  expect(probe.formatters.renderTextInstant ?? 0).toBe(0);
+  await expect(tool).toHaveAttribute('data-expanded', 'true');
+  await expect(mount.locator('a[href="https://example.test/history"]')).toHaveCount(1);
+  await expect(mount.getByRole('button', { name: 'Starred' })).toHaveCount(1);
+  const after = await page.evaluate(() => {
+    const root = document.querySelector('#mount-a');
+    const current = Array.from(root?.querySelectorAll('.rv-message') ?? []);
+    const stable = (window as any).__historyStableNodes as Element[];
+    return {
+      sameNodes: stable.every((node, index) => current[index] === node),
+      selection: window.getSelection()?.toString() ?? '',
+      scrollTop: root?.querySelector<HTMLElement>('.rv-chat-scroll-viewport')?.scrollTop ?? null,
+    };
+  });
+  expect(after).toEqual({ sameNodes: true, selection: before.selection, scrollTop: before.scrollTop });
+});
+
+test('metadata invalidation is scoped while hydration/content replacement cannot reuse stale formatting', async ({ page }) => {
+  await mountFixture(page);
+  await page.evaluate((threadId) => (window as unknown as { __chatSurfaceIsolation: {
+    seedCompletedHistoryPair: (id: string) => void;
+  } }).__chatSurfaceIsolation.seedCompletedHistoryPair(threadId), THREAD_A);
+  const revisionsBefore = await page.evaluate((threadId) => (
+    window as unknown as { __chatSurfaceIsolation: { historyRevisions: (id: string) => unknown } }
+  ).__chatSurfaceIsolation.historyRevisions(threadId), THREAD_A) as Array<Record<string, string>>;
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    resetRenderProbe: () => void;
+  } }).__chatSurfaceIsolation.resetRenderProbe());
+  await page.evaluate(({ threadId, exchangeId }) => (
+    window as unknown as { __chatSurfaceIsolation: {
+      updateHistoryMetadata: (id: string, exchange: number, metadata: unknown) => void;
+    } }
+  ).__chatSurfaceIsolation.updateHistoryMetadata(threadId, exchangeId, {
+    bookmark: { type: 'heart' }, note: { body: 'scoped note' },
+  }), { threadId: THREAD_A, exchangeId: 101 });
+  await expect(page.locator('#mount-a').getByRole('button', { name: 'Liked' })).toHaveCount(1);
+  await expect(page.locator('#mount-a').getByRole('button', { name: 'Starred' })).toHaveCount(1);
+  const revisionsAfter = await page.evaluate((threadId) => (
+    window as unknown as { __chatSurfaceIsolation: { historyRevisions: (id: string) => unknown } }
+  ).__chatSurfaceIsolation.historyRevisions(threadId), THREAD_A) as Array<Record<string, string>>;
+  expect(revisionsAfter[0].contentRevision).toBe(revisionsBefore[0].contentRevision);
+  expect(revisionsAfter[0].metadataRevision).not.toBe(revisionsBefore[0].metadataRevision);
+  expect(revisionsAfter[1]).toEqual(revisionsBefore[1]);
+  let probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  expect(probe.components.InstantSegmentRenderer).toBe(1);
+  expect(probe.formatters.renderTextInstant ?? 0).toBe(0);
+
+  const tool = page.locator('#mount-a .rv-tool-header-btn').first();
+  await tool.click();
+  await expect(tool).toHaveAttribute('data-expanded', 'true');
+  await page.evaluate(() => {
+    (window as any).__historyToolDerivedNode = document.querySelector('#mount-a .rv-tool-content-body');
+    (window as unknown as { __chatSurfaceIsolation: { resetRenderProbe: () => void } })
+      .__chatSurfaceIsolation.resetRenderProbe();
+  });
+  await page.evaluate(({ threadId, exchangeId }) => (
+    window as unknown as { __chatSurfaceIsolation: {
+      updateHistoryMetadata: (id: string, exchange: number, metadata: unknown) => void;
+    } }
+  ).__chatSurfaceIsolation.updateHistoryMetadata(threadId, exchangeId, {
+    bookmark: { type: 'flag' }, note: { body: 'tool row note' },
+  }), { threadId: THREAD_A, exchangeId: 102 });
+  await expect(tool).toHaveAttribute('data-expanded', 'true');
+  expect(await page.evaluate(() => (
+    (window as any).__historyToolDerivedNode === document.querySelector('#mount-a .rv-tool-content-body')
+  ))).toBe(true);
+  probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  expect(probe.components.InstantSegmentRenderer).toBe(1);
+  expect(probe.formatters.renderTextInstant ?? 0).toBe(0);
+
+  const opened = (text: string, bookmark: string) => ({
+    type: 'thread:opened', threadId: THREAD_A, threadGroupId: GROUP_A, workspaceId: WS_ID, viewId: null,
+    thread: { name: 'Alpha', createdAt: '2026-01-01T00:00:00.000Z', messageCount: 1,
+      status: 'active', harnessId: 'opencode', harnessConfig: {} },
+    exchanges: [{ exchangeId: 101, seq: 1, ts: 10, user: 'rehydrated question',
+      assistant: { parts: [{ type: 'text', content: text }] }, metadata: { bookmark: { type: bookmark } } }],
+  });
+  await deliver(page, opened('HYDRATED FIRST CONTENT', 'flag'));
+  await expect(page.locator('#mount-a .rv-chat-messages')).toContainText('HYDRATED FIRST CONTENT');
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    resetRenderProbe: () => void;
+  } }).__chatSurfaceIsolation.resetRenderProbe());
+  await deliver(page, opened('HYDRATED EDITED CONTENT', 'heart'));
+  await expect(page.locator('#mount-a .rv-chat-messages')).toContainText('HYDRATED EDITED CONTENT');
+  await expect(page.locator('#mount-a .rv-chat-messages')).not.toContainText('HYDRATED FIRST CONTENT');
+  await expect(page.locator('#mount-a').getByRole('button', { name: 'Liked' })).toHaveCount(1);
+  probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  expect(probe.formatters.renderTextInstant).toBeGreaterThan(0);
+  expect(await page.locator('#mount-a .rv-message').count()).toBe(2);
+});
+
+test('replacing an unrelated thread row does not reproject the target parent or leaves', async ({ page }) => {
+  await mountFixture(page);
+  expect((await storeState(page)).threads.find((thread: { threadId: string }) => (
+    thread.threadId === THREAD_A
+  ))?.entry?.name).toBe('Alpha');
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    resetRenderProbe: () => void;
+    replaceUnrelatedThread: (name: string) => void;
+  } }).__chatSurfaceIsolation.resetRenderProbe());
+  await page.evaluate(() => (window as unknown as { __chatSurfaceIsolation: {
+    replaceUnrelatedThread: (name: string) => void;
+  } }).__chatSurfaceIsolation.replaceUnrelatedThread('Gamma replaced'));
+  await page.waitForTimeout(50);
+
+  expect((await storeState(page)).threads.find((thread: { threadId: string }) => (
+    thread.threadId === THREAD_A
+  ))?.entry?.name).toBe('Alpha');
+  const probe = await page.evaluate(() => JSON.parse(
+    (window as unknown as { __chatSurfaceIsolation: { renderProbe: () => string } })
+      .__chatSurfaceIsolation.renderProbe(),
+  )) as { components: Record<string, number>; formatters: Record<string, number> };
+  for (const name of [
+    'ChatSurface',
+    'ConnectedChatHeader',
+    'ConnectedChatHistory',
+    'ChatAreaHeader',
+    'MessageList',
+    'InstantSegmentRenderer',
+  ]) {
+    expect(probe.components[name] ?? 0, `${name} should stay local`).toBe(0);
+  }
+  expect(Object.values(probe.formatters).reduce((sum, count) => sum + count, 0)).toBe(0);
+});
+
+
+test('collapsed header New Chat and Rename keep the explicit view/group address', async ({ page }) => {
+  await mountFixture(page);
+  await page.evaluate(() => (
+    window as unknown as { __chatSurfaceIsolation: { setSidebarA: (v: boolean) => void } }
+  ).__chatSurfaceIsolation.setSidebarA(true));
+  await page.locator('#mount-a').getByRole('button', { name: 'New chat' }).click();
+  const create = (await sentFrames(page)).find((frame) => frame.type === 'thread:open-assistant');
+  expect(create).toMatchObject({ type: 'thread:open-assistant', viewId: 'file-viewer' });
+
+  await page.evaluate(() => {
+    (window as unknown as { prompt: (message: string, value?: string) => string }).prompt = (_message, value) => {
+      (window as unknown as { __renameDefault: string | undefined }).__renameDefault = value;
+      return 'Renamed Header';
+    };
+  });
+  await page.locator('#mount-a').getByRole('button', { name: 'More options' }).click();
+  await page.getByRole('menu', { name: 'Chat options' }).getByRole('menuitem', { name: 'Rename' }).click();
+  const rename = (await sentFrames(page)).find((frame) => frame.type === 'thread:action' && frame.action === 'rename');
+  expect(rename).toMatchObject({ action: 'rename', threadGroupId: GROUP_A, threadId: THREAD_A, name: 'Renamed Header' });
+  expect(await page.evaluate(() => (window as unknown as { __renameDefault: string }).__renameDefault)).toBe('Alpha');
+});
+
 test('opening a menu on surface A leaves surface B DOM/menu/focus untouched', async ({ page }) => {
   await mountFixture(page);
   const moreA = page.locator('#mount-a').getByRole('button', { name: 'More options' });
@@ -555,11 +1035,10 @@ test('opening a menu on surface A leaves surface B DOM/menu/focus untouched', as
   await moreA.click();
   await expect(moreA).toHaveAttribute('aria-expanded', 'true');
   await expect(moreB).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('#mount-a .rv-chat-more-dropdown')).toHaveAttribute('data-open', 'true');
-  await expect(page.locator('#mount-b .rv-chat-more-dropdown')).toHaveAttribute('data-open', 'false');
+  await expect(page.getByRole('menu', { name: 'Chat options' })).toHaveCount(1);
 
   const ids = await surfaceIds(page);
-  const moreId = await page.locator('#mount-a .rv-chat-more-dropdown').getAttribute('id');
+  const moreId = await moreA.getAttribute('id');
   expect(moreId).toContain(ids.a.replace(/[^A-Za-z0-9_-]/g, '-'));
 
   // Per-mount model menus are keyed by their own thread identity.
@@ -636,3 +1115,48 @@ test('built client boots the real app on the isolated server without runtime err
   await expect(page.locator('.rv-connection-status').first()).toBeVisible({ timeout: 20_000 });
   expect(errors).toEqual([]);
 });
+
+// Synthetic keyboard regressions for the actual composer route; native proof is separate.
+for (const flags of [{ isComposing: true, keyCode: 13 }, { isComposing: false, keyCode: 229 }]) {
+  test(`composition keys do not Send or Stop (${JSON.stringify(flags)})`, async ({ page }) => {
+    await mountFixture(page);
+    const input = page.locator('#mount-a textarea.rv-chat-input');
+    await input.fill('exact composing draft');
+    const result = await input.evaluate((node: HTMLTextAreaElement, flags) => {
+      const event = new KeyboardEvent('keydown', { bubbles: true, cancelable: true, key: 'Enter', ...flags });
+      node.dispatchEvent(event);return event.defaultPrevented;
+    }, flags);
+    expect(result).toBe(false);
+    expect((await sentFrames(page)).filter(f => f.type === 'prompt')).toHaveLength(0);
+    await expect(input).toHaveValue('exact composing draft');
+    await deliverStream(page, { type: 'turn_begin', threadId: THREAD_A, turnId: 'composition-stop', streamSeq: 1 });
+    await expect(page.locator('#mount-a .rv-stop-btn')).toBeVisible();
+    expect(await input.evaluate((node, flags) => {
+      const event = new KeyboardEvent('keydown', { bubbles: true, cancelable: true, key: 'Enter', ...flags });
+      node.dispatchEvent(event);return event.defaultPrevented;
+    }, flags)).toBe(false);
+    expect((await sentFrames(page)).filter(f => f.type === 'turn:stop')).toHaveLength(0);
+    await input.press('Enter');
+    expect((await sentFrames(page)).filter(f => f.type === 'turn:stop')).toHaveLength(1);
+  });
+  test(`composition keys do not accept autocomplete (${JSON.stringify(flags)})`, async ({ page }) => {
+    await mountFixture(page);
+    await page.evaluate(() => (window as any).__chatSurfaceIsolation.upsertAutocompleteCandidate({
+      id: 'open-tab:/tmp/composing-notes.ts', label: 'composing-notes.ts', path: '/tmp/composing-notes.ts',
+      basename: 'composing-notes.ts', source: 'open-tab', openedAt: 1,
+    }));
+    const input = page.locator('#mount-a textarea.rv-chat-input');
+    await input.fill('open composing-notes');
+    await expect(page.locator('#mount-a .rv-chat-autocomplete-ghost')).toBeVisible();
+    for (const key of ['Enter', 'Tab']) {
+      expect(await input.evaluate((node, args) => {
+        const event = new KeyboardEvent('keydown', { bubbles: true, cancelable: true, key: args.key, ...args.flags });
+        node.dispatchEvent(event);return event.defaultPrevented;
+      }, { key, flags })).toBe(false);
+      await expect(input).toHaveValue('open composing-notes');
+    }
+    await input.press('Tab');
+    await expect(input).toHaveValue('open composing-notes.ts ');
+    expect((await sentFrames(page)).filter(f => f.type === 'prompt')).toHaveLength(0);
+  });
+}

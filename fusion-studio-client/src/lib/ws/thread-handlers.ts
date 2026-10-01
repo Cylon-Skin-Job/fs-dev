@@ -7,25 +7,21 @@
  * still stamps scope: 'project' on the wire; the client ignores it.
  */
 
+import { hydrateOpenedThread, hydrateThreadCandidates } from './thread-history';
+import { openThreadMarkdown } from './thread-markdown';
 import { usePanelStore } from '../../state/panelStore';
-import { useWorkspaceStore } from '../../state/workspaceStore';
+import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
 import { useChatFileLinkStore } from '../../state/chatFileLinkStore';
 import { useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
-import { useFileStore } from '../../state/fileStore';
-import { loadRootTree, loadFileContent } from '../file-tree';
-import { readTokenUsage } from '../chat/context-usage';
-import { sanitizeTerminalErrorMetadata } from '../chat/terminal-error';
+import { chatSubmissionOwnerKey, useChatSubmissionStore } from '../../state/chatSubmissionStore';
+import { finishAcceptedPromptExecution, settlePromptRecovery, trackAcceptedPromptExecution } from '../chat/prompt-submission-recovery';
+import { loadRootTree } from '../file-tree';
 import { showToast } from '../toast';
-import { convertPartToSegment } from './assistant-parts';
-import { installLiveTurnSnapshot } from './snapshot-restore';
 import { threadRowsFromProjections } from './threadGroupRows';
-import {
-  getCurrentThreadGroupId,
-  matchesPendingThreadOpen,
-} from '../../state/slices/chatSurfaceSlice';
+import { retireDeletedWorksurfaceGroup } from '../worksurface/worksurfaceDeletion';
 import { requestWorksurfaceEntryRead } from '../worksurface/worksurfaceController';
 import { isSideChatCapableView } from '../worksurface/sideChatViews';
-import type { WebSocketMessage, ExchangeData, LiveTurnSnapshot, Thread } from '../../types';
+import type { WebSocketMessage, Thread } from '../../types';
 
 /**
  * True when any visible group population names `threadId` as its current
@@ -55,18 +51,6 @@ function isGroupPrimaryThread(
  */
 export function handleThreadMessage(msg: WebSocketMessage): boolean {
   const store = usePanelStore.getState();
-  const hydrateThreadCandidates = (exchanges: ExchangeData[] | undefined) => {
-    const openTabPaths = useFileStore.getState().tabs
-      .filter((tab) => tab.kind === 'file')
-      .map((tab) => tab.file.path);
-    useChatFileLinkStore.getState().hydrateThreadAutocompleteCandidates(
-      (exchanges || []).map((exchange) => ({
-        ...exchange,
-        metadata: sanitizeTerminalErrorMetadata(exchange.metadata),
-      })),
-      openTabPaths,
-    );
-  };
 
   switch (msg.type) {
     case 'thread:list':
@@ -115,37 +99,9 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
             );
           }
         }
-        if (!useWorkspaceStore.getState().hasReceivedInit) {
-          console.log('[WS] Deferring MRU thread open until workspace:init');
-          return true;
-        }
-        // Auto-open the MRU (top) group only for the explicit Legacy
-        // population; a view population is opened by its own active host
-        // (SPEC-02 §6.1 request ownership).
-        if (responseViewId === null) {
-          const hasActive = store.currentThreadId;
-          if (!hasActive && rows.length > 0) {
-            const mru = rows[0];
-            const ws = store.ws;
-            if (ws && ws.readyState === WebSocket.OPEN && mru.threadGroupId && workspaceId) {
-              console.log('[WS] Auto-opening MRU thread group:', mru.threadGroupId.slice(0, 12));
-              // Mark the MRU as active before the server responds so only the
-              // first list response sends thread:open.
-              store.setCurrentThreadId(mru.threadId);
-              store.setCurrentThreadGroupId(workspaceId, null, mru.threadGroupId);
-              store.requestThreadOpen({
-                workspaceId,
-                viewId: null,
-                threadId: mru.threadId,
-                threadGroupId: mru.threadGroupId,
-              });
-              ws.send(JSON.stringify({
-                type: 'thread:open',
-                threadGroupId: mru.threadGroupId,
-              }));
-            }
-          }
-        }
+        // A null-view response may still be read explicitly for historical
+        // cleanup, but it owns no production host and therefore never selects
+        // or opens a session. Active view hosts own qualified MRU selection.
       }
       return true;
 
@@ -158,6 +114,9 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       if (membersWorkspaceId
         && typeof msg.threadGroupId === 'string' && msg.threadGroupId
         && Array.isArray(msg.members)) {
+        // A late member read cannot recreate a removed group's projection.
+        if (!getThreadGroupPopulation(store, membersWorkspaceId, msg.viewId ?? null)
+          .some(row => row.threadGroupId === msg.threadGroupId)) return true;
         store.setThreadMembers(
           membersWorkspaceId,
           msg.threadGroupId,
@@ -183,8 +142,12 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           viewId: typeof msg.viewId === 'string' && msg.viewId ? msg.viewId : null,
           entry: msg.thread,
         });
-        store.setCurrentThreadId(msg.threadId);
-        store.setChatActive(true);
+        // A correlated creation is selected only when its matching opened
+        // response arrives. Cancellation may leave the committed group intact.
+        if (!msg.requestId) {
+          store.setCurrentThreadId(msg.threadId);
+          store.setChatActive(true);
+        }
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
         store.clearChat(msg.threadId);
         store.clearThreadUsage(msg.threadId);
@@ -202,78 +165,9 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
       }
       return true;
 
-    case 'thread:opened': {
-      console.log('[WS] thread:opened:', msg.threadId?.slice(0, 8), 'exchanges:', msg.exchanges?.length, 'history:', msg.history?.length, 'contextUsage:', msg.contextUsage);
-      if (msg.threadId && msg.thread) {
-        // SPEC-02 §6.1/§6.2 late-response discipline: a `thread:opened` may
-        // change only its own population's visible selection, and only when it
-        // matches this client's correlated open request or the already-selected
-        // group. A late response for another population still hydrates THAT
-        // session's slot precisely (all mutations below are keyed by
-        // `msg.threadId`) but can never steal another population's selection.
-        const responseWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
-          ? msg.workspaceId
-          : store.activeWorkspaceId;
-        const responseViewId: string | null = msg.viewId ?? null;
-        const matchesPendingOpen = matchesPendingThreadOpen(
-          store,
-          { workspaceId: responseWorkspaceId, viewId: responseViewId },
-          { threadId: msg.threadId, threadGroupId: msg.threadGroupId },
-        );
-        if (responseViewId === null) {
-          const shouldSelectLegacy = store.currentThreadId === msg.threadId
-            || matchesPendingOpen
-            || !store.currentThreadId;
-          if (shouldSelectLegacy) {
-            store.setCurrentThreadId(msg.threadId);
-            store.setChatActive(true);
-            if (responseWorkspaceId && msg.threadGroupId) {
-              store.setCurrentThreadGroupId(responseWorkspaceId, null, msg.threadGroupId);
-            }
-          }
-        } else if (responseWorkspaceId) {
-          const currentGroupId = getCurrentThreadGroupId(
-            store,
-            responseWorkspaceId,
-            responseViewId,
-          );
-          const shouldSelectView = (!!msg.threadGroupId && currentGroupId === msg.threadGroupId)
-            || matchesPendingOpen
-            || !currentGroupId;
-          if (shouldSelectView && msg.threadGroupId) {
-            store.setCurrentThreadGroupId(
-              responseWorkspaceId,
-              responseViewId,
-              msg.threadGroupId,
-            );
-          }
-        }
-        store.consumeThreadOpen(
-          { workspaceId: responseWorkspaceId, viewId: responseViewId },
-          { threadId: msg.threadId, threadGroupId: msg.threadGroupId },
-        );
-
-        // PER_THREAD_CHAT_STATE: clear then hydrate this exact thread's slot.
-        store.clearChat(msg.threadId);
-        store.hydrateHarnessSelection(
-          msg.threadId,
-          msg.thread?.harnessConfig,
-          msg.thread?.harnessId ?? null,
-        );
-        hydrateThreadCandidates(msg.exchanges || []);
-
-        if (msg.exchanges && msg.exchanges.length > 0) {
-          console.log('[WS] Loading', msg.exchanges.length, 'exchanges (rich format)');
-          convertExchangesToMessages(msg.threadId, msg.exchanges);
-        } else if (msg.history && msg.history.length > 0) {
-          console.log('[WS] Loading', msg.history.length, 'messages (legacy format)');
-          convertHistoryToMessages(msg.threadId, msg.history);
-        }
-        overlayLiveTurn(msg.threadId, msg.liveTurn, msg.exchanges);
-        restoreContextSnapshot(msg.threadId, msg.exchanges, msg.contextUsage, msg.tokenUsage);
-      }
+    case 'thread:opened':
+      hydrateOpenedThread(msg);
       return true;
-    }
 
     case 'wire_ready':
       store.setChatActive(true);
@@ -290,24 +184,27 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
         // and every composite population containing this exact thread.
         store.updateThread(msg.threadId, { name: msg.name });
       } else if (msg.action === 'delete' && msg.threadId) {
-        // The ack's own population clears the qualified selection even when
-        // the row is absent from the current read model.
-        store.removeThread(
-          msg.threadId,
-          typeof msg.threadGroupId === 'string' ? msg.threadGroupId : null,
-          typeof msg.viewId === 'string' ? msg.viewId : null,
-        );
-        // SPEC-03 §8 / 03B-D10: a group delete removes exactly its server
-        // worksurface entry, so every live window drops a cached copy of the
-        // deleted group. This never touches a pending capture, binding, or
-        // conflict. Legacy (`viewId: null`) has no worksurface entry.
+        if (msg.workspaceId && msg.workspaceId !== store.activeWorkspaceId) return true;
+        // Retire the clean content binding before row removal can auto-select
+        // another group. Dirty captures retain the existing conflict gate.
         const deletedWorkspaceId = typeof msg.workspaceId === 'string' && msg.workspaceId
           ? msg.workspaceId
           : store.activeWorkspaceId;
         if (deletedWorkspaceId
           && typeof msg.viewId === 'string' && msg.viewId
           && typeof msg.threadGroupId === 'string' && msg.threadGroupId) {
-          store.removeWorksurfaceEntry(deletedWorkspaceId, msg.viewId, msg.threadGroupId);
+          retireDeletedWorksurfaceGroup(deletedWorkspaceId, msg.viewId, msg.threadGroupId);
+        }
+        // Whole-group deletion retires every server-acknowledged peer, including
+        // closed Side Chat sessions absent from the visible primary projection.
+        const members = (msg.members ?? []).flatMap((member) => {
+          const id = (member as { threadId?: unknown })?.threadId;
+          return typeof id === 'string' && id ? [id] : [];
+        });
+        for (const threadId of new Set([msg.threadId, ...members])) {
+          store.removeThread(threadId,
+            typeof msg.threadGroupId === 'string' ? msg.threadGroupId : null,
+            typeof msg.viewId === 'string' ? msg.viewId : null);
         }
       } else if (msg.action === 'move_chat_to_side'
         && typeof msg.threadGroupId === 'string' && msg.threadGroupId
@@ -426,8 +323,18 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
     }
 
     case 'message:sent':
-      console.log('[WS] Message accepted and saved to thread');
-      if (msg.threadId && typeof msg.content === 'string') {
+      if (msg.threadId && typeof msg.content === 'string'
+        && typeof msg.requestId === 'string' && typeof msg.turnId === 'string'
+        && typeof msg.workspaceId === 'string') {
+        if (msg.workspaceId !== store.activeWorkspaceId) return true;
+        const submission = useChatSubmissionStore.getState();
+        const ownerKey = chatSubmissionOwnerKey(msg.workspaceId, msg.threadId);
+        let attempt = submission.attemptsByOwner[ownerKey];
+        if (attempt?.requestId !== msg.requestId
+          && submission.provisionalByOwner[ownerKey]?.requestId === msg.requestId) {
+          submission.promoteProvisional(msg.workspaceId, msg.threadId, msg.requestId);
+          attempt = useChatSubmissionStore.getState().attemptsByOwner[ownerKey];
+        }
         const isOwnedThread = store.currentThreadId === msg.threadId
           || store.threads.some((thread) => thread.threadId === msg.threadId)
           // SPEC-04 §7/§8: a mounted Side Chat member is a non-primary peer, so
@@ -437,49 +344,55 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           || store.projectChats?.[msg.threadId] !== undefined
           // A group's current primary (the replacement Main Chat B) is a live
           // owner even before its chat slot hydrates.
-          || isGroupPrimaryThread(store, msg.threadId);
+          || isGroupPrimaryThread(store, msg.threadId)
+          // A reconnect status can beat thread:list. The authenticated exact
+          // attempt is already session ownership for this server ACK.
+          || attempt?.requestId === msg.requestId;
         // A late acknowledgement for a deleted or previous-workspace thread
         // must not recreate chat state in the active workspace. Legitimate
         // current threads still commit their server-owned user bubble even
         // when a remount/reload no longer has a local pending marker.
         if (!isOwnedThread) return true;
-        const pendingPrompt = store.projectChats[msg.threadId]?.pendingPromptAcceptance;
-        const pendingPromptMatched = pendingPrompt?.text === msg.content
-          && pendingPrompt.workspaceId === store.activeWorkspaceId;
-        if (pendingPromptMatched) {
-          store.setPendingPromptAcceptance(msg.threadId, null);
-          store.setPromptRetryDraft(msg.threadId, null);
-          useChatFileLinkStore.getState().removePendingAttachments(
-            pendingPrompt.workspaceId,
-            msg.threadId,
-            pendingPrompt.attachmentIds,
-          );
+        if (!attempt || attempt.requestId !== msg.requestId || attempt.phase === 'rejected') return true;
+        const accepted = useChatSubmissionStore.getState().accept(
+          msg.workspaceId, msg.threadId, msg.requestId, msg.turnId,
+        );
+        if (!accepted) return true;
+        settlePromptRecovery(msg.workspaceId, msg.threadId, msg.requestId);
+        trackAcceptedPromptExecution(useChatSubmissionStore.getState().attemptsByOwner[
+          chatSubmissionOwnerKey(msg.workspaceId, msg.threadId)]);
+        // A replayed begin or reconnect snapshot can precede this ACK.
+        // Do not start an execution timer for a turn already bound live.
+        const chat = usePanelStore.getState().projectChats[msg.threadId];
+        if (chat?.currentTurn?.id === msg.turnId || chat?.messages.some((message) => (
+          message.type === 'assistant' && (message.id === msg.turnId || message.metadata?.turnId === msg.turnId)
+        ))) {
+          finishAcceptedPromptExecution(msg.workspaceId, msg.threadId, msg.turnId);
         }
-        store.addMessage(msg.threadId, {
-          id: `user-${Date.now()}`,
-          type: 'user',
-          content: msg.content,
-          timestamp: Date.now(),
-        });
+        const messageId = `user-${msg.turnId}`;
+        if (!usePanelStore.getState().projectChats[msg.threadId]?.messages.some((message) => message.id === messageId)) {
+          store.addMessage(msg.threadId, {
+            id: messageId,
+            type: 'user',
+            content: msg.content,
+            timestamp: Date.now(),
+          });
+        }
+        useChatFileLinkStore.getState().removeSubmittedAttachments(
+          accepted.workspaceId, accepted.threadId, accepted.attachmentGenerations,
+        );
+        useChatComposerDraftStore.getState().clearDraftIfRevision(
+          accepted.workspaceId, accepted.threadId, accepted.draftRevision,
+        );
         window.dispatchEvent(new CustomEvent('fusion:prompt-accepted', {
           detail: {
             threadId: msg.threadId,
-            content: msg.content,
-            pendingPromptMatched,
-            pendingPromptComposerText: pendingPromptMatched
-              ? pendingPrompt.composerText
-              : undefined,
+            workspaceId: msg.workspaceId,
+            requestId: msg.requestId,
+            turnId: msg.turnId,
+            recoveredFromStatus: (msg as WebSocketMessage & { recoveredFromStatus?: boolean }).recoveredFromStatus === true,
           },
         }));
-        // The durable owner must clear even when its composer is unmounted or
-        // another thread is visible. Dispatch first so a mounted exact owner
-        // can perform its existing local scroll/clear lifecycle unchanged.
-        if (pendingPromptMatched) {
-          useChatComposerDraftStore.getState().clearDraft(
-            pendingPrompt.workspaceId,
-            msg.threadId,
-          );
-        }
       }
       return true;
 
@@ -489,110 +402,3 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
 }
 
 // --- History conversion helpers (private to this module) ---
-
-/**
- * Open the server-acknowledged exact-member mirror path in the File Viewer.
- * The server resolved the canonical `Data/Chatlogs/threads/<threadId>.md`
- * through ThreadManager; the renderer only translates the workspace-relative
- * `ai/` path for the existing file viewer.
- */
-function openThreadMarkdown(filePath: string): void {
-  const aiIdx = filePath.indexOf('ai/');
-  const relPath = aiIdx >= 0 ? filePath.slice(aiIdx) : filePath;
-  const panelStore = usePanelStore.getState();
-  panelStore.setCurrentPanel('file-viewer');
-  const name = relPath.split('/').pop() || relPath;
-  loadFileContent({
-    path: relPath,
-    name,
-    type: 'file',
-    extension: 'md',
-  });
-}
-
-function convertExchangesToMessages(threadId: string, exchanges: ExchangeData[]) {
-  const store = usePanelStore.getState();
-  exchanges.forEach((exchange, idx) => {
-    store.addMessage(threadId, {
-      id: `ex-${idx}-user`,
-      type: 'user',
-      content: exchange.user,
-      timestamp: exchange.ts,
-    });
-
-    const segments = exchange.assistant.parts.map((part) => convertPartToSegment(part));
-    const assistantContent = exchange.assistant.parts
-      .filter((p): p is { type: 'text'; content: string } => p.type === 'text')
-      .map((p) => p.content)
-      .join('');
-
-    store.addMessage(threadId, {
-      id: exchange.exchangeId ? `exchange-${exchange.exchangeId}-assistant` : `ex-${idx}-assistant`,
-      type: 'assistant',
-      content: assistantContent,
-      timestamp: exchange.ts,
-      segments: segments.length > 0 ? segments : undefined,
-      exchangeId: exchange.exchangeId,
-      exchangeSeq: exchange.seq,
-      metadata: sanitizeTerminalErrorMetadata(exchange.metadata),
-    });
-  });
-}
-
-function convertHistoryToMessages(
-  threadId: string,
-  history: { role: 'user' | 'assistant'; content: string; hasToolCalls?: boolean }[],
-) {
-  const store = usePanelStore.getState();
-  history.forEach((h, idx) => {
-    store.addMessage(threadId, {
-      id: `hist-${idx}`,
-      type: h.role,
-      content: h.content,
-      timestamp: Date.now() - (history.length - idx) * 1000,
-    });
-  });
-}
-
-function restoreContextSnapshot(
-  threadId: string,
-  exchanges: ExchangeData[] | undefined,
-  messageContextUsage?: number,
-  messageTokenUsage?: unknown,
-) {
-  const lastExchange = exchanges?.[exchanges.length - 1];
-  const metadataContextUsage = lastExchange?.metadata?.contextUsage;
-  const contextUsage = typeof messageContextUsage === 'number'
-    ? messageContextUsage
-    : typeof metadataContextUsage === 'number'
-      ? metadataContextUsage
-      : 0;
-  const tokenUsage = readTokenUsage(messageTokenUsage)
-    ?? readTokenUsage(lastExchange?.metadata?.tokenUsage);
-  const store = usePanelStore.getState();
-  console.log('[WS] Restoring context snapshot:', { threadId, contextUsage, tokenUsage });
-  // SPEC-02 §6.2: usage is session-owned by exact threadId. The workspace
-  // global fields remain only as a compatibility mirror for the currently
-  // selected session.
-  store.setThreadContextUsage(threadId, contextUsage);
-  store.setThreadTokenUsage(threadId, tokenUsage);
-  if (store.currentThreadId === threadId) {
-    store.setContextUsage(contextUsage);
-    store.setTokenUsage(tokenUsage);
-  }
-}
-
-/**
- * Overlay the served live turn onto the hydrated chat slot (thread:opened).
- * Slice C delegates all restoration semantics to snapshot-restore.ts: status
- * routing, monotone per-pair authority, atomic in-flight already-revealed
- * install, terminal instant path, and retained terminal-error envelopes live
- * there now.
- */
-function overlayLiveTurn(
-  threadId: string,
-  liveTurn: LiveTurnSnapshot | null | undefined,
-  exchanges: ExchangeData[] | undefined,
-): void {
-  installLiveTurnSnapshot(threadId, liveTurn, exchanges);
-}

@@ -10,13 +10,13 @@
  */
 
 import type { RefObject } from 'react';
-import type { AssistantTurn, HarnessStatus, Message, StreamSegment, TokenUsage } from '../../types';
+import type { HarnessStatus } from '../../types';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { ChatDiagnosticRouteIds } from '../../lib/ws/chat-diagnostic-handlers';
 import type { ValidatedChatTurnDiagnosticReport } from '../../lib/chat/diagnostic-report';
 
 /** Presentation-only host kind. Never changes membership, routing, or authority. */
-export type ChatSurfaceHostKind = 'main' | 'legacy-main' | 'side-tab';
+export type ChatSurfaceHostKind = 'main' | 'side-tab';
 
 /**
  * Canonical chat mount identity (SPEC-02 §4; BRIDGE-02 overlay §2).
@@ -44,52 +44,51 @@ export interface ChatSurfaceModelSelection {
   pending: boolean;
 }
 
-/** Read-only state projected into one mounted `ChatSurface`. */
-export interface ChatSurfaceModel {
+/** Stable shell state projected into one mounted `ChatSurface`. */
+export interface ChatSurfaceShellPresentation {
   hasThread: boolean;
-  messages: Message[];
-  currentTurn: AssistantTurn | null;
-  segments: StreamSegment[];
-  contextUsage: number;
-  tokenUsage: TokenUsage | null;
-  composerDraft: string;
   isActive: boolean;
-  isTurnActive: boolean;
-  isTurnFinalizing: boolean;
-  showOrb: boolean;
-  isAcceptancePending: boolean;
+  isSendingForCurrentThread: boolean;
   connectingHarnessName: string | null;
-  modelSelection: ChatSurfaceModelSelection;
-  harnessStatuses: Record<string, HarnessStatus>;
   isThreadsCollapsed: boolean;
   isContentCollapsed: boolean;
+}
+
+/** Stable header state. Session activity is resolved by the connected header. */
+export interface ChatSurfaceHeaderPresentation {
+  threadName: string;
+  harnessStatuses: Record<string, HarnessStatus>;
   showCliPicker: boolean;
   cliPickerOpen: boolean;
-  moreMenuOpen: boolean;
   /**
    * SPEC-04 §4 eligibility projection for the visible Move action. The server
    * remains authoritative; this only gates what the menu offers.
    */
-  canMoveToSideChat: boolean;
+  canMoveToSideChatBase: boolean;
+}
+
+/** Stable non-local composer state; local session stores are read by its leaf. */
+export interface ChatSurfaceComposerPresentation {
+  modelSelection: ChatSurfaceModelSelection;
 }
 
 /** Explicit user intents emitted by one mounted `ChatSurface`. */
 export interface ChatSurfaceActions {
   onSend: (text: string) => void;
+  onCheckSubmissionStatus: () => void;
   onStop: () => void;
   onWarmIntent: () => void;
   onInsertText: (text: string) => void;
   onAddAttachment: (attachment: ChatLinkAttachment) => void;
-  onComposerDraftChange: (text: string) => void;
   onCreateThread: () => void;
   onHarnessSelect: (harnessId: string, modelId?: string) => void;
   onToggleContent: () => void;
   onToggleCliPicker: () => void;
   onCloseCliPicker: () => void;
-  onSetMoreMenuOpen: (open: boolean) => void;
-  onRename: () => void;
+  onRename: (name: string) => void;
   onCopyLink: () => void;
   onViewMarkdown: () => void;
+  onOpenDiagnostics: () => void;
   /** SPEC-04 §4: move the current Main Chat into a Side Chat tab. */
   onMoveToSideChat: () => void;
   onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
@@ -97,11 +96,13 @@ export interface ChatSurfaceActions {
     route: ChatDiagnosticRouteIds,
   ) => Promise<ValidatedChatTurnDiagnosticReport | null>;
   onCopyDiagnostic: (text: string) => Promise<void>;
-  onAskAIWithDiagnostic: (text: string) => boolean;
+  onAskAIWithDiagnostic: (text: string) => Promise<boolean | 'pending-acceptance'>;
 }
 
 export interface ChatSurfaceProps extends ChatMountIdentity {
-  chat: ChatSurfaceModel;
+  shell: ChatSurfaceShellPresentation;
+  header: ChatSurfaceHeaderPresentation;
+  composer: ChatSurfaceComposerPresentation;
   actions: ChatSurfaceActions;
   /** Outer connected host toggles the owning rail (SPEC-02 §5.3). */
   onToggleThreads: () => void;
@@ -118,7 +119,7 @@ export interface ChatSurfaceInputHandle {
 }
 
 /**
- * Component-owned refs the connected host owns and the portable surface
+ * Mount-local refs the connected host supplies to the portable surface
  * renders. Refs are not application state and are never global identity.
  */
 export interface ChatSurfaceRefs {
@@ -134,8 +135,8 @@ export function chatSurfaceDomId(surfaceId: string): string {
 }
 
 // ── Transient surface identity minting ──────────────────────────────────────
-// A non-component host (`main`/`legacy-main`, including the Slice 02A legacy
-// mount) mints `surfaceId` at mount from its own runtime mount generation via
+// A non-component `main` host mints `surfaceId` at mount from its own runtime
+// mount generation via
 // `mintChatSurfaceId`, and never invents a component instance. A
 // component-backed mount derives its transient `surfaceId` from the descriptor's
 // unique `componentInstanceId` plus a runtime mount generation in

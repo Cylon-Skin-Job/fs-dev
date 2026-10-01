@@ -5,7 +5,7 @@
  *       (SPEC-02 §8; BRIDGE-02 overlay §4.3).
  *
  * The JSON-safe descriptor input carries durable identities ONLY: explicit
- * `workspaceId`, nullable `viewId`, `threadGroupId`, `threadId`, and `host`.
+ * `workspaceId`, view-bound `viewId`, `threadGroupId`, `threadId`, and `host`.
  * It never carries a transient `surfaceId`, store, socket, callback, path,
  * React element, import, or authority claim. The connected resolver mints the
  * transient `surfaceId` from the unique `componentInstanceId` + runtime mount
@@ -22,7 +22,7 @@ export const CHAT_SURFACE_COMPONENT_TYPE = 'fusion.chat-surface';
 /** Durable identities carried by the descriptor input. No transient fields. */
 export interface ChatSurfaceDescriptorInput {
   workspaceId: string;
-  viewId: string | null;
+  viewId: string;
   threadGroupId: string;
   threadId: string;
   host: ChatSurfaceHostKind;
@@ -41,7 +41,7 @@ const ALLOWED_INPUT_KEYS: readonly string[] = Object.freeze([
   'host',
 ]);
 
-const HOST_KINDS: readonly ChatSurfaceHostKind[] = Object.freeze(['main', 'legacy-main', 'side-tab']);
+const HOST_KINDS: readonly ChatSurfaceHostKind[] = Object.freeze(['main', 'side-tab']);
 
 function isPlainRecord(value: unknown): value is Record<string, unknown> {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
@@ -90,7 +90,7 @@ export function parseChatSurfaceDescriptorInput(
       || !isBoundedIdentity(threadId)) {
       return null;
     }
-    if (viewId !== null && !isBoundedIdentity(viewId)) return null;
+    if (!isBoundedIdentity(viewId)) return null;
     if (typeof host !== 'string' || !HOST_KINDS.includes(host as ChatSurfaceHostKind)) return null;
     return {
       workspaceId,

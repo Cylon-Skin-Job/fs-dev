@@ -7,7 +7,7 @@
  * Proof strategy:
  *  - source sweeps for the portable boundary import surface and for the
  *    absence of `surfaceId` in descriptors/action envelopes;
- *  - a real Vite-rendered fixture mounting the actual `LegacyChatHost` +
+ *  - a real Vite-rendered fixture mounting the actual `ChatSessionHost` +
  *    `ChatSurface` twice over one session;
  *  - the real store + WebSocket handler path for late frames, usage
  *    isolation, and model selection acknowledgement/rejection/hydration.
@@ -52,7 +52,7 @@ test('ChatSurface explicitly consumes an identity/model/actions contract', () =>
   for (const field of ['workspaceId', 'viewId', 'threadGroupId', 'threadId', 'surfaceId', 'host']) {
     expect(contract).toContain(field);
   }
-  expect(contract).toContain("'main' | 'legacy-main' | 'side-tab'");
+  expect(contract).toContain("'main' | 'side-tab'");
 });
 
 test('ChatSurface module imports no app store, socket, controller, service, filesystem, or tab owner', () => {
@@ -61,7 +61,7 @@ test('ChatSurface module imports no app store, socket, controller, service, file
     'state/panelStore',
     'state/slices',
     'lib/ws',
-    'useLegacyChatHost',
+    'useChatSessionHost',
     'chatFileLinkStore',
     'chatComposerDraftStore',
     'thread-runtime',
@@ -297,12 +297,12 @@ async function buildChatSurfaceHarness(): Promise<string> {
     const virtualEntry = 'virtual:chat-surface-harness';
     const resolvedEntry = `\0${virtualEntry}`;
     const panelStorePath = path.resolve('src/state/panelStore.ts');
-    const hostPath = path.resolve('src/components/chat/LegacyChatHost.tsx');
+    const hostPath = path.resolve('src/components/chat/ChatSessionHost.tsx');
     const source = `
       import React from 'react';
       import { createRoot } from 'react-dom/client';
       import { usePanelStore } from ${JSON.stringify(panelStorePath)};
-      import { LegacyChatHost } from ${JSON.stringify(hostPath)};
+      import { ChatSessionHost } from ${JSON.stringify(hostPath)};
 
       const SHARED = 'fixture-shared-thread';
       const GROUP = 'fixture-group';
@@ -353,9 +353,9 @@ async function buildChatSurfaceHarness(): Promise<string> {
         }, [collapsed]);
         return React.createElement('div', null,
           React.createElement('div', { id: 'mount-a' },
-            React.createElement(LegacyChatHost, { panel: 'fixture', threadId: SHARED, host: 'legacy-main', collapsed })),
+            React.createElement(ChatSessionHost, { panel: 'fixture', workspaceId: 'fixture-workspace', viewId: 'file-viewer', threadGroupId: GROUP, threadId: SHARED, host: 'main', collapsed })),
           React.createElement('div', { id: 'mount-b' },
-            React.createElement(LegacyChatHost, { panel: 'fixture', threadId: SHARED, host: 'main', collapsed })),
+            React.createElement(ChatSessionHost, { panel: 'fixture', workspaceId: 'fixture-workspace', viewId: 'file-viewer', threadGroupId: GROUP, threadId: SHARED, host: 'main', collapsed })),
         );
       }
 
@@ -416,7 +416,7 @@ async function mountIdentity(page: Page, selector: string): Promise<MountIdentit
   return page.locator(selector).evaluate((root) => {
     const surface = (root.querySelector('[data-chat-host]')
       ?? root.querySelector('[data-surface-id]')) as HTMLElement | null;
-    const more = root.querySelector('.rv-chat-more-dropdown') as HTMLElement | null;
+    const more = root.querySelector('.rv-chat-header [aria-label="More options"]') as HTMLElement | null;
     return {
       surfaceId: surface?.getAttribute('data-surface-id') ?? null,
       chatMoreId: more?.getAttribute('id') ?? null,
@@ -430,7 +430,7 @@ test('two mounts of one session share session truth but keep DOM/menu/focus stat
 
   const a = await mountIdentity(page, '#mount-a');
   const b = await mountIdentity(page, '#mount-b');
-  expect(a.surfaceId).toMatch(/^chat-surface:legacy-main:/);
+  expect(a.surfaceId).toMatch(/^chat-surface:main:/);
   expect(b.surfaceId).toMatch(/^chat-surface:main:/);
   expect(a.surfaceId).not.toBe(b.surfaceId);
   expect(a.chatMoreId).not.toBe(b.chatMoreId);
@@ -452,8 +452,7 @@ test('two mounts of one session share session truth but keep DOM/menu/focus stat
   await moreA.click();
   await expect(moreA).toHaveAttribute('aria-expanded', 'true');
   await expect(moreB).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('#mount-a .rv-chat-more-dropdown')).toHaveAttribute('data-open', 'true');
-  await expect(page.locator('#mount-b .rv-chat-more-dropdown')).toHaveAttribute('data-open', 'false');
+  await expect(page.getByRole('menu', { name: 'Chat options' })).toHaveCount(1);
   expect(await moreB.evaluate((el) => document.activeElement === el)).toBe(false);
 });
 
@@ -483,11 +482,11 @@ test('surfaceId is minted at mount, never persisted, and collapse/expand preserv
 
 test('contract mints distinct transient surface ids per runtime mount generation', async () => {
   const { mintChatSurfaceId, nextChatSurfaceMountGeneration } = await import('../src/components/chat/chatSurfaceContract');
-  const first = mintChatSurfaceId('legacy-main', nextChatSurfaceMountGeneration());
-  const second = mintChatSurfaceId('legacy-main', nextChatSurfaceMountGeneration());
+  const first = mintChatSurfaceId('main', nextChatSurfaceMountGeneration());
+  const second = mintChatSurfaceId('main', nextChatSurfaceMountGeneration());
   const third = mintChatSurfaceId('main', nextChatSurfaceMountGeneration());
   expect(new Set([first, second, third]).size).toBe(3);
-  expect(first).toContain('chat-surface:legacy-main:');
+  expect(first).toContain('chat-surface:main:');
   expect(third).toContain('chat-surface:main:');
 });
 
@@ -497,4 +496,113 @@ test('built client boots the real app on the isolated server without runtime err
   await page.goto('/');
   await expect(page.locator('.rv-connection-status').first()).toBeVisible({ timeout: 20_000 });
   expect(errors).toEqual([]);
+});
+
+
+test('history-only exact-member hydration preserves selected Main and unrelated pending group opens', async () => {
+  const usePanelStore = await seedStore();
+  const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
+  usePanelStore.setState({
+    currentThreadGroupIdByWorkspaceAndView: { [WORKSPACE]: { 'capture-viewer': GROUP_A } },
+    projectChats: {
+      [THREAD_A]: emptyPanelState({ messages: [{ id: 'a1', type: 'user', content: 'A-ONLY', timestamp: 1 }] }),
+      [THREAD_B]: emptyPanelState(),
+    },
+  } as never);
+  usePanelStore.getState().requestThreadOpen({ workspaceId: WORKSPACE, viewId: 'capture-viewer',
+    threadId: THREAD_A, threadGroupId: GROUP_A });
+  // Even a pending selection of this same group is not owned by this background read.
+  usePanelStore.getState().requestThreadOpen({ workspaceId: WORKSPACE, viewId: 'capture-viewer',
+    threadId: THREAD_B, threadGroupId: GROUP_B });
+  const pending = usePanelStore.getState().pendingThreadOpens;
+  handleThreadMessage({ type: 'thread:opened', historyOnly: true, requestId: 'member-history',
+    workspaceId: WORKSPACE, viewId: 'capture-viewer', threadGroupId: GROUP_B, threadId: THREAD_B,
+    thread: { name: 'B', createdAt: '2026-01-01T00:00:00.000Z', messageCount: 2, status: 'suspended' },
+    exchanges: [{ exchangeId: 1, seq: 1, ts: 1, user: 'B-HISTORY',
+      assistant: { parts: [{ type: 'text', content: 'B-ANSWER' }] }, metadata: {} }],
+  } as never);
+  const state = usePanelStore.getState();
+  expect(state.currentThreadGroupIdByWorkspaceAndView[WORKSPACE]['capture-viewer']).toBe(GROUP_A);
+  expect(state.currentThreadId).toBe(THREAD_A);
+  expect(state.pendingThreadOpens).toEqual(pending);
+  expect(state.projectChats[THREAD_A].messages.map(message => message.content)).toEqual(['A-ONLY']);
+  expect(state.projectChats[THREAD_B].messages.map(message => message.content)).toEqual(['B-HISTORY', 'B-ANSWER']);
+});
+
+test('whole-group Delete evicts every peer cache while preserving another group and workspace', async () => {
+  const store = await seedStore();
+  const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
+  const { useChatComposerDraftStore: drafts } = await import('../src/state/chatComposerDraftStore');
+  const { useChatSubmissionStore: submissions } = await import('../src/state/chatSubmissionStore');
+  const side = 'deleted-side-member';
+  for (const id of [THREAD_A, side, THREAD_B]) {
+    drafts.getState().setDraft(WORKSPACE, id, 'retained text');
+    submissions.getState().feedback(WORKSPACE, id, 'retained status');
+  }
+  drafts.getState().setDraft('other-workspace', side, 'foreign draft');
+  const ids = [THREAD_A, side, THREAD_B];
+  store.setState({
+    threadMembersByGroup: { [`${WORKSPACE}::${GROUP_A}`]: [], [`${WORKSPACE}::${GROUP_B}`]: [], [`foreign::${GROUP_A}`]: [] },
+    projectChats: Object.fromEntries(ids.map(id => [id, emptyPanelState()])),
+    contextUsageByThread: Object.fromEntries(ids.map(id => [id, 0.5])),
+    tokenUsageByThread: Object.fromEntries(ids.map(id => [id, { totalTokens: 10 }])),
+    wireReadyByThread: Object.fromEntries(ids.map(id => [id, true])),
+    harnessSelectionByThread: Object.fromEntries(ids.map(id => [id, { model: 'fixture' }])),
+  } as never);
+  handleThreadMessage({ type: 'thread:action:completed', action: 'delete', workspaceId: WORKSPACE,
+    threadId: THREAD_A, threadGroupId: GROUP_A, viewId: null,
+    members: [{ threadId: THREAD_A }, { threadId: side }] } as never);
+  const state = store.getState();
+  expect(Object.keys(state.threadMembersByGroup)).toEqual([`${WORKSPACE}::${GROUP_B}`,`foreign::${GROUP_A}`]);
+  handleThreadMessage({type:'thread:members',workspaceId:WORKSPACE,viewId:null,
+    threadGroupId:GROUP_A,members:[{threadId:side}]} as never);
+  expect(store.getState().threadMembersByGroup[`${WORKSPACE}::${GROUP_A}`]).toBeUndefined();
+  for (const field of ['projectChats', 'contextUsageByThread', 'tokenUsageByThread', 'wireReadyByThread', 'harnessSelectionByThread']) {
+    expect(Object.keys((state as any)[field]), field).toEqual([THREAD_B]);
+  }
+  expect(drafts.getState().draftsByOwner[JSON.stringify([WORKSPACE, side])]).toBeUndefined();
+  expect(drafts.getState().revisionsByOwner[JSON.stringify([WORKSPACE, side])]).toBeUndefined();
+  expect(drafts.getState().draftsByOwner[JSON.stringify(['other-workspace', side])]).toBe('foreign draft');
+  expect(JSON.stringify(submissions.getState().feedbackByOwner)).not.toContain(side);
+  // A stale foreign-workspace fanout must not clear the current workspace.
+  handleThreadMessage({ type: 'thread:action:completed', action: 'delete', workspaceId: 'other-workspace',
+    threadId: THREAD_B, threadGroupId: GROUP_B, members: [{ threadId: THREAD_B }] } as never);
+  expect(store.getState().projectChats[THREAD_B]).toBeDefined();
+});
+
+test('Delete retires only a clean exact worksurface binding and fences a late read', async () => {
+  const store=await seedStore();
+  const { handleThreadMessage }=await import('../src/lib/ws/thread-handlers');
+  const { tracked, resetWorksurfaceRuntime }=await import('../src/lib/worksurface/worksurfaceRuntime');
+  const { handleWorksurfaceResultFrame }=await import('../src/lib/worksurface/worksurfaceFrames');
+  resetWorksurfaceRuntime();
+  const key=`${WORKSPACE}::capture-viewer`;
+  const binding={workspaceId:WORKSPACE,viewId:'capture-viewer',threadGroupId:GROUP_A,
+    adapterId:'capture-viewer',adapterVersion:1,contentRevision:'known',placementRevision:'placement'};
+  store.setState({worksurfaceBindings:{[key]:binding},worksurfacePendingCaptures:{},worksurfaceConflicts:{},
+    worksurfaceEntries:{[`${key}::${GROUP_A}`]:null,[`${key}::${GROUP_B}`]:null}} as never);
+  tracked.set('late-deleted-read',{requestId:'late-deleted-read',kind:'get',workspaceId:WORKSPACE,
+    viewId:'capture-viewer',threadGroupId:GROUP_A,timer:null});
+  handleThreadMessage({type:'thread:action:completed',action:'delete',workspaceId:WORKSPACE,
+    viewId:'capture-viewer',threadGroupId:GROUP_A,threadId:THREAD_A} as never);
+  expect(store.getState().worksurfaceBindings[key]).toBeUndefined();
+  expect(Object.keys(store.getState().worksurfaceEntries)).toEqual([`${key}::${GROUP_B}`]);
+  expect(handleWorksurfaceResultFrame({requestId:'late-deleted-read',entry:null} as never)).toBe(false);
+  expect(store.getState().worksurfaceBindings[key]).toBeUndefined();
+});
+
+test('Delete preserves dirty content and another workspace binding without warned discard', async () => {
+  const store=await seedStore();
+  const { handleThreadMessage }=await import('../src/lib/ws/thread-handlers');
+  const key=`${WORKSPACE}::capture-viewer`,other='foreign::capture-viewer';
+  const binding={workspaceId:WORKSPACE,viewId:'capture-viewer',threadGroupId:GROUP_A,
+    adapterId:'capture-viewer',adapterVersion:1,contentRevision:'known',placementRevision:'placement'};
+  const pending={adapterId:'capture-viewer',adapterVersion:1,expectedContentRevision:'known',content:{unsaved:'retain exact'},seq:10};
+  store.setState({worksurfaceBindings:{[key]:binding,[other]:{...binding,workspaceId:'foreign'}},
+    worksurfacePendingCaptures:{[key]:pending},worksurfaceConflicts:{}} as never);
+  handleThreadMessage({type:'thread:action:completed',action:'delete',workspaceId:WORKSPACE,
+    viewId:'capture-viewer',threadGroupId:GROUP_A,threadId:THREAD_A} as never);
+  expect(store.getState().worksurfaceBindings[key]).toEqual(binding);
+  expect(store.getState().worksurfacePendingCaptures[key]).toEqual(pending);
+  expect(store.getState().worksurfaceBindings[other].workspaceId).toBe('foreign');
 });

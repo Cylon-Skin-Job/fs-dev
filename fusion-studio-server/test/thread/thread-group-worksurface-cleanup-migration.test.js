@@ -73,9 +73,9 @@ describe('migration 043 group worksurface cleanup outbox', () => {
     db = createDb();
     const [batch, migrations] = await db.migrate.latest();
     expect(batch).toBe(1);
-    // SPEC-04 migration 044 is the current head; 043 remains applied.
+    // Receipt migration 045 is the current head; 043 remains applied.
     expect(migrations).toContain('043_thread_group_worksurface_cleanup.js');
-    expect(migrations.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/);
+    expect(migrations.at(-1)).toMatch(/045_prompt_submission_receipts\.js$/);
     await expect(db.schema.hasTable('thread_group_worksurface_cleanup')).resolves.toBe(true);
 
     const columns = await db('thread_group_worksurface_cleanup').columnInfo();
@@ -196,8 +196,8 @@ describe('migration 043 group worksurface cleanup outbox', () => {
   test('down removes only the cleanup table', async () => {
     db = createDb();
     await db.migrate.latest();
-    // SPEC-04 migration 044 is the current head; roll it back first so this
-    // oracle can still prove 043's own down removes only its table.
+    // Roll back receipts and placement before proving 043's own down contract.
+    await db.migrate.down();
     await db.migrate.down();
     await db.migrate.down();
     await expect(db.schema.hasTable('thread_group_worksurface_cleanup')).resolves.toBe(false);

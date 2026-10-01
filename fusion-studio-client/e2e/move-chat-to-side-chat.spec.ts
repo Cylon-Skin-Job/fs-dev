@@ -141,16 +141,19 @@ test.describe('SPEC-04 Move Chat to Side Chat', () => {
     // No nested thread rail.
     await expect(sideMount.locator('[data-threaded-chat]')).toHaveCount(0);
 
-    // SPEC-04 §3/§12: the Side Chat list button operates the outer owning
-    // view's ThreadRail dock, not a nested/local sidebar.
-    const dock = page.locator('[data-worksurface-dock="file-viewer"]');
-    await expect(dock).toHaveAttribute('data-open', 'true');
+    // SPEC-04 §3/§12: the Side Chat list button operates the owning shell
+    // view's real ThreadRail state, not a retired content-local dock.
+    await expect(page.locator('[data-thread-rail-panel="file-viewer"]')).toBeAttached();
     const listButton = sideMount.locator('.rv-chat-thread-dock');
     await expect(listButton).toBeVisible();
     await listButton.click();
-    await expect(dock).toHaveAttribute('data-open', 'false');
+    await expect.poll(() => page.evaluate(() => (
+      window as unknown as { __wsFixture: { viewState: (v: string) => { collapsed?: { leftSidebar?: boolean } } } }
+    ).__wsFixture.viewState('file-viewer')?.collapsed?.leftSidebar)).toBe(true);
     await listButton.click();
-    await expect(dock).toHaveAttribute('data-open', 'true');
+    await expect.poll(() => page.evaluate(() => (
+      window as unknown as { __wsFixture: { viewState: (v: string) => { collapsed?: { leftSidebar?: boolean } } } }
+    ).__wsFixture.viewState('file-viewer')?.collapsed?.leftSidebar)).toBe(false);
   });
 
   test('a placement-only broadcast after a failed delivery materializes the Side Chat without another trigger', async ({ page }) => {
@@ -190,6 +193,9 @@ test.describe('SPEC-04 Move Chat to Side Chat', () => {
     await expect(moveItem).toBeEnabled();
 
     await callFixture(page, 'setThreadFinalizing', FILE_THREAD_A, true);
+    // The fixture remounts this chat on state delivery. The shared menu closes
+    // with its mount; reopen it and inspect the current server-gated intent.
+    if (await moveItem.count() === 0) await more.click();
     await expect(moveItem).toBeDisabled();
   });
 

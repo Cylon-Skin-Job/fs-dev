@@ -50,6 +50,7 @@ export interface SendHarnessConfig {
 }
 
 export interface SendMessageOptions {
+  requestId?: string;
   /**
    * Exact-session acknowledged selection. Present (possibly with `undefined`
    * harnessConfig) when a SPEC-02 surface drives Send; absent for the legacy
@@ -57,6 +58,9 @@ export interface SendMessageOptions {
    */
   harnessConfig?: SendHarnessConfig;
 }
+
+export type SendEnqueueResult = import('../lib/ws/product-send').ProductSendResult
+  | { status: 'not_enqueued'; reason: 'no_target' | 'invalid_request' };
 
 // TINTS_SPEC §8b: leaf paths the setTint action accepts.
 export type TintPath = 'leftPanel' | 'rightPanel' | 'cards' | 'borders.threads' | 'borders.chat';
@@ -141,14 +145,6 @@ export interface AppState {
   appendSegmentContentByIndex: (threadId: string | null, index: number, text: string) => void;
   resetSegments: (threadId: string | null) => void;
   setPendingTurnEnd: (threadId: string | null, pending: boolean) => void;
-  setPendingPromptAcceptance: (
-    threadId: string,
-    pending: PanelState['pendingPromptAcceptance'],
-  ) => void;
-  setPromptRetryDraft: (
-    threadId: string,
-    draft: PanelState['retryPromptDraft'],
-  ) => void;
   setPendingExchangeSave: (threadId: string | null, turnId: string | null) => void;
   setPendingMessage: (threadId: string | null, message: Message | null) => void;
   setTodoDrawer: (threadId: string | null, drawer: PanelState['todoDrawer']) => void;
@@ -181,7 +177,7 @@ export interface AppState {
     threadId?: string | null,
     attachments?: ChatLinkAttachment[],
     options?: SendMessageOptions,
-  ) => void;
+  ) => SendEnqueueResult;
   warmThread: (threadId?: string | null) => void;
 
   // ── Project root ──

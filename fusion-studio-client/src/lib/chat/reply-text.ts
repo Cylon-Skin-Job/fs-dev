@@ -7,6 +7,7 @@ export interface AssistantReplyTextPayload {
 }
 
 export interface AssistantReplySourceRef {
+  workspaceId?: string;
   threadId: string;
   messageId: string;
   exchangeSeq?: number;

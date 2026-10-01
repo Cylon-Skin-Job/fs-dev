@@ -27,6 +27,7 @@
 
 import { useWorkspaceStore } from '../../state/workspaceStore';
 import { usePanelStore } from '../../state/panelStore';
+import { resumeBoundPromptRecoveryWorkspace } from '../chat/prompt-submission-recovery';
 import { useFileStore } from '../../state/fileStore';
 import { useWikiStore } from '../../state/wikiStore';
 import { useFileDataStore } from '../../state/fileDataStore';
@@ -38,7 +39,7 @@ import { showModal, onModalAction } from '../modal';
 import { resetSharedStyles, injectWorkspaceStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { handleOfficePaletteWorkspaceChanged } from './office-palette-handlers';
 import { retirePendingResourceProvenanceQueries } from './resource-provenance-protocol';
-import { reconcileWorksurfacesOnReconnect, reconcileSideChatPlacementsOnReconnect } from '../worksurface/worksurfaceController';
+import { reconcileWorksurfacesOnReconnect } from '../worksurface/worksurfaceController';
 import {
   clearViewCapsuleProjection,
   forwardViewCapsuleProjection,
@@ -200,6 +201,7 @@ function applyWorkspaceSwitch(
     loadRootTree();
   }
   store.markInit();
+  resumeBoundPromptRecoveryWorkspace();
 }
 
 function completeWorkspaceInit(
@@ -627,9 +629,14 @@ export function handleWorkspaceMessage(
       // state loads immediately (avoids a blank-first-load after refresh).
       const activeId = workspaceId;
       if (activeId) {
-        usePanelStore.getState().activateWorkspace(activeId);
-        useFileStore.getState().activateWorkspace(activeId);
-        useWikiStore.getState().activateWorkspace(activeId);
+        // A reconnect to the same bound workspace retains the selected
+        // session. Resetting it here hides an accepted status-recovery bubble
+        // until the user manually reopens the thread.
+        if (usePanelStore.getState().activeWorkspaceId !== activeId) {
+          usePanelStore.getState().activateWorkspace(activeId);
+          useFileStore.getState().activateWorkspace(activeId);
+          useWikiStore.getState().activateWorkspace(activeId);
+        }
       }
       // Queue the acknowledged Electron binding before any request that can
       // produce panel_config. Projection installation is serialized behind it.
@@ -673,12 +680,7 @@ export function handleWorkspaceMessage(
           // views and then reapplies the exact pending local capture. A fan-out
           // is never treated as a write ack.
           reconcileWorksurfacesOnReconnect();
-          return bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel).then(() => {
-            // SPEC-04 §7: after the registry is discovered, sweep the
-            // unbound/dockless chat-capable views so an existing open Side Chat
-            // placement materializes without an action frame.
-            reconcileSideChatPlacementsOnReconnect();
-          });
+          return bootstrapWorkspaceAfterBind(wsConn, panelStore.currentPanel);
         }).catch(() => console.error('[WS] workspace_bootstrap_failed'));
       }
       // Preload workspace icon SVGs from Fusion Home so the ribbon
@@ -688,14 +690,11 @@ export function handleWorkspaceMessage(
         preloadIcons(iconNames).catch(() => {});
       }
 
-      // Re-request the thread list after workspace activation. A list may have
-      // arrived before workspace:init and was intentionally prevented from
-      // opening a thread whose state activation would immediately erase.
+      // Screenshots remain workspace-scoped bootstrap data. Thread populations
+      // are requested only by the active, view-qualified host after binding;
+      // the retired null-view host must not issue hidden list/open work.
       const wsConn2 = usePanelStore.getState().ws;
       if (wsConn2 && wsConn2.readyState === WebSocket.OPEN) {
-        // SPEC-02 §6.1: the explicit Legacy population, not an active-panel
-        // fallback. This is the workspace-lifecycle re-read after bind.
-        wsConn2.send(JSON.stringify({ type: 'thread:list', viewId: null }));
         // Request existing screenshots so the ribbon can show thumbnails immediately
         wsConn2.send(JSON.stringify({ type: 'screenshot:list' }));
       }

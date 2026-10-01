@@ -19,6 +19,8 @@ import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
 import { createWorksurfaceSlice } from './slices/worksurfaceSlice';
 import { useChatFileLinkStore } from './chatFileLinkStore';
 import { useChatComposerDraftStore } from './chatComposerDraftStore';
+import { useChatSubmissionStore } from './chatSubmissionStore';
+import { sendChatProduct } from '../lib/ws/product-send';
 
 // Re-export for consumers that import clampPaneWidth from this module (e.g. ResizeHandle.tsx).
 export { clampPaneWidth };
@@ -180,6 +182,7 @@ export const usePanelStore = create<AppState>((set, get) => ({
     const nextWorkspaceState = { ...state.workspaceState };
     useChatFileLinkStore.getState().clearWorkspaceAttachments(workspaceId);
     useChatComposerDraftStore.getState().clearWorkspaceDrafts(workspaceId);
+    useChatSubmissionStore.getState().clearWorkspace(workspaceId);
     delete nextWorkspaceState[workspaceId];
 
     if (state.activeWorkspaceId === workspaceId) {
@@ -377,7 +380,8 @@ export const usePanelStore = create<AppState>((set, get) => ({
     const activeWorkspace = get().activeWorkspaceId;
     if (activeWorkspace) {
       useChatFileLinkStore.getState().clearPendingAttachments(activeWorkspace, threadId);
-      useChatComposerDraftStore.getState().clearDraft(activeWorkspace, threadId);
+      useChatComposerDraftStore.getState().clearSession(activeWorkspace, threadId);
+      useChatSubmissionStore.getState().clearSession(activeWorkspace, threadId);
     }
     set((state) => {
       // PER_THREAD_CHAT_STATE: evict the deleted thread's cached chat state.
@@ -518,30 +522,27 @@ export const usePanelStore = create<AppState>((set, get) => ({
   }),
   selectHarness: (harnessId, modelId) => {
     const s = get();
-    set({
-      connectingHarnessId: harnessId,
-      wireReady: false,
-      currentThreadId: null,
-    });
-    const ws = s.ws;
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({
-        type: 'thread:open-assistant',
-        harnessId,
-        harnessConfig: modelId ? { model: modelId } : undefined,
-      }));
+    const result = sendChatProduct({ type: 'thread:open-assistant', harnessId,
+      harnessConfig: modelId ? { model: modelId } : undefined },
+    { workspaceId: s.activeWorkspaceId ?? '', policy: 'socket_only', expectedSocket: s.ws });
+    if (result.status !== 'not_enqueued') {
+      const current = get();
+      if (current.ws === s.ws && current.activeWorkspaceId === s.activeWorkspaceId
+        && current.currentThreadId === s.currentThreadId) {
+        set({ connectingHarnessId: harnessId, wireReady: false, currentThreadId: null });
+      }
     }
   },
   createDefaultAssistantThread: () => {
     const s = get();
-    set({
-      connectingHarnessId: null,
-      wireReady: false,
-      currentThreadId: null,
-    });
-    const ws = s.ws;
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: 'thread:open-assistant' }));
+    const result = sendChatProduct({ type: 'thread:open-assistant' },
+      { workspaceId: s.activeWorkspaceId ?? '', policy: 'socket_only', expectedSocket: s.ws });
+    if (result.status !== 'not_enqueued') {
+      const current = get();
+      if (current.ws === s.ws && current.activeWorkspaceId === s.activeWorkspaceId
+        && current.currentThreadId === s.currentThreadId) {
+        set({ connectingHarnessId: null, wireReady: false, currentThreadId: null });
+      }
     }
   },
 }));

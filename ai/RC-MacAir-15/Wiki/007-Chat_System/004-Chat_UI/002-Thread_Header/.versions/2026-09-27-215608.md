@@ -1,0 +1,40 @@
+---
+name: Chat Thread Header
+description: Header Copy Link, host-specific thread controls, and collapsed Legacy rail behavior.
+metadata:
+  last-modified: "2026-09-19T10:34:31Z"
+  incoming-edges:
+    - Chat UI
+  outgoing-edges:
+    - Chat Menus And Modals
+  source-files:
+    - fusion-studio-client/src/components/chat/ChatAreaHeader.tsx
+    - fusion-studio-client/src/styles/dropdown.css
+    - fusion-studio-client/src/clipboard/clipboard-api.ts
+    - fusion-studio-client/src/components/chat/useLegacyChatHost.ts
+    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+    - fusion-studio-client/src/components/chat/ThreadRail.tsx
+    - fusion-studio-client/src/components/Sidebar.tsx
+    - fusion-studio-client/src/components/Sidebar.css
+    - fusion-studio-client/src/lib/ws/thread-handlers.ts
+  connected-skills: []
+  related-trigger-files: []
+---
+
+The thread header presents group and session actions for its addressed chat. Header Copy Link sends `copy_link` with the group and session IDs; it copies the server-acknowledged version-1 application URI, not a raw `threadId`. The current requester handler uses `navigator.clipboard.writeText` and toast feedback directly. It does not call the managed clipboard-history helper, so managed-history integration must not be assumed from the copy action. See [Menus And Modals](../005-Menus_And_Modals/PAGE.md#side-chat-member-menu) for exact-member links and the separate navigation gap.
+
+## Identity Rule
+
+A session `threadId`, a Thread Group link, and a saved reply's Chat ID have different purposes. Reply chrome Chat ID copies SQLite `exchanges.id`; do not substitute the session or group identity for a saved exchange.
+
+## Side Chat Header Controls
+
+The current Side Chat header has a left-hand `dock_to_right` button with accessible name Show threads, and a right-hand `event_list` button with accessible name More options. The left toggles the owning view's outer dock state; the right opens the current menu, including a Show threads item wired to that same callback. The Side Chat mount itself contains no `ThreadRail` or nested list. A view without a production dock does not gain one by toggling its state.
+
+Owner direction removes the Side Chat tab's left-hand Show threads control and sliding thread-panel behavior, while retaining the right-hand list button with future shared behavior still undefined. This is a current product gap; it does not remove unrelated header controls or redesign Main Chat. See [Chat UI](../PAGE.md#main-chat-side-chat-and-move).
+
+## Collapsed Thread Rail
+
+The current collapsed hover preview belongs to the Legacy shell's `Sidebar`/`ThreadRail` composition and `Sidebar.css`. When that host renders a collapsed rail, `.rv-sidebar-peek-panel` exposes the existing rail as a full-height overlay without resizing the chat column. Its `.rv-panel:has(.rv-chat-thread-dock:hover)` and focus selectors, plus hover/focus within the preview, control visibility. These broad outer-shell selectors do not establish a nested rail inside a Side Chat tab.
+
+The Legacy preview keeps the thread-view dropdown available, hides the close control, and shows `dock_to_right` in the upper-left position. Clicking its dock control or the Legacy header's Show threads control pins the normal rail. Preview and pinned states share the management-header slot, New chat row, divider and list structure. Passive row open hydrates without warming or spawning a harness. These current host mechanics are not the intended Side Chat tab slider behavior.

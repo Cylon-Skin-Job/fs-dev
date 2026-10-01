@@ -8,7 +8,7 @@
 //
 // Exercises (SPEC-03 §11 whole-SPEC scenario):
 //   - opens the Capture Viewer (a 03D participating built-in view) and creates
-//     two view-bound thread groups through the production group-selection dock;
+//     two view-bound thread groups through the production outer ThreadRail;
 //   - changes content in each group (classic capture section/mode navigation)
 //     and confirms the exact acknowledged entry is written to the isolated
 //     workspace's view-state file;
@@ -173,24 +173,11 @@ async function waitForWorksurfaceContent(groupId, expectedMode) {
 
 async function selectCaptureView() {
   await page.locator('.rv-tool-btn[title="Captures"]').click();
-  await page.locator('.rv-panel[data-panel="capture-viewer"].active').waitFor({ timeout: 15_000 });
-  const toggle = page.locator(
-    '.rv-panel[data-panel="capture-viewer"].active [data-worksurface-dock="capture-viewer"] .rv-worksurface-dock-toggle',
-  );
-  const dock = page.locator(
-    '.rv-panel[data-panel="capture-viewer"].active [data-worksurface-dock="capture-viewer"]',
-  );
-  // Force a fresh mount so the view host re-issues its qualified `thread:list`
-  // (a dock that mounted before the workspace/registry settled would otherwise
-  // keep an empty cached population).
-  if (await dock.getAttribute('data-open') === 'true') {
-    await toggle.click();
-    await page.waitForTimeout(250);
-  }
-  await toggle.click();
-  await page.locator('.rv-panel[data-panel="capture-viewer"].active [data-threaded-chat]').first()
+  const panel = page.locator('.rv-panel[data-panel="capture-viewer"].active');
+  await panel.waitFor({ timeout: 15_000 });
+  await panel.locator('[data-thread-rail-panel="capture-viewer"], .rv-sidebar--collapsed').first()
     .waitFor({ timeout: 15_000 });
-  return dock;
+  return panel;
 }
 
 async function waitForAnySelection(dock) {
@@ -208,7 +195,7 @@ async function waitForAnySelection(dock) {
     }
     await page.waitForTimeout(150);
   }
-  throw new Error('worksurface dock never settled on a selected group');
+  throw new Error('production shell rail never settled on a selected group');
 }
 
 async function waitForModeSelected(label) {
@@ -223,24 +210,13 @@ async function waitForModeSelected(label) {
 
 async function waitForDockRows(dock, min) {
   const deadline = Date.now() + 45_000;
-  let lastRefresh = 0;
   while (Date.now() < deadline) {
     if (await dock.locator('.rv-chat-item[data-thread-group-id]').count() >= min) return;
-    // A dock that mounted before the workspace/population settled can cache an
-    // empty list; force a fresh host mount periodically.
-    if (Date.now() - lastRefresh > 6000) {
-      lastRefresh = Date.now();
-      const toggle = dock.locator('.rv-worksurface-dock-toggle');
-      await toggle.click().catch(() => undefined);
-      await page.waitForTimeout(250);
-      await toggle.click().catch(() => undefined);
-      await page.waitForTimeout(400);
-    }
     await page.waitForTimeout(150);
   }
   const count = await dock.locator('.rv-chat-item[data-thread-group-id]').count().catch(() => -1);
   const allRows = await dock.locator('.rv-chat-item').count().catch(() => -1);
-  throw new Error(`worksurface dock never listed ${min} group rows (groupRows=${count} allRows=${allRows})`);
+  throw new Error(`production shell rail never listed ${min} group rows (groupRows=${count} allRows=${allRows})`);
 }
 
 async function dismissConflict(dock) {
@@ -275,7 +251,7 @@ async function selectGroup(dock, groupId) {
     })),
   );
   const conflicts = await dock.locator('.rv-worksurface-conflict').count();
-  throw new Error(`group ${groupId} was not selected in the worksurface dock; conflicts=${conflicts}; rows=${JSON.stringify(rows)}`);
+  throw new Error(`group ${groupId} was not selected in the production shell rail; conflicts=${conflicts}; rows=${JSON.stringify(rows)}`);
 }
 
 function captureModeButton(label) {
@@ -317,7 +293,7 @@ try {
     { timeout: 30_000 },
   );
 
-  // ---- Create two view-bound groups through the production dock.
+  // ---- Create two view-bound groups through the production outer rail.
   let dock = await selectCaptureView();
   // Let the workspace binding + host settle before the first create intent so a
   // cold-start race cannot drop it.
@@ -385,13 +361,13 @@ try {
   const victimGroupId = selectedGroupId === firstGroupId ? secondGroupId : firstGroupId;
   const victimRow = dock.locator(`.rv-chat-item[data-thread-group-id="${victimGroupId}"]`);
   await victimRow.locator('.rv-thread-menu-btn').click();
-  await victimRow.locator('.rv-dropdown-item', { hasText: 'Delete' }).click();
+  await page.getByRole('menu', { name: 'Thread options' }).getByRole('menuitem', { name: 'Delete' }).click();
   const deleteDeadline = Date.now() + 20_000;
   while (Date.now() < deleteDeadline) {
     if (await victimRow.count() === 0) break;
     await page.waitForTimeout(100);
   }
-  assert.equal(await victimRow.count(), 0, 'deleted group row was not removed from the worksurface dock');
+  assert.equal(await victimRow.count(), 0, 'deleted group row was not removed from the production shell rail');
   const afterDelete = readWorksurfaces();
   assert.equal(afterDelete[victimGroupId], undefined, 'deleted group worksurface entry was not removed');
   assert.ok(afterDelete[selectedGroupId], 'surviving group worksurface entry was removed');

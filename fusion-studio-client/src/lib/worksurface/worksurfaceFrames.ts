@@ -20,7 +20,6 @@ import {
 } from '../../state/slices/worksurfaceSlice';
 import type { WorksurfaceFlushReason } from '../../state/slices/worksurfaceSlice';
 import { worksurfaceAdapterForView } from './registry';
-import { isSideChatCapableView } from './sideChatViews';
 import { failRequest } from './worksurfaceFailures';
 import {
   sendContentRequest,
@@ -362,40 +361,6 @@ export function reconcileWorksurfacesOnReconnect(): void {
     } else {
       // A clean binding re-reads acknowledged truth (never pending replacement).
       sendGetRequest(workspaceId, binding.viewId, binding.threadGroupId);
-    }
-  }
-}
-
-/**
- * SPEC-04 §7 restart/readback (carried 04B binding): after relaunch, an
- * existing open placement on an unbound/dockless adapterless view
- * (Issues/Agents/Browser) must materialize without an action frame. The
- * accepted-route mechanism is a bounded qualified `thread:list` per
- * chat-capable registered view that is not already worksurface-bound; the
- * `thread:list` handler then issues the exact per-group entry read that
- * carries the managed-placement lane. No Generic Host widening, no new
- * transport family, no primary-history scan.
- */
-export function reconcileSideChatPlacementsOnReconnect(): void {
-  const store = usePanelStore.getState();
-  const workspaceId = store.activeWorkspaceId;
-  if (!workspaceId) return;
-  const socket = store.ws;
-  if (!socket || socket.readyState !== WebSocket.OPEN) return;
-  for (const config of store.panelConfigs ?? []) {
-    const viewId = config?.id;
-    if (typeof viewId !== 'string' || !isSideChatCapableView(viewId)) continue;
-    // A bound view already re-reads its exact group in
-    // `reconcileWorksurfacesOnReconnect`; only unbound/dockless views need the
-    // qualified list to discover groups that may carry a persisted placement.
-    if (getWorksurfaceBinding(store, workspaceId, viewId)) continue;
-    const inFlightKey = worksurfaceKey(workspaceId, viewId);
-    if (inFlightByView.has(inFlightKey) || getInFlightByView.has(inFlightKey)) continue;
-    try {
-      socket.send(JSON.stringify({ type: 'thread:list', viewId }));
-    } catch (_error) {
-      // A failed sweep request never blocks another view; the next reconnect
-      // or view mount retries.
     }
   }
 }

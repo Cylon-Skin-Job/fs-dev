@@ -226,6 +226,23 @@
   border-radius: var(--chat-input-border-radius, 15px);
 }
 
+.rv-chat-submission-feedback {
+  color: var(--text-secondary, currentColor);
+  font-size: var(--chat-status-font-size, 12px);
+  line-height: 1.35;
+}
+
+.rv-chat-submission-check {
+  margin-inline-start: var(--space-xs, 6px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-link, var(--text-primary, currentColor));
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .rv-chat-composer-shell .rv-chat-input-container {
   margin-bottom: 0;
 }

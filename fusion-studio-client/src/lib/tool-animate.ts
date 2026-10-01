@@ -11,6 +11,7 @@
  * interface so we can reuse orchestrateReveal() without rewriting it.
  */
 
+import { RevealProgress } from './reveal/progress';
 import type { SegmentType } from '../types';
 import type { TaggedChunk } from '../types/tagged-chunk';
 import type { ActiveChunkStrategy } from '../types/active-strategy';
@@ -25,6 +26,7 @@ import { sleep } from './animate-utils';
 // =============================================================================
 
 export interface ToolAnimateOptions {
+  progress?: RevealProgress;
   contentRef: { current: string };
   completeRef: { current: boolean };
   cancelRef: { current: boolean };
@@ -51,7 +53,9 @@ export async function animateTool(opts: ToolAnimateOptions): Promise<void> {
   const adapter = createAdapter(strategy, entry, toolArgs);
 
   // ── Build reveal options from timing profile + catalog speed ──
-  const revealOptions = buildRevealOptions(entry, getTimingProfile);
+  const progress = opts.progress ?? new RevealProgress();
+  progress.received = () => contentRef.current.length;
+  const revealOptions = { ...buildRevealOptions(entry, getTimingProfile), progress };
 
   // ── Handle awaitsResult: wait for content, then reveal through the adapter ──
   if (entry.awaitsResult) {
@@ -156,6 +160,7 @@ async function runWithResultHolding(
       break;
     }
 
+    revealOptions.progress?.setPhase('waiting');
     await sleep(30);
   }
 

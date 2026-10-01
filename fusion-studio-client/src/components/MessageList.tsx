@@ -28,6 +28,7 @@
  * └─────────────────────────────────────────────────────────────────┘
  */
 
+import { memo } from 'react';
 import { usePanelStore } from '../state/panelStore';
 import type { Message, AssistantTurn, StreamSegment } from '../types';
 import { LiveSegmentRenderer } from './LiveSegmentRenderer';
@@ -41,8 +42,14 @@ import { AssistantReplyBookmarkModal } from './chat/AssistantReplyBookmarkModal'
 import { useAssistantReplyChromeController } from './chat/useAssistantReplyChromeController';
 import type { ChatDiagnosticRouteIds } from '../lib/ws/chat-diagnostic-handlers';
 import type { ValidatedChatTurnDiagnosticReport } from '../lib/chat/diagnostic-report';
+import {
+  messageContentRevision,
+  messageMetadataRevision,
+} from '../lib/chat/message-revisions';
 
 interface MessageListProps {
+  workspaceId?: string;
+  surfaceId?: string;
   // PER_THREAD_CHAT_STATE: the mounted host passes its exact session's threadId.
   threadId: string | null;
   messages: Message[];
@@ -54,18 +61,21 @@ interface MessageListProps {
     route: ChatDiagnosticRouteIds,
   ) => Promise<ValidatedChatTurnDiagnosticReport | null>;
   onCopyDiagnostic: (text: string) => Promise<void>;
-  onAskAIWithDiagnostic: (text: string) => boolean;
+  onAskAIWithDiagnostic: (text: string) => Promise<boolean | 'pending-acceptance'>;
   askAIWithDiagnosticEnabled: boolean;
 }
 
 function CompletedAssistantReplyChrome({
+  workspaceId,
   threadId,
   message,
 }: {
+  workspaceId?: string;
   threadId: string;
   message: Message;
 }) {
   const source = {
+    workspaceId,
     threadId,
     messageId: message.id,
     exchangeSeq: message.exchangeSeq,
@@ -149,7 +159,94 @@ function AssistantTurnError({
   );
 }
 
+interface HistoryMessageRowProps {
+  workspaceId?: string;
+  threadId: string | null;
+  message: Message;
+  isLastUser: boolean;
+  lastUserMsgRef?: React.RefObject<HTMLDivElement | null>;
+  onRequestDiagnostic: MessageListProps['onRequestDiagnostic'];
+  onCopyDiagnostic: MessageListProps['onCopyDiagnostic'];
+  onAskAIWithDiagnostic: MessageListProps['onAskAIWithDiagnostic'];
+  askAIWithDiagnosticEnabled: boolean;
+}
+
+/**
+ * One completed/history row owns its derived-render lifetime. Live frontier
+ * updates leave both message revisions unchanged, so React skips the entire
+ * row (including Markdown/tool formatting and local expansion state).
+ */
+const HistoryMessageRow = memo(function HistoryMessageRow({
+  workspaceId,
+  threadId,
+  message,
+  isLastUser,
+  lastUserMsgRef,
+  onRequestDiagnostic,
+  onCopyDiagnostic,
+  onAskAIWithDiagnostic,
+  askAIWithDiagnosticEnabled,
+}: HistoryMessageRowProps) {
+  return (
+    <div
+      ref={isLastUser ? lastUserMsgRef : undefined}
+      className={`rv-message rv-message-${message.type}`}
+    >
+      {message.type === 'user' ? (
+        <div className="rv-message-user-content">{message.content}</div>
+      ) : message.type === 'assistant' && threadId ? (
+        <>
+          <InstantSegmentRenderer segments={message.segments} />
+          {message.projection !== 'in-flight-snapshot-baseline' ? (
+            <>
+              <AssistantTurnError
+                threadId={threadId}
+                message={message}
+                onRequestDiagnostic={onRequestDiagnostic}
+                onCopyDiagnostic={onCopyDiagnostic}
+                onAskAIWithDiagnostic={onAskAIWithDiagnostic}
+                askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
+              />
+              <CompletedAssistantReplyChrome workspaceId={workspaceId} threadId={threadId} message={message} />
+            </>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <InstantSegmentRenderer segments={message.segments} />
+          {message.type === 'assistant' ? (
+            <AssistantTurnError
+              threadId={threadId}
+              message={message}
+              onRequestDiagnostic={onRequestDiagnostic}
+              onCopyDiagnostic={onCopyDiagnostic}
+              onAskAIWithDiagnostic={onAskAIWithDiagnostic}
+              askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
+            />
+          ) : null}
+        </>
+      )}
+    </div>
+  );
+}, (previous, next) => (
+  previous.workspaceId === next.workspaceId
+  && previous.threadId === next.threadId
+  && previous.message.id === next.message.id
+  && (previous.message.contentRevision ?? messageContentRevision(previous.message))
+    === (next.message.contentRevision ?? messageContentRevision(next.message))
+  && (previous.message.metadataRevision ?? messageMetadataRevision(previous.message))
+    === (next.message.metadataRevision ?? messageMetadataRevision(next.message))
+  && previous.isLastUser === next.isLastUser
+  && previous.lastUserMsgRef === next.lastUserMsgRef
+  && previous.onRequestDiagnostic === next.onRequestDiagnostic
+  && previous.onCopyDiagnostic === next.onCopyDiagnostic
+  && previous.onAskAIWithDiagnostic === next.onAskAIWithDiagnostic
+  && previous.askAIWithDiagnosticEnabled === next.askAIWithDiagnosticEnabled
+));
+
 export function MessageList({
+  workspaceId,
+  surfaceId,
   threadId,
   messages,
   currentTurn,
@@ -164,6 +261,9 @@ export function MessageList({
   // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId.
   const pendingTurnEnd = usePanelStore((s) =>
     threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false
+  );
+  const pendingSave = usePanelStore((s) =>
+    threadId ? Boolean(s.projectChats[threadId]?.pendingExchangeSaveTurnId) : false
   );
   const finalizeTurn = usePanelStore((s) => s.finalizeTurn);
 
@@ -187,46 +287,18 @@ export function MessageList({
   return (
     <>
       {messages.map((msg, i) => (
-        <div
+        <HistoryMessageRow
           key={msg.id}
-          ref={i === lastUserIdx ? lastUserMsgRef : undefined}
-          className={`rv-message rv-message-${msg.type}`}
-        >
-          {msg.type === 'user' ? (
-            <div className="rv-message-user-content">{msg.content}</div>
-          ) : msg.type === 'assistant' && threadId ? (
-            <>
-              <InstantSegmentRenderer segments={msg.segments} />
-              {msg.projection !== 'in-flight-snapshot-baseline' ? (
-                <>
-                  <AssistantTurnError
-                    threadId={threadId}
-                    message={msg}
-                    onRequestDiagnostic={onRequestDiagnostic}
-                    onCopyDiagnostic={onCopyDiagnostic}
-                    onAskAIWithDiagnostic={onAskAIWithDiagnostic}
-                    askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
-                  />
-                  <CompletedAssistantReplyChrome threadId={threadId} message={msg} />
-                </>
-              ) : null}
-            </>
-          ) : (
-            <>
-              <InstantSegmentRenderer segments={msg.segments} />
-              {msg.type === 'assistant' ? (
-                <AssistantTurnError
-                  threadId={threadId}
-                  message={msg}
-                  onRequestDiagnostic={onRequestDiagnostic}
-                  onCopyDiagnostic={onCopyDiagnostic}
-                  onAskAIWithDiagnostic={onAskAIWithDiagnostic}
-                  askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
-                />
-              ) : null}
-            </>
-          )}
-        </div>
+          workspaceId={workspaceId}
+          threadId={threadId}
+          message={msg}
+          isLastUser={i === lastUserIdx}
+          lastUserMsgRef={lastUserMsgRef}
+          onRequestDiagnostic={onRequestDiagnostic}
+          onCopyDiagnostic={onCopyDiagnostic}
+          onAskAIWithDiagnostic={onAskAIWithDiagnostic}
+          askAIWithDiagnosticEnabled={askAIWithDiagnosticEnabled}
+        />
       ))}
 
       {(currentTurn || showOrb) && (
@@ -235,6 +307,10 @@ export function MessageList({
           className="rv-message rv-message-assistant"
         >
           <LiveSegmentRenderer
+            workspaceId={workspaceId}
+            surfaceId={surfaceId}
+            threadId={threadId ?? undefined}
+            terminal={pendingTurnEnd || pendingSave || currentTurn?.status !== 'streaming'}
             turnId={currentTurn?.id}
             segments={segments}
             activity={activity}

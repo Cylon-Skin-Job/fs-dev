@@ -41,23 +41,16 @@ const MAX_GROUP_NAME_BYTES = 512;
 const { DELETE_TOMBSTONE_TTL_MS } = deleteService;
 
 class ThreadGroupService {
-  /** @param {{ manager: object }} deps */
-  constructor({ manager }) {
-    if (!manager) throw new Error('ThreadGroupService: manager is required');
-    this.manager = manager;
+  constructor({ workspaceId, projectRoot, operations }) {
+    if (!workspaceId || !operations) throw new Error('ThreadGroupService: explicit operations required');
+    Object.assign(this, { workspaceId, projectRoot, operations });
   }
 
-  get db() {
-    return getDb();
-  }
-
-  get workspaceId() {
-    return this.manager.workspaceId;
-  }
+  get db() { return getDb(); }
 
   /** Run preflight + reconciliation once; safe to call on every route. */
   async activate() {
-    return this.manager.ensureGroupsActivated();
+    return this.operations.ensureGroupsActivated();
   }
 
   /**
@@ -112,7 +105,7 @@ class ThreadGroupService {
   resolveViewTarget(viewId) {
     if (viewId === null || viewId === undefined) return { ok: true, viewId: null };
     if (typeof viewId !== 'string' || !viewId) return { ok: false, viewId: null };
-    const root = views.resolveViewRoot(this.manager.projectRoot, viewId, { strictFilesystemErrors: true });
+    const root = views.resolveViewRoot(this.projectRoot, viewId, { strictFilesystemErrors: true });
     return root ? { ok: true, viewId } : { ok: false, viewId: null };
   }
 
@@ -213,11 +206,11 @@ class ThreadGroupService {
    * @param {{ threadId: string, turnId: string }} input
    * @returns {Promise<{ ok: boolean, advanced?: boolean, code?: string }>}
    */
-  async recordPromptAccepted({ threadId, turnId } = {}) {
+  async recordPromptAccepted({ threadId, turnId, db: transaction = null } = {}) {
     if (!isBoundedId(threadId) || !isBoundedId(turnId)) {
       return { ok: false, code: 'request_invalid' };
     }
-    const activation = await this.activate();
+    const activation = transaction ? { ok: true } : await this.activate();
     if (!activation.ok) {
       return {
         ok: false,
@@ -225,7 +218,7 @@ class ThreadGroupService {
         diagnostics: activation.diagnostics,
       };
     }
-    const db = this.db;
+    const db = transaction || this.db;
     const groupRow = await repository.getGroupForThread(db, threadId);
     if (!groupRow || groupRow.workspace_id !== this.workspaceId) {
       return { ok: false, code: 'not_found' };
@@ -330,11 +323,11 @@ class ThreadGroupService {
         // service never clones ThreadManager's mirror rules (§7/§9).
         const before = await repository.getGroupProjection(db, groupRow.group_id);
         if (!before) return { ok: false, code: 'not_found' };
-        const renamed = typeof this.manager.renameThread === 'function'
-          ? await this.manager.renameThread(before.currentPrimaryThreadId, cleanName)
+        const renamed = typeof this.operations.renameThread === 'function'
+          ? await this.operations.renameThread(before.currentPrimaryThreadId, cleanName)
           : null;
         if (renamed === null) return { ok: false, code: 'not_found' };
-        if (typeof this.manager.renameThread !== 'function') {
+        if (typeof this.operations.renameThread !== 'function') {
           await repository.renameGroup(db, groupRow.group_id, cleanName);
         }
         const projection = await repository.getGroupProjection(db, groupRow.group_id);

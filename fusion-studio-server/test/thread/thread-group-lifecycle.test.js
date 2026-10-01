@@ -87,6 +87,79 @@ describe('thread group lifecycle', () => {
     });
   });
 
+  test.each([
+    'threads', 'thread_groups', 'thread_group_members', 'thread_group_primary_events',
+    'thread_group_activity_events', 'thread_group_mirror_recovery', 'thread_group_action_results',
+  ])('creation rolls back every row when %s insert fails', async (table) => {
+    const db = getDb();
+    await db.raw(`CREATE TEMP TRIGGER fail_insert BEFORE INSERT ON ${table}
+      BEGIN SELECT RAISE(ABORT, 'injected creation failure'); END`);
+    const manager = makeManager();
+    await expect(manager.createThread('fault-session', 'Fault', {
+      groupId: 'fault-group', requestId: 'fault-request', action: 'create',
+    })).rejects.toMatchObject({ message: expect.stringContaining('injected creation failure') });
+    for (const name of ['threads', 'thread_groups', 'thread_group_members',
+      'thread_group_primary_events', 'thread_group_activity_events',
+      'thread_group_mirror_recovery', 'thread_group_action_results']) {
+      expect(await db(name)).toHaveLength(0);
+    }
+    expect(fs.existsSync(manager.chatlogMirror.file('fault-session').filePath)).toBe(false);
+  });
+
+  test.each(['activate', 'resume'])('failed %s metadata leaves a suspended durable row and no provider owner', async (step) => {
+    const manager = makeManager();
+    await manager.createThread('activation-session', 'Cold', { groupId: 'activation-group' });
+    const db = getDb();
+    const beforeGroup = await db('thread_groups').first();
+    const clause = step === 'activate' ? "status ON threads WHEN NEW.status = 'active'" : 'resumed_at ON threads';
+    await db.raw(`CREATE TEMP TRIGGER fail_activation BEFORE UPDATE OF ${clause}
+      BEGIN SELECT RAISE(ABORT, 'injected activation failure'); END`);
+    const { EventEmitter } = require('events');
+    const wire = new EventEmitter();
+    wire.killed = false;
+    wire.kill = jest.fn((signal) => {
+      wire.killed = true;
+      queueMicrotask(() => wire.emit('close', null, signal));
+    });
+    await expect(manager.openSession('activation-session', wire, {}))
+      .rejects.toMatchObject({ message: expect.stringContaining('injected activation failure') });
+    expect(manager.getSession('activation-session')).toBeUndefined();
+    expect(wire.kill).toHaveBeenCalledTimes(1);
+    expect(await db('threads').first()).toMatchObject({ status: 'suspended', resumed_at: null });
+    expect((await db('thread_groups').first()).updated_at).toBe(beforeGroup.updated_at);
+  });
+
+  test.each(['journal', 'session', 'group'])('singleton deletion rolls back at %s failure', async (step) => {
+    const manager = makeManager();
+    await manager.createThread('delete-session', 'Retained', { groupId: 'delete-group' });
+    const db = getDb();
+    const table = { journal: 'thread_group_mirror_recovery', session: 'threads', group: 'thread_groups' }[step];
+    const operation = step === 'journal' ? 'INSERT' : 'DELETE';
+    await db.raw(`CREATE TEMP TRIGGER fail_delete BEFORE ${operation} ON ${table}
+      BEGIN SELECT RAISE(ABORT, 'injected deletion failure'); END`);
+    await expect(manager.deleteThread('delete-session')).rejects.toMatchObject({ message: expect.stringContaining('injected deletion failure') });
+    expect(await db('threads')).toHaveLength(1);
+    expect(await db('thread_groups')).toHaveLength(1);
+    expect(await db('thread_group_members')).toHaveLength(1);
+    expect(await db('thread_group_mirror_recovery').where({ operation: 'delete' })).toHaveLength(0);
+    expect(fs.existsSync(manager.chatlogMirror.file('delete-session').filePath)).toBe(true);
+  });
+
+  test('duplicate concurrent create and singleton delete mutate exactly once', async () => {
+    const manager = makeManager();
+    const create = () => manager.createThread('same-session', 'Same', { groupId: 'same-group' });
+    const results = await Promise.allSettled([create(), create()]);
+    expect(results.filter((result) => result.status === 'fulfilled')).toHaveLength(1);
+    expect(await getDb()('threads')).toHaveLength(1);
+    expect(await getDb()('thread_groups')).toHaveLength(1);
+    expect(await getDb()('thread_group_activity_events')).toHaveLength(1);
+    const deleted = await Promise.all([manager.deleteThread('same-session'), manager.deleteThread('same-session')]);
+    expect(deleted.sort()).toEqual([false, true]);
+    expect(await getDb()('threads')).toHaveLength(0);
+    expect(await getDb()('thread_groups')).toHaveLength(0);
+    expect(await getDb()('thread_group_mirror_recovery').where({ operation: 'delete' })).toHaveLength(1);
+  });
+
   test('resolveOpenTarget resolves the group, verifies membership, and never invents a replacement', async () => {
     const manager = makeManager();
     await manager.createThread('t-1', 'Alpha', { groupId: 'tg-1' });
@@ -155,7 +228,7 @@ describe('thread group lifecycle', () => {
       .where({ mirror_key: 'chatlog:t-1', operation: 'create' })
       .update({ status: 'failed', failure_code: 'mirror_write_failed' });
 
-    await manager._retryPendingMirrorRecovery();
+    await manager.chatlogMirror.recover();
     const recovery = await db('thread_group_mirror_recovery')
       .where({ mirror_key: 'chatlog:t-1', operation: 'create' })
       .first();

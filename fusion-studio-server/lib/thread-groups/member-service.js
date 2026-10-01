@@ -72,7 +72,7 @@ async function listGroupMembers(service, { threadGroupId = null } = {}) {
     try {
       const { getThreadWorksurface } = require('../view-state/thread-worksurface');
       const summary = await getThreadWorksurface(
-        service.manager.projectRoot,
+        service.projectRoot,
         projection.viewId,
         threadGroupId,
       );
@@ -85,8 +85,8 @@ async function listGroupMembers(service, { threadGroupId = null } = {}) {
   const memberRows = await repository.listMembers(db, threadGroupId);
   const members = [];
   for (const row of memberRows) {
-    const thread = typeof service.manager.getThread === 'function'
-      ? await service.manager.getThread(row.thread_id)
+    const thread = typeof service.operations.getThread === 'function'
+      ? await service.operations.getThread(row.thread_id)
       : null;
     let placementDisposition = 'absent';
     if (projection.viewId && placementEntry) {
@@ -191,7 +191,7 @@ async function openMemberInSide(service, {
 
   const opened = await materializeMemberPlacement(service.db, {
     workspaceId: service.workspaceId,
-    projectRoot: service.manager.projectRoot,
+    projectRoot: service.projectRoot,
     record: outbox,
   });
   if (!opened.ok) {

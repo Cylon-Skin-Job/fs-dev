@@ -3,9 +3,9 @@
  * @role Connected view-bound ThreadedChat host (SPEC-02 §5.2/§5.3, Slice 02B).
  *
  * Wraps one explicit `{workspaceId, viewId}` population in `ThreadedChat`.
- * This is the explicit view-host lane; it is mounted into production view
- * chrome by `ViewWorksurfaceDock` (SPEC-03/SPEC-04) while preserving the
- * accepted SPEC-02 population/selection contract.
+ * This explicit full-host lane is retained for isolated composition tests and
+ * non-shell embedding. Production shell regions compose the same projection
+ * as sibling rail/chat/content boundaries in `WorkspacePanel`.
  */
 
 import { useState } from 'react';
@@ -29,7 +29,7 @@ export function ViewChatHost({
 }: ViewChatHostProps) {
   const host = useViewChatHost({ panel, workspaceId, viewId, isActive });
   const [threadView, setThreadView] = useState<ThreadRailView>('active');
-  const { identity, chat, actions, refs, onToggleThreads, onToggleContent } = host.chatHost;
+  const { identity, shell, header, composer, actions, refs, onToggleThreads, onToggleContent } = host.chatHost;
 
   return (
     <ThreadedChat
@@ -47,7 +47,9 @@ export function ViewChatHost({
       }}
       chat={{
         ...identity,
-        chat,
+        shell,
+        header,
+        composer,
         actions,
         refs,
         panel,

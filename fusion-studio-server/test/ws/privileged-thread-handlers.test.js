@@ -1,3 +1,16 @@
+// Transport fixture aliases follow the extracted explicit module dependencies.
+jest.mock('../../lib/thread/ThreadWebSocketHandler', () => require('../../lib/thread').ThreadWebSocketHandler);
+jest.mock('../../lib/thread/thread-runtime-manager', () => ({
+  RUNTIME_STATES: require('../../lib/thread').RUNTIME_STATES,
+  threadRuntimeManager: require('../../lib/thread').threadRuntimeManager,
+}));
+// This transport-only fixture substitutes durable session admission. Real
+// lease/readback is exercised by the SQLite group/admission integration lane.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
 'use strict';
 
 const mockPerformAction = jest.fn();
@@ -29,7 +42,10 @@ jest.mock('../../lib/thread', () => ({
     })),
     sendThreadList: jest.fn(() => Promise.resolve()),
   },
-  threadRuntimeManager: { markReady: jest.fn(), getRuntimeState: jest.fn(() => 'cold') },
+  threadRuntimeManager: {
+    // Transport-only adapter; exact ownership is exercised by the real runtime suites.
+    adoptRuntimeIdentity: jest.fn(() => ({})), captureOwnership: jest.fn(() => ({})),
+    isOwnershipCurrent: jest.fn(() => true), markOwnedState: jest.fn(), markReady: jest.fn(), getRuntimeState: jest.fn(() => 'cold') },
   threadRuntimeController: { warmRuntimeForIntent: jest.fn(() => Promise.resolve()) },
 }));
 
@@ -386,6 +402,23 @@ describe('privileged thread route gate', () => {
     expect(ThreadWebSocketHandler.handleThreadOpenAssistant).not.toHaveBeenCalled();
     expect(spawnThreadWire).not.toHaveBeenCalled();
     expect(ws.send).toHaveBeenCalledTimes(2);
+  });
+
+  test('trusted correlated create receives exact denial while workspace binding is unavailable', async () => {
+    const { handlers, ws } = make('trusted-shell', {
+      currentWorkspaceId: null, workspaceEpoch: null,
+      workspaceBindingState: 'binding', projectRoot: null,
+    });
+    await handlers['thread:open-assistant']({
+      type: 'thread:open-assistant', viewId: 'system-viewer',
+      requestId: 'chat-action-early-system',
+    });
+    expect(ThreadWebSocketHandler.handleThreadOpenAssistant).not.toHaveBeenCalled();
+    expect(ws.send).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
+      type: 'error', requestId: 'chat-action-early-system',
+      code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied',
+    });
   });
 
   test('standalone untrusted read-only thread routes remain available', async () => {

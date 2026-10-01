@@ -169,7 +169,11 @@ export function handleStepBegin(
  * Called from snapshot-restore's `restoreInFlightTransportState` inside the
  * single synchronous install task for `status === 'in_flight'` snapshots.
  */
-export function restoreSnapshotActivity(threadId: string, snap: LiveTurnSnapshot): void {
+export function restoreSnapshotActivity(
+  threadId: string,
+  snap: LiveTurnSnapshot,
+  options: { rebuildAcceptedProjection?: boolean } = {},
+): void {
   // Create-or-return the addressed namespace (prior mechanical contract of
   // the install task; the claim step normally created it already).
   const ns = ensureNamespace(threadId, snap.turnId);
@@ -184,8 +188,12 @@ export function restoreSnapshotActivity(threadId: string, snap: LiveTurnSnapshot
 
   // Strictly-greater gate vs the LOCAL mirror: equal/lower snapshots cannot
   // alter local activity/cursor/revision (§4.9).
-  if (!isStrictlyGreaterRevision(ns.activityRevision, snap.activityRevision)) return;
-  ns.activityRevision = snap.activityRevision;
+  const isNewer = isStrictlyGreaterRevision(ns.activityRevision, snap.activityRevision);
+  const isAcceptedRebuild = options.rebuildAcceptedProjection === true
+    && ns.activityRevision === snap.activityRevision
+    && usePanelStore.getState().projectChats[threadId]?.currentTurn?.id === snap.turnId;
+  if (!isNewer && !isAcceptedRebuild) return;
+  if (isNewer) ns.activityRevision = snap.activityRevision;
 
   if (
     snap.stepCursor &&

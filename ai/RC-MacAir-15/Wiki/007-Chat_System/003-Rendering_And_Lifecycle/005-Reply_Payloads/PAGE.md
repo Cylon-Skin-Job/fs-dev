@@ -2,22 +2,20 @@
 name: Chat Reply Payloads
 description: Reply text extraction, tool output exclusion, clipboard policy, and TTS-ready payloads derived from finalized message segments.
 metadata:
-  incoming-edges:
-    - Chat Rendering And Lifecycle
-    - Reply Action Chrome
-  outgoing-edges:
-    - Chat User Metadata
+  last-modified: "2026-09-28T04:18:57Z"
   source-files:
     - fusion-studio-client/src/lib/ws/thread-handlers.ts
     - fusion-studio-client/src/state/slices/chatSlice.ts
     - fusion-studio-client/src/components/InstantSegmentRenderer.tsx
     - fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx
-    - fusion-studio-client/src/components/chat/useChatArea.ts
+    - fusion-studio-client/src/lib/chat/reply-text.ts
+    - fusion-studio-client/src/lib/chat/reply-chrome-actions.ts
+    - fusion-studio-client/src/components/chat/useAssistantReplyChromeController.ts
+    - fusion-studio-client/src/components/MessageList.tsx
     - fusion-studio-client/src/lib/tool-grouper.ts
     - fusion-studio-client/src/clipboard/clipboard-api.ts
     - fusion-studio-server/lib/secrets/clipboard/handlers.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
 ---
 
 Assistant reply payloads come from finalized `Message.segments`, not from DOM
@@ -31,6 +29,8 @@ consumes assistant reply text.
 
 ## Extraction Primitive
 
+`extractAssistantReplyText` in `fusion-studio-client/src/lib/chat/reply-text.ts` implements the shared payload. `MessageList.tsx` passes each saved reply's segments through it, then supplies the payload and source identity to `useAssistantReplyChromeController.ts`. The controller delegates reply, Chat ID and note copying to `reply-chrome-actions.ts`. TTS remains a future consumer.
+
 ```ts
 const replyMarkdown = segments
   .filter(segment => segment.type === 'text')
@@ -38,7 +38,7 @@ const replyMarkdown = segments
   .join('');
 ```
 
-The extractor should return one reusable payload:
+The extractor returns one reusable payload:
 
 ```ts
 interface AssistantReplyTextPayload {
@@ -66,39 +66,9 @@ assistant prose with tool transcript noise.
 
 ## Clipboard
 
-Any Fusion Studio action that writes to the system clipboard should also write
-to clipboard history.
+**Approved direction; implementation pending:** Reply, Chat ID, note and diagnostic Copy actions keep their selected payload and perform one ordinary system-clipboard write without retaining a Fusion history entry. Current reply actions and the connected session controller still call `writeAndRecord`, which records managed history; approved product direction calls for that path’s removal. [Frontend UI Standards](../../../005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md#copy-actions) owns the app-wide copy rule.
 
-Use:
-
-```ts
-writeAndRecord(text, source)
-```
-
-Do not call `navigator.clipboard.writeText()` directly for app copy actions.
-
-Chat source labels:
-
-- Reply copy: `assistant-reply`
-- Chat ID copy: `assistant-reply-chat-id`
-- Note copy: `assistant-reply-note`
-- Diagnostic copy: `chat-diagnostic`
-
-Diagnostic presentation validates and formats the retrieved report, then passes
-only that text through its injected copy callback. The chat controller owns the
-canonical `writeAndRecord(text, 'chat-diagnostic')` call; the presentation
-component does not write to `navigator.clipboard` directly. One explicit Copy
-activation therefore performs one system clipboard write and one
-`clipboard:append` history request with the same validated text and source.
-
-Active copy actions that unexpectedly lack required data should use the shared
-fallback toast:
-
-```text
-Error: Data Unavailable
-```
-
-Disabled or inert stub actions should not fire this toast.
+Diagnostic presentation validates and formats retrieved report text, then passes it through an injected callback. The connected session controller owns the copy action; the presentation component should not select a global clipboard route. Active copy actions that unexpectedly lack required data use the shared `Error: Data Unavailable` toast; disabled or inert stubs do not fire it.
 
 ## Text To Speech
 

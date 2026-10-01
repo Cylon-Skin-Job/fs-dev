@@ -73,6 +73,7 @@ function firstLineOf(text) {
  * @param {object} input
  * @param {boolean} [input.nativeAuthFailure] adapter observed -32004
  * @param {string} [input.stderr] captured stderr/process output
+ * @param {string} [input.nativeDetail] selected native tool error; diagnostic only, never classification
  * @param {number} [input.exitCode]
  * @param {string} [input.signal]
  * @param {string} [input.harnessId]
@@ -96,7 +97,7 @@ async function buildHarnessFailureMarker(input = {}) {
     providerCode: input.nativeAuthFailure ? '-32004' : undefined,
     exitCode: Number.isFinite(input.exitCode) ? input.exitCode : undefined,
     signal: typeof input.signal === 'string' && input.signal ? input.signal : undefined,
-    message: firstLineOf(stderr),
+    message: firstLineOf(stderr || input.nativeDetail),
     stderrExcerpt: stderr.trim() ? stderr : undefined,
     lastCanonicalEventType:
       typeof input.lastCanonicalEventType === 'string' && input.lastCanonicalEventType

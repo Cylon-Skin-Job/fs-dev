@@ -22,6 +22,7 @@
 
 import type { Thread, TokenUsage } from '../../types';
 import type { AppState } from '../panelStoreTypes';
+import { threadMembersKey } from './worksurfaceSlice';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
@@ -333,6 +334,11 @@ export function removeThreadFromPopulations(
   }
 
   const result: Partial<AppState> = { ...next };
+  if (address?.workspaceId && address.threadGroupId) {
+    const threadMembersByGroup = { ...state.threadMembersByGroup };
+    delete threadMembersByGroup[threadMembersKey(address.workspaceId,address.threadGroupId)];
+    result.threadMembersByGroup = threadMembersByGroup;
+  }
   if (selectionChanged) {
     result.currentLegacyThreadGroupIdByWorkspaceId = currentLegacyThreadGroupIdByWorkspaceId;
     result.currentThreadGroupIdByWorkspaceAndView = currentThreadGroupIdByWorkspaceAndView;

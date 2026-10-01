@@ -28,6 +28,7 @@ import type {
 } from './workspace';
 
 export type WebSocketMessageType =
+  | 'chat-turn:diagnostic:subscribe' | 'chat-turn:diagnostic:unsubscribe' | 'chat-turn:diagnostic:stream'
   // Turn stream / chat metadata
   | 'connected' | 'turn_begin' | 'content' | 'thinking' | 'turn_end'
   | 'step_begin' | 'status_update' | 'exchange_metadata'
@@ -44,6 +45,7 @@ export type WebSocketMessageType =
   | 'thread:members' | 'thread:members:error'
   | 'thread:action:completed' | 'thread:action:error'
   | 'message:sent' | 'auth_error'
+  | 'prompt:resolved' | 'prompt:resolve_error'
   | 'thread:create:confirm' | 'thread:state_changed'
   // Modal messages
   | 'modal:show' | 'file:moved' | 'file:move_error' | 'file:renamed'
@@ -114,6 +116,8 @@ export interface WebSocketMessage {
   requestType?: string;
   payload?: unknown;
   requestId?: string;
+  /** Passive member hydration never changes group selection or pending Main opens. */
+  historyOnly?: boolean;
   id?: string;
   result?: unknown;
   error?: string;
@@ -203,6 +207,7 @@ export interface WebSocketMessage {
   activeWorkspaceId?: string | null;
   sourceMachineName?: string;
   workspaceId?: string | null;
+  workspaceEpoch?: string | null;
   from?: string | null;
   to?: string | null;
   repoPath?: string | null;

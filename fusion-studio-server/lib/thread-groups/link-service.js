@@ -155,7 +155,7 @@ async function resolveLink(service, {
       if (!outbox) return { ok: false, code: 'member_unavailable' };
       const opened = await materializeMemberPlacement(service.db, {
         workspaceId: service.workspaceId,
-        projectRoot: service.manager.projectRoot,
+        projectRoot: service.projectRoot,
         record: outbox,
       });
       if (!opened.ok) return { ok: false, code: opened.code };
@@ -212,8 +212,8 @@ async function viewMarkdown(service, {
   const member = await repository.getMember(service.db, groupRow.group_id, memberThreadId);
   if (!member) return { ok: false, code: 'not_found' };
 
-  const thread = typeof service.manager.getThread === 'function'
-    ? await service.manager.getThread(memberThreadId)
+  const thread = typeof service.operations.getThread === 'function'
+    ? await service.operations.getThread(memberThreadId)
     : null;
   if (!thread || typeof thread.filePath !== 'string' || !thread.filePath) {
     return { ok: false, code: 'not_found' };

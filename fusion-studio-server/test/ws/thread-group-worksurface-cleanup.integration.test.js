@@ -455,4 +455,25 @@ describe('group-delete worksurface cleanup', () => {
     // No entry existed, so no capsule file was created or rewritten.
     expect(fs.existsSync(statePath(projectRoot, FILE_VIEW))).toBe(false);
   });
+
+  test('public delete commits file cleanup despite ACK outage and restart acknowledges the absent entry', async () => {
+    const workspaceId = nextWorkspaceId();
+    const h = await makeHarness({ workspaceId, threadId: 't-ack', groupId: 'tg-ack' });
+    await putEntry(h);
+    const repo = require('../../lib/thread-groups/repository');
+    const mark = jest.spyOn(repo, 'markWorksurfaceCleanup').mockRejectedValue(new Error('ACK unavailable'));
+    try {
+      await h.threadHandlers['thread:action']({ action: 'delete', requestId: 'delete-ack', threadGroupId: 'tg-ack' });
+      expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
+      expect((await cleanupRows(workspaceId))[0].status).toBe('pending');
+      expect(readViewState(FILE_VIEW).threadWorksurfaces ?? {}).not.toHaveProperty('tg-ack');
+    } finally { mark.mockRestore(); }
+    await closeDb(); await initDb();
+    const restarted = new ThreadManager({ projectRoot, workspaceId });
+    await restarted.ensureGroupsActivated();
+    expect((await cleanupRows(workspaceId))[0].status).toBe('applied');
+    expect(await getDb()('threads').where({ thread_id: 't-ack' })).toHaveLength(0);
+    expect(readViewState(FILE_VIEW).threadWorksurfaces ?? {}).not.toHaveProperty('tg-ack');
+  });
+
 });

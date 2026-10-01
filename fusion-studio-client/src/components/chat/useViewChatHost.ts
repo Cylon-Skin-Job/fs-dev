@@ -9,11 +9,14 @@
  * selected group's Main Chat through the existing `ChatSurface` session
  * machinery (session truth stays keyed by `threadId`).
  *
- * This module never places a view-bound rail into production view chrome; the
- * PRODUCTION workspace chat remains the Legacy host (`viewId: null`).
+ * Owner direction 2026-09-19: this host is the production workspace chat
+ * composition. `App.tsx` mounts it once per panel through `PanelContent`, so
+ * every view's shell chat shows that view's own family; the Legacy null-view
+ * population is no longer a production surface.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { usePanelStore } from '../../state/panelStore';
 import { useCliAccentResolver } from '../../hooks/useCliAccentStyle';
 import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
@@ -23,22 +26,19 @@ import {
   getCurrentThreadGroupId,
   getThreadGroupPopulation,
 } from '../../state/slices/chatSurfaceSlice';
+import { threadOpenRequest } from '../../lib/ws/threadGroupRows';
+import { sendChatProduct } from '../../lib/ws/product-send';
+import { copyGroupLink, copyGroupMemberLink, deleteGroup, openGroup, openGroupMember, renameGroup, requestGroupMembers, viewGroupMarkdown } from '../../lib/chat/thread-group-command-controller';
 import {
-  threadActionCopyLink,
-  threadActionDelete,
-  threadActionOpenMemberInSide,
-  threadActionRename,
-  threadActionViewMarkdown,
-  threadMembersRequest,
-  threadOpenRequest,
-} from '../../lib/ws/threadGroupRows';
-import { getThreadMembers } from '../../state/slices/worksurfaceSlice';
+  EMPTY_THREAD_MEMBERS,
+  threadMembersKey,
+} from '../../state/slices/worksurfaceSlice';
 import type { ThreadMemberProjection } from '../../state/slices/worksurfaceSlice';
 import {
   requestGroupSelection,
   worksurfaceAdapterForView,
 } from '../../lib/worksurface/worksurfaceController';
-import { useLegacyChatHost, type LegacyChatHostProjection } from './useLegacyChatHost';
+import { useChatSessionHost, type ChatSessionHostProjection } from './useChatSessionHost';
 import type { ThreadRailProps } from './ThreadRail';
 import type { HarnessStatus, Thread } from '../../types';
 
@@ -58,7 +58,7 @@ export type ViewChatRailProjection = Omit<
 
 export interface ViewChatHostProjection {
   rail: ViewChatRailProjection;
-  chatHost: LegacyChatHostProjection;
+  chatHost: ChatSessionHostProjection;
   showCliPicker: boolean;
   harnessStatuses: Record<string, HarnessStatus>;
   handleHarnessSelect: (harnessId: string, modelId?: string) => void;
@@ -77,30 +77,34 @@ export function useViewChatHost({
   const selectedThreadGroupId = usePanelStore(
     (state) => getCurrentThreadGroupId(state, workspaceId, viewId),
   );
-  // Subscribe to the ordered member projections so a menu opened before the
-  // `thread:members` response lands re-renders with the member list.
-  const threadMembersByGroup = usePanelStore((state) => state.threadMembersByGroup);
+  // Observe only member arrays belonging to rows in this exact population.
+  // An unrelated view/group response must not re-render this host.
+  const memberLists = usePanelStore(useShallow((state) => rows.map((row) => (
+    row.threadGroupId
+      ? (state.threadMembersByGroup[threadMembersKey(workspaceId, row.threadGroupId)]
+        ?? EMPTY_THREAD_MEMBERS)
+      : EMPTY_THREAD_MEMBERS
+  ))));
   const selectedRow = useMemo(
     () => rows.find((row) => row.threadGroupId === selectedThreadGroupId) ?? null,
     [rows, selectedThreadGroupId],
   );
   const displayThreadId = selectedRow?.threadId ?? '';
 
-  const chatHost = useLegacyChatHost({
+  const chatHost = useChatSessionHost({
     panel,
     threadId: displayThreadId || null,
     host: 'main',
     viewId,
     workspaceId,
     threadGroupId: selectedRow?.threadGroupId ?? null,
+    threadName: selectedRow?.entry?.name ?? selectedRow?.name ?? '',
     expectedPrimarySequence: selectedRow?.currentPrimarySequence ?? null,
-    explicitTarget: true,
     isActive,
   });
 
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState('');
-  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
 
   const resolveCliAccent = useCliAccentResolver();
   const harnessStatuses = useHarnessStatuses();
@@ -109,10 +113,9 @@ export function useViewChatHost({
 
   const sendMessage = useCallback((msg: object) => {
     const socket = usePanelStore.getState().ws;
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(msg));
-    }
-  }, []);
+    return sendChatProduct(msg as Record<string, unknown>,
+      { workspaceId, policy: 'socket_only', expectedSocket: socket });
+  }, [workspaceId]);
 
   // Request ownership: only the active host asks for its own population, once
   // per mounted connection/address. An inactive mounted host issues nothing.
@@ -127,8 +130,9 @@ export function useViewChatHost({
     if (requestedForRef.current?.address === address && requestedForRef.current.ws === ws) {
       return;
     }
-    requestedForRef.current = { address, ws };
-    ws.send(JSON.stringify({ type: 'thread:list', viewId }));
+    const outcome = sendChatProduct({ type: 'thread:list', viewId },
+      { workspaceId, policy: 'socket_only', expectedSocket: ws });
+    if (outcome.status !== 'not_enqueued') requestedForRef.current = { address, ws };
   }, [isActive, ws, workspaceId, viewId]);
 
   // MRU auto-open for this exact population, active host only. A view with a
@@ -150,7 +154,10 @@ export function useViewChatHost({
       threadId: mru.threadId,
       threadGroupId: mru.threadGroupId,
     });
-    ws.send(JSON.stringify(threadOpenRequest(mru.threadGroupId, mru.threadId)));
+    const outcome = sendChatProduct(threadOpenRequest(mru.threadGroupId, mru.threadId),
+      { workspaceId, policy: 'socket_only', expectedSocket: ws });
+    if (outcome.status === 'not_enqueued') usePanelStore.getState().consumeThreadOpen(
+      { workspaceId, viewId }, { threadId: mru.threadId, threadGroupId: mru.threadGroupId });
   }, [isActive, ws, workspaceId, viewId, selectedThreadGroupId, rows]);
 
   const handleOpenThread = useCallback((row: Thread) => {
@@ -162,14 +169,8 @@ export function useViewChatHost({
       && requestGroupSelection(workspaceId, viewId, row.threadGroupId)) {
       return;
     }
-    usePanelStore.getState().requestThreadOpen({
-      workspaceId,
-      viewId,
-      threadId: row.threadId,
-      threadGroupId: row.threadGroupId,
-    });
-    sendMessage(threadOpenRequest(row.threadGroupId, row.threadId));
-  }, [sendMessage, workspaceId, viewId]);
+    openGroup({ workspaceId, threadGroupId: row.threadGroupId ?? '', threadId: row.threadId }, viewId);
+  }, [workspaceId, viewId]);
 
   const handleCreateThread = useCallback(() => {
     // Bind the new group to this exact view, never the active panel.
@@ -183,15 +184,11 @@ export function useViewChatHost({
 
   const handleSubmitRename = useCallback((row: Thread) => {
     if (renameValue.trim()) {
-      sendMessage(threadActionRename({
-        threadGroupId: row.threadGroupId,
-        threadId: row.threadId,
-        name: renameValue.trim(),
-      }));
+      renameGroup({ workspaceId, threadGroupId: row.threadGroupId ?? '', threadId: row.threadId }, renameValue);
     }
     setRenamingId(null);
     setRenameValue('');
-  }, [renameValue, sendMessage]);
+  }, [renameValue, workspaceId]);
 
   const handleCancelRename = useCallback(() => {
     setRenamingId(null);
@@ -199,57 +196,36 @@ export function useViewChatHost({
   }, []);
 
   const handleDelete = useCallback((row: Thread) => {
-    if (confirm('Delete this conversation?')) {
-      sendMessage(threadActionDelete({
-        threadGroupId: row.threadGroupId,
-        threadId: row.threadId,
-      }));
-    }
-  }, [sendMessage]);
+    deleteGroup({ workspaceId, threadGroupId: row.threadGroupId ?? '', threadId: row.threadId });
+  }, [workspaceId]);
 
   const handleCopyLink = useCallback((row: Thread) => {
-    sendMessage(threadActionCopyLink({
-      threadGroupId: row.threadGroupId,
-      threadId: row.threadId,
-    }));
-  }, [sendMessage]);
+    copyGroupLink({ workspaceId, threadGroupId: row.threadGroupId ?? '', threadId: row.threadId });
+  }, [workspaceId]);
 
   const handleViewMarkdown = useCallback((row: Thread) => {
-    sendMessage(threadActionViewMarkdown({
-      threadGroupId: row.threadGroupId,
-      threadId: row.threadId,
-    }));
-  }, [sendMessage]);
+    viewGroupMarkdown({ workspaceId, threadGroupId: row.threadGroupId ?? '', threadId: row.threadId });
+  }, [workspaceId]);
 
   const handleRequestMembers = useCallback((row: Thread) => {
     if (!row.threadGroupId) return;
-    sendMessage(threadMembersRequest(row.threadGroupId));
-  }, [sendMessage]);
+    requestGroupMembers({ workspaceId, threadGroupId: row.threadGroupId, threadId: row.threadId });
+  }, [workspaceId]);
 
   const handleOpenMember = useCallback((row: Thread, member: ThreadMemberProjection) => {
     if (!row.threadGroupId || !member?.threadId || member.isPrimary) return;
-    sendMessage(threadActionOpenMemberInSide({
-      threadGroupId: row.threadGroupId,
-      threadId: member.threadId,
-    }));
-  }, [sendMessage]);
+    openGroupMember({ workspaceId, threadGroupId: row.threadGroupId, threadId: row.threadId }, member.threadId);
+  }, [workspaceId]);
 
   const handleCopyLinkMember = useCallback((row: Thread, member: ThreadMemberProjection) => {
     if (!row.threadGroupId || !member?.threadId) return;
-    sendMessage(threadActionCopyLink({
-      threadGroupId: row.threadGroupId,
-      threadId: member.threadId,
-    }));
-  }, [sendMessage]);
+    copyGroupMemberLink({ workspaceId, threadGroupId: row.threadGroupId, threadId: row.threadId }, member.threadId);
+  }, [workspaceId]);
 
   const membersForGroup = useCallback((row: Thread): ThreadMemberProjection[] => {
-    void threadMembersByGroup;
-    return getThreadMembers(
-      usePanelStore.getState(),
-      workspaceId,
-      row.threadGroupId ?? '',
-    );
-  }, [threadMembersByGroup, workspaceId]);
+    const index = rows.findIndex((candidate) => candidate.threadGroupId === row.threadGroupId);
+    return index >= 0 ? (memberLists[index] ?? EMPTY_THREAD_MEMBERS) : EMPTY_THREAD_MEMBERS;
+  }, [memberLists, rows]);
 
   const handleHarnessSelect = useCallback((harnessId: string, modelId?: string) => {
     usePanelStore.getState().selectHarness(harnessId, modelId);
@@ -270,8 +246,6 @@ export function useViewChatHost({
     renamingId,
     renameValue,
     setRenameValue,
-    menuOpenId,
-    setMenuOpenId,
     onOpenThread: handleOpenThread,
     onStartRename: handleStartRename,
     onSubmitRename: handleSubmitRename,

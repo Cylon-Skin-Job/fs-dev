@@ -71,7 +71,7 @@ async function deleteGroup(service, {
         });
       }
 
-      const deleted = await service.manager.deleteGroup(groupRow.group_id, {
+      const deleted = await service.operations.deleteGroup(groupRow.group_id, {
         tombstoneExpiresAt: Date.now() + DELETE_TOMBSTONE_TTL_MS,
         context: buildDurableActionContext({
           workspaceId: service.workspaceId,
@@ -92,7 +92,7 @@ async function deleteGroup(service, {
       // cleanup returns the retained state and stays repairable.
       let result = deleted.result;
       try {
-        await service.manager.retryMirrorCleanupForGroup(groupRow.group_id);
+        await service.operations.retryMirrorCleanupForGroup(groupRow.group_id);
       } catch (_error) {
         // Retained tombstone cleanup state already records the failure.
       }
@@ -140,7 +140,7 @@ async function recoverDeletedGroupWithinLease(service, {
   }
 
   try {
-    await service.manager.retryMirrorCleanupForGroup(tombstone.groupId);
+    await service.operations.retryMirrorCleanupForGroup(tombstone.groupId);
   } catch (_error) {
     // Retained cleanup state below reflects the remaining pending work.
   }
@@ -148,7 +148,7 @@ async function recoverDeletedGroupWithinLease(service, {
   // worksurface instruction is consumed; an applied/no-op delivery is
   // harmless.
   try {
-    await service.manager.retryWorksurfaceCleanupForGroup(tombstone.groupId);
+    await service.operations.retryWorksurfaceCleanupForGroup(tombstone.groupId);
   } catch (_error) {
     // The refreshed aggregate below still reports the unapplied state.
   }

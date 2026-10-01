@@ -278,8 +278,12 @@ function installInFlightBaseline(threadId: string, snap: LiveTurnSnapshot): void
  * `startedAt`. Kept as this module's named step so the install task's single
  * synchronous shape is unchanged.
  */
-function restoreInFlightTransportState(threadId: string, snap: LiveTurnSnapshot): void {
-  restoreSnapshotActivity(threadId, snap);
+function restoreInFlightTransportState(
+  threadId: string,
+  snap: LiveTurnSnapshot,
+  rebuildAcceptedProjection = false,
+): void {
+  restoreSnapshotActivity(threadId, snap, { rebuildAcceptedProjection });
 }
 
 /**
@@ -358,7 +362,11 @@ export function installLiveTurnSnapshot(
         // Same ordering discipline as the fresh install: slot first, then
         // observable activity restoration (SPEC-05 Slice A).
         installInFlightBaseline(threadId, cached.snapshot);
-        restoreInFlightTransportState(threadId, cached.snapshot);
+        // The open path cleared the addressed slot after this exact snapshot
+        // was accepted. Re-project its observable activity (including the
+        // original startedAt) without treating an equal revision as a new
+        // transport transition.
+        restoreInFlightTransportState(threadId, cached.snapshot, true);
         setNamespaceHydrating(threadId, turnId, false);
       } else {
         installCompletedInstantRow(threadId, cached.snapshot);

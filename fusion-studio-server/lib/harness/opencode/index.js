@@ -2,6 +2,7 @@ const { EventEmitter } = require('events');
 const os = require('os');
 const { PassThrough } = require('stream');
 const { spawn } = require('child_process');
+const { createNativeDiagnosticTap } = require('./native-diagnostic-tap');
 const { JsonLineParser } = require('./json-line-parser');
 const {
   OpenCodeJsonEventTranslator,
@@ -11,7 +12,10 @@ const {
 const { buildHarnessFailureMarker } = require('./failure-marker-builder');
 const { createConfiguredSecretsProvider } = require('./configured-secrets-provider');
 const { buildHarnessChildEnvironment } = require('../child-environment');
+const { retireSession } = require('./session-retirement');
+const { OpenCodeTurnOutcome } = require('./turn-outcome');
 const { sanitizeRuntimeHarnessConfig } = require('../../thread/thread-harness-config-policy');
+const { logTemporaryChatBoundary } = require('../../logging');
 
 /**
  * Native OpenCode protocol error observation — adapter boundary ONLY
@@ -41,7 +45,7 @@ function createProcessProxy() {
 }
 
 function buildRunArgs(config, projectRoot, openCodeSessionId, message) {
-  const args = ['run', '--format', 'json'];
+  const args = ['run', '--auto', '--format', 'json'];
 
   if (projectRoot) {
     args.push('--dir', projectRoot);
@@ -77,21 +81,6 @@ function createSessionIdPatch(openCodeSessionId) {
 
 function getEventSessionId(event) {
   return event?.sessionID || event?.part?.sessionID || null;
-}
-
-function isUsefulAssistantEvent(event) {
-  // Canonical 'step_begin' is intentionally NOT useful assistant output.
-  // A run that emits only step_start and then exits cleanly must still fail
-  // with "exited before turn_end" (pinned by
-  // "clean exit after only step_start still throws"); counting step_begin
-  // here would suppress that error path by enabling the synthetic turn_end.
-  // Working-activity consumption of step_begin belongs to the wire/thread
-  // layers, not this exit guard.
-  if (event.type === 'content' || event.type === 'tool_call' || event.type === 'tool_call_args'
-    || event.type === 'tool_result' || event.type === 'tool_snapshot') {
-    return true;
-  }
-  return event.type === 'thinking' && String(event.text || '').length > 0;
 }
 
 function createSyntheticTurnEnd(translator) {
@@ -175,9 +164,11 @@ class OpenCodeHarness extends EventEmitter {
         const args = buildRunArgs(runConfig, projectRoot, session.openCodeSessionId, message);
         let done = false;
         let sawTurnEnd = false;
-        let sawUsefulAssistantEvent = false;
+        const outcome = new OpenCodeTurnOutcome();
         let sawNativeAuthFailure = false;
         let sawRenderableOutput = false;
+        let sawNativeJson = false;
+        let sawSessionId = false;
         let sawToolCalls = false;
         let lastTranslatedType = null;
         // SPEC-03 Slice A: exit/close failures are described, then translated
@@ -193,6 +184,9 @@ class OpenCodeHarness extends EventEmitter {
         const getConfiguredSecrets = typeof runtimeConfig.getConfiguredSecrets === 'function'
           ? runtimeConfig.getConfiguredSecrets
           : harness.getConfiguredSecrets;
+        const diagnosticTap = createNativeDiagnosticTap(options.nativeDiagnostic, {
+          getConfiguredSecrets, env: envSnapshot, workspaceRoot: projectRoot || '', homePath: os.homedir(),
+        });
         let capturedOpenCodeSessionId = session.openCodeSessionId;
         let capturedSessionIdPatch = null;
 
@@ -200,13 +194,33 @@ class OpenCodeHarness extends EventEmitter {
           session.openCodeSessionId = openCodeSessionId;
         };
 
-        const proc = spawn(cliPath, args, {
-          stdio: ['ignore', 'pipe', 'pipe'],
-          cwd: projectRoot || process.cwd(),
-          env: buildHarnessChildEnvironment('opencode', {
-            overrides: { TERM: 'xterm-256color' },
-          }),
+        const diagnosticIdentity = { threadId, turnId: options.turnId, harnessId: 'opencode' };
+        logTemporaryChatBoundary('spawn_attempt', {
+          ...diagnosticIdentity, hadStoredSessionId: Boolean(session.openCodeSessionId),
         });
+        let proc;
+        let environmentReady = false;
+        try {
+          // The diagnostic snapshot above has already verified this family and
+          // its overrides. Keep spawn's env owned directly by the central
+          // builder so the child-launch inventory can verify the boundary.
+          environmentReady = true;
+          proc = spawn(cliPath, args, {
+            stdio: ['ignore', 'pipe', 'pipe'],
+            cwd: projectRoot || process.cwd(),
+            env: buildHarnessChildEnvironment('opencode', {
+              overrides: { TERM: 'xterm-256color' },
+            }),
+          });
+        } catch (err) {
+          logTemporaryChatBoundary('spawn_throw', {
+            ...diagnosticIdentity, errorCode: err?.code, errorName: err?.name,
+            errno: err?.errno, environmentReady,
+          });
+          diagnosticTap.finish();
+          throw err;
+        }
+        logTemporaryChatBoundary('spawn_return', { ...diagnosticIdentity, pid: proc.pid });
 
         session.activeProcess = proc;
         session.activeProcessClose = new Promise((resolve) => {
@@ -215,11 +229,14 @@ class OpenCodeHarness extends EventEmitter {
         session.process = proc;
         session.stopRequested = false;
 
-        parser.on('message', (openCodeEvent) => {
+        parser.on('message', (openCodeEvent, originalLine) => {
+          sawNativeJson = true;
+          diagnosticTap.push(originalLine);
           if (isOpenCodeNativeAuthFailure(openCodeEvent)) {
             sawNativeAuthFailure = true;
           }
           const openCodeSessionId = getEventSessionId(openCodeEvent);
+          if (openCodeSessionId) sawSessionId = true;
           if (!capturedOpenCodeSessionId && openCodeSessionId) {
             const sessionIdPatch = createSessionIdPatch(openCodeSessionId);
             capturedOpenCodeSessionId = openCodeSessionId;
@@ -231,12 +248,10 @@ class OpenCodeHarness extends EventEmitter {
           }
 
           const translated = translator.translate(openCodeEvent);
+          outcome.observe(openCodeEvent, translated);
           for (const event of translated) {
             events.push(event);
             lastTranslatedType = event.type;
-            if (isUsefulAssistantEvent(event)) {
-              sawUsefulAssistantEvent = true;
-            }
             if (event.type === 'content' || event.type === 'thinking') {
               sawRenderableOutput = true;
             }
@@ -260,18 +275,26 @@ class OpenCodeHarness extends EventEmitter {
           stderr += data.toString();
         });
         proc.on('error', (err) => {
+          logTemporaryChatBoundary('spawn_error', {
+            ...diagnosticIdentity, pid: proc.pid, errorCode: err?.code,
+          });
           if (!session.stopRequested) spawnFailure = err;
           done = true;
         });
         proc.on('close', (code, signal) => {
           parser.flush();
+          logTemporaryChatBoundary('child_close', {
+            ...diagnosticIdentity, pid: proc.pid, exitCode: code, signal,
+            sawNativeJson, sawSessionId, sawTurnEnd,
+            stopRequested: session.stopRequested,
+          });
           if (session.stopRequested) {
             done = true;
             return;
           }
           if (code !== 0) {
             failureDescriptor = { exitCode: code, signal };
-          } else if (!sawTurnEnd && sawUsefulAssistantEvent) {
+          } else if (!sawTurnEnd && outcome.permitsCleanExitCompletion()) {
             events.push(createSyntheticTurnEnd(translator));
             sawTurnEnd = true;
           } else if (!sawTurnEnd) {
@@ -291,8 +314,16 @@ class OpenCodeHarness extends EventEmitter {
             if (!done) await delay(options.pollIntervalMs || 10);
           }
           if (capturedSessionIdPatch && !session.openCodeSessionId) {
-            await updateHarnessConfig(capturedSessionIdPatch);
+            try {
+              await updateHarnessConfig(capturedSessionIdPatch);
+            } catch (err) {
+              logTemporaryChatBoundary('session_patch_error', {
+                ...diagnosticIdentity, pid: proc.pid, errorCode: err?.code,
+              });
+              throw err;
+            }
             commitSessionIdPatch(capturedOpenCodeSessionId);
+            logTemporaryChatBoundary('session_patch_committed', { ...diagnosticIdentity, pid: proc.pid });
           }
           if (spawnFailure) throw spawnFailure;
           if (failureDescriptor) {
@@ -303,6 +334,7 @@ class OpenCodeHarness extends EventEmitter {
             throw await buildHarnessFailureMarker({
               nativeAuthFailure: sawNativeAuthFailure,
               stderr,
+              nativeDetail: outcome.toolError,
               exitCode: failureDescriptor.exitCode,
               signal: failureDescriptor.signal,
               harnessId: harness.id,
@@ -316,11 +348,15 @@ class OpenCodeHarness extends EventEmitter {
             });
           }
           if (!session.stopRequested && !session.openCodeSessionId) {
+            logTemporaryChatBoundary('missing_session_id', {
+              ...diagnosticIdentity, pid: proc.pid, sawNativeJson, sawSessionId,
+            });
             // Missing-sessionID stays a generic error by contract (not one of
             // the three native signals; semantics unchanged).
             throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
           }
         } finally {
+          diagnosticTap.finish();
           if (session.activeProcess === proc) {
             session.activeProcess = null;
             session.activeProcessClose = null;
@@ -328,20 +364,7 @@ class OpenCodeHarness extends EventEmitter {
         }
       },
       async stop(signal) {
-        session.stopRequested = true;
-        const activeProcess = session.activeProcess;
-        const activeProcessClose = session.activeProcessClose;
-        if (!activeProcess || !activeProcessClose) return;
-        // ChildProcess.killed means only that kill() accepted a signal. It is
-        // not evidence of process exit and must not suppress SIGKILL escalation.
-        activeProcess.kill(signal || 'SIGTERM');
-        // Explicit signals are the escalation-aware path used by the wire
-        // owner: completion means that the child actually closed. Preserve the
-        // pre-existing direct-session contract for stop() with no argument,
-        // whose promise resolves after requesting SIGTERM.
-        if (signal !== undefined) {
-          await activeProcessClose;
-        }
+        await retireSession(harness.sessions, sessionKey, session, signal);
       },
     };
 

@@ -299,9 +299,9 @@ try {
   await more.focus();
   assert.equal(await more.evaluate((node) => document.activeElement === node), true, 'more-options control did not take focus');
   await page.keyboard.press('Enter');
-  await page.locator('.rv-panel.active .rv-chat-more-dropdown[data-open="true"]').waitFor({ timeout: 10_000 });
+  await page.getByRole('menu', { name: 'Chat options' }).waitFor({ timeout: 10_000 });
   await page.keyboard.press('Escape');
-  await page.locator('.rv-panel.active .rv-chat-more-dropdown[data-open="false"]').waitFor({ timeout: 10_000 });
+  await page.getByRole('menu', { name: 'Chat options' }).waitFor({ state: 'detached', timeout: 10_000 });
 
   assert.equal(
     messages.some((value) => value.includes('shell-auth:proof')),

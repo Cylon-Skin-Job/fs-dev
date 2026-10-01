@@ -60,7 +60,7 @@ test('descriptor input accepts durable identities only and rejects every transie
     host: 'main',
   });
   // Legacy/null view is valid.
-  expect(parseChatSurfaceDescriptorInput({ ...VALID_INPUT, viewId: null })?.viewId).toBeNull();
+  expect(parseChatSurfaceDescriptorInput({ ...VALID_INPUT, viewId: null })).toBeNull();
   expect(parseChatSurfaceDescriptorInput({ ...VALID_INPUT, host: 'side-tab' })?.host).toBe('side-tab');
 
   const rejected: unknown[] = [

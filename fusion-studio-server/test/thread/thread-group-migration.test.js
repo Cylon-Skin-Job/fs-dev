@@ -92,7 +92,7 @@ describe('migration 041 thread group foundation', () => {
     db = createDb();
     const [batch, migrations] = await db.migrate.latest();
     expect(batch).toBe(1);
-    expect(migrations.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/);
+    expect(migrations.at(-1)).toMatch(/045_prompt_submission_receipts\.js$/);
     for (const table of [
       'thread_groups', 'thread_group_members', 'thread_group_primary_events',
       'thread_group_activity_events', 'thread_group_action_results',

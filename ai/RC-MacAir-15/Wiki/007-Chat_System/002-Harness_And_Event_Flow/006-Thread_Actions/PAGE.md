@@ -2,6 +2,7 @@
 name: Chat Thread Actions
 description: Canonical path for user-initiated visible-thread and chat-session actions.
 metadata:
+  last-modified: "2026-09-19T10:34:31Z"
   incoming-edges:
     - Chat Harness And Event Flow
     - Architecture Routing
@@ -12,9 +13,15 @@ metadata:
     - Harness Boundary
     - Universal Event Bus
   source-files:
-    - fusion-studio-client/src/components/chat/
+    - fusion-studio-server/lib/thread-groups/delete-transaction.js
+    - fusion-studio-server/lib/ws/thread-action-handler.js
     - fusion-studio-server/lib/ws/thread-ws-handlers.js
-    - fusion-studio-server/lib/harness/
+    - fusion-studio-server/lib/thread-groups/service.js
+    - fusion-studio-client/src/components/chat/ChatComposerContextMeter.tsx
+    - fusion-studio-server/lib/thread-groups/link-service.js
+    - fusion-studio-server/lib/thread-groups/member-service.js
+    - fusion-studio-server/lib/thread-groups/placement-delivery.js
+    - fusion-studio-client/src/lib/ws/thread-handlers.ts
   connected-skills: []
   related-trigger-files: []
 ---
@@ -38,12 +45,11 @@ Implemented actions:
 - `rename` — group scope, title only;
 - `delete` — group scope, runtime-safe and Provenance-safe;
 - `copy_link` — group scope, versioned application URI with durable identities only;
-- `resolve_link` — group or exact current-member target, opens Main Chat, Legacy-safe;
+- `resolve_link` — group/current-primary hydration or exact non-primary placement resolution, with a missing renderer link read/focus bridge; Legacy-safe;
 - `view_markdown` — exact member, validated ThreadManager mirror path;
 - `set_harness_selection` — exact member, portable `{model, variant}` only;
-- `move_chat_to_side` — group scope, moves the current Main Chat into a Side Chat tab and creates a cold empty peer (SPEC-04);
-- `open_member_in_side` — group + exact non-primary member, reopens/focuses the member's lifetime Side Chat placement (SPEC-04);
-- `compact` — exact session.
+- `move_chat_to_side` — group scope, moves the current Main Chat into a Side Chat tab and creates a cold empty peer;
+- `open_member_in_side` — group + exact non-primary member, reopens/focuses the member's lifetime Side Chat placement.
 
 `thread:members` is a qualified read in the same client message family
 (workspace from the bound connection, one validated `threadGroupId`) returning
@@ -52,9 +58,7 @@ time, a bounded display label, and the current placement disposition. It is not
 a `thread:action` mutation, creates no `thread-group:*` transport family, and
 never returns transcript content.
 
-The obsolete `thread:touch` MRU bump was removed end to end: group `updated_at`
-is the sole visible-list MRU owner and is advanced only by creation and accepted
-prompts.
+The obsolete `thread:touch` MRU bump was removed end to end. The visible-list clock is `thread_groups.updated_at`, separate from legacy session timestamps. Its three implemented causes are group creation, an accepted prompt in any member session, and an accepted Move (`move_chat_to_side`). Each has an idempotent activity key; retrying the same Move with the same request ID and canonical input replays its result without advancing again. Passive open, warming, provider completion, Stop, rename, tab close, placement repair, and member reopen do not advance the clock. See [Thread Group Activity And Visible-List MRU](../../001-Identity_And_Persistence/PAGE.md#thread-group-activity-and-visible-list-mru) for activity keys, writer paths, and the Move/reopen example.
 
 ## Canonical Message
 
@@ -86,6 +90,8 @@ client workspace/view authority fields.
 
 ## Ownership
 
+The current implemented actions below are Fusion-owned. Provider-backed dispatch and adapter rules in this section are design constraints for future actions; they do not establish a working Compact route.
+
 Frontend:
 
 - renders the action in the correct scope
@@ -103,6 +109,13 @@ Backend thread action handler:
 - returns `thread:action:completed` or `thread:action:error` with the echoed
   `requestId`, `action`, and authoritative identities
 - fans committed state out to every window in the workspace
+
+`thread-action-handler.js` receives the existing workspace-bound transport
+callbacks; `thread-action-protocol.js` owns the closed Move/member schemas and
+result envelopes. Group services still own mutations and their shared lease.
+`delete-transaction.js` now commits whole-group deletion through explicit
+SessionLifecycle/mirror capabilities. `prompt_receipt_status` is the
+session-attempt recovery action delegated directly to the receipt service.
 
 ## Idempotency And Delete Recovery
 
@@ -148,17 +161,22 @@ Harness adapter:
 |---|---|---|
 | `rename` | Change the group title only; never rewrites session/provider identity, historical Provenance, or the visible-list MRU clock | none; Fusion-owned |
 | `delete` | Fence every member runtime, retain Provenance facts, delete group/member/session/exchange state, recover mirror cleanup through a bounded tombstone, and (for a view-bound group) deliver the durable worksurface-cleanup outbox instruction | none; Fusion-owned |
-| `copy_link` | Return the version-1 `fusion-thread-group:` application URI for the group with the validated sole/current member | none; Fusion-owned |
-| `resolve_link` | Validate the URI/ids, resolve the authoritative group + current primary, and open Main Chat; Legacy resolves to the null-view host | none; Fusion-owned |
+| `copy_link` | Return the version-1 `fusion-thread-group:` URI with the validated exact member, defaulting to the current primary if omitted | none; Fusion-owned |
+| `resolve_link` | Validate URI/ids; group/current-primary targets attempt Main Chat hydration, while non-primary members resolve retained Side Chat placement without promotion. The renderer lacks exact-link read/focus handling; Legacy stays null-view | none; Fusion-owned |
 | `view_markdown` | Return the validated exact-member `Data/Chatlogs/threads/<threadId>.md` mirror path through ThreadManager | none; Fusion-owned |
 | `set_harness_selection` | Validate `{model, variant}` against current server policy, persist by `threadId`, and fan out the acknowledged value; harness binding stays server-owned | none; Fusion-owned |
 | `move_chat_to_side` | Move the current primary session into a content tab and create a cold, empty primary peer in the same visible thread; write one idempotent activity and one durable placement instruction, then deliver placement separately | none; Fusion-owned |
 | `open_member_in_side` | Reopen (if closed) or focus (if open) one validated non-primary member's lifetime Side Chat placement; create no session, primary event, MRU activity, or transcript effect | none; Fusion-owned |
-| `compact` | Compact provider context for future turns; visible Fusion history remains | `opencode run --session <id> --command compact` |
 
 Group actions carry `threadGroupId`. Session actions carry `threadId` and may
 also carry `threadGroupId` when membership must be checked. Live chat output
 continues to route by `threadId`.
+
+## Compact Is Not Implemented
+
+`ChatComposerContextMeter.tsx` renders Compact with `data-stub="true"`, the title “Compact is not connected yet”, and no click handler. The public `DURABLE_THREAD_ACTIONS` allowlist and `ThreadGroupService.performAction` omit `compact`; an authenticated request for it returns `invalid_action`. No current end-to-end Compact action or provider command is established.
+
+Earlier design guidance describes compacting provider context for future turns while retaining visible Fusion history. Treat that as unimplemented design guidance requiring a future product specification, not new owner approval or a verified OpenCode invocation. If implemented, the session action would target `threadId` and provider syntax would remain in the adapter; it is separate from the per-reply Compress stub.
 
 ## Move, Member Access, And Side Chat Placement
 
@@ -173,26 +191,17 @@ inherits only the server-owned harness binding and the source session's last
 server-acknowledged portable `{model, variant}`; no transcript, runtime, draft,
 usage, turn, or Provenance is copied. Move is never a Fork.
 
-Placement delivery is a separate retryable step through SPEC-03's
-service-managed placement lane. It uses a stable independently minted
-`sideChatPlacementId` (never a `projectionId`, `surfaceId`, `threadId`, or
-`threadGroupId`). Ordinary outbox replay focuses/acknowledges an existing live
-or persisted placement and creates no duplicate; it never reopens a closed
-disposition. Closing a Side Chat records a durable closed disposition through
-the owning view contract before the descriptor is removed, so restart/outbox
-replay cannot resurrect it; an explicit `open_member_in_side` (or an exact-member
-link resolution) is the only reopen path and reuses the lifetime placement
-without warming or creating a session. Move-first then Delete removes both
-members and placements; Delete-first makes Move return deleting/not-found and
-creates nothing. Member access never promotes a member or advances MRU.
+Placement delivery is a separate retryable step through the service-managed placement lane. It uses a stable independently minted `sideChatPlacementId` (never a `projectionId`, `surfaceId`, `threadId`, or `threadGroupId`). Ordinary outbox replay acknowledges an existing open or closed disposition, creates no duplicate, and never reopens a closed placement. Closing a Side Chat retains its descriptor with a durable closed disposition and excludes it from the materialized open set; it does not erase the conversation or group membership.
+
+Explicit `open_member_in_side` and valid exact-member link resolution can reopen the retained server placement with its lifetime ID, without warming or creating a session. Their client integration differs: the menu action sets the active Side Chat placement and requests a worksurface read, while `resolve_link` has no corresponding renderer branch. An open but unselected exact-link target can remain unselected; persisting a closed placement as open is not proof of visible reopening. See [Group and exact-member links](../004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links) for server, renderer, and intended-presentation distinctions, validation failures, and the bounded follow-up.
+
+Move-first then Delete removes both members and placements; Delete-first makes Move return deleting/not-found and creates nothing. Member access and link resolution never promote a member or advance visible-list MRU.
 
 ## Events
 
 Thread actions are commands. They are not UEB events.
 
-After an action changes durable state or session state, the backend may emit a
-post-commit fact such as `thread:primary_changed` or `thread:compacted` for
-subscribers. Fact publication never gates the action response or fan-out.
+After an action changes durable state or session state, the backend may emit a post-commit fact such as `thread:primary_changed` for subscribers. Fact publication never gates the action response or fan-out. `thread:compacted` is only a possible future design example, not a current emitted fact.
 
 ## Forbidden Bypasses
 
@@ -206,6 +215,8 @@ subscribers. Fact publication never gates the action response or fan-out.
 - reopening a closed Side Chat placement through ordinary outbox replay
 
 ## Required Tests
+
+These are validation requirements for action implementations, not a report of executed tests. Provider-backed cases apply when such an action is implemented; Compact is currently a stub.
 
 - frontend action sends canonical `thread:action`
 - backend routes action through the thread action handler

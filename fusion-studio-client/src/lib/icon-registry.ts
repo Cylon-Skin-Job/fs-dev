@@ -36,7 +36,11 @@ async function fetchSvg(name: string, style: string, filled: boolean): Promise<s
   const url = svgUrl(name, style, filled);
   try {
     const res = await fetchServer(url);
-    if (!res.ok) return null;
+    if (!res.ok) {
+      // This caller does not read error bodies; release their runtime ownership.
+      await res.body?.cancel();
+      return null;
+    }
     const svg = await res.text();
     SVG_CACHE.set(key, svg);
     return svg;

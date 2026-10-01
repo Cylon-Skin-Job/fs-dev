@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chat-transport-simplification/roadmap",
+  "candidateId": "sha256:cf93d5d2b63073ccc16ca432bf8fab9fe8f4284fb3c1320b457d2ed8b7a34a54",
+  "artifacts": [
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "c13fe94d896db02aaf9d4b1beb451df7b79ac2fef1bc9efa396a267dc6775747"
+    },
+    {
+      "path": "OWNERSHIP-AND-VERIFICATION.md",
+      "sha256": "0eec4aa770aaeecaf19869f66d515a9ba6621ef7827cb3c49f68cd878be0bd19"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "d5a51b735ea4c7a54b4ff290aaeaee1b53a5aeeee0c337dab527660d6a825d2a"
+    },
+    {
+      "path": "SOURCES.json",
+      "sha256": "7011679d7f20336a02c6a40624c7b6493a298cd983416eb43cb63e7d94e32709"
+    },
+    {
+      "path": "SPEC-01.md",
+      "sha256": "aa4c4038a245a7645a269315abf1782e88bf0d5e25163795bcd2cfc3762fc46b"
+    },
+    {
+      "path": "SPEC-02.md",
+      "sha256": "93e589f3a37a7cf6a1f9b318d735124598c96e282ee3f7b8f34b1753f5a53b60"
+    },
+    {
+      "path": "SPEC-03.md",
+      "sha256": "791f0891173255945c53cf916edd73b76e69b37771f79d32ab2002ca7e92d2f2"
+    }
+  ]
+}

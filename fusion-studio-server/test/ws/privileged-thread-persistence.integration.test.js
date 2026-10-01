@@ -254,8 +254,10 @@ test('managed trusted route mutates real SQLite and markdown through New, resume
       repo_path: path.join(tempRoot, 'foreign-workspace'), sort_order: 1,
     }).onConflict('id').merge();
     const foreignThreadId = 'foreign-thread-owned-by-workspace-b';
-    const foreignIndex = new modules.ThreadIndex(FOREIGN_WORKSPACE_ID);
-    await foreignIndex.create(foreignThreadId, 'Foreign thread', { harnessId: 'opencode' });
+    const foreignManager = new (require('../../lib/thread/ThreadManager').ThreadManager)({
+      workspaceId: FOREIGN_WORKSPACE_ID, projectRoot: path.join(tempRoot, 'foreign-workspace'),
+    });
+    await foreignManager.createThread(foreignThreadId, 'Foreign thread', { harnessId: 'opencode' });
     const foreignSnapshot = await db('threads').where({ thread_id: foreignThreadId }).first();
     const crossWorkspaceSnapshot = {
       threadCount: await db('threads').count({ count: '*' }).first(),

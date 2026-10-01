@@ -345,6 +345,8 @@ async function redactHarnessDiagnosticDraft(draft, options = {}) {
 
 module.exports = {
   redactHarnessDiagnosticDraft,
+  collectExactValueReplacements,
+  redactFreeFormText,
   SENSITIVE_ENV_KEY_PATTERN,
   ADAPTER_CREDENTIAL_ENV_KEYS,
   TRUNCATION_MARKER_NAMES,

@@ -134,10 +134,10 @@ async function consumePlacementOutbox(db, { workspaceId, projectRoot, record }) 
     // committed instruction without resurrecting an intentionally closed
     // placement; only an explicit member action may reopen it.
     if (existing && existing.disposition === 'closed') {
-      return acknowledge(db, record, { alreadyMaterialized: false, closed: true });
+      return await acknowledge(db, record, { alreadyMaterialized: false, closed: true });
     }
     if (existing && existing.disposition === 'open' && sameDescriptor(existing.descriptor, descriptor)) {
-      return acknowledge(db, record, { alreadyMaterialized: true });
+      return await acknowledge(db, record, { alreadyMaterialized: true });
     }
     await mutateManagedPlacement(projectRoot, record.viewId, record.groupId, {
       placementId: record.sideChatPlacementId,
@@ -145,7 +145,7 @@ async function consumePlacementOutbox(db, { workspaceId, projectRoot, record }) 
       descriptor,
       expectedPlacementRevision: current.placementRevision ?? null,
     });
-    return acknowledge(db, record, { alreadyMaterialized: false });
+    return await acknowledge(db, record, { alreadyMaterialized: false });
   } catch (error) {
     const failureCode = classifyFailure(error);
     try {

@@ -106,16 +106,17 @@ function bindWebSocketToGeneration(socket: WebSocket, signal: AbortSignal): WebS
   const listenerWrappers = new WeakMap<EventListenerOrEventListenerObject, Map<string, EventListener>>();
   const handlerWrappers = new Map<PropertyKey, EventListener | null>();
   let active = true;
+  let closedEvent: Event | null = null;
 
   const invoke = (listener: EventListenerOrEventListenerObject, event: Event) => {
-    if (!active) return;
+    if (!active || (closedEvent && event !== closedEvent)) return;
     if (typeof listener === 'function') listener.call(facade, event);
     else listener.handleEvent(event);
   };
 
   const facade = new Proxy(socket, {
     get(target, property) {
-      if (property === 'readyState' && !active) return WebSocket.CLOSED;
+      if (property === 'readyState' && (!active || closedEvent)) return WebSocket.CLOSED;
       if (property === 'addEventListener') {
         return (type: string, listener: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean) => {
           if (!listener) return;
@@ -148,7 +149,7 @@ function bindWebSocketToGeneration(socket: WebSocket, signal: AbortSignal): WebS
       }
       const handler = typeof value === 'function'
         ? ((event: Event) => {
-            if (active) value.call(facade, event);
+            invoke(value, event);
           })
         : null;
       handlerWrappers.set(property, handler);
@@ -156,14 +157,21 @@ function bindWebSocketToGeneration(socket: WebSocket, signal: AbortSignal): WebS
     },
   });
 
-  signal.addEventListener('abort', () => {
-    if (!active) return;
+  const retire = () => {
+    if (!active || closedEvent) return;
     // Deliver one synchronous close while this generation is still active so
     // request owners can cancel timers/promises. Any native close or already
     // queued message delivered afterward is suppressed by the facade.
     socket.dispatchEvent(new Event('close'));
     active = false;
+  };
+  // A normal connection close ends the signal's ownership of this socket.
+  // Keep the facade's terminal fence even if another caller retains it.
+  socket.addEventListener('close', (event) => {
+    closedEvent = event;
+    signal.removeEventListener('abort', retire);
   }, { once: true });
+  signal.addEventListener('abort', retire, { once: true });
 
   return facade;
 }

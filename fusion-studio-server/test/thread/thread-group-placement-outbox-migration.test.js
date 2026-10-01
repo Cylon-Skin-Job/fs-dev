@@ -84,11 +84,11 @@ describe('migration 044 Side Chat placement outbox', () => {
     }
   });
 
-  test('the current migration head is 044 and the table is bounded identity/delivery state only', async () => {
+  test('migration 044 remains applied below the current head and the table is bounded identity/delivery state only', async () => {
     db = createDb();
     const [batch, migrations] = await db.migrate.latest();
     expect(batch).toBe(1);
-    expect(migrations.at(-1)).toMatch(/044_thread_group_placement_outbox\.js$/);
+    expect(migrations.at(-1)).toMatch(/045_prompt_submission_receipts\.js$/);
     await expect(db.schema.hasTable('thread_group_placement_outbox')).resolves.toBe(true);
 
     const columns = await db('thread_group_placement_outbox').columnInfo();
@@ -185,6 +185,7 @@ describe('migration 044 Side Chat placement outbox', () => {
   test('down removes only the placement outbox table', async () => {
     db = createDb();
     await db.migrate.latest();
+    await db.migrate.down(); // receipt migration 045
     await db.migrate.down();
     await expect(db.schema.hasTable('thread_group_placement_outbox')).resolves.toBe(false);
     await expect(db.schema.hasTable('thread_group_worksurface_cleanup')).resolves.toBe(true);

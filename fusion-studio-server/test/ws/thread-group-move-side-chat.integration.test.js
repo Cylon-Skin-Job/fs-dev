@@ -622,4 +622,144 @@ describe('move_chat_to_side public route', () => {
     expect(Number(after.outbox.n)).toBe(0);
     expect(await db('thread_group_action_results').where({ request_id: 'm-ineligible' })).toHaveLength(0);
   });
+
+  test.each([false, true])('public Move survives mirror and placement ACK outage; replay preserves closed=%s', async (closed) => {
+    const h = await makeHarness(`ack-${closed}`);
+    const { threadId, groupId } = await seedViewBoundGroup(h);
+    const repo = require('../../lib/thread-groups/repository');
+    const mirror = jest.spyOn(repo, 'markMirrorRecovery').mockRejectedValue(new Error('mirror ACK unavailable'));
+    const placement = jest.spyOn(repo, 'markPlacementOutbox').mockRejectedValue(new Error('placement ACK unavailable'));
+    let ack;
+    try {
+      await h.handlers['thread:action']({ action: 'move_chat_to_side', requestId: 'move-ack',
+        threadGroupId: groupId, threadId, expectedPrimarySequence: 1 });
+      ack = firstOfType(h.ws, 'thread:action:completed');
+      expect(ack).toMatchObject({ action: 'move_chat_to_side' });
+      expect(await getDb()('thread_group_members').where({ group_id: groupId })).toHaveLength(2);
+      expect((await getDb()('thread_group_placement_outbox').where({ group_id: groupId }).first()).status).toBe('pending');
+    } finally { mirror.mockRestore(); placement.mockRestore(); }
+    const lane = () => readViewState(h.projectRoot, 'file-viewer').threadWorksurfaces[groupId].managedComponentPlacements;
+    expect(lane()[ack.sideChatPlacementId].disposition).toBe('open');
+    if (closed) {
+      const { mutateManagedPlacement } = require('../../lib/view-state/thread-worksurface');
+      await mutateManagedPlacement(h.projectRoot, 'file-viewer', groupId,
+        { placementId: ack.sideChatPlacementId, operation: 'close',
+          expectedPlacementRevision: readViewState(h.projectRoot, 'file-viewer').threadWorksurfaces[groupId].placementRevision });
+    }
+    await closeDb(); await initDb();
+    const restarted = new ThreadManager({ projectRoot: h.projectRoot, workspaceId: h.workspaceId });
+    await restarted.ensureGroupsActivated();
+    await restarted.retryPlacementDeliveryForGroup(groupId);
+    expect(Object.keys(lane())).toEqual([ack.sideChatPlacementId]);
+    expect(lane()[ack.sideChatPlacementId].disposition).toBe(closed ? 'closed' : 'open');
+    expect((await getDb()('thread_group_placement_outbox').where({ group_id: groupId }).first()).status).toBe('applied');
+    expect((await restarted.getRichHistory(ack.newMainThreadId))?.exchanges || []).toHaveLength(0);
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
+  });
+
+  test.each(['warm', 'automation'])('Delete fences a concurrently requested %s before SQL deletion', async (lane) => {
+    const h = await makeHarness(`delete-${lane}`);
+    const { threadId, groupId } = await seedViewBoundGroup(h);
+    const { spawnThreadWire } = require('../../lib/harness/compat');
+    const beforeSpawns = spawnThreadWire.mock.calls.length;
+    let entered;
+    let release;
+    const reached = new Promise((resolve) => { entered = resolve; });
+    const gate = new Promise((resolve) => { release = resolve; });
+    const original = h.manager.sessionLifecycle.fenceMember.bind(h.manager.sessionLifecycle);
+    const fence = jest.spyOn(h.manager.sessionLifecycle, 'fenceMember').mockImplementation(async (id) => {
+      entered(); await gate; return original(id);
+    });
+    const deleting = h.handlers['thread:action']({ action: 'delete', requestId: 'delete-admission', threadGroupId: groupId });
+    await reached;
+    const admission = lane === 'warm'
+      ? h.handlers['thread:warm']({ type: 'thread:warm', threadId })
+      : require('../../lib/thread/thread-runtime-automation').sendAutomationPrompt({
+        workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId }, 'late prompt');
+    await new Promise((resolve) => setImmediate(resolve));
+    release();
+    try { await deleting; await admission; } finally { fence.mockRestore(); }
+    expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
+    expect(spawnThreadWire.mock.calls.length).toBe(beforeSpawns);
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(0);
+    const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
+    expect(threadRuntimeManager.getRuntimeForResource({ workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId })).toBeNull();
+    expect(h.manager.getSession(threadId)).toBeUndefined();
+  });
+
+  test('public warm admitted first completes under the lease before Delete retires its provider', async () => {
+    const h = await makeHarness('warm-delete');
+    const { threadId, groupId } = await seedViewBoundGroup(h);
+    const { EventEmitter } = require('events');
+    const wire = new EventEmitter();
+    wire.kill = () => { wire.exitCode = 0; wire.emit('exit', 0); };
+    const { spawnThreadWire } = require('../../lib/harness/compat');
+    spawnThreadWire.mockReturnValueOnce(wire);
+    let entered; let release;
+    const reached = new Promise((resolve) => { entered = resolve; });
+    const gate = new Promise((resolve) => { release = resolve; });
+    const handlers = createThreadWsHandlers({ ws: h.ws, projectRoot: h.projectRoot,
+      session: makeSession(h.projectRoot, h.workspaceId), wireLifecycle: {
+        awaitHarnessReady: async () => { entered(); await gate; },
+        initializeWire: () => {}, setupWireHandlers: () => {},
+      }, getWorkspaceRecipients: () => [] });
+    const warming = handlers['thread:warm']({ type: 'thread:warm', threadId });
+    await reached;
+    const deleting = h.handlers['thread:action']({ action: 'delete', requestId: 'delete-after-warm', threadGroupId: groupId });
+    await new Promise((resolve) => setImmediate(resolve));
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
+    release(); await warming; await deleting;
+    expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
+    expect(h.manager.getSession(threadId)).toBeUndefined();
+    expect(wire.exitCode).toBe(0);
+  });
+
+  test('automation reserves IN_FLIGHT before releasing admission; public Delete rejects without mutation', async () => {
+    const h = await makeHarness('automation-delete');
+    const { threadId, groupId } = await seedViewBoundGroup(h);
+    const { EventEmitter } = require('events');
+    const wire = new EventEmitter();
+    wire._usesDirectCanonicalEvents = true;
+    wire._sendMessage = async function* () {};
+    wire.kill = () => { wire.exitCode = 0; wire.emit('exit', 0); };
+    require('../../lib/harness/compat').spawnThreadWire.mockReturnValueOnce(wire);
+    let entered; let release;
+    const reached = new Promise((resolve) => { entered = resolve; });
+    const gate = new Promise((resolve) => { release = resolve; });
+    const original = h.manager.addMessage.bind(h.manager);
+    const persist = jest.spyOn(h.manager, 'addMessage').mockImplementation(async (...args) => {
+      entered(); await gate; return original(...args);
+    });
+    const sending = require('../../lib/thread/thread-runtime-automation').sendAutomationPrompt({
+      workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId }, 'owned automation');
+    await reached;
+    await h.handlers['thread:action']({ action: 'delete', requestId: 'delete-during-automation', threadGroupId: groupId });
+    expect(firstOfType(h.ws, 'thread:action:error')).toMatchObject({ code: 'group_busy' });
+    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
+    release();
+    try { await sending; } finally { persist.mockRestore(); await h.manager.closeSession(threadId); }
+  });
+
+  test('passive exact-member open after Move hydrates source history without changing Main or activating a provider', async () => {
+    const h = await makeHarness('exact-member-history');
+    const { threadId, groupId } = await seedViewBoundGroup(h);
+    const { HistoryFile } = require('../../lib/thread/HistoryFile');
+    await new HistoryFile(threadId).addExchange(threadId, 'source prompt', [{ type: 'text', text: 'source answer' }]);
+    await h.handlers['thread:action']({ action: 'move_chat_to_side', requestId: 'move-exact-history',
+      threadGroupId: groupId, threadId, expectedPrimarySequence: 1 });
+    expect(firstOfType(h.ws, 'thread:action:completed')).toBeTruthy();
+    const main = (await getDb()('thread_groups').where({ group_id: groupId }).first()).current_primary_thread_id;
+    expect(main).not.toBe(threadId);
+    h.ws.send.mockClear();
+    const spawn = require('../../lib/harness/compat').spawnThreadWire;
+    spawn.mockClear();
+    await h.handlers['thread:open']({ type: 'thread:open', requestId: 'read-exact-member',
+      threadGroupId: groupId, threadId, historyOnly: true });
+    expect(firstOfType(h.ws, 'thread:opened')).toMatchObject({ threadId, threadGroupId: groupId,
+      historyOnly: true, requestId: 'read-exact-member', exchanges: [{ user: 'source prompt' }] });
+    expect((await getDb()('thread_groups').where({ group_id: groupId }).first()).current_primary_thread_id).toBe(main);
+    expect(spawn).not.toHaveBeenCalled();
+    expect(h.manager.getActiveSessionCount()).toBe(0);
+  });
+
 });

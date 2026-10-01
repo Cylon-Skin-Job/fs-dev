@@ -28,7 +28,7 @@
  * └─────────────────────────────────────────────────────────────┘
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useId } from 'react';
 import type { StreamSegment, TurnActivity } from '../types';
 import { getToolRenderer } from '../lib/tool-renderers';
 import type { TimingProfile } from '../lib/timing';
@@ -36,11 +36,11 @@ import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
 import { animateTool } from '../lib/tool-animate';
 import { renderTextInstant } from '../lib/text';
 import { animateText } from '../lib/text/text-animate';
-import { sleep } from '../lib/animate-utils';
 import { ToolCallBlock } from './ToolCallBlock';
 import { Orb } from './Orb';
 import { HourglassFlow } from './chat/HourglassFlow';
-import { WorkingActivity } from './chat/WorkingActivity';
+import { VisibleWaitActivity } from './chat/VisibleWaitActivity';
+import { SurfaceRevealProgress, registerRevealSurface, type RevealProgress } from '../lib/reveal/progress';
 import './LiveSegmentRenderer.css';
 
 interface TimingProbe {
@@ -56,24 +56,43 @@ interface TimingProbe {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 interface LiveSegmentRendererProps {
+  workspaceId?: string;
+  threadId?: string;
+  surfaceId?: string;
+  terminal?: boolean;
   turnId?: string;
   segments: StreamSegment[];
   onRevealComplete?: () => void;
   /**
-   * SPEC-05 Slice A: the addressed thread's observable transient Working
-   * activity (passed through by MessageList, the documented presentation
-   * routing point). Read-only here — all transitions live in the state layer.
+   * Canonical step activity still starts the existing orb disposal.
+   * Visible-wait eligibility and elapsed time belong to this mounted surface.
    */
   activity?: TurnActivity | null;
 }
 
-export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
+export function LiveSegmentRenderer(props: LiveSegmentRendererProps) {
+  // A replacement turn owns a fresh frontier and retires every old continuation.
+  return <LiveTurnSegments key={JSON.stringify([props.workspaceId, props.threadId, props.surfaceId, props.turnId])} {...props} />;
+}
+
+function LiveTurnSegments({ turnId, workspaceId, threadId, surfaceId, terminal, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
+  const fallbackSurfaceId = useId();
+  const [waitingSince, setWaitingSince] = useState<number | null>(null);
+  const [observation] = useState(() => new SurfaceRevealProgress({ workspaceId, threadId, surfaceId: surfaceId ?? fallbackSurfaceId, turnId }, setWaitingSince));
   const [orbDone, setOrbDone] = useState(false);
   const [orbDisposing, setOrbDisposing] = useState(false);
   const [revealedCount, setRevealedCount] = useState(0);
+  useEffect(() => registerRevealSurface(observation), [observation]);
+  useEffect(() => {
+    observation.update(terminal || onRevealComplete ? 'terminal' : orbDone ? 'active' : 'orb', revealedCount, segments.length);
+  }, [observation, terminal, onRevealComplete, orbDone, revealedCount, segments.length]);
   const prevLenRef = useRef(0);
   const hasTokenRef = useRef(false);
   const finalizedRef = useRef(false);
+  const lastRenderableRef = useRef(-1);
+  lastRenderableRef.current = segments.reduce((last, seg, i) =>
+    seg.type !== 'text' || seg.content.length > 0 ? i : last, -1);
+  const hasQueuedItemAfter = useCallback((index: number) => lastRenderableRef.current > index, []);
 
   useEffect(() => {
     setOrbDone(false);
@@ -143,8 +162,8 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
   // onSegmentDone: ONLY bumps the counter. No completion logic here.
   // Stable callback — no deps, no stale closure risk. Every mounted
   // segment gets the same function reference.
-  const onSegmentDone = useCallback(() => {
-    setRevealedCount(prev => prev + 1);
+  const onSegmentDone = useCallback((index: number) => {
+    setRevealedCount(prev => prev === index ? prev + 1 : prev);
   }, []);
 
   // Completion detection: reactive effect, not a callback.
@@ -191,25 +210,11 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
     return <Orb disposing={orbDisposing} onDone={handleOrbDone} />;
   }
 
-  // SPEC-05 Slice A (§4.5) — Working reveal order. Render Working only when
-  // ALL hold: orb disposal is complete (we are past Phase 1); the activity
-  // belongs to the CURRENT turn; no newer renderable event cleared it
-  // (activity still non-null in state); and every already-queued segment has
-  // revealed (revealedCount >= segments.length — which also orders a later
-  // post-tool step AFTER the queued tool segments). Output rendering is
-  // independent of this gate; the gate only places the transient row.
-  const showWorking = Boolean(activity && turnId && activity.turnId === turnId)
-    && revealedCount >= segments.length;
-  const working = showWorking && activity ? activity : null;
+  const working = !terminal && !onRevealComplete && waitingSince !== null
+    ? <VisibleWaitActivity key={waitingSince} since={waitingSince} /> : null;
 
-  // Phase 2: Orb is done. Render segments sequentially.
   if (!segments || segments.length === 0) {
-    if (working) {
-      // key={identity}: a fresh step remounts the row, so its elapsed label
-      // re-inits truthfully from the new server startedAt (never stale, never 0s-forced).
-      return <WorkingActivity key={working.identity} activity={working} />;
-    }
-    return <div className="rv-message-assistant-content streaming" />;
+    return working ?? <div className="rv-message-assistant-content streaming" />;
   }
 
   // Mount only completed segments + the one currently animating
@@ -224,6 +229,7 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
               key={`text-${i}`}
               segment={seg}
               index={i}
+              progress={observation.segment(i, seg.type, () => seg.content.length)}
               getTimingProfile={getTimingProfile}
               onDone={onSegmentDone}
             />
@@ -235,6 +241,9 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
             <LiveToolSegment
               segment={seg}
               index={i}
+              progress={observation.segment(i, seg.type, () => seg.content.length)}
+              hasQueuedNext={hasQueuedItemAfter(i)}
+              hasQueuedItemAfter={hasQueuedItemAfter}
               skipShimmer={i === 0}
               getTimingProfile={getTimingProfile}
               onDone={onSegmentDone}
@@ -243,7 +252,7 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
           </div>
         );
       })}
-      {working && <WorkingActivity key={working.identity} activity={working} />}
+      {working}
     </>
   );
 }
@@ -255,6 +264,7 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
 // ── Live Text Segment ─────────────────────────────────────────────────
 
 interface LiveTextSegmentProps {
+  progress: RevealProgress;
   segment: StreamSegment;
   index: number;
   skipAnimation?: boolean;
@@ -268,7 +278,7 @@ interface LiveTextSegmentProps {
  * Owns React state and refs. Delegates animation to animateText().
  * Display state is HTML (pre-rendered by sub-renderers), not raw markdown.
  */
-function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDone }: LiveTextSegmentProps) {
+function LiveTextSegment({ progress, segment, index, skipAnimation, getTimingProfile, onDone }: LiveTextSegmentProps) {
   const [displayedHtml, setDisplayedHtml] = useState('');
   const animatingRef = useRef(false);
   const contentRef = useRef(segment.content);
@@ -291,7 +301,7 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
     cancelRef.current = false;
 
     animateText({
-      contentRef, completeRef, cancelRef,
+      contentRef, completeRef, cancelRef, progress,
       segmentType: segment.type,
       setDisplayedHtml, getTimingProfile,
       onDone: () => onDone(index),
@@ -311,6 +321,9 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
 // ── Live Tool Segment ─────────────────────────────────────────────────
 
 interface LiveToolSegmentProps {
+  progress: RevealProgress;
+  hasQueuedNext: boolean;
+  hasQueuedItemAfter: (index: number) => boolean;
   segment: StreamSegment;
   index: number;
   /** Skip shimmer delay — used for first segment after orb (orb already bridged the wait) */
@@ -333,29 +346,54 @@ interface LiveToolSegmentProps {
  * boundary, returning the stable timing profile. Reveal speed is
  * controlled by chunk queue lookahead inside the reveal controllers.
  */
-function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
+function LiveToolSegment({ progress, segment, index, hasQueuedNext, hasQueuedItemAfter, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
   const [phase, setPhase] = useState<'shimmer' | 'revealing' | 'collapsing' | 'done'>('shimmer');
   const [expanded, setExpanded] = useState(true);
   const [displayedContent, setDisplayedContent] = useState('');
-  const animatingRef = useRef(false);
   const contentRef = useRef(segment.content);
   const completeRef = useRef(segment.complete ?? false);
-  const cancelRef = useRef(false);
-  const collapseMsRef = useRef(DEFAULT_TIMING_PROFILE.collapseDuration); // synced with CSS transition
+  const [collapseMs, setCollapseMs] = useState(DEFAULT_TIMING_PROFILE.collapseDuration);
+  const interruptCollapseRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (hasQueuedNext) interruptCollapseRef.current?.();
+  }, [hasQueuedNext]);
 
   contentRef.current = segment.content;
   completeRef.current = segment.complete ?? false;
 
   useEffect(() => {
     if (segment.type !== 'subagent') return;
+    progress.directOutput(segment.content.length);
     setDisplayedContent(segment.content);
     if (segment.complete) setExpanded(false);
   }, [segment.type, segment.content, segment.complete]);
 
   useEffect(() => {
-    if (animatingRef.current) return;
-    animatingRef.current = true;
-    cancelRef.current = false;
+    // Each effect invocation has its own cancellation token (including replay).
+    const cancelled = { current: false };
+    let finishWait: (() => void) | null = null;
+    let done = false;
+    const wait = (ms: number) => new Promise<void>(resolve => {
+      const finish = () => {
+        clearTimeout(timer);
+        finishWait = null;
+        resolve();
+      };
+      const timer = setTimeout(finish, ms);
+      finishWait = finish;
+    });
+    const finish = () => {
+      if (cancelled.current || done) return;
+      done = true;
+      progress.setPhase('done');
+      onDone(index);
+    };
+    const cleanup = () => {
+      cancelled.current = true;
+      interruptCollapseRef.current = null;
+      finishWait?.();
+    };
 
     // Subagents are live background ledgers. They must not block later
     // assistant text from rendering, because Kimi can keep emitting
@@ -364,8 +402,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       setDisplayedContent(contentRef.current);
       setPhase('done');
       setExpanded(true);
-      setTimeout(() => onDone(index), 0);
-      return;
+      void wait(0).then(finish);
+      return cleanup;
     }
 
     // ── Skipped segments render instantly when animation is bypassed ──
@@ -373,8 +411,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       setDisplayedContent(contentRef.current);
       setPhase('done');
       setExpanded(false);
-      setTimeout(() => onDone(index), 0);
-      return;
+      void wait(0).then(finish);
+      return cleanup;
     }
 
     // ── TIMING: Log when this segment's animate() fires ──
@@ -392,8 +430,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       if (!skipShimmer) {
         const p = getTimingProfile();
         if (p.shimmerTotal > 0) {
-          await sleep(p.shimmerTotal);
-          if (cancelRef.current) return;
+          await wait(p.shimmerTotal);
+          if (cancelled.current) return;
         }
       }
 
@@ -407,34 +445,44 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
         console.log(`[TIMING] REVEAL START (${segment.type} #${index}) at ${revealAt.toFixed(1)}ms — ${sinceSend}ms after send`);
       }
       await animateTool({
-        contentRef, completeRef, cancelRef,
+        contentRef, completeRef, cancelRef: cancelled, progress,
         segmentType: segment.type,
         toolArgs: segment.toolArgs,
         setDisplayedContent,
         getTimingProfile,
         onDone: () => {},  // collapse phase handles the real onDone
       });
-      if (cancelRef.current) return;
+      if (cancelled.current) return;
 
-      // Phase 3: Collapse. The reveal is done — content has been
-      // shown. Collapse immediately. The sequential gating
-      // (revealedCount) ensures the next segment mounts after
-      // this one calls onDone.
-      setPhase('collapsing');
+      // Only later renderable items count, never parser chunks of this item.
+      // The getter reads current queue bytes even after an awaited reveal.
+      let immediate = hasQueuedItemAfter(index);
       const collapseProfile = getTimingProfile();
-      collapseMsRef.current = collapseProfile.collapseDuration;
-      if (collapseProfile.postTypingPause > 0) await sleep(collapseProfile.postTypingPause);
+      interruptCollapseRef.current = () => {
+        immediate = true;
+        setCollapseMs(0);
+        setExpanded(false);
+        finishWait?.();
+      };
+      progress.setPhase('holding');
+      setPhase('collapsing');
+      setCollapseMs(immediate ? 0 : collapseProfile.collapseDuration);
+      if (!immediate && collapseProfile.postTypingPause > 0) await wait(collapseProfile.postTypingPause);
+      if (cancelled.current) return;
+      progress.setPhase('collapsing');
       setExpanded(false);
-      if (collapseProfile.collapseDuration > 0) await sleep(collapseProfile.collapseDuration);
-
-      // Brief gap then mount next — 100ms feels back-to-back
+      if (!immediate && collapseProfile.collapseDuration > 0) await wait(collapseProfile.collapseDuration);
+      if (cancelled.current) return;
+      // Retire lookahead before the gap: completed items stay user-expandable.
+      interruptCollapseRef.current = null;
+      progress.setPhase('gap');
       setPhase('done');
-      await sleep(100);
-      onDone(index);
+      await wait(100);
+      finish();
     };
 
     animate();
-    return () => { cancelRef.current = true; };
+    return cleanup;
   }, []);
 
   const renderer = getToolRenderer(segment.type);
@@ -448,7 +496,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
       shimmer={phase === 'shimmer' || phase === 'revealing'}
-      collapseDuration={collapseMsRef.current}
+      collapseDuration={collapseMs}
     >
       {renderedContent && (
         <div

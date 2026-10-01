@@ -69,7 +69,6 @@ export {
   handleWorksurfaceErrorFrame,
   handleWorksurfaceChangedFrame,
   reconcileWorksurfacesOnReconnect,
-  reconcileSideChatPlacementsOnReconnect,
   requestWorksurfaceEntryRead,
   closeSideChatPlacement,
 } from './worksurfaceFrames';

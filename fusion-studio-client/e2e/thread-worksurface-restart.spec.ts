@@ -108,7 +108,8 @@ test('lifecycle flush and reconnect hooks are wired into production owners', () 
   const workspaceStore = readSource('src/state/workspaceStore.ts');
   expect(workspaceStore).toContain('flushBoundWorkspaceViews');
   const wiki = readSource('src/components/wiki/WikiExplorer.tsx');
-  expect(wiki).toContain('ViewWorksurfaceDock');
+  expect(wiki).not.toContain('ViewWorksurfaceDock');
+  expect(readSource('src/components/WorkspacePanel.tsx')).toContain('useViewChatHost');
 });
 
 // ── Fan-out ─────────────────────────────────────────────────────────────────

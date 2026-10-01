@@ -12,7 +12,9 @@
  *     descriptor's `componentInstanceId` + runtime mount generation.
  */
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { makeThreadActionRequestId } from '../../lib/ws/threadGroupRows';
+import { sendChatProduct } from '../../lib/ws/product-send';
 import { usePanelStore } from '../../state/panelStore';
 import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
 import { getWorksurfaceEntry } from '../../state/slices/worksurfaceSlice';
@@ -20,7 +22,7 @@ import type { AppState } from '../../state/panelStoreTypes';
 import type { ComponentDescriptor } from '../view-tabs/componentTabTypes';
 import { readOpenSideChatPlacements } from './sideChatBridge';
 import { ChatSurface } from './ChatSurface';
-import { useLegacyChatHost } from './useLegacyChatHost';
+import { useChatSessionHost } from './useChatSessionHost';
 import { nextChatSurfaceMountGeneration } from './chatSurfaceContract';
 import {
   mintChatComponentSurfaceId,
@@ -105,22 +107,34 @@ function ChatSurfaceReadyMount({
   }
   const surfaceId = surfaceIdRef.current;
   const panel = `chat-surface-component-${descriptor.componentInstanceId}`;
+  const ws = usePanelStore(state => state.ws);
+  useEffect(() => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    // Restored component tabs need their exact member history. A group-only
+    // open selects Main Chat; passive exact-member open never warms a provider.
+    const requestId = makeThreadActionRequestId();
+    sendChatProduct({ type: 'thread:open', requestId, historyOnly: true,
+      threadGroupId: input.threadGroupId, threadId: input.threadId },
+    { workspaceId: input.workspaceId, policy: 'socket_only', expectedSocket: ws });
+  }, [ws, input.workspaceId, input.viewId, input.threadGroupId, input.threadId]);
 
-  const host = useLegacyChatHost({
+
+  const host = useChatSessionHost({
     panel,
     threadId: input.threadId,
     threadGroupId: input.threadGroupId,
     viewId: input.viewId,
     workspaceId: input.workspaceId,
     host: input.host,
-    explicitTarget: true,
     surfaceId,
   });
 
   return (
     <ChatSurface
       {...host.identity}
-      chat={host.chat}
+      shell={host.shell}
+      header={host.header}
+      composer={host.composer}
       actions={host.actions}
       refs={host.refs}
       panel={panel}
