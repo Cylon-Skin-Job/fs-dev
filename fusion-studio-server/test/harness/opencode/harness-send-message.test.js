@@ -1,11 +1,15 @@
 const { EventEmitter } = require('events');
 const { PassThrough } = require('stream');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 jest.mock('child_process', () => ({ spawn: jest.fn() }));
 
 const { spawn } = require('child_process');
 const { OpenCodeHarness } = require('../../../lib/harness/opencode');
 const { HarnessRegistry } = require('../../../lib/harness/registry');
+const { installLogTee } = require('../../../lib/logging');
 
 function createFakeProcess() {
   const proc = new EventEmitter();
@@ -125,7 +129,7 @@ describe('OpenCodeHarness', () => {
     expect(termSettled).toBe(true);
   });
 
-  it('sendMessage spawns opencode run with JSON format, dir, and prompt', async () => {
+  it('sendMessage spawns auto OpenCode with JSON format, dir, and prompt', async () => {
     const proc = createFakeProcess();
     spawn.mockReturnValue(proc);
     const harness = new OpenCodeHarness();
@@ -137,8 +141,43 @@ describe('OpenCodeHarness', () => {
 
     const events = await eventsPromise;
 
-    expect(spawn).toHaveBeenCalledWith('opencode', ['run', '--format', 'json', '--dir', '/project', 'hello'], expect.objectContaining({ cwd: '/project' }));
+    expect(spawn).toHaveBeenCalledWith('opencode', ['run', '--auto', '--format', 'json', '--dir', '/project', 'hello'], expect.objectContaining({
+      cwd: '/project',
+      env: expect.objectContaining({ OPENCODE_DISABLE_CLAUDE_CODE: '1' }),
+    }));
     expect(events.map((event) => event.type)).toEqual(['turn_begin', 'content', 'status_update', 'turn_end']);
+  });
+
+  it('records a content-free child launch failure at the temporary boundary', async () => {
+    const proc = createFakeProcess();
+    spawn.mockReturnValue(proc);
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-chat-launch-'));
+    const logPath = path.join(tmpDir, 'server-live.log');
+    const restoreLogTee = installLogTee(logPath);
+    try {
+      const harness = new OpenCodeHarness();
+      const session = await harness.startThread('11111111-1111-4111-8111-111111111111', '/project');
+      const result = collect(session.sendMessage('SECRET_PROMPT_CANARY', {
+        turnId: '22222222-2222-4222-8222-222222222222',
+      }));
+      setImmediate(() => {
+        const error = new Error('SECRET_ERROR_CANARY');
+        error.code = 'EMFILE';
+        proc.emit('error', error);
+        proc.emit('close', -2, null);
+      });
+      await expect(result).rejects.toThrow('SECRET_ERROR_CANARY');
+      const logged = fs.readFileSync(logPath, 'utf8');
+      expect(logged).toContain('"stage":"spawn_attempt"');
+      expect(logged).toContain('"stage":"spawn_return"');
+      expect(logged).toContain('"stage":"spawn_error"');
+      expect(logged).toContain('"errorCode":"EMFILE"');
+      expect(logged).not.toContain('SECRET_PROMPT_CANARY');
+      expect(logged).not.toContain('SECRET_ERROR_CANARY');
+    } finally {
+      restoreLogTee();
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
   });
 
   it('keeps each session bound to the runtime config of its workspace', async () => {
@@ -162,7 +201,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn).toHaveBeenCalledWith('/workspace-a/opencode', [
-      'run', '--format', 'json', '--dir', '/workspace-a',
+      'run', '--auto', '--format', 'json', '--dir', '/workspace-a',
       '--model', 'workspace-a/model',
       'workspace-a prompt',
     ], expect.objectContaining({ cwd: '/workspace-a' }));
@@ -196,8 +235,8 @@ describe('OpenCodeHarness', () => {
     setImmediate(() => emitSuccessfulTextRun(secondProc, 'ses_thread_1'));
     await secondEventsPromise;
 
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', 'first']);
-    expect(spawn.mock.calls[1][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_thread_1', 'second']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', 'first']);
+    expect(spawn.mock.calls[1][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--session', 'ses_thread_1', 'second']);
   });
 
   it('starts from a stored OpenCode session id after a cold Fusion session', async () => {
@@ -213,7 +252,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(session.openCodeSessionId).toBe('ses_stored');
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--session', 'ses_stored', 'after cold start']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--session', 'ses_stored', 'after cold start']);
   });
 
   it('passes the per-thread model override to opencode run', async () => {
@@ -230,7 +269,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project',
+      'run', '--auto', '--format', 'json', '--dir', '/project',
       '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
       'model probe',
     ]);
@@ -250,7 +289,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project',
+      'run', '--auto', '--format', 'json', '--dir', '/project',
       '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
       '--variant', 'max',
       'variant probe',
@@ -273,7 +312,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project',
+      'run', '--auto', '--format', 'json', '--dir', '/project',
       '--model', 'baseten/deepseek-ai/DeepSeek-V4-Flash-0731',
       '--variant', 'high',
       'live config probe',
@@ -294,7 +333,7 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project',
+      'run', '--auto', '--format', 'json', '--dir', '/project',
       '--model', 'kimi-model',
       'no variant probe',
     ]);
@@ -314,47 +353,10 @@ describe('OpenCodeHarness', () => {
     await eventsPromise;
 
     expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project',
+      'run', '--auto', '--format', 'json', '--dir', '/project',
       '--model', 'fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731',
       'default model probe',
     ]);
-  });
-
-  it('makes direct legacy Fork configuration inert before provider arguments', async () => {
-    const proc = createFakeProcess();
-    spawn.mockReturnValue(proc);
-    const updateHarnessConfig = jest.fn(async () => {});
-    const harness = new OpenCodeHarness();
-    const pendingFork = {
-      type: 'opencode-current-head',
-      status: 'pending',
-      sourceThreadId: 'thread-source',
-      sourceOpenCodeSessionId: 'ses_source',
-    };
-    const session = await harness.startThread('thread-fork', '/project', {}, {
-      harnessConfig: {
-        opencodeSessionId: 'ses_legacy_fork',
-        pendingFork,
-        forkProvenance: { ...pendingFork, status: 'created' },
-      },
-      updateHarnessConfig,
-    });
-
-    const eventsPromise = collect(session.sendMessage('fork prompt'));
-    expect(session.openCodeSessionId).toBeNull();
-    setImmediate(() => emitSuccessfulTextRun(proc, 'ses_fresh'));
-    await eventsPromise;
-
-    expect(spawn.mock.calls[0][1]).toEqual([
-      'run', '--format', 'json', '--dir', '/project', 'fork prompt',
-    ]);
-    expect(spawn.mock.calls[0][1]).not.toContain('--fork');
-    expect(spawn.mock.calls[0][1]).not.toContain('ses_source');
-    expect(spawn.mock.calls[0][1]).not.toContain('ses_legacy_fork');
-    expect(updateHarnessConfig).toHaveBeenCalledTimes(1);
-    expect(updateHarnessConfig).toHaveBeenCalledWith({ opencodeSessionId: 'ses_fresh' });
-    expect(session.openCodeSessionId).toBe('ses_fresh');
-    expect(session.pendingFork).toBeNull();
   });
 
   it('persists the first captured OpenCode session id once', async () => {
@@ -475,7 +477,7 @@ describe('OpenCodeHarness', () => {
     setImmediate(() => emitSuccessfulTextRun(proc));
     await eventsPromise;
 
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--model', 'opencode/mimo-v2.5-free', 'hello']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--model', 'opencode/mimo-v2.5-free', 'hello']);
   });
 
   it('config.thinking true adds --thinking', async () => {
@@ -489,7 +491,7 @@ describe('OpenCodeHarness', () => {
     setImmediate(() => emitSuccessfulTextRun(proc));
     await eventsPromise;
 
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--thinking', 'hello']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--thinking', 'hello']);
   });
 
   it('configures Kimi Code 2.7 visible thinking through OpenCode flags', async () => {
@@ -503,7 +505,7 @@ describe('OpenCodeHarness', () => {
     setImmediate(() => emitSuccessfulTextRun(proc));
     await eventsPromise;
 
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--model', 'kimi-for-coding/k2p7', '--thinking', 'hello']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--model', 'kimi-for-coding/k2p7', '--thinking', 'hello']);
   });
 
   it('config.pure adds --pure while preserving session reuse', async () => {
@@ -522,8 +524,8 @@ describe('OpenCodeHarness', () => {
     setImmediate(() => emitSuccessfulTextRun(secondProc, 'ses_thread_1'));
     await secondEventsPromise;
 
-    expect(spawn.mock.calls[0][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--pure', 'first']);
-    expect(spawn.mock.calls[1][1]).toEqual(['run', '--format', 'json', '--dir', '/project', '--pure', '--session', 'ses_thread_1', 'second']);
+    expect(spawn.mock.calls[0][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--pure', 'first']);
+    expect(spawn.mock.calls[1][1]).toEqual(['run', '--auto', '--format', 'json', '--dir', '/project', '--pure', '--session', 'ses_thread_1', 'second']);
   });
 
   it('stdout text JSON yields turn_begin then content', async () => {

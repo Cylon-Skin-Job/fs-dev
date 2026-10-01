@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-09-29T03:53:20.084718+00:00",
+  "checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "files": [
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "sha256": "3fde5bc113c276523b7584e3bfdee027d27325ac746cde74cf2fce0e795aa411"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/shell-auth-client.ts",
+      "sha256": "c334aea10184b722eda46077fb139f817d1765608a90ed62b9311cb45313f6fc"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/product-send.ts",
+      "sha256": null
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "sha256": "6573e55f2afa0af6a02618894cd4f77ba290ac7a2772d60c1e832a00112ec421"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "sha256": "09eee115f44535b6b52260da0c9c48dd16029993eac1fbf2ad0222d8743a256a"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "sha256": "f0d42ae389f0b550ce135a2817985292bc42b97b08cbb79a0a474252f0f6e0ab"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/thread-group-command-controller.ts",
+      "sha256": "eceaecdc2be83aa11c68803943d331c2099d7533c79f234ab96d8ccb563dcfc0"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "sha256": "cf729072e8534ea93af8c3fd637298a4cc6ae3b68a0aa982712ad64c1d244fed"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/worksurface/worksurfaceSwitch.ts",
+      "sha256": "da896c39e5e2695f7708b6413caea0287eecc96832daad167272c8fe80f6719e"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "sha256": "511723c364bdc1cadc72aa4d9911fb05eea1d9add525e23574a2fa08c3a77a4b"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/reply-metadata-api.ts",
+      "sha256": "587adad9f67e2e7824beea3c62f7396917eb468cd5fe49a5b4045bb620117b8f"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/prompt-submission-recovery.ts",
+      "sha256": "787206f278c433c18a0f73f8b3257f2f9ad71e940c2f7341ae4e7d2c4a951c67"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "sha256": "6f307272016a41c47cd55007958254bd555fce2fc9f79ce65eb88c13b234b648"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/chat-diagnostic-handlers.ts",
+      "sha256": "52234681f285090fae98cb893f7dbb474a53c3f3c27a20f9421f62db6dd8652f"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/diagnostics/stream.ts",
+      "sha256": "b90d969d815076e67afc415e620d9a7ea9458ea70308a0dd0ac6b2967b48b04b"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "sha256": "5cc86262213e1d1dc5ee79fc027cef63cb1fcf449945b5a14966be5bcf984ebe"
+    },
+    {
+      "path": "fusion-studio-client/e2e/trusted-shell-auth-smoke.mjs",
+      "sha256": "633a44e39b0068fbc02cf3c6c073641b3bf77ee2fd9850f0b5379f3e068e6bba"
+    }
+  ]
+}

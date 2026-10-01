@@ -1,0 +1,122 @@
+{
+  "planning_id": "CHAT-SIMPLE-DRAFT-001",
+  "revision": 1,
+  "observed_at": "2026-09-28T22:52:36.330016+00:00",
+  "repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "dirty": true,
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "sha256": "2a88395345613b5a680cc71f987a7a4ae449ebc60863df0899e03f2bf9825527"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+      "sha256": "33e3181e55321f0544bb780404520353a4ed430780e5ef1c39e0798d82e30a15"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/INTENT.md",
+      "sha256": "c02eff465abe31edc704cea1bdfa5a54ef447601326b16c859686484ae974669"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/DECISIONS.md",
+      "sha256": "ae64383eadbe711556f30eac3705075f30c8a4f2b2328fc8c49bc52ee2a6efcc"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/CAPTURE.md",
+      "sha256": "a7c658aa9ad06c106c40d37b06afb84d09675084d993d771128711ef7190a4a3"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/ISSUES.md",
+      "sha256": "ad64ef09659e62b28d1016e5e9a49ddce0bcf87ec6219504d0ac55049259af4c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/REFERENCES.md",
+      "sha256": "3a9593668a0e01f07765c3d8f4c46986c9dcc273c40d2a90d41a19d4dfbf1f2c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+      "sha256": "10b553c26043be901b885de8fe9b283c295de51b35473ce6dcce5d134e993679"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json",
+      "sha256": "0790202faa046192e108aeeaf4b48b7745a5871c594665c2278ebef8578dfabd"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/investigations/CHAT-AR-INV-001/report.md",
+      "sha256": "74d5d6458fc09f4a40a6d38e342b2c35377935a4061e1751a31d3af777a23638"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/investigations/CHAT-AR-INV-002/report.md",
+      "sha256": "f175d9d58bafb79a27b1f85e1cb0b69e8523114f1826ba84fd83353912b1f157"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "4407d595f6f926996bd8bcacb6b0117849606de61662acfe463c3d80f8f4f640"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/ws/client-message-router.js",
+      "sha256": "b59f4d74c218e73a4cc828a82a5faa7cbbe08299d7ed1ac78718eac7412036a6"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/lib/ws-client.ts",
+      "sha256": "799ea39d8085c7d7472aab0e56ba3c748488a3f9a007a18b79c427854e708648"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/lib/chat/prompt-submission-recovery.ts",
+      "sha256": "787206f278c433c18a0f73f8b3257f2f9ad71e940c2f7341ae4e7d2c4a951c67"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/state/slices/chatSlice.ts",
+      "sha256": "6573e55f2afa0af6a02618894cd4f77ba290ac7a2772d60c1e832a00112ec421"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "sha256": "09eee115f44535b6b52260da0c9c48dd16029993eac1fbf2ad0222d8743a256a"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/thread/prompt-submission-service.js",
+      "sha256": "c6c2ceb640e5aa9d8de221c9d8ca43899a263247da39b3d7a1ec380f72d36966"
+    }
+  ]
+}

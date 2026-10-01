@@ -1,0 +1,5 @@
+# CHAT-SIMPLE-02 owner acceptance
+
+On 2026-09-29 UTC in supervisor task `01a0eaa0-a843-7680-a962-f5ab2c971cce`, the owner replied “Approved” to the explicit checkpoint asking whether they accepted completed SPEC-02 with the disclosed full-suite failure and unresolved possible port-3001 owner-state effect. The [supervisor review](SUPERVISOR-REVIEW.md) and [orchestrator report](REPORT.md) were the presented completion packet.
+
+Immediately before recording acceptance, all 36 source/doc/test and 130 generated build fingerprints matched the reviewed manifest, and the seven normative candidate files matched `CANDIDATE.json`. SPEC-02 is accepted on these current bytes. The two invalid browser runs remain invalid evidence; owner-state impact remains unverified. The pre-existing V8 failure remains a failed check, not a pass. This receipt releases SPEC-03 under the approved roadmap but does not accept SPEC-03 or waive its checks, authorize Git/Alpha/live-app operations, or complete the deferred failure-map work.

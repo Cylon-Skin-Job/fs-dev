@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import type { ChatLinkAttachment } from '../src/lib/chat-file-links/file-link-types';
-import { selectThread, startWaSession } from './support/working-activity-scenario';
-import { NAME_A, THREAD_A as FIXTURE_A, THREAD_B as FIXTURE_B } from './support/working-activity-wire';
+import { assistantRows, selectThread, startWaSession } from './support/working-activity-scenario';
+import { begin, chatTurnSaved, content, NAME_A, terminalError, THREAD_A as FIXTURE_A,
+  THREAD_B as FIXTURE_B, turnEnd } from './support/working-activity-wire';
 
 const THREAD_A = 'prompt-owner-a';
 const THREAD_B = 'prompt-owner-b';
@@ -30,7 +31,7 @@ test('Slice C: identical attachment IDs remain isolated by workspace and thread 
   expect(state[chatAttachmentOwnerKey(WORKSPACE_A, THREAD_B)]?.attachments).toEqual([ATTACHMENT]);
 });
 
-test('Slice C: valid ownerless message:sent commits, stale deleted ownership does not recreate state', async () => {
+test('correlated message:sent commits once; unmatched, deleted and foreign ownership cannot recreate state', async () => {
   if (!('window' in globalThis)) {
     Object.defineProperty(globalThis, 'window', {
       configurable: true,
@@ -38,6 +39,7 @@ test('Slice C: valid ownerless message:sent commits, stale deleted ownership doe
     });
   }
   const { usePanelStore } = await import('../src/state/panelStore');
+  const { useChatSubmissionStore } = await import('../src/state/chatSubmissionStore');
   const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
   const thread = {
     threadId: THREAD_A,
@@ -56,17 +58,25 @@ test('Slice C: valid ownerless message:sent commits, stale deleted ownership doe
     secondary: null,
   });
 
-  handleThreadMessage({ type: 'message:sent', threadId: THREAD_A, content: 'VALID' } as never);
+  useChatSubmissionStore.getState().begin({ workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-valid-1', text: 'VALID', draftRevision: 0, attachmentIds: [], phase: 'pending' });
+  handleThreadMessage({ type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-valid-1', turnId: 'turn-valid-1', content: 'VALID' } as never);
   expect(usePanelStore.getState().projectChats[THREAD_A]?.messages.at(-1)?.content).toBe('VALID');
+  handleThreadMessage({ type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-valid-1', turnId: 'turn-valid-1', content: 'VALID' } as never);
+  expect(usePanelStore.getState().projectChats[THREAD_A]?.messages).toHaveLength(1);
 
   usePanelStore.getState().removeThread(THREAD_A);
-  handleThreadMessage({ type: 'message:sent', threadId: THREAD_A, content: 'STALE' } as never);
+  handleThreadMessage({ type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-valid-1', turnId: 'turn-valid-1', content: 'STALE' } as never);
   expect(usePanelStore.getState().projectChats[THREAD_A]).toBeUndefined();
   expect(usePanelStore.getState().threads).toEqual([]);
 
   usePanelStore.setState({ activeWorkspaceId: WORKSPACE_A, threads: [thread], currentThreadId: THREAD_A });
   usePanelStore.getState().activateWorkspace('workspace-owner-b');
-  handleThreadMessage({ type: 'message:sent', threadId: THREAD_A, content: 'CROSS-WORKSPACE' } as never);
+  handleThreadMessage({ type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-valid-1', turnId: 'turn-valid-1', content: 'CROSS-WORKSPACE' } as never);
   expect(usePanelStore.getState().projectChats[THREAD_A]).toBeUndefined();
 });
 
@@ -87,11 +97,228 @@ test('Slice C: workspace activation evicts only the departed workspace attachmen
   expect(state[chatAttachmentOwnerKey('workspace-owner-b', THREAD_B)]?.attachments).toEqual([ATTACHMENT]);
 });
 
+test('accepted receipt bubble survives a late open and yields once to the saved turn', async () => {
+  if (!('window' in globalThis)) {
+    Object.defineProperty(globalThis, 'window', { configurable: true, value: new EventTarget() });
+  }
+  const { usePanelStore } = await import('../src/state/panelStore');
+  const { useChatSubmissionStore } = await import('../src/state/chatSubmissionStore');
+  const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
+  const thread = { threadId: THREAD_A, entry: { name: 'Owned', createdAt: '2026-08-28T00:00:00.000Z',
+    messageCount: 0, status: 'active' as const } };
+  usePanelStore.setState({ activeWorkspaceId: WORKSPACE_A, threads: [thread],
+    currentThreadId: THREAD_A, projectChats: {} });
+  useChatSubmissionStore.setState({ attemptsByOwner: {}, feedbackByOwner: {} });
+  expect(useChatSubmissionStore.getState().begin({ workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-hydrate-1', text: 'accepted input', draftRevision: 0,
+    attachmentIds: [], attachmentGenerations: {}, phase: 'unknown' })).toBe(true);
+  const ack = { type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-hydrate-1', turnId: 'turn-hydrate-1', content: 'accepted input' };
+  handleThreadMessage(ack as never);
+  // A failed pre-begin response may leave A accepted without a saved exchange;
+  // a later deliberate B must not evict A during a passive open.
+  expect(useChatSubmissionStore.getState().begin({ workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-hydrate-2', text: 'second input', draftRevision: 0,
+    attachmentIds: [], attachmentGenerations: {}, phase: 'pending' })).toBe(true);
+  const secondAck = { type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'attempt-hydrate-2', turnId: 'turn-hydrate-2', content: 'second input' };
+  handleThreadMessage(secondAck as never);
+  const opened = { type: 'thread:opened', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    threadGroupId: 'group-hydrate', viewId: null, thread: thread.entry };
+  handleThreadMessage({ ...opened, exchanges: [] } as never);
+  expect(usePanelStore.getState().projectChats[THREAD_A]?.messages.filter(
+    (message) => message.id === 'user-turn-hydrate-1')).toHaveLength(1);
+  expect(usePanelStore.getState().projectChats[THREAD_A]?.messages.filter(
+    (message) => message.id === 'user-turn-hydrate-2')).toHaveLength(1);
+
+  handleThreadMessage({ ...opened, exchanges: [{ exchangeId: 12, seq: 1, ts: 100,
+    user: 'second input', assistant: { parts: [{ type: 'text', content: 'answer' }] },
+    metadata: { turnId: 'turn-hydrate-2' } }] } as never);
+  handleThreadMessage(ack as never);
+  handleThreadMessage(secondAck as never);
+  const messages = usePanelStore.getState().projectChats[THREAD_A]?.messages ?? [];
+  expect(messages.filter((message) => message.id === 'user-turn-hydrate-1')).toHaveLength(1);
+  expect(messages.filter((message) => message.id === 'user-turn-hydrate-2')).toHaveLength(1);
+  expect(messages.filter((message) => message.type === 'assistant')).toHaveLength(1);
+});
+
+test('a live turn bound before its ACK does not retain an accepted execution watch', async () => {
+  if (!('window' in globalThis)) {
+    Object.defineProperty(globalThis, 'window', { configurable: true, value: new EventTarget() });
+  }
+  const { usePanelStore } = await import('../src/state/panelStore');
+  const { useChatSubmissionStore } = await import('../src/state/chatSubmissionStore');
+  const { hasAcceptedPromptExecutionWatch } = await import('../src/lib/chat/prompt-submission-recovery');
+  const { handleThreadMessage } = await import('../src/lib/ws/thread-handlers');
+  const { createInitialPanelState } = await import('../src/state/slices/chatSlice');
+  useChatSubmissionStore.setState({ attemptsByOwner: {}, feedbackByOwner: {} });
+  usePanelStore.setState({ activeWorkspaceId: WORKSPACE_A, currentThreadId: THREAD_A,
+    threads: [{ threadId: THREAD_A, entry: { name: 'Owned', createdAt: '2026-08-28T00:00:00.000Z',
+      messageCount: 0, status: 'active' } }],
+    projectChats: { [THREAD_A]: { ...createInitialPanelState(),
+      currentTurn: { id: 'turn-before-ack', status: 'streaming' } as never } } });
+  useChatSubmissionStore.getState().begin({ workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'request-before-ack', text: 'begun input', draftRevision: 0,
+    attachmentIds: [], attachmentGenerations: {}, phase: 'pending' });
+  handleThreadMessage({ type: 'message:sent', workspaceId: WORKSPACE_A, threadId: THREAD_A,
+    requestId: 'request-before-ack', turnId: 'turn-before-ack', content: 'begun input' } as never);
+  expect(useChatSubmissionStore.getState().attemptsByOwner[JSON.stringify([WORKSPACE_A, THREAD_A])]?.phase).toBe('accepted');
+  expect(hasAcceptedPromptExecutionWatch(WORKSPACE_A, THREAD_A, 'request-before-ack')).toBe(false);
+});
+
+test('accepted pre-begin failure releases Stop without letting an older failure clear a newer send', async ({ browser }) => {
+  const { fx, page } = await startWaSession(browser);
+  const textarea = page.locator('section textarea').first();
+  const send = page.getByRole('button', { name: 'Send message', exact: true }).first();
+  const stop = page.locator('.rv-stop-btn').first();
+  const initialAssistantRows = await assistantRows(page);
+  await textarea.fill('PREBEGIN-A');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(1);
+  const requestA = String(fx.sentFrames().find((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A)?.requestId);
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestA, turnId: 'prebegin-turn-a', content: 'PREBEGIN-A' });
+  await expect(stop).toBeVisible();
+  await fx.push({ type: 'error', scope: 'project', code: 'accepted_execution_failed',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+    message: 'Accepted prompt could not start' });
+  await expect(send).toBeVisible();
+  await expect(textarea).toBeEnabled();
+  expect(await assistantRows(page)).toHaveLength(initialAssistantRows.length);
+  await expect(page.locator('.rv-chat-messages')).toContainText('PREBEGIN-A');
+
+  await textarea.fill('PREBEGIN-B');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(2);
+  const requestB = String(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).at(-1)?.requestId);
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestB, turnId: 'prebegin-turn-b', content: 'PREBEGIN-B' });
+  await expect(stop).toBeVisible();
+  await fx.push({ type: 'error', scope: 'project', code: 'accepted_execution_failed',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+    message: 'Old accepted prompt could not start' });
+  await expect(stop).toBeVisible();
+  await fx.push({ type: 'error', scope: 'project', code: 'accepted_execution_failed',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestB,
+    message: 'Accepted prompt could not start' });
+  await expect(send).toBeVisible();
+  expect(await assistantRows(page)).toHaveLength(initialAssistantRows.length);
+});
+
+test('acknowledged pre-begin restart queries interrupted receipt and keeps a later send independent', async ({ browser }) => {
+  const { fx, page } = await startWaSession(browser);
+  const textarea = page.locator('section textarea').first();
+  const send = page.getByRole('button', { name: 'Send message', exact: true }).first();
+  const stop = page.locator('.rv-stop-btn').first();
+  const initialAssistantRows = await assistantRows(page);
+  await textarea.fill('RESTART-A');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(1);
+  const requestA = String(fx.sentFrames().find((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A)?.requestId);
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestA, turnId: 'restart-turn-a', content: 'RESTART-A' });
+  await expect(stop).toBeVisible();
+  const interrupted = { type: 'thread:action:completed', action: 'prompt_receipt_status',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+    receipt: { workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+      outcome: 'accepted', execution: 'interrupted_before_dispatch', turnId: 'restart-turn-a',
+      content: 'RESTART-A', reason: 'server_restart' } };
+  fx.setStatusReply(requestA, interrupted);
+  await fx.disconnect();
+  await expect(send).toBeVisible();
+  await expect(page.locator('.rv-chat-submission-feedback')).toContainText('response status unknown');
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'thread:action'
+    && frame.action === 'prompt_receipt_status' && frame.requestId === requestA).length, { timeout: 15_000 }).toBe(1);
+  await expect(page.locator('.rv-chat-submission-feedback')).toContainText('response could not start');
+  await expect(send).toBeVisible();
+  await expect(page.locator('.rv-chat-messages')).toContainText('RESTART-A');
+  expect(await assistantRows(page)).toHaveLength(initialAssistantRows.length);
+
+  await textarea.fill('RESTART-B');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(2);
+  const requestB = String(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).at(-1)?.requestId);
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestB, turnId: 'restart-turn-b', content: 'RESTART-B' });
+  await expect(stop).toBeVisible();
+  await fx.push(interrupted);
+  await expect(stop).toBeVisible();
+});
+
+test('post-begin accepted failure consumes its companion before a later rejection', async ({ browser }) => {
+  const { fx, page } = await startWaSession(browser);
+  const textarea = page.locator('section textarea').first();
+  const send = page.getByRole('button', { name: 'Send message', exact: true }).first();
+  await textarea.fill('PARTIAL-A');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(1);
+  const requestA = String(fx.sentFrames().find((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A)?.requestId);
+  const turnA = 'partial-error-a';
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestA, turnId: turnA, content: 'PARTIAL-A' });
+  await fx.push([begin(FIXTURE_A, turnA, 1), content(FIXTURE_A, turnA, 2, 'PARTIAL-OUTPUT'),
+    turnEnd(FIXTURE_A, turnA, 3, { reason: 'error', partial: true, terminalError: terminalError() })]);
+  await fx.push(chatTurnSaved(FIXTURE_A, turnA, { exchangeId: 91 }));
+  await expect(page.locator('.rv-message-assistant')).toContainText('PARTIAL-OUTPUT');
+  await expect(page.getByRole('alert')).toHaveCount(1);
+  await fx.push({ type: 'error', scope: 'project', code: 'accepted_execution_failed',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+    message: 'Accepted prompt could not finish' });
+  await expect(send).toBeVisible();
+  await expect(page.locator('.rv-chat-submission-feedback')).toHaveCount(0);
+
+  await textarea.fill('REJECT-B');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(2);
+  const requestB = String(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).at(-1)?.requestId);
+  await fx.push({ type: 'error', scope: 'project', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestB, error: 'B was rejected', message: 'B was rejected' });
+  await expect(textarea).toBeEnabled();
+  await expect(textarea).toHaveValue('REJECT-B');
+  await expect(page.locator('.rv-chat-submission-feedback')).toContainText('B was rejected');
+  await expect(page.getByRole('alert')).toHaveCount(1);
+});
+
+test('a later rejection is immediate even when the old terminal companion arrives afterward', async ({ browser }) => {
+  const { fx, page } = await startWaSession(browser);
+  const textarea = page.locator('section textarea').first();
+  const send = page.getByRole('button', { name: 'Send message', exact: true }).first();
+  await textarea.fill('OLD-PARTIAL');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(1);
+  const requestA = String(fx.sentFrames().find((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A)?.requestId);
+  const turnA = 'old-partial-turn';
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestA, turnId: turnA, content: 'OLD-PARTIAL' });
+  await fx.push([begin(FIXTURE_A, turnA, 1), content(FIXTURE_A, turnA, 2, 'SAVED-PARTIAL'),
+    turnEnd(FIXTURE_A, turnA, 3, { reason: 'error', partial: true, terminalError: terminalError() })]);
+  await fx.push(chatTurnSaved(FIXTURE_A, turnA, { exchangeId: 92 }));
+  await expect(page.locator('.rv-message-assistant')).toContainText('SAVED-PARTIAL');
+  await expect(send).toBeVisible();
+
+  await textarea.fill('NEW-REJECTION');
+  await send.click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(2);
+  const requestB = String(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).at(-1)?.requestId);
+  await fx.push({ type: 'error', scope: 'project', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: requestB, error: 'NEW-REJECTION', message: 'NEW-REJECTION' });
+  await expect(textarea).toBeEnabled();
+  await expect(page.locator('.rv-chat-submission-feedback')).toContainText('NEW-REJECTION');
+  await fx.push({ type: 'error', scope: 'project', code: 'accepted_execution_failed',
+    workspaceId: 'boot-fixture', threadId: FIXTURE_A, requestId: requestA,
+    message: 'Old accepted prompt could not finish' });
+  await expect(page.locator('.rv-chat-submission-feedback')).toContainText('NEW-REJECTION');
+  await expect(page.getByRole('alert')).toHaveCount(1);
+});
+
 test('Slice C: composer drafts swap immediately by thread and preserve pending retry ownership', async ({ browser }) => {
   const { fx, page } = await startWaSession(browser);
   const textarea = page.locator('section textarea').first();
   await textarea.fill('A-OWNED-DRAFT');
   await page.getByRole('button', { name: 'Send message', exact: true }).first().click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(1);
+  const firstRequestId = String(fx.sentFrames().find((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A)?.requestId);
+  expect(firstRequestId).not.toBe('undefined');
   await selectThread(fx, page, 'b');
   await expect(textarea).toHaveValue('');
   await textarea.fill('B-OWNED-DRAFT');
@@ -100,7 +327,8 @@ test('Slice C: composer drafts swap immediately by thread and preserve pending r
   await expect(textarea).toBeDisabled();
   await selectThread(fx, page, 'b');
   await expect(textarea).toHaveValue('B-OWNED-DRAFT');
-  fx.push({ type: 'error', threadId: FIXTURE_A, error: 'Prompt failed' });
+  await fx.push({ type: 'error', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: firstRequestId, error: 'Prompt failed' });
   await expect(textarea).toHaveValue('B-OWNED-DRAFT');
   await selectThread(fx, page, 'a');
   await expect(textarea).toBeEnabled();
@@ -110,8 +338,11 @@ test('Slice C: composer drafts swap immediately by thread and preserve pending r
   expect(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_B)).toHaveLength(0);
   await selectThread(fx, page, 'a');
   await page.getByRole('button', { name: 'Send message', exact: true }).first().click();
+  await expect.poll(() => fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).length).toBe(2);
+  const secondRequestId = String(fx.sentFrames().filter((frame) => frame.type === 'prompt' && frame.threadId === FIXTURE_A).at(-1)?.requestId);
   await selectThread(fx, page, 'b');
-  fx.push({ type: 'message:sent', threadId: FIXTURE_A, content: 'A-OWNED-DRAFT' });
+  await fx.push({ type: 'message:sent', workspaceId: 'boot-fixture', threadId: FIXTURE_A,
+    requestId: secondRequestId, turnId: 'wa-turn-accepted-2', content: 'A-OWNED-DRAFT' });
   await expect(textarea).toHaveValue('B-OWNED-DRAFT');
   await selectThread(fx, page, 'a');
   await expect(textarea).toHaveValue('');

@@ -5,7 +5,7 @@
  * Groups consecutive same-type groupable segments into one block.
  */
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { renderTextInstant } from '../lib/text';
 import type { StreamSegment } from '../types';
 import { isGroupable } from '../lib/catalog-visual';
@@ -49,11 +49,12 @@ function groupSegments(segments: StreamSegment[]): SegmentGroup[] {
 }
 
 export function InstantSegmentRenderer({ segments }: InstantSegmentRendererProps) {
+  // Keep group arrays stable when only the owning message's metadata changes.
+  // This lets grouped tool formatting retain its component-local derived value.
+  const groups = useMemo(() => groupSegments(segments ?? []), [segments]);
   if (!segments || segments.length === 0) {
     return <div className="rv-message-assistant-content" />;
   }
-
-  const groups = groupSegments(segments);
 
   return (
     <>
@@ -85,8 +86,10 @@ export function InstantSegmentRenderer({ segments }: InstantSegmentRendererProps
 // ── Instant Text ──────────────────────────────────────────────────────
 
 function InstantText({ content }: { content: string }) {
+  // The cache is owned by this mounted completed row. A real content edit
+  // changes `content`; retiring the row releases the derived HTML.
+  const html = useMemo(() => renderTextInstant(content), [content]);
   if (!content) return null;
-  const html = renderTextInstant(content);
   return (
     <div
       className="rv-message-assistant-content"
@@ -100,7 +103,10 @@ function InstantText({ content }: { content: string }) {
 function InstantToolBlock({ segment }: { segment: StreamSegment }) {
   const [expanded, setExpanded] = useState(false);
   const renderer = getToolRenderer(segment.type);
-  const renderedContent = renderer.formatContent(segment.content, segment.toolArgs, segment);
+  const renderedContent = useMemo(
+    () => renderer.formatContent(segment.content, segment.toolArgs, segment),
+    [renderer, segment],
+  );
 
   return (
     <ToolCallBlock
@@ -128,6 +134,10 @@ function InstantGroupedBlock({ segments }: { segments: StreamSegment[] }) {
   const [expanded, setExpanded] = useState(false);
   const type = segments[0].type;
   const renderer = getToolRenderer(type);
+  const renderedContent = useMemo(
+    () => segments.map(seg => renderer.formatContent(seg.content, seg.toolArgs, seg)).join(''),
+    [renderer, segments],
+  );
 
   return (
     <ToolCallBlock
@@ -139,9 +149,7 @@ function InstantGroupedBlock({ segments }: { segments: StreamSegment[] }) {
       <div
         style={renderer.contentStyle}
         dangerouslySetInnerHTML={{
-          __html: segments.map(seg =>
-            renderer.formatContent(seg.content, seg.toolArgs, seg)
-          ).join(''),
+            __html: renderedContent,
         }}
       />
     </ToolCallBlock>

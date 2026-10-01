@@ -2,7 +2,7 @@
 
 **Status:** `DRAFT_CANDIDATE`  
 **Domain owner:** the Move Chat to Side Chat product transition  
-**Prerequisites:** owner-accepted SPEC-03  
+**Prerequisites:** owner-accepted SPEC-03 and the packet `BRIDGE-02-CONFORMANCE-OVERLAY.md`  
 **Blocks:** roadmap completion
 
 ## 1. Objective
@@ -39,7 +39,9 @@ Read before implementation:
 - the independently accepted Generic Component Tab Host report and exact
   descriptor/resolver/rendering contract; and
 - current Main Chat, Secondary Chat, view-tab, model-selection, ThreadManager,
-  WebSocket action, and thread runtime owners.
+  WebSocket action, and thread runtime owners; and
+- the approved BRIDGE-01/BRIDGE-02 contracts and the packet-local
+  `BRIDGE-02-CONFORMANCE-OVERLAY.md`.
 
 The orchestrator records the accepted migration head and revalidates that
 `fusion.chat-surface` resolves through the generic host before Slice 04A.
@@ -102,6 +104,11 @@ classified warnings. Workspace comes from the authenticated bound connection;
 view comes from the group. Redundant client workspace/view authority fields are
 schema-rejected. A `requestId` replay returns the recorded result and performs no
 second move.
+
+Envelope conformance: the action consumes the durable `ChatActionContext`
+portion exactly as `025` SPEC-01 §8.2; `surfaceId` never appears in the envelope,
+persisted action result, or placement records; `threadId` remains the
+routing/Provenance identity (`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.2).
 
 ## 5. Atomic Group Transition
 
@@ -170,6 +177,11 @@ The exact generic descriptor shape follows the accepted host. It contains no
 callback, store, socket, path-derived authority, React element, or persisted
 `surfaceId`. The chat registration validates that `A` remains a member of `G`
 bound to the exact view before rendering.
+
+Bridge conformance: the descriptor contains durable identities only and no
+persisted `surfaceId`; `sideChatPlacementId` is the durable placement key,
+distinct from `projectionId`, `surfaceId`, `threadId`, and `threadGroupId`
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.3/§4.5; `CHAT-RD-012`).
 
 The Generic Host remains ignorant of chat semantics and only validates/resolves/
 renders the descriptor through its accepted seam. SPEC-04—not the Generic
@@ -268,6 +280,9 @@ threads or a lineage tree.
   request acknowledgement.
 - Live stream, Stop, saved-turn, usage, and readiness frames for `A` remain
   addressed to `A`; no frame is reassigned to `B` or the placement.
+- No envelope, result, placement record, live frame, or fan-out payload carries
+  `surfaceId`; `threadId` remains the routing/Provenance identity
+  (`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.2/§4.5).
 - Placement failure never copies, deletes, or changes either transcript.
 - Closing/reopening a Side Chat never warms, forks, or creates a harness session
   for its existing member.

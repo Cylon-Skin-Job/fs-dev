@@ -1,0 +1,59 @@
+{
+  "candidateId": "CHAT-AR-4641ca5897f0",
+  "algorithm": "SHA256 of sorted relative path TAB SHA256 LF entries, UTF-8",
+  "fullDigest": "4641ca5897f094a0c9b6d9d341cd48b29cc886dc1c6afdb30e052341ef800d0e",
+  "artifacts": [
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "e05ea606bb6285fe6d1cd7b9e26186e5f4b8531a451dbff5d0efe37673556abe"
+    },
+    {
+      "path": "AUTHORITY-AND-DECISIONS.md",
+      "sha256": "8be31dd38c9da7316d8c2c1a124c742b99656901e05a6f3a35196cae55625362"
+    },
+    {
+      "path": "BUNDLE-INDEX.md",
+      "sha256": "9870db94fca4ee1933fe6ae8175f4f4fbbce82acbaaf643db63c5d19718207c2"
+    },
+    {
+      "path": "GUIDANCE.md",
+      "sha256": "648790eb974cffc64f1df4658187ff3ebf504024fadf6ff410b37145cb42269e"
+    },
+    {
+      "path": "ISSUES.md",
+      "sha256": "d0e0d781730d91643461042cfb5417951a69d73c123ba01ed7e1c315273acbe9"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "15b177d94e13fccb2a23de74701b9f9217773eaa49e46310b91e8328ce4fbe27"
+    },
+    {
+      "path": "SPEC-01.md",
+      "sha256": "80359e87794a4e51fad4b483bbc366e45f13534de7cd1bb2b8e6ae40eb16c9ed"
+    },
+    {
+      "path": "SPEC-02.md",
+      "sha256": "aa88f904558616a8e9973c6400e4b9b794e5568c840e2695bc0dd3ec28a235e7"
+    },
+    {
+      "path": "SPEC-03.md",
+      "sha256": "3bc841255f0fbc40a2333973d3f2d5a08e4770c2a2090d89bd11f7262993312d"
+    },
+    {
+      "path": "SPEC-04.md",
+      "sha256": "61dc5ab171ffc0f4f19ad8a65bb2c7403ffb817f5793adb34e8d57bec3928c21"
+    },
+    {
+      "path": "SPEC-05.md",
+      "sha256": "b04dc041755c579b41e7260035c86bfb8574013cb9eb962733ab74528a9b89e8"
+    },
+    {
+      "path": "SPEC-06.md",
+      "sha256": "6a47f0a43d11b6bfbb5fdf12a41a33233808b70a73f836483bd3ee97fa419554"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "0eaeaeb39bf4e252acae5fb73e296ce84f313ca4964ba8d69f8d1d5976a44abb"
+    }
+  ]
+}

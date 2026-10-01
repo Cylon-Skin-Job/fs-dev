@@ -24,7 +24,8 @@ type DiagnosticState =
   | 'ready'
   | 'copied'
   | 'copy-failed'
-  | 'composer-busy'
+  | 'composer-unavailable'
+  | 'acceptance-pending'
   | 'inserted'
   | 'unavailable';
 
@@ -46,7 +47,7 @@ interface ResolvedDiagnostic {
 interface ChatDiagnosticDetailsProps extends ChatDiagnosticRouteIds {
   onRequest: (route: ChatDiagnosticRouteIds) => Promise<ValidatedChatTurnDiagnosticReport | null>;
   onCopy: (text: string) => Promise<void>;
-  onAskAI: (text: string) => boolean;
+  onAskAI: (text: string) => Promise<boolean | 'pending-acceptance'>;
   askAIEnabled: boolean;
 }
 
@@ -153,9 +154,11 @@ export function ChatDiagnosticDetails({
     const resolved = await resolveReport();
     if (!resolved) return;
     if (mounted.current && identityRef.current === identity) {
+      const applied = await onAskAI(`${ASK_AI_INTRO}${resolved.text}`);
+      if (!mounted.current || identityRef.current !== identity) return;
       setKeyedState({
         identity,
-        state: onAskAI(`${ASK_AI_INTRO}${resolved.text}`) ? 'inserted' : 'composer-busy',
+        state: applied === true ? 'inserted' : applied === 'pending-acceptance' ? 'acceptance-pending' : 'composer-unavailable',
       });
     }
   };
@@ -177,8 +180,10 @@ export function ChatDiagnosticDetails({
         <div className="rv-chat-diagnostic-status">Diagnostic copied.</div>
       ) : state === 'copy-failed' ? (
         <div className="rv-chat-diagnostic-status">Unable to copy diagnostic.</div>
-      ) : state === 'composer-busy' ? (
+      ) : state === 'acceptance-pending' ? (
         <div className="rv-chat-diagnostic-status">Wait for the current message to be accepted, then try again.</div>
+      ) : state === 'composer-unavailable' ? (
+        <div className="rv-chat-diagnostic-status">Unable to add diagnostic to the composer. Check the chat target and try again.</div>
       ) : state === 'inserted' ? (
         <div className="rv-chat-diagnostic-status">Diagnostic added to the composer for review.</div>
       ) : null}

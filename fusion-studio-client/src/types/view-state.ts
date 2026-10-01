@@ -1,8 +1,7 @@
 /**
  * @module types/view-state
  * @role Per-view UI state types — panes/layout, view activity and
- * collections, secondary chat state, theme entries, panel identity, and UI
- * timing constants.
+ * collections, theme entries, panel identity, and UI timing constants.
  *
  * Split out of the former monolithic types module (SPEC-04 Slice A).
  * Pure type surface plus the TIMING constants; no other runtime logic.
@@ -84,20 +83,16 @@ export interface ThemeEntry {
 }
 
 // SPEC-26c-2: per-view UI state (collapse + pane widths)
-// SECONDARY_CHAT_SPEC: `rightSecondary` added for the sticky-right column.
-// `rightCol` is the view's right column (e.g. file-viewer file tree) — kept
-// separate from rightSecondary so the file tree retains its own width when
-// the sticky chat undocks. Content navigation widths are separate again so
-// resizing Wiki navigation never changes the workspace Threads width.
+// `rightCol` is the view's right column (e.g. file-viewer file tree). Content
+// navigation widths are separate again so resizing Wiki navigation never
+// changes the workspace Threads width.
 export type Pane =
   | 'leftSidebar'
   | 'leftChat'
-  | 'rightSecondary'
   | 'rightCol'
   | 'contentNavLeft'
   | 'contentNavRight';
-// The secondary pane has its own show/hide modes; the other layout panes can
-// be collapsed directly (rightCol is the File Explorer tree).
+// Layout panes that can be collapsed directly (rightCol is the File Explorer tree).
 export type CollapsablePane = 'leftSidebar' | 'leftChat' | 'rightCol' | 'contentArea';
 
 export type ViewActivityKind = 'file' | 'folder' | 'document' | 'page' | 'view';
@@ -154,22 +149,11 @@ export interface ViewUIState {
   widths: {
     leftSidebar: number;
     leftChat: number;
-    rightSecondary?: number;  // sticky secondary chat width (when docked)
     rightCol?: number;        // view's right column (e.g. file-viewer file tree)
     contentNavLeft?: number;  // content-owned left navigation (e.g. Wiki topics)
     contentNavRight?: number; // content-owned right navigation (e.g. Wiki page tree)
   };
-  // STATE_OVERRIDE_SPEC §5: persisted popup geometry.
-  popup: {
-    open: boolean;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    threadId: string | null;
-  };
   currentThreadId: string | null;
-  secondaryThreadId: string | null;
   // TINTS_SPEC §4: per-surface tint toggles. All default false (neutral).
   tints: ViewStateTints;
   // Doc viewer persisted UI state.
@@ -255,21 +239,6 @@ export interface ViewStateTints {
     threads: boolean;
     chat:    boolean;
   };
-}
-
-// SECONDARY_CHAT_SPEC: singleton secondary-chat state (replaces SPEC-26d popup).
-// Top-level, not per-panel — at most one secondary exists per workspace.
-export type SecondaryMode = 'floating' | 'minimized' | 'sticky-right';
-
-export interface SecondaryState {
-  threadId: string;
-  mode: SecondaryMode;
-  previousMode: 'floating' | 'sticky-right';  // where minimize came from
-  float: { x: number; y: number; width: number; height: number };
-  // Set true by restoreSecondary; read by SecondaryChat/SecondaryChatSticky
-  // on mount to play the reverse genie animation. Cleared by the component
-  // after the animation finishes.
-  justRestored?: boolean;
 }
 
 // Timing Constants

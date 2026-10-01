@@ -1,0 +1,25 @@
+/*
+ * ThreadedChat — one explicit rail + Main Chat composition.
+ *
+ * Presentation-only. Uses existing CSS variables so the visual language is
+ * unchanged; production keeps the shell grid tracks and only explicit
+ * view-bound hosts/fixtures use this wrapper.
+ */
+
+.rv-threaded-chat {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: var(--bg-panel, transparent);
+}
+
+.rv-threaded-chat > .rv-sidebar {
+  flex: 0 0 auto;
+}
+
+.rv-threaded-chat > .rv-chat-area {
+  flex: 1 1 auto;
+  min-width: 0;
+}

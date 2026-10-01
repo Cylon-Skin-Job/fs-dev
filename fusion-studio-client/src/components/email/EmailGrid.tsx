@@ -31,7 +31,7 @@ import { Icon } from '../Icon';
 import { FloatingPathActions } from '../FloatingPathActions';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { EMAIL_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
-import type { ViewUIState } from '../../types';
+import { persistEmailViewPatch } from './emailViewerPersistence';
 import {
   normalizeViewCollections,
 } from '../../lib/viewCollections';
@@ -46,12 +46,6 @@ import './EmailGrid.css';
 
 const PANEL = 'email-viewer';
 const ROOT_PATH = '';
-
-function persistEmailViewPatch(patch: Partial<ViewUIState>) {
-  const store = usePanelStore.getState();
-  store.setViewState(PANEL, patch);
-  store._persistViewPatch(PANEL, patch);
-}
 
 function folderPathForFile(filePath: string): string {
   const lastSlash = filePath.lastIndexOf('/');
@@ -1200,33 +1194,35 @@ export function EmailGrid() {
   } as React.CSSProperties;
 
   const renderEmailShell = (content: ReactNode, mainClassName = 'rv-email-grid', showSidebar = true) => (
-    <div
-      className={`rv-email-shell rv-email-view-transition${showSidebar ? '' : ' rv-email-shell--no-sidebar'}`}
-      style={emailPaperStyle}
-    >
-      {showSidebar ? (
-        <EmailSidebar
-          activeAction={emailMode}
-          onAction={handleSidebarAction}
-          onCompose={openCompose}
-        />
-      ) : null}
-      <main className={mainClassName}>
-        {content}
-      </main>
-      <EmailComposeLayer />
-      {rulesOpen ? (
-        <EmailRulesPopover onClose={() => setRulesOpen(false)} />
-      ) : null}
-      {createModalKind ? (
-        <EmailCreateModal
-          kind={createModalKind}
-          name={createName}
-          onNameChange={setCreateName}
-          onCancel={handleCloseCreateModal}
-          onSave={handleSaveCreateItem}
-        />
-      ) : null}
+    <div className="rv-worksurface-view-layout">
+      <div
+        className={`rv-email-shell rv-email-view-transition${showSidebar ? '' : ' rv-email-shell--no-sidebar'}`}
+        style={emailPaperStyle}
+      >
+        {showSidebar ? (
+          <EmailSidebar
+            activeAction={emailMode}
+            onAction={handleSidebarAction}
+            onCompose={openCompose}
+          />
+        ) : null}
+        <main className={mainClassName}>
+          {content}
+        </main>
+        <EmailComposeLayer />
+        {rulesOpen ? (
+          <EmailRulesPopover onClose={() => setRulesOpen(false)} />
+        ) : null}
+        {createModalKind ? (
+          <EmailCreateModal
+            kind={createModalKind}
+            name={createName}
+            onNameChange={setCreateName}
+            onCancel={handleCloseCreateModal}
+            onSave={handleSaveCreateItem}
+          />
+        ) : null}
+      </div>
     </div>
   );
 

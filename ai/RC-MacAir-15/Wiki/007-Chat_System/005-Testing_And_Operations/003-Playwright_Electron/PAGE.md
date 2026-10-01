@@ -2,6 +2,7 @@
 name: Chat Electron Playwright
 description: Target structure for future Electron Playwright coverage.
 metadata:
+  last-modified: "2026-09-19T10:34:31Z"
   incoming-edges:
     - Chat Testing And Operations
     - Chat Smoke Tests
@@ -14,6 +15,8 @@ metadata:
 ---
 
 Electron Playwright should be a separate test lane from browser Playwright.
+
+Current Side Chat shell coverage also exists in `fusion-studio-client/e2e/side-chat-electron-smoke.mjs`, an isolated script described in [Testing And Operations](../PAGE.md). Its presence does not mean the future dedicated lane below exists or that it passed during the source-only documentation review.
 
 Target structure:
 

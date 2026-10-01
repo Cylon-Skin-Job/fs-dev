@@ -1,0 +1,61 @@
+{
+  "bundle": "TABS-PROVENANCE-BRIDGE",
+  "updated": "2026-09-12",
+  "purpose": "Reconcile the planned Tabs/Chat/Provenance bridge contracts into executables.",
+  "owner": "RC",
+  "read_first": "HANDOFF.md",
+  "decisions": "DECISIONS.md",
+  "sequence": [
+    {
+      "order": 1,
+      "id": "BRIDGE-01",
+      "title": "Component/Tab Action Context",
+      "kind": "spec",
+      "spec": "SPEC-01-COMPONENT-TAB-ACTION-CONTEXT.md",
+      "status": "authored_candidate",
+      "implementable_now": true,
+      "gate": "owner approval of the BRIDGE-01 candidate, then orchestrator dispatch",
+      "depends_on": ["accepted TABS-03 placement chokepoint", "accepted PROV-01", "accepted mediated-save path"],
+      "next_action": "owner review/approval of SPEC-01"
+    },
+    {
+      "order": 2,
+      "id": "BRIDGE-02",
+      "title": "Chat/Tab/Provenance Integration Contract",
+      "kind": "contract",
+      "spec": "SPEC-02-CHAT-TAB-PROVENANCE-INTEGRATION.md",
+      "status": "authored_candidate",
+      "implementable_now": "contract-only",
+      "gate": "approved BRIDGE-01, then owner approval",
+      "depends_on": ["BRIDGE-01"],
+      "next_action": "owner review/approval of SPEC-02; code lands with chat"
+    },
+    {
+      "order": 3,
+      "id": "CHAT-EXTRACTION",
+      "title": "Composable Chat packet (025 bundle)",
+      "kind": "roadmap",
+      "status": "owner-gated",
+      "depends_on": ["BRIDGE-01", "BRIDGE-02", "owner-released tab platform"],
+      "note": "chat implementation; then chat conforms to the bridge and joins the provenance fold"
+    },
+    {
+      "order": 4,
+      "id": "VIEW-DECOMPOSITION",
+      "title": "View decomposition/unification into the provenance fold",
+      "kind": "roadmap",
+      "status": "owner-gated",
+      "depends_on": ["CHAT-EXTRACTION"],
+      "note": "unified document tabs (render/raw), views as presentation layers over files/folders, app-style views with database pointers"
+    }
+  ],
+  "authoritative_inputs": [
+    "ai/RC-MacAir-15/Captures/028-System-View-Relocation-And-Configured-Tabs/BRIDGE-01-HANDOFF.md",
+    "ai/RC-MacAir-15/Captures/002-SPECs/TABS-PROVENANCE-COORDINATION/INTERFACE-CONTRACT.md",
+    "ai/RC-MacAir-15/Captures/002-SPECs/TABS-PROVENANCE-COORDINATION/OWNER-DECISIONS.md",
+    "ai/RC-MacAir-15/Captures/024-Agent-Tool-Provenance/PROV-01-INTEGRATION-REPORT.md",
+    "ai/RC-MacAir-15/Captures/025-Chat_Composition_Roadmap/",
+    "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md"
+  ]
+}

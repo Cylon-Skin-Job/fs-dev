@@ -30,7 +30,7 @@ describe('ThreadManager chatlog markdown path', () => {
       projectRoot: tempRoot,
       workspaceId: 'workspace-chatlog-path',
     });
-    const chatFile = manager._createChatFile('thread-1');
+    const chatFile = manager.chatlogMirror.file('thread-1');
 
     expect(chatFile.filePath).toBe(path.join(
       tempRoot,
@@ -55,7 +55,7 @@ describe('ThreadManager chatlog markdown path', () => {
       projectRoot: tempRoot,
       workspaceId: 'workspace-chatlog-path',
     });
-    const chatFile = manager._createChatFile('missing-thread');
+    const chatFile = manager.chatlogMirror.file('missing-thread');
 
     await expect(chatFile.read()).resolves.toBeNull();
     expect(fs.existsSync(chatFile.filePath)).toBe(false);

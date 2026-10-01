@@ -1,0 +1,4 @@
+.rv-diagnostics { display: flex; flex-direction: column; height: var(--diagnostics-height, 100%); min-height: var(--diagnostics-min-height, 0); color: var(--text-primary, #ddd); background: var(--bg-primary, #181818); font-family: var(--font-mono, monospace); font-size: var(--diagnostics-font-size, 12px); }
+.rv-diagnostics-header { flex: 0 0 auto; padding: var(--space-sm, 8px); border-bottom: var(--diagnostics-border-width, 1px) solid var(--border-color, #444); max-height: var(--diagnostics-header-max, 45%); overflow: auto; }
+.rv-diagnostics-counters { margin-block: var(--space-sm, 8px); }
+.rv-diagnostics-stream { flex: 1 1 auto; min-height: var(--diagnostics-min-height, 0); overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space-sm, 8px); margin: var(--diagnostics-margin, 0); font: inherit; }

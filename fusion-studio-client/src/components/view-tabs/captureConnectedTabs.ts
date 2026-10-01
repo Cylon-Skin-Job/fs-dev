@@ -13,6 +13,7 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { isViewWorksurfaceBound } from '../../lib/worksurface/worksurfaceController';
 import { showToast } from '../../lib/toast';
 import type { ViewUIState } from '../../types/view-state';
 import type { ConnectedTabOwnerRuntime } from './componentTabConnectedOwner';
@@ -106,6 +107,14 @@ export function applyCaptureClassicConversionOnce(
     'readCollection' | 'applyCollection' | 'mintTabId' | 'mintComponentInstanceId'
   >,
 ): void {
+  // CHAT-03 / SPEC-03 §5: while the Capture Viewer is bound to a Thread Group,
+  // its worksurface adapter/controller is the sole writer of the elected
+  // classic tab facts. The one-time classic conversion moves those facts into
+  // the VIEW-02 records lane and empties the classic keys, so it must not run
+  // while group-bound (the conversion/handoff remains the explicit
+  // non-group/Legacy compatibility transition).
+  const activeWorkspaceId = usePanelStore.getState().activeWorkspaceId;
+  if (activeWorkspaceId && isViewWorksurfaceBound(activeWorkspaceId, CAPTURE_PANEL_ID)) return;
   const records = ports.readCollection();
   const viewState = usePanelStore.getState().viewStates[CAPTURE_PANEL_ID];
   if (records.tabs.length > 0) {

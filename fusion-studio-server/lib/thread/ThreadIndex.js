@@ -20,10 +20,7 @@ class ThreadIndex {
     this.workspaceId = workspaceId;
   }
 
-  /**
-   * No-op — kept for caller compatibility. Migrations handle schema.
-   */
-  async init() {}
+
 
   /**
    * Get all threads ordered by MRU (most recent first)
@@ -72,48 +69,7 @@ class ThreadIndex {
     return Boolean(row && (row.workspace_id !== this.workspaceId || row.scope !== 'project'));
   }
 
-  /**
-   * Create a new thread entry
-   * @param {string} threadId
-   * @param {string|null} [name=null] - Display name; null means "fall back to ID" in the UI
-   * @param {object} [options]
-   * @param {string} [options.harnessId='kimi']
-   * @param {object} [options.harnessConfig]
-   * @param {string} [options.projectId] - Deprecated backward-compat basename(projectRoot)
-   * @returns {Promise<object>}
-   */
-  async create(threadId, name = null, options = {}) {
-    const db = getDb();
-    const now = Date.now();
-    const createdAt = new Date().toISOString();
-    const harnessId = options.harnessId || 'kimi';
-    const harnessConfig = options.harnessConfig ? JSON.stringify(options.harnessConfig) : null;
 
-    await db('threads').insert({
-      thread_id: threadId,
-      workspace_id: this.workspaceId,
-      project_id: options.projectId || null, // DEPRECATED: use workspace_id
-      scope: 'project',
-      view_id: null,
-      name,
-      created_at: createdAt,
-      message_count: 0,
-      status: 'suspended',
-      updated_at: now,
-      harness_id: harnessId,
-      harness_config: harnessConfig,
-    });
-
-    return {
-      name,
-      createdAt,
-      messageCount: 0,
-      status: 'suspended',
-      harnessId,
-      scope: 'project',
-      viewId: null,
-    };
-  }
 
   /**
    * Update a thread entry
@@ -194,20 +150,7 @@ class ThreadIndex {
     return this.update(threadId, { resumedAt: new Date().toISOString() });
   }
 
-  /**
-   * Delete a thread (CASCADE deletes exchanges)
-   * @param {string} threadId
-   * @returns {Promise<boolean>}
-   */
-  async delete(threadId) {
-    const db = getDb();
-    const count = await db('threads')
-      .where('thread_id', threadId)
-      .where('workspace_id', this.workspaceId)
-      .where('scope', 'project')
-      .del();
-    return count > 0;
-  }
+
 
   /**
    * Bump MRU timestamp
@@ -217,17 +160,7 @@ class ThreadIndex {
     return this.update(threadId, { updatedAt: Date.now() });
   }
 
-  /**
-   * Rebuild — no-op for SQLite (no filesystem index to reconstruct)
-   * @returns {Promise<number>}
-   */
-  async rebuild() {
-    const db = getDb();
-    const rows = await db('threads')
-      .where('workspace_id', this.workspaceId)
-      .where('scope', 'project');
-    return rows.length;
-  }
+
 
   /**
    * Map a DB row (snake_case) to the ThreadEntry shape (camelCase)

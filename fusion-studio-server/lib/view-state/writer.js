@@ -43,6 +43,15 @@ const FORCE_VIEW_OVERRIDE_TOP_KEYS = new Set([
   'captureTabRecords',
 ]);
 
+// CHAT-03 / SPEC-03 §4: the group-keyed thread-worksurface map lives in the
+// view capsule state document. Each entry is a whole value with two
+// independently revised lanes, so the writer must REPLACE the map rather than
+// deep-merge it: a stale content leaf could otherwise survive an adapter
+// recapture, and a closed placement disposition must not be resurrected.
+const REPLACE_VIEW_OVERRIDE_TOP_KEYS = new Set([
+  'threadWorksurfaces',
+]);
+
 const FORCE_VIEW_OVERRIDE_PATHS = new Set([
   'collapsed.rightCol',
   'collapsed.contentArea',
@@ -110,9 +119,20 @@ async function writeViewStatePatchNow(projectRoot, viewId, patch, callerLease = 
     // Accumulate routed patches.
     const workspaceUpdates = {};
     const overrideUpdates  = {};
+    const overrideReplacements = {};
     let overrideTouched = false;
 
+    // Whole-document replacement keys are never flattened into leaves so an
+    // exact, caller-computed map replaces the previous value atomically.
+    for (const key of REPLACE_VIEW_OVERRIDE_TOP_KEYS) {
+      if (isPlainObject(patch) && Object.prototype.hasOwnProperty.call(patch, key)) {
+        overrideReplacements[key] = patch[key];
+        overrideTouched = true;
+      }
+    }
+
     for (const [keyPath, value] of leafEntries(patch)) {
+      if (REPLACE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0])) continue;
       const pathKey = keyPath.join('.');
       if (FORCE_VIEW_OVERRIDE_TOP_KEYS.has(keyPath[0]) || FORCE_VIEW_OVERRIDE_PATHS.has(pathKey)) {
         setKeyPath(overrideUpdates, keyPath, value);
@@ -138,6 +158,9 @@ async function writeViewStatePatchNow(projectRoot, viewId, patch, callerLease = 
     // it can create the override file even when no user override existed yet.
     if (overrideTouched) {
       const nextOverride = deepMerge(overrideBefore || {}, overrideUpdates);
+      for (const key of Object.keys(overrideReplacements)) {
+        nextOverride[key] = overrideReplacements[key];
+      }
       writes.push({
         filePath: overrideFile,
         obj: nextOverride,
@@ -189,10 +212,22 @@ function writeViewStatePatchUnderLease(projectRoot, viewId, patch, lease) {
   );
 }
 
+/**
+ * Run one read-modify-write operation inside the per-view write queue. The
+ * operation receives no implicit lock token; it must use `writeViewStatePatchNow`
+ * (not `writeViewStatePatch`, which would re-enter this queue and deadlock).
+ * CHAT-03 / SPEC-03 §6.2 uses this to make CAS + lane merge atomic per view.
+ */
+function runViewStateWriteExclusive(projectRoot, viewId, operation) {
+  return enqueueViewStatePatch(projectRoot, viewId, operation);
+}
+
 module.exports = {
   writeViewStatePatch,
   writeViewStatePatchUnderLease,
-  // exported for tests
+  runViewStateWriteExclusive,
+  // exported for the thread-worksurface service and tests
+  writeViewStatePatchNow,
   hasKeyPath,
   setKeyPath,
   leafEntries,

@@ -2,16 +2,27 @@
 name: Chat Runtime Model
 description: Explains how chat threads are opened, warmed, streamed, stopped, persisted, and resumed. Use this page when changing runtime state or thread lifecycle behavior.
 metadata:
-  incoming-edges:
-    - Chat System
-    - Chat Overview
-  outgoing-edges:
-    - Chat Identity And Persistence
-    - Chat Rendering And Lifecycle
-    - Chat Harness And Event Flow
-    - Chat UI
-    - Chat Decisions
+  last-modified: "2026-09-29T07:12:08Z"
   source-files:
+    - fusion-studio-client/src/components/WorkspacePanel.tsx
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+    - fusion-studio-server/lib/wire/terminal-saved-delivery.js
+    - fusion-studio-server/lib/wire/wire-broadcaster.js
+    - fusion-studio-server/lib/event-bus.js
+    - fusion-studio-client/src/lib/ws/thread-markdown.ts
+    - fusion-studio-client/src/lib/ws/thread-history.ts
+    - fusion-studio-client/src/lib/ws-client.ts
+    - fusion-studio-client/src/lib/ws/product-send.ts
+    - fusion-studio-client/src/lib/shell-auth-client.ts
+    - fusion-studio-client/src/lib/ws/application-message-router.ts
+    - fusion-studio-client/src/lib/chat/prompt-submission-recovery.ts
+    - fusion-studio-client/src/lib/ws/fusion-response-listeners.ts
+    - fusion-studio-server/lib/thread/thread-open-handler.js
+    - fusion-studio-server/lib/thread/prompt-submission-service.js
+    - fusion-studio-server/lib/thread-groups/delete-transaction.js
+    - fusion-studio-server/lib/thread/runtime-stop.js
+    - fusion-studio-server/lib/thread/chatlog-mirror.js
+    - fusion-studio-server/lib/thread/session-lifecycle.js
     - fusion-studio-server/lib/thread/thread-crud.js
     - fusion-studio-server/lib/thread/thread-runtime-controller.js
     - fusion-studio-server/lib/thread/thread-runtime-manager.js
@@ -24,11 +35,82 @@ metadata:
     - fusion-studio-server/lib/chat-metadata/collectors/attachments.js
     - fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js
     - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/thread-groups/service.js
+    - fusion-studio-server/lib/thread-groups/repository.js
+    - fusion-studio-server/lib/thread-groups/move-service.js
+    - fusion-studio-server/lib/view-state/thread-worksurface.js
+    - fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+    - fusion-studio-client/src/lib/ws/threadGroupRows.ts
+    - fusion-studio-server/lib/ws/thread-ws-handlers.js
+    - fusion-studio-server/lib/thread/thread-harness-config-policy.js
+    - fusion-studio-server/lib/thread/ThreadManager.js
+    - fusion-studio-server/lib/thread/ThreadWebSocketHandler.js
+    - fusion-studio-client/src/components/chat/useViewChatHost.ts
+    - fusion-studio-client/src/lib/ws/thread-handlers.ts
+    - fusion-studio-client/src/components/ChatArea.tsx
+    - fusion-studio-server/lib/thread-groups/chat-capable-views.js
+    - fusion-studio-server/lib/thread/session-manager.js
+    - fusion-studio-server/lib/thread/thread-lifecycle-controller.js
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-How threads are opened, warmed, streamed, stopped, and persisted.
+Cleanup review: current renderer host composition and replaced source owners were rechecked against development source. Older verification dates and unrelated runtime claims retain their stated scope; no runtime or Alpha validation was performed in this pass.
+
+A visible Thread (internally a Thread Group, `threadGroupId`) contains peer chat sessions and owns the title, immutable workspace/view binding, membership, current primary selection, and visible ordering. Main Chat is the primary session; Side Chats present other members in content tabs. Each session retains its own `threadId` for transcript, runtime, draft, model selection, prompt/Stop targeting, turns, and provenance. This page describes how those sessions are opened, warmed, streamed, stopped, and persisted. See [Thread Identity](../001-Identity_And_Persistence/001-Thread_Identity/PAGE.md) for the action and storage identity map.
+
+## Backend ownership update — September 24, 2026
+
+CHAT-AR SPEC-05 preserves public thread identities, eager New Chat, passive open,
+server acceptance and Stop. `ThreadManager` is a workspace-qualified facade;
+its policies now have explicit owners:
+
+| Owner | Responsibility |
+|---|---|
+| `session-lifecycle.js` / `session-repository.js` | Session creation/deletion primitives, capacity, exact provider activation/retirement and runtime fencing; SQL uses the caller's transaction |
+| `session-metadata.js` / `ThreadIndex.js` | Session metadata mutations/queries; no raw index create/delete bypass |
+| `thread-groups/session-transactions.js` | Initial group/singleton-delete transactions and session admission under the shared group mutation lease |
+| `thread-groups/delete-transaction.js` | Whole-group transaction after busy checks and exact member fences; mirror intent, tombstone, session deletion and worksurface outbox commit together |
+| `thread-groups/startup-reconciliation.js` | Stable-view preflight, ungrouped-session attachment and retry of pending file projections |
+| `chatlog-mirror.js` / `mirror-journal.js` | Disposable Markdown projection and durable revision-conditional recovery intent; not a second exchange writer |
+| `runtime-activation.js` / `runtime-session-activation.js` | Exact captured runtime/session activation ownership |
+| `runtime-prompt-admission.js` / `runtime-dispatch.js` / `runtime-stop.js` | Interactive admission, accepted iterator/drain and Stop orchestration |
+| `prompt-submission-service.js` / repository | Receipt admission/recovery; accepted receipt and group activity share a transaction before ACK/dispatch |
+| `thread-runtime-manager.js` | Sole canonical runtime map and compare-current runtime-object/key/drain-revision checks |
+| `automation-runtime-activation.js` / `automation-turn-context.js` / `automation-drain.js` | Headless use of the same runtime/drain authority, without fabricated client receipts |
+| `ws/thread-action-handler.js` / `thread-action-protocol.js` | Existing authenticated action dispatch and canonical response serialization |
+| `ws/thread-provider-binding.js` | Exact eager provider binding and readiness, exported by the existing WS facade for prompt reuse |
+
+Dependency direction is transport → command/lifecycle owners → repositories or
+canonical runtime APIs. Group operations receive named session capabilities,
+not a whole ThreadManager. `SessionManager` retains provider sessions and idle
+timers; `provider-termination.js` performs bounded process termination and owns
+no runtime map. Action-result/tombstone, mirror-journal and projection-outbox SQL
+have separate repositories behind the existing group repository API. Existing
+file-backed placement/worksurface consumers remain the only view-state writers;
+SQLite contains retry instructions, never copied worksurface snapshots.
+
+Admission holds the same group mutation lease as Move/Delete and rechecks the
+session after waiting. Interactive and automation prompts reserve IN_FLIGHT
+before releasing admission; nested lease acquisition is avoided. Delete checks
+all runtime generations, fences each member before SQL deletion, and cannot be
+undone by late provider/status callbacks. Completed orphan drains clear unless
+failed provider retirement still requires a genuine STOPPING fence.
+
+No migration is added by SPEC-05. Migration 045 from SPEC-02 owns session-lifetime
+submission receipts/tombstones; authorized deletion cascades their owning session.
+`HistoryFile` remains the exchange writer and invalidates mirror intent in the
+same transaction as the exchange. A stale export cannot acknowledge a newer
+revision. File failures remain pending for activation/retry after storage recovers.
+A failed canonical exchange save emits no saved ACK; the exact partial RAM
+snapshot is retained, without promising durability across process loss.
+
+The isolated validation inventory and fault/readback matrix are under
+`Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/`.
+Full server tests use real staged provider source and their declared mocks;
+GUI checks use a deterministic provider adapter behind real Electron auth,
+production routes, SQLite and files. This update does not certify SPEC-06
+performance, soak, native-input or owner symptom acceptance, or an Alpha build.
 
 ## Shell and server generation
 
@@ -39,10 +121,15 @@ binds only exact IPv4 loopback and reports only its selected port at readiness.
 
 On generation change, the renderer runtime-transport owner aborts outstanding
 server HTTP work and closes sockets created for the old generation.
-`ws-client.ts` clears response trackers and transient connection state, creates
-one new socket, and lets the normal `workspace:init` path rehydrate
-authoritative state. Missing or invalid descriptor state is disconnected and
+`ws-client.ts` retires connection-scoped response listeners and transient state,
+creates one new authenticated socket, and delegates ordered inbound frames to
+`ws/application-message-router.ts`. That router lets the normal `workspace:init`
+path rehydrate authoritative state and then resumes receipt inquiry recovery. Missing or invalid descriptor state is disconnected and
 has no browser/page-origin fallback.
+
+The client invalidates the local workspace binding sequence at each `beginInit`, including a same-workspace rebind. Chat socket-only commands require the current authenticated connection and captured binding. Qualified metadata and receipt inquiries may enter the existing bounded auth queue while the new `workspace:init` binding is pending; a later flush rechecks the exact socket, generation, workspace, epoch, revision and local sequence before sending. Stale queued work is dropped rather than retargeted. A local queue or native-send result is only admission evidence; server `message:sent`, action results, and saved-turn frames still own their respective transitions.
+
+Receipt recovery owns two distinct local facts for an exact attempt: whether one inquiry is waiting on its five-second deadline and whether a possibly sent inquiry may still receive an exact reply. Definite refusal releases only the waiting inquiry and shows existing unknown feedback immediately, with the original pending or accepted phase intact. A possible send, including auth-queue custody, waits at most five seconds; expiry schedules the existing bounded status-only retry while retaining late-reply eligibility. An exact eligible response can reconcile after expiry or a later refused inquiry. Accepted turn identity and the current workspace binding, including its local invalidation sequence, fence that response. Reconnect, rebind, session removal, new attempt, ACK or terminal turn retires the old timer and eligibility. Neither a local result nor timeout resends a prompt, commits acceptance, or cancels provider work. This does not resolve the broader provider-failure and accepted-without-exchange cases.
 
 Each server generation has a separate ephemeral HMAC master held only in
 Electron main and server memory. Electron transfers it once through the
@@ -72,10 +159,11 @@ asynchronous product cleanup before process exit so each activated connection
 completes durable session suspension.
 
 At the decoded thread-message boundary, New Chat, assistant activation/resume,
-Rename, Delete, Touch, Warm, and prompt-triggered runtime activation require
+Rename, Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm,
+and prompt-triggered runtime activation require
 that exact private role before their current owners
 run. Assistant resume is privileged because its current implementation writes
-resumed and MRU metadata in addition to launching the stored provider session.
+resumed metadata in addition to launching the stored provider session.
 Passive `thread:open` retains standalone hydration without writing `resumed_at`,
 `updated_at`, or delayed list state. Legacy Fork is always denied before
 thread-manager or provider work, and stored Fork-era provider state is removed
@@ -101,7 +189,8 @@ the shared adapter for another workspace cannot retarget an existing session's
 CLI, model, mode, or configured-secret provider. Ownership transfers and
 deletion are serialized per connection across close/open and workspace-switch
 boundaries. A separate per-connection workspace-operation lease linearizes
-workspace binding with Create/Resume, Rename, Delete, Touch, Warm, and prompt
+workspace binding with Create/Resume, Rename, Delete, Copy Link, Resolve Link,
+View Markdown, model selection, Warm, and prompt
 acceptance through persistence and provider admission. If the action wins it
 finishes that bounded admission before binding begins; if binding wins, the
 action is denied before manager, database, list, event, or provider effects.
@@ -128,82 +217,153 @@ client/epoch owner. If the target exits while predecessor retirement is
 awaited, activation rolls back and emits no readiness or delivery ownership.
 Passive manager-backed reads use the same live pair check without requiring
 trusted mutation authority. After an A-to-B bind, A's retained manager cannot
-serve open/list/link/search data while B's panel manager is pending;
+serve open/list/search data while B's panel manager is pending;
 normal B reads resume after the exact B manager is installed.
 The isolated agent-tool fixture is bound to its startup-provisioned thread,
 workspace, and root and holds the same workspace-operation lease across passive
 selection, authority creation, filesystem work, canonical events, and result
 delivery. It cannot use a retained manager after another workspace binds.
 
+## Renderer Chat Surfaces
+
+The renderer composes one explicit chat surface from an addressed identity rather than a global current thread. `ChatSurface` renders one session model and emits explicit actions; a connected host owns store reads, WebSocket actions, and application services and passes no store, socket, controller, service, or mutable global into the surface.
+
+Identity domains stay separate:
+
+- `threadId` keys transcript, live-turn frontier, readiness/wire state,
+  context/token usage, acknowledged/pending model selection, draft, and
+  attachments;
+- `surfaceId` keys transient mounted DOM/menu/focus state and is minted by the
+  connected host at mount from its own runtime mount generation. It is never
+  persisted, sent, or used as session authority;
+- shell visibility/collapse is not session state and never clears or reassigns
+  a chat identity;
+- a component-backed mount derives `surfaceId` from its unique
+  `componentInstanceId` + runtime mount generation; the pending new-thread
+  connecting state is surface-owned (keyed by `surfaceId`) so two mounted
+  surfaces never display each other's connecting state.
+
+Model/variant selection is the last server-acknowledged exact-session value.
+The composer emits only portable `{model, variant}` through
+`thread:action set_harness_selection` with a fresh `requestId`; the optimistic
+value stays pending by `threadId` and never becomes Send authority. The exact
+session's acknowledgement promotes the acknowledged value, a rejection restores
+the prior acknowledged value, and restart/open hydrates the acknowledged value
+from the server-owned `entry.harnessConfig`. Send snapshots the acknowledged
+value for that exact `threadId`.
+
+`thread:opened` hydrates the returned session's own slot. Visible selection is qualified by the response population and a matching pending open, existing selection, or empty selection; a late response is not a wire-token guarantee of the latest user intent. `wire_ready`, status/usage, and `thread:action:*` results retain their session-specific handling. See [List And Open Correlation](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#list-and-open-correlation).
+
+Group lists and their selected visible group are keyed by the composite `{workspaceId, viewId}`; `viewId: null` is the explicit Legacy population and never a fallback to the active panel. `ThreadRail` is a portable presentation boundary: it receives one population, its selected group, and callbacks and emits canonical row intents; it does not request a list, inspect a panel, or mutate a store. `ThreadedChat` can compose a rail and selected Main Chat; the production shell uses `WorkspacePanel` and `useViewChatHost` to present sibling view-bound rail/chat/content regions.
+
+The production `ChatArea` is view-bound. The former View Threads dock and Legacy production host are removed. Side Chat mounts remain single sessions without a nested rail; their current Show threads action toggles the owning view’s outer sidebar. Removing that left-hand tab control remains a product gap. See the [Chat UI host map and owner direction](../004-Chat_UI/PAGE.md#main-chat-side-chat-and-move).
+
+Only the active connected host requests or opens its own population. Fusion
+keeps inactive panels mounted, but they render cached state and issue no
+duplicate unqualified `thread:list`; each `thread:open` request is recorded per
+request and per population so a late response can only mutate its own
+population's selection. A reconnected socket re-issues its qualified
+`thread:list` (the request dedupe is generation-aware).
+
+`fusion.chat-surface` is registered as a code-owned first-party component through the code-owned Generic Host resolver seam. The JSON-safe descriptor input carries durable identities only — workspace, nullable view, group, session, and presentation host — and no transient `surfaceId`, store, socket, callback, path, React element, import, or authority claim. The connected resolver validates the descriptor/schema and the workspace/view/group/member tuple against hydrated authority before binding established state/actions, then mints the transient `surfaceId` and never persists it. The Generic Host stays chat-ignorant and provides no placement, target-matching, dedupe, or persistence command. The Side Chat path delivers a descriptor only through the service-managed placement lane and code-owned bridge; it does not use the empty-launcher lifecycle and does not widen the Generic Host contract. The descriptor carries the durable `sideChatPlacementId` (not the transient `surfaceId`).
+
 ## Persistent Unit
 
-The persistent unit is a thread.
+Persistence separates the visible Thread/group from its member chat sessions. Rename and Delete address the group; prompts and Stop address one session. View content continuity lives in the owning view capsule at `viewStates[viewId].threadWorksurfaces[threadGroupId]`, not in the session or group tables. A null view is the separate Legacy population and owns no view worksurface.
+
+Move preserves the existing session and creates a new empty Main peer without copying conversation context. `sideChatPlacementId` identifies the durable Side Chat placement, while `surfaceId` identifies only a transient mounted UI instance. Closing a tab records a closed placement disposition without deleting its conversation or group membership.
 
 | Table | Purpose |
 |---|---|
-| `threads` | Metadata: id, workspace, scope, view, name, harness, status, MRU |
+| `threads` | Session metadata: id, workspace, scope, view, name, harness, status, legacy per-session timestamps |
+| `thread_groups` | Visible Thread: workspace, immutable view binding (`null` = Legacy), name, current primary, `updated_at` visible-list MRU |
+| `thread_group_members` | Exactly one group per session (`thread_id` globally unique); peer ordinal and `origin_kind` |
+| `thread_group_primary_events` | Append-only Main Chat primary history (`reason='move-to-side-chat'` for Move) |
+| `thread_group_activity_events` | Durable idempotent `initial` / `prompt-accepted` / `move-chat-to-side` MRU causes |
+| `thread_group_placement_outbox` | Durable `open-side-chat-tab` intent keyed by `sideChatPlacementId` (migration 044) |
 | `exchanges` | Rich turn history: user input, assistant parts, metadata, sequence |
 
 Markdown chat files still exist for compatibility and link/view workflows. The
 rich renderer hydrates from SQLite exchanges.
 
+Prompt acceptance mints the turn identity and records `prompt:{threadId}:{turnId}` plus the group `updated_at` advance in one transaction **before** `message:sent` or provider dispatch. The activity uses the immutable workspace/thread/turn authority and never re-reads the current panel to retarget the turn; a failed persist rejects the prompt through the normal acceptance path.
+
+The visible-list MRU clock is `thread_groups.updated_at`, separate from legacy session timestamps such as `threads.updated_at` and `resumed_at`. Its three implemented causes are group creation (`initial:{threadGroupId}`), accepted prompt (`prompt:{threadId}:{turnId}`), and accepted Move (`move:{requestId}`). Creation sets the initial clock and activity together; subsequent activity insertion and clock advancement are atomic and idempotent. Retrying the same Move with the same request ID and canonical input replays the result without advancing again. Passive open, warming, provider completion, Stop, rename, tab close, placement repair, and member reopen do not advance group ordering. See [Thread Group Activity And Visible-List MRU](../001-Identity_And_Persistence/PAGE.md#thread-group-activity-and-visible-list-mru) for the writer paths and Move/reopen example.
+
 ## Workspace Open
 
-When a workspace opens, the client requests the project thread list:
+Lists contain visible Thread Group projections for one population in the connection-bound workspace. An unqualified list means Legacy, not all chats across every view. These two Legacy requests are equivalent:
 
 ```json
-{ "type": "thread:list", "scope": "project" }
+{ "type": "thread:list", "viewId": null }
 ```
-
-If there is no active project thread and the list is non-empty, the client
-passively opens the MRU thread:
 
 ```json
-{ "type": "thread:open", "scope": "project", "threadId": "..." }
+{ "type": "thread:list" }
 ```
 
-This hydrates history without spawning a harness.
+A view host requests only its registered immutable view ID; `file-viewer` below is an example that must exist in that workspace:
+
+```json
+{ "type": "thread:list", "viewId": "file-viewer" }
+```
+
+The server validates the view through `resolveViewTarget`; an unavailable explicit view returns `view_not_found`, without falling back to Legacy. `sendThreadList` returns `thread:list` with `scope: "project"`, the selected nullable `viewId`, and `threads` containing group projections. Each row includes workspace/group/view identity and `currentPrimaryThreadId`. `scope` is retained for wire compatibility; it does not select every view. Workspace authority comes from the bound connection and matching manager, never a client workspace field.
+
+After workspace initialization, the Legacy client handler auto-opens the MRU row if no Legacy session is selected. A view population's active `useViewChatHost` owns its own qualified request and initial group selection; inactive mounted hosts do not request lists. Visible-row selection uses the group identity:
+
+```json
+{ "type": "thread:open", "threadGroupId": "<existing-group-id>" }
+```
+
+`threadOpenRequest` prefers `threadGroupId`, and the server resolves its current primary for history hydration. The returned session `threadId`, not the group ID, remains the prompt/Stop/live-event address. See [List And Open Correlation](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#list-and-open-correlation) for response ownership.
 
 ## Passive Browse
 
-Clicking an existing thread sends `thread:open`.
+Clicking a visible Thread sends `thread:open`. The response `thread:opened` carries authoritative `workspaceId`, nullable `viewId`, `threadGroupId`, the current primary's `threadId`, history, and an optional in-memory `liveTurn` snapshot. Passive browse does not warm, spawn, kill, mark resumed, advance visible ordering, or schedule delayed list reordering.
 
-Server response:
+The retained session-addressed request is valid for any verified existing group member and hydrates that exact session, including a non-primary Side Chat or one-member Legacy group:
 
-- `thread:opened`
-- rich exchange history
-- optional `liveTurn` snapshot when the thread has an active in-memory turn
+```json
+{ "type": "thread:open", "threadId": "<existing-member-session-id>" }
+```
 
-Passive browse must not warm, spawn, kill, mark resumed, update MRU, or schedule
-a list reorder.
+`resolveOpenTarget` validates the requested member and the open handler reads its exact `target.threadId`. A group-only request still resolves the current Main. Supplying both IDs verifies membership; no replacement session is created. Restored components add `historyOnly: true` so their read leaves selected Main/group and pending user-open intent alone. Existing-session `thread:open-assistant` composes the same exact read before its explicit activation. See the [Side chats menu and link contracts](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links) for placement routes.
+
+Unknown/foreign passive-open targets and mismatched group/member pairs return `not_found` without creating anything; group activation/preflight failures return their repair diagnostic. This passive behavior must not be generalized to every assistant-create/resume case below.
 
 ## New Thread And Activation
 
-New chat uses `thread:open-assistant` without a `threadId`:
+New Chat currently creates eagerly. A Legacy request omits IDs and uses null or omitted `viewId`; a view-bound request supplies its registered view ID:
 
 ```json
-{ "type": "thread:open-assistant", "scope": "project" }
+{ "type": "thread:open-assistant", "viewId": null }
 ```
 
-The server resolves the default harness from `ai/<machine>/System/config/cli.json`. In the
-current OpenCode-only config, no explicit `harnessId` is needed.
+```json
+{ "type": "thread:open-assistant", "viewId": "file-viewer" }
+```
 
-`thread:open-assistant` is the assistant activation/create path:
+The public route requires the private trusted-shell role, normalizes the closed request shape, verifies the live workspace/manager binding, and runs creation/resume plus provider admission under the workspace-operation lease. The accepted top-level keys are `type`, `threadId`, `threadGroupId`, `viewId`, `requestId`, `name`, `scope`, `harnessId`, and `harnessConfig`. They confer no workspace authority. `harnessConfig` accepts only portable `model` and `variant`; provider-session IDs, Fork metadata, credentials, and unknown keys are denied before lookup/persistence. An explicit `variant: null` clears the selection.
 
-1. If a valid `threadId` is supplied, resume/open that assistant thread.
-2. If no valid `threadId` exists, create a new SQLite thread row.
-3. Persist the resolved harness id on the thread.
-4. Send `thread:created`.
-5. Open and hydrate the thread.
+After those public checks, target handling differs:
 
-Server-side policy rejects explicit disabled or absent harnesses for new thread
-creation.
+| Request target | Current source behavior |
+|---|---|
+| Known `threadGroupId`, with optional valid member `threadId` | Validate group/workspace/membership, then open and activate the specified member, or the current primary when no member is supplied; no replacement group |
+| Unknown/foreign explicit `threadGroupId`, or mismatched group/member | `not_found`; no fallback creation |
+| Existing session-only `threadId` in this workspace | Delegate to `handleThreadOpen` for that exact validated session with activation metadata enabled |
+| Session-only `threadId` belonging to another workspace | Return an unavailable-thread error; do not create a replacement |
+| Unknown session-only `threadId`, absent from this workspace and other workspaces | Reachable fallback to eager creation with newly minted session and group IDs; the supplied unknown ID is not reused |
+| Neither ID supplied | Eager creation |
 
-Creation accepts only portable `model` and `variant` fields inside
-`harnessConfig`. Provider-session ids, Fork metadata, credentials, and unknown
-fields receive the same bounded denial before manager lookup or persistence.
-An explicit `variant: null` is a clear operation and is persisted/applied to
-the live session rather than silently retaining an earlier effort selection.
+The unknown-session fallback is reachable because `normalizeOpenAssistantRequest` allows `threadId`; it validates the request/config shape, not existence. This differs from passive-open rejection and the intended no-replacement rule for explicit unknown targets. Carry that mismatch into product planning; do not silently describe it as rejected or endorse it as the desired future behavior. These rows assume earlier authority/binding/stopping guards and group preflight succeed.
+
+For creation, `handleThreadCreate` resolves policy from `ai/<machine>/System/config/cli.json`, rejecting explicit absent/disabled harnesses and otherwise using the default (OpenCode in the current config). A non-null requested view must resolve through the registry or creation returns `view_not_found`; null/omission creates Legacy and never borrows the active view. The creation path does not create a view, folder, project, template, or CWD binding.
+
+`ThreadManager.createThread` commits the session row, independently minted group, initial membership/current primary, primary event, initial group activity, and mirror-recovery instruction together. It preserves the manager's session-limit and Markdown mirror ownership. The server then sends `thread:created` with both IDs and nullable view, refreshes that group's own list population, and sends `thread:opened` after hydration with activation metadata enabled. The public handler subsequently reuses or starts the provider runtime and emits readiness through the existing activation owner. Durable creation and its acknowledgements do not wait for a provider signal; a created row is not proof of provider readiness. Activation's session resume/touch metadata does not advance the group's visible ordering clock.
+
+Pending New Chat (a renderer-memory intent with provider-signal-gated commit) is future work. The current surface connecting indicator is not that deferred creation lifecycle.
 
 Every harness/CLI process and installation/version probe receives its
 environment from the central server child-environment policy. The policy copies
@@ -234,19 +394,21 @@ Intent to send can warm a cold runtime:
 
 Passive thread browsing does not warm.
 
+`SessionManager` holds live provider sessions. Current `ThreadManager` defaults allow 10 active provider sessions and use a 9-minute provider-session idle timer; this is not a limit on visible or persisted conversations. A separate 45-minute thread lifecycle observer emits `thread:idle_expired` after turn idleness and does not itself evict threads or provider wires. These are distinct from the old proposed workspace FIFO/TTL settings. Durable exchanges and metadata remain available for later history hydration.
+
 ## Prompt Acceptance
 
 Prompt sending goes through `threadRuntimeController.acceptPromptThroughRuntime`.
 
 Current flow:
 
-1. Client sends prompt with `scope`, `threadId`, `user_input`, and optional
+1. Client sends prompt with an immutable `requestId`, `scope`, `threadId`, `user_input`, and optional
    `attachments`.
 2. Server checks/warm runtime readiness.
 3. Server rejects in-flight/stopping conflicts.
-4. Server persists/accepts the user message.
+4. Server commits the accepted receipt and group activity in one transaction.
 5. Server emits `message:sent`.
-6. Client commits the user bubble and clears accepted input.
+6. Client commits the user bubble and clears only the submitted draft/attachment snapshot.
 7. Server serializes a compact attached-reference block for the harness when
    attachment metadata is present.
 8. Harness events stream through the canonical path.
@@ -353,3 +515,54 @@ no assistant exchange.
 Automation hooks can send prompts without a focused UI. They use explicit
 workspace/project/thread targets and the same runtime/canonical event path. They
 do not call `ws.send` directly and should not interrupt in-flight user turns.
+
+### Terminal delivery and provider exit ownership (SPEC05D integration)
+
+Stop waits for the existing bounded event-effect barrier for its exact
+workspace/root/epoch/thread/turn before removing the provider route. This keeps
+`chat-turn:saved` deliverable after the interrupted exchange commits. A three
+second effect timeout still terminates the captured provider and releases the
+exact session after proven termination. A transport-only listener can forward
+one genuine late saved ACK for up to30seconds; it is canceled on ACK, failed or
+settled effects, Stop failure, connection close, or its deadline. A shared
+event-local delivery receipt prevents duplicate normal/fallback sends. Exact
+connection generation, runtime ownership and provider-session checks prevent
+replacement delivery. After the deadline, eventual persistence requires normal
+history/reconnect recovery; a failed save never invents an ACK. The existing
+effect drain accepts cancellation so every fallback timer is released.
+The session's active Stop-finalization token and existing close promise prevent
+its provider-exit observer from starting competing retirement. Observed exits
+are retained on that exact session; releasing the token schedules at most one
+reconciliation if the session still exists. Reconciliation rechecks the exact
+session after queued work and drain retirement. Metadata suspension completes
+before provider admission is released; late cleanup cannot cool a replacement.
+
+### Restored component history (SPEC05D integration)
+
+A validated restored chat component issues `thread:open` with its explicit
+`threadGroupId`, exact `threadId`, a request ID, and `historyOnly: true`.
+`thread-open-handler.js` consumes captured read/metadata capabilities and reads
+the resolved member, rather than substituting the group's current Main Chat.
+The server echoes `historyOnly` and leaves connection selection/provider ownership
+alone. `thread-history.ts` hydrates that session's history/live snapshot without
+changing selected groups or consuming pending Main Chat opens. It is a read,
+not assistant activation. `thread-handlers.ts` remains the message dispatcher;
+`thread-markdown.ts` only opens the acknowledged mirror in File Viewer.
+
+The bounded affected-owner graph is enforced by `backend-owner-contract.mjs`.
+Unchanged dependencies outside its inventory (including the thread barrel,
+registry, and worksurface cleanup) are external boundaries; this check does not
+claim a complete repository dependency graph.
+
+
+### Observed exit after failed drain retirement
+
+An accepted drain can exist before `turn_begin`. If bounded Stop fails and its
+exact provider later exits, SessionLifecycle waits up to five seconds for that
+captured iterator to settle, including a rejected completion, instead of replaying
+the cached failed Stop. It clears only the still-owned completed drain through
+the canonical runtime API and suspends metadata before releasing the session.
+Active Stop ownership and session/runtime/drain replacements are rechecked across
+awaits and before/after metadata. Still-pending completion or failed metadata
+retains the discoverable session for an explicit retirement retry; no saved ACK
+is fabricated and no additional provider signal is sent after observed exit.

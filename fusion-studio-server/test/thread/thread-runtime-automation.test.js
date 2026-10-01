@@ -1,3 +1,10 @@
+// Unit persistence adapter: real lease/row validation is covered by isolated
+// public-route deletion/admission and submission integration tests.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
 'use strict';
 
 const fs = require('fs/promises');
@@ -409,6 +416,7 @@ describe('canonical drain binding (SPEC-01 Slice B)', () => {
   });
 
   test('claimed record carries control closures and route context bound to the target', async () => {
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain');
     const stopSession = jest.fn(() => Promise.resolve());
     const manager = makeManager();
     registry.getThreadManagerForTarget.mockReturnValue(manager);
@@ -421,7 +429,8 @@ describe('canonical drain binding (SPEC-01 Slice B)', () => {
     await expect(sendAutomationPrompt(makeTarget(), 'hello')).resolves.toMatchObject({ accepted: true });
 
     const runtimeKey = _getRuntimeKey(makeTarget());
-    const record = threadRuntimeManager.getActiveDrain(runtimeKey);
+    const record = claimSpy.mock.results[0].value;
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
 
     expect(record).toBeTruthy();
     expect(record.drainId).toBe('turn-1'); // uuid is mocked file-wide
@@ -447,6 +456,7 @@ describe('canonical drain binding (SPEC-01 Slice B)', () => {
   });
 
   test('automation-owned stop failure logs only fixed marker and opaque route ids', async () => {
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain');
     const canary = 'CANARY_SECRET_AUTOMATION_STOP';
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const stopSession = jest.fn(async () => { throw new Error(canary); });
@@ -459,7 +469,8 @@ describe('canonical drain binding (SPEC-01 Slice B)', () => {
     spawnThreadWire.mockReturnValue(wire);
 
     await expect(sendAutomationPrompt(makeTarget(), 'hello')).resolves.toMatchObject({ accepted: true });
-    const record = threadRuntimeManager.getActiveDrain(_getRuntimeKey(makeTarget()));
+    const record = claimSpy.mock.results[0].value;
+    expect(threadRuntimeManager.getActiveDrain(_getRuntimeKey(makeTarget()))).toBeNull();
 
     await expect(record.control.stopHarness()).rejects.toThrow('Automation provider termination failed');
 
@@ -1111,4 +1122,131 @@ describe('diagnosticId wiring — headless parity (SPEC-03 Slice C)', () => {
       errorLogs: errorSpy.mock.calls,
     })).not.toContain(canary);
   });
+});
+
+describe('automation exact generation and drain completion', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+    getWireForThread.mockReturnValue(null);
+  });
+  test('late automation warmup cannot open a session after generation fencing', async () => {
+    const target = makeTarget();
+    const manager = makeManager();
+    registry.getThreadManagerForTarget.mockReturnValue(manager);
+    let release;
+    const wire = makeWire([]);
+    wire._harnessPromise = new Promise(resolve => { release = resolve; });
+    wire._stopSession = jest.fn(async () => {});
+    spawnThreadWire.mockReturnValue(wire);
+    const sending = sendAutomationPrompt(target, 'hello');
+    await flushAsyncWork();
+    const key = _getRuntimeKey(target);
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.WARMING);
+    threadRuntimeManager.fenceResource(key);
+    release();
+    await expect(sending).resolves.toMatchObject({ accepted: false, error: 'Thread warm-up failed' });
+    expect(manager.openSession).not.toHaveBeenCalled();
+    expect(manager.addMessage).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntime(key)).toBeNull();
+    expect(wire._stopSession).toHaveBeenCalled();
+  });
+
+  test('retained automation retire callback cannot stop a replacement after it clears', async () => {
+    const target = makeTarget();
+    registry.getThreadManagerForTarget.mockReturnValue(makeManager());
+    let release;
+    const delay = new Promise(resolve => { release = resolve; });
+    const wire = { _harnessPromise: Promise.resolve(), _usesDirectCanonicalEvents: true,
+      _stopSession: jest.fn(async () => {}), async *_sendMessage() {
+        yield { type: 'turn_begin' }; await delay;
+      } };
+    spawnThreadWire.mockReturnValue(wire);
+    const sending = sendAutomationPrompt(target, 'hello');
+    await flushAsyncWork();
+    const key = _getRuntimeKey(target);
+    const old = threadRuntimeManager.getActiveDrain(key);
+    const { createCanonicalDrainControl } = require('../../lib/thread/canonical-drain-context');
+    threadRuntimeManager.claimActiveDrain(key, createCanonicalDrainControl({ drainId: 'replacement', runtimeKey: key,
+      touchThreadSession() {}, stopHarness: async () => {} }), old.routeContext);
+    threadRuntimeManager.clearActiveDrainIfCurrent(key, 'replacement');
+    threadRuntimeManager.markState(key, RUNTIME_STATES.STOPPING);
+    expect(await old.retire()).toBe(false);
+    expect(wire._stopSession).not.toHaveBeenCalled();
+    release();
+    await expect(sending).resolves.toMatchObject({ error: 'Drain superseded during iteration' });
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.STOPPING);
+    expect(unregisterWire).not.toHaveBeenCalled();
+  });
+
+  test('automation retirement rechecks after terminal application before stopping reused provider', async () => {
+    const target = makeTarget();
+    registry.getThreadManagerForTarget.mockReturnValue(makeManager());
+    let release;
+    const delay = new Promise(resolve => { release = resolve; });
+    const wire = { _harnessPromise: Promise.resolve(), _usesDirectCanonicalEvents: true,
+      _stopSession: jest.fn(async () => {}), async *_sendMessage() {
+        yield { type: 'turn_begin' }; await delay;
+      } };
+    spawnThreadWire.mockReturnValue(wire);
+    const sending = sendAutomationPrompt(target, 'hello');
+    await flushAsyncWork();
+    const key = _getRuntimeKey(target);
+    const old = threadRuntimeManager.getActiveDrain(key);
+    const { createCanonicalDrainControl } = require('../../lib/thread/canonical-drain-context');
+    // The real terminal subscriber can yield ownership while its promise settles.
+    emit.mockImplementationOnce((type) => {
+      expect(type).toBe('chat:turn_end');
+      threadRuntimeManager.claimActiveDrain(key, createCanonicalDrainControl({ drainId: 'replacement', runtimeKey: key,
+        touchThreadSession() {}, stopHarness: async () => {} }), old.routeContext);
+      threadRuntimeManager.markInFlight(key);
+    });
+    expect(await old.retire()).toBe(false);
+    expect(wire._stopSession).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(key).drainId).toBe('replacement');
+    release();
+    await sending;
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.IN_FLIGHT);
+  });
+});
+
+test.each(['empty', 'throw'])('completed %s automation iterator releases its pre-begin reservation', async (mode) => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  getWireForThread.mockReturnValue(null);
+  const target = makeTarget();
+  registry.getThreadManagerForTarget.mockReturnValue(makeManager());
+  spawnThreadWire.mockReturnValue({ _usesDirectCanonicalEvents: true,
+    _harnessPromise: Promise.resolve(), async *_sendMessage() {
+      if (mode === 'throw') throw new Error('provider failed before begin');
+    } });
+  const result = await sendAutomationPrompt(target, 'hello');
+  const key = _getRuntimeKey(target);
+  expect(result.accepted).toBe(mode === 'empty');
+  expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+  expect(threadRuntimeManager.getResourceBusyState(key)).toBeNull();
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.READY);
+  expect(threadRuntimeManager.getLiveTurn(key)).toBeNull();
+  expect(emit.mock.calls.filter(([type]) => ['chat:turn_begin', 'chat:turn_end'].includes(type))).toHaveLength(0);
+});
+
+test('completed automation iterator preserves STOPPING after actual provider retirement failure', async () => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  getWireForThread.mockReturnValue(null);
+  const target = makeTarget();
+  registry.getThreadManagerForTarget.mockReturnValue(makeManager());
+  let finish;
+  const gate = new Promise(resolve => { finish = resolve; });
+  const wire = { _usesDirectCanonicalEvents: true, _harnessPromise: Promise.resolve(),
+    _stopSession: jest.fn(async () => { throw new Error('provider termination failed'); }),
+    async *_sendMessage() { await gate; } };
+  spawnThreadWire.mockReturnValue(wire);
+  const sending = sendAutomationPrompt(target, 'hello');
+  await flushAsyncWork();
+  const key = _getRuntimeKey(target);
+  const record = threadRuntimeManager.getActiveDrain(key);
+  expect(await record.retire()).toBe(false);
+  expect(wire._stopSession).toHaveBeenCalled();
+  finish(); await sending;
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.STOPPING);
+  expect(threadRuntimeManager.getActiveDrain(key)).toBe(record);
+  expect(threadRuntimeManager.getResourceBusyState(key)).toBe('draining');
 });

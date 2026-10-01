@@ -160,23 +160,8 @@ export interface ThreadEntry {
   harnessConfig?: ThreadHarnessConfig | null;
 }
 
-export interface ThreadForkMetadata {
-  type?: string;
-  status?: string;
-  sourceThreadId?: string;
-  sourceThreadName?: string;
-  sourceExchangeId?: number | null;
-  sourceExchangeSeq?: number | null;
-  sourceOpenCodeSessionId?: string;
-  createdOpenCodeSessionId?: string;
-  createdAt?: string;
-  [key: string]: unknown;
-}
-
 export interface ThreadHarnessConfig {
   opencodeSessionId?: string;
-  pendingFork?: ThreadForkMetadata | null;
-  forkProvenance?: ThreadForkMetadata | null;
   [key: string]: unknown;
 }
 
@@ -192,5 +177,16 @@ export interface HarnessStatus {
 
 export interface Thread {
   threadId: string;
+  /** Visible-row/worksurface key. Distinct type from `threadId` (CHAT-RD-004). */
+  threadGroupId?: string;
   entry: ThreadEntry;
+  /** Server projection fields present on `thread:list` rows (SPEC-01 §8.1). */
+  workspaceId?: string;
+  viewId?: string | null;
+  name?: string | null;
+  currentPrimaryThreadId?: string;
+  currentPrimarySequence?: number;
+  memberCount?: number;
+  createdAt?: number;
+  updatedAt?: number;
 }

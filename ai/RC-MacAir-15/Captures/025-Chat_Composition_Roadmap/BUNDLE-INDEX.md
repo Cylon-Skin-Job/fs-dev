@@ -19,8 +19,10 @@ surface in a content tab. It does so through five independently judged domains:
 
 The first domain waits for the owner-accepted Agent Tool Provenance product
 bytes to be integrated because the accepted Provenance work overlaps transport,
-startup, and child-process paths. Chat implementation also waits for approved
-BRIDGE-01 and BRIDGE-02 contracts and the owner-released Tab Platform milestone.
+startup, and child-process paths. Chat implementation also waits for
+owner-accepted BRIDGE-01 (`16ccecf`) and owner-approved BRIDGE-02, consumed
+through `BRIDGE-02-CONFORMANCE-OVERLAY.md`, and the owner-released Tab Platform
+milestone.
 The renderer domains consume the independently accepted Tab Platform rather
 than recreating it.
 
@@ -31,6 +33,7 @@ than recreating it.
 | 00 | `DECISIONS.md` | Owner decisions and reconciled bundle choices | draft |
 | 00 | `ISSUES.md` | External gates, resolved conflicts, and deferrals | draft |
 | 00 | `GUIDANCE.md` | Builder, reviewer, deviation, and acceptance lifecycle | draft |
+| 00 | `BRIDGE-02-CONFORMANCE-OVERLAY.md` | Bridge `ChatActionContext` conformance overlay consumed by every SPEC | draft |
 | 00 | `ROADMAP.md` | Dependency order and roadmap completion contract | draft |
 | 00 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | Shell origin, transport descriptor, connection proof, and privileged-route gate | draft |
 | 01 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | Thread Group persistence, migration, lifecycle, and public protocol | draft |
@@ -109,7 +112,8 @@ Integrated owner-accepted Agent Tool Provenance
 SPEC-00 Trusted Fusion Shell Authority
                  |
                  v
-Approved BRIDGE-01 + BRIDGE-02
+BRIDGE-01 accepted + BRIDGE-02 candidate
+through BRIDGE-02-CONFORMANCE-OVERLAY.md
 and owner-released Tab Platform milestone
                  |
                  v

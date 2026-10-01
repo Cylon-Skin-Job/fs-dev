@@ -2,6 +2,7 @@
 name: Chat Vision
 description: Product and developer goals for the chat system. Use this page to preserve the desired user experience while changing runtime, rendering, harness, or UI behavior.
 metadata:
+  last-modified: "2026-09-19T10:34:31Z"
   incoming-edges:
     - Chat System
     - Chat Overview
@@ -42,9 +43,16 @@ like a transient web chat window.
 - Visible thinking is a capability, not a guarantee. Do not fake a thought trace
   from reasoning token counts.
 
+## Chat Placement Direction
+
+Owner direction is chat in content tabs: each Side Chat is one session without a nested or left-column thread list. Remove the Side Chat tab's left-hand Show threads button and sliding thread-panel behavior; retain its right-hand list button, whose future shared action is still undecided. The current left-hand outer-dock toggle is a product gap, not a permanent requirement. The normal workspace host remains Legacy today; whether view-bound chat becomes the default has not been decided. See [Chat UI](../../004-Chat_UI/PAGE.md#main-chat-side-chat-and-move) for source-inspected placement and [September 19 Decisions](../002-Decisions/PAGE.md#2026-09-19--side-chat-tabs-and-non-chat-windows) for the latest intent.
+
+The retired floating/minimized Secondary Chat must not return as a chat mode. Recover a separate windowed container for non-chat content, including minimizing to a small button and reopening. A generic container is not currently available; content types, persistence, placement ownership, native OS window use, sticky-right behavior, and animation remain unresolved.
+
 ## Developer-Level Principles
 
-- Thread id is the stream routing key.
+- The visible Thread is a body of work with peer chat sessions; Main and Side describe presentation roles. Renaming or deleting the visible Thread is group-scoped, while a prompt or Stop targets one session.
+- Session `threadId` is the stream routing key. `threadGroupId` identifies the visible Thread and its view continuity; tab placement and transient mounted UI identity stay separate.
 - Server owns prompt acceptance and stop/interruption.
 - SQLite exchanges are the durable source for completed turns.
 - In-memory live snapshots bridge the gap between durable history and active

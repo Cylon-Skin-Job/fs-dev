@@ -1,8 +1,10 @@
 'use strict';
 
 const PORTABLE_HARNESS_CONFIG_KEYS = Object.freeze(['model', 'variant']);
+const MAX_SELECTION_BYTES = 128;
 const OPEN_ASSISTANT_REQUEST_KEYS = new Set([
-  'type', 'threadId', 'name', 'scope', 'harnessId', 'harnessConfig',
+  'type', 'threadId', 'threadGroupId', 'viewId', 'requestId',
+  'name', 'scope', 'harnessId', 'harnessConfig',
 ]);
 
 function isRecord(value) {
@@ -63,11 +65,9 @@ function sanitizeRuntimeHarnessConfig(harnessId, value) {
   }
 
   // An ordinary OpenCode session identifier is required for exact provider
-  // resume. Any Fork-era marker makes the whole provider-session binding
-  // legacy and therefore ineligible for activation.
-  const hasForkState = Object.prototype.hasOwnProperty.call(value, 'pendingFork')
-    || Object.prototype.hasOwnProperty.call(value, 'forkProvenance');
-  if (harnessId === 'opencode' && !hasForkState) {
+  // resume. Fork has been removed from the product before group activation, so
+  // only a plain provider session binding is eligible for activation.
+  if (harnessId === 'opencode') {
     const sessionId = portableValue(value.opencodeSessionId);
     if (sessionId) result.opencodeSessionId = sessionId;
   }
@@ -81,10 +81,54 @@ function mergeRuntimeHarnessConfig(harnessId, current, patch) {
   });
 }
 
+function boundedSelection(value) {
+  return typeof value === 'string'
+    && value.trim().length > 0
+    && Buffer.byteLength(value.trim(), 'utf8') <= MAX_SELECTION_BYTES
+    ? value.trim()
+    : null;
+}
+
+/**
+ * Validate a portable `{model, variant}` selection against the current
+ * server-owned model policy (`set_harness_selection`, `SPEC-01 §8.2`). The
+ * caller supplies the policy's model catalog for the session's server-owned
+ * harness; a client-supplied catalog is never accepted. `variant: null` means
+ * no explicit variant. An unknown model, an unknown variant, or an absent
+ * catalog is rejected so the prior authoritative value is preserved.
+ *
+ * @param {{ models: object|null, model: unknown, variant: unknown }} input
+ * @returns {{ ok: true, model: string, variant: string|null }
+ *          | { ok: false, code: 'invalid_selection' }}
+ */
+function validatePortableSelection({ models, model, variant }) {
+  const cleanModel = boundedSelection(model);
+  if (!cleanModel) return { ok: false, code: 'invalid_selection' };
+
+  let cleanVariant = null;
+  if (variant !== null && variant !== undefined) {
+    cleanVariant = boundedSelection(variant);
+    if (!cleanVariant) return { ok: false, code: 'invalid_selection' };
+  }
+
+  const providers = models && Array.isArray(models.providers) ? models.providers : [];
+  const matched = providers
+    .flatMap((provider) => (Array.isArray(provider?.models) ? provider.models : []))
+    .find((entry) => entry?.id === cleanModel);
+  if (!matched) return { ok: false, code: 'invalid_selection' };
+
+  if (cleanVariant !== null) {
+    const variants = Array.isArray(matched.variants) ? matched.variants : [];
+    if (!variants.includes(cleanVariant)) return { ok: false, code: 'invalid_selection' };
+  }
+  return { ok: true, model: cleanModel, variant: cleanVariant };
+}
+
 module.exports = {
   PORTABLE_HARNESS_CONFIG_KEYS,
   mergeRuntimeHarnessConfig,
   normalizeOpenAssistantRequest,
   normalizePortableHarnessConfig,
   sanitizeRuntimeHarnessConfig,
+  validatePortableSelection,
 };

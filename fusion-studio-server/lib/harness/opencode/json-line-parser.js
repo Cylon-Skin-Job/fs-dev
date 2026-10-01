@@ -32,7 +32,7 @@ class JsonLineParser extends EventEmitter {
     if (!trimmed) return;
 
     try {
-      this.emit('message', JSON.parse(trimmed));
+      this.emit('message', JSON.parse(trimmed), line);
     } catch (err) {
       this.emit('parse_error', trimmed, err, this.lineNumber);
     }

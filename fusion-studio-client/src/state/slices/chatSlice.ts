@@ -17,6 +17,8 @@ import type {
 import type { AppState } from '../panelStoreTypes';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import { sanitizeTerminalErrorMetadata } from '../../lib/chat/terminal-error';
+import { withMessageRevisions } from '../../lib/chat/message-revisions';
+import { sendChatProduct } from '../../lib/ws/product-send';
 
 type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
 type Get = () => AppState;
@@ -36,8 +38,6 @@ export function createInitialPanelState(): PanelState {
     messages: [],
     currentTurn: null,
     pendingTurnEnd: false,
-    pendingPromptAcceptance: null,
-    retryPromptDraft: null,
     pendingMessage: null,
     segments: [],
     lastReleasedSegmentCount: 0,
@@ -103,7 +103,7 @@ export function applySavedExchangePayload(
   payload: MessageExchangeSavedPayload | undefined,
 ): Message {
   if (!payload) return message;
-  return {
+  return withMessageRevisions({
     ...message,
     ...(payload.exchangeId !== undefined ? { exchangeId: payload.exchangeId } : {}),
     ...(payload.seq !== undefined ? { exchangeSeq: payload.seq } : {}),
@@ -111,7 +111,7 @@ export function applySavedExchangePayload(
     ...(payload.metadata !== undefined
       ? { metadata: sanitizeTerminalErrorMetadata(payload.metadata) }
       : {}),
-  };
+  });
 }
 
 // ── Slice factory ─────────────────────────────────────────────────────────────
@@ -126,7 +126,10 @@ export function createChatSlice(set: Set, get: Get) {
 
     addMessage: (threadId: string | null, message: Message) => set((state) => {
       const cs = getChatState(state, threadId);
-      return writeChatState(state, threadId, { ...cs, messages: [...cs.messages, message] });
+      return writeChatState(state, threadId, {
+        ...cs,
+        messages: [...cs.messages, withMessageRevisions(message)],
+      });
     }),
 
     setCurrentTurn: (threadId: string | null, turn: AssistantTurn | null) => set((state) => {
@@ -214,22 +217,6 @@ export function createChatSlice(set: Set, get: Get) {
       return writeChatState(state, threadId, { ...cs, pendingTurnEnd: pending });
     }),
 
-    setPendingPromptAcceptance: (
-      threadId: string,
-      pendingPromptAcceptance: PanelState['pendingPromptAcceptance'],
-    ) => set((state) => {
-      const cs = getChatState(state, threadId);
-      return writeChatState(state, threadId, { ...cs, pendingPromptAcceptance });
-    }),
-
-    setPromptRetryDraft: (
-      threadId: string,
-      retryPromptDraft: PanelState['retryPromptDraft'],
-    ) => set((state) => {
-      const cs = getChatState(state, threadId);
-      return writeChatState(state, threadId, { ...cs, retryPromptDraft });
-    }),
-
     setPendingExchangeSave: (threadId: string | null, turnId: string | null) => set((state) => {
       const cs = getChatState(state, threadId);
       return writeChatState(state, threadId, { ...cs, pendingExchangeSaveTurnId: turnId });
@@ -258,7 +245,7 @@ export function createChatSlice(set: Set, get: Get) {
         const savedPayload = cs.pendingSavedExchanges?.[turn.id];
         const pendingSavedExchanges = { ...(cs.pendingSavedExchanges || {}) };
         delete pendingSavedExchanges[turn.id];
-        const assistantMessage = applySavedExchangePayload({
+        const assistantMessage = applySavedExchangePayload(withMessageRevisions({
           id: turn.id || `turn-${Date.now()}`,
           type: 'assistant' as const,
           content: turn.content,
@@ -267,7 +254,7 @@ export function createChatSlice(set: Set, get: Get) {
           // Immediate validated source. Durable history supplies the metadata
           // fallback; MessageList prefers this field and never renders both.
           ...(terminalError ? { terminalError } : {}),
-        }, savedPayload);
+        }), savedPayload);
         const newMessages = [
           ...cs.messages,
           assistantMessage,
@@ -340,10 +327,10 @@ export function createChatSlice(set: Set, get: Get) {
       if (messageIndex < 0) return state;
 
       const messages = [...cs.messages];
-      messages[messageIndex] = {
+      messages[messageIndex] = withMessageRevisions({
         ...messages[messageIndex],
         metadata: sanitizeTerminalErrorMetadata(metadata),
-      };
+      });
 
       return writeChatState(state, threadId, {
         ...cs,
@@ -352,54 +339,50 @@ export function createChatSlice(set: Set, get: Get) {
     }),
 
     clearChat: (threadId: string | null) => set((state) => {
-      const current = getChatState(state, threadId);
-      return writeChatState(state, threadId, {
-        ...createInitialPanelState(),
-        // Passive re-hydration must not forget server-owned prompt acceptance.
-        pendingPromptAcceptance: current.pendingPromptAcceptance,
-        retryPromptDraft: current.retryPromptDraft,
-      });
+      return writeChatState(state, threadId, createInitialPanelState());
     }),
 
-    sendMessage: (text: string, threadIdOpt?: string | null, attachments?: ChatLinkAttachment[]) => {
+    sendMessage: (
+      text: string,
+      threadIdOpt?: string | null,
+      attachments?: ChatLinkAttachment[],
+      options?: import('../panelStoreTypes').SendMessageOptions,
+    ): import('../panelStoreTypes').SendEnqueueResult => {
       const state = get();
-      const socket = state.ws;
-      if (!socket || socket.readyState !== WebSocket.OPEN) return;
       const threadId = resolveThreadId(state, threadIdOpt ?? null);
       if (!threadId) {
-        console.error('[Store] sendMessage: no active thread');
-        return;
+        return { status: 'not_enqueued', reason: 'no_target' };
+      }
+      if (!options?.requestId || !/^[a-zA-Z0-9-]{8,128}$/.test(options.requestId)) {
+        return { status: 'not_enqueued', reason: 'invalid_request' };
       }
       const now = performance.now();
       (window as TimingProbeWindow).__TIMING = { sendAt: now, firstTokenAt: 0, firstTokenType: '' };
       console.log(`[TIMING] SEND at ${now.toFixed(1)}ms threadId=${threadId.slice(0, 8)}`);
-      const composerModelConfig = state.composerModelConfig?.[state.currentPanel];
-      const harnessConfig = composerModelConfig
-        ? {
-            ...(composerModelConfig.modelId ? { model: composerModelConfig.modelId } : {}),
-            ...(composerModelConfig.effort ? { variant: composerModelConfig.effort } : {}),
-          }
-        : undefined;
-      socket.send(JSON.stringify({
+      // SPEC-02 §6.2: an exact-session surface supplies the last
+      // server-acknowledged portable selection it owns. There is no
+      // panel-global fallback; the legacy `composerModelConfig` mirror was
+      // inert (zero writers) and was retired in SPEC-04 Slice 04D.
+      const harnessConfig = options?.harnessConfig;
+      return sendChatProduct({
         type: 'prompt',
         threadId,
+        requestId: options.requestId,
         user_input: text,
         ...(attachments?.length ? { attachments } : {}),
         ...(harnessConfig && Object.keys(harnessConfig).length ? { harnessConfig } : {}),
-      }));
+      }, { workspaceId: state.activeWorkspaceId ?? '', policy: 'socket_only', expectedSocket: state.ws });
     },
 
     warmThread: (threadIdOpt?: string | null) => {
       const state = get();
-      const socket = state.ws;
-      if (!socket || socket.readyState !== WebSocket.OPEN) return;
       if (!state.chatActive) return;
       const threadId = resolveThreadId(state, threadIdOpt ?? null);
       if (!threadId) return;
-      socket.send(JSON.stringify({
+      sendChatProduct({
         type: 'thread:warm',
         threadId,
-      }));
+      }, { workspaceId: state.activeWorkspaceId ?? '', policy: 'socket_only', expectedSocket: state.ws });
     },
   };
 }

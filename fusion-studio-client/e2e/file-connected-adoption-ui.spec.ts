@@ -91,7 +91,7 @@ async function buildHarness(mode: 'test' | 'production') {
                 activeTabId: null,
               },
               collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
-              widths: { rightSecondary: 220, rightCol: 220 },
+              widths: { rightCol: 220 },
               tints: { borders: { threads: false, chat: false } },
             },
           },
@@ -182,7 +182,7 @@ async function buildHarness(mode: 'test' | 'production') {
               'file-viewer': {
                 activity: workspace.activity,
                 collapsed: { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false },
-                widths: { rightSecondary: 220, rightCol: 220 },
+                widths: { rightCol: 220 },
                 tints: { borders: { threads: false, chat: false } },
               },
             },

@@ -58,8 +58,7 @@
 }
 
 /* Disabled menu items keep the same color as enabled — only the action and
-   cursor change. The threads-list menu is the lone exception and stays on
-   its own reset (see .rv-thread-dropdown .rv-dropdown-item in ThreadJumpDropdown.css). */
+   cursor change. */
 .rv-dropdown-item[disabled] {
   cursor: default;
 }

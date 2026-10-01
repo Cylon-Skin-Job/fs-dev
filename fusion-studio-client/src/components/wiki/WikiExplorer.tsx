@@ -176,20 +176,24 @@ export function WikiExplorer() {
 
   if (!root) {
     return (
-      <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
-        <div className="rv-wiki-loading">
-          <span className="rv-dim-label">Loading wiki...</span>
+      <div className="rv-worksurface-view-layout">
+        <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
+          <div className="rv-wiki-loading">
+            <span className="rv-dim-label">Loading wiki...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
-      <WikiPageNav />
-      <TopicList />
-      <PageViewer />
-      <EdgePanel />
+    <div className="rv-worksurface-view-layout">
+      <div className="rv-wiki-explorer" style={wikiLayoutStyle}>
+        <WikiPageNav />
+        <TopicList />
+        <PageViewer />
+        <EdgePanel />
+      </div>
     </div>
   );
 }

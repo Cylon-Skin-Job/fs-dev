@@ -14,6 +14,7 @@ import {
   finalizeOfficeProcessLifecycle,
   installOfficeSignalCleanup,
   officeRuntimeEnvironment,
+  prepareOfficeRuntimeLaneAssets,
   startOfficeOwnedProcess,
   stopOfficeOwnedProcesses,
   validateOfficeFixtureOptions,
@@ -583,9 +584,14 @@ export function finalizationReasonForIsolatedElectronFailure(error, applicationL
 
 export async function runIsolatedElectron(args = process.argv.slice(2), hooks = {}) {
   const options = parseIsolatedElectronArguments(args)
-  const parentWatch = options.scenario === 'presentation-output'
-    ? createParentLifecycleWatch({ role: 'presentation-output-runner' })
-    : null
+  // R1: every isolated Electron launch self-terminates on parent loss. The
+  // presentation-output role is preserved for the existing paired wrapper; all
+  // other scenarios share one stable runner role.
+  const parentWatch = createParentLifecycleWatch({
+    role: options.scenario === 'presentation-output'
+      ? 'presentation-output-runner'
+      : 'isolated-electron-runner',
+  })
   const parentSafe = (promise) => parentWatch
     ? parentWatch.race(Promise.resolve(promise))
     : promise
@@ -604,6 +610,9 @@ export async function runIsolatedElectron(args = process.argv.slice(2), hooks = 
     }
     await parentSafe(hooks.beforeApplicationLaunch?.(lifecycle))
     const launchContext = createIsolatedElectronLaunchContext(lifecycle)
+    // R4: the Electron lane verifies (and, when the clone excluded it, supplies)
+    // the transcription model/whisper-cli before any child is spawned.
+    prepareOfficeRuntimeLaneAssets(launchContext.runtime)
     let presentationLaunch = null
     if (options.scenario === 'presentation-output') {
       presentationLaunch = createPresentationOutputLaunchContext(lifecycle, launchContext)

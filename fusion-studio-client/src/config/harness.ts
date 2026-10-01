@@ -24,8 +24,8 @@ export interface HarnessOption {
   materialIcon: string;
   /**
    * Default accent color for this CLI. Applied as `--cli-accent` on chat
-   * header, secondary header, and thread rows. User overrides (future
-   * SQLite theme cascade) take precedence over this default.
+   * header and thread rows. User overrides (future SQLite theme cascade) take
+   * precedence over this default.
    */
   accentColor?: string;
   details: HarnessDetails;

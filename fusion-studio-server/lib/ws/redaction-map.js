@@ -58,6 +58,7 @@ const CHAT_TURN_NOTE_REDACTION_PATHS = [
 ];
 
 const RULES = {
+  'chat-turn:diagnostic:stream': { redactPaths: ['events'] },
   'shell-auth:challenge': { redactPaths: ['serverNonce'] },
   'shell-auth:proof': { redactPaths: ['serverNonce', 'rendererNonce', 'proof'] },
   client_log: { redactPaths: ['level', 'message', 'data'] },

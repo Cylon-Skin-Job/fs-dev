@@ -17,7 +17,8 @@ const OWNER_CHANGED_MESSAGE = 'Screenshot was not attached because the chat chan
 export interface ScreenshotAttachmentOwner {
   workspaceId: string;
   threadId: string;
-  surface: 'primary' | 'secondary';
+  /** Only the Main Chat owns screenshot attachment; Secondary Chat is retired. */
+  surface: 'primary';
 }
 
 function currentPrimaryOwner(
@@ -33,10 +34,8 @@ function currentPrimaryOwner(
 
 function isCurrentOwner(owner: ScreenshotAttachmentOwner): boolean {
   const state = usePanelStore.getState();
-  if (state.activeWorkspaceId !== owner.workspaceId) return false;
-  if (owner.surface === 'primary') return state.currentThreadId === owner.threadId;
-  return state.secondary?.threadId === owner.threadId
-    && state.secondary.mode !== 'minimized';
+  return state.activeWorkspaceId === owner.workspaceId
+    && state.currentThreadId === owner.threadId;
 }
 
 function screenshotName(savedPath: string): string {
@@ -107,8 +106,8 @@ export async function captureAndAttachScreenshot(
 ): Promise<ChatLinkAttachment | null> {
   const panelState = usePanelStore.getState();
   // Snapshot the complete owner and socket from one state read before the
-  // first await. Composer callers pass their exact primary/secondary owner;
-  // global capture defaults to the primary owner from this same read.
+  // first await. Composer callers pass their exact Main Chat owner; global
+  // capture defaults to the primary owner from this same read.
   const owner = requestedOwner ?? currentPrimaryOwner(panelState);
   const socket = panelState.ws;
   const capturePage = window.electronAPI?.capturePage;

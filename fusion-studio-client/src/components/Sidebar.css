@@ -85,6 +85,47 @@
   font-size: 18px;
 }
 
+/* SPEC-04 §8: one non-primary group member in the ThreadRail kebab. The
+   member label opens/focuses its Side Chat; the trailing link control copies
+   the exact-member version-1 application link. */
+.rv-thread-menu-member {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-thread-menu-member .rv-dropdown-item {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rv-thread-menu-member-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs, 4px);
+  border: none;
+  background: transparent;
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-secondary)));
+  cursor: pointer;
+}
+
+.rv-thread-menu-member-link:hover {
+  color: var(--thread-selected-bg, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-thread-menu-member-link .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.rv-thread-menu-members-label {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--thread-foreground-color, var(--chrome-accent, var(--text-secondary)));
+}
+
 .rv-sidebar .rv-new-chat-btn {
   justify-content: flex-start;
   border: none;

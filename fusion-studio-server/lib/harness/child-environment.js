@@ -53,6 +53,10 @@ function buildHarnessChildEnvironment(adapter, options = {}) {
     if (isAllowedValue(value)) result[key] = value;
   }
 
+  // Fusion-launched OpenCode uses native rules/skills, not Claude fallbacks.
+  // Enforce after overrides; OpenCode 1.18.32 retains .agents and native config.
+  if (adapter === 'opencode') result.OPENCODE_DISABLE_CLAUDE_CODE = '1';
+
   return Object.freeze(result);
 }
 

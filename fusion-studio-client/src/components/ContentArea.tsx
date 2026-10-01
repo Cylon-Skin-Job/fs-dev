@@ -28,6 +28,7 @@ import { CustomViewer } from './browser/CustomViewer';
 import { CalendarViewer } from './calendar/CalendarViewer';
 import { ViewLayoutControls } from './ViewLayoutControls';
 import { ViewTabBar } from './view-tabs/ViewTabBar';
+import { WorksurfaceConflictBanner } from './chat/WorksurfaceConflictBanner';
 
 /** Built-in component map: panel ID → content component */
 const CONTENT_COMPONENTS: Record<string, ComponentType> = {
@@ -44,26 +45,37 @@ const CONTENT_COMPONENTS: Record<string, ComponentType> = {
 
 interface ContentAreaProps {
   panel: string;
+  workspaceId: string;
 }
 
-function ContentFrame({ panel, children }: { panel: string; children: ReactNode }) {
+function ContentFrame({
+  panel,
+  workspaceId,
+  children,
+}: {
+  panel: string;
+  workspaceId: string;
+  children: ReactNode;
+}) {
   return (
     <main className="rv-content-area" tabIndex={-1}>
+      <WorksurfaceConflictBanner workspaceId={workspaceId} viewId={panel} />
       <ViewLayoutControls panel={panel} />
       <ViewTabBar panel={panel}>{children}</ViewTabBar>
     </main>
   );
 }
 
-export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
-  const configs = usePanelStore((state) => state.panelConfigs);
-  const config = configs.find((c) => c.id === panel);
+export const ContentArea: React.FC<ContentAreaProps> = ({ panel, workspaceId }) => {
+  const config = usePanelStore((state) => (
+    state.panelConfigs.find((candidate) => candidate.id === panel)
+  ));
   const StaticComponent = CONTENT_COMPONENTS[panel];
 
   // Built-in product views stay React-backed even if old iframe artifacts exist.
   if (StaticComponent) {
     return (
-      <ContentFrame panel={panel}>
+      <ContentFrame panel={panel} workspaceId={workspaceId}>
         <StaticComponent />
       </ContentFrame>
     );
@@ -72,7 +84,7 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
   // Shell-managed custom/local app iframe.
   if (config?.hasAppHtml) {
     return (
-      <ContentFrame panel={panel}>
+      <ContentFrame panel={panel} workspaceId={workspaceId}>
         <iframe
           className="rv-view-iframe"
           src={`fusion-studio://${panel}/app/index.html`}
@@ -86,7 +98,7 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
   // Track 2: local custom iframe — user-built local servers, origin-locked, collapsible chrome
   if (config?.type === 'custom' || config?.type === 'iframe') {
     return (
-      <ContentFrame panel={panel}>
+      <ContentFrame panel={panel} workspaceId={workspaceId}>
         <CustomViewer config={config} />
       </ContentFrame>
     );
@@ -95,14 +107,14 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
   // Track 2b: general browser — free navigation, always-visible chrome, back/forward
   if (config?.type === 'browser') {
     return (
-      <ContentFrame panel={panel}>
+      <ContentFrame panel={panel} workspaceId={workspaceId}>
         <WebBrowser config={config} />
       </ContentFrame>
     );
   }
 
   return (
-    <ContentFrame panel={panel}>
+    <ContentFrame panel={panel} workspaceId={workspaceId}>
       <div className="rv-content-placeholder">
         <h3 className="rv-content-placeholder-heading">
           {config?.name || panel}

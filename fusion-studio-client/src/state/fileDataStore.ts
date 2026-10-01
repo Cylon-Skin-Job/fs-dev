@@ -22,6 +22,7 @@ import {
   createFileContentRequestV1,
   createFileTreeRequestV1,
 } from '../lib/ws/file-viewer-read-protocol';
+import { readSaveActionContext } from '../lib/save-action-context';
 import type {
   FileContentResponseV1,
   FileSaveResponseV1,
@@ -536,6 +537,10 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
       if (!workspace.activeWorkspaceId || !workspace.workspaceEpoch) {
         return Promise.reject(saveFailure('The workspace is not available.'));
       }
+      // Snapshot the live view/tab context at command time (BRIDGE-01 SPEC-01
+      // §6.1). Fail-open: an unavailable context is omitted, never fabricated,
+      // and never blocks or delays the save.
+      const reportedUiContext = readSaveActionContext(panel);
       const payload = createFileSaveRequestV1({
         workspaceId: workspace.activeWorkspaceId,
         workspaceEpoch: workspace.workspaceEpoch,
@@ -544,6 +549,7 @@ export const useFileDataStore = create<FileDataState>((set, get) => ({
         content,
         reason,
         milestone,
+        ...(reportedUiContext ? { reportedUiContext } : {}),
       });
       const completion = createSaveCompletion();
       const pendingSave: PendingFileSave = {

@@ -2,18 +2,50 @@
 name: Chat Changelog
 description: Dated record of chat system architecture changes. Use this page to understand when runtime, harness, rendering, and UI behavior changed.
 metadata:
-  incoming-edges:
-    - Chat System
-    - Chat Overview
-  outgoing-edges:
-    - Chat Decisions
-    - Chat Lessons
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-29T07:12:08Z"
 ---
 
 Dated architecture changes that matter for future work.
+
+## 2026-09-29 — Receipt Inquiry Consumes Local Send Outcomes
+
+The development recovery controller now treats a definitely refused receipt inquiry as immediate unknown feedback without a five-second response wait. Possibly sent inquiries retain bounded waiting and exact late-reply eligibility through timeout and retry exhaustion; workspace rebind, attempt replacement and settled turns retire that eligibility. The existing status-only schedule, server acceptance, provider ownership and no-prompt-replay boundary remain. Isolated browser and native receipt checks cover the changed path; broader Fusion/OpenCode failure mapping remains separate.
+
+## 2026-09-29 — Client Chat Transport Entry Ownership Extracted
+
+The development checkout now keeps connection/authentication and reconnect retirement in `ws-client.ts`, with private owners for response listeners, ordered inbound dispatch, view-state reconciliation and residual shell projections. The wire families and established chat/store owners are unchanged. The native shell-auth smoke now uses only a temporary profile and workspace, including failure cleanup; client and auth gates exercise these development bytes. Unified send outcomes, receipt inquiry changes and the deferred broad failure map remain separate work.
+
+## 2026-09-28 — Server Chat Ingress Ownership Extracted
+
+The development checkout now delegates view/workspace readiness and mutations, file/provenance request selection, and prompt/provider ingress through focused private WebSocket owners. The public router keeps decoded request ordering, diagnostic-prefix precedence and exact close cleanup. Public route suites for the moved families and server integration pass on this slice's current bytes. This is the first server slice of the transport simplification; client transport, unified sends and receipt inquiry changes remain separate work. It does not recertify the deferred broad failure map or installed Alpha runtime.
+
+## 2026-09-19 — View-Bound Chat Is The Default Production Host; Legacy Threads Wiped
+
+- Owner direction: the production shell chat is the view-bound host. `App.tsx` mounts `useViewChatHost` once per panel through `PanelContent`; `Sidebar.tsx` and `ChatArea.tsx` render that panel's own view population. One family per view across dock open/close; a different view holds a different family. `LegacyChatHost` remains only for explicit/component mounts; `useSidebar.ts` is deleted.
+- The Legacy null-view population is no longer a production surface. `view_id NULL` groups are not carried forward: the dev checkout database, the Alpha profile database, and the local view01 acceptance profile database were backed up and wiped of chat data (groups, members, placements, threads, exchanges), and Chatlogs thread mirrors were cleared.
+- Verified in the development checkout by `e2e/view-bound-shell-smoke.mjs` (empty per-view families, shell create binds to the active view, Move from the shell Main Chat lands the Side Chat tab, another view shows a different family) plus the existing `side-chat-electron-smoke.mjs`. Committed/pushed state and the installed Alpha build may lag this entry; Alpha was not rebuilt in this pass.
+
+## 2026-09-19 — Side Chat Direction Clarified (Documentation Only)
+
+- Recorded the owner's distinction between tab-based Side Chats without a left-column thread list and a future non-chat windowed-content container.
+- Owner correction distinguishes two current controls: left-hand Show threads toggles the outer dock; right-hand event_list opens More options. The intended Side Chat tab retains only the right-hand list button from these two controls, with no left-hand thread-panel toggle or slider. Its future shared behavior remains undefined; product code is unchanged.
+- Confirmed by source/Git inspection that the old Secondary Chat shell and minimized restore button were removed in `554bedf`, while `useFloatingWindow` survives for email compose. The removed shell is recoverable from Git; a generic content-window host was not delivered by that removal.
+- This entry records current findings and owner intent. No product behavior changed and no runtime verification was performed in this pass.
+
+## 2026-09-15 — Worksurfaces, Side Chat Tabs And Secondary Chat Retirement
+
+Git commit `554bedf` records group-keyed view worksurfaces, Move to Side Chat, durable member-tab placement and retirement of the singleton Secondary Chat shell. Worksurface continuity was accepted on September 14; Side Chat and the replacement/retirement were accepted on September 15. Move preserves the existing session and creates an empty Main peer. Shared drag/resize mechanics remain in use for email compose; this milestone did not deliver a generic non-chat window container. The later September 19 Side Chat control direction above still requires product work.
+
+## 2026-09-14 — Composable Chat Surfaces Committed
+
+Git commit `5073b10` records the portable `ChatSurface` and `ThreadRail` boundaries, connected Legacy/view hosts and component registration. The acceptance record dates this milestone to September 13, before the September 14 commit. Composition did not replace the normal workspace Legacy host with view-bound chat as the default.
+
+## 2026-09-13 — Thread Group Foundation
+
+Git commit `5f46d1a` and the September 13 acceptance record establish the visible Thread Group foundation: durable group identity, membership, primary selection, view binding and group-level actions/ordering, while each member keeps its session `threadId` for transcript and runtime routing.
+
+These three milestone entries were documented on September 19 from Git and historical acceptance evidence. Their dates describe commits or acceptance as stated, not installation dates, new runtime observations, or completion of deferred features. See [Structure](../../007-Structure/PAGE.md) for current owners.
 
 ## 2026-06-27
 

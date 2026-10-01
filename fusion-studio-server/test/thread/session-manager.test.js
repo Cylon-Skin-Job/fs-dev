@@ -353,6 +353,45 @@ describe('ThreadManager provider exit ownership', () => {
     threadRuntimeManager.runtimes.clear();
   });
 
+  test('concurrent different-thread capacity claims settle without evicting pending activations', async () => {
+    const manager = new ThreadManager({ projectRoot: '/tmp/capacity-fixture',
+      workspaceId: 'capacity-fixture', maxActiveSessions: 1 });
+    manager.index = {
+      list: jest.fn(async () => [{ threadId: 'a' }, { threadId: 'b' }]),
+      activate: jest.fn(async () => {}), markResumed: jest.fn(async () => {}),
+      suspend: jest.fn(async () => {}),
+    };
+    const wires = [makeAutoClosingProcess(), makeAutoClosingProcess()];
+    const results = await Promise.allSettled([
+      manager.openSession('a', wires[0], {}), manager.openSession('b', wires[1], {}),
+    ]);
+    expect(results.filter((result) => result.status === 'rejected').length).toBeGreaterThan(0);
+    expect(manager.getActiveSessionCount()).toBeLessThanOrEqual(1);
+    for (const id of ['a', 'b']) expect(manager.getSession(id)?.pendingActivation).toBeUndefined();
+    await manager.shutdownSessions();
+    expect(manager.getActiveSessionCount()).toBe(0);
+  });
+
+  test('concurrent capacity requests retire each settled LRU only once', async () => {
+    const manager = new ThreadManager({ projectRoot: '/tmp/capacity-fixture',
+      workspaceId: 'capacity-fixture', maxActiveSessions: 2 });
+    manager.index = {
+      list: jest.fn(async () => ['c', 'b', 'a'].map((threadId) => ({ threadId }))),
+      activate: jest.fn(async () => {}), markResumed: jest.fn(async () => {}),
+      suspend: jest.fn(async () => {}),
+    };
+    const old = makeAutoClosingProcess();
+    await manager.openSession('a', old, {});
+    const results = await Promise.allSettled([
+      manager.openSession('b', makeAutoClosingProcess(), {}),
+      manager.openSession('c', makeAutoClosingProcess(), {}),
+    ]);
+    expect(results.every((result) => result.status === 'fulfilled')).toBe(true);
+    expect(old.kill).toHaveBeenCalledTimes(1);
+    expect(manager.getActiveSessionCount()).toBe(2);
+    await manager.shutdownSessions();
+  });
+
   test('duplicate provider claim fails before capacity enforcement or predecessor teardown', async () => {
     const threadManager = Object.create(ThreadManager.prototype);
     threadManager.workspaceId = 'workspace-1';
@@ -362,7 +401,7 @@ describe('ThreadManager provider exit ownership', () => {
       markResumed: jest.fn(async () => {}),
       suspend: jest.fn(async () => {}),
     };
-    threadManager._enforceSessionLimit = jest.fn(async () => {});
+
     const currentWire = new EventEmitter();
     currentWire.killed = false;
     currentWire.kill = jest.fn(() => true);
@@ -372,12 +411,12 @@ describe('ThreadManager provider exit ownership', () => {
     const ws = {};
 
     await threadManager.openSession('thread-1', currentWire, ws);
-    threadManager._enforceSessionLimit.mockClear();
+    const enforceCapacity = jest.spyOn(threadManager.sessionLifecycle, 'enforceCapacity');
 
     await expect(threadManager.openSession('thread-1', challenger, ws))
       .rejects.toThrow('A live provider already owns this thread');
 
-    expect(threadManager._enforceSessionLimit).not.toHaveBeenCalled();
+    expect(enforceCapacity).not.toHaveBeenCalled();
     expect(threadManager.getSession('thread-1')).toMatchObject({
       wireProcess: currentWire,
       ws,
@@ -397,7 +436,7 @@ describe('ThreadManager provider exit ownership', () => {
       markResumed: jest.fn(async () => {}),
       suspend: jest.fn(async () => {}),
     };
-    threadManager._enforceSessionLimit = jest.fn(async () => {});
+
     const wire = new EventEmitter();
     wire.killed = false;
     wire.kill = jest.fn(() => true);
@@ -429,7 +468,7 @@ describe('ThreadManager provider exit ownership', () => {
       markResumed: jest.fn(async () => {}),
       suspend: jest.fn(async () => {}),
     };
-    threadManager._enforceSessionLimit = jest.fn(async () => {});
+
     const wire = makeAutoClosingProcess();
     const wsA = { name: 'A' };
     const wsB = { name: 'B' };
@@ -506,7 +545,7 @@ describe('ThreadManager provider exit ownership', () => {
       markResumed: jest.fn(async () => {}),
       suspend: jest.fn(async () => {}),
     };
-    threadManager._enforceSessionLimit = jest.fn(async () => {});
+
     const wire = makeAutoClosingProcess();
     await threadManager.openSession('thread-1', wire, {});
     const runtimeKey = { workspaceId: 'workspace-1', scope: 'project', threadId: 'thread-1' };
@@ -549,7 +588,7 @@ describe('ThreadManager provider exit ownership', () => {
       markResumed: jest.fn(async () => {}),
       suspend: jest.fn(async () => {}),
     };
-    threadManager._enforceSessionLimit = jest.fn(async () => {});
+
     const wire = makeAutoClosingProcess();
     await threadManager.openSession('thread-headless', wire, null);
     threadRuntimeManager.markReady({
@@ -570,4 +609,79 @@ describe('ThreadManager provider exit ownership', () => {
       managers.delete('workspace-headless');
     }
   });
+});
+
+test('provider exit during explicit Stop leaves its reservation for the Stop owner to complete', async () => {
+  const manager = new ThreadManager({ projectRoot: '/tmp/stop-owned-exit', workspaceId: 'stop-owned-exit' });
+  manager.index = { activate: jest.fn(async () => {}), markResumed: jest.fn(async () => {}),
+    suspend: jest.fn(async () => {}), list: jest.fn(async () => []) };
+  const wire = makeAutoClosingProcess();
+  const ws = {};
+  await manager.openSession('thread', wire, ws);
+  const reserved = manager.beginSessionRetirement('thread', ws);
+  expect(reserved.state).toBe('stopping');
+  reserved.stopFinalization = {};
+  wire.emit('exit', null, 'SIGTERM');
+  await new Promise(resolve => setImmediate(resolve));
+  expect(manager.getSession('thread')).toBe(reserved);
+  expect(wire.kill).not.toHaveBeenCalled();
+  delete reserved.stopFinalization;
+  await expect(manager.completeStoppedSession('thread', wire)).resolves.toBe(true);
+  expect(manager.getSession('thread')).toBeUndefined();
+  expect(manager.index.suspend).toHaveBeenCalledTimes(1);
+});
+
+
+test.each(['after-release', 'during-failed-finalization'])('late provider exit %s reconciles only its exact failed retirement', async timing => {
+  const manager = new ThreadManager({ projectRoot: '/tmp/late-stop-exit', workspaceId: 'late-stop-exit' });
+  manager.index = { activate: jest.fn(async () => {}), markResumed: jest.fn(async () => {}),
+    suspend: jest.fn(async () => {}), list: jest.fn(async () => []) };
+  const wire = makeAutoClosingProcess(); const ws = {};
+  await manager.openSession('late-thread', wire, ws, { workspaceEpoch: 'late-epoch' });
+  const key = { workspaceId: manager.workspaceId, projectRoot: manager.projectRoot,
+    scope: 'project', workspaceEpoch: 'late-epoch', threadId: 'late-thread' };
+  threadRuntimeManager.markState(key, 'stopping');
+  const reserved = manager.beginSessionRetirement('late-thread', ws);
+  if (timing === 'during-failed-finalization') reserved.stopFinalization = {};
+  wire.emit('exit', null, 'SIGTERM');
+  if (timing === 'during-failed-finalization') {
+    expect(manager.getSession('late-thread')).toBe(reserved);
+    manager.index.suspend.mockRejectedValueOnce(new Error('one failed final metadata write'));
+    await expect(manager.completeStoppedSession('late-thread', wire)).rejects.toThrow('one failed final metadata write');
+    delete reserved.stopFinalization;
+    manager.reconcileProviderExit('late-thread', reserved);
+  }
+  await reserved.exitReconciliation;
+  expect(manager.getSession('late-thread')).toBeUndefined();
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe('cold');
+  expect(wire.kill).not.toHaveBeenCalled();
+  const replacement = makeAutoClosingProcess();
+  await manager.openSession('late-thread', replacement, ws, { workspaceEpoch: 'replacement-epoch' });
+  manager.reconcileProviderExit('late-thread', reserved);
+  expect(manager.getSession('late-thread').wireProcess).toBe(replacement);
+  await manager.closeSession('late-thread');
+});
+
+
+test('close rechecks the exact provider after deferred canonical retirement before signalling or metadata writes', async () => {
+  const manager = new ThreadManager({ projectRoot: '/tmp/close-replacement', workspaceId: 'close-replacement' });
+  manager.index = { activate: jest.fn(async () => {}), markResumed: jest.fn(async () => {}),
+    suspend: jest.fn(async () => {}), list: jest.fn(async () => []) };
+  const wire = makeAutoClosingProcess();
+  await manager.openSession('thread', wire, {}, { workspaceEpoch: 'old-epoch' });
+  let release;
+  const retire = jest.spyOn(threadRuntimeManager, 'retireActiveDrain')
+    .mockImplementationOnce(() => new Promise(resolve => { release = resolve; }));
+  const closing = manager.closeSession('thread');
+  const replacementWire = makeAutoClosingProcess();
+  const old = manager.getSession('thread');
+  const replacement = { ...old, wireProcess: replacementWire, workspaceEpoch: 'new-epoch' };
+  manager.sessionManager.activeSessions.set('thread', replacement);
+  release(); expect(await closing).toBe(false);
+  expect(manager.getSession('thread')).toBe(replacement);
+  expect(wire.kill).not.toHaveBeenCalled();
+  expect(replacementWire.kill).not.toHaveBeenCalled();
+  expect(manager.index.suspend).not.toHaveBeenCalled();
+  retire.mockRestore();
+  await manager.closeSession('thread');
 });

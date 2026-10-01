@@ -12,6 +12,7 @@ export default async function globalTeardown() {
   try {
     await finalizeOfficeProcessLifecycle(state.lifecycle, { reason: 'orderly' })
   } finally {
+    state.harnessLifetime?.stop()
     state.removeSignalHandlers()
     delete process.env.FUSION_OFFICE_E2E_BASE_URL
     delete process.env.FUSION_OFFICE_E2E_FIXTURE_ROOT

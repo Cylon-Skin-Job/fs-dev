@@ -133,7 +133,6 @@ test('current File Viewer UI adapter emits only correlated v1 requests while oth
   const directEmitterSources = [
     '../src/components/file-explorer/FolderNode.tsx',
     '../src/components/file-explorer/FileExplorer.tsx',
-    '../src/components/sidebar/useSidebar.ts',
   ].map((path) => readFileSync(new URL(path, import.meta.url), 'utf8')).join('\n');
   expect(directEmitterSources).not.toMatch(/type:\s*['"]file_(?:tree|content)_request['"]/u);
 });

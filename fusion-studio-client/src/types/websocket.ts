@@ -21,7 +21,6 @@ import type {
   ResolvedCliEntry,
   Thread,
   ThreadEntry,
-  ThreadForkMetadata,
   Workspace,
   WorkspaceCreateManifest,
   WorkspaceHiddenView,
@@ -29,6 +28,7 @@ import type {
 } from './workspace';
 
 export type WebSocketMessageType =
+  | 'chat-turn:diagnostic:subscribe' | 'chat-turn:diagnostic:unsubscribe' | 'chat-turn:diagnostic:stream'
   // Turn stream / chat metadata
   | 'connected' | 'turn_begin' | 'content' | 'thinking' | 'turn_end'
   | 'step_begin' | 'status_update' | 'exchange_metadata'
@@ -40,9 +40,12 @@ export type WebSocketMessageType =
   // Requests / errors / tools
   | 'request' | 'response' | 'error'
   | 'tool_call' | 'tool_call_args' | 'tool_result' | 'subagent_event'
-  // Thread messages
-  | 'thread:list' | 'thread:created' | 'thread:forked' | 'thread:opened'
-  | 'thread:renamed' | 'thread:deleted' | 'message:sent' | 'auth_error'
+  // Thread messages (Rename/Delete now use the canonical thread:action family)
+  | 'thread:list' | 'thread:created' | 'thread:opened'
+  | 'thread:members' | 'thread:members:error'
+  | 'thread:action:completed' | 'thread:action:error'
+  | 'message:sent' | 'auth_error'
+  | 'prompt:resolved' | 'prompt:resolve_error'
   | 'thread:create:confirm' | 'thread:state_changed'
   // Modal messages
   | 'modal:show' | 'file:moved' | 'file:move_error' | 'file:renamed'
@@ -60,6 +63,8 @@ export type WebSocketMessageType =
   | 'wire_ready' | 'wire_disconnected' | 'parse_error'
   // View UI state (SPEC-26c-2)
   | 'state:result' | 'state:error'
+  // Group-keyed content worksurface (CHAT-03 / SPEC-03)
+  | 'state:worksurface_result' | 'state:worksurface_error' | 'state:worksurface_changed'
   // Workspace messages (WORKSPACE_CLIENT_UI_SPEC)
   | 'workspace:init' | 'workspace:registry_changed' | 'workspace:switched'
   | 'workspace:added' | 'workspace:removed' | 'workspace:ribbon_removed'
@@ -111,6 +116,8 @@ export interface WebSocketMessage {
   requestType?: string;
   payload?: unknown;
   requestId?: string;
+  /** Passive member hydration never changes group selection or pending Main opens. */
+  historyOnly?: boolean;
   id?: string;
   result?: unknown;
   error?: string;
@@ -132,6 +139,35 @@ export interface WebSocketMessage {
   // Thread fields
   panel?: string;
   threadId?: string;
+  threadGroupId?: string;
+  action?: 'rename' | 'delete' | 'copy_link' | 'resolve_link' | 'view_markdown' | 'set_harness_selection' | string;
+  code?: string;
+  deleted?: boolean;
+  recovered?: boolean;
+  replayed?: boolean;
+  fanOut?: boolean;
+  cleanup?: { status: string; mirrors?: unknown[] } | null;
+  /** Durable view-state cleanup outbox state reported by an acknowledged delete. */
+  viewStateCleanup?: { status: string; attempts?: number; failureCode?: string } | null;
+  members?: unknown[];
+  context?: Record<string, unknown> | null;
+  /** SPEC-04 §4/§5 Move result identities. */
+  movedThreadId?: string | null;
+  newMainThreadId?: string | null;
+  sideChatPlacementId?: string | null;
+  currentPrimarySequence?: number | null;
+  placementStatus?: 'pending' | 'applied' | 'failed' | null;
+  placement?: { status: string; attempts?: number; failureCode?: string } | null;
+  /** Versioned application URI returned by an acknowledged `copy_link`. */
+  link?: string | null;
+  /** Validated exact-member mirror path returned by `view_markdown`. */
+  markdownPath?: string | null;
+  /** Server-owned harness identity echoed by `set_harness_selection`. */
+  harnessId?: string | null;
+  /** Acknowledged portable selection returned by `set_harness_selection`. */
+  model?: string | null;
+  variant?: string | null;
+  resolved?: boolean;
   thread?: ThreadEntry;
   threads?: Thread[];
   history?: { role: 'user' | 'assistant'; content: string; hasToolCalls?: boolean }[];
@@ -140,7 +176,6 @@ export interface WebSocketMessage {
   name?: string;
   content?: string;
   metadata?: Record<string, unknown>;
-  fork?: ThreadForkMetadata | null;
   exchangeId?: number;
   seq?: number;
   message?: string;
@@ -172,6 +207,7 @@ export interface WebSocketMessage {
   activeWorkspaceId?: string | null;
   sourceMachineName?: string;
   workspaceId?: string | null;
+  workspaceEpoch?: string | null;
   from?: string | null;
   to?: string | null;
   repoPath?: string | null;

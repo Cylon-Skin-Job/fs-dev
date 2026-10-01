@@ -15,7 +15,9 @@
  * legacy behavior.
  */
 
+import { useDiagnosticTabAdapter } from '../diagnostics/useDiagnosticTabAdapter';
 import { usePanelStore } from '../../state/panelStore';
+import { useSideChatRailAdapter } from '../chat/useSideChatRailAdapter';
 import {
   useCaptureAdapter,
   useCaptureConnectedAdapter,
@@ -60,7 +62,17 @@ export function useViewTabAdapter(panelId: string): ViewTabAdapterModel | null {
   );
   const fileConnected = useFileConnectedAdapter(isFiles && filePolicyReady);
   const files = useFileAdapter(isFiles && !filePolicyReady);
-  if (isCapture) return capturePolicyReady ? captureConnected : captureLegacy;
-  if (isFiles) return filePolicyReady ? fileConnected : files;
-  return null;
+  const nativeBase = isCapture
+    ? (capturePolicyReady ? captureConnected : captureLegacy)
+    : isFiles
+      ? (filePolicyReady ? fileConnected : files)
+      : null;
+  // SPEC-04 §6/§11 04B: one code-owned Side Chat composition seam above the
+  // existing adapter lookup. Native-adapted views keep their adapter as the
+  // native-tab owner; adapterless chat-capable views get a runtime-only root
+  // only while an open managed placement exists. With no placement the base
+  // model is returned unchanged (and `null` for adapterless views renders the
+  // existing children byte-identically).
+  const withSideChats = useSideChatRailAdapter(panelId, nativeBase);
+  return useDiagnosticTabAdapter(panelId, withSideChats);
 }

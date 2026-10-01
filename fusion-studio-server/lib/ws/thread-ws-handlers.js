@@ -6,9 +6,11 @@
  * Returns a handler map keyed by message type. The router dispatches
  * any clientMsg.type that starts with 'thread:' through this map.
  *
- * Owns the wire-spawn sequence for thread:open-assistant. Thin
- * delegations to ThreadWebSocketHandler for rename/delete/copyLink/
- * touch/search/list.
+ * Owns the wire-spawn sequence for thread:open-assistant. Thin delegations to
+ * ThreadWebSocketHandler for list/search, plus the canonical `thread:action`
+ * route (rename/delete/copy_link/resolve_link/view_markdown/
+ * set_harness_selection). The raw `thread:copyLink` and `thread:touch` routes
+ * were removed with no aliases (slices 01B/01C).
  */
 
 const {
@@ -17,14 +19,11 @@ const {
   threadRuntimeController,
   threadRuntimeManager,
 } = require('../thread');
-const { spawnThreadWire } = require('../harness/compat');
-const {
-  attachClientToWire,
-  getWireForThread,
-  unregisterWire,
-} = require('../wire/process-manager');
-const { terminateProviderProcessAndWait } = require('../thread/session-manager');
+const { spawnAndSetupWire, resumeLiveProvider } = require('./thread-provider-binding');
+const { boundedActionError } = require('./thread-action-protocol');
+const { createThreadActionHandler } = require('./thread-action-handler');
 const { normalizeOpenAssistantRequest } = require('../thread/thread-harness-config-policy');
+const { logTemporaryChatBoundary } = require('../logging');
 const {
   denyThreadFork,
   denyThreadMutation,
@@ -41,10 +40,24 @@ const {
  * @param {object} deps.session
  * @param {{ awaitHarnessReady: Function, initializeWire: Function, setupWireHandlers: Function }} deps.wireLifecycle
  * @param {string} deps.projectRoot
+ * @param {Function} [deps.getWorkspaceRecipients] - other-window delivery provider
  * @returns {Record<string, (msg: object) => Promise<void>>}
  */
-function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
+function createThreadWsHandlers({
+  ws, session, wireLifecycle, projectRoot, getWorkspaceRecipients = () => [],
+}) {
   const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
+
+  const denyOpenAssistant = (requestId) => {
+    // The trusted caller must receive an exact rejection for a correlated
+    // create. Keep the public/untrusted denial generic and echo only a bounded
+    // request identifier, never an unvalidated caller payload.
+    if (typeof requestId !== 'string' || !requestId
+      || Buffer.byteLength(requestId, 'utf8') > 128) return denyThreadMutation(ws);
+    ws.send(JSON.stringify({ type: 'error', requestId,
+      code: 'THREAD_MUTATION_DENIED', message: 'Thread mutation denied' }));
+    return false;
+  };
 
   const currentBinding = () => {
     const state = ThreadWebSocketHandler.getState(ws);
@@ -70,7 +83,7 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
     };
   };
 
-  const runBoundMutation = async (binding, operation) => {
+  const runBoundMutation = async (binding, operation, openAssistantRequestId = null) => {
     try {
       return await runWorkspaceOperation(
         ws,
@@ -79,7 +92,8 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       );
     } catch (error) {
       if (!isWorkspaceOperationLeaseError(error)) throw error;
-      denyThreadMutation(ws);
+      if (openAssistantRequestId) denyOpenAssistant(openAssistantRequestId);
+      else denyThreadMutation(ws);
       return null;
     }
   };
@@ -106,71 +120,19 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
     }
   };
 
-  const resumeLiveProvider = async (threadId, binding) => {
-    const state = ThreadWebSocketHandler.getState(ws);
-    const manager = state?.threadManager;
-    const managedSession = typeof manager?.getSession === 'function'
-      ? manager.getSession(threadId)
-      : null;
-    const runtimeKey = {
-      workspaceId: binding.workspaceId,
-      projectRoot: binding.projectRoot,
-      workspaceEpoch: binding.workspaceEpoch,
-      scope: 'project',
-      threadId,
-    };
-    if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING
-      || managedSession?.state === 'stopping') {
-      throw new Error('Thread provider retirement is still pending');
-    }
-    const registeredWire = getWireForThread(threadId, binding);
-    if (managedSession?.wireProcess && registeredWire
-      && managedSession.wireProcess !== registeredWire) {
-      throw new Error('Thread provider ownership is inconsistent');
-    }
-    const wire = managedSession?.wireProcess || registeredWire;
-    const exited = wire && (
-      (wire.exitCode !== undefined && wire.exitCode !== null)
-      || (wire.signalCode !== undefined && wire.signalCode !== null)
-    );
-    if (!wire) return null;
-    if (wire.killed || exited) {
-      if (managedSession?.wireProcess === wire) {
-        await manager.closeSession(threadId);
-      }
-      if (getWireForThread(threadId, binding) === wire) {
-        unregisterWire(threadId, binding, wire);
-      }
-      return null;
-    }
-
-    const activeThreadId = state && Object.prototype.hasOwnProperty.call(state, 'activatedThreadId')
-      ? state.activatedThreadId
-      : state?.threadId;
-    const ownsExactSession = activeThreadId === threadId
-      && managedSession?.ws === ws
-      && managedSession.wireProcess === wire;
-    if (!ownsExactSession) {
-      await ThreadWebSocketHandler.activateThreadSession(ws, threadId, wire, binding);
-    }
-    attachClientToWire(threadId, wire, binding.projectRoot, ws, {
-      workspaceId: binding.workspaceId,
-      projectRoot: binding.projectRoot,
-      workspaceEpoch: binding.workspaceEpoch,
-      viewId: null,
-    });
-    session.wire = wire;
-    session.currentThreadId = threadId;
-    session.currentScope = 'project';
-    session.currentViewId = null;
-    ws.send(JSON.stringify({ type: 'wire_ready', threadId, scope: 'project' }));
-    return wire;
-  };
 
   return {
     async 'thread:open'(clientMsg) {
+      logTemporaryChatBoundary('thread_open_request', { hasThreadId: Boolean(clientMsg.threadId) });
       const binding = currentBinding();
-      await runBoundRead(binding, () => ThreadWebSocketHandler.handleThreadOpen(ws, clientMsg));
+      if (!binding) logTemporaryChatBoundary('thread_open_unbound');
+      try {
+        await runBoundRead(binding, () => ThreadWebSocketHandler.handleThreadOpen(ws, clientMsg));
+        logTemporaryChatBoundary('thread_open_return');
+      } catch (error) {
+        logTemporaryChatBoundary('thread_open_error');
+        throw error;
+      }
     },
 
     async 'thread:open-assistant'(clientMsg) {
@@ -185,7 +147,7 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       }
       const binding = currentBinding();
       if (!binding) {
-        denyThreadMutation(ws);
+        denyOpenAssistant(acceptedRequest.requestId);
         return;
       }
       console.log('[WS] thread:open-assistant received, threadId:', acceptedRequest.threadId?.slice(0, 8) || '(new)');
@@ -202,7 +164,7 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
           const existingSession = binding.state.threadManager.getSession?.(acceptedRequest.threadId);
           if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING
             || existingSession?.state === 'stopping') {
-            denyThreadMutation(ws);
+            denyOpenAssistant(acceptedRequest.requestId);
             return;
           }
         }
@@ -213,40 +175,28 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
         // Creation/resume, its response frames, and provider admission are one
         // workspace-leased operation. A queued workspace bind cannot split
         // durable metadata from activation.
-        if (await resumeLiveProvider(threadId, binding)) return;
-        await spawnAndSetupWire({
-          ws,
-          session,
-          wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
-          threadId,
-          projectRoot: binding.projectRoot,
-          expectedBinding: binding,
+        const { withSessionAdmission } = require('../thread-groups/session-transactions');
+        await withSessionAdmission(binding.workspaceId, threadId, async () => {
+          if (await resumeLiveProvider({ ws, session, threadId, binding })) return;
+          await spawnAndSetupWire({
+            ws,
+            session,
+            wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+            threadId,
+            projectRoot: binding.projectRoot,
+            expectedBinding: binding,
+          });
         });
-      });
+      }, acceptedRequest.requestId);
     },
 
-    async 'thread:rename'(clientMsg) {
-      if (!requireTrustedThreadAuthority(ws, session)) return;
-      const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadRename(ws, clientMsg));
-    },
-
-    async 'thread:delete'(clientMsg) {
-      if (!requireTrustedThreadAuthority(ws, session)) return;
-      const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadDelete(ws, clientMsg));
-    },
-
-    async 'thread:copyLink'(clientMsg) {
-      const binding = currentBinding();
-      await runBoundRead(binding, () => ThreadWebSocketHandler.handleThreadCopyLink(ws, clientMsg));
-    },
+    'thread:action': createThreadActionHandler({ ws, session, currentBinding, runBoundMutation, getWorkspaceRecipients }),
 
     async 'thread:fork'() {
-      // Fork is not a trusted capability. Keep the baseline public symbol
-      // bounded and inert until SPEC-01 removes the remaining stale surfaces.
+      // SPEC-00 owns the unconditional unavailability of Fork. Thread Group
+      // Foundation removes every Fork capability, composer, service, config,
+      // and provider argument while this accepted denial remains the sole
+      // bounded response and never reaches a service effect.
       denyThreadFork(ws);
     },
 
@@ -267,13 +217,6 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       }));
     },
 
-    async 'thread:touch'(clientMsg) {
-      if (!requireTrustedThreadAuthority(ws, session)) return;
-      const binding = currentBinding();
-      if (!binding) return denyThreadMutation(ws);
-      await runBoundMutation(binding, () => ThreadWebSocketHandler.handleThreadTouch(ws, clientMsg));
-    },
-
     async 'thread:search'(clientMsg) {
       const binding = currentBinding();
       if (!binding) {
@@ -291,143 +234,80 @@ function createThreadWsHandlers({ ws, session, wireLifecycle, projectRoot }) {
       }));
     },
 
-    async 'thread:list'() {
+    async 'thread:list'(clientMsg = {}) {
       const binding = currentBinding();
-      await runBoundRead(binding, () => ThreadWebSocketHandler.sendThreadList(ws));
+      await runBoundRead(binding, () => {
+        let viewId = null;
+        if (clientMsg.viewId !== undefined && clientMsg.viewId !== null) {
+          const target = binding?.state?.threadManager?.threadGroups?.resolveViewTarget(clientMsg.viewId);
+          if (!target || !target.ok) {
+            ws.send(JSON.stringify({
+              type: 'error',
+              code: 'view_not_found',
+              message: 'Requested view is not available',
+            }));
+            return;
+          }
+          viewId = target.viewId;
+        }
+        return ThreadWebSocketHandler.sendThreadList(ws, viewId);
+      });
+    },
+
+    /**
+     * `thread:members` — the registered qualified read for one validated group
+     * (`SPEC-04 §8`). Workspace is server-derived from the bound connection and
+     * the server returns the group's authoritative nullable view. It returns
+     * ordered member projections only; transcript content is never included.
+     */
+    async 'thread:members'(clientMsg = {}) {
+      if (!requireTrustedThreadAuthority(ws, session)) return;
+      const binding = currentBinding();
+      await runBoundRead(binding, async () => {
+        const service = binding?.state?.threadManager?.threadGroups;
+        if (!service || typeof service.listGroupMembers !== 'function') {
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code: 'action_unavailable',
+            message: 'Thread members are unavailable',
+          }));
+          return;
+        }
+        let outcome;
+        try {
+          outcome = await service.listGroupMembers({
+            threadGroupId: clientMsg.threadGroupId ?? null,
+          });
+        } catch (_error) {
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code: 'members_failed',
+            message: 'Thread members are unavailable',
+          }));
+          return;
+        }
+        if (!outcome?.ok) {
+          const code = outcome?.code || 'not_found';
+          ws.send(JSON.stringify({
+            type: 'thread:members:error',
+            threadGroupId: clientMsg.threadGroupId ?? null,
+            code,
+            message: boundedActionError(code),
+          }));
+          return;
+        }
+        ws.send(JSON.stringify({
+          type: 'thread:members',
+          threadGroupId: outcome.result.threadGroupId,
+          workspaceId: outcome.result.workspaceId,
+          viewId: outcome.result.viewId,
+          members: outcome.result.members,
+        }));
+      });
     },
   };
-}
-
-/**
- * Spawn and set up a wire for a thread. Extracted so the prompt recovery
- * path in client-message-router.js can reuse the same wire-spawn sequence
- * as thread:open-assistant without duplicating logic.
- *
- * @param {object} deps
- * @param {import('ws').WebSocket} deps.ws
- * @param {object} deps.session
- * @param {{ awaitHarnessReady: Function, initializeWire: Function, setupWireHandlers: Function }} deps.wireLifecycle
- * @param {string} deps.threadId
- * @param {string} deps.projectRoot
- * @returns {Promise<import('child_process').ChildProcess>}
- */
-async function spawnAndSetupWire({
-  ws,
-  session,
-  wireLifecycle,
-  threadId,
-  projectRoot,
-  expectedBinding = null,
-}) {
-  const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
-
-  console.log('[WS] Spawning wire for thread:', threadId);
-  // CHAT_SCOPE_SPEC: workspace-universal scope — resolveScope() builds the
-  // structured workspace string for every chat:* event this wire emits.
-  const state = ThreadWebSocketHandler.getState(ws);
-  const manager = state?.threadManager;
-  if (!manager || manager.projectRoot !== projectRoot
-    || manager.workspaceId !== session.currentWorkspaceId) {
-    throw new Error('Workspace unavailable for thread activation');
-  }
-  const binding = {
-    state,
-    session,
-    projectRoot,
-    workspaceId: session.currentWorkspaceId,
-    workspaceEpoch: session.workspaceEpoch,
-  };
-  const activationBinding = expectedBinding || binding;
-  if (!ThreadWebSocketHandler.isActivationBindingCurrent(ws, activationBinding)) {
-    throw new Error('Workspace unavailable for thread activation');
-  }
-  const scopeContext = {
-    workspaceId: session.currentWorkspaceId,
-    projectRoot,
-    workspaceEpoch: session.workspaceEpoch,
-    viewId: null,
-  };
-  const wire = spawnThreadWire(threadId, projectRoot, scopeContext);
-  try {
-    console.log('[WS] Wire spawned, awaiting harness ready...');
-    await awaitHarnessReady(wire);
-    console.log('[WS] Setting up handlers...');
-    setupWireHandlers(wire, threadId, scopeContext);
-    console.log('[WS] Initializing wire...');
-    initializeWire(wire);
-    console.log('[WS] Wire initialization complete');
-
-    // Register with the workspace ThreadManager before claiming the session
-    // or announcing readiness. A failed/stale activation is rolled back below.
-    console.log('[WS] Registering with ThreadManager...');
-    await ThreadWebSocketHandler.activateThreadSession(ws, threadId, wire, activationBinding);
-    session.wire = wire;
-    session.currentThreadId = threadId;
-    session.currentScope = 'project';
-    session.currentViewId = null;
-    threadRuntimeManager.markReady({
-      workspaceId: manager.workspaceId,
-      projectRoot: manager.projectRoot,
-      workspaceEpoch: activationBinding.workspaceEpoch,
-      scope: 'project',
-      threadId,
-    });
-    console.log('[WS] ThreadManager registration complete');
-
-    // Fire wire_ready only after the serialized lifecycle owner commits.
-    ws.send(JSON.stringify({ type: 'wire_ready', threadId, scope: 'project' }));
-
-    return wire;
-  } catch (error) {
-    try {
-      await ThreadWebSocketHandler.rollbackThreadActivation(
-        ws,
-        threadId,
-        wire,
-        activationBinding,
-      );
-    } catch (_rollbackError) {
-      // Registry/provider teardown below remains mandatory even if durable
-      // suspension reporting fails during rollback.
-    }
-    const managedSession = typeof manager.getSession === 'function'
-      ? manager.getSession(threadId)
-      : null;
-    if (wire && managedSession?.wireProcess === wire) {
-      // Rollback could not prove provider exit. Keep every ownership surface
-      // discoverable and block replacement until a later bounded close wins.
-      threadRuntimeManager.markState({
-        workspaceId: manager.workspaceId,
-        projectRoot: manager.projectRoot,
-        workspaceEpoch: activationBinding.workspaceEpoch,
-        scope: 'project',
-        threadId,
-      }, RUNTIME_STATES.STOPPING);
-      throw error;
-    }
-    if (wire) await terminateProviderProcessAndWait(wire);
-
-    // Clear delivery/runtime ownership only after actual child termination.
-    if (getWireForThread(threadId, scopeContext) === wire) {
-      unregisterWire(threadId, scopeContext, wire);
-      threadRuntimeManager.markCold({
-        workspaceId: manager.workspaceId,
-        projectRoot: manager.projectRoot,
-        workspaceEpoch: activationBinding.workspaceEpoch,
-        scope: 'project',
-        threadId,
-      });
-    }
-    if (session.wire === wire) {
-      session.wire = null;
-      if (session.currentThreadId === threadId) {
-        session.currentThreadId = null;
-        session.currentScope = null;
-        session.currentViewId = null;
-      }
-    }
-    throw error;
-  }
 }
 
 module.exports = { createThreadWsHandlers, spawnAndSetupWire };

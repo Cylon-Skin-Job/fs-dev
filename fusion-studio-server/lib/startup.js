@@ -229,6 +229,9 @@ async function start({
   // chicken-and-egg. The DB is the registry's home; workspaces resolve
   // through it, not the other way around.
   await initDb();
+  // A reservation from an earlier server process can never own this launch's
+  // runtime. Fence it before sockets are admitted; accepted rows remain.
+  await require('./thread/prompt-submission-service').recoverInterrupted();
   await isolatedProvenance.initializeProfile(getDb());
   process.env.ROBIN_DB = DB_PATH;
   console.log('[DB] fusion.db initialized');
@@ -514,8 +517,12 @@ async function start({
     const manager = getProjectThreadManager(target.projectRoot, target.workspaceId);
     await awaitThreadManagerReady(manager);
     if (!await manager.getThread(target.threadId)) {
+      const { mintThreadGroupId } = require('./thread-groups/ids');
       await manager.createThread(target.threadId, 'Agent provenance isolated fixture', {
         harnessId: 'opencode',
+        // §4: a new group receives an independently minted opaque ID; the
+        // session identity is never reused as the group identity.
+        groupId: mintThreadGroupId(),
       });
     }
   });

@@ -191,3 +191,110 @@ SPEC-00 through SPEC-11 are accepted. The owner tested SPEC-11 in the normal Fus
 - Cleanup: detached runner reported graceful shutdown and exact-root removal; no owned process or CDP listener remained
 - Evidence: `/Users/rccurtrightjr./projects/Fusion-Home/oe009-run/SPEC-03/LIVE-SMOKE-RESULT.md` and `VERIFY-03-ELECTRON-EVIDENCE.md`
 - Downstream effect: SPEC-06 prerequisite satisfied
+
+## 2026-09-14 — Post-acceptance harness maintenance: clone staging + stale-root sweep
+
+- **Change (test-only):** `e2e/office/fixture-lifecycle.mjs` — `cloneOwnedTree`
+  stages files ≥4 MiB as real APFS clones (`COPYFILE_FICLONE_FORCE`, then
+  `/bin/cp -c`, then ordinary copy; `FICLONE_FORCE` returns `ENOSYS` on this
+  machine/Node 25.6.1, so `cp -c` is load-bearing); `.office-e2e-owner.json`
+  lease written at fixture-root creation; `sweepStaleOfficeFixtureRoots`
+  invoked from `playwright.office.config.ts` at config load (default 6 h age,
+  live-owner skip, direct-child and symlink-safe, overrides
+  `FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS` / `FUSION_OFFICE_E2E_SWEEP=0`); new tests
+  in `fixture-lifecycle.test.mjs`.
+- **Evidence:** all 52 staged large files (3.24 GB, including the 1.55 GB
+  whisper model) showed 0 MB `df` delta; `node --test
+  e2e/office/fixture-lifecycle.test.mjs` exercises the clone and sweep contracts;
+  a hard-killed run left its root and the next sweep removed it with
+  `OFFICE_E2E_SWEPT_STALE_ROOT=…`; orderly harness runs left zero roots.
+  `SPEC-00-OFFICE-EDITOR-TEST-HARNESS.md` updated.
+- **Blocker (pre-existing, reproduced at clean baseline `5f46d1a`):** the office
+  browser lane cannot start its isolated server (packaged mode now requires the
+  Trusted Fusion Shell Authority bootstrap; detail and options in `ISSUES.md`
+  2026-09-14), and the office Electron lane times out waiting for the renderer
+  page. The full Playwright acceptance run remains blocked by these lane
+  failures, not by the clone/sweep change. No owner acceptance is claimed.
+
+## 2026-09-16 — SPEC-12 drafted (harness lifetime and resource bounds)
+
+- **Trigger:** a 46-hour orphaned `node --test e2e/office/fixture-lifecycle.test.mjs`
+  runaway (parent dead, reparented to PID 1; killed 2026-09-16), plus the
+  runtime download/build fallback in `lib/transcription/index.js:109-136`
+  observed during investigation.
+- **Scope:** bounded runs (run deadline + parent-loss watch on the entry points
+  that lack it), disk preflight + CoW physical-delta assertion, fail-closed
+  no-network/no-build asset verification, and a janitor extension for empty
+  harness-owned leftovers. No product-behavior changes; the 2026-09-14 lane
+  blocker is explicitly out of scope.
+- **Artifact:** `SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md` — awaiting
+  owner approval and dispatch.
+
+## 2026-09-17 — SPEC-12 executed (harness lifetime and resource bounds)
+
+- **State:** executed — terminal `SPEC_READY_FOR_SUPERVISOR_REVIEW`; not yet
+  accepted by the supervisor or owner. Nothing committed or staged.
+- **Dispatch:** owner-authorized packet 2026-09-17; baseline HEAD `88637d1`,
+  branch `agent/exact-workspace-paths`; builders received only SPEC-12 +
+  `GUIDANCE.md`. Report: `SPEC-12-IMPLEMENTATION-REPORT.md` (this bundle).
+- **Slice 12.1 — lifetime bounds (R1, R2), accepted:** shared
+  `e2e/office/harness-bounds.mjs` surface; parent-loss watch on the
+  `node --test` runner and the Playwright lifecycle path; 15 min run deadline
+  (env override) and config `timeout`/`globalTimeout` from the shared
+  constants. Fresh builder `ses_f51ba2e11ffedxYPP4p8DEj7F9`; builder gate
+  pass 1 `CLEAN` (`ses_f5193ba61ffeTe7gh2JNglvSfn`); orchestrator acceptance
+  `CLEAN` (`ses_f517dc864ffe1wMod7OtfFoT0P`). Candidate: `harness-bounds
+  797c0b56…`, `fixture-lifecycle 42ad527e…`, `fixture-lifecycle.test 6fc7b4ff…`,
+  `global-setup a6243227…`, `global-teardown 26d6ae43…`, `parent-watch
+  d8175398…`, `parent-watch.test 6b1669cc…`, `run-isolated 5d50de37…`,
+  `playwright.office.config eb52328c…`.
+- **Slice 12.2 — resource bounds and janitor (R3, R4, R5), accepted:** disk
+  preflight before allocation (`OFFICE_E2E_LOW_DISK`), staged-bytes report,
+  CoW physical-delta regression assertion, fail-closed lane asset
+  provisioning/verification (`OFFICE_E2E_RESOURCE_MISSING`) with npx/cmake
+  interception probe, and the empty-shell janitor
+  (`OFFICE_E2E_JANITOR_SWEPT`). Fresh builder
+  `ses_f5177c279ffeZqMVxBkn3b9QXJ`; builder gate pass 1 `CLEAN`
+  (`ses_f502b4040ffeRYLarskZsflVjj`); orchestrator acceptance `CLEAN`
+  (`ses_f501127d5ffeud7HVg4Ua6QG5Y`). Final integrated candidate:
+  `harness-bounds 1fbf8ba5…`, `fixture-lifecycle 0b9f0fa9…`,
+  `fixture-lifecycle.test c5cc64e5…`, `global-setup 2f01b332…`,
+  `run-isolated 53b52e30…`, `playwright.office.config f70bf469…` (plus the
+  four unchanged 12.1 files).
+- **Final integration:** fresh reviewer `ses_f4ffe6cbfffeI18h0R9odPCpY9` →
+  `CLEAN` (advisories only).
+- **Gates (final bytes):** tagged `[slice 12.1]` 6/6; tagged `[slice 12.2]` 6/6;
+  `parent-lifecycle-watch.test.cjs` 4/4 (baseline 2/4); `playwright test --list`
+  exit 0 (371); ESLint exit 0; documented full invocation
+  `node --test --test-timeout=300000 e2e/office/fixture-lifecycle.test.mjs`
+  → 59 tests / 57 pass / 2 fail / 438 s; literal command → 59/57/2 / 447 s.
+  The only reds are the pre-existing `[slice 07.4]` lane-blocker tests
+  (`shell_bootstrap_unavailable`, ISSUES.md 2026-09-14 — out of scope);
+  baseline was 47/44/3. Probes captured: `OFFICE_E2E_LOW_DISK
+  free_bytes=83272572928 required_bytes=104861524126277`,
+  `OFFICE_E2E_STAGED_BYTES=3924126277`, `OFFICE_E2E_COW_OK delta_bytes=32768
+  logical_bytes=3393743591 ceiling_bytes=67874872`, parent-loss exit 143 +
+  marker with zero retained roots, deadline exit 124 + marker,
+  `OFFICE_E2E_RESOURCE_MISSING … hint=npx nodejs-whisper download
+  large-v3-turbo` with zero child shim invocations.
+- **Janitor effect:** the 9 real empty `/tmp/fusion-spec00a-*` shells were
+  removed; the 5 non-empty siblings preserved; no harness roots or processes
+  left; `~/.whisper/ggml-large-v3-turbo.bin` unchanged.
+- **Deviations:** recorded and classified in `SPEC-12-IMPLEMENTATION-REPORT.md`
+  §6 (12.1: D1–D7; 12.2: A–E) — all `accepted`; none silent; no out-of-scope
+  touches. Notable accepted interpretations: CoW assertion covers the
+  ≥4 MiB clone-candidate inventory (full-staging delta is ~795 MiB by the
+  accepted small-file copy contract); deadline exit 124 is owned by the
+  `node --test` file process (outer runner reports failure).
+- **Residuals:** out-of-scope lane blocker keeps the two `[slice 07.4]` reds;
+  `run-isolated-electron.mjs` parent-loss path exits 1 without the SPEC marker
+  (cleanup verified, advisory follow-up candidate); CoW call-site coverage gap;
+  `~/.whisper` provisioning dependency; 44-byte cross-process staged-bytes
+  variance (diagnostic only).
+- **Downstream effect:** `compatible deviation` — no product, schema, API,
+  authority, or downstream SPEC contract change; harness entry points must
+  adopt the shared bounds/guard surface.
+
+## 2026-10-01T02:48:52.954228+00:00 — SPEC-12 owner acceptance and combined merge authorization
+
+The owner accepts the existing Office E2E fix and explicitly directs its merge with the accepted chat changes. See [SPEC-12-OWNER-ACCEPTANCE.md](SPEC-12-OWNER-ACCEPTANCE.md) for the direct direction, all nine matching source hashes and retained verification limits. Historical pending status above is superseded for owner acceptance; no additional supervisor pass or full-suite green claim is made. Publication/merge results will be recorded separately.

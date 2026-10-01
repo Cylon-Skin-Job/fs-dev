@@ -1,9 +1,10 @@
 # Chat Composition Roadmap — Release Manifest
 
-**Candidate ID:** `CHAT-COMPOSITION-e3d2c49f044cd7f7`
-**Candidate status:** `OWNER APPROVED — SPEC-00 READY FOR IMPLEMENTATION`
+**Candidate ID:** `CHAT-COMPOSITION-2d34f8b45562f8f3`
+**Candidate status:** `SPEC-00 ACCEPTED; SPEC-01 ACCEPTED; SPEC-02 ACCEPTED; SPEC-03 (CHAT-03) ACCEPTED; SPEC-04 (CHAT-04) ACCEPTED — ROADMAP COMPLETE; SPEC-05 (CHAT-05) ADVISORY REPAIRS ACCEPTED — READY FOR COMMIT/PUSH DECISION`
 **Prepared:** 2026-09-05
-**Clean-room verdict:** `CLEAN — 1 fresh independent pass`
+**Overlay round:** 2026-09-13
+**Clean-room verdict:** `PRIOR CANDIDATE CLEAN (2026-09-05); OVERLAID CANDIDATE CLEAN (2026-09-13)`
 
 ## 1. Candidate Identity
 
@@ -12,37 +13,52 @@ SHA-256 of the ordered lines `<artifact-sha256><two spaces><artifact-path>`, wit
 paths relative to this bundle. The complete aggregate is:
 
 ```text
-e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7
+2d34f8b45562f8f3034c6801c3409bc48bf3af56c13af4ad015ead9297713505
 ```
+
+**Previous candidate:** `CHAT-COMPOSITION-e3d2c49f044cd7f7` (owner-approved
+2026-09-05; aggregate `e3d2c49f044cd7f7d5c913a5e03ee3c9f92f50636f8455acb5bad01dc73a1dc7`)
+remains the basis under which SPEC-00 was accepted. The overlaid candidate adds
+`BRIDGE-02-CONFORMANCE-OVERLAY.md`, updates `ISSUES.md`, `BUNDLE-INDEX.md`,
+`ROADMAP.md`, and `SPEC-01`–`SPEC-04`, and leaves `SPEC-00`, `DECISIONS.md`, and
+`GUIDANCE.md` byte-unchanged.
 
 Ordered normative artifacts:
 
 | Order | Artifact | SHA-256 |
 |---:|---|---|
-| 01 | `BUNDLE-INDEX.md` | `9d957a85d2a66ae72440b8b55b6c5d07fd5d7c35015f8d464a017cb2bbb1438b` |
+| 01 | `BUNDLE-INDEX.md` | `11a4844d31fd7f6f619b4d1f992d42bca2518282a2512f472067e1f87fb6ea0b` |
 | 02 | `DECISIONS.md` | `6c34943a9b53ef81e3020660313dabcd4697babd60e77287fc1b9928bfec2f7b` |
-| 03 | `ISSUES.md` | `48924a4de82c8995b763ac7914a15fc84433f1921b31d77a2e5dd3849fec548b` |
+| 03 | `ISSUES.md` | `2e68120f5aa32f612b00c4469c32b0f224cebf0f66e9c2704e683d7748cd4e9a` |
 | 04 | `GUIDANCE.md` | `60df8af9b089b14af10ae2eb82d726fc58e0f12b7f18f122a0f1b1ef35800405` |
-| 05 | `ROADMAP.md` | `7af19e9ce1650aeb3d982d86fe93191b3ccca5d878cf8e9f62d36e535659df4f` |
-| 06 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | `154c47db9f7181993751390468267e376470727937cdc8595d827e45b0b5ab0b` |
-| 07 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | `85daec5193dc5693c9e842f09f19a4f8e474e1af1060a341447b4ad9c46afe39` |
-| 08 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | `34c4cd1fbd4cffd949be25a3bdcd3ca2870ee1bede523a1f9bcd66069f956b7c` |
-| 09 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | `e18ba9f4231245792f4d958ab90951c7ed8c19f7a84a9f6674e49a7b08ceb966` |
-| 10 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | `4ee617394aacf7e882f8e48c6b022a787cfea81f1964dbfb920d21a7de48c3a3` |
+| 05 | `BRIDGE-02-CONFORMANCE-OVERLAY.md` | `21978c82b67e01dcfc94fb53b926d56b45166774d34a72eb731b55384167842b` |
+| 06 | `ROADMAP.md` | `6318e881db4bffb1d3610ff2170a3c59e37c14944c3f68db8d8cd3630fe7d72c` |
+| 07 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | `154c47db9f7181993751390468267e376470727937cdc8595d827e45b0b5ab0b` |
+| 08 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | `df2b3cc8ef7f9eaea49b9e74f382d91ab69e36c8f0ed29e0e8bccddaa0013ade` |
+| 09 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | `106e9468def9e6943e370357af2285f3d996f79fa63df2f1e009b9ce64b01721` |
+| 10 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | `807f4350a201dcd148256aa2a472cf509c8b4b3c4d065f18b416588b017f002a` |
+| 11 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | `fae72715b29796dd4142f866ff757cc57b0a593062bc91734ede39a354ccfe87` |
+
+The 11-file aggregate above is the SHA-256 of these eleven ordered
+`<sha256><two spaces><path>` lines. The pre-overlay 10-file aggregate
+`e3d2c49f044cd7f7…` was reproduced over the original ten-artifact list as a
+sanity check before this overlay edit.
 
 `CLEAN-ROOM-REVIEW.md` and this manifest are evidence/identification artifacts,
 not normative inputs to their own candidate hash.
 
 ## 2. Ordered Roadmap
 
-1. **SPEC-00 — Trusted Fusion Shell Authority**
+1. **SPEC-00 — Trusted Fusion Shell Authority** — owner-accepted and integrated
+   (commit `1baaffa`, acceptance `7f0d3c8`, 2026-09-07).
    Gate: owner-accepted Agent Tool Provenance product bytes integrated into the
    implementation baseline.
    Outcome: secure Electron shell origin, centralized runtime endpoint,
    one-use connection proof, trusted-shell route guard, and child-process
    secret isolation without Thread Group or bridge behavior.
 2. **SPEC-01 — Thread Group Foundation**
-   Gates: accepted SPEC-00, approved BRIDGE-01 and BRIDGE-02, and the
+   Gates: accepted SPEC-00, owner-accepted BRIDGE-01 (`16ccecf`) and
+   owner-approved BRIDGE-02 through `BRIDGE-02-CONFORMANCE-OVERLAY.md`, and the
    owner-released accepted Tab Platform milestone.
    Outcome: stable view IDs, consumption of accepted shell authority, durable one-member Thread
    Groups, migration, public lifecycle, group actions, and Fork retirement.
@@ -59,6 +75,10 @@ not normative inputs to their own candidate hash.
    Gate: owner-accepted SPEC-03.  
    Outcome: unchanged old chat in a recoverable Side Chat tab, new empty Main
    Chat peer, repeated Move, member access, and Secondary Chat retirement.
+
+The `BRIDGE-02-CONFORMANCE-OVERLAY.md` overlay is packet-wide: it binds
+SPEC-01 through SPEC-04 as the consuming instrument of the BRIDGE-02
+`ChatActionContext` contract.
 
 No following SPEC may begin before the preceding SPEC is explicitly accepted by
 the owner.
@@ -125,7 +145,15 @@ close-without-resurrection, and absence of Fork/old Secondary Chat paths.
 Candidate `CHAT-COMPOSITION-e3d2c49f044cd7f7` completed a fresh independent
 read-only clean-room pass on 2026-09-05. The reviewer reproduced the exact
 aggregate and all ten artifact hashes and reported `CLEAN — no material
-findings`. See `CLEAN-ROOM-REVIEW.md` for the scope, verified contracts, and
+findings`. That pass covered the pre-overlay candidate only. The overlaid
+candidate `CHAT-COMPOSITION-2d34f8b45562f8f3` (aggregate
+`2d34f8b45562f8f3034c6801c3409bc48bf3af56c13af4ad015ead9297713505`) completed a
+fresh independent read-only clean-room pass on 2026-09-13 (reviewer
+`ses_f6615c595ffetDxYDbCdRl98vA`, GLM 5.3 Flash high reasoning effort); the
+reviewer reproduced the aggregate and all eleven artifact hashes and reported
+`CLEAN — no material findings`; two non-blocking advisories were recorded
+(prerequisite gate phrasing; before-state dead-path quotes in the BRIDGE-02 R-1
+narrative). See `CLEAN-ROOM-REVIEW.md` for the scope, verified contracts, and
 remaining execution gates.
 
 ## 7. Approval Record
@@ -137,6 +165,134 @@ remaining execution gates.
   `d31fc8aeab0eae9cd622cad7b6db7b81a3498e87`, with integration acceptance
   recorded in `3110bd0`
 - **Implementation before approval:** prohibited
+- **Overlay round (2026-09-13):** the BRIDGE-02 conformance overlay
+  (`BRIDGE-02-CONFORMANCE-OVERLAY.md`) was applied to this packet. SPEC-00
+  acceptance and bytes are unchanged. Owner re-approval of this overlaid
+  candidate — and owner approval of the BRIDGE-02 candidate — is required before
+  CHAT-01 dispatch. No implementation is authorized by the overlay.
+- **OVERLAID CANDIDATE OWNER-APPROVED — 2026-09-13.** Owner statement:
+  “Approve.” The overlaid candidate `CHAT-COMPOSITION-2d34f8b45562f8f3` and the
+  BRIDGE-02 living candidate `BRIDGE-1e722a9c6d30f6b5` are owner-approved. This
+  satisfies the remaining owner-approval gate recorded in `ISSUES.md`
+  `CHAT-I-035`; the packet's normative bytes are unchanged by this approval
+  record (the manifest is excluded from its own candidate hash). CHAT-01
+  (SPEC-01 Thread Group Foundation) may now dispatch through a fresh
+  orchestrator; each following SPEC still requires explicit owner acceptance of
+  its predecessor.
+- **SPEC-01 (CHAT-01) ACCEPTED — 2026-09-13.** Owner statement: “Accepted.
+  Let's continue.” Independent owner-side review `CLEAN` (no blocking findings,
+  no unresolved deviations) on product digest
+  `2a4ba090c7d82dc9411057a3495f23b7c10201db3bddf0beb0014b633bae2ce0` (61 paths;
+  migration head `042`; 6 Fork-era deletions; union list `b178762b…`). Gates
+  reproduced by reviewer and owner-side: server `npx jest --runInBand` 203
+  suites / 2975 passed / 1 skipped; client build passed; isolated thread-group
+  Playwright 7 passed; source suite 65 passed; both PROV live launchers exit 0.
+  All 33 recorded deviations ratified; four advisories non-blocking. Evidence:
+  `SPEC-01-IMPLEMENTATION-REPORT.md`, `CHAT-01-EXECUTION-LEDGER.md`. **SPEC-02
+  (Composable Chat Surfaces) is now unblocked** subject to its independently
+  accepted Generic Component Tab Host prerequisite and an owner-authorized
+  dispatch; worktree commit is a separate owner call.
+- **SPEC-02 (CHAT-02) ACCEPTED — 2026-09-13.** Owner statement: “Yes.”
+  Independent owner-side review `CLEAN` (no blocking findings; two documented
+  owner-visibility items, no repair required) on product digest
+  `ca7c23e66a0a7d7d4a12447a0da29e2cd4f96d417b35101232bf561669aa6a50` (43 paths
+  + 3 deletions; migration head `042`; union list `5c8c3de0…`). Gates
+  reproduced by reviewer and owner-side: server `npx jest --runInBand` 203
+  suites / 2975 passed / 1 skipped; client build passed; four focused specs 49
+  passed; source 65; thread-group 7; component-tab + action-context 142;
+  hover/composer 2; Electron smoke `CHAT_SURFACE_CONCURRENCY_SMOKE_OK` with two
+  stop frames. The 02A-D7 baseline-red set (five source/CSS specs,
+  `prompt-ownership.slice-c`, 56/59 `working-activity` cases) was independently
+  reproduced at clean baseline `5f46d1a` and is carried as an **owner
+  re-baseline item**. Evidence: `SPEC-02-IMPLEMENTATION-REPORT.md`,
+  `CHAT-02-EXECUTION-LEDGER.md`. **SPEC-03 (Thread Worksurface Continuity) is
+  now unblocked**; worktree commit is a separate owner call.
+- **SPEC-03 (CHAT-03) ACCEPTED — 2026-09-14.** Owner statement: “Okay, let's
+  accept this and move on.” Independent owner-side review `CLEAN` (no blocking
+  findings; no deviation requiring an owner ruling) on product digest
+  `6b1e36ce28689121857200ddbd997a618596a37c00744c305b4896e8714b793d` (71 paths,
+  0 deletions; migration head `043`; union list `d2d04943…`). Gates reproduced
+  by reviewer and owner-side: server `npx jest --runInBand` 206 suites / 3003
+  passed / 1 skipped; client build passed; four chat03 specs 46 passed;
+  Electron smoke `CHAT_03_THREAD_WORKSURFACE_SMOKE_OK` (2 groups, delete
+  isolated, relaunch restored); regressions — thread-group 7, chat-surface 49,
+  source 65, component-tab + action-context 142, hover/composer 2. Advisories:
+  two stale comment drifts, a pre-existing size carry, and an owner-observed
+  Electron-smoke cold-launch timing sensitivity (loud-fail; passed on retry and
+  for the reviewer). Evidence: `SPEC-03-IMPLEMENTATION-REPORT.md`,
+  `CHAT-03-EXECUTION-LEDGER.md`. **SPEC-04 (Move Chat to Side Chat) is now
+  unblocked**; worktree commit is a separate owner call.
+- **SPEC-04 (CHAT-04) ACCEPTED — 2026-09-15.** Owner statement: “Accepted.”
+  Independent owner-side review `CLEAN` (no material findings; no deviation
+  requiring an owner ruling) on product digest
+  `03171a3954972dccf0abe19fbaa1513c12315b78fd4a34c6ab5de976285c24e7` (79 paths
+  + 6 deletions; migration head `044`; path-list digest `6c84b83b…`; deletions
+  digest `18ef01f2…`). Gates reproduced by reviewer and owner-side: server
+  `npx jest --runInBand` 209 suites / 3038 passed / 1 skipped; client build
+  passed (pre-existing chunk warning only); SPEC §12 e2e set 20 passed
+  (isolated port 3317, `/tmp` profile); Electron smoke all nine markers
+  including `CHAT_04D_SECONDARY_ABSENT=true`; regressions — chat03 worksurface
+  46, chat-surface 49 + component-tab/action-context 142 (191), thread-group 7,
+  source 65. The disclosed 77→79 manifest record repair (no product byte
+  changed) was independently verified consistent. Advisories (non-blocking):
+  `service.js` 857-line residual split plan, portal-menu adoption carry,
+  capability lockstep by convention, Electron smoke model-turn scope, and the
+  pre-existing 02A-D7 baseline-red set unchanged. Evidence:
+  `SPEC-04-IMPLEMENTATION-REPORT.md`, `CHAT-04-EXECUTION-LEDGER.md`. Roadmap
+  final integration gate now in progress; worktree commit remains a separate
+  owner call.
+- **ROADMAP FINAL INTEGRATION COMPLETE — 2026-09-15.** Fresh read-only
+  final-integration reviewer `ses_f5bdcbe75ffeh6xRIlaTaonCNn` (pinned GLM 5.3
+  Flash, high effort; no inherited parent conversation) returned **CLEAN** (no
+  material findings; three non-blocking advisories) on the accepted current
+  bytes. Independently reproduced: SPEC-04 product manifest 79/79 OK (digest
+  `03171a39…`); SPEC-03 supersede-check (29 changed paths — 26 superseded
+  inside the 79-list, 3 = SPEC-04 documentation Wiki pages; zero
+  non-documentation drift outside the 79-list); 11-artifact candidate aggregate
+  `2d34f8b45562f8f3…3505`; HEAD `5073b10` unchanged, nothing staged; migration
+  head `044`, nothing above, 001–042 tracked-frozen; dirty-worktree
+  classification with no unclassified entry. Combined checks: server 209
+  suites / 3038 passed / 1 skipped; client build passed (pre-existing chunk
+  warning only); SPEC §12 e2e 20; chat03 worksurface 46; chat-surface 49 +
+  component-tab/action-context 142 (191); thread-group 7; source 65;
+  side-chat smoke all nine markers; worksurface smoke
+  `CHAT_03_THREAD_WORKSURFACE_SMOKE_OK` (see advisory 1); chat-surface
+  concurrency smoke `CHAT_SURFACE_CONCURRENCY_SMOKE_OK` with
+  `STOP_EXERCISED=true`; trusted-shell smoke `TRUSTED_SHELL_AUTH_SMOKE_OK`.
+  All ROADMAP §6 completion criteria PASS. Advisories (non-blocking):
+  (1) the CHAT-03 worksurface Electron smoke now fails deterministically
+  without the same cold-start settle delay the SPEC-04 smoke carries
+  (`side-chat-electron-smoke.mjs:286-288`); with the identical settle in a
+  /tmp diagnostic copy (no repo byte touched) it passes with all four markers,
+  and the underlying product behavior is verified green — a test-only
+  back-port is recommended for a future slice; (2) SPEC-03 vs SPEC-04 manifest
+  documentation-scope convention differs (Wiki docs included vs excluded);
+  future convention pin; (3) carried advisories unchanged (`service.js`
+  857-line residual split plan, portal-menu adoption carry, capability
+  lockstep by convention, Electron smoke model-turn scope, inert `useChatArea`
+  forbidden-import token, pre-existing 02A-D7 baseline-red set).
+  **ROADMAP_COMPLETE declared** on the accepted current bytes; worktree commit
+  remains a separate owner call.
+- **SPEC-05 (CHAT-05) ADVISORY REPAIRS ACCEPTED — 2026-09-15.** Owner
+  statement: “Accepted.” Post-roadmap repair
+  (`SPEC-05-ADVISORY-REPAIRS.md`); receipt recorded on the frozen 7-path
+  product fingerprint (smoke `27886f57…`, service `3b1ea999…`, link
+  `cf622eff…`, selection `14eb23a5…`, delete `3854f65e…`, lockstep test
+  `00334824…`, identity spec `71e448e6…`). Gates reproduced by the reviewer
+  chain and owner-side: server `npx jest --runInBand` 210 suites / 3042
+  passed / 1 skipped / 0 failures; client build passed (pre-existing chunk
+  warning only); lanes 20 / 46 / 191 / 7 / 65; side-chat smoke all nine
+  markers; CHAT-03 worksurface smoke 3/3 consecutive green (cold-start settle
+  back-port); lockstep guard independently demonstrated to fail on induced
+  drift with byte-exact restore. `service.js` 857 → 391 lines (≤400, no
+  residual carry; `link-service.js`/`selection-service.js`/`delete-service.js`
+  added). Migration head stays `044`; no schema, transport, or user-visible
+  change. Deviations 05B-D1–D3 and 05C-D1 accepted; advisories 05A-A1
+  (pre-existing load-stage flake) and 05D-A1 (sentinel removal per SPEC
+  directive) carried. Evidence: `SPEC-05-IMPLEMENTATION-REPORT.md`,
+  `CHAT-05-EXECUTION-LEDGER.md`. Worktree remains uncommitted at HEAD
+  `5073b10` with nothing staged; the next step is the owner's commit/push
+  decision.
 
 After approval, execution may begin through either:
 

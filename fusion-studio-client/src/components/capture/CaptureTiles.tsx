@@ -6,7 +6,7 @@
  * useDocViewerState; this component only wires presentation to that state.
  */
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
 import { DOC_VIEWER_ARCHIVE_FOLDER, type DocViewerMode, useDocViewerState } from '../../hooks/useDocViewerState';
 import { useFolderFiles } from '../../hooks/useFolderFiles';
@@ -301,12 +301,18 @@ export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
     && docTabs[0]?.kind === 'capture'
     && captureHandoffStatus !== 'failed';
 
+  const withWorksurfaceDock = (node: ReactNode) => (
+    <div className="rv-worksurface-view-layout">
+      {node}
+    </div>
+  );
+
   if (loneCaptureIsHandingOff) {
-    return <div className="rv-tile-grid rv-capture-viewer-grid" aria-busy="true" />;
+    return withWorksurfaceDock(<div className="rv-tile-grid rv-capture-viewer-grid" aria-busy="true" />);
   }
 
   if (selected && isFullPageSelected) {
-    return (
+    return withWorksurfaceDock(
       <FilePageView
         file={selected.file}
         panel={DOC_VIEWER_PANEL}
@@ -332,7 +338,7 @@ export function CaptureTiles({ onOpenDocument }: CaptureTilesProps) {
     );
   }
 
-  return (
+  return withWorksurfaceDock(
     <div className="rv-tile-grid rv-capture-viewer-grid">
       <DocViewerHeader
         mode={mode}

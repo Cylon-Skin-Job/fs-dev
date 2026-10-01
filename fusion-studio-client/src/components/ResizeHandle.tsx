@@ -14,8 +14,8 @@ import type { Pane } from '../types';
  *     grow with -delta).
  *   - `defaultWidth`: initial width if nothing is stored for this pane.
  *
- * Keeping these as three separate components means there's no
- * cross-contamination between primary-chat, sidebar, and secondary-chat
+ * Keeping these as separate components means there's no
+ * cross-contamination between primary-chat, sidebar, and content-navigation
  * resize logic — each one is independently testable.
  */
 
@@ -75,7 +75,7 @@ function useResizeDrag({ panel, pane, edge, defaultWidth }: ResizeDragConfig) {
 
     const delta = e.clientX - d.startX;
     // Right-edge handles (sidebar, primary chat): +delta grows the pane.
-    // Left-edge handles (secondary chat, file tree): -delta grows the pane
+    // Left-edge handles (file tree, content nav): -delta grows the pane
     // (the left edge moves outward as the pointer moves leftward).
     const signedDelta = edge === 'right' ? delta : -delta;
     const dragMax = pane === 'leftSidebar'
@@ -141,16 +141,8 @@ export function LeftChatResize({ panel }: { panel: string }) {
   return <div {...props} />;
 }
 
-/** Sticky secondary chat column. Left-edge handle: drag left grows.
- *  Writes to widths.rightSecondary (chat-only slot). */
-export function RightSecondaryResize({ panel }: { panel: string }) {
-  const props = useResizeDrag({ panel, pane: 'rightSecondary', edge: 'left', defaultWidth: 300 });
-  return <div {...props} />;
-}
-
 /** View's right column (e.g. file-viewer file tree). Left-edge handle.
- *  Writes to widths.rightCol, independent of the sticky chat's width so the
- *  file tree returns to its own size when the chat undocks. */
+ *  Writes to widths.rightCol. */
 export function RightColResize({ panel }: { panel: string }) {
   const props = useResizeDrag({ panel, pane: 'rightCol', edge: 'left', defaultWidth: 220 });
   return <div {...props} />;
@@ -166,18 +158,4 @@ export function ContentNavLeftResize({ panel }: { panel: string }) {
 export function ContentNavRightResize({ panel }: { panel: string }) {
   const props = useResizeDrag({ panel, pane: 'contentNavRight', edge: 'left', defaultWidth: 220 });
   return <div {...props} />;
-}
-
-// --- Legacy compatibility shim ---
-// Old callers passed <ResizeHandle panel={...} pane="..." />. Route to the
-// correct wrapper so we can remove this once all call sites are migrated.
-interface LegacyProps {
-  panel: string;
-  pane: Pane;
-}
-
-export function ResizeHandle({ panel, pane }: LegacyProps) {
-  if (pane === 'leftSidebar') return <LeftSidebarResize panel={panel} />;
-  if (pane === 'leftChat') return <LeftChatResize panel={panel} />;
-  return <RightSecondaryResize panel={panel} />;
 }

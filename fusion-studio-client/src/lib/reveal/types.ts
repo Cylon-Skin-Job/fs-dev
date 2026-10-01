@@ -1,3 +1,4 @@
+import type { RevealProgress } from './progress';
 /**
  * Reveal types — interfaces for chunk parsing and reveal orchestration.
  */
@@ -39,6 +40,7 @@ export interface ChunkParser {
  * queue lookahead.
  */
 export interface RevealOptions {
+  progress?: RevealProgress;
   speedFast?: number;
   speedSlow?: number;
   batchSizeFast?: number;

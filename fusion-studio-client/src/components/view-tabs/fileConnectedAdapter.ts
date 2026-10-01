@@ -52,6 +52,7 @@ import {
   protectFileModelForPendingClose,
 } from './fileConnectedOwnerPorts';
 import { setActiveFileConnectedRuntime } from './fileConnectedTabs';
+import { chatConnectedRegistrations } from '../chat/chatComponentRegistration';
 
 // The real presenters carry view CSS; they load lazily so pure/spec consumers
 // of the registry chain stay CSS-free.
@@ -102,7 +103,13 @@ function boundedUnavailableSurface() {
   );
 }
 
-const FILE_CONNECTED_REGISTRATIONS = fileConnectedPresenterRegistrations();
+// SPEC-02 §8: the chat domain registers `fusion.chat-surface` through the same
+// closed resolver seam; SPEC-04 §6 composes open managed Side Chat placements
+// into this view's visible rail through `composeSideChatAdapter` below.
+const FILE_CONNECTED_REGISTRATIONS = [
+  ...fileConnectedPresenterRegistrations(),
+  ...chatConnectedRegistrations(),
+];
 
 /**
  * Stand-in policy used ONLY while the connected path is disabled (no ready
@@ -295,6 +302,10 @@ export function useFileConnectedAdapter(enabled: boolean): ViewTabAdapterModel |
     };
   }, [pickerHostActive]);
 
+  // SPEC-04 §6: the code-owned Side Chat composition seam now runs once, above
+  // this adapter, in `useViewTabAdapter`/`useSideChatRailAdapter`. The File
+  // adapter stays the native-tab owner and returns its protected model
+  // unchanged; with no open placement the rail is byte-identical.
   return protectedModel;
 }
 

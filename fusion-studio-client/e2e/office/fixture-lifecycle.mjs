@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
 import { createHash, randomUUID } from 'node:crypto'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
@@ -13,6 +13,18 @@ import {
   localPalettePath,
   resetPaletteSelectorFixture,
 } from './palette-selector-fixtures.mjs'
+// Shared resource-bound surface (R3/R4). Importing bounds into the staging
+// module is the one safe ESM cycle in this harness: harness-bounds.mjs imports
+// fixture-lifecycle.mjs for lifetime cleanup, and this module only reads the
+// bound values inside function bodies, so both modules finish evaluating before
+// any bound is consumed.
+import {
+  OFFICE_E2E_JANITOR_SWEPT_MARKER,
+  OFFICE_E2E_LOW_DISK_MARKER,
+  OFFICE_E2E_RESOURCE_MISSING_MARKER,
+  OFFICE_E2E_STAGED_BYTES_MARKER,
+  officeE2eDiskHeadroomBytes,
+} from './harness-bounds.mjs'
 
 export const OFFICE_E2E_MACHINE = 'Office-E2E'
 export const OFFICE_E2E_DIAGNOSTIC_TAIL_BYTES = 65_536
@@ -63,6 +75,10 @@ const runtimeMarkerName = '.office-e2e-runtime-complete.json'
 const fixtureInternals = new WeakMap()
 const processLifecycleInternals = new WeakMap()
 const retainedOfficeRoots = new Set()
+// Process-lifecycle registrations still owned by this process. Parent-loss and
+// deadline cleanup enumerate this set so no owned child group or fixture root
+// is left behind without an explicit report.
+const activeProcessLifecycles = new Set()
 let activeFixture = null
 
 function installOfficeDependencyWriteGuard() {
@@ -258,12 +274,24 @@ function validateRequestedFixtureRoot(candidate) {
   return safeCandidate
 }
 
+// Ownership lease for the stale-root sweep: the run that created a root keeps
+// its pid here so a later suite start can distinguish an abandoned root from a
+// live one without following anything inside the directory.
+function writeOfficeFixtureOwnerFile(root) {
+  fs.writeFileSync(
+    path.join(root, officeE2eOwnerFileName),
+    `${JSON.stringify({ pid: process.pid, startedAt: Date.now() })}\n`,
+    { flag: 'w', mode: 0o600 },
+  )
+}
+
 function createFixtureRoot(requestedRoot) {
   const safeTemporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
   const root = requestedRoot
     ? validateRequestedFixtureRoot(requestedRoot)
     : fs.mkdtempSync(path.join(safeTemporaryRoot, 'fusion-office-e2e-'))
   if (requestedRoot) fs.mkdirSync(root, { mode: 0o700 })
+  writeOfficeFixtureOwnerFile(root)
   return assertOfficeFixturePathSafe(root)
 }
 
@@ -497,6 +525,9 @@ export async function createOfficeFixture(options = {}) {
   const scenarioId = validated.scenario
   const selectedWorkspaces = OFFICE_E2E_WORKSPACES.slice(0, workspaceCount)
   if (activeFixture) throw new Error('An Office fixture is already active in this process')
+  // R3: the disk preflight runs before the fixture root is allocated, so a
+  // low-disk machine creates no owned directory at all.
+  assertOfficeE2eDiskHeadroom({ environment: process.env })
 
   const root = createFixtureRoot(validated.root)
   const priorEnvironment = {
@@ -605,29 +636,172 @@ function isPackagedServerNodeModuleExclusion(relative) {
   return packagedServerNodeModuleExclusion.test(relative)
 }
 
-function cloneOwnedTree(sourceRoot, destinationRoot, excludedPaths = new Set(), excludePath = () => false) {
-  function cloneEntry(source, destination, relative) {
-    const stat = fs.lstatSync(source)
-    if (stat.isDirectory()) {
-      fs.mkdirSync(destination, { mode: stat.mode, recursive: true })
-      for (const name of fs.readdirSync(source).sort()) {
-        const childRelative = relative ? `${relative}/${name}` : name
-        if (excludedPaths.has(childRelative) || excludePath(childRelative)) continue
-        cloneEntry(path.join(source, name), path.join(destination, name), childRelative)
+// Runtime staging must not duplicate large owned bytes. APFS copy-on-write is
+// requested explicitly for large files; Node's plain `COPYFILE_FICLONE` silently
+// falls back to a real byte copy on this platform, so the staged runtime grew by
+// gigabytes per run and interrupted runs left that behind. Small files keep the
+// ordinary copy path.
+const OFFICE_E2E_LARGE_CLONE_FILE_MIN_BYTES = 4 * 1024 * 1024
+const officeE2eOwnerFileName = '.office-e2e-owner.json'
+
+function removeDestinationFile(destination) {
+  try {
+    fs.rmSync(destination, { force: true })
+  } catch {
+    // Best-effort: the caller falls through to another copy strategy.
+  }
+}
+
+// Copy one owned file, preferring a genuine copy-on-write clone for large files:
+// `COPYFILE_FICLONE_FORCE`, then macOS `cp -c`, then an ordinary copy. The mode
+// is always applied explicitly so permission parity is preserved. Returns the
+// strategy used (observability/testing only; callers ignore it).
+export function cloneFilePreservingMode(source, destination, mode) {
+  if (fs.lstatSync(source).size >= OFFICE_E2E_LARGE_CLONE_FILE_MIN_BYTES) {
+    try {
+      fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE_FORCE)
+      fs.chmodSync(destination, mode)
+      return 'ficlone_force'
+    } catch {
+      removeDestinationFile(destination)
+    }
+    if (process.platform === 'darwin') {
+      const result = spawnSync('/bin/cp', ['-c', '--', source, destination], { stdio: 'ignore' })
+      if (result.status === 0 && fs.existsSync(destination)) {
+        fs.chmodSync(destination, mode)
+        return 'cp_c'
       }
+      removeDestinationFile(destination)
+    }
+  }
+  fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE)
+  fs.chmodSync(destination, mode)
+  return 'copy'
+}
+
+// One traversal shared by the runtime clone and the pre-staging inventory walk.
+// `visit` is called pre-order, so directory handlers can create the destination
+// before their children are visited. Keeping clone and measurement on the same
+// walk is what guarantees the preflight byte count matches what staging copies.
+function walkOwnedTree(source, relative, excludedPaths, excludePath, visit) {
+  const stat = fs.lstatSync(source)
+  if (stat.isDirectory()) {
+    visit({ kind: 'directory', relative, source, stat })
+    for (const name of fs.readdirSync(source).sort()) {
+      const childRelative = relative ? `${relative}/${name}` : name
+      if (excludedPaths.has(childRelative) || excludePath(childRelative)) continue
+      walkOwnedTree(path.join(source, name), childRelative, excludedPaths, excludePath, visit)
+    }
+    return
+  }
+  if (stat.isSymbolicLink()) {
+    visit({ kind: 'symlink', relative, source, stat })
+    return
+  }
+  if (!stat.isFile()) throw new Error(`Unsupported Office runtime clone entry: ${source}`)
+  visit({ kind: 'file', relative, source, stat })
+}
+
+// Clone one owned tree, returning the logical bytes of every file written. The
+// return value feeds the R3 `OFFICE_E2E_STAGED_BYTES` report without a second
+// walk of the staged result.
+function cloneOwnedTree(sourceRoot, destinationRoot, excludedPaths = new Set(), excludePath = () => false) {
+  let logicalBytes = 0
+  walkOwnedTree(sourceRoot, '', excludedPaths, excludePath, ({ kind, relative, source, stat }) => {
+    const destination = relative ? path.join(destinationRoot, relative) : destinationRoot
+    if (kind === 'directory') {
+      fs.mkdirSync(destination, { mode: stat.mode, recursive: true })
       fs.chmodSync(destination, stat.mode)
       return
     }
-    if (stat.isSymbolicLink()) {
+    if (kind === 'symlink') {
       fs.symlinkSync(fs.readlinkSync(source), destination)
       if (typeof fs.lchmodSync === 'function') fs.lchmodSync(destination, stat.mode)
       return
     }
-    if (!stat.isFile()) throw new Error(`Unsupported Office runtime clone entry: ${source}`)
-    fs.copyFileSync(source, destination, fs.constants.COPYFILE_FICLONE)
-    fs.chmodSync(destination, stat.mode)
+    cloneFilePreservingMode(source, destination, stat.mode)
+    logicalBytes += stat.size
+  })
+  return logicalBytes
+}
+
+// The clone inventory: every file the runtime staging walk would copy, in the
+// same order, with its logical size. `key` is a stable clone-destination bucket
+// so callers can materialize a subset without relative-path collisions.
+function officeRuntimeCloneInventory() {
+  const inventory = []
+  const collect = (key, sourceRoot, excludedPaths = new Set(), excludePath = () => false) => {
+    walkOwnedTree(sourceRoot, '', excludedPaths, excludePath, ({ kind, relative, source, stat }) => {
+      if (kind !== 'file') return
+      inventory.push(Object.freeze({ key, relative, size: stat.size, source }))
+    })
   }
-  cloneEntry(sourceRoot, destinationRoot, '')
+  collect('server-lib', path.join(serverRoot, 'lib'))
+  collect('server-node-modules', path.join(serverRoot, 'node_modules'), ownedCacheDirectories, isPackagedServerNodeModuleExclusion)
+  collect('client-electron', path.join(clientRoot, 'electron'))
+  collect('client-public', path.join(clientRoot, 'public'))
+  collect('client-src', path.join(clientRoot, 'src'))
+  collect('client-node-modules', path.join(clientRoot, 'node_modules'), ownedCacheDirectories)
+  return Object.freeze(inventory)
+}
+
+// The logical bytes of every file runtime staging will write, plus the small
+// root files and the dependency write guard. The source trees rarely change
+// within one harness process, so the walk is memoized; pass `{ fresh: true }`
+// to bypass the memo and compare against the live source at assertion time.
+let stagedLogicalBytesMeasurement = null
+export function measureOfficeRuntimeStagedLogicalBytes(options = {}) {
+  if (options.fresh !== true && stagedLogicalBytesMeasurement !== null) {
+    return stagedLogicalBytesMeasurement
+  }
+  let total = Buffer.byteLength(dependencyWriteGuardBytes)
+  for (const entry of officeRuntimeCloneInventory()) total += entry.size
+  for (const filename of serverRootFiles) total += fs.lstatSync(path.join(serverRoot, filename)).size
+  for (const filename of clientRootFiles) total += fs.lstatSync(path.join(clientRoot, filename)).size
+  stagedLogicalBytesMeasurement = total
+  return total
+}
+
+// Owned files large enough for the clone path (R3 CoW probe). Excludes the
+// packaged whisper model exactly as staging does.
+export function listOfficeRuntimeCloneCandidates(minimumBytes = OFFICE_E2E_LARGE_CLONE_FILE_MIN_BYTES) {
+  if (!Number.isSafeInteger(minimumBytes) || minimumBytes < 0) {
+    throw new TypeError('Office runtime clone candidates require a non-negative minimum byte size')
+  }
+  return Object.freeze(
+    officeRuntimeCloneInventory()
+      .filter((entry) => entry.size >= minimumBytes)
+      .map((entry) => Object.freeze({ ...entry })),
+  )
+}
+
+// R3 disk preflight: free space must cover the planned staged logical bytes plus
+// the configured headroom. Called before the fixture root is allocated and again
+// before any (re)staging, so an under-resourced machine fails with a stable
+// marker before a single owned byte is written.
+export function assertOfficeE2eDiskHeadroom(options = {}) {
+  const environment = options.environment ?? process.env
+  const stagedBytes = options.stagedBytes ?? measureOfficeRuntimeStagedLogicalBytes()
+  const headroomBytes = options.headroomBytes ?? officeE2eDiskHeadroomBytes(environment)
+  if (!Number.isFinite(stagedBytes) || stagedBytes < 0 || !Number.isFinite(headroomBytes) || headroomBytes < 0) {
+    throw new TypeError('Office E2E disk preflight requires non-negative staged and headroom byte counts')
+  }
+  const requiredBytes = stagedBytes + headroomBytes
+  const stats = fs.statfsSync(assertOfficeFixturePathSafe(os.tmpdir()))
+  const freeBytes = stats.bavail * stats.bsize
+  if (freeBytes < requiredBytes) {
+    console.log(`${OFFICE_E2E_LOW_DISK_MARKER} free_bytes=${freeBytes} required_bytes=${requiredBytes}`)
+    const error = new Error(
+      `Office E2E staging requires ${requiredBytes} free bytes (staged=${stagedBytes} headroom=${headroomBytes}) but only ${freeBytes} are available`,
+    )
+    error.code = OFFICE_E2E_LOW_DISK_MARKER
+    error.freeBytes = freeBytes
+    error.headroomBytes = headroomBytes
+    error.requiredBytes = requiredBytes
+    error.stagedBytes = stagedBytes
+    throw error
+  }
+  return Object.freeze({ freeBytes, headroomBytes, requiredBytes, stagedBytes })
 }
 
 function assertTreeSymlinksContained(root) {
@@ -861,19 +1035,27 @@ export function createOfficeRuntimeLayout(fixture) {
   if (validRuntimeLayout(fixture, runtimeRoot)) return runtimeLayoutResult(runtimeRoot)
   if (fs.existsSync(runtimeRoot)) fs.rmSync(runtimeRoot, { recursive: true, force: true })
 
+  // R3: never begin staging without room for the planned staged bytes plus
+  // headroom. The fixture root already exists, so this is the re-staging guard;
+  // createOfficeFixture runs the same preflight before allocating anything.
+  assertOfficeE2eDiskHeadroom({ environment: process.env })
+
   const stagingRoot = assertFixtureOwnedPath(
     fixture,
     path.join(fixture.root, `runtime-staging-${randomUUID()}`),
   )
   const runtime = runtimeLayoutResult(stagingRoot)
+  let stagedLogicalBytes = 0
   try {
     fs.mkdirSync(stagingRoot)
-    cloneOwnedTree(path.join(serverRoot, 'lib'), path.join(runtime.runtimeServerRoot, 'lib'))
+    stagedLogicalBytes += cloneOwnedTree(path.join(serverRoot, 'lib'), path.join(runtime.runtimeServerRoot, 'lib'))
     for (const filename of serverRootFiles) {
-      fs.copyFileSync(path.join(serverRoot, filename), path.join(runtime.runtimeServerRoot, filename))
+      const source = path.join(serverRoot, filename)
+      fs.copyFileSync(source, path.join(runtime.runtimeServerRoot, filename))
+      stagedLogicalBytes += fs.lstatSync(source).size
     }
     fs.mkdirSync(path.join(runtime.runtimeServerRoot, 'data'), { recursive: true })
-    cloneOwnedTree(
+    stagedLogicalBytes += cloneOwnedTree(
       path.join(serverRoot, 'node_modules'),
       path.join(runtime.runtimeServerRoot, 'node_modules'),
       ownedCacheDirectories,
@@ -886,12 +1068,14 @@ export function createOfficeRuntimeLayout(fixture) {
     for (const directory of ['electron', 'public', 'src']) {
       const source = path.join(clientRoot, directory)
       const destination = path.join(runtime.runtimeClientRoot, directory)
-      cloneOwnedTree(source, destination)
+      stagedLogicalBytes += cloneOwnedTree(source, destination)
     }
     for (const filename of clientRootFiles) {
-      fs.copyFileSync(path.join(clientRoot, filename), path.join(runtime.runtimeClientRoot, filename))
+      const source = path.join(clientRoot, filename)
+      fs.copyFileSync(source, path.join(runtime.runtimeClientRoot, filename))
+      stagedLogicalBytes += fs.lstatSync(source).size
     }
-    cloneOwnedTree(
+    stagedLogicalBytes += cloneOwnedTree(
       path.join(clientRoot, 'node_modules'),
       path.join(runtime.runtimeClientRoot, 'node_modules'),
       ownedCacheDirectories,
@@ -905,6 +1089,7 @@ export function createOfficeRuntimeLayout(fixture) {
       path.join(runtime.runtimeClientRoot, 'electron', 'resources'),
     ]) assertTreeSymlinksContained(tree)
     fs.writeFileSync(runtime.dependencyWriteGuard, dependencyWriteGuardBytes, { flag: 'wx' })
+    stagedLogicalBytes += Buffer.byteLength(dependencyWriteGuardBytes)
     const marker = runtimeExpectedMarker(runtime)
     if (!runtimeIdentityMatches(marker.identity)) {
       throw new Error('Office E2E runtime source changed while its fixture-owned clone was being created')
@@ -914,11 +1099,127 @@ export function createOfficeRuntimeLayout(fixture) {
     }
     fs.writeFileSync(path.join(stagingRoot, runtimeMarkerName), `${JSON.stringify(marker)}\n`, { flag: 'wx' })
     fs.renameSync(stagingRoot, runtimeRoot)
+    console.log(`${OFFICE_E2E_STAGED_BYTES_MARKER}=${stagedLogicalBytes}`)
   } catch (error) {
     fs.rmSync(stagingRoot, { recursive: true, force: true })
     throw error
   }
   return runtimeLayoutResult(runtimeRoot)
+}
+
+// R4: the transcription runtime the server lazily initializes expects its model
+// inside nodejs-whisper and a built whisper-cli. The staged clone deliberately
+// excludes model *.bin files (package.json packaged-server filter), so the
+// harness provisions the model itself from the developer cache and verifies both
+// assets before any isolated server/Electron lane is spawned. A missing asset
+// fails the lane closed; the server's npx/cmake fallback is never reached.
+export const OFFICE_E2E_WHISPER_CACHE_ENV = 'FUSION_OFFICE_E2E_WHISPER_CACHE'
+// Mirrors DEFAULT_MODEL in fusion-studio-server/lib/transcription/index.js.
+export const OFFICE_E2E_WHISPER_MODEL_FILE = 'ggml-large-v3-turbo.bin'
+export const OFFICE_E2E_WHISPER_SETUP_HINT = 'npx nodejs-whisper download large-v3-turbo'
+const officeE2eWhisperCppRelative = path.join('node_modules', 'nodejs-whisper', 'cpp', 'whisper.cpp')
+const officeE2eWhisperCliRelative = path.join(officeE2eWhisperCppRelative, 'build', 'bin', 'whisper-cli')
+const officeE2eWhisperModelRelative = path.join(
+  officeE2eWhisperCppRelative,
+  'models',
+  OFFICE_E2E_WHISPER_MODEL_FILE,
+)
+
+export function officeWhisperCacheDirectory(environment = process.env) {
+  const configured = environment[OFFICE_E2E_WHISPER_CACHE_ENV]
+  if (typeof configured === 'string' && configured.length > 0) return path.resolve(configured)
+  return path.join(os.homedir(), '.whisper')
+}
+
+// The transcription runtime is present exactly when the staged clone carries the
+// nodejs-whisper package. When it is absent there is nothing to verify.
+export function officeTranscriptionRuntimePresent(runtime) {
+  if (!runtime?.runtimeServerRoot) return false
+  return fs.existsSync(path.join(runtime.runtimeServerRoot, 'node_modules', 'nodejs-whisper'))
+}
+
+export function officeRuntimeLaneAssetRequirements(runtime) {
+  return Object.freeze({
+    modelPath: path.join(runtime.runtimeServerRoot, officeE2eWhisperModelRelative),
+    whisperCliPath: path.join(runtime.runtimeServerRoot, officeE2eWhisperCliRelative),
+  })
+}
+
+function officeResourceMissingError(pathname, hint, detail) {
+  console.log(`${OFFICE_E2E_RESOURCE_MISSING_MARKER} path=${pathname} hint=${hint}`)
+  const error = new Error(
+    `Office E2E required runtime asset missing (${detail}): ${pathname}; run: ${hint}`,
+  )
+  error.code = OFFICE_E2E_RESOURCE_MISSING_MARKER
+  error.hint = hint
+  error.path = pathname
+  return error
+}
+
+function assertOfficeRuntimeAssetFile(pathname, hint) {
+  let stat
+  try {
+    stat = fs.lstatSync(pathname)
+  } catch {
+    throw officeResourceMissingError(pathname, hint, 'not found')
+  }
+  if (!stat.isFile() || stat.isSymbolicLink()) {
+    throw officeResourceMissingError(pathname, hint, 'not a regular file')
+  }
+  return stat
+}
+
+// Supply the required model from the developer cache with a hardlink (or a CoW
+// clone when a hardlink is impossible) so the physical delta stays within R3's
+// ceiling. Products of a missing cache are left missing for the verifier below.
+export function provisionOfficeRuntimeTranscriptionAssets(runtime, options = {}) {
+  if (!officeTranscriptionRuntimePresent(runtime)) {
+    return Object.freeze({ modelPath: null, provisioned: false })
+  }
+  const environment = options.environment ?? process.env
+  const { modelPath } = officeRuntimeLaneAssetRequirements(runtime)
+  if (fs.existsSync(modelPath)) return Object.freeze({ modelPath, provisioned: false })
+  const cacheDirectory = options.cacheDirectory ?? officeWhisperCacheDirectory(environment)
+  const cacheModelPath = path.join(cacheDirectory, OFFICE_E2E_WHISPER_MODEL_FILE)
+  let cacheStat
+  try {
+    cacheStat = fs.lstatSync(cacheModelPath)
+  } catch {
+    return Object.freeze({ modelPath, provisioned: false })
+  }
+  if (!cacheStat.isFile() || cacheStat.isSymbolicLink()) {
+    return Object.freeze({ modelPath, provisioned: false })
+  }
+  fs.mkdirSync(path.dirname(modelPath), { recursive: true })
+  try {
+    fs.linkSync(cacheModelPath, modelPath)
+  } catch {
+    try {
+      cloneFilePreservingMode(cacheModelPath, modelPath, cacheStat.mode & 0o7777)
+    } catch {
+      removeDestinationFile(modelPath)
+      return Object.freeze({ modelPath, provisioned: false })
+    }
+  }
+  return Object.freeze({ modelPath, provisioned: true })
+}
+
+// Fail closed unless every required asset is present in the staged tree.
+export function assertOfficeRuntimeLaneAssets(runtime) {
+  if (!officeTranscriptionRuntimePresent(runtime)) return Object.freeze({ enforced: false })
+  const { modelPath, whisperCliPath } = officeRuntimeLaneAssetRequirements(runtime)
+  assertOfficeRuntimeAssetFile(whisperCliPath, OFFICE_E2E_WHISPER_SETUP_HINT)
+  assertOfficeRuntimeAssetFile(modelPath, OFFICE_E2E_WHISPER_SETUP_HINT)
+  return Object.freeze({ enforced: true, modelPath, whisperCliPath })
+}
+
+// R4 lane integration: provision first, then verify. Callers invoke this before
+// spawning any isolated server or Electron lane; a throw is a classified
+// fail-closed with the OFFICE_E2E_RESOURCE_MISSING marker already printed.
+export function prepareOfficeRuntimeLaneAssets(runtime, options = {}) {
+  const provisioning = provisionOfficeRuntimeTranscriptionAssets(runtime, options)
+  const assertion = assertOfficeRuntimeLaneAssets(runtime)
+  return Object.freeze({ ...assertion, provisioned: provisioning.provisioned })
 }
 
 export function officeRuntimeEnvironment(runtime, environment = process.env) {
@@ -1109,6 +1410,7 @@ export async function createOfficeProcessLifecycle(options = {}) {
     finalized: false,
     signalReceived: false,
   })
+  activeProcessLifecycles.add(lifecycle)
   return lifecycle
 }
 
@@ -1240,6 +1542,7 @@ export async function finalizeOfficeProcessLifecycle(lifecycle, options = {}) {
   if (!internal) return Object.freeze({ retained: false, root: null })
   if (reason === 'signal') internal.signalReceived = true
   if (internal.finalized) {
+    activeProcessLifecycles.delete(lifecycle)
     if (internal.signalReceived && internal.finalResult?.retained) {
       retainedOfficeRoots.delete(lifecycle.fixture.root)
       fs.rmSync(validateRequestedFixtureRoot(lifecycle.fixture.root), { recursive: true, force: true })
@@ -1279,6 +1582,7 @@ export async function finalizeOfficeProcessLifecycle(lifecycle, options = {}) {
       fs.rmSync(validateRequestedFixtureRoot(lifecycle.fixture.root), { recursive: true, force: true })
     }
     internal.finalized = true
+    activeProcessLifecycles.delete(lifecycle)
     if (retained) {
       retainedOfficeRoots.add(lifecycle.fixture.root)
       console.log(`OFFICE_E2E_RETAINED_ROOT=${lifecycle.fixture.root}`)
@@ -1289,6 +1593,128 @@ export async function finalizeOfficeProcessLifecycle(lifecycle, options = {}) {
     return internal.finalResult
   })()
   return internal.finalizationPromise
+}
+
+// Enumerate the fixture/runtime roots this process still owns. Used by the
+// parent-loss and wall-clock deadline diagnostics so an operator can see
+// exactly what was active when the harness self-terminated.
+export function activeOfficeHarnessRoots() {
+  const roots = new Set()
+  if (activeFixture) {
+    const internal = fixtureInternals.get(activeFixture)
+    if (internal?.allocatedRoot) roots.add(internal.allocatedRoot)
+  }
+  for (const lifecycle of activeProcessLifecycles) {
+    if (lifecycle.fixture?.root) roots.add(lifecycle.fixture.root)
+  }
+  return Object.freeze([...roots])
+}
+
+export function activeOfficeHarnessProcessIds() {
+  const pids = []
+  for (const lifecycle of activeProcessLifecycles) {
+    const internal = processLifecycleInternals.get(lifecycle)
+    for (const record of internal?.children ?? []) {
+      if (Number.isInteger(record.child?.pid)) pids.push(record.child.pid)
+    }
+  }
+  return Object.freeze(pids)
+}
+
+function raceCleanupDeadline(promise, deadline) {
+  const remaining = Math.max(0, deadline - Date.now())
+  if (remaining <= 0) return Promise.resolve({ timedOut: true })
+  return new Promise((resolve) => {
+    let settled = false
+    // Deliberately ref'd: bounded cleanup must run to completion (or its
+    // deadline) and report before the process exits.
+    const timer = setTimeout(() => {
+      if (settled) return
+      settled = true
+      resolve({ timedOut: true })
+    }, remaining)
+    Promise.resolve(promise).then(
+      (value) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        resolve({ timedOut: false, value })
+      },
+      (error) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        resolve({ timedOut: false, error })
+      },
+    )
+  })
+}
+
+// Bounded fail-safe cleanup shared by the SIGTERM-class parent-loss path and
+// the wall-clock deadline path. Every owned lifecycle and fixture is finalized
+// with signal semantics (never retained). Anything that cannot finish inside
+// the deadline is force-killed, left for the stale-root sweep with its owner
+// lease intact, and reported in `retainedRoots` - never silently dropped.
+export async function cleanupActiveOfficeHarness(options) {
+  const reason = options?.reason ?? 'signal'
+  const deadlineMs = options?.deadlineMs
+  if (!Number.isSafeInteger(deadlineMs) || deadlineMs <= 0) {
+    throw new TypeError('Office harness cleanup requires a positive integer deadlineMs')
+  }
+  const startedAt = Date.now()
+  const deadline = startedAt + deadlineMs
+  const roots = activeOfficeHarnessRoots()
+  const childPids = activeOfficeHarnessProcessIds()
+  const cleanedRoots = []
+  const retainedRoots = []
+  const failures = []
+
+  for (const lifecycle of [...activeProcessLifecycles]) {
+    const root = lifecycle.fixture?.root ?? null
+    const internal = processLifecycleInternals.get(lifecycle)
+    if (internal) internal.signalReceived = true
+    const outcome = await raceCleanupDeadline(
+      finalizeOfficeProcessLifecycle(lifecycle, { reason: 'signal' }),
+      deadline,
+    )
+    if (outcome.timedOut) {
+      for (const record of [...(processLifecycleInternals.get(lifecycle)?.children ?? [])]) {
+        try { signalChildGroup(record.child, 'SIGKILL') } catch { /* child group already gone */ }
+      }
+      if (root) retainedRoots.push(root)
+      failures.push(Object.freeze({ phase: 'lifecycle-deadline', root }))
+    } else if (outcome.error) {
+      if (root) retainedRoots.push(root)
+      failures.push(Object.freeze({ error: outcome.error, phase: 'lifecycle-cleanup', root }))
+    } else if (root) {
+      cleanedRoots.push(root)
+    }
+  }
+
+  if (activeFixture) {
+    const fixture = activeFixture
+    const root = fixtureInternals.get(fixture)?.allocatedRoot ?? fixture.root ?? null
+    const outcome = await raceCleanupDeadline(destroyOfficeFixture(fixture), deadline)
+    if (outcome.timedOut) {
+      if (root) retainedRoots.push(root)
+      failures.push(Object.freeze({ phase: 'fixture-deadline', root }))
+    } else if (outcome.error) {
+      if (root) retainedRoots.push(root)
+      failures.push(Object.freeze({ error: outcome.error, phase: 'fixture-cleanup', root }))
+    } else if (root) {
+      cleanedRoots.push(root)
+    }
+  }
+
+  return Object.freeze({
+    childPids,
+    cleanedRoots: Object.freeze([...new Set(cleanedRoots)]),
+    durationMs: Date.now() - startedAt,
+    failures: Object.freeze(failures),
+    reason,
+    retainedRoots: Object.freeze([...new Set(retainedRoots)]),
+    roots,
+  })
 }
 
 export function cleanupOfficePlaywrightRunRoot(root) {
@@ -1302,6 +1728,192 @@ export function cleanupOfficePlaywrightRunRoot(root) {
 export function shouldCleanupOfficePlaywrightRunRoot(root) {
   const safeRoot = validateRequestedFixtureRoot(root)
   return process.env.FUSION_OFFICE_E2E_RETAIN !== '1' || !retainedOfficeRoots.has(safeRoot)
+}
+
+const officeE2eRootPrefix = 'fusion-office-e2e-'
+const OFFICE_E2E_DEFAULT_STALE_ROOT_MAX_AGE_MS = 6 * 60 * 60 * 1000
+
+function officeE2eStaleRootMaxAgeMs(environment) {
+  const raw = environment.FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS
+  if (raw === undefined || raw === '') return OFFICE_E2E_DEFAULT_STALE_ROOT_MAX_AGE_MS
+  if (!/^(0|[1-9]\d*)$/.test(raw)) {
+    throw new Error('FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS must be a non-negative integer')
+  }
+  return Number(raw)
+}
+
+function officeFixtureOwnerPid(root) {
+  try {
+    const owner = JSON.parse(fs.readFileSync(path.join(root, officeE2eOwnerFileName), 'utf8'))
+    return Number.isInteger(owner?.pid) && owner.pid > 0 ? owner.pid : null
+  } catch {
+    return null
+  }
+}
+
+function officeFixtureOwnerIsLive(pid) {
+  if (pid === null) return false
+  if (pid === process.pid) return true
+  try {
+    process.kill(pid, 0)
+    return true
+  } catch (error) {
+    // A process we may not signal still exists; only ESRCH means it is gone.
+    return error?.code === 'EPERM'
+  }
+}
+
+// Sweep abandoned `fusion-office-e2e-*` run roots left behind by interrupted
+// suites. A root is removed only when it is a direct directory child of the
+// temporary directory (never a symlink), older than the age threshold, not the
+// current run, and not owned by a live process. Set
+// FUSION_OFFICE_E2E_SWEEP=0 to disable, or FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS
+// to change the age threshold.
+export function sweepStaleOfficeFixtureRoots(options = {}) {
+  const environment = options.environment ?? process.env
+  if (environment.FUSION_OFFICE_E2E_SWEEP === '0') {
+    return Object.freeze({ removed: Object.freeze([]), skipped: Object.freeze([]) })
+  }
+  const temporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
+  const currentRoot = options.currentRoot ? validateRequestedFixtureRoot(options.currentRoot) : null
+  const maxAgeMs = options.maxAgeMs ?? officeE2eStaleRootMaxAgeMs(environment)
+  const now = options.now ?? Date.now()
+  const namePrefix = options.namePrefix ?? officeE2eRootPrefix
+  const removed = []
+  const skipped = []
+  for (const name of fs.readdirSync(temporaryRoot)) {
+    if (!name.startsWith(officeE2eRootPrefix) || !name.startsWith(namePrefix)) continue
+    const candidate = path.join(temporaryRoot, name)
+    let stat
+    try {
+      stat = fs.lstatSync(candidate)
+    } catch {
+      continue
+    }
+    if (stat.isSymbolicLink() || !stat.isDirectory()) continue
+    let safeCandidate
+    try {
+      safeCandidate = validateRequestedFixtureRoot(candidate)
+    } catch {
+      continue
+    }
+    if (currentRoot && safeCandidate === currentRoot) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    if (officeFixtureOwnerIsLive(officeFixtureOwnerPid(safeCandidate))) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    if (now - stat.mtimeMs < maxAgeMs) {
+      skipped.push(safeCandidate)
+      continue
+    }
+    try {
+      fs.rmSync(safeCandidate, { recursive: true, force: true })
+      removed.push(safeCandidate)
+      console.log(`OFFICE_E2E_SWEPT_STALE_ROOT=${safeCandidate}`)
+    } catch (error) {
+      console.warn(`OFFICE_E2E_SWEEP_FAILED=${safeCandidate} (${error?.code ?? error?.message ?? 'error'})`)
+    }
+  }
+  return Object.freeze({ removed: Object.freeze(removed), skipped: Object.freeze(skipped) })
+}
+
+// R5 janitor: documented harness-owned prefix list for *empty* leftover
+// directories (packaging/verification shells). Only direct children of a
+// temporary root with one of these exact prefixes are ever considered, and only
+// empty ones are removed. Unmatched names, model caches, ~/.whisper, non-empty
+// directories, and symlinks are never touched.
+const officeE2eEmptyShellPrefixes = Object.freeze([
+  'fusion-spec00a-',
+])
+
+// The janitor scans the process temporary root and, when it is a distinct
+// directory, the system temporary root (`/tmp` on macOS), where the observed
+// `fusion-spec00a-*` packaging shells were left. Symlinks at the root path are
+// resolved once; nothing inside a candidate is ever followed.
+function officeE2eJanitorRoots() {
+  const roots = []
+  const seen = new Set()
+  for (const candidate of [os.tmpdir(), '/tmp']) {
+    let canonical
+    try {
+      canonical = fs.realpathSync(candidate)
+    } catch {
+      continue
+    }
+    if (seen.has(canonical)) continue
+    seen.add(canonical)
+    roots.push(canonical)
+  }
+  return roots
+}
+
+// Remove empty, age-gated, harness-owned shells. Set FUSION_OFFICE_E2E_SWEEP=0
+// to disable or FUSION_OFFICE_E2E_SWEEP_MAX_AGE_MS to change the age gate; the
+// existing `fusion-office-e2e-*` stale-root sweep semantics are unchanged.
+export function sweepOfficeHarnessEmptyShells(options = {}) {
+  const environment = options.environment ?? process.env
+  if (environment.FUSION_OFFICE_E2E_SWEEP === '0') {
+    return Object.freeze({ removed: Object.freeze([]), skipped: Object.freeze([]) })
+  }
+  const maxAgeMs = options.maxAgeMs ?? officeE2eStaleRootMaxAgeMs(environment)
+  const now = options.now ?? Date.now()
+  const prefixes = options.prefixes ?? officeE2eEmptyShellPrefixes
+  const tempRoots = options.tempRoots ?? officeE2eJanitorRoots()
+  const removed = []
+  const skipped = []
+  for (const temporaryRoot of tempRoots) {
+    let names
+    try {
+      names = fs.readdirSync(temporaryRoot)
+    } catch {
+      continue
+    }
+    for (const name of names) {
+      if (!prefixes.some((prefix) => name.startsWith(prefix))) continue
+      const candidate = path.join(temporaryRoot, name)
+      let stat
+      try {
+        stat = fs.lstatSync(candidate)
+      } catch {
+        continue
+      }
+      // Never follow symlinks, never leave the direct-child level, never touch
+      // files or unmatched names.
+      if (stat.isSymbolicLink() || !stat.isDirectory()) continue
+      if (path.dirname(candidate) !== temporaryRoot) continue
+      if (officeFixtureOwnerIsLive(officeFixtureOwnerPid(candidate))) {
+        skipped.push(candidate)
+        continue
+      }
+      if (now - stat.mtimeMs < maxAgeMs) {
+        skipped.push(candidate)
+        continue
+      }
+      let entries
+      try {
+        entries = fs.readdirSync(candidate)
+      } catch {
+        continue
+      }
+      // Empty-only: rmdirSync cannot remove a non-empty directory even if the
+      // emptiness check above raced a writer.
+      if (entries.length > 0) continue
+      try {
+        fs.rmdirSync(candidate)
+        removed.push(candidate)
+        console.log(`OFFICE_E2E_JANITOR_REMOVED=${candidate}`)
+      } catch (error) {
+        console.warn(`OFFICE_E2E_JANITOR_FAILED=${candidate} (${error?.code ?? error?.message ?? 'error'})`)
+      }
+    }
+  }
+  if (removed.length > 0) {
+    console.log(`${OFFICE_E2E_JANITOR_SWEPT_MARKER}=${removed.length}`)
+  }
+  return Object.freeze({ removed: Object.freeze(removed), skipped: Object.freeze(skipped) })
 }
 
 export async function withOfficeProcessLifecycle(options, action) {

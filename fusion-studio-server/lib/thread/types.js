@@ -62,16 +62,16 @@
  */
 
 /**
- * @typedef {Object} WSMessageThreadRename
- * @property {'thread:rename'} type
- * @property {string} threadId - Thread to rename
- * @property {string} name - New name
- */
-
-/**
- * @typedef {Object} WSMessageThreadDelete
- * @property {'thread:delete'} type
- * @property {string} threadId - Thread to delete
+ * @typedef {Object} WSMessageThreadAction
+ * @property {'thread:action'} type
+ * @property {'rename'|'delete'|'copy_link'|'resolve_link'|'view_markdown'|'set_harness_selection'|'compact'} action - Canonical action
+ * @property {string} requestId - Durable idempotent retry identity
+ * @property {string} [threadGroupId] - Group scope
+ * @property {string} [threadId] - Exact member identity when applicable
+ * @property {string} [name] - New title for `rename`
+ * @property {string} [uri] - Versioned application URI for `resolve_link`
+ * @property {string} [model] - Portable model for `set_harness_selection`
+ * @property {string|null} [variant] - Portable variant for `set_harness_selection`
  */
 
 /**
@@ -82,7 +82,7 @@
  */
 
 /**
- * @typedef {WSMessageThreadOpenAssistant|WSMessageThreadRename|WSMessageThreadDelete|WSMessageSend} WSClientMessage
+ * @typedef {WSMessageThreadOpenAssistant|WSMessageThreadAction|WSMessageSend} WSClientMessage
  */
 
 /**
@@ -99,16 +99,21 @@
  */
 
 /**
- * @typedef {Object} WSMessageThreadRenamed
- * @property {'thread:renamed'} type
- * @property {string} threadId - Thread ID
- * @property {string} name - New name
+ * @typedef {Object} WSMessageThreadActionCompleted
+ * @property {'thread:action:completed'} type
+ * @property {string} requestId - Echoed requester retry identity
+ * @property {'rename'|'delete'} action - Completed action
+ * @property {string} threadGroupId - Authoritative group identity
+ * @property {string} [threadId] - Authoritative member identity
  */
 
 /**
- * @typedef {Object} WSMessageThreadDeleted
- * @property {'thread:deleted'} type
- * @property {string} threadId - Deleted thread ID
+ * @typedef {Object} WSMessageThreadActionError
+ * @property {'thread:action:error'} type
+ * @property {string} requestId - Echoed requester retry identity
+ * @property {'rename'|'delete'} action - Attempted action
+ * @property {string} code - Bounded failure code
+ * @property {string} message - Bounded failure message
  */
 
 /**
@@ -126,7 +131,7 @@
  */
 
 /**
- * @typedef {WSMessageThreadList|WSMessageThreadCreated|WSMessageThreadRenamed|WSMessageThreadDeleted|WSMessageStream|WSMessageError} WSServerMessage
+ * @typedef {WSMessageThreadList|WSMessageThreadCreated|WSMessageThreadActionCompleted|WSMessageThreadActionError|WSMessageStream|WSMessageError} WSServerMessage
  */
 
 module.exports = {

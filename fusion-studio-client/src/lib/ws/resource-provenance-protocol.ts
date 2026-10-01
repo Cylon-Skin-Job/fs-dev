@@ -42,6 +42,35 @@ function validTimestamp(value: unknown): value is number {
   return Number.isSafeInteger(value) && Number(value) >= 0;
 }
 
+/**
+ * Bounded `ComponentActionContext` echoed on a durable fact (SPEC-01 §4/§6.3).
+ * Every field is optional and independently byte-capped; the server never emits
+ * an unknown field, so an unknown key fails closed.
+ */
+const REPORTED_UI_CONTEXT_LIMITS: ReadonlyMap<string, number> = new Map([
+  ['workspaceId', 128],
+  ['viewId', 128],
+  ['viewInstanceId', 128],
+  ['tabId', 128],
+  ['componentTypeId', 128],
+  ['componentInstanceId', 128],
+  ['presenterId', 128],
+  ['targetKey', 512],
+]);
+
+function validReportedUiContext(value: unknown): boolean {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const context = value as Record<string, unknown>;
+  // `ComponentActionContext` requires both identities, and the server always
+  // emits them (server-derived workspace + required viewId); a partial echo
+  // missing either fails closed rather than passing a false `ResourceProvenanceItemV1`.
+  if (!validId(context.workspaceId) || !validId(context.viewId)) return false;
+  return Object.keys(context).every((key) => {
+    const maxBytes = REPORTED_UI_CONTEXT_LIMITS.get(key);
+    return maxBytes !== undefined && validId(context[key], maxBytes);
+  });
+}
+
 function validItem(value: unknown): value is ResourceProvenanceItemV1 {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const item = value as Record<string, unknown>;
@@ -60,8 +89,12 @@ function validItem(value: unknown): value is ResourceProvenanceItemV1 {
   if (!exactKeys(ingress, ['panel', 'path']) || !validId(ingress.panel) || !validPath(ingress.path)) return false;
   if (!item.origin || typeof item.origin !== 'object' || Array.isArray(item.origin)) return false;
   const origin = item.origin as Record<string, unknown>;
-  if (!exactKeys(origin, ['kind', 'assurance', 'connectionId']) || origin.kind !== 'local_client'
+  if (!exactKeys(origin, ['kind', 'assurance', 'connectionId'], ['reportedUiContext'])
+    || origin.kind !== 'local_client'
     || origin.assurance !== 'transport_only' || !validId(origin.connectionId)) return false;
+  if (origin.reportedUiContext !== undefined && !validReportedUiContext(origin.reportedUiContext)) {
+    return false;
+  }
   if (!item.snapshot || typeof item.snapshot !== 'object' || Array.isArray(item.snapshot)) return false;
   const snapshot = item.snapshot as Record<string, unknown>;
   if (snapshot.kind === 'absent') {

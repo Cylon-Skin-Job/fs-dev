@@ -1,0 +1,115 @@
+{
+  "candidate": "sha256:cf93d5d2b63073ccc16ca432bf8fab9fe8f4284fb3c1320b457d2ed8b7a34a54",
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-28-182507.md",
+      "sha256": "5c94dcc163a851b809ac041525453627917f241dd7269d9c86ec041eb24c5611"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-28-184321.md",
+      "sha256": "9ec9772ed7bc2cbcec3bfa2f5a0eb55e48e7ad3edde8c7f8e06dd99f63a5ddf5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md",
+      "sha256": "a9dbb73579c0f421286c1152d19d108ae1229ebcfd7991739fdffe8a0d759761"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-28-182331.md",
+      "sha256": "07ccbc445b66544f75448090aefcf7e39830a35cfbc30fa1f3cfc35a9fa7d3e1"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-28-184321.md",
+      "sha256": "ad2c4eee810d080894aaacb86ff910c52e1e3f50547606b4fd3df89d6a1946a4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "25d4f32ea21dcc078f6a5164d70b7120281f861d1262d6e7d228d7aa5529d999"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-28-184321.md",
+      "sha256": "3b3a8ee712e5d51a282a6b9c82e053ee67b7dd995508ef0c5a2026cdc8e48054"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "sha256": "e510d81c58072065679a9e6178d1b64c8c3ae1b757c22b82269a588730f1b7f3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-28-182331.md",
+      "sha256": "e95910dc1e067f50191387ac36907a55799b508509db4459261008788e815990"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-28-184321.md",
+      "sha256": "39a9b19ec953162e526f2f37d381a7c5dcb5782a0fe69c3c88be10a77208d212"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "sha256": "d3ab2f39515e71bfa7d0a8164839da600e110d0ff4345dc1819e9c3e05cf49a9"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "sha256": "b0b7f00c6b6cd1b94b075402a8b93340cce94fcbbe3134c1b06646efcc59f289"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-transport-entry.spec.ts",
+      "sha256": "6e7db0f5baaf09b41956bd088fb8bd7a9b4d1ba226ce6050ab88fba8749fe528"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-transport-test-server.mjs",
+      "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5"
+    },
+    {
+      "path": "fusion-studio-client/e2e/trusted-shell-auth-smoke.mjs",
+      "sha256": "633a44e39b0068fbc02cf3c6c073641b3bf77ee2fd9850f0b5379f3e068e6bba"
+    },
+    {
+      "path": "fusion-studio-client/package-lock.json",
+      "sha256": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4"
+    },
+    {
+      "path": "fusion-studio-client/playwright.chat-architecture.config.ts",
+      "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "sha256": "3fde5bc113c276523b7584e3bfdee027d27325ac746cde74cf2fce0e795aa411"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/application-message-router.ts",
+      "sha256": "89a7eeef5eb889934b6a4241bec0484f75d0946aac2e173815d5cb20a096f0cc"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/fusion-response-listeners.ts",
+      "sha256": "901af91eef1acb5374d0a12c69d102daccefc199f4b0c77417db02f2fa9ba754"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/shell-message-handlers.ts",
+      "sha256": "d83c6a1038585586e5f7988c251fed89ef4c8b6cd11c4991b81d67076079cd27"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/view-state-handlers.ts",
+      "sha256": "ae257e25f87e7c42305f1910695cdf671f0e978346f376830938f69b1dc2114c"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/chat-runtime-ws-handlers.js",
+      "sha256": "1760aeab66b9ad7145e8a64a9aff6c9a7c7ec50cfa5cd2ce77714a3117de693e"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/client-message-router.js",
+      "sha256": "8e9f6ec7f7d604f3e0e4e175a7443aa105e537696e44e0da0dfdfa2511805bd0"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/file-request-dispatch.js",
+      "sha256": "d264dcdedf082346f76a0da2d7c361367a3bc088d72400798ee648a70fc20f38"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/view-workspace-ws-handlers.js",
+      "sha256": "b4155e555676d5d1e482c0bb3c2e252f6e7c246bed52fc4a36026db816be0fc7"
+    },
+    {
+      "path": "fusion-studio-server/test/ws/client-message-router.test.js",
+      "sha256": "eb6d76a4d4b98a43406a6d6812cbb90c890c0b865aded3c9d953f7ab23cf26f9"
+    }
+  ],
+  "manifestSha256": "ba1098964a69d57bc2c2e29ed59bb7a9f1eb20bc28958edd531cac7dd07d3b40",
+  "buildManifestSha256": "11a8d6c52dde8fec905ce319256e9ee7eaf2e7b6188786b7eb02532c4419da1a"
+}

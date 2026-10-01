@@ -269,3 +269,34 @@ test('fails disconnected when preload runtime authority is unavailable', async (
   await transport.start();
   expect(transport.getSnapshot()).toEqual({ status: 'disconnected', descriptor: null });
 });
+
+test('native close releases generation abort retention and never redelivers closed socket events', async () => {
+  const { getEventListeners } = await import('node:events');
+  const signals = new Set<AbortSignal>();
+  const original = AbortSignal.prototype.addEventListener;
+  AbortSignal.prototype.addEventListener = function(type, listener, options) {
+    if (type === 'abort') signals.add(this);
+    return original.call(this, type, listener, options);
+  };
+  try {
+    const fixture=createHarness(); await fixture.transport.start();
+    let closes=0,messages=0;
+    for(let i=0;i<20;i++) {
+      const socket=fixture.transport.createWebSocket();
+      socket.addEventListener('close',()=>closes++);
+      socket.addEventListener('message',()=>messages++);
+      socket.onclose=()=>closes++;
+      socket.onmessage=()=>messages++;
+      // FakeSocket models property handlers explicitly alongside EventTarget.
+      const native=fixture.sockets[i] as FakeSocket & {onclose?: (e:Event)=>void;onmessage?: (e:Event)=>void};
+      const close=new Event('close');native.dispatchEvent(close);native.onclose?.(close);
+      expect([...signals].reduce((n,signal)=>n+getEventListeners(signal,'abort').length,0)).toBe(0);
+      const late=new Event('message');native.dispatchEvent(late);native.onmessage?.(late);
+    }
+    expect(closes).toBe(40);expect(messages).toBe(0);
+    fixture.change(second);
+    expect(closes).toBe(40);
+    for(const socket of fixture.sockets)socket.dispatchEvent(new Event('message'));
+    expect(messages).toBe(0);
+  } finally {AbortSignal.prototype.addEventListener=original;}
+});

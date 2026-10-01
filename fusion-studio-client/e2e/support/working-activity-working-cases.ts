@@ -165,7 +165,7 @@ export function registerWorkingCases(): void {
     await expect(page.locator(WORKING)).toHaveCount(0);
   });
 
-  test('@working in-flight return restores original startedAt over an already-revealed baseline', async ({ browser }) => {
+  test('@working in-flight return starts a fresh surface wait over an already-revealed baseline', async ({ browser }) => {
     const startedAt = Date.now() - 8_500;
     const { page } = await startWaSession(browser, { alpha: { threadId: THREAD_A, liveTurn: snapshot({
       threadId: THREAD_A, turnId: TURN_A1, streamSeq: 7,
@@ -177,7 +177,7 @@ export function registerWorkingCases(): void {
     await expectTranscript(page, { ordered: ['RETURN-BASELINE'] });
     expect((await assistantRows(page))[0].isLivePlane).toBe(false);
     await waitForWorking(page);
-    await expect(page.locator(SECONDS).first()).toHaveText(/^Working… (?:[89]|\d{2,})s$/);
+    await expect(page.locator(SECONDS).first()).toHaveText(/^Working… [23]s$/);
   });
 
   test('@working completed return is instant and historical metadata never creates Working', async ({ browser }) => {

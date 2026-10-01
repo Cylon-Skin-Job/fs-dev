@@ -26,9 +26,9 @@ import { Icon } from '../Icon';
 import { LinkedResourceIndicator } from '../LinkedResourceIndicator';
 import { FloatingPathActions } from '../FloatingPathActions';
 import { OfficeNewMenuButton } from './OfficeNewMenuButton';
+import { persistOfficeViewPatch } from './officeViewerPersistence';
 import { onFusionMessage, sendFusionMessage } from '../../lib/ws-client';
 import { OFFICE_VIEWER_ARCHIVE_FOLDER, isViewerArchivePath } from '../../lib/viewFolders';
-import type { ViewUIState } from '../../types';
 import {
   normalizeViewCollections,
 } from '../../lib/viewCollections';
@@ -43,12 +43,6 @@ import './OfficeGrid.css';
 
 const PANEL = 'office-viewer';
 const ROOT_PATH = '';
-
-function persistOfficeViewPatch(patch: Partial<ViewUIState>) {
-  const store = usePanelStore.getState();
-  store.setViewState(PANEL, patch);
-  store._persistViewPatch(PANEL, patch);
-}
 
 function folderPathForFile(filePath: string): string {
   const lastSlash = filePath.lastIndexOf('/');
@@ -770,33 +764,35 @@ export function OfficeGrid() {
   }) as CSSProperties, [officePaperBrightness]);
 
   const renderOfficeShell = (content: ReactNode, mainClassName = 'rv-office-grid', showSidebar = true) => (
-    <div
-      className={`rv-office-shell rv-office-view-transition${showSidebar ? '' : ' rv-office-shell--no-sidebar'}`}
-      style={officePaperStyle}
-    >
-      {showSidebar ? (
-        <OfficeSidebar
-          activeAction={officeMode}
-          onAction={handleSidebarAction}
-          pinnedFolders={pinnedFolders}
-          activeFolderPath={activeFolderPath}
-          onPinnedFolderClick={handleNavigateToFolder}
-          onNewFolder={handleOpenNewFolderModal}
-          onNewDocument={handleOpenNewDocumentModal}
-        />
-      ) : null}
-      <main className={mainClassName}>
-        {content}
-      </main>
-      {createModalKind ? (
-        <OfficeCreateModal
-          kind={createModalKind}
-          name={createName}
-          onNameChange={setCreateName}
-          onCancel={handleCloseCreateModal}
-          onSave={handleSaveCreateItem}
-        />
-      ) : null}
+    <div className="rv-worksurface-view-layout">
+      <div
+        className={`rv-office-shell rv-office-view-transition${showSidebar ? '' : ' rv-office-shell--no-sidebar'}`}
+        style={officePaperStyle}
+      >
+        {showSidebar ? (
+          <OfficeSidebar
+            activeAction={officeMode}
+            onAction={handleSidebarAction}
+            pinnedFolders={pinnedFolders}
+            activeFolderPath={activeFolderPath}
+            onPinnedFolderClick={handleNavigateToFolder}
+            onNewFolder={handleOpenNewFolderModal}
+            onNewDocument={handleOpenNewDocumentModal}
+          />
+        ) : null}
+        <main className={mainClassName}>
+          {content}
+        </main>
+        {createModalKind ? (
+          <OfficeCreateModal
+            kind={createModalKind}
+            name={createName}
+            onNameChange={setCreateName}
+            onCancel={handleCloseCreateModal}
+            onSave={handleSaveCreateItem}
+          />
+        ) : null}
+      </div>
     </div>
   );
 

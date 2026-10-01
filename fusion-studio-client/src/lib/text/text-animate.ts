@@ -22,6 +22,7 @@ import { parseTextChunks } from './index';
 import { createChunkBuffer } from './chunk-buffer';
 import { truncateHtmlToChars, getVisibleTextLength } from './html-utils';
 import { sleep } from '../animate-utils';
+import { RevealProgress } from '../reveal/progress';
 import type { TimingProfile } from '../timing';
 
 const CODE_FENCE_AS_LOOKAHEAD = true;
@@ -29,6 +30,7 @@ const CODE_FENCE_AS_LOOKAHEAD = true;
 // ── Public Interface ─────────────────────────────────────────────────
 
 export interface AnimateTextOptions {
+  progress?: RevealProgress;
   /** Reactive ref to the full content string (grows as tokens stream in) */
   contentRef: { current: string };
   /** Reactive ref — true when the segment is done streaming */
@@ -53,12 +55,16 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
     setDisplayedHtml, getTimingProfile, onDone,
   } = opts;
 
+  const progress = opts.progress ?? new RevealProgress();
+  progress.received = () => contentRef.current.length;
+  progress.visibleUnit = 'html-visible-units';
+
   // Text queue metadata determines buffer behavior (code fences as lookahead)
   const buffer = createChunkBuffer({
     codeFenceAsLookahead: CODE_FENCE_AS_LOOKAHEAD,
   });
 
-  let cursor = 0;                // byte position in raw content (only moves forward)
+  let cursor = 0;                // UTF16 position in raw content (only moves forward)
   let accumulatedHtml = '';       // HTML for all fully-typed blocks
 
   while (!cancelRef.current) {
@@ -70,8 +76,12 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
     // Returns blocks with pre-rendered HTML + how far we consumed.
     const { blocks, consumed } = parseTextChunks(content, cursor, isComplete);
 
+    progress.sourceCursor = cursor;
+    progress.parserFedSource = content.length;
+    progress.readyChunks = blocks.length;
     if (blocks.length === 0) {
       if (isComplete) break;      // nothing left to type, segment done
+      progress.setPhase('waiting');
       await sleep(30);            // wait for more streaming content
       continue;
     }
@@ -109,6 +119,11 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
       const html = block.html;
       const totalChars = getVisibleTextLength(html);
 
+      progress.readyChunks = blocks.length - blockIndex;
+      progress.chunkTotal = totalChars;
+      progress.chunkVisible = 0;
+      progress.speedMs = speedMs;
+      progress.batchSize = batchSize;
       if (totalChars === 0) {
         // Empty block (e.g. whitespace-only) — accumulate and move on
         accumulatedHtml += html;
@@ -116,11 +131,15 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
         continue;
       }
 
+      progress.sourceCursor = null; // A partially revealed HTML block has no exact raw position.
+      progress.setPhase('revealing');
       let charCount = 0;
       while (charCount < totalChars && !cancelRef.current) {
+        const previous = charCount;
         charCount = Math.min(charCount + batchSize, totalChars);
         const partial = truncateHtmlToChars(html, charCount);
         setDisplayedHtml(accumulatedHtml + partial);
+        progress.advance(charCount - previous);
 
         if (charCount < totalChars) {
           await sleep(speedMs);
@@ -136,13 +155,14 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
       // If the next block is already queued, skip the pause — go straight to it.
       if (!buffer.hasNext() && !cancelRef.current) {
         const pause = getTimingProfile().interChunkPause;
-        if (pause > 0) await sleep(pause);
+        if (pause > 0) { progress.setPhase('pacing'); await sleep(pause); }
       }
     }
 
     // Update cursor to consumed position (covers any blocks that
     // were parsed but not typed due to cancellation)
     cursor = consumed;
+    progress.sourceCursor = cursor;
   }
 
   // ── Finalize ──
@@ -159,9 +179,10 @@ export async function animateText(opts: AnimateTextOptions): Promise<void> {
 
   // Inter-segment pause — timing-aware gap before next segment
   if (!cancelRef.current) {
+    progress.setPhase('gap');
     const segPause = getTimingProfile().interSegmentPause;
     if (segPause > 0) await sleep(segPause);
   }
 
-  onDone();
+  if (!cancelRef.current) { progress.setPhase('done'); onDone(); }
 }

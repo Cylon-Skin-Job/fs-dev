@@ -1,0 +1,229 @@
+{
+  "schema_version": 2,
+  "name": "Fusion health and governed observability",
+  "description": "Track CHAT-AR follow-up and shape shared governed diagnostics, logger and plugin/view integration.",
+  "repository_root": "../../../../..",
+  "wiki_root": "../../../Wiki",
+  "workflow": [
+    "intake",
+    "shaping",
+    "planning",
+    "authorized implementation",
+    "verification"
+  ],
+  "documents": [
+    {
+      "path": "TICKET.md",
+      "kind": "ticket",
+      "authority": "context",
+      "description": "Intake and return point, not implementation approval.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Assignment",
+          "description": "Assignment for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Current disposition",
+          "description": "Current disposition for this follow-up domain."
+        },
+        {
+          "key": "section_3",
+          "heading": "Next action and return conditions",
+          "description": "Next action and return conditions for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "CAPTURE.md",
+      "kind": "capture",
+      "authority": "context",
+      "description": "Context from the owner conversation and inspected local artifacts, not a complete history checkpoint.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Current understanding",
+          "description": "Current understanding for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Open discussion",
+          "description": "Open discussion for this follow-up domain."
+        },
+        {
+          "key": "section_3",
+          "heading": "Routed outcomes",
+          "description": "Routed outcomes for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "intent",
+      "authority": "owner",
+      "description": "Owner-directed outcomes and boundaries; not claims of implementation.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Outcomes",
+          "description": "Outcomes for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Architecture direction",
+          "description": "Architecture direction for this follow-up domain."
+        },
+        {
+          "key": "section_3",
+          "heading": "Boundaries",
+          "description": "Boundaries for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "decisions",
+      "authority": "owner",
+      "description": "Explicit owner direction. Source is the supervisor conversation unless linked otherwise.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Acceptance and follow-up",
+          "description": "Acceptance and follow-up for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Architecture and privacy",
+          "description": "Architecture and privacy for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "issues",
+      "authority": "evidence",
+      "description": "Sourced residuals and consequential gaps. Closure acceptance does not resolve these technically.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Verification and rendering",
+          "description": "Verification and rendering for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Foundation and logger",
+          "description": "Foundation and logger for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "proposals",
+      "authority": "proposal",
+      "description": "Assistant-proposed sequencing under approved direction; not an approved roadmap or dispatch.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Dependency sequence",
+          "description": "Dependency sequence for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Dogfood intake",
+          "description": "Dogfood intake for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "REFERENCES.md",
+      "kind": "references",
+      "authority": "context",
+      "description": "Source authority and freshness, not another decision ledger.",
+      "lifecycle": "Maintained as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Owner and closure",
+          "description": "Owner and closure for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Architecture and existing plans",
+          "description": "Architecture and existing plans for this follow-up domain."
+        },
+        {
+          "key": "section_3",
+          "heading": "Source and evidence limits",
+          "description": "Source and evidence limits for this follow-up domain."
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "kind": "instructions",
+      "description": "Local role and record contract.",
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Scope and authority",
+          "description": "Scope and authority for this follow-up domain."
+        },
+        {
+          "key": "section_2",
+          "heading": "Main and side roles",
+          "description": "Main and side roles for this follow-up domain."
+        },
+        {
+          "key": "section_3",
+          "heading": "Re-entry and records",
+          "description": "Re-entry and records for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "BULLETIN.md",
+      "kind": "coordination",
+      "description": "Advisory handoffs.",
+      "sections": [
+        {
+          "key": "section_1",
+          "heading": "Handoffs",
+          "description": "Handoffs for this follow-up domain."
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "kind": "index",
+      "description": "Static document routing."
+    }
+  ]
+}

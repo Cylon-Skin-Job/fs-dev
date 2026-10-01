@@ -110,3 +110,90 @@ test('workspace switch and reconnect replace the provenance advertisement with t
   retirePendingResourceProvenanceQueries();
   await expect(completion).rejects.toThrow('workspace changed');
 });
+
+function contextBearingItem(context: unknown): Record<string, unknown> {
+  return {
+    eventId: A2,
+    eventType: 'resource.mutated',
+    occurredAt: 1_800_000_000_000,
+    acceptedAt: 1_800_000_000_001,
+    operationId: '123e4567-e89b-42d3-a456-426614174010',
+    commandId: '123e4567-e89b-42d3-a456-426614174011',
+    commandAcceptedEventId: '123e4567-e89b-42d3-a456-426614174012',
+    resourceId: '123e4567-e89b-42d3-a456-426614174013',
+    fileVersionId: '123e4567-e89b-42d3-a456-426614174014',
+    mutationKind: 'modify',
+    canonicalPath: 'target/live.txt',
+    ingress: { panel: 'file-viewer', path: 'target/live.txt' },
+    origin: {
+      kind: 'local_client',
+      assurance: 'transport_only',
+      connectionId: 'connection-1',
+      reportedUiContext: context,
+    },
+    snapshot: { kind: 'absent', byteLength: 0, capturedAt: 1_800_000_000_002 },
+  };
+}
+
+test('context-bearing durable items are accepted with the bounded snapshot preserved', async () => {
+  const messages: Array<Record<string, unknown>> = [];
+  setup(messages);
+  const completion = queryResourceProvenance({});
+  const request = messages[0];
+  const context = {
+    workspaceId: 'workspace-A',
+    viewId: 'file-viewer',
+    viewInstanceId: 'mount-1',
+    tabId: 'tab-file-1',
+    componentTypeId: 'file.document',
+    componentInstanceId: 'component-instance-1',
+    presenterId: 'file.document',
+    targetKey: 'file:doc:target/live.txt',
+  };
+  expect(handleResourceProvenanceResponse({
+    type: 'resource:provenance:result', version: 1, requestId: request.requestId,
+    workspaceId: 'workspace-A', workspaceEpoch: A1, items: [contextBearingItem(context)],
+  })).toBe(true);
+  const items = await completion;
+  expect(items).toHaveLength(1);
+  expect(items[0].origin.reportedUiContext).toEqual(context);
+
+  // The accepted prior shape (no context) stays valid and simply omits the key.
+  const bareCompletion = queryResourceProvenance({});
+  const bareRequest = messages.at(-1)!;
+  const bareItem = contextBearingItem(undefined);
+  delete (bareItem.origin as Record<string, unknown>).reportedUiContext;
+  expect(handleResourceProvenanceResponse({
+    type: 'resource:provenance:result', version: 1, requestId: bareRequest.requestId,
+    workspaceId: 'workspace-A', workspaceEpoch: A1, items: [bareItem],
+  })).toBe(true);
+  await expect(bareCompletion).resolves.toHaveLength(1);
+});
+
+test('context-bearing items fail closed on missing required identities, unknown fields, or over-cap values', async () => {
+  const messages: Array<Record<string, unknown>> = [];
+  setup(messages);
+
+  const rejectedContexts: unknown[] = [
+    { viewId: 'file-viewer', secret: 'not-allowed' },
+    { viewId: 'v'.repeat(129), workspaceId: 'workspace-A' },
+    { viewId: 'file-viewer', workspaceId: 'w'.repeat(129) },
+    { viewId: 'file-viewer', workspaceId: 'workspace-A', targetKey: 'k'.repeat(513) },
+    // Canonical `ComponentActionContext` requires workspaceId and viewId.
+    { viewId: 'file-viewer' },
+    { workspaceId: 'workspace-A' },
+    { tabId: 'tab-1' },
+    {},
+  ];
+  for (const context of rejectedContexts) {
+    const completion = queryResourceProvenance({});
+    const observed = completion.catch((error: unknown) => error);
+    const request = messages.at(-1)!;
+    expect(handleResourceProvenanceResponse({
+      type: 'resource:provenance:result', version: 1, requestId: request.requestId,
+      workspaceId: 'workspace-A', workspaceEpoch: A1, items: [contextBearingItem(context)],
+    })).toBe(false);
+    retirePendingResourceProvenanceQueries();
+    await expect(observed).resolves.toBeInstanceOf(Error);
+  }
+});

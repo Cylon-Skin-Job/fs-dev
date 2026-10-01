@@ -50,6 +50,32 @@ test('unknown families fail closed', () => {
   expect(() => buildHarnessChildEnvironment('unknown')).toThrow('Unknown harness child environment family');
 });
 
+test.each([undefined, '', '0', 'false', '1'])('OpenCode disables Claude compatibility despite source/override %s', (value) => {
+  const source = Object.freeze({
+    HOME: '/fixture/home', OPENCODE_CONFIG: '/fixture/opencode.json',
+    OPENCODE_CONFIG_DIR: '/fixture/config', OPENCODE_DISABLE_CLAUDE_CODE: value,
+    OPENAI_API_KEY: 'provider-canary', FUSION_SHELL_MASTER: 'authority-canary',
+  });
+  const overrides = Object.freeze({ OPENCODE_DISABLE_CLAUDE_CODE: value });
+  const env = buildHarnessChildEnvironment('opencode', { source, overrides });
+  expect(env).toEqual({
+    HOME: source.HOME, OPENCODE_CONFIG: source.OPENCODE_CONFIG,
+    OPENCODE_CONFIG_DIR: source.OPENCODE_CONFIG_DIR, OPENAI_API_KEY: 'provider-canary',
+    OPENCODE_DISABLE_CLAUDE_CODE: '1',
+  });
+  expect(Object.isFrozen(env)).toBe(true);
+});
+
+test('Claude compatibility policy does not enter another harness family', () => {
+  for (const family of Object.keys(ADAPTER_KEYS).filter((name) => name !== 'opencode')) {
+    const env = buildHarnessChildEnvironment(family, {
+      source: { OPENCODE_DISABLE_CLAUDE_CODE: '1' },
+      overrides: { OPENCODE_DISABLE_CLAUDE_CODE: '1' },
+    });
+    expect(env).toEqual({});
+  }
+});
+
 for (const [family, allowedKey, expectedCredentials] of [
   ['locator', 'PATH', []],
   ['probe', 'PATH', []],

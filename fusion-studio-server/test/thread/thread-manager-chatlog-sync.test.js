@@ -19,7 +19,7 @@ describe('ThreadManager chatlog markdown sync', () => {
 
   async function createThread(threadId, name = 'Sync Thread') {
     await manager.createThread(threadId, name, { harnessId: 'opencode' });
-    return manager._createChatFile(threadId);
+    return manager.chatlogMirror.file(threadId);
   }
 
   async function addExchange(threadId, user, assistant, metadata = {}) {
@@ -158,4 +158,107 @@ describe('ThreadManager chatlog markdown sync', () => {
     const entry = await manager.index.get(threadId);
     expect(entry.messageCount).toBe(6);
   });
+
+  test.each(['ack', 'file-and-ack'])('committed creation survives %s failure and DB reopen repairs its mirror', async (fault) => {
+    const repository = require('../../lib/thread-groups/repository');
+    const { ChatFile } = require('../../lib/thread/ChatFile');
+    const { getDb } = require('../../lib/db');
+    const mark = jest.spyOn(repository, 'markMirrorRecovery').mockRejectedValue(new Error('ACK unavailable'));
+    const write = fault === 'file-and-ack'
+      ? jest.spyOn(ChatFile.prototype, 'write').mockRejectedValue(new Error('file unavailable')) : null;
+    try {
+      await expect(manager.createThread('fault-mirror', 'Committed', { harnessId: 'opencode' }))
+        .resolves.toMatchObject({ threadId: 'fault-mirror' });
+      expect(await getDb()('threads').where({ thread_id: 'fault-mirror' })).toHaveLength(1);
+      expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
+    } finally { mark.mockRestore(); write?.mockRestore(); }
+    await closeDb();
+    await initDb();
+    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
+    await restarted.ensureGroupsActivated();
+    expect(await restarted.getHistory('fault-mirror')).toMatchObject({ name: 'Committed', messages: [] });
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
+  });
+
+  test('a queued late projection cannot recreate a deleted mirror', async () => {
+    await createThread('late-mirror');
+    const original = manager.getRichHistory.bind(manager);
+    let release;
+    let entered;
+    const started = new Promise((resolve) => { entered = resolve; });
+    manager.getRichHistory = async (id) => {
+      entered();
+      await new Promise((resolve) => { release = resolve; });
+      return original(id);
+    };
+    const write = manager.syncChatlogMirrorFromHistory('late-mirror');
+    await started;
+    const deleting = manager.threadGroups.deleteGroup({ threadGroupId: 'late-mirror', requestId: 'delete-late' });
+    manager.getRichHistory = original;
+    release();
+    await write;
+    expect(await deleting).toMatchObject({ ok: true });
+    expect(fs.existsSync(manager.chatlogMirror.file('late-mirror').filePath)).toBe(false);
+    expect(await manager.syncChatlogMirrorFromHistory('late-mirror'))
+      .toMatchObject({ updated: false, reason: 'thread-not-found' });
+    expect(manager.chatlogMirror.pendingWrites.size).toBe(0);
+  });
+
+  test('a failed saved-exchange projection re-arms the write journal and restart exports exact history', async () => {
+    const { ChatFile } = require('../../lib/thread/ChatFile');
+    const { getDb } = require('../../lib/db');
+    await createThread('saved-mirror');
+    const saved = await addExchange('saved-mirror', 'durable question', 'durable answer', { turnId: 'saved-turn' });
+    const write = jest.spyOn(ChatFile.prototype, 'write').mockRejectedValue(new Error('file unavailable'));
+    try {
+      await expect(manager.syncChatlogMirrorFromHistory('saved-mirror')).rejects.toThrow('file unavailable');
+    } finally { write.mockRestore(); }
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('failed');
+    await closeDb(); await initDb();
+    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
+    await restarted.ensureGroupsActivated();
+    const history = await restarted.getHistory('saved-mirror');
+    expect(history.messages.map((message) => message.content)).toEqual(['durable question', 'durable answer']);
+    expect(history.messages[1].metadata.chatMirror).toMatchObject({ exchangeId: saved.exchangeId, seq: saved.seq, turnId: 'saved-turn' });
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
+  });
+
+  test('exchange commit before projection is durable across restart and journal failure rolls the exchange back', async () => {
+    const { getDb } = require('../../lib/db');
+    const journal = require('../../lib/thread/mirror-journal');
+    await createThread('crash-mirror');
+    const invalidate = jest.spyOn(journal, 'invalidate').mockRejectedValue(new Error('intent unavailable'));
+    try {
+      await expect(addExchange('crash-mirror', 'rolled back', 'never saved')).rejects.toThrow('intent unavailable');
+    } finally { invalidate.mockRestore(); }
+    expect(await getDb()('exchanges').where({ thread_id: 'crash-mirror' })).toHaveLength(0);
+    await addExchange('crash-mirror', 'committed before crash', 'recovered answer');
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
+    // No sync call: simulate process loss immediately after canonical commit.
+    await closeDb(); await initDb();
+    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
+    await restarted.ensureGroupsActivated();
+    expect((await restarted.getHistory('crash-mirror')).messages.map((m) => m.content))
+      .toEqual(['committed before crash', 'recovered answer']);
+  });
+
+  test('an older export ACK cannot erase a newer exchange write intent', async () => {
+    const { ChatFile } = require('../../lib/thread/ChatFile');
+    const { getDb } = require('../../lib/db');
+    await createThread('race-mirror');
+    await addExchange('race-mirror', 'first', 'answer one');
+    const original = ChatFile.prototype.write;
+    const write = jest.spyOn(ChatFile.prototype, 'write').mockImplementationOnce(async function (...args) {
+      await addExchange('race-mirror', 'second', 'answer two');
+      return original.apply(this, args);
+    });
+    try { await manager.syncChatlogMirrorFromHistory('race-mirror'); }
+    finally { write.mockRestore(); }
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
+    await manager.chatlogMirror.recover();
+    expect((await manager.getHistory('race-mirror')).messages.map((m) => m.content))
+      .toEqual(['first', 'answer one', 'second', 'answer two']);
+    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
+  });
+
 });

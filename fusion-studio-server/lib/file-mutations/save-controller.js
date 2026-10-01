@@ -428,7 +428,7 @@ function createFileSaveController({
         connectionId: session.connectionId,
         assurance: 'transport_only',
         reportedUiContext: intent.reportedUiContext,
-      });
+      }, pair.workspaceId, diagnose);
       validatedIntent = intentFromInput(intent);
     } catch (error) {
       const code = error instanceof TextValidationError ? error.code : 'invalid_request';

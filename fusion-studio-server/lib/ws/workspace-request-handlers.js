@@ -21,6 +21,13 @@ const {
   resolveViewState,
   writeViewStatePatchUnderLease,
 } = require('../view-state');
+const {
+  getThreadWorksurface,
+  putThreadWorksurfaceContent,
+  mutateManagedPlacement,
+  CONTENT_LANE,
+  PLACEMENT_LANE,
+} = require('../view-state/thread-worksurface');
 const { moveFileWithArchive } = require('../file-ops');
 const createService = require('../workspace/create-service');
 const { getPanelPath } = require('../views/panel-paths');
@@ -120,6 +127,92 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
       workspaceId: session.currentWorkspaceId ?? null,
     };
   }
+
+  // ---- Thread Worksurface (CHAT-03 / SPEC-03 §4, §7) ----
+  // Registered within the accepted `state:*` view-state route family. The
+  // renderer never writes view-state files; workspace is server-derived and
+  // `threadId`/`surfaceId` are never accepted or echoed.
+
+  const WORKSURFACE_ERROR_CODES = new Set([
+    'invalid_request',
+    'invalid_view',
+    'invalid_adapter',
+    'content_invalid',
+    'content_too_large',
+    'invalid_descriptor',
+    'placement_limit',
+    'not_found',
+    'revision_conflict',
+    'workspace_unavailable',
+    'view_registry_unavailable',
+    'worksurface_failed',
+  ]);
+
+  function sendWorksurfaceError({ viewId, threadGroupId, correlation, error, lane }) {
+    const requested = typeof error?.code === 'string' ? error.code : 'worksurface_failed';
+    const code = WORKSURFACE_ERROR_CODES.has(requested) ? requested : 'worksurface_failed';
+    ws.send(JSON.stringify({
+      type: 'state:worksurface_error',
+      viewId,
+      threadGroupId,
+      ...correlation,
+      lane,
+      code,
+      message: code,
+      // A stale lane write returns that lane's current revision and entry so
+      // the owning view can reconcile without a second read.
+      ...(error && Object.prototype.hasOwnProperty.call(error, 'entry')
+        ? { entry: error.entry }
+        : {}),
+      ...(error && typeof error.contentRevision !== 'undefined'
+        ? { contentRevision: error.contentRevision }
+        : {}),
+      ...(error && typeof error.placementRevision !== 'undefined'
+        ? { placementRevision: error.placementRevision }
+        : {}),
+    }));
+  }
+
+  /**
+   * Qualified lane-specific state-changed fan-out. Carries durable identities
+   * and lane revisions only — never the entry, never `surfaceId`. The
+   * requester already receives its correlated result and is skipped.
+   */
+  function broadcastWorksurfaceChanged(detail) {
+    const workspaceId = detail.workspaceId;
+    if (typeof workspaceId !== 'string' || !workspaceId) return;
+    const frame = JSON.stringify({
+      type: 'state:worksurface_changed',
+      workspaceId,
+      viewId: detail.viewId,
+      threadGroupId: detail.threadGroupId,
+      lane: detail.lane,
+      contentRevision: detail.contentRevision ?? null,
+      placementRevision: detail.placementRevision ?? null,
+    });
+    const clients = getAllClients ? getAllClients(workspaceId) : [];
+    for (const client of clients) {
+      if (client === ws || client.readyState !== 1) continue;
+      try { client.send(frame); } catch (_error) { /* failed recipient is isolated */ }
+    }
+  }
+
+  function readWorksurfaceIdentity(clientMsg) {
+    const viewId = typeof clientMsg.viewId === 'string' && clientMsg.viewId.trim()
+      ? clientMsg.viewId
+      : null;
+    const threadGroupId = typeof clientMsg.threadGroupId === 'string' && clientMsg.threadGroupId.trim()
+      ? clientMsg.threadGroupId
+      : null;
+    return { viewId, threadGroupId };
+  }
+
+  /** `viewId: null` is Legacy and has no entry; absent identity is malformed. */
+  function worksurfaceRequestErrorCode(clientMsg, viewId) {
+    if (!viewId && clientMsg.viewId === null) return 'invalid_view';
+    return 'invalid_request';
+  }
+
   return {
     // ---- Workspace lifecycle (MULTI_WORKSPACE_SPEC) ----
 
@@ -373,6 +466,116 @@ function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {
             ? 'view_registry_unavailable'
             : 'Unable to write state',
         }));
+      }
+    },
+
+    // ---- Thread Worksurface (CHAT-03 / SPEC-03) ----
+
+    async 'state:worksurface_get'(clientMsg = {}) {
+      const correlation = captureRequestCorrelation(clientMsg);
+      const { viewId, threadGroupId } = readWorksurfaceIdentity(clientMsg);
+      if (!viewId || !threadGroupId) {
+        sendWorksurfaceError({
+          viewId, threadGroupId, correlation, lane: CONTENT_LANE,
+          error: { code: worksurfaceRequestErrorCode(clientMsg, viewId) },
+        });
+        return;
+      }
+      try {
+        const projectRoot = session.projectRoot;
+        if (!projectRoot) throw Object.assign(new Error('No active workspace'), { code: 'workspace_unavailable' });
+        const result = await runReadyViewOperation(
+          (lease) => getThreadWorksurface(projectRoot, viewId, threadGroupId, lease),
+        );
+        ws.send(JSON.stringify({
+          type: 'state:worksurface_result',
+          viewId,
+          threadGroupId,
+          ...correlation,
+          lane: CONTENT_LANE,
+          ...result,
+        }));
+      } catch (error) {
+        console.error('[state:worksurface_get] failed');
+        sendWorksurfaceError({ viewId, threadGroupId, correlation, error, lane: CONTENT_LANE });
+      }
+    },
+
+    async 'state:worksurface_put'(clientMsg = {}) {
+      const correlation = captureRequestCorrelation(clientMsg);
+      if (!requireTrustedViewAuthority(ws, session)) return;
+      const { viewId, threadGroupId } = readWorksurfaceIdentity(clientMsg);
+      if (!viewId || !threadGroupId) {
+        sendWorksurfaceError({
+          viewId, threadGroupId, correlation, lane: CONTENT_LANE,
+          error: { code: worksurfaceRequestErrorCode(clientMsg, viewId) },
+        });
+        return;
+      }
+      try {
+        const projectRoot = session.projectRoot;
+        if (!projectRoot) throw Object.assign(new Error('No active workspace'), { code: 'workspace_unavailable' });
+        const result = await runReadyViewOperation(
+          (lease) => putThreadWorksurfaceContent(projectRoot, viewId, threadGroupId, clientMsg, lease),
+        );
+        ws.send(JSON.stringify({
+          type: 'state:worksurface_result',
+          viewId,
+          threadGroupId,
+          ...correlation,
+          lane: CONTENT_LANE,
+          ...result,
+        }));
+        if (result.applied) {
+          broadcastWorksurfaceChanged({
+            workspaceId: correlation.workspaceId,
+            viewId, threadGroupId, lane: CONTENT_LANE,
+            contentRevision: result.contentRevision,
+            placementRevision: result.placementRevision,
+          });
+        }
+      } catch (error) {
+        console.error('[state:worksurface_put] failed');
+        sendWorksurfaceError({ viewId, threadGroupId, correlation, error, lane: CONTENT_LANE });
+      }
+    },
+
+    async 'state:worksurface_placement'(clientMsg = {}) {
+      const correlation = captureRequestCorrelation(clientMsg);
+      if (!requireTrustedViewAuthority(ws, session)) return;
+      const { viewId, threadGroupId } = readWorksurfaceIdentity(clientMsg);
+      if (!viewId || !threadGroupId) {
+        sendWorksurfaceError({
+          viewId, threadGroupId, correlation, lane: PLACEMENT_LANE,
+          error: { code: worksurfaceRequestErrorCode(clientMsg, viewId) },
+        });
+        return;
+      }
+      try {
+        const projectRoot = session.projectRoot;
+        if (!projectRoot) throw Object.assign(new Error('No active workspace'), { code: 'workspace_unavailable' });
+        const result = await runReadyViewOperation(
+          (lease) => mutateManagedPlacement(projectRoot, viewId, threadGroupId, clientMsg, lease),
+        );
+        ws.send(JSON.stringify({
+          type: 'state:worksurface_result',
+          viewId,
+          threadGroupId,
+          ...correlation,
+          lane: PLACEMENT_LANE,
+          ...result,
+        }));
+        if (result.applied) {
+          broadcastWorksurfaceChanged({
+            workspaceId: correlation.workspaceId,
+            viewId, threadGroupId, lane: PLACEMENT_LANE,
+            contentRevision: result.contentRevision,
+            placementRevision: result.placementRevision,
+          });
+        }
+      } catch (error) {
+        console.error('[state:worksurface_placement] failed');
+        sendWorksurfaceError({ viewId, threadGroupId, correlation, error, lane: PLACEMENT_LANE });
       }
     },
 

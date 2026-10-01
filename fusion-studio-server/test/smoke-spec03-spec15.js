@@ -53,8 +53,7 @@ section('SPEC-03: Export surface');
 const EXPECTED_EXPORTS = [
   'setPanel', 'getState', 'cleanup',
   'sendThreadList',
-  'handleThreadOpen', 'handleThreadOpenAssistant', 'handleThreadTouch',
-  'handleThreadRename', 'handleThreadDelete', 'handleThreadCopyLink',
+  'handleThreadOpen', 'handleThreadOpenAssistant', 'deleteThreadSession',
   'handleThreadSearch',
   'handleMessageSend',
   'getCurrentThreadId', 'getCurrentThreadManager',

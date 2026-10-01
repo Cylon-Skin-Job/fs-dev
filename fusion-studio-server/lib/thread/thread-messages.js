@@ -28,7 +28,9 @@ function createMessageHandlers({ wsState }) {
       return false;
     }
 
-    const threadId = state.threadId;
+    // The prompt's resolved target is immutable for this admission. The
+    // connection's selected thread can still refer to a different session.
+    const threadId = msg.threadId;
     if (!threadId) {
       ws.send(JSON.stringify({ type: 'error', message: 'No active thread' }));
       return false;
@@ -48,12 +50,17 @@ function createMessageHandlers({ wsState }) {
       // Update MRU
       await manager.index.touch(threadId);
 
-      ws.send(JSON.stringify({
-        type: 'message:sent',
-        threadId,
-        scope: 'project',
-        content
-      }));
+      if (msg.sendAcknowledgement !== false) {
+        ws.send(JSON.stringify({
+          type: 'message:sent',
+          workspaceId: manager.workspaceId,
+          threadId,
+          scope: 'project',
+          content,
+          ...(msg.requestId ? { requestId: msg.requestId } : {}),
+          ...(msg.turnId ? { turnId: msg.turnId } : {}),
+        }));
+      }
       return true;
 
     } catch {
@@ -61,12 +68,14 @@ function createMessageHandlers({ wsState }) {
         threadId,
         marker: 'MESSAGE_PERSISTENCE_FAILED',
       });
-      ws.send(JSON.stringify({
+      if (msg.suppressFailureFrame !== true) ws.send(JSON.stringify({
         type: 'error',
         message: 'Message could not be saved',
         scope: 'project',
+        ...(manager.workspaceId ? { workspaceId: manager.workspaceId } : {}),
         threadId,
         recoverable: true,
+        ...(msg.requestId ? { requestId: msg.requestId } : {}),
       }));
       return false;
     }

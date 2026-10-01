@@ -9,6 +9,7 @@ interface ChatFileLinkState {
     threadId: string;
     attachments: ChatLinkAttachment[];
   }>;
+  attachmentGenerationsByOwner: Record<string, Record<string, number>>;
   autocompleteCandidates: ChatFileAutocompleteCandidate[];
   addPendingAttachment: (
     workspaceId: string,
@@ -20,6 +21,11 @@ interface ChatFileLinkState {
     workspaceId: string,
     threadId: string,
     ids: readonly string[],
+  ) => void;
+  removeSubmittedAttachments: (
+    workspaceId: string,
+    threadId: string,
+    generations: Readonly<Record<string, number>>,
   ) => void;
   clearPendingAttachments: (workspaceId: string, threadId: string) => void;
   clearWorkspaceAttachments: (workspaceId: string) => void;
@@ -83,6 +89,7 @@ function candidatesFromExchangeMetadata(exchange: ExchangeData): ChatFileAutocom
 
 export const useChatFileLinkStore = create<ChatFileLinkState>((set) => ({
   pendingAttachmentsByOwner: {},
+  attachmentGenerationsByOwner: {},
   autocompleteCandidates: [],
   addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {
     const key = chatAttachmentOwnerKey(workspaceId, threadId);
@@ -93,6 +100,13 @@ export const useChatFileLinkStore = create<ChatFileLinkState>((set) => ({
       pendingAttachmentsByOwner: {
         ...state.pendingAttachmentsByOwner,
         [key]: { workspaceId, threadId, attachments: [...attachments, attachment] },
+      },
+      attachmentGenerationsByOwner: {
+        ...state.attachmentGenerationsByOwner,
+        [key]: {
+          ...state.attachmentGenerationsByOwner[key],
+          [attachment.id]: (state.attachmentGenerationsByOwner[key]?.[attachment.id] ?? 0) + 1,
+        },
       },
     };
   }),
@@ -125,17 +139,42 @@ export const useChatFileLinkStore = create<ChatFileLinkState>((set) => ({
       },
     };
   }),
+  removeSubmittedAttachments: (workspaceId, threadId, generations) => set((state) => {
+    const key = chatAttachmentOwnerKey(workspaceId, threadId);
+    const owner = state.pendingAttachmentsByOwner[key];
+    if (!owner) return state;
+    const current = state.attachmentGenerationsByOwner[key] ?? {};
+    return {
+      pendingAttachmentsByOwner: {
+        ...state.pendingAttachmentsByOwner,
+        [key]: {
+          ...owner,
+          attachments: owner.attachments.filter((attachment) => (
+            generations[attachment.id] === undefined
+            || current[attachment.id] !== generations[attachment.id]
+          )),
+        },
+      },
+    };
+  }),
   clearPendingAttachments: (workspaceId, threadId) => set((state) => {
     const key = chatAttachmentOwnerKey(workspaceId, threadId);
     if (!state.pendingAttachmentsByOwner[key]) return state;
     const pendingAttachmentsByOwner = { ...state.pendingAttachmentsByOwner };
+    const attachmentGenerationsByOwner = { ...state.attachmentGenerationsByOwner };
     delete pendingAttachmentsByOwner[key];
-    return { pendingAttachmentsByOwner };
+    delete attachmentGenerationsByOwner[key];
+    return { pendingAttachmentsByOwner, attachmentGenerationsByOwner };
   }),
   clearWorkspaceAttachments: (workspaceId) => set((state) => ({
     pendingAttachmentsByOwner: Object.fromEntries(
       Object.entries(state.pendingAttachmentsByOwner)
         .filter(([, owner]) => owner.workspaceId !== workspaceId),
+    ),
+    attachmentGenerationsByOwner: Object.fromEntries(
+      Object.entries(state.attachmentGenerationsByOwner).filter(([key]) => {
+        try { return JSON.parse(key)[0] !== workspaceId; } catch { return true; }
+      }),
     ),
   })),
   upsertAutocompleteCandidate: (candidate) => set((state) => {

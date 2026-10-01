@@ -252,9 +252,6 @@ test('theme picker launches from the upper-right palette button only', () => {
     /\.rv-chat-area \.rv-message-assistant-content h1,[\s\S]*?\.rv-chat-area \.rv-code-block-header\s*\{[^}]*color: var\(--chat-accent-color,/s,
   );
   expect(chatAreaCss).toMatch(
-    /\.rv-secondary-header-identity,[\s\S]*?\.rv-secondary-header-identity-name\s*\{[^}]*color: var\(--chat-accent-color,/s,
-  );
-  expect(chatAreaCss).toMatch(
     /\.rv-chat-area\.rv-chat-area--project \.rv-message-assistant-content,[\s\S]*?\.rv-chat-area\.rv-chat-area--project \.rv-chat-input\s*\{[^}]*color: var\(--chat-text-color,/s,
   );
   expect(chatAreaCss).toMatch(

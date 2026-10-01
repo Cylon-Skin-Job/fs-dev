@@ -2,7 +2,7 @@
 
 **Status:** `DRAFT_CANDIDATE`  
 **Domain owner:** view-state persistence and view-specific worksurface adapters  
-**Prerequisites:** owner-accepted SPEC-02  
+**Prerequisites:** owner-accepted SPEC-02 and the packet `BRIDGE-02-CONFORMANCE-OVERLAY.md`  
 **Blocks:** SPEC-04
 
 ## 1. Objective
@@ -35,7 +35,9 @@ Read before implementation:
 - current workspace/view-state services, handlers, renderer stores, navigation
   owners, and built-in view state; and
 - the independently accepted Generic Component Tab Host state contract used by
-  SPEC-02.
+  SPEC-02; and
+- the approved BRIDGE-01/BRIDGE-02 contracts and the packet-local
+  `BRIDGE-02-CONFORMANCE-OVERLAY.md`.
 
 The orchestrator records the exact accepted baseline commit and migration head
 before assigning Slice 03A. Unaccepted tab-host or Provenance worktree code is
@@ -99,6 +101,12 @@ from a path. `viewId` comes from the central registry and existing
 There is no Legacy entry when `viewId` is null. The Legacy chat host has no
 view-owned content worksurface. No code guesses a view from the active panel,
 folder name, title, component, or group label.
+
+Bridge conformance: `threadGroupId` owns the worksurface key; `threadId` remains
+the transcript/routing/Provenance identity and is never the worksurface key;
+`surfaceId` never appears in either lane; closing a tab removes placement only
+and never deletes chat or Provenance (`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.5;
+`CHAT-H06`).
 
 `content` is adapter-owned. `managedComponentPlacements` is service-owned and is
 mutated only through a narrow placement command, not a renderer content PUT.
@@ -201,6 +209,10 @@ that newer remote state exists. A content mutation server-merges against the
 current managed-placement lane; a placement mutation server-merges against the
 current content lane. Clients can never replace the opposite lane.
 
+Fan-out conformance: state-changed delivery carries qualified durable identities
+and lane revisions only; never `surfaceId`
+(`BRIDGE-02-CONFORMANCE-OVERLAY.md` §4.5).
+
 ### 6.3 First selection and unavailable content
 
 When no snapshot exists, selecting a group leaves the view in its established
@@ -286,6 +298,10 @@ group deletion. Legacy groups produce no cleanup record.
 This is an extension point in the Thread Group domain, not a second delete
 implementation. There is no filesystem cascade and no direct database-to-file
 mutation. The accepted Provenance deletion contract remains unchanged.
+
+Bridge conformance: group deletion never cascades into Provenance and never
+rewrites `threadId`/`turnId` authority (`BRIDGE-02-CONFORMANCE-OVERLAY.md`
+§4.5).
 
 Groups deleted before SPEC-03 activation require no backfill because no
 group-keyed snapshot existed before activation. If implementation discovers a
@@ -381,7 +397,9 @@ Required scenarios:
 - deletion commits when cleanup delivery fails, then retry removes only the
   exact entry;
 - repeated cleanup delivery is harmless;
-- Legacy groups create no worksurface state; and
+- Legacy groups create no worksurface state;
+- no worksurface lane or fan-out payload contains `surfaceId`, and deletion
+  leaves chat/Provenance intact; and
 - accepted SPEC-01/02, Provenance, Generic Host, chat, and view-state tests remain
   green.
 

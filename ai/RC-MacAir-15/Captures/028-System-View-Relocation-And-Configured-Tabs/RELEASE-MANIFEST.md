@@ -169,3 +169,9 @@ change stops implementation.
   pre-commit. Commit granularity remains an owner decision; the candidate is the
   uncommitted worktree at `7f0d3c8` (322+ dirty paths). Gate 6 (view-platform milestone
   release) remains owner-controlled and is required before BRIDGE-01.
+- **GATE 6 OPEN — VIEW-PLATFORM MILESTONE RELEASED — 2026-09-12.** Owner
+  statement: "Everything is approved for release and for handoff." The
+  view-platform milestone is released; BRIDGE-01 (Tabs ↔ Provenance) is
+  authorized to begin as a SPEC conversation. Read
+  `BRIDGE-01-HANDOFF.md` first. Standing rule intact: chat extraction and
+  Composable-Views remain owner-gated after the bridge.

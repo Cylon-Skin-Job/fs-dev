@@ -2,16 +2,31 @@
 name: Chat WebSocket Protocol
 description: WebSocket and canonical event contracts for Fusion Studio chat. Use this page when changing client/server messages, canonical harness events, stream routing, or chat-turn messages.
 metadata:
-  incoming-edges:
-    - Chat Harness And Event Flow
-  outgoing-edges:
-    - Legacy Wire Terminology
+  last-modified: "2026-09-29T07:12:08Z"
   source-files:
+    - fusion-studio-client/src/lib/ws/thread-markdown.ts
+    - fusion-studio-client/src/lib/ws/thread-history.ts
+    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+    - fusion-studio-server/lib/thread/thread-open-handler.js
+    - fusion-studio-server/lib/ws/thread-provider-binding.js
+    - fusion-studio-server/lib/ws/thread-action-protocol.js
+    - fusion-studio-server/lib/ws/thread-action-handler.js
     - fusion-studio-server/lib/ws/client-message-router.js
+    - fusion-studio-server/lib/ws/chat-runtime-ws-handlers.js
+    - fusion-studio-server/lib/ws/file-request-dispatch.js
+    - fusion-studio-server/lib/ws/view-workspace-ws-handlers.js
     - fusion-studio-server/lib/ws/thread-ws-handlers.js
     - fusion-studio-client/src/types/index.ts
     - fusion-studio-client/src/types/chat-wire.ts
     - fusion-studio-client/src/lib/ws-client.ts
+    - fusion-studio-client/src/lib/ws/product-send.ts
+    - fusion-studio-client/src/lib/shell-auth-client.ts
+    - fusion-studio-client/src/state/slices/chatSlice.ts
+    - fusion-studio-client/src/lib/chat/prompt-submission-recovery.ts
+    - fusion-studio-client/src/lib/ws/application-message-router.ts
+    - fusion-studio-client/src/lib/ws/fusion-response-listeners.ts
+    - fusion-studio-client/src/lib/ws/view-state-handlers.ts
+    - fusion-studio-client/src/lib/ws/shell-message-handlers.ts
     - fusion-studio-client/src/lib/ws/thread-handlers.ts
     - fusion-studio-client/src/lib/ws/stream-handlers.ts
     - fusion-studio-client/src/lib/ws/frontier.ts
@@ -19,6 +34,18 @@ metadata:
     - fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js
     - fusion-studio-client/src/lib/chat-action.ts
     - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
+    - fusion-studio-server/lib/thread-groups/application-link.js
+    - fusion-studio-server/lib/thread-groups/link-service.js
+    - fusion-studio-server/lib/thread-groups/placement-delivery.js
+    - fusion-studio-server/lib/ws/workspace-request-handlers.js
+    - fusion-studio-server/lib/thread/thread-crud.js
+    - fusion-studio-server/lib/thread/thread-harness-config-policy.js
+    - fusion-studio-server/lib/thread/ThreadWebSocketHandler.js
+    - fusion-studio-server/lib/thread-groups/service.js
+    - fusion-studio-client/src/lib/ws/threadGroupRows.ts
+    - fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
+    - fusion-studio-client/src/components/chat/useViewChatHost.ts
+    - fusion-studio-client/src/lib/worksurface/worksurfaceController.ts
   connected-skills: []
   related-trigger-files: []
 ---
@@ -33,8 +60,9 @@ or a fixed host/port. Electron preload returns the exact current
 `{ generation, httpOrigin, webSocketUrl }` descriptor only to the committed
 `fusion-shell://app` main frame. `src/lib/runtime-transport.ts` validates and
 owns it, creates the socket, constructs every server-backed HTTP/resource URL,
-and aborts old-generation work. `ws-client.ts` remains the application-message
-router and consumes that transport owner.
+and aborts old-generation work. `ws-client.ts` owns application socket activation and consumes that transport
+owner; `ws/application-message-router.ts` selects inbound product handlers in
+order, while existing domain modules apply the response.
 
 Endpoint possession is not connection authority. The 00A descriptor contains
 no secret. On each socket the server sends one bounded
@@ -54,7 +82,8 @@ no wire, message, workspace, manager, or application-router owner. Authenticatio
 are transport commands, not product facts, and never enter UEB, Provenance,
 persistence, or application stores. The thread-domain guard reads only this
 private live connection role. It rejects New Chat, assistant activation/resume,
-Rename, Delete, Touch, Warm, and prompt-triggered activation before their normal owners run; request fields, model or
+Rename, Delete, Copy Link, Resolve Link, View Markdown, model selection, Warm,
+and prompt-triggered activation before their normal owners run; request fields, model or
 harness output, persisted values, and provenance/event metadata cannot grant
 authority. Exact assistant resume is included because the activation owner writes
 resumed/MRU metadata. Passive `thread:open` only hydrates history/live state and
@@ -65,9 +94,9 @@ an explicit foreign or absent binding returns the fixed unavailable response.
 `thread:fork` is always unavailable and is not a trusted capability.
 After authority, thread identity is resolved only inside the connection's
 workspace and project scope. Foreign thread IDs cannot hydrate history or reach
-assistant upsert, Warm, prompt, Rename, Delete, Touch, mirror, or provider
-effects.
-Manager-backed passive open, list, link, and search reads likewise
+assistant upsert, Warm, prompt, Rename, Delete, Copy Link, Resolve Link, View
+Markdown, model selection, mirror, or provider effects.
+Manager-backed passive open, list, and search reads likewise
 require the manager to match the active live session root, workspace id, and
 epoch. During binding or before the new panel installs its matching manager,
 they return a fixed unavailable response without lookup, history, reclaim, or
@@ -78,7 +107,8 @@ lease rule and additionally accepts only its process-provisioned workspace,
 root, and thread identity before any fixture effect.
 Warm, prompt, and assistant-open activation also resolve the current live
 session root rather than the root captured when the socket was constructed.
-Create/resume, Rename, Delete, Touch, Warm, and prompt acceptance share one
+Create/resume, Rename, Delete, Copy Link, Resolve Link, View Markdown, model
+selection, Warm, and prompt acceptance share one
 per-connection workspace-operation lease with workspace binding. An operation
 already admitted completes its bounded persistence, response, and provider
 admission before binding begins; an operation queued after binding revalidates
@@ -107,11 +137,18 @@ exactly-once activated cleanup through durable thread-session suspension.
 
 ## Client To Server
 
+The private renderer chat send boundary returns a local result, separate from every server response: `enqueued/socket` means the authenticated native send returned normally; `enqueued/auth_queue` means a qualified pre-auth metadata or receipt inquiry is held in the bounded local queue. Neither means receipt, accepted prompt, saved exchange, created thread, stopped turn, or durable action. A definite `not_enqueued` covers disconnected/retired/stale connection, missing or stale workspace binding, unavailable auth, serialization failure, queue refusal, or a reliably observed pre-enqueue native failure. A native throw after buffered bytes increase is `uncertain/send_failed_after_enqueue`; without reliable observation it is `uncertain/send_outcome_unknown`. These fixed reasons contain no payload or exception text.
+
+Prompt, Warm, Stop, list/open/create, group/member actions, worksurface chat open, prompt resolve and diagnostics use `socket_only`; an OPEN but unauthenticated socket does not admit them. Reply metadata updates and receipt-status inquiries alone may use `auth_queue_allowed` with an installed exact workspace binding. Queue entries capture socket/generation, workspace epoch/revision and local binding invalidation sequence. Flush discards stale work, including a same-ID rebind or A→B→A switch, and never replays it to a replacement connection. `workspace:init` may establish the pending binding before its asynchronous view projection marks initialization complete, so receipt inquiry may queue during that interval. The existing server route and domain response listeners remain authoritative; failed or uncertain local admission does not authorize automatic prompt or mutation replay.
+
+Receipt recovery consumes that local result for both pending acceptance and accepted execution. A definite `not_enqueued` immediately shows the existing unknown feedback, releases the current inquiry lock and arms no five-second response deadline; the original attempt remains gated. `uncertain` and either `enqueued` destination keep one bounded five-second inquiry wait without claiming wire delivery. The existing 15-second initial deadline and status-only retry delays of 1, 2, 4, 8 and 15 seconds remain. A possible inquiry stays eligible for an exact late receipt after its wait expires or a later inquiry is definitely refused. Exact attempt, workspace, thread, accepted turn and current connection/workspace binding fence application; a same-ID rebind or retired attempt removes eligibility. The current server's `thread:action:error` omits workspace identity, so recovery cannot treat that unqualified error as a matched inquiry result; it reaches existing unknown feedback through the five-second timeout instead. Processing an eligible qualified response clears its wait and scheduled retry first. No inquiry result resends the original prompt, sends Stop, cancels the provider, or commits a user bubble without server acceptance.
+
 | Message | Purpose |
 |---|---|
-| `thread:list` | Request MRU thread list for a scope |
-| `thread:open` | Passive browse/hydrate an existing thread |
+| `thread:list` | Request one connection-workspace population: nullable Legacy view or registered view ID |
+| `thread:open` | Passively hydrate a validated exact member, or the current primary for a group-only target |
 | `thread:open-assistant` | Activate/resume assistant thread or create new one |
+| `thread:members` | Qualified ordered-member read for one validated thread group |
 | `thread:warm` | Trusted-shell-only warm of a cold runtime based on send intent |
 | `thread:action` | Perform a canonical visible-thread or chat-session action |
 | `prompt` | Send user input and optional attachment metadata to a specific thread |
@@ -125,6 +162,7 @@ Prompt payloads may include attachment metadata:
 {
   "type": "prompt",
   "threadId": "...",
+  "requestId": "unique_attempt_001",
   "user_input": "Explain this startup flow.",
   "attachments": [
     {
@@ -140,12 +178,28 @@ Prompt payloads may include attachment metadata:
 The visible textarea remains plain user text. Attachment pills are separate UI
 state until send.
 
+Each deliberate prompt has one bounded `requestId` (8–128 ASCII letters,
+digits, `_` or `-`). The accepted response echoes request/session/turn identity.
+`thread:action` `prompt_receipt_status` resolves that exact attempt through the
+receipt owner: absent status installs a cancellation fence and accepted status
+never replays provider work. The 15-second client recovery transition permits
+editing but does not establish rejection or authorize resend.
+
+`thread-ws-handlers.js` remains the workspace-bound transport facade.
+`thread-action-handler.js` delegates durable actions and receipt reads;
+`thread-action-protocol.js` validates/serializes canonical frames;
+`thread-provider-binding.js` owns eager exact-session readiness. Authentication,
+workspace leases and the public message families remain unchanged.
+
 ## Server To Client
 
 | Message | Purpose |
 |---|---|
-| `thread:created` | New thread metadata was created |
-| `thread:opened` | Thread history and optional live turn are hydrated |
+| `thread:created` | Eager session and one-member group were committed; carries both IDs and nullable view |
+| `thread:opened` | Resolved session history/live state plus workspace, view, group and exact session identities |
+| `thread:list` | Group projections for the echoed nullable view population |
+| `thread:members` | Ordered durable member projections for one validated group (no transcript content) |
+| `thread:members:error` | Fixed value-free denial for an unknown/foreign/unavailable group read |
 | `thread:action:completed` | Canonical action completed with authoritative state |
 | `thread:action:error` | Canonical action failed or conflicted without ambiguous client state |
 | `wire_ready` | Runtime is ready for prompt delivery |
@@ -158,6 +212,29 @@ state until send.
 | `fusion:turn-ended` | Terminal turn event reached client state |
 | `chat-turn:diagnostic:report` | One validated redacted V1 report after an explicit request |
 | `chat-turn:diagnostic:unavailable` | Fixed value-free denial for every unavailable class |
+
+## List And Open Correlation
+
+These examples address the connection-bound workspace. Values in angle brackets stand for existing IDs; `file-viewer` must be a registered view in that workspace. Do not add client workspace authority fields.
+
+| Intent | Accepted request | Actual target |
+|---|---|---|
+| Legacy list | `{ "type": "thread:list", "viewId": null }` or `{ "type": "thread:list" }` | Only the null-view Legacy population |
+| View list | `{ "type": "thread:list", "viewId": "file-viewer" }` | Only that registry-validated view; unavailable view fails without Legacy fallback |
+| Visible-row browse | `{ "type": "thread:open", "threadGroupId": "<group-id>" }` | Group's current primary, resolved by server |
+| Session compatibility browse | `{ "type": "thread:open", "threadId": "<member-session-id>" }` | Validates workspace/group membership; hydrates that exact member, including a non-primary session |
+| Legacy New Chat | `{ "type": "thread:open-assistant" }` or the same request with `"viewId": null` | New session plus one-member Legacy group |
+| View New Chat | `{ "type": "thread:open-assistant", "viewId": "file-viewer" }` | New session plus one-member group bound to that registered view |
+
+`thread:list` echoes `viewId` and returns `threads` as group projections; it does not echo a request token or a top-level workspace ID. The client maps each row's primary to the session `threadId`, combines the active workspace with the response's nullable view, filters foreign-workspace rows, and updates that population. Only null-view responses also update the Legacy backing list. A view-qualified result is never a request to overwrite Legacy. The server's exact connection binding remains the authority; these fields do not grant workspace switching.
+
+Before passive row selection, the client records `requestThreadOpen` with its local `{workspaceId, viewId, threadGroupId, threadId}` target. For passive `thread:open`, `thread:opened` returns authoritative population and target identities and echoes the supplied `requestId` (or null). `matchesPendingThreadOpen` correlates by population plus matching group or session identity, not by request ID. For ordinary opens with a request ID, selection requires that pending identity match; responses without a request ID may also retain the already-selected target or fill an empty selection. `consumeThreadOpen` then retires matching entries for that population. A `historyOnly: true` response changes neither selection nor pending Main open requests. History/live state hydrates the returned session's own slot in either mode. This remains identity-based pending-open correlation, not a wire-level latest-request token guarantee. Registered worksurface views additionally route group selection through the acknowledgement-gated worksurface controller.
+
+The session compatibility shape hydrates the exact validated member returned by `resolveOpenTarget`; a group-only request resolves its current primary. Existing-session assistant activation uses the same resolved member with activation metadata enabled. Unknown/foreign passive targets fail without creation. Restored Side Chat sends both member/group IDs with `historyOnly: true` to read that member without changing Main selection or provider ownership. The separate Side Chat placement actions and link-consumer gap are documented [below](#group-and-exact-member-links).
+
+`thread:open-assistant` first passes trusted-shell authority, `normalizeOpenAssistantRequest`, and the bound workspace-operation lease. Its closed top-level schema permits IDs but rejects client authority/unknown fields. Unknown explicit group or mismatched member fails; a foreign session-only ID fails; an unknown session-only ID absent everywhere can still fall through to eager creation, just like omitted IDs. That reachable fallback does not satisfy the intended no-replacement rule for explicit unknown targets. The [Runtime creation table](../../006-Runtime_Model/PAGE.md#new-thread-and-activation) records the exact distinctions and the source-observed follow-up.
+
+New Chat commits the session and group before sending `thread:created`, refreshing the qualified population, hydrating via `thread:opened`, and admitting the provider. No provider signal gates durable creation. Pending New Chat/provider-signal commit remains future work; neither creation acknowledgement nor the connecting indicator proves runtime readiness. Creation and activation responses are distinct from the passive-open correlation contract above.
 
 ## Canonical Harness Events
 
@@ -256,16 +333,64 @@ key.
 
 ## Visible-thread and session actions
 
-Keep one `thread:action` command family. A group action such as
-`move_chat_to_side` carries `threadGroupId` and
-`expectedPrimaryThreadId`. A provider-backed session action such as `compact`
-carries `threadId`. The handler validates whichever identity set the action
-requires; do not create a separate `thread-group:*` transport family.
+Keep one `thread:action` command family. A group action such as `rename`, `delete`, or `copy_link` carries `requestId`, `threadGroupId`, and optionally the exact `threadId`; an implemented session-targeted action such as `set_harness_selection` carries `threadId`. Compact is not accepted by the current route; its [future design guidance](../006-Thread_Actions/PAGE.md#compact-is-not-implemented) is separate from this implemented taxonomy. The handler validates whichever identity set the action requires; do not create a separate `thread-group:*` transport family. The superseded raw `thread:rename`, `thread:delete`, `thread:copyLink`, and `thread:touch` routes are removed with no aliases.
+
+Implemented canonical actions:
+
+- `rename` — group title only;
+- `delete` — runtime-safe, Provenance-safe group delete;
+- `copy_link` — returns a version-1 application URI for a validated group member: the supplied exact `threadId`, or the current primary when omitted; no `surfaceId` or placement identity is encoded;
+- `resolve_link` — validates the URI/ids; group-only and current-primary targets use Main Chat hydration, while a non-primary exact member resolves its lifetime Side Chat placement with the renderer integration gap described below; Legacy retains its explicit null-view host;
+- `view_markdown` — exact member; returns the validated canonical
+  `Data/Chatlogs/threads/<threadId>.md` mirror path resolved through
+  ThreadManager; and
+- `set_harness_selection` — exact member; accepts only portable
+  `{model, variant}`, validates both against current server policy, reads the
+  harness binding from immutable server session state, persists by `threadId`,
+  and returns/fans out the acknowledged value. Rejection leaves the prior value
+  authoritative; and
+- `move_chat_to_side` (group + exact current primary + observed
+  `expectedPrimarySequence`) and `open_member_in_side` (group + exact
+  non-primary member). Both derive workspace from the bound connection and view
+  from the group; neither accepts client workspace/view authority fields.
+  `thread:members` is the qualified ordered-member read for one validated group
+  (see the client/server tables above); it returns durable projections and the
+  current placement disposition, never transcript content.
+
+Move commits its SQLite group transition first and delivers the Side Chat placement as a separate durable, retryable step through the service-managed placement lane; a failed or unapplied delivery stays observable and never rolls back the transition. The durable placement key is the `sideChatPlacementId`; ordinary replay never reopens a closed disposition.
+
+### Group and exact-member links
+
+The version-1 URI is `fusion-thread-group:v1?workspaceId=…&threadGroupId=…[&viewId=…][&threadId=…]`. `copy_link` validates membership and always encodes a member `threadId`, defaulting to the current primary when the request omits it. A URI without `threadId` follows the current primary at resolution time; a copied exact-primary link can instead target Side Chat after that session has been moved. The renderer writes the returned URI to the clipboard only after the requester's completion frame, never on workspace fan-out.
+
+The following is source-inspected development behavior, not a runtime focus test. Server placement success and visible presentation are separate outcomes.
+
+| Target / case | Server resolution | Renderer response handling | Intended presentation |
+|---|---|---|---|
+| Group-only URI or exact current-primary member | Returns authoritative primary in `threadId`; on a fresh, non-replayed action the public handler attempts passive `handleThreadOpen`, producing `thread:opened` on success | Hydrates that session's history/live state. Selection is qualified by the response population and a matching pending open, existing selection, or empty selection; it does not guarantee activation of the owning view | Main Chat in the group's bound host; Legacy uses `viewId: null` |
+| Exact non-primary member, placement already open | Validates membership and retained placement; matching open descriptor returns without a placement write. Completion includes `targetMemberThreadId`, `sideChatPlacementId`, and `placementStatus: applied`; `threadId` still names the primary. Skips Main Chat hydration | No `resolve_link` completion branch reads or selects the placement. An already-open but unfocused tab can remain unselected despite successful resolution | Select that exact member's Side Chat without promotion |
+| Exact non-primary member, placement closed | Reuses the retained lifetime placement ID and persists an open descriptor through `materializeMemberPlacement`; skips Main Chat hydration | No matching `resolve_link` read/focus bridge. Persistence alone does not establish visible reopening; a later independent worksurface read can discover the open record | Reopen and select that exact Side Chat |
+| Invalid URI, foreign workspace, mismatched encoded view, unknown group/nonmember, or unavailable member placement | Returns a bounded failure, with no fallback to the primary or another workspace/view | Existing action-error handling surfaces failure; it does not substitute another target | Remain at the existing location and report failure |
+
+`parseGroupLink` rejects unknown versions, unknown or duplicate keys (including `surfaceId`), missing required IDs, empty or over-128-byte UTF-8 IDs, and URIs over 2,048 bytes. URI workspace must match the connection-bound workspace and its nullable view must match the group's immutable binding. A non-primary Legacy target is rejected; a non-primary member without its lifetime placement returns `member_unavailable`. Placement read/write failures propagate as bounded failures. No link grants cross-workspace navigation, view rebinding, primary promotion, or a visible-list MRU advance.
+
+The public action route sends `resolve_link` completion to the requester and workspace peers, but `thread-handlers.ts` has no placement consumer for that action. The separate `state:worksurface_placement` route emits `state:worksurface_changed`; the link service calls the placement service directly and does not traverse that notification route. Its action fan-out therefore does not supply the missing read/focus bridge. Group/current-primary replay also skips another passive open, and a failed hydration attempt does not roll back a successful resolution result.
+
+The [Side chats menu](../../004-Chat_UI/005-Menus_And_Modals/PAGE.md#side-chat-member-menu) uses `open_member_in_side`, whose renderer completion handler sets the active placement and requests its worksurface entry. That implemented consumer must not be inferred for exact-member links. The bounded product follow-up is to connect exact-member `resolve_link` results to qualified placement read and selection, covering both an open unselected tab and a closed placement; this documentation does not implement that repair.
+
+Durable actions are idempotent per `{workspaceId, requestId}`: same
+request/same input replays the stored result, different input returns
+`request_mismatch`. Delete returns non-mutating `group_busy` while a member
+runtime is mid-operation, fences runtime generations once terminal, records a
+bounded group cleanup tombstone before canonical rows vanish, and recovers the
+retained aggregate for a new `requestId` while that tombstone holds.
 
 Durable action responses go to the requester after commit. The server also
 fans the authoritative result out to every open window in the workspace. An
 optional UEB fact such as `thread:primary_changed` is post-commit and cannot
-gate the response, persistence, or fan-out.
+gate the response, persistence, or fan-out. Durable envelopes, persisted
+action results, idempotency records, and fan-out carry qualified durable
+identities only and never `surfaceId`.
 
 Requester acknowledgement, each workspace-recipient send, and UEB publication
 run as separate failure-isolated post-commit deliveries. Failure or closure of
@@ -282,12 +407,7 @@ rejected server-side.
 Existing historical threads use their stored `harness_id` when resumed; do not
 migrate them by changing policy.
 
-Public creation and prompt-selection `harnessConfig` accepts only portable
-`model` as a non-empty string and `variant` as either a non-empty string or
-explicit `null`; null clears an earlier persisted/live variant. Provider session ids, Fork metadata, credentials,
-and unknown fields are rejected before lookup or persistence. Runtime loading
-also removes legacy Fork state before any adapter sees stored configuration;
-ordinary OpenCode session ids without Fork markers retain exact-session resume.
+Public creation and prompt-selection `harnessConfig` accepts only portable `model` as a non-empty string and `variant` as either a non-empty string or explicit `null`; null clears an earlier persisted/live variant. Provider session ids, Fork metadata, credentials, and unknown fields are rejected before lookup or persistence. Runtime loading also removes legacy Fork state before any adapter sees stored configuration; ordinary OpenCode provider session IDs without Fork markers remain eligible for provider-session reuse. That stored adapter binding is separate from public group/member selection: the existing-session assistant-open path hydrates and activates the validated exact member, or the current primary for a group-only request, as documented in [List And Open Correlation](#list-and-open-correlation).
 
 All production harness launches and harness/CLI installation or version probes
 build their child environment through `lib/harness/child-environment.js`.
@@ -323,7 +443,7 @@ clean-exit contract gap into canonical completion.
 
 When adding a message family:
 
-- add server router delegation in `client-message-router.js`
+- add ordered server delegation in `client-message-router.js` and keep family behavior in the focused `chat-runtime-ws-handlers.js`, `file-request-dispatch.js`, or `view-workspace-ws-handlers.js` owner as applicable
 - add client type union entries in `fusion-studio-client/src/types/index.ts`
 - add client handlers in the appropriate WS handler module
 - add redaction rules for sensitive payload paths
@@ -353,3 +473,20 @@ chat-turn:metadata:update
 chat-turn:metadata:updated
 chat-turn:metadata:error
 ```
+
+### Restored component history (SPEC05D integration)
+
+A validated restored chat component issues `thread:open` with its explicit
+`threadGroupId`, exact `threadId`, a request ID, and `historyOnly: true`.
+`thread-open-handler.js` consumes captured read/metadata capabilities and reads
+the resolved member, rather than substituting the group's current Main Chat.
+The server echoes `historyOnly` and leaves connection selection/provider ownership
+alone. `thread-history.ts` hydrates that session's history/live snapshot without
+changing selected groups or consuming pending Main Chat opens. It is a read,
+not assistant activation. `thread-handlers.ts` remains the message dispatcher;
+`thread-markdown.ts` only opens the acknowledged mirror in File Viewer.
+
+The bounded affected-owner graph is enforced by `backend-owner-contract.mjs`.
+Unchanged dependencies outside its inventory (including the thread barrel,
+registry, and worksurface cleanup) are external boundaries; this check does not
+claim a complete repository dependency graph.

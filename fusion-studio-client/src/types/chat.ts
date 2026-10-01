@@ -72,6 +72,10 @@ export interface Message {
   type: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: number;
+  /** Stable identity of the content/segment projection used by history rows. */
+  contentRevision?: string;
+  /** Stable identity of saved/user metadata and reply-chrome inputs. */
+  metadataRevision?: string;
   /** Ordered segments (think + text inline) for assistant messages */
   segments?: StreamSegment[];
   /** Queue position when added to history; used for consistent render */
@@ -127,13 +131,6 @@ export interface AssistantTurn {
   thinkingContent: string;
 }
 
-export interface PendingPromptAcceptance {
-  text: string;
-  composerText: string;
-  workspaceId: string;
-  attachmentIds: string[];
-}
-
 // Panel State
 export interface PanelState {
   // Messages
@@ -141,10 +138,6 @@ export interface PanelState {
   currentTurn: AssistantTurn | null;
 
   pendingTurnEnd: boolean;
-  /** Server-owned prompt acceptance awaiting correlated sent/failure. */
-  pendingPromptAcceptance: PendingPromptAcceptance | null;
-  /** Exact draft retained after a correlated acceptance failure for retry. */
-  retryPromptDraft: PendingPromptAcceptance | null;
   /** Message to add when typing completes; set at turn_end, cleared by finalizeTurn */
   pendingMessage: Message | null;
 

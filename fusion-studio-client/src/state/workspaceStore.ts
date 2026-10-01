@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { Workspace, WorkspaceCreateManifest } from '../types';
 import { usePanelStore } from './panelStore';
+import { flushBoundWorkspaceViews } from '../lib/worksurface/worksurfaceController';
 import { createWorkspacePreviewActions } from './workspacePreview';
 
 /**
@@ -18,6 +19,8 @@ interface WorkspaceStoreState {
   activeWorkspaceId: string | null;
   workspaceEpoch: string | null;
   bindingRevision: number | null;
+  /** Monotonic local invalidation, including same-ID workspace rebinds. */
+  bindingSerial: number;
   /** Null keeps first-party saves on the legacy path until SPEC-03d activates v1. */
   fileSaveProtocolVersion: 1 | null;
   /** Null prevents provenance queries until the active server bind advertises v1. */
@@ -119,6 +122,7 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   activeWorkspaceId: null,
   workspaceEpoch: null,
   bindingRevision: null,
+  bindingSerial: 0,
   fileSaveProtocolVersion: null,
   resourceProvenanceProtocolVersion: null,
   fileViewerReadProtocolVersion: null,
@@ -160,13 +164,14 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
   // Retire the transport-issued epoch immediately. Preserve the visible
   // workspace id so reconnect does not erase navigation while the new bind
   // frame is in flight.
-  beginInit: () => set({
+  beginInit: () => set((state) => ({
     hasReceivedInit: false,
     workspaceEpoch: null,
     bindingRevision: null,
+    bindingSerial: state.bindingSerial + 1,
     resourceProvenanceProtocolVersion: null,
     fileViewerReadProtocolVersion: null,
-  }),
+  })),
   markInit: () => {
     console.log('[workspaceStore] markInit called (hasReceivedInit = true)');
     set({ hasReceivedInit: true });
@@ -198,9 +203,14 @@ export const useWorkspaceStore = create<WorkspaceStoreState>((set, get) => ({
     sendWorkspaceMessage({ type: 'workspace:add_requested', repoPath });
   },
   requestSwitch: (workspaceId) => {
+    // CHAT-03 / SPEC-03 §6.1: flush the outgoing workspace's bound views
+    // through the acknowledgement gate before the switch request is sent.
+    flushBoundWorkspaceViews(get().activeWorkspaceId, 'workspace-switch');
     sendWorkspaceMessage({ type: 'workspace:switch_requested', workspaceId });
   },
   requestRemove: (workspaceId) => {
+    // Detaching a workspace flushes the outgoing bound key the same way.
+    flushBoundWorkspaceViews(get().activeWorkspaceId, 'detach');
     sendWorkspaceMessage({ type: 'workspace:remove_requested', workspaceId });
   },
   requestRemoveFromRibbon: (workspaceId) => {

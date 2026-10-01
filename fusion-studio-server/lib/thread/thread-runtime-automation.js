@@ -1,48 +1,18 @@
-/**
- * @module thread-runtime-automation
- * @role Headless runtime status and prompt sending for server automation callers.
- */
-
 const { v4: generateId } = require('uuid');
 const path = require('path');
 const { resolveScope } = require('../chat-scope');
-const { checkSettingsBounce } = require('../enforcement');
-const { emit } = require('../event-bus');
-const { spawnThreadWire } = require('../harness/compat');
-const { createCanonicalChatEventApplier } = require('../wire/canonical-chat-event-applier');
-const { createCanonicalHarnessEventBridge } = require('../wire/canonical-harness-event-bridge');
-const {
-  attachClientToWire,
-  getWireForThread,
-  unregisterWire,
-} = require('../wire/process-manager');
-const { getDb } = require('../db');
-const { createAgentActivityRepository } = require('../agent-provenance/activity-repository');
-const { getSharedAgentActivityOwner } = require('../agent-provenance/activity-owner');
-const {
-  createAgentTurnAuthorityRef,
-  releaseAgentTurnAuthorityRef,
-} = require('../agent-provenance/turn-authority');
+const { createAgentTurnAuthorityRef, releaseAgentTurnAuthorityRef } = require('../agent-provenance/turn-authority');
+const { createCanonicalRouteContext, createCanonicalDrainControl } = require('./canonical-drain-context');
+const { terminateProviderProcessAndWait } = require('./provider-termination');
+const { awaitThreadManagerReady, getThreadManagerForTarget } = require('./thread-manager-registry');
+const { ensureAutomationWire, getDeferReason } = require('./automation-runtime-activation');
+const { createHeadlessTurnApplicationContext, disposeTurnApplicationContext, createAutomationBridge } = require('./automation-turn-context');
+const { drainAutomationTurn } = require('./automation-drain');
 const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
-const { isHarnessRuntimeError } = require('../harness/errors');
-const { terminateProviderProcessAndWait } = require('./session-manager');
-const { normalizeTurnTerminalError } = require('./turn-terminal-error');
-const { persistDiagnosticReport } = require('./harness-diagnostic-service');
-const { persistTerminalDiagnosticSafely } = require('./terminal-diagnostic-boundary');
-const {
-  createCanonicalDrainControl,
-  createCanonicalRouteContext,
-} = require('./canonical-drain-context');
-const {
-  awaitThreadManagerReady,
-  getThreadManagerForTarget,
-} = require('./thread-manager-registry');
-
 function normalizeTarget(target) {
   if (!target || !target.workspaceId || !target.projectRoot || !target.threadId) {
     throw new Error('Automation target requires workspaceId, projectRoot, and threadId');
   }
-  // RCC-0095: all threads are workspace-scoped ('project').
   return {
     workspaceId: target.workspaceId,
     projectRoot: path.resolve(target.projectRoot),
@@ -64,13 +34,6 @@ function getRuntimeKey(target) {
   };
 }
 
-function getDeferReason(state) {
-  if (state === RUNTIME_STATES.WARMING) return 'warming';
-  if (state === RUNTIME_STATES.IN_FLIGHT) return 'in_flight';
-  if (state === RUNTIME_STATES.STOPPING) return 'stopping';
-  return null;
-}
-
 function getAutomationRuntimeStatus(rawTarget) {
   const target = normalizeTarget(rawTarget);
   const runtimeKey = getRuntimeKey(target);
@@ -86,145 +49,6 @@ function getAutomationRuntimeStatus(rawTarget) {
   };
 }
 
-function createHeadlessTurnApplicationContext(target, wire, turnAuthority, turnId, input) {
-  return {
-    currentWorkspaceId: target.workspaceId,
-    projectRoot: turnAuthority?.canonicalRoot || target.projectRoot,
-    currentThreadId: target.threadId,
-    currentScope: target.scope,
-    currentViewId: target.viewId,
-    pendingUserInput: input,
-    pendingTurnId: turnId,
-    pendingAgentTurnAuthority: turnAuthority,
-    pendingAttachments: [],
-    currentTurn: null,
-    assistantParts: [],
-    hasToolCalls: false,
-    activeToolId: null,
-    activeToolName: null,
-    toolArgs: {},
-    toolNamesById: {},
-    bouncedToolCalls: new Set(),
-    contextUsage: null,
-    tokenUsage: null,
-    messageId: null,
-    planMode: false,
-    wire,
-  };
-}
-
-function disposeTurnApplicationContext(context) {
-  context.pendingTurnId = null;
-  context.pendingAgentTurnAuthority = null;
-  context.pendingUserInput = null;
-  context.pendingAttachments = [];
-  context.currentTurn = null;
-  context.assistantParts = [];
-  context.wire = null;
-  context.projectRoot = null;
-}
-
-function createAutomationBridge(turnAuthority = null) {
-  let activityOwner = null;
-  try {
-    const db = getDb();
-    const activityRepository = createAgentActivityRepository(db, {
-      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
-    });
-    activityOwner = getSharedAgentActivityOwner({
-      db,
-      activityRepository,
-      onDiagnostic: (code) => console.warn(`[AgentProvenance] ${code}`),
-    });
-  } catch {
-    console.warn('[AgentProvenance] agent_activity_owner_unavailable');
-  }
-  const applier = createCanonicalChatEventApplier({
-    emit,
-    checkSettingsBounce,
-    generateTurnId: () => generateId(),
-    activityOwner,
-  });
-
-  return createCanonicalHarnessEventBridge({
-    applyChatEvent: applier.applyChatEvent,
-    // SPEC-01 Slice C bind-once: the accepted server turnId binds exactly once
-    // to the automation drain that produced it.
-    bindDrainTurn: (drainContext, turnId) => threadRuntimeManager.bindTurnToDrain(
-      drainContext.control.runtimeKey,
-      drainContext.control.drainId,
-      turnId
-    ),
-    resolveTurnIdentity: () => turnAuthority,
-  });
-}
-
-async function warmAutomationRuntime(target, manager, runtimeKey) {
-  const scopeContext = {
-    workspaceId: target.workspaceId,
-    projectRoot: target.projectRoot,
-    workspaceEpoch: target.workspaceEpoch,
-    viewId: target.viewId,
-  };
-  const warmPromise = (async () => {
-    const wire = spawnThreadWire(target.threadId, target.projectRoot, scopeContext);
-    try {
-      if (wire._harnessPromise) await wire._harnessPromise;
-      if (!wire._sendMessage) {
-        throw new Error('Wire does not support ACP sendMessage. Legacy wire format has been retired.');
-      }
-      if (!wire._usesDirectCanonicalEvents) {
-        throw new Error('Wire does not support direct canonical event delivery. Legacy wire format has been retired.');
-      }
-      await manager.openSession(target.threadId, wire, null, {
-        workspaceEpoch: target.workspaceEpoch,
-      });
-      attachClientToWire(target.threadId, wire, target.projectRoot, null, scopeContext);
-      return wire;
-    } catch (error) {
-      const managedSession = typeof manager.getSession === 'function'
-        ? manager.getSession(target.threadId)
-        : null;
-      if (managedSession?.wireProcess === wire) {
-        await manager.closeSession(target.threadId);
-      } else {
-        await terminateProviderProcessAndWait(wire);
-      }
-      throw error;
-    }
-  })();
-
-  threadRuntimeManager.markWarming(runtimeKey, warmPromise);
-  try {
-    const wire = await warmPromise;
-    threadRuntimeManager.markReady(runtimeKey);
-    return wire;
-  } catch (err) {
-    threadRuntimeManager.markCold(runtimeKey);
-    throw err;
-  } finally {
-    threadRuntimeManager.clearWarmPromise(runtimeKey);
-  }
-}
-
-async function ensureAutomationWire(target, manager, runtimeKey) {
-  const state = threadRuntimeManager.getRuntimeState(runtimeKey);
-  if (state === RUNTIME_STATES.READY) {
-    const wire = getWireForThread(target.threadId, target);
-    if (wire) return { wire, deferReason: null };
-    threadRuntimeManager.markCold(runtimeKey);
-  } else {
-    const deferReason = getDeferReason(state);
-    if (deferReason) {
-      return { wire: null, deferReason };
-    }
-  }
-  return {
-    wire: await warmAutomationRuntime(target, manager, runtimeKey),
-    deferReason: null,
-  };
-}
-
 async function persistAutomationUserPrompt(manager, target, input) {
   await manager.addMessage(target.threadId, {
     role: 'user',
@@ -236,10 +60,6 @@ async function persistAutomationUserPrompt(manager, target, input) {
 
 async function sendAutomationPrompt(rawTarget, input) {
   const target = normalizeTarget(rawTarget);
-
-  // SPEC-01 Slice B: the drain-binding factories below require non-empty
-  // string input. Validate before any state transition or persistence so a
-  // garbage prompt can neither wedge the runtime nor dirty history.
   if (typeof input !== 'string' || !input) {
     return {
       accepted: false,
@@ -292,8 +112,24 @@ async function sendAutomationPrompt(rawTarget, input) {
 
   const runtimeKey = getRuntimeKey(target);
   let wireResult;
+  let ownership;
+  const sessions = Object.freeze({ openSession: manager.openSession.bind(manager),
+    getSession: manager.getSession?.bind(manager), closeSession: manager.closeSession?.bind(manager) });
   try {
-    wireResult = await ensureAutomationWire(target, manager, runtimeKey);
+    const { withSessionAdmission } = require('../thread-groups/session-transactions');
+    wireResult = await withSessionAdmission(target.workspaceId, target.threadId, async () => {
+      const runtime = threadRuntimeManager.adoptRuntimeIdentity(runtimeKey);
+      if (!runtime) return { wire: null, deferReason: 'in_flight' };
+      ownership = threadRuntimeManager.captureOwnership(runtimeKey);
+      const ready = await ensureAutomationWire(target, sessions, runtimeKey, ownership);
+      if (ready.deferReason) return ready;
+      const state = threadRuntimeManager.getRuntimeState(runtimeKey);
+      if (!threadRuntimeManager.isOwnershipCurrent(ownership) || state !== RUNTIME_STATES.READY) return { wire: null, deferReason: getDeferReason(state) || 'in_flight' };
+      threadRuntimeManager.markOwnedState(ownership, RUNTIME_STATES.IN_FLIGHT);
+      return ready;
+    });
+    if (!wireResult) return { accepted: false, deferred: false, error: `Thread not found: ${target.threadId}`,
+      threadId: target.threadId, scope: target.scope };
   } catch {
     console.error('[ThreadRuntime] Automation warm-up failed', {
       threadId: target.threadId,
@@ -318,21 +154,10 @@ async function sendAutomationPrompt(rawTarget, input) {
   }
   const { wire } = wireResult;
 
-  if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
-    return {
-      accepted: false,
-      deferred: true,
-      reason: getDeferReason(threadRuntimeManager.getRuntimeState(runtimeKey)) || 'in_flight',
-      threadId: target.threadId,
-      scope: target.scope,
-    };
-  }
-
-  threadRuntimeManager.markInFlight(runtimeKey);
   try {
     await persistAutomationUserPrompt(manager, target, input);
   } catch {
-    threadRuntimeManager.markReady(runtimeKey);
+    threadRuntimeManager.markOwnedState(ownership, RUNTIME_STATES.READY);
     console.error('[ThreadRuntime] Automation prompt persistence failed', {
       threadId: target.threadId,
       marker: 'AUTOMATION_PROMPT_PERSISTENCE_FAILED',
@@ -362,6 +187,11 @@ async function sendAutomationPrompt(rawTarget, input) {
   } catch {
     console.warn('[AgentProvenance] agent_turn_authority_unavailable');
   }
+  if (!threadRuntimeManager.isOwnershipCurrent(ownership)) {
+    releaseAgentTurnAuthorityRef(turnAuthority);
+    return { accepted: false, deferred: false, error: 'Runtime replaced during admission',
+      threadId: target.threadId, scope: target.scope };
+  }
   const bridge = createAutomationBridge(turnAuthority);
   const turnApplicationContext = createHeadlessTurnApplicationContext(
     target,
@@ -370,11 +200,6 @@ async function sendAutomationPrompt(rawTarget, input) {
     turnId,
     input,
   );
-
-  // SPEC-01 Slice B: bind the accepted prompt to an immutable route context
-  // and claim one UUID drain before bridge.drainHarnessEvents consumes the
-  // iterator. The control closes over this target's exact manager/wire. Any
-  // binding failure rolls the runtime back to READY instead of wedging it.
   let claimedRecord = null;
   try {
     const routeContext = createCanonicalRouteContext({
@@ -410,8 +235,10 @@ async function sendAutomationPrompt(rawTarget, input) {
     claimedRecord = threadRuntimeManager.claimActiveDrain(runtimeKey, drainControl, routeContext);
   } catch {
     if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.IN_FLIGHT) {
-      threadRuntimeManager.markReady(runtimeKey);
+      threadRuntimeManager.markOwnedState(ownership, RUNTIME_STATES.READY);
     }
+    releaseAgentTurnAuthorityRef(turnAuthority);
+    disposeTurnApplicationContext(turnApplicationContext);
     console.error('[ThreadRuntime] Automation prompt drain binding failed', {
       threadId: target.threadId,
       marker: 'AUTOMATION_PROMPT_DRAIN_BINDING_FAILED',
@@ -425,210 +252,8 @@ async function sendAutomationPrompt(rawTarget, input) {
     };
   }
 
-  const drainContext = { route: claimedRecord.routeContext, control: claimedRecord.control };
-  let resolveDrainCompletion;
-  const drainCompletion = new Promise(resolve => {
-    resolveDrainCompletion = resolve;
-  });
-  let retirementRequested = false;
-
-  try {
-    threadRuntimeManager.bindActiveDrainLifecycle(runtimeKey, claimedRecord.drainId, {
-      completion: drainCompletion,
-      retire: async () => {
-        retirementRequested = true;
-        threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
-        const boundTurnId = threadRuntimeManager.resolveBoundTurnId(
-          runtimeKey,
-          claimedRecord.drainId,
-        );
-        if (boundTurnId) {
-          try {
-            await bridge.applyHarnessEvent({
-              type: 'turn_end',
-              reason: 'interrupted',
-              partial: true,
-            }, null, drainContext);
-          } catch {
-            console.error('[ThreadRuntime] Automation interruption synthesis failed', {
-              threadId: target.threadId,
-              drainId: claimedRecord.drainId,
-              marker: 'AUTOMATION_INTERRUPTION_SYNTHESIS_FAILED',
-            });
-          }
-        }
-        try {
-          await claimedRecord.control.stopHarness();
-        } catch {
-          threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
-          return false;
-        }
-        unregisterWire(target.threadId, target, wire);
-        threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, claimedRecord.drainId);
-        if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.STOPPING) {
-          threadRuntimeManager.markCold(runtimeKey);
-        }
-        return true;
-      },
-    });
-  } catch {
-    threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, claimedRecord.drainId);
-    threadRuntimeManager.markReady(runtimeKey);
-    resolveDrainCompletion();
-    releaseAgentTurnAuthorityRef(turnAuthority);
-    disposeTurnApplicationContext(turnApplicationContext);
-    console.error('[ThreadRuntime] Automation prompt drain lifecycle failed', {
-      threadId: target.threadId,
-      marker: 'AUTOMATION_PROMPT_DRAIN_LIFECYCLE_FAILED',
-    });
-    return {
-      accepted: false,
-      deferred: false,
-      error: 'Prompt binding failed',
-      threadId: target.threadId,
-      scope: target.scope,
-    };
-  }
-
-  // SPEC-01 Slice C stale guard (same contract as the interactive loop): a
-  // DIFFERENT live drain on this runtime key proves this iterator is stale;
-  // absence is our own terminal clear-if-current and must still mark ready.
-  function isDrainSuperseded() {
-    const current = threadRuntimeManager.getActiveDrain(runtimeKey);
-    return Boolean(current && current.drainId !== claimedRecord.drainId);
-  }
-
-  try {
-    await bridge.drainHarnessEvents(wire._sendMessage(input, {}), null, {
-      drainContext,
-      turnAuthority,
-      turnApplicationContext,
-      finalizeOnError: false,
-    });
-    if (retirementRequested) {
-      return {
-        accepted: false,
-        deferred: false,
-        error: 'Drain retired during iteration',
-        threadId: target.threadId,
-        scope: target.scope,
-      };
-    }
-    if (isDrainSuperseded()) {
-      console.warn(`[ThreadRuntime] Drain ${claimedRecord.drainId} superseded; automation completion is a diagnostic no-op`);
-      return {
-        accepted: false,
-        deferred: false,
-        error: 'Drain superseded during iteration',
-        threadId: target.threadId,
-        scope: target.scope,
-      };
-    }
-    if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.IN_FLIGHT) {
-      threadRuntimeManager.markReady(runtimeKey);
-    }
-    return {
-      accepted: true,
-      deferred: false,
-      threadId: target.threadId,
-      scope: target.scope,
-    };
-  } catch (err) {
-    if (retirementRequested) {
-      return {
-        accepted: false,
-        deferred: false,
-        error: 'Drain retired during iteration',
-        threadId: target.threadId,
-        scope: target.scope,
-      };
-    }
-    if (isDrainSuperseded()) {
-      console.warn('[ThreadRuntime] Ignoring superseded automation iterator failure', {
-        threadId: target.threadId,
-        drainId: claimedRecord.drainId,
-        marker: 'SUPERSEDED_AUTOMATION_ITERATOR_FAILURE',
-      });
-      return {
-        accepted: false,
-        deferred: false,
-        error: 'Drain superseded during iteration',
-        threadId: target.threadId,
-        scope: target.scope,
-      };
-    }
-    // SPEC-03 Slice B headless parity (parent §4.13, criterion 9): a begun,
-    // non-terminalized bound turn synthesizes the identical canonical error
-    // turn_end through the SAME bridge with the claimed drainContext BEFORE
-    // computing the return value — headless runtimes must not strand
-    // finalization. Superseded drains never reach here and remain diagnostic
-    // no-ops. Same single sequenced terminal publication path; same fixed
-    // catalog envelope; no raw error material attached.
-    const boundTurnId = threadRuntimeManager.resolveBoundTurnId(runtimeKey, claimedRecord.drainId);
-    if (boundTurnId) {
-      // SPEC-03 Slice C headless parity (parent §4.13.1, R5/R5A): best-effort
-      // diagnostic persistence BEFORE synthesis, gated on a genuine marker
-      // carrying an already-redacted closed V1 candidate. The service
-      // normally resolves to null on failure. The shared terminal boundary
-      // also contains a rejecting replacement/dependency as fixed-safe null,
-      // so terminalization proceeds identically with or without a diagnosticId.
-      let diagnosticId = null;
-      if (isHarnessRuntimeError(err) && err.candidate) {
-        diagnosticId = await persistTerminalDiagnosticSafely(
-          persistDiagnosticReport,
-          {
-            workspaceId: target.workspaceId,
-            projectRoot: target.projectRoot,
-            workspaceEpoch: target.workspaceEpoch,
-            threadId: target.threadId,
-            turnId: boundTurnId,
-          },
-          err.candidate,
-        );
-      }
-      try {
-        // New plain envelope object carrying the optional opaque
-        // diagnosticId; downstream validateTurnTerminalError re-validates.
-        await bridge.applyHarnessEvent({
-          type: 'turn_end',
-          reason: 'error',
-          partial: true,
-          terminalError: {
-            ...normalizeTurnTerminalError(err),
-            ...(diagnosticId ? { diagnosticId } : {}),
-          },
-        }, null, drainContext);
-      } catch {
-        console.error('[ThreadRuntime] Automation error-turn synthesis failed', {
-          threadId: target.threadId,
-          drainId: claimedRecord.drainId,
-          marker: 'AUTOMATION_ERROR_TURN_SYNTHESIS_FAILED',
-        });
-      }
-    }
-    if (threadRuntimeManager.getRuntimeState(runtimeKey) === RUNTIME_STATES.IN_FLIGHT) {
-      threadRuntimeManager.markReady(runtimeKey);
-    }
-    const safeTerminalError = normalizeTurnTerminalError(err);
-    console.error('[ThreadRuntime] Automation harness send failed', {
-      threadId: target.threadId,
-      drainId: claimedRecord.drainId,
-      marker: safeTerminalError.code,
-    });
-    return {
-      accepted: false,
-      deferred: false,
-      error: safeTerminalError.message,
-      threadId: target.threadId,
-      scope: target.scope,
-    };
-  } finally {
-    releaseAgentTurnAuthorityRef(turnAuthority);
-    disposeTurnApplicationContext(turnApplicationContext);
-    resolveDrainCompletion();
-  }
+  return drainAutomationTurn({ target, wire, runtimeKey, claimedRecord, bridge, turnAuthority, turnApplicationContext, input });
 }
-
 module.exports = {
   getAutomationRuntimeStatus,
   sendAutomationPrompt,

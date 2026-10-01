@@ -11,6 +11,8 @@ jest.mock('uuid', () => ({
 jest.mock('../../lib/thread', () => ({
   ThreadWebSocketHandler: {
     cleanup: jest.fn(() => Promise.resolve()),
+    setPanel: jest.fn(),
+    sendThreadList: jest.fn(() => Promise.resolve()),
     captureActivationBinding: jest.fn(),
     getState: jest.fn(() => ({
       threadId: 'thread-1',
@@ -66,6 +68,10 @@ jest.mock('../../lib/views', () => ({
   addWorkspaceView: jest.fn(() => ({ version: 2, views: [] })),
   buildViewCapsulesProjection: jest.fn(() => ({ version: 1, entries: [] })),
   listViews: jest.fn(() => []),
+}));
+
+jest.mock('../../lib/cli-config', () => ({
+  resolveViewDelta: jest.fn(async () => ({})),
 }));
 
 const { createClientMessageRouter } = require('../../lib/ws/client-message-router');
@@ -151,6 +157,8 @@ function makeRouter({
   });
   if (role) Object.defineProperty(session, 'connectionRole', { value: role, enumerable: false });
 
+  const sessions = new Map([[ws, session], ...additionalSessions]);
+  const clearSessionRoot = jest.fn();
   const router = createClientMessageRouter({
     ws,
     session,
@@ -162,9 +170,9 @@ function makeRouter({
       initializeWire: jest.fn(),
       setupWireHandlers: jest.fn(),
     },
-    sessions: new Map([[ws, session], ...additionalSessions]),
+    sessions,
     setSessionRoot: jest.fn(),
-    clearSessionRoot: jest.fn(),
+    clearSessionRoot,
     getProjectRoot: jest.fn(() => projectRoot),
     getFusionHandlers: () => ({}),
     getClipboardHandlers: () => ({}),
@@ -179,7 +187,7 @@ function makeRouter({
     handleCanonicalHarnessEvent,
   });
 
-  return { router, ws, session, handleCanonicalHarnessEvent };
+  return { router, ws, session, sessions, clearSessionRoot, handleCanonicalHarnessEvent };
 }
 
 describe('createClientMessageRouter prompt harness routing', () => {
@@ -202,7 +210,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     getWireForThread.mockReturnValue(wire);
 
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt',
+      type: 'prompt', requestId: 'router-test-request',
       user_input: 'hello',
       threadId: 'thread-1',
     }));
@@ -211,7 +219,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     expect(threadRuntimeController.acceptPromptThroughRuntime).toHaveBeenCalledWith(expect.objectContaining({
       ws,
       session,
-      clientMsg: expect.objectContaining({ type: 'prompt', user_input: 'hello' }),
+      clientMsg: expect.objectContaining({ type: 'prompt', requestId: 'router-test-request', user_input: 'hello' }),
       handleCanonicalHarnessEvent,
     }));
   });
@@ -230,7 +238,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     getWireForThread.mockReturnValue(wire);
 
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt',
+      type: 'prompt', requestId: 'router-test-request',
       user_input: 'hello',
       threadId: 'thread-1',
     }));
@@ -247,7 +255,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     getWireForThread.mockReturnValue(wire);
 
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt',
+      type: 'prompt', requestId: 'router-test-request',
       user_input: 'hello',
       threadId: 'thread-1',
     }));
@@ -269,7 +277,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     getWireForThread.mockReturnValue(wire);
 
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt',
+      type: 'prompt', requestId: 'router-test-request',
       user_input: 'hello',
       threadId: 'thread-1',
     }));
@@ -295,7 +303,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
   test('untrusted prompt cannot reach runtime lookup, persistence, or provider spawn', async () => {
     const { router, ws } = makeRouter({ wire: null, role: 'untrusted' });
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt', threadId: 'thread-1', user_input: 'forged', role: 'trusted-shell',
+      type: 'prompt', requestId: 'router-test-request', threadId: 'thread-1', user_input: 'forged', role: 'trusted-shell',
     }));
     expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
     expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({
@@ -360,11 +368,13 @@ describe('createClientMessageRouter prompt harness routing', () => {
   test('trusted prompt rejects Fork-era or unknown harness configuration before runtime effects', async () => {
     const { router, ws } = makeRouter({ wire: null });
     await router.handleClientMessage(JSON.stringify({
-      type: 'prompt', threadId: 'thread-1', user_input: 'forged',
+      type: 'prompt', requestId: 'router-test-request', threadId: 'thread-1', user_input: 'forged',
       harnessConfig: { opencodeSessionId: 'provider-session' },
     }));
     expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
-    expect(JSON.parse(ws.send.mock.calls[0][0]).code).toBe('THREAD_MUTATION_DENIED');
+    expect(JSON.parse(ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error', code: 'invalid_prompt', requestId: 'router-test-request', threadId: 'thread-1',
+    });
   });
 
   test('workspace binding waits for in-progress prompt persistence and provider admission', async () => {
@@ -382,7 +392,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
     });
 
     const prompt = router.handleClientMessage(JSON.stringify({
-      type: 'prompt', threadId: 'thread-1', user_input: 'hello',
+      type: 'prompt', requestId: 'router-test-request', threadId: 'thread-1', user_input: 'hello',
     }));
     await persistenceStarted;
     const binding = beginWorkspaceTransition(ws, () => {
@@ -413,7 +423,7 @@ describe('createClientMessageRouter prompt harness routing', () => {
       .mockReturnValueOnce(false);
 
     await Promise.all([binding, router.handleClientMessage(JSON.stringify({
-      type: 'prompt', threadId: 'thread-1', user_input: 'hello',
+      type: 'prompt', requestId: 'router-test-request', threadId: 'thread-1', user_input: 'hello',
     }))]);
 
     expect(threadRuntimeController.acceptPromptThroughRuntime).not.toHaveBeenCalled();
@@ -1180,7 +1190,7 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
     let releaseCleanup;
     const cleanupGate = new Promise((resolve) => { releaseCleanup = resolve; });
     ThreadWebSocketHandler.cleanup.mockReturnValueOnce(cleanupGate);
-    const { router } = makeRouter({ wire: { pid: canary } });
+    const { router, ws, sessions, clearSessionRoot } = makeRouter({ wire: { pid: canary } });
     let completed = false;
 
     const closing = router.handleClientClose().then(() => { completed = true; });
@@ -1188,6 +1198,11 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
     expect(completed).toBe(false);
     releaseCleanup();
     await closing;
+    expect(ThreadWebSocketHandler.cleanup).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.cleanup).toHaveBeenCalledWith(ws);
+    expect(sessions.has(ws)).toBe(false);
+    expect(clearSessionRoot).toHaveBeenCalledTimes(1);
+    expect(clearSessionRoot).toHaveBeenCalledWith(ws);
 
     const diagnostics = [...logSpy.mock.calls, ...errorSpy.mock.calls]
       .flat()
@@ -1373,5 +1388,61 @@ describe('createClientMessageRouter text-frame and file_save privacy contract', 
       workspaceId: 'workspace-A', workspaceEpoch: session.workspaceEpoch,
       panel: 'file-viewer', path: 'docs/a.md', content: 'body', size: 4, lastModified: 5,
     });
+  });
+
+  test('diagnostic prefix consumes an unknown request before metadata and later owners', async () => {
+    const fileSave = jest.fn();
+    const { router, ws } = makeRouter({ fileSaveRoute: { handleFileSave: fileSave } });
+    await router.handleClientMessage(JSON.stringify({
+      type: 'chat-turn:diagnostic:unknown', requestId: 'diag-1',
+      payload: 'PRIVATE-DIAGNOSTIC-CANARY',
+    }));
+    expect(fileSave).not.toHaveBeenCalled();
+    expect(ws.send).not.toHaveBeenCalled();
+    const logged = [...logSpy.mock.calls, ...errorSpy.mock.calls].flat().map(String).join(' ');
+    expect(logged).not.toContain('PRIVATE-DIAGNOSTIC-CANARY');
+    expect(logged).not.toContain('chat-turn:diagnostic:unknown');
+  });
+
+  test.each([
+    ['folder_create', 'handleFolderCreateRequest'],
+    ['document_create', 'handleDocumentCreateRequest'],
+  ])('%s reaches exactly one existing file owner', async (type, method) => {
+    const fileExplorer = {
+      handleFolderCreateRequest: jest.fn(),
+      handleDocumentCreateRequest: jest.fn(),
+    };
+    const { router, ws } = makeRouter({ fileExplorer });
+    const message = { type, requestId: 'create-1', name: 'draft' };
+    await router.handleClientMessage(JSON.stringify(message));
+    expect(fileExplorer[method]).toHaveBeenCalledTimes(1);
+    expect(fileExplorer[method]).toHaveBeenCalledWith(ws, message);
+    expect(fileExplorer[method === 'handleFolderCreateRequest'
+      ? 'handleDocumentCreateRequest' : 'handleFolderCreateRequest']).not.toHaveBeenCalled();
+  });
+
+  test('initialize retains the owned wire and exactly one protocol write', async () => {
+    const wire = { pid: 7 };
+    const { router } = makeRouter({ wire });
+    await router.handleClientMessage(JSON.stringify({ type: 'initialize' }));
+    expect(sendToWire).toHaveBeenCalledTimes(1);
+    expect(sendToWire).toHaveBeenCalledWith(wire, 'initialize', {
+      protocol_version: '1.4',
+      client: { name: 'fusion-studio', version: '0.1.0' },
+      capabilities: { supports_question: true },
+    }, 'test-id');
+  });
+
+  test('set_panel preserves thread-list then panel response ordering through view readiness', async () => {
+    installReadyViewOwner('/tmp/project');
+    ThreadWebSocketHandler.sendThreadList.mockImplementationOnce(async (ws) => {
+      ws.send(JSON.stringify({ type: 'thread:list', threads: [] }));
+    });
+    const { router, ws } = makeRouter();
+    await router.handleClientMessage(JSON.stringify({ type: 'set_panel', panel: 'files' }));
+    expect(ThreadWebSocketHandler.setPanel).toHaveBeenCalledTimes(1);
+    expect(ws.send.mock.calls.map(([frame]) => JSON.parse(frame).type)).toEqual([
+      'thread:list', 'panel_changed',
+    ]);
   });
 });

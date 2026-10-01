@@ -1,0 +1,126 @@
+---
+name: Chat Changelog
+description: Dated record of chat system architecture changes. Use this page to understand when runtime, harness, rendering, and UI behavior changed.
+metadata:
+  last-modified: "2026-09-19T10:34:31Z"
+  incoming-edges:
+    - Chat System
+    - Chat Overview
+  outgoing-edges:
+    - Chat Decisions
+    - Chat Lessons
+  source-files: []
+  connected-skills: []
+  related-trigger-files: []
+---
+
+Dated architecture changes that matter for future work.
+
+## 2026-09-19 — View-Bound Chat Is The Default Production Host; Legacy Threads Wiped
+
+- Owner direction: the production shell chat is the view-bound host. `App.tsx` mounts `useViewChatHost` once per panel through `PanelContent`; `Sidebar.tsx` and `ChatArea.tsx` render that panel's own view population. One family per view across dock open/close; a different view holds a different family. `LegacyChatHost` remains only for explicit/component mounts; `useSidebar.ts` is deleted.
+- The Legacy null-view population is no longer a production surface. `view_id NULL` groups are not carried forward: the dev checkout database, the Alpha profile database, and the local view01 acceptance profile database were backed up and wiped of chat data (groups, members, placements, threads, exchanges), and Chatlogs thread mirrors were cleared.
+- Verified in the development checkout by `e2e/view-bound-shell-smoke.mjs` (empty per-view families, shell create binds to the active view, Move from the shell Main Chat lands the Side Chat tab, another view shows a different family) plus the existing `side-chat-electron-smoke.mjs`. Committed/pushed state and the installed Alpha build may lag this entry; Alpha was not rebuilt in this pass.
+
+## 2026-09-19 — Side Chat Direction Clarified (Documentation Only)
+
+- Recorded the owner's distinction between tab-based Side Chats without a left-column thread list and a future non-chat windowed-content container.
+- Owner correction distinguishes two current controls: left-hand Show threads toggles the outer dock; right-hand event_list opens More options. The intended Side Chat tab retains only the right-hand list button from these two controls, with no left-hand thread-panel toggle or slider. Its future shared behavior remains undefined; product code is unchanged.
+- Confirmed by source/Git inspection that the old Secondary Chat shell and minimized restore button were removed in `554bedf`, while `useFloatingWindow` survives for email compose. The removed shell is recoverable from Git; a generic content-window host was not delivered by that removal.
+- This entry records current findings and owner intent. No product behavior changed and no runtime verification was performed in this pass.
+
+## 2026-09-15 — Worksurfaces, Side Chat Tabs And Secondary Chat Retirement
+
+Git commit `554bedf` records group-keyed view worksurfaces, Move to Side Chat, durable member-tab placement and retirement of the singleton Secondary Chat shell. Worksurface continuity was accepted on September 14; Side Chat and the replacement/retirement were accepted on September 15. Move preserves the existing session and creates an empty Main peer. Shared drag/resize mechanics remain in use for email compose; this milestone did not deliver a generic non-chat window container. The later September 19 Side Chat control direction above still requires product work.
+
+## 2026-09-14 — Composable Chat Surfaces Committed
+
+Git commit `5073b10` records the portable `ChatSurface` and `ThreadRail` boundaries, connected Legacy/view hosts and component registration. The acceptance record dates this milestone to September 13, before the September 14 commit. Composition did not replace the normal workspace Legacy host with view-bound chat as the default.
+
+## 2026-09-13 — Thread Group Foundation
+
+Git commit `5f46d1a` and the September 13 acceptance record establish the visible Thread Group foundation: durable group identity, membership, primary selection, view binding and group-level actions/ordering, while each member keeps its session `threadId` for transcript and runtime routing.
+
+These three milestone entries were documented on September 19 from Git and historical acceptance evidence. Their dates describe commits or acceptance as stated, not installation dates, new runtime observations, or completion of deferred features. See [Structure](../../007-Structure/PAGE.md) for current owners.
+
+## 2026-06-27
+
+- Filename autocomplete ghost text no longer accepts on `Space`; only `Tab` and
+  non-shift `Enter` accept the suggestion.
+- The autocomplete ghost overlay was documented as a textarea-geometry mirror:
+  typed prefix text is invisible and the suffix is visible so wrapping and cursor
+  position stay aligned.
+- OpenCode shell status normalization moved to the OpenCode harness translator.
+  Command-duplicate titles such as `git status` are suppressed before canonical
+  events reach the universal backend interpreter.
+- Canonical `statusMessage` was clarified as optional displayable diagnostic
+  text, not raw provider title/status text.
+- Tool failures now keep normal collapsed chrome and route error body rendering
+  through the shared tool-renderer error formatter.
+- Live and history tool rendering paths now consume canonical status fields
+  consistently.
+
+## 2026-06-25
+
+- Chat System became a top-level wiki domain at
+  `ai/<machine>/Wiki/007-Chat_System/`.
+- The old Workspaces And Views chat page became a compatibility pointer.
+- Domain articles were added for identity/persistence, harness/event flow,
+  rendering/lifecycle, UI, user metadata, text/media payloads, testing, durable
+  decisions, lessons, vision, changelog, and structure.
+
+## 2026-06-20
+
+- `Send to chat` changed from raw path insertion to removable link attachment
+  pills above the composer.
+- Filename autocomplete was added as plain text completion from RAM-only
+  non-`.md` file candidates.
+- Prompt payloads gained optional attachment metadata.
+- Turn metadata gained collector-backed `attachments`, `mentions`, and
+  `fileMutations` fields in SQLite exchange metadata.
+- `exchange_metadata` broadcasts refresh client autocomplete candidates after
+  turn-end persistence.
+
+## 2026-06-07
+
+- `cli.json` became the single harness policy.
+- OpenCode-only config hides the harness picker.
+- New Thread directly creates OpenCode-backed threads.
+- Stale Kimi-default wording was removed from active docs/comments.
+
+## 2026-06-06
+
+- OpenCode clean-exit terminal repair added synthetic `turn_end` when OpenCode
+  exits code `0` after useful output but without `step_finish`.
+- OpenCode thinking/variant matrix showed visible thinking is model/profile
+  specific.
+- Only `openai/gpt-5.5 --thinking` and `openai/gpt-5.5 --thinking --variant high`
+  were known-good visible-thinking profiles in that matrix.
+
+## 2026-06-05
+
+- OpenCode became selectable from the New Chat picker before the selector was
+  later hidden by OpenCode-only policy.
+- OpenCode durable session binding persisted `opencodeSessionId` in
+  `threads.harness_config`.
+
+## 2026-06-04
+
+- Server-owned stop/interrupt persisted interrupted turns as partial exchanges.
+- Automation hooks gained headless prompt support.
+- Warm intent triggers were added for focus, paste, insertion, and send fallback.
+
+## 2026-06-03
+
+- Passive browse split from assistant activation.
+- Runtime manager foundation added cold/warming/ready/in-flight/stopping states.
+- Live turn snapshot overlay added for active background streams.
+- Kimi wire runtime path removed in favor of canonical harness events.
+- Frontend canonical tool names became the active contract.
+
+## Earlier Cleanup
+
+- Visible typing cursor removed.
+- Frontend pressure gauge and instant reveal branch removed.
+- Inactive segment renderer layer removed.
+- Static chunk strategy layer removed.

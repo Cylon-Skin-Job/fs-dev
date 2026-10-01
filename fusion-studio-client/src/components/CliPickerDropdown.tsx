@@ -10,6 +10,15 @@ interface CliPickerDropdownProps {
   panel: string;
   statuses: Record<string, HarnessStatus>;
   onSelect: (harnessId: string, modelId?: string) => void;
+  /**
+   * Optional controlled open state. When supplied, the mount surface owns the
+   * transient menu state (keyed by its own surface id) instead of the shared
+   * panel-keyed store map.
+   */
+  open?: boolean;
+  onRequestClose?: () => void;
+  /** Optional DOM-id suffix scoping the menu to one mounted surface. */
+  instanceKey?: string;
 }
 
 function isSelectable(entry: ResolvedCliEntry, statuses: Record<string, HarnessStatus>): boolean {
@@ -39,22 +48,36 @@ function badgeLabel(entry: ResolvedCliEntry, s: HarnessStatus | undefined): stri
   return null;
 }
 
-export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdownProps) {
-  const open = usePanelStore((s) => !!s.cliPickerOpen[panel]);
+export function CliPickerDropdown({
+  panel,
+  statuses,
+  onSelect,
+  open: openProp,
+  onRequestClose,
+  instanceKey,
+}: CliPickerDropdownProps) {
+  const storeOpen = usePanelStore((s) => !!s.cliPickerOpen[panel]);
   const closeCliPicker = usePanelStore((s) => s.closeCliPicker);
   const resolveCliAccent = useCliAccentResolver();
   const resolvedList = useResolvedCliList();
+  const open = openProp ?? storeOpen;
+  const domId = instanceKey ?? panel;
 
   const [modelPickerFor, setModelPickerFor] = useState<string | null>(null);
 
+  const closePicker = () => {
+    if (onRequestClose) onRequestClose();
+    else closeCliPicker(panel);
+  };
+
   const handleSelect = (id: string) => {
     onSelect(id);
-    closeCliPicker(panel);
+    closePicker();
   };
 
   const handleModelSelect = (id: string, modelId: string) => {
     onSelect(id, modelId);
-    closeCliPicker(panel);
+    closePicker();
   };
 
   // CLI_CONFIG_SPEC §8c: filter hidden entries; list is already sorted by order.
@@ -70,7 +93,7 @@ export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdo
         className="rv-dropdown rv-cli-picker-dropdown"
         role="menu"
         data-open={open}
-        id={`cli-picker-${panel}`}
+        id={`cli-picker-${domId}`}
         aria-label={`Choose a model for ${modelTarget.name}`}
       >
         <button
@@ -111,7 +134,7 @@ export function CliPickerDropdown({ panel, statuses, onSelect }: CliPickerDropdo
       className="rv-dropdown rv-cli-picker-dropdown"
       role="menu"
       data-open={open}
-      id={`cli-picker-${panel}`}
+      id={`cli-picker-${domId}`}
       aria-label="Start a new chat with"
     >
       {!anySelectable ? (

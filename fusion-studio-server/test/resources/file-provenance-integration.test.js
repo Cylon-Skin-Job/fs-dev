@@ -110,6 +110,11 @@ describe('atomic mediated save to governed ledger to public query', () => {
         type: 'file_save', version: 1, requestId: 'request-1',
         workspaceId: 'workspace-1', workspaceEpoch: WORKSPACE_EPOCH,
         panel: 'file-viewer', path: 'alias/note.md', content: 'after', reason: 'manual',
+        reportedUiContext: {
+          workspaceId: 'workspace-1', viewId: 'file-viewer', viewInstanceId: 'mount-1',
+          tabId: 'tab-1', componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+          presenterId: 'markdown', targetKey: 'docs/note.md',
+        },
       },
     });
 
@@ -160,14 +165,32 @@ describe('atomic mediated save to governed ledger to public query', () => {
         panel: 'file-viewer', folderPrefix: 'alias', limit: 50,
       },
     });
-    expect(queryReplies).toHaveLength(2);
+    await queryRoute.handleQuery({
+      ws,
+      session,
+      message: {
+        type: 'resource:provenance:query', version: 1, requestId: 'query-3',
+        workspaceId: 'workspace-1', workspaceEpoch: WORKSPACE_EPOCH,
+        tabId: 'tab-1', targetKey: 'docs/note.md', limit: 50,
+      },
+    });
+    expect(queryReplies).toHaveLength(3);
     expect(queryReplies[0]).toMatchObject({
       type: 'resource:provenance:result', workspaceId: 'workspace-1',
       workspaceEpoch: WORKSPACE_EPOCH,
       items: [{ canonicalPath: 'docs/note.md', snapshot: { kind: 'bytes', byteLength: 6 } }],
     });
+    expect(queryReplies[0].items[0].origin.reportedUiContext).toEqual({
+      workspaceId: 'workspace-1', viewId: 'file-viewer', viewInstanceId: 'mount-1',
+      tabId: 'tab-1', componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+      presenterId: 'markdown', targetKey: 'docs/note.md',
+    });
     expect(queryReplies[1]).toMatchObject({
       type: 'resource:provenance:result', requestId: 'query-2',
+      items: [{ canonicalPath: 'docs/note.md' }],
+    });
+    expect(queryReplies[2]).toMatchObject({
+      type: 'resource:provenance:result', requestId: 'query-3',
       items: [{ canonicalPath: 'docs/note.md' }],
     });
     expect(JSON.stringify(queryReplies)).not.toContain('before');

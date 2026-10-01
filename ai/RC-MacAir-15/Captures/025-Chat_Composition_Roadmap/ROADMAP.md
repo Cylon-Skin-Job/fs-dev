@@ -23,10 +23,14 @@ Side Chat tab while creating a fresh empty Main Chat.
 | Order | SPEC | Domain | Prerequisites |
 |---:|---|---|---|
 | 00 | `SPEC-00-TRUSTED-FUSION-SHELL-AUTHORITY.md` | Electron shell origin, runtime transport, connection authority, and privileged-route gate | integrated owner-accepted Agent Tool Provenance product baseline |
-| 01 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | Thread Group persistence, lifecycle, migration, and public protocol | accepted SPEC-00; approved BRIDGE-01 and BRIDGE-02; owner-released accepted Tab Platform milestone |
+| 01 | `SPEC-01-THREAD-GROUP-FOUNDATION.md` | Thread Group persistence, lifecycle, migration, and public protocol | accepted SPEC-00; owner-accepted BRIDGE-01 (`16ccecf`) and owner-approved BRIDGE-02 through `BRIDGE-02-CONFORMANCE-OVERLAY.md`; owner-released accepted Tab Platform milestone |
 | 02 | `SPEC-02-COMPOSABLE-CHAT-SURFACES.md` | Renderer chat/thread composition and identity isolation | accepted SPEC-01; independently accepted Generic Component Tab Host |
 | 03 | `SPEC-03-THREAD-WORKSURFACE-CONTINUITY.md` | View-owned group-keyed content state and cross-store recovery | accepted SPEC-02 |
 | 04 | `SPEC-04-MOVE-CHAT-TO-SIDE-CHAT.md` | One multi-member group transition and Side Chat tab placement | accepted SPEC-03 |
+
+Every SPEC in this packet consumes `ChatActionContext` under
+`BRIDGE-02-CONFORMANCE-OVERLAY.md`; the overlay becomes binding on owner approval
+of the BRIDGE-02 and overlaid `025` candidates and gates CHAT-01 dispatch.
 
 ## 3. Dependency Graph
 
@@ -38,7 +42,7 @@ Agent Tool Provenance implementation
 SPEC-00 Trusted Fusion Shell Authority
               |
               v
-BRIDGE-01 + BRIDGE-02 approved
+BRIDGE-01 accepted + BRIDGE-02 approved (through BRIDGE-02-CONFORMANCE-OVERLAY.md)
 accepted Tab Platform milestone released
               |
               v
@@ -113,6 +117,12 @@ context ad hoc; it still creates no tab placement or renderer chat surface.
 16. Shell authority is established once in SPEC-00 and consumed by later Chat
     routes. A workspace, view, tab, component, prompt, model, harness, raw
     localhost client, or request field can never assert that role.
+17. Chat action envelopes, component registration, group projections, and
+    worksurface fan-out consume `ChatActionContext`
+    (`BRIDGE-02-CONFORMANCE-OVERLAY.md`): `threadId` remains the live-routing and
+    Provenance identity, `threadGroupId` owns visible-thread/worksurface
+    identity, `surfaceId` is transient and never persisted, and durable
+    descriptors, records, and fan-out carry durable identities only.
 
 ## 5. Per-SPEC Acceptance
 
@@ -147,7 +157,9 @@ The roadmap is complete only when:
 - closing a Side Chat removes placement only and restart does not resurrect it;
 - old Fork and singleton Secondary Chat paths are absent; and
 - final combined server tests, client build, targeted Playwright, restart
-  readback, and Electron acceptance pass with warnings classified.
+  readback, and Electron acceptance pass with warnings classified; and
+- `BRIDGE-02-CONFORMANCE-OVERLAY.md` conformance is applied and owner-approved
+  before CHAT-01 dispatch.
 
 ## 7. Downstream Work
 

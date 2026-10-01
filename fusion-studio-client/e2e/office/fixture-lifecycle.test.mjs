@@ -12,22 +12,65 @@ import { zipSync } from 'fflate'
 import {
   OFFICE_E2E_DIAGNOSTIC_TAIL_BYTES,
   OFFICE_E2E_MACHINE,
+  OFFICE_E2E_WHISPER_CACHE_ENV,
+  OFFICE_E2E_WHISPER_SETUP_HINT,
+  activeOfficeHarnessProcessIds,
+  activeOfficeHarnessRoots,
+  assertOfficeE2eDiskHeadroom,
   assertOfficeFixturePathSafe,
   captureOfficeFixtureMode,
+  cleanupActiveOfficeHarness,
   cleanupOfficePlaywrightRunRoot,
+  cloneFilePreservingMode,
   createOfficeFixture,
   createOfficePlaywrightRunPaths,
   createOfficeProcessLifecycle,
   createOfficeRuntimeLayout,
   destroyOfficeFixture,
   finalizeOfficeProcessLifecycle,
+  listOfficeRuntimeCloneCandidates,
+  measureOfficeRuntimeStagedLogicalBytes,
+  officeRuntimeLaneAssetRequirements,
+  prepareOfficeRuntimeLaneAssets,
   resetOfficeFixtureScenario,
   resetOfficePlaywrightScenario,
   shouldCleanupOfficePlaywrightRunRoot,
   startOfficeOwnedProcess,
   stopOfficeOwnedProcesses,
+  sweepOfficeHarnessEmptyShells,
+  sweepStaleOfficeFixtureRoots,
   withOfficeProcessLifecycle,
 } from './fixture-lifecycle.mjs'
+import {
+  OFFICE_E2E_COW_DELTA_FRACTION,
+  OFFICE_E2E_COW_DELTA_MIN_BYTES,
+  OFFICE_E2E_COW_OK_MARKER,
+  OFFICE_E2E_COW_REGRESSION_MARKER,
+  OFFICE_E2E_COW_SKIP_MARKER,
+  OFFICE_E2E_DISK_HEADROOM_DEFAULT_BYTES,
+  OFFICE_E2E_DISK_HEADROOM_ENV,
+  OFFICE_E2E_GLOBAL_TIMEOUT_DEFAULT_MS,
+  OFFICE_E2E_GLOBAL_TIMEOUT_ENV,
+  OFFICE_E2E_JANITOR_SWEPT_MARKER,
+  OFFICE_E2E_LIFETIME_EVIDENCE_ENV,
+  OFFICE_E2E_LOW_DISK_MARKER,
+  OFFICE_E2E_NODE_TEST_TIMEOUT_MS,
+  OFFICE_E2E_ORPHAN_CLEANUP_DEADLINE_MS,
+  OFFICE_E2E_PARENT_LOST_MARKER,
+  OFFICE_E2E_PARENT_WATCH_INTERVAL_MS,
+  OFFICE_E2E_PLAYWRIGHT_TEST_TIMEOUT_MS,
+  OFFICE_E2E_RESOURCE_MISSING_MARKER,
+  OFFICE_E2E_STAGED_BYTES_MARKER,
+  OFFICE_E2E_TEST_DEADLINE_DEFAULT_MS,
+  OFFICE_E2E_TEST_DEADLINE_ENV,
+  OFFICE_E2E_TEST_DEADLINE_EXCEEDED_MARKER,
+  armOfficeHarnessLifetime,
+  officeE2eCowDeltaCeilingBytes,
+  officeE2eDiskHeadroomBytes,
+  officeE2eGlobalTimeoutMs,
+  officeE2eTestDeadlineMs,
+  officeNodeTestHarnessInvocation,
+} from './harness-bounds.mjs'
 import {
   ALIGNMENT_CANONICAL,
   BORDERS_CANONICAL,
@@ -61,6 +104,36 @@ const testDirectory = path.dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = path.resolve(testDirectory, '..', '..', '..')
 const launcherPath = path.join(testDirectory, 'run-isolated-electron.mjs')
 const require = createRequire(import.meta.url)
+
+// R1/R2: the `node --test` harness runner process owns the fixture, so it arms
+// its own parent-loss watch and wall-clock run deadline regardless of how it is
+// invoked. Parent loss cleans owned roots/children and exits 143; the run
+// deadline prints OFFICE_E2E_TEST_DEADLINE_EXCEEDED, cleans, and exits 124.
+const lifetimeProbeMode = process.env.FUSION_OFFICE_E2E_LIFETIME_PROBE ?? ''
+const lifetimeProbeTitlePrefix = '[slice 12.1] env-gated lifetime probe'
+const harnessLifetime = armOfficeHarnessLifetime({
+  deadlineMs: officeE2eTestDeadlineMs(),
+  role: 'fixture-lifecycle-runner',
+})
+
+if (lifetimeProbeMode === 'parent-loss' || lifetimeProbeMode === 'deadline') {
+  test(`${lifetimeProbeTitlePrefix} stall (${lifetimeProbeMode})`, async () => {
+    const lifecycle = await createOfficeProcessLifecycle({ workspaces: 1 })
+    const child = startOfficeOwnedProcess(
+      lifecycle,
+      process.execPath,
+      ['-e', 'setInterval(() => {}, 1000)'],
+      { stdio: 'ignore' },
+    )
+    await child.spawned
+    console.log(`OFFICE_E2E_LIFETIME_PROBE_MODE=${lifetimeProbeMode}`)
+    console.log(`OFFICE_E2E_LIFETIME_PROBE_ROOT=${lifecycle.fixture.root}`)
+    console.log(`OFFICE_E2E_LIFETIME_PROBE_CHILD_PID=${child.child.pid}`)
+    console.log(`OFFICE_E2E_LIFETIME_PROBE_RUNNER_PID=${process.pid}`)
+    console.log('OFFICE_E2E_LIFETIME_PROBE_READY=1')
+    await new Promise(() => setInterval(() => {}, 1000))
+  })
+}
 
 const DOCUMENT_SHA256 = Object.freeze({
   'basic/Basic Tables.md': '6e993708dcca7e1b5fe52c03a29a189ffccb31168cad753c7e09cdbf368a7a32',
@@ -134,6 +207,11 @@ function assertOutside(candidate, forbiddenRoot) {
 
 function officeTemporaryRoots() {
   return new Set(fs.readdirSync(os.tmpdir()).filter((name) => name.startsWith('fusion-office-e2e-')))
+}
+
+function statfsFreeBytes(root = os.tmpdir()) {
+  const stats = fs.statfsSync(fs.realpathSync(root))
+  return stats.bavail * stats.bsize
 }
 
 async function unusedLoopbackPort() {
@@ -272,6 +350,76 @@ function isProcessAlive(pid) {
   } catch (error) {
     if (error.code === 'ESRCH') return false
     throw error
+  }
+}
+
+async function waitForCondition(predicate, timeoutMs, message) {
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    if (predicate()) return
+    await new Promise((resolve) => setTimeout(resolve, 25))
+  }
+  throw new Error(typeof message === 'function' ? message() : message)
+}
+
+function waitForChildExit(child, timeoutMs) {
+  if (child.exitCode !== null || child.signalCode !== null) {
+    return Promise.resolve({ code: child.exitCode, signal: child.signalCode })
+  }
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Office lifetime probe child did not exit')), timeoutMs)
+    child.once('error', (error) => { clearTimeout(timer); reject(error) })
+    child.once('exit', (code, signal) => { clearTimeout(timer); resolve({ code, signal }) })
+  })
+}
+
+async function waitForJsonFile(candidate, timeoutMs) {
+  await waitForCondition(
+    () => fs.existsSync(candidate),
+    timeoutMs,
+    () => `Timed out waiting for lifetime evidence: ${candidate}`,
+  )
+  return JSON.parse(fs.readFileSync(candidate, 'utf8'))
+}
+
+const lifetimeProbeNamePattern = 'env-gated lifetime probe'
+
+function spawnLifetimeProbe({ deadlineMs = null, mode, viaNodeTest }) {
+  const probeDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-lifetime-probe-'))
+  const evidencePath = path.join(probeDirectory, 'lifetime-evidence.json')
+  const args = [
+    ...(viaNodeTest ? ['--test'] : []),
+    `--test-name-pattern=${lifetimeProbeNamePattern}`,
+    'e2e/office/fixture-lifecycle.test.mjs',
+  ]
+  const env = {
+    ...process.env,
+    [OFFICE_E2E_LIFETIME_EVIDENCE_ENV]: evidencePath,
+    FUSION_OFFICE_E2E_LIFETIME_PROBE: mode,
+  }
+  if (deadlineMs !== null) env[OFFICE_E2E_TEST_DEADLINE_ENV] = String(deadlineMs)
+  // This test file is itself a `node --test` child; drop the runner context so
+  // the nested real `node --test` invocation actually runs its files.
+  delete env.NODE_TEST_CONTEXT
+  const child = spawn(process.execPath, args, {
+    cwd: path.join(repositoryRoot, 'fusion-studio-client'),
+    env,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  })
+  let output = ''
+  const scan = (chunk) => { output += chunk.toString() }
+  child.stdout.on('data', scan)
+  child.stderr.on('data', scan)
+  return {
+    child,
+    evidencePath,
+    probeDirectory,
+    readOutput: () => output,
+    stop() {
+      child.stdout.off('data', scan)
+      child.stderr.off('data', scan)
+      try { child.kill('SIGKILL') } catch { /* probe already exited */ }
+    },
   }
 }
 
@@ -2264,3 +2412,577 @@ test('[slice 00.2] lifecycle probe SIGTERM exits launcher and sentinel and remov
 test('[slice 00.2] signal during in-progress teardown waits for process-group and root cleanup', async () => {
   await runTeardownSignalProbe('SIGINT')
 })
+
+test('[slice 00.2] large-file staging uses the clone path and preserves content and mode', () => {
+  const sourceRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'office-clone-source-'))
+  const destinationRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'office-clone-dest-'))
+  try {
+    const payload = crypto.randomBytes(5 * 1024 * 1024)
+    const source = path.join(sourceRoot, 'large.bin')
+    const largeDestination = path.join(destinationRoot, 'large.bin')
+    fs.writeFileSync(source, payload, { mode: 0o640 })
+    const strategy = cloneFilePreservingMode(source, largeDestination, 0o640)
+    assert.deepEqual(fs.readFileSync(largeDestination), payload)
+    assert.equal(fs.lstatSync(largeDestination).mode & 0o7777, 0o640)
+    if (process.platform === 'darwin') {
+      assert.notEqual(strategy, 'copy', 'large-file staging must use an APFS clone strategy on darwin')
+    } else {
+      assert.equal(strategy, 'copy')
+    }
+
+    const smallSource = path.join(sourceRoot, 'small.bin')
+    const smallDestination = path.join(destinationRoot, 'small.bin')
+    fs.writeFileSync(smallSource, 'small payload', { mode: 0o600 })
+    assert.equal(cloneFilePreservingMode(smallSource, smallDestination, 0o600), 'copy')
+    assert.equal(fs.readFileSync(smallDestination, 'utf8'), 'small payload')
+    assert.equal(fs.lstatSync(smallDestination).mode & 0o7777, 0o600)
+  } finally {
+    fs.rmSync(sourceRoot, { recursive: true, force: true })
+    fs.rmSync(destinationRoot, { recursive: true, force: true })
+  }
+})
+
+test('[slice 00.2] stale-root sweep removes abandoned roots and preserves live, current, fresh, and non-matching entries', () => {
+  const prefix = 'fusion-office-e2e-sweeptest-'
+  const temporaryRoot = assertOfficeFixturePathSafe(os.tmpdir())
+  const created = []
+  const makeRoot = (name, { ageMs = 0, ownerPid = null } = {}) => {
+    const root = path.join(temporaryRoot, `${prefix}${name}`)
+    fs.mkdirSync(root, { mode: 0o700 })
+    fs.mkdirSync(path.join(root, 'runtime-staging-abandoned'))
+    fs.writeFileSync(path.join(root, 'runtime-staging-abandoned', 'payload.bin'), 'staged')
+    if (ownerPid !== null) {
+      fs.writeFileSync(
+        path.join(root, '.office-e2e-owner.json'),
+        `${JSON.stringify({ pid: ownerPid, startedAt: Date.now() })}\n`,
+      )
+    }
+    if (ageMs > 0) {
+      const past = new Date(Date.now() - ageMs)
+      fs.utimesSync(root, past, past)
+    }
+    created.push(root)
+    return root
+  }
+  try {
+    const stale = makeRoot('stale', { ageMs: 8 * 60 * 60 * 1000 })
+    const fresh = makeRoot('fresh')
+    const live = makeRoot('live', { ageMs: 8 * 60 * 60 * 1000, ownerPid: process.pid })
+    const current = makeRoot('current', { ageMs: 8 * 60 * 60 * 1000 })
+    const nonMatching = path.join(temporaryRoot, 'office-sweeptest-other')
+    fs.mkdirSync(nonMatching)
+    created.push(nonMatching)
+    const symlinked = path.join(temporaryRoot, `${prefix}symlinked`)
+    fs.symlinkSync(fresh, symlinked)
+    created.push(symlinked)
+
+    const result = sweepStaleOfficeFixtureRoots({
+      currentRoot: current,
+      namePrefix: prefix,
+      maxAgeMs: 60 * 60 * 1000,
+    })
+
+    assert.ok(result.removed.includes(stale), 'stale root is reported removed')
+    assert.equal(fs.existsSync(stale), false, 'stale root including its abandoned staging dir is gone')
+    assert.ok(fs.existsSync(fresh), 'fresh root is preserved')
+    assert.ok(fs.existsSync(live), 'live-owned root is preserved')
+    assert.ok(fs.existsSync(current), 'current run root is preserved')
+    assert.ok(fs.existsSync(nonMatching), 'non-matching entry is left alone')
+    assert.ok(fs.lstatSync(symlinked).isSymbolicLink(), 'symlinked entry is neither followed nor removed')
+    assert.ok(fs.existsSync(fresh), 'symlink target is intact')
+  } finally {
+    for (const candidate of created) fs.rmSync(candidate, { recursive: true, force: true })
+  }
+})
+
+test('[slice 12.1] shared bounds surface exposes the deadline, timeout, cleanup, and poll constants', () => {
+  assert.equal(officeE2eTestDeadlineMs({}), OFFICE_E2E_TEST_DEADLINE_DEFAULT_MS)
+  assert.equal(OFFICE_E2E_TEST_DEADLINE_DEFAULT_MS, 15 * 60 * 1000)
+  assert.equal(officeE2eTestDeadlineMs({ [OFFICE_E2E_TEST_DEADLINE_ENV]: '1500' }), 1500)
+  assert.throws(
+    () => officeE2eTestDeadlineMs({ [OFFICE_E2E_TEST_DEADLINE_ENV]: 'nope' }),
+    /must be a non-negative integer/,
+  )
+  assert.throws(
+    () => officeE2eTestDeadlineMs({ [OFFICE_E2E_TEST_DEADLINE_ENV]: '0' }),
+    /must be greater than zero/,
+  )
+  assert.equal(officeE2eGlobalTimeoutMs({}), OFFICE_E2E_GLOBAL_TIMEOUT_DEFAULT_MS)
+  assert.equal(OFFICE_E2E_GLOBAL_TIMEOUT_DEFAULT_MS, 45 * 60 * 1000)
+  assert.equal(officeE2eGlobalTimeoutMs({ [OFFICE_E2E_GLOBAL_TIMEOUT_ENV]: '1234000' }), 1234000)
+  assert.throws(
+    () => officeE2eGlobalTimeoutMs({ [OFFICE_E2E_GLOBAL_TIMEOUT_ENV]: '-1' }),
+    /must be a non-negative integer/,
+  )
+  assert.equal(OFFICE_E2E_PLAYWRIGHT_TEST_TIMEOUT_MS, 120 * 1000)
+  assert.equal(OFFICE_E2E_ORPHAN_CLEANUP_DEADLINE_MS, 30 * 1000)
+  assert.equal(OFFICE_E2E_NODE_TEST_TIMEOUT_MS, 300 * 1000)
+  assert.ok(OFFICE_E2E_NODE_TEST_TIMEOUT_MS > OFFICE_E2E_PLAYWRIGHT_TEST_TIMEOUT_MS)
+  const parentWatchHelper = require('./parent-lifecycle-watch.cjs')
+  assert.equal(OFFICE_E2E_PARENT_WATCH_INTERVAL_MS, parentWatchHelper.DEFAULT_PARENT_WATCH_INTERVAL_MS)
+  assert.equal(OFFICE_E2E_PARENT_WATCH_INTERVAL_MS, 250)
+  assert.equal(
+    officeNodeTestHarnessInvocation(),
+    `node --test --test-timeout=${OFFICE_E2E_NODE_TEST_TIMEOUT_MS} e2e/office/fixture-lifecycle.test.mjs`,
+  )
+  assert.equal(harnessLifetime.role, 'fixture-lifecycle-runner')
+  assert.equal(harnessLifetime.deadlineMs, officeE2eTestDeadlineMs())
+})
+
+test('[slice 12.1] armOfficeHarnessLifetime validates its role and returns a stoppable watch', () => {
+  assert.throws(() => armOfficeHarnessLifetime({}), /requires a role/)
+  const armed = armOfficeHarnessLifetime({
+    deadlineMs: null,
+    exit: () => {},
+    role: 'bounds-surface-unit',
+  })
+  assert.equal(armed.role, 'bounds-surface-unit')
+  assert.equal(armed.deadlineMs, null)
+  assert.ok(armed.parentWatch)
+  armed.stop()
+  armed.stop()
+})
+
+test('[slice 12.1] active harness diagnostics enumerate owned roots/children and bounded cleanup validates its deadline', async () => {
+  await assert.rejects(cleanupActiveOfficeHarness({}), /requires a positive integer deadlineMs/)
+  const lifecycle = await createOfficeProcessLifecycle({ workspaces: 1 })
+  const child = startOfficeOwnedProcess(
+    lifecycle,
+    process.execPath,
+    ['-e', 'setInterval(() => {}, 1000)'],
+    { stdio: 'ignore' },
+  )
+  await child.spawned
+  try {
+    assert.ok(activeOfficeHarnessRoots().includes(lifecycle.fixture.root))
+    assert.ok(activeOfficeHarnessProcessIds().includes(child.child.pid))
+    const report = await cleanupActiveOfficeHarness({
+      deadlineMs: OFFICE_E2E_ORPHAN_CLEANUP_DEADLINE_MS,
+      reason: 'assertion',
+    })
+    assert.ok(report.cleanedRoots.includes(lifecycle.fixture.root))
+    assert.equal(report.retainedRoots.includes(lifecycle.fixture.root), false)
+    assert.equal(report.failures.length, 0)
+  } finally {
+    if (fs.existsSync(lifecycle.fixture.root)) {
+      await finalizeOfficeProcessLifecycle(lifecycle, { reason: 'assertion' })
+    }
+  }
+  assert.equal(fs.existsSync(lifecycle.fixture.root), false)
+  assert.equal(isProcessAlive(child.child.pid), false)
+  assert.equal(activeOfficeHarnessRoots().includes(lifecycle.fixture.root), false)
+})
+
+test('[slice 12.1] parent-loss probe: an orphaned node --test run cleans roots/children and exits 143', async () => {
+  const rootsBefore = officeTemporaryRoots()
+  const probe = spawnLifetimeProbe({
+    deadlineMs: OFFICE_E2E_TEST_DEADLINE_DEFAULT_MS,
+    mode: 'parent-loss',
+    viaNodeTest: true,
+  })
+  try {
+    await waitForCondition(
+      () => probe.readOutput().includes('OFFICE_E2E_LIFETIME_PROBE_READY=1'),
+      120_000,
+      () => `lifetime probe never became ready: ${probe.readOutput()}`,
+    )
+    const output = probe.readOutput()
+    const root = /^OFFICE_E2E_LIFETIME_PROBE_ROOT=(.+)$/m.exec(output)?.[1]
+    const probeChildPid = Number(/^OFFICE_E2E_LIFETIME_PROBE_CHILD_PID=(\d+)$/m.exec(output)?.[1])
+    const probeRunnerPid = Number(/^OFFICE_E2E_LIFETIME_PROBE_RUNNER_PID=(\d+)$/m.exec(output)?.[1])
+    assert.ok(root, output)
+    assert.ok(Number.isInteger(probeChildPid) && probeChildPid > 1, output)
+    assert.ok(Number.isInteger(probeRunnerPid) && probeRunnerPid > 1, output)
+    assert.equal(fs.existsSync(root), true)
+    assert.equal(isProcessAlive(probeChildPid), true)
+    assert.equal(fs.existsSync(probe.evidencePath), false)
+
+    // Kill the intermediate parent (the `node --test` runner). The test-file
+    // process is reparented and must self-terminate with the stable marker.
+    probe.child.kill('SIGKILL')
+    const evidence = await waitForJsonFile(probe.evidencePath, 40_000)
+    assert.equal(evidence.role, 'fixture-lifecycle-runner')
+    assert.equal(evidence.cause, 'parent-loss')
+    assert.equal(evidence.exit_code, 143)
+    assert.equal(OFFICE_E2E_PARENT_LOST_MARKER, 'OFFICE_E2E_PARENT_LOST_CLEANUP')
+    assert.equal(evidence.marker, OFFICE_E2E_PARENT_LOST_MARKER)
+    assert.equal(evidence.expected_parent_pid, probe.child.pid)
+    assert.notEqual(evidence.current_parent_pid, evidence.expected_parent_pid)
+    assert.deepEqual(evidence.active_roots, [root])
+    assert.deepEqual(evidence.child_pids, [probeChildPid])
+    assert.deepEqual(evidence.cleaned_roots, [root])
+    assert.deepEqual(evidence.retained_roots, [])
+    await waitForCondition(
+      () => !isProcessAlive(probeRunnerPid),
+      10_000,
+      `probe runner ${probeRunnerPid} survived parent loss`,
+    )
+    assert.equal(isProcessAlive(probeChildPid), false, 'owned child group must not survive parent loss')
+    assert.equal(fs.existsSync(root), false, 'owned fixture root must not survive parent loss')
+    await waitForCondition(
+      () => [...officeTemporaryRoots()].sort().join(',') === [...rootsBefore].sort().join(','),
+      10_000,
+      () => `leftover owned roots: ${JSON.stringify([...officeTemporaryRoots()])}`,
+    )
+  } finally {
+    probe.stop()
+    fs.rmSync(probe.probeDirectory, { recursive: true, force: true })
+  }
+})
+
+test('[slice 12.1] deadline probe: an injected stall self-terminates with exit 124 and bounded cleanup', async () => {
+  for (const viaNodeTest of [false, true]) {
+    const rootsBefore = officeTemporaryRoots()
+    const probe = spawnLifetimeProbe({ deadlineMs: 4000, mode: 'deadline', viaNodeTest })
+    try {
+      const exit = await waitForChildExit(probe.child, 60_000)
+      const evidence = await waitForJsonFile(probe.evidencePath, 10_000)
+      assert.equal(evidence.role, 'fixture-lifecycle-runner')
+      assert.equal(evidence.cause, 'deadline')
+      assert.equal(evidence.exit_code, 124)
+      assert.equal(OFFICE_E2E_TEST_DEADLINE_EXCEEDED_MARKER, 'OFFICE_E2E_TEST_DEADLINE_EXCEEDED')
+      assert.equal(evidence.marker, OFFICE_E2E_TEST_DEADLINE_EXCEEDED_MARKER)
+      assert.equal(evidence.deadline_ms, 4000)
+      assert.equal(evidence.retained_roots.length, 0)
+      assert.equal(evidence.cleaned_roots.length, 1)
+      assert.equal(evidence.active_roots.length, 1)
+      assert.deepEqual(evidence.cleaned_roots, evidence.active_roots)
+      assert.equal(isProcessAlive(evidence.child_pids[0]), false, 'owned child group must not survive the deadline')
+      assert.equal(
+        fs.existsSync(evidence.active_roots[0]),
+        false,
+        'owned fixture root must not survive the deadline',
+      )
+      assert.match(probe.readOutput(), /OFFICE_E2E_TEST_DEADLINE_EXCEEDED/)
+      assert.equal(exit.signal, null)
+      if (viaNodeTest) assert.equal(exit.code, 1)
+      else assert.equal(exit.code, 124)
+      await waitForCondition(
+        () => [...officeTemporaryRoots()].sort().join(',') === [...rootsBefore].sort().join(','),
+        10_000,
+        () => `leftover owned roots: ${JSON.stringify([...officeTemporaryRoots()])}`,
+      )
+    } finally {
+      probe.stop()
+      fs.rmSync(probe.probeDirectory, { recursive: true, force: true })
+    }
+  }
+})
+
+test('[slice 12.1] playwright.office.config.ts loads with both timeouts derived from the shared bounds surface', async () => {
+  const clientRoot = path.join(repositoryRoot, 'fusion-studio-client')
+  const configUrl = pathToFileURL(path.join(clientRoot, 'playwright.office.config.ts')).href
+  const configProbe = [
+    `const loaded = await import(${JSON.stringify(configUrl)})`,
+    `process.stdout.write(JSON.stringify({ globalTimeout: loaded.default.globalTimeout, timeout: loaded.default.timeout }))`,
+  ].join(';')
+  const readConfigTimeouts = async (environment) => {
+    const child = spawn(process.execPath, ['--input-type=module', '-e', configProbe], {
+      cwd: clientRoot,
+      env: { ...process.env, ...environment },
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    let stdout = ''
+    let stderr = ''
+    child.stdout.on('data', (chunk) => { stdout += chunk.toString() })
+    child.stderr.on('data', (chunk) => { stderr += chunk.toString() })
+    const exit = await waitForChildExit(child, 30_000)
+    assert.equal(exit.signal, null, stderr)
+    assert.equal(exit.code, 0, stderr)
+    // Config load also runs the stale-root sweep and the R5 empty-shell janitor,
+    // which may emit their own marker lines before the JSON probe line.
+    const jsonLine = stdout.split('\n').map((line) => line.trim()).filter((line) => line.startsWith('{')).pop()
+    assert.ok(jsonLine, stdout)
+    return JSON.parse(jsonLine)
+  }
+
+  const defaults = await readConfigTimeouts({})
+  assert.equal(defaults.timeout, OFFICE_E2E_PLAYWRIGHT_TEST_TIMEOUT_MS)
+  assert.equal(defaults.globalTimeout, OFFICE_E2E_GLOBAL_TIMEOUT_DEFAULT_MS)
+  const overridden = await readConfigTimeouts({ [OFFICE_E2E_GLOBAL_TIMEOUT_ENV]: '1234000' })
+  assert.equal(overridden.timeout, OFFICE_E2E_PLAYWRIGHT_TEST_TIMEOUT_MS)
+  assert.equal(overridden.globalTimeout, 1234000)
+
+  const list = spawn(process.execPath, [
+    require.resolve('@playwright/test/cli'),
+    'test',
+    '--list',
+    '--config=playwright.office.config.ts',
+  ], { cwd: clientRoot, env: process.env, stdio: ['ignore', 'pipe', 'pipe'] })
+  let listOutput = ''
+  list.stdout.on('data', (chunk) => { listOutput += chunk.toString() })
+  list.stderr.on('data', (chunk) => { listOutput += chunk.toString() })
+  const listExit = await waitForChildExit(list, 120_000)
+  assert.equal(listExit.signal, null, listOutput)
+  assert.equal(listExit.code, 0, listOutput)
+  assert.match(listOutput, /Total: \d+ tests? /)
+})
+
+test('[slice 12.2] shared bounds surface exposes the disk headroom and CoW ceiling bounds', () => {
+  assert.equal(OFFICE_E2E_DISK_HEADROOM_DEFAULT_BYTES, 2 * 1024 * 1024 * 1024)
+  assert.equal(officeE2eDiskHeadroomBytes({}), OFFICE_E2E_DISK_HEADROOM_DEFAULT_BYTES)
+  assert.equal(officeE2eDiskHeadroomBytes({ [OFFICE_E2E_DISK_HEADROOM_ENV]: '16' }), 16 * 1024 * 1024)
+  assert.equal(officeE2eDiskHeadroomBytes({ [OFFICE_E2E_DISK_HEADROOM_ENV]: '0' }), 0)
+  assert.throws(
+    () => officeE2eDiskHeadroomBytes({ [OFFICE_E2E_DISK_HEADROOM_ENV]: 'nope' }),
+    /must be a non-negative integer/,
+  )
+  assert.equal(OFFICE_E2E_COW_DELTA_MIN_BYTES, 64 * 1024 * 1024)
+  assert.equal(OFFICE_E2E_COW_DELTA_FRACTION, 0.02)
+  assert.equal(officeE2eCowDeltaCeilingBytes(0), OFFICE_E2E_COW_DELTA_MIN_BYTES)
+  assert.equal(officeE2eCowDeltaCeilingBytes(1024 * 1024), OFFICE_E2E_COW_DELTA_MIN_BYTES)
+  assert.equal(
+    officeE2eCowDeltaCeilingBytes(10 * 1024 * 1024 * 1024),
+    Math.ceil(10 * 1024 * 1024 * 1024 * OFFICE_E2E_COW_DELTA_FRACTION),
+  )
+  assert.throws(() => officeE2eCowDeltaCeilingBytes(-1), /non-negative/)
+  assert.throws(
+    () => assertOfficeE2eDiskHeadroom({ headroomBytes: -1, stagedBytes: 0 }),
+    /non-negative staged and headroom/,
+  )
+})
+
+test('[slice 12.2] disk preflight fails closed before allocating a fixture root', async () => {
+  const rootsBefore = officeTemporaryRoots()
+  const beforeAppUserData = process.env.FUSION_APP_USER_DATA
+  const beforeMachine = process.env.FUSION_LOCAL_MACHINE
+  const previousHeadroom = process.env[OFFICE_E2E_DISK_HEADROOM_ENV]
+  const stagedBytes = measureOfficeRuntimeStagedLogicalBytes()
+  // A deliberately impossible headroom (100 TB in MiB) forces the preflight to
+  // fail without filling the disk. The bound is documented and test-only here.
+  const forcedHeadroomMb = 100_000_000
+  const logs = []
+  const originalLog = console.log
+  console.log = (...args) => { logs.push(args.map(String).join(' ')) }
+  try {
+    process.env[OFFICE_E2E_DISK_HEADROOM_ENV] = String(forcedHeadroomMb)
+    await assert.rejects(
+      createOfficeFixture(),
+      (error) => error.code === OFFICE_E2E_LOW_DISK_MARKER,
+    )
+  } finally {
+    console.log = originalLog
+    if (previousHeadroom === undefined) delete process.env[OFFICE_E2E_DISK_HEADROOM_ENV]
+    else process.env[OFFICE_E2E_DISK_HEADROOM_ENV] = previousHeadroom
+  }
+  const marker = logs.find((line) => line.startsWith(`${OFFICE_E2E_LOW_DISK_MARKER} `))
+  assert.ok(marker, logs.join('\n'))
+  const requiredBytes = stagedBytes + forcedHeadroomMb * 1024 * 1024
+  const match = /^OFFICE_E2E_LOW_DISK free_bytes=(\d+) required_bytes=(\d+)$/.exec(marker)
+  assert.ok(match, marker)
+  assert.equal(Number(match[2]), requiredBytes)
+  assert.ok(Number(match[1]) > 0)
+  assert.ok(Number(match[1]) < requiredBytes)
+  assert.deepEqual(officeTemporaryRoots(), rootsBefore)
+  assert.equal(process.env.FUSION_APP_USER_DATA, beforeAppUserData)
+  assert.equal(process.env.FUSION_LOCAL_MACHINE, beforeMachine)
+})
+
+test('[slice 12.2] normal lane path stages the runtime, reports staged bytes, and provisions the model', async () => {
+  const fixture = await createOfficeFixture()
+  const logs = []
+  const originalLog = console.log
+  console.log = (...args) => { logs.push(args.map(String).join(' ')); originalLog(...args) }
+  try {
+    const runtime = createOfficeRuntimeLayout(fixture)
+    const { modelPath } = officeRuntimeLaneAssetRequirements(runtime)
+    assert.equal(fs.existsSync(modelPath), false, 'the clone excludes the whisper model .bin')
+    const stagedPrefix = `${OFFICE_E2E_STAGED_BYTES_MARKER}=`
+    const stagedLine = logs.find((line) => line.startsWith(stagedPrefix))
+    assert.ok(stagedLine, logs.join('\n'))
+    const stagedBytes = Number(stagedLine.slice(stagedPrefix.length))
+    assert.equal(stagedBytes, measureOfficeRuntimeStagedLogicalBytes({ fresh: true }))
+    assert.ok(stagedBytes > 0)
+
+    const freeBefore = statfsFreeBytes()
+    const prepared = prepareOfficeRuntimeLaneAssets(runtime)
+    const freeAfter = statfsFreeBytes()
+    assert.equal(prepared.enforced, true)
+    assert.equal(prepared.provisioned, true)
+    assert.equal(fs.existsSync(modelPath), true)
+    assert.equal(fs.lstatSync(modelPath).isFile(), true)
+    assert.equal(fs.lstatSync(modelPath).isSymbolicLink(), false)
+    const provisioningDelta = freeBefore - freeAfter
+    const provisioningCeiling = officeE2eCowDeltaCeilingBytes(fs.statSync(modelPath).size)
+    assert.ok(
+      provisioningDelta <= provisioningCeiling,
+      `provisioning delta ${provisioningDelta} exceeds ceiling ${provisioningCeiling}`,
+    )
+    assert.equal(prepareOfficeRuntimeLaneAssets(runtime).provisioned, false, 'provisioning is idempotent')
+    assert.doesNotMatch(logs.join('\n'), new RegExp(OFFICE_E2E_COW_REGRESSION_MARKER))
+  } finally {
+    console.log = originalLog
+    await destroyOfficeFixture(fixture)
+  }
+})
+
+test('[slice 12.2] CoW physical-delta regression keeps large staged owned files to clones', async () => {
+  const candidates = listOfficeRuntimeCloneCandidates()
+  if (candidates.length === 0) {
+    // Classified skip: there is no >=4 MiB owned file to exercise the clone path.
+    console.log(`${OFFICE_E2E_COW_SKIP_MARKER} reason=no_large_owned_file`)
+    assert.equal(candidates.length, 0)
+    return
+  }
+  const fixture = await createOfficeFixture()
+  const destinationRoot = path.join(fixture.root, 'cow-probe')
+  try {
+    fs.mkdirSync(destinationRoot)
+    const logicalBytes = candidates.reduce((total, entry) => total + entry.size, 0)
+    const freeBefore = statfsFreeBytes()
+    for (const entry of candidates) {
+      const destination = path.join(destinationRoot, entry.key, entry.relative)
+      fs.mkdirSync(path.dirname(destination), { recursive: true })
+      cloneFilePreservingMode(entry.source, destination, fs.lstatSync(entry.source).mode & 0o7777)
+    }
+    const freeAfter = statfsFreeBytes()
+    const deltaBytes = freeBefore - freeAfter
+    const ceilingBytes = officeE2eCowDeltaCeilingBytes(logicalBytes)
+    const report = `delta_bytes=${deltaBytes} logical_bytes=${logicalBytes} ceiling_bytes=${ceilingBytes}`
+    if (deltaBytes > ceilingBytes) {
+      console.log(`${OFFICE_E2E_COW_REGRESSION_MARKER} ${report}`)
+      assert.fail(`Office E2E CoW regression: ${report}`)
+    }
+    console.log(`${OFFICE_E2E_COW_OK_MARKER} ${report}`)
+    assert.ok(logicalBytes >= 4 * 1024 * 1024)
+    assert.ok(deltaBytes <= ceilingBytes)
+  } finally {
+    await destroyOfficeFixture(fixture)
+  }
+})
+
+test('[slice 12.2] missing transcription asset fails closed with RESOURCE_MISSING and no download/build execution', async () => {
+  const probeRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-asset-probe-'))
+  const shimDirectory = path.join(probeRoot, 'bin')
+  const shimLog = path.join(probeRoot, 'invocations.log')
+  const cacheDirectory = path.join(probeRoot, 'empty-cache')
+  const syntheticRoot = path.join(probeRoot, 'runtime')
+  fs.mkdirSync(shimDirectory)
+  fs.mkdirSync(cacheDirectory)
+  for (const name of ['npx', 'cmake']) {
+    fs.writeFileSync(
+      path.join(shimDirectory, name),
+      `#!/bin/sh\nprintf '%s %s\\n' "$0" "$*" >> "$OFFICE_E2E_COMMAND_SHIM_LOG"\nexit 1\n`,
+      { mode: 0o755 },
+    )
+  }
+  // A staged-like runtime with transcription present, whisper-cli built, and the
+  // model removed. The empty cache makes provisioning impossible.
+  const whisperCpp = path.join(syntheticRoot, 'node_modules', 'nodejs-whisper', 'cpp', 'whisper.cpp')
+  fs.mkdirSync(path.join(whisperCpp, 'build', 'bin'), { recursive: true })
+  fs.writeFileSync(path.join(whisperCpp, 'build', 'bin', 'whisper-cli'), '#!/bin/sh\nexit 0\n', { mode: 0o755 })
+  const lifecycleModuleUrl = pathToFileURL(path.join(testDirectory, 'fixture-lifecycle.mjs')).href
+  const probeScript = [
+    'import fs from \'node:fs\'',
+    `const { prepareOfficeRuntimeLaneAssets, officeRuntimeLaneAssetRequirements } = await import(${JSON.stringify(lifecycleModuleUrl)})`,
+    `const runtime = { runtimeServerRoot: ${JSON.stringify(syntheticRoot)} }`,
+    'const { modelPath } = officeRuntimeLaneAssetRequirements(runtime)',
+    'let failure = null',
+    'try { prepareOfficeRuntimeLaneAssets(runtime) } catch (error) { failure = error }',
+    "if (!failure) { console.log('LANE_GUARD_DID_NOT_FAIL'); process.exitCode = 3 }",
+    `else if (failure.code !== ${JSON.stringify(OFFICE_E2E_RESOURCE_MISSING_MARKER)}) { console.log('LANE_GUARD_WRONG_CODE=' + failure.code); process.exitCode = 3 }`,
+    'const shimLog = process.env.OFFICE_E2E_COMMAND_SHIM_LOG',
+    "const readInvocations = () => fs.existsSync(shimLog) ? fs.readFileSync(shimLog, 'utf8').split('\\n').filter(Boolean) : []",
+    "console.log('LANE_COMMAND_INVOCATIONS_AFTER_GUARD=' + readInvocations().length)",
+    "console.log('LANE_GUARD_MODEL_PATH=' + modelPath)",
+    "const { spawnSync } = await import('node:child_process')",
+    "const npx = spawnSync('npx', ['--version'], { encoding: 'utf8' })",
+    "const cmake = spawnSync('cmake', ['--version'], { encoding: 'utf8' })",
+    "console.log('POSITIVE_CONTROL_STATUS=' + npx.status + ',' + cmake.status)",
+    "console.log('POSITIVE_CONTROL_RECORDED=' + readInvocations().length)",
+  ].join('\n')
+  const childEnvironment = {
+    ...process.env,
+    [OFFICE_E2E_WHISPER_CACHE_ENV]: cacheDirectory,
+    OFFICE_E2E_COMMAND_SHIM_LOG: shimLog,
+    PATH: `${shimDirectory}:${process.env.PATH}`,
+  }
+  delete childEnvironment.NODE_TEST_CONTEXT
+  try {
+    const child = spawn(process.execPath, ['--input-type=module', '-e', probeScript], {
+      cwd: path.join(repositoryRoot, 'fusion-studio-client'),
+      env: childEnvironment,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    let output = ''
+    child.stdout.on('data', (chunk) => { output += chunk.toString() })
+    child.stderr.on('data', (chunk) => { output += chunk.toString() })
+    const exit = await waitForChildExit(child, 60_000)
+    assert.equal(exit.signal, null, output)
+    assert.equal(exit.code, 0, output)
+    assert.match(output, new RegExp(`^${OFFICE_E2E_RESOURCE_MISSING_MARKER} path=.+ hint=.+$`, 'm'))
+    assert.match(output, /ggml-large-v3-turbo\.bin/)
+    assert.match(output, new RegExp(OFFICE_E2E_WHISPER_SETUP_HINT.replace(/\s+/g, '\\s+')))
+    assert.match(output, /LANE_COMMAND_INVOCATIONS_AFTER_GUARD=0/)
+    assert.match(output, /POSITIVE_CONTROL_STATUS=1,1/)
+    assert.match(output, /POSITIVE_CONTROL_RECORDED=2/)
+    const recorded = fs.readFileSync(shimLog, 'utf8')
+    assert.match(recorded, /npx/)
+    assert.match(recorded, /cmake/)
+  } finally {
+    fs.rmSync(probeRoot, { recursive: true, force: true })
+  }
+})
+
+test('[slice 12.2] janitor removes empty stale shells and preserves fresh, non-empty, unmatched, and symlinked entries', () => {
+  const temporaryRoot = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-janitor-')))
+  const shellPrefix = 'fusion-spec00a-'
+  const created = []
+  const makeShell = (name, { empty = true, ageMs = 0 } = {}) => {
+    const directory = path.join(temporaryRoot, `${shellPrefix}${name}`)
+    fs.mkdirSync(directory)
+    if (!empty) fs.writeFileSync(path.join(directory, 'payload.txt'), 'keep\n')
+    if (ageMs > 0) {
+      const past = new Date(Date.now() - ageMs)
+      fs.utimesSync(directory, past, past)
+    }
+    created.push(directory)
+    return directory
+  }
+  const logs = []
+  const originalLog = console.log
+  try {
+    const staleEmpty = makeShell('stale-empty', { ageMs: 8 * 60 * 60 * 1000 })
+    const staleEmptySecond = makeShell('stale-empty-second', { ageMs: 8 * 60 * 60 * 1000 })
+    const freshEmpty = makeShell('fresh-empty')
+    const nonEmpty = makeShell('non-empty', { empty: false, ageMs: 8 * 60 * 60 * 1000 })
+    const modelCacheLike = path.join(temporaryRoot, 'whisper-models')
+    fs.mkdirSync(modelCacheLike)
+    created.push(modelCacheLike)
+    const unmatched = path.join(temporaryRoot, 'fusion-office-e2e-janitor-unmatched')
+    fs.mkdirSync(unmatched)
+    created.push(unmatched)
+    const symlinked = path.join(temporaryRoot, `${shellPrefix}symlinked`)
+    fs.symlinkSync(freshEmpty, symlinked)
+    created.push(symlinked)
+
+    console.log = (...args) => { logs.push(args.map(String).join(' ')) }
+    const disabled = sweepOfficeHarnessEmptyShells({
+      environment: { FUSION_OFFICE_E2E_SWEEP: '0' },
+      tempRoots: [fs.realpathSync(temporaryRoot)],
+    })
+    assert.deepEqual(disabled.removed, [])
+    const result = sweepOfficeHarnessEmptyShells({
+      maxAgeMs: 60 * 60 * 1000,
+      tempRoots: [fs.realpathSync(temporaryRoot)],
+    })
+    console.log = originalLog
+
+    assert.deepEqual([...result.removed].sort(), [staleEmpty, staleEmptySecond].sort())
+    assert.equal(fs.existsSync(staleEmpty), false)
+    assert.equal(fs.existsSync(staleEmptySecond), false)
+    assert.ok(fs.existsSync(freshEmpty), 'fresh empty shell is preserved')
+    assert.ok(fs.existsSync(nonEmpty), 'non-empty shell is preserved')
+    assert.ok(fs.existsSync(modelCacheLike), 'model-cache-like path is untouched')
+    assert.ok(fs.existsSync(unmatched), 'unmatched name is untouched')
+    assert.ok(fs.lstatSync(symlinked).isSymbolicLink(), 'symlink is neither followed nor removed')
+    assert.ok(fs.existsSync(freshEmpty), 'symlink target is intact')
+    const marker = logs.find((line) => line.startsWith(`${OFFICE_E2E_JANITOR_SWEPT_MARKER}=`))
+    assert.equal(marker, `${OFFICE_E2E_JANITOR_SWEPT_MARKER}=2`)
+  } finally {
+    console.log = originalLog
+    for (const candidate of created) fs.rmSync(candidate, { recursive: true, force: true })
+    fs.rmSync(temporaryRoot, { recursive: true, force: true })
+  }
+})
+

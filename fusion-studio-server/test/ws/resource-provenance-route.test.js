@@ -124,6 +124,21 @@ describe('resource provenance public route', () => {
     }]);
   });
 
+  test('forwards bounded view/tab/component/presenter/target context selectors', async () => {
+    const harness = createHarness();
+    const message = query({
+      viewId: 'file-viewer', tabId: 'tab-1', componentTypeId: 'file-viewer',
+      componentInstanceId: 'component-1', presenterId: 'markdown', targetKey: 'docs/a.md',
+    });
+    await harness.route.handleQuery({ ws: harness.ws, session: activeSession(), message });
+    expect(harness.repository.query).toHaveBeenCalledWith({
+      workspaceId: 'workspace-a', viewId: 'file-viewer', tabId: 'tab-1',
+      componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+      presenterId: 'markdown', targetKey: 'docs/a.md',
+    });
+    expect(harness.replies[0]).toMatchObject({ type: 'resource:provenance:result' });
+  });
+
   test.each(['../secret', '.', '..'])(
     'returns captured-pair invalid_request for invalid filename selector %j',
     async (fileName) => {

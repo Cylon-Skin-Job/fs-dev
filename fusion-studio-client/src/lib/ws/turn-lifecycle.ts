@@ -34,6 +34,7 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { chatSubmissionOwnerKey, useChatSubmissionStore } from '../../state/chatSubmissionStore';
 import type { WebSocketMessage } from '../../types';
 import { validateTurnTerminalError } from '../chat/terminal-error';
 import { isValidStreamSeq } from './frontier';
@@ -45,7 +46,7 @@ import {
 type TerminalCompanionType = 'auth_error' | 'error';
 
 /**
- * Post-terminal runtime failures publish one identity-less companion after
+ * Post-terminal runtime failures publish one companion after
  * their authoritative error turn_end. Remember that lifecycle edge so the
  * companion can retain its notification without being mistaken for a new
  * prompt's pre-begin acceptance failure on the same thread.
@@ -54,7 +55,7 @@ type TerminalCompanionType = 'auth_error' | 'error';
  * no provider payload, message text, selected thread, or replacement turn is
  * inspected. Consumption is one-shot because the server emits one companion.
  */
-const pendingTerminalCompanions = new Map<string, TerminalCompanionType>();
+const pendingTerminalCompanions = new Map<string, { type: TerminalCompanionType; requestId?: string }>();
 
 function expectedTerminalCompanion(error: ReturnType<typeof validateTurnTerminalError>): TerminalCompanionType {
   return error.code === 'AUTHENTICATION_FAILED' ? 'auth_error' : 'error';
@@ -63,8 +64,11 @@ function expectedTerminalCompanion(error: ReturnType<typeof validateTurnTerminal
 export function consumeTerminalCompanion(
   threadId: string | undefined,
   type: TerminalCompanionType,
+  requestId?: string,
 ): boolean {
-  if (!threadId || pendingTerminalCompanions.get(threadId) !== type) return false;
+  if (!threadId) return false;
+  const marker = pendingTerminalCompanions.get(threadId);
+  if (!marker || marker.type !== type || marker.requestId !== requestId) return false;
   pendingTerminalCompanions.delete(threadId);
   return true;
 }
@@ -221,9 +225,14 @@ export function handleTurnEnd(msg: WebSocketMessage, threadId: string): void {
       : undefined;
 
     if (terminalError) {
+      const workspaceId = store.activeWorkspaceId;
+      const attempt = workspaceId ? useChatSubmissionStore.getState().attemptsByOwner[
+        chatSubmissionOwnerKey(workspaceId, threadId)] : null;
       pendingTerminalCompanions.set(
         threadId,
-        expectedTerminalCompanion(terminalError),
+        { type: expectedTerminalCompanion(terminalError),
+          ...(attempt?.phase === 'accepted' && attempt.turnId === addressedTurnId
+            ? { requestId: attempt.requestId } : {}) },
       );
     }
 

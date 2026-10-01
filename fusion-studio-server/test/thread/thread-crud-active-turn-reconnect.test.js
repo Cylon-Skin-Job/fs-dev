@@ -49,7 +49,7 @@ function makeManager(exchanges = []) {
   };
 }
 
-function makeHandlers(ws, manager) {
+function makeHandlers(ws, manager, epoch = WORKSPACE_EPOCH) {
   const closeThread = jest.fn(() => Promise.resolve());
   const sendThreadList = jest.fn(() => Promise.resolve());
   const pendingReorderTimers = new Map();
@@ -57,7 +57,7 @@ function makeHandlers(ws, manager) {
     viewName: 'view-1',
     panelId: 'view-1',
     threadId: null,
-    workspaceEpoch: WORKSPACE_EPOCH,
+    workspaceEpoch: epoch,
     threadManager: manager,
   }]]);
   const handlers = createCrudHandlers({
@@ -394,4 +394,17 @@ describe('passive open active-turn reconnect routing', () => {
       expect.stringContaining(`Dropped content for thread ${THREAD_ID}: client readyState=3`)
     );
   });
+});
+
+
+test('passive opens across twenty connection epochs allocate no empty runtime owners', async () => {
+  threadRuntimeManager.runtimes.clear();
+  for(let i=0;i<20;i++) {
+    const ws=makeWebSocket(), manager=makeManager();
+    const {handlers,pendingReorderTimers}=makeHandlers(ws,manager,`passive-${i}`);
+    await handlers.handleThreadOpen(ws,{threadId:THREAD_ID});
+    expect(parseSent(ws).map(message=>message.type)).toEqual(['thread:opened']);
+    expect(threadRuntimeManager.runtimes.size).toBe(0);
+    clearPendingTimers(pendingReorderTimers);
+  }
 });

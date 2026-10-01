@@ -348,6 +348,69 @@ describe('public schema-owned file_save@1 route', () => {
     }
   });
 
+  test('passes the validated component context through with the server-derived workspace', async () => {
+    const seen = [];
+    const route = createFileSaveRoute({
+      registryAccess: registry,
+      fileSaveOwner: {
+        async save(input) { seen.push(input); return exactSuccessFromIntent(input.intent); },
+      },
+    });
+    const ws = socket();
+    await route.handleFileSave({
+      ws,
+      session: activeSession(),
+      message: request({
+        requestId: 'ctx-valid',
+        reportedUiContext: {
+          workspaceId: 'workspace-A', viewId: 'file-viewer', viewInstanceId: 'mount-1',
+          tabId: 'tab-1', componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+          presenterId: 'markdown', targetKey: 'docs/note.md',
+        },
+      }),
+    });
+    expect(JSON.parse(ws.sent[0])).toMatchObject({ success: true, outcome: 'succeeded' });
+    expect(seen[0].intent.reportedUiContext).toEqual({
+      workspaceId: 'workspace-A', viewId: 'file-viewer', viewInstanceId: 'mount-1',
+      tabId: 'tab-1', componentTypeId: 'file-viewer', componentInstanceId: 'component-1',
+      presenterId: 'markdown', targetKey: 'docs/note.md',
+    });
+  });
+
+  test('degrades malformed/oversized/stale reportedUiContext instead of rejecting the save', async () => {
+    const seen = [];
+    const diagnostics = [];
+    const route = createFileSaveRoute({
+      registryAccess: registry,
+      fileSaveOwner: {
+        async save(input) { seen.push(input); return exactSuccessFromIntent(input.intent); },
+      },
+      writeDiagnostic: (code) => diagnostics.push(code),
+    });
+    const cases = [
+      ['unknown', { workspaceId: 'workspace-A', viewId: 'file-viewer', secret: true },
+        { context: { workspaceId: 'workspace-A', viewId: 'file-viewer' },
+          diagnostic: 'reported_ui_context_degraded' }],
+      ['mismatch', { workspaceId: 'workspace-B', viewId: 'file-viewer' },
+        { context: undefined, diagnostic: 'reported_ui_context_workspace_mismatch' }],
+      ['oversized', { workspaceId: 'workspace-A', viewId: 'file-viewer', targetKey: '\u{1f98a}'.repeat(200) },
+        { context: { workspaceId: 'workspace-A', viewId: 'file-viewer' },
+          diagnostic: 'reported_ui_context_degraded' }],
+      ['null', null, { context: undefined, diagnostic: null }],
+    ];
+    for (const [, reportedUiContext, expected] of cases) {
+      const ws = socket();
+      await route.handleFileSave({
+        ws,
+        session: activeSession(),
+        message: request({ requestId: `ctx-${seen.length + 1}`, reportedUiContext }),
+      });
+      expect(JSON.parse(ws.sent[0])).toMatchObject({ success: true, outcome: 'succeeded' });
+      expect(seen.at(-1).intent.reportedUiContext).toEqual(expected.context);
+    }
+    expect(diagnostics).toEqual(cases.map(([, , expected]) => expected.diagnostic).filter(Boolean));
+  });
+
   test('completed paired route reply is held behind an in-progress bind frame', async () => {
     const state = activeSession();
     const ws = socket();

@@ -4,7 +4,7 @@
  *       chat-header dropdown (multi-harness picker, thread jump) transient state.
  */
 import type { ViewUIState, Pane, CollapsablePane } from '../../types';
-import type { AppState, ComposerModelSelection, TintPath } from '../panelStoreTypes';
+import type { AppState, TintPath } from '../panelStoreTypes';
 import {
   getLatestViewStateMutationId,
   hasPendingViewStateMutation,
@@ -25,16 +25,7 @@ export const DEFAULT_VIEW_UI_STATE: ViewUIState = {
     contentNavLeft: 200,
     contentNavRight: 220,
   },
-  popup: {
-    open: false,
-    x: -1,
-    y: -1,
-    width: 420,
-    height: 520,
-    threadId: null,
-  },
   currentThreadId: null,
-  secondaryThreadId: null,
   // TINTS_SPEC §8a: surface tint toggles, all neutral by default.
   tints: {
     leftPanel:     false,
@@ -88,8 +79,6 @@ export function clampPaneWidth(pane: Pane, n: number, maxOverride?: number): num
     max = 460;
   } else if (pane === 'leftChat') {
     min = 360;
-  } else if (pane === 'rightSecondary') {
-    min = 300;
   } else if (pane === 'rightCol') {
     // View's right column (e.g. file tree). Allow narrower than the chat
     // so the tree can be compact when no sticky chat is docked.
@@ -111,17 +100,6 @@ export function createViewSlice(set: Set, get: Get) {
     viewStateLoadPending: {} as Record<string, boolean>,
     cliPickerOpen: {} as Record<string, boolean>,
     threadDropdownOpen: {} as Record<string, boolean>,
-    composerModelConfig: {} as Record<string, ComposerModelSelection>,
-
-    setComposerModelConfig: (panel: string, patch: Partial<ComposerModelSelection>) => set((s) => {
-      const base = s.composerModelConfig[panel] ?? { providerId: null, modelId: null, effort: null };
-      return {
-        composerModelConfig: {
-          ...s.composerModelConfig,
-          [panel]: { ...base, ...patch },
-        },
-      };
-    }),
 
     loadViewState: (view: string) => {
       const workspaceId = get().activeWorkspaceId;

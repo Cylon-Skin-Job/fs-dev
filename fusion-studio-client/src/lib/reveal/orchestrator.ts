@@ -14,6 +14,7 @@
  * The parser is content-type-specific. The orchestrator is shared.
  */
 
+import { RevealProgress } from './progress';
 import type { ChunkParser, ParsedChunk, RevealOptions } from './types';
 
 // Defaults used when no RevealOptions are provided.
@@ -72,6 +73,9 @@ export async function orchestrateReveal(
   const batchFast = options?.batchSizeFast ?? DEFAULT_BATCH_SIZE_FAST;
   const chunkPause = options?.interChunkPause ?? DEFAULT_INTER_CHUNK_PAUSE;
 
+  const progress = options?.progress ?? new RevealProgress();
+  progress.received = () => contentRef.current.length;
+  // Transforms have no source-to-display mapping. Cursor remains explicitly unknown.
   const buffer: ParsedChunk[] = [];
   let bufferCursor = 0;   // next chunk to render
   let displayed = '';     // parsed/render-ready content displayed so far
@@ -87,6 +91,7 @@ export async function orchestrateReveal(
         buffer.push(chunk);
       }
       lastFedLength = content.length;
+      progress.parserFedSource = lastFedLength;
     }
 
     // ── Step 2: Is there a chunk ready to render? ──
@@ -97,15 +102,24 @@ export async function orchestrateReveal(
       const speed = nextChunkReady ? speedFast : speedSlow;
       const batch = nextChunkReady ? batchFast : 1;
 
+      progress.readyChunks = buffer.length - bufferCursor - 1;
+      progress.chunkTotal = chunk.text.length;
+      progress.chunkVisible = 0;
+      progress.speedMs = speed;
+      progress.batchSize = batch;
+      progress.setPhase('revealing');
+
       // ── Step 3: Type this chunk ──
       await typeChunk(chunk.text, speed, batch, (typed) => {
         displayed += typed;
+        progress.advance(typed.length);
         setDisplayed(displayed);
       }, cancelRef);
 
       bufferCursor++;
 
       if (!cancelRef.current && chunkPause > 0) {
+        progress.setPhase('pacing');
         await sleep(chunkPause);
       }
     } else {
@@ -142,8 +156,15 @@ export async function orchestrateReveal(
         // Render any remaining buffered chunks
         while (bufferCursor < buffer.length && !cancelRef.current) {
           const chunk = buffer[bufferCursor];
+          progress.readyChunks = buffer.length - bufferCursor - 1;
+          progress.chunkTotal = chunk.text.length;
+          progress.chunkVisible = 0;
+          progress.speedMs = speedSlow;
+          progress.batchSize = 1;
+          progress.setPhase('revealing');
           await typeChunk(chunk.text, speedSlow, 1, (typed) => {
             displayed += typed;
+            progress.advance(typed.length);
             setDisplayed(displayed);
           }, cancelRef);
           bufferCursor++;
@@ -175,6 +196,8 @@ export async function orchestrateReveal(
       }
 
       // Not complete yet — wait for more tokens
+      progress.readyChunks = 0;
+      progress.setPhase('waiting');
       await sleep(POLL_INTERVAL);
     }
   }
@@ -182,4 +205,5 @@ export async function orchestrateReveal(
   // Ensure final parsed content is fully displayed without replacing transformed
   // chunks with raw transport text.
   setDisplayed(displayed || contentRef.current);
+  if (!cancelRef.current) progress.setPhase('done');
 }

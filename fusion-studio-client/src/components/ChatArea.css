@@ -194,12 +194,6 @@
   color: var(--chat-accent-color, var(--theme-primary));
 }
 
-.rv-secondary-header-identity,
-.rv-secondary-header-identity .material-symbols-outlined,
-.rv-secondary-header-identity-name {
-  color: var(--chat-accent-color, var(--cli-accent, var(--text-primary)));
-}
-
 /* Mirror of .rv-collapse-btn: absolutely positioned, sized to its 20px icon. */
 .rv-chat-header-btn--left {
   position: absolute;
@@ -230,6 +224,23 @@
   background: var(--chat-content-bg, var(--bg-solid, #000));
   border: none;
   border-radius: var(--chat-input-border-radius, 15px);
+}
+
+.rv-chat-submission-feedback {
+  color: var(--text-secondary, currentColor);
+  font-size: var(--chat-status-font-size, 12px);
+  line-height: 1.35;
+}
+
+.rv-chat-submission-check {
+  margin-inline-start: var(--space-xs, 6px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-link, var(--text-primary, currentColor));
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .rv-chat-composer-shell .rv-chat-input-container {

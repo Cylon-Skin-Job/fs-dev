@@ -89,7 +89,7 @@ describe('audit subscriber chatlog finalization', () => {
 
     const manager = new modules.ThreadManager({ projectRoot, workspaceId });
     await manager.createThread(threadId, 'Audit Thread', { harnessId: 'opencode' });
-    const chatFile = manager._createChatFile(threadId);
+    const chatFile = manager.chatlogMirror.file(threadId);
     await chatFile.write('Audit Thread', [
       { role: 'user', content: 'stale markdown', hasToolCalls: false },
     ]);
@@ -425,4 +425,40 @@ describe('audit subscriber chatlog finalization', () => {
     expect(JSON.parse(rows[0].metadata).terminalError).toEqual(safeEnvelope());
     expect(saved.metadata.terminalError).toEqual(safeEnvelope());
   });
+  test('SQLite terminal save failure publishes no saved ACK and retains the exact partial runtime snapshot', async () => {
+    const projectRoot = path.join(tempRoot, 'workspace');
+    const workspaceId = 'audit-workspace';
+    const threadId = 'audit-terminal-failure';
+    fs.mkdirSync(projectRoot, { recursive: true });
+    const manager = new modules.ThreadManager({ projectRoot, workspaceId });
+    await manager.createThread(threadId, 'Failure', { harnessId: 'opencode' });
+    const db = modules.db.getDb();
+    await db.raw("CREATE TRIGGER reject_terminal BEFORE INSERT ON exchanges BEGIN SELECT RAISE(ABORT, 'terminal unavailable'); END");
+    const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
+    const { createCanonicalDrainControl, createCanonicalRouteContext } = require('../../lib/thread/canonical-drain-context');
+    const { createCanonicalChatEventApplier } = require('../../lib/wire/canonical-chat-event-applier');
+    const key = { workspaceId, projectRoot, workspaceEpoch: 'fault-epoch', scope: 'project', threadId };
+    const route = createCanonicalRouteContext({ ...key, workspace: `workspace:${workspaceId}`,
+      acceptedUserInput: 'exact accepted input', attachments: [] });
+    const control = createCanonicalDrainControl({ drainId: 'save-failure', runtimeKey: key,
+      touchThreadSession() {}, stopHarness: async () => {} });
+    threadRuntimeManager.claimActiveDrain(key, control, route);
+    const saved = jest.fn();
+    modules.eventBus.on('chat-turn:saved', saved);
+    modules.auditSubscriber.startAuditSubscriber();
+    const applier = createCanonicalChatEventApplier({ emit: modules.eventBus.emit,
+      checkSettingsBounce: () => null, generateTurnId: () => 'fault-turn' });
+    const context = { route, control };
+    applier.applyChatEvent({ type: 'turn_begin', payload: {} }, null, context);
+    threadRuntimeManager.bindTurnToDrain(key, control.drainId, 'fault-turn');
+    applier.applyChatEvent({ type: 'content', payload: { text: 'exact partial response' } }, null, context);
+    await applier.applyChatEvent({ type: 'turn_end', payload: { reason: 'interrupted', partial: true } }, null, context);
+    await expect(modules.auditSubscriber.drainAuditSaves()).rejects.toMatchObject({ message: expect.stringContaining('terminal unavailable') });
+    expect(await db('exchanges').where({ thread_id: threadId })).toEqual([]);
+    expect(saved).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getLiveTurn(key)).toMatchObject({ turnId: 'fault-turn',
+      userInput: 'exact accepted input', fullText: 'exact partial response', status: 'interrupted' });
+    expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+  });
+
 });

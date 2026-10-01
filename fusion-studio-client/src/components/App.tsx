@@ -1,6 +1,11 @@
-import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
-import { clampPaneWidth, usePanelStore } from '../state/panelStore';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { isComposingKeyboardEvent } from '../lib/composition-key';
+import { usePanelStore } from '../state/panelStore';
 import { useWorkspaceStore } from '../state/workspaceStore';
+import {
+  flushBoundView,
+  flushBoundWorkspaceViews,
+} from '../lib/worksurface/worksurfaceController';
 
 import { useWebSocket } from '../hooks/useWebSocket';
 import { useWorkspaceKeyboard } from '../hooks/useWorkspaceKeyboard';
@@ -8,17 +13,13 @@ import { useScreenshotCapture } from '../hooks/useScreenshotCapture';
 import { useSharedWorkspaceStyles } from '../hooks/useSharedWorkspaceStyles';
 import { useThemeTokenBridge } from '../hooks/useThemeTokenBridge';
 import { useElectronMenu } from '../hooks/useElectronMenu';
+import { installChatActionConsumer } from '../lib/chat-action-controller';
 import { ToolsPanel } from './ToolsPanel';
-import { Sidebar } from './Sidebar';
-import { ChatArea } from './ChatArea';
-import { ContentArea } from './ContentArea';
+import { WorkspacePanel } from './WorkspacePanel';
 import { AppHeaderLayoutControls } from './ViewLayoutControls';
-import { LeftSidebarResize, LeftChatResize } from './ResizeHandle';
 import { Toast } from './Toast';
 import { ModalOverlay } from './Modal/ModalOverlay';
 import { FusionOverlay } from './Fusion/FusionOverlay';
-import { SecondaryChat, SecondaryChatSticky } from './SecondaryChat';
-import { SecondaryDockButton } from './SecondaryDockButton';
 import { EmptyStateView } from './EmptyStateView';
 import { WorkspaceRibbon } from './WorkspaceRibbon';
 import { WorkspaceCarousel } from './WorkspaceCarousel';
@@ -37,9 +38,6 @@ import {
 } from '../screenshots';
 import './App.css';
 
-// SPEC-26c-2: defaults for the 3-column layout
-const DEFAULT_WIDTHS = { leftSidebar: 220, leftChat: 360 };
-const DEFAULT_COLLAPSED = { leftSidebar: false, leftChat: false, rightCol: false, contentArea: false };
 // TINTS_SPEC §8c: all-off fallback when viewState hasn't loaded yet.
 const DEFAULT_TINTS = {
   leftPanel:     false,
@@ -48,112 +46,8 @@ const DEFAULT_TINTS = {
   borders: { threads: false, chat: false },
 };
 
-/**
- * Memoized panel content — only re-renders when its own panel prop changes,
- * NOT when currentPanel changes in the parent. This prevents all 7 panels
- * from re-rendering on every panel switch.
- *
- * RCC-0095: the single workspace chat renders unconditionally as part of
- * the workspace shell. A missing or malformed view folder may degrade
- * ContentArea, but never removes the chat column/sidebar.
- */
-interface PanelContentProps {
-  panel: string;
-  collapsedSidebar: boolean;
-  collapsedChat: boolean;
-  collapsedContent: boolean;
-  secondarySticky: boolean;
-}
-const PanelContent = memo(function PanelContent({ panel, collapsedSidebar, collapsedChat, collapsedContent, secondarySticky }: PanelContentProps) {
-  // SPEC-26c-2: [workspace sidebar][handle][workspace chat][handle][content]
-  // SECONDARY_CHAT_SPEC §7c: when secondary is sticky-right, it overlays
-  // the view's right column via absolute positioning + z-index. Grid stays
-  // at 5 tracks; sticky chat sits on top of the existing content.
-  return (
-    <>
-      <Sidebar panel={panel} collapsed={collapsedSidebar} />
-      <LeftSidebarResize panel={panel} />
-      <ChatArea
-        panel={panel}
-        collapsed={collapsedChat}
-        sidebarCollapsed={collapsedSidebar}
-        contentCollapsed={collapsedContent}
-        hideCollapsedRail
-      />
-      <LeftChatResize panel={panel} />
-      <ContentArea panel={panel} />
-      {secondarySticky && <SecondaryChatSticky />}
-    </>
-  );
-});
-
-/**
- * SPEC-26c-2: PanelWrapper reads viewStates from the store to compute
- * inline CSS variables for the grid and pass collapsed props to children.
- * Extracted so each panel reads only its own slice.
- */
-function PanelWrapper({ panelId, isActive }: {
-  panelId: string;
-  isActive: boolean;
-}) {
-  const viewState = usePanelStore((s) => s.viewStates[panelId]);
-  const secondaryMode = usePanelStore((s) => s.secondary?.mode ?? null);
-
-  // Fallback to defaults if viewState is not yet loaded or is partial.
-  // We merge to ensure that missing keys (like leftSidebar) don't result in "undefinedpx".
-  const widths = { ...DEFAULT_WIDTHS, ...(viewState?.widths ?? {}) };
-  const collapsed = { ...DEFAULT_COLLAPSED, ...(viewState?.collapsed ?? {}) };
-  const leftSidebarWidth = clampPaneWidth('leftSidebar', widths.leftSidebar);
-  const collapsedContent = collapsed.contentArea;
-
-  // Only the active panel renders the sticky secondary (one grid track
-  // at a time; the popup persists state across panel switches but the
-  // column is painted in whichever panel is currently active).
-  const secondarySticky = isActive && secondaryMode === 'sticky-right';
-  // When sticky chat is docked, the shared --right-col-w follows the chat
-  // width so the file tree visually matches. When undocked, it reverts to
-  // the view's own right-column width (widths.rightCol), so the file tree
-  // is never stuck at the chat's docked width after the user hits green.
-  const rightColWidth = secondarySticky
-    ? (widths.rightSecondary ?? 300)
-    : (widths.rightCol ?? 220);
-
-  const gridStyle: CSSProperties = {
-    '--left-sidebar-w':   collapsed.leftSidebar ? '0px' : `min(${leftSidebarWidth}px, 25vw)`,
-    '--left-sidebar-expanded-w': `min(${leftSidebarWidth}px, 25vw)`,
-    '--left-chat-w':      `${collapsed.leftChat ? 0 : Math.max(360, widths.leftChat)}px`,
-    '--right-col-w':      `${rightColWidth}px`,
-    '--file-tree-w':      `${collapsed.rightCol ? 0 : rightColWidth}px`,
-  } as CSSProperties;
-
-  const panelClasses = [
-    'rv-panel',
-    'rv-layout-dual-chat',
-    isActive ? 'active' : '',
-    collapsed.leftSidebar ? 'rv-panel--sidebar-collapsed' : '',
-    collapsedContent ? 'rv-panel--content-collapsed' : '',
-    secondarySticky ? 'rv-panel--secondary-sticky' : '',
-  ].filter(Boolean).join(' ');
-
-  return (
-    <div
-      data-panel={panelId}
-      data-secondary-sticky={secondarySticky ? 'true' : undefined}
-      className={panelClasses}
-      style={gridStyle}
-    >
-      <PanelContent
-        panel={panelId}
-        collapsedSidebar={collapsed.leftSidebar}
-        collapsedChat={collapsed.leftChat}
-        collapsedContent={collapsedContent}
-        secondarySticky={secondarySticky}
-      />
-    </div>
-  );
-}
-
 function App() {
+  useEffect(() => { installChatActionConsumer(); }, []);
   // WebSocket connection — must run BEFORE the loading gate
   // so discovery can complete and populate configs
   const runtimeStatus = useWebSocket();
@@ -182,9 +76,32 @@ function App() {
     void captureAndAttachScreenshot();
   }, []);
 
+  // CHAT-03 / SPEC-03 §6.1: before changing views, flush the outgoing bound key
+  // through the same acknowledgement gate. No platform view-switch veto exists;
+  // an unacknowledged capture is retained and surfaced as a warned conflict on
+  // the owning view rather than being described as saved.
+  const flushOutgoingView = useCallback((nextPanel: string) => {
+    const state = usePanelStore.getState();
+    if (nextPanel === state.currentPanel) return;
+    flushBoundView(state.activeWorkspaceId, state.currentPanel, 'view-change');
+  }, []);
+
   const handlePanelSwitch = useCallback((panelId: string) => {
+    flushOutgoingView(panelId);
     setCurrentPanel(panelId);
-  }, [setCurrentPanel]);
+  }, [flushOutgoingView, setCurrentPanel]);
+
+  // Orderly renderer teardown: best-effort flush of every bound view. There is
+  // no bounded close-veto in this build, so the in-app warned-discard conflict
+  // remains the discard path (recorded as a 03B deviation).
+  useEffect(() => {
+    const flushAllBound = () => {
+      const state = usePanelStore.getState();
+      flushBoundWorkspaceViews(state.activeWorkspaceId, 'teardown');
+    };
+    window.addEventListener('pagehide', flushAllBound);
+    return () => window.removeEventListener('pagehide', flushAllBound);
+  }, []);
 
   useEffect(() => {
     const handleScreenshotFlash = (event: Event) => {
@@ -211,6 +128,7 @@ function App() {
   // Keyboard: Escape defocuses content, Option+Up/Down cycles panels
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
+      if (isComposingKeyboardEvent(e)) return;
       (document.activeElement as HTMLElement)?.blur();
       return;
     }
@@ -229,8 +147,9 @@ function App() {
     const next = e.key === 'ArrowDown'
       ? ids[(idx + 1) % ids.length]
       : ids[(idx - 1 + ids.length) % ids.length];
+    flushOutgoingView(next);
     setCurrentPanel(next);
-  }, [configs, currentPanel, setCurrentPanel]);
+  }, [configs, currentPanel, flushOutgoingView, setCurrentPanel]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -387,7 +306,7 @@ function App() {
       {/* Panel Container */}
       <div className="rv-panel-container">
         {configs.map((config) => (
-          <PanelWrapper
+          <WorkspacePanel
             key={config.id}
             panelId={config.id}
             isActive={currentPanel === config.id}
@@ -397,8 +316,6 @@ function App() {
       <Toast />
       <ModalOverlay />
       <FusionOverlay open={fusionOpen} onClose={() => setFusionOpen(false)} />
-      <SecondaryChat />
-      <SecondaryDockButton />
       <WorkspaceRibbon />
       <WorkspaceCarousel />
 

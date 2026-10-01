@@ -16,6 +16,7 @@
  */
 
 import { usePanelStore } from '../../state/panelStore';
+import { onViewContentChanged } from '../../lib/worksurface/worksurfaceController';
 import type { CaptureTabRecordsDocument, ViewUIState } from '../../types/view-state';
 import { canonicalCapturePath } from './captureTabDomain';
 import {
@@ -252,7 +253,14 @@ export function createCaptureConnectedOwnerPorts(options: {
         [CAPTURE_TAB_RECORDS_FIELD]: captureTabRecordsDocument(next),
       } as Partial<ViewUIState>;
       state.setViewState(CAPTURE_PANEL_ID, documentPatch);
-      state._persistViewPatch(CAPTURE_PANEL_ID, documentPatch);
+      // CHAT-03 / SPEC-03 §5: the connected records lane is the visible Capture
+      // tab surface in a policy-ready workspace and is elected into the
+      // worksurface content. While the view is group-bound its adapter/
+      // controller is the sole writer, so the global `state:set` write-through
+      // is skipped and routed into the selected group's content lane.
+      if (!onViewContentChanged(CAPTURE_PANEL_ID)) {
+        state._persistViewPatch(CAPTURE_PANEL_ID, documentPatch);
+      }
     },
     subscribe: (listener) => usePanelStore.subscribe(listener),
     isCurrent: () => {

@@ -1,8 +1,28 @@
+// Unit persistence adapter: real lease/row validation is covered by isolated
+// public-route deletion/admission and submission integration tests.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
 'use strict';
 
 const { EventEmitter } = require('events');
 
 jest.mock('uuid', () => ({ v4: jest.fn(() => '00000000-0000-4000-8000-000000000001') }));
+
+jest.mock('../../lib/thread/prompt-submission-service', () => ({
+  begin: jest.fn(async () => ({ ok: true, replayed: false })),
+  isReserved: jest.fn(async () => true),
+  reject: jest.fn(async () => true),
+  accept: jest.fn(async (_identity, turnId, groups) => {
+    const activity = await groups.recordPromptAccepted({ threadId: _identity.threadId, turnId });
+    return { ok: activity.ok, receipt: { turnId, content: 'hello' } };
+  }),
+  claimDispatch: jest.fn(async () => true),
+  failBeforeDispatch: jest.fn(async () => true),
+  noteClaimedFailure: jest.fn(async () => true),
+}));
 
 jest.mock('../../lib/harness/compat', () => ({
   spawnThreadWire: jest.fn(),
@@ -36,7 +56,8 @@ const {
   threadRuntimeManager,
 } = require('../../lib/thread');
 const { SessionManager } = require('../../lib/thread/session-manager');
-const { createThreadWsHandlers, spawnAndSetupWire } = require('../../lib/ws/thread-ws-handlers');
+const { createThreadWsHandlers } = require('../../lib/ws/thread-ws-handlers');
+const { spawnAndSetupWire } = require('../../lib/ws/thread-provider-binding');
 const { emit: emitBusEvent, on: onBusEvent } = require('../../lib/event-bus');
 
 function makeWs() {
@@ -76,6 +97,9 @@ function makeManager() {
     }),
     deleteThread: jest.fn(() => Promise.resolve(true)),
     listThreads: jest.fn(() => Promise.resolve([])),
+    // SPEC-01 §5.4: prompt acceptance records the group activity before
+    // message:sent. Production managers always own the Thread Group service.
+    threadGroups: { activate: jest.fn(async () => ({ ok: true })), recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
   };
   manager._sessions = sessions;
   return manager;
@@ -133,7 +157,7 @@ test('trusted active assistant resume reuses the exact live provider through the
     suspend: jest.fn(async () => {}),
     list: jest.fn(async () => []),
   };
-  manager._enforceSessionLimit = jest.fn(async () => {});
+
   manager.getThread = jest.fn(async () => ({ entry: { harnessId: 'opencode' } }));
   manager.getHistory = jest.fn(async () => ({ messages: [] }));
   manager.getRichHistory = jest.fn(async () => ({ exchanges: [] }));
@@ -215,7 +239,7 @@ test('assistant resume cannot transfer or announce a provider reserved by concur
     suspend: jest.fn(async () => {}),
     list: jest.fn(async () => []),
   };
-  manager._enforceSessionLimit = jest.fn(async () => {});
+
   manager.getThread = jest.fn(async () => ({ entry: { harnessId: 'opencode' } }));
   manager.getHistory = jest.fn(async () => ({ messages: [] }));
   manager.getRichHistory = jest.fn(async () => ({ exchanges: [] }));
@@ -311,7 +335,7 @@ test('disconnect retains its exact manager binding until canonical drain quiesce
     suspend: jest.fn(async () => {}),
     list: jest.fn(async () => []),
   };
-  manager._enforceSessionLimit = jest.fn(async () => {});
+
   const wire = new EventEmitter();
   wire.killed = false;
   wire.exitCode = null;
@@ -385,20 +409,18 @@ test('passive selection followed by warm/prompt shared spawn owns disconnect cle
   expect(manager.closeSession).toHaveBeenCalledWith('thread-b');
 });
 
-test('warm/prompt activation transfers active A to passively selected B before cleanup', async () => {
+test('warm/prompt activation preserves another active peer before cleanup', async () => {
   const ws = makeWs();
   const manager = makeManager();
   const session = { currentWorkspaceId: 'workspace-lifecycle', projectRoot: manager.projectRoot, wire: null };
   setState(ws, manager, 'thread-b', 'thread-a');
 
   const wire = await activateThroughSharedSpawn(ws, session, 'thread-b');
-  expect(manager.closeSession).toHaveBeenNthCalledWith(1, 'thread-a');
+  expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.openSession).toHaveBeenCalledWith('thread-b', wire, ws, { workspaceEpoch: null });
-  expect(manager.openSession.mock.invocationCallOrder[0])
-    .toBeLessThan(manager.closeSession.mock.invocationCallOrder[0]);
 
   await ThreadWebSocketHandler.cleanup(ws);
-  expect(manager.closeSession).toHaveBeenNthCalledWith(2, 'thread-b');
+  expect(manager.closeSession).toHaveBeenCalledWith('thread-b');
 });
 
 test('duplicate same-thread activation fails target CAS without closing the live predecessor', async () => {
@@ -464,75 +486,35 @@ test('occupied target activation preserves the connection-owned predecessor', as
   expect(ThreadWebSocketHandler.getState(ws).activatedThreadId).toBe('thread-a');
 });
 
-test('predecessor retirement failure restores a same-wire target to its prior owner', async () => {
+test('same-connection peer activation never invokes predecessor retirement', async () => {
   const ws = makeWs();
-  const otherWs = makeWs();
   const manager = makeManager();
   const wireA = { pid: 211, killed: false };
   const wireB = { pid: 212, killed: false };
-  const target = {
-    threadId: 'thread-b', wireProcess: wireB, ws: otherWs,
-    state: 'active', workspaceEpoch: 'epoch-other',
-  };
-  manager.getSession = jest.fn(threadId => (threadId === 'thread-b' ? target : null));
-  manager.openSession.mockImplementation(async (_threadId, _wire, ownerWs, options = {}) => {
-    target.ws = ownerWs;
-    target.workspaceEpoch = options.workspaceEpoch || null;
-  });
-  manager.restoreSessionOwner.mockImplementation(async (
-    _threadId, expectedSession, expectedWire, expectedWs, previous,
-  ) => {
-    if (expectedSession !== target || expectedWire !== wireB || target.ws !== expectedWs) return false;
-    target.ws = previous.ws;
-    target.workspaceEpoch = previous.workspaceEpoch;
-    return true;
-  });
-  manager.closeSession.mockImplementation(async (threadId) => {
-    if (threadId === 'thread-a') throw new Error('injected predecessor retirement failure');
-    throw new Error('target must be restored, not closed');
-  });
-  setState(ws, manager, 'thread-b', 'thread-a', 'epoch-new-owner');
-
-  await expect(ThreadWebSocketHandler.activateThreadSession(
-    ws, 'thread-b', wireB,
-  )).rejects.toThrow('injected predecessor retirement failure');
-
-  expect(manager.restoreSessionOwner).toHaveBeenCalledTimes(1);
-  expect(target).toMatchObject({
-    wireProcess: wireB, ws: otherWs, state: 'active', workspaceEpoch: 'epoch-other',
-  });
-  expect(manager.closeSession).toHaveBeenCalledTimes(1);
-  expect(manager.closeSession).toHaveBeenCalledWith('thread-a');
-  expect(attachClientToWire).not.toHaveBeenCalled();
-  expect(wireA.killed).toBe(false);
-  expect(wireB.killed).toBe(false);
+  await manager.openSession('thread-a', wireA, ws);
+  manager.closeSession.mockImplementation(async () => { throw Error('must not retire peer'); });
+  setState(ws, manager, 'thread-a', 'thread-a', 'epoch-same');
+  await ThreadWebSocketHandler.activateThreadSession(ws, 'thread-b', wireB);
+  expect(manager.getSession('thread-a').wireProcess).toBe(wireA);
+  expect(manager.getSession('thread-b').wireProcess).toBe(wireB);
+  expect(manager.closeSession).not.toHaveBeenCalled();
   manager.closeSession.mockResolvedValue(true);
 });
 
-test('target exit while predecessor retires rolls back without publishing ownership', async () => {
+test('target exit during activation rolls back without stopping a peer', async () => {
   const ws = makeWs();
   const manager = makeManager();
-  const wireB = { pid: 221, killed: false, exitCode: null, signalCode: null };
-  manager.closeSession.mockImplementation(async (threadId) => {
-    manager._sessions.delete(threadId);
-    if (threadId === 'thread-a') {
-      wireB.killed = true;
-      wireB.exitCode = 0;
-    }
-    return true;
+  const wire = { pid: 221, killed: false, exitCode: null };
+  manager.openSession.mockImplementation(async (threadId, wireProcess, owner) => {
+    manager._sessions.set(threadId, { threadId, wireProcess, ws: owner, state:'active' });
+    wire.exitCode = 0;
   });
-  setState(ws, manager, 'thread-b', 'thread-a', 'epoch-exit-race');
-
-  await expect(ThreadWebSocketHandler.activateThreadSession(
-    ws, 'thread-b', wireB,
-  )).rejects.toThrow('Thread activation target exited or changed during predecessor retirement');
-
-  expect(manager.closeSession.mock.calls.map(([threadId]) => threadId)).toEqual([
-    'thread-a', 'thread-b',
-  ]);
-  expect(manager.getSession('thread-b')).toBeUndefined();
+  setState(ws, manager, 'thread-a', 'thread-a');
+  await expect(ThreadWebSocketHandler.activateThreadSession(ws, 'thread-b', wire))
+    .rejects.toThrow('Thread activation target exited before publication');
+  expect(manager.closeSession).toHaveBeenCalledWith('thread-b');
+  expect(manager.closeSession).not.toHaveBeenCalledWith('thread-a');
   expect(attachClientToWire).not.toHaveBeenCalled();
-  expect(ThreadWebSocketHandler.getState(ws).activatedThreadId).toBeNull();
 });
 
 test('deleting passive B preserves unrelated active A', async () => {
@@ -540,7 +522,7 @@ test('deleting passive B preserves unrelated active A', async () => {
   const manager = makeManager();
   setState(ws, manager, 'thread-b', 'thread-a');
 
-  await ThreadWebSocketHandler.handleThreadDelete(ws, { threadId: 'thread-b' });
+  await ThreadWebSocketHandler.deleteThreadSession(ws, 'thread-b');
 
   expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.deleteThread).toHaveBeenCalledWith('thread-b');
@@ -553,9 +535,10 @@ test('deleting passive B preserves unrelated active A', async () => {
 test('deleting active A closes A while preserving passive B selection', async () => {
   const ws = makeWs();
   const manager = makeManager();
+  await manager.openSession('thread-a', { pid: 530 }, ws);
   setState(ws, manager, 'thread-b', 'thread-a');
 
-  await ThreadWebSocketHandler.handleThreadDelete(ws, { threadId: 'thread-a' });
+  await ThreadWebSocketHandler.deleteThreadSession(ws, 'thread-a');
 
   expect(manager.closeSession).toHaveBeenCalledWith('thread-a');
   expect(manager.deleteThread).toHaveBeenCalledWith('thread-a');
@@ -793,7 +776,7 @@ test('workspace bind retirement cancels the delayed assistant-resume list', asyn
   }
 });
 
-test('READY warm transfers active A to B before disconnect cleanup', async () => {
+test('READY warm preserves another active peer before disconnect cleanup', async () => {
   const ws = makeWs();
   const manager = makeManager();
   const session = { currentWorkspaceId: 'workspace-lifecycle', projectRoot: manager.projectRoot, wire: null };
@@ -817,14 +800,14 @@ test('READY warm transfers active A to B before disconnect cleanup', async () =>
     spawnAndSetupWire: jest.fn(),
   });
 
-  expect(manager.closeSession).toHaveBeenNthCalledWith(1, 'thread-a');
+  expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.openSession).toHaveBeenCalledWith('thread-b', wire, ws, { workspaceEpoch: null });
   expect(ThreadWebSocketHandler.getState(ws)).toMatchObject({
     threadId: 'thread-b',
     activatedThreadId: 'thread-b',
   });
   await ThreadWebSocketHandler.cleanup(ws);
-  expect(manager.closeSession).toHaveBeenNthCalledWith(2, 'thread-b');
+  expect(manager.closeSession).toHaveBeenCalledWith('thread-b');
 });
 
 test('READY warm reclaims exact manager ownership after another client previously owned the thread', async () => {
@@ -952,14 +935,14 @@ test('READY prompt transfers active A to B before workspace-switch cleanup', asy
     handleCanonicalHarnessEvent: jest.fn(),
   });
 
-  expect(manager.closeSession).toHaveBeenNthCalledWith(1, 'thread-a');
+  expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.openSession).toHaveBeenCalledWith('thread-b', wire, ws, { workspaceEpoch: null });
   ThreadWebSocketHandler.setPanel(ws, 'chat', {
     projectRoot: '/tmp/spec00c-next-workspace',
     workspaceId: 'workspace-next',
   });
   await new Promise(resolve => setImmediate(resolve));
-  expect(manager.closeSession).toHaveBeenNthCalledWith(2, 'thread-b');
+  expect(manager.closeSession).toHaveBeenCalledWith('thread-b');
   expect(ThreadWebSocketHandler.getState(ws)).toMatchObject({
     threadId: null,
     activatedThreadId: null,
@@ -999,9 +982,7 @@ test('concurrent B/C transfers serialize and disconnect closes the sole final ow
 
   releaseB();
   await Promise.all([activateB, activateC]);
-  expect(manager.closeSession.mock.calls.map(([threadId]) => threadId)).toEqual([
-    'thread-a', 'thread-b',
-  ]);
+  expect(manager.closeSession).not.toHaveBeenCalled();
   expect(manager.openSession.mock.calls.map(([threadId]) => threadId)).toEqual([
     'thread-b', 'thread-c',
   ]);
@@ -1207,4 +1188,89 @@ test('superseded workspace epoch rejects before spawning a provider', async () =
   expect(spawnThreadWire).not.toHaveBeenCalled();
   expect(manager.openSession).not.toHaveBeenCalled();
   expect(ws.send).not.toHaveBeenCalled();
+});
+
+test('eager wire warmup cannot reactivate a fenced runtime when readiness arrives late', async () => {
+  const ws = makeWs();
+  const manager = makeManager();
+  const session = { currentWorkspaceId: manager.workspaceId, projectRoot: manager.projectRoot,
+    workspaceEpoch: 'fenced-epoch', workspaceBindingState: 'active', wire: null };
+  setState(ws, manager, 'thread-b', null, session.workspaceEpoch);
+  let ready;
+  const delay = new Promise(resolve => { ready = resolve; });
+  const wire = { _stopSession: jest.fn(async () => {}) };
+  spawnThreadWire.mockReturnValue(wire);
+  const opening = spawnAndSetupWire({ ws, session, projectRoot: manager.projectRoot, threadId: 'thread-b',
+    wireLifecycle: { awaitHarnessReady: () => delay, setupWireHandlers: jest.fn(), initializeWire: jest.fn() } });
+  const key = { workspaceId: manager.workspaceId, projectRoot: manager.projectRoot,
+    workspaceEpoch: session.workspaceEpoch, threadId: 'thread-b', scope: 'project' };
+  threadRuntimeManager.fenceResource(key);
+  ready();
+  await expect(opening).rejects.toThrow('Runtime changed during warmup');
+  expect(threadRuntimeManager.getRuntime(key)).toBeNull();
+  expect(manager.openSession).not.toHaveBeenCalled();
+  expect(wire._stopSession).toHaveBeenCalled();
+  expect(ws.send).not.toHaveBeenCalled();
+});
+
+test('workspace retirement closes all exact connection peers and preserves another connection', async () => {
+  const ws = makeWs(), other = makeWs(), manager = makeManager();
+  for (const [id, owner] of [['a',ws],['b',ws],['foreign',other]]) {
+    await manager.openSession(id, { pid: 900 + id.length }, owner, { workspaceEpoch:'epoch-multi' });
+  }
+  manager.getOwnedSessionIds = owner => [...manager._sessions.values()].filter(s=>s.ws===owner).map(s=>s.threadId);
+  setState(ws,manager,'b','b','epoch-multi');
+  await ThreadWebSocketHandler.retireWorkspaceBinding(ws);
+  expect(manager.closeSession.mock.calls.map(([id])=>id)).toEqual(['a','b']);
+  expect(manager.getSession('foreign').ws).toBe(other);
+  expect(unregisterWireForClient.mock.calls.map(([id])=>id)).toEqual(['a','b']);
+});
+
+test('retirement attempts every owned peer, preserves failed ownership, and retries', async () => {
+  const ws = makeWs(), manager = makeManager();
+  manager.getOwnedSessionIds = owner => [...manager._sessions.values()].filter(s=>s.ws===owner).map(s=>s.threadId);
+  for (const id of ['refusing', 'healthy']) await manager.openSession(id, { pid: 911 }, ws);
+  setState(ws,manager,'healthy','healthy','epoch-multi');
+  const close = manager.closeSession.getMockImplementation();
+  manager.closeSession.mockImplementation(async id => {
+    if (id === 'refusing') throw Error('provider still live');
+    return close(id);
+  });
+  await expect(ThreadWebSocketHandler.retireWorkspaceBinding(ws)).rejects.toThrow('provider still live');
+  expect(manager.closeSession.mock.calls.map(([id])=>id)).toEqual(['refusing','healthy']);
+  expect(manager.getSession('refusing').ws).toBe(ws);
+  expect(manager.getSession('healthy')).toBeUndefined();
+  expect(ThreadWebSocketHandler.getState(ws).workspaceRetired).toBe(true);
+  expect(unregisterWireForClient.mock.calls.map(([id])=>id)).toEqual(['refusing','healthy']);
+  manager.closeSession.mockImplementation(close);
+  await ThreadWebSocketHandler.cleanup(ws);
+  expect(manager._sessions.size).toBe(0);
+  expect(ThreadWebSocketHandler.getState(ws)).toBeUndefined();
+});
+
+test.each(['retireWorkspaceBinding', 'cleanup'])('%s waits for admitted activation and discovers its retained target', async method => {
+  const ws = makeWs(), manager = makeManager();
+  manager.getOwnedSessionIds = owner => [...manager._sessions.values()].filter(s=>s.ws===owner).map(s=>s.threadId);
+  await manager.openSession('a', { pid: 921 }, ws);
+  let entered, release;
+  const started = new Promise(resolve => { entered=resolve; });
+  const blocked = new Promise(resolve => { release=resolve; });
+  const open=manager.openSession.getMockImplementation();
+  manager.openSession.mockImplementation(async (...args) => { entered(); await blocked; return open(...args); });
+  setState(ws,manager,'a','a','epoch-queued');
+  const activation=ThreadWebSocketHandler.activateThreadSession(ws,'b',{pid:922});
+  const rejected=expect(activation).rejects.toThrow('rollback pending');
+  await started;
+  const close=manager.closeSession.getMockImplementation();
+  let first=true;
+  manager.closeSession.mockImplementation(async id => {
+    if(id==='b' && first) { first=false; throw Error('rollback pending'); }
+    return close(id);
+  });
+  const retirement=ThreadWebSocketHandler[method](ws);
+  release();
+  await rejected;
+  await retirement;
+  expect(manager._sessions.size).toBe(0);
+  expect(manager.closeSession.mock.calls.map(([id])=>id)).toEqual(['b','a','b']);
 });

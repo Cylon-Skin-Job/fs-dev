@@ -121,6 +121,7 @@ function trackEffect(event, result) {
 
 async function drainEventEffects(identity, {
   timeoutMs = 3_000,
+  signal,
   monotonicNow = () => performance.now(),
   setTimer = setTimeout,
   clearTimer = clearTimeout,
@@ -129,19 +130,24 @@ async function drainEventEffects(identity, {
   if (!key) return Object.freeze({ drained: false });
   const deadline = monotonicNow() + Math.max(0, timeoutMs);
   while (true) {
+    if (signal?.aborted) return Object.freeze({ drained: false });
     const effects = inFlightEffects.get(key);
     if (!effects || effects.size === 0) return Object.freeze({ drained: true });
     const remaining = Math.max(0, deadline - monotonicNow());
     if (remaining <= 0) return Object.freeze({ drained: false });
     let timer;
+    let abort;
     const completed = await Promise.race([
       Promise.allSettled([...effects]).then(() => true),
       new Promise((resolve) => {
+        abort = () => resolve(false);
+        signal?.addEventListener('abort', abort, { once: true });
         timer = setTimer(() => resolve(false), remaining);
         timer?.unref?.();
       }),
     ]);
     if (timer) clearTimer(timer);
+    if (abort) signal?.removeEventListener('abort', abort);
     if (!completed) return Object.freeze({ drained: false });
   }
 }
