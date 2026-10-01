@@ -4,6 +4,33 @@ Unresolved questions that need decisions before implementation.
 
 ---
 
+## 2026-09-16 — Harness runaway incident; SPEC-12 bounds packet drafted
+
+**Status:** queued — runaway process killed; containment scoped by
+`SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md` (drafted 2026-09-16,
+awaiting owner dispatch).
+
+**Incident.** An orphaned `node --test e2e/office/fixture-lifecycle.test.mjs`
+(parent shell died; reparented to PID 1) spun at ~99% CPU for ~46 hours from
+2026-09-15 00:32 until an operator killed it 2026-09-16 ~21:55. The same
+investigation observed a runtime-triggered `whisper-cli` cmake/GGML compile.
+
+**Root cause.** The harness bounds nothing: no parent-loss watch on the
+`node --test` runner path (the existing watch covers only
+`run-isolated-electron.mjs` and `isolated-electron-output-main.cjs`), no run
+deadline, no disk preflight, and no guard preventing
+`lib/transcription/index.js:109-136` from downloading the model or building
+whisper-cli when a staged runtime lacks assets. The disk-amplification half of
+this class was already fixed by the post-acceptance CoW clone + owner lease +
+stale sweep change.
+
+**Resolution path.** SPEC-12 defines bounded runs, an orphan watchdog on the
+missing entry points, disk/CoW guards, a fail-closed no-network/no-build asset
+check, and a janitor extension. Full-lane validation remains limited by the
+2026-09-14 lane blocker below.
+
+---
+
 ## 2026-09-14 — Office browser lane blocked after Trusted Fusion Shell Authority
 
 **Status:** open — pre-existing (reproduced at clean baseline `5f46d1a`, before

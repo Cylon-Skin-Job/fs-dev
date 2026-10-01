@@ -1,5 +1,10 @@
 'use strict'
 
+// Single source for the parent-loss poll cadence. The ESM bounds surface
+// (harness-bounds.mjs) re-exports this value so every entry point shares one
+// literal; callers may still pass an explicit `intervalMs` helper option.
+const DEFAULT_PARENT_WATCH_INTERVAL_MS = 250
+
 function processIsAlive(pid) {
   if (!Number.isSafeInteger(pid) || pid <= 1) return false
   try {
@@ -29,7 +34,7 @@ function createParentLifecycleWatch(options = {}) {
   const expectedParentPid = options.expectedParentPid ?? process.ppid
   const readParentPid = options.readParentPid ?? (() => process.ppid)
   const isAlive = options.isAlive ?? processIsAlive
-  const intervalMs = options.intervalMs ?? 250
+  const intervalMs = options.intervalMs ?? DEFAULT_PARENT_WATCH_INTERVAL_MS
   if (!Number.isSafeInteger(expectedParentPid) || expectedParentPid < 0) {
     throw new TypeError('Office E2E parent watch requires a valid initial parent PID')
   }
@@ -82,6 +87,7 @@ function createParentLifecycleWatch(options = {}) {
 }
 
 module.exports = {
+  DEFAULT_PARENT_WATCH_INTERVAL_MS,
   createParentLifecycleWatch,
   parentLossError,
   processIsAlive,

@@ -8,9 +8,11 @@ import {
   finalizeOfficeProcessLifecycle,
   installOfficeSignalCleanup,
   officeRuntimeEnvironment,
+  prepareOfficeRuntimeLaneAssets,
   startOfficeOwnedProcess,
   validateOfficeFixtureOptions,
 } from './fixture-lifecycle.mjs'
+import { armOfficeHarnessLifetime } from './harness-bounds.mjs'
 
 const lifecycleStateKey = Symbol.for('fusion-studio.office-e2e.playwright-lifecycle')
 
@@ -257,14 +259,25 @@ export default async function globalSetup() {
   await assertPortAvailable(port)
 
   let lifecycle
+  let harnessLifetime = null
   const removeSignalHandlers = installOfficeSignalCleanup()
   try {
     lifecycle = await createOfficeProcessLifecycle(fixtureOptions)
     removeSignalHandlers.attach(lifecycle)
-    globalThis[lifecycleStateKey] = { lifecycle, removeSignalHandlers }
+    // R1: the Playwright runner path self-terminates on parent loss. Playwright
+    // owns the per-test and global run timeouts, so only the parent watch is
+    // armed here; its bounded cleanup finalizes the owned lifecycle.
+    harnessLifetime = armOfficeHarnessLifetime({
+      deadlineMs: null,
+      role: 'office-playwright-global-setup',
+    })
+    globalThis[lifecycleStateKey] = { harnessLifetime, lifecycle, removeSignalHandlers }
     seedCaptureRehydrationFixtures(lifecycle.fixture)
 
     const runtime = createOfficeRuntimeLayout(lifecycle.fixture)
+    // R4: supply and verify the transcription model/runtime assets before the
+    // isolated server lane is spawned; a missing asset fails closed here.
+    prepareOfficeRuntimeLaneAssets(runtime)
     const runtimeEnvironment = officeRuntimeEnvironment(runtime)
     const build = startOfficeOwnedProcess(lifecycle, 'npm', ['run', 'build'], {
       cwd: runtime.runtimeClientRoot,
@@ -306,6 +319,7 @@ export default async function globalSetup() {
     } catch (candidate) {
       cleanupError = candidate
     } finally {
+      harnessLifetime?.stop()
       removeSignalHandlers()
       delete globalThis[lifecycleStateKey]
       delete process.env.FUSION_OFFICE_E2E_BASE_URL

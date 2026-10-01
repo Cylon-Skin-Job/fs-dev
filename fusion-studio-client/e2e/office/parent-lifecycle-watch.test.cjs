@@ -101,9 +101,16 @@ test('presentation runner and Electron wrapper wire independent parent watches t
   const runner = fs.readFileSync(runnerPath, 'utf8')
   const wrapper = fs.readFileSync(wrapperPath, 'utf8')
 
-  assert.match(runner, /role: 'presentation-output-runner'/)
+  // The presentation-output scenario keeps its dedicated role; every other
+  // scenario shares the isolated runner role.
+  assert.match(runner, /options\.scenario === 'presentation-output'/)
+  assert.match(runner, /'presentation-output-runner'/)
+  assert.match(runner, /'isolated-electron-runner'/)
   assert.match(runner, /parentWatch\.race\(Promise\.resolve\(promise\)\)/)
-  assert.match(runner, /await finalizeOfficeProcessLifecycle\(lifecycle, \{ reason \}\)/)
+  // The SPEC-11 export repair routes failure cleanup through the injectable
+  // finalizer and a classification helper; assert that current wiring.
+  assert.match(runner, /finalizationReasonForIsolatedElectronFailure\(error, applicationLaunchStarted\)/)
+  assert.match(runner, /await finalizeLifecycle\(lifecycle, \{ reason \}\)/)
   assert.match(wrapper, /role: 'presentation-output-electron-wrapper'/)
   assert.match(wrapper, /launcherParentWatch\.lost\.then/)
   assert.match(wrapper, /fail\(`\$\{error\.code\}/)
@@ -156,6 +163,9 @@ test('wrapper parent loss still exits when its bounded ledger evidence cannot be
   vm.runInNewContext(source, {
     Buffer,
     console,
+    // The wrapper exports helpers for its own tests and ends with
+    // `module.exports = ...`; provide the CommonJS module shell in the sandbox.
+    module: { exports: {} },
     process: {
       env: {
         FUSION_OFFICE_E2E_DOWNLOAD_LEDGER: '/owned/download-ledger.json',
