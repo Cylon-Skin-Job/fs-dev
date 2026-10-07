@@ -1,0 +1,74 @@
+{
+  "command": "self-test",
+  "checked_at": "2026-09-21T11:56:45Z",
+  "cases": [
+    {
+      "case": "good",
+      "passed": true
+    },
+    {
+      "case": "bad_yaml",
+      "passed": true
+    },
+    {
+      "case": "native_date",
+      "passed": true
+    },
+    {
+      "case": "bad_date",
+      "passed": true
+    },
+    {
+      "case": "duplicate",
+      "passed": true
+    },
+    {
+      "case": "directory",
+      "passed": true
+    },
+    {
+      "case": "missing_link",
+      "passed": true
+    },
+    {
+      "case": "missing_fragment",
+      "passed": true
+    },
+    {
+      "case": "reference_link",
+      "passed": true
+    },
+    {
+      "case": "duplicate_heading_slug",
+      "passed": true
+    },
+    {
+      "case": "intermediate_future",
+      "passed": true
+    },
+    {
+      "case": "final_future_rejected",
+      "passed": true
+    },
+    {
+      "case": "unauthorized_edit",
+      "passed": true
+    },
+    {
+      "case": "overwritten_snapshot",
+      "passed": true
+    },
+    {
+      "case": "stamp_body_alteration",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "passed": 15,
+    "total": 15
+  },
+  "failures": [],
+  "exclusions": [
+    "Disposable fixture only; no live wiki mutation"
+  ]
+}

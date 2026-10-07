@@ -1,0 +1,813 @@
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md
+@@ -10,29 +10,77 @@
+     - Chat Universal Event Bus
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
++    - fusion-studio-server/lib/startup.js
++    - fusion-studio-server/lib/event-registry/index.js
++    - fusion-studio-server/lib/event-registry/reconcile.js
++    - fusion-studio-server/lib/event-registry/policy.js
++    - fusion-studio-server/lib/event-registry/filter.js
++    - fusion-studio-server/lib/event-registry/subscription-seed-catalog.js
++    - fusion-studio-server/lib/subscriptions/admission.js
++    - fusion-studio-server/lib/subscriptions/generation-compiler.js
++    - fusion-studio-server/lib/subscriptions/controller.js
++    - fusion-studio-server/lib/subscriptions/capability-factory.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before adding a new event producer, event subscriber, or cross-system event path.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-The Universal Event Bus is the canonical firehose for application facts. Events are emitted after something happened. They are not a request/response API and should not become a second command router.
++Use this page before adding an event producer, subscriber or cross-system event path. Commands enter the owning controller; facts describe command acceptance, completed work or observations. The bus is not a request/response command router.
+ 
+-## Boundaries
++## Current startup and authority
+ 
+-- Producers emit facts with enough metadata for subscribers to decide relevance.
+-- Subscribers filter, compact, persist, broadcast, or trigger follow-up work.
+-- Canonical candidates pass schema validation or a validated-or-diagnosed publisher before canonical-only subscribers act. Record validation never becomes authorization or failure of the already-valid source operation.
+-- Canonical publication accepts only a privately registered `PreparedCanonicalCandidate`. `prepareCanonicalCandidate` strips caller-supplied proof fields, consumes upstream refs, and privately proves each registered atomic accepted-only relationship group. A missing, copied, stale, forged, mismatched, wrong-workspace, or otherwise unbound proof omits the whole affected relationship group with fixed value-free diagnostic `accepted_relationship_unbound`; it does not suppress an otherwise valid relationship-free base fact or affect the source operation. Whole-candidate suppression is reserved for an invalid required fact core, an unsanitizable base after relationship removal, an unrelated final schema error, or UEB failure. Admission clones/freezes the safe event, binds its allowlisted identity to an opaque ref, and freezes one `{ acceptedRef }` context. Every D01-admitted listener task calls exact ABI `listener(frozenEvent, deliveryContext)` with the same event/context/ref; bare-ref argument two is invalid. UEB returns `{ published: true, acceptedRef }` before listener code. Identity-sensitive consumers require `assertAcceptedDelivery`. A false publication result exposes no event/ref/context and queues nothing. Legacy `emit()` is non-migrated only.
+-- Source commands never await admission or a ref. A private per-command slot exposes only leased non-blocking `peekAccepted()` to frozen-registry producers. Command/producer `finally` paths close/release it; late/pending/terminal branches omit relationships, and private state is deleted only after close, terminal admission, and zero leases. SPEC-40 owns the exact slot API and race tests.
+-- Async listener chains preserve depth/trigger context across `await` boundaries using async-scoped context rather than process-global synchronous state. Concurrent root emissions remain isolated. Subscriber throws/rejections are logged and do not revoke an already true publish result.
+-- Resource sync, ledger persistence, metadata collectors, and future versioning consume accepted canonical events. TRIGGERS.md file-change execution remains on its one fail-open workspace-watcher path; mutation handlers do not add a second matcher, and canonical automation/resource events observe and correlate it without authorizing execution.
+-- New watchers or private event buses should not be added when the existing UEB pipeline can carry the event.
++`fusion-studio-server/lib/startup.js` initializes the System database and migrations, then `initializeEventRegistry` reconstructs effective authority before subscribers, watchers and public sockets start. Migration `034_event_registry_authority.js` owns schema, subscription and grant tables. `reconcileSystemSchemas` inserts missing locked shipped definitions and their initial grants, preserves existing rows and lifecycle reductions, and diagnoses collisions. It does not repair a modified locked definition by silently overwriting it or restore a removed grant. Invalid rows become ineffective in derived state; infrastructure initialization failure remains startup-fatal.
+ 
+-`UEB-D01` is OWNER APPROVAL REQUIRED before SPEC-40a/40b1a or first-package assembly. It must define exact admission/listener executor item and byte capacities, concurrency/fairness, enqueue/eviction/drop behavior, cancellation finalizers, per-task event/context/ref retained-byte and lifetime caps, never-settling isolation, and listener saturation. Byte accounting defines measured representation/encoding, object/container overhead, shared-event/context/ref apportionment, queued/active/cancelling ownership, charge/release points, cap precedence, and bounded cap-plus-one measurement. Every command has a bounded private owner cell whose atomic `open_empty|open_slot -> closed` transition makes completion/cancel/throw win safely over late installation; owner-cell initialization failure disables only provenance. UI preflight allocates no slot/link until all bounded data is ready; nullable slot allocation failure installs/offers nothing; install after close terminalizes/releases the new slot; and only after successful install does the fixed module-private offer receive the branded slot synchronously. Only its D01-created link enters task ownership. D01 defines global owner-cell/live-slot count/byte caps, per-slot/per-producer lease caps, repeated acquisition, slot/ref/lease lifetime, and the private nonserializable `AcceptedRefSlotTaskLink` representation/item/byte charge, atomic link-creation/admission-or-finalization transition, single-settlement rule, partial-state release, leaked-cell/link/lease expiry/forced cleanup, slot-registry shutdown, restart, and fixed value-free overload/leak diagnostics. Slot/lease exhaustion returns absent/null and releases bounded provenance state. Link creation/measurement/setup failure, rejection, or overflow invokes the internal fixed link finalizer, settles an installed slot once, terminates only provenance work, independently skips saturated listener deliveries, and never backpressures or retries a source operation. No queued owner cell/slot handle, caller callback, runnable, finalizer, or command-context handle is permitted. No capacity/accounting/default may be inferred.
++`event-registry/policy.js` checks canonical JSON/checksum, locked identity, enabled state, schema references, installed handler and requested-versus-granted capabilities. Requests do not grant themselves authority. The public initialized registry exposes read/validate access, not a human permission UI. Folder discovery cannot install or activate a handler. Platform migrations own schema evolution; the [System boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) excludes arbitrary plugin tables and self-grants.
++
++The subscription compiler selects the four built-in handler keys, validates exact required capability scopes and provider availability, then orders descriptors by priority and ordinal subscription ID. Filters allow exact event type/version and closed resource predicates for operation, kind and ingress panel; they are not arbitrary executable expressions. `file.command_accepted@1` is registered and publishable but is not an allowed subscription filter or a seeded ledger input.
++
++## Current governed admission
++
++`subscriptions/admission.js` seals one lexical publisher catalog and injects exact closures into the durable save and agent owners. It does not expose a public producer selector. The catalog is:
++
++| Producer | Fact |
++|---|---|
++| `system.file-save-controller` | `file.command_accepted@1`, `resource.mutated@1` |
++| `system.agent-tool-activity-controller` | `agent.tool_completed@1` |
++| `system.agent-resource-observer` | `resource.state_observed@1` |
++
++Each publisher accepts a private reservation plus a body. The reservation authority rereads durable producer state; admission binds producer/schema/workspace/operation/event/time and verifies the canonical input hash, validates the active schema, then deep-freezes the fact. Caller-supplied envelope fields in the body are rejected. Rejection returns `admitted: false`, null event ID and no deliveries. Replaying identical reserved input can redeliver the same event; admission is not a universal deduplication service.
++
++Save reservations come from `file_operations`. Agent reservations come from `agent_tool_activities` or `agent_resource_snapshots`; only those two publishers commit their producer admission state before dispatch. This asymmetry is intentional current behavior. Durable source state, rather than an older proposed accepted-reference graph, supplies the authority.
++
++## Current delivery and failure timing
++
++| Handler | Seeded input | Policy and bounded responsibility |
++|---|---|---|
++| `system.provenance-ledger` | `resource.mutated@1` | `required_ack`; append the exact save projection through a same-fact capability |
++| `system.agent-provenance-ledger` | Both agent facts | `required_ack`; invoke the durable ledger owner |
++| `system.agent-resource-observer` | `agent.tool_completed@1` | `required_ack`; validate/signal the durable observation queue, not perform detached filesystem observation in the callback |
++| `system.resource-render-projection` | `resource.mutated@1` | `best_effort`; publish File Viewer invalidation or freshness recovery |
++
++`controller.js` snapshots one generation per delivery, calls matching handlers in order and awaits each required acknowledgment for up to 2,000 ms. Best-effort promises are observed for rejection but not awaited. A required timeout does not cancel its handler; the controller retains it for drain, and application shutdown supplies the outer deadline. This is not the older proposal in which every listener runs in an independent nonwaiting executor.
++
++The publisher awaits reservation lookup, payload validation and delivery. `admitted: true` means admission succeeded even if delivery throws, times out, is absent or a later projection fails. Delivery `completed` means the callback resolved; inspect the owning durable state to learn whether ledger work stored, conflicted or was rescheduled. `invoked` is not persistence or client acknowledgment. Scoped capability contexts expose only the permitted same-fact append, scheduling, renderer message and fixed diagnostic operations; handlers receive no ambient database or bus authority.
++
++Reload atomically installs a valid generation. If compilation fails, only unchanged, independently revalidated prior descriptors survive; an authority-read failure clears the visible generation. In-flight work retains its selected generation. Reload is explicit/startup-driven, not a filesystem settings watcher.
++
++A save awaits command-fact publication before preparing its required preimage. Rejected command-fact admission can remain pending without denying the save, but failed operation reservation, durable preimage preparation or attempted-write recording prevents replacement. After replacement, admission/projection recovery must not reinterpret the completed write as an untouched target. Agent observations follow reported tool activity and do not authorize or reverse execution. See [Ledger Event Provenance](../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md) for persistence and reconciliation.
++
++## Legacy compatibility remains separate
++
++`lib/event-bus.js` still exports `emit`, `on` and the EventEmitter singleton. `emit` delivers type listeners then wildcard listeners under synchronous depth/same-event guards, with best-effort error handling. Its depth counter is process-local synchronous state, not a generalized async causal chain. Governed delivery never calls public `emit/on`; emitting a governed-looking topic cannot create admitted delivery.
++
++Chat, watchers and existing triggers still use legacy paths. The wildcard legacy ledger subscriber records only `workspace:switched`, `thread:state_changed` and `file:changed`; it cannot make every bus topic durable. Chat's adapter-normalized event naming does not imply admission into these four governed facts. Chat lifecycle remains owned by [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md).
++
++## Approved direction and open work
++
++Use one governed fact architecture, separate commands from facts, keep permission requests distinct from grants, and preserve honest timestamped observations without requiring causal verdicts. The accepted trusted save/subscription scope replaced older accepted-reference/lease/causal-proof prerequisites only for that bounded implementation. The accepted agent overlay adds normalized activity, eligible observation checkpoints and exactly two ledger facts; it does not activate the wider draft.
++
++General plugin emission/executors, canonical chat/tool/native-output schemas, causal graphs, canonical version events and broad automation remain future work. Older exact candidate/ref/lease APIs and executor capacities are proposals, not current APIs or mandated implementations. Resolve their material choices when a feature needs them; do not reopen the settled System boundary.
+ 
+ ## Related Pages
+ 
+ - [Decisions](../000-Events_And_Ledger/002-Decisions/PAGE.md)
++- [Taxonomy](../002-Event_Taxonomy/PAGE.md)
+ - [Universal Event Bus Standards](../../005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md)
+-- [Chat Universal Event Bus](../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md)
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md
+@@ -10,24 +10,42 @@
+     - Events Resource Events And Render Sync
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
++    - fusion-studio-server/lib/event-registry/seed-catalog.js
++    - fusion-studio-server/lib/event-registry/filter.js
++    - fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json
++    - fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json
++    - fusion-studio-server/lib/event-registry/schemas/agent-tool-completed-v1.json
++    - fusion-studio-server/lib/event-registry/schemas/resource-state-observed-v1.json
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before naming or classifying events.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-Fusion Studio events need stable categories so subscribers can filter without knowing every producer implementation.
++Use this page before naming or classifying events. A name's punctuation does not establish authority. Legacy topics, registered commands/queries, governed facts and renderer projections are different contracts.
+ 
+-## Event Families
++## Current registered vocabulary
+ 
+-- UI actions: button clicks, document edits, drag/drop, rename, move, delete, save, and send-to-chat.
+-- Chat lifecycle: send, stream, tool call, tool result, turn end, stop, and interruption.
+-- Harness activity: provider runs, model sessions, tool calls, and adapter-normalized events.
+-- Automation: trigger runs, scheduler runs, script runs, agent runs, and sync/import jobs.
+-- Resource mutations: file/folder create, modify, delete, rename, metadata changes, and symlink changes.
+-- Render/resource sync: cache invalidation, tree refresh, content refresh, style refresh, and registry refresh.
+-- External observations: filesystem changes seen by watcher without a known app, assistant, trigger, or script cause.
++`fusion-studio-server/lib/event-registry/seed-catalog.js` defines the shipped schema catalog. The event schemas use top-level `eventId`, `eventType`, `schemaVersion`, `occurredAt`, `workspaceId` and `operationId`; they do not implement the older universal `eventFamily`/`ids`/`provenance` envelope.
+ 
+-## Rule
++| Kind | Name/version | Meaning and current consumer |
++|---|---|---|
++| Command | `file_save@1` | Validated mediated UTF-8 save; a request, not a mutation fact |
++| Fact | `file.command_accepted@1` | Durable save acceptance; contains `commandId`, `origin`, `resource`, `intent`; no seeded subscriber or ledger row for this fact |
++| Fact | `resource.mutated@1` | Successful mediated save, `create` or `modify`; adds `commandAcceptedEventId`, `mutation`, `fileVersionId`; save ledger and renderer subscribers |
++| Fact | `agent.tool_completed@1` | Terminal activity, including schema statuses `completed`, `error`, `blocked`, `interrupted`; `origin`, `thread`, `tool`, `timing`, `resources`, `candidatesTruncated`; ledger and observation scheduling |
++| Fact | `resource.state_observed@1` | First/changed eligible `bytes` or `absent` checkpoint; `source`, `resource`, `observation`; agent ledger, with renderer work owned by durable projection jobs |
++| Projection | `resource:changed@1` | File Viewer invalidation after a mediated create/modify |
++| Projection | `resource:changed@2` | Agent observation invalidation with `first_observation`, `changed` or `unchanged`; does not assert a tool caused a mutation |
++| Projection | `resource:refresh_required@1` | Non-fact freshness recovery; no canonical mutation claim |
++| Query | `resource:provenance@1`, `agent:activity@1`, `file_tree@1`, `file_content@1` | Typed protocol contracts; registration alone says nothing about a mounted audit UI |
+ 
+-Do not overload one event name with multiple meanings. If subscribers need different behavior, the event type or metadata must make the distinction explicit.
++An unchanged observation may issue v2 invalidation without creating another observation fact/checkpoint. Tool status is a terminal activity classification, not a promise of successful execution or a synonym for the event name. Save-to-missing is create; separate create/move/rename/delete commands and arbitrary external writes have not become governed save facts.
++
++## Legacy topics
++
++Public `emit/on` uses colon topics such as `chat:*`, `workspace:switched`, `thread:state_changed` and `file:changed`, with `{type, timestamp, ...data}` rather than the governed envelope. The legacy ledger whitelist includes only the latter three exact names. Legacy watcher and trigger activity is not admission, causal proof or comprehensive provenance. See [Universal Event Bus](../001-Universal_Event_Bus/PAGE.md).
++
++## Direction and proposals
++
++Product domains include UI actions, chat/harness activity, automation, resource mutations, render synchronization and external observations. This is a useful conceptual taxonomy, not a list of registered governed families. General `ui.action`, `chat.tool.*`, `file.version` and audit/automation envelopes remain outside the implemented catalog. Do not add fields or register an event merely because a conceptual category exists. Approved intent favors distinct timestamped facts and unknown attribution where necessary; exact wider schemas and permission grammar require their own decisions.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md
+@@ -18,233 +18,47 @@
+     - UI Action Provenance Module
+     - Audit Query And Review Provenance Schema
+   source-files:
+-    - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
++    - fusion-studio-server/lib/subscriptions/admission.js
++    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
++    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
++    - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
++    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
++    - fusion-studio-server/lib/ledger/event-ledger.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Prefer one composable schema with registered reusable extensions, but leave decision-tagged findings unresolved until explicit owner approval.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-Use this page before changing event origin, source, actor, or causal metadata.
++Provenance records what Fusion knew, when it knew it and the identity of the responsible operation or observation. Observation and causation are separate. A path mentioned by a tool, a later file hash, a watcher callback or an admitted event identity does not alone prove who changed the file.
+ 
+-Provenance separates observation from causation. Chokidar can observe a mutation, but it usually cannot prove who caused it. UI commands, assistant tool calls, trigger runs, scheduler runs, scripts, and known system jobs should carry durable IDs when they initiate work.
++## Current carriers and identities
+ 
+-## Required Distinctions
++| Carrier | Identity and meaning | Limit |
++|---|---|---|
++| Save command/mutation | Server-reserved operation, command, acceptance-event, resource-event, resource and preimage-version IDs; `resource.path` is canonical workspace-relative identity while `resource.access` is ingress panel/path | `commandAcceptedEventId` references the reserved acceptance identity; it is not an older accepted-reference capability and need not prove delivery or a ledger row |
++| Save origin | `origin.kind = local_client`, server `connectionId`, `assurance = transport_only`, optional `reportedUiContext` | Reported view/tab/component context is historical context, not authenticated human identity, permission, a general UI action record or ownership of live view state |
++| Tool activity | `operationId` is the host activity ID; `thread` carries thread/turn, `tool` carries provider tool-call ID/name/status and optional argument/result fingerprints; reported and observed times are separate | Fingerprints do not publish raw output or prove execution changed a path; the activity is normalized separately from detailed Chat exchange content |
++| File observation | `operationId` is the observation ID; `source` links activity/edge/thread/turn/tool/harness; checkpoint and previous checkpoint IDs describe a path-scoped observed history | First observation is not a pre-tool image. Prior observed state need not immediately precede the tool's write; `absent` has no live resource ID |
++| Legacy ledger | Compatibility fields, inferred actor/source, correlation/causation values copied when present | `file:changed` defaults to actor `user`; this is heuristic attribution, not an authenticated user or accepted cause |
+ 
+-- `source`: the producer of the canonical event record.
+-- `origin`: the initiating actor or context that caused work.
+-- `observedBy`: the subsystem that detected the fact.
+-- `confidence`: whether attribution is direct, correlated, inferred, or unknown.
+-- `cause`: durable schema-approved upstream initiator IDs such as UI action ID, tool call ID, harness ID/run/event ID, automation run ID, or audit query ID. Trigger/scheduler/script/agent subtype cause IDs remain `AUT-D03`/finding-1 candidates. Chat turn, parent event, root event, correlation, and causation IDs live under `ids`.
+-- `eventId`: the canonical event/graph node ID. Domain-specific IDs belong inside the domain payload.
+-- `occurredAt`: the canonical event time. Use `observedAt` only for observer facts and `startedAt`/`endedAt`/`durationMs` only for lifecycle data.
+-- `context`: UI, client, route, scope, and active-resource context. Do not mix view/panel fields into resource or domain payloads.
++The four governed facts share only their actual registered top-level identity fields and domain-specific bodies. No universal common envelope, confidence enum, accepted-reference delivery ABI or generalized causal graph is implemented. Consult the exact [Taxonomy](../002-Event_Taxonomy/PAGE.md) and [Ledger Event Provenance](004-Ledger_Event_Provenance_Schema/PAGE.md) before adding fields.
+ 
+-## Unknown Is Valid
++## Failure boundaries
+ 
+-If the app cannot connect a file change to UI, assistant, trigger, scheduler, script, sync, import, or known system work, the mutation should remain external or unknown.
++Operational authentication/authorization, command shape, workspace/path safety and required save recovery protection can gate work. The mediated save requires a durable operation and exact eligible preimage before replacement. A storage or preimage failure there must prevent replacement; a blanket rule that versioning is always optional would violate the supported guarantee.
+ 
+-Sync, import, and known system jobs use `automation.runId` with an appropriate `automation.kind`; downstream canonical events reference that ID only through a registered builder binding that consumes the accepted automation reference.
++Optional reported UI context is sanitized and omitted when malformed, stale or oversized without rejecting otherwise valid work. After a filesystem replacement, failed admission or projection cannot make it un-happen; pending/conflict states and freshness recovery describe that failure. Tool provenance observes reported execution and cannot rewrite an executed result as failed. Admission and required acknowledgments are actually awaited at their owning boundaries; they are not guaranteed zero-latency side effects.
+ 
+-For watcher-only events, `source` can be the resource-event producer/enricher that produced the canonical event while `observedBy` is the workspace watcher that detected the filesystem fact. Reserve `resource-event-mapper` for derived render/cache projections such as `viewRefs`.
++## Approved direction
+ 
+-## Metadata Must Not Gate Valid Work
++Use timestamped facts with shared host identities where available, preserve unknown attribution and keep source evidence separate from causal conclusions. Record save/session grain rather than keystrokes. Historical copies support auditing/recovery while [System ownership](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) keeps connected applications and workspace content authoritative outside the System database. Restoration remains a separately permitted operation against that source.
+ 
+-Provenance is an observational and query system, not authorization for an otherwise valid user action. Validate the operation and its provenance separately.
++The trusted save/subscription agreement replaced older accepted-reference and broad versioning blockers only within that bounded scope. The agent extension separately covers normalized observational activity/fingerprints, sparse eligible checkpoints and two admitted ledger projections. The save-context extension reuses the existing carrier. None approves every older chat/tool/native-reference, automation, UI-action or graph design.
+ 
+-- Authentication, authorization, command shape, required mutation target, workspace resolution, and path safety are operational checks. They may reject an unsafe command before it executes.
+-- Missing or malformed provenance context, attribution IDs, active-view fields, cause links, native references, enrichment, hashes, token counts, ledger availability, or versioning availability must not reject, delay, roll back, or suppress an otherwise valid operation.
+-- Canonical IDs and timestamps that the server controls are generated by the accepting producer. Do not require the renderer to manufacture them as a condition of interaction.
+-- When attribution cannot be established, use `external` or `unknown` with honest confidence. When enrichment cannot be captured, use the schema's omission/unavailable form. When no trustworthy canonical provenance record can be built, emit a structured non-canonical diagnostic and continue the operation.
+-- A provenance, ledger, versioning, compaction, or audit subscriber failure is isolated from the source operation. It may retry/defer only under its owner-approved bounded idempotency policy, otherwise it skips/terminates its own record with a fixed diagnostic; it must not make the already-valid source action fail. Ledger production retry/defer remains blocked on `LED-D04`.
+-- Redaction failure fails closed for sensitive material by omitting that material or its derived hash/preview. It never fails the source operation. Whether a non-sensitive event core is canonical depends on the domain registry: only an explicitly registered failure-safe-core branch may be admitted.
++## Open design
+ 
+-An operationally necessary fact can still be required for a domain subscriber. For example, a resource invalidation needs a resolved workspace and canonical path. A mutation handler must establish those values as part of safely executing the mutation; optional provenance enrichment is not allowed to become a second gate.
+-
+-Some values are dual-use. A thread ID may be required to route a prompt, a provider tool-call ID may be required to return a tool result, and a workspace/path may be required to perform a mutation. Their operational copy can legitimately gate that operation. Failure to project or persist the same value into provenance after the operation is accepted cannot retroactively fail it. Implementations must keep those validation paths separate even when they use the same underlying value.
+-
+-## Common Core Envelope
+-
+-Every provenance leg should share one envelope. Domain schemas add registered payload extensions under keys such as `chat`, `tool`, `resourceMutation`, `ledgerEvent`, `fileVersion`, `automation`, `uiAction`, or `audit`. Multiple domain/sidecar keys are not implicitly authorized: finding 4 must settle whether chat/tool resource buckets are registered sidecars or folded into shared `resources[]` roles.
+-
+-```js
+-{
+-  schemaVersion,
+-  eventId,
+-  eventFamily,
+-  eventType,
+-  eventPhase,
+-  occurredAt,
+-  lifecycle: {
+-    startedAt,
+-    endedAt,
+-    durationMs,
+-    status
+-  },
+-  ids: {
+-    workspaceId,
+-    machineId,
+-    machineName,
+-    threadId,
+-    turnId,
+-    exchangeId,
+-    messageId,
+-    rootEventId,
+-    parentEventId,
+-    correlationId,
+-    causationId,
+-    serverMutationId,
+-    harnessId,
+-    harnessRunId,
+-    harnessEventId
+-  },
+-  actor: {
+-    type,
+-    id
+-  },
+-  provenance: {
+-    source: {
+-      type,
+-      module,
+-      path,
+-      handler
+-    },
+-    origin: {
+-      type,
+-      id
+-    },
+-    observedBy: {
+-      type,
+-      module,
+-      path,
+-      handler
+-    },
+-    confidence,
+-    cause: {
+-      uiActionId,
+-      toolCallId,
+-      harnessId,
+-      harnessRunId,
+-      harnessEventId,
+-      automationRunId,
+-      auditQueryId
+-    }
+-  },
+-  context: {
+-    scope,
+-    viewId,
+-    panelId,
+-    route,
+-    activeTabId,
+-    activeDocumentPath,
+-    activeResourcePath,
+-    selectedResourceId
+-  },
+-  resources: [
+-    {
+-      role,
+-      resourceId,
+-      resourceType,
+-      path,
+-      oldPath,
+-      relatedEventId,
+-      resourceEventId,
+-      fileVersionId
+-    }
+-  ],
+-  redaction: {
+-    status,
+-    policyId,
+-    policyVersion,
+-    omissions: []
+-  }
+-}
+-```
+-
+-`ids.serverMutationId` is assigned to the server-produced resource-mutation branch: the server command handler generates or propagates it, server-resource validation requires it, and watcher-observed resource facts prohibit it. It is not a generic workspace/view lifecycle ID.
+-
+-Automation subtype cause fields are deliberately absent from the settled common-core example while finding 1 remains open. Domain examples may show them only as `AUT-D03` candidates. Likewise, `chatResources` and `toolResources` are finding-4 candidates, not registered schema, and domain `fileVersionIds` projections remain absent until their owning relationship schema, accepted-reference binding, bounds, and registration are approved.
+-
+-`redaction.status` is `not_required`, `applied`, or `failed`; `policyId` and `policyVersion` are strings. Potentially sensitive registered domains require status plus policy ID/version before complete ledger payload persistence. A pre-UEB failed-redaction safe core may be admitted only when that domain's registry entry defines its exact shape. In the first package only `ui.action` has one. Resource and lifecycle redaction failure publishes no canonical event/reference and uses its non-canonical freshness recovery without failing the source operation. If an inconsistent accepted delivery reaches ledger, storage may keep only the restricted ledger-only `defensive_fallback` body and diagnostic. That body is not a canonical safe core, cannot provide historical relationship proof, and neither admits an event nor makes a rejected candidate canonical.
+-
+-## Identity Mapping
+-
+-`eventId` is the canonical event or graph-node ID for this record. Domain IDs are not aliases for `eventId`; they identify domain records or related events inside a payload.
+-
+-| ID | Meaning |
+-|---|---|
+-| `eventId` | Canonical event/graph node for the current record. |
+-| `ledger_events.ledger_event_id` | Persistence/query projection assigned to the ledger row after accepted delivery; never inserted into canonical event JSON. |
+-| `resourceMutation.resourceEventId` | Domain ID for a resource mutation fact, usually also linked by a ledger edge. |
+-| `fileVersion.fileVersionId` | Domain ID for a file version record. |
+-| `tool.toolCallId` | Provider/app tool-call identity. |
+-| `uiAction.uiActionId` | Server-generated durable identity for an accepted UI-origin action. |
+-| `ids.messageId` | Canonical app/chat message identity. Provider-native message IDs stay under provider-keyed `nativeRefs`. |
+-| `ids.harnessId` | Canonical harness/adapter identity, such as an OpenCode harness adapter. |
+-| `ids.harnessRunId` | Canonical run identity for a harness invocation. |
+-| `ids.harnessEventId` | Provider-neutral domain identity for an adapter-normalized harness event; `eventId` remains canonical graph identity. |
+-| `ids.serverMutationId` | Server command identity for a server-produced canonical resource mutation; required on that branch and prohibited on watcher-observed resource facts. |
+-| `automation.runId` | Common automation run identity across trigger, scheduler, script, sync, import, agent, and system automation kinds. |
+-| `audit.auditQueryId` | Domain ID for an audit or review query. |
+-| `chat.turnEventId` | Compatibility mirror of `eventId` for a chat turn lifecycle event. |
+-| `chat.exchangeSavedEventId` | Chat-domain event ID for exchange persistence. |
+-
+-Ledger row IDs and edge-row keys exist only in private persistence/query projections. No canonical payload or canonical identity contains a `ledger` block or persistence key. Canonical relationships use event/domain/content identities and registered graph semantics.
+-
+-A compact projection may rename or regroup canonical fields only through a registered projection schema that declares exact source pointers, member equivalence, presence/derivation rules, and redaction behavior. Names such as `causeIds` are projection aliases, not a second identity vocabulary.
+-
+-An event must not copy its own domain identity into `provenance.cause.*`. Cause IDs reference distinct upstream initiators. The current record's identity stays in `eventId` and its domain payload.
+-
+-After redaction, `prepareCanonicalCandidate` consumes upstream accepted refs, inserts each fully proven schema-registered atomic relationship group into a fresh safe clone, and stores private pointer/ref proof. Canonical publication accepts only that opaque prepared candidate; copying the same ordinary string exposed by `inspectAcceptedRef` does not carry proof. Raw, unbound, mismatched, forged, stale, or wrong-workspace proof leaves the whole affected group absent, reports only exact fixed `accepted_relationship_unbound`, and never suppresses an otherwise valid relationship-free fact. Whole-fact rejection is reserved for invalid required fact core, unsanitizable safe base, unrelated final schema error, or publication failure. Admission clones/freezes the safe event, binds its registered identity to an opaque ref, and freezes one `{ acceptedRef }` context. Every listener uses exact ABI `listener(frozenEvent, deliveryContext)`; bare-ref argument two is invalid, and identity-sensitive consumers use `assertAcceptedDelivery(frozenEvent, acceptedRef)`.
+-
+-The same builder rule applies to upstream canonical event relationships. `ids.parentEventId` is the immediate producing canonical predecessor, `ids.rootEventId` is that predecessor's accepted root or its own event ID when it has no root, and `ids.causationId` is the event type's registered direct initiating canonical cause. Root, parent, causation, and same-source domain mirrors declared as one group consume the same immediate-parent capability and are inserted or omitted atomically; an arbitrary retained ancestor cannot substitute. Each relationship requires an exact candidate event type, source event type, target pointer, and selector registration plus the source `AcceptedCanonicalRef` or hash-revalidated historical capability. Workspace identity is embedded in both capabilities. Workspace-scoped candidate/source IDs must be equal by default; a cross-workspace relation requires a separately registered policy and an opaque authorization capability bound to the exact operation and workspaces. No such cross-workspace selector exists in the first package. Missing, null, stale, forged, or mismatched proof omits the group and never affects the base canonical fact or source operation.
+-
+-Workspace identity/root for the current operation comes from a coordinator-captured command context or an explicit already-authorized workspace argument, never a session cache; thread/turn and selected-resource IDs may come from their own authoritative operational owners because they are not proof of an upstream event. A new correlation ID may be freshly server-generated; carrying an existing correlation/event ID requires an accepted binding. Raw IDs recovered from mutable session, operation, renderer, provider, candidate state, or even copied from `inspectAcceptedRef` never populate accepted-only relationship fields directly.
+-
+-`provenance.origin.id` may reference an upstream domain/run/action/tool identity. Do not store domain IDs in `provenance.origin.eventId`; canonical event IDs belong in event records, ledger edges, `ids.parentEventId`, `ids.causationId`, or normalized resource/edge references.
+-
+-## Common Enums
+-
+-| Field | Values |
+-|---|---|
+-| `eventFamily` | `chat`, `chat.tool`, `resource`, `workspace`, `view`, `theme`, `ledger`, `file.version`, `automation`, `ui`, `audit` |
+-| `provenance.origin.type` | `ui`, `tool`, `harness`, `trigger`, `scheduler`, `script`, `sync`, `import`, `agent`, `system`, `external`, `unknown` |
+-| `provenance.confidence` | `direct`, `correlated`, `inferred`, `unknown` |
+-| `actor.type` | `human`, `assistant`, `trigger`, `scheduler`, `script`, `sync`, `import`, `agent`, `system`, `external`, `unknown` |
+-| `context.scope` | `ui`, `headless`, `harness`, `system`, `external` |
+-| `eventPhase` | Domain-specific phase such as `start`, `args`, `result`, `complete`, `observe`, `persist`, `review` |
+-
+-Ledger rows preserve the persisted canonical event's `eventFamily` and `eventType`. Use `eventFamily: 'ledger'` only for ledger-internal maintenance, repair, migration, or audit events. File-change storm batches remain `eventFamily: 'file.version'` with `eventType: 'file.version.change_batch'` unless a later decision promotes storm control to its own family.
+-
+-Harness identity is canonical and provider-neutral. Use `harnessId`, `harnessRunId`, and `harnessEventId` for adapter-normalized harness facts; do not add provider-specific canonical fields such as `openCodeRunId` or `openCodeEventId`. OpenCode session/event/message IDs belong in provider-keyed `nativeRefs` such as `nativeRefs.opencode` or the harness/tool domain payload for debugging, dedupe, replay, and adapter audits.
+-
+-Do not add `openCode` as a `provenance.origin.type`; use the closest existing origin category such as `tool`, `harness`, `agent`, `system`, `external`, or `unknown`.
+-
+-## Edge Types
+-
+-Use a shared edge vocabulary so graph queries do not depend on payload-specific field names.
+-
+-| Edge | Meaning |
+-|---|---|
+-| `caused_by` | An event was directly caused by another event or domain entity. |
+-| `observed_by` | A subsystem observed a fact without necessarily causing it. |
+-| `triggered` | An event triggered automation, scheduling, or follow-up work. |
+-| `mutated` | An actor/event changed a resource. |
+-| `read` | An actor/event read a resource. |
+-| `wrote` | An actor/event wrote or generated a resource. |
+-| `versioned_as` | A resource mutation produced a file version record. |
+-| `restored_from` | A resource state was restored from a prior version. |
+-| `compacts` | A compaction or storm event summarizes a bounded set of events. |
+-| `represents` | A summary, storm, or audit event stands for affected resources or representative states. |
+-| `queried` | An audit or search event queried another event/entity. |
+-| `reviewed` | An audit or review event evaluated evidence. |
+-| `recommended` | A review event produced a recommendation, ticket, rule, or follow-up. |
+-
+-## Schema Legs
+-
+-Define provenance schemas close to the system leg they describe. Each leg should use the same core fields for source, origin, actor, observer, confidence, and causal IDs, but it can add domain-specific fields for useful audits.
+-
+-Define Resource Mutation, Ledger Event, and UI Action And Context first when implementing. Those three establish event identity, attribution, and query anchors; tool, file-version, automation, and audit schemas can then link to stable IDs instead of inventing parallel correlation fields.
++A composable common envelope and durable causal graph remain design directions, not executable schemas. Exact relationship meaning/proof, canonical tool/native-output handling, broad version events, automation run generation and audit schemas need feature-specific decisions. Older candidate/ref/lease APIs, redaction branches and executor capacities must not be presented as current or automatically required. Preserve meaningful distinctions between producer, reported origin, observer and evidence without manufacturing a confidence verdict or inserting unregistered fields.
+ 
+ ## Children
+ 
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md
+@@ -13,90 +13,50 @@
+   source-files:
+     - fusion-studio-server/lib/ledger/event-ledger.js
+     - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
++    - fusion-studio-server/lib/agent-provenance/agent-ledger-reconciler.js
++    - fusion-studio-server/lib/agent-provenance/fact-admission-reconciler.js
++    - fusion-studio-server/lib/file-mutations/fact-replay.js
++    - fusion-studio-server/lib/file-mutations/reconciliation.js
+     - fusion-studio-server/lib/db/migrations/029_event_ledger.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before changing durable event storage, ledger indexes, event payload storage, or graph edges between events.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-Ledger event provenance is the durable sink for system facts. It must preserve enough identity and relationship data for future queries without requiring every audit to parse raw payload JSON.
++Use this page before changing ledger ingress, payload projection, identity or reconciliation. The implemented sinks use `event_log` and resource edges; they do not implement the older generalized `ledger_events` schema or accepted-reference graph.
+ 
+-## Boundary
++## Current durable sinks
+ 
+-The ledger stores canonical events, payloads, and edges. It should connect chat turns, tool calls, resource events, file versions, automation runs, UI actions, and later audit/review results.
++| Ingress | Producer truth and transaction | Stored attribution |
++|---|---|---|
++| Legacy wildcard subscriber | `event-ledger-subscriber.js` selects three whitelisted topics; `recordEvent` writes event, resource edges and tags in one transaction | Actor/source may be inferred; selected content keys are redacted and strings truncated to 4,000 characters; this is not the exact governed payload branch |
++| Governed `resource.mutated@1` | `resource-provenance-repository.js` checks the succeeded `file_operations` row and exact body, then writes `event_log`, one subject resource edge, `resource_provenance_events` and operation projection state transactionally | `local_client` with connection ID, operation correlation, null causation; canonical fact JSON and its projection hash, including optional reported context |
++| Governed `agent.tool_completed@1` | Agent ledger repository requires matching already-admitted activity fact JSON/hash; claimed projection writes event, path-bearing resource edges and source ledger state atomically | `agent_harness`, harness ID, activity correlation, null causation; roles `agent_read`, `agent_write`, `agent_execute`, `agent_unknown` |
++| Governed `resource.state_observed@1` | Same owner verifies the admitted snapshot fact; transaction writes event, one observed-file edge and source ledger state | `agent_harness`, source harness, source activity correlation, null causation; `observed` role, live resource ID only for bytes |
+ 
+-Ledger rows preserve the persisted canonical event's `eventFamily` and `eventType`. Accepted canonical chat, tool, resource, file-version, automation, UI, and audit events are stored unwrapped with their exact frozen safe domain payload. Persistence generates the private row projection `ledger_event_id`; no persistence row key may enter the accepted event, stored canonical JSON, canonical identity, or a future canonical ledger/update event. Canonical events use event/domain/content identities and graph edges; query/storage APIs use row keys privately. Use `eventFamily: 'ledger'` only for ledger-internal maintenance, repair, migration, or audit facts. File-change storm batches remain `file.version.change_batch` unless a later decision changes the family.
++`file.command_accepted@1` has a durable operation reservation and admission state but no seeded ledger subscription. Governed resource/agent projections do not create tags or generic event-to-event causal edges. An `event_resource_edges` row connects an event to a resource/path and role; it is not a `caused_by` verdict. The public event ID is the `event_log` primary key; private integer resource-edge keys are a different identity.
+ 
+-## Ledger-Internal Event Payload
++## Admission is not storage success
+ 
+-Canonical events stored in the ledger use their original domain payload. The shape below is only for ledger-internal events.
++The private publisher verifies a reservation, validates and freezes the fact, then awaits delivery. Only the two agent publishers persist admitted state before dispatch. Save replay updates its admission marker after the returned report. A subscriber failure cannot revoke the admitted fact; `admitted: true` can coexist with pending, conflict or failed persistence. A resolved required-ack handler can return a rescheduled/conflict state, so `completed` alone is not proof of a stored row.
+ 
+-It is a non-authoritative design candidate. Open owner decision `LED-D02` must first decide whether any canonical ledger-internal maintenance/repair/migration/audit events are needed and approve their exhaustive schemas, producers, identity/row-key boundary, redaction/failure behavior, bounds, ordering/dedupe/replay/migration, and tests. Until then, no `eventFamily: 'ledger'` registry entry, producer, accepted ref, or persistence branch exists merely because this example is present.
++Exact save replays compare operation identity and payload hash, return duplicate, and can repair a pending marker; conflicting event identity records conflict without replacing established ledger truth. Agent replays compare exact projected event and ordered edges; `created_at` stays owned by first insertion and is excluded from replay comparison. The durable producer row is the retry marker, not a generic replay table or historical accepted capability.
+ 
+-Open owner decision `LED-D03` separately blocks `caused_by` edge extraction until the exact accepted relationship pointer/domain/confidence matrix and non-direct evidence behavior are approved. Endpoint admission proof never supplies causal meaning by itself.
++## Current retry and restart boundaries
+ 
+-Open owner decision `LED-D04` blocks production ledger event/projection/resource/native-ref/edge writes until exact table idempotency/uniqueness keys, atomic boundaries, duplicate/conflict behavior, bounded detached retry/defer semantics, cancellation/shutdown/restart/replay, missing targets, database nonsettlement, terminal fixed diagnostics, and crash/concurrency tests are approved. No inline retry or unbounded queue may be inferred.
++Save ledger append uses a five-attempt SQLite contention cycle. `fact-replay.js` preserves pending admission/projection and requests `resource:refresh_required` when publication or render delivery is unavailable. Startup `reconciliation.js` handles reserved/prepared/succeeded operations, replays eligible pending facts and cleans temporary files. An interrupted attempted replacement remains `outcome_unknown` even if later observed bytes match the intended postimage; this does not invent a success fact. The save recovery scan is separate from the agent scheduler budgets and does not claim a universal bounded background executor.
+ 
+-```js
+-{
+-  schemaVersion,
+-  eventId,
+-  eventFamily: 'ledger',
+-  eventType,
+-  eventPhase,
+-  occurredAt,
+-  lifecycle,
+-  ids,
+-  actor,
+-  provenance: {
+-    source: {
+-      type,
+-      module,
+-      path,
+-      handler
+-    },
+-    origin: {
+-      type,
+-      id
+-    },
+-    observedBy: {
+-      type,
+-      module,
+-      path,
+-      handler
+-    },
+-    confidence,
+-    cause
+-  },
+-  context,
+-  resources: [],
+-  redaction,
+-  ledgerEvent: {
+-    payloadJson,
+-    edges: [
+-      { type, fromEventId, toEventId, fromEntityType, fromEntityId, toEntityType, toEntityId }
+-    ],
+-    indexes: []
+-  }
+-}
+-```
++Agent admission has a deterministic 100-source/one-second startup cap, yielded continuation and one delayed retry for retryable transition failures; repeated exhaustion or nonretryable failure suppresses that exact key until restart. Agent ledger work is claimed and charged durably before each cycle: at most three cycles of five immediate SQLite attempts, a 30-second claim lease, +250 ms then +1,000 ms scheduling after the first two contention failures, then terminal `failed`. Semantic mismatch is `conflict`. Transition errors use one delayed retry then exact-key suppression; expired claims consume the charged cycle rather than repeating it. These are inspected implementation bounds, not promised eventual delivery or general plugin queue policy.
+ 
+-`sourceModule` may remain as a database compatibility field, but the canonical schema should expose it as `provenance.source.module`.
++Legacy write failures only warn in the subscriber; there is no durable per-event retry marker on that path. Its shutdown drain is bounded, but the public emitter does not await ledger writes. No live persistence success was exercised for this page.
+ 
+-Edge direction uses `from_*` as the relationship subject or current event and `to_*` as the target. `caused_by` is effect -> cause; `triggered` is triggering event -> triggered work; `versioned_as` is resource mutation -> file version; `compacts` is storm/summary -> compacted events; audit edges flow from audit/review event to target.
++## Approved direction and open schema work
+ 
+-## Connections
++System retains history for audit and recovery by default; exact cleanup/retention remains future policy. The accepted save scope settled its own snapshot/hash/idempotency and persistence contract. The agent overlay separately authorized only its two exact facts into the existing event and resource-edge tables. Neither blanket-blocks these implemented projections on older design decisions nor approves all general ledger work.
+ 
+-- Private ledger query and join projections relate chat turns, exchanges, tools, and resources to ledger row IDs; canonical chat metadata never stores persistence row IDs.
+-- Tool calls and resource mutations become graph nodes rather than isolated payloads.
+-- File versions point back to resource event IDs and causal chain IDs.
+-- Automation runs and UI actions become first-class causes.
+-- Audit queries can traverse graph edges instead of relying on time-window guesses.
++General causal edges, ledger-internal events, common-envelope storage, historical proof capabilities, native-reference projections and cross-domain retention/redaction contracts remain open. Broader integrity serialization and migration choices must be decided for that feature; current canonical JSON/hash helpers do not silently approve the whole older design. Historical snapshots are not live editable app data or a universal restore interface.
+ 
+-## Gaps To Close
+-
+-- The current ledger records only a narrow set of event types.
+-- Graph edges are not first-class yet.
+-- Indexes are needed for workspace, resource/path, event family/type, thread, turn, tool call, UI action, harness ID/run/event, automation run, trigger run, script run, scheduler run, agent run, audit query, correlation ID, causation ID, root/parent event ID, timestamp range, edge endpoints, `changeStorm.reason` when present, and provider-keyed `nativeRefs` or provider-specific payloads when a harness adapter needs replay or dedupe queries.
+-- Domain sensitivity and redaction policy still need detailed detection/retention rules before broad content durability. Storage branches are settled: ordinary safe payloads stay exact with required matching hash and are the only historical-proof-eligible branch; an admitted registered UI failure-safe-core stays exact with null hash but cannot yield `AcceptedLedgerRowRef`; both use `validation_status = valid | valid_with_warnings`. All other missing/failed/thrown redaction uses `validation_status = defensive_fallback` and a ledger-only body with exact code-only `ledger_defensive_fallback`, null hash, no unsafe material, and no historical-proof capability. `loadAcceptedLedgerRowRef` returns no capability for every null-hash row. None affects the source operation.
++See [Ledger Schema](../../004-Ledger_Schema/PAGE.md) for table ownership and [Provenance Model](../PAGE.md) for evidence limits.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md
+@@ -8,30 +8,50 @@
+     - Events Provenance Model
+     - Events File Versioning
+   source-files:
+-    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
++    - fusion-studio-server/lib/db/migrations/029_event_ledger.js
++    - fusion-studio-server/lib/db/migrations/034_event_registry_authority.js
++    - fusion-studio-server/lib/db/migrations/035_file_provenance.js
++    - fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js
++    - fusion-studio-server/lib/db/migrations/040_reported_ui_context.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before changing durable event storage.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-The ledger is the durable record of system facts. It should store event identity, event type, timestamps, workspace/resource identity, provenance, causal links, payload metadata, and enough indexed fields for later query workflows.
++The following tables belong to `fusion.db`, the [System database](../../002-Server_And_Runtime/PAGE.md#system-database-boundary). They are platform-owned control, history and recovery stores. A plugin cannot create arbitrary System tables or turn these records into its own application database. This is a bounded provenance inventory, not an audit of every application table.
+ 
+-## Schema Concerns
++## Current table owners
+ 
+-- Event ID, root event ID, parent event ID, correlation ID, and causation ID.
+-- Workspace, view, resource/path, thread, turn, tool call, UI action, harness ID, harness run, harness event, automation run, trigger run, script run, scheduler run, agent run, and audit query identifiers.
+-- JSON payload storage for the complete validated safe canonical event when registered sensitivity/redaction policy permits it; never an unconditional raw producer copy.
+-- Indexes for common forensic questions: file path, resource ID, actor, event family/type, thread, turn, tool call, UI action, harness ID/run/event, automation run, trigger run, script run, scheduler run, agent run, audit query, correlation ID, causation ID, root/parent event ID, edge endpoints, timestamp range, `changeStorm.reason` when present, and provider-keyed `nativeRefs` or provider-specific payloads when a harness adapter needs replay or dedupe queries.
+-- Validation status and warnings for accepted canonical events, plus structured non-canonical diagnostics for rejected candidates. Exact stored canonical or registered failure-safe-core payloads use `valid | valid_with_warnings`; a restricted ledger-only diagnostic body uses `defensive_fallback`, which can never provide historical relationship proof. Ledger or diagnostic persistence failure never changes the source operation's result.
+-- `canonical_admission_status = 'accepted'` on every `ledger_events` row, set only when the ledger listener receives UEB's privately branded accepted-reference delivery context. Validation status is separate and never proves admission; missing/forged delivery context creates no canonical ledger row.
+-- First-class edge and resource projection tables so audits can traverse UI actions, chat turns, tool calls, automation runs, resource mutations, file versions, storm batches, and audit/review records without parsing every payload.
+-- Retention and compaction policy for high-volume events.
++Migration paths below are under `fusion-studio-server/lib/db/migrations/`; runtime owners are under `fusion-studio-server/lib/`.
+ 
+-File versioning can add its own tables, but it should link back to canonical event IDs.
++| Tables | Migration | Runtime owner and purpose |
++|---|---|---|
++| `event_log`, `event_resource_edges`, `event_tags` | `029_event_ledger.js` | `ledger/event-ledger.js` for legacy whitelist; `ledger/resource-provenance-repository.js` and `agent-provenance/agent-ledger-repository.js` for exact governed projections; governed writers do not add tags |
++| `event_schema_registry`, `event_subscription_registry`, `event_subscription_grants` | `034_event_registry_authority.js` | `event-registry/reconcile.js`, `repository.js`, `policy.js`; mutable lifecycle/grant authority distinct from authored requests, with locked shipped definitions |
++| `resource_registry` | `035_file_provenance.js` | `file-mutations/stable-resource-repository.js`; workspace/path/fingerprint identity and lifecycle, reused by agent observation |
++| `file_operations` | `035_file_provenance.js` | `file-mutations/file-operation-repository.js`; request binding, reserved IDs, prewrite/replacement state, admission/projection markers and terminal response/recovery |
++| `file_versions` | `035_file_provenance.js` | `file-mutations/file-version-repository.js` through operation preparation; exact eligible preimage bytes or absent state, not general canonical version events |
++| `resource_provenance_events` | `035_file_provenance.js` | `ledger/resource-provenance-repository.js`; compact save query projection joined to the preimage row |
++| `agent_tool_activities`, `agent_tool_resource_edges` | `036_agent_tool_provenance.js` | `agent-provenance/activity-repository.js`; bounded normalized activity, resource candidates, clocks, optional fingerprints and binding/observation state |
++| `agent_snapshot_blobs`, `agent_resource_snapshots` | `036_agent_tool_provenance.js` | `agent-provenance/checkpoint-repository.js`; exact content-addressed eligible bytes and sparse path-scoped observation checkpoints/fact authority |
++| `agent_exchange_bind_jobs`, `agent_observation_jobs`, `agent_renderer_projection_jobs` | `036_agent_tool_provenance.js` | Corresponding repositories and binder/observer/projection scheduler; durable work, claim and settlement state |
++| Additional reported context columns on `file_operations` and `resource_provenance_events` | `040_reported_ui_context.js` | Save context sanitization/projection; historical view/tab/component/presenter/target metadata, not live view state |
+ 
+-Ledger storage has three exact material branches. Ordinary registered `not_required|applied` safe payloads are stored unchanged with a required matching non-null payload hash and are the only branch eligible for historical proof. An already-admitted registry-valid failure-safe-core payload (first package: exact UI safe core only) is stored unchanged with null hash and is categorically ineligible for `AcceptedLedgerRowRef`. Those two branches use `validation_status = valid | valid_with_warnings`. Missing/failed/thrown redaction that is not such a registered branch uses `validation_status = defensive_fallback` and a ledger-only body with exact `diagnostic: { code: 'ledger_defensive_fallback' }`, `payloadOmissions.redaction = 'failed'`, null hash, no unsafe material, and no historical-proof capability. Schema/policy/column consistency cannot substitute for integrity evidence; `loadAcceptedLedgerRowRef` returns no capability for every null-hash row. None affects the source operation.
++Migration `040_reported_ui_context.js` also refreshes the four affected locked schema definitions to the extended context shape before startup reconciliation. This platform migration is distinct from ordinary reconciliation, which preserves existing definitions and authority reductions.
+ 
+-`LED-D01` remains OWNER APPROVAL REQUIRED before SPEC-35b/SPEC-40c implements that non-null hash or `AcceptedLedgerRowRef`: select deterministic JSON canonicalization/serialization, byte encoding, hash algorithm, digest representation, stored policy/version, and migration/reverification rules. This ledger-integrity decision is separate from ULV-D10 content hashing and does not block the first Wiki/File resource/render package.
++`event_log.event_id` is the public event primary key. Its other columns include type, workspace/machine, actor, occurrence/creation times, summary, payload JSON, source, correlation and causation. Indexes cover type/workspace/machine with occurrence time and correlation. Resource edges have private integer row IDs, resource/path/role fields and event/resource/workspace-path indexes; tags are unique per event/tag. These resource edges already exist, but they are not a general event-to-event graph.
+ 
+-`LED-D04` is OWNER APPROVAL REQUIRED before production Slices 35b-35d: define exact natural/idempotency keys and unique constraints for every ledger table; event/child transaction boundaries; duplicate/conflict behavior; any detached retry/defer capacities, attempts, backoff, cancellation, shutdown/restart/replay, and missing-target behavior; database nonsettlement; terminal fixed diagnostics; and crash/concurrency/source-isolation tests. No inline retry or unbounded deferred work is allowed. Slice 35a inventory may proceed.
++Save operation IDs and reserved event/version IDs have uniqueness constraints; operation state and projection state remain separate. Save query projections index workspace/time, path, filename and folder. Agent tables add their own activity, thread/turn, exchange, path/access, observation and due/lease indexes. Read the migration and owning repository before extending a query; a desired future index is not an existing column.
++
++## Payload and failure semantics
++
++Legacy `recordEvent` sanitizes selected keys and truncates long strings. Governed save and agent projections store their canonical fact JSON, verified against the corresponding producer-owned durable record. Save projection hashes live in `resource_provenance_events`; agent fact hashes and admission/ledger schedules live on activity/snapshot rows. There is no common `canonical_admission_status` or older three-branch `validation_status` scheme on every event row.
++
++Admission, filesystem outcome, subscriber acknowledgment, ledger storage and renderer delivery are separate states. Required save preimages precede replacement; failed later projection does not undo a write. Existing snapshot tables do not supply universal restoration or retention. See [Ledger Event Provenance](../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md) for exact ingress and retry limits.
++
++## Target and open work
++
++The older generalized `ledger_events` design, common-envelope graph, accepted ledger-row proof capability, universal redaction branches and broad indexes are proposals, not current storage contracts. The accepted save/subscription and agent-observation agreements supersede their older blockers only for those bounded tables and facts. Retention, causal edges, ledger-internal events, wider versioning and restore require separate feature decisions. System's preservation direction and source/application ownership are already settled and do not require reopening.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md
+@@ -10,35 +10,57 @@
+     - Events Ledger Schema
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+-    - fusion-studio-server/lib/ledger
+-    - fusion-studio-server/lib/watch
+-    - fusion-studio-server/lib/chat-metadata
+-    - fusion-studio-client/src/lib/ws
+-    - fusion-studio-client/src/state/fileDataStore.ts
++    - fusion-studio-server/lib/startup.js
++    - fusion-studio-server/lib/event-registry/index.js
++    - fusion-studio-server/lib/event-registry/seed-catalog.js
++    - fusion-studio-server/lib/subscriptions/admission.js
++    - fusion-studio-server/lib/subscriptions/controller.js
++    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
++    - fusion-studio-server/lib/file-mutations/save-controller.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Current file/module map for events, resource sync, provenance, and ledger work.
++Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+ 
+-## Server
++This map identifies current owners; it is not a claim that every planned provenance subsystem is implemented. Server paths below begin at `fusion-studio-server/`; client paths begin at `fusion-studio-client/`.
+ 
+-| File | Role |
++## Current server
++
++| Owner | Responsibility |
+ |---|---|
+-| `fusion-studio-server/lib/event-bus.js` | Universal Event Bus pub/sub. |
+-| `fusion-studio-server/lib/watch/core.js` | Central chokidar watcher manager. |
+-| `fusion-studio-server/lib/watch/workspace-watcher.js` | Workspace filesystem observation and UEB file-change emission. |
+-| `fusion-studio-server/lib/ledger/event-ledger-subscriber.js` | Durable event ledger subscriber. |
+-| `fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js` | Chat turn file mutation metadata collection. |
+-| `fusion-studio-server/lib/ws/workspace-request-handlers.js` | File move/rename/delete command paths that need canonical resource event emission. |
+-| `fusion-studio-server/lib/file-explorer.js` | File create/save paths and legacy file change emission. |
++| `lib/db.js`, `lib/startup.js` | System DB/migrations, registry initialization, host composition and startup reconciliation before public traffic |
++| `lib/event-registry/index.js`, `reconcile.js`, `repository.js`, `policy.js` | Database-backed effective schema/subscription/grant authority; no project-file discovery |
++| `lib/event-registry/seed-catalog.js`, `subscription-seed-catalog.js`, `schemas/*.json` | Shipped locked schema and handler contracts; command/query/projection definitions are not all facts |
++| `lib/subscriptions/admission.js`, `file-provenance-bootstrap.js` | Four sealed publisher identities and durable reservation verification |
++| `lib/subscriptions/generation-compiler.js`, `handler-catalog.js`, `capability-factory.js`, `controller.js` | Closed handlers, exact grants/filter compilation, reload generations, delivery and acknowledgments |
++| `lib/event-bus.js` | Separate legacy EventEmitter compatibility API and synchronous chain guards |
++| `lib/ledger/event-ledger-subscriber.js`, `event-ledger.js` | Legacy whitelist, heuristic/sanitized event projection and shutdown drain |
++| `lib/ws/file-save-route.js`, `lib/file-mutations/save-owner.js`, `save-controller.js` | Public save validation and the required operation/preimage/atomic replacement contract |
++| `lib/file-mutations/durable-reservations.js`, `fact-replay.js`, `reconciliation.js` | Save authority, pending fact replay, restart outcome/cleanup handling |
++| `lib/ledger/resource-provenance-repository.js`, `provenance-ledger-handler.js` | Same-fact save ledger transaction and compact provenance queries |
++| `lib/agent-provenance/activity-owner.js`, `activity-repository.js`, `fact-authority-repository.js`, `fact-admission-reconciler.js` | Normalized agent activity, producer fact state and admission reconciliation |
++| `lib/agent-provenance/resource-observer.js`, `checkpoint-repository.js`, `observation-job-repository.js` | Bounded post-tool observation/checkpoints and durable jobs; uses `native/secure-file-observer/index.js` |
++| `lib/agent-provenance/agent-ledger-repository.js`, `agent-ledger-reconciler.js` | Two admitted agent fact projections with producer-owned durable retry state |
++| `lib/agent-provenance/renderer-projection-authority.js`, `renderer-projection-scheduler.js` | Durable observation invalidation work, distinct from save projection callback |
++| `lib/subscriptions/handlers/resource-render-projection.js`, `lib/ws/resource-projection-publisher.js` | Save invalidation and workspace-bound projection transport |
++| `lib/ws/resource-provenance-route.js`, `agent-activity-route.js`, `lib/agent-provenance/query-repository.js` | Typed bounded query transports/repositories; no mounted audit UI follows from these modules |
++| `lib/watch/workspace-watcher.js`, `lib/chat-metadata/collectors/file-mutations.js` | Legacy filesystem observations and Chat metadata collection; not new governed facts |
+ 
+-## Client
++## Current client integration
+ 
+-| File | Role |
++| Owner | Responsibility |
+ |---|---|
+-| `fusion-studio-client/src/lib/ws/file-handlers.ts` | Current file WebSocket response and change handling. |
+-| `fusion-studio-client/src/state/fileDataStore.ts` | Central file tree/content cache and invalidation state. |
+-| `fusion-studio-client/src/components/wiki/WikiExplorer.tsx` | Current private Wiki tree/content loading path. |
+-| `fusion-studio-client/src/state/wikiStore.ts` | Wiki selection, content, history, and view state. |
+-| `fusion-studio-client/src/hooks/usePanelData.ts` | Generic per-view WebSocket data hook targeted for migration. |
++| `src/state/fileDataStore.ts` | Mediated save caller and central File Viewer invalidation/refetch state |
++| `src/lib/save-action-context.ts` | Optional reported context captured from registered live view/component state |
++| `src/lib/ws/file-handlers.ts` | Save/query/read response and resource projection handling |
++| `src/components/ContentArea.tsx`, `src/components/view-tabs/ViewTabBar.tsx`, `viewTabAdapters.ts`, `fileConnectedAdapter.ts` | Policy-gated File document mounting; connected presenter when ready, legacy children otherwise |
++| `src/components/file-explorer/FileDocumentPresenter.tsx`, `FileViewer.tsx` | Connected and legacy File consumers of central file state respectively |
++
++Detailed save/freshness and tool/query contracts are in their topic articles. Chat persistence and identity remain owned by [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md); naming a source here does not replace that authority.
++
++## Planned areas
++
++General UI action adapters, canonical automation/audit records, causal graph traversal, canonical file-version events, arbitrary plugin producers and universal restore/retention remain future or open. The implemented save context, sparse checkpoint stores and query helpers are narrower counterparts. Locate the current owner and [settled decisions](../000-Events_And_Ledger/002-Decisions/PAGE.md) before planning an extension; do not infer a production module from an older exact API proposal.
+--- ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md
++++ ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md
+@@ -10,6 +10,12 @@
+     - Chat Universal Event Bus
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
++    - fusion-studio-server/lib/startup.js
++    - fusion-studio-server/lib/subscriptions/admission.js
++    - fusion-studio-server/lib/subscriptions/controller.js
++    - fusion-studio-server/lib/subscriptions/generation-compiler.js
++    - fusion-studio-server/lib/subscriptions/capability-factory.js
++    - fusion-studio-server/lib/file-mutations/save-controller.js
+     - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
+     - fusion-studio-server/lib/wire/wire-broadcaster.js
+     - fusion-studio-server/lib/audit/audit-subscriber.js
+@@ -17,88 +23,56 @@
+   related-trigger-files: []
+ ---
+ 
+-Use this page before emitting, subscribing to, or bypassing universal event bus
+-events.
++Status: event/provenance rules reconciled against approved direction and source inspected on 2026-09-19. This page distinguishes the implemented trusted built-in path from broader design proposals. It does not certify unrelated Chat behavior or a fresh product test/runtime pass.
+ 
+-## Rule
++Use this page before emitting, subscribing to or bypassing universal event bus events.
+ 
+-The event bus carries facts after something happened. It is not the command
+-transport for user requests.
++## Commands and facts
+ 
+-## Topics And Canonical Payloads
++User requests enter existing WebSocket handlers/controllers or authorized scheduled commands. Facts describe acceptance, success, failure or observation after the described transition has occurred. A command-accepted fact can precede mutation; a mutation fact cannot. The event bus is not a request/response command router. Subscribers needing new work use an authorized owning command rather than bypassing its validation.
+ 
+-Use flat `domain:action` strings only as bus topics. A canonical payload has a unique `eventId`; dotted `eventType` plus `eventFamily` is classification. Do not treat the colon topic as event identity or classification.
++Payloads use product vocabulary, relevant entity/workspace identity and the smallest non-sensitive context. Do not emit raw provider protocol or secrets. Adapter-normalized Chat events and governed provenance facts are different boundaries; the word canonical in an older module name does not establish governed admission.
+ 
+-Payloads use product vocabulary and include the smallest useful context:
++## Current governed contract
+ 
+-- entity ID, such as `threadId`, `ticketId`, or `workspaceId`
+-- workspace or scope when ownership matters
+-- non-sensitive metadata needed by subscribers
+-- no raw secrets
+-- no raw provider protocol
++The host seals four publisher identities in `subscriptions/admission.js`: the save owner's `file.command_accepted@1` and `resource.mutated@1`, and the agent owners' `agent.tool_completed@1` and `resource.state_observed@1`. Each verifies a durable reservation and complete canonical input hash, validates the active database-backed schema, and freezes the fact before private delivery. Public legacy `emit/on` cannot grant admitted status. There is no public arbitrary producer catalog or plugin publisher factory.
+ 
+-Migrated canonical publication accepts only an opaque `PreparedCanonicalCandidate`, canonical-clones/deep-freezes its safe event, binds its allowlisted identity to an opaque ref, and freezes one `{ acceptedRef }` context. `prepareCanonicalCandidate` is the sole accepted-only relationship constructor: it consumes upstream refs, inserts registered event/domain IDs, and records private pointer/ref proof; copying an `inspectAcceptedRef` string is insufficient. Every task uses exact ABI `listener(frozenEvent, deliveryContext)` with the same event/context/ref; bare-ref argument two is invalid. Identity-sensitive consumers use `assertAcceptedDelivery`. Mismatched, forged, unbound, or raw relationships fail. False admission exposes no event/ref/context and queues nothing. Tasks re-enter async chain context.
++The current facts use top-level event/workspace/operation/time fields plus closed domain bodies. Do not require the older proposed common `eventFamily`/`ids`/`provenance` envelope or accepted-reference listener ABI. Exact command/query/projection names and versions are listed in [Event Taxonomy](../../../010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md).
+ 
+-## Failure Isolation
++Database definitions and permission requests are separate from grants. The compiler requires an installed allowlisted handler and its exact capabilities; runtime contexts expose same-fact append, scheduling, bounded renderer messages and fixed diagnostics, not ambient DB/bus access. Configuration may narrow or revoke authority but cannot grant, restore or expand it. A future human Systems authorization surface is not implied by a test-only authorization fixture. Plugins remain subject to the [System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).
+ 
+-Canonical publication is a provenance side effect, not command authorization, success, or a prerequisite to execution. After operational validation accepts a command, the operational path starts before initiating provenance is submitted to the supervised admission executor; the command/response chain never invokes or awaits provenance or an accepted-ref promise. Downstream producers use an already-filled command-scoped ref slot or omit the relationship without waiting. Mutation facts do not exist before the owning mutation succeeds; their provenance/recovery work is scheduled only after success and outside the mutation result/response chain. Missing metadata follows the omission/diagnostic path without lookup or retry.
++## Failure timing and required protection
+ 
+-The command slot is a private per-command object, never keyed by renderer IDs. Only frozen-registry producers can acquire leases while the command scope is open. `peekAccepted()` is non-blocking; pending/terminal/late branches return no ref. Producers release leases in `finally`, the command closes acquisition in `finally`, and the supervised admission task always settles or runs its cancellation finalizer. Slot/ref state is deleted only after close, terminal admission, and zero leases. Exact APIs, reasons, races, and tests are normative in SPEC-40.
++Do not impose a universal rule that source commands never await provenance. Current admission awaits durable reservation verification, schema validation and subscriber dispatch. The controller invokes handlers in deterministic order; `required_ack` waits up to 2,000 ms per handler, while best-effort promises are observed without awaiting. Timeout is not cancellation. Current trusted handlers do not use the older proposed independent listener executor or accepted-ref leases.
+ 
+-Optional enrichment is used only when already available. After admission, UEB enqueues every listener as a separate supervised-executor task; it never calls listener code in the admission/source-operation stack or awaits returned promises. All callbacks are queued before task execution, each task re-enters the captured async-chain context, and rejections are diagnosed with deterministic test draining. Subscriber callbacks must use async I/O and offload unbounded CPU work; synchronous filesystem/database/provider I/O is forbidden. Ledger, versioning, audit, compaction, and other subscribers cannot hold the operation response open. Failures or unavailable dependencies never reject, delay, roll back, or rewrite the source result.
++`admitted: true` is not proof of delivery, persistence or renderer receipt. A required callback's completion can still represent rescheduled/conflicting work; consult producer-owned durable state. Subscriber failure cannot retroactively revoke admission or undo completed source work. Preserve the implemented bounded retry/reconciliation rules described in [Ledger Event Provenance](../../../010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md), rather than inferring unbounded retry or forbidding all retry.
+ 
+-Only operational authentication, authorization, command shape, provider protocol, target/workspace resolution, and path safety may gate execution. A value used operationally can still be optional in provenance; failure to project or persist it after acceptance cannot retroactively fail the operation.
++The mediated save requires a durable operation and eligible exact preimage before replacement. Required prewrite storage/protection failure prevents mutation. Optional reported UI context is different: malformed/stale/oversized context is omitted without denying a valid save. Postwrite publication or projection failure records pending/conflict/recovery state without claiming that the completed write did not happen. Agent observation follows reported tool execution and cannot rewrite its result or create a pre-tool image after the fact.
+ 
+-Rejected or suppressed candidates expose no accepted reference. Raw candidate/runtime IDs must not enter downstream ID-bearing origins, causes, mirrors, edges, or evidence. Subscriber failure does not revoke an accepted reference.
++Use the registered `resource:changed` projections and `resource:refresh_required` recovery through the workspace-bound WebSocket and central File Viewer state. A successful server send is not client acknowledgment. Preserve the owning freshness/dirty-buffer contract; do not turn recovery into a canonical mutation fact or promise general view coverage.
+ 
+-After a resource mutation/observation, pre-admission rejection/throw/suppression exposes no ref/delivery; post-admission projection failure preserves the accepted ref/frozen event for other subscribers. Both invoke non-canonical `resource:refresh_required`. Clients preserve navigation/history/scroll/dirty/optimistic/undo state; clean entries replace and dirty entries use `recoveryRemote`/`conflict_pending`. Reconnect cannot claim false freshness. Recovery is never canonical.
++## Legacy and scoped supersessions
+ 
+-## Chat Lifecycle
++Legacy `emit/on` remains available for existing Chat, watcher and trigger paths. It uses colon topics and synchronous chain guards. The legacy ledger records only `workspace:switched`, `thread:state_changed` and `file:changed`; neither those events nor every `chat:*` emission pass the private governed admission path. Preserve Chat exchange persistence ownership and route new claims through [Chat System](../../../007-Chat_System/000-Overview_and_References/PAGE.md).
+ 
+-The target chat lifecycle goes through registered canonical chat events. During first-package 40b1, however, the existing `canonical-chat-event-applier.js` name is historical: its `chat:*` emissions are a named legacy compatibility path, not SPEC-40 canonical admission. They may continue feeding existing chat persistence, metadata collectors, automation, and WebSocket fan-out, but they must not call `publishCanonical`, receive `AcceptedCanonicalRef`/delivery context, set canonical admission status, enter canonical-only ledger/subscribers, or carry new accepted-only relationships such as `uiActionId`.
++The accepted trusted save/subscription implementation supersedes older accepted-reference, causal-proof and broad versioning prerequisites only for that bounded scope. The separately accepted agent overlay covers normalized activity/fingerprints, sparse eligible checkpoints and its two exact ledger facts. It does not register broad `chat.tool.*` or native-output events, causal edges, canonical version events, ledger-internal events or arbitrary plugin executors. The save-context carrier does not implement general `ui.action`.
+ 
+-SPEC-40b2 must register the exact affected chat types/redaction policies, migrate the applier to prepared-candidate publication, and remove this exception before chat facts or UI cause/result links are treated as canonical. Tests in 40b1 spy on canonical publication/ledger ingress and prove legacy `chat:*` has no accepted delivery, not merely that one field is absent.
++Older exact candidate/ref/lease APIs, historical proof capabilities and executor capacities remain proposals outside those agreements. Broader causal, plugin, automation, redaction, versioning and retention/restore contracts require feature-specific decisions. Apply settled System and observation principles without treating the whole old draft as approved or reopening already settled bounded behavior.
+ 
+-## Commands Versus Events
++## Required review questions
+ 
+-Commands enter through WebSocket handlers, controllers, or scheduled jobs.
+-
+-Events are emitted after the command succeeds, fails, or changes state.
+-
+-Examples:
+-
+-| User request | Command path | Event/fact path |
+-|---|---|---|
+-| Send prompt | `prompt` WS message | `chat:*` lifecycle events |
+-| Compact thread | `thread:action` with `action: compact` | optional `thread:compacted` fact |
+-| Move primary chat to a side tab | `thread:action` with `action: move_chat_to_side` | optional `thread:primary_changed` fact |
+-| Add secret | `secrets:*` WS handler | `secret:added` fact |
+-
+-## Forbidden Bypasses
+-
+-- emitting raw OpenCode, Kimi, or other provider events
+-- using the event bus as a request/response API
+-- persisting chat exchanges outside the canonical turn-end path
+-- emitting facts before the owning mutation succeeds
+-- adding listener side effects without loop and failure considerations
+-
+-## Required Checks
+-
+-- Is this a fact or a request?
+-- Who owns the mutation that makes the fact true?
+-- Which subscribers need the event?
+-- Could the event loop back into the same action?
+-- Does the payload expose secrets, prompts, or provider-native data?
+-- Are core construction, redaction, validation, admission, and invalidation projection bounded, synchronous, and free of I/O, with their outcome unable to gate the operation?
+-- Is optional enrichment already available rather than fetched, and are listener callbacks queued outside the admission/operation stack with async rejections observed but not awaited?
+-- Do subscriber tests forbid synchronous filesystem/database/provider I/O and prove one pending listener cannot prevent later queued listeners from running?
+-- Can a rejected or suppressed candidate leak an ID into a cause, mirror, edge, or evidence field?
+-- After a valid resource mutation or safely established watcher observation, does every failed publication/projection branch invoke freshness recovery without changing the operation or observed fact?
++- Is this a command, an accepted-command fact, a mutation fact, an observation or a projection, and who owns the transition?
++- Does the real producer have a host-minted publisher and durable reservation, or is this still legacy compatibility?
++- Are schema/filter/grant/handler checks and the exact scoped capability preserved?
++- Are required prewrite protection, optional context, admission, acknowledgment, durable storage and client freshness distinguished?
++- Do retries, duplicates, conflicts, timeouts and restart/shutdown follow the owning bounded implementation?
++- Could a raw topic, copied ID, reported UI context or observed hash be mistaken for permission, authentication or causal proof?
++- Are provider details and sensitive content kept within their approved disclosure boundary?
+ 
+ ## Related Pages
+ 
+ - [Code Standards](../000-Code_Standards/PAGE.md)
+ - [Architecture Routing](../001-Architecture_Routing/PAGE.md)
+ - [WebSocket Protocol Standards](../004-WebSocket_Protocol/PAGE.md)
++- [Universal Event Bus](../../../010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md)
+ - [Chat Universal Event Bus](../../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md)
+-- [Canonical Events](../../../007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md)

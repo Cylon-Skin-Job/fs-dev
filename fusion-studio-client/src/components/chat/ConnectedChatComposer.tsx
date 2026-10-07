@@ -1,5 +1,5 @@
 /** Exact-session connected composer leaf. No parent observes composer stores. */
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import {
   chatAttachmentOwnerKey,
@@ -17,11 +17,16 @@ import { hasAcceptedPromptExecutionWatch } from '../../lib/chat/prompt-submissio
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { ChatSurfaceActions, ChatSurfaceComposerPresentation, ChatSurfaceRefs } from './chatSurfaceContract';
 import { ChatAreaFooter } from './ChatAreaFooter';
+import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
 
 const EMPTY_ATTACHMENTS: readonly ChatLinkAttachment[] = [];
 
 interface ConnectedChatComposerProps {
   workspaceId: string;
+  viewId: string | null;
+  threadGroupId: string;
+  host: 'main' | 'side-tab';
+  screenshotSelection: 'view' | 'session';
   threadId: string;
   surfaceId: string;
   panel: string;
@@ -35,6 +40,10 @@ interface ConnectedChatComposerProps {
 
 export const ConnectedChatComposer = memo(function ConnectedChatComposer({
   workspaceId,
+  viewId,
+  threadGroupId,
+  host,
+  screenshotSelection,
   threadId,
   surfaceId,
   panel,
@@ -46,6 +55,25 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
   inputRef,
 }: ConnectedChatComposerProps) {
   const ownerReady = Boolean(workspaceId && hasThread && threadId);
+  const screenshotViewActive = usePanelStore(
+    (state) => viewId === null || state.currentPanel === viewId,
+  );
+  // This token owns only the committed mount's lifetime, not session state.
+  // A new owner/active view invalidates old asynchronous captures even when
+  // the same component instance is reused or the old session is reopened.
+  const screenshotMount = useMemo(() => ({ current: false }),
+    [workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, isActive, screenshotViewActive, ownerReady]);
+  useLayoutEffect(() => {
+    screenshotMount.current = ownerReady && isActive && screenshotViewActive;
+    return () => { screenshotMount.current = false; };
+  }, [screenshotMount, ownerReady, isActive, screenshotViewActive]);
+  const screenshotOwner = useMemo<ScreenshotAttachmentOwner | null>(() => ownerReady ? {
+    workspaceId,
+    threadId,
+    surface: host === 'side-tab' ? 'side-tab' : 'primary',
+    selection: { viewId, threadGroupId },
+    mount: { surfaceId, selectionScope: screenshotSelection, isCurrent: () => screenshotMount.current },
+  } : null, [ownerReady, workspaceId, threadId, viewId, threadGroupId, surfaceId, host, screenshotSelection, screenshotMount]);
   const draftKey = ownerReady ? chatComposerDraftOwnerKey(workspaceId, threadId) : '';
   const attachmentKey = ownerReady ? chatAttachmentOwnerKey(workspaceId, threadId) : '';
   const submissionKey = ownerReady ? chatSubmissionOwnerKey(workspaceId, threadId) : '';
@@ -126,11 +154,7 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
       onComposerDraftChange={handleDraftChange}
       modelSelection={composer.modelSelection}
       onModelSelectionChange={actions.onModelSelectionChange}
-      screenshotOwner={hasThread ? {
-        workspaceId,
-        threadId,
-        surface: 'primary',
-      } : null}
+      screenshotOwner={screenshotOwner}
     />
   );
 });

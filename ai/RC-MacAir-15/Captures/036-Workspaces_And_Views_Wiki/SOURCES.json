@@ -1,0 +1,175 @@
+{
+  "kind": "preparation reference inventory, not an execution baseline or proof of runtime verification",
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "read_at": "2026-09-21T11:39:53.772600+00:00",
+  "standards_hub": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+  "routed_standards": [
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "f1adcce948629e4d6b3221561c452558ebcbdc06c8de2532a96b76b790575b56"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "09978e923e911d23cd9dd38fd5bdfdb0a609b1c3fe51f423be57b94a075bcf86"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "3f35422ba03ebb9b6fcff9ad16ec1e0d5a2a9c19ec88bdb5c2f5d912e00a6a6c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "sha256": "669827c9f3cbd8970d074ba55defa333a3a14b154ffe97a9e27047b4d1c674d9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "sha256": "c995d59bde9a95dacaa9f9ae844d1d9701b05c6f8a259b3ced9fe9b6608c3288"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/registry-service.js",
+      "sha256": "32c911d54b1a8889c89a2cd627440a31fc25e34d380fbbdbf9e6910e2b710c29"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/create-service.js",
+      "sha256": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/bootstrap-service.js",
+      "sha256": "bdb06beac5f90b7e086d56b13924d9e5e9ba1093c1807a973e8fc57daf726795"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/path-service.js",
+      "sha256": "8a9f07ff352d7ea47965b4a7b2dbd4171579c0d7ffd622a70e301ad2d7ca28bb"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/ai-paths.js",
+      "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/workspace-registry-writer.js",
+      "sha256": "bd9c98082e2bbdb49dc546d53994efd5c6f03026685d967b4891025e1ecdc54f"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/view-id.js",
+      "sha256": "37eac5a179177106560d767750ae9d20decf46ec67055a3fbff18fc61d4c35b8"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/tab-policy.js",
+      "sha256": "ab4fca2b5ef31f46d1e793a2c022f20e531b62353bfc32db1fc2fecf6e47af03"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/tab-launcher-catalog.js",
+      "sha256": "d88caa1f0aabf0fe156a401f7fccbaf9734ec24024d288c0ff3694503d8ea41d"
+    },
+    {
+      "path": "fusion-studio-server/lib/view-state/resolver.js",
+      "sha256": "50607ad41264004461f75e0c73ec1445dc2e505b482d9731d7e4302951df742d"
+    },
+    {
+      "path": "fusion-studio-server/lib/view-state/writer.js",
+      "sha256": "29c4714ca8cf383d6324580c5b4759aafcc19339ce14c98962e19f9f1268e2c6"
+    },
+    {
+      "path": "fusion-studio-server/lib/view-state/thread-worksurface.js",
+      "sha256": "d7aec4b6d9b6eed11cd2d689bf0274b4b35c5606542bb558bf22f4b6b937f837"
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "sha256": "968622f942a171ea2e99dd98a5ce7cd8e78c68d5b4f17064a5f459bf68d0760d"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+      "sha256": "481149b2846d3811171f254023d82410c280d1287e4b389f1cb9dcf86be294d8"
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "sha256": "8c1c6e9e9a8771b5d212bfad0d959e78e608fc0beb304399a3c3e450a13f430b"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "sha256": "4d8e3dd65ee9f5728ceeae70436f48da7e8ecaa370f1cc36790a1bb098b25afc"
+    },
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/new/profile.json",
+      "sha256": "6cb17a9ab28e11459e7b196bf76f1a62501d1f76f29875831983425d0cd1c924"
+    },
+    {
+      "path": "fusion-studio-server/scripts/wiki.js",
+      "sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e"
+    },
+    {
+      "path": "fusion-studio-server/lib/wiki/audit/run.js",
+      "sha256": "914328a6a38f053967db2cd85f14b06c35eba74948aa1e665de87b01dd9d5d03"
+    },
+    {
+      "path": "fusion-studio-server/lib/wiki/audit/toc-sync.js",
+      "sha256": "8fa1b29f766bb7142ab89f54b3cf8606cecab0ede458d04004893e3c0ec40b5f"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/panels.ts",
+      "sha256": "7a7faf705b6923ead8f023f2d493d4a866896dfce6b9440314736a5452aa8b1f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "be775a56a14b49b12ae47423a2c1e0c739091bc28174f28448185c00daab30ab"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "sha256": "e9da40047fc361a6b9a19a567013840c499385d908deba3693a480ea2064d0c1"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/030-Plugin_System/decisions.md",
+      "sha256": "dae7996623d94c1b6ae41cb01faa44df519dc0b09ca383cb7f35a5ef14f89434"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/029-Composable_Views/composable-views-vision.md",
+      "sha256": "525bc29cc3538b158d4fe2a3aff7c2d7c72dfd01b42a982c86b9cc833b33981f"
+    }
+  ],
+  "additional_execution_reads": [
+    "System_Manager/ai-template/templates/view-templates/*/manifest.md and content.json: enumerate at S00",
+    "Current UI/request/broadcaster and per-view producer/consumer/test paths discovered through source owners; hash every source actually used for a claim."
+  ],
+  "scope_note": "Source inventory includes required future execution reads; presence here is not proof that all file contents were inspected during preparation."
+}

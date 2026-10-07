@@ -1,16 +1,11 @@
 ---
 name: Updating Wiki Content
-description: Rules for editing existing wiki pages without breaking generated blocks, links, or edges.
+description: Rules for editing wiki pages while preserving generated blocks, source accountability, timestamps, and version history.
 metadata:
-  incoming-edges:
-    - Wiki Guidance
-    - Creating Wiki Content
-  outgoing-edges:
-    - Wiki Audit Workflow
   source-files:
-    - fusion-studio-server/scripts/sync-wiki-tocs.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/scripts/wiki.js
+    - fusion-studio-server/lib/wiki/audit/toc-sync.js
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 ## Ownership Zones
@@ -44,10 +39,14 @@ Renaming or renumbering folders changes paths. Before moving:
 1. Find every reference to the old path — wiki links, `AGENTS.md`, workflow pages.
 2. Update references and move together. Marker-block links fix themselves on the next script run; hand-written links do not.
 
-## Edges
+## Source Files And Modification Time
 
-`incoming-edges` and `outgoing-edges` use page names, not paths. When a page is merged or renamed, update the edges that name it.
+Follow the [Wiki Style Guide](../001-Style_Guide/PAGE.md#frontmatter-contract): maintain `metadata.source-files` and a quoted UTC `metadata.last-modified` timestamp. Do not maintain edge, connected-skill, or related-trigger lists. When adopting the schema on an edited page, remove those legacy keys; preserve ordinary body links and unrelated domain-owned metadata.
+
+Update source paths when their owning code moves, and check that they still describe the page's subject. Set `last-modified` to the actual write time for any page-content change, including metadata, typo fixes, and generated-block changes. Preserve it on no-op reads/reviews and byte-preserving moves. The timestamp is not a verification date. Do not fabricate dates for untouched older pages or reset timestamps in `.versions/` copies.
+
+Current editor/audit code does not automatically maintain this new field. After a generator changes a page, stamp that page's authored frontmatter; do not manually alter its generated block. A no-op generator run does not require a new timestamp.
 
 ## After Structural Changes
 
-Run the sync script and read its output. `updated` lines confirm blocks regenerated; `skipped (no-markers)` lines are the remaining migration worklist.
+Run `node fusion-studio-server/scripts/wiki.js audit /path/to/disposable/Wiki` against a staged copy and inspect the result before importing intended generated blocks. The audit also writes state and can create legacy TOC pages; normalize and timestamp actual imported page changes. Do not copy generated audit state or migrate unrelated untouched pages. `skipped (no-markers)` is normal for a hand-maintained article; only headings intended to have generated navigation need markers.

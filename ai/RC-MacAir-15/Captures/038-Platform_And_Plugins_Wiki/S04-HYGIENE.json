@@ -1,0 +1,145 @@
+{
+  "paths": [
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md"
+  ],
+  "whitespace_conflict_failures": [],
+  "raw_diff": "S04-PROSE-DIFF.patch",
+  "predecessors_equal_BASELINE": true,
+  "counts": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "changed_line_groups": 2
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "changed_line_groups": 2
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "changed_line_groups": 3
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "changed_line_groups": 3
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "changed_line_groups": 2
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "changed_line_groups": 2
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "changed_line_groups": 2
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "changed_line_groups": 5
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "changed_line_groups": 2
+    }
+  ],
+  "git_diff_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "untracked_pages": [
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md"
+  ],
+  "scan_scope": "All 9 pages directly scanned; tracked git diff is supplemental because it includes earlier owner changes. Generated body preserved by safe writer.",
+  "contextual_hits": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "line": 22,
+      "text": "Today, workspace creation copies selected **bundled** view templates into `ai/<machine>/System/Views/`; the renderer dispatches built-in view IDs to React components. These are source-inspected development-checkout facts, not a runtime certification or proof of plugin-based provisioning. The approved direction moves editable view instances outside System, keeps capability-bearing plugins protected, and has the server provision views from installed plugins. The exact destination, schema, update lifecycle, and dependency policy remain open. Read [Vision](001-Vision/PAGE.md) for the intended experience and [Decisions](002-Decisions/PAGE.md) for settled boundaries and open choices."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "line": 13,
+      "text": "A view plugin supplies the protected behavior and template for a view type: display, content behavior, tabs, capabilities, and its own maintenance instructions. A recognized folder and declaration schema will tell the platform what a plugin contributes; that schema is still to be designed. A plugin can explain how to adjust an instance or point its content elsewhere. Predictable changes should use a small script or simple tool where possible; AI can coordinate or interpret the exceptional cases. Installing a view should not require an agent to improvise a copy procedure from prose."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "line": 11,
+      "text": "- **Views become plugins.** A view plugin contributes templates, display/content/tab behavior, capability declarations, and maintenance resources. The folder and declaration schema that identifies those contributions is not yet settled."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "line": 24,
+      "text": "The older proposed rule placing every installed view under `ai/<machine>/System/Views` is superseded as a **target**. That remains the observed current code path until the product changes. The older thin-instance interpretation is superseded: local persona, skills, workflows, and configuration belong with the editable instance. A blanket claim that every persona or skill edit requires privileged System modification is likewise superseded. None of these changes grants unrestricted execution, changes System's data ownership or state services, or makes all workspace content trusted."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "line": 33,
+      "text": "6. **Agent context mechanics (WV-O06):** define harness-specific working-directory setup, discovery and assembly of local context, skill collision handling and enforcement before claiming end-to-end support. The view-local orientation, own AGENTS/persona context, skills available on demand and deliberate manual other-view reads are settled above; this gate does not require a new skill override/precedence model. See [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md#approved-agent-orientation)."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "line": 21,
+      "text": "**Target:** More than one independently identified instance may refer to the same protected view plugin. **Current limit:** registry discovery and Add View require unique view IDs, while built-in rendering dispatches fixed IDs; the current `baseViewId` does not establish a separate repeatable definition identity. **Remaining capability:** distinct instance identity, validated plugin binding and renderer dispatch for multiple instances. **Owner:** view registry, renderer and plugin platform. **Decision gates:** WV-O04 for identity/binding schema and WV-O02 for instance update/remove lifecycle. See [View Architecture](../../002-View_Architecture/PAGE.md#current-view-discovery)."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "line": 29,
+      "text": "**Target:** Editable instance folders live outside `System`, reference a protected view plugin and stay within that plugin's declared capabilities. **Current limit:** the view registry still discovers `ai/<machine>/System/Views/` capsules, and fixed renderer dispatch does not enforce a new plugin-defined capability binding. Existing path and state checks remain real; this gap concerns the full intended plugin boundary. **Remaining capability:** relocate editable instances and validate plugin references, content bindings and authority at server and display interfaces. **Owner:** view registry, renderer and plugin platform. **Decision gates:** WV-O01 for placement/portability and WV-O04 for schema and enforcement workflow. See [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md#current-implementation-and-gap) and [System Manager](../../011-System_Manager/PAGE.md)."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "line": 17,
+      "text": "Today the server discovers numbered folders under `ai/<machine>/System/Views/`. Each folder's `manifest.md` declares a canonical, unique `metadata.view-id`; its `name` is the display label. The numeric folder prefix controls order, with folder-name sorting as a tie-breaker. The prefix and label are not the durable ID. `content.json`, styles and state are within the instance folder, often called a **capsule** in code. The target moves editable instances outside System, while protected plugins stay there; the exact destination is still open. This current folder convention is not the future plugin schema."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "line": 19,
+      "text": "**WV-G03 \u2014 repeatable plugin-defined instances:** the current discovery and bundled Add View route require unique view IDs and reject a second installed copy of the same template. `baseViewId` in the current registry projection equals the instance ID; it does not yet give multiple independent instances of one plugin. `ContentArea.tsx` dispatches built-in React components by fixed IDs, with separate custom/browser iframe cases and an unknown-view placeholder. The remaining capability is a plugin-to-instance binding and display dispatch that allows distinct instance identities while retaining the protected plugin's permissions. The platform view registry and renderer own that work. The identity/schema and binding rules remain a product gate (WV-O04); instance update/remove behavior is also open (WV-O02). A template folder alone does not establish this capability."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "line": 22,
+      "text": "The approved hybrid direction places standard host pieces beside a custom iframe region and offers narrow authorized platform-operation requests. It does not grant unrestricted server, Node or database access; the current embedding paths do not establish that bridge. An iframe-side UI library is optional and deferred. [Custom Iframe Composition](../../011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md) owns the target and open interface choices."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "line": 19,
+      "text": "**WV-G02 \u2014 plugin-aware compositions and provisioning:** today's `new` profile is a bundled JSON list of five template IDs, and `create-service.js` copies from `System_Manager/ai-template`. The Create New form displays those five, but sends only project path and label. Add View also copies a bundled template. The remaining capability is a server-owned installer/provisioner that reads installed workspace/view plugins, resolves the edited selection and dependencies, creates instances and initializes their state. The workspace controller, create service and future plugin platform own the integration. Before implementation, the owner must settle dependency/version behavior (WV-O03), declaration/binding schemas (WV-O04), copied-instance updates/disable/remove (WV-O02), and the instance destination/portability (WV-O01). No behavior for missing plugins or customized-instance upgrades is implied here."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "line": 20,
+      "text": "Editable instance resources move outside `System` into the workspace `ai` tree. The exact destination and shared versus machine-specific placement are open (WV-O01). A person or assistant can tailor the instance's persona, skills, workflow, theme and content binding within the installed plugin's capabilities. A local edit must not independently add database access, unrestricted file access, background processes or executable display behavior. The protected plugin controls those permissions and behavior; changing that plugin requires the user-mediated plugin-edit route. The folder/declaration schema, binding validation and edit workflow remain open (WV-O04). Plugin-specific how-to knowledge belongs with the plugin, using a script or simple tool for predictable edits when possible."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "line": 32,
+      "text": "Today `views/index.js` discovers numbered capsules in `ai/<machine>/System/Views/`, reads their `manifest.md`, `content.json` and styles, and `panel-paths.js` resolves access through that registry. `view-state/resolver.js` locates each capsule's `state/state.json` and merges it with workspace defaults. The renderer's built-in dispatch is still a fixed component map in `ContentArea.tsx`. This is current implementation, not the relocated instance or plugin-binding design."
+    }
+  ],
+  "interpretation": "No planning-artifact references. Current System/Views statements preserved; schema/bridge mechanics explicitly open; precedence appears only to reject requiring a new model. Exact all-page raw deltas reviewed in S04-PROSE-DIFF.patch."
+}

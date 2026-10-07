@@ -1,120 +1,30 @@
 ---
 name: Events And Ledger Vision
-description: Product and developer goals for event provenance, ledger history, file versioning, render/resource sync, and future assistant-led system analysis.
+description: Product direction for explainable system history, bounded recovery, and future provenance analysis.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Chat Harness And Event Flow
-    - Universal Event Bus Standards
-    - Resource Event Sync Controller
-    - Universal Ledger File Versioning and Provenance
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Fusion Studio should be able to explain what happened inside itself.
+Status: approved product direction with explicitly future capabilities, reconciled 2026-09-19. This page does not claim a complete event graph, universal restore or audit UI is implemented. For source-inspected behavior, begin with the [overview](../PAGE.md) and [System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).
 
-The ledger is not just a log. It is the beginning of a system knowledge graph:
-chat turns, tool calls, UI actions, triggers, scheduler runs, file mutations,
-resource refreshes, render invalidations, version snapshots, and review outcomes
-should connect through durable IDs and provenance metadata.
+Fusion Studio should be able to explain what happened inside itself without inventing who caused it. Useful history connects operations, resources, chat and tool activity through stable identities and honest timestamps. The user should be able to investigate failures and recover eligible work without reconstructing every past conversation.
 
-## Product Goals
+## Approved goals
 
-- A user can ask why a file changed and trace the answer to a UI action, tool
-  call, trigger run, scheduler script, or unknown external change.
-- A user can restore a file version even when the relevant harness context is
-  buried, lost, interrupted, or unrelated to Git status.
-- A user can inspect whether a failure came from the assistant, a trigger,
-  a scheduler, an external editor, a filesystem operation, or app UI behavior.
-- File and folder changes can refresh rendered views without destroying the
-  current DOM, selection, scroll, active tab, or navigation state.
-- Future background workers can review conversations, tool calls, file changes,
-  and outcomes to surface concrete improvement suggestions.
-- Future self-improvement loops can evaluate whether agents followed prompts,
-  whether skills would be better than ad hoc instructions, and where the app can
-  optimize repeated workflows.
+- Keep Fusion's mutable configuration, registrations, permissions and subscriptions alongside its durable chat, ledger, provenance and recovery records in System's ownership domain. This does not require moving every file-backed System setting into SQLite.
+- Keep connected email, calendar, notes and other application content authoritative at their source. Views display and act through integrations; workspace applications may own their own files or separate SQLite database.
+- Preserve durable history by default. Historical snapshots serve audit/recovery, while a restore is a separate authorized write back to the authoritative source.
+- Record mutations and their initiating action context at meaningful save/action boundaries. Ambient navigation, focus, scroll and reorder are not durable provenance. A bus event and a retained ledger record are separate decisions.
+- Keep observation, reported context and causal proof distinct. Unknown external changes should remain unknown. A local transport connection, nearby timestamp or matching path does not authenticate a human action or prove a tool caused a change.
+- Refresh affected resources through shared system ownership while preserving useful view state and unsaved work.
 
-## Developer-Level Principles
+## Current foothold and its limits
 
-- Events are facts after something happened. Commands may cause events, but the
-  Universal Event Bus is not a request/response API.
-- Provenance must separate observation from causation. Chokidar can observe a
-  file change; it usually cannot prove who caused it.
-- Direct initiators should carry durable IDs in `provenance.cause`: UI action
-  IDs, tool call IDs, harness ID/run/event IDs, trigger run IDs, script run IDs,
-  scheduler run IDs, automation run IDs, agent run IDs, or audit query IDs.
-  Chat thread IDs, chat turn IDs, resource event IDs, root/parent event IDs, and
-  correlation IDs belong under `ids`, domain payloads, or ledger edges.
-- Unknown external changes should stay honest. If a change was not linked to UI,
-  assistant, trigger, scheduler, script, or known system work, the ledger should
-  mark it external or unknown instead of guessing.
-- Resource/render sync and file versioning should consume the same canonical
-  events. Views should not build isolated listener paths that drift from ledger
-  provenance.
-- Ledger subscribers can filter, compact, and summarize. Producers should
-  preserve facts and avoid discarding metadata before subscribers can decide what
-  matters.
-- High-frequency file changes need storm control. The system must preserve that
-  a storm happened without flooding the ledger or future assistant context.
+The accepted implementation scope is narrower than these goals: governed built-in facts, mediated UTF-8 save preimages, reported save context and bounded post-tool observation checkpoints. The [Decisions](../002-Decisions/PAGE.md#accepted-implementation-boundaries) page explains those boundaries and their source owners. An eligible snapshot can be useful evidence without providing a general restore UI or permission to overwrite a source.
 
-## Event Graph Vision
+## Future capabilities and unresolved choices
 
-The durable graph should eventually support paths like:
+A future investigation could follow a resource observation to a tool activity, a saved exchange and related changes, then offer an evidence-based explanation. Future workers could suggest better prompts, skills or workflows. Wider causal edges, automation identities, saved audits, recommendations, storm summaries and broader version history remain feature-specific design work; illustrative graph paths are goals rather than a live schema or query contract.
 
-```text
-file version
-  -> resource mutation event
-  -> tool call id
-  -> chat turn
-  -> thread
-  -> related mutations
-  -> earlier/later versions
-  -> likely cause or regression explanation
-```
-
-and:
-
-```text
-button_click:send_to_chat
-  -> view:capture-viewer
-  -> active document
-  -> chat attachment metadata
-  -> generated tool calls
-  -> resulting file mutations
-```
-
-and:
-
-```text
-trigger run
-  -> script execution
-  -> output files
-  -> wrong destination
-  -> restore or corrective action
-```
-
-## Near-Term Boundary
-
-The immediate resource-sync work should not build the full ledger, but it must
-not block it. Resource events need stable IDs, clear observed-by/provenance
-fields, workspace and path identity, known causal IDs, and enough before/after
-metadata for future versioning.
-
-The full ledger/versioning work can follow as a separate build once the event
-contract is stable enough to consume.
-
-## Why This Matters
-
-Without meticulous event categories, future sessions will need the same context
-dump repeatedly. With them, the system can answer from its own history:
-
-- What changed?
-- Who or what caused it?
-- Which view or document was active?
-- Which tool call, chat turn, trigger, or script was involved?
-- What changed before and after?
-- Which nearby change likely caused the failure?
-- Should this become a rule, a skill, a trigger, a UI affordance, or a code fix?
+Before building those capabilities, settle their exact permissions, data eligibility, retention, redaction, failure behavior and user controls. The [open product choices](../002-Decisions/PAGE.md#open-product-choices) are decision triggers, not a blanket blocker on using today's bounded implementation. No autonomous self-modification, plugin self-grant or new data-lifecycle policy follows from this vision.

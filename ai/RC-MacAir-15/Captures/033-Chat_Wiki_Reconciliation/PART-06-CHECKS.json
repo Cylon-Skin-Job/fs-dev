@@ -1,0 +1,40 @@
+{
+  "counts": {
+    "generated_blocks": 39,
+    "unchanged_articles": 31,
+    "exact_pre_edit_snapshots": 8,
+    "no_new_ephemeral_refs": 8,
+    "whitespace": 8,
+    "protected_files": 1668,
+    "authority_unchanged": 2,
+    "revision": 1,
+    "product_inventory": 1,
+    "frontmatter": 8,
+    "source_paths_exist": 80,
+    "source_code_files": 80,
+    "relative_links": 24,
+    "heading_fragments": 7,
+    "json_examples": 1,
+    "prior_snapshots": 25,
+    "audit_page_coverage": 1,
+    "all_source_code_files": 289,
+    "audit_before_coverage": 1,
+    "audit_current_coverage": 1,
+    "no_deleted_active_owner": 1,
+    "june_history_preserved": 1,
+    "owner_changelog_preserved": 1
+  },
+  "passed": 2286,
+  "errors": [],
+  "warnings": [],
+  "candidate_pages": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": "def8dc92efb90fa5accda8ca41b50211af6a55dfd6df161ff7911e7780bf5e3d",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md": "d47062fbde88b5b06cb91fe7ee83641f95ff4ab24de43b4c67afdfeb96a02a0c",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md": "c99857894c4003cb7bbaa383314c7bfdc8b8b92814c77681ca621a72d8279b91",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md": "9af6095992b8c6e3e0c9394b4a8af23d203d8fe4c565bcf09df10d05d922d02a",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md": "7dbc007c936793585b2eb30c6611667012f32e799afc220a772c469f0531a557",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md": "b04933d5c95f724312508b3be0e46a6891185349233727af1ee53b7dac5dda8d",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md": "bab6e50ad907faef2861ab420971c9323537e04a981c220575c97a117f376b09",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md": "1bc990977d39225021b56da33fe3e92c77285f918c23c92bdc92404d63edc0a7"
+  }
+}

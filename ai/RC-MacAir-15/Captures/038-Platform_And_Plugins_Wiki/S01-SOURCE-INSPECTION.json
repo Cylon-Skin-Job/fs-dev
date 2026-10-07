@@ -1,0 +1,106 @@
+{
+  "at": "2026-09-23T12:55:48.937578+00:00",
+  "scope": "S01 fresh reads; current claim PP-CUR01 traces ContentArea/ContentFrame to ViewTabBar; save controller read for authority orientation only, no new save implementation assertion. Authority pages source-only, no recertification of dated Chat runtime prose. S00 full inventory remains prior evidence.",
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d"
+    },
+    {
+      "path": "fusion-studio-server/AGENTS.md",
+      "sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "sha256": "669827c9f3cbd8970d074ba55defa333a3a14b154ffe97a9e27047b4d1c674d9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "sha256": "c995d59bde9a95dacaa9f9ae844d1d9701b05c6f8a259b3ced9fe9b6608c3288"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "f1adcce948629e4d6b3221561c452558ebcbdc06c8de2532a96b76b790575b56"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "8a2bdb1cc23e095ea5462e6c74a30e54f828a16db3e5a4d3609049378ba9ee60"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "f81aa22c196fc63e70fafb2229f7793d8509e485c3588d322c49e71f71f3f553"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "be775a56a14b49b12ae47423a2c1e0c739091bc28174f28448185c00daab30ab"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "eb673397e881d241858ac47d4ad513c97d843f491f1190cbaf525e4a0f987eee"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "81fd3621d5273b98e69a142f4899e2604f5e04f31773a0e9a024637cd6a8f7a3"
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx",
+      "sha256": "886482040483da3985b87f74d6886b7ce6ec1a7372c9be5575135e908992c6b1"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+      "sha256": "4631143ff64ce0e4c6754bb3e24bc77c73b2da57c9ab17ae51505477ade6e126"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "sha256": "58165cc333b5b74108ab70dad2f26246207104fbff81eaac51800fbf6aafcbec"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "sha256": "77495240714010228061df9e2133488aa8eaaefbe01f6e87b7c7f4b147e53628"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "sha256": "1bbc11c6794ae2fbee8971716a6551ef54117b3b619c65f441e1ed161fa9cca2"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/HANDOFF.md",
+      "sha256": "45239f709d4a6bdf1cfdeab0d69837ec04041c297e9c5568363f3d386b2eecb5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/030-Plugin_System/decisions.md",
+      "sha256": "dae7996623d94c1b6ae41cb01faa44df519dc0b09ca383cb7f35a5ef14f89434"
+    }
+  ]
+}

@@ -1,35 +1,11 @@
 ---
-name: Domains
-description: Sub-agent prompt for the Sync Wiki Context workflow. Writes the "Domains" section of the root Wiki Guide.
+name: "Domains"
+description: "Read-only research prompt for refreshing the corresponding Wiki Guide section."
+metadata:
+  source-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-You are a sub-agent in the Sync Wiki Context workflow. Your job is to write ONE section of the root Wiki Guide.
+Write `## Domains`. Inspect each nonhidden top-level section, preferring its `000-` heading; otherwise read its folder `PAGE.md`. Describe actual subject coverage, without claiming completion. Link from the Guide folder, for example `../007-Chat_System/000-Overview_and_References/PAGE.md`. Exclude Guidance itself and retired hidden history. Order for reader usefulness. Do not resurrect old Project, System Tools or System Manager buckets.
 
-## Your Section
-
-Write a `## Domains` section — a bullet list of every top-level domain folder, each with a one-line description of what it COVERS.
-
-## Research
-
-The wiki root is at `ai/<machine>/Wiki/`.
-
-For each `NNN-*` folder directly under the wiki root:
-1. Read its bare `PAGE.md` (the table of contents).
-2. If it has a `000-*` folder, read that overview's `PAGE.md` for richer context.
-3. Write a one-line description of what the domain covers — the actual subject matter, not "Navigation map for..."
-
-Exclude any folder that is clearly legacy/transitional (those go in the Status section, not here). Exclude `000-` folders and the `Workflows` section.
-
-## Format
-
-```markdown
-- [Domain Name](NNN-Folder_Name/PAGE.md) — One line describing what this domain covers.
-```
-
-Links are relative from the wiki root.
-
-## Rules
-
-- Descriptions must be substantive (what does this domain document?), not meta ("Navigation map for...").
-- Order domains by importance/frequency of use, not by folder number — the most-used domains first.
-- Do NOT write to any file. Return ONLY the markdown section (the `## Domains` heading + bullet list).
+Return the requested Markdown section plus a separate evidence note naming inspected files and uncertainties. Do not write files. The coordinator owns synthesis, verification and edits.

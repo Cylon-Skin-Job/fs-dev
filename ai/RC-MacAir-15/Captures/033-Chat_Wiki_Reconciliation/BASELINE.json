@@ -1,0 +1,167 @@
+{
+  "purpose": "Preparation-time source inventory, not completed wiki verification or execution baseline",
+  "recorded_at": "2026-09-19T01:37:06.977648-07:00",
+  "root": "/Users/rccurtrightjr./projects/fs-dev",
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "branch": "agent/exact-workspace-paths",
+  "status": " M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md\n M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md\n M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json\n M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md\n M fusion-studio-client/e2e/office/fixture-lifecycle.mjs\n M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs\n M fusion-studio-client/e2e/office/global-setup.mjs\n M fusion-studio-client/e2e/office/global-teardown.mjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs\n M fusion-studio-client/e2e/office/run-isolated-electron.mjs\n M fusion-studio-client/playwright.office.config.ts\n?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md\n?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md\n?? ai/RC-MacAir-15/Captures/031-Remote_Access/\n?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md\n?? fusion-studio-client/e2e/office/harness-bounds.mjs\n",
+  "chat_page_count": 38,
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md",
+      "sha256": "df5e0f6439982bc9e7c0ca01aec7063dcf624144cf1a8c6829682e36e55738e6"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+      "sha256": "e777998396836f789810f0de671f94c456037663b3b6fef2bd4f4fcdec0897a3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/003-Lessons/PAGE.md",
+      "sha256": "4afaed29bbeb99fb6a5e4b6282bf0e78d6a6bfe36b36f02638960d185afca972"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md",
+      "sha256": "ee9385afa32caf5f3ea377f556a3a6192ce0cda83045074a8332e74cf943a1f3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "cef64edb535dba412b9671b22b171d7f68bec72bb3b260e4edaff44f44f429db"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md",
+      "sha256": "8da7c28b4d0f22faac61bcac1f1076527a20c34af2c942f580088a9c21bfee6d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/002-Turn_Identity/PAGE.md",
+      "sha256": "1155de52f31d661f9f822a62bf3c9889dbdc6dfb89f3f5f48ba9c5a80a856e69"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/003-Exchange_Storage/PAGE.md",
+      "sha256": "fb7947d559b967c71e1daa0fe458ae7d434f7dd62a93b2377f007f8aee9d87a1"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/004-Metadata/PAGE.md",
+      "sha256": "5ae8a1ba217fa0a46fbd882f9fec69c1d210228f4e9d55393d69c77ae13a143b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/005-User_Metadata/PAGE.md",
+      "sha256": "597c44bf3282ab87a286c25597300b80af970c3a41ecf71777eeacf90c448bf9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+      "sha256": "92a73ccbfa30afe109da426b68e4e4080e01098aadf8f1f5c7d4205270b53063"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md",
+      "sha256": "c2befc2bfc71701074fae823ea1c13f1f2d87f4e19702b01e78f9407f01d52e2"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md",
+      "sha256": "86b2108e9e9270bc18727919cc7e7cf28a3265abd2f2f231d03f2aa2ce224e28"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md",
+      "sha256": "ab9c73ab7b8d8109e6ce6ac3c03fc8dbdee86ac345e825428c3d13bea4ae9d18"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "687510f254d9939a90c72eb2977dcbbbda701e5474ede12a4aede4ea9587ce3d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/005-Legacy_Wire_Terminology/PAGE.md",
+      "sha256": "ad682f6c1607b5dd0edab0eb39335a3ec56da016bb8bb1e239ce03bbbc8c800a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md",
+      "sha256": "adea552f1a61d2fc9011a10b12b112b62b63577b9ed321886e2cc63152b46c45"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md",
+      "sha256": "b44dacabf8d06dd5d7866189523b71c899a7d10b98303068d693c0e72d8c0919"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/001-Live_Rendering/PAGE.md",
+      "sha256": "6bfb1e24d76738aaac90b649b97910182c4c71902fd227d29257f96b78956fd4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/002-History_Rendering/PAGE.md",
+      "sha256": "bcdb7c2766f32a2c9a0976a519486e49fd1a219002943709dd2e086fb5aa2d6d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/003-Turn_Finalization/PAGE.md",
+      "sha256": "82119a868692998fab60f89eef6a51e8d48d40b93f7b97ecd34b75acea413365"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md",
+      "sha256": "4c8f1af86b2a0e97f47a5312c7336c3958db6ce442c72afe676b62a0f66f2ceb"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md",
+      "sha256": "89bf04611ec278b43a5b2c1bf3a7cec5fb9694ca101005a685dc3c2f87413f78"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md",
+      "sha256": "1babe204e672097e5b3325bbefd8ee3e4c934800272fd7ebc1880597df44482a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "sha256": "17e37cc7d5e7930361efceac220011d203f64385f3074887c2b4c2cde37a80a8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md",
+      "sha256": "271c26c0cf41e7185ecfa557ebaf5b934d6bb2be880a6fbb2c2b03cc5dcb9c32"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/003-Message_List/PAGE.md",
+      "sha256": "696f88eb11f44f3fed339cef9b880a9c6164a518c673c98a6197b653caeab2af"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/004-Reply_Action_Chrome/PAGE.md",
+      "sha256": "190270ad6381c12c010f61f3165861d3c14da914182bc53a9dd92ec3d3371af4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md",
+      "sha256": "8152179f4c8bb7750169b20d0da369a595701de02fc2120d356f86c357f6ff20"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/006-Tool_Call_Rendering/PAGE.md",
+      "sha256": "02e1288ce9528451e733fb7f91b68d1ae9e0868da828735710ea498a0134714b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+      "sha256": "203c469699fb50fef0b6f7e71d446f6b16a3f2cc50286a65febbb0ce78a7d999"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md",
+      "sha256": "d180f7edc3125e0cf49aec2ea28dc2d77ce2624b5a7529fa7d51b5917411da03"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/002-Playwright_Browser/PAGE.md",
+      "sha256": "bc2360997249005c1dc254b15092592296cd3df014f27bc0c7de031ea35d9a1c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md",
+      "sha256": "c5229155c3c595174d41502f5ee215aaf51300fab5bb784f7540548b938b87ac"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "ae2f70689babd328b8b8e55a2e43b04f64548c0648ae4cead422800595ddb771"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "sha256": "fb38ae6a8640f844f83839070471095d26442f6305a4b58dd5c53f8f4a669eb1"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "sha256": "28861f4b610d05d2a3a030fa5cb7dc9cace245aa236754b4d8e83071c50c69bd"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md",
+      "sha256": "50944aaf2e1e0f8d1583f76606800f475306d4398b6644d6845405a3590f3d04"
+    }
+  ]
+}

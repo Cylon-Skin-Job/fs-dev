@@ -1,49 +1,47 @@
 ---
 name: View Activity And Collections
-description: Documents shared per-view state for recents, navigation, tabs, starred files, and pinned folders.
+description: Explains current per-view activity, collections and group-bound worksurface state with their owning services.
 metadata:
-  incoming-edges:
-    - Workspaces And Views
-    - View Architecture
-    - Themes and State
-    - State Management Standards
-  outgoing-edges:
-    - View Architecture
-    - Viewer Search
-    - Themes and State
   source-files:
     - fusion-studio-client/src/lib/viewActivity.ts
     - fusion-studio-client/src/lib/viewCollections.ts
     - fusion-studio-client/src/state/slices/viewSlice.ts
     - fusion-studio-client/src/hooks/useFileTileMenu.ts
-    - fusion-studio-client/src/state/fileStore.ts
-    - fusion-studio-client/src/state/wikiStore.ts
-    - fusion-studio-server/lib/view-state/defaults.js
+    - fusion-studio-server/lib/view-state/resolver.js
     - fusion-studio-server/lib/view-state/writer.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/view-state/thread-worksurface.js
+    - fusion-studio-server/lib/thread-groups/placement-delivery.js
+    - fusion-studio-client/src/lib/ws/thread-handlers.ts
+    - fusion-studio-client/src/hooks/useDocViewerState.ts
+    - fusion-studio-client/src/state/wikiStore.ts
+    - fusion-studio-client/src/state/fileStore.ts
+    - fusion-studio-client/src/components/office/OfficeGrid.tsx
+    - fusion-studio-client/src/lib/worksurface/builtins.ts
+    - fusion-studio-client/src/lib/worksurface/worksurfaceController.ts
+    - fusion-studio-client/src/components/capture/CaptureTiles.tsx
+  last-modified: "2026-09-21T13:37:22Z"
 ---
 
-Use this page for persisted per-view activity and saved-item collections. This is the shared model behind Recents, wiki back/forward navigation, File Explorer tab persistence, starred files, and Office pinned folders.
+Use this page for **current** persisted per-view activity and saved-item collections: Recents, wiki back/forward navigation, File Explorer tabs, starred files and Office pinned folders. These are built-in view integrations, not a promise that every future plugin view restores every kind of state. For the approved editable-instance boundary, see [View Configuration And Agents](../022-View_Configuration_And_Agents/PAGE.md).
 
 ## Storage Model
 
-Per-view activity and collections live in the view capsule state file:
+In the current implementation, per-view activity and collections live in the view capsule state file:
 
 ```text
 ai/<machine>/System/Views/<view-folder>/state/state.json
 ```
 
-The client writes minimal `state:set` patches through `usePanelStore._persistViewPatch`. The server state writer treats `activity`, `collections`, and `officeDocumentSidePanel` as forced view-override keys so they stay view-local instead of being folded into workspace defaults.
+The client writes minimal `state:set` patches through `usePanelStore._persistViewPatch`. The server resolves workspace defaults and the registered per-view override; its state writer treats `activity`, `collections`, and `officeDocumentSidePanel` as forced view-override keys so they stay view-local instead of being folded into workspace defaults.
 
-The persisted shape has two shared branches:
+This current persisted shape has two shared branches:
 
 - `activity`: recents, navigation stack, open tabs, and active tab id.
 - `collections`: starred items and pinned folders.
 
 Use `activityId(panel, path)` as the stable item id. Do not create another id format for starred, pinned, recent, or tab entries.
 
-## Thread Worksurfaces (CHAT-03 / SPEC-03)
+## Thread worksurfaces
 
 A view bound to a Thread Group remembers its content under the same view-state
 document:
@@ -80,20 +78,13 @@ selected, and expose the owning view's warned retry / `Switch without saving`
 choice. Group deletion atomically records a durable cleanup outbox row that the
 view-state service consumes to remove only that exact entry.
 
-## Side Chat Placements (CHAT-04 / SPEC-04)
+## Side Chat placements
 
-A Move creates a durable `open-side-chat-tab` placement outbox row and delivers
-it into the same service-owned `managedComponentPlacements` lane under a stable
-independently minted `sideChatPlacementId`. Delivery is retryable and never
-rolls back the committed group transition; ordinary outbox replay focuses or
-acknowledges an existing placement and creates no duplicate, and it never
-reopens a closed disposition. Closing a Side Chat records a closed disposition
-through this lane before the descriptor is removed, so restart/outbox replay
-cannot resurrect it. An explicit `open_member_in_side` (or an exact-member link
-resolution) is the only reopen path and reuses the lifetime placement without
-warming or creating a session. The lane stays keyed by
-`{workspaceId, viewId, threadGroupId}` and never carries `surfaceId`,
-transcript, or chat-runtime state.
+A Move creates a durable `open-side-chat-tab` placement outbox row and delivers it into the service-owned `managedComponentPlacements` lane under a stable independently minted `sideChatPlacementId`. Delivery is retryable and never rolls back the committed group transition. Ordinary replay acknowledges an existing placement, creates no duplicate, and never reopens a closed disposition. Closing retains the descriptor with `disposition: closed`; the materialized open set excludes that record, preserving the lifetime identity without resurrecting the tab.
+
+Explicit `open_member_in_side` and valid exact-member link resolution can persist that lifetime placement as open without warming or creating a session. Only the menu action currently has the corresponding renderer completion consumer that selects the placement and requests its worksurface entry. Exact-member `resolve_link` lacks this read/focus bridge, so server resolution does not establish visible reopening or selection. See [Group and exact-member links](../../007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links) for the source-derived gap and intended presentation.
+
+The lane stays keyed by `{workspaceId, viewId, threadGroupId}` and never carries `surfaceId`, transcript, or chat-runtime state.
 
 ## Activity
 
@@ -117,7 +108,7 @@ Empty groups are not rendered.
 
 ## Current Consumers
 
-Capture records document opens in `doc-viewer` activity and renders the Recents mode from `activity.recents`.
+Capture records document opens in `capture-viewer` activity and renders the Recents mode from `activity.recents`.
 
 Office records document opens in `office-viewer` activity and renders the Recents sidebar/page from the same grouping helper. Opening a document also keeps the Office document side drawer state in `officeDocumentSidePanel`, so the drawer remains open or closed when another document opens.
 
@@ -146,10 +137,10 @@ When a file is archived, restored, renamed, or deleted, the same path-reference 
 
 ## Extension Rule
 
-When another view needs recents, back/forward, tabs, stars, or pins:
+When a current built-in view needs recents, back/forward, tabs, stars, or pins:
 
 1. Use `viewActivity.ts` and `viewCollections.ts`.
-2. Persist with `state:set` patches, not new JSON files or SQLite tables.
+2. Persist through the owning `state:set` path for these view-local facts; group-bound content uses its dedicated worksurface route. A plugin-defined future view needs an explicit state contract before assuming this behavior.
 3. Keep durable item paths as panel-relative paths.
 4. Use `removeViewPathReferences` and `rewriteViewPathReferences` when filesystem actions mutate paths.
 5. Render view-specific chrome in the view, but keep activity and collection mutation in the shared helpers.
@@ -159,3 +150,7 @@ When another view needs recents, back/forward, tabs, stars, or pins:
 - [View Architecture](../002-View_Architecture/PAGE.md) - view capsules, content roots, and view state boundaries.
 - [Viewer Search](../012-Viewer_Search/PAGE.md) - shared local search for Capture and Office.
 - [Themes And State](../../005-Enforcement/002-Themes_And_State/PAGE.md) - filesystem state and style boundaries.
+
+## Ownership limit
+
+Current per-view overrides are addressed through the registered capsule under `System/Views`; the approved target relocates editable instance resources outside `System` without changing the rule that platform state services own writes. Group-keyed worksurface content and service-managed placement are narrower than universal save/restore. The [Chat Runtime Model](../../007-Chat_System/006-Runtime_Model/PAGE.md) and [Chat UI](../../007-Chat_System/004-Chat_UI/PAGE.md) own the accepted group, Main/Side Chat and tab behavior; this page does not redefine their contracts.

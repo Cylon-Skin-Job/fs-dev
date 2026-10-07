@@ -1,0 +1,34 @@
+{
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "sha256": "342eb6ee20cbd4bdd6f19c9db7519ba5940fff9c8e5bc97561ea8c573bc93e59"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "sha256": "2db745c46c8274cfa8fbfe1854ce7894f4b0c16e39868830c68633c5dab8d5b2"
+    }
+  ],
+  "whitespace_conflict_failures": [],
+  "contextual_hits": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "line": 38,
+      "text": "The inspected `create-service.js` reads bundled workspace/view templates from `System_Manager/ai-template`. Its scaffold path selects bundled view IDs and copies numbered view capsules into the machine-scoped `System/Views` root resolved by `ai-paths.js`. The consumer in `views/index.js` discovers that root, reads manifest identity and loads content/layout configuration. This is bundled scaffolding and registry loading, not an installed-plugin provisioner or a choice of future editable-instance location."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "line": 42,
+      "text": "These observations come from the named source paths only; no product runtime was exercised. [WV-G03](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g03--repeatable-instances-of-a-view-plugin) and [WV-G05](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g05--editable-instance-placement-and-capability-binding) retain repeatable-instance and capability/placement gaps. The [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates) cover schemas, dependencies and harness mechanics. Continue to [Composable Presentation](../003-Composable_Presentation/PAGE.md) for what an instance can configure and compose in the approved model."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "line": 25,
+      "text": "A card or specialized layout is different from a privileged service and from a canonical file-type renderer. Plugin presentation contributions do not replace the platform file-type registry, canonical editor or save path. Exact registration ABI, supported inputs/actions, version compatibility and execution/isolation mechanics remain open; no arbitrary in-process React import contract is implied."
+    }
+  ],
+  "hit_disposition": "System/Views is explicitly current, ABI/schema mechanics explicitly open; no ephemeral reference or invented interface.",
+  "tracked_paths": [],
+  "git_diff_check": "N/A: both articles untracked; direct whitespace/conflict check applied",
+  "result": "PASS"
+}

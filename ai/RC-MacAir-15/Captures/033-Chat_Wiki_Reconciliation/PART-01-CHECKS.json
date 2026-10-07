@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "generated_blocks": 39,
+    "exact_pre_edit_snapshots": 6,
+    "no_new_ephemeral_refs": 6,
+    "whitespace": 6,
+    "unchanged_articles": 33,
+    "protected_files": 1668,
+    "authority_unchanged": 2,
+    "revision": 1,
+    "product_inventory": 1,
+    "frontmatter": 6,
+    "source_paths_exist": 62,
+    "relative_links": 24,
+    "heading_fragments": 1
+  },
+  "passed": 1855,
+  "errors": [],
+  "warnings": [
+    {
+      "source_metadata": "ai/<machine>/System/config/cli.json",
+      "classification": "existing config pointer; Part 6 owns source-metadata normalization"
+    }
+  ],
+  "candidate_pages": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md": "6e8474da43b265a65ecb57cddde5069efe7c3a9a0569b6c725d7e1f790af1913",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md": "d781cd982a9baaa56daa4e92f0eafc555e957a407f3539ce485685398c0ce518",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md": "35d52954efa5c655b65e165dfe393faa0efcb053e07dba97749839fbc2b754e8",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md": "40289698c4874348e66ad2d29dee46258e8d2b4cd6c521e71d341099feb64bc1",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md": "e0b0315ba4fac87cee7dc7cae821df3a127fad2402c14faea0d910ed6919971c",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": "07850fab98ed9800bf8a9c5ed2fe40974d3000808c18acd8844d7ab57cc5bea9"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "counts": {
+    "generated_blocks": 39,
+    "unchanged_articles": 35,
+    "exact_pre_edit_snapshots": 4,
+    "no_new_ephemeral_refs": 4,
+    "whitespace": 4,
+    "protected_files": 1668,
+    "authority_unchanged": 2,
+    "revision": 1,
+    "product_inventory": 1,
+    "frontmatter": 4,
+    "source_paths_exist": 75,
+    "json_examples": 10,
+    "relative_links": 26,
+    "heading_fragments": 10
+  },
+  "passed": 1883,
+  "errors": [],
+  "warnings": [
+    {
+      "source_metadata": "ai/<machine>/System/config/cli.json",
+      "classification": "existing config pointer; Part 6 owns source-metadata normalization"
+    }
+  ],
+  "candidate_pages": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md": "7ed5a5c4dbe3f371cfe4657ee6936104cc903c6bc0f6e1f22a9555d289ba7032",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md": "cbb1f0bff2156b09e182e4deddde32ca4bd0b2eecdc8c87716dd8a64d6a3de50",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md": "872588cc16da7aaf5684d6b152f0a9385a1edee18c9c1a8d06cb8a7d805036b7",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": "24dc54d4e3528a00db9e06e2ef6bac37fc2caea1dbdce7d4b006d53d7fe276d7"
+  }
+}

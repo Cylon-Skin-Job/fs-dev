@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-06T07:34:23.201078+00:00",
+  "purpose": "Read-only original authority/record preimages for bounded incorporation proposal. No transfer or write inferred.",
+  "writerObservedByRoot": "implementation01a1042c-09df-7473-a1e1-f458eee6b93d notLoaded/latestinterrupted; source01a0ea32-f152-77a2-afc2-b73e8976685a notLoaded/latestcompleted; root native recheck currentturn",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/SPEC-01-CHOKIDAR-RETIREMENT-AND-CHAT-VERIFICATION.md",
+      "sha256": "bd9068de68a1d83d74d2a1d309eb28f433db97aa11a2f73f9bd872453e6521c3",
+      "bytes": 50959
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/OWNER-APPROVAL.md",
+      "sha256": "e0704ea562f4b6e2b9bb685cbf0a101b10314df1476ab3f784a6a309f8e7a24e",
+      "bytes": 1990
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "sha256": "8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240",
+      "bytes": 9630
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-builder-report-2026-10-03.md",
+      "sha256": "75ac47bff8c844417f0faff58507cde4c94d468a457917a6820631916b2bf573",
+      "bytes": 9971
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-orchestrator-acceptance-2026-10-03.md",
+      "sha256": "41eed0a6b2e4b9cc9fd85e8e46b6b93d809d8c3ea822d1f21dac54c7487913c3",
+      "bytes": 3097
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-builder-report-2026-10-03.md",
+      "sha256": "76a24a785563714a427555a995031bb79939124151c1682c38f0b473c9debf91",
+      "bytes": 13930
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-native-ui-retry-2026-10-04.md",
+      "sha256": "a387faa407e54e9497a2538e68560afc7ff39cedeea26aa2abbb51097b7d5c28",
+      "bytes": 5322
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-orchestrator-2026-10-05.md",
+      "sha256": "33d5c86c60655dcb297ec27c3a3f71122905341acf9adc6131adf752e5c5cba2",
+      "bytes": 12338
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-repair-builder-2026-10-05.md",
+      "sha256": "e850610d156a45edb2ec0c14f1275e98e842a1391a3619d863a89e4d00cf77ff",
+      "bytes": 19560
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-orchestrator-acceptance-2026-10-03.md",
+      "sha256": "3b9d2efffc1079a86176f19ba1e628fa02fed873960a7ba6050f45a2b2650b54",
+      "bytes": 5915
+    }
+  ],
+  "requestedWriteTargets": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "exists": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "exists": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "exists": true
+    }
+  ],
+  "authorityStatus": "successor transfer ungranted; no original records edited"
+}

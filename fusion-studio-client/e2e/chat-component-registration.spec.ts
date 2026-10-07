@@ -145,6 +145,7 @@ async function buildHarness(): Promise<string> {
     const registrationPath = path.resolve('src/components/chat/chatComponentRegistration.tsx');
     const resolverPath = path.resolve('src/components/view-tabs/componentTabResolver.ts');
     const panelStorePath = path.resolve('src/state/panelStore.ts');
+    const productSendPath = path.resolve('src/lib/ws/product-send.ts');
     const source = `
       import React from 'react';
       import { createRoot } from 'react-dom/client';
@@ -152,6 +153,7 @@ async function buildHarness(): Promise<string> {
       import { chatConnectedRegistrations } from ${JSON.stringify(registrationPath)};
       import { createFirstPartyComponentResolver } from ${JSON.stringify(resolverPath)};
       import { usePanelStore } from ${JSON.stringify(panelStorePath)};
+      import { installProductSendCapability } from ${JSON.stringify(productSendPath)};
 
       var WS = ${JSON.stringify(WS)};
       var VIEW = ${JSON.stringify(VIEW)};
@@ -168,6 +170,19 @@ async function buildHarness(): Promise<string> {
         removeEventListener: function () {},
         close: function () {},
       };
+      // The fixture owns its socket lifecycle; install the same admission
+      // capability that ws-client supplies in the app before sending intents.
+      var binding = { workspaceId: WS, workspaceEpoch: 'fixture-epoch', bindingRevision: 1, bindingSerial: 1 };
+      installProductSendCapability({ socket: fakeWs, generation: 'component-registration-fixture',
+        isAuthenticated: function () { return true; },
+        captureBinding: function (id) { return id === WS ? binding : null; },
+        isBindingCurrent: function (captured) { return captured === binding; },
+        sendProductResult: function (serialized, policy, stillCurrent) {
+          if (!stillCurrent()) return { status: 'not_enqueued', reason: 'stale_binding' };
+          fakeWs.send(serialized);
+          return { status: 'enqueued', destination: 'socket' };
+        },
+      });
 
       var row = {
         threadId: THREAD,

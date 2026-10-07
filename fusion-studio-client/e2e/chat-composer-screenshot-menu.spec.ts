@@ -39,8 +39,8 @@ test('composer screenshot menu preserves split capture and gallery controls', as
 
   expect(appSource).toContain('void captureAndAttachScreenshot()');
   expect(appSource).toContain('onClick={handleControlCamera}');
-  expect(footerSource).toContain('onAttach={handleAddAttachment}');
-  expect(footerSource).toContain('onInsert={handleInsertText}');
+  expect(footerSource).toContain('onAttach={onAddAttachment}');
+  expect(footerSource).toContain('onInsert={onInsertText}');
   expect(footerSource).not.toContain('<ScreenshotsTrigger');
   expect(addMenuSource).toContain('void captureAndAttachScreenshot(screenshotOwner)');
   expect(addMenuSource).toContain('control_camera');

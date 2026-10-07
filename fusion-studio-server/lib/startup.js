@@ -8,8 +8,8 @@
  *   4. startAuditSubscriber
  *   5. server.listen()
  *   6. wiki hooks
- *   7. project file watcher + loadComponents + createActionHandlers
- *   8. agent triggers + cron scheduler
+ *   7. loadComponents + createActionHandlers
+ *   8. agent event triggers + cron scheduler
  *   9. runner heartbeat monitor
  *  10. SIGTERM/SIGINT handlers for clean shutdown
  *  11. material-symbols static mount (post-listen, DB-resolved path)
@@ -41,9 +41,9 @@ const { startThreadLifecycle } = require('./thread/thread-lifecycle-controller')
 const { loadComponents, getModalDefinition } = require('./components/component-loader');
 const views = require('./views');
 const viewReadiness = require('./views/readiness-runtime');
+const { startWorkspacePipelineWhenReady } = require('./views/readiness-startup');
 const { createViewReadinessCoordinator } = require('./views/readiness-coordinator');
 const { createViewRelocationService } = require('./views/relocation-service');
-const { startWorkspacePipelineWhenReady } = require('./views/readiness-startup');
 const { createShutdownHandler } = require('./shutdown');
 
 const {
@@ -631,15 +631,6 @@ async function start({
   const workspaceController = require('./workspace/workspace-controller');
   await workspaceController.start();
 
-  // 3.8a. Start watching the macOS screenshot folder for hotkey captures.
-  // Started after workspaceController so the active workspace repo_path is known.
-  isolatedProvenance.defineStartupEffect('hotkey-screenshot-watcher', () => {
-    const hotkeyScreenshotWatcher = require('./screenshot/hotkey-screenshot-watcher');
-    hotkeyScreenshotWatcher.start().catch((err) => {
-      console.error('[Startup] Failed to start hotkey screenshot watcher:', err.message);
-    });
-  }).start();
-
   // 3.8b. Themes CSS — re-derive themes.css from the active slug in themes.json
   // on every boot so the CSS is never stale after a hand-edit (THEME_PICKER_SPEC §5c).
   const projectRootForThemes = getProjectRoot();
@@ -668,7 +659,7 @@ async function start({
     });
   }).start();
 
-  // 4. listen() — must come before watcher/hooks start, they broadcast to clients
+  // 4. listen() — must come before post-listen hooks that can broadcast to clients
   await new Promise((resolve, reject) => {
     server.listen(PORT, SERVER_HOST, async () => {
       const boundPort = server.address().port;
@@ -676,7 +667,7 @@ async function start({
       console.log(`[Server] Default CLI: ${process.env.KIMI_PATH || 'kimi'}`);
 
       try {
-        await isolatedProvenance.defineStartupEffect('workspace-watcher-trigger-pipeline', () => (
+        await isolatedProvenance.defineStartupEffect('workspace-automation-pipeline', () => (
           startWorkspacePipelineWhenReady({
             sessions,
             getProjectRoot,
@@ -721,10 +712,6 @@ async function start({
       shutdownThreadManagers: require('./thread/thread-manager-registry').shutdownThreadManagers,
       closeReconciliationDatabase: () => agentReconciliationDb.destroy(),
     })],
-    closeWatchers: () => {
-      const { abandonAll } = require('./watch/core');
-      abandonAll();
-    },
     stopSubscriptions: () => subscriptionController.stop(),
     closeDatabase: closeDb,
   });
@@ -757,23 +744,19 @@ async function start({
 }
 
 /**
- * The post-listen pipeline: watcher, hold registry, action handlers,
- * filters, triggers, cron scheduler, heartbeat monitor.
+ * The post-listen pipeline: component definitions, trigger action handlers,
+ * event subscriptions, cron scheduling, and runner heartbeat.
  *
- * Split out of `start()` only for readability — the split has no
- * semantic effect. Everything here runs synchronously from inside the
- * `server.listen()` callback.
+ * Split out of `start()` only for readability. Everything here runs
+ * synchronously from inside the `server.listen()` callback.
  *
  * @private
  */
-function _startPipeline({ sessions, projectRoot, workspaceId }) {
+function _startPipeline({ sessions, projectRoot }) {
   if (!projectRoot) {
     console.log('[Server] No active workspace — pipeline skipped');
     return;
   }
-  // Start project-wide file watcher
-  const { createWatcher } = require('./watch/workspace-watcher');
-  const { loadFilters } = require('./watcher/filter-loader');
   const { createActionHandlers } = require('./watcher/actions');
 
   // Issues/tickets — optional, not every workspace has an issues-viewer
@@ -810,10 +793,6 @@ function _startPipeline({ sessions, projectRoot, workspaceId }) {
     return result;
   };
 
-  const projectWatcher = createWatcher(projectRoot, { workspaceId });
-
-  // Load declarative filters (.md) from filters/
-  const filterDir = path.join(__dirname, 'watcher', 'filters');
   // Load modal component definitions from ai/components/
   const componentsDir = path.join(projectRoot, 'ai', 'components');
   loadComponents(componentsDir);
@@ -850,9 +829,6 @@ function _startPipeline({ sessions, projectRoot, workspaceId }) {
       }
     },
   });
-  const declFilters = loadFilters(filterDir, actionHandlers);
-  for (const f of declFilters) projectWatcher.addFilter(f);
-
   // Load agent TRIGGERS.md files
   const { loadTriggers } = require('./triggers/trigger-loader');
   const { createCronScheduler } = require('./triggers/cron-scheduler');
@@ -861,11 +837,9 @@ function _startPipeline({ sessions, projectRoot, workspaceId }) {
   const agentsBasePath = views.resolveOperationalViewRoot(projectRoot, 'agents-viewer');
   try {
     const registry = JSON.parse(fs.readFileSync(path.join(agentsBasePath, 'registry.json'), 'utf8'));
-    const { filters: triggerFilters, cronTriggers } = loadTriggers(
+    const { cronTriggers } = loadTriggers(
       projectRoot, agentsBasePath, registry, actionHandlers
     );
-
-    for (const f of triggerFilters) projectWatcher.addFilter(f);
 
     if (cronTriggers.length > 0) {
       const cronScheduler = createCronScheduler(wrappedCreateTicket, { evaluateCondition });

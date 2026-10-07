@@ -23,7 +23,6 @@ function createHarness(overrides = {}) {
     closeIdleConnections: jest.fn(),
     closeAllConnections: jest.fn(),
   };
-  const closeWatchers = jest.fn().mockResolvedValue(undefined);
   const stopSubscriptions = jest.fn().mockResolvedValue(undefined);
   const closeDatabase = jest.fn().mockResolvedValue(undefined);
   const logger = {
@@ -34,7 +33,6 @@ function createHarness(overrides = {}) {
     server,
     sessions,
     terminateTransports,
-    closeWatchers,
     stopSubscriptions,
     closeDatabase,
     exit: (code) => exits.push(code),
@@ -43,7 +41,7 @@ function createHarness(overrides = {}) {
     ...overrides,
   });
   return {
-    requestShutdown, server, sessions, ws, terminateTransports, closeWatchers, stopSubscriptions,
+    requestShutdown, server, sessions, ws, terminateTransports, stopSubscriptions,
     closeDatabase, exits, logs,
   };
 }
@@ -68,7 +66,6 @@ function runIsolatedShutdown(mode) {
       server: { close() {}, closeIdleConnections() {}, closeAllConnections() {} },
       sessions: new Map(),
       terminateTransports() {},
-      closeWatchers: async () => true,
       phaseAOwners: [owner],
       stopSubscriptions: async () => true,
       closeDatabase: async () => true,
@@ -102,7 +99,7 @@ function runIsolatedShutdown(mode) {
   });
 }
 
-test('shutdown closes network clients, watchers, and database before exiting', async () => {
+test('shutdown closes network clients and independent owners before the database', async () => {
   const harness = createHarness();
 
   await harness.requestShutdown('SIGTERM');
@@ -114,7 +111,6 @@ test('shutdown closes network clients, watchers, and database before exiting', a
   expect(harness.terminateTransports).toHaveBeenCalledTimes(1);
   expect(harness.sessions.size).toBe(0);
   expect(harness.stopSubscriptions).toHaveBeenCalledTimes(1);
-  expect(harness.closeWatchers).toHaveBeenCalledTimes(1);
   expect(harness.closeDatabase).toHaveBeenCalledTimes(1);
   expect(harness.exits).toEqual([0]);
   expect(harness.logs).toContain('[Shutdown] cleanup complete');

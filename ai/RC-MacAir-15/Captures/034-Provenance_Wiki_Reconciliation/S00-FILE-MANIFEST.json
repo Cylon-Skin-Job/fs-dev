@@ -1,0 +1,52 @@
+{
+  "at": "2026-09-19T09:54:02.257194+00:00",
+  "candidate": "PW01-f24d5cd427b9ca14",
+  "scope": "S00 new Capture-only files; pre-edit bytes absent; manifest self-excluded",
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EXECUTION-BASELINE.json",
+      "before": null,
+      "sha256": "a4e8a43505458e6744b10e93f20eee942ad66ad61389a837d6681afc2b45b50a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-INPUT-INVENTORY.json",
+      "before": null,
+      "sha256": "4e385262ccbd666d1146692a30992ba71f4a0fbc53f62edbb7e8b5dc5001e8f0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/AUTHORITY-MATRIX.md",
+      "before": null,
+      "sha256": "7abaa999019e65f0f6a07dac55628ea3a18a807398d03d82855be30fa9e64c5c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before": null,
+      "sha256": "8f6799b4ef2937430a3c1815182684a8496101baa1f78ddabf3cbf58d523a838"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before": null,
+      "sha256": "990a2942a734ff6993021eb88bf47739970522987b9364946628733f86a7595e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-HANDOFF.md",
+      "before": null,
+      "sha256": "27bee02703d5a925eda8f6606d5817c9887a66901f868c7147ea48ba4d3f72cd"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s00-inventory.cjs",
+      "before": null,
+      "sha256": "268ab1c0aefc217835f63fddc007d12e88aa4a8721ae3591c4589b56eacfdcd2"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s00-verify.cjs",
+      "before": null,
+      "sha256": "1006c9217f031586a6c0f4d0f1130a927b93d0d22637043f89987533a9de7f4d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-CHECKS.json",
+      "before": null,
+      "sha256": "25f3679b4504d9fb6c7934aa3133c7df2ef92a92088223d9a06cf8c5142948df"
+    }
+  ]
+}

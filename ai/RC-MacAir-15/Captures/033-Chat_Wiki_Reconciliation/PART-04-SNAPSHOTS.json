@@ -1,0 +1,22 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md",
+    "pre_sha256": "961139a5be78b07173e3f190e758aa46dfe0262d980af9ee15d5246baeed8219"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md",
+    "pre_sha256": "fea0b8b7c739baebfcd854638087bcb904c16c2c9beec82412a1ad6cda038a29"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md",
+    "pre_sha256": "6e8474da43b265a65ecb57cddde5069efe7c3a9a0569b6c725d7e1f790af1913"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md",
+    "pre_sha256": "07850fab98ed9800bf8a9c5ed2fe40974d3000808c18acd8844d7ab57cc5bea9"
+  }
+]

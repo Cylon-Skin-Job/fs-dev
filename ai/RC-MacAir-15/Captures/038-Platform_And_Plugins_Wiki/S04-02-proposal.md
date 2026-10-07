@@ -1,0 +1,23 @@
+---
+name: Workspace And View Vision
+description: The intended plugin-based workspace and view experience, with current implementation and unresolved mechanics kept distinct.
+metadata:
+  source-files: []
+  last-modified: "2026-09-21T13:37:22Z"
+---
+
+## Intended experience
+
+A person can bind Fusion Studio to an ordinary project folder, then choose a workspace composition that fits the work. A workspace plugin declares which view plugins it uses. Its suggested set is editable: the user can omit an unwanted view and use the remaining installed view plugins. A six-view composition is an example, not a fixed default. The server is responsible for creating the workspace's view instances from the selected plugins, copying their templates and initializing the configuration and state they need. This is approved direction, not a claim that plugin-based provisioning is implemented today.
+
+A view plugin supplies the protected behavior and template for a view type: display, content behavior, tabs, capabilities, and its own maintenance instructions. A recognized folder and declaration schema will tell the platform what a plugin contributes; that schema is still to be designed. A plugin can explain how to adjust an instance or point its content elsewhere. Predictable changes should use a small script or simple tool where possible; AI can coordinate or interpret the exceptional cases. Installing a view should not require an agent to improvise a copy procedure from prose.
+
+Each installed view receives a separate editable copy of the plugin template, including its agent persona, AGENTS.md, skills, special sub-agent definitions, workflows, ordinary configuration, theme, and state. The instance refers to its plugin for behavior and permission boundaries. Its content root can be distinct from the instance folder. Editing those local resources must not silently create database access, new file authority, background processes, or executable display behavior. Those capabilities belong to the protected plugin and a user-mediated plugin-edit path. The target moves editable instances out of System while retaining protected plugins in System; the precise location is unresolved.
+
+The approved presentation model combines a useful standard component library with registered plugin contributions. Instances can configure and compose these pieces; specialized executable components stay in protected plugins. The platform shell owns tab, drawer and popup/window hosts, while the canonical file surface owns file presentation/editing and platform services own save/history. Components render on the client with explicit data/actions; they do not gain ambient service or database access. [Platform And Plugins](../../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) explains these layers.
+
+The intended agent starts in its own view-instance folder with project-root orientation and authorized project-wide working access, subject to protected System/plugin boundaries. Its own AGENTS and persona enter harness context; its skills are available through the harness, with bodies read when needed. Other views' instructions and skills are deliberately read when requested, not automatically injected. Such a read does not change identity, working directory or capabilities. [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md) separates this settled direction from the remaining harness mechanics and current startup behavior.
+
+This design leaves a useful boundary between what a view knows and what it may do. A persona or skill can guide an assistant without granting the view extra authority. A tab can show content without becoming an independently installed view. The server, renderer, and harness need explicit contracts to apply local resources, validate bindings, and enforce capabilities; the existence of a folder or instructions alone does not prove those contracts are implemented.
+
+The [current workspace and view explanation](../PAGE.md) is the entry point for observed code and the rest of this section. [Decisions](../002-Decisions/PAGE.md) records the durable choices and remaining product questions.

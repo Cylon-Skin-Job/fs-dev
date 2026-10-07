@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-06T09:33:00.449950+00:00",
+  "state": "SPEC_READY_FOR_OWNER_REVIEW",
+  "finalReportPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+  "finalReportSha256": "bb4aff9f428bd6202f5d86fd32b3f3abfc75bdcc28090afb1737d0bcd5c83d7d",
+  "changes": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/STARTUP-REPAIR-REPORT.md",
+      "beforeSha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+      "afterSha256": "fe2ffdfd9e8912f1d1e688121a040cedbc845eb864a2de16f170f9eb129601f7",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/REGRESSION-RESULTS.md",
+      "beforeSha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+      "afterSha256": "71ba136bb80faaf4b29863f3981b2643dae4698a3f5b57e6bdbd38ca11c963ca",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/GUARDED-SERVER-PROOF.md",
+      "beforeSha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+      "afterSha256": "377a048e49cdfbee66e8a781e6540d472d5c0322ad702ab1c945768e65fa97a3",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/SLICE-AND-DEVIATION-LEDGER.md",
+      "beforeSha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+      "afterSha256": "b83b7e1b8e0468ce55a1cdbff3e6b7a9c3e26b41d0cd08326bef8b61ddad836b",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/original-S4-repaired-integration-report.md",
+      "beforeSha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+      "afterSha256": "9a8c01bf1c29fc62a60b6f9a45f0d79afed80c1b103dbe1c5f0e22c3a3ee9c67",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/original-SLICE-AND-DEVIATION-LEDGER.md",
+      "beforeSha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+      "afterSha256": "cf624f7256cf6b11187b541e4a36ba638eb05aa34eb4d30891da464ca3bcbc0c",
+      "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+    }
+  ],
+  "originalPrefixPreserved": true,
+  "noProductWikiTestOracleRuntimeNormativeChange": true,
+  "ownerAcceptance": "pending",
+  "reportAdministrativeCorrection": {
+    "beforeSha256": "d461b8da8bc989ac2793842a1625cd93acc1bf5a68b08c93804ad606f50bd54a",
+    "afterSha256": "bb4aff9f428bd6202f5d86fd32b3f3abfc75bdcc28090afb1737d0bcd5c83d7d",
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/SPEC-FINAL-REPORT-before-current-scope-annotation.md",
+    "reason": "current full-review scope tense and final FIN-D01 matrix inclusion; no core/raw-evidence change"
+  }
+}

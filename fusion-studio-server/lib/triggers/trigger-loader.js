@@ -1,16 +1,15 @@
 /**
  * Trigger Loader — scans agent folders for TRIGGERS.md files,
- * parses them, and produces watcher filters + cron registrations.
+ * registers bus event triggers and returns cron registrations.
  *
- * Runs alongside the existing lib/watcher/filters/*.md system.
- * TRIGGERS.md adds agent-specific triggers loaded from agent folders.
+ * Event and cron blocks remain active; file-change blocks have no active
+ * watcher input and are intentionally ignored.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { parseTriggerBlocks } = require('./trigger-parser');
-const { runScript } = require('./script-runner');
-const { buildFilter, evaluateCondition, applyTemplate } = require('../watcher/filter-loader');
+const { evaluateCondition } = require('../watcher/filter-loader');
 const { on } = require('../event-bus');
 const views = require('../views');
 const { createCycleGuard } = require('../fs/cycle-guard');
@@ -120,7 +119,7 @@ function deriveAssignee(triggersPath, projectRoot) {
 }
 
 /**
- * Scan agent folders for TRIGGERS.md and build filters + cron triggers.
+ * Scan agent folders for TRIGGERS.md and register event triggers + return cron triggers.
  * Also scans the active view-capsule root and ai/components/ recursively
  * for additional TRIGGERS.md files.
  *
@@ -128,11 +127,10 @@ function deriveAssignee(triggersPath, projectRoot) {
  * @param {string} agentsBasePath - Absolute path to agents panel
  * @param {Object} registry - Parsed registry.json { agents: { botName: { folder } } }
  * @param {Object} actionHandlers - Action handlers from createActionHandlers()
- * @returns {{ filters: Array, cronTriggers: Array<{ trigger: Object, assignee: string }> }}
+ * @returns {{ cronTriggers: Array<{ trigger: Object, assignee: string }> }}
  * @sideeffect Registers event bus listeners for chat/ticket/agent/system triggers.
  */
 function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
-  const filters = [];
   const cronTriggers = [];
   const processedPaths = new Set();
   const cycleGuard = createCycleGuard();
@@ -151,7 +149,7 @@ function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
       console.log(`[TriggerLoader] ${botName}${rel !== 'TRIGGERS.md' ? '/' + path.dirname(rel) : ''}: parsed ${blocks.length} triggers`);
 
       for (const block of blocks) {
-        processBlock(block, botName, projectRoot, actionHandlers, filters, cronTriggers);
+        processBlock(block, botName, projectRoot, actionHandlers, cronTriggers);
       }
     }
   }
@@ -175,18 +173,18 @@ function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {
       console.log(`[TriggerLoader] ${rel}: parsed ${blocks.length} triggers (assignee: ${assignee})`);
 
       for (const block of blocks) {
-        processBlock(block, assignee, projectRoot, actionHandlers, filters, cronTriggers);
+        processBlock(block, assignee, projectRoot, actionHandlers, cronTriggers);
       }
     }
   }
 
-  return { filters, cronTriggers };
+  return { cronTriggers };
 }
 
 /**
  * Process a single trigger block — categorize and register.
  */
-function processBlock(block, assignee, projectRoot, actionHandlers, filters, cronTriggers) {
+function processBlock(block, assignee, projectRoot, actionHandlers, cronTriggers) {
   if (block.type === 'cron') {
     cronTriggers.push({ trigger: block, assignee });
   } else if (['chat', 'ticket', 'agent', 'system'].includes(block.type)) {
@@ -195,108 +193,18 @@ function processBlock(block, assignee, projectRoot, actionHandlers, filters, cro
       return;
     }
     registerBusListener(`${block.type}:${block.event}`, block, assignee, actionHandlers);
-  } else {
-    const filter = buildTriggerFilter(block, assignee, projectRoot, actionHandlers);
-    if (filter) filters.push(filter);
+  } else if (block.type === 'file-change') {
+    // File-change blocks have no active filesystem producer after watcher retirement.
   }
 }
 
-/**
- * Normalize the message field from a trigger block.
- * The YAML parser may return a string or an object (when | multiline is used).
- * If object, reconstruct as "key: value" lines.
- */
 function normalizeMessage(msg) {
   if (!msg) return null;
   if (typeof msg === 'string') return msg;
   if (typeof msg === 'object') {
-    return Object.entries(msg).map(([k, v]) => `${k}: ${v}`).join('\n');
+    return Object.entries(msg).map(([key, value]) => `${key}: ${value}`).join('\n');
   }
   return String(msg);
-}
-
-/**
- * Convert a file-change trigger block into a watcher filter.
- * Injects the prompt field and assignee into ticket creation.
- */
-function buildTriggerFilter(block, assignee, projectRoot, actionHandlers) {
-  const message = normalizeMessage(block.message);
-
-  // Build a filter definition compatible with buildFilter()
-  const action = block.action || 'create-ticket';
-  const def = {
-    name: block.name || 'unnamed-trigger',
-    events: block.events || ['modify', 'create', 'delete'],
-    match: block.match,
-    exclude: block.exclude,
-    condition: block.condition,
-    action,
-    prompt: block.prompt || null,
-    script: block.script || null,
-    function: block.function || null,
-    modal: block.modal || null,
-    _autoHold: action === 'create-ticket',
-    ticket: {
-      assignee,
-      title: message
-        ? message.split('\n')[0].trim()
-        : `Trigger: ${block.name}`,
-      body: message || `Trigger fired: ${block.name}`,
-    },
-  };
-
-  // Wrap the action handlers to support script execution
-  if (def.script) {
-    const wrappedHandlers = wrapWithScript(def, actionHandlers, projectRoot);
-    const filter = buildFilter(def, wrappedHandlers);
-    console.log(`[TriggerLoader] Built filter: ${def.name} (with script: ${def.script})`);
-    return filter;
-  }
-
-  const filter = buildFilter(def, actionHandlers);
-  console.log(`[TriggerLoader] Built filter: ${def.name} → ${assignee}`);
-  return filter;
-}
-
-/**
- * Wrap action handlers to run a script before the action executes.
- * The script's return value is merged into template variables as `result`.
- */
-function wrapWithScript(def, originalHandlers, projectRoot) {
-  const wrapped = { ...originalHandlers };
-
-  const originalCreateTicket = wrapped['create-ticket'];
-  if (originalCreateTicket) {
-    wrapped['create-ticket'] = function(filterDef, vars) {
-      // Run the script and merge result into vars
-      const result = runScript(def.script, def.function, vars, projectRoot);
-      if (result !== null) {
-        vars.result = result;
-      }
-
-      // Re-evaluate condition with script result if needed
-      if (def.condition && def.condition.includes('result.')) {
-        if (!evaluateCondition(def.condition, vars)) {
-          console.log(`[TriggerLoader] ${def.name}: script condition not met, skipping`);
-          return;
-        }
-      }
-
-      // Re-apply templates with script result
-      if (vars.result) {
-        filterDef = { ...filterDef };
-        if (filterDef.ticket) {
-          filterDef.ticket = { ...filterDef.ticket };
-          filterDef.ticket.title = applyTemplate(filterDef.ticket.title, vars);
-          filterDef.ticket.body = applyTemplate(filterDef.ticket.body, vars);
-        }
-      }
-
-      originalCreateTicket(filterDef, vars);
-    };
-  }
-
-  return wrapped;
 }
 
 module.exports = { loadTriggers };

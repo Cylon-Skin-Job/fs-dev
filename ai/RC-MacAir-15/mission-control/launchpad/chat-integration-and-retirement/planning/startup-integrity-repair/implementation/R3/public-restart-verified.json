@@ -1,0 +1,42 @@
+{
+  "state": "RUNTIME_VERIFIED",
+  "mainPid": 57401,
+  "serverPid": 57425,
+  "rendererPids": [
+    57444
+  ],
+  "serverPort": 52199,
+  "debugPort": 52197,
+  "mainExecutable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+  "mainEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+  "mainCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+  "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+  "serverEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+  "serverCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+  "rendererExecutables": [
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+  ],
+  "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+  "machine": "RC-MacAir-15",
+  "serverUserData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+  "connectedAfterWorkspaceInit": true,
+  "samples": 11,
+  "durationMs": 2000,
+  "serverUrl": "http://localhost:52199",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "client": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+  "main": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+  "server": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+  "profileMode": "explicit",
+  "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+  "bin": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+  "runtime": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart",
+  "portFile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server.port",
+  "dryRun": false,
+  "database": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-data/fusion.db",
+  "serverLog": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-live.log",
+  "run": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart/run-gWZBmc",
+  "logFile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart/run-gWZBmc/launch.log",
+  "electronLog": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart/run-gWZBmc/tmp/fusion-electron.log",
+  "rendererLog": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart/run-gWZBmc/tmp/electron-renderer.log"
+}

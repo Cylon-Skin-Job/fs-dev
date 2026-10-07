@@ -7,6 +7,7 @@ import path from 'node:path';
 import net from 'node:net';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { withScenarioEvidence, withProtectedStateCheck, createEvidenceRoot } from './guarded-proof-lifecycle.mjs';
 
 const MARKER = '.fusion-provenance-test-owned';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
@@ -117,14 +118,6 @@ function createWorkspace(root, name, nonce, initialText) {
   return workspaceRoot;
 }
 
-function removeOwnedRoot(root, nonce) {
-  const marker = path.join(root, MARKER);
-  if (!fs.existsSync(marker) || fs.readFileSync(marker, 'utf8') !== `${nonce}\n`) {
-    throw new Error(`Refusing to clean unowned provenance directory: ${root}`);
-  }
-  fs.rmSync(root, { recursive: true, force: false });
-}
-
 async function runPlaywright(environment) {
   const cli = path.join(clientRoot, 'node_modules', '@playwright', 'test', 'cli.js');
   if (!fs.existsSync(cli)) throw new Error('The local Playwright CLI is unavailable.');
@@ -142,36 +135,38 @@ async function runPlaywright(environment) {
   });
 }
 
-async function runScenario(scenario, usedPorts) {
+async function runScenario(scenario, usedPorts, evidence) {
   const nonce = randomUUID();
   const tempBase = fs.realpathSync(os.tmpdir());
   const root = fs.mkdtempSync(path.join(tempBase, 'fusion-provenance-live-'));
   fs.writeFileSync(path.join(root, MARKER), `${nonce}\n`, { encoding: 'utf8', flag: 'wx' });
-  const appData = path.join(root, 'app-data');
-  writeOwnedMarker(appData, nonce);
-  const workspaceA = createWorkspace(root, 'workspace-a', nonce, 'version one Ω\n');
-  const workspaceB = createWorkspace(root, 'workspace-b', nonce, 'workspace B\n');
-  const port = await reservePort();
-  if (usedPorts.has(port)) throw new Error('The isolated port was reused.');
-  usedPorts.add(port);
-  const workspaces = [
-    { id: 'provenance-a', label: 'Provenance A', repoPath: workspaceA },
-    { id: 'provenance-b', label: 'Provenance B', repoPath: workspaceB },
-  ];
-  const environment = {
-    ...process.env,
-    NODE_ENV: 'test',
-    PORT: String(port),
-    FUSION_APP_USER_DATA: appData,
-    FUSION_LOCAL_MACHINE: 'Test-Provenance',
-    FUSION_PROVENANCE_TEST_MODE: 'isolated-v1',
-    FUSION_PROVENANCE_TEST_NONCE: nonce,
-    FUSION_PROVENANCE_TEST_ROOT: root,
-    FUSION_PROVENANCE_TEST_WORKSPACES: JSON.stringify(workspaces),
-    FUSION_PROVENANCE_TEST_SCENARIO: scenario,
-  };
-  try {
+  return withScenarioEvidence({ root, nonce, evidence, scenario, run: async (setPhase) => {
+    const appData = path.join(root, 'app-data');
+    writeOwnedMarker(appData, nonce);
+    const workspaceA = createWorkspace(root, 'workspace-a', nonce, 'version one Ω\n');
+    const workspaceB = createWorkspace(root, 'workspace-b', nonce, 'workspace B\n');
+    const port = await reservePort();
+    if (usedPorts.has(port)) throw new Error('The isolated port was reused.');
+    usedPorts.add(port);
+    const workspaces = [
+      { id: 'provenance-a', label: 'Provenance A', repoPath: workspaceA },
+      { id: 'provenance-b', label: 'Provenance B', repoPath: workspaceB },
+    ];
+    const environment = {
+      ...process.env,
+      NODE_ENV: 'test',
+      PORT: String(port),
+      FUSION_APP_USER_DATA: appData,
+      FUSION_LOCAL_MACHINE: 'Test-Provenance',
+      FUSION_PROVENANCE_TEST_MODE: 'isolated-v1',
+      FUSION_PROVENANCE_TEST_NONCE: nonce,
+      FUSION_PROVENANCE_TEST_ROOT: root,
+      FUSION_PROVENANCE_TEST_WORKSPACES: JSON.stringify(workspaces),
+      FUSION_PROVENANCE_TEST_SCENARIO: scenario,
+    };
+    setPhase('playwright');
     await runPlaywright(environment);
+    setPhase('startup-audit');
     const auditPath = path.join(appData, 'isolated-provenance-audit.json');
     const audit = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
     const observedAttempts = audit.observationGuards?.attempts;
@@ -202,36 +197,36 @@ async function runScenario(scenario, usedPorts) {
       throw new Error('The isolated workspace registry contains unexpected entries.');
     }
     return { scenario, port, audit };
-  } finally {
-    removeOwnedRoot(root, nonce);
-  }
+  } });
 }
 
-const protectedBefore = {
-  developmentDb: hashFile(developmentDb),
-  normalProfileDb: hashFile(normalProfileDb),
-  developerWorkspace: hashTree(developerWorkspace),
-  repositoryPlaywrightOutput: hashTree(repositoryPlaywrightOutput),
-};
+function snapshotProtectedState() {
+  return {
+    developmentDb: hashFile(developmentDb),
+    normalProfileDb: hashFile(normalProfileDb),
+    developerWorkspace: hashTree(developerWorkspace),
+    repositoryPlaywrightOutput: hashTree(repositoryPlaywrightOutput),
+  };
+}
+const evidence = createEvidenceRoot();
 const usedPorts = new Set();
-const results = [];
-for (const scenario of ['normal', 'fact-publish-failure']) {
-  results.push(await runScenario(scenario, usedPorts));
+try {
+  const results = await withProtectedStateCheck({ evidence, snapshot: snapshotProtectedState, run: async () => {
+    const results = [];
+    for (const scenario of ['normal', 'fact-publish-failure']) {
+      results.push(await runScenario(scenario, usedPorts, evidence));
+    }
+    return results;
+  } });
+  console.log(JSON.stringify({
+    status: 'FILE_VIEWER_LIVE_PROVENANCE_OK',
+    scenarios: results.map(({ scenario, port }) => ({ scenario, port })),
+    uniqueNonDevelopmentPorts: usedPorts.size === results.length && !usedPorts.has(3001),
+    protectedDeveloperStateUnchanged: true,
+    cleanup: 'owned-marker-verified',
+    evidenceRoot: evidence.root,
+  }, null, 2));
+} catch (error) {
+  console.error(JSON.stringify({ status: 'FILE_VIEWER_LIVE_PROVENANCE_FAILED', evidenceRoot: evidence.root }));
+  throw error;
 }
-const protectedAfter = {
-  developmentDb: hashFile(developmentDb),
-  normalProfileDb: hashFile(normalProfileDb),
-  developerWorkspace: hashTree(developerWorkspace),
-  repositoryPlaywrightOutput: hashTree(repositoryPlaywrightOutput),
-};
-if (JSON.stringify(protectedAfter) !== JSON.stringify(protectedBefore)) {
-  throw new Error('A protected developer database, profile, workspace, or repository test output changed during the live proof.');
-}
-
-console.log(JSON.stringify({
-  status: 'FILE_VIEWER_LIVE_PROVENANCE_OK',
-  scenarios: results.map(({ scenario, port }) => ({ scenario, port })),
-  uniqueNonDevelopmentPorts: usedPorts.size === results.length && !usedPorts.has(3001),
-  protectedDeveloperStateUnchanged: true,
-  cleanup: 'owned-marker-verified',
-}, null, 2));

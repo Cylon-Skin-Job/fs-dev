@@ -1,0 +1,555 @@
+{
+  "at": "2026-09-19T10:16:51.255Z",
+  "candidate": "PW01-f24d5cd427b9ca14",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger",
+        "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation"
+      ],
+      "at": "2026-09-19T10:16:51.301Z",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "Captures/|SPEC-|ULV-D|LED-D|TOOL-D|AUT-D|UEB-D|RSC-D|CHAT-D|AUD-D|acceptedRef|PreparedCanonicalCandidate|uiActionSeed|ledger_events|file\\.version|resource:invalidate|fully built|stub",
+        "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger",
+        "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+        "-g",
+        "PAGE.md",
+        "-g",
+        "!**/.versions/**"
+      ],
+      "at": "2026-09-19T10:16:51.317Z",
+      "exit": 0,
+      "stdout": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md:45:Immediate resource mapping uses no live registry lookup. Before admission the producer deep-freezes the current resource-policy generation; after true publication it stores that snapshot in a private WeakMap keyed by `acceptedRef` before queued listeners can run. The subscriber reads it only through `(frozenEvent, { acceptedRef })`; policy reload affects future events, not queued ones. Missing sidecar means projection failure/recovery without revoking admission.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md:51:Canonical `workspace:switched` publication is gated on the SPEC-32b0 operational sequencer/topic fence. Generic EventBus listeners are unawaited, so every active switch/create/remove/ribbon ingress synchronously enqueues one intent before lookup or active-state reads. A single workspace coordinator resolves intents FIFO, captures `from` from the last commit, transactionally commits active registry/settings changes, updates memory only after commit, and sends the exact adjacent pair plus opaque ordered capability through a closed registry of audited bounded synchronous hooks that reject thenable returns. Synchronous I/O, unbounded CPU, user/plugin callbacks, and reentrant mutations are prohibited because an in-process function that never returns cannot be recovered. Controller/ribbon code cannot write active state or emit switches directly. The coordinator owns authoritative workspace/root resolution; per-session cache failure forces recomputation/snapshot rather than leaving A authoritative. The baseline broadcaster has no async enrichment/serialized queue and is at-most-once: healthy delivery sends exactly one `type: 'workspace:switched'`, while failure records a diagnostic and relies on reconnect authoritative snapshot plus `lifecycle:refresh_required` without retrying the pair. The watcher hook invalidates/installs synchronously and supervises detached close/ready/reconciliation without holding the FIFO. Hook throws, returned thenables, and detached background failure/nonsettlement cannot roll back the committed workspace, invoke provenance, or block the next intent. This workspace-owned transport remains noncanonical and unpersisted after 40b1b. The old ledger whitelist stops recording workspace switches, and legacy persistence pauses until SPEC-35. After accepted 32b/32c/40b1b, canonical `workspace.switched` independently carries the registered envelope to accepted-only subscribers and the separate `resource:invalidate` freshness path; only its durable row remains gated on SPEC-35. Concurrent-request/failure tests prove one total order, adjacent pairs, database/memory/coordinator-resolver/watcher-generation consistency, healthy exactly-one notification, recovery after failure, and no canonical lifecycle row before SPEC-35.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md:55:Workspace watcher and TRIGGERS.md filter lifecycle is a synchronous hook of the permanent private `workspace:operational_switched` coordinator dispatcher, not canonical lifecycle admission or generic EventBus ordering. Slice 32e is blocked until owner decision `RSC-D16` approves the exact close-diagnostic/readiness/reconciliation watchdog values and semantics. The hook verifies the next ordered capability/pair, invalidates the prior generation, installs B/null bindings/listeners, launches supervised close/ready/reconciliation plus watchdogs, and returns a non-Promise acknowledgment. Those tasks/timers check currency; throw or expiry cannot block the next workspace intent, current ready/reconciliation failure enters `degraded_recovery_pending` with exactly one freshness recovery, and close expiry only diagnoses cleanup. A later transition cancels/invalidates them. File-change trigger matching consumes only its single established workspace-watcher observation path; mutation handlers do not invoke a second matcher. It never awaits canonical resource admission. While `AUT-D02` is open, canonical file-trigger automation facts omit direct resource IDs/edges; after closure only its approved non-wait accepted-ref handoff may bind them. Provenance failure cannot suppress or duplicate operational trigger execution.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md:57:The operational matcher accepts only this closed current watcher-condition vocabulary: `filePath`, `parentDir`, `type`, `ext`, `basename`, `delta`, `oldPath`, `newPath`, `parentStats.files|folders`, and `fileStats.lines|words|tokens|size`. The exhaustive lexer is owned by SPEC-32: 512 UTF-8 bytes overall; numeric keys use signed safe base-10 integers without plus/negative-zero/leading-zero/float/exponent; string keys use equality/inequality with a 256-byte quote-without-escapes value or `[A-Za-z0-9_./:@*-]+`; the three nullable keys also accept exact null. Operators parse longest-first and the full input is consumed. Watcher stats are operational trigger context, not canonical provenance enrichment. Slice 32e side-effect-free parses/classifies all blocks but validates/reloads only file-change blocks through atomic `replaceFilters`; cron and bus triggers retain one-time registration and cannot be duplicated/removed by workspace reload. Workspace parse failure installs no old-root filters; same-workspace fatal reload retains the last valid set. Invalid file syntax never defaults true. Post-execution provenance may use valid metadata only for correlation.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md:59:File-change blocks also use SPEC-32's closed schema. Slice 32d only preserves the single current matcher; Slice 32e exclusively introduces and owns lifecycle repoint/recompile. It loads immutable declarative/programmatic base descriptors once, then instantiates both base and trigger filters per controller-owned generation capability with an opaque bound workspace root and currency guard. At the synchronous transition linearization point, after authoritative workspace selection and before any await, B/null becomes current and A is permanently invalidated. Programmatic filters with workspace side effects are generation factories. Actions recheck currency after every await/callback boundary and immediately before irreversible effects; stale callbacks/timers and obsolete reconciliation are no-ops. B handlers attach before transition awaits, settlement requires A close/B ready/current-generation reconciliation, and reconciliation never synthesizes trigger execution. Atomic replacement preserves each base descriptor once without retaining startup-root closures, replaces workspace trigger filters, and never touches cron/bus registrations. Tests prove every B action targets B and paused A callbacks cannot affect A or B after transition.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md:51:Product domains include UI actions, chat/harness activity, automation, resource mutations, render synchronization and external observations. This is a useful conceptual taxonomy, not a list of registered governed families. General `ui.action`, `chat.tool.*`, `file.version` and audit/automation envelopes remain outside the implemented catalog. Do not add fields or register an event merely because a conceptual category exists. Approved intent favors distinct timestamped facts and unknown attribution where necessary; exact wider schemas and permission grammar require their own decisions.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md:20:`ULV-D04` remains owner-blocked before storm detection, batch persistence, or compaction. In addition to window thresholds, it must approve global detector caps for active windows, tracked workspace/group keys, buffered member refs, timers, diagnostics, pending reconciliation, and aggregate in-memory/serialized state; hard persisted caps for affected path/resource arrays, representative event/version IDs, cause/actor/resource entries, compacting edges, rows per window, diagnostics, and serialized summary bytes; deterministic admission/coalescing/eviction/expiry/cleanup/ordering/selection/deduplication; first/last preservation; overflow counters/flags and follow-up discoverability; crash/restart persistence-or-discard behavior; byte serialization/encoding; cap-conflict precedence; and configuration ownership. Adversarial unique-key or sustained load must remain bounded. Overflow may degrade storm metadata but cannot suppress/delay source facts, drop artifacts before accepted 35f, or merge unrelated keys into false attribution. No implementation may invent defaults or call either the detector or summary bounded before that decision closes.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md:34:- `eventFamily: 'file.version'`\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md:35:- `eventType: 'file.version.change_batch'`\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md:40:Every live ID-bearing storm member must come from an accepted canonical delivery ref. A historical member requires an opaque fully revalidated `AcceptedLedgerRowRef`. First/last/representative own identities use ordinary event/domain selectors. Cause/actor/resource IDs embedded in a member require SPEC-39-registered exact target/source `acceptedPayloadPointer` bindings against that capability; whole-object/raw-pointer copies and raw row/status strings never qualify. Raw runtime/candidate IDs, tampered rows, and rejected diagnostics remain outside arrays/summaries as unknown or incomplete diagnostics.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md:42:Slice 39d historical edge/query support cannot begin until SPEC-35d and SPEC-40c are accepted. Earlier live storm persistence does not authorize reading raw ledger IDs or rows as historical proof.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md:57:The older generalized `ledger_events` design, common-envelope graph, accepted ledger-row proof capability, universal redaction branches and broad indexes are proposals, not current storage contracts. The accepted save/subscription and agent-observation agreements supersede their older blockers only for those bounded tables and facts. Retention, causal edges, ledger-internal events, wider versioning and restore require separate feature decisions. System's preservation direction and source/application ownership are already settled and do not require reopening.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md:17:> **Schema correction authority (2026-07-15):** Apply [provenance schema finding 5](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. The metadata/hash-only label does not approve concrete file-version hashes; the separate-policy branch remains an owner decision.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md:23:Metadata/hash-only version rows are not a policy-free fallback. `ULV-D03` must approve which file types, sizes, and classes may receive any version record, including binary/generated/large/temp/ignored/symlink/unsupported handling. `ULV-D05` must approve retention/deletion for metadata rows, edges, and indexes as well as snapshots/diffs/blobs. Together with `ULV-D10` hash/redaction approval, both block metadata/hash-only persistence. `ULV-D12` additionally requires owner approval of the exact non-batch event types, phase/lifecycle and envelope presence, identity/idempotency, bounds, ordering/dedupe/replay/retry/restart, safe failure branches, and subscriber/ledger transaction boundaries; conceptual generic/unknown fields are not defaults. SPEC-35b storage must be accepted and live-ref-only registry Slice 40b2d1 must be active before live metadata emission; before 40b2d1h, restart/replay uses D12's approved omit/diagnose/defer branch and performs no raw-ID backfill. Historical replay/backfill additionally requires accepted SPEC-40c and active 40b2d1h. SPEC-35d is required before version edges. Content artifacts additionally require `ULV-D02` and active 40b2d2. Storm batches require ULV-D03/D04/D05/D10, accepted SPEC-35b, and active 40b2d3; 39d historical edge/query support requires accepted 35d and 40c, and compaction/drop requires accepted 35f.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md:43:| Tool observations | `lib/agent-provenance/resource-observer.js` and its checkpoint repository provide bounded post-tool observations of eligible workspace files; first or changed bytes/absent states can create sparse checkpoints. | These are observations, not tool interception or causal verdicts, and not canonical `file.version` events. The narrower normalized activity/fingerprint/checkpoint/two-fact ledger contract does not approve general tool/native-reference/output artifacts, diffs, retention or restore. |\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md:34:This shape is decision input, not registration-ready. `AUD-D01` must settle the exact schema and branches described below before audit persistence:\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md:93:- `AUD-D01` requires owner approval before SPEC-40b2f audit registration or SPEC-38b-38f: exact event/phase/lifecycle branches; versioned query types and typed/redacted filters; result/evidence presence and accepted-proof rules; review confidence; failure/incomplete/unavailable/cancel semantics; recommendation/ticket payload and domain ownership; redaction policy/failure-safe branch; deterministic hard limits, overflow diagnostics, and pagination for filters/evidence/results/summaries/recommendations/tickets/traversal/serialized bytes; and fail-open tests. SPEC-38a may gather evidence only. This does not block the first Wiki/File packet.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md:29:Use this page before changing ledger ingress, payload projection, identity or reconciliation. The implemented sinks use `event_log` and resource edges; they do not implement the older generalized `ledger_events` schema or accepted-reference graph.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:27:> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Decision-tagged chat/resource/output choices remain open under `CHAT-D01` and the named cross-domain gates.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:59:The first Wiki/File package's 40b1a stage does not yet register canonical chat events. Existing `chat:*` facts remain a named compatibility path and receive no `uiActionId`. Open owner decision `CHAT-D01` blocks SPEC-40b2a registration and migration. It must approve exact event types and phase/lifecycle presence; IDs, payload fields, mirrors, current-record identities, and accepted-only relationships; optional UI cause/result pointer bindings; redaction policy/version and sensitive prompt/content/attachment/native-ref handling; failed-redaction safe-core versus no-event behavior; deterministic text/collection/serialized-byte bounds and overflow; ordering/dedupe/replay/idempotence; and legacy coexistence/removal/backfill. Until then, the schema below is design guidance rather than an executable registration contract, and no implementation may choose its open values or mutate/backfill existing chat facts.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:61:One non-authoritative migration option is to preserve selected legacy keys while adding a versioned structure for provenance and queryability. `CHAT-D01` has not chosen that option, coexistence duration, removal, or backfill.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:65:The following is a design candidate, not an executable contract: add a versioned envelope inside exchange metadata using the shared provenance envelope from [Events Provenance Model](../PAGE.md), then add a `chat` payload for exchange-specific facts. Whether any existing loose keys coexist, are removed, or are backfilled remains entirely open under `CHAT-D01`.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:135:    // Finding 8 / CHAT-D01 must decide derivation vs redaction-surviving summary.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:157:  // Finding 4 / CHAT-D01 candidate; not registered until its relationship to\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:204:`causeIds` is a compact projection alias. Its registry entry must declare exact source pointers, member equivalence, presence, and redaction behavior; it does not create new cause semantics. Trigger/scheduler/script/agent members remain `AUT-D03`/finding-1 candidates.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:237:Compact tool resource buckets remain finding-4 candidates; they do not mirror canonical schema until the owner decides their relationship to shared `resources[]` and SPEC-40 registers the projection. Domain `fileVersionIds` remains absent until the owning file-version relationship schema, accepted-reference binding, bounds, and registration are approved.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:261:- Tool events should preserve canonical harness IDs, provider-keyed `nativeRefs` or provider-specific payloads, approved outcome/redaction metadata, and target resources. OpenCode-specific IDs stay in native refs, not top-level canonical fields. `TOOL-D01` must close before `chat.tool.args|result` registration defines args/result redaction, exit/signal/outcome normalization, output byte/truncation/external-storage metadata, branches, and bounds. Argument/output hashes remain omitted as `policy_unapproved` until ULV-D10 or a separate owner-approved tool hash policy is closed.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:262:- Finding 3 must select the unified captured-output extension contract jointly with `TOOL-D01`/`AUT-D01`; chat metadata cannot invent its own output metrics.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:263:- Finding 4/`CHAT-D01` must settle `chatResources` authority and derivation relative to `resources[]`.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md:264:- Finding 8/`CHAT-D01` must settle whether `chat.hasToolCalls` is a pure derivation or an independently retained redaction-safe summary.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:164:// The prompt accepts this wrapper only at top-level `uiActionSeed`.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:169:The private token is exact `wctx_` plus 43 base64url characters generated from 32 CSPRNG bytes. Init/switch may carry an already-available top-level token but never calls or awaits entropy; otherwise detached asynchronous allocation later sends exact recipient-only `workspace:context_token` with workspace ID/root/token. Panel config only echoes an already-installed token and never replaces it. Absence is degraded metadata and never blocks workspace/panel handling. The renderer owns exactly one module-private memory-only slot keyed by the current WebSocket object, outside Zustand, workspace/panel/view caches, state pushes, local/session storage, IndexedDB, URL/history, Electron persistence, and serialized snapshots. Every init/switch clears before optional install; the metadata update installs only after exact current socket/workspace/root equality; close, explicit disconnect, replacement, and shutdown clear synchronously before another prompt read. A prompt reads only for the exact current OPEN socket, so a new connection starts null and stale workspace state cannot restore a token. The allocator checks all live tokens and makes at most four abort-aware async CSPRNG attempts; rejection/collision consumes one, context change aborts/discards late completion, and exhaustion sends nothing with fixed value-free diagnostic. Two connections never share a bound token, and shared broadcaster objects/buffers contain none. Prompt echo is accepted only at `uiActionSeed.workspaceCommandContextToken`; the UI envelope itself never contains it. Other, inherited, duplicate, malformed, array, or alternate nested locations are ignored by runtime binding. Token-bearing inbound messages have no payload/type logger path; only a fixed private counter increments after original handling.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:171:`RSC-D17` is OWNER APPROVAL REQUIRED before SPEC-32b0 activates that allocator or token transport and before first-package assembly. It defines exact global/per-connection executor queue item/byte caps, concurrency/fairness, enqueue/eviction/drop behavior, cancellation/finalizer deadlines including abort-ignoring providers, per-job retained context/provider byte and lifetime caps, live-token binding count/byte caps and cleanup, shutdown/restart, and fixed value-free saturation diagnostics. Byte accounting defines measured job/binding representation/encoding, object/provider-wrapper overhead, shared-ref apportionment, queued/active/cancelling/live ownership, charge/release points, cap precedence, and bounded cap-plus-one measurement. Unadmitted, evicted, cancelled, expired, saturated, or otherwise failed work installs/sends nothing, releases only bounded state, and never retries or affects init, transitions, panels, prompts, connection lifecycle, or source operations. No capacity/accounting/default may be inferred.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:173:The renderer envelope contains no event/domain relationship IDs. Mutation handlers resolve authoritative workspace/path from the coordinator-captured operational command context or an explicit authorized workspace argument; session workspace/root fields are caches only. Chat thread/turn and selected-resource identity may come from their authoritative server operational facts. First-package `ui.action` is a root canonical fact and omits root, parent, and causation IDs; a future UI relationship requires an exact SPEC-40 candidate/source selector and accepted capability. The server may attempt optional fresh correlation through SPEC-40's nullable private generator. Unavailable/thrown generation omits only correlation with fixed `fresh_correlation_unavailable`; it never suppresses the safe UI fact, affects the command, or copies client/caller/session/operation/raw correlation as fallback. Raw event/causation IDs in mutable state never qualify. Unknown legacy ID-bearing renderer fields are discarded. Non-mutating UI telemetry is out of scope unless a later article defines a separate type.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:257:The renderer sends no free-text summary/content or relationship IDs. Pre-UEB policy `ui-resource-metadata-v1` treats client correlation, UI path/context, and resource paths as potentially sensitive. Missing/failed/thrown redaction uses exactly the failure safe core defined in [SPEC-34](../../../Captures/008-Provenance-Temp/34-ui-action-provenance-module.md), including `redaction = { status: 'failed', policyId: 'ui-resource-metadata-v1', policyVersion: '1', omissions: ['/*:redaction_failed'] }`, empty resources, and no optional context/IDs/correlation/mirrors. Safe-core validation failure emits no event/reference but never blocks the prompt. Resource metadata redaction failure emits no incomplete/path-bearing resource fact and uses `resource:refresh_required` after a valid mutation or safely established watcher observation.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:259:Successful first-package treatment uses the exhaustive JSON-pointer keep/known-omit/error sets in [SPEC-34](../../../Captures/008-Provenance-Temp/34-ui-action-provenance-module.md); this page does not broaden them. `*` is one array index, braced child sets are exhaustive, every unlisted pointer is `unknown_field` error, and omission entries are sorted RFC 6901 pointer strings with the exact approved suffix. `ui-resource-metadata-v1` and `resource-metadata-v1` are both version `'1'`. Content hashes are always absent with `:policy_unapproved` until a separate owner-approved policy closes. Unsafe required paths reject the provenance candidate; unsafe optional symlink targets are omitted with `:unsafe_path`. Failures never change the source operation or watcher-observed fact.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:271:The renderer constructs tentative command context/resource inputs and echoes its latest private token only at `uiActionSeed.workspaceCommandContextToken` by reading the exact current OPEN socket's ephemeral slot. The server keeps only the latest binding per live connection; transition/reconnect invalidates it and disconnect deletes it. The client clears its side synchronously on every init/switch/close/disconnect/replacement boundary before prompt access or reconnect scheduling. `workspace:init` performs optional async enrichment first, then in one no-await block captures the latest coordinator snapshot, synchronously derives workspace ID/root and panel roots, includes only an already-completed token, and sends one atomic init. Paused entropy never delays it; a later exact-current metadata-only message may install the token. The token binds the exact coordinator transition capability; no separate client revision exists. The old separate connection-open-root startup `panel_config` is removed; panel-root failure uses empty roots/unavailable status/refetch.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:275:The server independently treats the seed as untrusted. After operational prompt validation starts the command, its fixed-schema nonrecursive extractor reads at most 207 charged own data properties including the message seed, array length, and 32 indexed element descriptors; 170 scalars; 32 subjects; four schema levels from `uiActionSeed`; an exactly enumerated 1,034 steps; and 16,384 UTF-8 output bytes. Each private subject carries its strictly increasing original operational attachment index. Target evidence is direct-read only at those positions from the already-required validated attachment vector and becomes at most 32 closed five-field null-prototype data copies under separate 129-property/160-scalar/exact 901-step/16,384-byte caps. Gaps are allowed; duplicate/reordered/out-of-range/hole/non-accepted/mismatched entries omit provenance, and indices/ordinals are stripped before canonical construction. There is no key/map scheme or scan, and no handle, attachment/vector entry, callback, capability, operation object, or graph reference enters the queue. Structural/budget/preflight/direct-read failure emits fixed `ui_provenance_seed_unavailable`, schedules no UI candidate, allocates no slot/link, and cannot affect prompt acceptance/response. Those bounded seed/target copies enter D01 only with the bound context below; all three data values are byte-charged and released whenever an offer is attempted.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:299:In first-package 40b1a, existing `chat:*` facts remain a named compatibility path and receive no `uiActionId`; they are not canonical cause/result consumers. `CHAT-D01` must close and SPEC-40b2a must register the exact affected chat contract before removing that gap. Registered downstream events use only ref-consuming builder bindings, never copied strings, and never wait for a ref. Operational `ids.serverMutationId` remains independent.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md:309:Before a view emits UI-origin mutation events through SPEC-32, its adapter selectors must be documented. This closes SPEC-32 `RSC-D12a` for that view/command path.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:21:> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Decision-tagged output and resource-sidecar choices remain open.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:31:Open owner decision `TOOL-D02` blocks canonical harness identity and `chat.tool.started` registration/activation until exact phase/lifecycle presence, current-record IDs, actor/provenance, native-ref redaction/failure behavior, bounds, ordering/dedupe/replay/reconnect/cancel semantics, relationships, and fail-open tests are approved. `TOOL-D01` separately blocks args/result/outcome branches. Until D02 closes, identity/native-ref helpers are inert and no accepted harness/tool ref or persisted canonical started event exists.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:35:The following is a design candidate, not an executable registration contract. `TOOL-D02` must settle the exact harness/started branches and `TOOL-D01` the args/result/outcome extensions; no implementation may infer presence, bounds, redaction, or lifecycle behavior from this example.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:75:    // TOOL-D01 + AUT-D01 + finding 3 must approve the owner-selected unified\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:100:SQL/runtime output row keys are always query/storage-only and never enter canonical tool JSON. A separately registered canonical output artifact/event may contribute its canonical event/domain/content ID and edge through SPEC-40 proof. Any future external-storage observation approved by `TOOL-D01` is non-ID metadata and never contains or proves that row/artifact identity.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md:117:- `TOOL-D01` requires owner approval before any `chat.tool.args|result` registration/persistence: jointly with `AUT-D01` and finding 3, select the unified captured-output extension contract (including whether it is one shared block), then define exact tool mapping; args/result/output domains and normalization/encoding; redaction policy IDs/versions, detection, shapes, omissions, failure-safe/no-event behavior, and safe resource extraction; byte/truncation measurement and layer semantics; exit code/signal/provider error normalization into `isError`/`lifecycle.status`; complete phase/outcome presence; external-artifact qualification without row-ID leakage; unavailable/partial/stream/error/cancel/timeout behavior and bounds; and fail-open tests. This does not block the first Wiki/File resource/render package.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:20:> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. File-version hash behavior remains an owner decision under finding 5 and ULV-D10.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:28:File version records are created only from admitted canonical resource mutation deliveries. After owner decision `ULV-D12` closes the exact non-batch event/lifecycle/envelope/identity/order/idempotency/failure/transaction contract, the 40b2d1 builder consumes that resource ref to insert both `fileVersion.createdFromResourceEventId` and `ids.parentEventId` from the same upstream `eventId`, and optionally inserts `ids.correlationId` only from that upstream event's present validated correlation; absence means omission. Copied, raw, prepopulated, or mismatched bindings fail. Accepted SPEC-35d separately proves `versioned_as`. The version event uses the versioning subscriber as source/observer and may project safe non-ID context/type/confidence, but it does not transitively copy root/causation, actor/origin IDs, or cause IDs embedded in the resource event because the resource ref cannot prove those earlier refs. Audits traverse through the accepted resource event; an earlier identity appears directly only when the producer separately binds its original live ref or revalidated historical capability.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:30:Exception: `file.version.change_batch` storm records carry `changeStorm` instead of `fileVersion`; SPEC-39 owns that payload.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:34:`fileVersion.createdFromResourceEventId` is builder-inserted from the accepted resource event's top-level `eventId`. Optional `fileVersion.createdFromResourceMutationId` is not distinct identity: it must equal that same source's registered `/resourceMutation/resourceEventId` and `domainIds.resourceEventId`, inserted through the exact SPEC-40b2d1 target/source selector. Missing source domain identity omits it; raw/copied/mismatched IDs are invalid. Branchwise registry order is live-only 40b2d1 metadata/hash-only candidate (whose concrete hashes remain prohibited until finding 5 and `ULV-D10` approve their policy), post-40c 40b2d1h historical replay/backfill, 40b2d2 content artifacts, then 40b2d3 storm batches; each activates before matching behavior and uses the SPEC-35b/35d/35f/40c gates defined by the File Versioning page.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:40:  eventFamily: 'file.version',\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md:76:The hash fields above are candidates, not an approval to copy resource-event hashes. First-package resource events omit every concrete content hash under `resource-metadata-v1`. A file-version record may carry hashes only if the owner selects the separate-policy branch in finding 5 and ULV-D10 registers that exact file-version hash/redaction policy; otherwise those fields remain absent.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md:27:The renderer sends tentative non-ID active view, panel, tab, document, route, selected resource path, and similar UI context known at command time. The accepting server captures workspace ID/root/transition from the coordinator's `WorkspaceCommandContextRef`; session workspace/root fields are caches only. Renderer context/resources qualify only when the exact private workspace token binds to that same command ref and the server re-resolves paths/targets under it. The client token lives only in one memory-only slot keyed by the exact current OPEN WebSocket, outside all state caches and persistence, and is synchronously cleared on init/switch replacement, close, disconnect, socket replacement, and shutdown. First-package `ui.action` is a root canonical fact and omits root, parent, and causation IDs; any future UI relationship requires an exact SPEC-40 candidate/source selector and accepted capability. The server attempts an optional fresh correlation for the new chain. Successful generation inserts it through a private fresh-correlation binding; generator absence/throw, allocation, or registration failure omits only `ids.correlationId`, reports fixed `fresh_correlation_unavailable`, and leaves the otherwise safe UI fact and command unchanged. No renderer/client/session/operation/raw correlation is copied as fallback. Raw event/causation IDs in mutable session/operation state never qualify. Unknown legacy renderer relationship-ID fields are discarded. After successful workspace binding, missing optional UI details may remain null/unknown without blocking the command. Missing/stale/forged/wrong-connection binding or root/target mismatch creates no canonical `ui.action`, ID, ref, mirror, or edge and reports only exact frozen `{ code: 'workspace_context_unbound' }` to the dedicated one-key, process-memory counter sink; no token, path, workspace, connection, transition, attachment, reason, or exception value is retained. The command still proceeds.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md:65:After the operational path starts and workspace binding succeeds, the server admission task generates the canonical `uiActionId`. The optional renderer `clientCommandId` must match `[A-Za-z0-9_-]{1,128}` and remains non-authoritative client correlation, never a fallback for canonical `ids.correlationId`. Invalid client correlation is omitted without suppressing an otherwise valid UI fact. Canonical correlation is separately optional and server-generated through SPEC-40's nullable fresh binding; unavailable/thrown generation omits that independent group only. Individually optional active UI details enrich the record when available; no other renderer correlation or relationship ID is accepted. Missing optional details degrade to null/unknown/omission state. The server accepts renderer input only through SPEC-34's fixed-schema nonrecursive bounded extractor and retains no original seed reference. Binding or extraction failure emits no record and only a non-sensitive fixed diagnostic. Neither branch fails or delays the source interaction.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md:74:First-package 40b1a leaves existing `chat:*` facts on a named non-canonical compatibility path and does not add `uiActionId` to them. Exact chat cause/result linkage begins only after `CHAT-D01` closes and SPEC-40b2a registers the affected chat schema and redaction policy; chat publication never waits for the UI ref.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:20:> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Automation subtype and captured-output choices remain open under `AUT-D03`, `AUT-D01`, and findings 1/3.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:30:TRIGGERS.md file-change execution is operational and fail-open with respect to provenance. Its one workspace-watcher matcher consumes established observations exactly once, and mutation handlers do not invoke a second matcher. It does not await canonical resource construction, redaction, validation, publication, or an accepted reference. Canonical automation facts observe the match only after the exact SPEC-40b2c branch is registered. Open owner decision `AUT-D02` blocks direct matched-resource IDs/edges until a private non-wait accepted-reference handoff and exactly-once semantics are approved; until then independently safe automation facts omit those relationships without delaying, suppressing, retrying, or duplicating the run.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:32:Open owner decision `AUT-D03` blocks even the base canonical automation run/match registration, emission, accepted ref, and persistence until exact per-kind run-ID generation owner/timing/format/handoff, phase/lifecycle presence, subtype IDs, actor/provenance/context, sensitive-field redaction/failure behavior, bounds, ordering/dedupe/replay/restart/cancel semantics, and fail-open tests are approved. The settled requirement that canonical automation facts contain durable `automation.runId` and `automation.kind` is not reopened. Before D03 closes, only audit and inert ABI/fixture proposals may proceed; no production generator or new ID ABI may be added or exposed. AUT-D01 separately governs result branches.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:36:The following shape is non-authoritative `AUT-D03` decision input, not an executable schema or registration contract, except for the settled requirement that every eventual canonical automation fact contains durable `automation.runId` and `automation.kind`. D03 may accept, replace, split, or remove the example's event types, phases, lifecycle branches, subtype/optional fields, and presence rules, but not those two common fields. Until D03 closes and is propagated/back-validated, no implementation may infer their generation ABI or a producer, registry entry, accepted ref, persistence branch, bound, redaction rule, or test expectation from this example. `AUT-D01` separately controls any result extension and `AUT-D02` any matched-resource accepted relationship.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:66:    // AUT-D01 + TOOL-D01 + finding 3 must approve the owner-selected unified\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:79:After at least one canonical event establishing an automation run is accepted, a downstream event may store the accepted `automation.runId` only in a selector its D03/owning schema explicitly approves. The automation event itself may use upstream event causality only through a D03/AUT-D02-approved selector and registered accepted-reference binding and never self-references. While `AUT-D02` is open, operational file-trigger matches always omit upstream resource IDs/edges while preserving any independently safe D03-approved match/run fact. No subtype index role, optionality, equality, or selector exists until D03 approves it.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:94:- Common-field product intent is resolved: eventual canonical trigger, scheduler, script, sync/import, agent, and system automation facts must contain durable `automation.runId` and `automation.kind`. Production generation/integration remains blocked until `AUT-D03` approves the exact per-kind ABI; this statement alone authorizes no generator change.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md:95:- Script captured-output fields remain unregistered. `AUT-D01`, `TOOL-D01`, and finding 3 must select the unified extension contract—including whether it is one shared block—before defining automation mapping, result domain, falsy/Promise handling, serialization/encoding, hashes, bytes, truncation, external storage, omission/redaction, per-branch presence, failure material, timeout behavior, or lifecycle mappings. The failure-isolation branch is decided: provenance/redaction failure never fails automation execution; unsafe result material and derived hashes/previews are omitted, while the non-sensitive run/event core and a diagnostic remain when possible.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md:23:> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. This page supplies the mechanical `serverMutationId` branch assignment; decision-tagged cross-domain choices remain open.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md:72:For the first package, successful resource redaction uses exact strings `resource-metadata-v1` / `'1'` and the branch matrix in SPEC-34. A present before/after side requires both its state-hash and matching mutation-hash omissions as `policy_unapproved` plus two redaction omission pointers. An absent side uses mutation hash omission `not_applicable`; an unavailable side uses `not_observed`; neither adds a hash redaction pointer. Every concrete hash field remains absent, and retaining one rejects the candidate. `resourceMutation.fileVersionIds` is not a first-package field and is absent until its later domain registration. Policy failure preserves the mutation or watcher fact and invokes recovery.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md:78:- Direct attribution requires a registered SPEC-40 `prepareCanonicalCandidate` binding that consumes the upstream domain event's `AcceptedCanonicalRef`. In 40b1a the UI root/parent/causation/origin/cause group is registered only for a resource candidate directly initiated by an accepted `ui.action`; first-package lifecycle registers no upstream group. SPEC-40b2 and later owning slices may add tool, harness, trigger, scheduler, script, automation, agent, audit, or lifecycle cause pointers only by extending both schema and pointer/domain registries. The builder inserts a complete proven group and records private proof; a copied inspection string or raw operational, runtime, candidate, user-supplied, rejected, or unpublished ID omits the group with fixed `accepted_relationship_unbound` while the independently safe resource fact remains eligible.\nai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md:84:- Chat metadata may attach relevant mutations under `chatResources.mutations` only if finding 4/`CHAT-D01` approves and registers that sidecar's relationship to shared `resources[]`; this example is not current authority.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "at": "2026-09-19T10:16:51.400Z",
+      "exit": 0,
+      "stdout": " M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md\n M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md\n M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json\n M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json\n M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md\n M ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md\n M fusion-studio-client/e2e/office/fixture-lifecycle.mjs\n M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs\n M fusion-studio-client/e2e/office/global-setup.mjs\n M fusion-studio-client/e2e/office/global-teardown.mjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs\n M fusion-studio-client/e2e/office/run-isolated-electron.mjs\n M fusion-studio-client/playwright.office.config.ts\n?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md\n?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md\n?? ai/RC-MacAir-15/Captures/031-Remote_Access/\n?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md\n?? fusion-studio-client/e2e/office/harness-bounds.mjs\n",
+      "stderr": ""
+    }
+  ],
+  "sources": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/startup.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/index.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/reconcile.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/policy.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/filter.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/subscription-seed-catalog.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/capability-factory.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/filter.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/schemas/agent-tool-completed-v1.json",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/schemas/resource-state-observed-v1.json",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/fact-authority-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-reconciler.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/fact-admission-reconciler.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/reconciliation.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/029_event_ledger.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/029_event_ledger.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/034_event_registry_authority.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/035_file_provenance.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/db/migrations/040_reported_ui_context.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/startup.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/index.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/agent-provenance/fact-authority-repository.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/startup.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/subscriptions/capability-factory.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+      "status": "file"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "path": "fusion-studio-server/lib/audit/audit-subscriber.js",
+      "status": "file"
+    }
+  ],
+  "links": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../../002-Server_And_Runtime/PAGE.md#system-database-boundary",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../../007-Chat_System/000-Overview_and_References/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../002-Event_Taxonomy/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "target": "../../005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "target": "../001-Universal_Event_Bus/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "../002-Event_Taxonomy/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "../../002-Server_And_Runtime/PAGE.md#system-database-boundary",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "002-Tool_Call_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "005-File_Version_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "006-Automation_Run_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "007-UI_Action_And_Context_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "../011-UI_Action_Provenance_Module/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "target": "008-Audit_Query_And_Review_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "target": "../../004-Ledger_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "target": "../PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "target": "../../002-Server_And_Runtime/PAGE.md#system-database-boundary",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "target": "../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "target": "../../007-Chat_System/000-Overview_and_References/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "target": "../000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../002-Server_And_Runtime/PAGE.md#system-database-boundary",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../007-Chat_System/000-Overview_and_References/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../000-Code_Standards/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../001-Architecture_Routing/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../004-WebSocket_Protocol/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "status": "resolved"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "target": "../../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md",
+      "status": "resolved"
+    }
+  ],
+  "vocabulary": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "line": 51,
+      "match": "file.version",
+      "disposition": "explicitly labeled unimplemented broader schema or canonical version scope"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "line": 29,
+      "match": "ledger_events",
+      "disposition": "explicitly labeled unimplemented broader schema or canonical version scope"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "line": 57,
+      "match": "ledger_events",
+      "disposition": "explicitly labeled unimplemented broader schema or canonical version scope"
+    }
+  ],
+  "limitations": [],
+  "status": "PASS",
+  "frontmatters": 27,
+  "changedPages": 7,
+  "sourceHashes": 82,
+  "snapshots": 10,
+  "generatedBlocksUnchanged": true,
+  "productRuntime": "not run: prohibited by approved documentation contract"
+}

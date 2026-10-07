@@ -1,0 +1,650 @@
+{
+  "at": "2026-10-06T07:33:01.122Z",
+  "before": {
+    "mainPid": 57401,
+    "serverPid": 57425,
+    "rendererPids": [
+      57444
+    ],
+    "serverPort": 52199,
+    "debugPort": 52197,
+    "mainExecutable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "mainEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "mainCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "serverEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "serverCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "rendererExecutables": [
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+    ],
+    "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+    "machine": "RC-MacAir-15",
+    "serverUserData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2"
+  },
+  "after": {
+    "mainPid": 57401,
+    "serverPid": 57425,
+    "rendererPids": [
+      57444
+    ],
+    "serverPort": 52199,
+    "debugPort": 52197,
+    "mainExecutable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "mainEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "mainCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "serverEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "serverCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "rendererExecutables": [
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+    ],
+    "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+    "machine": "RC-MacAir-15",
+    "serverUserData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2"
+  },
+  "registry": [
+    {
+      "id": "public-scratch-2",
+      "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2"
+    }
+  ],
+  "selected": {
+    "value": "public-scratch-2"
+  },
+  "connection": {
+    "connectedAfterWorkspaceInit": true,
+    "samples": 11,
+    "durationMs": 2000
+  },
+  "threads": [
+    {
+      "threadId": "2026-10-06T00-19-54-139",
+      "harnessId": "opencode",
+      "opencodeSessionId": "ses_eefea8b30ffev5uEQlRAeAV0cv",
+      "messageCount": 2
+    },
+    {
+      "threadId": "2026-10-06T00-20-09-736",
+      "harnessId": "opencode",
+      "opencodeSessionId": "ses_eefea3c2cffeSfl9mxF0cGlbma",
+      "messageCount": 4
+    }
+  ],
+  "receipts": [
+    {
+      "thread_id": "2026-10-06T00-19-54-139",
+      "request_id": "9b2e0f3bf8ae02b3529cb8c6061fd329",
+      "turn_id": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "outcome": "accepted",
+      "execution": "claimed",
+      "reason": null,
+      "created_at": 1791271203100,
+      "updated_at": 1791271203105
+    },
+    {
+      "thread_id": "2026-10-06T00-20-09-736",
+      "request_id": "894fa70643b44870ba0b83d06c662cf2",
+      "turn_id": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "outcome": "accepted",
+      "execution": "claimed",
+      "reason": null,
+      "created_at": 1791271223769,
+      "updated_at": 1791271223773
+    },
+    {
+      "thread_id": "2026-10-06T00-20-09-736",
+      "request_id": "7a35bc9cfc9b4ce4750db34f5bd68ff5",
+      "turn_id": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "outcome": "accepted",
+      "execution": "claimed",
+      "reason": null,
+      "created_at": 1791271807402,
+      "updated_at": 1791271807419
+    }
+  ],
+  "exchanges": [
+    {
+      "exchangeId": 1,
+      "threadId": "2026-10-06T00-19-54-139",
+      "seq": 1,
+      "ts": 1791271205956,
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "bindState": "applied",
+      "bindCreatedAt": 1791271205956,
+      "bindUpdatedAt": 1791271205961,
+      "userInput": {
+        "chars": 4,
+        "sha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152",
+        "normalizedSha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152"
+      },
+      "assistantPlain": {
+        "chars": 4,
+        "sha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc",
+        "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+      },
+      "assistantJson": {
+        "chars": 44,
+        "sha256": "e3225d1192aa551694e8cec6a5d7483a8c7773ed0247bee47cdf22a81e9c4d0d",
+        "normalizedSha256": "e3225d1192aa551694e8cec6a5d7483a8c7773ed0247bee47cdf22a81e9c4d0d"
+      },
+      "assistantObjectKeys": [
+        "parts"
+      ],
+      "parts": [
+        {
+          "keys": [
+            "type",
+            "content"
+          ],
+          "type": "text",
+          "stringFields": [
+            {
+              "key": "type",
+              "chars": 4,
+              "sha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1",
+              "normalizedSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+            },
+            {
+              "key": "content",
+              "chars": 4,
+              "sha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc",
+              "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+            }
+          ],
+          "objectFields": []
+        }
+      ],
+      "metadataKeys": [
+        "messageId",
+        "planMode",
+        "contextUsage",
+        "tokenUsage",
+        "turnId",
+        "reason",
+        "partial",
+        "capturedAt",
+        "savedAt",
+        "attachments",
+        "mentions",
+        "fileMutations"
+      ],
+      "metadataSafe": {
+        "partial": false,
+        "reason": "stop"
+      }
+    },
+    {
+      "exchangeId": 2,
+      "threadId": "2026-10-06T00-20-09-736",
+      "seq": 1,
+      "ts": 1791271225428,
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "bindState": "applied",
+      "bindCreatedAt": 1791271225428,
+      "bindUpdatedAt": 1791271225432,
+      "userInput": {
+        "chars": 4,
+        "sha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152",
+        "normalizedSha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152"
+      },
+      "assistantPlain": {
+        "chars": 4,
+        "sha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc",
+        "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+      },
+      "assistantJson": {
+        "chars": 44,
+        "sha256": "e3225d1192aa551694e8cec6a5d7483a8c7773ed0247bee47cdf22a81e9c4d0d",
+        "normalizedSha256": "e3225d1192aa551694e8cec6a5d7483a8c7773ed0247bee47cdf22a81e9c4d0d"
+      },
+      "assistantObjectKeys": [
+        "parts"
+      ],
+      "parts": [
+        {
+          "keys": [
+            "type",
+            "content"
+          ],
+          "type": "text",
+          "stringFields": [
+            {
+              "key": "type",
+              "chars": 4,
+              "sha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1",
+              "normalizedSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+            },
+            {
+              "key": "content",
+              "chars": 4,
+              "sha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc",
+              "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+            }
+          ],
+          "objectFields": []
+        }
+      ],
+      "metadataKeys": [
+        "messageId",
+        "planMode",
+        "contextUsage",
+        "tokenUsage",
+        "turnId",
+        "reason",
+        "partial",
+        "capturedAt",
+        "savedAt",
+        "attachments",
+        "mentions",
+        "fileMutations"
+      ],
+      "metadataSafe": {
+        "partial": false,
+        "reason": "stop"
+      }
+    },
+    {
+      "exchangeId": 3,
+      "threadId": "2026-10-06T00-20-09-736",
+      "seq": 2,
+      "ts": 1791271818902,
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "bindState": "applied",
+      "bindCreatedAt": 1791271818902,
+      "bindUpdatedAt": 1791271818907,
+      "userInput": {
+        "chars": 4,
+        "sha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25",
+        "normalizedSha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+      },
+      "assistantPlain": {
+        "chars": 6,
+        "sha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136",
+        "normalizedSha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136"
+      },
+      "assistantJson": {
+        "chars": 46,
+        "sha256": "6597bc8971a6fa7861652ff6cc985e65db3969c82ca22953f37299b41f357668",
+        "normalizedSha256": "6597bc8971a6fa7861652ff6cc985e65db3969c82ca22953f37299b41f357668"
+      },
+      "assistantObjectKeys": [
+        "parts"
+      ],
+      "parts": [
+        {
+          "keys": [
+            "type",
+            "content"
+          ],
+          "type": "text",
+          "stringFields": [
+            {
+              "key": "type",
+              "chars": 4,
+              "sha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1",
+              "normalizedSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+            },
+            {
+              "key": "content",
+              "chars": 6,
+              "sha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136",
+              "normalizedSha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136"
+            }
+          ],
+          "objectFields": []
+        }
+      ],
+      "metadataKeys": [
+        "messageId",
+        "planMode",
+        "contextUsage",
+        "tokenUsage",
+        "turnId",
+        "reason",
+        "partial",
+        "capturedAt",
+        "savedAt",
+        "attachments",
+        "mentions",
+        "fileMutations"
+      ],
+      "metadataSafe": {
+        "partial": false,
+        "reason": "stop"
+      }
+    }
+  ],
+  "ownerRecords": [
+    {
+      "at": "2026-10-06T07:19:54.167Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:19:54.320Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:03.108Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_attempt",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "hadStoredSessionId": false
+    },
+    {
+      "at": "2026-10-06T07:20:03.111Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_return",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302
+    },
+    {
+      "at": "2026-10-06T07:20:05.975Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "child_close",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302,
+      "exitCode": 0,
+      "sawNativeJson": true,
+      "sawSessionId": true,
+      "sawTurnEnd": true,
+      "stopRequested": false
+    },
+    {
+      "at": "2026-10-06T07:20:05.977Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "session_patch_committed",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302
+    },
+    {
+      "at": "2026-10-06T07:20:09.966Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:09.968Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:12.160Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:12.162Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:13.742Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:13.743Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:16.644Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:16.646Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:18.125Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:18.127Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:23.774Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_attempt",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "hadStoredSessionId": false
+    },
+    {
+      "at": "2026-10-06T07:20:23.774Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_return",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140
+    },
+    {
+      "at": "2026-10-06T07:20:25.436Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "child_close",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140,
+      "exitCode": 0,
+      "sawNativeJson": true,
+      "sawSessionId": true,
+      "sawTurnEnd": true,
+      "stopRequested": false
+    },
+    {
+      "at": "2026-10-06T07:20:25.439Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "session_patch_committed",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140
+    },
+    {
+      "at": "2026-10-06T07:29:58.725Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:29:58.730Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:30:00.555Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:30:00.557Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:30:07.420Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_attempt",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "harnessId": "opencode",
+      "hadStoredSessionId": true
+    },
+    {
+      "at": "2026-10-06T07:30:07.421Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_return",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "harnessId": "opencode",
+      "pid": 5018
+    },
+    {
+      "at": "2026-10-06T07:30:18.918Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "child_close",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "harnessId": "opencode",
+      "pid": 5018,
+      "exitCode": 0,
+      "sawNativeJson": true,
+      "sawSessionId": true,
+      "sawTurnEnd": true,
+      "stopRequested": false
+    },
+    {
+      "at": "2026-10-06T07:30:23.699Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:30:23.705Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:30:24.724Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:30:24.725Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    }
+  ],
+  "dom": {
+    "workspaceLabel": "Public Scratch 2",
+    "machine": "Local: RC-MacAir-15",
+    "threadId": "2026-10-06T00-20-09-736",
+    "surfaceId": "chat-surface:main:1:4a4d00ac-cf96-4918-8dcf-0bcb5056802c",
+    "selectedRows": [
+      {
+        "threadId": "2026-10-06T00-20-09-736",
+        "groupId": "tg-0281b53b-4ef4-48de-95c7-41e8c44e308a"
+      }
+    ],
+    "users": [
+      {
+        "chars": 4,
+        "sha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152",
+        "normalizedSha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152"
+      },
+      {
+        "chars": 4,
+        "sha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25",
+        "normalizedSha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+      }
+    ],
+    "assistants": [
+      {
+        "completed": true,
+        "texts": [
+          {
+            "streaming": false,
+            "chars": 5,
+            "sha256": "424f8b85b47fca288b1e7070ffc838cee58f65d44e53a7331f46594b381b27cf",
+            "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+          }
+        ]
+      },
+      {
+        "completed": true,
+        "texts": [
+          {
+            "streaming": false,
+            "chars": 7,
+            "sha256": "a649dc6ae9d8e9daf7e7334f612479e7519973f583667a41af03aa3b42935a70",
+            "normalizedSha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136"
+          }
+        ]
+      }
+    ]
+  },
+  "noUIInputs": true,
+  "readOnly": true,
+  "exactComparisons": [
+    {
+      "exchangeId": 2,
+      "seq": 1,
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "visibleRowIndex": 0,
+      "userBytesExact": true,
+      "assistantNormalizedExact": true,
+      "assistantRawBytesExact": false,
+      "normalization": "collapse whitespace and trim; raw/normalized hashes retained",
+      "storedUser": {
+        "chars": 4,
+        "sha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152",
+        "normalizedSha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152"
+      },
+      "visibleUser": {
+        "chars": 4,
+        "sha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152",
+        "normalizedSha256": "6a4c3a4483b0448883299321ec2677f99a20afbf6a60bc5447bf2243d23b7152"
+      },
+      "storedAssistant": {
+        "chars": 4,
+        "sha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc",
+        "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+      },
+      "visibleAssistant": {
+        "chars": 5,
+        "sha256": "424f8b85b47fca288b1e7070ffc838cee58f65d44e53a7331f46594b381b27cf",
+        "normalizedSha256": "f4e2f2b43402948f7cec1d2a5d2baef207530bc0f67d2a2df3d5f4cb3cf3d3fc"
+      }
+    },
+    {
+      "exchangeId": 3,
+      "seq": 2,
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "visibleRowIndex": 1,
+      "userBytesExact": true,
+      "assistantNormalizedExact": true,
+      "assistantRawBytesExact": false,
+      "normalization": "collapse whitespace and trim; raw/normalized hashes retained",
+      "storedUser": {
+        "chars": 4,
+        "sha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25",
+        "normalizedSha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+      },
+      "visibleUser": {
+        "chars": 4,
+        "sha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25",
+        "normalizedSha256": "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+      },
+      "storedAssistant": {
+        "chars": 6,
+        "sha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136",
+        "normalizedSha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136"
+      },
+      "visibleAssistant": {
+        "chars": 7,
+        "sha256": "a649dc6ae9d8e9daf7e7334f612479e7519973f583667a41af03aa3b42935a70",
+        "normalizedSha256": "e20846d20bcd60f0f57708fb7e0afdc584cfac4711ea4bb636dfce053ad50136"
+      }
+    }
+  ],
+  "historyRowCounts": {
+    "durableSelected": 2,
+    "visibleUsers": 2,
+    "visibleCompletedAssistants": 2
+  },
+  "exactSelectedHistory": true
+}

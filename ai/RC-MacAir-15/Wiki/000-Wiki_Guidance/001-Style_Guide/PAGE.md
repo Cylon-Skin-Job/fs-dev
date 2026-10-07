@@ -2,14 +2,10 @@
 name: Wiki Style Guide
 description: Structure, naming, frontmatter, and content rules for writing Fusion Studio wiki pages.
 metadata:
-  incoming-edges:
-    - Wiki Guidance
-  outgoing-edges:
-    - Creating Wiki Content
-    - Updating Wiki Content
-  source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  source-files:
+    - fusion-studio-client/src/lib/wiki-frontmatter.ts
+    - fusion-studio-server/lib/wiki/audit/toc-sync.js
+  last-modified: "2026-09-19T10:34:31Z"
 ---
 
 ## Folder Scheme
@@ -60,7 +56,7 @@ leading `-` or `?`, `{`, `[`, `#`, `&`, `*`, `!`, `|`, `>`).
 One file, two zones, two audiences:
 
 - Above `<!-- section-toc:start -->`: hand-written guidance — intent, preferences, decisions, reading order.
-- Between the markers: generated contents, maintained by `fusion-studio-server/scripts/sync-wiki-tocs.js`. Never hand-edit inside the markers.
+- Between the markers: generated contents, maintained by `fusion-studio-server/scripts/wiki.js audit <workspace-or-wiki-root>`. Never hand-edit inside the markers.
 
 Humans get guidance plus chrome navigation; AI agents reading the raw file get the same guidance plus the routed map.
 
@@ -70,20 +66,46 @@ A heading article's sub-topics are the intent layer: vibe, decisions, lessons, a
 
 ## Frontmatter Contract
 
-The `name`, `description`, and `metadata` frontmatter envelope is the system-wide Markdown contract, not a Wiki-only convention. Use it for Wiki pages, READMEs, skill documents, Office documents, and any Markdown file expected to be searchable or machine-routable.
+The shared Markdown envelope is `name`, `description`, and `metadata`. For wiki pages, the authored metadata schema contains source-file accountability and a last-modified timestamp. Do not record incoming/outgoing edges, connected-skills, or related-trigger-files; ordinary body links remain the navigation mechanism. This wiki policy does not remove Office or other domains' settings such as `metadata.display` and `metadata.tables`.
 
 ```yaml
+---
 name: Chat Reply Payloads
-description: One actionable line. Say when to use the page, not just what it is.
+description: Explains which source code owns reply text extraction and when to consult it.
 metadata:
-  incoming-edges: []   # page names that link here
-  outgoing-edges: []   # page names this page links to
-  source-files: []     # real code files only
-  connected-skills: []
-  related-trigger-files: []
+  source-files:
+    - fusion-studio-client/src/components/MessageList.tsx
+  last-modified: "2026-09-19T10:00:00Z"
+---
 ```
 
-Domain-specific structured data also lives under `metadata`. Office document display settings, for example, use `metadata.display`; Office table dimensions use `metadata.tables`.
+The example time is illustrative; write the actual edit time, not this example value.
+
+| Field | Type | Authoring rule |
+|---|---|---|
+| `name` | Non-empty string | Human-readable article title. |
+| `description` | Non-empty string | Briefly explain what the page covers and when to use it. |
+| `metadata.source-files` | Array of strings | Unique repository-relative paths to the actual code files the page describes. Use `[]` when no code file applies. |
+| `metadata.last-modified` | Quoted string | Actual page modification time in UTC, using `YYYY-MM-DDTHH:mm:ssZ`. Required on new pages and pages edited under this policy. |
+
+### Source Accountability
+
+`source-files` is an authored claim about which code the page explains, not an automatically inferred list of everything in its domain. Use exact files with forward-slash paths, not directories, globs, absolute machine paths, links to other articles, or SPEC/plan documents. Check that each path exists and owns the behavior described. A guidance page with no direct code subject may use `[]`; a technical article without sources needs explicit review rather than guessed paths. Where machine-scoped code is unavoidable, explain and validate the placeholder resolution rather than treating an unresolved placeholder as a verified file.
+
+When listed code changes, review the affected page's claims. A newer source commit is a reason to check the prose; an older commit or newer page timestamp is not proof of accuracy. A future source-to-page index or automated freshness check may use this list, but this schema does not claim those mechanisms are implemented. No edge registry or computed-edge metadata is required.
+
+### Last-Modified Semantics
+
+- Set `metadata.last-modified` when a new page is written. Update it in the same edit whenever page content changes: prose, source references, other frontmatter, typo fixes, or generated navigation blocks.
+- Use a quoted UTC timestamp with seconds and a `Z` suffix. Quoting preserves a string instead of a YAML-native date value. Do not use filesystem mtime, the latest code commit, or a copied example timestamp as the page edit time.
+- The value records modification, not source verification or factual freshness. A typo correction or generated-link update does not certify any claim. Record verification scope and evidence separately in prose or a review record when needed.
+- Do not update the timestamp for a read, review with no page changes, no-op generation, or timestamp-only refresh. A byte-preserving move/rename also preserves the timestamp; edits to paths or body content during the move update it. Preserve historical timestamps in version snapshots.
+- For an older page with no trustworthy timestamp, leave it unknown until an actual edit; do not invent a historical date. When migrating its metadata, use the migration edit time without implying the body was reviewed.
+- The person, agent, or tool writing the page is responsible for the timestamp. Current wiki rendering normalizes known list metadata and does not expose this timestamp in its metadata footer; current audit/TOC tooling does not stamp it automatically. Until that changes, authors must stamp actual generated edits too, without hand-editing the generated blocks themselves.
+
+### Adoption
+
+Use this schema for new wiki pages. When editing an existing page, remove legacy relationship keys from its metadata and add/update `last-modified`, preserving real source claims and any unrelated domain-owned metadata. Do not bulk-stamp untouched pages or treat a schema migration as factual verification. Follow the [Updating Wiki Content](../003-Updating_Wikis/PAGE.md) versioning rules before substantive rewrites; this policy keeps `.versions/` and does not adopt a separate archive/retention system.
 
 ## Content Rules
 

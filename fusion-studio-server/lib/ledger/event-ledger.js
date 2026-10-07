@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const RECORDED_EVENT_TYPES = new Set([
   'workspace:switched',
   'thread:state_changed',
-  'file:changed',
 ]);
 
 const REDACTED_KEYS = new Set([
@@ -46,7 +45,7 @@ function inferActor(event) {
   }
 
   return {
-    actorType: event.actorType || event.actor_type || (event.type === 'file:changed' ? 'user' : 'system'),
+    actorType: event.actorType || event.actor_type || 'system',
     actorId: event.actorId || event.actor_id || null,
   };
 }
@@ -56,7 +55,6 @@ function inferSourceModule(event) {
   if (event.source) return event.source;
   if (event.type === 'workspace:switched') return 'workspace-controller';
   if (event.type === 'thread:state_changed') return 'thread-lifecycle-controller';
-  if (event.type === 'file:changed') return 'workspace-watcher';
   return null;
 }
 
@@ -67,9 +65,6 @@ function buildSummary(event) {
   }
   if (event.type === 'thread:state_changed') {
     return `Thread ${event.threadId || 'unknown'} changed state to ${event.state || 'unknown'}`;
-  }
-  if (event.type === 'file:changed') {
-    return `${event.context?.type || 'file'} ${event.event || 'changed'}: ${event.filePath || event.path || 'unknown'}`;
   }
   return event.type;
 }
@@ -109,29 +104,12 @@ function tagsForEvent(event) {
   }
   if (event.type === 'workspace:switched') tags.add('workspace');
   if (event.type === 'thread:state_changed') tags.add('thread');
-  if (event.type === 'file:changed') {
-    tags.add('resource');
-    tags.add(event.event || 'changed');
-  }
   return Array.from(tags);
 }
 
 function edgesForEvent(event, machineIdentity) {
   const workspaceId = inferWorkspaceId(event);
   const machineId = machineIdentity.machineId;
-
-  if (event.type === 'file:changed') {
-    const filePath = event.filePath || event.path || null;
-    const resourceType = event.context?.type || event.resourceType || 'file';
-    return [{
-      resource_type: resourceType,
-      resource_id: event.resourceId || filePath,
-      workspace_id: workspaceId,
-      machine_id: machineId,
-      path: filePath,
-      role: event.role || 'subject',
-    }];
-  }
 
   return [];
 }

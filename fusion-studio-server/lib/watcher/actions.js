@@ -1,7 +1,7 @@
 /**
- * Built-in action handlers for declarative filters.
+ * Built-in action handlers for legacy event and cron triggers.
  *
- * Each action is a function: (filterDef, vars) => void | Promise<void>
+ * Each action is a function: (definition, vars) => void | Promise<void>
  * where vars contains the template variables from the event context.
  */
 
@@ -20,7 +20,7 @@ const { assertGenericViewMutationAllowed } = require('../views/protected-path-po
 function createActionHandlers(deps = {}) {
   return {
     /**
-     * Create a ticket from the filter's ticket template.
+     * Create a ticket from the action definition's ticket template.
      */
     'create-ticket'(def, vars) {
       if (!deps.createTicket) {

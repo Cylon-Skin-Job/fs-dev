@@ -1,0 +1,18 @@
+{
+  "supplements": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before_bytes": 21997,
+      "before_sha256": "91f9916f1bd8717977506cab503ab7040209b5beb675fe454123ff40673750c8",
+      "append": "\n## S05 UI, automation and future contracts\n\nSeven pages now distinguish the implemented optional save-context carrier and current legacy automation from unimplemented general UI-action, audit/storm and plugin contracts. [S05-EVIDENCE.md](S05-EVIDENCE.md) maps every page to raw authority, real producer/consumer chains and negative searches; S05-SOURCE-EVIDENCE.json records current source hashes. Durable automation runId/kind, T1/T2 history and T3 exclusion are preserved; exact future schemas/executors/output/lifecycle choices are not invented. S05 uses current owner-directed metadata with real edit times; parent completion stamping and earlier-page migration remain separate. No product tests/runtime were run.\n",
+      "after_sha256": "13d310bc07eb54e6060915fa572a1cbee42b350765b61c6ed69c2a2fe5b55a4a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before_bytes": 10215,
+      "before_sha256": "fd9b24bdb9a5cdde2f1e0c717ef1d1bd4b0e65886c4028039f90fc3ff74b6a1f",
+      "append": "\n## S05 bounded updates\n\n- DEP-03: Capture 030 PLUG-D012 is explicitly pending; only individually owner-adopted decisions are binding. Current host-sealed four publishers and three subscribed fact types do not admit arbitrary plugins. Plugin owner must reconcile eventual registration/capability grammar with PW-D05 without raw bus access, self-grants or System app tables. No external capture edits.\n- DEP-04: Capture 032 \u00a72/\u00a76 broad LED/ULV/hash and never-delay language omits accepted save preimage/hash and bounded agent fingerprint/checkpoint/ledger overlays. Its \u00a72/\u00a73 evidence-layer claim that lifecycle shape is settled goes beyond durable common automation.runId/kind: per-kind generation/lifecycle/output ABI remains open. Its design-phase/not-SPEC status cannot approve a producer, output schema or live-app table. Exact capture correction belongs to plugin owner before implementation.\n- DEP-01/02: current operational attachments use SendToChatButton \u2192 chat-action \u2192 useLegacyChatHost \u2192 chatSlice prompt, with workspace/session pending attachment ownership. This is not a general ui.action envelope; old useChatArea pointers are stale. Future Wiki/File adapter work must coordinate current Chat group/session/surface/placement owners and connected File selectors. No protected Chat/shared-view page was edited.\n- S06: preserve narrow current save reader (registered initiating panel, matching File connected owner), server shape/echo sanitation without live tab existence validation, historical context/no writeback, and absent production query display. T1/T2 versus T3 direction is not universal current coverage. Retain automation common fields while keeping output, causal handoff and general lifecycle details open.\n- DEP-06/07 normalization remains S06 as root instructed: corrected wiki.js guidance and current source-only metadata supersede old notes; no generator is run. S05-D01 affects only current-page metadata and cumulative validator expectations.\n",
+      "after_sha256": "ef07abfad5ae6bb10fcb1dab97dbc057d76b2203bde0338374376feed1c1dee8"
+    }
+  ]
+}

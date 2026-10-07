@@ -1,0 +1,14 @@
+✔ ordered two-exchange history matches each identity with explicit rendered whitespace (3.007417ms)
+✔ same user prompt cannot conceal swapped assistant exchange rows (0.10825ms)
+✔ missing history row fails rather than joining all response text (0.074042ms)
+✔ streaming row cannot satisfy completed durable response (0.986208ms)
+✔ foreign thread and duplicate durable identity cannot supply owned history (0.103084ms)
+✔ unsupported p.text field is not decoded as an empty success (0.07375ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.387375

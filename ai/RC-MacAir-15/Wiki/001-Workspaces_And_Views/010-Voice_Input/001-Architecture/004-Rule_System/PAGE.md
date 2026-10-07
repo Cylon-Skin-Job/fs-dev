@@ -2,19 +2,12 @@
 name: Voice Input Rule System
 description: Map of editable STT cleanup rule files, generated verb candidates, and runtime rule assembly.
 metadata:
-  incoming-edges:
-    - Voice Input Overview
-    - Voice Input Architecture
-    - Voice Input Decisions
-  outgoing-edges:
-    - Voice Input Structure
   source-files:
-    - System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules
     - fusion-studio-server/lib/transcription/deterministic-cleanup.js
+    - fusion-studio-server/lib/resources/resolver.js
     - fusion-studio-client/scripts/prepare-ai-resources.cjs
     - fusion-studio-client/scripts/generate-action-verbs.cjs
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 The voice cleanup rule system is JSON-first.
@@ -23,7 +16,7 @@ The voice cleanup rule system is JSON-first.
 
 Rules live under:
 
-`System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules/`
+`System_Manager/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules/`
 
 Important split folders:
 
@@ -49,3 +42,9 @@ by the cleanup passes. It falls back to older monolithic files where needed.
 
 `prepare-ai-resources.cjs` copies the editable rule tree into Electron resources
 so dev and packaged runtime can resolve the same rule structure.
+
+## Source and runtime rule selection
+
+`prepare-ai-resources.cjs` selects `System_Manager/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules` when present (as in this checkout), otherwise `System_Manager/resources/text-to-speech/rules`. It copies that tree into `fusion-studio-client/electron/resources/rules/text-to-speech`. Edit the selected source, then prepare/package resources; editing a copied resource alone is not a durable source change.
+
+At runtime `getTextToSpeechRulesRoot` prefers `rules/text-to-speech` under the resource root selected by `FUSION_RESOURCES_PATH`, the development Electron resources directory, or the repository fallback. If that rules directory is absent, it uses `System_Manager/resources/text-to-speech/rules`. Runtime resolution does not directly prefer the legacy wiki source tree. This is source inspection, not a transcription or packaged-build test.

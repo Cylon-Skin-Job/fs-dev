@@ -1,0 +1,45 @@
+[
+  {
+    "at": "2026-09-19T03:27:23.956998-07:00",
+    "command": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-evidence.py"
+    ],
+    "exit": 0,
+    "stdout": "Source records 82 drift [] ref drift False\nCommand results [(['git', 'rev-parse', '--show-toplevel'], 0), (['git', 'rev-parse', 'HEAD'], 0), (['git', 'status', '--short'], 0), (['git', 'for-each-ref', '--format=%(refname) %(objectname)'], 0), (['rg', '-n', 'saveFile\\\\(|queryResourceProvenance|readSaveActionContext'], 0), (['rg', '-n', 'resource:provenance|file_save|handleFileMessage'], 0), (['rg', '-n', 'readSnapshotBytes|file\\\\.version|restoreOfVersionId|resource:invalidate|recoveryRemote|conflict_pending|uiActionSeed|PreparedCanonicalCandidate'], 0), (['rg', '-n', 'file_changed|file:changed'], 0), (['rg', '-n', 'file.command_accepted|resource.mutated|resource-render-projection|deliveryPolicy'], 0), (['rg', '-n', 'dirty|reconnect|generation|stale|snapshot|post-write|pre-rename'], 0)]\n",
+    "stderr": ""
+  },
+  {
+    "at": "2026-09-19T03:27:24.095384-07:00",
+    "command": [
+      "node",
+      "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-verify.cjs"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 7,\n  \"sourceHashes\": 82,\n  \"snapshots\": 8,\n  \"links\": 32,\n  \"vocabulary\": 2,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "at": "2026-09-19T03:27:24.201259-07:00",
+    "command": [
+      "node",
+      "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-verify.cjs",
+      "--read-only"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 7,\n  \"sourceHashes\": 82,\n  \"snapshots\": 8,\n  \"links\": 32,\n  \"vocabulary\": 2,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "at": "2026-09-19T03:29:33.846639-07:00",
+    "command": [
+      "node",
+      "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-verify.cjs",
+      "--read-only"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 7,\n  \"sourceHashes\": 82,\n  \"snapshots\": 8,\n  \"links\": 32,\n  \"vocabulary\": 2,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+    "stderr": "",
+    "phase": "final bookkeeping after terminal CLEAN; wiki/source bytes unchanged"
+  }
+]

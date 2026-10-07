@@ -1,0 +1,91 @@
+{
+  "at": "2026-09-19T03:04:12.909690-07:00",
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "sha256": "81dc03a92c2dc7d1df3c81d8e48f124e795b332bc6db241053afd6f4bf62d4ad"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "sha256": "24bdd54cd4e98f0aca3581a4e62b1921d2c7d6c270c21b7be6805f4982a28d5e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-CHANGE-MANIFEST.json",
+      "sha256": "ea8008d3d0ec92473746f6a32e9b887915c7d7644b50fc3274596f606063d301"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-CHECKS.json",
+      "sha256": "d613ff92b3f045f3062fae13bd48b6552cc459ab43f915e2dfdbd9820dc2f0d5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-EVIDENCE.md",
+      "sha256": "bd3a9d3bfe8a5d2cbefcb7a73654f48403e933127bf610d8eb97103fa5ce7ff0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-HANDOFF.md",
+      "sha256": "c38ff80530974b2df7494a955bf7340bc39cd1359eabaee872163fd578571e27"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-PAGES.diff",
+      "sha256": "93157614c1b9ee6eb021b0b8f892facfa3bb5e8759e963a9cbd7fafadf646a51"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-SOURCE-EVIDENCE.json",
+      "sha256": "22da7a223c59e093c0f50bf56b479b3b2224660a8a1b881675612fb20d8e22aa"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s01-verify.cjs",
+      "sha256": "b9a866419cb8c364878d4d46a522c522b5b93bd5b304c916e09bdb43c762f41f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md",
+      "sha256": "dcdd38d2a18d9602a76a62a20ad723685e7312e59cc09efef37ef15ac4ef8234"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "c6dc42e0e15ef23d0697ef39d308698e5044788c21338beee0a5d5aa52b88df9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md",
+      "sha256": "d12762890c68788fb359198ef38ab5cebc68cef0b47ff8d4062ac3906b405dc5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "6d7a6d5e8e80c4fd75ccdff0824d7791ed345787fd2abce90342760019e1e9a0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md",
+      "sha256": "a40d03ddf0a4abcc6f27dbd495cef0838db008fc48a18196675bdc98db51528b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md",
+      "sha256": "b0e3bd322b7486cef376c9d98259118f326a32749d84ca00668c8c4e8bbd1fb2"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md",
+      "sha256": "993b639339d34a7e868687f8b5075015a42639c69ed06cd2e7322ac058558a9b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "sha256": "62e0349b0e50462f42b690e6fdc6dab6af84fc74f2c9d54ecb24d6a93606de5c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md",
+      "sha256": "312233d9030a81d8ac213b54daa268620b9b3277575eefeabd29505bac139f37"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md",
+      "sha256": "dec8056c7b74e72befc26d5c585874cd2ae8a9cd522cecb02bcb7c1c007eabce"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "8f4fc54e9895bad4e988996bbf7366c6d9baff1cf9a2accafb5c1506fe8b2675"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "sha256": "85edb31a9a0eb77de660e7ceb4f13b7328551a95e929dabf690b726ff1d9bc33"
+    }
+  ]
+}

@@ -1,11 +1,7 @@
 ---
 name: Themes and State
-description: V2 boundary between workspace-wide theme styling and per-view layout state.
+description: Current V2 styling and state paths, with the approved editable-instance relocation boundary.
 metadata:
-  incoming-edges:
-    - Enforcement
-    - Code Standards
-  outgoing-edges: []
   source-files:
     - fusion-studio-client/src/hooks/useSharedWorkspaceStyles.ts
     - fusion-studio-client/src/lib/viewActivity.ts
@@ -15,11 +11,11 @@ metadata:
     - fusion-studio-server/lib/view-state/resolver.js
     - fusion-studio-server/lib/view-state/writer.js
     - fusion-studio-server/lib/workspace/workspace-state.js
-    - ai/<machine>/System/styles/themes.json
-    - ai/<machine>/System/styles/themes.css
-  connected-skills:
-    - css-conventions
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/panels.ts
+    - fusion-studio-client/src/components/ThemePicker.tsx
+    - fusion-studio-client/src/lib/ws/theme-handlers.ts
+    - fusion-studio-server/lib/theme/themes-service.js
+  last-modified: "2026-09-28T04:13:18Z"
 ---
 
 # Themes and State
@@ -27,6 +23,8 @@ metadata:
 This page defines the V2 filesystem boundary for styling and layout state. The short version: workspace-wide CSS lives in `System/styles`, per-view CSS and icons live in each view capsule's `styles` folder, and per-view UI state lives in each view capsule's `state` folder.
 
 ## V2 Paths
+
+These are **current** machine-scoped paths, not the target location for editable view instances. The approved model moves instance resources outside `System` while protected plugins remain there; its exact path and schema are still open. See [View Configuration And Agents](../../001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md). Workspace-wide System styles and state service ownership are not relocated by that decision.
 
 | Concern | Path | Scope |
 |---------|------|-------|
@@ -45,17 +43,21 @@ Do not use retired non-machine-scoped view, settings, or system paths. V2 is mac
 
 ## View Folder Contract
 
-The numbered view folder is the storage boundary for view-local metadata. The folder name `NNN-view-id` controls sidebar order through its numeric prefix, while `manifest.md` owns the durable `view-id`. Keep sidebar icons in the view's `styles/icon.md` file and view-specific UI state in the view's `state/state.json` file. Do not move either concern into global registries, workspace state, or retired `settings/` folders.
+In current code the numbered view folder is the storage boundary for view-local metadata. The folder name `NNN-view-id` controls sidebar order through its numeric prefix, while `manifest.md` owns the durable `view-id`. Keep sidebar icons in the view's `styles/icon.md` file and view-specific UI state in the view's `state/state.json` file. Do not move either concern into global registries, workspace state, or retired `settings/` folders.
 
 ## CSS Loading
 
-Global CSS is fetched from `ai/<machine>/System/styles/`. The client injects the shared layers in a stable order so defaults load before overrides:
+Global CSS is fetched from `ai/<machine>/System/styles/`. The current loader injects a fixed shared list in this initial order:
 
 1. `variables.css`
 2. `themes.css`
 3. `components.css`
 4. `views.css`
-5. `tints.css`
+5. `file-viewer.css`
+6. `capture-viewer.css`
+7. `tints.css`
+
+Files outside that list are not discovered automatically. For declarations of equal cascade priority and specificity, later style tags win. The Theme Picker can regenerate `themes.css` and the targeted client refresh removes and reappends its tag after other shared layers; live-preview variables also affect the result. Do not treat the initial list as a permanent override priority after refresh. Generated `themes.css` is not a hand-authored customization file.
 
 Per-view CSS is fetched from the active view capsule under `ai/<machine>/System/Views/<view-folder>/styles/`. `layout.css` is for geometry and structure. `themes.css` is an optional manual override for one view. Icon selection comes from `styles/icon.md`.
 
@@ -94,6 +96,8 @@ Use `viewActivity.ts` and `viewCollections.ts` for these mutations. Do not creat
 - Do not programmatically create per-view CSS as a workaround for missing theme variables. Add shared variables to `System/styles` instead.
 
 ## Quick Reference
+
+The entries below are current paths. Future instance placement must be designed before replacing them in implementation.
 
 | Change | File |
 |--------|------|

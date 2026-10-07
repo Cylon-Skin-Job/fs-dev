@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-10-06T01:11:37.255652+00:00",
+  "sourceSweep": {
+    "command": "rg -n \"require\\(['\\\"]chokidar['\\\"]\\)|from ['\\\"]chokidar['\\\"]|watch/core|watch/workspace-watcher|hotkey-screenshot-watcher|watch/calendar-watcher|abandonAll\" lib package.json",
+    "exit": 1,
+    "matches": [],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+    "literalRegex": "require\\(['\"]chokidar['\"]\\)|from ['\"]chokidar['\"]|watch/core|watch/workspace-watcher|hotkey-screenshot-watcher|watch/calendar-watcher|abandonAll"
+  },
+  "chokidarDependencies": [],
+  "retiredPaths": {
+    "lib/watch/core.js": {
+      "exists": false
+    },
+    "lib/watch/workspace-watcher.js": {
+      "exists": false
+    },
+    "lib/screenshot/hotkey-screenshot-watcher.js": {
+      "exists": false
+    },
+    "lib/watch/calendar-watcher.js": {
+      "exists": false
+    }
+  },
+  "requiredSources": {
+    "lib/startup.js": {
+      "exists": true,
+      "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec"
+    },
+    "lib/views/readiness-startup.js": {
+      "exists": true,
+      "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+    },
+    "lib/testing/isolated-provenance-runtime.js": {
+      "exists": true,
+      "sha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f"
+    },
+    "lib/shutdown.js": {
+      "exists": true,
+      "sha256": "f651e3a4e85e80a2f438a4ed3bfe2a59d31b9777c6d9f50e53ee7c89454b6520"
+    },
+    "lib/calendar/index.js": {
+      "exists": true,
+      "sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb"
+    },
+    "lib/calendar/google/poller.js": {
+      "exists": true,
+      "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+    },
+    "lib/screenshot/ws-handlers.js": {
+      "exists": true,
+      "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254"
+    },
+    "lib/workspace/screenshot-service.js": {
+      "exists": true,
+      "sha256": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287"
+    },
+    "lib/ws/file-save-route.js": {
+      "exists": true,
+      "sha256": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875"
+    },
+    "lib/file-mutations/save-controller.js": {
+      "exists": true,
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d"
+    },
+    "lib/chat-metadata/collectors/file-mutations.js": {
+      "exists": true,
+      "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+    },
+    "lib/wire/canonical-chat-tool-events.js": {
+      "exists": true,
+      "sha256": "160a8f3301751b9733a0387635c7a361cecb9c74855ba86c3f7d0413ba6a3d40"
+    },
+    "lib/agent-provenance/fact-authority-repository.js": {
+      "exists": true,
+      "sha256": "2db31b728b022854474231665da185573ad0904bc42d94bf83fb37c6caa338be"
+    },
+    "lib/ledger/event-ledger.js": {
+      "exists": true,
+      "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+    }
+  },
+  "packageInspection": {
+    "method": "Python json.loads(package.json/package-lock.json); inspect dependencies/devDependencies/optionalDependencies dictionaries for chokidar and lock packages keys ending /chokidar",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+    "files": [
+      "package.json",
+      "package-lock.json"
+    ],
+    "exit": 0,
+    "chokidarMatches": []
+  }
+}

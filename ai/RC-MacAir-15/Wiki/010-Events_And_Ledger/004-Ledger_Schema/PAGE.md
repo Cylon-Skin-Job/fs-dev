@@ -2,36 +2,50 @@
 name: Events Ledger Schema
 description: SQLite event table concerns for payload storage, indexes, retention, correlation IDs, and graph-style relationships between events.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events Provenance Model
-    - Events File Versioning
   source-files:
-    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/db/migrations/029_event_ledger.js
+    - fusion-studio-server/lib/db/migrations/034_event_registry_authority.js
+    - fusion-studio-server/lib/db/migrations/035_file_provenance.js
+    - fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js
+    - fusion-studio-server/lib/db/migrations/040_reported_ui_context.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before changing durable event storage.
+Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
 
-The ledger is the durable record of system facts. It should store event identity, event type, timestamps, workspace/resource identity, provenance, causal links, payload metadata, and enough indexed fields for later query workflows.
+The following tables belong to `fusion.db`, the [System database](../../002-Server_And_Runtime/PAGE.md#system-database-boundary). They are platform-owned control, history and recovery stores. A plugin cannot create arbitrary System tables or turn these records into its own application database. This is a bounded provenance inventory, not an audit of every application table.
 
-## Schema Concerns
+## Current table owners
 
-- Event ID, root event ID, parent event ID, correlation ID, and causation ID.
-- Workspace, view, resource/path, thread, turn, tool call, UI action, harness ID, harness run, harness event, automation run, trigger run, script run, scheduler run, agent run, and audit query identifiers.
-- JSON payload storage for the complete validated safe canonical event when registered sensitivity/redaction policy permits it; never an unconditional raw producer copy.
-- Indexes for common forensic questions: file path, resource ID, actor, event family/type, thread, turn, tool call, UI action, harness ID/run/event, automation run, trigger run, script run, scheduler run, agent run, audit query, correlation ID, causation ID, root/parent event ID, edge endpoints, timestamp range, `changeStorm.reason` when present, and provider-keyed `nativeRefs` or provider-specific payloads when a harness adapter needs replay or dedupe queries.
-- Validation status and warnings for accepted canonical events, plus structured non-canonical diagnostics for rejected candidates. Exact stored canonical or registered failure-safe-core payloads use `valid | valid_with_warnings`; a restricted ledger-only diagnostic body uses `defensive_fallback`, which can never provide historical relationship proof. Ledger or diagnostic persistence failure never changes the source operation's result.
-- `canonical_admission_status = 'accepted'` on every `ledger_events` row, set only when the ledger listener receives UEB's privately branded accepted-reference delivery context. Validation status is separate and never proves admission; missing/forged delivery context creates no canonical ledger row.
-- First-class edge and resource projection tables so audits can traverse UI actions, chat turns, tool calls, automation runs, resource mutations, file versions, storm batches, and audit/review records without parsing every payload.
-- Retention and compaction policy for high-volume events.
+Migration paths below are under `fusion-studio-server/lib/db/migrations/`; runtime owners are under `fusion-studio-server/lib/`.
 
-File versioning can add its own tables, but it should link back to canonical event IDs.
+| Tables | Migration | Runtime owner and purpose |
+|---|---|---|
+| `event_log`, `event_resource_edges`, `event_tags` | `029_event_ledger.js` | `ledger/event-ledger.js` for legacy whitelist; `ledger/resource-provenance-repository.js` and `agent-provenance/agent-ledger-repository.js` for exact governed projections; governed writers do not add tags |
+| `event_schema_registry`, `event_subscription_registry`, `event_subscription_grants` | `034_event_registry_authority.js` | `event-registry/reconcile.js`, `repository.js`, `policy.js`; mutable lifecycle/grant authority distinct from authored requests, with locked shipped definitions |
+| `resource_registry` | `035_file_provenance.js` | `file-mutations/stable-resource-repository.js`; workspace/path/fingerprint identity and lifecycle, reused by agent observation |
+| `file_operations` | `035_file_provenance.js` | `file-mutations/file-operation-repository.js`; request binding, reserved IDs, prewrite/replacement state, admission/projection markers and terminal response/recovery |
+| `file_versions` | `035_file_provenance.js` | `file-mutations/file-version-repository.js` through operation preparation; exact eligible preimage bytes or absent state, not general canonical version events |
+| `resource_provenance_events` | `035_file_provenance.js` | `ledger/resource-provenance-repository.js`; compact save query projection joined to the preimage row |
+| `agent_tool_activities`, `agent_tool_resource_edges` | `036_agent_tool_provenance.js` | `agent-provenance/activity-repository.js`; bounded normalized activity, resource candidates, clocks, optional fingerprints and binding/observation state |
+| `agent_snapshot_blobs`, `agent_resource_snapshots` | `036_agent_tool_provenance.js` | `agent-provenance/checkpoint-repository.js`; exact content-addressed eligible bytes and sparse path-scoped observation checkpoints/fact authority |
+| `agent_exchange_bind_jobs`, `agent_observation_jobs`, `agent_renderer_projection_jobs` | `036_agent_tool_provenance.js` | Corresponding repositories and binder/observer/projection scheduler; durable work, claim and settlement state |
+| Additional reported context columns on `file_operations` and `resource_provenance_events` | `040_reported_ui_context.js` | Save context sanitization/projection; historical view/tab/component/presenter/target metadata, not live view state |
 
-Ledger storage has three exact material branches. Ordinary registered `not_required|applied` safe payloads are stored unchanged with a required matching non-null payload hash and are the only branch eligible for historical proof. An already-admitted registry-valid failure-safe-core payload (first package: exact UI safe core only) is stored unchanged with null hash and is categorically ineligible for `AcceptedLedgerRowRef`. Those two branches use `validation_status = valid | valid_with_warnings`. Missing/failed/thrown redaction that is not such a registered branch uses `validation_status = defensive_fallback` and a ledger-only body with exact `diagnostic: { code: 'ledger_defensive_fallback' }`, `payloadOmissions.redaction = 'failed'`, null hash, no unsafe material, and no historical-proof capability. Schema/policy/column consistency cannot substitute for integrity evidence; `loadAcceptedLedgerRowRef` returns no capability for every null-hash row. None affects the source operation.
+Migration `040_reported_ui_context.js` also refreshes the four affected locked schema definitions to the extended context shape before startup reconciliation. This platform migration is distinct from ordinary reconciliation, which preserves existing definitions and authority reductions.
 
-`LED-D01` remains OWNER APPROVAL REQUIRED before SPEC-35b/SPEC-40c implements that non-null hash or `AcceptedLedgerRowRef`: select deterministic JSON canonicalization/serialization, byte encoding, hash algorithm, digest representation, stored policy/version, and migration/reverification rules. This ledger-integrity decision is separate from ULV-D10 content hashing and does not block the first Wiki/File resource/render package.
+`event_log.event_id` is the public event primary key. Its other columns include type, workspace/machine, actor, occurrence/creation times, summary, payload JSON, source, correlation and causation. Indexes cover type/workspace/machine with occurrence time and correlation. Resource edges have private integer row IDs, resource/path/role fields and event/resource/workspace-path indexes; tags are unique per event/tag. These resource edges already exist, but they are not a general event-to-event graph.
 
-`LED-D04` is OWNER APPROVAL REQUIRED before production Slices 35b-35d: define exact natural/idempotency keys and unique constraints for every ledger table; event/child transaction boundaries; duplicate/conflict behavior; any detached retry/defer capacities, attempts, backoff, cancellation, shutdown/restart/replay, and missing-target behavior; database nonsettlement; terminal fixed diagnostics; and crash/concurrency/source-isolation tests. No inline retry or unbounded deferred work is allowed. Slice 35a inventory may proceed.
+Save operation IDs and reserved event/version IDs have uniqueness constraints; operation state and projection state remain separate. Save query projections index workspace/time, path, filename and folder. Agent tables add their own activity, thread/turn, exchange, path/access, observation and due/lease indexes. Read the migration and owning repository before extending a query; a desired future index is not an existing column.
+
+## Payload and failure semantics
+
+Legacy `recordEvent` sanitizes selected keys and truncates long strings. Governed save and agent projections store their canonical fact JSON, verified against the corresponding producer-owned durable record. Save projection hashes live in `resource_provenance_events`; agent fact hashes and admission/ledger schedules live on activity/snapshot rows. There is no common `canonical_admission_status` or older three-branch `validation_status` scheme on every event row.
+
+Admission, filesystem outcome, subscriber acknowledgment, ledger storage and renderer delivery are separate states. Required save preimages precede replacement; failed later projection does not undo a write. Existing snapshot tables do not supply universal restoration or retention. See [Ledger Event Provenance](../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md) for exact ingress and retry limits.
+
+## Target and open work
+
+The older generalized `ledger_events` design, common-envelope graph, accepted ledger-row proof capability, universal redaction branches and broad indexes are proposals, not current storage contracts. The accepted save/subscription and agent-observation agreements supersede their older blockers only for those bounded tables and facts. Retention, causal edges, ledger-internal events, wider versioning and restore require separate feature decisions. System's preservation direction and source/application ownership are already settled and do not require reopening.

@@ -1,0 +1,2704 @@
+{
+  "at": "2026-10-06T09:04:37.427668+00:00",
+  "gate": "fresh final complete repair and original integration",
+  "contracts": [
+    "CHAT-AR-REPAIR-01 entire SPEC/REQ01..07/R1..R3/public7/adoption8/final9",
+    "CHAT-AR-SPEC-01 entire SPEC/amendments/R01..07/S1..S4/compatibility7/all10acceptance8/deferrals9"
+  ],
+  "rows": [
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "bytesHashed": 18340,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "bytesHashed": 32202,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "bytesHashed": 12701,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "bytesHashed": 2706,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "bytesHashed": 15364,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "bytesHashed": 12638,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "sha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "bytesHashed": 14330,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "sha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "bytesHashed": 2380,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "sha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "bytesHashed": 2366,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "bytesHashed": 38793,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "bytesHashed": 1280,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "sha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "bytesHashed": 7473,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+      "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "bytesHashed": 2084,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "sha256": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "bytesHashed": 10828,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+      "sha256": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "bytesHashed": 5753,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "sha256": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "bytesHashed": 10543,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "bytesHashed": 246,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "bytesHashed": 6372,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "bytesHashed": 5520,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "bytesHashed": 10697,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "bytesHashed": 2953,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "sha256": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "bytesHashed": 24424,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "bytesHashed": 16217,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "bytesHashed": 7086,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "bytesHashed": 5710,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "bytesHashed": 42483,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "bytesHashed": 2654,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "sha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "bytesHashed": 2834,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "bytesHashed": 9378,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "bytesHashed": 10303,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "sha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "bytesHashed": 10752,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "bytesHashed": 5885,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "bytesHashed": 8272,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "sha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "bytesHashed": 9459,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "sha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "bytesHashed": 4515,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "bytesHashed": 3664,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "sha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "bytesHashed": 5849,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "bytesHashed": 7125,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "bytesHashed": 15601,
+      "prefixOnly": false
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "bytesHashed": 19077,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "bytesHashed": 18340,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "bytesHashed": 38793,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "bytesHashed": 1280,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "bytesHashed": 246,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "bytesHashed": 6372,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "bytesHashed": 5520,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "bytesHashed": 10697,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "bytesHashed": 2953,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "sha256": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "bytesHashed": 24424,
+      "prefixOnly": false
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "bytesHashed": 16217,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "bytesHashed": 32202,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "bytesHashed": 38793,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "bytesHashed": 18340,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "bytesHashed": 1280,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "bytesHashed": 15364,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "sha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "bytesHashed": 14330,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "sha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "bytesHashed": 2366,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "sha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "bytesHashed": 7473,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "sha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "bytesHashed": 2380,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "bytesHashed": 12701,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "bytesHashed": 12638,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+      "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "bytesHashed": 2084,
+      "prefixOnly": false
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "bytesHashed": 2706,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "sha256": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "bytesHashed": 10828,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+      "sha256": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "bytesHashed": 5753,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "sha256": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "bytesHashed": 10543,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "bytesHashed": 7086,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "bytesHashed": 5710,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "bytesHashed": 7125,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "bytesHashed": 15601,
+      "prefixOnly": false
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "bytesHashed": 19077,
+      "prefixOnly": false
+    },
+    {
+      "scope": "prerequisite-manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "sha256": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d",
+      "bytesHashed": 5144,
+      "prefixOnly": false
+    },
+    {
+      "scope": "prerequisite-manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/CURRENT-FINGERPRINTS.json",
+      "sha256": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+      "bytesHashed": 91818,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/CaptureDocumentPresenter-Bej7sqr2.js",
+      "sha256": "3cbc006485f85efede5f10c73bba2e74272c2e26cad38a9f6bfc21bf835022d8",
+      "bytesHashed": 1143,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ChatSurfaceComponentMount-BqGI3h2a.js",
+      "sha256": "d16b773bfadbaa609a1dbf12c8615274321b55f0d3b2e6227701dc3eceb87745",
+      "bytesHashed": 1942,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileDocumentPresenter-CflsNQo-.css",
+      "sha256": "1255a539e24702681e2710bb0895f5a1e7f45646f5ab5873b5fe277987e37517",
+      "bytesHashed": 617,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileDocumentPresenter-Co1Yziq4.js",
+      "sha256": "c75b6283f37ffc9b34c43e225f6455006bc26400c8f44722ac7e7db5c1ea5328",
+      "bytesHashed": 1351,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileEmptyTabBody-2xnBUkZA.js",
+      "sha256": "cb83694962f360f3d497c521d47dfa50866a08837e367521402a01fe0802da72",
+      "bytesHashed": 917,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileEmptyTabBody-Cxwzun_s.css",
+      "sha256": "533ee1a6af9531e9f976b34a852cf650e83357292a75db238be02aa5e72e19c4",
+      "bytesHashed": 653,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FilePickerDrawerLayer-CQODmtw5.css",
+      "sha256": "af6ceb799a35cca419f477260c1aede230fda1e82381d76f9e57de4b7be941d4",
+      "bytesHashed": 217,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FilePickerDrawerLayer-Dibi_iZc.js",
+      "sha256": "e8a02010125e53c99420da708a6284d192fda770fd575dcba65616fb2d4ff890",
+      "bytesHashed": 214,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "bytesHashed": 28076,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "sha256": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+      "bytesHashed": 33516,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "sha256": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+      "bytesHashed": 63632,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "sha256": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+      "bytesHashed": 12368,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "sha256": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+      "bytesHashed": 7716,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "bytesHashed": 6912,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "sha256": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+      "bytesHashed": 7656,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "bytesHashed": 6908,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "sha256": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+      "bytesHashed": 12344,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "sha256": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+      "bytesHashed": 19584,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "sha256": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+      "bytesHashed": 13296,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "bytesHashed": 11348,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "sha256": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+      "bytesHashed": 19572,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "bytesHashed": 11316,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "sha256": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+      "bytesHashed": 13208,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "bytesHashed": 25324,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "sha256": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+      "bytesHashed": 29912,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "sha256": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+      "bytesHashed": 51336,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "bytesHashed": 16780,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "sha256": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+      "bytesHashed": 32968,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "sha256": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+      "bytesHashed": 19412,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "sha256": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+      "bytesHashed": 33580,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "sha256": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+      "bytesHashed": 19676,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "bytesHashed": 16988,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "bytesHashed": 26272,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "sha256": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+      "bytesHashed": 30772,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "sha256": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+      "bytesHashed": 53580,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "sha256": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+      "bytesHashed": 31196,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "bytesHashed": 16400,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "sha256": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+      "bytesHashed": 18668,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "sha256": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+      "bytesHashed": 18748,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "sha256": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+      "bytesHashed": 31308,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "bytesHashed": 16440,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "sha256": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+      "bytesHashed": 24504,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "bytesHashed": 12216,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "sha256": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+      "bytesHashed": 14408,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "bytesHashed": 12028,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "sha256": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+      "bytesHashed": 14112,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "sha256": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+      "bytesHashed": 22364,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "sha256": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+      "bytesHashed": 19436,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "sha256": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+      "bytesHashed": 12316,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "bytesHashed": 10344,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "sha256": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+      "bytesHashed": 16648,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "bytesHashed": 9644,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "sha256": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+      "bytesHashed": 10588,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "sha256": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+      "bytesHashed": 6496,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "sha256": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+      "bytesHashed": 12228,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "bytesHashed": 5468,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "sha256": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+      "bytesHashed": 11508,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "bytesHashed": 5208,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "sha256": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+      "bytesHashed": 6188,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "sha256": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+      "bytesHashed": 4420,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "sha256": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+      "bytesHashed": 7588,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "sha256": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+      "bytesHashed": 5980,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "sha256": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+      "bytesHashed": 10364,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "bytesHashed": 4928,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "sha256": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+      "bytesHashed": 16028,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "bytesHashed": 13568,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+      "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+      "bytesHashed": 27556,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/MenuSurface-BrYLoXvx.css",
+      "sha256": "dab03a11f209ffbeea5130ceb17601c3d851eed429a7e62e2eabb7a05b6f8820",
+      "bytesHashed": 4181,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/apl-B4CMkyY2.js",
+      "sha256": "f242eda34c4a72bd8e51c278934ec62fe4804f129733e27d0441e1dc8bbc07a9",
+      "bytesHashed": 2301,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asciiarmor-Df11BRmG.js",
+      "sha256": "a4f24c2097052635b21234f8995ea0bc9aa6eb4627e9aad3d4c7da5fb3eb9321",
+      "bytesHashed": 786,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asn1-EdZsLKOL.js",
+      "sha256": "ae03ba33f00f6d244c134c98deb75db9ef27894ed42661b6b96cf897561e1bab",
+      "bytesHashed": 3981,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asterisk-B-8jnY81.js",
+      "sha256": "47dfc80fb04e1d00d31d9f5286c817e3a75d012bc8c88b97585ea4776a4761c7",
+      "bytesHashed": 4480,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/brainfuck-C4LP7Hcl.js",
+      "sha256": "de73a71178f148e59b5a6d7ca989842599d46d92836517bad1ddf005a968ab4e",
+      "bytesHashed": 606,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/chat-completing-pinwheel.gif",
+      "sha256": "921d36808bfc3816beacbf37ad281d59b9e2414b98f3d533926e5ed6ff89d874",
+      "bytesHashed": 6706,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/clike-B9uivgTg.js",
+      "sha256": "362289d801a4f7b5abb548e9220660731b08cf3e00989bb8462ebed73bf28e96",
+      "bytesHashed": 22302,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/clojure-BMjYHr_A.js",
+      "sha256": "498a60106d02e5d91242032d01e8c02c8405cc0dd2d089d69f55eab8e78d1a20",
+      "bytesHashed": 10815,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cmake-BQqOBYOt.js",
+      "sha256": "754963f9ba8388c27113791b9da35a6291f5784fd853027081091ae4b9018ca7",
+      "bytesHashed": 783,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cobol-CWcv1MsR.js",
+      "sha256": "b5708cea6e07765d16bd3cea07d4a10a3672636bbc45ce2d2646c9f1833a4372",
+      "bytesHashed": 6201,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/coffeescript-S37ZYGWr.js",
+      "sha256": "140d96ba54d87483b611e343940304fd55d851a31289ffb6b9ab1a2c8b4793a2",
+      "bytesHashed": 3868,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/commonlisp-DBKNyK5s.js",
+      "sha256": "5ab53180afeb19f45f2adb48571c37465b9b697129377d2745eb0948ee8add01",
+      "bytesHashed": 2323,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/crystal-SjHAIU92.js",
+      "sha256": "66127e5531035963dfda0a8bc314538018e1205865fa9371da29ddc850b3fd7b",
+      "bytesHashed": 5130,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/css-BnMrqG3P.js",
+      "sha256": "aa3e47bd7d7e6f2b9aed7b342b7d6aa059ff6e770c86d64cb0eaf97b403ec98a",
+      "bytesHashed": 27132,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cypher-C_CwsFkJ.js",
+      "sha256": "4a2a3e7313e1339de833d287d518acc97046ddd16fb244a28b34f15f01f01b4b",
+      "bytesHashed": 3561,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/d-pRatUO7H.js",
+      "sha256": "7d17f349f6b8da47c4e024e6646b867bcae32da8f1262291e93eb551f2d6f15d",
+      "bytesHashed": 3719,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/diff-DbItnlRl.js",
+      "sha256": "100f04b4d542403a267b0beed52abb489c507eb75bd1cff9e11447af2dbf9eda",
+      "bytesHashed": 309,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dockerfile-BKs6k2Af.js",
+      "sha256": "95f163ab68a8f7365d9a168beafab67b4eaaf73ed8a051cad2bbb445d3dbd208",
+      "bytesHashed": 1949,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dtd-DF_7sFjM.js",
+      "sha256": "e107c8a82ea6a638f3350669326809c15eb5e227e6dae8d8dd41ca139cd522ee",
+      "bytesHashed": 2059,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dylan-DwRh75JA.js",
+      "sha256": "9b7382fd95169a9a2b34765109c2bf6c7ae30b3dd0bd62759b04a49c3d394acc",
+      "bytesHashed": 4051,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ebnf-CDyGwa7X.js",
+      "sha256": "ef22ca54434ab2be0f6ed0dc36b246cdcfa507556fed7a847d77064c5fb1c0ef",
+      "bytesHashed": 1986,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ecl-Cabwm37j.js",
+      "sha256": "af42e9e8b926913548f8cf9d90bbe9ea829ced5b235a49d8b59e4f8010113fc1",
+      "bytesHashed": 5128,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/eiffel-CnydiIhH.js",
+      "sha256": "6a7536ca49edb77b3af0b9a68caeb900aa05f71ae09babb95591fa4699ccb07f",
+      "bytesHashed": 1807,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/elm-vLlmbW-K.js",
+      "sha256": "649698475e1b2b949f3af3c199a7e4cb72dbc4e51a111984437689b8893865ad",
+      "bytesHashed": 1891,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/erlang-BNw1qcRV.js",
+      "sha256": "8a3a9b30601fc689347511fed678378f5db855c49743cbf971043e1c10b19fed",
+      "bytesHashed": 8095,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/factor-kuTfRLto.js",
+      "sha256": "c3f0ab8713e16d718edae2753adce49b7d87b3ee36d3a529db49e4c7ae209335",
+      "bytesHashed": 1672,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/fcl-Kvtd6kyn.js",
+      "sha256": "685d86c935fa25d282da3444b211803edf318f1723b0e3db5a665ec50db10151",
+      "bytesHashed": 2075,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/forth-Ffai-XNe.js",
+      "sha256": "f6680528a050997990fd2eac73d2fee5e3c5432b34aaf52fe1fdc2f984db261b",
+      "bytesHashed": 2544,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/fortran-DYz_wnZ1.js",
+      "sha256": "91936d3b97248972ef6db720395a5f811a4f560a34920d60ebcf3add475162b1",
+      "bytesHashed": 4652,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/gas-Bneqetm1.js",
+      "sha256": "548fd06740ff7e7e6dab57021f454462c6899e78043f5d70e1902e4ca7c317a0",
+      "bytesHashed": 4567,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/gherkin-heZmZLOM.js",
+      "sha256": "75d36502feb18a52191c195ac7fd3b5f7e57a29b6e73ae30422815efc689fc81",
+      "bytesHashed": 10159,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/groovy-D9Dt4D0W.js",
+      "sha256": "6912e83a4950c0e255f200359253bfb636344600ab03ad7178aaa166041fb79e",
+      "bytesHashed": 4139,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/haskell-Cw1EW3IL.js",
+      "sha256": "b47ca38b34ea1f8fb65c1f4f1043277796f6437c9852bad46a7c6cf1445d6f20",
+      "bytesHashed": 4166,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/haxe-H-WmDvRZ.js",
+      "sha256": "3754ffb01bd31420d626dd6139d4fc5b12f58485c5779552a99710740ee0f5da",
+      "bytesHashed": 7893,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/http-DBlCnlav.js",
+      "sha256": "269060ee11376e85e7b8d4c7dd15c014fe4b755289a85d084d125a2615488e75",
+      "bytesHashed": 848,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/idl-BEugSyMb.js",
+      "sha256": "24a7719ff1d38588f4889f8d0f6bca90690f58436a048ef8e3c644aabf1aaffd",
+      "bytesHashed": 11634,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-4inLKB80.js",
+      "sha256": "703421c983922d81ad4cc1f5215864d1aef205466c02e069534a73f02bfc3143",
+      "bytesHashed": 12710,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-B-ev9ziP.js",
+      "sha256": "3cf8c43692762042c553cc1b757744a5185d4e1e3044d29dac3694cdfab794b9",
+      "bytesHashed": 4448157,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BA4stZ3t.js",
+      "sha256": "0fed5a4c2cbf75f455a41dc1dca2046e0df18daba8900f8899fda47bc1c52acd",
+      "bytesHashed": 3402,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BBABxg3z.js",
+      "sha256": "12125f7612392aaaa7ba56043f22b9583d2aca02c7879180ff16c42212880e3f",
+      "bytesHashed": 86924,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BmZ0W5GA.js",
+      "sha256": "f5608a8737aa60e56c4e844360c5081635b78f93fae583b5b43af3b6d63b9305",
+      "bytesHashed": 70809,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CAAcF9Aq.js",
+      "sha256": "da6f31846d750c95b31616f7f00cd6e137e382b182f994fa80f6e55dc913139e",
+      "bytesHashed": 5067,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CBlo99-V.js",
+      "sha256": "d226aaa43072f906315114026b51755162409ea0e6d8319f6a00e1400d84a6d8",
+      "bytesHashed": 45101,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CByjXUoY.js",
+      "sha256": "d58c9445005d5d8642faf65909ceb1d59b5fbd117161119d1ff1cc5c234385df",
+      "bytesHashed": 14671,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Ccl14zbn.js",
+      "sha256": "1a92259a47c0a1db69c4983f999754906cebb28e47a73123319c45bbda35e992",
+      "bytesHashed": 2632,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Cd5u-RY9.js",
+      "sha256": "9abe71ee38b95042dc78a7544cf1b522df5ed36602b94cf900107c377a1f4bff",
+      "bytesHashed": 100553,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CkYwWPKA.js",
+      "sha256": "e34e59ecfc407341cb33612bb2c96156a225749ba79eab7716da4678ac4addfe",
+      "bytesHashed": 27187,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-D-VGcjKx.css",
+      "sha256": "230b93ffbc7fda6a3c17eb38982513963b679b1c994530524ce5ade90417a951",
+      "bytesHashed": 410325,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-D7cfHEJY.js",
+      "sha256": "dd4a6b13952cf30fbca9df77c6753749047426c16c918668939aaff31bcaa380",
+      "bytesHashed": 20924,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DAzXIw0r.js",
+      "sha256": "a23482205dc9f6859a44b71e605bbebe31c829f4d4a3408d6f83e4686b8087a3",
+      "bytesHashed": 30793,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DQO5ig1l.js",
+      "sha256": "c143f561da9346f3ec7d0f3168f2e20d66554d9429728aad058279f61779925a",
+      "bytesHashed": 40732,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DQZPuh3t.js",
+      "sha256": "87fb4f2a9bd1e50092c920c05b86367d8ffec0e7913f0a2ddade802d376c8104",
+      "bytesHashed": 16310,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DUEXZiFM.js",
+      "sha256": "528ccd5a1621ffcfa14ef09e701eb48d51827d1ded3aa095b1c80ce9ea1fe1e8",
+      "bytesHashed": 32296,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DVvzQ662.js",
+      "sha256": "a4434328db85903b1b9a0857ab1754183fb294fce85fcefc3f6acbdbabacc938",
+      "bytesHashed": 97859,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DoEzcY5q.js",
+      "sha256": "2d2ebb871ffdb4f035dc4a6afbe2e463d3290a6216d0aa82528ea7fb2de71dc9",
+      "bytesHashed": 21188,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Dq_rTBQH.js",
+      "sha256": "86c163678cb0ca28cd5cf5052aae8a6ff1fc477cc73978bc3b0e3db278ae694d",
+      "bytesHashed": 26520,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-J2r6dQDi.js",
+      "sha256": "e2cbaf9d0bebb18dbdf16041a976a308af43cd8623a6476a7f10c61c1b3273d5",
+      "bytesHashed": 44160,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-MMZtbGfg.js",
+      "sha256": "af669aca3fcd939d2069521a9c51f99fb1f8bc84f5b79d10b3ad2cbeafa52f18",
+      "bytesHashed": 28659,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-VI6S4YN0.js",
+      "sha256": "d35cda0ef0d269b913db99b4a57fc02f5f91f00f04cdb16ac836467b1191a622",
+      "bytesHashed": 23055,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-r1wckcDm.js",
+      "sha256": "b1b5bb50508e8cece6f8ad3b02ab05b2e0959c9a0f9706fa887f2769299a366a",
+      "bytesHashed": 2423,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/javascript-iXu5QeM3.js",
+      "sha256": "182fdca66238d12ed737c8fd2d3f5a4bfec8d6559889f9c79117a1caab05d649",
+      "bytesHashed": 17082,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/julia-DuME0IfC.js",
+      "sha256": "9c693e030ec08a516cdbb591c88c08c69a6525445481ba74a899961e8704b9d6",
+      "bytesHashed": 5385,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/livescript-BwQOo05w.js",
+      "sha256": "63b490e7cca07ce077a7c204e930a01413d0d5e18064eed03b1e662e01c22103",
+      "bytesHashed": 4087,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/lua-BgMRiT3U.js",
+      "sha256": "dabbc2ffcce570b8ac8374c85c98d9f58bf0c51031bd0e9a1a02f080420a2521",
+      "bytesHashed": 3395,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/material-symbols-outlined-CqIkmgaP.woff2",
+      "sha256": "9ec3f3deed0be4da191a434b78fdc53e76ead92333290d3f8ee9f3dde34b6339",
+      "bytesHashed": 3960036,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mathematica-DTrFuWx2.js",
+      "sha256": "d3613780e5d57d3809324863462a59a54fb9b83f31e223d59f504a77b04dc495",
+      "bytesHashed": 1916,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mbox-CNhZ1qSd.js",
+      "sha256": "19086bb5a8b00d893a7b6aceea1d06a0cc34c24bdb053031f880cb1bb1994ced",
+      "bytesHashed": 1397,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mirc-CjQqDB4T.js",
+      "sha256": "76ae2e410f90b453529c367ac69d476e5fb516964c0bf8ffb2676d875b8522b4",
+      "bytesHashed": 5920,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mllike-CXdrOF99.js",
+      "sha256": "0bf60c6883fe103d813759f1b69baa46af8b5dc0b502aae492c247838a5d8784",
+      "bytesHashed": 4788,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/modelica-Dc1JOy9r.js",
+      "sha256": "03c2e8fe9a47723c0e6eb8a2394543d7e2bdddace7770b4ae9c54005d6ae4be9",
+      "bytesHashed": 2788,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mscgen-BA5vi2Kp.js",
+      "sha256": "f0e7bd8988241778eac8d6093bee63f099bcd957994a35c58979ff33f5a137cc",
+      "bytesHashed": 3510,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mumps-BT43cFF4.js",
+      "sha256": "1eee059f667d792d74620cbb7e83406488e209e548c7de0f880cd8830d97a58f",
+      "bytesHashed": 2069,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/nginx-DdIZxoE0.js",
+      "sha256": "67487e9c0fa87bca9b8e9be91aad97fca8b610627731156b4ae44116a2b33b36",
+      "bytesHashed": 7341,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/nsis-LdVXkNf5.js",
+      "sha256": "b57b168755b7a19fc7100fb4dba6b50b66e3e8561606232b8be6020c13ef4f1b",
+      "bytesHashed": 6807,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ntriples-BfvgReVJ.js",
+      "sha256": "46bcf88e08c9250fac68671aa5bb4b5314a3ff62c487736825f6bdc41f02392b",
+      "bytesHashed": 2102,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/octave-Ck1zUtKM.js",
+      "sha256": "2050e71c70081d414f73ab9b72ccf17a7319d311d6aba18193ba050705d661e9",
+      "bytesHashed": 2306,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/oz-BzwKVEFT.js",
+      "sha256": "930fe68084255ef156188a29a640431ca0f276d323ce07241b92f1b678390777",
+      "bytesHashed": 2896,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pascal--L3eBynH.js",
+      "sha256": "19eb54c507f12be735989dcfebb5dc2f7a139777cdd71665896fb4bd287f89ca",
+      "bytesHashed": 2301,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/perl-CdXCOZ3F.js",
+      "sha256": "195216883cd9274b5414861746c3ca02f4df013330b91440c785561fbc188f37",
+      "bytesHashed": 9753,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pig-CevX1Tat.js",
+      "sha256": "8a443e606edc2da2658abe26c048af2a468c4f3244434957fe11320a15938043",
+      "bytesHashed": 2534,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/powershell-CFHJl5sT.js",
+      "sha256": "5eef7d073bc36b86d7cfd0804c38c091931f20dadc61b176ca2d70ce6bb488d2",
+      "bytesHashed": 7769,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/properties-C78fOPTZ.js",
+      "sha256": "5b083077fe05a0376e6ca5536d04fb555ba72e848b7a8ba2cd8a7236a3a5d6b9",
+      "bytesHashed": 667,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/protobuf-ChK-085T.js",
+      "sha256": "872320ac45a7915b0f7aed71325ae2adb105b51cadd2a6fc74b65f5a552791ae",
+      "bytesHashed": 864,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pug-DeIclll2.js",
+      "sha256": "803a888b8468015a2133ca30b67d5ad7d18a7b67e0715cbb8b0fb5426f790d20",
+      "bytesHashed": 6674,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/puppet-DMA9R1ak.js",
+      "sha256": "c614d78e96603483b265bdb548e7cdd7a54a68df8b7a3556829d7b7ea874eb4e",
+      "bytesHashed": 2543,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/python-BuPzkPfP.js",
+      "sha256": "ac31cf70d1ebf5ecde918d2284e736615fab53442c2b3c230bfa83f85f806d78",
+      "bytesHashed": 6475,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/q-pXgVlZs6.js",
+      "sha256": "c4828fd3608a4a8a9b322b6e5653aea3b21aa2556267680d5d27520796320fd9",
+      "bytesHashed": 4032,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/r-B6wPVr8A.js",
+      "sha256": "e32bc0fe55b99eb76ad25438a9c224ee4ae4d9ed482e95c40af328e44ea70a64",
+      "bytesHashed": 2942,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/rpm-CTu-6PCP.js",
+      "sha256": "60f8f25323f47996c1e5a299f87f42de42bd6c13a584733c4fe3d71ec48ba65a",
+      "bytesHashed": 1622,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ruby-B2Rjki9n.js",
+      "sha256": "5cd3a5c7aab2013878c02b629ac364781ffd33eea086457f1d1c28f5cdede906",
+      "bytesHashed": 5164,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sas-B4kiWyti.js",
+      "sha256": "f8c7889fa764fc5a840cbe7010e1d9f931865efee9d4c510425d62b0ac84075d",
+      "bytesHashed": 9334,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/scheme-C41bIUwD.js",
+      "sha256": "7ddaa1a5f63ea49d2ba6007ee977de4495644082218253d0c107f7b6865ce8fe",
+      "bytesHashed": 6368,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/shell-CjFT_Tl9.js",
+      "sha256": "b4da8a11db1127e003f10a94ff707474af1392051c41f1e0ef78152e9bd0ea95",
+      "bytesHashed": 2571,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sieve-C3Gn_uJK.js",
+      "sha256": "e30edd162cbd37962e7e62440bf9835dad2bb1234288486f24ad4e4940fd1e8f",
+      "bytesHashed": 1618,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/simple-mode-GW_nhZxv.js",
+      "sha256": "8ae187bd3b7d02dbf9bd195a73c4c8635c67a557825c91a00ef476d4e1113db2",
+      "bytesHashed": 2277,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/smalltalk-CnHTOXQT.js",
+      "sha256": "6fea82ec5301f1b147fda0b2e757be2c8dd8b4792c74dac06261c07718290762",
+      "bytesHashed": 2007,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/solr-DehyRSwq.js",
+      "sha256": "c4f3f72687c813db9a8a676f52b958aec08292b294aade4f43ee53222bafb2cd",
+      "bytesHashed": 866,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sparql-DkYu6x3z.js",
+      "sha256": "35e5e4f888aac0249bb3570ac5f07f7dbb45cef40eb8444ec2a3a0772776d0f0",
+      "bytesHashed": 3545,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/spreadsheet-BCZA_wO0.js",
+      "sha256": "44d7acba2c5b735fbda1649b9845fbb6de24821882d2a34682bc726c1925bb03",
+      "bytesHashed": 1138,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sql-D0XecflT.js",
+      "sha256": "de179cb192745a50f178503fd65ae5ff2488f34b4d421de85961a1207930a125",
+      "bytesHashed": 37052,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/stex-C3f8Ysf7.js",
+      "sha256": "bee5f7a433d45272561fef44f62f4c354b7c849efbadfe2143da5595ce0c1537",
+      "bytesHashed": 3124,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/stylus-B533Al4x.js",
+      "sha256": "352405ae3d7bbf0dfcd087d128510cb3cd5f4763bc2e58136e069c7e915be77e",
+      "bytesHashed": 25798,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/swift-BzpIVaGY.js",
+      "sha256": "6fdd63ef4febc2aaff6b39553ef9b5d60a76a59a4ddfedbbd260b0ebded352f9",
+      "bytesHashed": 3955,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tcl-DVfN8rqt.js",
+      "sha256": "dd357643696c69931e253fb64d0cd3911ac609616448c3197958a821dcbbbd08",
+      "bytesHashed": 2356,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/textile-CnDTJFAw.js",
+      "sha256": "0f2de1a421c605520b0c8b876bd124369085c5fb7f13b12c9dfbcc60bd27c394",
+      "bytesHashed": 6801,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tiddlywiki-DO-Gjzrf.js",
+      "sha256": "0bf0e719c5c34298e72e308cd6be69ca63680a0bf538086adf4939a16f41aa8a",
+      "bytesHashed": 2781,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tiki-DGYXhP31.js",
+      "sha256": "3bdc3135821a80ff86d40c2d4fbae733f59b7dcf86a43a2367a17d1df5cb1b80",
+      "bytesHashed": 3249,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/toml-Bm5Em-hy.js",
+      "sha256": "b7f8416bfb193fea056e2ea29ac97d5569055b02829786fae1f23d619a3b08d6",
+      "bytesHashed": 1138,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/troff-wAsdV37c.js",
+      "sha256": "8e77af30b3dfad9e8c5fb316df448139905aeb2ec55ed63970c1c5f1e43758cd",
+      "bytesHashed": 960,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ttcn-CfJYG6tj.js",
+      "sha256": "09fd86d60a4bf3f39f56146b8444dab213087d567f3685f91b810499020f5255",
+      "bytesHashed": 4800,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ttcn-cfg-B9xdYoR4.js",
+      "sha256": "8d367f5c728e0a125912df85cc96c61e1bd2616e3617535c70783494e6361653",
+      "bytesHashed": 4050,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/turtle-B1tBg_DP.js",
+      "sha256": "7aee24b54c788eb05f03336ac595622a7e26d5a51d7d175fc95b12bd139f948a",
+      "bytesHashed": 1977,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vb-CmGdzxic.js",
+      "sha256": "a6d39b887d52687053a94f7fd6438d9e193c78735e36ec0d7585ab54873e0e3a",
+      "bytesHashed": 3904,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vbscript-BuJXcnF6.js",
+      "sha256": "6ca48951cc338f55899631cf06bae1f31e0ab9068225eb7a1c4a2bcbe35b1693",
+      "bytesHashed": 5815,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/velocity-D8B20fx6.js",
+      "sha256": "a83193ff3101931e7df5a8e2c0fcd29d4b9db08d1464e270efdcfd589ad3dc17",
+      "bytesHashed": 2671,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/verilog-C6RDOZhf.js",
+      "sha256": "51f07eed339c5f2fb36a10c69b0311f6888e5b93694ac2ba8527da651317091d",
+      "bytesHashed": 8244,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vhdl-lSbBsy5d.js",
+      "sha256": "9e808646c19567daf6856e0e835ea01b94fc38e4b8529c526872ecf587041256",
+      "bytesHashed": 3348,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/webidl-ZXfAyPTL.js",
+      "sha256": "bce47d0d06b098cede3bbb8ffee3d534c1cd85610afe7463f579e357037a3bd2",
+      "bytesHashed": 2517,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/xquery-DzFWVndE.js",
+      "sha256": "c98f053278244c215c51c68f20cc352f038a2fd3c99436400785a6d36a9853bd",
+      "bytesHashed": 6624,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/yacas-BJ4BC0dw.js",
+      "sha256": "5f69a3c388a14c26bd6060c2eddb3970b6e3e8a40fc6419ce705783685526bf5",
+      "bytesHashed": 2154,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/z80-Hz9HOZM7.js",
+      "sha256": "af74ec9a00d4224b94ceb13fc87cac85fadc218e26b64a2d6e4f7e47a8fede01",
+      "bytesHashed": 1751,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/index.html",
+      "sha256": "69b4fa5e2bffd7eaa79d32fbf006e719897ab682a9c69e78f095161ffd85b1b1",
+      "bytesHashed": 680,
+      "prefixOnly": false
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/vite.svg",
+      "sha256": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb",
+      "bytesHashed": 1497,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "bytesHashed": 7086,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "bytesHashed": 5710,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "bytesHashed": 42483,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "bytesHashed": 2654,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "sha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "bytesHashed": 2834,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "bytesHashed": 9378,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "bytesHashed": 10303,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "sha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "bytesHashed": 10752,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "bytesHashed": 5885,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "bytesHashed": 8272,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "sha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "bytesHashed": 9459,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "sha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "bytesHashed": 4515,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "bytesHashed": 3664,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "sha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "bytesHashed": 5849,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "bytesHashed": 7125,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "bytesHashed": 15601,
+      "prefixOnly": false
+    },
+    {
+      "scope": "Wiki inventory",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "bytesHashed": 19077,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "bytesHashed": 38597,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+      "bytesHashed": 17862,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "bytesHashed": 1333,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "bytesHashed": 4200,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "bytesHashed": 10665,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "bytesHashed": 19709,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "bytesHashed": 16335,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "bytesHashed": 10597,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "bytesHashed": 2703,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "bytesHashed": 15361,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "bytesHashed": 32207,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "bytesHashed": 38597,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8",
+      "bytesHashed": 17857,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "bytesHashed": 1333,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "bytesHashed": 4200,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "bytesHashed": 10665,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "bytesHashed": 19709,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "bytesHashed": 16335,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "bytesHashed": 10597,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "bytesHashed": 2703,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "bytesHashed": 15361,
+      "prefixOnly": false
+    },
+    {
+      "scope": "retained negative control",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "bytesHashed": 32207,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+      "sha256": "ee5a5a7a0727a212135dcc8833d494977df084918814f239617dc4443fcadcfc",
+      "bytesHashed": 33463,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ADOPTION-RECEIPT.json",
+      "sha256": "3f4a94bb93f9c9824a4725b536baa0292527fb9c55cae7847b895ed72cedee6e",
+      "bytesHashed": 9465,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/CURRENT-SOURCE-BUILD-REVALIDATION.json",
+      "sha256": "f2c7ed7fc80e937b8e20f4fa0e31c2edaaedf5b46f307865c7e4167092cf3e92",
+      "bytesHashed": 98843,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "sha256": "f75449f3766023179a18cb9b63c17111f1b81ad20511a0302663a9f69be65080",
+      "bytesHashed": 18453,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison-tests.log",
+      "sha256": "8a2d3eac4fa898c442751920b9226582dee51c535d383faa939dc35911f56e8b",
+      "bytesHashed": 612,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison.mjs",
+      "sha256": "d4738d01c6766bd434f89b6efc5283b7ea947602cd633c371811a5e54d7f1972",
+      "bytesHashed": 2005,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison.test.mjs",
+      "sha256": "21e5d0a1372d526146e39f1f4b821818b9ffc3225b28f8b68796ab95ede90cfd",
+      "bytesHashed": 2194,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/observe-public-manual-v4.mjs",
+      "sha256": "5aacb3af8aa2d65a2b685bcc89d24552ba1cd81ffd9892f429b3688bdf7c93e6",
+      "bytesHashed": 8476,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ordered-history-oracle-current.log",
+      "sha256": "ce3a3e3341c5260db2dd68b1bc5e1e545670a64945dca1665d88d2b6ac635f99",
+      "bytesHashed": 619,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-native-windows.json",
+      "sha256": "6a78bd05bc2738c8d708926451a39f07ce6c367551cff60b82da95b1e19f888c",
+      "bytesHashed": 2093,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-readback.json",
+      "sha256": "8b1e214c8fd219df86fd4fcaa72c2622c91d4f0795c759fea84c0b6440a660f1",
+      "bytesHashed": 13908,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-readback.log",
+      "sha256": "7c3c6eeb27e3d8f5ead28f7119c8ec024641743fafbda493a23351bb7da24906",
+      "bytesHashed": 10546,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated-v2.json",
+      "sha256": "141a516eb324eefc7cc406f1102187409330c397afed7c476e5099d7645a8520",
+      "bytesHashed": 22187,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated-v2.log",
+      "sha256": "a3cf3fb5f0490fa3795cbce0b503ed2a414406fd81d8e3f4c432d8beec880447",
+      "bytesHashed": 16641,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated.log",
+      "sha256": "478710b4c66461d6f90f161dcf8995490d941aff10bb1822097eab073b487d32",
+      "bytesHashed": 1194,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen.json",
+      "sha256": "80d3dcf5547a36b3aaea3770d9850bf7bdab02d3822effffe22f8f0edb8f3231",
+      "bytesHashed": 20942,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen.log",
+      "sha256": "896bcd569967d3845b12084492ba0f6ac0962c9aeb2189585463f80023c16054",
+      "bytesHashed": 15692,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes-v2.json",
+      "sha256": "38cdc076bf032bd9cf879db5020cf29cf0711ee46c4094be305a23df96313eeb",
+      "bytesHashed": 9994,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes-v2.log",
+      "sha256": "712cfb442bb171dc30761a109119cb49cbf057a36301c2680e2afe4c82a7a8c0",
+      "bytesHashed": 7419,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes.log",
+      "sha256": "e961973bd1f6e58dc56f89b1bd78a78cfdc6d46fd4e77f077c75198db7fbfa58",
+      "bytesHashed": 617,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-manual-receipts-v4.jsonl",
+      "sha256": "7a7dee2e504e4792d81234f9b7d37a69a9f56eec5eec97cf1b991029ac6c81d5",
+      "bytesHashed": 91462,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-ready-v4.json",
+      "sha256": "becc1fd9acbcd414f05e8d0b3b7017bfa8d505b9ba5e9f1c579e813854b50d3c",
+      "bytesHashed": 2856,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-v4-process.json",
+      "sha256": "540a8fc632db7a0cdfb3bd7caacf5c719be7b8742985b521b9315f19b935930a",
+      "bytesHashed": 412,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-after.json",
+      "sha256": "d8f3c62c9fb1e7299d6c6e5e6e3a2b35b0bea3e80b88d3c3184605b637a7426c",
+      "bytesHashed": 11487,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-before.json",
+      "sha256": "e0db772ec46fc1923b800b5ff90fe62d9587987b92616648afd5d9b9a1acfb95",
+      "bytesHashed": 7844,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop.log",
+      "sha256": "1fa40e98fd8fab035e95054211434e85f6347393add9f49b3764b22b6991662d",
+      "bytesHashed": 8872,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-windows-after-stop.json",
+      "sha256": "eb23d3a66f8bd6a246387f18ade3fdb5b914ccd4d7c115df548e18f524b808f4",
+      "bytesHashed": 67,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-readback.mjs",
+      "sha256": "e5a126e2e0c8932b93f2a4bf322ababa6284c6cd2e43f48fc1de4c3074bdde30",
+      "bytesHashed": 7826,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen-validated-v2.mjs",
+      "sha256": "e62aca78d0322616231ceb268247e5db2837efdf92c32d74980de0b23c961807",
+      "bytesHashed": 7379,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen-validated.mjs",
+      "sha256": "072bdd75d38f45bb6226a12fcf936be39d3ddf457a4af002a65a373d0d6d2904",
+      "bytesHashed": 7378,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen.mjs",
+      "sha256": "6b47a657bdb5cdec3187e7093c4fe15001b193f009e62d8cfce83939c84f7b67",
+      "bytesHashed": 8352,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-shapes-v2.mjs",
+      "sha256": "ca6ded9dfdb5a4b98899464e6477b111b6b5ec8aefe75208364204ba277dbc58",
+      "bytesHashed": 6653,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-shapes.mjs",
+      "sha256": "11a2dd68bdaab3c5bdcce21b70ccd00ab9d4db4aa9c10d38f67627bbbeeabefa",
+      "bytesHashed": 6642,
+      "prefixOnly": false
+    },
+    {
+      "scope": "runtime sealed support/evidence",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/stop-owned-public-scratch.mjs",
+      "sha256": "8b24cc057230ac2ecbe3eaeee614f281938eb6a960579ba8ceb30e23d972e21f",
+      "bytesHashed": 7366,
+      "prefixOnly": false
+    },
+    {
+      "scope": "adoption manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "sha256": "d230c0d8b563d163ea23f439722dd7d5ea69bc00833fc57379dacd3649b531ab",
+      "bytesHashed": 5587,
+      "prefixOnly": false
+    },
+    {
+      "scope": "adopted original target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "sha256": "7dbb1f2a3c0378984d226ce8ee53cb515f39f40230578659d83e4c0c9db06826",
+      "bytesHashed": 11272,
+      "prefixOnly": false
+    },
+    {
+      "scope": "adopted original target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "sha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+      "bytesHashed": 20556,
+      "prefixOnly": false,
+      "priorAcceptedSha256": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "scope": "adopted original target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "sha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+      "bytesHashed": 13525,
+      "prefixOnly": false,
+      "priorAcceptedSha256": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/SPEC-01-CHOKIDAR-RETIREMENT-AND-CHAT-VERIFICATION.md",
+      "sha256": "bd9068de68a1d83d74d2a1d309eb28f433db97aa11a2f73f9bd872453e6521c3",
+      "bytesHashed": 50959,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/OWNER-APPROVAL.md",
+      "sha256": "e0704ea562f4b6e2b9bb685cbf0a101b10314df1476ab3f784a6a309f8e7a24e",
+      "bytesHashed": 1990,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "sha256": "8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240",
+      "bytesHashed": 9630,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-builder-report-2026-10-03.md",
+      "sha256": "75ac47bff8c844417f0faff58507cde4c94d468a457917a6820631916b2bf573",
+      "bytesHashed": 9971,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-orchestrator-acceptance-2026-10-03.md",
+      "sha256": "41eed0a6b2e4b9cc9fd85e8e46b6b93d809d8c3ea822d1f21dac54c7487913c3",
+      "bytesHashed": 3097,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-builder-report-2026-10-03.md",
+      "sha256": "76a24a785563714a427555a995031bb79939124151c1682c38f0b473c9debf91",
+      "bytesHashed": 13930,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-native-ui-retry-2026-10-04.md",
+      "sha256": "a387faa407e54e9497a2538e68560afc7ff39cedeea26aa2abbb51097b7d5c28",
+      "bytesHashed": 5322,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-orchestrator-2026-10-05.md",
+      "sha256": "33d5c86c60655dcb297ec27c3a3f71122905341acf9adc6131adf752e5c5cba2",
+      "bytesHashed": 12338,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-repair-builder-2026-10-05.md",
+      "sha256": "e850610d156a45edb2ec0c14f1275e98e842a1391a3619d863a89e4d00cf77ff",
+      "bytesHashed": 19560,
+      "prefixOnly": true
+    },
+    {
+      "scope": "preserved historical prefix/file",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-orchestrator-acceptance-2026-10-03.md",
+      "sha256": "3b9d2efffc1079a86176f19ba1e628fa02fed873960a7ba6050f45a2b2650b54",
+      "bytesHashed": 5915,
+      "prefixOnly": true
+    },
+    {
+      "scope": "successor approval",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "sha256": "4e30de42d63504202ef36cd582f986a7773cc85f78a7fe00a4e707af0c61d464",
+      "bytesHashed": 5206,
+      "prefixOnly": false
+    },
+    {
+      "scope": "frozen repair",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SPEC-01-STARTUP-INTEGRITY-REPAIR.md",
+      "sha256": "0d7a3176cca89b017162970b2fe8f28a5c8b902547fba48f797a2cc68060ac3c",
+      "bytesHashed": 49015,
+      "prefixOnly": false
+    },
+    {
+      "scope": "frozen repair",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SOURCES.json",
+      "sha256": "d124abc38a76f7e63011184387c6d2c5b6e5778333c4d29c146a8bb9d07cdaff",
+      "bytesHashed": 49808,
+      "prefixOnly": false
+    },
+    {
+      "scope": "historical R3 manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+      "sha256": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+      "bytesHashed": 63302,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "sha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+      "bytes": 5056,
+      "priorAcceptedSha256": "1b86743e6cf05eabcfe891f3e1325163ac11ecf4ac19ba1a2b2512d334aa2a2f",
+      "bytesHashed": 4973,
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "sha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+      "bytes": 9201,
+      "priorAcceptedSha256": "d224ff5d2079262dd023a62e16d45965bfbdb9d51798aa237ff3eae123cfd660",
+      "bytesHashed": 9118,
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "sha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+      "bytes": 10528,
+      "priorAcceptedSha256": "eca3f633f523480efc12338bdefbdaf2b5e9043152e909c9141c83ec107d0e5e",
+      "bytesHashed": 10445,
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "sha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+      "bytes": 15910,
+      "priorAcceptedSha256": "5ef2d2f00ee35768ca829e5e234f928b6e536df7d379500e2531386f4c54cdf7",
+      "bytesHashed": 16831,
+      "transition": "administrative actual R3 gate adoption; exact preimage retained in final-integration/r3-acceptance-recorded; no product/evidence change"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/ORIGINAL-OWNER-INCORPORATION.md",
+      "sha256": "ee08bfed0bfc64ef15ade295ac0e82509a2237ba31ba0375265e543053757e91",
+      "bytes": 2533
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-CURRENT-ORCHESTRATOR-INSPECTION.md",
+      "sha256": "5afb01844b951e818bc933fb5fc5e76a3de094268fcb80e8cc9b3dfa63354009",
+      "bytes": 7963
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-RETIREMENT-AND-DIFF-CHECK.json",
+      "sha256": "32aebb086549f4336c74c042d421b451504dfe7240e26f90c0b4006098b7bd45",
+      "bytes": 3435
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/CUMULATIVE-CHECK-RESULT.json",
+      "sha256": "e2c2724772dcf45dd49e936b0028a655d0c761d13de5276c315d274bbc4541b9",
+      "bytes": 1897
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/administrative-refresh-20261006/REFRESH-MANIFEST.json",
+      "sha256": "5be88b5f5909dbd8f02e6f822b840330eb833729be38ba6214bc29b1ca57bc77",
+      "bytes": 3059
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SOURCE-FINGERPRINTS.json",
+      "sha256": "485f11f75f2713f3a65328fce51ed810d9c3caeab8241cca58e3e9548a46d32e",
+      "bytesHashed": 60348,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE-REVIEW-01-RAW.md",
+      "sha256": "ec5150bab3bef5126f5577d4bffb56b6fc26a72c3b2eb25dee40ccfc9cbde6d9",
+      "bytesHashed": 5068,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE.json",
+      "sha256": "11c3cdf542988b1829d1dd1b291c21c102756dc59590924077bad890389c4b32",
+      "bytesHashed": 125694,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ACCEPTANCE-LIFECYCLE.json",
+      "sha256": "f8dabfd974054e54e7d589272bee9bd9c6dc14b150c055989f2c130b23ee598f",
+      "bytesHashed": 1375,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETION-CANDIDATE.md",
+      "sha256": "9cccf1dad36e34ddd2e5c1b8b567f4c441c57934fe09592ecf5b73d3673ba2b8",
+      "bytesHashed": 13371,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/REVIEW-AUTHORITY-AND-EVIDENCE.md",
+      "sha256": "6d9492cc37a4aacb139e3443a59252820268686b9f8a523528f83be15b74477d",
+      "bytesHashed": 9327,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-RETIREMENT-AND-DIFF-CHECK.json",
+      "sha256": "32aebb086549f4336c74c042d421b451504dfe7240e26f90c0b4006098b7bd45",
+      "bytesHashed": 3435,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/ARCHIVE-MANIFEST.json",
+      "sha256": "4b293da540d8d42c450fae911b7166ff06f67d7324ecf6dd7ef72cca8b99ce35",
+      "bytesHashed": 13858,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-reviewed-owned-roots.py",
+      "sha256": "cf0d1854282ccf54cbe7fd4be2ef501ffc36750d869321967734a8fbd16b9fcb",
+      "bytesHashed": 6296,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/R3-ACCEPTANCE-ADOPTION-REFRESH.json",
+      "sha256": "2eb4976bf627e1e17928c4fa3a34a3a8b12ed9e3563d1b91a8ef14021e40b5c7",
+      "bytesHashed": 5682,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "sha256": "4e30de42d63504202ef36cd582f986a7773cc85f78a7fe00a4e707af0c61d464",
+      "bytesHashed": 5206,
+      "prefixOnly": false
+    },
+    {
+      "scope": "current-final-raw-packet",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "sha256": "ee0961876df9caa844daeedf1885efafede903b5cc96470ca7dc5c6f04c98e68",
+      "bytesHashed": 7031,
+      "prefixOnly": false
+    }
+  ],
+  "comparisons": 376,
+  "administrativeTransitions": {
+    "at": "2026-10-06T09:03:59.622347+00:00",
+    "changes": [
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/STARTUP-REPAIR-REPORT.md",
+        "beforeSha256": "1b86743e6cf05eabcfe891f3e1325163ac11ecf4ac19ba1a2b2512d334aa2a2f",
+        "afterSha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/REGRESSION-RESULTS.md",
+        "beforeSha256": "d224ff5d2079262dd023a62e16d45965bfbdb9d51798aa237ff3eae123cfd660",
+        "afterSha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/GUARDED-SERVER-PROOF.md",
+        "beforeSha256": "eca3f633f523480efc12338bdefbdaf2b5e9043152e909c9141c83ec107d0e5e",
+        "afterSha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/SLICE-AND-DEVIATION-LEDGER.md",
+        "beforeSha256": "5ef2d2f00ee35768ca829e5e234f928b6e536df7d379500e2531386f4c54cdf7",
+        "afterSha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-S4-repaired-integration-report.md",
+        "beforeSha256": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+        "afterSha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-SLICE-AND-DEVIATION-LEDGER.md",
+        "beforeSha256": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+        "afterSha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETION-CANDIDATE.md",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/COMPLETION-CANDIDATE.md",
+        "beforeSha256": "b612634a71c746f9965e9dfb88fc6b013b20a3cd637090c34256daa0ab86b794",
+        "afterSha256": "9cccf1dad36e34ddd2e5c1b8b567f4c441c57934fe09592ecf5b73d3673ba2b8",
+        "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+      }
+    ],
+    "prefixPreserved": true,
+    "productOrWikiOrNormativeOrSealedRuntimeChange": false,
+    "testInvalidation": false,
+    "remaining": "full both-contract final integration/cleanup/owner acceptance"
+  },
+  "rawRetainedRoots": "18 inventory entries/10 retained/8 already clean; inspect before parent-coordinated final cleanup",
+  "cleanupProtocol": "Reviewer independently inspects raw roots and current integrated contract; if no material finding remains in precleanup scope, signal RAW_EVIDENCE_REVIEWED_READY_FOR_CLEANUP, wait for manager receipts; independently verify cleanup/protected/archive/current evidence before terminal verdict",
+  "scopeWarnings": "Earlier CLEAN labels and owner testimony do not supply current gate verdict; fixture outcomes are not real-provider success; exact loaded source versus aggregate scope",
+  "ownerAcceptance": "pending",
+  "productCoreChangedAfterAcceptedGates": false
+}

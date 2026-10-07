@@ -1,0 +1,3599 @@
+{
+  "at": "2026-09-19T10:47:57.359052+00:00",
+  "candidate": "PW01-f24d5cd427b9ca14",
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/002-SPECs/TABS-PROVENANCE-BRIDGE/DECISIONS.md",
+      "sha256": "844deb18a3b7c751339276d3cacc7cca473dba9858baa982f402caaaccf63f7b",
+      "line_count": 148,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 9,
+          "text": "### BRG-D01 \u2014 Bridge mission: action \u2192 provenance"
+        },
+        {
+          "line": 20,
+          "text": "### BRG-D02 \u2014 BRIDGE-01 extends the UI-action context with `ComponentActionContext`"
+        },
+        {
+          "line": 31,
+          "text": "### BRG-D03 \u2014 Granularity: T1+T2 durable, T3 not (resolves TPC-O03)"
+        },
+        {
+          "line": 48,
+          "text": "### BRG-D04 \u2014 Non-mutating click/trigger telemetry is out of BRIDGE-01 scope"
+        },
+        {
+          "line": 59,
+          "text": "### BRG-D05 \u2014 Actors adopt the existing taxonomy"
+        },
+        {
+          "line": 68,
+          "text": "deferred: `automation.runId` + `automation.kind` are reserved common fields, and"
+        },
+        {
+          "line": 69,
+          "text": "their generation ABI is owned by open decision `AUT-D03`."
+        },
+        {
+          "line": 71,
+          "text": "### BRG-D06 \u2014 No rendering surface in the bridge"
+        },
+        {
+          "line": 81,
+          "text": "### BRG-D07 \u2014 No pruning in the bridge"
+        },
+        {
+          "line": 91,
+          "text": "### BRG-D08 \u2014 Context is an immutable snapshot stored in the database"
+        },
+        {
+          "line": 103,
+          "text": "### BRG-D09 \u2014 Blast-radius scoping: reuse the existing carrier, defer the `ui.action` subsystem"
+        },
+        {
+          "line": 111,
+          "text": "`ui.action`/`uiActionId` renderer envelope is design-only. BRIDGE-01 does **not**"
+        },
+        {
+          "line": 115,
+          "text": "a schema-supported `reportedUiContext {viewId, viewInstanceId}` on"
+        },
+        {
+          "line": 116,
+          "text": "`resource.mutated@1`/`file.command_accepted@1` \u2014 currently plumbed but never"
+        },
+        {
+          "line": 123,
+          "text": "### BRG-D10 \u2014 Two SPECs, one live and one contract-only"
+        },
+        {
+          "line": 128,
+          "text": "- **BRIDGE-01 \u2014 Component/Tab Action Context:** implementable now (per BRG-D09)."
+        },
+        {
+          "line": 133,
+          "text": "### BRG-D11 \u2014 Downstream direction and sequence"
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/002-SPECs/TABS-PROVENANCE-BRIDGE/RELEASE-MANIFEST.md",
+      "sha256": "d53617d3be0c7aac3b8df94579523fda3b87c429214566f36a381c9c13078c6e",
+      "line_count": 180,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 84,
+          "text": "- Mediated-save path (`023` SPEC-03/SPEC-04) \u2014 `reportedUiContext` carrier."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/008-Provenance-Temp/34-ui-action-provenance-module.md",
+      "sha256": "c9a9647e14b794bec9576d57767b72917cff2ba88199b1b8d45cf152e4a5b97c",
+      "line_count": 507,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 35,
+          "text": "The current-code audit found no direct durable file create/save/move/rename/delete commands in Wiki or File Viewer. The first durable command migrated for this pair is `chat.send_with_resource` at actual prompt send when the active panel is `wiki-viewer` or `file-viewer` and `useChatArea.sendToThread` consumes at least one valid pending resource attachment. The attachment may have been staged from any panel; its origin does not select the active-context adapter. Attachment staging and ordinary Wiki/File navigation are non-mutating UI behavior and do not emit `ui.action` events."
+        },
+        {
+          "line": 140,
+          "text": "The binder has no callback/provider/plugin/I/O/Promise/thenable path. It performs exactly two private-registry lookups, five fixed type/shape checks, four cap-plus-one workspace-ID/root scans, four connection/workspace/root/transition equality or capability comparisons, three binding/liveness decisions, one output allocation, three writes, one freeze, and one outcome decision: `MAX_SYNC_UI_CONTEXT_BIND_STEPS = 24`. Workspace ID uses dual 256 caps, root uses dual 4,096 caps, and exact `MAX_BOUND_UI_PROVENANCE_CONTEXT_UTF8_BYTES = 4_608` is measured by a cap-plus-one serializer before offer. The token is fixed 48-byte syntax. Binder creation and D01 offer are in one module-private closure; neither the function nor its result-acceptance path is exported, and no caller-supplied lookalike object is accepted. The command ref and token are used only inside those 24 charged sites and released from provenance locals before slot creation/offer; the result contains no connection, token, transition capability, ref, callback, registry entry, or external object reference. Failure returns null before slot/link allocation, reports only exact `workspace_context_unbound`, and schedules no UI provenance. Each accepted command attempts bounded private owner-cell initialization; null disables only provenance, while a non-null cell is closed from command `finally`. On full preflight success, nullable slot allocation failure installs/offers nothing. A non-null slot atomically installs only into an open cell; `owner_closed` terminalizes/releases it once without offer. A successful install reaches the fixed offer in the same callback-free, non-yielding turn. The offer receives the installed branded slot synchronously and D01 byte-charges only those three UI data values plus the one fixed `AcceptedRefSlotTaskLink` control value defined and owned by SPEC-40; only the link enters task ownership. It releases all data/cell/link/partial charges and terminalizes an installed slot once on every link creation/measurement/setup failure, completion, rejection/overflow, cancellation, expiry, forced-cleanup, or shutdown branch. No caller callback/finalizer or command-context handle is accepted. Later admission re-resolves context/resources from this already-proven command root and never consults live session/current-workspace state. The private workspace root is omitted from every canonical/ledger/log/diagnostic/response output."
+        },
+        {
+          "line": 142,
+          "text": "The renderer envelope contains no event/domain relationship IDs. The accepting handler derives workspace identity/root from the coordinator-captured command context; authoritative thread/turn and selected-resource identity come from their owning server operational state, while session workspace/root fields remain caches. The first-package `ui.action` is a root canonical fact and therefore omits `rootEventId`, `parentEventId`, and `causationId`; any future UI relationship requires an exact SPEC-40 candidate/source selector and accepted capability. The server may attempt optional fresh correlation through SPEC-40's nullable private generator. Unavailable/thrown generation omits only correlation with fixed `fresh_correlation_unavailable`; it never suppresses the safe fact, affects the command, or copies client/caller/session/operation/raw correlation as fallback. Raw event/causation IDs in mutable state never qualify. Mutation commands still require a safely resolved workspace/path as operational inputs, but provenance metadata does not provide or authorize them."
+        },
+        {
+          "line": 148,
+          "text": "The envelope is renderer-supplied command context, not canonical event provenance. The accepting UI command path is the evidence for UI origin. Outside the command/response chain, the server admission task constructs the canonical `ui.action`, generates `uiActionId`, assigns `provenance.source`, `provenance.origin`, `provenance.observedBy`, and `provenance.confidence`, and routes the candidate through the SPEC-40 validation/diagnostic publisher."
+        },
+        {
+          "line": 152,
+          "text": "Mutation-producing UI commands ask the first accepting server handler to construct a canonical `ui.action` candidate and route it through the SPEC-40 validation/diagnostic publisher. Accepted candidates emit on UEB; a provenance failure records a diagnostic without failing the source command:"
+        },
+        {
+          "line": 159,
+          "text": "  eventType: 'ui.action',"
+        },
+        {
+          "line": 164,
+          "text": "    source: { type: 'ui-action-ingestor', module: 'provenance/ui-action-ingestor' },"
+        },
+        {
+          "line": 166,
+          "text": "    observedBy: { type: 'ui-action-ingestor', module: 'provenance/ui-action-ingestor' },"
+        },
+        {
+          "line": 184,
+          "text": "The `ui.action` event itself must not self-reference its own `uiActionId` in `provenance.cause`. Downstream events carry that cause only after the upstream action was accepted."
+        },
+        {
+          "line": 214,
+          "text": "| `ui-action-registry` | Own universal command vocabulary and metadata. |"
+        },
+        {
+          "line": 217,
+          "text": "| `ui-action-dispatch` | Wrap mutation command dispatch; keep the envelope local through 34c, then attach it only in 34d1 after the server prompt-log fence is installed. |"
+        },
+        {
+          "line": 218,
+          "text": "| `ui-action-adapters/*` | Per-view selector/resource mapping adapters. |"
+        },
+        {
+          "line": 269,
+          "text": "On a matching binding, the server resolves the registered Wiki/File panel roots under the command ref's authoritative root, re-resolves each renderer tentative active path/subject, proves it corresponds to the same operationally accepted attachment target where applicable, and derives canonical workspace-relative paths itself. The renderer-derived path is comparison evidence, never copied canonical output. On missing/stale/forged/wrong-connection token, A-root/B-root mismatch, panel-root mismatch, operational-target mismatch, or server resolution failure, create no canonical `ui.action` candidate, `uiActionId`, accepted ref, result mirror, or edge. Submit exactly `WORKSPACE_CONTEXT_UNBOUND_DIAGNOSTIC = Object.freeze({ code: 'workspace_context_unbound' })`; runtime `Object.keys` are exactly `['code']`. The dedicated `reportUiProvenanceDiagnostic` sink accepts only that exact one-key literal, increments one process-local saturating counter keyed by the code up to `Number.MAX_SAFE_INTEGER`, may log only the fixed code, and immediately discards the object. It has no ring entries, payloads, serialization, network output, canonical/ledger persistence, or cross-process retention; restart resets the counter. Token, path/root, workspace, connection/client, transition/capability, panel/attachment, reason/subcode, stack, message, and exception-derived values are categorically forbidden even though other noncanonical diagnostic families may carry server routing IDs. Sink throw is swallowed by the supervised provenance boundary. Do not reuse the `redaction.status = 'failed'` safe core because binding failure is not redaction failure. The baseline prompt/attachment bytes, acceptance, response, and operational target remain unchanged and are never retried. Server session caches are not consulted by this gate."
+        },
+        {
+          "line": 275,
+          "text": "Attachment handling has two explicit, one-way outputs. The operational attachment list is decided only by the existing prompt command's operational validation and is the sole list serialized into or rejected from the harness prompt. Separately, provenance receives an immutable snapshot of the operationally accepted inputs and derives a `resources[]` subject list under the stricter rules above. Provenance normalization must not mutate, filter, reorder, default, add to, or reject the operational list. Therefore an operationally accepted attachment that is provenance-invalid remains in the prompt but is omitted from `resources[]` with a diagnostic; an all-provenance-invalid list still sends the same operational prompt and simply emits no first-pair `ui.action`. Any future hardening of path safety belongs to the operational validator and must be specified/tested independently of provenance."
+        },
+        {
+          "line": 302,
+          "text": "Rules: `schemaVersion` is integer literal `1`; `eventFamily`/`eventType` are exactly `ui`/`ui.action`; `actor.type` is exactly `human`; `command` is a registered universal command; `clientCommandId`, when present, matches `[A-Za-z0-9_-]{1,128}`. It is optional correlation: invalid renderer input is omitted by the bounded renderer/server extractors and never selects a safe core, rejects an otherwise valid UI fact, or affects the prompt. `provenance.origin.id` must equal `uiAction.uiActionId`, and the 40b1a identity extractor must return that same value as `domainIds.uiActionId`; this is schema-approved current-record identity, not an upstream relationship. Any mismatch is validation error before admission. `context.activeDocumentPath`, `context.activeResourcePath`, and every resource path are canonical workspace-relative paths. For the first pair, `context.route` and `context.selectedResourceId` are exactly `null`. Upstream relationship IDs, when a schema permits them, require SPEC-40's private builder binding."
+        },
+        {
+          "line": 311,
+          "text": "- Optional: `ids.threadId`, `turnId`, and successfully server-generated `correlationId`; `context.activeTabId`, `activeDocumentPath`, and `activeResourcePath` as string or null; `uiAction.clientCommandId`; and `redaction.omissions` under the status rule below. Fresh-correlation generator absence/throw, allocation failure, or private-registration failure omits only `ids.correlationId` with exact fixed `fresh_correlation_unavailable`; the safe UI fact remains admissible and the command is unchanged. `clientCommandId`, caller/session/operation state, inspected refs, and raw IDs are never fallback canonical correlation. First-package `ui.action` rejects populated `rootEventId`, `parentEventId`, or `causationId` because 40b1a registers no predecessor/cause selector for it. No other retained pointer is optional."
+        },
+        {
+          "line": 383,
+          "text": "  eventType: 'ui.action',"
+        },
+        {
+          "line": 388,
+          "text": "    source: { type: 'ui-action-ingestor', module: 'provenance/ui-action-ingestor' },"
+        },
+        {
+          "line": 390,
+          "text": "    observedBy: { type: 'ui-action-ingestor', module: 'provenance/ui-action-ingestor' },"
+        },
+        {
+          "line": 410,
+          "text": "The renderer constructs command context and resource inputs. The first server handler accepts or rejects the source command using operational rules independently of provenance. After acceptance it starts the operational command path, performs only the exact fixed-schema nonrecursive extraction and bounded target copy, consumes the transient token for binding, and submits only the already-frozen token-free queued envelope, target copies, and bound context for `ui.action` construction/redaction/validation/admission. The extraction wrapper/token is discarded before admission without another envelope copy, and no later stage runs or is awaited in the command/response chain. Extraction failure omits UI provenance. A command-scoped accepted-reference slot is write-once; downstream producers check it synchronously and either pass the available ref to `prepareCanonicalCandidate` or omit the relationship and diagnose without waiting. Optional enrichment is included only when already available. The canonical record uses the accepting server ingestor for `provenance.source` and `provenance.observedBy` and assigns its schema-approved self-origin; downstream `resource.*` events use the server mutation producer."
+        },
+        {
+          "line": 412,
+          "text": "The server discards unknown legacy ID-bearing fields in renderer provenance input. It never promotes renderer `eventId`, root/parent/cause IDs, resource IDs, related-event IDs, resource-event IDs, or file-version IDs. When the canonical `ui.action` is admitted, the ingestor receives its accepted reference for downstream propagation. On failure it returns no propagatable action ID. Server handlers must:"
+        },
+        {
+          "line": 420,
+          "text": "- Attach `provenance.cause.uiActionId` only through the registered builder binding when the upstream `ui.action` ref is already available."
+        },
+        {
+          "line": 424,
+          "text": "First-package Slice 40b1a does not register canonical chat events. Existing `chat:*` facts remain a named compatibility path and must not be mutated with `uiActionId` or treated as canonical relationship consumers. Owner-approved `CHAT-D01` and SPEC-40b2a must register the exact affected chat event/schema/redaction policy and replace that gap before any chat cause/result linkage is accepted; at that point chat producers use `prepareCanonicalCandidate` with an already-available UI ref or omit the relationship without waiting. This deferral does not affect prompt execution or the independent `ui.action` record. If a later registered chat/tool flow causes a resource mutation, its accepted-only relationships follow the same builder rule; operational `ids.serverMutationId` remains independent."
+        },
+        {
+          "line": 426,
+          "text": "The `ui.action` event itself must not self-reference its own `uiActionId` in `provenance.cause`."
+        },
+        {
+          "line": 447,
+          "text": "- Add Vitest as a locked client dev dependency, add package script `\"test:provenance\": \"vitest --config vitest.provenance.config.ts\"`, and add `vitest.provenance.config.ts` with Node environment, isolated mocks, cleared/restored mocks between cases, and only the named provenance unit-test include pattern. Add `src/provenance/__tests__/ui-action-command-envelope.test.ts` for the complete construction/path/resource table and `src/provenance/__tests__/ui-action-send-fallback.test.ts` for every failure-injection branch. The fallback suite captures the pre-provenance serialized baseline bytes and asserts strict byte equality, exactly one `socket.send` call, no enriched envelope, no retry after send failure, and unchanged operational serializer failure behavior."
+        },
+        {
+          "line": 448,
+          "text": "- Required client checks: `cd fusion-studio-client && npm run test:provenance -- --run src/provenance/__tests__/ui-action-command-envelope.test.ts src/provenance/__tests__/ui-action-send-fallback.test.ts` and `cd fusion-studio-client && npm run build`. The slice report records the added Vitest version and lockfile change; tests are not accepted through build-only evidence or an unconfigured global runner."
+        },
+        {
+          "line": 477,
+          "text": "- Add `fusion-studio-server/test/provenance/ui-action-wire-log-redaction.test.js`. Reuse the accepted 32b0 client tests and cover canonical prompt seed plus absent, wrong type/format, inherited, top-level prompt, inside-envelope, alternate nesting, duplicate canonical/wrong-path, arrays, malformed siblings, every registered prompt-family type, parse/route rejection, and unknown type. Seed fixtures place unique sentinels in `clientCommandId`, every context path/ID, every resource field, future unknown seed children, token occurrences, raw text, and thrown exception fields. Spy on every statically inventoried console/logger/redactor/formatter/stringifier/rejection/error function and assert zero calls, no sentinel/reserved key anywhere, handler/binder invocation, then exact fixed counter increment/saturation. Install synchronous-prefix, nonreturning-worker, throwing, and never-settling logger spies and prove none is reachable from production prompt ingress while prompt acceptance/response settles. A bidirectional static assertion fails when a new prompt logger/serializer/error path or provenance wire field is not inventoried/tested."
+        },
+        {
+          "line": 478,
+          "text": "- Required server checks: `cd fusion-studio-server && npm test -- --runInBand test/provenance/ui-action-ingestor.test.js test/provenance/ui-action-wire-log-redaction.test.js`."
+        },
+        {
+          "line": 481,
+          "text": "- Add `fusion-studio-client/e2e/ui-action-workspace-token.spec.ts` and run `cd fusion-studio-client && node e2e/run-provenance-playwright.cjs e2e/ui-action-workspace-token.spec.ts`. Through real WebSockets and the isolated 32b0 harness, use two browser contexts to prove token-optional init receipt -> detached exact-current `workspace:context_token` -> recipient-specific ephemeral client slot -> prompt private-seed echo -> server binder -> eventual accepted `ui.action`; then prove paused entropy leaves prompts operational with no event, switch rotation, close-before-reinit clearing, reconnect rotation, cross-client/stale/missing token no-event, persistence/workspace-cache exclusion, missed-notification convergence, and healthy re-admission. Record run nonce/root cleanup, both connection token inequality without printing values, transition capability changes, prompt response timing, accepted event IDs only for healthy bindings, and zero candidate/ref/edge for failed bindings."
+        },
+        {
+          "line": 482,
+          "text": "- Required runtime smoke: run the four cross-panel/mixed-validity/unsupported/no-valid cases from Slice 34c. For each supported case, verify prompt acceptance is not sequenced behind provenance, the independent `ui.action` is eventually accepted when healthy, active-panel context and valid subjects are preserved, and legacy chat facts contain no unregistered `uiActionId`. Pause the admission executor and prove the prompt response settles; then release it and verify eventual admission. Downstream chat cause/result linkage is explicitly deferred to `CHAT-D01` and SPEC-40b2a."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/008-Provenance-Temp/37-automation-trigger-scheduler-provenance.md",
+      "sha256": "cd579d21c635e336058e1639ac080dd980289806f7d8b298d62038d694c57f29",
+      "line_count": 218,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 37,
+          "text": "| AUT-D01 | What exactly do script captured output and lifecycle status describe? | OPEN - OWNER APPROVAL REQUIRED before Slice 37d; failure isolation is decided. | Define: (1) the captured result domain (raw function return, runner-normalized return, stdout/stderr, or a combination); (2) whether valid falsy returns (`false`, `0`, `''`, `NaN`, and `undefined`) remain distinct or normalize to `null`; (3) whether Promise/thenable results are prohibited, awaited, or unsupported; (4) automation-specific mapping into the owner-selected unified captured-output extension contract required by TOOL-D01/provenance finding 3, whose exact shared-block choice/name/shape remains open; (5) deterministic serialization/encoding, hash, byte-count, truncation, external-storage, omission, and redaction primitives without independently registered automation-only `resultHash`/`resultBytes`/`resultTruncated` names; (6) whether truncation changes downstream runtime `vars.result`; (7) the event-type/branch presence matrix, including omitted versus `null`/`0`/`false`; (8) whether error/failure/rejection/timeout/cancellation material is captured or omitted; (9) the applicable secret/redaction policy and policy ID/version. The owner rule is settled: provenance/redaction failure never fails automation execution; unsafe material and derived hashes/previews are omitted while the non-sensitive run/event core and a diagnostic remain when possible; (10) timeout support/enforcement; and (11) lifecycle mappings for load, export-resolution, missing-export, success, failure, rejection, cancellation, and null-result branches. The current runner behavior remains evidence only and cannot settle these branches. |"
+        },
+        {
+          "line": 38,
+          "text": "| AUT-D02 | How can an operational file-trigger match later claim direct causality from the independently admitted canonical resource observation? | OPEN - OWNER APPROVAL REQUIRED before `automation.matchedEventId`, upstream resource root/parent/causation IDs, or a `triggered` edge links that match to the resource event. | Define the private observation/run handoff, task ordering without waiting, capability lifetime, exact pointer/selector, multiple-match fanout, rename-pair behavior, dedupe, late/missing/rejected admission, cancellation/restart, and tests proving trigger execution remains exactly once. Until closure, file-trigger automation facts omit those resource IDs/edges. This does not block the operational trigger or an independently safe canonical automation run fact. |"
+        },
+        {
+          "line": 39,
+          "text": "| AUT-D03 | What is the exact base canonical automation run/match contract independent of result payloads and matched-resource linkage? | OPEN - OWNER APPROVAL REQUIRED before 40b2c registers any automation run/match branch, 37c emits it, or an accepted automation ref exists. The settled product requirement is that every eventual canonical automation fact carries durable `automation.runId` and `automation.kind`; D03 cannot remove those fields. | Define exact per-kind run-ID generation owner/timing/format and operational handoff; event types/phases/lifecycle status and presence; subtype ID ownership/equality/presence; actor/source/origin/observer/context; sensitivity/redaction policy for trigger name/file, schedule, condition, script path, ticket/resource summaries, and failure-safe/no-event behavior; deterministic field/array/serialized-byte bounds and overflow; ordering, sequence, dedupe, replay/restart/cancel behavior; and fail-open tests. AUT-D01 separately governs result branches; AUT-D02 separately governs matched-resource accepted relationships. Slices 37a-37b remain audit and inert ABI/fixture proposal only: they may inventory existing operational IDs but may not add/replace a production generator, expose a new ID ABI, register/publish canonical identity, or create accepted refs until D03 closes and is back-validated. |"
+        },
+        {
+          "line": 43,
+          "text": "The wiki-settled requirement is that every eventual canonical automation fact contains durable `automation.runId` plus `automation.kind`. `AUT-D03` cannot remove those common fields, but must approve their per-kind generation owner, timing, format, and operational handoff before implementation. The subtype fields in this broader shape are decision candidates whose ownership/equality/presence D03 may accept, replace, or remove:"
+        },
+        {
+          "line": 48,
+          "text": "    runId,"
+        },
+        {
+          "line": 58,
+          "text": "Execution outcome belongs in the common envelope's `lifecycle.status`; do not add a second `automation.status` field. The exact result-capture and status mapping semantics remain blocked by `AUT-D01`."
+        },
+        {
+          "line": 62,
+          "text": "- `automation.runId` is the canonical cross-subsystem automation run identity and `automation.kind` classifies the run; D03 must define their exact ABI and production timing."
+        },
+        {
+          "line": 67,
+          "text": "- `AUT-D02` must approve the applicable accepted-reference handoff and exact selector/field matrix before an operational file-trigger match uses `automation.matchedEventId`, `ids.parentEventId`, `ids.causationId`, or an edge."
+        },
+        {
+          "line": 70,
+          "text": "- The automation publisher returns an accepted automation reference only after an event establishing the required `automation.runId` is accepted on UEB. Downstream producers receive and propagate only that accepted reference, never the raw operational run ID. If publication fails, known execution kind may remain as an origin type, but omit `origin.id`, all automation/subtype cause IDs, `automationRef`, result/resource mirrors, and ledger edges until a canonical run event is accepted. A later accepted lifecycle event may establish the reference for subsequent work; it does not retroactively create causes for earlier events."
+        },
+        {
+          "line": 74,
+          "text": "The following broad shape is design input only. `AUT-D03` must approve exhaustive registered base-run/match branches that preserve required `automation.runId` and `automation.kind`; AUT-D01 and AUT-D02 govern their separate result and matched-resource extensions. No implementation may infer optionality, subtype fields, bounds, redaction, or lifecycle presence from this example."
+        },
+        {
+          "line": 92,
+          "text": "    runId,"
+        },
+        {
+          "line": 104,
+          "text": "    // AUT-D01 + TOOL-D01 must approve the owner-selected unified captured-output"
+        },
+        {
+          "line": 117,
+          "text": "The example's subtype IDs remain `AUT-D03` candidates and do not make those fields common-envelope or downstream-cause authority. `fileVersionIds` is absent from canonical automation records until the owning relationship, accepted-reference binding, bounds, and schema registration are approved; an empty candidate array is not early authorization."
+        },
+        {
+          "line": 121,
+          "text": "Illustrative `AUT-D03` decision candidates only:"
+        },
+        {
+          "line": 134,
+          "text": "This list is not canonical, registration-ready, or implementation authority. `AUT-D03` may accept, replace, split, or remove every candidate and must approve the exhaustive kind/phase/lifecycle matrix before SPEC-40b2c registration, Slice 37c emission, accepted refs, or persistence. No producer, registry, test, or downstream slice may infer an event type from this list while D03 remains open. After approval, additional narrow event types require the same registry/version process; do not overload one event type with multiple meanings."
+        },
+        {
+          "line": 143,
+          "text": "2. It may record the D03-approved registered match/run fact after 40b2c registration; this document does not select its event type. While `AUT-D02` is open, `automation.matchedEventId` and upstream resource IDs/edges are always omitted. After closure, only its approved private non-wait handoff may provide a resource accepted ref to the registered builder; missing/late/rejected branches still omit without affecting execution."
+        },
+        {
+          "line": 176,
+          "text": "- `triggered` from matched event to automation run only after `AUT-D02` closes for operational file-trigger matches and the exact accepted binding exists."
+        },
+        {
+          "line": 189,
+          "text": "Inventory existing operational ID generators, ownership, timing, formats, collision behavior, and consumers; propose the D03 decision table, ABI, migration fixtures, and fail-open tests. This slice is inert preparation only. It does not add or replace a production generator, expose a new operational/canonical ID ABI, assign subtype semantics, register/publish canonical identity, or create an accepted automation ref before owner-approved/back-validated `AUT-D03`."
+        },
+        {
+          "line": 193,
+          "text": "Prerequisites: owner-approved/back-validated `AUT-D03`, accepted operational matcher audit/ID preparation from 37a-37b, and exact automation match/run schemas registered in SPEC-40b2c. Observe operational trigger matches and emit independently safe registered canonical automation facts without controlling, delaying, retrying, or duplicating execution. While `AUT-D02` is open, omit every matched-resource ID/edge. A later branch may add only the owner-approved non-wait accepted-ref handoff. Acceptance injects every resource provenance failure branch and proves trigger execution remains exactly once while canonical automation output is accepted when independently buildable or explicitly diagnosed/omitted when it is not."
+        },
+        {
+          "line": 197,
+          "text": "Blocked until `AUT-D01`, `TOOL-D01`, and provenance finding 3 jointly settle the owner-selected unified captured-output extension contract and SPEC-40b2c registers the exact automation result branch. Capture script path, `lifecycle.status`, and only the registered automation mapping into that approved extension; do not infer legacy result-hash, byte-count, truncation, redaction, omission, or storage names/semantics."
+        },
+        {
+          "line": 201,
+          "text": "Prerequisites: owner-approved/back-validated `AUT-D03`, accepted Slice 37c, and the exact applicable 40b2c registrations; result-bearing propagation additionally requires the joint `AUT-D01`/`TOOL-D01`/finding-3 settlement and accepted 37d. Pass an accepted automation reference, not the raw operational run ID, into resource mutation producers and tool/chat paths. Inject run-event validation/publication failure and prove the execution continues while downstream ID-bearing origin, causes, mirrors, and ledger edges remain absent."
+        },
+        {
+          "line": 207,
+          "text": "Prerequisites: accepted branch-specific 40b2c automation registration, accepted producing 37c/37d/37e slices as applicable, and accepted SPEC-35b event ingestion plus applicable SPEC-35d edge support. Persist only accepted automation events and approved builder-proven edges. `triggered` file-match edges additionally require `AUT-D02`; every `caused_by` edge additionally requires owner-approved/back-validated `LED-D03`, otherwise that branch is absent. This slice does not backfill rejected/raw run or matched-event IDs."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/008-Provenance-Temp/38-audit-query-review-provenance-loops.md",
+      "sha256": "eecf56e68d9908a2d8c4bcc768e2007dd860c3e4f119cb6a5314f5bfbe47a3c4",
+      "line_count": 211,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 28,
+          "text": "- [SPEC-34 - UI Action Provenance Module](34-ui-action-provenance-module.md)"
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/008-Provenance-Temp/39-change-storm-control-compaction.md",
+      "sha256": "e796496993e86d851b23fdb7f025c7f1b4e4d239a43cfa8695d0ce796eef0cf7",
+      "line_count": 212,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/008-Provenance-Temp/provenance-schema-findings.md",
+      "sha256": "727a9a3aace7a2d5600d79af9ea774a6c28e544ed59e0a7233a568ed631dbd67",
+      "line_count": 67,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 11,
+          "text": "**Overall:** envelope discipline held up \u2014 no enum redefined anywhere, cause-ID block membership identical in all three occurrences, all used `eventFamily` values registered, no second status fields, decision-gate cross-references (CHAT-D01, TOOL-D01/D02, AUT-D01/02/03, LED-D02/03/04, AUD-D01, ULV-D10/D12) coherent. Findings below are residuals."
+        },
+        {
+          "line": 15,
+          "text": "Core envelope lists `cause.triggerRunId` / `schedulerRunId` / `scriptRunId` / `agentRunId` as unconditional members (`PAGE.md:126-131`); Automation page says subtype IDs \"remain D03 candidates\" (`006:76`). Also asymmetric: `automation.runId` + `kind` is the settled common identity across all seven kinds, yet only four kinds get dedicated cause fields (sync/import/system don't)."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/023-MVP-Provenance-Subscriptions/DECISIONS.md",
+      "sha256": "30565c6983a034b7a087cbf73fa12130bfcad56b4ffb5a75a3deabae6cc0c867",
+      "line_count": 102,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 59,
+          "text": "### MVP-D14 \u2014 Replace the old accepted-reference MVP gate with simple trusted admission"
+        },
+        {
+          "line": 67,
+          "text": "### MVP-D16 \u2014 Treat current local WebSocket origin as a reported local-client fact, not authenticated human identity"
+        },
+        {
+          "line": 71,
+          "text": "### MVP-D17 \u2014 Keep TRIGGERS compatibility outside the governed MVP"
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/023-MVP-Provenance-Subscriptions/RELEASE-MANIFEST.md",
+      "sha256": "ab14143583d52ac4330962e96b1f54d5c7a197c72a0563fa16f0640ea6ccadff",
+      "line_count": 75,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/024-Agent-Tool-Provenance/DECISIONS.md",
+      "sha256": "731157ac104d9c8cfba2f8290aebf0c6f021cb89a2121b38bdf70c6512a1b012",
+      "line_count": 122,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 43,
+          "text": "`agent.tool_completed@1` and `resource.state_observed@1` use locked schemas, host-minted publishers, database-backed locked subscriptions, and exact capabilities on the existing admitted-fact channel. No parallel event service or direct renderer listener is permitted."
+        },
+        {
+          "line": 65,
+          "text": "### ATP-D15 \u2014 Narrow TOOL-D01/TOOL-D02 overlay only"
+        },
+        {
+          "line": 67,
+          "text": "Approval of this exact candidate supersedes the older `TOOL-D01` and `TOOL-D02` blockers only for the bounded observational contracts defined here: normalized activity/resource-edge rows; `agent.tool_completed@1`; the configured `harnessId`, provider, provider tool-call ID, tool names, lifecycle status, and reported/observed timestamps carried by those contracts; and optional SHA-256 fingerprints of the complete argument/result values already retained by the existing chat exchange path. These fingerprints are local integrity/search-discrimination metadata, not captured-output artifacts or proof that raw output was safely published."
+        },
+        {
+          "line": 73,
+          "text": "### ATP-D16 \u2014 Narrow ULV checkpoint-storage overlay only"
+        },
+        {
+          "line": 75,
+          "text": "Approval of this exact candidate explicitly folds the SPEC's bounded agent-observation checkpoints into the current work. It supersedes `ULV-D02`, `ULV-D03`, `ULV-D05`, and `ULV-D10`, and any reading of `ULV-D12` that would block `resource.state_observed@1`, only for `agent_snapshot_blobs`, `agent_resource_snapshots`, their exact eligibility/hash/state/chain rules, and the separately named observation fact defined here. For this narrow scope, `ULV-D02` is answered as full exact snapshots of the eligible UTF-8 bytes with no stored or computed diffs. These are observation checkpoints, not canonical `file.version` records."
+        },
+        {
+          "line": 79,
+          "text": "### ATP-D17 \u2014 Narrow LED-D04 overlay for two admitted facts"
+        },
+        {
+          "line": 81,
+          "text": "Approval of this exact candidate supersedes `LED-D04` only for idempotently projecting admitted `agent.tool_completed@1` and `resource.state_observed@1` facts into the existing migration-029 `event_log` and `event_resource_edges` tables under the exact mappings, transactions, retries, diagnostics, and reconciliation rules in SPEC section 10.4. It authorizes no causal/graph edge, tag, accepted-reference, native-reference, ledger-internal event, new general ledger schema, or other event type."
+        },
+        {
+          "line": 113,
+          "text": "- Observation jobs are claimable only after their owning `agent.tool_completed@1` fact is admitted. Every successful dominant edge atomically creates a durable renderer-projection job. Unchanged may project v2 under the admitted tool fact; first/changed projects v2 only when its checkpoint fact is admitted and otherwise uses identity-safe refresh-required fallback. Claim/lease recovery provides stable-ID at-least-once delivery, bounded failures, exact no-recipient settlement, and restart recovery without historical rescans."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/024-Agent-Tool-Provenance/RELEASE-MANIFEST.md",
+      "sha256": "e4f695aa00ffcab3cccdea74a17eaf7f45ce78bd317f49de881f8ef15fc2e1e2",
+      "line_count": 63,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/030-Plugin_System/decisions.md",
+      "sha256": "dae7996623d94c1b6ae41cb01faa44df519dc0b09ca383cb7f35a5ef14f89434",
+      "line_count": 105,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 98,
+          "text": "## PLUG-D012 \u2014 Plugins emit only through server-registered producers"
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/032-Plugin_Backend/backend-architecture.md",
+      "sha256": "79631f233222e41dbb64813d8508b123930c37320963d2aced42e1fa27bd2bfc",
+      "line_count": 252,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 35,
+          "text": "provenance contract that *are* settled \u2014 durable `automation.runId` and `kind`,"
+        },
+        {
+          "line": 52,
+          "text": "**Blocked:** canonical automation result/lifecycle semantics (`AUT-D01/D03`),"
+        },
+        {
+          "line": 165,
+          "text": "the settled parts (`automation.runId`, `kind`, lifecycle status), with the"
+        },
+        {
+          "line": 237,
+          "text": "| `AUT-D01/D02/D03` | Automation run results/lifecycle, file-trigger handoff, run/match contract |"
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "line_count": 116,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "  source-files:"
+        },
+        {
+          "line": 8,
+          "text": "  last-modified: \"2026-09-19T10:34:31Z\""
+        },
+        {
+          "line": 69,
+          "text": "The shared Markdown envelope is `name`, `description`, and `metadata`. For wiki pages, the authored metadata schema contains source-file accountability and a last-modified timestamp. Do not record incoming/outgoing edges, connected-skills, or related-trigger-files; ordinary body links remain the navigation mechanism. This wiki policy does not remove Office or other domains' settings such as `metadata.display` and `metadata.tables`."
+        },
+        {
+          "line": 76,
+          "text": "  source-files:"
+        },
+        {
+          "line": 78,
+          "text": "  last-modified: \"2026-09-19T10:00:00Z\""
+        },
+        {
+          "line": 88,
+          "text": "| `metadata.source-files` | Array of strings | Unique repository-relative paths to the actual code files the page describes. Use `[]` when no code file applies. |"
+        },
+        {
+          "line": 89,
+          "text": "| `metadata.last-modified` | Quoted string | Actual page modification time in UTC, using `YYYY-MM-DDTHH:mm:ssZ`. Required on new pages and pages edited under this policy. |"
+        },
+        {
+          "line": 93,
+          "text": "`source-files` is an authored claim about which code the page explains, not an automatically inferred list of everything in its domain. Use exact files with forward-slash paths, not directories, globs, absolute machine paths, links to other articles, or SPEC/plan documents. Check that each path exists and owns the behavior described. A guidance page with no direct code subject may use `[]`; a technical article without sources needs explicit review rather than guessed paths. Where machine-scoped code is unavoidable, explain and validate the placeholder resolution rather than treating an unresolved placeholder as a verified file."
+        },
+        {
+          "line": 99,
+          "text": "- Set `metadata.last-modified` when a new page is written. Update it in the same edit whenever page content changes: prose, source references, other frontmatter, typo fixes, or generated navigation blocks."
+        },
+        {
+          "line": 108,
+          "text": "Use this schema for new wiki pages. When editing an existing page, remove legacy relationship keys from its metadata and add/update `last-modified`, preserving real source claims and any unrelated domain-owned metadata. Do not bulk-stamp untouched pages or treat a schema migration as factual verification. Follow the [Updating Wiki Content](../003-Updating_Wikis/PAGE.md) versioning rules before substantive rewrites; this policy keeps `.versions/` and does not adopt a separate archive/retention system."
+        },
+        {
+          "line": 113,
+          "text": "- `source-files` lists actual code files, never documents."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0",
+      "line_count": 47,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "  source-files:"
+        },
+        {
+          "line": 8,
+          "text": "  last-modified: \"2026-09-19T10:34:31Z\""
+        },
+        {
+          "line": 13,
+          "text": "Use the [Wiki Style Guide frontmatter schema](../001-Style_Guide/PAGE.md#frontmatter-contract) for every new page: `name`, `description`, `metadata.source-files`, and quoted UTC `metadata.last-modified` set to its actual creation time. Source files are exact code paths, or `[]` where no code subject applies. Do not add incoming/outgoing edges, connected-skills, or related-trigger-files. The example timestamp in the guide is not a default."
+        },
+        {
+          "line": 47,
+          "text": "The audit does not currently stamp `last-modified`, and legacy generated TOC frontmatter still uses the older relationship lists. Normalize newly created pages to the current schema and stamp pages whose content actually changed; preserve no-op pages and script-owned block contents."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "sha256": "669827c9f3cbd8970d074ba55defa333a3a14b154ffe97a9e27047b4d1c674d9",
+      "line_count": 52,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "  source-files:"
+        },
+        {
+          "line": 8,
+          "text": "  last-modified: \"2026-09-19T10:34:31Z\""
+        },
+        {
+          "line": 44,
+          "text": "Follow the [Wiki Style Guide](../001-Style_Guide/PAGE.md#frontmatter-contract): maintain `metadata.source-files` and a quoted UTC `metadata.last-modified` timestamp. Do not maintain edge, connected-skill, or related-trigger lists. When adopting the schema on an edited page, remove those legacy keys; preserve ordinary body links and unrelated domain-owned metadata."
+        },
+        {
+          "line": 46,
+          "text": "Update source paths when their owning code moves, and check that they still describe the page's subject. Set `last-modified` to the actual write time for any page-content change, including metadata, typo fixes, and generated-block changes. Preserve it on no-op reads/reviews and byte-preserving moves. The timestamp is not a verification date. Do not fabricate dates for untouched older pages or reset timestamps in `.versions/` copies."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "sha256": "c995d59bde9a95dacaa9f9ae844d1d9701b05c6f8a259b3ced9fe9b6608c3288",
+      "line_count": 29,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "  source-files:"
+        },
+        {
+          "line": 9,
+          "text": "  last-modified: \"2026-09-19T10:34:31Z\""
+        },
+        {
+          "line": 17,
+          "text": "4. **Source files** \u2014 validate `metadata.source-files` against real code ownership and existing repository-relative files; repair moved/deleted references. Knowledge pages without sources need review; guidance may use `[]`. Do not maintain edge lists."
+        },
+        {
+          "line": 27,
+          "text": "The [Wiki Style Guide](../001-Style_Guide/PAGE.md#frontmatter-contract) defines source-only accountability metadata plus a quoted UTC `last-modified` string. Check new/edited pages against that schema. Missing timestamps on older untouched pages mean unknown; they must not be filled with an invented date. Metadata migration records its own edit time and does not verify the page's facts."
+        },
+        {
+          "line": 29,
+          "text": "The current command is `node fusion-studio-server/scripts/wiki.js audit /path/to/workspace`. It does not implement automatic `last-modified` stamping or establish source freshness from that field. After actual generated changes, stamp the affected pages' frontmatter; preserve no-op pages. Review source changes against page claims separately, and do not treat a recent typo or navigation edit as a factual audit. Legacy generated TOC metadata may require normalization after creation; this is not authorization to rewrite untouched pages."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "sha256": "57af0fa7906b1a350fe5f02579d8c409edd94e9e014d5a096178c8fba86d5cf1",
+      "line_count": 57,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 7,
+          "text": "  source-files: []"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/e2e/component-action-context-source.spec.ts",
+      "sha256": "1d8586b8a37f65dca46f130d4e15571f552e91fa4a43c204718f83a14f19c913",
+      "line_count": 283,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 15,
+          "text": "function success(request: {"
+        },
+        {
+          "line": 41,
+          "text": "function seed(messages: Array<Record<string, unknown>>): void {"
+        },
+        {
+          "line": 71,
+          "text": "function hydrateOneFileTab(): void {"
+        },
+        {
+          "line": 82,
+          "text": "function mountRealFileOwner(workspaceId: string): void {"
+        },
+        {
+          "line": 90,
+          "text": "function mountRawOwner(collection: ComponentTabCollectionState): void {"
+        },
+        {
+          "line": 101,
+          "text": "test('component-backed File tab populates the full context and the file_save wire message carries it', async () => {"
+        },
+        {
+          "line": 122,
+          "text": "    requestId: string; reportedUiContext?: Record<string, unknown>;"
+        },
+        {
+          "line": 124,
+          "text": "  expect(request.reportedUiContext).toMatchObject({"
+        },
+        {
+          "line": 132,
+          "text": "  expect(typeof request.reportedUiContext?.componentInstanceId).toBe('string');"
+        },
+        {
+          "line": 137,
+          "text": "test('context omits tab fields when absent and omits entirely for an unregistered view', async () => {"
+        },
+        {
+          "line": 151,
+          "text": "  expect(messages.at(-1)).not.toHaveProperty('reportedUiContext');"
+        },
+        {
+          "line": 163,
+          "text": "test('stale owner identity omits tab fields and a throwing owner read cannot flail the save', async () => {"
+        },
+        {
+          "line": 187,
+          "text": "  expect(messages.at(-1)).not.toHaveProperty('reportedUiContext');"
+        },
+        {
+          "line": 195,
+          "text": "test('over-cap identifiers are dropped with the fixed cap rule and boundary values are kept', () => {"
+        },
+        {
+          "line": 253,
+          "text": "test('context reads mutate no store and emit no view-state message', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/e2e/resource-provenance-protocol-source.spec.ts",
+      "sha256": "35372686e9248481df2e2c2454c2a90af33e01ff99819d6b1c37f80eb1a486b3",
+      "line_count": 199,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": "35372686e9248481df2e2c2454c2a90af33e01ff99819d6b1c37f80eb1a486b3",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 6,
+          "text": "  queryResourceProvenance,"
+        },
+        {
+          "line": 13,
+          "text": "function setup(messages: Array<Record<string, unknown>>) {"
+        },
+        {
+          "line": 29,
+          "text": "test('query sender captures the atomic workspace pair and resolves only an exact current response', async () => {"
+        },
+        {
+          "line": 32,
+          "text": "  const completion = queryResourceProvenance({ panel: 'file-viewer', path: 'docs/a.md', limit: 25 });"
+        },
+        {
+          "line": 45,
+          "text": "test('A to B to A stale replies cannot settle and binding retirement rejects the pending query', async () => {"
+        },
+        {
+          "line": 48,
+          "text": "  const completion = queryResourceProvenance({ fileName: 'a.md' });"
+        },
+        {
+          "line": 60,
+          "text": "test('closed response guard rejects raw/unknown snapshot fields and invalid discriminants', async () => {"
+        },
+        {
+          "line": 63,
+          "text": "  const completion = queryResourceProvenance({});"
+        },
+        {
+          "line": 76,
+          "text": "test('query sender requires the active bind to advertise provenance v1 before registering or sending', async () => {"
+        },
+        {
+          "line": 81,
+          "text": "  await expect(queryResourceProvenance({ fileName: 'a.md' })).rejects.toThrow("
+        },
+        {
+          "line": 87,
+          "text": "  const completion = queryResourceProvenance({ fileName: 'a.md' });"
+        },
+        {
+          "line": 93,
+          "text": "test('workspace switch and reconnect replace the provenance advertisement with the new bind', async () => {"
+        },
+        {
+          "line": 98,
+          "text": "  await expect(queryResourceProvenance({})).rejects.toThrow('not supported by this server');"
+        },
+        {
+          "line": 103,
+          "text": "  await expect(queryResourceProvenance({})).rejects.toThrow('workspace is not available');"
+        },
+        {
+          "line": 107,
+          "text": "  const completion = queryResourceProvenance({});"
+        },
+        {
+          "line": 114,
+          "text": "function contextBearingItem(context: unknown): Record<string, unknown> {"
+        },
+        {
+          "line": 117,
+          "text": "    eventType: 'resource.mutated',"
+        },
+        {
+          "line": 132,
+          "text": "      reportedUiContext: context,"
+        },
+        {
+          "line": 138,
+          "text": "test('context-bearing durable items are accepted with the bounded snapshot preserved', async () => {"
+        },
+        {
+          "line": 141,
+          "text": "  const completion = queryResourceProvenance({});"
+        },
+        {
+          "line": 159,
+          "text": "  expect(items[0].origin.reportedUiContext).toEqual(context);"
+        },
+        {
+          "line": 162,
+          "text": "  const bareCompletion = queryResourceProvenance({});"
+        },
+        {
+          "line": 165,
+          "text": "  delete (bareItem.origin as Record<string, unknown>).reportedUiContext;"
+        },
+        {
+          "line": 173,
+          "text": "test('context-bearing items fail closed on missing required identities, unknown fields, or over-cap values', async () => {"
+        },
+        {
+          "line": 189,
+          "text": "    const completion = queryResourceProvenance({});"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/SendToChatButton.tsx",
+      "sha256": "7584dafdaa1ac92e9e3e928706de9e0840feb6a705ac34204736932b7ca079f6",
+      "line_count": 47,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "7584dafdaa1ac92e9e3e928706de9e0840feb6a705ac34204736932b7ca079f6",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 22,
+          "text": "export function SendToChatButton({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+      "sha256": "ce7b9a61351494120fbe81104284c0fbafd14682f155ecf3bdae1e65dcff3a6f",
+      "line_count": 764,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 108,
+          "text": "export function useLegacyChatHost({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/documentSaveAcknowledgement.ts",
+      "sha256": "c1cfc2376ff4e14190403764549bef01a458e8dbe689f925b9f093b337685aea",
+      "line_count": 56,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 13,
+          "text": "export function isDocumentDirty(panel: string, path: string): boolean {"
+        },
+        {
+          "line": 17,
+          "text": "export function documentDirtyRevision(panel: string, path: string): number {"
+        },
+        {
+          "line": 21,
+          "text": "export async function saveBeforeDocumentNavigation({"
+        },
+        {
+          "line": 37,
+          "text": "export async function saveAcknowledgedMilestone({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/email/EmailDocumentPage.tsx",
+      "sha256": "de126e78670706ebbc291b5217f80ae7668f8a12f20baa8b5dec73e47767e677",
+      "line_count": 364,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 54,
+          "text": "export function EmailDocumentPage({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx",
+      "sha256": "1a2bdf9c09b4a7a27a25131c51a2823d6f175fe0edb1050dd633b36b7da04574",
+      "line_count": 88,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 29,
+          "text": "export function FileDocumentPresenter({ input }: { input: FileDocumentPresenterInput }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+      "sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "line_count": 106,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function getFileBreadcrumb(path: string): { folders: string[]; fileName: string } {"
+        },
+        {
+          "line": 17,
+          "text": "export function FileViewer() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/office/OfficeDocumentPage.tsx",
+      "sha256": "39e4be6c50d146ea03a15a31869bed5f0e48f110e8593c911ff2a3b3ae32989e",
+      "line_count": 534,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "39e4be6c50d146ea03a15a31869bed5f0e48f110e8593c911ff2a3b3ae32989e",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 71,
+          "text": "export function OfficeDocumentPage({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedTabs.ts",
+      "sha256": "60b676440cc04ff0bb1b59f2d0881ef7d16d6780046020c466bea9be1d8d5f3c",
+      "line_count": 158,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 30,
+          "text": "export function setActiveFileConnectedRuntime("
+        },
+        {
+          "line": 39,
+          "text": "export function isFileConnectedActive(): boolean {"
+        },
+        {
+          "line": 75,
+          "text": "export function readActiveFileConnectedTabContext(): ActiveFileConnectedTabContext | null {"
+        },
+        {
+          "line": 119,
+          "text": "export function openFileDocument(request: {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/PageViewer.tsx",
+      "sha256": "34da50e392764a18d0de12ac7137a745678d1d14ce4bec1a7de9fb2f1fc0bbbf",
+      "line_count": 186,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 20,
+          "text": "  { key: 'source-files', label: 'Source Files' },"
+        },
+        {
+          "line": 25,
+          "text": "function WikiPageHeader({ frontmatter }: { frontmatter: WikiFrontmatter | null }) {"
+        },
+        {
+          "line": 36,
+          "text": "function WikiMetadataFooter({ frontmatter }: { frontmatter: WikiFrontmatter | null }) {"
+        },
+        {
+          "line": 64,
+          "text": "export function PageViewer() {"
+        },
+        {
+          "line": 151,
+          "text": "export function WikiPageNav() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/TopicList.tsx",
+      "sha256": "df0a15dd17211a7ae50b78faff693306b3b14694f2b0741d7778e22bc6aa8eba",
+      "line_count": 102,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 12,
+          "text": "export function TopicList() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "sha256": "ddc0b82256f9c96d29ac9c5a7e7b166ff844e228c6a25084e2d26780db994b18",
+      "line_count": 21,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "ddc0b82256f9c96d29ac9c5a7e7b166ff844e228c6a25084e2d26780db994b18",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 19,
+          "text": "export function dispatchChatAction(action: ChatActionPayload) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/resource-path.ts",
+      "sha256": "588893bf0c90f22d618457227c46762030b735be059e7ef6aa7d64cde5325bf9",
+      "line_count": 73,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "588893bf0c90f22d618457227c46762030b735be059e7ef6aa7d64cde5325bf9",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 21,
+          "text": "function trimSlashes(value: string): string {"
+        },
+        {
+          "line": 25,
+          "text": "export function normalizeResourceRelativePath(relativePath: string): string {"
+        },
+        {
+          "line": 29,
+          "text": "export function resolvePanelRoot(panel: string): string | null {"
+        },
+        {
+          "line": 35,
+          "text": "export function resolveResourcePath(panel: string, relativePath: string): ResolvedResourcePath | null {"
+        },
+        {
+          "line": 51,
+          "text": "export function resolveAbsolutePath(panel: string, relativePath: string): string | null {"
+        },
+        {
+          "line": 55,
+          "text": "export function copyResourcePath(panel: string, relativePath: string): void {"
+        },
+        {
+          "line": 65,
+          "text": "export function createResourceChatAttachment(panel: string, relativePath: string): ChatLinkAttachment | null {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/save-action-context.ts",
+      "sha256": "661694ffe969bfab723faa85c6d102dd12a09bf2f6e263e0629502f4b0c04deb",
+      "line_count": 105,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "661694ffe969bfab723faa85c6d102dd12a09bf2f6e263e0629502f4b0c04deb",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 5,
+          "text": " *       command time for `reportedUiContext`."
+        },
+        {
+          "line": 33,
+          "text": "function boundedScalar(value: unknown, maxBytes: number): string | undefined {"
+        },
+        {
+          "line": 49,
+          "text": "function buildContext(panel: string): ComponentActionContext | undefined {"
+        },
+        {
+          "line": 99,
+          "text": "export function readSaveActionContext(panel: string): ComponentActionContext | undefined {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "sha256": "87f49bcbd8aac776d9fb40abb34330ba1f489d54840b5c63fc28771cc392007d",
+      "line_count": 635,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "87f49bcbd8aac776d9fb40abb34330ba1f489d54840b5c63fc28771cc392007d",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 85,
+          "text": "export function abandonWsResponseTracking(): void {"
+        },
+        {
+          "line": 92,
+          "text": "function ensureOfficePaletteWorkspaceSubscription(): void {"
+        },
+        {
+          "line": 142,
+          "text": "function isWebSocketMessage(value: unknown): value is WebSocketMessage {"
+        },
+        {
+          "line": 155,
+          "text": "export function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {"
+        },
+        {
+          "line": 186,
+          "text": "export function sendFusionMessage(msg: Record<string, unknown>) {"
+        },
+        {
+          "line": 193,
+          "text": "export function onFusionMessage<T = FusionMessagePayload>(type: string, listener: (msg: T) => void): () => void {"
+        },
+        {
+          "line": 204,
+          "text": "export function onFusionResponse<T = FusionMessagePayload>("
+        },
+        {
+          "line": 218,
+          "text": "function emitFusion(type: string, msg: WebSocketMessage) {"
+        },
+        {
+          "line": 225,
+          "text": "function retireFusionResponseListeners(): void {"
+        },
+        {
+          "line": 239,
+          "text": "function retireConnectionState(): void {"
+        },
+        {
+          "line": 250,
+          "text": "function connectCurrentRuntime() {"
+        },
+        {
+          "line": 356,
+          "text": "function handleRuntimeTransportChange(): void {"
+        },
+        {
+          "line": 381,
+          "text": "export function connectWs() {"
+        },
+        {
+          "line": 387,
+          "text": "export function disconnectWs() {"
+        },
+        {
+          "line": 412,
+          "text": "function handleMessageWithinDiagnosticBoundary("
+        },
+        {
+          "line": 627,
+          "text": "export function handleMessage("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts",
+      "sha256": "f0a2eddc06a2b65ada726e53dcd1db9d9ce48bc4885707166608f545b345dc88",
+      "line_count": 195,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "f0a2eddc06a2b65ada726e53dcd1db9d9ce48bc4885707166608f545b345dc88",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 20,
+          "text": "function validId(value: unknown, maxBytes = 128): value is string {"
+        },
+        {
+          "line": 24,
+          "text": "function validPair(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 26,
+          "text": "    && UUID_PATTERN.test(value.workspaceEpoch);"
+        },
+        {
+          "line": 29,
+          "text": "function exactKeys(value: Record<string, unknown>, required: string[], optional: string[] = []): boolean {"
+        },
+        {
+          "line": 35,
+          "text": "function validPath(value: unknown): value is string {"
+        },
+        {
+          "line": 41,
+          "text": "function validTimestamp(value: unknown): value is number {"
+        },
+        {
+          "line": 61,
+          "text": "function validReportedUiContext(value: unknown): boolean {"
+        },
+        {
+          "line": 74,
+          "text": "function validItem(value: unknown): value is ResourceProvenanceItemV1 {"
+        },
+        {
+          "line": 82,
+          "text": "  if (item.eventType !== 'resource.mutated' || !validTimestamp(item.occurredAt)"
+        },
+        {
+          "line": 86,
+          "text": "    .every((key) => typeof item[key] === 'string' && UUID_PATTERN.test(item[key] as string))) return false;"
+        },
+        {
+          "line": 92,
+          "text": "  if (!exactKeys(origin, ['kind', 'assurance', 'connectionId'], ['reportedUiContext'])"
+        },
+        {
+          "line": 95,
+          "text": "  if (origin.reportedUiContext !== undefined && !validReportedUiContext(origin.reportedUiContext)) {"
+        },
+        {
+          "line": 106,
+          "text": "    && typeof snapshot.sha256 === 'string' && /^[0-9a-f]{64}$/u.test(snapshot.sha256)"
+        },
+        {
+          "line": 111,
+          "text": "function isResponse(value: unknown): value is ResourceProvenanceResponseV1 {"
+        },
+        {
+          "line": 139,
+          "text": "export function retirePendingResourceProvenanceQueries(): void {"
+        },
+        {
+          "line": 144,
+          "text": "export function handleResourceProvenanceResponse(value: unknown): boolean {"
+        },
+        {
+          "line": 162,
+          "text": "export function queryResourceProvenance("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/workspace-handlers.ts",
+      "sha256": "c9e9630feb7a2bfbd402d0d45dfe2ddddc618423b03db9954308ba627f19388c",
+      "line_count": 825,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "c9e9630feb7a2bfbd402d0d45dfe2ddddc618423b03db9954308ba627f19388c",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 115,
+          "text": "function toWorkspacePanelStateSnapshot(snapshot: WorkspaceStateSnapshot): Partial<WorkspacePanelState> {"
+        },
+        {
+          "line": 121,
+          "text": "function bindingWorkspaceId(msg: WebSocketMessage, legacyId: string | null | undefined): string | null {"
+        },
+        {
+          "line": 126,
+          "text": "function isBindingRevision(value: unknown): value is number {"
+        },
+        {
+          "line": 130,
+          "text": "export async function bootstrapWorkspaceAfterBind("
+        },
+        {
+          "line": 139,
+          "text": "function applyWorkspaceSwitch("
+        },
+        {
+          "line": 205,
+          "text": "function completeWorkspaceInit("
+        },
+        {
+          "line": 219,
+          "text": "export function retirePendingWorkspaceExposure(): void {"
+        },
+        {
+          "line": 228,
+          "text": "function isCurrentViewRegistryUpdate("
+        },
+        {
+          "line": 250,
+          "text": "function beginViewRegistryUpdate("
+        },
+        {
+          "line": 293,
+          "text": "function armWorkspaceExposureFallback(pending: PendingWorkspaceExposure): void {"
+        },
+        {
+          "line": 309,
+          "text": "function beginWorkspaceSwitch("
+        },
+        {
+          "line": 352,
+          "text": "export function capturePendingWorkspaceExposure(): Readonly<WorkspaceExposureSnapshot> | null {"
+        },
+        {
+          "line": 363,
+          "text": "export function canInstallWorkspaceProjection("
+        },
+        {
+          "line": 394,
+          "text": "export async function awaitPendingWorkspaceBinding("
+        },
+        {
+          "line": 413,
+          "text": "export async function acceptInstalledWorkspaceProjection("
+        },
+        {
+          "line": 455,
+          "text": "function acceptClearedWorkspaceProjection("
+        },
+        {
+          "line": 479,
+          "text": "function clearUnavailableViewRegistryUi(): void {"
+        },
+        {
+          "line": 487,
+          "text": "function processViewRegistryFrame("
+        },
+        {
+          "line": 573,
+          "text": "export function handleWorkspaceMessage("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "sha256": "b02b0a065bf34018723211780fd4b14f16823acef82af0cad9f0e332a6f405a2",
+      "line_count": 218,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "b02b0a065bf34018723211780fd4b14f16823acef82af0cad9f0e332a6f405a2",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 32,
+          "text": "export function chatAttachmentOwnerKey(workspaceId: string, threadId: string): string {"
+        },
+        {
+          "line": 36,
+          "text": "function candidateFromPath("
+        },
+        {
+          "line": 53,
+          "text": "function metadataArray(metadata: Record<string, unknown> | undefined, key: string): Array<Record<string, unknown>> {"
+        },
+        {
+          "line": 59,
+          "text": "function candidatesFromExchangeMetadata(exchange: ExchangeData): ChatFileAutocompleteCandidate[] {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileDataStore.ts",
+      "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+      "line_count": 1006,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 196,
+          "text": "function createSaveCompletion(): PendingFileSaveCompletion {"
+        },
+        {
+          "line": 206,
+          "text": "function saveFailure(message?: string): Error {"
+        },
+        {
+          "line": 214,
+          "text": "function sendWs(msg: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 543,
+          "text": "      const reportedUiContext = readSaveActionContext(panel);"
+        },
+        {
+          "line": 552,
+          "text": "        ...(reportedUiContext ? { reportedUiContext } : {}),"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "sha256": "95c43cc943093b7815d216894118bb18b7f4ca048945c888efc05a30a2ba8165",
+      "line_count": 408,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "95c43cc943093b7815d216894118bb18b7f4ca048945c888efc05a30a2ba8165",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 34,
+          "text": "export function createInitialPanelState(): PanelState {"
+        },
+        {
+          "line": 55,
+          "text": "function getChatState(state: AppState, threadId: string | null): PanelState {"
+        },
+        {
+          "line": 66,
+          "text": "function writeChatState("
+        },
+        {
+          "line": 80,
+          "text": "function resolveThreadId(state: AppState, threadId: string | null): string | null {"
+        },
+        {
+          "line": 101,
+          "text": "export function applySavedExchangePayload("
+        },
+        {
+          "line": 119,
+          "text": "export function createChatSlice(set: Set, get: Get) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/state/wikiStore.ts",
+      "sha256": "8d7b2ff56c387aac25de7b87c49383301e008308f8e5eb15aa2eece345e53bb4",
+      "line_count": 320,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "8d7b2ff56c387aac25de7b87c49383301e008308f8e5eb15aa2eece345e53bb4",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 60,
+          "text": "export function wikiFolderNameToLabel(name: string): string {"
+        },
+        {
+          "line": 64,
+          "text": "export function createWikiRootNode(children: WikiNode[] = []): WikiNode {"
+        },
+        {
+          "line": 77,
+          "text": "export function createWikiNode(params: {"
+        },
+        {
+          "line": 103,
+          "text": "export function findHeadingArticle(section: WikiNode): WikiNode | null {"
+        },
+        {
+          "line": 107,
+          "text": "export function isWikiHeadingArticle(node: WikiNode): boolean {"
+        },
+        {
+          "line": 111,
+          "text": "export function isWikiRightNavContext(node: WikiNode | null): node is WikiNode {"
+        },
+        {
+          "line": 115,
+          "text": "export function findWikiNodeByPath(node: WikiNode | null, path: string): WikiNode | null {"
+        },
+        {
+          "line": 127,
+          "text": "function createEmptyState(): WikiState {"
+        },
+        {
+          "line": 142,
+          "text": "function selectionForNode(node: WikiNode) {"
+        },
+        {
+          "line": 150,
+          "text": "function viewForNode(node: WikiNode) {"
+        },
+        {
+          "line": 157,
+          "text": "function wikiActivityInput(node: WikiNode) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+      "line_count": 354,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 32,
+          "text": "function digest(bytes) {"
+        },
+        {
+          "line": 36,
+          "text": "function storedBytesEqual(stored, observed) {"
+        },
+        {
+          "line": 44,
+          "text": "function verifyUtf8Bytes(value, { takeOwnership = false } = {}) {"
+        },
+        {
+          "line": 74,
+          "text": "function stateMatches(snapshot, state, sha256, byteLength) {"
+        },
+        {
+          "line": 79,
+          "text": "function chooseDominant(edges) {"
+        },
+        {
+          "line": 86,
+          "text": "function observationFact({ activity, dominant, eventId, observationId, snapshotId, observedAt, state, relation, resourceId, sha256, byteLength, previousSnapshotId }) {"
+        },
+        {
+          "line": 89,
+          "text": "    eventType: 'resource.state_observed',"
+        },
+        {
+          "line": 121,
+          "text": "function createAgentCheckpointRepository(db, {"
+        },
+        {
+          "line": 129,
+          "text": "  async function insertBlob(trx, bytes, sha256, now) {"
+        },
+        {
+          "line": 147,
+          "text": "  async function advanceObservationJob(trx, activityId, claimToken, now) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/query-repository.js",
+      "sha256": "6011faba606b0f0abe5f7492f432ebf9e01d6dfe089006301f0b3c4c43d4a834",
+      "line_count": 256,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "6011faba606b0f0abe5f7492f432ebf9e01d6dfe089006301f0b3c4c43d4a834",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 17,
+          "text": "function omitNulls(value) {"
+        },
+        {
+          "line": 21,
+          "text": "function normalizeCursor(value) {"
+        },
+        {
+          "line": 23,
+          "text": "  if (typeof value !== 'string' || !/^[1-9][0-9]{0,19}$/u.test(value)) throw new TypeError('cursor is invalid');"
+        },
+        {
+          "line": 29,
+          "text": "function normalizeArray(value, allowed, label) {"
+        },
+        {
+          "line": 38,
+          "text": "function normalizeToolNames(value) {"
+        },
+        {
+          "line": 46,
+          "text": "function normalizePathSelector(value, normalizer, label) {"
+        },
+        {
+          "line": 51,
+          "text": "function normalizeFileName(value) {"
+        },
+        {
+          "line": 53,
+          "text": "  if (fileName === '.' || fileName === '..' || /[\\\\/\\0]/u.test(fileName)) throw new TypeError('fileName is invalid');"
+        },
+        {
+          "line": 57,
+          "text": "function normalizeQuery(input) {"
+        },
+        {
+          "line": 96,
+          "text": "function folderWhere(builder, alias, folderPrefix) {"
+        },
+        {
+          "line": 103,
+          "text": "function applyActivityFilters(builder, query, activityAlias = 'a', { includeTime = true } = {}) {"
+        },
+        {
+          "line": 115,
+          "text": "function applyEdgeFilters(builder, query, edgeAlias = 'e') {"
+        },
+        {
+          "line": 124,
+          "text": "function timing(row) {"
+        },
+        {
+          "line": 140,
+          "text": "function detailRef(row) {"
+        },
+        {
+          "line": 144,
+          "text": "function createAgentActivityQueryRepository(db) {"
+        },
+        {
+          "line": 147,
+          "text": "  async function toolCalls(query) {"
+        },
+        {
+          "line": 154,
+          "text": "      builder.whereExists(function edgeExists() {"
+        },
+        {
+          "line": 195,
+          "text": "  async function resourceEdges(query) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "sha256": "46c44f4f8b2a1ee471eb1dffa679b554b6fca7adcad3a988acd2dec87d35dc81",
+      "line_count": 166,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "46c44f4f8b2a1ee471eb1dffa679b554b6fca7adcad3a988acd2dec87d35dc81",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 39,
+          "text": "function eventKey(data) {"
+        },
+        {
+          "line": 40,
+          "text": "  return data.ticketId ?? data.threadId ?? data.runId ?? data.workspaceId ?? null;"
+        },
+        {
+          "line": 47,
+          "text": "function isSameEventLoop(type, data) {"
+        },
+        {
+          "line": 61,
+          "text": "function emit(type, data = {}) {"
+        },
+        {
+          "line": 85,
+          "text": "function emitSafely(type, event) {"
+        },
+        {
+          "line": 92,
+          "text": "function exactEffectKey(event) {"
+        },
+        {
+          "line": 103,
+          "text": "function trackEffect(event, result) {"
+        },
+        {
+          "line": 122,
+          "text": "async function drainEventEffects(identity, {"
+        },
+        {
+          "line": 156,
+          "text": "function on(type, handler) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+      "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+      "line_count": 131,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 10,
+          "text": "const resourceMutatedV1 = require('./schemas/resource-mutated-v1.json');"
+        },
+        {
+          "line": 19,
+          "text": "function deepFreeze(value) {"
+        },
+        {
+          "line": 25,
+          "text": "function createSeed(schemaId, schemaKey, definitionKind, definition, schemaVersion = 1) {"
+        },
+        {
+          "line": 42,
+          "text": "const SYSTEM_SCHEMA_SEEDS = Object.freeze(["
+        },
+        {
+          "line": 45,
+          "text": "    'resource.mutated',"
+        },
+        {
+          "line": 70,
+          "text": "    'file.command_accepted',"
+        },
+        {
+          "line": 100,
+          "text": "    'agent.tool_completed',"
+        },
+        {
+          "line": 106,
+          "text": "    'resource.state_observed',"
+        },
+        {
+          "line": 118,
+          "text": "function createSystemSchemaIntegrityCatalog() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-registry/subscription-seed-catalog.js",
+      "sha256": "2435a0dce4b6075801b8422469169c3d3e1e2f2df0f3ad8d399c5d43829be1ee",
+      "line_count": 221,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "2435a0dce4b6075801b8422469169c3d3e1e2f2df0f3ad8d399c5d43829be1ee",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 11,
+          "text": "function deepFreeze(value) {"
+        },
+        {
+          "line": 17,
+          "text": "function createSeed(subscriptionId, input) {"
+        },
+        {
+          "line": 37,
+          "text": "const PROVENANCE_LEDGER_SUBSCRIPTION_SEED = createSeed(PROVENANCE_LEDGER_SUBSCRIPTION_ID, {"
+        },
+        {
+          "line": 41,
+          "text": "    eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }],"
+        },
+        {
+          "line": 46,
+          "text": "      scope: { eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }] },"
+        },
+        {
+          "line": 61,
+          "text": "    { definitionKind: 'event', schemaKey: 'resource.mutated', schemaVersion: 1 },"
+        },
+        {
+          "line": 65,
+          "text": "const RESOURCE_RENDER_PROJECTION_SUBSCRIPTION_SEED = createSeed("
+        },
+        {
+          "line": 71,
+          "text": "      eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }],"
+        },
+        {
+          "line": 76,
+          "text": "        scope: { eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }] },"
+        },
+        {
+          "line": 108,
+          "text": "      { definitionKind: 'event', schemaKey: 'resource.mutated', schemaVersion: 1 },"
+        },
+        {
+          "line": 115,
+          "text": "const AGENT_PROVENANCE_LEDGER_SUBSCRIPTION_SEED = createSeed("
+        },
+        {
+          "line": 122,
+          "text": "        { eventType: 'agent.tool_completed', schemaVersion: 1 },"
+        },
+        {
+          "line": 123,
+          "text": "        { eventType: 'resource.state_observed', schemaVersion: 1 },"
+        },
+        {
+          "line": 131,
+          "text": "            { eventType: 'agent.tool_completed', schemaVersion: 1 },"
+        },
+        {
+          "line": 132,
+          "text": "            { eventType: 'resource.state_observed', schemaVersion: 1 },"
+        },
+        {
+          "line": 155,
+          "text": "      { definitionKind: 'event', schemaKey: 'agent.tool_completed', schemaVersion: 1 },"
+        },
+        {
+          "line": 156,
+          "text": "      { definitionKind: 'event', schemaKey: 'resource.state_observed', schemaVersion: 1 },"
+        },
+        {
+          "line": 161,
+          "text": "const AGENT_RESOURCE_OBSERVER_SUBSCRIPTION_SEED = createSeed("
+        },
+        {
+          "line": 167,
+          "text": "      eventTypes: [{ eventType: 'agent.tool_completed', schemaVersion: 1 }],"
+        },
+        {
+          "line": 172,
+          "text": "        scope: { eventTypes: [{ eventType: 'agent.tool_completed', schemaVersion: 1 }] },"
+        },
+        {
+          "line": 187,
+          "text": "      { definitionKind: 'event', schemaKey: 'agent.tool_completed', schemaVersion: 1 },"
+        },
+        {
+          "line": 188,
+          "text": "      { definitionKind: 'event', schemaKey: 'resource.state_observed', schemaVersion: 1 },"
+        },
+        {
+          "line": 195,
+          "text": "const SYSTEM_SUBSCRIPTION_SEEDS = Object.freeze(["
+        },
+        {
+          "line": 202,
+          "text": "function createSystemSubscriptionIntegrityCatalog() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+      "sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb",
+      "line_count": 162,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 6,
+          "text": "  reportedUiContextFromRow,"
+        },
+        {
+          "line": 13,
+          "text": "function omitUndefined(object) {"
+        },
+        {
+          "line": 17,
+          "text": "function originFromInput(origin, serverWorkspaceId, onDiagnostic = () => {}) {"
+        },
+        {
+          "line": 26,
+          "text": "  const { context: reportedUiContext, diagnostic } = sanitizeReportedUiContext("
+        },
+        {
+          "line": 27,
+          "text": "    origin.reportedUiContext,"
+        },
+        {
+          "line": 34,
+          "text": "    kind: 'local_client', connectionId, assurance: 'transport_only', reportedUiContext,"
+        },
+        {
+          "line": 38,
+          "text": "function intentFromInput(input) {"
+        },
+        {
+          "line": 59,
+          "text": "function commandBody(input, ids, resourceId, origin, intent) {"
+        },
+        {
+          "line": 73,
+          "text": "function resourceBody(row) {"
+        },
+        {
+          "line": 74,
+          "text": "  const reportedUiContext = reportedUiContextFromRow(row);"
+        },
+        {
+          "line": 82,
+          "text": "      reportedUiContext,"
+        },
+        {
+          "line": 99,
+          "text": "function commandBodyFromRow(row) {"
+        },
+        {
+          "line": 108,
+          "text": "    reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 117,
+          "text": "function durableHash({ schemaKey, eventId, occurredAt, workspaceId, operationId, body }) {"
+        },
+        {
+          "line": 130,
+          "text": "function requestBindingHash({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/file-operation-repository.js",
+      "sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016",
+      "line_count": 696,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 18,
+          "text": "  reportedUiContextColumns,"
+        },
+        {
+          "line": 19,
+          "text": "  reportedUiContextFromRow,"
+        },
+        {
+          "line": 44,
+          "text": "function parseTerminalResponse(value) {"
+        },
+        {
+          "line": 54,
+          "text": "function mapOperation(row, { idempotentReplay = false } = {}) {"
+        },
+        {
+          "line": 73,
+          "text": "      reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 125,
+          "text": "function createFileOperationRepository(db, options = {}) {"
+        },
+        {
+          "line": 131,
+          "text": "  function newId(provided, label) {"
+        },
+        {
+          "line": 135,
+          "text": "  async function reserve(input) {"
+        },
+        {
+          "line": 171,
+          "text": "    function validateWinner(winner) {"
+        },
+        {
+          "line": 178,
+          "text": "    async function reserveOnce() {"
+        },
+        {
+          "line": 222,
+          "text": "        ...reportedUiContextColumns(origin.reportedUiContext),"
+        },
+        {
+          "line": 230,
+          "text": "          schemaKey: 'file.command_accepted',"
+        },
+        {
+          "line": 277,
+          "text": "  async function prepare({ operationId, preimage, intendedAfterSha256, intendedAfterByteLength, preparedAt }) {"
+        },
+        {
+          "line": 317,
+          "text": "  async function markAttempted(operationId, attemptedAt) {"
+        },
+        {
+          "line": 336,
+          "text": "  async function markPreparedBeforeReplaceFailed({ operationId, completedAt }) {"
+        },
+        {
+          "line": 367,
+          "text": "  async function markSucceeded({ operationId, occurredAt, completedAt, fingerprint }) {"
+        },
+        {
+          "line": 392,
+          "text": "        schemaKey: 'resource.mutated',"
+        },
+        {
+          "line": 424,
+          "text": "  async function markFailed({ operationId, failureCode, completedAt, reconciledAt = null }) {"
+        },
+        {
+          "line": 471,
+          "text": "  async function markOutcomeUnknown({"
+        },
+        {
+          "line": 520,
+          "text": "  async function setAxis(operationId, column, from, to, now) {"
+        },
+        {
+          "line": 538,
+          "text": "  async function markTempCleanupComplete(operationId, now) {"
+        },
+        {
+          "line": 542,
+          "text": "  async function storeTerminalResponse(operationId, response, now) {"
+        },
+        {
+          "line": 569,
+          "text": "  async function storeResponseSnapshot(operationId, response, now) {"
+        },
+        {
+          "line": 621,
+          "text": "  async function getById(operationId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+      "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce",
+      "line_count": 179,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 6,
+          "text": " * One job: treat the renderer-supplied `reportedUiContext` as untrusted"
+        },
+        {
+          "line": 51,
+          "text": "function scalarWithin(value, maxBytes) {"
+        },
+        {
+          "line": 67,
+          "text": "function isUsableWorkspaceId(value) {"
+        },
+        {
+          "line": 76,
+          "text": "function sanitizeReportedUiContext(rawContext, serverWorkspaceId) {"
+        },
+        {
+          "line": 137,
+          "text": "function assertCanonicalReportedUiContext(rawContext, serverWorkspaceId) {"
+        },
+        {
+          "line": 140,
+          "text": "  if (diagnostic || !context) throw new TypeError('reportedUiContext is not a canonical context');"
+        },
+        {
+          "line": 146,
+          "text": "    throw new TypeError('reportedUiContext is not a canonical context');"
+        },
+        {
+          "line": 152,
+          "text": "function reportedUiContextFromRow(row) {"
+        },
+        {
+          "line": 164,
+          "text": "function reportedUiContextColumns(context) {"
+        },
+        {
+          "line": 176,
+          "text": "  reportedUiContextColumns,"
+        },
+        {
+          "line": 177,
+          "text": "  reportedUiContextFromRow,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "line_count": 592,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 42,
+          "text": "function ids(operation) {"
+        },
+        {
+          "line": 54,
+          "text": "function capturedPair(session) {"
+        },
+        {
+          "line": 62,
+          "text": "function createFileSaveController({"
+        },
+        {
+          "line": 95,
+          "text": "  function diagnose(code) {"
+        },
+        {
+          "line": 99,
+          "text": "  async function recover(operation, reason) {"
+        },
+        {
+          "line": 115,
+          "text": "  function rejected(errorCode, extra = {}) {"
+        },
+        {
+          "line": 128,
+          "text": "  function acceptedBase(operation, pair) {"
+        },
+        {
+          "line": 141,
+          "text": "  async function readPreimage(target) {"
+        },
+        {
+          "line": 170,
+          "text": "  async function markAcceptedFailure(operation, code) {"
+        },
+        {
+          "line": 187,
+          "text": "  async function failBeforeWriterInvocation(operation, acceptedFailureCode) {"
+        },
+        {
+          "line": 213,
+          "text": "  async function cleanupTerminal(operation, target) {"
+        },
+        {
+          "line": 223,
+          "text": "  function cacheTerminalResponse(operationId, requestCacheKey, response) {"
+        },
+        {
+          "line": 237,
+          "text": "  async function persistTerminalResponse(operation, response, requestCacheKey) {"
+        },
+        {
+          "line": 258,
+          "text": "  function buildSuccessResponse(operation, pair, checkpointState) {"
+        },
+        {
+          "line": 278,
+          "text": "  function outcomeUnknownResponse(operation, pair) {"
+        },
+        {
+          "line": 287,
+          "text": "  async function finishSuccess(operation, pair, target) {"
+        },
+        {
+          "line": 308,
+          "text": "  function failedBeforeReplace(operation, pair, code) {"
+        },
+        {
+          "line": 317,
+          "text": "  async function replayAcceptedResult(operation, pair, requestCacheKey) {"
+        },
+        {
+          "line": 360,
+          "text": "  async function markDurableSuccess(operation, fingerprintValue) {"
+        },
+        {
+          "line": 383,
+          "text": "  async function save({ session, intent, capturedWorkspacePair }) {"
+        },
+        {
+          "line": 388,
+          "text": "      if (!UUID_PATTERN.test(intent?.expectedWorkspaceEpoch || '')) throw new TypeError('invalid epoch');"
+        },
+        {
+          "line": 402,
+          "text": "        || !UUID_PATTERN.test(capturedWorkspacePair.workspaceEpoch || '')"
+        },
+        {
+          "line": 430,
+          "text": "        reportedUiContext: intent.reportedUiContext,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+      "sha256": "c5b68f7646535182a75f24be88783a631f8492b16904ddeedfcf480240cd08ca",
+      "line_count": 205,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "c5b68f7646535182a75f24be88783a631f8492b16904ddeedfcf480240cd08ca",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 23,
+          "text": "function isRecordedEventType(type) {"
+        },
+        {
+          "line": 27,
+          "text": "async function getMachineIdentity(db) {"
+        },
+        {
+          "line": 36,
+          "text": "function inferWorkspaceId(event) {"
+        },
+        {
+          "line": 40,
+          "text": "function inferActor(event) {"
+        },
+        {
+          "line": 54,
+          "text": "function inferSourceModule(event) {"
+        },
+        {
+          "line": 63,
+          "text": "function buildSummary(event) {"
+        },
+        {
+          "line": 77,
+          "text": "function sanitizePayload(value, seen = new WeakSet()) {"
+        },
+        {
+          "line": 103,
+          "text": "function tagsForEvent(event) {"
+        },
+        {
+          "line": 119,
+          "text": "function edgesForEvent(event, machineIdentity) {"
+        },
+        {
+          "line": 139,
+          "text": "async function recordEvent(db, event, options = {}) {"
+        },
+        {
+          "line": 191,
+          "text": "async function listRecentEvents(db, options = {}) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "sha256": "bba3f47ff6fabeaad15d19c208f327f276df6ffc5ca9cf60deb02b347c287e97",
+      "line_count": 302,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "bba3f47ff6fabeaad15d19c208f327f276df6ffc5ca9cf60deb02b347c287e97",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 8,
+          "text": "  reportedUiContextFromRow,"
+        },
+        {
+          "line": 20,
+          "text": "function validateFact(fact) {"
+        },
+        {
+          "line": 22,
+          "text": "  if (fact.eventType !== 'resource.mutated' || fact.schemaVersion !== 1) {"
+        },
+        {
+          "line": 23,
+          "text": "    throw new TypeError('only resource.mutated@1 is supported');"
+        },
+        {
+          "line": 40,
+          "text": "  assertCanonicalReportedUiContext(fact.origin.reportedUiContext, fact.workspaceId);"
+        },
+        {
+          "line": 45,
+          "text": "function rowMatchesFact(operation, fact) {"
+        },
+        {
+          "line": 74,
+          "text": "function mapQueryRow(row) {"
+        },
+        {
+          "line": 85,
+          "text": "    eventType: 'resource.mutated',"
+        },
+        {
+          "line": 100,
+          "text": "      reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 106,
+          "text": "function createResourceProvenanceRepository(db) {"
+        },
+        {
+          "line": 109,
+          "text": "  async function appendResourceFact(fact, { projectedAt = Date.now() } = {}) {"
+        },
+        {
+          "line": 145,
+          "text": "        event_type: 'resource.mutated',"
+        },
+        {
+          "line": 188,
+          "text": "        reported_view_id: fact.origin.reportedUiContext?.viewId ?? null,"
+        },
+        {
+          "line": 189,
+          "text": "        reported_view_instance_id: fact.origin.reportedUiContext?.viewInstanceId ?? null,"
+        },
+        {
+          "line": 190,
+          "text": "        reported_tab_id: fact.origin.reportedUiContext?.tabId ?? null,"
+        },
+        {
+          "line": 191,
+          "text": "        reported_component_type_id: fact.origin.reportedUiContext?.componentTypeId ?? null,"
+        },
+        {
+          "line": 192,
+          "text": "        reported_component_instance_id: fact.origin.reportedUiContext?.componentInstanceId ?? null,"
+        },
+        {
+          "line": 193,
+          "text": "        reported_presenter_id: fact.origin.reportedUiContext?.presenterId ?? null,"
+        },
+        {
+          "line": 194,
+          "text": "        reported_target_key: fact.origin.reportedUiContext?.targetKey ?? null,"
+        },
+        {
+          "line": 209,
+          "text": "  async function query(options) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/runner/index.js",
+      "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+      "line_count": 243,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 5,
+          "text": " *   executeRun(projectRoot, agentFolder, ticket) -> { runId, runPath, status }"
+        },
+        {
+          "line": 17,
+          "text": "// Active runs: runId -> { proc, runPath, agentId, lastActivity, stalls }"
+        },
+        {
+          "line": 25,
+          "text": "function updateManifest(runPath, updates) {"
+        },
+        {
+          "line": 41,
+          "text": "function attachOutputMonitor(proc, runId) {"
+        },
+        {
+          "line": 46,
+          "text": "      heartbeat.recordActivity(runId);"
+        },
+        {
+          "line": 60,
+          "text": "            console.log(`[Runner] Run ${runId}: TurnEnd received`);"
+        },
+        {
+          "line": 70,
+          "text": "    const run = activeRuns.get(runId);"
+        },
+        {
+          "line": 80,
+          "text": "      activeRuns.delete(runId);"
+        },
+        {
+          "line": 81,
+          "text": "      console.log(`[Runner] Run ${runId} finished (status: ${status})`);"
+        },
+        {
+          "line": 84,
+          "text": "        emit('agent:run_completed', { runId, agentId: manifest?.agent_id, ticketId: manifest?.ticket_id, status: 'completed', outcome: 'success' });"
+        },
+        {
+          "line": 87,
+          "text": "        emit('agent:run_failed', { runId, agentId: manifest?.agent_id, ticketId: manifest?.ticket_id, status: 'stopped', error });"
+        },
+        {
+          "line": 95,
+          "text": "        const ticketTitle = manifest?.ticket_id || runId;"
+        },
+        {
+          "line": 99,
+          "text": "        const entry = `- **${ts}** \u2014 ${promptUsed}: ${ticketTitle}${outcomeTag} [run: ${runId}]`;"
+        },
+        {
+          "line": 137,
+          "text": " * @returns {Promise<{ runId: string, runPath: string, status: string }>}"
+        },
+        {
+          "line": 139,
+          "text": "async function executeRun(projectRoot, agentFolder, ticket) {"
+        },
+        {
+          "line": 140,
+          "text": "  let runId, runPath, manifest;"
+        },
+        {
+          "line": 144,
+          "text": "    ({ runId, runPath, manifest } = createRunFolder(projectRoot, agentFolder, ticket));"
+        },
+        {
+          "line": 148,
+          "text": "    return { runId: null, runPath: null, status: 'error' };"
+        },
+        {
+          "line": 158,
+          "text": "    return { runId, runPath, status: 'error' };"
+        },
+        {
+          "line": 168,
+          "text": "    return { runId, runPath, status: 'error' };"
+        },
+        {
+          "line": 172,
+          "text": "  activeRuns.set(runId, {"
+        },
+        {
+          "line": 181,
+          "text": "  attachOutputMonitor(proc, runId);"
+        },
+        {
+          "line": 186,
+          "text": "    console.log(`[Runner] Wire initialized for run ${runId}`);"
+        },
+        {
+          "line": 191,
+          "text": "    activeRuns.delete(runId);"
+        },
+        {
+          "line": 192,
+          "text": "    return { runId, runPath, status: 'error' };"
+        },
+        {
+          "line": 199,
+          "text": "  console.log(`[Runner] Run ${runId} started for agent ${manifest.agent_id}`);"
+        },
+        {
+          "line": 200,
+          "text": "  emit('agent:run_started', { runId, agentId: manifest.agent_id, ticketId: ticket.frontmatter?.id, botName: manifest?.bot_name });"
+        },
+        {
+          "line": 201,
+          "text": "  return { runId, runPath, status: 'running' };"
+        },
+        {
+          "line": 210,
+          "text": "function checkHeartbeats(projectRoot, options = {}) {"
+        },
+        {
+          "line": 217,
+          "text": "    onStall(runId, stalls) {"
+        },
+        {
+          "line": 218,
+          "text": "      const run = activeRuns.get(runId);"
+        },
+        {
+          "line": 220,
+          "text": "      console.log(`[Runner] Nudging stalled run ${runId} (stall #${stalls})`);"
+        },
+        {
+          "line": 223,
+          "text": "    onMaxStalls(runId) {"
+        },
+        {
+          "line": 224,
+          "text": "      const run = activeRuns.get(runId);"
+        },
+        {
+          "line": 233,
+          "text": "      activeRuns.delete(runId);"
+        },
+        {
+          "line": 234,
+          "text": "      console.log(`[Runner] Killed stalled run ${runId}`);"
+        },
+        {
+          "line": 235,
+          "text": "      emit('agent:run_stalled', { runId, agentId: run.agentId, stallCount: options.maxStalls || 3 });"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/runner/run-folder.js",
+      "sha256": "8d8e32d07323105a0d44693b28f99474a0788295dbf7f7cd913f98d21549f290",
+      "line_count": 104,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 16,
+          "text": "function makeTimestamp() {"
+        },
+        {
+          "line": 28,
+          "text": " * @returns {{ runId: string, runPath: string, manifest: Object }}"
+        },
+        {
+          "line": 30,
+          "text": "function createRunFolder(projectRoot, agentFolder, ticket) {"
+        },
+        {
+          "line": 31,
+          "text": "  const runId = makeTimestamp();"
+        },
+        {
+          "line": 33,
+          "text": "  const runPath = path.join(agentBase, 'runs', runId);"
+        },
+        {
+          "line": 75,
+          "text": "    run_id: runId,"
+        },
+        {
+          "line": 101,
+          "text": "  return { runId, runPath, manifest };"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "sha256": "888433c47713f11bef8b79790daeaa26c450f9d623d8e543bc0d10e29afa1e02",
+      "line_count": 888,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "888433c47713f11bef8b79790daeaa26c450f9d623d8e543bc0d10e29afa1e02",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 58,
+          "text": "async function initializeRuntimeMachineIdentity({ initializeIdentity, resolveIdentity } = {}) {"
+        },
+        {
+          "line": 70,
+          "text": "function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.promises.realpath } = {}) {"
+        },
+        {
+          "line": 74,
+          "text": "  return async function resolveWorkspaceRoot(workspaceId) {"
+        },
+        {
+          "line": 88,
+          "text": "function createAgentPhaseAOwner({"
+        },
+        {
+          "line": 106,
+          "text": "  return async function shutdownAgentOwners(options) {"
+        },
+        {
+          "line": 186,
+          "text": "async function start({"
+        },
+        {
+          "line": 427,
+          "text": "        if (fact?.eventType !== 'agent.tool_completed' || fact?.schemaVersion !== 1) {"
+        },
+        {
+          "line": 454,
+          "text": "      if (fact?.eventType === 'agent.tool_completed') observationOwner.signal();"
+        },
+        {
+          "line": 455,
+          "text": "      if (fact?.eventType === 'resource.state_observed') rendererProjectionOwner.signal();"
+        },
+        {
+          "line": 766,
+          "text": "function _startPipeline({ sessions, projectRoot, workspaceId }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "line_count": 325,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 32,
+          "text": "    schemaKey: 'file.command_accepted',"
+        },
+        {
+          "line": 37,
+          "text": "    schemaKey: 'resource.mutated',"
+        },
+        {
+          "line": 42,
+          "text": "    schemaKey: 'agent.tool_completed',"
+        },
+        {
+          "line": 48,
+          "text": "    schemaKey: 'resource.state_observed',"
+        },
+        {
+          "line": 54,
+          "text": "function assertPlainObject(value, label) {"
+        },
+        {
+          "line": 64,
+          "text": "function assertExactKeys(value, keys, label) {"
+        },
+        {
+          "line": 72,
+          "text": "function assertIdentity(identity) {"
+        },
+        {
+          "line": 93,
+          "text": "    || !/^[0-9a-f]{64}$/u.test(identity.canonicalHash)"
+        },
+        {
+          "line": 97,
+          "text": "function rejectionReport() {"
+        },
+        {
+          "line": 101,
+          "text": "function diagnose(runtime, code, publisher) {"
+        },
+        {
+          "line": 115,
+          "text": "function normalizeDeliveries(deliveries) {"
+        },
+        {
+          "line": 135,
+          "text": "function durableInput(publisher, identity, body) {"
+        },
+        {
+          "line": 148,
+          "text": "function createPublisher(runtime, publisher) {"
+        },
+        {
+          "line": 149,
+          "text": "  return Object.freeze(async function publishFact(input) {"
+        },
+        {
+          "line": 232,
+          "text": "        || /database is locked|cannot start a transaction within a transaction/iu.test(String(error?.message));"
+        },
+        {
+          "line": 242,
+          "text": "function bootstrapAdmission({"
+        },
+        {
+          "line": 285,
+          "text": "          && input.schemaKey === 'agent.tool_completed' && input.schemaVersion === 1)"
+        },
+        {
+          "line": 287,
+          "text": "          && input.schemaKey === 'resource.state_observed' && input.schemaVersion === 1);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+      "line_count": 314,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 12,
+          "text": "function boundedText(value) {"
+        },
+        {
+          "line": 16,
+          "text": "function snapshotFact(fact) {"
+        },
+        {
+          "line": 20,
+          "text": "function createSubscriptionController({"
+        },
+        {
+          "line": 50,
+          "text": "  function diagnose(code, fields = {}, error = null) {"
+        },
+        {
+          "line": 69,
+          "text": "  function inspectGeneration() {"
+        },
+        {
+          "line": 83,
+          "text": "  function getDiagnostics() {"
+        },
+        {
+          "line": 87,
+          "text": "  function compileOne(effectiveState, entry, generationId) {"
+        },
+        {
+          "line": 96,
+          "text": "  async function performReload() {"
+        },
+        {
+          "line": 155,
+          "text": "  function enqueueReload() {"
+        },
+        {
+          "line": 161,
+          "text": "  async function start() {"
+        },
+        {
+          "line": 182,
+          "text": "  async function reload() {"
+        },
+        {
+          "line": 187,
+          "text": "  function quiesce() {"
+        },
+        {
+          "line": 192,
+          "text": "  async function stop() {"
+        },
+        {
+          "line": 218,
+          "text": "  function observeBestEffort(result, descriptor) {"
+        },
+        {
+          "line": 228,
+          "text": "  function observeRequiredAck(result, descriptor) {"
+        },
+        {
+          "line": 264,
+          "text": "  async function dispatchAdmittedFact(sourceFact) {"
+        },
+        {
+          "line": 299,
+          "text": "  function deliverAdmittedFact(sourceFact) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+      "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+      "line_count": 223,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 20,
+          "text": "function parseSchedule(schedule) {"
+        },
+        {
+          "line": 59,
+          "text": "function matchCronField(field, value) {"
+        },
+        {
+          "line": 63,
+          "text": "  if (/^\\d+$/.test(field)) return parseInt(field, 10) === value;"
+        },
+        {
+          "line": 78,
+          "text": "function parseDuration(str) {"
+        },
+        {
+          "line": 99,
+          "text": "function createCronScheduler(createTicketFn, options = {}) {"
+        },
+        {
+          "line": 197,
+          "text": "  function normalizeMessage(msg) {"
+        },
+        {
+          "line": 206,
+          "text": "  function fireJob(job) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/triggers/hold-registry.js",
+      "sha256": "a2d07d3be74110765c7056bfe1758ac0da603226724be0f639bbcf7f1127bbf6",
+      "line_count": 112,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 22,
+          "text": "function createHoldRegistry(issuesDir, options = {}) {"
+        },
+        {
+          "line": 78,
+          "text": "  function releaseHold(key) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/triggers/script-runner.js",
+      "sha256": "71034f7ff11dac87a836e3a74fd954b846dde66c2cdd3b95454653d5f0bce677",
+      "line_count": 50,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "71034f7ff11dac87a836e3a74fd954b846dde66c2cdd3b95454653d5f0bce677",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 13,
+          "text": " * Run a script function and return its result."
+        },
+        {
+          "line": 16,
+          "text": " * @param {string|null} functionName - Exported function name, or null for default export"
+        },
+        {
+          "line": 21,
+          "text": "function runScript(scriptPath, functionName, ctx, projectRoot) {"
+        },
+        {
+          "line": 36,
+          "text": "    console.error(`[ScriptRunner] No function \"${functionName || 'default'}\" in ${scriptPath}`);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+      "sha256": "ad1193e632d225865a36a441ecbd5a8a2693dd837bc2660a3ad05441366a67c5",
+      "line_count": 302,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "ad1193e632d225865a36a441ecbd5a8a2693dd837bc2660a3ad05441366a67c5",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 25,
+          "text": "function registerBusListener(eventType, block, assignee, actionHandlers) {"
+        },
+        {
+          "line": 79,
+          "text": "function realpathOrNull(targetPath) {"
+        },
+        {
+          "line": 87,
+          "text": "function findTriggersFiles(dir, cycleGuard = createCycleGuard()) {"
+        },
+        {
+          "line": 115,
+          "text": "function deriveAssignee(triggersPath, projectRoot) {"
+        },
+        {
+          "line": 134,
+          "text": "function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {"
+        },
+        {
+          "line": 189,
+          "text": "function processBlock(block, assignee, projectRoot, actionHandlers, filters, cronTriggers) {"
+        },
+        {
+          "line": 209,
+          "text": "function normalizeMessage(msg) {"
+        },
+        {
+          "line": 222,
+          "text": "function buildTriggerFilter(block, assignee, projectRoot, actionHandlers) {"
+        },
+        {
+          "line": 236,
+          "text": "    function: block.function || null,"
+        },
+        {
+          "line": 265,
+          "text": "function wrapWithScript(def, originalHandlers, projectRoot) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/watch/core.js",
+      "sha256": "3f0ea12c0732d0e44721709e21681358514aae7145c96d7763e81996829b8ba2",
+      "line_count": 134,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "3f0ea12c0732d0e44721709e21681358514aae7145c96d7763e81996829b8ba2",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 30,
+          "text": "function getOptionsKey(opts) {"
+        },
+        {
+          "line": 41,
+          "text": "function subscribe({ id, path: watchPath, options = {}, handler }) {"
+        },
+        {
+          "line": 89,
+          "text": "  return function unsubscribeById() {"
+        },
+        {
+          "line": 94,
+          "text": "function unsubscribe(id) {"
+        },
+        {
+          "line": 113,
+          "text": "function closeAll() {"
+        },
+        {
+          "line": 127,
+          "text": "function abandonAll() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/watch/workspace-watcher.js",
+      "sha256": "acd4b8a7e58223c5c3fa0259f7c2d6471b618e769e98b24b2b3ed0c9104511b3",
+      "line_count": 187,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "acd4b8a7e58223c5c3fa0259f7c2d6471b618e769e98b24b2b3ed0c9104511b3",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 40,
+          "text": "function createWatcher(projectRoot, options = {}) {"
+        },
+        {
+          "line": 51,
+          "text": "  function notifyFilters(event, filePath, extra) {"
+        },
+        {
+          "line": 95,
+          "text": "  function checkForRenameTarget(filename) {"
+        },
+        {
+          "line": 110,
+          "text": "  function scheduleDelete(filePath) {"
+        },
+        {
+          "line": 122,
+          "text": "  function handleFileEvent(event, absolutePath) {"
+        },
+        {
+          "line": 152,
+          "text": "  // function so isExcluded operates on the relative path as it does elsewhere."
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/watcher/actions.js",
+      "sha256": "670e98f2d9f7a566c7c20f80e94027087ee0562bf38ce4ac7d77f584fe101f16",
+      "line_count": 210,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 20,
+          "text": "function createActionHandlers(deps = {}) {"
+        },
+        {
+          "line": 27,
+          "text": "        console.error(`[Action:create-ticket] No createTicket function provided`);"
+        },
+        {
+          "line": 85,
+          "text": "        console.warn(`[Action:send-message] No sendChatMessage function provided`);"
+        },
+        {
+          "line": 123,
+          "text": "        console.warn(`[Action:show-modal] No getModalDefinition function provided`);"
+        },
+        {
+          "line": 128,
+          "text": "        console.warn(`[Action:show-modal] No broadcastModal function provided`);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/agent-activity-route.js",
+      "sha256": "c3641128b4c0494e32a16d535d58dc6b3feba768000c855faaae55ec32ec867f",
+      "line_count": 196,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "c3641128b4c0494e32a16d535d58dc6b3feba768000c855faaae55ec32ec867f",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 16,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 29,
+          "text": "function validRequestId(value) { return scalarStringWithin(value, 128); }"
+        },
+        {
+          "line": 31,
+          "text": "function validEnvelope(message) {"
+        },
+        {
+          "line": 37,
+          "text": "    && UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 40,
+          "text": "function error(code, extra = {}) {"
+        },
+        {
+          "line": 44,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 48,
+          "text": "function createAgentActivityRoute({"
+        },
+        {
+          "line": 59,
+          "text": "  function diagnose(code) {"
+        },
+        {
+          "line": 63,
+          "text": "  function closeInvalidAuthority(ws) {"
+        },
+        {
+          "line": 68,
+          "text": "  async function sendFixedQueryFailure(ws, session, requestId, pair) {"
+        },
+        {
+          "line": 78,
+          "text": "  async function sendValidated(ws, session, value, pair = null) {"
+        },
+        {
+          "line": 86,
+          "text": "        && UUID_PATTERN.test(value.workspaceEpoch)) {"
+        },
+        {
+          "line": 103,
+          "text": "  async function handleValidatedQuery({ ws, session, message }) {"
+        },
+        {
+          "line": 180,
+          "text": "  async function handleQuery(input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/client-message-router.js",
+      "sha256": "c10727bf72f5b54923647d55d17cf4ea413d771ba83236b7432509204fcfb1c1",
+      "line_count": 889,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "c10727bf72f5b54923647d55d17cf4ea413d771ba83236b7432509204fcfb1c1",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 79,
+          "text": "function createClientMessageRouter({"
+        },
+        {
+          "line": 137,
+          "text": "  function fanViewRegistryUpdated(message, binding) {"
+        },
+        {
+          "line": 281,
+          "text": "  async function handleClientMessageWithinBoundary(message, isBinary = false) {"
+        },
+        {
+          "line": 863,
+          "text": "  function handleClientMessage(message, isBinary = false) {"
+        },
+        {
+          "line": 869,
+          "text": "  function handleClientClose() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/file-save-route.js",
+      "sha256": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875",
+      "line_count": 209,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 17,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 34,
+          "text": "function independentlyValidRequestId(value) {"
+        },
+        {
+          "line": 38,
+          "text": "function validEnvelope(message) {"
+        },
+        {
+          "line": 44,
+          "text": "    && UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 47,
+          "text": "function response(errorCode, extra = {}) {"
+        },
+        {
+          "line": 60,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 64,
+          "text": "function omitReportedUiContext(message) {"
+        },
+        {
+          "line": 65,
+          "text": "  const { reportedUiContext: _omitted, ...rest } = message;"
+        },
+        {
+          "line": 69,
+          "text": "function classifyContentError(errors) {"
+        },
+        {
+          "line": 82,
+          "text": "function createFileSaveRoute({"
+        },
+        {
+          "line": 93,
+          "text": "  function diagnose(code) {"
+        },
+        {
+          "line": 97,
+          "text": "  function closeInvalidAuthority(ws) {"
+        },
+        {
+          "line": 102,
+          "text": "  async function sendValidated(ws, session, value) {"
+        },
+        {
+          "line": 112,
+          "text": "  async function handleValidatedFileSave({ ws, session, message }) {"
+        },
+        {
+          "line": 133,
+          "text": "    const sanitizedContext = sanitizeReportedUiContext(message.reportedUiContext, pair.workspaceId);"
+        },
+        {
+          "line": 136,
+          "text": "      ? { ...message, reportedUiContext: sanitizedContext.context }"
+        },
+        {
+          "line": 185,
+          "text": "        reportedUiContext: sanitizedContext.context,"
+        },
+        {
+          "line": 191,
+          "text": "  async function handleFileSave(input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/resource-provenance-route.js",
+      "sha256": "8555703be80788d4675ea8f564c5dfceb4fbdc1a7d581a9dcdf0667a8b67ab20",
+      "line_count": 215,
+      "evidence": "bounded source/authority inspection",
+      "s00_sha256": "8555703be80788d4675ea8f564c5dfceb4fbdc1a7d581a9dcdf0667a8b67ab20",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 16,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 31,
+          "text": "function validRequestId(value) {"
+        },
+        {
+          "line": 35,
+          "text": "function validEnvelope(message) {"
+        },
+        {
+          "line": 41,
+          "text": "    && UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 44,
+          "text": "function error(code, extra = {}) {"
+        },
+        {
+          "line": 53,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 57,
+          "text": "function createResourceProvenanceRoute({"
+        },
+        {
+          "line": 70,
+          "text": "  function diagnose(code) {"
+        },
+        {
+          "line": 74,
+          "text": "  function closeInvalidAuthority(ws) {"
+        },
+        {
+          "line": 79,
+          "text": "  async function sendFixedQueryFailure(ws, session, requestId, pair) {"
+        },
+        {
+          "line": 89,
+          "text": "  async function sendValidated(ws, session, value) {"
+        },
+        {
+          "line": 97,
+          "text": "        && UUID_PATTERN.test(value.workspaceEpoch)) {"
+        },
+        {
+          "line": 114,
+          "text": "  async function handleValidatedQuery({ ws, session, message }) {"
+        },
+        {
+          "line": 197,
+          "text": "  async function handleQuery(input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/reported-ui-context.test.js",
+      "sha256": "530d661ccca9bc07d14ec8593d23eca1af90f14c492fdaf29d8866112f2ce561",
+      "line_count": 274,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 15,
+          "text": "  reportedUiContextFromRow,"
+        },
+        {
+          "line": 34,
+          "text": "function uuid(number) {"
+        },
+        {
+          "line": 38,
+          "text": "function reservationInput(start, overrides = {}) {"
+        },
+        {
+          "line": 50,
+          "text": "      reportedUiContext: { ...CONTEXT },"
+        },
+        {
+          "line": 66,
+          "text": "async function succeed(operations, operation, occurredAt, preimage = { kind: 'absent' }) {"
+        },
+        {
+          "line": 91,
+          "text": "  test('uses the server workspace, preserves bounds, and reports fixed diagnostics', () => {"
+        },
+        {
+          "line": 121,
+          "text": "  test('originFromInput stays strict about base origin while degrading malformed context fail-open', () => {"
+        },
+        {
+          "line": 127,
+          "text": "      reportedUiContext: 'not-an-object',"
+        },
+        {
+          "line": 138,
+          "text": "  test('persists both durable fact bodies with the validated context and stable bindings on replay', async () => {"
+        },
+        {
+          "line": 157,
+          "text": "    expect(reportedUiContextFromRow(row)).toEqual(CONTEXT);"
+        },
+        {
+          "line": 160,
+          "text": "    expect(commandBody.origin.reportedUiContext).toEqual(CONTEXT);"
+        },
+        {
+          "line": 162,
+          "text": "      schemaKey: 'file.command_accepted',"
+        },
+        {
+          "line": 172,
+          "text": "    expect(resourceBody.origin.reportedUiContext).toEqual(CONTEXT);"
+        },
+        {
+          "line": 175,
+          "text": "      schemaKey: 'resource.mutated',"
+        },
+        {
+          "line": 189,
+          "text": "  test('omits the context on renderer workspace mismatch without changing the accepted save', async () => {"
+        },
+        {
+          "line": 197,
+          "text": "        reportedUiContext: { ...CONTEXT, workspaceId: 'workspace-other' },"
+        },
+        {
+          "line": 205,
+          "text": "    expect(commandBody.origin.reportedUiContext).toBeUndefined();"
+        },
+        {
+          "line": 208,
+          "text": "  test('the controller path never rejects or delays a save for malformed context', async () => {"
+        },
+        {
+          "line": 248,
+          "text": "      for (const [index, reportedUiContext] of malformed.entries()) {"
+        },
+        {
+          "line": 260,
+          "text": "            reportedUiContext,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/triggers/cron-scheduler.test.js",
+      "sha256": "cef23ba844212b4975ad6eed2ddfd75b71685d890c8cf7b4d3613c5d96225734",
+      "line_count": 111,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 45,
+          "text": "  test('keeps the existing daily/cron schedule and retry parsing contract', () => {"
+        },
+        {
+          "line": 58,
+          "text": "  test('registers through safe timers, suppresses same-minute duplicates, and passes no governed power', () => {"
+        },
+        {
+          "line": 86,
+          "text": "  test('retries a failed condition and isolates an action throw so later schedules still fire', () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+      "sha256": "fab03b7cd585fac7605166f195899bbff7f6290ff2d4f404ec0be9d7e43a194a",
+      "line_count": 178,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 7,
+          "text": "function writeTriggers(root, content) {"
+        },
+        {
+          "line": 34,
+          "text": "  test('editable bus definitions retain legacy emit/on behavior without governed capabilities', () => {"
+        },
+        {
+          "line": 89,
+          "text": "  test('editable file definitions retain watcher filtering and script action topology', () => {"
+        },
+        {
+          "line": 145,
+          "text": "  test('cron definitions remain inert data returned to the established scheduler owner', () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/agent-activity-route.test.js",
+      "sha256": "3dbb5fdf7ec0756a5611cde5e1e669fa6f4fa69ed1531b0e40cd553ea6f5641f",
+      "line_count": 153,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": null,
+      "unchanged_from_s00": null,
+      "anchors": [
+        {
+          "line": 12,
+          "text": "function activeSession(workspaceId = 'workspace-a', workspaceEpoch = A1) {"
+        },
+        {
+          "line": 19,
+          "text": "function query(overrides = {}) {"
+        },
+        {
+          "line": 27,
+          "text": "function harness(overrides = {}) {"
+        },
+        {
+          "line": 48,
+          "text": "  test('normalizes selectors, queries only captured workspace authority, and returns exact subject result', async () => {"
+        },
+        {
+          "line": 84,
+          "text": "  test('distinguishes unavailable and stale workspace pairs before selector validation', async () => {"
+        },
+        {
+          "line": 112,
+          "text": "  test('reports panel/path normalization rejection as invalid and authority failure as query_failed', async () => {"
+        },
+        {
+          "line": 123,
+          "text": "  test('query failure is fixed and value-free', async () => {"
+        },
+        {
+          "line": 130,
+          "text": "  test('inactive registered schema closes instead of running the query', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/file-save-route.test.js",
+      "sha256": "00ad8e92d573f5a07dfe157e93a1c68d2c3d885cc7b633824a9611aca3d7eb8d",
+      "line_count": 520,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": "00ad8e92d573f5a07dfe157e93a1c68d2c3d885cc7b633824a9611aca3d7eb8d",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 18,
+          "text": "function socket() {"
+        },
+        {
+          "line": 34,
+          "text": "function activeSession(epoch = EPOCH_A1) {"
+        },
+        {
+          "line": 47,
+          "text": "function request(overrides = {}) {"
+        },
+        {
+          "line": 62,
+          "text": "function exactSuccess(message) {"
+        },
+        {
+          "line": 79,
+          "text": "function exactSuccessFromIntent(intent) {"
+        },
+        {
+          "line": 102,
+          "text": "  test('validates the public request, maps reason to saveReason, and emits an exact response', async () => {"
+        },
+        {
+          "line": 125,
+          "text": "        clientActionId: undefined, reportedUiContext: undefined,"
+        },
+        {
+          "line": 132,
+          "text": "  test('accepts an empty milestone while preserving the reason/milestone coupling', async () => {"
+        },
+        {
+          "line": 171,
+          "text": "  test('maps content exceeding 10 MiB of encoded UTF-8 to too_large before mutation', async () => {"
+        },
+        {
+          "line": 217,
+          "text": "  test('invalid envelope is rejected without relying on request fields for correlation', async () => {"
+        },
+        {
+          "line": 231,
+          "text": "  test('binding, A -> B, and A -> B -> A reject stale intent before owner/path I/O', async () => {"
+        },
+        {
+          "line": 262,
+          "text": "  test('locked schema checksum drift fails closed before mutation', async () => {"
+        },
+        {
+          "line": 282,
+          "text": "  test('owner exceptions and response drift close with fixed diagnostics and never serialize request content', async () => {"
+        },
+        {
+          "line": 299,
+          "text": "  test('direct composition writes through the mediated controller without the retired save broadcast', async () => {"
+        },
+        {
+          "line": 351,
+          "text": "  test('passes the validated component context through with the server-derived workspace', async () => {"
+        },
+        {
+          "line": 365,
+          "text": "        reportedUiContext: {"
+        },
+        {
+          "line": 373,
+          "text": "    expect(seen[0].intent.reportedUiContext).toEqual({"
+        },
+        {
+          "line": 380,
+          "text": "  test('degrades malformed/oversized/stale reportedUiContext instead of rejecting the save', async () => {"
+        },
+        {
+          "line": 401,
+          "text": "    for (const [, reportedUiContext, expected] of cases) {"
+        },
+        {
+          "line": 406,
+          "text": "        message: request({ requestId: `ctx-${seen.length + 1}`, reportedUiContext }),"
+        },
+        {
+          "line": 409,
+          "text": "      expect(seen.at(-1).intent.reportedUiContext).toEqual(expected.context);"
+        },
+        {
+          "line": 414,
+          "text": "  test('completed paired route reply is held behind an in-progress bind frame', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/resource-provenance-route.test.js",
+      "sha256": "03ebb9e878b0c5662c2b642b4d8e59df64cc30aee7ce4e2a5b909462540dde45",
+      "line_count": 431,
+      "evidence": "test assertions inspected, not rerun",
+      "s00_sha256": "03ebb9e878b0c5662c2b642b4d8e59df64cc30aee7ce4e2a5b909462540dde45",
+      "unchanged_from_s00": true,
+      "anchors": [
+        {
+          "line": 19,
+          "text": "function activeSession(workspaceId = 'workspace-a', workspaceEpoch = A1) {"
+        },
+        {
+          "line": 26,
+          "text": "function query(overrides = {}) {"
+        },
+        {
+          "line": 34,
+          "text": "function createHarness(overrides = {}) {"
+        },
+        {
+          "line": 52,
+          "text": "function createV2Workspace() {"
+        },
+        {
+          "line": 89,
+          "text": "  test('rejects binding and stale-pair preconditions before selector/query work', async () => {"
+        },
+        {
+          "line": 108,
+          "text": "  test('normalizes panel aliases and combines every selector with the captured workspace', async () => {"
+        },
+        {
+          "line": 127,
+          "text": "  test('forwards bounded view/tab/component/presenter/target context selectors', async () => {"
+        },
+        {
+          "line": 173,
+          "text": "  test('returns fixed query_failed for repository errors', async () => {"
+        },
+        {
+          "line": 188,
+          "text": "  test('distinguishes typed selector rejection from path-normalizer infrastructure failure', async () => {"
+        },
+        {
+          "line": 229,
+          "text": "  test('production panel stat failure returns fixed query_failed and only its bounded diagnostic', async () => {"
+        },
+        {
+          "line": 259,
+          "text": "  test('production V2 manifest EIO returns fixed query_failed instead of unknown-panel rejection', async () => {"
+        },
+        {
+          "line": 293,
+          "text": "  test('production V2 Views-directory EIO returns fixed query_failed', async () => {"
+        },
+        {
+          "line": 327,
+          "text": "  test('production V2 entry-classification EIO returns fixed query_failed', async () => {"
+        },
+        {
+          "line": 362,
+          "text": "  test('a truly unknown V2 panel remains invalid_request without an infrastructure diagnostic', async () => {"
+        },
+        {
+          "line": 388,
+          "text": "  test('registry validation exception returns fixed query_failed without retry or route diagnostic', async () => {"
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "at": "2026-09-19T10:47:57.198941+00:00",
+      "exit": 0,
+      "stdout": "/Users/rccurtrightjr./projects/fs-dev\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "at": "2026-09-19T10:47:57.203282+00:00",
+      "exit": 0,
+      "stdout": "88637d11c65be53d4f2ad0f049f64a07fa3db1de\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "at": "2026-09-19T10:47:57.294788+00:00",
+      "exit": 0,
+      "stdout": " M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md\n M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md\n M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json\n M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json\n M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md\n M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md\n M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md\n M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md\n M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md\n M ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md\n M fusion-studio-client/e2e/office/fixture-lifecycle.mjs\n M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs\n M fusion-studio-client/e2e/office/global-setup.mjs\n M fusion-studio-client/e2e/office/global-teardown.mjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs\n M fusion-studio-client/e2e/office/run-isolated-electron.mjs\n M fusion-studio-client/playwright.office.config.ts\n?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md\n?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md\n?? ai/RC-MacAir-15/Captures/031-Remote_Access/\n?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033208.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033208.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033208.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033208.md\n?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033208.md\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-032540.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-033431.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-032620.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-033554.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-033554.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032540.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-033554.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-034705.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-034705.md\n?? fusion-studio-client/e2e/office/harness-bounds.mjs\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "uiActionSeed|ui\\.action|chat.send_with_resource|changeStorm|automation\\.runId",
+        "fusion-studio-client/src",
+        "fusion-studio-server/lib"
+      ],
+      "at": "2026-09-19T10:47:57.322400+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "queryResourceProvenance|agent:activity|resource:provenance",
+        "fusion-studio-client/src"
+      ],
+      "at": "2026-09-19T10:47:57.334146+00:00",
+      "exit": 0,
+      "stdout": "fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:114:  if (!['resource:provenance:result', 'resource:provenance:error'].includes(String(item.type))\nfusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:117:  if (item.type === 'resource:provenance:result') {\nfusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:157:  if (value.type === 'resource:provenance:result') entry.resolve(value.items);\nfusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:162:export function queryResourceProvenance(\nfusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:173:    type: 'resource:provenance:query',\nfusion-studio-client/src/types/file-explorer.ts:273:  type: 'resource:provenance:query';\nfusion-studio-client/src/types/file-explorer.ts:317:  type: 'resource:provenance:result';\nfusion-studio-client/src/types/file-explorer.ts:327:      type: 'resource:provenance:error'; version: 1; code: 'invalid_request'; requestId?: string;\nfusion-studio-client/src/types/file-explorer.ts:330:      type: 'resource:provenance:error'; version: 1; code: 'invalid_request'; requestId: string;\nfusion-studio-client/src/types/file-explorer.ts:334:      type: 'resource:provenance:error'; version: 1; code: 'workspace_unavailable'; requestId: string;\nfusion-studio-client/src/types/file-explorer.ts:337:      type: 'resource:provenance:error'; version: 1; code: 'query_failed' | 'stale_workspace';\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "readSaveActionContext|saveFile\\(",
+        "fusion-studio-client/src"
+      ],
+      "at": "2026-09-19T10:47:57.342434+00:00",
+      "exit": 0,
+      "stdout": "fusion-studio-client/src/lib/save-action-context.ts:99:export function readSaveActionContext(panel: string): ComponentActionContext | undefined {\nfusion-studio-client/src/state/fileDataStore.ts:25:import { readSaveActionContext } from '../lib/save-action-context';\nfusion-studio-client/src/state/fileDataStore.ts:529:          get().saveFile(panel, path, content, reason, milestone, dirtyRevision)\nfusion-studio-client/src/state/fileDataStore.ts:543:      const reportedUiContext = readSaveActionContext(panel);\nfusion-studio-client/src/components/email/EmailDocumentPage.tsx:168:      await saveFile(\nfusion-studio-client/src/components/documentSaveAcknowledgement.ts:54:  await saveFile(panel, path, content, 'milestone', milestone, capturedDirtyRevision);\nfusion-studio-client/src/components/office/OfficeDocumentPage.tsx:291:      await saveFile(\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "loadTriggers|createCronScheduler|_autoHold|runId",
+        "fusion-studio-server/lib/startup.js",
+        "fusion-studio-server/lib/triggers",
+        "fusion-studio-server/lib/runner",
+        "fusion-studio-server/lib/watcher"
+      ],
+      "at": "2026-09-19T10:47:57.350466+00:00",
+      "exit": 0,
+      "stdout": "fusion-studio-server/lib/startup.js:854:  const { loadTriggers } = require('./triggers/trigger-loader');\nfusion-studio-server/lib/startup.js:855:  const { createCronScheduler } = require('./triggers/cron-scheduler');\nfusion-studio-server/lib/startup.js:861:    const { filters: triggerFilters, cronTriggers } = loadTriggers(\nfusion-studio-server/lib/startup.js:868:      const cronScheduler = createCronScheduler(wrappedCreateTicket, { evaluateCondition });\nfusion-studio-server/lib/watcher/actions.js:39:      if (def._autoHold) ticket.autoHold = true;\nfusion-studio-server/lib/runner/run-folder.js:28: * @returns {{ runId: string, runPath: string, manifest: Object }}\nfusion-studio-server/lib/runner/run-folder.js:31:  const runId = makeTimestamp();\nfusion-studio-server/lib/runner/run-folder.js:33:  const runPath = path.join(agentBase, 'runs', runId);\nfusion-studio-server/lib/runner/run-folder.js:75:    run_id: runId,\nfusion-studio-server/lib/runner/run-folder.js:101:  return { runId, runPath, manifest };\nfusion-studio-server/lib/triggers/trigger-loader.js:57:        _autoHold: true,\nfusion-studio-server/lib/triggers/trigger-loader.js:134:function loadTriggers(projectRoot, agentsBasePath, registry, actionHandlers) {\nfusion-studio-server/lib/triggers/trigger-loader.js:238:    _autoHold: action === 'create-ticket',\nfusion-studio-server/lib/triggers/trigger-loader.js:302:module.exports = { loadTriggers };\nfusion-studio-server/lib/runner/heartbeat.js:15: * @property {function} [onStall]             - Called on each stall: (runId, stallCount) => void\nfusion-studio-server/lib/runner/heartbeat.js:16: * @property {function} [onMaxStalls]         - Called when maxStalls reached: (runId) => void\nfusion-studio-server/lib/runner/heartbeat.js:22: * @param {Map} activeRuns - Map of runId -> { proc, runPath, agentId, lastActivity, stalls }\nfusion-studio-server/lib/runner/heartbeat.js:52:    for (const [runId, run] of activeRuns.entries()) {\nfusion-studio-server/lib/runner/heartbeat.js:64:      console.log(`[Runner:Heartbeat] Run ${runId} stall #${run.stalls} (max ${maxStalls})`);\nfusion-studio-server/lib/runner/heartbeat.js:67:        console.log(`[Runner:Heartbeat] Run ${runId} reached max stalls \u2014 killing`);\nfusion-studio-server/lib/runner/heartbeat.js:68:        runSafely(`Runner:Heartbeat:max-stalls:${runId}`, () => onMaxStalls(runId));\nfusion-studio-server/lib/runner/heartbeat.js:70:        runSafely(`Runner:Heartbeat:stall:${runId}`, () => onStall(runId, run.stalls));\nfusion-studio-server/lib/runner/heartbeat.js:98:     * @param {string} runId\nfusion-studio-server/lib/runner/heartbeat.js:100:    recordActivity(runId) {\nfusion-studio-server/lib/runner/heartbeat.js:101:      const run = activeRuns.get(runId);\nfusion-studio-server/lib/triggers/cron-scheduler.js:99:function createCronScheduler(createTicketFn, options = {}) {\nfusion-studio-server/lib/triggers/cron-scheduler.js:223:module.exports = { createCronScheduler, parseSchedule, parseDuration };\nfusion-studio-server/lib/runner/index.js:5: *   executeRun(projectRoot, agentFolder, ticket) -> { runId, runPath, status }\nfusion-studio-server/lib/runner/index.js:17:// Active runs: runId -> { proc, runPath, agentId, lastActivity, stalls }\nfusion-studio-server/lib/runner/index.js:41:function attachOutputMonitor(proc, runId) {\nfusion-studio-server/lib/runner/index.js:46:      heartbeat.recordActivity(runId);\nfusion-studio-server/lib/runner/index.js:60:            console.log(`[Runner] Run ${runId}: TurnEnd received`);\nfusion-studio-server/lib/runner/index.js:70:    const run = activeRuns.get(runId);\nfusion-studio-server/lib/runner/index.js:80:      activeRuns.delete(runId);\nfusion-studio-server/lib/runner/index.js:81:      console.log(`[Runner] Run ${runId} finished (status: ${status})`);\nfusion-studio-server/lib/runner/index.js:84:        emit('agent:run_completed', { runId, agentId: manifest?.agent_id, ticketId: manifest?.ticket_id, status: 'completed', outcome: 'success' });\nfusion-studio-server/lib/runner/index.js:87:        emit('agent:run_failed', { runId, agentId: manifest?.agent_id, ticketId: manifest?.ticket_id, status: 'stopped', error });\nfusion-studio-server/lib/runner/index.js:95:        const ticketTitle = manifest?.ticket_id || runId;\nfusion-studio-server/lib/runner/index.js:99:        const entry = `- **${ts}** \u2014 ${promptUsed}: ${ticketTitle}${outcomeTag} [run: ${runId}]`;\nfusion-studio-server/lib/runner/index.js:137: * @returns {Promise<{ runId: string, runPath: string, status: string }>}\nfusion-studio-server/lib/runner/index.js:140:  let runId, runPath, manifest;\nfusion-studio-server/lib/runner/index.js:144:    ({ runId, runPath, manifest } = createRunFolder(projectRoot, agentFolder, ticket));\nfusion-studio-server/lib/runner/index.js:148:    return { runId: null, runPath: null, status: 'error' };\nfusion-studio-server/lib/runner/index.js:158:    return { runId, runPath, status: 'error' };\nfusion-studio-server/lib/runner/index.js:168:    return { runId, runPath, status: 'error' };\nfusion-studio-server/lib/runner/index.js:172:  activeRuns.set(runId, {\nfusion-studio-server/lib/runner/index.js:181:  attachOutputMonitor(proc, runId);\nfusion-studio-server/lib/runner/index.js:186:    console.log(`[Runner] Wire initialized for run ${runId}`);\nfusion-studio-server/lib/runner/index.js:191:    activeRuns.delete(runId);\nfusion-studio-server/lib/runner/index.js:192:    return { runId, runPath, status: 'error' };\nfusion-studio-server/lib/runner/index.js:199:  console.log(`[Runner] Run ${runId} started for agent ${manifest.agent_id}`);\nfusion-studio-server/lib/runner/index.js:200:  emit('agent:run_started', { runId, agentId: manifest.agent_id, ticketId: ticket.frontmatter?.id, botName: manifest?.bot_name });\nfusion-studio-server/lib/runner/index.js:201:  return { runId, runPath, status: 'running' };\nfusion-studio-server/lib/runner/index.js:217:    onStall(runId, stalls) {\nfusion-studio-server/lib/runner/index.js:218:      const run = activeRuns.get(runId);\nfusion-studio-server/lib/runner/index.js:220:      console.log(`[Runner] Nudging stalled run ${runId} (stall #${stalls})`);\nfusion-studio-server/lib/runner/index.js:223:    onMaxStalls(runId) {\nfusion-studio-server/lib/runner/index.js:224:      const run = activeRuns.get(runId);\nfusion-studio-server/lib/runner/index.js:233:      activeRuns.delete(runId);\nfusion-studio-server/lib/runner/index.js:234:      console.log(`[Runner] Killed stalled run ${runId}`);\nfusion-studio-server/lib/runner/index.js:235:      emit('agent:run_stalled', { runId, agentId: run.agentId, stallCount: options.maxStalls || 3 });\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "CHAT_ACTION_EVENT|pendingAttachmentsByOwner|sendMessage\\(|type: .prompt.",
+        "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+        "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "fusion-studio-client/src/components/SendToChatButton.tsx"
+      ],
+      "at": "2026-09-19T10:47:57.359007+00:00",
+      "exit": 0,
+      "stdout": "fusion-studio-client/src/state/slices/chatSlice.ts:387:        type: 'prompt',\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:31:import { CHAT_ACTION_EVENT, type ChatActionPayload } from '../../lib/chat-action';\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:245:      .pendingAttachmentsByOwner[attachmentKey]?.attachments ?? [];\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:268:    sendMessage(text, targetThreadId, attachments, {\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:677:        type: 'prompt:resolve',\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:683:    window.addEventListener(CHAT_ACTION_EVENT, handleChatAction);\nfusion-studio-client/src/components/chat/useLegacyChatHost.ts:684:    return () => window.removeEventListener(CHAT_ACTION_EVENT, handleChatAction);\n",
+      "stderr": ""
+    }
+  ],
+  "limits": "No product module execution, runtime, app, DB, build or tests. Hashes identify bounded inspected owners, not whole-module certification."
+}

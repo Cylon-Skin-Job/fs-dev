@@ -5,6 +5,9 @@
 
 import { useChatFileLinkStore } from '../state/chatFileLinkStore';
 import { usePanelStore } from '../state/panelStore';
+import { getCurrentThreadGroupId, getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
+import { getWorksurfaceEntry } from '../state/slices/worksurfaceSlice';
+import { readOpenSideChatPlacements } from '../lib/chat/side-chat-placements';
 import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
 import { showToast } from '../lib/toast';
@@ -17,25 +20,63 @@ const OWNER_CHANGED_MESSAGE = 'Screenshot was not attached because the chat chan
 export interface ScreenshotAttachmentOwner {
   workspaceId: string;
   threadId: string;
-  /** Only the Main Chat owns screenshot attachment; Secondary Chat is retired. */
-  surface: 'primary';
+  surface: 'primary' | 'side-tab';
+  selection?: { viewId: string | null; threadGroupId: string };
+  /** Connected composer lifetime; omitted for the global/header action. */
+  mount?: {
+    surfaceId: string;
+    selectionScope: 'view' | 'session';
+    isCurrent: () => boolean;
+  };
 }
 
 function currentPrimaryOwner(
   state: ReturnType<typeof usePanelStore.getState>,
 ): ScreenshotAttachmentOwner | null {
-  if (!state.activeWorkspaceId || !state.currentThreadId) return null;
-  return {
-    workspaceId: state.activeWorkspaceId,
-    threadId: state.currentThreadId,
-    surface: 'primary',
-  };
+  const workspaceId = state.activeWorkspaceId;
+  if (!workspaceId) return null;
+  const viewId = state.currentPanel;
+  const threadGroupId = getCurrentThreadGroupId(state, workspaceId, viewId);
+  const row = getThreadGroupPopulation(state, workspaceId, viewId)
+    .find((candidate) => candidate.threadGroupId === threadGroupId);
+  if (row?.threadId && row.threadGroupId) {
+    return { workspaceId, threadId: row.threadId, surface: 'primary',
+      selection: { viewId, threadGroupId: row.threadGroupId } };
+  }
+  if (!state.currentThreadId) return null;
+  return { workspaceId, threadId: state.currentThreadId, surface: 'primary' };
 }
 
-function isCurrentOwner(owner: ScreenshotAttachmentOwner): boolean {
-  const state = usePanelStore.getState();
-  return state.activeWorkspaceId === owner.workspaceId
-    && state.currentThreadId === owner.threadId;
+function isCurrentOwner(
+  owner: ScreenshotAttachmentOwner,
+  state = usePanelStore.getState(),
+): boolean {
+  if (state.activeWorkspaceId !== owner.workspaceId) return false;
+  if (owner.mount && (!owner.mount.surfaceId || !owner.mount.isCurrent())) return false;
+  if (!owner.selection) {
+    // Legacy is an intentional fallback only while no qualified Main exists.
+    const current = currentPrimaryOwner(state);
+    return owner.surface === 'primary' && !current?.selection
+      && current?.threadId === owner.threadId;
+  }
+  const { viewId, threadGroupId } = owner.selection;
+  // Content component tabs stay mounted when WorkspacePanel becomes hidden.
+  // Their owning view must still be the shell's active view at every await.
+  if (viewId !== null && state.currentPanel !== viewId) return false;
+  if (owner.surface === 'side-tab') {
+    if (!viewId || !owner.mount) return false;
+    return readOpenSideChatPlacements(
+      getWorksurfaceEntry(state, owner.workspaceId, viewId, threadGroupId), viewId,
+    ).some(({ threadId, descriptor }) => threadId === owner.threadId
+      && descriptor.input.workspaceId === owner.workspaceId
+      && descriptor.input.threadGroupId === threadGroupId);
+  }
+  if (!owner.mount && state.currentPanel !== viewId) return false;
+  if (owner.mount?.selectionScope !== 'session'
+    && getCurrentThreadGroupId(state, owner.workspaceId, viewId) !== threadGroupId) return false;
+  const row = getThreadGroupPopulation(state, owner.workspaceId, viewId)
+    .find((candidate) => candidate.threadGroupId === threadGroupId);
+  return row?.threadId === owner.threadId;
 }
 
 function screenshotName(savedPath: string): string {
@@ -106,13 +147,13 @@ export async function captureAndAttachScreenshot(
 ): Promise<ChatLinkAttachment | null> {
   const panelState = usePanelStore.getState();
   // Snapshot the complete owner and socket from one state read before the
-  // first await. Composer callers pass their exact Main Chat owner; global
+  // first await. Composer callers pass their exact mounted session owner; global
   // capture defaults to the primary owner from this same read.
   const owner = requestedOwner ?? currentPrimaryOwner(panelState);
   const socket = panelState.ws;
   const capturePage = window.electronAPI?.capturePage;
 
-  if (!owner || !isCurrentOwner(owner)) {
+  if (!owner || !isCurrentOwner(owner, panelState)) {
     showToast(OWNER_CHANGED_MESSAGE);
     return null;
   }

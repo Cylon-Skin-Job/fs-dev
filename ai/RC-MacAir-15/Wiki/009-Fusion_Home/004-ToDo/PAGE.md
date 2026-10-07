@@ -1,24 +1,13 @@
 ---
-name: ToDo
-description: Task list view in Fusion Home. Stub - planned; runs on the shared SQLite layer and ships with the Fusion Home templated workspace.
+name: "ToDo in Fusion Home"
+description: "Planning placeholder for ToDo within the Fusion Home composition."
 metadata:
-  incoming-edges:
-    - Fusion Home
-  outgoing-edges:
-    - Fusion Home
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-> **Stub.** This page is a breadcrumb. Deep content is pending a dedicated
-> build pass.
+This is a planning placeholder for a ToDo view in [Fusion Home](../000-Fusion_Home/PAGE.md), not evidence of a shipped feature or an installed view. The [Office Viewer](../001-Office_Viewer/PAGE.md) and [Documents](../005-Documents/PAGE.md) own existing Office behavior.
 
-**ToDo** is a planned office-app view inside
-[Fusion Home](../000-Fusion_Home/PAGE.md) — the task list. It is part of the
-templated workspace that ships with Fusion Studio and runs on the shared SQLite
-layer; it does not drop into new workspaces automatically but can be added by
-user action.
+Task scope, storage and cross-view links remain open.
 
-Scope, schema, and any cross-view linking (e.g. to Calendar/Email) are pending a
-dedicated build pass.
+Do not infer a storage schema from this placeholder. Live app content belongs in its files, application database or connected service, with System retaining platform state and provenance. Future presentation should use the [Platform And Plugins](../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) contracts; no dedicated plugin or provisioning behavior is established here.

@@ -1,0 +1,112 @@
+{
+  "at": "2026-09-19T03:41:18.812349-07:00",
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "sha256": "fd9b24bdb9a5cdde2f1e0c717ef1d1bd4b0e65886c4028039f90fc3ff74b6a1f",
+      "bytes": 10215
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "sha256": "91f9916f1bd8717977506cab503ab7040209b5beb675fe454123ff40673750c8",
+      "bytes": 21997
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-ANCHOR-CHECK.json",
+      "sha256": "3530aef922353652bfdad566ce1146728c7f27aa73f7fd9d821953b77617ec0e",
+      "bytes": 5316
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-CHANGE-MANIFEST.json",
+      "sha256": "594a822aae26d141e5254b3bd8244b24b878e2573269ff4a58f35480a970a5ee",
+      "bytes": 2014
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-CHECKS.json",
+      "sha256": "87c6dbf56e13fbe462fd5d77bc853653ee822a779273083edadd81543be5e4c1",
+      "bytes": 54180
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-EVIDENCE.md",
+      "sha256": "7796098329a0876a613a6774383550a082cc7a118fbb5b504db12c817d485009",
+      "bytes": 15559
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-HANDOFF.md",
+      "sha256": "830dce2bc682d1e5b7156ea112e3de4fed73acbce3b9ef1d678284507940b33d",
+      "bytes": 4593
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-PAGES.diff",
+      "sha256": "25b4e7c50fba101a2ca2775d240f3f745112083a2e0af975609e491e8db4cdb5",
+      "bytes": 48352
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-REVIEW.md",
+      "sha256": "605944e3b452e6e98e06ee36d148b4f7434c420b2fd799c03cd2d2cf93ffb32c",
+      "bytes": 1873
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-RUN-LOG.json",
+      "sha256": "bd074a97d3e19c321910eba5e56d4022a4455114ff8813eb5959b97a704111c3",
+      "bytes": 1612
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-SOURCE-EVIDENCE.json",
+      "sha256": "ec86d4909c85b2002173adc3b83a9111558141755eb2f0af460c189f0fba7380",
+      "bytes": 186084
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-SUPPLEMENT-MANIFEST.json",
+      "sha256": "1f2436c02c199d4d3c0f622a04ccc2c42dee630a08d0f68f84011509df06b970",
+      "bytes": 3240
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-evidence.py",
+      "sha256": "c5c39e0dcc3bdc01768f74d69407c0665ac30fe0df8824189b6c47963bfa75a0",
+      "bytes": 4441
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-verify.cjs",
+      "sha256": "0089ddd27cf0a43e738875d0eb2b3d21538673bdfccc6f297f5af3b6cfddbbca",
+      "bytes": 8297
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-write.py",
+      "sha256": "2db32b91a2b1034c59d6960927972f65549a3a32fab566e5c4ffae9353ef9d15",
+      "bytes": 29549
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "sha256": "a84c22311556bc2e4777f5e8414d16117aa7ad42f9698e319e9b171284b0df45",
+      "bytes": 11104
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "sha256": "3b10f1937f1ce32ff7120a75ba49cf494d7d96f27ddea4548797c830d55a2f1d",
+      "bytes": 7901
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "sha256": "fc1f278f95f280fbc739965db02f12f8893e25acd88e6629cb29357a282322a8",
+      "bytes": 7316
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md",
+      "sha256": "52a4a38c4e4a0ed80544418c8bcc6200035740063d23dcca1c11f5f10cb34933",
+      "bytes": 10401
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-033554.md",
+      "sha256": "686474202b269c717ed1f744deaea0411d26f64c8be6721cbd11abbbf3cb5de4",
+      "bytes": 1372
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md",
+      "sha256": "a118a7f302949b91533cf7e1e039b5859e86ceec12db2fc4012f49c46b3dc603",
+      "bytes": 9913
+    }
+  ],
+  "aggregate_sha256": "04c31033e1b48bc7116b8bc5dbacde8fdcabdae8cd082dfb7bf9561595ae5d9d",
+  "scope": "Exactly three S04 pages/preimages, capture-only evidence/scripts, two append-only supplements; manifest excludes itself. Owner concurrent changes not attributed."
+}

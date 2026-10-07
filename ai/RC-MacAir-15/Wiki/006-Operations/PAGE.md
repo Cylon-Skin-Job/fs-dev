@@ -2,30 +2,15 @@
 name: Operations
 description: Navigation map for setup, maintenance, startup, packaging, smoke tests, and troubleshooting.
 metadata:
-  incoming-edges:
-    - Wiki Guide
-  outgoing-edges:
-    - Setup
-    - Smoke Tests
-    - Packaging
-    - Troubleshooting
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:12:31Z"
 ---
 
-Use this section for setup, maintenance, startup, packaging, smoke tests, troubleshooting, and operator procedures.
+Use this section for setup, startup checks, packaging, smoke tests and troubleshooting.
 
-## Planned Children
+## Subject articles
 
-- `001-Setup/` - setup wizard and project startup guidance.
-- `002-Smoke_Tests/` - manual and automated smoke checks.
-- `003-Packaging/` - packaging and release artifact guidance when migrated into the wiki.
-- `004-Troubleshooting/` - durable troubleshooting notes.
+- [Setup](001-Setup/PAGE.md) distinguishes installed-app use, source development and optional integrations.
+- [Troubleshooting Background Services](004-Troubleshooting/PAGE.md) lists bounded checks for background-service failures.
 
-## Migration Sources
-
-- [Project > Setup Wizard](../001-Project/021-Setup_Wizard/PAGE.md)
-- [Project > Background Services Audit](../001-Project/014-Background_Services_Audit/PAGE.md)
-
-Do not mix architecture decisions with one-off operational recipes. If a source page is mostly historical, condense durable lessons instead of preserving the audit as primary navigation.
+Packaging and broader smoke-test guidance remain future subjects. [Background Services](../002-Server_And_Runtime/006-Background_Services/PAGE.md) owns the current lifecycle account.

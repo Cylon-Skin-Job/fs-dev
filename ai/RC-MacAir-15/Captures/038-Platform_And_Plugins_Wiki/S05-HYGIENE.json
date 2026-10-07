@@ -1,0 +1,39 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check",
+    "--",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "tracked": 4,
+  "untracked": 15,
+  "direct_scan_paths": [
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+  ],
+  "failures": []
+}

@@ -1,0 +1,18 @@
+---
+name: Capture View
+description: A workspace capture and document surface selected by the current default profile.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/ContentArea.tsx
+    - fusion-studio-client/src/components/capture/CaptureTiles.tsx
+    - fusion-studio-server/lib/views/index.js
+  last-modified: "2026-09-21T13:37:22Z"
+---
+
+**Capture** is the workspace's capture/document tile surface. The bundled `capture-viewer` template points to `Captures` and is the first of five views selected by the current New Workspace profile. `CaptureTiles` requests its panel tree, presents folders and documents, and can open capture content in a document presentation.
+
+## Current status and limits
+
+This is a mounted React view backed by the workspace's machine-scoped Captures content root. Its grid, document tabs, recents and search have separate state and behavior; see [View Activity And Collections](../013-View_Activity_And_Collections/PAGE.md) and [Viewer Search](../012-Viewer_Search/PAGE.md). The current template and renderer do not establish plugin-aware provisioning. A future Capture plugin could supply the view definition while the workspace instance holds editable configuration and agent resources.
+
+This page is an introduction, not a guarantee that every older capture note or viewer variant has been audited.

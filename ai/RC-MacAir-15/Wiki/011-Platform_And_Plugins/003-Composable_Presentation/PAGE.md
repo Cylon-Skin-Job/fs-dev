@@ -1,0 +1,44 @@
+---
+name: Composing Standard And Plugin Presentation
+description: Describes configure, compose and protected custom components with an illustrative Capture flow and bounded current tab-host evidence.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/view-tabs/componentTabLauncherCatalog.ts
+    - fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts
+    - fusion-studio-client/src/components/view-tabs/captureConnectedOwnerPorts.ts
+    - fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts
+  last-modified: "2026-09-23T13:50:37Z"
+---
+
+The approved presentation model starts with a useful standard library and allows plugins to contribute specialized presentation through a defined host contract. A person should be able to build a working view from familiar pieces without installing a separate plugin for every button or field. This is intended product behavior; the current source foundation below does not establish a general plugin component system.
+
+## Configure, compose, then implement
+
+There are three levels of customization:
+
+1. **Configure a standard component.** Choose the supported labels, display options, content binding or other settings that fit the task. Configuration stays within the component and host's existing authority.
+2. **Compose standard components.** Arrange useful pieces declaratively and connect their explicit data and actions. A plugin may package this composition and its defaults; a [copied view instance](../002-Plugin_Templates_And_Instances/PAGE.md) can tailor the permitted configuration.
+3. **Implement a protected component.** If standard pieces are insufficient, a plugin can contribute specialized executable presentation through the platform's registration and hosting boundary. Editable configuration does not become an arbitrary code loader.
+
+These levels extend presentation within fixed hosting and permission rules. A reusable component renders on the client from explicit data, identity and action callbacks. A connected host can adapt established stores and actions into that contract; the reusable component must not discover its workspace, global stores, network routes or database handles for itself. Server-owned services still validate access and perform controlled operations. See the [portable-component standard](../../005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md#portable-components-and-connected-hosts).
+
+A card or specialized layout is different from a privileged service and from a canonical file-type renderer. Plugin presentation contributions do not replace the platform file-type registry, canonical editor or save path. Exact registration ABI, supported inputs/actions, version compatibility and execution/isolation mechanics remain open; no arbitrary in-process React import contract is implied.
+
+## An illustrative Capture collection
+
+Consider a Capture-style collection of project notes. The following sequence illustrates the approved composition and ownership model. It is not manifest syntax, a required component inventory, the selected first conversion, or a claim that the current Capture view implements this complete flow.
+
+1. A connected host obtains authorized folder data and passes document summaries plus explicit actions into a card collection and search control. The cards present that data; they do not acquire filesystem authority by knowing a folder path.
+2. The person searches and selects a card. The collection keeps its filter, selection and navigation state. An open action asks the shell to show that file through the canonical platform file surface, either in the current tab with a return route or in another tab.
+3. The canonical file surface handles presentation and editing under its existing mode rules. Save and history go through the owning platform services; the collection does not add an alternate editor or persistence implementation.
+4. The person returns to the collection and its retained navigation state. The shell owns container identity, focus and lifecycle throughout, while the collection and file surface keep their distinct responsibilities.
+
+This example does not settle generalized duplicate-tab, dirty-buffer, restoration or close policies and does not create a second tab store. [Tabs, Drawers And Files](../004-Tabs_Drawers_And_Files/PAGE.md) develops the hosting boundary, [File View](../../001-Workspaces_And_Views/007-File_View/PAGE.md) owns current File Viewer behavior, and [Data And Actions](../005-Data_And_Actions/PAGE.md) separates content sources from authorized operations. A specialized embedded region can also participate in the target model; its separate interface questions belong to [Custom Iframe Composition](../006-Custom_Iframe_Composition/PAGE.md).
+
+## Current source-inspected foundation
+
+The inspected `componentTabLauncherCatalog.ts` contains two code-owned entries: `capture.home` for Capture and `file.open` for Files. Its lookup checks launcher and view identity. The connected Capture/File owner ports supply those fixed launcher bindings; this catalog is not an installed-plugin contribution registry.
+
+`componentTabConnectedOwner.ts` takes explicit owner ports for reading and applying a collection, identifying the workspace/view and resolving launchers. Its launch path reserves an empty tab, obtains a code-owned binding and handles its result. Capture's ports read and update the existing panel view state; Files' ports adapt the existing file store and apply through its connected-tab action. These paths provide bounded hosting foundations without introducing a second durable tab store. They do not prove that the illustrative collection flow or a general contributed-component loader exists.
+
+This account is source inspection only, with no runtime certification. [Platform Boundaries](../001-Platform_Boundaries/PAGE.md#current-source-inspected-foundation) explains current built-in renderer dispatch. [Unfinished Work](../000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md) owns the broader platform gaps; the [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates) retain host mechanics and the initial component inventory for later product decisions.

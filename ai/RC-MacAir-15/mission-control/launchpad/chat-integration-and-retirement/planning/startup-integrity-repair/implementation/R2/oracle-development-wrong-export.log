@@ -1,0 +1,27 @@
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-pYQhjw","port":51616,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+(node:49634) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/runtime/workspace-startup-integrity.test.js (6.013 s)
+  ● actual unavailable startup refuses all consumers after genuine registered readiness conflict
+
+    expect(received).toContain(expected) // indexOf
+
+    Matcher error: received value must not be null nor undefined
+
+    Received has value: undefined
+
+      87 |     expect(fixture.readiness.registeredStatus).toMatchObject({ status: 'unavailable', verified: false, errorCode: 'root_conflict' });
+      88 |     expect(fixture.controller.getActiveWorkspaceId()).toBe('A');
+    > 89 |     expect(fixture.runtimeModule.ISOLATED_STARTUP_EFFECT_NAMES).toContain('workspace-automation-pipeline');
+         |                                                                 ^
+      90 |     expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
+      91 |     expectNoPipeline(fixture);
+      92 |     expect(fixture.readiness.events.filter(item => item.kind === 'operation-ensure')).toHaveLength(1);
+
+      at Object.toContain (test/runtime/workspace-startup-integrity.test.js:89:65)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 12 skipped, 13 total
+Snapshots:   0 total
+Time:        6.049 s, estimated 7 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js".

@@ -2,7 +2,7 @@
 name: Chat Runtime Model
 description: Explains how chat threads are opened, warmed, streamed, stopped, persisted, and resumed. Use this page when changing runtime state or thread lifecycle behavior.
 metadata:
-  last-modified: "2026-09-29T07:12:08Z"
+  last-modified: "2026-10-06T22:14:26Z"
   source-files:
     - fusion-studio-client/src/components/WorkspacePanel.tsx
     - fusion-studio-client/src/components/chat/useChatSessionActions.ts
@@ -52,7 +52,6 @@ metadata:
     - fusion-studio-server/lib/thread-groups/chat-capable-views.js
     - fusion-studio-server/lib/thread/session-manager.js
     - fusion-studio-server/lib/thread/thread-lifecycle-controller.js
-  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 Cleanup review: current renderer host composition and replaced source owners were rechecked against development source. Older verification dates and unrelated runtime claims retain their stated scope; no runtime or Alpha validation was performed in this pass.
@@ -433,13 +432,15 @@ Completed turns persist structured metadata in `exchanges.metadata`.
 Metadata assembly is modular:
 
 - runtime emits prompt and turn events with attachment context
-- workspace watchers emit file changes with their exact workspace id and root;
-  a complete epoch/thread/turn tuple targets only that exact live turn, while a
-  normal watcher observation without that tuple is collected only when exactly
-  one live turn matches its workspace and root. Partial tuples, foreign roots,
-  and ambiguous same-root observations are omitted rather than assigned
-  causally. Records remain keyed by workspace, root, epoch, thread, and turn so
-  delayed finalization cannot consume a following turn's mutations
+- the legacy file-mutation collector remains wired for any independent
+  `file:changed` producer, but the generic workspace watcher is retired and
+  external file observations are no longer promised. If a correlated event is
+  supplied, a complete epoch/thread/turn tuple targets only that exact live
+  turn, while an event without that tuple is collected only when exactly one
+  live turn matches its workspace and root. Partial tuples, foreign roots, and
+  ambiguous same-root observations are omitted rather than assigned causally.
+  Records remain keyed by workspace, root, epoch, thread, and turn so delayed
+  finalization cannot consume a following turn's mutations
 - `chat-metadata` collectors contribute focused metadata slices
 - the exchange metadata aggregator merges collector output with audit metadata
 

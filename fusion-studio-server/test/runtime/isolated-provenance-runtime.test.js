@@ -129,7 +129,6 @@ test('isolated mode records every routed startup factory and proves zero invocat
       runtime.defineRuntimeEffect(name, () => invoked.push(name));
     }
     expect(invoked).toEqual([]);
-    expect(() => runtime.defineStartupEffect(EXPECTED_STARTUP_EFFECTS[0], () => {})).toThrow('effect repeated');
     await runtime.finalizeStartupAudit(emptyAuditDb);
     const audit = JSON.parse(fs.readFileSync(runtime.auditPath, 'utf8'));
     expect(audit.startupEffects).toEqual(EXPECTED_STARTUP_EFFECTS.map((name) => ({
@@ -154,6 +153,46 @@ test('isolated mode records every routed startup factory and proves zero invocat
     runtime.restoreObservationGuards();
   }
 });
+
+test('normal mode accepts only the automation identity and rejects unknown or duplicate definitions', () => {
+  const runtime = createIsolatedProvenanceRuntime({ environment: {} });
+  const factory = jest.fn();
+  runtime.defineStartupEffect('workspace-automation-pipeline', factory).start();
+  expect(factory).toHaveBeenCalledTimes(1);
+  expect(() => runtime.defineStartupEffect('workspace-watcher-trigger-pipeline', factory)).toThrow('unknown');
+  expect(() => runtime.defineStartupEffect('workspace-automation-pipeline', factory)).toThrow('repeated');
+  expect(factory).toHaveBeenCalledTimes(1);
+});
+
+test.each(['unknown', 'duplicate', 'missing-start', 'duplicate-start', 'prohibited'])(
+  'isolated audit refuses %s effects even when definition errors are caught', async (kind) => {
+    const input = fixture();
+    const runtime = createIsolatedProvenanceRuntime({
+      environment: input.environment, port: 43127, dbPath: input.dbPath,
+      repositoryRoot: '/definitely-separate/repository',
+      applicationSupport: '/definitely-separate/Application Support',
+    });
+    runtime.installObservationGuards();
+    try {
+      const factory = jest.fn();
+      const effects = EXPECTED_STARTUP_EFFECTS.map(name => runtime.defineStartupEffect(name, factory));
+      for (const name of EXPECTED_RUNTIME_EFFECTS) runtime.defineRuntimeEffect(name, factory);
+      for (const [index, effect] of effects.entries()) {
+        if (kind !== 'missing-start' || index !== 0) effect.start();
+      }
+      if (kind === 'unknown') expect(() => runtime.defineStartupEffect('unknown-effect', factory)).toThrow('unknown');
+      if (kind === 'duplicate') expect(() => runtime.defineStartupEffect(EXPECTED_STARTUP_EFFECTS[0], factory)).toThrow('repeated');
+      if (kind === 'duplicate-start') effects[0].start();
+      if (kind === 'prohibited') expect(() => effects[0].attempt()).toThrow('prohibited');
+      await expect(runtime.finalizeStartupAudit(emptyAuditDb)).rejects.toThrow(
+        kind === 'unknown' ? 'unknown' : kind === 'duplicate' ? 'repeated' : 'prohibited startup effect observed',
+      );
+      expect(factory).not.toHaveBeenCalled();
+    } finally {
+      runtime.restoreObservationGuards();
+    }
+  },
+);
 
 test('isolated startup factories fail closed if a prohibited effect is attempted', async () => {
   const input = fixture();

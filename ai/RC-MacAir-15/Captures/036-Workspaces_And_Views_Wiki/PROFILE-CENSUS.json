@@ -1,0 +1,73 @@
+{
+  "source_inspected_at": "2026-09-21T11:59:34Z",
+  "profiles": [
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/new/profile.json",
+      "sha256": "6cb17a9ab28e11459e7b196bf76f1a62501d1f76f29875831983425d0cd1c924",
+      "id": "new",
+      "selectedViewIds": [
+        "capture-viewer",
+        "file-viewer",
+        "wiki-viewer",
+        "issues-viewer",
+        "agents-viewer"
+      ],
+      "category": "new"
+    },
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/startup/fusion-home/profile.json",
+      "sha256": "ab88653bc344bb31bdcd1f5a60f12af78b1c476346a279392e7be1f8745d1873",
+      "id": "fusion-home",
+      "selectedViewIds": [
+        "office-viewer",
+        "file-viewer",
+        "issues-viewer",
+        "wiki-viewer",
+        "agents-viewer"
+      ],
+      "category": "startup"
+    },
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/startup/invoicing-and-expenses/profile.json",
+      "sha256": "76e1fa164d763f0c12c572368078d84a7189cc0167c77c95b1671012cb47948d",
+      "id": "invoicing-and-expenses",
+      "selectedViewIds": [
+        "office-viewer",
+        "file-viewer",
+        "issues-viewer",
+        "wiki-viewer",
+        "agents-viewer"
+      ],
+      "category": "startup"
+    },
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/startup/media-studio/profile.json",
+      "sha256": "16bc01655055ced64b068bd7eca2edf53b13a4992ece8a500df96d944ed8a21d",
+      "id": "media-studio",
+      "selectedViewIds": [
+        "office-viewer",
+        "file-viewer",
+        "issues-viewer",
+        "wiki-viewer",
+        "agents-viewer"
+      ],
+      "category": "startup"
+    },
+    {
+      "path": "System_Manager/ai-template/templates/workspace-templates/startup/system-source-files/profile.json",
+      "sha256": "2520c5d386a92b9ee9896958e7c1d070db01601f3702fbb6d169bc229d99e529",
+      "id": "system-source-files",
+      "selectedViewIds": [
+        "office-viewer",
+        "file-viewer",
+        "issues-viewer",
+        "wiki-viewer",
+        "agents-viewer"
+      ],
+      "category": "startup"
+    }
+  ],
+  "limits": [
+    "Bundled profile declarations do not prove plugin-aware provisioning."
+  ]
+}

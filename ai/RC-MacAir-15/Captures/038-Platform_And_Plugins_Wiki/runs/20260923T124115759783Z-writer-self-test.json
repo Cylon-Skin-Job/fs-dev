@@ -1,0 +1,67 @@
+{
+  "command": "python3 writer-self-test.py",
+  "checked_at": "2026-09-23T12:41:15.759726+00:00",
+  "tool_sha256": "9c63556f3c3f7cc4b79a7d344be569b109cb732f28bf51ac336cc171d5ba44e1",
+  "cases": [
+    {
+      "case": "writer_rejects_unauthorized_path",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_wrong_slice",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_invalid_yaml",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_handwritten_generated_body",
+      "passed": true
+    },
+    {
+      "case": "writer_creates_absent_page",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_stale_predecessor",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_stamp_body_change",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_generation_body_change",
+      "passed": true
+    },
+    {
+      "case": "writer_records_exact_preimage",
+      "passed": true
+    },
+    {
+      "case": "snapshot_bytes_exact",
+      "passed": true
+    },
+    {
+      "case": "receipt_slice_phase_and_current_hash",
+      "passed": true
+    },
+    {
+      "case": "actual_chain_validator_accepts",
+      "passed": true
+    },
+    {
+      "case": "writer_rejects_noop",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "passed": 13,
+    "total": 13
+  },
+  "failures": [],
+  "exclusions": [
+    "Fixture-only; no live wiki mutation, product runtime or builds."
+  ]
+}

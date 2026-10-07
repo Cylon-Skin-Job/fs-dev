@@ -2,20 +2,15 @@
 name: Voice Input Structure
 description: File and module map for voice input, transcription cleanup, rule resources, packaging, and generated verb candidates.
 metadata:
-  incoming-edges:
-    - Voice Input Overview
-    - Voice Input Architecture
-    - Voice Input Rule System
-    - Voice Input Transcription Flow
-  outgoing-edges:
-    - Chat System Structure
-    - Server And Runtime
   source-files:
-    - fusion-studio-client/src/mic
-    - fusion-studio-server/lib/transcription
+    - fusion-studio-client/src/mic/MicTrigger.tsx
+    - fusion-studio-client/src/mic/VoiceRecorder.tsx
+    - fusion-studio-client/src/mic/useAudioCapture.ts
+    - fusion-studio-server/lib/transcription/index.js
+    - fusion-studio-server/lib/transcription/deterministic-cleanup.js
+    - fusion-studio-server/lib/resources/resolver.js
     - fusion-studio-client/scripts/prepare-ai-resources.cjs
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 Current file/module map for voice input work.
@@ -46,7 +41,7 @@ Current file/module map for voice input work.
 
 | Path | Role |
 |---|---|
-| `System Source Files/ai/<machine>/Wiki/system/Text-To-Speech/Rules/` | editable source rules |
+| `System_Manager/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules/` | editable source rules |
 | `fusion-studio-client/electron/resources/rules/text-to-speech/` | copied runtime/package rules |
 | `fusion-studio-client/scripts/prepare-ai-resources.cjs` | copies prompts and nested rule resources |
 | `fusion-studio-client/scripts/generate-action-verbs.cjs` | generates WordNet verb candidates |
@@ -56,3 +51,9 @@ Current file/module map for voice input work.
 - local model cleanup for live mic transcription
 - visible hover mini-modal/cue
 - unstructured monolithic-only rule editing
+
+## Source and runtime rule selection
+
+`prepare-ai-resources.cjs` selects `System_Manager/ai/views/wiki-viewer/content/system/Text-To-Speech/Rules` when present (as in this checkout), otherwise `System_Manager/resources/text-to-speech/rules`. It copies that tree into `fusion-studio-client/electron/resources/rules/text-to-speech`. Edit the selected source, then prepare/package resources; editing a copied resource alone is not a durable source change.
+
+At runtime `getTextToSpeechRulesRoot` prefers `rules/text-to-speech` under the resource root selected by `FUSION_RESOURCES_PATH`, the development Electron resources directory, or the repository fallback. If that rules directory is absent, it uses `System_Manager/resources/text-to-speech/rules`. Runtime resolution does not directly prefer the legacy wiki source tree. This is source inspection, not a transcription or packaged-build test.

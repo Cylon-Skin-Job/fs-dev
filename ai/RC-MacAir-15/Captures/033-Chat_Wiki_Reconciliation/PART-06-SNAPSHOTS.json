@@ -1,0 +1,42 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-023606.md",
+    "pre_sha256": "7315e4f88098bd61c42163b024a5a0d40e49db04d3c882611509c493aef0f0ac"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-023606.md",
+    "pre_sha256": "ee9385afa32caf5f3ea377f556a3a6192ce0cda83045074a8332e74cf943a1f3"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-023606.md",
+    "pre_sha256": "7b4c78143a3d1700b831d1903c0e5e4b0b1ddc71a594c99fe8d5d22423274234"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-023606.md",
+    "pre_sha256": "5390a8dda467dc4724c360af46990e2a841d12336e14653e19f5b0ff8421c65f"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-023606.md",
+    "pre_sha256": "d180f7edc3125e0cf49aec2ea28dc2d77ce2624b5a7529fa7d51b5917411da03"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-023606.md",
+    "pre_sha256": "17e37cc7d5e7930361efceac220011d203f64385f3074887c2b4c2cde37a80a8"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-023606.md",
+    "pre_sha256": "89bf04611ec278b43a5b2c1bf3a7cec5fb9694ca101005a685dc3c2f87413f78"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+    "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-023606.md",
+    "pre_sha256": "e2260599c8176373698ff79373108befbddeacd7e1ca4547aefc8473f20e7a9a"
+  }
+]

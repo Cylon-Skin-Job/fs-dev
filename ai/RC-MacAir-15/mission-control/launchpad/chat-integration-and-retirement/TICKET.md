@@ -4,19 +4,39 @@
 
 ## Assignment
 
+Current scope, owner direction October 5, 2026: finish fixing the current last build. [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work) narrows the earlier remit below. Subsequent broader OpenCode harness work follows in [Chat Harness Repair and Testing](../chat-harness-repair-and-testing/TICKET.md) after closeout. Current repairs, verification, task ownership and acceptance gates stay here.
+
 Owner transfer recorded 2026-09-28 UTC: “Let's transfer your responsibilities here: /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/”. This folder is now the canonical working-memory home for the remaining chat integration, retirement, applicable verification and consumer handoff previously coordinated in supervisor task `01a0c1c8-6e85-7f83-8d67-2cb5c1476007`. Read D-002 and the transferred synthesis in CAPTURE. This is a responsibility/document handoff, not a new task dispatch, app CWD change or checkpoint registration.
 
-The owner approved a distinct Launchpad folder for this subject in the current Mission Control setup conversation, after coordination with [Run roadmap supervisor](codex://threads/01a0c1c8-6e85-7f83-8d67-2cb5c1476007). Source direction: [SPEC-06 closure addendum](../../../Captures/035-Composer_Typing_Regression/ROADMAP/SPEC-06-OWNER-CLOSURE-ADDENDUM.md); supporting context: [CHAT-AR ledger](../../../Captures/035-Composer_Typing_Regression/ROADMAP/ROADMAP-LEDGER.md) and [SPEC-06](../../../Captures/035-Composer_Typing_Regression/ROADMAP/SPEC-06.md). No main task is registered for this folder.
+The owner approved a distinct Launchpad folder for this subject in the current Mission Control setup conversation, after coordination with [Run roadmap supervisor](codex://threads/01a0c1c8-6e85-7f83-8d67-2cb5c1476007). Source direction: [SPEC-06 closure addendum](../../../Captures/035-Composer_Typing_Regression/ROADMAP/SPEC-06-OWNER-CLOSURE-ADDENDUM.md); supporting context: [CHAT-AR ledger](../../../Captures/035-Composer_Typing_Regression/ROADMAP/ROADMAP-LEDGER.md) and [SPEC-06](../../../Captures/035-Composer_Typing_Regression/ROADMAP/SPEC-06.md). Main registration is now verified in [CHECKPOINT.json](CHECKPOINT.json); see B-002 and the startup handoff below. This records the existing main task, without dispatching a new one.
 
 ## Desired outcome
 
-Give later plugin and view work an exact, reviewed chat source/build baseline, a contract map, actual retirement findings, and honestly scoped verification.
+Fix and finish the current last-build job with its required verification, fresh final integration and owner acceptance. Preserve its source/build baseline and historical contract/consumer evidence.
 
 ## Scope and dependencies
+
+The current job is identified in the [October 5 Chokidar/harness handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md). Necessary repairs and harness checks within that approved job remain here. Its broader “Other OpenCode harness issues retained for later work” section supplies historical input to the new [harness home](../chat-harness-repair-and-testing/CAPTURE.md); it does not expand this build. No evidence or active implementation is relocated by the split.
 
 SPEC-06 remains owner-accepted with residuals. This folder does not reopen its acceptance. Ongoing bookmarks, unrelated dogfood reports, logger design, and new health-event subscriptions belong in the [health folder](../fusion-health-and-governed-observability/TICKET.md). The work may be shaped alongside sibling folders, but a dependency is released only by a named, reviewed contract or accepted integration result. The owner will settle detailed scope and sequencing after provisioning.
 
 ## Current disposition
+
+### October 5 Chokidar and harness handoff
+
+Owner-requested [work handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md), recorded 2026-10-05 at 16:08 UTC, covers the bounded **Map Fusion–OpenCode chat failure states** source task (`01a0ea32-f152-77a2-afc2-b73e8976685a`) and its approved CHAT-AR-SPEC-01 implementation. Chokidar retirement slices S1–S3 are internally accepted; a reproduced New Chat selection defect was repaired and reviewed. Whole S4 remains `NATIVE_CHECK_WAITING_OWNER_MANUAL_RESULT`: actual authenticated response, persistence and reopening are unverified. The render-delay cause and relationship to the owner's known working baseline remain unresolved. The isolated app was canonically rebuilt/restarted; older normal development and Alpha instances remain running at the dated inventory. No publication or Alpha operation occurred for this work.
+
+Use the handoff and [current implementation ledger](planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md) before acting on historical observations below. The source task yields after this handoff; the existing orchestrator (`01a1042c-09df-7473-a1e1-f458eee6b93d`) was observed idle with owner manual results pending. Inspect it before overlapping work. The registered main and `lastCheckpoint: null` are preserved; this handoff does not designate a successor, save a history checkpoint or activate Mission Control.
+
+### Current startup and durable handoff
+
+Main history target remains `01a0e6c9-e4e0-7872-9268-9a77a76f0c57`, host `local`, in [CHECKPOINT.json](CHECKPOINT.json). On 2026-10-01 the owner stated that a checkpoint had run and that they intend to continue in another session within this folder. At this handoff check, the registry still has `lastCheckpoint: null`; no saved checkpoint boundary was confirmed. The handoff does not rerun a checkpoint, advance state or infer that the owner's run failed. Built-in `read_thread` confirms this target as **Resume chat integration work** and returns the later Alpha and startup turns. The old local-reader coverage issue in B-002 is therefore superseded as a startup prerequisite; checkpoint recall now uses the installed native-reader workflow. See [B-003](BULLETIN.md#b-003--owner-requested-successor-handoff).
+
+All three CHAT-SIMPLE SPECs are owner accepted and complete in [ROADMAP-LEDGER](implementation/ROADMAP-LEDGER.md) and [final integration report](implementation/FINAL-ROADMAP/INTEGRATION-REPORT.md). Chat and the accepted Office E2E fix were merged through [PR #5](https://github.com/Cylon-Skin-Job/fs-dev/pull/5) at `3356e1b73cc5d44028eac5baa02fd542a8bbc385` ([merge receipt](implementation/FINAL-ROADMAP/MERGE-RECEIPT.json)). Alpha was updated and started from that revision ([deployment receipt](implementation/FINAL-ROADMAP/ALPHA-DEPLOYMENT.json)); profile, RC-Alpha identity, six workspaces and continuing renderer connection were verified at deployment. Visual inspection was unavailable. These are dated receipts, not a new runtime health check.
+
+Successor identity and next assignment are not yet designated. This main chat yields shared-record writing after completing this handoff turn. Preserve the accepted work, merge/deployment receipts, historical SPEC-06 residuals and waived soak. The broad failure-map task **Map Fusion–OpenCode chat failure states** (`01a0ea32-f152-77a2-afc2-b73e8976685a`) was observed actively running an owner-requested isolated connection-reuse comparison at this check. It owns that bounded investigation; a successor must inspect its status before overlapping work. Its shared CWD does not designate it as the new main. Temporary `temp_chat_boundary_v1` / `TEMP CHAT-AR I-007` diagnostics still require migration or deletion when the governed subscriber is implemented; logger design/subscriptions remain in the sibling health folder. Mission Control monitoring stays inactive.
+
+### Historical intake and draft observations
 
 D-006’s managed First Draft is independently validated for discussion, with no material draft findings. See [FIRST-DRAFT](planning/chat-transport-simplification/FIRST-DRAFT.md), [stage report](planning/chat-transport-simplification/reports/STAGE-REPORT.md) and REF-013. The proposed sequence is transport decomposition → unified sends → status-send result handling. R1–R4 are bounded Creator work; no new owner product decision is required for that handoff. Source artifacts remain linked, and no executable product candidate or consumer release is approved by this draft. See [INTENT](INTENT.md), [DECISIONS](DECISIONS.md), [ISSUES](ISSUES.md), and [REFERENCES](REFERENCES.md).
 
@@ -39,6 +59,14 @@ Latest owner direction (D-004/D-005): prepare a First Draft around three simple 
 The old supervisor conversation is a historical source, not a second live task ledger. Product evidence and acceptance receipts remain in their original capture paths. Health issue I-001 already points to this folder; no second copy needs to be created. Future domain-session registration, if needed, uses the supported procedure separately; no cursor was created or advanced by this transfer.
 
 ## Next safe action
+
+For the current retirement assignment, start with the [October 5 handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md#next-safe-action): identify the refreshed app/profile and current owner test result, complete the scratch-workspace public OpenCode scenario, then refresh independent final integration and obtain owner acceptance. Check the existing orchestrator before resuming or reassigning its work. Preserve publication, Alpha and main-identity gates. Future event-triggered and half-hour snapshots remain separately scoped in plugin-foundation.
+
+Replacement session: read this TICKET, index, unresolved BULLETIN, INTENT/DECISIONS and the linked final receipts; verify its actual identity and owner-assigned scope before becoming the main writer. Preserve the existing main history target and saved boundary, verify any checkpoint artifact/receipt from the owner's run, and use an explicit ownership handoff before any registry rebinding. Do not reset or advance history as startup housekeeping. Check the active failure-map investigation before duplicating or reallocating its work. The three-SPEC acceptance, merge and Alpha deployment are complete; resume only the owner's next bounded assignment.
+
+The former Roadmap Creation handoff below is retained as historical preparation context, not the current dispatch or next action.
+
+### Historical planning handoff
 
 D-007 now authorizes Roadmap Creation. The active supervisor uses [Roadmap coordination](planning/chat-transport-simplification/roadmap/PLANNING.md) to manage candidate creation, independent stage/release validation and the final owner approval checkpoint. The reviewed draft/preparation steps below are completed prerequisites; do not repeat them without changed evidence.
 

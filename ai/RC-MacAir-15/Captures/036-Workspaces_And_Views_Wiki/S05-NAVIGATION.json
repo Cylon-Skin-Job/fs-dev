@@ -1,0 +1,48 @@
+{
+  "at": "2026-09-21T13:28:24Z",
+  "command": "node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js audit /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/wv01-s05-navigation-819zrhpy/Wiki",
+  "runs": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "stdout_tail": "\n=== RC-MacAir-15 ===\n  updated: 000-Wiki_Guidance/PAGE.md\n  skipped (no-markers): 001-Project/000-Project/PAGE.md\n  updated: 001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  updated (children): 007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n  updated (children): 007-Chat_System/004-Chat_UI/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  updated: 010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n  created: 0  updated: 6  skipped: 27\n\nTotal: 0 created, 6 updated, 27 skipped\n",
+      "stderr_tail": ""
+    },
+    {
+      "run": 2,
+      "exit_code": 0,
+      "stdout_tail": "\n=== RC-MacAir-15 ===\n  skipped (no-markers): 001-Project/000-Project/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  created: 0  updated: 1  skipped: 30\n\nTotal: 0 created, 1 updated, 30 skipped\n",
+      "stderr_tail": ""
+    }
+  ],
+  "stage_modified_after_first": [
+    ".audit-state.json",
+    "000-Wiki_Guidance/PAGE.md",
+    "001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+    "007-Chat_System/002-Harness_And_Event_Flow/PAGE.md",
+    "007-Chat_System/004-Chat_UI/PAGE.md",
+    "010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md"
+  ],
+  "idempotent_owned_blocks": true,
+  "imports": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "action": "write",
+      "at": "2026-09-21T13:28:24Z",
+      "before_sha256": "688db571f63ea42253803a2f29eaa6cb96df4122288c5285001ec19f717fde17",
+      "after_sha256": "fb2806347dc2efded85581a59bc619fe800477154edd8c7059605fd606d71b07",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-062824.md",
+      "status": "complete"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "action": "write",
+      "at": "2026-09-21T13:28:24Z",
+      "before_sha256": "28bf8b4889fd6e984b020e7ee2e20c951cc1f423cd55814ce7f5f855babe5ed6",
+      "after_sha256": "aa1b0133ea437891cc320057e37c0eb516faa2ef952c0a3884375887aa120991",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-062824.md",
+      "status": "complete"
+    }
+  ],
+  "excluded_imports": "No staged whole pages, state files, generated edges or unowned changes imported."
+}

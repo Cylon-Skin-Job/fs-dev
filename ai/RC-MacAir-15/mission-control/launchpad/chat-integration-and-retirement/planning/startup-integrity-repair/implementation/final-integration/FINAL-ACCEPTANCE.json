@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-06T09:33:00.392555+00:00",
+  "gate": "fresh final integration BOTH complete original+repair contracts",
+  "verdict": "CLEAN",
+  "terminal": true,
+  "reviewer": "/root/startup_integrity_repair_orchestrator/final_integration_review_01",
+  "bothCompleteContractsCovered": true,
+  "contracts": {
+    "original": "All owner amendments, R01\u201307, S1\u2013S4, compatibility\u00a77, all10acceptance\u00a78, deferrals\u00a79",
+    "repair": "REQ01\u201307, R1\u2013R3, public\u00a77, actualadoption\u00a78, final\u00a79"
+  },
+  "candidatePath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-CANDIDATE.json",
+  "candidateSha256": "0665b45455361aea5854d16ce3d6fcd3cad6d89035b99358c7ecef5b6a570b83",
+  "rawReportPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+  "rawReportSha256": "3166e8e46e5c2216639ac4bdfc42846b45e9bab56649d60db36ec8357d15f34c",
+  "postCleanupMappingSha256": "881992f63384b6adbeb7970211901916638c2e39f40d7c495aad1f650c4899ec",
+  "cleanupSealSha256": "7bdda7b506a39bb055ce7dd565f561a918adaaa48d55fb992bf53fc4c301d281",
+  "FIN_D01Sha256": "5919fa87f8f24b9e0fc61dbf652bfce54a2cb7d129934acffb9168db0a1a4ee7",
+  "presentCandidatePaths": 354,
+  "archiveMappedCandidatePaths": 22,
+  "all376ReviewedIdentitiesAccountedFor": true,
+  "materialFindings": [],
+  "advisories": [
+    "Dated LedgerEventProvenanceSchema line26 three-v-two legacy topics; outside required17inventory; actualcode/requiredguidance unambiguous"
+  ],
+  "deviations": "16repair slice deviations +3preserved original deviations + final-executionFIN-D01; classifications accepted except D07 downstream_impact compatible evidence selection propagated",
+  "downstreamImpact": "compatible deviation",
+  "noRequiredDownstreamProductCorrection": true,
+  "noOwnerProductRulingRemaining": true,
+  "requiredManualRuntimeComplete": true,
+  "resourcesCleaned": true,
+  "initialFinalCleanupExitCode": 1,
+  "initialAllFourProtectedMatched": false,
+  "currentReadOnlyAllFourStable": true,
+  "oldLogicalEqualityClaimed": false,
+  "lowerProductTestEvidenceInvalidated": false,
+  "firstCleanStop": true,
+  "ownerAcceptance": "pending"
+}

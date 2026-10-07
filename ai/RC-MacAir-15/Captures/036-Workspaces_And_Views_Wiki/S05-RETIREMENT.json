@@ -1,0 +1,136 @@
+{
+  "retired_path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md",
+  "retired_at": "2026-09-21T13:27:44Z",
+  "predecessor_sha256": "5ac37116e76e303db81b1afab09af47cce2f9270799b7818973dd5c987351225",
+  "predecessor_snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/.versions/2026-09-21-062744.md",
+  "after_sha256": null,
+  "repaired_active_inbound": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md",
+  "active_wiki_inbound_remaining": 0,
+  "scan_command": "rg -n -F 001-Workspaces_And_Views/PAGE.md --glob !**/.versions/** --glob !**/node_modules/** --glob !**/runs/** .",
+  "remaining_reference_count": 26,
+  "remaining_references": [
+    {
+      "reference": "./System_Manager/ai/views/wiki-viewer/Wiki/PAGE.md:12:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md)",
+      "classification": "self_contained_template_or_mirror"
+    },
+    {
+      "reference": "./System_Manager/ai/RC-MacAir-15/Wiki/PAGE.md:12:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md)",
+      "classification": "self_contained_template_or_mirror"
+    },
+    {
+      "reference": "./claude-convo-artifacts/WIKI_COMPLETION_PLAN.md:31:- **Legacy folder TOC** `001-Workspaces_And_Views/PAGE.md:25` still links to the old `014-Office_Viewer` path \u2014 it's script-generated (description starts with \"Table of contents for\"), so left alone; the redirect keeps it resolving.",
+      "classification": "historical_research_or_capture"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/020-CSS_UI_Changes/WIKI_LIST.md:18:- Workspaces And Views \u2014 `ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md`",
+      "classification": "historical_research_or_capture"
+    },
+    {
+      "reference": "./System_Manager/ai-v2/RC-MacAir-15/Wiki/PAGE.md:24:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, chat, wiki, browser, file, agent, and issues surfaces.",
+      "classification": "self_contained_template_or_mirror"
+    },
+    {
+      "reference": "./System_Manager/ai-v2/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md:24:- [Workspaces And Views](../../001-Workspaces_And_Views/PAGE.md) - navigation for workspace and view architecture.",
+      "classification": "self_contained_template_or_mirror"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/validate-wiki.py:173:    old='001-Workspaces_And_Views/PAGE.md'",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/validate-wiki.py:426:            if ref.startswith('./ai/RC-MacAir-15/Wiki/') and not ref.startswith('./ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md'):",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:247:      \"path\": \"ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:481:    \"ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md\": \"5ac37116e76e303db81b1afab09af47cce2f9270799b7818973dd5c987351225\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1257:    \"./ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md:25:- [Workspaces And Views](../../001-Workspaces_And_Views/PAGE.md) - navigation for workspace and view architecture.\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1258:    \"./ai/RC-MacAir-15/Captures/020-CSS_UI_Changes/WIKI_LIST.md:18:- Workspaces And Views \\u2014 `ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md`\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1259:    \"./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/validate-wiki.py:160:    old='001-Workspaces_And_Views/PAGE.md'\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1260:    \"./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/validate-wiki.py:220:            if ref.startswith('./ai/RC-MacAir-15/Wiki/') and not ref.startswith('./ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md'):\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1261:    \"./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/PAGE-MAP.json:186:      \\\"path\\\": \\\"ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md\\\",\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1262:    \"./claude-convo-artifacts/WIKI_COMPLETION_PLAN.md:31:- **Legacy folder TOC** `001-Workspaces_And_Views/PAGE.md:25` still links to the old `014-Office_Viewer` path \\u2014 it's script-generated (description starts with \\\"Table of contents for\\\"), so left alone; the redirect keeps it resolving.\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1263:    \"./System_Manager/ai/views/wiki-viewer/Wiki/PAGE.md:12:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md)\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1264:    \"./System_Manager/ai-v2/RC-MacAir-15/Wiki/PAGE.md:24:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, chat, wiki, browser, file, agent, and issues surfaces.\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1265:    \"./System_Manager/ai-v2/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md:24:- [Workspaces And Views](../../001-Workspaces_And_Views/PAGE.md) - navigation for workspace and view architecture.\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1266:    \"./System_Manager/ai/RC-MacAir-15/Wiki/PAGE.md:12:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md)\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1267:    \"./System_Manager/ai-template/Wiki/PAGE.md:24:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, chat, wiki, browser, file, agent, and issues surfaces.\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json:1268:    \"./System_Manager/ai-template/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md:24:- [Workspaces And Views](../../001-Workspaces_And_Views/PAGE.md) - navigation for workspace and view architecture.\"",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/PAGE-MAP.json:186:      \"path\": \"ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/EDIT-RECEIPTS.json:527:      \"path\": \"ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md\",",
+      "classification": "execution_evidence"
+    },
+    {
+      "reference": "./System_Manager/ai-template/Wiki/PAGE.md:24:- [Workspaces And Views](001-Workspaces_And_Views/PAGE.md) - product workspace model, view architecture, chat, wiki, browser, file, agent, and issues surfaces.",
+      "classification": "self_contained_template_or_mirror"
+    },
+    {
+      "reference": "./System_Manager/ai-template/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md:24:- [Workspaces And Views](../../001-Workspaces_And_Views/PAGE.md) - navigation for workspace and view architecture.",
+      "classification": "self_contained_template_or_mirror"
+    }
+  ],
+  "mirror_resolution": [
+    {
+      "root": "System_Manager/ai/views/wiki-viewer/Wiki",
+      "own_old_root_exists": true
+    },
+    {
+      "root": "System_Manager/ai-template/Wiki",
+      "own_old_root_exists": true
+    },
+    {
+      "root": "System_Manager/ai/RC-MacAir-15/Wiki",
+      "own_old_root_exists": true
+    },
+    {
+      "root": "System_Manager/ai-v2/RC-MacAir-15/Wiki",
+      "own_old_root_exists": true
+    }
+  ],
+  "scope_note": "Mirrors/templates and historical records were read only. Each mirror has its own old root; this retirement affects only the active ai/RC-MacAir-15/Wiki tree."
+}

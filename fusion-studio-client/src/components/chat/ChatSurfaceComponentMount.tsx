@@ -20,7 +20,7 @@ import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
 import { getWorksurfaceEntry } from '../../state/slices/worksurfaceSlice';
 import type { AppState } from '../../state/panelStoreTypes';
 import type { ComponentDescriptor } from '../view-tabs/componentTabTypes';
-import { readOpenSideChatPlacements } from './sideChatBridge';
+import { readOpenSideChatPlacements } from '../../lib/chat/side-chat-placements';
 import { ChatSurface } from './ChatSurface';
 import { useChatSessionHost } from './useChatSessionHost';
 import { nextChatSurfaceMountGeneration } from './chatSurfaceContract';
@@ -132,6 +132,7 @@ function ChatSurfaceReadyMount({
   return (
     <ChatSurface
       {...host.identity}
+      screenshotSelection="session"
       shell={host.shell}
       header={host.header}
       composer={host.composer}

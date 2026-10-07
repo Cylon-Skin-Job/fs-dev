@@ -1,0 +1,56 @@
+[
+  {
+    "argv": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-tabs-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S03",
+      "--phase",
+      "content"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:19:31Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"9363572a3b9309094cd33ec1bf41bfa8a5eac76d706b6f5d68b0b43910f24edb\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S03\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-data-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S03",
+      "--phase",
+      "content"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:19:31Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"5c35c7047b480a08dbaeae2593339862e35afa42059acb62770fcdc8b35e67b6\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S03\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-iframe-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S03",
+      "--phase",
+      "content"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:19:31Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"20315e4953eab6de004e7ea1f7ab85873060a3b38e9e379ae1e6adb1cf79c582\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S03\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  }
+]

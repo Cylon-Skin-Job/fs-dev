@@ -1,0 +1,44 @@
+{
+  "paths": [
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md"
+  ],
+  "whitespace_conflict_failures": [],
+  "contextual_hits": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "line": 36,
+      "text": "The inspected admission module seals four trusted built-in publisher identities for save and agent-observation facts. It verifies reserved input and schema before private delivery; that bounded route is not a general plugin publisher factory. Admission alone does not prove delivery, ledger storage or renderer receipt. These are source-inspected observations of the named producer/consumer routes, not a runtime verification or a universal atomicity guarantee."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "line": 42,
+      "text": "Post-tool observations cannot manufacture a pre-tool image or establish causation from timing alone. Save preimages and observation checkpoints have different coverage; neither is a universal history/restore service. General external-store failure, retry, transaction and provenance integration remain adapter-specific work under [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates), without cross-store atomicity promises. [Unfinished Work](../000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md) owns the platform gap route. Return to [Tabs, Drawers And Files](../004-Tabs_Drawers_And_Files/PAGE.md) for presentation ownership or continue to [Custom Iframe Composition](../006-Custom_Iframe_Composition/PAGE.md) for the narrow-operation target."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "line": 22,
+      "text": "A separate standard UI library running inside the iframe is optional, deferred work. It is not a prerequisite for placing standard host pieces alongside an embedded region. The exact bridge transport, authentication/authorization, supported operations, compatibility and isolation mechanism remain [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates). This page defines no message envelope, SDK method or executable import interface."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "line": 30,
+      "text": "These named embedding/navigation paths do not establish an implemented general hybrid bridge, iframe SDK or complete isolation model. This is bounded source inspection, with no product runtime or security certification. [Custom View](../../001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md) retains the detailed current embedding account and its limitations; linking it does not recertify all Electron or browser behavior."
+    }
+  ],
+  "interpretation": "Hits are explicitly open schema/ABI/SDK language and a denial of universal atomicity; no ephemeral planning references.",
+  "git_ls_files": {
+    "argv": [
+      "git",
+      "ls-files",
+      "--",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md"
+    ],
+    "exit_code": 0,
+    "stdout": ""
+  },
+  "git_diff_check": "N/A for these untracked creates; direct whitespace/conflict scan performed."
+}

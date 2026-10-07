@@ -1,0 +1,17 @@
+{
+  "slice": "S03",
+  "outputs": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "sha256": "9363572a3b9309094cd33ec1bf41bfa8a5eac76d706b6f5d68b0b43910f24edb"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "sha256": "5c35c7047b480a08dbaeae2593339862e35afa42059acb62770fcdc8b35e67b6"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "sha256": "20315e4953eab6de004e7ea1f7ab85873060a3b38e9e379ae1e6adb1cf79c582"
+    }
+  ]
+}

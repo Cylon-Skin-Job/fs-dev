@@ -72,7 +72,7 @@ describe('event registry startup integration', () => {
     const enableLedger = source.indexOf('agentLedgerOwner.enableContinuations()');
     const enableObservation = source.indexOf('observationOwner.enableContinuations()');
     const enableRendererProjection = source.indexOf('rendererProjectionOwner.enableContinuations()');
-    const watcher = source.indexOf("require('./watch/workspace-watcher')");
+    const pipeline = source.indexOf("defineStartupEffect('workspace-automation-pipeline'");
 
     expect(dbInit).toBeGreaterThan(-1);
     expect(registryInit).toBeGreaterThan(dbInit);
@@ -103,7 +103,8 @@ describe('event registry startup integration', () => {
     expect(enableLedger).toBeGreaterThan(listen);
     expect(enableObservation).toBeGreaterThan(listen);
     expect(enableRendererProjection).toBeGreaterThan(listen);
-    expect(watcher).toBeGreaterThan(listen);
+    expect(pipeline).toBeGreaterThan(listen);
+    expect(source).not.toContain('workspace-watcher-trigger-pipeline');
     expect(source).toContain("'system.agent-provenance-ledger'");
     expect(source).not.toContain('broadcastLegacyFileChanged');
     expect(source).not.toContain("type: 'file_changed'");

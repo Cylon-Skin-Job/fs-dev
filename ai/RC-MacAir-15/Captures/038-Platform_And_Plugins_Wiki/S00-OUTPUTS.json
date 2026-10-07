@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/validate-wiki.py",
+      "sha256": "2e43b5dea0ce663f2d766e8f015ebdb4d3d44074cf17657a2967bb58c56bb5c5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "sha256": "d82043d0a77e4bb4c9d76e45392665c2cc91f16c3789872d65442488b82029ae"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s05-navigation.py",
+      "sha256": "4fa6ffc29c8ea8dc5f83a1c267d5338ecaf5f810b19d7338ec24f5006d61a74e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s05-stamp.py",
+      "sha256": "8355a946bdd5c60143174027ab5b8c42a181d642688da411c2ec946165b42b50"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/writer-self-test.py",
+      "sha256": "cfca5e9c0cfb8a297d6235921f4b98b927e8d1345254d6bc966c9f218155c822"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/BASELINE.json",
+      "sha256": "81eed171b191aec3d35f76176d8bc1e0bfd0f329445fd45de199b5e0a80632cc"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/NAVIGATION-BASELINE.json",
+      "sha256": "d49b4e9679bd589db4b3fcdf02070a7b0800a7d9eaff5fdc7f9b572f4be73dbf"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/ADDITIONAL-SOURCES.json",
+      "sha256": "c2bb4ed3e79af0a20f8ddb86f29b133c6a2c34873225bb1e79a35e2ddc8d5c43"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/CLAIMS.json",
+      "sha256": "27e4f714fd25b321b71ec4172b9da0b370ebf4bb6786298807eef639d3f3fb85"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/COVERAGE.json",
+      "sha256": "f165d06de1a95da360ef77a35906489988ae1c884e74438e8f1412a823326472"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/SOURCE-INSPECTION.md",
+      "sha256": "400c9fa04cf9ed6f5e2d3cab0c4394283bd6ade0b1eae14cbd5e85777fcb21e9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/TOOLING.md",
+      "sha256": "39afd47107f0ef7c8278e623eb4992390f6bbf761178b32a67d3ea185f9f3c6c"
+    }
+  ],
+  "counts": {
+    "files": 12
+  },
+  "failures": [],
+  "limits": "Read-only syntax/whitespace of actual S00 output; no product build."
+}

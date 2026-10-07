@@ -1,0 +1,183 @@
+{
+  "status": "SPEC_READY_FOR_OWNER_REVIEW",
+  "candidate": "PPW01-0159a35a4ecb7fd3",
+  "recorded_at": "2026-09-23T14:11:42.167823+00:00",
+  "evidence_sha256": {
+    "HANDOFF.md": "b35f470f3bf4d3f9983c9d1460bb542106e3b3441c8267b334701938a7d8b17a",
+    "EXECUTION.md": "b5b2e440c477dcc22701c86440c568d66e48f398cc85c86dbcb261f7bfe25c38",
+    "COVERAGE.json": "0798d2cacb451a07bc0f321979aa3ceef5cf290c610dfb17eff375aa2e0a40f3",
+    "CLAIMS.json": "005f08320cd2845c8add3aa3e43b51bccb5d0a084715ced1057dc9e24162edc8",
+    "S05-OUTPUTS.json": "614bdb6fe5c017e2a54d942be16f964a5a6a31033a59d9cedca350ff26a44f69",
+    "TIMESTAMP-RECEIPT.json": "2d5fc62c6ea56e286aa1bfe90a4483d155b73594a47027e82d9decebc1824278",
+    "EDIT-RECEIPTS.json": "5073e440bc12d86d0020b89ad96d212da282bff1d48d45f89b7eaef360da5f5d",
+    "FINAL-INTEGRATION-REVIEW-01.md": "3e8fdeb999b2056dc6239ec4695cbfa72fdd70f6c4f97f7eac1e0ed5185c8ed3",
+    "ORCHESTRATOR-FINAL-BYTES.json": "893b6183f72243c97a3f70aa1cf99abb01be5d7c073eff02a5c3e13da7df6094",
+    "runs/20260923T141118056563Z-final.json": "16fad7a8bcd963389b0e66810d06132c3cc5358214c1b089d3c04534531628be",
+    "S00-ACCEPTANCE-REVIEW-01.md": "09eca97da5d747132943598b9f81a0b0286ec0909c7b8f7e7089619f499e0fa1",
+    "S01-ACCEPTANCE-REVIEW-01.md": "40d08a98f638fdd2c1375160e2ddb4311e063458d5b1760554cc6e13bc4222ea",
+    "S02-ACCEPTANCE-REVIEW-01.md": "b49cc64bf92f9bb10bc7c5da2b740295d32127e07bfd9c093d1743e93a136bea",
+    "S03-ACCEPTANCE-REVIEW-01.md": "124b5ce31376de4c320ee219b40107a608ea942370db8b24a701ca80ceaa4ca5",
+    "S04-ACCEPTANCE-REVIEW-01.md": "6cd456013221df8aa382c6a99c041901f1db584d35bd497b75239c9e6edf50a7",
+    "S05-ACCEPTANCE-REVIEW-01.md": "2e021f4897ceeb998e92e59268675b1fde5734a666e2b42945669b6e9ef379f9"
+  },
+  "outputs": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+      "sha256": "ac07dc3025b3e3a066150cb1530136a4a737f0d5a00e519ff7e241bf6926e382",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "sha256": "78ae558202b957422970845246885212d4fc2db696eb5fa074e6549dc36a68f0",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "sha256": "aca5006e86f4e3610f38f589e1d6ddf075a18d68cf218c030bc19705a8ed3830",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "sha256": "6b57f7bab0dc2d1027971656392bb4103f1501bfa784ec39d463390c8d62ddc0",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "sha256": "f0999475c112d81379d356ecbea6d1ae02d0ed6492cb6ae4b359887c7fc954d7",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "sha256": "3d38d07483700508acb5b5233855502a1e1104c5cb591efb0dd223443efabeaa",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "sha256": "2189100f281e0b945a1f21f282f34c05d587d73d8b1faa865b61ec01e6c8eb4c",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "sha256": "2d035c6a446680dcc1698052b16cc1f9b0c003677d81f3e7ba4c61c2ec41df37",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "sha256": "b96ae5f230c77a702cae3721e1bb0200f89824c2f4dbd5741fa52847ef61511a",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "sha256": "98f6992a5cb610160b4b35eb8b3356cd8b7c5c30730190781cf0ef08427f6341",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "sha256": "ef13256606956ea0fab69847b6aa756a2a617127a74dafff986edc49aedea4e6",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "sha256": "fd73602bc036e65f1d68a01a84ae4d9eb2ff004754c48956c47b490a6c0ebf96",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "sha256": "aa8f2b85925f23346d374fa4f1b21290b66c7a06c08788ef0943ba973a2e6fee",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "sha256": "4c25f961c92e94be69e3641bf8dc15212091fd4351cda2417c12ec2d63614945",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "sha256": "d865233fdab5dbdb5c2c383742634b57113c936e844dd0fd400b19fc709680a3",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "sha256": "fc65e6f6df5fd1779d7e060ce7702c6bc8e50dd24942e5bf52c2c156ce8d16c0",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "sha256": "b66e19f89339d2c2dc0cc59ef1d3a4aaa568fe239c5691425238e5e1d6f1f2ac",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "sha256": "0846d488a4f60f05f69a4afd981775df4865a9bb46926d75e7305b707fde679c",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "sha256": "0912cc8329411e9af0c4f04daf6f3f8de1e3f029f94ffe54ea11570b64c574ba",
+      "snapshot_matches": true,
+      "final_matches": true,
+      "timestamp_only": true,
+      "common_stamp": true
+    }
+  ],
+  "builder_count": 6,
+  "lower_independent_gates": 12,
+  "final_integration_reviewer": "/root/pp_final_integration",
+  "all_gates": "CLEAN",
+  "downstream_impact": "none",
+  "limitations": "Documentation/source inspection only; owner acceptance separate; no next SPEC or product operation."
+}

@@ -1,0 +1,50 @@
+---
+name: Background Services
+description: Current startup effects, opt-ins, failure boundaries, and background-service limits.
+metadata:
+  source-files:
+    - fusion-studio-server/lib/views/readiness-startup.js
+    - fusion-studio-server/lib/views/readiness-runtime.js
+    - fusion-studio-server/lib/views/readiness-coordinator.js
+    - fusion-studio-server/lib/views/relocation-service.js
+    - fusion-studio-server/lib/workspace/workspace-controller.js
+    - fusion-studio-server/lib/testing/isolated-provenance-runtime.js
+    - fusion-studio-server/test/runtime/workspace-startup-integrity.test.js
+    - fusion-studio-server/test/views/readiness-startup.test.js
+    - fusion-studio-server/lib/startup.js
+    - fusion-studio-server/lib/background-services/config.js
+    - fusion-studio-server/lib/background-services/safety.js
+    - fusion-studio-server/lib/background-services/log.js
+    - fusion-studio-server/lib/calendar/index.js
+    - fusion-studio-server/lib/calendar/google/poller.js
+    - fusion-studio-server/lib/triggers/cron-scheduler.js
+    - fusion-studio-server/lib/runner/heartbeat.js
+    - fusion-studio-client/src/clipboard/clipboard-monitor.ts
+    - fusion-studio-client/src/hooks/useScreenshotCapture.ts
+    - fusion-studio-server/lib/harness/harness-status-service.js
+  last-modified: "2026-10-06T01:16:27Z"
+---
+
+## Startup ownership
+
+Server startup initializes `fusion.db`, registers request handlers and broadcasters, starts thread and audit lifecycle services, validates registered workspaces, and starts harness-status revalidation without blocking `listen()`. Unavailable registered workspace rows remain available for status reporting. The harness-status service gives a version lookup a 150 ms caller budget: expiration resolves the status lookup, but does not itself terminate a child process started by the harness adapter. Registering a request handler alone does not access a credential; a request or enabled adapter determines that effect.
+
+## Configuration and calendar
+
+The implemented server background-service opt-ins are `settings.backgroundServices.calendar.apple.enabled` and `.google.enabled` in the server's `data/config.json`, with `FUSION_CALENDAR_APPLE_ENABLED` and `FUSION_CALENDAR_GOOGLE_ENABLED` overrides. Both default off when absent or unreadable. Apple requires its local Calendar database, but retirement of its directory listener stops current automatic Apple sync/refresh; imported rows are not deleted and may become stale. Enabled Google retains its separate initial sync and five-minute poll, and needs `GOOGLE_BRIDGE_URL` and `GOOGLE_BRIDGE_KEY`. Calendar HTTP routes are request-driven reads from local `calendar_*` tables; the current client store does not write edits back. Repo-local snapshots are not Calendar freshness. Future Apple monitoring follows [D-019/D-020](../../../mission-control/launchpad/plugin-foundation/DECISIONS.md#d-019--treat-apple-mail-and-calendar-monitoring-separately-from-repo-snapshots) and [I-021/I-022](../../../mission-control/launchpad/plugin-foundation/ISSUES.md#i-021--low-resource-apple-mail-and-calendar-change-monitoring), not implemented here. [Server And Runtime](../PAGE.md#current-calendar-storage-gap) records the separate System database ownership gap.
+
+## Workspace pipeline
+
+After listening, the `workspace-automation-pipeline` startup effect captures the canonical active workspace ID and root from the workspace controller. `views/readiness-startup.js` ensures workspace view readiness and holds a verified readiness lease through view-root resolution, optional issue-script loading, component definitions, action wiring, declarative trigger loading, configured cron registration and runner heartbeat initialization. A missing active ID or root skips the pipeline. Pending preparation is joined before admission; consumers cannot enter while readiness remains unverified. Unavailable or retiring readiness admits no pipeline initialization; the lease releases on success or failure. Existing startup exception handling remains bounded to this pipeline. Production-entry canaries exercise the real effect registry, readiness runtime/coordinator and relocation owner; their scratch consumers establish startup reachability, not an active trigger or provider session on this machine. There is no generic workspace watcher or automatic `file:changed` publication. Cron jobs and `chat`, `ticket`, `agent` and `system` event triggers remain independent legacy event-bus paths; `file-change` trigger definitions have no active watcher input and do not fire. These paths are not governed event admission or proof that a worker session starts. See [Background Agents](../../003-Automation_And_Agents/005-Background_Agents/PAGE.md) and [Ticketing](../../003-Automation_And_Agents/002-Ticketing/PAGE.md).
+
+Automatic workspace file observation, registered watcher filters and watcher-driven theme regeneration are retired. Boot-time `themes.json` to `themes.css` generation and app-mediated theme operations remain. The legacy `file:changed` bus topic remains available to independent producers, but the legacy event ledger no longer records it. The separate manual wiki audit does not implement old wiki-specific edge/index hooks.
+
+## Client-initiated and automatic work
+
+Renderer startup checks `fusion.clipboard.monitor.enabled` in localStorage; only `true` enables one-second system clipboard polling. Current code still contains managed history while the approved product direction calls for its removal. Electron workspace activation schedules a native panel screenshot capture, and workspace initialization requests the screenshot list. Browser bookmark favicons currently use Google's favicon service. Shared styles, panel discovery and Calendar loads are client requests. [Screenshot Capture](../../004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md) owns image storage and attachment behavior.
+
+## Failure boundaries and open work
+
+Watcher subscribers, legacy bus listeners, cron callbacks and runner heartbeat callbacks use `background-services/safety.js` for synchronous throws and observed promise rejections. A failure reaching that boundary appends a generic redacted JSON line to `fusion-studio-server/data/background-services.log` and prints a generic console error. The file does not include the original service name or error code. This is not a guarantee that every startup or external failure uses the shared log; database initialization remains startup-fatal and some paths catch locally. Cron and hold registries expose `stop()`, but the inspected server shutdown composition does not call those methods.
+
+The former Warmth Settings page proposed a unified workspace FIFO/TTL, background-bot exemptions and memory figures. Those are historical, unmeasured proposals, not configured defaults. [Chat Runtime Model](../../007-Chat_System/006-Runtime_Model/PAGE.md) owns the distinct provider-session lifecycle. Future non-chat resource policy needs measured costs and explicit pause, persistence and resume ownership before it can become operational guidance.

@@ -1,0 +1,264 @@
+{
+  "at": "2026-09-19T11:08:32.912355+00:00",
+  "candidate": "PW01-f24d5cd427b9ca14",
+  "excludes": [
+    "S06-FILE-MANIFEST.json (self-reference)"
+  ],
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/FINAL-ARTICLE-HASHES.json",
+      "sha256": "442ffacd8ecabf89c06394d5e79770320564fadf1dd9f29b4c9dd6124394a9eb",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-CHANGE-MANIFEST.json",
+      "sha256": "3a8945c594a85051234e99a3cdcee19d8d4ebdbfa2a0a2edde3b3237d9859335",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-CHECKS.json",
+      "sha256": "b0be76c1bd4b7e9d8fb57069b74fb9278789282030e0be159429d3e658341404",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-DISPOSITIONS.json",
+      "sha256": "7a9eaacf564a43c00816b46c86fde0d8acfdd85012bbc7712d81e02039fb011d",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-EVIDENCE.md",
+      "sha256": "f7cd8205febb3d4a3b9f032f23e67ae81cb63f41f3f8f3274a9a43e99a4f1e56",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-HANDOFF.md",
+      "sha256": "d069ecf760ff7b69c9949a01ac74dac47306326c5d5ae49db7373420607cf194",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-PAGES.diff",
+      "sha256": "77d4489afbec6423ebfbac8f458f5e1633f1ac2c44e25f6edebfe714b230245f",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-REVIEW.md",
+      "sha256": "a6266fea2a1a681624f6b5809a008684b4503db5b6d5a15cbd319f8f18f4fe1a",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-SOURCE-EVIDENCE.json",
+      "sha256": "62e1127db260f953163998e03e6d659350f506f8b95e5b0890e4cfed869f69b1",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-SUPPLEMENT-MANIFEST.json",
+      "sha256": "f394cbba13588942af543e0bb24bc9fb8bb9aaf4870a57654d483c409cec6589",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-evidence.py",
+      "sha256": "13a2393b3abc68da9f1a29bc62c255b0bf0ae373d91eaf4f09ba79e05fbb2cc3",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-manifest.py",
+      "sha256": "67a8763208b20c14910a1797a7eb8e02c4945d5b6a48d1c25ad73db217d1efab",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-verify.cjs",
+      "sha256": "a04ef0fe6b4cce9d45bdcaa0b7a1faf37db34389ee4a9051960a03235d3a486b",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-write.py",
+      "sha256": "8937f9dc6b9b017f3d3a8655d33533f542ec45e25a9be9acf8be95e9d4bb2676",
+      "attribution": "S06 capture-only artifact"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "sha256": "0f0bc233960df8422f03a7d63a2ce7cbd4cd7731f5691f2204c888ad947abbf9",
+      "attribution": "append-only S06 supplement; prior bytes excluded from attribution"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "sha256": "00a6a4566ac5a6ff1fe06f030883c71416d112bb187f5030140cb58df0462add",
+      "attribution": "append-only S06 supplement; prior bytes excluded from attribution"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-040021.md",
+      "sha256": "c6dc42e0e15ef23d0697ef39d308698e5044788c21338beee0a5d5aa52b88df9",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "c48b4a5aed2c65d0195410e267beed5509189756a9f7e3a3500e39f91a66d624",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "sha256": "b6357046872aef01c729268a41ecf3ee732d5b1bab62a1634bcf336f39f4a4ec",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "baecb88fbedd53a1b83548350aa2439fe4ff6d442dfb4e5ed0daeb1ba66243d0",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-040021.md",
+      "sha256": "6d7a6d5e8e80c4fd75ccdff0824d7791ed345787fd2abce90342760019e1e9a0",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "03a0f9d5c3ba6966157678cbffeab3e96f900e5b675baff90d7ba671574290c4",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-040021.md",
+      "sha256": "85edb31a9a0eb77de660e7ceb4f13b7328551a95e929dabf690b726ff1d9bc33",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-040021.md",
+      "sha256": "62e0349b0e50462f42b690e6fdc6dab6af84fc74f2c9d54ecb24d6a93606de5c",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "sha256": "974bf1db71927ad15aa38fa138927500da7d08fd009536eac03194906b547df4",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-040021.md",
+      "sha256": "8f4fc54e9895bad4e988996bbf7366c6d9baff1cf9a2accafb5c1506fe8b2675",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "1c72ed2f8792ad30c8983c141d5a97284f735c5fa3766384d01c15409e849f82",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "sha256": "bfdcce5e4b705c74e95e1552a4b6e717bdb52a21ce510726ff7780c4fbdd3957",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "sha256": "237038cba9010a345b785df9003193bd350e2febbf6025481ec98efb262d9f84",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "sha256": "c88f14bb2f5d7d3d4266b23aaa8b4c86c562094107e2f7f1412792826e62749a",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-040021.md",
+      "sha256": "86a5d19b998b413d7e59ec515c11439400d67d63a20c0eebb3d0b4b4d926a8c1",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "ed0a090e19d768da355d94e5f47e1fec2062098a34d4355f75031cd8a218e776",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-040021.md",
+      "sha256": "5df60aecf62d9591858ee6a90e2854982d601dbf2bf093c64672dff91df652a7",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "sha256": "7a82f32ecf8f0196c1de52b03b719ba3320b8ae8207c2ea16f46b337b935439d",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "sha256": "87f4aa61ab2eb25097245eba46f662822409a9e01c1b3a50f6c4598e7539d2f7",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "sha256": "9e1c1cf2133a5c226d5136e0b7ef71afe7ef86f0a431e0d65e19a597fde2253d",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "sha256": "1e3f7881053f65a5fa632ebdbdad21346e76e3f8b1b5a14731d0fceac0cbd1f5",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "sha256": "8ff92f6735e8149d3c481e409171d6d6ac96b0598e6a710c1bdd2bd7d1e118c9",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md",
+      "sha256": "09fb7b06a8f91b0e50dc33a15cad39ff5e20cde057ba6133d1c007801681fce4",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "05fb9589a5aa7d68be93e8865db1c2f9716fe817f8ecbabb4f4964733da41680",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-040021.md",
+      "sha256": "d6f29d7a30a81b75c617575b45f6c9d3bee1a5f9290eb20f6f890395038e252f",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "sha256": "9084487902df640f96c12b0dd8b87b4290d965b9f539f0363f9779e19632c71e",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-040021.md",
+      "sha256": "511ae7b20857860cc6a3ddb9007af048b197203f16bce9a3bf4461253a92bd1d",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "sha256": "3143fe75fe31d3c34831aa135964e5b5268890340c3635dd73da1964184cddaa",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-040021.md",
+      "sha256": "bda6ad2a3b78ad6066eb0db28261f609d3e2ece8e26759b9cf41d08fb0526021",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md",
+      "sha256": "a273c1446c304ead23348f537be44123f5176aaf0d3eb664cf64d3291d9b5b5b",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040021.md",
+      "sha256": "c803b1cc3a1850492fdbac73326b90e3578bd023b971466dba2f4783c24c6659",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040308.md",
+      "sha256": "b1e4ef34e0095c41de3293004b7fbc8e9fb3d2237714ad9db50383d516ca7280",
+      "attribution": "exclusive exact repair predecessor"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "sha256": "7350bce4c6d283ee5ca64e0ed2490326d1cca2aae1043b27c2fce3963effc7b8",
+      "attribution": "S06 article edit"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-040021.md",
+      "sha256": "781a87c0154a6814ba7a0d436b09b11be783c0832d50a48951931f7e1d0fb618",
+      "attribution": "exclusive exact pre-edit article snapshot"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "sha256": "4e08e5665371f9585ed1e19cdbe3f210849ac4afd86e0363e23d2de34a0200d2",
+      "attribution": "S06 article edit"
+    }
+  ]
+}

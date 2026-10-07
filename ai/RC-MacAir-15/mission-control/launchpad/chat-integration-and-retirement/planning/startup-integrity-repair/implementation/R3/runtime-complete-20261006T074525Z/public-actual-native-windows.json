@@ -1,0 +1,97 @@
+{
+  "mainPid" : 57401,
+  "readOnly" : true,
+  "windows" : [
+    {
+      "kCGWindowBounds" : {
+        "Height" : 19,
+        "Width" : 89,
+        "X" : 755,
+        "Y" : 1117
+      },
+      "kCGWindowLayer" : 103,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142967,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 500,
+        "Width" : 500,
+        "X" : 0,
+        "Y" : 743
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142961,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 1000,
+        "Width" : 1600,
+        "X" : 160,
+        "Y" : 122
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "Fusion Studio",
+      "kCGWindowNumber" : 142887,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 42,
+        "Width" : 1920,
+        "X" : 0,
+        "Y" : 0
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142905,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 42,
+        "Width" : 1920,
+        "X" : 0,
+        "Y" : 0
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142904,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 42,
+        "Width" : 1920,
+        "X" : 0,
+        "Y" : 0
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142903,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    },
+    {
+      "kCGWindowBounds" : {
+        "Height" : 42,
+        "Width" : 1920,
+        "X" : 0,
+        "Y" : 0
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowName" : "",
+      "kCGWindowNumber" : 142902,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    }
+  ]
+}

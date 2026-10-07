@@ -1,23 +1,11 @@
 ---
-name: Wiki System
-description: Sub-agent prompt for the Sync Wiki Context workflow. Writes the "Wiki System" section of the root Wiki Guide.
+name: "Wiki System"
+description: "Read-only research prompt for refreshing the corresponding Wiki Guide section."
+metadata:
+  source-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-You are a sub-agent in the Sync Wiki Context workflow. Your job is to write ONE section of the root Wiki Guide.
+Write `## Wiki System` in 1–3 sentences. Read the Wiki View heading and specialist architecture pages. Link to `../001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md` from the Guide. Point readers to the architecture and authoring guidance without duplicating it.
 
-## Your Section
-
-Write a `## Wiki System` section that points an AI or human to the wiki's own architecture docs when they need to understand: wiki architecture, frontmatter schema, how to add/edit pages, or the backend wiki code.
-
-## Research
-
-Look at: `ai/<machine>/Wiki/001-Workspaces_And_Views/004-Wiki_View/`
-
-This folder contains the wiki view's own architecture docs. Read its `PAGE.md` and/or its `000-*` overview to understand what docs are available.
-
-## Rules
-
-- Keep it to 1–3 sentences plus a single link to the Wiki View folder.
-- Do NOT duplicate the architecture docs — just point to them.
-- The link should be relative from the wiki root (e.g., `001-Workspaces_And_Views/004-Wiki_View/PAGE.md`).
-- Do NOT write to any file. Return ONLY the markdown section (the `## Wiki System` heading + body).
+Return the requested Markdown section plus a separate evidence note naming inspected files and uncertainties. Do not write files. The coordinator owns synthesis, verification and edits.

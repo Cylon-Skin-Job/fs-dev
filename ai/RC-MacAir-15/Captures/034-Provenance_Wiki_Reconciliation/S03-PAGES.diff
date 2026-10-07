@@ -1,0 +1,511 @@
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-032330.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md
+@@ -1,6 +1,6 @@
+ ---
+ name: Events Resource Events And Render Sync
+-description: How file and folder mutations flow through UEB into cache invalidation and React/Zustand state without private per-view listeners.
++description: Trace mediated text saves through governed projections to the two mounted File Viewer consumers; distinguish reconnect and dirty-buffer limits.
+ metadata:
+   incoming-edges:
+     - Events And Ledger
+@@ -9,55 +9,66 @@
+     - Events Universal Event Bus
+     - Events Provenance Model
+   source-files:
+-    - fusion-studio-server/lib/watch/core.js
+-    - fusion-studio-server/lib/watch/workspace-watcher.js
++    - fusion-studio-client/src/components/office/OfficeDocumentPage.tsx
++    - fusion-studio-client/src/components/email/EmailDocumentPage.tsx
++    - fusion-studio-client/src/components/documentSaveAcknowledgement.ts
+     - fusion-studio-client/src/state/fileDataStore.ts
+-    - fusion-studio-client/src/components/wiki/WikiExplorer.tsx
++    - fusion-studio-client/src/lib/ws/file-handlers.ts
++    - fusion-studio-client/src/lib/ws/resource-projection-protocol.ts
++    - fusion-studio-client/src/components/ContentArea.tsx
++    - fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx
++    - fusion-studio-client/src/components/view-tabs/viewTabAdapters.ts
++    - fusion-studio-client/src/components/view-tabs/fileConnectedAdapter.ts
++    - fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx
++    - fusion-studio-client/src/components/file-explorer/FileViewer.tsx
++    - fusion-studio-server/lib/ws/client-message-router.js
++    - fusion-studio-server/lib/ws/file-save-route.js
++    - fusion-studio-server/lib/file-mutations/save-controller.js
++    - fusion-studio-server/lib/file-mutations/fact-replay.js
++    - fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js
++    - fusion-studio-server/lib/ws/resource-projection-publisher.js
++    - fusion-studio-server/lib/ws/workspace-session.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before changing file-change events, view cache invalidation, or Wiki/File Viewer refresh behavior.
++Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+ 
+-Resource/render sync should consume canonical UEB resource events and update central cache/state. Views should subscribe to state and render from it. They should not each own private WebSocket listeners, recursive reload policies, or stale-check loops.
++Use this page before changing save routing or File Viewer freshness. The implemented path uses the existing WebSocket, governed subscriptions and central Zustand state. It does not establish universal freshness for every view or filesystem writer.
+ 
+-First-package workspace/view/theme lifecycle events use `lifecycle-metadata-v1` version `'1'`. Canonical workspace-switch records contain workspace IDs and reason, never absolute/local roots. View/theme affected paths are canonical workspace-relative. Compatibility roots, broad context/resources/ledger fields, actor ID, and source filesystem paths are omitted; unknown fields error. Lifecycle status `failed` is not canonical and has no safe core. Policy failure preserves the lifecycle operation and invokes non-canonical `lifecycle:refresh_required` with workspace, view-registry, or theme scope.
++## Current save-to-render path
+ 
+-## Target Flow
++1. Production `OfficeDocumentPage.handleSave` and `EmailDocumentPage.handleSave` serialize their document, capture its dirty revision and await `fileDataStore.saveFile`; milestone actions also use `documentSaveAcknowledgement`. These are save callers. The current File Viewer presenters display content and have no save editor control. A fixture submitting a save from another socket or directly through the store is not a production File Viewer edit gesture.
++2. With the advertised save protocol, `saveFile` creates `file_save@1` with a request ID and current workspace ID/epoch, snapshots optional reported UI context, and sends through the existing socket. The server message router delegates to `file-save-route.handleFileSave`, which checks the active server session pair and locked request schema. The pair is a stale-intent precondition, never client authority to choose a root.
++3. `save-controller.save` resolves workspace/panel/path authority, validates exact UTF-8 text, serializes the physical target, reserves the operation and prepares its durable preimage before invoking the atomic writer. A missing target is create; an existing eligible regular file is modify. See [File Versioning](../006-File_Versioning/PAGE.md) for eligibility and failure boundaries.
++4. The save owner attempts `file.command_accepted@1` after reservation and `resource.mutated@1` only after successful replacement. Durable reservation verification and schema validation admit frozen facts. Command-fact publication failure may remain pending without stopping a protected save; this does not waive required operation/preimage storage.
++5. The seeded `system.provenance-ledger` subscription projects the resource fact into System history. The separate best-effort `system.resource-render-projection` handler derives `resource:changed@1` with canonical workspace-relative path and File Viewer scope. Admission, ledger storage, handler invocation and visible delivery are separate outcomes.
++6. `resource-projection-publisher` selects matching open workspace sessions, injects each recipient's epoch, validates the registered projection and rechecks its pair before the workspace-bound send. During binding, the existing bounded queue orders bind frames before replies/projections; failure or overflow closes for reconnect. A send or zero-recipient result is not a client acknowledgment.
++7. `ws-client` dispatches to `file-handlers`; strict v1/v2/recovery guards reject malformed projections by closing the connection. `fileDataStore.handleResourceChanged` rejects stale pairs and deduplicates exact identities; conflicting identity closes through the handler. `applyTargetedProjection` drops the addressed File content and parent tree caches/errors/pending reads, then requests that parent tree and, if previously cached, pending or of interest, that content.
++8. Under a ready File tab policy, `ContentArea` mounts `ViewTabBar`, whose connected File adapter supplies `FileDocumentPresenter`. The fallback `FileExplorer` mounts `FileViewer`. Both select `file-viewer:<path>` from `fileDataStore` and render through `FileContentRenderer`; the addressed presenter requests content on path/generation changes. Updated store state reaches React without a private per-view socket listener or DOM patch.
+ 
+-```text
+-file/folder mutation
+-  -> successful owning mutation
+-  -> resource event candidate
+-  -> validation + canonical admission / diagnostic gate
+-  -> accepted canonical resource event
+-  -> resource sync subscriber
+-  -> renderer resource message
+-  -> central cache invalidation
+-  -> view selector updates
+-  -> React reconciliation
+-```
++## Current failures and recovery
+ 
+-Mutation resource facts, admission, and renderer projection occur only after the owning mutation succeeds; watcher resource facts begin only after the observation safely establishes workspace/path/operation. Resource sync acts on accepted canonical events. Malformed candidates produce diagnostics rather than being treated as canonical. Optional attribution/enrichment never suppresses an otherwise valid workspace/path/operation fact. If unexpected publication or projection failure after either branch would leave the UI stale, use conservative recovery plus a diagnostic without changing the mutation result or observed filesystem fact.
++| Point | Result and freshness behavior |
++|---|---|
++| Invalid/stale request, unsupported target/text or reservation failure | No replacement; request rejected. No successful mutation fact or save-driven refresh is invented. |
++| Required preimage/prepare failure | Accepted operation fails before replacement; original bytes remain, resource fact is not emitted. The save promise rejects. |
++| Rename occurred but replacement identity or directory durability is uncertain | `outcome_unknown`, `retrySafe: false`; no successful resource fact. Targeted recovery may refetch observed state without deciding that the save succeeded. |
++| Resource fact publication fails after a completed write | Save stays successful with provenance pending; controller attempts `resource:refresh_required` with `fact_publish_failed`. Pending durable work is eligible for startup reconciliation; the mutation is not replayed. |
++| Render handler absent or publication fails | Controller can request `projection_unavailable`; the invoked handler attempts `projection_failed` recovery on its own publication failure. The best-effort render outcome is not part of the save response's provenance-complete calculation. |
+ 
+-The recovery transport is the non-canonical `FreshnessRecoveryMessage` union: `resource:refresh_required` carries authoritative workspace/reason/path hints, while `lifecycle:refresh_required` carries nullable workspace, reason, lifecycle scope, and optional affected-panel hints. Candidate rejection, publisher failure, and suppression are pre-admission: no ref/delivery exists. Broadcaster projection failure is post-admission: the accepted ref/frozen event remain valid for every other subscriber and are not revoked. Both branches invoke the matching recovery variant. Clients preserve navigation/history/scroll/dirty/optimistic/undo state; clean entries replace, while dirty entries use `recoveryRemote` and `conflict_pending`. A null workspace switch detaches rather than discards dirty buffers. View-registry and theme recovery refetch their own state without clobbering user work. Recovery never enters UEB.
++Recovery uses the same addressed store invalidation path. It is an instruction to refetch, not an admitted mutation or a durable receipt that the client saw the change. If both projection and recovery delivery fail, reconnect is the remaining freshness route. Postwrite ledger conflict/pending state and optional Git-checkpoint failure do not undo the filesystem write. A successful save response can coexist with stale UI or a warning.
+ 
+-Immediate resource mapping uses no live registry lookup. Before admission the producer deep-freezes the current resource-policy generation; after true publication it stores that snapshot in a private WeakMap keyed by `acceptedRef` before queued listeners can run. The subscriber reads it only through `(frozenEvent, { acceptedRef })`; policy reload affects future events, not queued ones. Missing sidecar means projection failure/recovery without revoking admission.
++## Reconnect and dirty-state limits
+ 
+-Lifecycle renderer messages are an exact discriminated union: workspace switch pairs `workspace.switched` / `workspace-switch` / `workspace` / `all`; view registry pairs `view.registry_changed` / `view-registry-change` / `view-registry` / `registry`; theme pairs `theme.changed` / `theme-change` / `theme` / `style`. The accepted frozen event is the only construction input: renderer `eventId` and `ids` must match it exactly. `ids.workspaceId` and, only for a workspace switch, required `ids.previousWorkspaceId` are the only workspace identities. Cross-paired event types, IDs, scopes, actions, kinds, or extra top-level workspace identity are invalid.
++`workspace-handlers` installs workspace ID and epoch together and calls `beginWorkspaceGeneration`. File reads match request ID, local generation and both workspace fields, so delayed A→B→A replies cannot become current merely because the workspace ID matches. Disconnect retires in-flight correlations and rejects pending saves. Same-workspace reconnect invalidates/refetches known File trees and clean content while preserving dirty cached content and its metadata/navigation; a different-workspace generation resets the File data cache and dirty flags.
+ 
+-Receiver routing is separate private state. First-package lifecycle publication is connection-originated and installs a frozen `AcceptedCanonicalRef`-keyed route sidecar containing opaque initiating-connection and lifecycle-epoch capabilities plus the post-switch workspace before listener tasks can run. Delivery/recovery rechecks that the initiator's epoch and workspace are still current; an older queued transition is diagnosed and cannot invalidate or rewarm the initiator's newer state. Null-workspace invalidation/recovery resolves only that current opaque initiator, never all connections whose workspace is null; non-null routing adds only connections whose authoritative workspace matches at delivery. The sidecar exposes no connection or epoch ID and is never canonical, serialized, or persisted. Installation failure triggers direct producer-owned recovery only while the captured route is current; the missing-sidecar subscriber branch diagnoses without duplicating recovery. Headless/global lifecycle publication remains unregistered until its routing and recovery semantics are approved.
++Targeted `resource:changed` and `resource:refresh_required` handling has no dirty-content guard: `applyTargetedProjection` deletes/refetches the addressed File cache even when that key is dirty. Do not generalize reconnect protection into remote-conflict staging, merge, undo preservation or a `recoveryRemote` buffer. Save acknowledgments clear a dirty flag only when its captured dirty revision still matches; navigation helpers drain newer document edits before leaving. These are distinct protections.
+ 
+-Canonical `workspace:switched` publication is gated on the SPEC-32b0 operational sequencer/topic fence. Generic EventBus listeners are unawaited, so every active switch/create/remove/ribbon ingress synchronously enqueues one intent before lookup or active-state reads. A single workspace coordinator resolves intents FIFO, captures `from` from the last commit, transactionally commits active registry/settings changes, updates memory only after commit, and sends the exact adjacent pair plus opaque ordered capability through a closed registry of audited bounded synchronous hooks that reject thenable returns. Synchronous I/O, unbounded CPU, user/plugin callbacks, and reentrant mutations are prohibited because an in-process function that never returns cannot be recovered. Controller/ribbon code cannot write active state or emit switches directly. The coordinator owns authoritative workspace/root resolution; per-session cache failure forces recomputation/snapshot rather than leaving A authoritative. The baseline broadcaster has no async enrichment/serialized queue and is at-most-once: healthy delivery sends exactly one `type: 'workspace:switched'`, while failure records a diagnostic and relies on reconnect authoritative snapshot plus `lifecycle:refresh_required` without retrying the pair. The watcher hook invalidates/installs synchronously and supervises detached close/ready/reconciliation without holding the FIFO. Hook throws, returned thenables, and detached background failure/nonsettlement cannot roll back the committed workspace, invoke provenance, or block the next intent. This workspace-owned transport remains noncanonical and unpersisted after 40b1b. The old ledger whitelist stops recording workspace switches, and legacy persistence pauses until SPEC-35. After accepted 32b/32c/40b1b, canonical `workspace.switched` independently carries the registered envelope to accepted-only subscribers and the separate `resource:invalidate` freshness path; only its durable row remains gated on SPEC-35. Concurrent-request/failure tests prove one total order, adjacent pairs, database/memory/coordinator-resolver/watcher-generation consistency, healthy exactly-one notification, recovery after failure, and no canonical lifecycle row before SPEC-35.
++`resource:changed@2` carries an agent state observation, including unchanged observations; it drives File invalidation, not tool-authorship inference. Both versions target only `file-viewer`, so Office/Email caches and local editor buffers are not directly replaced by this projection. A cross-panel save can therefore refresh a File Viewer alias without guaranteeing that every editor showing those bytes refreshes.
+ 
+-The active first-package canonical workspace producers are the live-connection `switch_requested`, successful create/activate, active remove fallback/null, active ribbon remove fallback/null, and ribbon add from null branches; all map exactly to `workspace.reason = 'user_switch'`. `ids.previousWorkspaceId` and `ids.workspaceId` are both required-nullable and jointly identify the transition. WebSocket ingress resolves an opaque route capability and enqueues it with the intent; only the coordinator head captures the authoritative pre-operation workspace, and the lifecycle epoch binds the exact committed/settled previous/current pair. Admission rejects missing or mismatched prior state even when the post workspace matches. Invalid/no-op/non-active changes emit no lifecycle fact. `startup|reload|system` remain schema-reserved but unauthorized until a registry update names and tests an exact connection-bound producer; initiator-absent/headless publication remains out of scope. Missing route capability omits only canonical lifecycle provenance with a diagnostic and never blocks the operational switch.
++## Compatibility and future direction
+ 
+-Workspace watcher and TRIGGERS.md filter lifecycle is a synchronous hook of the permanent private `workspace:operational_switched` coordinator dispatcher, not canonical lifecycle admission or generic EventBus ordering. Slice 32e is blocked until owner decision `RSC-D16` approves the exact close-diagnostic/readiness/reconciliation watchdog values and semantics. The hook verifies the next ordered capability/pair, invalidates the prior generation, installs B/null bindings/listeners, launches supervised close/ready/reconciliation plus watchdogs, and returns a non-Promise acknowledgment. Those tasks/timers check currency; throw or expiry cannot block the next workspace intent, current ready/reconciliation failure enters `degraded_recovery_pending` with exactly one freshness recovery, and close expiry only diagnoses cleanup. A later transition cancels/invalidates them. File-change trigger matching consumes only its single established workspace-watcher observation path; mutation handlers do not invoke a second matcher. It never awaits canonical resource admission. While `AUT-D02` is open, canonical file-trigger automation facts omit direct resource IDs/edges; after closure only its approved non-wait accepted-ref handoff may bind them. Provenance failure cannot suppress or duplicate operational trigger execution.
++Separate create-document/folder, rename, move, delete, Office sidecars and arbitrary external writes are not mediated-save coverage. Legacy `file_changed` and watcher `file:changed` paths remain for compatibility; the successful mediated-save broadcast was replaced by the governed projection. Watcher timing does not establish canonical mutation identity or causal authorship.
+ 
+-The operational matcher accepts only this closed current watcher-condition vocabulary: `filePath`, `parentDir`, `type`, `ext`, `basename`, `delta`, `oldPath`, `newPath`, `parentStats.files|folders`, and `fileStats.lines|words|tokens|size`. The exhaustive lexer is owned by SPEC-32: 512 UTF-8 bytes overall; numeric keys use signed safe base-10 integers without plus/negative-zero/leading-zero/float/exponent; string keys use equality/inequality with a 256-byte quote-without-escapes value or `[A-Za-z0-9_./:@*-]+`; the three nullable keys also accept exact null. Operators parse longest-first and the full input is consumed. Watcher stats are operational trigger context, not canonical provenance enrichment. Slice 32e side-effect-free parses/classifies all blocks but validates/reloads only file-change blocks through atomic `replaceFilters`; cron and bus triggers retain one-time registration and cannot be duplicated/removed by workspace reload. Workspace parse failure installs no old-root filters; same-workspace fatal reload retains the last valid set. Invalid file syntax never defaults true. Post-execution provenance may use valid metadata only for correlation.
+-
+-File-change blocks also use SPEC-32's closed schema. Slice 32d only preserves the single current matcher; Slice 32e exclusively introduces and owns lifecycle repoint/recompile. It loads immutable declarative/programmatic base descriptors once, then instantiates both base and trigger filters per controller-owned generation capability with an opaque bound workspace root and currency guard. At the synchronous transition linearization point, after authoritative workspace selection and before any await, B/null becomes current and A is permanently invalidated. Programmatic filters with workspace side effects are generation factories. Actions recheck currency after every await/callback boundary and immediately before irreversible effects; stale callbacks/timers and obsolete reconciliation are no-ops. B handlers attach before transition awaits, settlement requires A close/B ready/current-generation reconciliation, and reconciliation never synthesizes trigger execution. Atomic replacement preserves each base descriptor once without retaining startup-root closures, replaces workspace trigger filters, and never touches cron/bus registrations. Tests prove every B action targets B and paused A callbacks cannot affect A or B after transition.
+-
+-## Invalidation Rule
+-
+-Invalidate the smallest affected resource: file content, parent folder tree, style resource, config resource, registry resource, or known dependent index. Do not clear a whole view unless the workspace/root changed or the active resource disappeared.
++The approved direction is centralized, narrow invalidation from governed facts with truthful recovery and state-owned rendering. General Wiki/style/config/registry freshness, lifecycle projection unions, watcher-generation executors and remote dirty-conflict staging described in older designs are proposals beyond this implementation. Wider operation and view coverage needs an owning contract; it is not activated by this page.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-032330.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md
+@@ -1,6 +1,6 @@
+ ---
+ name: Events File Versioning
+-description: How resource mutation events will attach to before and after snapshots, diffs, restore, and file history.
++description: Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
+ metadata:
+   incoming-edges:
+     - Events And Ledger
+@@ -9,25 +9,53 @@
+     - Events Ledger Schema
+     - Universal Ledger File Versioning and Provenance
+   source-files:
+-    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
++    - fusion-studio-server/lib/file-mutations/save-controller.js
++    - fusion-studio-server/lib/file-mutations/path-authority.js
++    - fusion-studio-server/lib/file-mutations/text-codec.js
++    - fusion-studio-server/lib/file-mutations/atomic-writer.js
++    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
++    - fusion-studio-server/lib/file-mutations/file-version-repository.js
++    - fusion-studio-server/lib/file-mutations/reconciliation.js
++    - fusion-studio-server/lib/file-mutations/checkpoint-adapter.js
++    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
++    - fusion-studio-server/lib/agent-provenance/resource-observer.js
++    - fusion-studio-server/lib/versioning.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-> **Schema correction authority (2026-07-15):** Apply [provenance schema finding 5](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. The metadata/hash-only label does not approve concrete file-version hashes; the separate-policy branch remains an owner decision.
++Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+ 
+-Use this page before designing SQLite file version storage.
++## Current mechanisms
+ 
+-File versioning should be a ledger subscriber over canonical resource events. It should not become a second filesystem watcher, a Git wrapper, or a parallel mutation source of truth.
++| Mechanism | What is retained | What it does not establish |
++|---|---|---|
++| Mediated UTF-8 save | `file_operations` durable command/mutation state and `file_versions` exact before bytes or explicit absent preimage | General before/after versions for every filesystem operation, a canonical version event or restore UI |
++| Agent observation | Sparse path-linked `agent_resource_snapshots` and deduplicated exact UTF-8 `agent_snapshot_blobs` after eligible observation | A pre-tool snapshot, proof that the tool changed those bytes, or a diff |
++| Existing Git checkpoint adapter | Reason-based `versioning.commitIfChanged` after successful save for session end, checkpoint or milestone | The required preimage guarantee or general System snapshot restoration |
+ 
+-Metadata/hash-only version rows are not a policy-free fallback. `ULV-D03` must approve which file types, sizes, and classes may receive any version record, including binary/generated/large/temp/ignored/symlink/unsupported handling. `ULV-D05` must approve retention/deletion for metadata rows, edges, and indexes as well as snapshots/diffs/blobs. Together with `ULV-D10` hash/redaction approval, both block metadata/hash-only persistence. `ULV-D12` additionally requires owner approval of the exact non-batch event types, phase/lifecycle and envelope presence, identity/idempotency, bounds, ordering/dedupe/replay/retry/restart, safe failure branches, and subscriber/ledger transaction boundaries; conceptual generic/unknown fields are not defaults. SPEC-35b storage must be accepted and live-ref-only registry Slice 40b2d1 must be active before live metadata emission; before 40b2d1h, restart/replay uses D12's approved omit/diagnose/defer branch and performs no raw-ID backfill. Historical replay/backfill additionally requires accepted SPEC-40c and active 40b2d1h. SPEC-35d is required before version edges. Content artifacts additionally require `ULV-D02` and active 40b2d2. Storm batches require ULV-D03/D04/D05/D10, accepted SPEC-35b, and active 40b2d3; 39d historical edge/query support requires accepted 35d and 40c, and compaction/drop requires accepted 35f.
++These stores have separate identities and owners. The save response's `checkpointState` describes the optional Git step, not an agent checkpoint or the required preimage. Its failure is a warning after the write. Snapshots are System audit/recovery copies under the [System boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary); they do not replace the live file or connected app as authority.
+ 
+-## Future Responsibilities
++## Required save preimage and replacement
+ 
+-- Capture before/after snapshots or blobs for eligible file mutations.
+-- Store diffs or derived summaries where useful.
+-- Link each version to the canonical resource event that caused or observed it.
+-- Preserve reachability to UI actions, assistant tool calls, harness ID/run/event, trigger, scheduler, script, automation run, sync/import, agent, system, audit, or external observations through the accepted source resource event. Copy an earlier identity directly only when the version producer separately holds and builder-binds that original live accepted ref or a revalidated historical capability; never transitively copy embedded upstream IDs from the resource event.
+-- Support restore and forensic query workflows without depending on Git status.
++The supported command is one validated Unicode-scalar, NUL-free JSON string encoded exactly as UTF-8, at most 10 MiB. Existing bytes must also be at most 10 MiB, fatal-decode and round-trip exactly as NUL-free UTF-8. Empty text and a UTF-8 BOM are supported. Unsupported encodings/binary content, oversized preimages, directories and final symlinks are rejected before replacement. Parents must exist and resolve within both the authoritative workspace and panel roots; an in-root parent alias can normalize to the physical path. Protected-path checks further constrain the target and generated Git/temp paths.
+ 
+-The resource-sync work must preserve event identity and provenance hooks, but version storage belongs to the versioning build unless explicitly folded in.
++`path-authority.resolve` derives the physical workspace-relative path and fingerprint. The shared path serialization and a second resolution precede `file-operation-repository.reserve`; the operation binds host-generated operation, command, event, resource and file-version IDs plus request origin/intent/content hash. The same connection/request with identical binding replays its stored terminal result without repeating replacement or checkpoint side effects. This is not a blanket guarantee for newly generated requests or reconnect retries.
++
++The controller reads an existing preimage through bounded no-follow file access. `prepare` transactionally inserts the complete preimage row and changes the operation to prepared. A missing target stores `absent` with no bytes/hash and becomes create-by-save. Only after durable attempt registration does `atomic-writer.replace` create an exclusive operation temp, write and sync it, verify temp/parent/final identity and old-content hash, rename once and sync the directory. This narrows races but does not provide a platform-independent compare-and-swap against arbitrary external writers across the final pathname rename window.
++
++## Failure and restart truth
++
++Required reservation, preimage or prepare failure prevents replacement. For example, invalid old UTF-8 leaves those original bytes unchanged, records a failed accepted operation and returns `failed_before_replace`; no `resource.mutated` fact is emitted. Command admission is a separate axis: it may remain pending while the durable protected save continues.
++
++An error after rename can mean `outcome_unknown` with `retrySafe: false`; the controller cannot safely call it a failed unperformed mutation. Startup reconciliation fails accepted/unprepared work, marks unattempted prepared work failed, and records attempted prepared work as unknown with bounded current-state evidence. Matching the intended postimage hash does not upgrade that unknown operation to success or rerun its mutation. Succeeded operations can replay pending facts/ledger work with their original IDs; temp cleanup is separately tracked.
++
++If replacement succeeds but durable success recording fails, the current response remains a successful write with pending provenance after bounded persistence attempts. A restart can still find prepared/attempted state and report unknown. Response snapshots/cache prevent immediate duplicate side effects where available; they cannot make unavailable durable state certain. After successful replacement, publication, ledger, projection or Git-checkpoint failures never justify blindly replaying the write.
++
++## Observation checkpoints and future versioning
++
++The agent observer runs after reported activity, using its captured workspace authority and the secure native observation boundary. Missing native support fails observation rather than falling back to unsafe pathname capture. Eligible exact UTF-8 bytes are bounded at 10 MiB. First observation creates a checkpoint; a changed bytes/absent state creates another linked to the prior observed snapshot; unchanged state reuses the checkpoint. A read can establish the first baseline. The earlier observed checkpoint is not necessarily the state immediately before a tool ran.
++
++The approved bounded save and agent contracts already permit their exact snapshots and hashes. Older general policy prerequisites must not be applied as blanket prohibitions to these stores. Broader `file.version` events, general diffs, restore commands/UI, arbitrary binary/large-file eligibility, deletion/rename/move coverage and lifecycle policy remain outside this implementation. Preserve history by default; exact retention, redaction/export and restore conflict/provider permissions require decisions when those features are specified. Restoring is a separate permitted write to the authoritative source, not editing a historical copy.
++
++See [File Version Provenance Schema](../003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md) for current record fields and [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) for the consumer path.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032330.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md
+@@ -1,6 +1,6 @@
+ ---
+ name: Events Correlation And Causality
+-description: How the system links watcher observations to UI actions, tool calls, trigger runs, scheduler scripts, and nearby file versions.
++description: Interpret durable operation links, reported UI context and observed resource history without turning temporal association into causal proof.
+ metadata:
+   incoming-edges:
+     - Events And Ledger
+@@ -8,25 +8,35 @@
+     - Events Provenance Model
+     - Events File Versioning
+   source-files:
++    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
++    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/ledger/event-ledger.js
+     - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
++    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
++    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-Use this page before adding heuristics that connect file mutations to possible causes.
++Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+ 
+-Direct causal IDs are preferred. Correlation is a fallback when the system observed related events close together but cannot prove causation.
++## Current evidence and its meaning
+ 
+-Every direct ID below must come from the accepted canonical reference for its upstream event. A raw runtime/provider/candidate ID is not a canonical cause. Without an accepted reference, correlation may record evidence and a justified origin type/confidence, but it omits ID-bearing origin, cause fields, mirrors, and edges.
++The mediated save knows its owning command and replacement attempt. `operationId`, `commandId`, `commandAcceptedEventId`, resource identity and preimage identity are derived from durable reservations, not a caller's invented causal graph. The ledger uses the operation as `correlation_id` and leaves `causation_id` null. This is strong evidence of Fusion's own save workflow, while the transport-only local connection remains an unauthenticated origin.
+ 
+-## Priority Order
++Optional `origin.reportedUiContext` records the reported workspace/view/tab/component/presenter/target at save time. The server derives workspace authority and bounds the context; it does not authenticate a human, verify that a tab caused the operation or turn `targetKey` into physical path authority. Unknown fields and malformed/oversized values are omitted or degraded without denying valid work; a mismatching workspace echo drops the context. The renderer omits tab fields from an unavailable or nonmatching connected owner, but the server does not verify that a syntactically valid tab/component ID still exists. Missing context stays missing. Historical context survives a tab's disappearance and does not write back to live tab state. See [Resource Mutation Provenance Schema](../003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md).
+ 
+-1. Direct UI action ID.
+-2. Direct assistant tool call ID.
+-3. Direct harness cause identity: `provenance.cause.harnessId`, `provenance.cause.harnessRunId`, or `provenance.cause.harnessEventId`.
+-4. Direct automation cause identity: `provenance.cause.automationRunId`, with trigger, scheduler, script, sync, import, or agent run IDs as subtype/index helpers when present.
+-5. Server API mutation ID.
+-6. Watcher observation correlated by path, time window, active operation, or content hash.
+-7. External or unknown.
++Agent activity IDs and resource edges connect a reported tool invocation to a later bounded observation. First/changed/unchanged refers to the previous observed checkpoint, not a verified before/after interception of that tool. A post-tool hash, write-like argument or matching path does not prove a successful write or sole authorship; another writer can act between checkpoints. Observation ledger rows retain source linkage with null causation. Keep reported provider clocks distinct from server observation clocks and record absence/failure instead of inventing an earlier image.
+ 
+-Correlated attribution must record confidence. It should not pretend to be direct proof or promote an unaccepted raw ID into canonical provenance.
++## Legacy correlation is separate
++
++The legacy `file:changed` collector associates a change with an active turn only when workspace/root match and either the full epoch/thread/turn tuple matches or exactly one eligible turn exists for that workspace/root. Partial turn identity is rejected; ambiguous overlapping turns are not guessed. Its `fileMutations` metadata remains an association, not a governed tool-to-mutation proof.
++
++The legacy ledger can default a `file:changed` actor to `user` when stronger actor data is absent. That is current heuristic code, not authenticated attribution and not the approved standard for a new provenance producer. A watcher reports an observed filesystem change; it cannot establish a human or assistant cause from timing alone.
++
++## Approved direction and open contracts
++
++Record useful independent facts even when causality is unknown. Prefer verified operation linkage where the owner actually has it, and label reported/observed/inferred evidence honestly. Do not require the old proposed accepted-reference API or confidence verdict before recording the accepted save/agent facts.
++
++General UI-action/tool/harness/automation causal graphs, confidence policies and cross-domain proof interfaces remain future contracts. The earlier priority list of possible causes was a proposal, not a runtime resolver. A future correlation feature must define its evidence and uncertainty explicitly; it must not promote time proximity, a raw provider ID or an embedded upstream ID into direct causation.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-032330.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md
+@@ -1,6 +1,6 @@
+ ---
+ name: Resource Mutation Provenance Schema
+-description: Schema guidance for file and folder mutation events from watchers, UI file APIs, file explorer operations, sync jobs, imports, and scripts.
++description: Read the implemented mediated-save facts and optional reported context, distinct from broader resource-mutation schema proposals.
+ metadata:
+   incoming-edges:
+     - Events Provenance Model
+@@ -12,85 +12,51 @@
+     - File Version Provenance Schema
+     - UI Action Provenance Module
+   source-files:
+-    - fusion-studio-server/lib/watch/workspace-watcher.js
+-    - fusion-studio-server/lib/file-explorer.js
+-    - fusion-studio-server/lib/ws/workspace-request-handlers.js
+-    - fusion-studio-client/src/state/fileDataStore.ts
++    - fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json
++    - fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json
++    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
++    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
++    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/ws/file-save-route.js
++    - fusion-studio-server/lib/ws/resource-provenance-route.js
++    - fusion-studio-client/src/lib/save-action-context.ts
++    - fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. This page supplies the mechanical `serverMutationId` branch assignment; decision-tagged cross-domain choices remain open.
++Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+ 
+-Use this page before changing file-change events, watcher payloads, file API mutation messages, or resource cache invalidation metadata.
++## Current closed save facts
+ 
+-Resource mutation provenance covers file and folder changes observed or caused by watcher events, UI file APIs, file explorer saves, sync/import jobs, scripts, triggers, schedulers, and tool calls.
++The registered `file.command_accepted@1` and `resource.mutated@1` schemas describe one mediated text-save operation. The command fact follows durable acceptance; the mutation fact requires successful replacement. They do not use the older proposed common `eventFamily`/`ids`/`provenance`/`resourceMutation` envelope.
+ 
+-## Boundary
++| Field | Current meaning |
++|---|---|
++| `eventId`, `eventType`, `schemaVersion`, `occurredAt`, `workspaceId`, `operationId` | Reservation-bound host identity and time; exact event name and version 1 |
++| `commandId` | Owning durable save command in both facts |
++| `origin` | `kind: local_client`, server connection ID, `assurance: transport_only`, optional `reportedUiContext` |
++| `resource` | Host `resourceId`, `kind: file`, canonical workspace-relative `path`, plus ingress `access.panel` and `access.path` |
++| Command `intent` | `kind: save`; optional save reason, milestone and client action ID within validation bounds |
++| Mutation `commandAcceptedEventId` | Reserved command-acceptance identity; not proof that its separate admission axis completed |
++| Mutation `mutation` | `kind: create` or `modify`, with optional save reason/milestone |
++| Mutation `fileVersionId` | Operational required-preimage row identity; not a canonical version event |
+ 
+-Resource mutation events are the bridge between filesystem facts and higher-level causes. They must preserve the distinction between "this changed" and "this actor caused it."
++There are no concrete content hashes or snapshot bytes in `resource.mutated@1`. Required preimage bytes/hash and intended-after hash live in owning System records; bounded query results expose preimage metadata. Create-by-save has an absent preimage. Other mutation commands and watcher events have not acquired this schema. See [File Versioning](../../006-File_Versioning/PAGE.md) and [Render Sync](../../005-Resource_Events_And_Render_Sync/PAGE.md).
+ 
+-## Domain Payload
++## Optional reported UI context
+ 
+-```js
+-{
+-  schemaVersion,
+-  eventId,
+-  eventFamily: 'resource',
+-  eventType,
+-  eventPhase,
+-  occurredAt,
+-  lifecycle,
+-  ids,
+-  actor,
+-  provenance,
+-  context,
+-  resourceMutation: {
+-    resourceEventId,
+-    resourceId,
+-    resourceType,
+-    path,
+-    oldPath,
+-    operation,
+-    observedAt,
+-    observerEventType,
+-    contentHashBefore,
+-    contentHashAfter,
+-    sizeBefore,
+-    sizeAfter,
+-    symlink
+-  },
+-  resources: [],
+-  redaction
+-}
+-```
++`fileDataStore.saveFile` calls synchronous `readSaveActionContext(panel)` at command time. It requires a current workspace and registered panel; it reads matching connected File owner state for optional active component-tab fields. Other registered save panels can contribute workspace/view context without those File component fields. It does not infer identities from an unrelated active tab or capture all UI actions.
+ 
+-View and panel fields belong under `context`, not inside `resourceMutation`.
+-Use `provenance.confidence` for attribution confidence. Do not add a second attribution enum inside `resourceMutation`.
+-`observerEventType` stores the watcher or legacy collector event kind, such as create, modify, delete, or rename. It is not an event ID and should not be confused with `provenance.observedBy`.
++The carrier permits `workspaceId`, `viewId`, `viewInstanceId`, `tabId`, `componentTypeId`, `componentInstanceId`, `presenterId` and `targetKey`. Identifier caps are 128 UTF-8 bytes and target key is 512. The current reader does not fabricate `viewInstanceId`. Server sanitization requires a usable view ID for retained context, derives workspace from the session, strips unknown/invalid optional fields, and drops the whole subtree for a bad or mismatching supplied workspace. Null/missing context may be omitted silently; degraded/mismatched input uses fixed diagnostics. Sanitization precedes locked request-schema validation so optional context failure does not reject an otherwise valid save. This exception does not relax path/content/operation validation or required preimage storage.
+ 
+-For the first package, successful resource redaction uses exact strings `resource-metadata-v1` / `'1'` and the branch matrix in SPEC-34. A present before/after side requires both its state-hash and matching mutation-hash omissions as `policy_unapproved` plus two redaction omission pointers. An absent side uses mutation hash omission `not_applicable`; an unavailable side uses `not_observed`; neither adds a hash redaction pointer. Every concrete hash field remains absent, and retaining one rejects the candidate. `resourceMutation.fileVersionIds` is not a first-package field and is absent until its later domain registration. Policy failure preserves the mutation or watcher fact and invokes recovery.
++`reported-ui-context` maps retained fields to `file_operations` columns. `fact-reservation-bindings` reconstructs them in command and resource facts, and the resource ledger transaction copies them to `resource_provenance_events` beside the canonical payload. `resource-provenance-repository.query` returns the stored context and preimage metadata; view/tab/component/presenter/target selectors filter those historical columns. It does not reread live tab configuration to reconstruct the past, return snapshot bytes or change tab state.
+ 
+-For `ids.serverMutationId`, the server-produced resource-mutation branch requires the command handler to generate or propagate it. Watcher-observed resource facts prohibit it. Resource validators, projections, and ledger correlation consume that branch identity; workspace/view lifecycle events do not.
++The typed query runs through `resource:provenance:query/result/error` with server-bound workspace/epoch validation and bounded results. The client protocol helper and response registration exist; the inspected client source has no production invocation of `queryResourceProvenance`, so this transport is not evidence of a mounted audit/history screen. Query UI belongs to later work.
+ 
+-## Attribution Rules
++## Meaning and future scope
+ 
+-- Direct attribution requires a registered SPEC-40 `prepareCanonicalCandidate` binding that consumes the upstream domain event's `AcceptedCanonicalRef`. In 40b1a the UI root/parent/causation/origin/cause group is registered only for a resource candidate directly initiated by an accepted `ui.action`; first-package lifecycle registers no upstream group. SPEC-40b2 and later owning slices may add tool, harness, trigger, scheduler, script, automation, agent, audit, or lifecycle cause pointers only by extending both schema and pointer/domain registries. The builder inserts a complete proven group and records private proof; a copied inspection string or raw operational, runtime, candidate, user-supplied, rejected, or unpublished ID omits the group with fixed `accepted_relationship_unbound` while the independently safe resource fact remains eligible.
+-- Watcher-only attribution is observed or correlated, not direct.
+-- Unknown external changes should stay unknown when no causal ID is available.
++The context is reported comparison evidence, not an authenticated actor, permission, causal verdict or resource identity. T1 domain mutations and their T2 action context are the durable direction; ambient T3 navigation/focus/scroll is not retained by this carrier. This implementation does not emit a general `ui.action`, assign a universal UI action ID, or cover all panels, prompt attachments or commands.
+ 
+-## Connections
+-
+-- Chat metadata may attach relevant mutations under `chatResources.mutations` only if finding 4/`CHAT-D01` approves and registers that sidecar's relationship to shared `resources[]`; this example is not current authority.
+-- After its later registration, a tool call links to a mutation through `provenance.cause.toolCallId` only when the builder consumes the accepted canonical tool ref; otherwise it uses later watcher correlation without inventing a direct cause.
+-- Ledger events store the canonical resource event and graph edges.
+-- File versioning subscribes to resource mutation events.
+-- UI context can explain which view/document was active when a user-initiated mutation happened.
+-- Audits can answer who or what changed a path and whether attribution was direct or inferred.
+-
+-## Gaps To Close
+-
+-- Watcher payloads currently lack stable event IDs and full provenance.
+-- Resource events need workspace identity before multi-workspace correlation is safe.
+-- Existing ledger behavior can infer watcher file changes as user actions, which violates observer-vs-cause.
+-- Direct WebSocket `file_changed` paths need to become derived output rather than source-of-truth events.
++Broader resource schemas, watcher provenance, automation causes and graph edges remain proposals requiring their owning contracts. The exact supported save snapshot/context behavior already has authority; an older blanket hash prohibition or accepted-reference gate does not disable it. Preserve unknown attribution rather than guessing, as explained in [Correlation And Causality](../../007-Correlation_And_Causality/PAGE.md).
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-032330.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md
+@@ -1,6 +1,6 @@
+ ---
+ name: File Version Provenance Schema
+-description: Schema guidance for before and after snapshots, diffs, restore records, and file version IDs tied to resource events.
++description: Identify current save-preimage and agent-checkpoint records without implying a universal file-version event or restore contract.
+ metadata:
+   incoming-edges:
+     - Events Provenance Model
+@@ -10,81 +10,42 @@
+     - Ledger Event Provenance Schema
+     - Events File Versioning
+   source-files:
+-    - fusion-studio-server/lib/versioning.js
+-    - fusion-studio-server/lib/file-explorer.js
+-    - fusion-studio-server/lib/db/migrations/029_event_ledger.js
++    - fusion-studio-server/lib/db/migrations/035_file_provenance.js
++    - fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js
++    - fusion-studio-server/lib/file-mutations/file-version-repository.js
++    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
++    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
++    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
++    - fusion-studio-server/lib/file-mutations/checkpoint-adapter.js
+   connected-skills: []
+   related-trigger-files: []
+ ---
+ 
+-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. File-version hash behavior remains an owner decision under finding 5 and ULV-D10.
++Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+ 
+-Use this page before designing universal SQLite file versioning, restore behavior, snapshot storage, or diff storage.
++## Current operational preimage record
+ 
+-File version provenance ties content history to canonical resource mutation events. It should not become a second watcher or Git-based source of truth.
++Migration `035_file_provenance.js` owns `file_versions` alongside the save operation/resource/projection tables. `file-version-repository.insertInTransaction` is called by operation preparation before replacement, not by a post-mutation universal version subscriber. Reserved IDs alone do not mean the mutation succeeded or its resource fact was admitted.
+ 
+-## Boundary
++| Stored column | Meaning |
++|---|---|
++| `file_version_id`, `operation_id`, `resource_id`, `resource_event_id` | Host-generated identities bound to the reserved save operation and its prospective resource fact |
++| `preimage_kind` | Exact `bytes` or `absent` state before replacement |
++| `snapshot_bytes`, `sha256`, `encoding`, `byte_length` | Exact eligible before bytes, SHA-256, `utf-8` and byte length; absent has null bytes/hash/encoding and zero length |
++| `captured_at` | Preparation-time capture timestamp |
+ 
+-File version records are created only from admitted canonical resource mutation deliveries. After owner decision `ULV-D12` closes the exact non-batch event/lifecycle/envelope/identity/order/idempotency/failure/transaction contract, the 40b2d1 builder consumes that resource ref to insert both `fileVersion.createdFromResourceEventId` and `ids.parentEventId` from the same upstream `eventId`, and optionally inserts `ids.correlationId` only from that upstream event's present validated correlation; absence means omission. Copied, raw, prepopulated, or mismatched bindings fail. Accepted SPEC-35d separately proves `versioned_as`. The version event uses the versioning subscriber as source/observer and may project safe non-ID context/type/confidence, but it does not transitively copy root/causation, actor/origin IDs, or cause IDs embedded in the resource event because the resource ref cannot prove those earlier refs. Audits traverse through the accepted resource event; an earlier identity appears directly only when the producer separately binds its original live ref or revalidated historical capability.
++The transaction couples the row to prepared operation state. Reusing an established file-version identity with different data conflicts. The public resource-provenance query joins snapshot metadata, not bytes; the repository's internal `readSnapshotBytes` method is not a public restore command. No after snapshot or computed/stored diff is added by this row. Intended-after hash/length are operation binding data, not a general after-version artifact.
+ 
+-Exception: `file.version.change_batch` storm records carry `changeStorm` instead of `fileVersion`; SPEC-39 owns that payload.
++## Current agent checkpoint record
+ 
+-## Domain Payload
++Migration `036_agent_tool_provenance.js` owns the separate `agent_resource_snapshots` and `agent_snapshot_blobs`. `checkpoint-repository` stores an eligible post-activity bytes/absent observation, its path/workspace, activity/observation/event/snapshot identities, observed clock and previous snapshot link. Exact byte content is deduplicated by hash with byte-equality checking. First/changed state creates a snapshot and `resource.state_observed@1`; unchanged state reuses the snapshot and adds no new observation fact. It can still drive renderer invalidation.
+ 
+-`fileVersion.createdFromResourceEventId` is builder-inserted from the accepted resource event's top-level `eventId`. Optional `fileVersion.createdFromResourceMutationId` is not distinct identity: it must equal that same source's registered `/resourceMutation/resourceEventId` and `domainIds.resourceEventId`, inserted through the exact SPEC-40b2d1 target/source selector. Missing source domain identity omits it; raw/copied/mismatched IDs are invalid. Branchwise registry order is live-only 40b2d1 metadata/hash-only candidate (whose concrete hashes remain prohibited until finding 5 and `ULV-D10` approve their policy), post-40c 40b2d1h historical replay/backfill, 40b2d2 content artifacts, then 40b2d3 storm batches; each activates before matching behavior and uses the SPEC-35b/35d/35f/40c gates defined by the File Versioning page.
++A first read may establish a baseline. A prior checkpoint is a prior observation, not guaranteed pre-tool content. These snapshots do not mint save `fileVersionId` values or canonical `file.version` events. The observer's native security and eligibility checks can fail without a checkpoint; bounded metadata then records the failure rather than fabricating bytes. Agent timing/capture detail belongs to the tool provenance owner.
+ 
+-```js
+-{
+-  schemaVersion,
+-  eventId,
+-  eventFamily: 'file.version',
+-  eventType,
+-  eventPhase,
+-  occurredAt,
+-  lifecycle,
+-  ids,
+-  actor,
+-  provenance,
+-  context,
+-  fileVersion: {
+-    fileVersionId,
+-    createdFromResourceEventId,
+-    createdFromResourceMutationId,
+-    resourceId,
+-    resourceType,
+-    path,
+-    oldPath,
+-    operation,
+-    snapshotBeforeId,
+-    snapshotAfterId,
+-    diffId,
+-    contentHashBefore,
+-    contentHashAfter,
+-    sizeBefore,
+-    sizeAfter,
+-    restoreOfVersionId,
+-    retentionClass,
+-    eligibility
+-  },
+-  resources: [],
+-  redaction
+-}
+-```
++## Direction and unimplemented schema
+ 
+-Directories, deletes, renames, binaries, generated files, large files, and restore events need explicit eligibility and retention behavior.
++System owns historical recovery/audit copies; the authoritative file or connected app owns live content. Restoration requires a separately permitted mutation to that source. Existing reason-based Git checkpoints remain a third mechanism, not universal snapshot restoration.
+ 
+-The hash fields above are candidates, not an approval to copy resource-event hashes. First-package resource events omit every concrete content hash under `resource-metadata-v1`. A file-version record may carry hashes only if the owner selects the separate-policy branch in finding 5 and ULV-D10 registers that exact file-version hash/redaction policy; otherwise those fields remain absent.
++General version events, before/after/diff/restore lineage, version graph edges and change-storm batches are unimplemented design areas. The former universal example was a proposal and is not a payload callers may send. Binary/generated/large-file eligibility, retention/deletion, redaction/export, restore coverage and conflicts require feature-specific decisions. Preserve history by default; no new pruning policy or restore operation is approved here. The bounded save and agent snapshot/hash contracts are already implemented and must not be blocked by older general policy proposals.
+ 
+-## Connections
+-
+-- Resource mutation events trigger version creation.
+-- Ledger edges connect versions to chat turns, tool calls, UI actions, triggers, schedulers, and scripts.
+-- Chat metadata can reference version IDs for mutations that occurred during a turn.
+-- Audits can compare before/after content and walk from a broken file to the likely cause.
+-
+-## Gaps To Close
+-
+-- Existing Git-based versioning is separate and reason-based.
+-- There is no universal version table linked to resource events.
+-- Storm compaction and retention policy must be defined before high-frequency snapshots are enabled.
+-- Binary files, large files, generated files, and secrets need eligibility and redaction rules.
++See [File Versioning](../../006-File_Versioning/PAGE.md), [Resource Mutation Provenance](../003-Resource_Mutation_Provenance_Schema/PAGE.md) and [System Database Boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).
+--- ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-032540.md
++++ ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md
+@@ -47,7 +47,7 @@
+ 
+ `admitted: true` is not proof of delivery, persistence or renderer receipt. A required callback's completion can still represent rescheduled/conflicting work; consult producer-owned durable state. Subscriber failure cannot retroactively revoke admission or undo completed source work. Preserve the implemented bounded retry/reconciliation rules described in [Ledger Event Provenance](../../../010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md), rather than inferring unbounded retry or forbidding all retry.
+ 
+-The mediated save requires a durable operation and eligible exact preimage before replacement. Required prewrite storage/protection failure prevents mutation. Optional reported UI context is different: malformed/stale/oversized context is omitted without denying a valid save. Postwrite publication or projection failure records pending/conflict/recovery state without claiming that the completed write did not happen. Agent observation follows reported tool execution and cannot rewrite its result or create a pre-tool image after the fact.
++The mediated save requires a durable operation and eligible exact preimage before replacement. Required prewrite storage/protection failure prevents mutation. Optional reported UI context is different: malformed/oversized context or a mismatching workspace echo is omitted without denying a valid save. Postwrite publication or projection failure records pending/conflict/recovery state without claiming that the completed write did not happen. Agent observation follows reported tool execution and cannot rewrite its result or create a pre-tool image after the fact. The renderer omits tab fields from an unavailable or nonmatching connected owner; the server does not verify the current existence of a syntactically valid tab/component ID.
+ 
+ Use the registered `resource:changed` projections and `resource:refresh_required` recovery through the workspace-bound WebSocket and central File Viewer state. A successful server send is not client acknowledgment. Preserve the owning freshness/dirty-buffer contract; do not turn recovery into a canonical mutation fact or promise general view coverage.
+ 
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-032620.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md
+@@ -48,7 +48,7 @@
+ 
+ Operational authentication/authorization, command shape, workspace/path safety and required save recovery protection can gate work. The mediated save requires a durable operation and exact eligible preimage before replacement. A storage or preimage failure there must prevent replacement; a blanket rule that versioning is always optional would violate the supported guarantee.
+ 
+-Optional reported UI context is sanitized and omitted when malformed, stale or oversized without rejecting otherwise valid work. After a filesystem replacement, failed admission or projection cannot make it un-happen; pending/conflict states and freshness recovery describe that failure. Tool provenance observes reported execution and cannot rewrite an executed result as failed. Admission and required acknowledgments are actually awaited at their owning boundaries; they are not guaranteed zero-latency side effects.
++Optional reported UI context is sanitized or omitted for malformed/oversized fields or a mismatching workspace echo without rejecting otherwise valid work. The renderer omits tab fields from an unavailable or nonmatching connected owner; the server does not verify the current existence of a syntactically valid tab/component ID. After a filesystem replacement, failed admission or projection cannot make it un-happen; pending/conflict states and freshness recovery describe that failure. Tool provenance observes reported execution and cannot rewrite an executed result as failed. Admission and required acknowledgments are actually awaited at their owning boundaries; they are not guaranteed zero-latency side effects.
+ 
+ ## Approved direction
+ 

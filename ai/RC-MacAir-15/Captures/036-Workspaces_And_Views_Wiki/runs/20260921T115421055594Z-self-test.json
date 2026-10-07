@@ -1,0 +1,8 @@
+{
+  "command": "self-test",
+  "checked_at": "2026-09-21T11:54:21Z",
+  "failures": [
+    "'/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/wv01-fixture-yzvoel3p/PAGE.md' is not in the subpath of '/Users/rccurtrightjr./projects/fs-dev' OR one path is relative and the other is absolute."
+  ],
+  "counts": {}
+}

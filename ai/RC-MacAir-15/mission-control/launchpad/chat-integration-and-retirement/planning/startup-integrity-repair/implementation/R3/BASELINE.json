@@ -1,0 +1,93 @@
+{
+  "builder": "/root/startup_integrity_repair_orchestrator/r3_builder",
+  "createdAt": "2026-10-06T01:05:01.795806+00:00",
+  "controllerHome": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memoryCwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "ownedCodePreimage": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+    "sha256": "3f70b4b0ca455748d87806ab8d11152e1b4e270cb8f0ee6913b61d9a3cddd43e"
+  },
+  "acceptedPrerequisites": [
+    {
+      "slice": "R1",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "sha256": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d",
+      "current": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "afterSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+          "afterSha256": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+          "afterSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+          "afterSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+          "afterSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "afterSha256": "12b47073ccbdddd0109a93bcadad0b81dd35c82dfc42b8a5b8320be12e974a00"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+          "afterSha256": "7450bd2ab3636ca4123307c8d71bffa9391dde07557230e55457f2b2cd8de7f7"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+          "afterSha256": "3539c61e9b9e240323f387bb68a7937658d01faf8673609162cd3bfa4b63026c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+          "afterSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0"
+        }
+      ]
+    },
+    {
+      "slice": "R2",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/CURRENT-FINGERPRINTS.json",
+      "sha256": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+      "current": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+          "afterSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+          "afterSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "afterSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+          "afterSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+          "afterSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+          "afterSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+          "afterSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        }
+      ]
+    }
+  ]
+}

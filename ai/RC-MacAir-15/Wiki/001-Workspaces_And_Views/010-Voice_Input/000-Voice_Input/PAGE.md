@@ -2,24 +2,12 @@
 name: Voice Input Overview
 description: Overview of Fusion Studio voice input, Whisper transcription, deterministic STT cleanup, editable rules, and voice-to-chat behavior.
 metadata:
-  incoming-edges:
-    - Wiki Guide
-    - Workspaces And Views
-    - Chat System Overview
-  outgoing-edges:
-    - Voice Input Architecture
-    - Voice Input Decisions
-    - Voice Input Lessons
-    - Voice Input Rule System
-    - Voice Input Transcription Flow
-    - Voice Input Structure
   source-files:
     - fusion-studio-client/src/mic/MicTrigger.tsx
     - fusion-studio-client/src/mic/VoiceRecorder.tsx
     - fusion-studio-server/lib/transcription/index.js
     - fusion-studio-server/lib/transcription/deterministic-cleanup.js
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 Start here when working on Fusion Studio voice input.
@@ -54,3 +42,9 @@ mic transcription because it can rewrite user intent.
 Keep voice input architecture, cleanup decisions, rule file organization, and
 debugging lessons in this tree. Link to Chat System for chat runtime behavior and
 to Server And Runtime for broader backend ownership.
+
+<!-- section-toc:start -->
+## Technical Articles in this Wiki Section
+
+- [Architecture](../001-Architecture/000-Architecture/PAGE.md) - Architecture map for Fusion Studio microphone input, transcription, deterministic cleanup, and rule resources.
+<!-- section-toc:end -->

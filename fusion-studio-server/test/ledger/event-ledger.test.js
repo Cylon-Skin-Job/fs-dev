@@ -80,7 +80,7 @@ describe('event ledger', () => {
     expect(tags).toEqual(['workspace']);
   });
 
-  test('records file events with resource edge and redacted payload content', async () => {
+  test('direct recording ignores file changes without writing ledger projections', async () => {
     db = await setupDb();
 
     const result = await recordEvent(db, {
@@ -97,16 +97,31 @@ describe('event ledger', () => {
       },
     });
 
-    const edge = await db('event_resource_edges').where({ event_id: result.eventId }).first();
-    expect(edge.resource_type).toBe('file');
-    expect(edge.resource_id).toBe('docs/example.md');
-    expect(edge.workspace_id).toBe('fs-dev');
-    expect(edge.machine_id).toBeNull();
-    expect(edge.path).toBe('docs/example.md');
+    expect(result).toBeNull();
+    await expect(db('event_log').count('* as count').first()).resolves.toMatchObject({ count: 0 });
+    await expect(db('event_resource_edges').count('* as count').first()).resolves.toMatchObject({ count: 0 });
+    await expect(db('event_tags').count('* as count').first()).resolves.toMatchObject({ count: 0 });
+  });
 
-    const row = await db('event_log').where({ event_id: result.eventId }).first();
-    const payload = JSON.parse(row.payload_json);
-    expect(payload.content).toBe('[redacted]');
+  test('records thread state changes and keeps only supported types whitelisted', async () => {
+    db = await setupDb();
+
+    const result = await recordEvent(db, {
+      type: 'thread:state_changed',
+      timestamp: 1781335000150,
+      workspaceId: 'fs-dev',
+      threadId: 'thread-1',
+      state: 'idle',
+    });
+
+    expect(result.eventId).toBeTruthy();
+    expect(await db('event_log').where({ event_id: result.eventId }).first()).toMatchObject({
+      event_type: 'thread:state_changed',
+      workspace_id: 'fs-dev',
+      summary: 'Thread thread-1 changed state to idle',
+    });
+    expect(await db('event_tags').where({ event_id: result.eventId }).pluck('tag')).toEqual(['thread']);
+    expect(await recordEvent(db, { type: 'settings:enforcement_changed' })).toBeNull();
   });
 
   test('subscriber mirrors recorded bus events and ignores unrelated events', async () => {
@@ -119,6 +134,12 @@ describe('event ledger', () => {
       to: 'fusion-home',
       repoPath: '/tmp/fusion-home',
     });
+    emit('thread:state_changed', {
+      workspaceId: 'fusion-home', threadId: 'thread-1', state: 'idle',
+    });
+    emit('file:changed', {
+      workspaceId: 'fusion-home', filePath: 'docs/example.md', event: 'modify',
+    });
     emit('settings:enforcement_changed', {
       key: 'something',
       value: 1,
@@ -127,9 +148,13 @@ describe('event ledger', () => {
     await flushAsync();
 
     const rows = await listRecentEvents(db, { limit: 10 });
-    expect(rows).toHaveLength(1);
-    expect(rows[0].event_type).toBe('workspace:switched');
-    expect(rows[0].workspace_id).toBe('fusion-home');
+    expect(rows).toHaveLength(2);
+    expect(rows.map((row) => row.event_type).sort()).toEqual([
+      'thread:state_changed', 'workspace:switched',
+    ]);
+    expect(rows.every((row) => row.workspace_id === 'fusion-home')).toBe(true);
+    expect(await db('event_resource_edges').count('* as count').first()).toMatchObject({ count: 0 });
+    expect(await db('event_tags').count('* as count').first()).toMatchObject({ count: 2 });
     expect(logger.warn).not.toHaveBeenCalled();
   });
 

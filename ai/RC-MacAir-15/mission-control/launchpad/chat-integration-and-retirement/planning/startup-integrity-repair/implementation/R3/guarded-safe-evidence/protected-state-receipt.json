@@ -1,0 +1,16 @@
+{
+  "outcome": "passed",
+  "before": {
+    "developmentDb": "c6eee4089347d0b421a11102a81f03a553f041575ad91d001211ea59fa67b4d7",
+    "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+    "developerWorkspace": "b999494d459d065887b441813468236cbb80f1943ba092b77ac011ecadf265fd",
+    "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+  },
+  "after": {
+    "developmentDb": "c6eee4089347d0b421a11102a81f03a553f041575ad91d001211ea59fa67b4d7",
+    "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+    "developerWorkspace": "b999494d459d065887b441813468236cbb80f1943ba092b77ac011ecadf265fd",
+    "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+  },
+  "comparison": "unchanged"
+}

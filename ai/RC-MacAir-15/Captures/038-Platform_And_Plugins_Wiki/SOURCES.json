@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "external_design_repository": "/Users/rccurtrightjr./projects/plug-ins",
+  "scope_note": "Preparation hashes identify working-tree source bytes, not implementation acceptance. Code entry points include scoped parent inspection and required fresh execution research. Read dependent producer/consumer files as needed without expanding write scope. External historical artifacts are not wiki source-files.",
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "kind": "guidance",
+      "preparation_sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/AGENTS.md",
+      "kind": "guidance",
+      "preparation_sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "kind": "guidance",
+      "preparation_sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "kind": "guidance",
+      "preparation_sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "kind": "guidance",
+      "preparation_sha256": "669827c9f3cbd8970d074ba55defa333a3a14b154ffe97a9e27047b4d1c674d9",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "kind": "guidance",
+      "preparation_sha256": "c995d59bde9a95dacaa9f9ae844d1d9701b05c6f8a259b3ced9fe9b6608c3288",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "f1adcce948629e4d6b3221561c452558ebcbdc06c8de2532a96b76b790575b56",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "8a2bdb1cc23e095ea5462e6c74a30e54f828a16db3e5a4d3609049378ba9ee60",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "f81aa22c196fc63e70fafb2229f7793d8509e485c3588d322c49e71f71f3f553",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "kind": "standards",
+      "preparation_sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/README.md",
+      "kind": "design_history",
+      "preparation_sha256": "6b33002b3c56dfb4e1715259e320b4632a53eea5cd05fa426452d7fc1243c7f7",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/VISION.md",
+      "kind": "design_history",
+      "preparation_sha256": "67e1899c239274230c1053b1cdc39613cf6b1074a0f0784e3a13adbae334d179",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/HANDOFF.md",
+      "kind": "design_history",
+      "preparation_sha256": "8e0af0ae450a77cf9734f216e86ed5927187a6c4ddb5d3604c29e491f20f2c00",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/OBSERVATIONS.md",
+      "kind": "design_history",
+      "preparation_sha256": "3c10be17ddc8c605caf1c4f7c38ed41620016f45ac0c38d28dbaf2e362d1c631",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/TODO.md",
+      "kind": "design_history",
+      "preparation_sha256": "d6da622536c8c17328bbd2fafc72cbf376afeec1c445f3a286d6687a04d868e3",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/plugin-system-kickoff.md",
+      "kind": "design_history",
+      "preparation_sha256": "ca659dbc928be6f6ec87e0968599fc10a73fb9545ec3ef72f37843d9038de414",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/provenance-research.md",
+      "kind": "design_history",
+      "preparation_sha256": "a8cdd7742b477ac08394abde9f1af6ac30abaad1922c40acca306ea9807bd2ee",
+      "execution_read_required": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/002-Specs/PLUGINS-VIEW-MOCKUP/SPEC-01-PLUGINS-VIEW-MOCKUP.md",
+      "kind": "design_history",
+      "preparation_sha256": "e22d7837ea99d5f5b9ee7a8a94bc04358e1f24864200b41b72081bd037170ad2",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/030-Plugin_System/decisions.md",
+      "kind": "design_history",
+      "preparation_sha256": "dae7996623d94c1b6ae41cb01faa44df519dc0b09ca383cb7f35a5ef14f89434",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/030-Plugin_System/plugin-system-vision.md",
+      "kind": "design_history",
+      "preparation_sha256": "3cfa46ef0fb57f50f3ed82fd1f04f94004ecad0fdaf053a97465bbf11690c0c0",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/032-Plugin_Backend/backend-architecture.md",
+      "kind": "design_history",
+      "preparation_sha256": "79631f233222e41dbb64813d8508b123930c37320963d2aced42e1fa27bd2bfc",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/029-Composable_Views/composable-views-vision.md",
+      "kind": "design_history",
+      "preparation_sha256": "525bc29cc3538b158d4fe2a3aff7c2d7c72dfd01b42a982c86b9cc833b33981f",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/handoff.md",
+      "kind": "design_history",
+      "preparation_sha256": "bf88be4f3d2795011a508b12d3233c5e851c6a8d72c94880413643a64e44977f",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-overview.md",
+      "kind": "design_history",
+      "preparation_sha256": "0f17bfe480b8d133d664f61ea40522881d05bf3499fd0633ba4712d0872684e1",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/HANDOFF.md",
+      "kind": "design_history",
+      "preparation_sha256": "45239f709d4a6bdf1cfdeab0d69837ec04041c297e9c5568363f3d386b2eecb5",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "kind": "live_authority",
+      "preparation_sha256": "be775a56a14b49b12ae47423a2c1e0c739091bc28174f28448185c00daab30ab",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "kind": "live_authority",
+      "preparation_sha256": "eb673397e881d241858ac47d4ad513c97d843f491f1190cbaf525e4a0f987eee",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "kind": "live_authority",
+      "preparation_sha256": "81fd3621d5273b98e69a142f4899e2604f5e04f31773a0e9a024637cd6a8f7a3",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "58165cc333b5b74108ab70dad2f26246207104fbff81eaac51800fbf6aafcbec",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "51a147b459c50632d2236fc01d3c0fe556a13f5cd4c14d03d578232469c98bfb",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "77495240714010228061df9e2133488aa8eaaefbe01f6e87b7c7f4b147e53628",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "1bbc11c6794ae2fbee8971716a6551ef54117b3b619c65f441e1ed161fa9cca2",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "37255baf982013ea6afb3728eb7a1b69f12fa2b29ecb9fed2f3fd9b1d3448ad2",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "50e99e6508f17819bc35b64964a64b7f2b5ddaa361535a66d093092e5e7614a6",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "df46717db98874b8e53cc6abbb615e87f9b156aa40cf99d7929af06a75646bdd",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "a0aa796aa3ae7cc41e6d6ab619feb1c55e05d11e56afb5e176c2d7b1bcf0456f",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "b1a17c0ab9d5316d32d9d9caa1a72c3ad0da82d8795896f563803818be78bf55",
+      "execution_read_required": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "kind": "owned_existing_articles",
+      "preparation_sha256": "74cf6222a22bed763e08fd4f2df301447fe1dfedc067bfc352ba5a6d5a791d30",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "kind": "code_entry_points",
+      "preparation_sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabLauncherCatalog.ts",
+      "kind": "code_entry_points",
+      "preparation_sha256": "bd144eddc1866b16e39ae8a2d9bfb1d2aa7ceaed1cc222e3ef1231c158c9c8c7",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedPresenterTargets.ts",
+      "kind": "code_entry_points",
+      "preparation_sha256": "e3dcc0232b6f0edabbd6f7df7bfe48e4f68c12a5bb3c66efb124ebb1068d2805",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/ComponentTabPanel.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "d407ee5a1eb5df41ea8dac3666475e745d931cf0eceaffd4064da45945b3fb53",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FilePickerDrawerLayer.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "8791acc3bb374377781432b8fb2255e2add1f07a70d756a1a8e64c835174c565",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/iframe/IframeSurface.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "cb225687f7dd1976266e2712b815e93afb43087831629113ba5349609e1c8200",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/browser/CustomViewer.tsx",
+      "kind": "code_entry_points",
+      "preparation_sha256": "94daad613f4f0f9bbdcf5e278ec29bec2133a414d3c6532e99a3fb3390a67792",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/create-service.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/views/index.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "8c1c6e9e9a8771b5d212bfad0d959e78e608fc0beb304399a3c3e450a13f430b",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/scripts/wiki.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e",
+      "execution_read_required": true
+    },
+    {
+      "path": "fusion-studio-server/lib/wiki/audit/toc-sync.js",
+      "kind": "code_entry_points",
+      "preparation_sha256": "8fa1b29f766bb7142ab89f54b3cf8606cecab0ede458d04004893e3c0ec40b5f",
+      "execution_read_required": true
+    }
+  ]
+}

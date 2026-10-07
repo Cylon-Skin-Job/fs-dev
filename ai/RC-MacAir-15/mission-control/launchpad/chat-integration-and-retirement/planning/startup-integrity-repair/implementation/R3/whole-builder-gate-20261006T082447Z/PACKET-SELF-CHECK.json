@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-06T08:36:16.002025+00:00",
+  "scope": "new whole-R3 technical packet self-check; no product check repeated",
+  "localLinks": [
+    {
+      "target": "REVIEW-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "target": "../../original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "target": "R3-CURRENT-OWNED.diff",
+      "exists": true
+    }
+  ],
+  "fullR3DeviationIds": [
+    "R3-D01",
+    "R3-D02",
+    "R3-D03",
+    "R3-D04",
+    "R3-D05",
+    "R3-D06",
+    "R3-D07",
+    "R3-D08",
+    "R3-D09"
+  ],
+  "explicitCurrentReviewPending": true,
+  "originalAdoptionReleased": true,
+  "reviewInputsUnchanged": true,
+  "noLiveOrCleanupOperations": true
+}

@@ -1,0 +1,33 @@
+{
+  "runRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-orchestrator-uxkmt9_9",
+  "runNonce": "a36215a0-3692-45fe-923e-a16ee3c552b5",
+  "evidenceRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ",
+  "evidenceNonce": "5af43329-add0-4eb0-a5a8-f0dff56b6d1a",
+  "summary": {
+    "status": "FILE_VIEWER_LIVE_PROVENANCE_OK",
+    "scenarios": [
+      {
+        "scenario": "normal",
+        "port": 52246
+      },
+      {
+        "scenario": "fact-publish-failure",
+        "port": 52262
+      }
+    ],
+    "uniqueNonDevelopmentPorts": true,
+    "protectedDeveloperStateUnchanged": true,
+    "cleanup": "owned-marker-verified",
+    "evidenceRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ"
+  },
+  "files": {
+    "orchestrator-guarded-safe-evidence/normal/scenario-receipt.json": "04d159228e20438c78370d76cece753ba13fbd5ba9d3ce2dec522602dd44b312",
+    "orchestrator-guarded-safe-evidence/normal/app-data/isolated-provenance-audit.json": "ed6e9025453791161f4f424b3d587cdbe2229b5f4866d9b3dcde32a48c89bfed",
+    "orchestrator-guarded-safe-evidence/fact-publish-failure/scenario-receipt.json": "9374fc6b0918f9cce344ba12fa2be3e2ab8e681dcaba408065d57b975a2d5795",
+    "orchestrator-guarded-safe-evidence/fact-publish-failure/app-data/isolated-provenance-audit.json": "243da812b66a65230740a8fbf20de280391c37f86aa1d452880af86f28717c51",
+    "orchestrator-guarded-safe-evidence/protected-state-receipt.json": "ecd7557cf6a8b58d053a7d39ec37c43f7f3eeadc1f75bdff845e083b61751e9e",
+    "orchestrator-guarded-launcher.log": "ef61a4561286b030c09510d575ee1746ad284de23853d396579ec4f2f7667d19",
+    "orchestrator-guarded-command-result.json": "474a67692af6f6c8459a86dd91da08a5571c7014ac310b0095d636e7447d4fe5"
+  },
+  "independentAssertions": "seven literal names, all counters/guards/runtime effect/registry/cleanup/protected equality"
+}

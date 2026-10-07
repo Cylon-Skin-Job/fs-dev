@@ -1,0 +1,185 @@
+{
+  "at": "2026-10-06T07:45:25.486161+00:00",
+  "folder": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z",
+  "nonceVerified": "f090d27f-fb16-4ff4-9957-a0119380a957",
+  "externalRootPreserved": true,
+  "copies": [
+    {
+      "name": "history-readback-comparison.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/history-readback-comparison.mjs",
+      "sha256": "d4738d01c6766bd434f89b6efc5283b7ea947602cd633c371811a5e54d7f1972",
+      "bytes": 2005
+    },
+    {
+      "name": "history-readback-comparison.test.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/history-readback-comparison.test.mjs",
+      "sha256": "21e5d0a1372d526146e39f1f4b821818b9ffc3225b28f8b68796ab95ede90cfd",
+      "bytes": 2194
+    },
+    {
+      "name": "history-readback-comparison-tests.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/history-readback-comparison-tests.log",
+      "sha256": "8a2d3eac4fa898c442751920b9226582dee51c535d383faa939dc35911f56e8b",
+      "bytes": 612
+    },
+    {
+      "name": "read-public-actual-shapes.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-shapes.mjs",
+      "sha256": "11a2dd68bdaab3c5bdcce21b70ccd00ab9d4db4aa9c10d38f67627bbbeeabefa",
+      "bytes": 6642
+    },
+    {
+      "name": "public-actual-shapes.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-shapes.log",
+      "sha256": "e961973bd1f6e58dc56f89b1bd78a78cfdc6d46fd4e77f077c75198db7fbfa58",
+      "bytes": 617
+    },
+    {
+      "name": "read-public-actual-shapes-v2.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-shapes-v2.mjs",
+      "sha256": "ca6ded9dfdb5a4b98899464e6477b111b6b5ec8aefe75208364204ba277dbc58",
+      "bytes": 6653
+    },
+    {
+      "name": "public-actual-shapes-v2.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-shapes-v2.json",
+      "sha256": "38cdc076bf032bd9cf879db5020cf29cf0711ee46c4094be305a23df96313eeb",
+      "bytes": 9994
+    },
+    {
+      "name": "public-actual-shapes-v2.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-shapes-v2.log",
+      "sha256": "712cfb442bb171dc30761a109119cb49cbf057a36301c2680e2afe4c82a7a8c0",
+      "bytes": 7419
+    },
+    {
+      "name": "read-public-actual-readback.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-readback.mjs",
+      "sha256": "e5a126e2e0c8932b93f2a4bf322ababa6284c6cd2e43f48fc1de4c3074bdde30",
+      "bytes": 7826
+    },
+    {
+      "name": "public-actual-readback.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-readback.json",
+      "sha256": "8b1e214c8fd219df86fd4fcaa72c2622c91d4f0795c759fea84c0b6440a660f1",
+      "bytes": 13908
+    },
+    {
+      "name": "public-actual-readback.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-readback.log",
+      "sha256": "7c3c6eeb27e3d8f5ead28f7119c8ec024641743fafbda493a23351bb7da24906",
+      "bytes": 10546
+    },
+    {
+      "name": "read-public-actual-reopen.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-reopen.mjs",
+      "sha256": "6b47a657bdb5cdec3187e7093c4fe15001b193f009e62d8cfce83939c84f7b67",
+      "bytes": 8352
+    },
+    {
+      "name": "public-actual-reopen.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-reopen.json",
+      "sha256": "80d3dcf5547a36b3aaea3770d9850bf7bdab02d3822effffe22f8f0edb8f3231",
+      "bytes": 20942
+    },
+    {
+      "name": "public-actual-reopen.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-reopen.log",
+      "sha256": "896bcd569967d3845b12084492ba0f6ac0962c9aeb2189585463f80023c16054",
+      "bytes": 15692
+    },
+    {
+      "name": "read-public-actual-reopen-validated.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-reopen-validated.mjs",
+      "sha256": "072bdd75d38f45bb6226a12fcf936be39d3ddf457a4af002a65a373d0d6d2904",
+      "bytes": 7378
+    },
+    {
+      "name": "public-actual-reopen-validated.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-reopen-validated.log",
+      "sha256": "478710b4c66461d6f90f161dcf8995490d941aff10bb1822097eab073b487d32",
+      "bytes": 1194
+    },
+    {
+      "name": "read-public-actual-reopen-validated-v2.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/read-public-actual-reopen-validated-v2.mjs",
+      "sha256": "e62aca78d0322616231ceb268247e5db2837efdf92c32d74980de0b23c961807",
+      "bytes": 7379
+    },
+    {
+      "name": "public-actual-reopen-validated-v2.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-reopen-validated-v2.json",
+      "sha256": "141a516eb324eefc7cc406f1102187409330c397afed7c476e5099d7645a8520",
+      "bytes": 22187
+    },
+    {
+      "name": "public-actual-reopen-validated-v2.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-reopen-validated-v2.log",
+      "sha256": "a3cf3fb5f0490fa3795cbce0b503ed2a414406fd81d8e3f4c432d8beec880447",
+      "bytes": 16641
+    },
+    {
+      "name": "public-actual-native-windows.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-actual-native-windows.json",
+      "sha256": "6a78bd05bc2738c8d708926451a39f07ce6c367551cff60b82da95b1e19f888c",
+      "bytes": 2093
+    },
+    {
+      "name": "observe-public-manual-v4.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/observe-public-manual-v4.mjs",
+      "sha256": "5aacb3af8aa2d65a2b685bcc89d24552ba1cd81ffd9892f429b3688bdf7c93e6",
+      "bytes": 8476
+    },
+    {
+      "name": "public-manual-receipts-v4.jsonl",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-manual-receipts-v4.jsonl",
+      "sha256": "7a7dee2e504e4792d81234f9b7d37a69a9f56eec5eec97cf1b991029ac6c81d5",
+      "bytes": 91462
+    },
+    {
+      "name": "public-observer-ready-v4.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-observer-ready-v4.json",
+      "sha256": "becc1fd9acbcd414f05e8d0b3b7017bfa8d505b9ba5e9f1c579e813854b50d3c",
+      "bytes": 2856
+    },
+    {
+      "name": "public-observer-v4-process.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-observer-v4-process.json",
+      "sha256": "540a8fc632db7a0cdfb3bd7caacf5c719be7b8742985b521b9315f19b935930a",
+      "bytes": 412
+    },
+    {
+      "name": "stop-owned-public-scratch.mjs",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/stop-owned-public-scratch.mjs",
+      "sha256": "8b24cc057230ac2ecbe3eaeee614f281938eb6a960579ba8ceb30e23d972e21f",
+      "bytes": 7366
+    },
+    {
+      "name": "public-scratch-stop-before.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-stop-before.json",
+      "sha256": "e0db772ec46fc1923b800b5ff90fe62d9587987b92616648afd5d9b9a1acfb95",
+      "bytes": 7844
+    },
+    {
+      "name": "public-scratch-stop-after.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-stop-after.json",
+      "sha256": "d8f3c62c9fb1e7299d6c6e5e6e3a2b35b0bea3e80b88d3c3184605b637a7426c",
+      "bytes": 11487
+    },
+    {
+      "name": "public-scratch-stop.log",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-stop.log",
+      "sha256": "1fa40e98fd8fab035e95054211434e85f6347393add9f49b3764b22b6991662d",
+      "bytes": 8872
+    },
+    {
+      "name": "public-scratch-windows-after-stop.json",
+      "source": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-windows-after-stop.json",
+      "sha256": "eb23d3a66f8bd6a246387f18ade3fdb5b914ccd4d7c115df548e18f524b808f4",
+      "bytes": 67
+    }
+  ],
+  "historicalHeldPacket": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z",
+  "historicalManifestPreserved": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+  "noRawOwnerLogDatabaseProviderFramesOrCredentialsCopied": true
+}

@@ -1,0 +1,34 @@
+{
+  "startedAt": "2026-10-06T09:20:57.880538+00:00",
+  "completedAt": "2026-10-06T09:21:06.424013+00:00",
+  "scope": "read-only post-cleanup protection attribution and current stable comparison; no retrospective equality claim",
+  "protectedBefore": {
+    "developmentDb": "0557c87a67824b7778c70d0e5b9be6b8a747b27e3976a54fea9b8c267f2b6f6d",
+    "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+    "developerWorkspace": "bab6c5a36a937ed48218dca529998516b0b4cd7f0abc9037b63dc96ffd1a9ad3",
+    "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+  },
+  "protectedAfter": {
+    "developmentDb": "0557c87a67824b7778c70d0e5b9be6b8a747b27e3976a54fea9b8c267f2b6f6d",
+    "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+    "developerWorkspace": "bab6c5a36a937ed48218dca529998516b0b4cd7f0abc9037b63dc96ffd1a9ad3",
+    "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+  },
+  "freshProtectedUnchanged": true,
+  "matchesInitialAfterTuple": true,
+  "readOnlySqliteQuickCheckPassed": true,
+  "quickCheckCount": 1,
+  "databaseMtimeBefore": "2026-10-06T09:17:35.609198+00:00",
+  "databaseMtimeAfter": "2026-10-06T09:17:35.609198+00:00",
+  "databasePhysicalHashStableDuringReadOnlyCheck": true,
+  "observedDeveloperDbMtimePrecedesActualDeletionBoundary": true,
+  "originalDeletionBoundaryStarted": "2026-10-06T09:17:39.980905+00:00",
+  "originalAfterAt": "2026-10-06T09:17:43.771469+00:00",
+  "oldInitialBaselineLogicalSnapshotAvailable": false,
+  "knownOlderIdentitiesMatchInitialAfter": true,
+  "olderCount": 9,
+  "rootsRemain": [],
+  "allOriginalAndSealedReceiptsRetained": true,
+  "noAppStopNoDbWriteNoPrivatePayloadProjection": true,
+  "boundedInference": "Observed developer DB file modification timestamp precedes root-deletion boundary; only open DB owner observed is existing unchanged server77007 under77002, so background DB change during multi-file baseline capture is supported, not caused by later external-root deletion. No exact old logical/page preimage was captured, so old before/after content equality is not asserted."
+}

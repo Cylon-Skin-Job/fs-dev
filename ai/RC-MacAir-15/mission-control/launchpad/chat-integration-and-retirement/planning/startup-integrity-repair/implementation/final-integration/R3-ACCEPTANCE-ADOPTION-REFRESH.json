@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-06T09:03:59.622347+00:00",
+  "changes": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/STARTUP-REPAIR-REPORT.md",
+      "beforeSha256": "1b86743e6cf05eabcfe891f3e1325163ac11ecf4ac19ba1a2b2512d334aa2a2f",
+      "afterSha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/REGRESSION-RESULTS.md",
+      "beforeSha256": "d224ff5d2079262dd023a62e16d45965bfbdb9d51798aa237ff3eae123cfd660",
+      "afterSha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/GUARDED-SERVER-PROOF.md",
+      "beforeSha256": "eca3f633f523480efc12338bdefbdaf2b5e9043152e909c9141c83ec107d0e5e",
+      "afterSha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/SLICE-AND-DEVIATION-LEDGER.md",
+      "beforeSha256": "5ef2d2f00ee35768ca829e5e234f928b6e536df7d379500e2531386f4c54cdf7",
+      "afterSha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-S4-repaired-integration-report.md",
+      "beforeSha256": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+      "afterSha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-SLICE-AND-DEVIATION-LEDGER.md",
+      "beforeSha256": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+      "afterSha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETION-CANDIDATE.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/COMPLETION-CANDIDATE.md",
+      "beforeSha256": "b612634a71c746f9965e9dfb88fc6b013b20a3cd637090c34256daa0ab86b794",
+      "afterSha256": "9cccf1dad36e34ddd2e5c1b8b567f4c441c57934fe09592ecf5b73d3673ba2b8",
+      "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+    }
+  ],
+  "prefixPreserved": true,
+  "productOrWikiOrNormativeOrSealedRuntimeChange": false,
+  "testInvalidation": false,
+  "remaining": "full both-contract final integration/cleanup/owner acceptance"
+}

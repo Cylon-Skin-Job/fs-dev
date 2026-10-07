@@ -1,0 +1,17 @@
+  console.log
+    [Migration 019] Added workspaces.type (default: code)
+
+      at Object.log [as up] (lib/db/migrations/019_workspace_type.js:17:11)
+
+  console.log
+    [Migration 019] Added workspaces.type (default: code)
+
+      at Object.log [as up] (lib/db/migrations/019_workspace_type.js:17:11)
+
+(node:54924) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.299 s, estimated 1 s
+Ran all test suites within paths "test/views/readiness-startup.test.js".

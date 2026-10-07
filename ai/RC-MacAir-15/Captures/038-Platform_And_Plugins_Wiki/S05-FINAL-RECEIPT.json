@@ -1,0 +1,61 @@
+{
+  "at": "2026-09-23T13:59:18.450582+00:00",
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "candidate": "PPW01-0159a35a4ecb7fd3",
+  "builder": "/root/pp_s05_builder",
+  "reviewer": "/root/pp_s05_builder/s05_clean_review_01",
+  "review_result": "CLEAN",
+  "article_hashes_unchanged": true,
+  "checks": [
+    "runs/20260923T135829766148Z-slice-S05.json",
+    "runs/20260923T135832744199Z-final.json"
+  ],
+  "artifacts": [
+    {
+      "path": "S05-OUTPUTS.json",
+      "sha256": "614bdb6fe5c017e2a54d942be16f964a5a6a31033a59d9cedca350ff26a44f69"
+    },
+    {
+      "path": "TIMESTAMP-RECEIPT.json",
+      "sha256": "2d5fc62c6ea56e286aa1bfe90a4483d155b73594a47027e82d9decebc1824278"
+    },
+    {
+      "path": "S05-BUILDER-REVIEW-01.md",
+      "sha256": "b52588c1d69225d74e525f38ed65fc3d59907c36c4e3480cf2050749d59e21ca"
+    },
+    {
+      "path": "S05-LIFECYCLE.json",
+      "sha256": "fcb0ea1fdc12adcc4051bb027d1a94859ca0f6cdad85828a7513ce24853e6ba8"
+    },
+    {
+      "path": "S05-HANDOFF.md",
+      "sha256": "2c69e6d484de5ed8982c787b1882fb56e7b40af5e00360c1182d589221f13d66"
+    },
+    {
+      "path": "CLAIMS.json",
+      "sha256": "005f08320cd2845c8add3aa3e43b51bccb5d0a084715ced1057dc9e24162edc8"
+    },
+    {
+      "path": "COVERAGE.json",
+      "sha256": "7aea0a375202740739b86e0e00d09430f0f9f71da40104d9f3d5a4b514b78fc6"
+    },
+    {
+      "path": "S05-SOURCE-INSPECTION.json",
+      "sha256": "780b2814449bff4ca0a34c0987481871f53f53becad1fee14751b392b74a7130"
+    },
+    {
+      "path": "S05-HYGIENE.json",
+      "sha256": "f9aa5f98938640c91abcd64e5912229167fe4814f100304749a562946c988c58"
+    },
+    {
+      "path": "EDIT-RECEIPTS.json",
+      "sha256": "5073e440bc12d86d0020b89ad96d212da282bff1d48d45f89b7eaef360da5f5d"
+    }
+  ],
+  "pending": [
+    "S05 orchestrator acceptance",
+    "final SPEC integration review",
+    "parent final HANDOFF",
+    "owner acceptance"
+  ]
+}

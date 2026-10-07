@@ -1,0 +1,447 @@
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md
+@@ -2,14 +2,6 @@
+ name: Events And Ledger
+ description: Read the System boundary, inspected provenance behavior, approved direction, and open choices before designing event or storage changes.
+ metadata:
+-  incoming-edges:
+-    - Wiki Guidance
+-  outgoing-edges:
+-    - Server And Runtime
+-    - Events And Ledger Vision
+-    - Events And Ledger Decisions
+-    - Universal Event Bus Standards
+-    - Persistence And Metadata Standards
+   source-files:
+     - fusion-studio-server/lib/db.js
+     - fusion-studio-server/lib/subscriptions/admission.js
+@@ -18,11 +10,10 @@
+     - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+     - fusion-studio-server/lib/agent-provenance/resource-observer.js
+     - fusion-studio-server/lib/ledger/event-ledger.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+-Status: the System boundary and this orientation were reconciled by source inspection on 2026-09-19 in the development checkout. This is not a runtime test result or certification of the entire section. Detailed articles carry their own scope and evidence; generated navigation below is a topic map, not proof that every described subsystem exists. Installed Alpha is a separate, unverified baseline.
++Status: reconciled on 2026-09-19 across the 24 Events And Ledger articles and the bounded System/provenance subjects in three supporting articles. The inspected development checkout is `/Users/rccurtrightjr./projects/fs-dev`, at HEAD `88637d11c65be53d4f2ad0f049f64a07fa3db1de`, with dirty working files. Claims follow the inspected working bytes rather than HEAD alone; unrelated concurrent changes were preserved. This is source and documentation inspection, not a product test, runtime pass, whole-app storage audit or whole-wiki certification. Installed Alpha is a separate, unverified baseline. Generated navigation below is a topic map, not proof that every described subsystem exists.
+ 
+ Events And Ledger describes Fusion Studio's system memory: operational facts, provenance and bounded recovery records. Chat is one producer and consumer; workspace files, tools, render freshness and future integrations also need honest history. Recording a fact does not by itself prove a cause, authorize a plugin, or provide a restore operation.
+ 
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md
+@@ -2,15 +2,8 @@
+ name: Events And Ledger Vision
+ description: Product direction for explainable system history, bounded recovery, and future provenance analysis.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger
+-    - Events And Ledger Decisions
+-    - Server And Runtime
+   source-files: []
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: approved product direction with explicitly future capabilities, reconciled 2026-09-19. This page does not claim a complete event graph, universal restore or audit UI is implemented. For source-inspected behavior, begin with the [overview](../PAGE.md) and [System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md
+@@ -2,13 +2,6 @@
+ name: Events And Ledger Decisions
+ description: Settled System ownership and bounded provenance contracts, with current gaps and future product choices separated.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger
+-    - Events And Ledger Vision
+-    - Server And Runtime
+-    - Persistence And Metadata Standards
+   source-files:
+     - fusion-studio-server/lib/db.js
+     - fusion-studio-server/lib/subscriptions/admission.js
+@@ -18,8 +11,7 @@
+     - fusion-studio-server/lib/agent-provenance/resource-observer.js
+     - fusion-studio-server/lib/ledger/event-ledger.js
+     - fusion-studio-client/src/lib/save-action-context.ts
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: reconciled 2026-09-19 against approved owner direction and inspected development source. Settled targets below are not claims of complete enforcement. Current observations cover the named owners only; no product tests or runtime checks were rerun for this documentation.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Events Universal Event Bus
+ description: Canonical firehose rules for Fusion Studio events, subscriber boundaries, and producer responsibilities.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger Decisions
+-    - Universal Event Bus Standards
+-    - Chat Universal Event Bus
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/startup.js
+@@ -20,8 +14,7 @@
+     - fusion-studio-server/lib/subscriptions/generation-compiler.js
+     - fusion-studio-server/lib/subscriptions/controller.js
+     - fusion-studio-server/lib/subscriptions/capability-factory.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Events Taxonomy
+ description: Categories for UI actions, chat lifecycle, tool calls, harness events, triggers, scheduler runs, resource mutations, render events, and external observations.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger Decisions
+-    - Events Provenance Model
+-    - Events Resource Events And Render Sync
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/event-registry/seed-catalog.js
+@@ -16,8 +10,7 @@
+     - fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json
+     - fusion-studio-server/lib/event-registry/schemas/agent-tool-completed-v1.json
+     - fusion-studio-server/lib/event-registry/schemas/resource-state-observed-v1.json
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md
+@@ -2,21 +2,6 @@
+ name: Events Provenance Model
+ description: How event metadata records actor, observer, confidence, causal IDs, UI context, tool call IDs, trigger run IDs, script run IDs, and external changes.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger Decisions
+-    - Events Taxonomy
+-    - Events Correlation And Causality
+-    - Chat Metadata Provenance Schema
+-    - Tool Call Provenance Schema
+-    - Resource Mutation Provenance Schema
+-    - Ledger Event Provenance Schema
+-    - File Version Provenance Schema
+-    - Automation Run Provenance Schema
+-    - UI Action And Context Provenance Schema
+-    - UI Action Provenance Module
+-    - Audit Query And Review Provenance Schema
+   source-files:
+     - fusion-studio-server/lib/subscriptions/admission.js
+     - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
+@@ -24,8 +9,7 @@
+     - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
+     - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+     - fusion-studio-server/lib/ledger/event-ledger.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md
+@@ -2,14 +2,6 @@
+ name: Ledger Event Provenance Schema
+ description: Schema guidance for durable event storage, graph edges, indexes, redaction, and retention in the Universal Ledger.
+ metadata:
+-  incoming-edges:
+-    - Events Provenance Model
+-    - Resource Mutation Provenance Schema
+-  outgoing-edges:
+-    - Chat Metadata Provenance Schema
+-    - Resource Mutation Provenance Schema
+-    - File Version Provenance Schema
+-    - Audit Query And Review Provenance Schema
+   source-files:
+     - fusion-studio-server/lib/ledger/event-ledger.js
+     - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
+@@ -20,8 +12,7 @@
+     - fusion-studio-server/lib/file-mutations/fact-replay.js
+     - fusion-studio-server/lib/file-mutations/reconciliation.js
+     - fusion-studio-server/lib/db/migrations/029_event_ledger.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md
+@@ -2,11 +2,6 @@
+ name: Events Ledger Schema
+ description: SQLite event table concerns for payload storage, indexes, retention, correlation IDs, and graph-style relationships between events.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events Provenance Model
+-    - Events File Versioning
+   source-files:
+     - fusion-studio-server/lib/db/migrations/029_event_ledger.js
+     - fusion-studio-server/lib/db/migrations/034_event_registry_authority.js
+@@ -15,8 +10,7 @@
+     - fusion-studio-server/lib/db/migrations/040_reported_ui_context.js
+     - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+     - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Events And Ledger Structure
+ description: File and module map for event bus, ledger, watcher, resource sync, metadata collectors, and future versioning work.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events Universal Event Bus
+-    - Events Resource Events And Render Sync
+-    - Events Ledger Schema
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/startup.js
+@@ -19,8 +13,7 @@
+     - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+     - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
+     - fusion-studio-server/lib/file-mutations/save-controller.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Events Resource Events And Render Sync
+ description: Trace mediated text saves through governed projections to the two mounted File Viewer consumers; distinguish reconnect and dirty-buffer limits.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events And Ledger Decisions
+-    - Events Universal Event Bus
+-    - Events Provenance Model
+   source-files:
+     - fusion-studio-client/src/components/office/OfficeDocumentPage.tsx
+     - fusion-studio-client/src/components/email/EmailDocumentPage.tsx
+@@ -28,8 +22,7 @@
+     - fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js
+     - fusion-studio-server/lib/ws/resource-projection-publisher.js
+     - fusion-studio-server/lib/ws/workspace-session.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Events File Versioning
+ description: Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events Provenance Model
+-    - Events Ledger Schema
+-    - Universal Ledger File Versioning and Provenance
+   source-files:
+     - fusion-studio-server/lib/file-mutations/save-controller.js
+     - fusion-studio-server/lib/file-mutations/path-authority.js
+@@ -20,8 +14,7 @@
+     - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+     - fusion-studio-server/lib/agent-provenance/resource-observer.js
+     - fusion-studio-server/lib/versioning.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md
+@@ -2,11 +2,6 @@
+ name: Events Correlation And Causality
+ description: Interpret durable operation links, reported UI context and observed resource history without turning temporal association into causal proof.
+ metadata:
+-  incoming-edges:
+-    - Events And Ledger
+-  outgoing-edges:
+-    - Events Provenance Model
+-    - Events File Versioning
+   source-files:
+     - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
+     - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+@@ -15,8 +10,7 @@
+     - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
+     - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+     - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:03:08Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md
+@@ -2,15 +2,6 @@
+ name: Resource Mutation Provenance Schema
+ description: Read the implemented mediated-save facts and optional reported context, distinct from broader resource-mutation schema proposals.
+ metadata:
+-  incoming-edges:
+-    - Events Provenance Model
+-    - Tool Call Provenance Schema
+-  outgoing-edges:
+-    - Chat Metadata Provenance Schema
+-    - Tool Call Provenance Schema
+-    - Ledger Event Provenance Schema
+-    - File Version Provenance Schema
+-    - UI Action Provenance Module
+   source-files:
+     - fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json
+     - fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json
+@@ -22,8 +13,7 @@
+     - fusion-studio-server/lib/ws/resource-provenance-route.js
+     - fusion-studio-client/src/lib/save-action-context.ts
+     - fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md
+@@ -2,13 +2,6 @@
+ name: File Version Provenance Schema
+ description: Identify current save-preimage and agent-checkpoint records without implying a universal file-version event or restore contract.
+ metadata:
+-  incoming-edges:
+-    - Events Provenance Model
+-    - Resource Mutation Provenance Schema
+-  outgoing-edges:
+-    - Resource Mutation Provenance Schema
+-    - Ledger Event Provenance Schema
+-    - Events File Versioning
+   source-files:
+     - fusion-studio-server/lib/db/migrations/035_file_provenance.js
+     - fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js
+@@ -17,8 +10,7 @@
+     - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+     - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+     - fusion-studio-server/lib/file-mutations/checkpoint-adapter.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
+--- ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md
+@@ -2,20 +2,9 @@
+ name: Server And Runtime
+ description: Navigation map for backend ownership, runtime state, persistence, WebSockets, path resolution, and process behavior.
+ metadata:
+-  incoming-edges:
+-    - Wiki Guide
+-  outgoing-edges:
+-    - Runtime Overview
+-    - Thread Runtime
+-    - WebSocket Protocol
+-    - SQLite Persistence
+-    - Harness Runtime
+-    - Background Services
+-    - Path Resolution
+-    - Viewer Search
+   source-files:
+     - fusion-studio-server/server.js
+-    - fusion-studio-server/lib/thread/ThreadRuntimeManager.js
++    - fusion-studio-server/lib/thread/thread-runtime-manager.js
+     - fusion-studio-server/lib/workspace/workspace-controller.js
+     - fusion-studio-server/lib/workspace/registry-service.js
+     - fusion-studio-server/lib/workspace/bootstrap-service.js
+@@ -44,8 +33,7 @@
+     - fusion-studio-server/lib/thread/harness-diagnostic-service.js
+     - fusion-studio-client/src/state/calendarStore.ts
+     - fusion-studio-client/src/components/calendar/CalendarViewer.tsx
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Use this section for backend ownership, runtime state, persistence, WebSockets, filesystem resolution, and service behavior.
+--- ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md
+@@ -2,12 +2,6 @@
+ name: Universal Event Bus Standards
+ description: Rules for using the server-side universal event bus without confusing commands, facts, chat lifecycle, and provider protocol.
+ metadata:
+-  incoming-edges:
+-    - Code Standards
+-  outgoing-edges:
+-    - Architecture Routing
+-    - WebSocket Protocol Standards
+-    - Chat Universal Event Bus
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/startup.js
+@@ -19,8 +13,7 @@
+     - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
+     - fusion-studio-server/lib/wire/wire-broadcaster.js
+     - fusion-studio-server/lib/audit/audit-subscriber.js
+-  connected-skills: []
+-  related-trigger-files: []
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Status: event/provenance rules reconciled against approved direction and source inspected on 2026-09-19. This page distinguishes the implemented trusted built-in path from broader design proposals. It does not certify unrelated Chat behavior or a fresh product test/runtime pass.
+--- ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-040021.md
++++ ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md
+@@ -2,17 +2,12 @@
+ name: Persistence And Metadata Standards
+ description: Rules for SQLite writes, migrations, thread managers, metadata, file mirrors, and durable state updates.
+ metadata:
+-  incoming-edges:
+-    - Code Standards
+-  outgoing-edges:
+-    - Architecture Routing
+-    - State Management Standards
+   source-files:
+     - fusion-studio-server/lib/db.js
+-    - fusion-studio-server/lib/thread/
+-    - fusion-studio-server/lib/chat-metadata/
+-  connected-skills: []
+-  related-trigger-files: []
++    - fusion-studio-server/lib/thread/ThreadManager.js
++    - fusion-studio-server/lib/thread/HistoryFile.js
++    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
++  last-modified: "2026-09-19T11:00:21Z"
+ ---
+ 
+ Use this page before changing SQLite tables, migrations, thread metadata,

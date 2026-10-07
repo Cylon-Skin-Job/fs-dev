@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "path": "fusion-studio-client/src/components/iframe/core/useIframeNavigation.ts",
+      "sha256": "4df2c6297a385bbdf9d255ed16cef26af20709e42a660ef10d2a8a1c268954ec",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx",
+      "sha256": "886482040483da3985b87f74d6886b7ce6ec1a7372c9be5575135e908992c6b1",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+      "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+      "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/compat.js",
+      "sha256": "5b1b041ec7ab259e9f8f6e0320e503f3c0059d44c3a206de7a413b64708fe7bf",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/ai-paths.js",
+      "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "kind": "producer_consumer_or_validation_dependency"
+    },
+    {
+      "path": "fusion-studio-server/lib/wiki/audit/run.js",
+      "sha256": "914328a6a38f053967db2cd85f14b06c35eba74948aa1e665de87b01dd9d5d03",
+      "kind": "producer_consumer_or_validation_dependency"
+    }
+  ]
+}

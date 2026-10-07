@@ -1,0 +1,84 @@
+[2m[WebServer] [22m(node:54201) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_warning
+[2m[WebServer] [22m[Server] diagnostic_warning
+
+Running 34 tests using 1 worker
+
+(node:54254) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:54254) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:84:1 › SEND-01–13 share production serialization and socket admission; sources have no raw chat send (29ms)
+  ✓   2 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:99:1 › auth queue is explicit, FIFO, bounded to captured binding, and prompt is never queued (0ms)
+  ✓   3 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:117:1 › qualified pre-auth frames flush FIFO once and a retired socket cannot deliver to a replacement (1ms)
+  ✓   4 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:141:1 › local refusal and native throw preserve the closed truthful result vocabulary (1ms)
+[TIMING] SEND at 755.5ms threadId=thread-0
+  ✓   5 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:177:1 › real store, group, creation, metadata, recovery, and diagnostic callers use the installed lane (197ms)
+[WS] thread:opened: thread-s exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-sync'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:created received: sync-created-1
+[WS] thread:created received: sync-created-2
+  ✓   6 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:299:1 › SEND-05 installs exact open/model correlation before a synchronous server response (5ms)
+  ✓   7 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:354:1 › SEND-04 active host lists and opens its exact view through the real browser socket (762ms)
+  ✓   8 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:363:1 › SEND-03 Stop and SEND-06 passive component history use the installed product lane (2.3s)
+  ✓   9 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:392:1 › synchronous native-send ACK keeps the prompt attempt and Stop terminal state exact (425ms)
+  ✓  10 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:416:1 › definitely refused prompt keeps the draft and releases only its provisional attempt (347ms)
+  ✓  11 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:429:1 › refused later prompt preserves a prior accepted attempt and its original ACK (15.8s)
+  ✓  12 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:87:1 › ThreadRail is a portable population/menu boundary with no store or socket access (11ms)
+  ✓  13 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:121:1 › ThreadedChat composes exactly one ThreadRail with one ChatSurface (1ms)
+  ✓  14 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:130:1 › the connected view host owns qualified list/open correlation and never touches the Legacy store (1ms)
+  ✓  15 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:143:1 › the dead un-gated ThreadJumpDropdown is removed (0ms)
+  ✓  16 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:153:1 › open-request correlation is per-request/per-population, not a single slot (1ms)
+  ✓  17 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:161:1 › thread:list fills only the echoed view population and keeps Legacy explicit (0ms)
+  ✓  18 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:214:1 › threadId-only historical commands keep the canonical server fallback (4ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  19 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:249:1 › thread:list fills only its echoed {workspaceId, viewId} population (4ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  20 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:276:1 › a late list/open for view B cannot fill or select view A (2ms)
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  21 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:316:1 › thread:opened updates only its own population selection and retires its request (1ms)
+[WS] thread:created received: new-thread
+[WS] thread:list received: [33m2[39m thread groups
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  22 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:343:1 › ordinary New Chat selects the accepted view group without rewriting Legacy or content state (1ms)
+[WS] thread:created received: new-thread
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  23 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:372:1 › New Chat in Capture keeps the outgoing group until its content save is acknowledged (3ms)
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  24 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:416:1 › Legacy viewId:null is explicit and never borrows a view population (0ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:opened: thread-a exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-alpha'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  25 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:441:1 › restart/readback restores keyed populations and selections through the handler path (1ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  26 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:508:1 › accepted rename updates the composite Legacy and view populations, not only threads (1ms)
+  ✓  27 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:542:1 › accepted delete removes the row and clears the qualified selection (1ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  28 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:592:1 › a row mutation acked for one population never mutates an unrelated population (1ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m2[39m thread groups
+  ✓  29 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:638:1 › accepted create inserts into an initialized Legacy population without double-adding (1ms)
+  ✓  30 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:836:1 › the rail New Chat button replaces the selected chat after accepted create and open (915ms)
+  ✓  31 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:860:1 › two view-bound hosts restore independent selected rows and transcripts (177ms)
+  ✓  32 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:900:1 › rendered hosts isolate a late list/open for view B from view A (180ms)
+  ✓  33 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:939:1 › hidden inactive panels issue no list request and do not steal selection (285ms)
+  ✓  34 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:990:1 › ThreadRail rows emit canonical thread:open and thread:action intents (332ms)
+
+  34 passed (24.3s)

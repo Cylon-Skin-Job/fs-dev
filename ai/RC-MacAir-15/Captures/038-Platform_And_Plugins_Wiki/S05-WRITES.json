@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-gaps-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S05",
+      "--phase",
+      "content"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:50:12Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"2be2f2ad3a8e0503617b2a4d4ae191fdc47016cb639ca8afaed3e35af54a8137\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S05\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-guidance-proposal.md",
+      "--expect",
+      "74cf6222a22bed763e08fd4f2df301447fe1dfedc067bfc352ba5a6d5a791d30",
+      "--slice",
+      "S05",
+      "--phase",
+      "content"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:50:12Z\",\n  \"before_sha256\": \"74cf6222a22bed763e08fd4f2df301447fe1dfedc067bfc352ba5a6d5a791d30\",\n  \"after_sha256\": \"c6fe89cf185d2911187c0e09c074426a310adaa9208b49f0c0e7430f0ae2fe97\",\n  \"snapshot\": \"ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065012.md\",\n  \"status\": \"complete\",\n  \"slice\": \"S05\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  }
+]

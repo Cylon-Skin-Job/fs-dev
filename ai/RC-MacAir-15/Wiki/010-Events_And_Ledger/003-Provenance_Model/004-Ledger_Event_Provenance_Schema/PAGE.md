@@ -2,101 +2,52 @@
 name: Ledger Event Provenance Schema
 description: Schema guidance for durable event storage, graph edges, indexes, redaction, and retention in the Universal Ledger.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-    - Resource Mutation Provenance Schema
-  outgoing-edges:
-    - Chat Metadata Provenance Schema
-    - Resource Mutation Provenance Schema
-    - File Version Provenance Schema
-    - Audit Query And Review Provenance Schema
   source-files:
     - fusion-studio-server/lib/ledger/event-ledger.js
     - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+    - fusion-studio-server/lib/agent-provenance/agent-ledger-reconciler.js
+    - fusion-studio-server/lib/agent-provenance/fact-admission-reconciler.js
+    - fusion-studio-server/lib/file-mutations/fact-replay.js
+    - fusion-studio-server/lib/file-mutations/reconciliation.js
     - fusion-studio-server/lib/db/migrations/029_event_ledger.js
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before changing durable event storage, ledger indexes, event payload storage, or graph edges between events.
+Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
 
-Ledger event provenance is the durable sink for system facts. It must preserve enough identity and relationship data for future queries without requiring every audit to parse raw payload JSON.
+Use this page before changing ledger ingress, payload projection, identity or reconciliation. The implemented sinks use `event_log` and resource edges; they do not implement the older generalized `ledger_events` schema or accepted-reference graph.
 
-## Boundary
+## Current durable sinks
 
-The ledger stores canonical events, payloads, and edges. It should connect chat turns, tool calls, resource events, file versions, automation runs, UI actions, and later audit/review results.
+| Ingress | Producer truth and transaction | Stored attribution |
+|---|---|---|
+| Legacy wildcard subscriber | `event-ledger-subscriber.js` selects three whitelisted topics; `recordEvent` writes event, resource edges and tags in one transaction | Actor/source may be inferred; selected content keys are redacted and strings truncated to 4,000 characters; this is not the exact governed payload branch |
+| Governed `resource.mutated@1` | `resource-provenance-repository.js` checks the succeeded `file_operations` row and exact body, then writes `event_log`, one subject resource edge, `resource_provenance_events` and operation projection state transactionally | `local_client` with connection ID, operation correlation, null causation; canonical fact JSON and its projection hash, including optional reported context |
+| Governed `agent.tool_completed@1` | Agent ledger repository requires matching already-admitted activity fact JSON/hash; claimed projection writes event, path-bearing resource edges and source ledger state atomically | `agent_harness`, harness ID, activity correlation, null causation; roles `agent_read`, `agent_write`, `agent_execute`, `agent_unknown` |
+| Governed `resource.state_observed@1` | Same owner verifies the admitted snapshot fact; transaction writes event, one observed-file edge and source ledger state | `agent_harness`, source harness, source activity correlation, null causation; `observed` role, live resource ID only for bytes |
 
-Ledger rows preserve the persisted canonical event's `eventFamily` and `eventType`. Accepted canonical chat, tool, resource, file-version, automation, UI, and audit events are stored unwrapped with their exact frozen safe domain payload. Persistence generates the private row projection `ledger_event_id`; no persistence row key may enter the accepted event, stored canonical JSON, canonical identity, or a future canonical ledger/update event. Canonical events use event/domain/content identities and graph edges; query/storage APIs use row keys privately. Use `eventFamily: 'ledger'` only for ledger-internal maintenance, repair, migration, or audit facts. File-change storm batches remain `file.version.change_batch` unless a later decision changes the family.
+`file.command_accepted@1` has a durable operation reservation and admission state but no seeded ledger subscription. Governed resource/agent projections do not create tags or generic event-to-event causal edges. An `event_resource_edges` row connects an event to a resource/path and role; it is not a `caused_by` verdict. The public event ID is the `event_log` primary key; private integer resource-edge keys are a different identity.
 
-## Ledger-Internal Event Payload
+## Admission is not storage success
 
-Canonical events stored in the ledger use their original domain payload. The shape below is only for ledger-internal events.
+The private publisher verifies a reservation, validates and freezes the fact, then awaits delivery. Only the two agent publishers persist admitted state before dispatch. Save replay updates its admission marker after the returned report. A subscriber failure cannot revoke the admitted fact; `admitted: true` can coexist with pending, conflict or failed persistence. A resolved required-ack handler can return a rescheduled/conflict state, so `completed` alone is not proof of a stored row.
 
-It is a non-authoritative design candidate. Open owner decision `LED-D02` must first decide whether any canonical ledger-internal maintenance/repair/migration/audit events are needed and approve their exhaustive schemas, producers, identity/row-key boundary, redaction/failure behavior, bounds, ordering/dedupe/replay/migration, and tests. Until then, no `eventFamily: 'ledger'` registry entry, producer, accepted ref, or persistence branch exists merely because this example is present.
+Exact save replays compare operation identity and payload hash, return duplicate, and can repair a pending marker; conflicting event identity records conflict without replacing established ledger truth. Agent replays compare exact projected event and ordered edges; `created_at` stays owned by first insertion and is excluded from replay comparison. The durable producer row is the retry marker, not a generic replay table or historical accepted capability.
 
-Open owner decision `LED-D03` separately blocks `caused_by` edge extraction until the exact accepted relationship pointer/domain/confidence matrix and non-direct evidence behavior are approved. Endpoint admission proof never supplies causal meaning by itself.
+## Current retry and restart boundaries
 
-Open owner decision `LED-D04` blocks production ledger event/projection/resource/native-ref/edge writes until exact table idempotency/uniqueness keys, atomic boundaries, duplicate/conflict behavior, bounded detached retry/defer semantics, cancellation/shutdown/restart/replay, missing targets, database nonsettlement, terminal fixed diagnostics, and crash/concurrency tests are approved. No inline retry or unbounded queue may be inferred.
+Save ledger append uses a five-attempt SQLite contention cycle. `fact-replay.js` preserves pending admission/projection and requests `resource:refresh_required` when publication or render delivery is unavailable. Startup `reconciliation.js` handles reserved/prepared/succeeded operations, replays eligible pending facts and cleans temporary files. An interrupted attempted replacement remains `outcome_unknown` even if later observed bytes match the intended postimage; this does not invent a success fact. The save recovery scan is separate from the agent scheduler budgets and does not claim a universal bounded background executor.
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily: 'ledger',
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle,
-  ids,
-  actor,
-  provenance: {
-    source: {
-      type,
-      module,
-      path,
-      handler
-    },
-    origin: {
-      type,
-      id
-    },
-    observedBy: {
-      type,
-      module,
-      path,
-      handler
-    },
-    confidence,
-    cause
-  },
-  context,
-  resources: [],
-  redaction,
-  ledgerEvent: {
-    payloadJson,
-    edges: [
-      { type, fromEventId, toEventId, fromEntityType, fromEntityId, toEntityType, toEntityId }
-    ],
-    indexes: []
-  }
-}
-```
+Agent admission has a deterministic 100-source/one-second startup cap, yielded continuation and one delayed retry for retryable transition failures; repeated exhaustion or nonretryable failure suppresses that exact key until restart. Agent ledger work is claimed and charged durably before each cycle: at most three cycles of five immediate SQLite attempts, a 30-second claim lease, +250 ms then +1,000 ms scheduling after the first two contention failures, then terminal `failed`. Semantic mismatch is `conflict`. Transition errors use one delayed retry then exact-key suppression; expired claims consume the charged cycle rather than repeating it. These are inspected implementation bounds, not promised eventual delivery or general plugin queue policy.
 
-`sourceModule` may remain as a database compatibility field, but the canonical schema should expose it as `provenance.source.module`.
+Legacy write failures only warn in the subscriber; there is no durable per-event retry marker on that path. Its shutdown drain is bounded, but the public emitter does not await ledger writes. No live persistence success was exercised for this page.
 
-Edge direction uses `from_*` as the relationship subject or current event and `to_*` as the target. `caused_by` is effect -> cause; `triggered` is triggering event -> triggered work; `versioned_as` is resource mutation -> file version; `compacts` is storm/summary -> compacted events; audit edges flow from audit/review event to target.
+## Approved direction and open schema work
 
-## Connections
+System retains history for audit and recovery by default; exact cleanup/retention remains future policy. The accepted save scope settled its own snapshot/hash/idempotency and persistence contract. The agent overlay separately authorized only its two exact facts into the existing event and resource-edge tables. Neither blanket-blocks these implemented projections on older design decisions nor approves all general ledger work.
 
-- Private ledger query and join projections relate chat turns, exchanges, tools, and resources to ledger row IDs; canonical chat metadata never stores persistence row IDs.
-- Tool calls and resource mutations become graph nodes rather than isolated payloads.
-- File versions point back to resource event IDs and causal chain IDs.
-- Automation runs and UI actions become first-class causes.
-- Audit queries can traverse graph edges instead of relying on time-window guesses.
+General causal edges, ledger-internal events, common-envelope storage, historical proof capabilities, native-reference projections and cross-domain retention/redaction contracts remain open. Broader integrity serialization and migration choices must be decided for that feature; current canonical JSON/hash helpers do not silently approve the whole older design. Historical snapshots are not live editable app data or a universal restore interface.
 
-## Gaps To Close
-
-- The current ledger records only a narrow set of event types.
-- Graph edges are not first-class yet.
-- Indexes are needed for workspace, resource/path, event family/type, thread, turn, tool call, UI action, harness ID/run/event, automation run, trigger run, script run, scheduler run, agent run, audit query, correlation ID, causation ID, root/parent event ID, timestamp range, edge endpoints, `changeStorm.reason` when present, and provider-keyed `nativeRefs` or provider-specific payloads when a harness adapter needs replay or dedupe queries.
-- Domain sensitivity and redaction policy still need detailed detection/retention rules before broad content durability. Storage branches are settled: ordinary safe payloads stay exact with required matching hash and are the only historical-proof-eligible branch; an admitted registered UI failure-safe-core stays exact with null hash but cannot yield `AcceptedLedgerRowRef`; both use `validation_status = valid | valid_with_warnings`. All other missing/failed/thrown redaction uses `validation_status = defensive_fallback` and a ledger-only body with exact code-only `ledger_defensive_fallback`, null hash, no unsafe material, and no historical-proof capability. `loadAcceptedLedgerRowRef` returns no capability for every null-hash row. None affects the source operation.
+See [Ledger Schema](../../004-Ledger_Schema/PAGE.md) for table ownership and [Provenance Model](../PAGE.md) for evidence limits.

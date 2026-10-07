@@ -382,3 +382,104 @@ test('Slice C: deferred screenshot cancels when its workspace and thread owner c
   expect(toast).toBe('Screenshot was not attached because the chat changed.');
   unregisterToastSetter();
 });
+
+test('Slice C: direct screenshot attaches only the path acknowledged for its request ID', async () => {
+  const sent: Array<Record<string, unknown>> = [];
+  const socket = new EventTarget() as WebSocket;
+  Object.assign(socket, {
+    readyState: WebSocket.OPEN,
+    send(payload: string) {
+      const request = JSON.parse(payload) as { requestId: string };
+      sent.push(JSON.parse(payload) as Record<string, unknown>);
+      socket.dispatchEvent(new MessageEvent('message', { data: JSON.stringify({
+        type: 'screenshot:file-captured', requestId: 'unrelated-request', savedPath: '/wrong.png',
+      }) }));
+      socket.dispatchEvent(new MessageEvent('message', { data: JSON.stringify({
+        type: 'screenshot:file-captured', requestId: request.requestId,
+        workspaceId: WORKSPACE_A,
+        savedPath: '/scratch/ai/Test-Machine/Data/Screenshots/fusion-capture.png',
+      }) }));
+    },
+  });
+  const fakeWindow = new EventTarget() as Window & typeof globalThis;
+  Object.assign(fakeWindow, {
+    electronAPI: { capturePage: async () => 'captured-base64' },
+    setTimeout: globalThis.setTimeout,
+    clearTimeout: globalThis.clearTimeout,
+  });
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: fakeWindow });
+  if (!('WebSocket' in globalThis)) {
+    Object.defineProperty(globalThis, 'WebSocket', { configurable: true, value: { OPEN: 1 } });
+  }
+
+  const { usePanelStore } = await import('../src/state/panelStore');
+  const { useChatFileLinkStore } = await import('../src/state/chatFileLinkStore');
+  const { captureAndAttachScreenshot } = await import('../src/screenshots/chatScreenshotCapture');
+  const { registerToastSetter, unregisterToastSetter } = await import('../src/lib/toast');
+  useChatFileLinkStore.setState({ pendingAttachmentsByOwner: {} });
+  usePanelStore.setState({
+    activeWorkspaceId: WORKSPACE_A,
+    currentThreadId: THREAD_A,
+    threads: [],
+    ws: socket,
+  });
+  registerToastSetter(() => {});
+
+  const attachment = await captureAndAttachScreenshot({
+    workspaceId: WORKSPACE_A, threadId: THREAD_A, surface: 'primary',
+  });
+  const pending = useChatFileLinkStore.getState().pendingAttachmentsByOwner[
+    JSON.stringify([WORKSPACE_A, THREAD_A])
+  ];
+
+  expect(sent).toHaveLength(1);
+  expect(sent[0]).toMatchObject({ type: 'screenshot:file-capture', workspaceId: WORKSPACE_A });
+  expect(sent[0].requestId).toEqual(expect.any(String));
+  expect(attachment).toMatchObject({
+    kind: 'file',
+    path: '/scratch/ai/Test-Machine/Data/Screenshots/fusion-capture.png',
+    relativePath: 'Data/Screenshots/fusion-capture.png',
+  });
+  expect(pending.attachments).toEqual([attachment]);
+  expect(Object.keys(useChatFileLinkStore.getState().pendingAttachmentsByOwner)).toEqual([
+    JSON.stringify([WORKSPACE_A, THREAD_A]),
+  ]);
+  unregisterToastSetter();
+});
+
+test('qualified screenshot guards reject arbitrary requested sessions and stale mounts before capture', async () => {
+  let captureCalls = 0;
+  const fakeWindow = new EventTarget() as Window & typeof globalThis;
+  Object.assign(fakeWindow, { electronAPI: { capturePage: async () => { captureCalls += 1; return 'png'; } } });
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: fakeWindow });
+  if (!('WebSocket' in globalThis)) {
+    Object.defineProperty(globalThis, 'WebSocket', { configurable: true, value: { OPEN: 1 } });
+  }
+  const { usePanelStore } = await import('../src/state/panelStore');
+  const { useChatFileLinkStore } = await import('../src/state/chatFileLinkStore');
+  const { captureAndAttachScreenshot } = await import('../src/screenshots/chatScreenshotCapture');
+  useChatFileLinkStore.setState({ pendingAttachmentsByOwner: {} });
+  usePanelStore.setState({
+    activeWorkspaceId: WORKSPACE_A, currentPanel: 'guard-view', currentThreadId: THREAD_B,
+    threadGroupsByWorkspaceAndView: { [WORKSPACE_A]: { 'guard-view': [
+      { threadGroupId: 'guard-group', threadId: THREAD_A, entry: { name: 'Guard' } },
+    ] } },
+    currentThreadGroupIdByWorkspaceAndView: { [WORKSPACE_A]: { 'guard-view': 'guard-group' } },
+    worksurfaceEntries: {}, ws: { readyState: WebSocket.OPEN } as WebSocket,
+  } as never);
+  const owner = { workspaceId: WORKSPACE_A, threadId: THREAD_A, surface: 'primary' as const,
+    selection: { viewId: 'guard-view', threadGroupId: 'guard-group' },
+    mount: { surfaceId: 'guard-surface', selectionScope: 'view' as const, isCurrent: () => true } };
+  for (const invalid of [
+    { ...owner, workspaceId: 'foreign-workspace' },
+    { ...owner, threadId: THREAD_B },
+    { ...owner, selection: { viewId: 'other-view', threadGroupId: 'guard-group' } },
+    { ...owner, selection: { viewId: 'guard-view', threadGroupId: 'other-group' } },
+    { ...owner, mount: { ...owner.mount, isCurrent: () => false } },
+    { ...owner, surface: 'side-tab' as const },
+  ]) {
+    await expect(captureAndAttachScreenshot(invalid)).resolves.toBeNull();
+  }
+  expect(captureCalls).toBe(0);
+  expect(useChatFileLinkStore.getState().pendingAttachmentsByOwner).toEqual({});
+});

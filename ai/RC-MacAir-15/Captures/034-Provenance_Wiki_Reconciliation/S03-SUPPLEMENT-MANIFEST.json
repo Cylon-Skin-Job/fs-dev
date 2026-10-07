@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-19T03:27:09.124575-07:00",
+  "files": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before_sha256": "37dbcb82957f99ffc9b370490db25b8988eba3c74ff6e57bc303269dd4f9cae9",
+      "after_sha256": "814685413d701b57a9d61d8240bdb501e5b50bf5b545ee8efa5b86b9611a3aa9",
+      "change": "append bounded S03 supplement"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before_sha256": "ed668f16c1774b1cea23208a30094b2c2a3dde3acb6d499db98c026ff69db318",
+      "after_sha256": "0ec53b8cbd4b84b1acc80bd7702b136121466f6afa5da52837bafb3f2142f448",
+      "change": "append bounded S03 supplement"
+    }
+  ]
+}

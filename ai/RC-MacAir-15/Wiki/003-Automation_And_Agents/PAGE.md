@@ -2,33 +2,16 @@
 name: Automation And Agents
 description: Navigation map for background agents, ticket routing, orchestration, run auditing, and automation loops.
 metadata:
-  incoming-edges:
-    - Wiki Guide
-  outgoing-edges:
-    - Agent Model
-    - Ticketing
-    - Orchestration
-    - Run Auditing
-    - Background Agents
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:12:31Z"
 ---
 
-Use this section for background agents, ticket routing, orchestration, run auditing, and future automation loops.
+Use this section for current trigger actions, ticket authoring, run evidence and future worker orchestration. These subjects have separate current and proposed behavior.
 
-## Planned Children
+## Subject articles
 
-- `001-Agent_Model/` - agent ownership, worker responsibilities, and planner/executor boundaries.
-- `002-Ticketing/` - ticket routing intent and current implementation gaps.
-- `003-Orchestration/` - planned orchestration loops; do not present future concepts as implemented behavior.
-- `004-Run_Auditing/` - run/audit records and review flows.
-- `005-Background_Agents/` - background worker behavior and task execution notes.
+- [Ticketing](002-Ticketing/PAGE.md) owns visible board data, authoring and creation/dispatch gaps.
+- [Run Auditing](004-Run_Auditing/PAGE.md) owns the legacy run record and evidence limits.
+- [Background Agents](005-Background_Agents/PAGE.md) owns trigger loading, actions and the unimplemented worker-launch boundary.
 
-## Migration Sources
-
-- [Project > Background Agents](../001-Project/013-Background_Agents/PAGE.md)
-- [Project > Ticket Routing](../001-Project/022-Ticket_Routing/PAGE.md)
-- [Project > Run Auditing](../001-Project/019-Run_Auditing/PAGE.md)
-
-Ticketing and orchestration are partial/planned areas. Mark incomplete backend behavior plainly when content moves here.
+Agent model and broader orchestration remain planned subjects. Current trigger registration does not by itself grant plugin permission or start an autonomous worker. Consult [Automation Run Provenance](../010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md) for the separate governed direction.

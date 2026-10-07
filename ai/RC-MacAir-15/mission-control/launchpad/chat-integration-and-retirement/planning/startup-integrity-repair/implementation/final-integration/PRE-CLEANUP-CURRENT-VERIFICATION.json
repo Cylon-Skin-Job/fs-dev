@@ -1,0 +1,105 @@
+{
+  "at": "2026-10-06T09:11:50.896564+00:00",
+  "scope": "manager current evidence before final raw inspection/cleanup",
+  "candidateSha256": "0665b45455361aea5854d16ce3d6fcd3cad6d89035b99358c7ecef5b6a570b83",
+  "comparisons": 376,
+  "allMatch": true,
+  "mismatches": [],
+  "negativeArchiveFilesVerified": 22,
+  "runtimeFilesVerified": 34,
+  "resourceStates": [
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-oracle-eakswdjf",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-orchestrator-uxkmt9_9",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Dfr4Nf",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Xrfzm4",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-nrBthZ",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-9ZQNAx",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-ARG1mv",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-IBwCQH",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-TTGc0x",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-Ub1QMG",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-VT9S1w",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-ZNk1t9",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS",
+      "recordedExists": false,
+      "currentExists": false
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c",
+      "recordedExists": true,
+      "currentExists": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-opm2tF",
+      "recordedExists": true,
+      "currentExists": true
+    }
+  ],
+  "rawResourcesPreserved": true,
+  "ownerAcceptance": "pending",
+  "reviewerVerdict": "not inferred"
+}

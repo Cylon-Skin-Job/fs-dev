@@ -26,6 +26,8 @@ export interface ChatSurfaceComponentProps extends ChatSurfaceProps {
   panel: string;
   /** Outer shell content-collapse toggle; shell state is never chat identity. */
   onToggleContent?: () => void;
+  /** Component descriptors own an exact session independently of rail selection. */
+  screenshotSelection?: 'view' | 'session';
 }
 
 export const ChatSurface = memo(function ChatSurface({
@@ -43,9 +45,8 @@ export const ChatSurface = memo(function ChatSurface({
   panel,
   onToggleThreads,
   onToggleContent,
+  screenshotSelection = 'view',
 }: ChatSurfaceComponentProps) {
-  void threadGroupId;
-
   const domId = chatSurfaceDomId(surfaceId);
   const sectionClass = `rv-chat-area rv-chat-area--project${shell.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${!shell.hasThread ? ' rv-chat-area--no-thread' : ''}`;
 
@@ -83,6 +84,10 @@ export const ChatSurface = memo(function ChatSurface({
       />
       <ConnectedChatComposer
         workspaceId={workspaceId}
+        viewId={viewId}
+        threadGroupId={threadGroupId}
+        host={host}
+        screenshotSelection={screenshotSelection}
         threadId={threadId}
         surfaceId={surfaceId}
         panel={panel}

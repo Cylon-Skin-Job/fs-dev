@@ -1,65 +1,38 @@
 ---
 name: Wiki Viewer UI Context
-description: Normative command-time context and resource mapping for the first Wiki Viewer UI-action adapter.
+description: Current Wiki navigation and attachment owners, with the future first-pair UI-action adapter boundary.
 metadata:
-  incoming-edges:
-    - UI Action Provenance Module
-  outgoing-edges:
-    - UI Action And Context Provenance Schema
   source-files:
-    - fusion-studio-client/src/state/panelStore.ts
     - fusion-studio-client/src/state/wikiStore.ts
+    - fusion-studio-client/src/components/wiki/PageViewer.tsx
+    - fusion-studio-client/src/components/wiki/TopicList.tsx
     - fusion-studio-client/src/components/SendToChatButton.tsx
-    - fusion-studio-client/src/components/chat/useChatArea.ts
-    - fusion-studio-client/src/state/chatFileLinkStore.ts
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/resource-path.ts
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+    - fusion-studio-client/src/lib/save-action-context.ts
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-Use this page when implementing or reviewing Wiki Viewer UI-action provenance.
+Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. Wiki navigation and resource attachment staging exist; a Wiki `ui.action` context adapter does not. This page preserves the chosen first-pair direction without claiming the proposed prompt schema is implemented. No runtime or product test was run.
 
-## Current Scope
+## Current Wiki path
 
-The owner approved Wiki Viewer for the first adapter pair. The current Wiki surface has no direct durable file create/save/move/rename/delete command. Its first migrated durable command is `chat.send_with_resource` when Wiki Viewer is the active panel and prompt send consumes at least one valid pending resource attachment, regardless of which panel staged it.
+`wikiStore` owns selected/viewed paths, including `viewedPagePath`. The page and topic surfaces pass a panel-relative target to their file actions or `SendToChatButton`. `createResourceChatAttachment` resolves that target using the server-hydrated panel content root; the button dispatches a Chat action with insertion delivery. The Chat action controller stages the attachment for the addressed session; `useChatSessionActions` later snapshots pending resources for the ordinary prompt path. No general UI-action fact is created by this sequence.
 
-`SendToChatButton` attachment staging and Wiki navigation are non-mutating. They do not emit `ui.action` events.
+Navigation/selection and attachment staging are not themselves durable mutation provenance. The inspected Wiki reader surfaces do not expose direct file create/save/move/rename/delete commands. The generic mediated-save reader can carry workspace/view identity for a registered initiating panel, but its tab/component detail comes only from a matching connected File owner. It does not read `wikiStore.viewedPagePath` or supply a Wiki-specific save/prompt adapter.
 
-## Context Mapping
+## First-pair design direction
 
-The adapter is selected only when `usePanelStore.getState().currentPanel === 'wiki-viewer'` at actual prompt-send time.
+Wiki and File Viewer remain the selected first pair for future prompt-with-resource provenance. Capture active context at actual send separately from attachment subjects: a user may stage a topic and navigate to another page, or stage a resource in a different panel. Neither subject origin nor a staged path is proof of the current active page.
 
-| Output | Source / rule |
+| Candidate input | Design boundary, not current adapter output |
 |---|---|
-| Canonical `ids.workspaceId` | Server coordinator `WorkspaceCommandContextRef` captured for the accepted prompt; not session cache or renderer input. Missing provenance metadata does not block chat. |
-| `context.viewId` | Literal `wiki-viewer`. |
-| `context.panelId` | Literal `wiki-viewer`. |
-| `context.route` | `null`; Wiki has no authoritative route store. |
-| `context.activeTabId` | `null`; Wiki navigation history is not a tab identity. |
-| `context.activeDocumentPath` | Renderer tentatively converts `useWikiStore.getState().viewedPagePath` through cached roots; server preserves it only after private workspace-token binding and re-resolution under the coordinator command root; null/omitted on failure. |
-| `context.activeResourcePath` | Same server-verified canonical workspace-relative path as `activeDocumentPath`. |
-| Canonical `context.selectedResourceId` | Server-derived only from an accepted resource reference; absent/null for this adapter. `selectedPath` is not read during send capture and is not an ID. |
+| Active Wiki view/panel | Read the actual owning registered view at send; do not substitute another surface's identity. |
+| Viewed page | `viewedPagePath` is the existing selector to evaluate; resolve any reported path beneath the server's authoritative workspace/content root. |
+| Tab, route, selected resource identity | Do not invent values from navigation history, React keys, path strings or attachment IDs. Missing fields stay absent/unknown under the future schema. |
+| Attachment subjects | Keep separately validated operational attachments and their order unchanged when optional provenance omits unavailable detail. |
 
-The first adapter reads only `useWikiStore.getState().viewedPagePath`. It does not inspect `selectedPath` for envelope fields or diagnostics, avoiding a second selector and its failure surface.
+Before implementation, confirm selectors against the then-current view/tab architecture and approve exact schema, admission, sensitive-path handling, limits and failure semantics. The earlier literal view IDs, route-null table and token-bound resource mappings are design proposals, not a production ABI. Optional provenance cannot become a second prompt validator or retry a send whose transport outcome is unknown.
 
-## Resource Mapping
-
-Each valid Wiki-origin attachment becomes a `resources[]` entry with:
-
-- `role: 'subject'`.
-- `resourceType: 'wiki'`.
-- Renderer tentatively proves `wikiPanelRoot + relativePath === absolutePath` and cached-project containment. The server requires the private workspace token to match the coordinator command context, re-resolves the Wiki root/operational target, and derives the canonical path under the authoritative command root. For example, panel-relative `010-X/PAGE.md` may become `ai/<machine>/Wiki/010-X/PAGE.md`; the raw/tentative renderer value is never copied as canonical path. A stale A token/root while B is current omits the subject without affecting the prompt.
-
-The attachment subject may differ from `activeDocumentPath` when the user stages a child/topic link or changes Wiki pages before sending. Preserve both facts; do not replace command-time active context with the subject path.
-
-## Migration Boundary
-
-Emit the first-pair envelope when the active panel is supported and at least one pending resource attachment is valid. The generic resource-ref helper also preserves valid subjects originating in other panels; their origin does not replace the active Wiki context. Otherwise keep the existing prompt path, record a development diagnostic, and never block ordinary prompt sending because provenance metadata is incomplete.
-
-## Required Evidence
-
-- Client build passes.
-- A Wiki attachment can be staged without emitting `ui.action`.
-- Actual prompt send emits one accepted `ui.action` with `command: 'chat.send_with_resource'`.
-- Active Wiki context and attachment subject resource are both preserved.
-- With Wiki active, a provenance-valid attachment staged by another panel still emits Wiki active context and preserves that cross-panel subject; a mixed provenance-valid/invalid list preserves every valid canonical subject and diagnoses/omits invalid entries only from provenance. The operational prompt attachment list and order remain unchanged.
-- Missing context or enrichment degrades honestly without blocking prompt acceptance or producing falsely precise provenance.
+The [UI Action Provenance Module](../PAGE.md) owns shared direction; [UI Action And Context Provenance](../../003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md) owns the implemented save carrier. Prompt acceptance, session/group/surface identity and attachment lifecycle remain with [Chat System](../../../007-Chat_System/000-Overview_and_References/PAGE.md). A future adapter must verify staging, send-time capture, cross-panel subjects and honest missing context through those real owners before claiming coverage.

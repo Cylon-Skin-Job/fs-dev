@@ -1,0 +1,11 @@
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-avvmWh","port":51427,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-1GA0s0","port":51430,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-p4dT1o","port":51431,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+(node:47516) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Test Suites: 4 passed, 4 total
+Tests:       33 passed, 33 total
+Snapshots:   0 total
+Time:        6.732 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js", "test/runtime/isolated-provenance-runtime.test.js", "test/watch/watcher-retirement.test.js", "test/event-registry/startup-integration.test.js".

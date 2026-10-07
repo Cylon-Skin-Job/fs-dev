@@ -2,15 +2,8 @@
 name: Fusion Home Decisions
 description: Durable decisions for the Fusion Home domain - the views-vs-editor-surfaces split, table resize/columns-only, colors via injected stylesheet, the override cascade, and sibling frontmatter.
 metadata:
-  incoming-edges:
-    - Fusion Home
-  outgoing-edges:
-    - Documents
-    - Tables
-    - Lessons
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 Bite-size durable decisions for the Fusion Home domain. Details live in
@@ -19,10 +12,7 @@ the traps behind them live in [Lessons](../001-Lessons/PAGE.md).
 
 ## Structure
 
-- **Four actual views** (Office, Calendar, ToDo, Email) plus **editor surfaces
-  split into their own top-level articles** (Documents, Sheets, Pdfs, Artifacts)
-  because the Office view does a lot. Each editor surface is built within the
-  Office view but gets its own article and sub-articles.
+- **Separate view subjects from editor surfaces.** Office, Calendar, ToDo and Email are documentation subjects, not a claim of four completed or co-installed apps. Documents, Sheets, PDFs and Artifacts have separate articles so editor concerns can grow independently. Read each owner for implemented behavior versus planning placeholders.
 - **Folder name = sidebar label; frontmatter `name` = descriptive article title.**
   Any frontmatter value containing a colon must be quoted (strict YAML).
 

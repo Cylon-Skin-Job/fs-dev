@@ -1,0 +1,376 @@
+{
+  "at": "2026-10-06T08:28:17.924828+00:00",
+  "inventoryScope": "External top-level R3/control roots identified by R3 JSON plus parent guarded raw/report references; current marker nonce projections only, no runtime content read/deletion",
+  "roots": [
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n",
+      "exists": true,
+      "purpose": "Distinct accepted R1 pristine or R2 identity-only eleven-file negative control; preserve exact counterfactual bytes",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/.chat-ar-preimage-owner.json",
+          "nonce": "cdb2d006-35ae-4123-9145-35ebbe3b301f",
+          "sha256": "e6db75f900dd356a33b43958b1db865f504eec86b2d032339ec6b6cf789b6fc2",
+          "format": "json nonce projection"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/preserved-negative-control-check.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-oracle-eakswdjf",
+      "exists": true,
+      "purpose": "Independent synthetic DOM oracle fixture and safe result; no owner UI",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-oracle-eakswdjf/.chat-ar-r3-owned",
+          "nonce": "0dfcf1e9-b072-4fe0-8851-c92744bb52b2",
+          "sha256": "8c3d28544bb0db3f2cfd239bee292492c45a2b555fd40de608f75a95e104f4c1",
+          "format": "UUID text"
+        },
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-oracle-eakswdjf/.orchestrator-owner.json",
+          "nonce": "0dfcf1e9-b072-4fe0-8851-c92744bb52b2",
+          "sha256": "11826e9c502fe9f5647bc975b6bfb900fb7cfa044394f9df1099cc35d1fe54e0",
+          "format": "json nonce projection"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-dom-oracle-v3-command.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-orchestrator-uxkmt9_9",
+      "exists": true,
+      "purpose": "Independent orchestrator command/log/nonce-owned guarded proof root",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-orchestrator-uxkmt9_9/.chat-ar-orchestrator-run-owned.json",
+          "nonce": "a36215a0-3692-45fe-923e-a16ee3c552b5",
+          "sha256": "4862ed960e32254741f1c2523d0420833ad6fe1bcba1b99023224903d946c11d",
+          "format": "json nonce projection"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-CURRENT-RECEIPT.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-RECEIPT.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+      "exists": true,
+      "purpose": "R3 raw checks/read-only evidence collectors/native probes/public profile1 conservative preparation and profile2 sole registered-selected scratch runtime/DB/history; app and collector stopped",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/.chat-ar-r3-owned",
+          "nonce": "f090d27f-fb16-4ff4-9957-a0119380a957",
+          "sha256": "378011acc596d2ae9421e35a28484099eb3dba23bd420b5ca8bae6e04a40341f",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ACTUAL-MANUAL-READBACK-INITIAL-20261006T072418Z.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CHECKS.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-ACTUAL-READBACK-01.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-PUBLIC-READY.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/READINESS-LIVE-CHECK-20261006T070347Z.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z/SOURCE-AND-OBSERVER-RECEIPT.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z/public-actual-readback.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z/public-actual-shapes-v2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z/public-observer-ready-v4.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/actual-runtime-20261006T073145Z/public-observer-v4-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-result.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/OLD-V3-TERMINAL.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/READINESS-FINGERPRINTS-v4.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/REFRESH-BOUNDARY.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/SOURCE-BUILD-REVALIDATION.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/public-baseline-v4.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/public-observer-ready-v4.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/public-observer-v4-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-baseline-current.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-baseline.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-ready-v2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-ready-v3.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-ready.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-v2-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-observer-v3-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-preparation-2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-process-before-2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/public-restart-verified.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/restart-environment-names.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ADOPTION-RECEIPT.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-readback.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated-v2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes-v2.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-ready-v4.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-v4-process.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-after.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-before.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ",
+      "exists": true,
+      "purpose": "Guarded launcher retained safe audits/protected receipts/scenario artifact hashes or isolated New Chat output; dated/current variants preserved",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ/.fusion-provenance-test-owned",
+          "nonce": "5af43329-add0-4eb0-a5a8-f0dff56b6d1a",
+          "sha256": "68f3b135a4c287bba0bacebc65a0319fdc2e018ae2fa02a72a7ce7321e80c78c",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-RECEIPT.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Dfr4Nf",
+      "exists": true,
+      "purpose": "Guarded launcher retained safe audits/protected receipts/scenario artifact hashes or isolated New Chat output; dated/current variants preserved",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Dfr4Nf/.fusion-provenance-test-owned",
+          "nonce": "26bffcce-79fa-4ff9-b09a-f36261e9988b",
+          "sha256": "deb7d8022b21ed0960a3b89ce00e6e73690298232c97079dcccefd0c144adbe3",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CHECKS.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Xrfzm4",
+      "exists": true,
+      "purpose": "Guarded launcher retained safe audits/protected receipts/scenario artifact hashes or isolated New Chat output; dated/current variants preserved",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Xrfzm4/.fusion-provenance-test-owned",
+          "nonce": "0176fd45-e9bd-4771-8d30-938a99cfdeee",
+          "sha256": "e1e1edc22d01fcebdfa84352286d7f971cc2e3c57246f4e75e1cc6155bf67fce",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-CURRENT-RECEIPT.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-nrBthZ",
+      "exists": true,
+      "purpose": "Guarded launcher retained safe audits/protected receipts/scenario artifact hashes or isolated New Chat output; dated/current variants preserved",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-nrBthZ/.fusion-provenance-test-owned",
+          "nonce": "36ead23e-d85e-4a4f-a564-e171db9ccd09",
+          "sha256": "343134a0b00a0131832983ce1b1d95fa3ae0e6faf6c420aabcbad239de847135",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-result.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-9ZQNAx",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-result.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-safe-evidence/fact-publish-failure/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-safe-evidence/fact-publish-failure/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-ARG1mv",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-safe-evidence/fact-publish-failure/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-safe-evidence/fact-publish-failure/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-IBwCQH",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-result.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-safe-evidence/normal/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-current-safe-evidence/normal/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-TTGc0x",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-safe-evidence/normal/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-safe-evidence/normal/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-Ub1QMG",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-current-safe-evidence/normal/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-current-safe-evidence/normal/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-VT9S1w",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-safe-evidence/normal/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-safe-evidence/normal/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-ZNk1t9",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-safe-evidence/fact-publish-failure/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-safe-evidence/fact-publish-failure/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS",
+      "exists": false,
+      "purpose": "Guarded isolated production-server scenario root; successful marker cleanup was expected; existence recorded without removal",
+      "markers": [],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-current-safe-evidence/fact-publish-failure/app-data/isolated-provenance-audit.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-current-safe-evidence/fact-publish-failure/scenario-receipt.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c",
+      "exists": true,
+      "purpose": "Distinct accepted R1 pristine or R2 identity-only eleven-file negative control; preserve exact counterfactual bytes",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/.chat-ar-r2-owner.json",
+          "nonce": "3847d4ec-ccb9-4e01-9679-65e3d92d5803",
+          "sha256": "f7af11afeed45866518baef0482fa982310edbe47e9385433919926893f9643a",
+          "format": "json nonce projection"
+        },
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/.chat-ar-preimage-owner.json",
+          "nonce": "cdb2d006-35ae-4123-9145-35ebbe3b301f",
+          "sha256": "e6db75f900dd356a33b43958b1db865f504eec86b2d032339ec6b6cf789b6fc2",
+          "format": "json nonce projection"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/preserved-negative-control-check.json"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with sealed safe evidence retained; reverify exact recorded marker/nonce, process absence and scope; never delete if ownership is uncertain",
+      "cleanedByThisContinuation": false
+    },
+    {
+      "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-opm2tF",
+      "exists": true,
+      "purpose": "Dated builder guarded retained safe audits/protected receipts/artifact hashes before corrected helper",
+      "markers": [
+        {
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-opm2tF/.fusion-provenance-test-owned",
+          "nonce": "61e398be-e384-46c2-a025-d1f9ae1fcda8",
+          "sha256": "d307a39f00e5a6003c92673c97ef64bb50b7a9790ff64db056bdf607efbd943b",
+          "format": "UUID text"
+        }
+      ],
+      "sourceReferences": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-launcher.log"
+      ],
+      "cleanupOwner": "parent orchestrator after actual final review, not this builder",
+      "release": "after final review with safe sealed evidence retained; reverify exact marker/nonce and process absence/scope; no deletion with uncertain ownership",
+      "cleanedByThisContinuation": false
+    }
+  ],
+  "publicSubpaths": [
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile",
+      "purpose": "earlier conservative seed-identity preparation failure preserved"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+      "purpose": "actual ordinary default public app profile, durable three exchanges; stopped"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch",
+      "purpose": "earlier prepared scratch candidate preserved"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+      "purpose": "sole actually registered-selected scratch machine subtree/views/capsules/state; actual public runtime workspace"
+    }
+  ],
+  "parentCoordinatedFinalCleanupRequired": true,
+  "noDeletionOrAppOperation": true
+}

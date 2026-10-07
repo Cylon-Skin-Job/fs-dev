@@ -1,0 +1,12 @@
+{
+  "pid": 49427,
+  "startedAt": "2026-10-06T07:04:53.716286+00:00",
+  "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+  "script": "observe-public-manual-v4.mjs",
+  "output": "public-manual-receipts-v4.jsonl",
+  "ready": "public-observer-ready-v4.json",
+  "stopMarker": ".stop-public-observer-v4",
+  "readOnly": true,
+  "oracleVersion": 3,
+  "collectorVersion": 4
+}

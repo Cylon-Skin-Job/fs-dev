@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T07:48:17.159985+00:00",
+  "status": "RUNTIME_EVIDENCE_COMPLETE_GATE_HELD",
+  "slice": "R3",
+  "builder": "/root/startup_integrity_repair_orchestrator/r3_builder",
+  "manager": "/root/startup_integrity_repair_orchestrator",
+  "controllerHome": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memoryCwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "dirty": true,
+  "permissions": {
+    "filesystem": "unrestricted",
+    "approval": "never",
+    "override": null
+  },
+  "approvedCandidateId": "sha256:29749ceb65dab37535a047f64cbd57aa1ddd6f149191c1a4f6ae6d1bf31cf6e4",
+  "historicalManifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+    "sha256": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+    "preserved": true
+  },
+  "rawCurrentSourceBuildVerification": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/CURRENT-SOURCE-BUILD-REVALIDATION.json",
+    "sha256": "f2c7ed7fc80e937b8e20f4fa0e31c2edaaedf5b46f307865c7e4167092cf3e92",
+    "comparisons": 264,
+    "allMatch": true
+  },
+  "runtimeCriterionMap": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+      "name": "ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+      "sha256": "ee5a5a7a0727a212135dcc8833d494977df084918814f239617dc4443fcadcfc",
+      "bytes": 33463
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ADOPTION-RECEIPT.json",
+      "name": "ADOPTION-RECEIPT.json",
+      "sha256": "3f4a94bb93f9c9824a4725b536baa0292527fb9c55cae7847b895ed72cedee6e",
+      "bytes": 9465
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/CURRENT-SOURCE-BUILD-REVALIDATION.json",
+      "name": "CURRENT-SOURCE-BUILD-REVALIDATION.json",
+      "sha256": "f2c7ed7fc80e937b8e20f4fa0e31c2edaaedf5b46f307865c7e4167092cf3e92",
+      "bytes": 98843
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "name": "FINAL-RUNTIME-HANDOFF.md",
+      "sha256": "f75449f3766023179a18cb9b63c17111f1b81ad20511a0302663a9f69be65080",
+      "bytes": 18453
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison-tests.log",
+      "name": "history-readback-comparison-tests.log",
+      "sha256": "8a2d3eac4fa898c442751920b9226582dee51c535d383faa939dc35911f56e8b",
+      "bytes": 612
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison.mjs",
+      "name": "history-readback-comparison.mjs",
+      "sha256": "d4738d01c6766bd434f89b6efc5283b7ea947602cd633c371811a5e54d7f1972",
+      "bytes": 2005
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/history-readback-comparison.test.mjs",
+      "name": "history-readback-comparison.test.mjs",
+      "sha256": "21e5d0a1372d526146e39f1f4b821818b9ffc3225b28f8b68796ab95ede90cfd",
+      "bytes": 2194
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/observe-public-manual-v4.mjs",
+      "name": "observe-public-manual-v4.mjs",
+      "sha256": "5aacb3af8aa2d65a2b685bcc89d24552ba1cd81ffd9892f429b3688bdf7c93e6",
+      "bytes": 8476
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ordered-history-oracle-current.log",
+      "name": "ordered-history-oracle-current.log",
+      "sha256": "ce3a3e3341c5260db2dd68b1bc5e1e545670a64945dca1665d88d2b6ac635f99",
+      "bytes": 619
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-native-windows.json",
+      "name": "public-actual-native-windows.json",
+      "sha256": "6a78bd05bc2738c8d708926451a39f07ce6c367551cff60b82da95b1e19f888c",
+      "bytes": 2093
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-readback.json",
+      "name": "public-actual-readback.json",
+      "sha256": "8b1e214c8fd219df86fd4fcaa72c2622c91d4f0795c759fea84c0b6440a660f1",
+      "bytes": 13908
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-readback.log",
+      "name": "public-actual-readback.log",
+      "sha256": "7c3c6eeb27e3d8f5ead28f7119c8ec024641743fafbda493a23351bb7da24906",
+      "bytes": 10546
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated-v2.json",
+      "name": "public-actual-reopen-validated-v2.json",
+      "sha256": "141a516eb324eefc7cc406f1102187409330c397afed7c476e5099d7645a8520",
+      "bytes": 22187
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated-v2.log",
+      "name": "public-actual-reopen-validated-v2.log",
+      "sha256": "a3cf3fb5f0490fa3795cbce0b503ed2a414406fd81d8e3f4c432d8beec880447",
+      "bytes": 16641
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen-validated.log",
+      "name": "public-actual-reopen-validated.log",
+      "sha256": "478710b4c66461d6f90f161dcf8995490d941aff10bb1822097eab073b487d32",
+      "bytes": 1194
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen.json",
+      "name": "public-actual-reopen.json",
+      "sha256": "80d3dcf5547a36b3aaea3770d9850bf7bdab02d3822effffe22f8f0edb8f3231",
+      "bytes": 20942
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-reopen.log",
+      "name": "public-actual-reopen.log",
+      "sha256": "896bcd569967d3845b12084492ba0f6ac0962c9aeb2189585463f80023c16054",
+      "bytes": 15692
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes-v2.json",
+      "name": "public-actual-shapes-v2.json",
+      "sha256": "38cdc076bf032bd9cf879db5020cf29cf0711ee46c4094be305a23df96313eeb",
+      "bytes": 9994
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes-v2.log",
+      "name": "public-actual-shapes-v2.log",
+      "sha256": "712cfb442bb171dc30761a109119cb49cbf057a36301c2680e2afe4c82a7a8c0",
+      "bytes": 7419
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-actual-shapes.log",
+      "name": "public-actual-shapes.log",
+      "sha256": "e961973bd1f6e58dc56f89b1bd78a78cfdc6d46fd4e77f077c75198db7fbfa58",
+      "bytes": 617
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-manual-receipts-v4.jsonl",
+      "name": "public-manual-receipts-v4.jsonl",
+      "sha256": "7a7dee2e504e4792d81234f9b7d37a69a9f56eec5eec97cf1b991029ac6c81d5",
+      "bytes": 91462
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-ready-v4.json",
+      "name": "public-observer-ready-v4.json",
+      "sha256": "becc1fd9acbcd414f05e8d0b3b7017bfa8d505b9ba5e9f1c579e813854b50d3c",
+      "bytes": 2856
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-observer-v4-process.json",
+      "name": "public-observer-v4-process.json",
+      "sha256": "540a8fc632db7a0cdfb3bd7caacf5c719be7b8742985b521b9315f19b935930a",
+      "bytes": 412
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-after.json",
+      "name": "public-scratch-stop-after.json",
+      "sha256": "d8f3c62c9fb1e7299d6c6e5e6e3a2b35b0bea3e80b88d3c3184605b637a7426c",
+      "bytes": 11487
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop-before.json",
+      "name": "public-scratch-stop-before.json",
+      "sha256": "e0db772ec46fc1923b800b5ff90fe62d9587987b92616648afd5d9b9a1acfb95",
+      "bytes": 7844
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-stop.log",
+      "name": "public-scratch-stop.log",
+      "sha256": "1fa40e98fd8fab035e95054211434e85f6347393add9f49b3764b22b6991662d",
+      "bytes": 8872
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/public-scratch-windows-after-stop.json",
+      "name": "public-scratch-windows-after-stop.json",
+      "sha256": "eb23d3a66f8bd6a246387f18ade3fdb5b914ccd4d7c115df548e18f524b808f4",
+      "bytes": 67
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-readback.mjs",
+      "name": "read-public-actual-readback.mjs",
+      "sha256": "e5a126e2e0c8932b93f2a4bf322ababa6284c6cd2e43f48fc1de4c3074bdde30",
+      "bytes": 7826
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen-validated-v2.mjs",
+      "name": "read-public-actual-reopen-validated-v2.mjs",
+      "sha256": "e62aca78d0322616231ceb268247e5db2837efdf92c32d74980de0b23c961807",
+      "bytes": 7379
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen-validated.mjs",
+      "name": "read-public-actual-reopen-validated.mjs",
+      "sha256": "072bdd75d38f45bb6226a12fcf936be39d3ddf457a4af002a65a373d0d6d2904",
+      "bytes": 7378
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-reopen.mjs",
+      "name": "read-public-actual-reopen.mjs",
+      "sha256": "6b47a657bdb5cdec3187e7093c4fe15001b193f009e62d8cfce83939c84f7b67",
+      "bytes": 8352
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-shapes-v2.mjs",
+      "name": "read-public-actual-shapes-v2.mjs",
+      "sha256": "ca6ded9dfdb5a4b98899464e6477b111b6b5ec8aefe75208364204ba277dbc58",
+      "bytes": 6653
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/read-public-actual-shapes.mjs",
+      "name": "read-public-actual-shapes.mjs",
+      "sha256": "11a2dd68bdaab3c5bdcce21b70ccd00ab9d4db4aa9c10d38f67627bbbeeabefa",
+      "bytes": 6642
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/stop-owned-public-scratch.mjs",
+      "name": "stop-owned-public-scratch.mjs",
+      "sha256": "8b24cc057230ac2ecbe3eaeee614f281938eb6a960579ba8ceb30e23d972e21f",
+      "bytes": 7366
+    }
+  ],
+  "affectedCheck": {
+    "command": "node --test history-readback-comparison.test.mjs",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z",
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ordered-history-oracle-current.log"
+  },
+  "productWikiOrOriginalRecordsChangedByRuntimeContinuation": [],
+  "deviations": {
+    "R3-D08": "manager accepted; distinct additional ordinary prompts/turns/exchanges retained",
+    "R3-D09": "manager accepted; source-backed content/ordered-row/whitespace/owner-clock projection corrections"
+  },
+  "reviewer": {
+    "dispatched": false,
+    "reason": "whole-R3 builder gate waits necessary original adoption evidence; no partial review before successor question",
+    "lifecycle": "prior children terminal; no current reviewer; close_agent unavailable"
+  },
+  "unmetGates": [
+    "original S3/S4/ledger adoption by original owner or acknowledged successor",
+    "fresh whole-R3 builder review",
+    "fresh orchestrator slice acceptance",
+    "fresh complete repair+original integration",
+    "owner acceptance"
+  ],
+  "scratchShutdown": {
+    "at": "2026-10-06T07:39:25.338Z",
+    "exitCode": 0,
+    "ownedProcessesAndListenersAbsent": true,
+    "protectedUnchanged": true,
+    "olderUnchanged": true,
+    "scratchDurableUnchanged": true,
+    "profileWorkspaceMarkerAndEvidenceRetained": true
+  },
+  "observerTerminal": {
+    "pid": 49427,
+    "at": "2026-10-06T07:39:13.033Z",
+    "reason": "explicit-owned-stop-marker"
+  },
+  "noMoreOwnerUIActionRequested": true,
+  "noWholeR3CleanOrAcceptanceClaim": true
+}

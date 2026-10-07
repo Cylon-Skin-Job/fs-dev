@@ -1,0 +1,58 @@
+---
+name: Platform And Plugin Decisions
+description: Settled composition and authority boundaries, the interpretations they replace, and open implementation choices with their decision gates.
+metadata:
+  source-files: []
+  last-modified: "2026-09-23T12:54:40Z"
+---
+
+## Approved direction
+
+These are product decisions. Their presence here does not mean that the corresponding capability has shipped. Current code evidence is kept separately in [Platform Boundaries](../../001-Platform_Boundaries/PAGE.md#current-source-inspected-foundation) and the owning technical articles.
+
+| Decision | Meaning |
+|---|---|
+| PP-D01 — Explain status honestly | Keep current source-inspected facts, approved intended behavior and unresolved work distinct. Documentation of a target does not implement it. |
+| PP-D02 — Shell owns containers | Tabs, drawers and popup/window surfaces belong to the platform shell, including navigation, focus and container lifecycle. Their content has a separate owner. |
+| PP-D03 — Services and UI have different jobs | Server-owned platform services control validation, data access, persistence and actions. Client components render UI. Platform ownership does not move every UI component onto the server. |
+| PP-D04 — A useful library can grow | Standard presentation components ship as a useful library, without requiring a separately installed plugin for every button or field. Plugins can package compositions and contribute reusable specialized presentation through a defined host contract. |
+| PP-D05 — Configure, compose, then implement | First configure standard pieces, then compose them declaratively, then add specialized executable components in protected plugins when needed. Editable instance configuration cannot create executable authority. |
+| PP-D06 — Keep canonical file ownership | The shell, canonical file surface and file-type registry remain platform-owned. A collection may open that surface in the current tab with a return route or in another tab. Selection, filtering and navigation belong to the collection; presentation/editing belong to the file surface; save/history belong to platform services. Do not introduce an alternate save implementation. |
+| PP-D07 — Provision from protected packages | A view plugin contains protected implementation, server-interpreted contributions and a template. The server copies template payload into a separate editable instance, binds it to the installed plugin and initializes configuration/state. Workspace plugins select view dependencies and instances; their composition can be customized. |
+| PP-D08 — Keep local agent resources editable | Templates carry persona, AGENTS.md, relevant skills and, where applicable, workflows and sub-agent definitions. Copied instances are agent-editable outside System. Their exact destination remains open; editing local instructions does not modify protected plugin powers. Plugin edits use a deliberate user-mediated route. |
+| PP-D09 — Orient the agent locally | The intended working directory is the view-instance folder, with project-root orientation and authorized project-wide working access subject to protected System/plugin boundaries. Own persona and AGENTS enter harness context; own skills are available through the harness, with bodies read when needed. Other views' instructions and skills are deliberately read when requested, not eagerly injected. Reading them does not rebind identity, change the working directory or grant capabilities. |
+| PP-D10 — Support custom regions | Custom iframes remain an escape hatch. The hybrid target places standard host pieces beside a custom region and permits narrow platform-operation requests. A separate UI library running inside the iframe is optional, deferred work. |
+| PP-D11 — Preserve data and fact owners | Application files and application-owned SQLite remain separate from System storage. Authorized commands/adapters execute mutations; provenance records actual outcomes; the bus distributes facts. A logged tool call does not prove a successful write. Required prewrite protection and postwrite recovery retain their distinct contracts. |
+| PP-D12 — Make maintenance repeatable | Use scripts, tools and plugin-provided instructions for predictable maintenance. AI coordination does not replace server provisioning, validation or authorization. |
+
+The [System storage boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary) and [Events And Ledger decisions](../../../010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md) remain authoritative for their subjects. Required prewrite protection must succeed before a mediated save; optional reported context may degrade; postwrite recovery must not deny that completed source work occurred. Post-tool observations are not universal preimages or proof of causation. These boundaries do not establish a general plugin publisher or external-store transaction API.
+
+## Interpretations replaced or retained
+
+A fixed presentation inventory with iframe-only extension is superseded by the extensible library model. The rule keeping file types and canonical file-detail rendering platform-owned remains: contributing a card or layout is different from registering a replacement canonical file renderer. Registered presentation also does not mean arbitrary in-process React imports or ambient store, network, database or bus access.
+
+Older category-folder illustrations and thin System capsules do not select the future package or instance schema. Editable instances carry local resources outside System; exact installation grammar, paths and machine scope remain open. A copied template does not become privileged code. Existing bundled scaffolding must not be treated as proof of installed-plugin provisioning.
+
+View-local working directory, project orientation and local-versus-manual context use are settled intended behavior. Harness discovery, assembly, skill collision handling and enforcement remain unfinished; [WV-G04](../../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g04--view-local-agent-context) remains the owning gap. This distinction does not require a new skill override hierarchy.
+
+Collections are allowed to open the canonical file surface in place. Older “collections never open files in the current tab” or “raw-only editing” interpretations cannot prohibit that flow. This does not change the canonical editor's own mode or save rules, or settle duplicate-tab, dirty-buffer, restore or close policies for a generalized host.
+
+Preserve the [Chat side-chat decision](../../../007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md#2026-09-19--side-chat-tabs-and-non-chat-windows): a Side Chat is one session in a content tab, without a new left thread list or the removed left sliding-panel target. The right-hand list button remains; its future shared behavior is separate. Generic non-chat popup/window containers do not revive floating chat or establish a new drawer or launcher catalog.
+
+Older blanket fail-open provenance, raw bus access and proposed event envelopes/executors do not override current event authority. Historical plugin-management mockups, a process-per-database rule, inbox-plugin proposals, notification learning, marketplace distribution and deployment schedules are not adopted by this model.
+
+## Open choices and decision gates
+
+Each choice stays with the product owner, supported by the named subsystem. Resolve it before the listed implementation, without reopening the settled direction above.
+
+| Choice | What remains open | Owner and trigger |
+|---|---|---|
+| PP-O01 | Plugin/template/instance folder and manifest schema; shared versus machine-specific placement. | Plugin/workspace owners, before provisioning or relocation; coordinate workspace choices WV-O01 and WV-O04. |
+| PP-O02 | Component registration and host ABI, supported data/actions, version compatibility and execution/isolation mechanism. | UI/platform/plugin owners, before loading contributed executable components. |
+| PP-O03 | Missing, disabled or incompatible dependencies; customized-template updates, removal and migration. | Plugin/workspace owners, before instance lifecycle implementation; coordinate WV-O02 and WV-O03. |
+| PP-O04 | Harness-specific working directory, resource discovery/injection, skill collision handling and enforcement mechanics. | Harness/context owners, before claiming local context works end to end; the remaining mechanics of WV-O06. |
+| PP-O05 | Iframe bridge transport, authentication/authorization, supported operations and optional iframe UI SDK. | Platform/custom-view owners, before shipping a bridge or SDK. |
+| PP-O06 | Initial component inventory, drawer content catalog, first conversion example and rollout order. | Product owner, before a product roadmap is approved. Examples do not choose these. |
+| PP-O07 | Per-adapter application-store failure, retry, transaction and provenance integration beyond trusted built-ins. | Data/provenance owners, before general external-store mutation APIs. No cross-store atomicity is promised. |
+
+For the workspace choices, see [Workspace And View Decisions](../../../001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md#open-product-choices). Follow [Unfinished Work](../002-Unfinished_Work/PAGE.md) for platform capability gaps rather than treating an open choice as proof that all related behavior is absent.

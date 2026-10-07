@@ -1,0 +1,68 @@
+{
+  "counts": {
+    "generated_blocks": 39,
+    "exact_pre_edit_snapshots": 8,
+    "no_new_ephemeral_refs": 8,
+    "whitespace": 8,
+    "unchanged_articles": 31,
+    "protected_files": 1668,
+    "authority_unchanged": 2,
+    "revision": 1,
+    "product_inventory": 1,
+    "frontmatter": 8,
+    "source_paths_exist": 121,
+    "relative_links": 42,
+    "heading_fragments": 19,
+    "json_examples": 8
+  },
+  "passed": 1964,
+  "errors": [],
+  "warnings": [
+    {
+      "source_metadata": "ai/<machine>/System/config/cli.json",
+      "classification": "existing config pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-server/lib/thread",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-server/lib/wire",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-server/lib/ws",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-server/lib/chat-metadata",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-client/src/components/chat",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-client/src/lib/chat-file-links",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-client/src/lib/tool-renderers",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-client/src/lib/ws",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    }
+  ],
+  "candidate_pages": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md": "ad4ab0177d74848987a04f6002aa7fae97073efefef05485fbbf53a940c0e621",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md": "4b1a18cf80b65176a04572a6eaec3e7651ce1b3dcda36aa0a16fd62ece0b82f6",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": "7315e4f88098bd61c42163b024a5a0d40e49db04d3c882611509c493aef0f0ac",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md": "e2260599c8176373698ff79373108befbddeacd7e1ca4547aefc8473f20e7a9a",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md": "2ae641953bda73983a10535e2a40241fd9cf24263b9d339fa61588f9b79d8342",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md": "8f23c173ce0b1f45172c08f15300be86086120909776de281d0f8238f466c48d",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md": "c9c666dd120014a84d0ff9d47b87376cffe37e51d3fd6131c10393581e240240",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md": "7b4c78143a3d1700b831d1903c0e5e4b0b1ddc71a594c99fe8d5d22423274234"
+  }
+}

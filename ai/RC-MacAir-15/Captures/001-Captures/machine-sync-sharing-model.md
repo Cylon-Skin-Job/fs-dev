@@ -3,6 +3,14 @@
 Status: CAPTURE — design conversation output, no implementation scheduled
 Captured: 2026-07-13
 
+## Scope update — 2026-09-25
+
+The later [Fusion Server capture](fusion-server-knowledge-sync-and-instance-identity.md) establishes two distinct directions: local instances upload their own session knowledge to Server and query the consolidated collection remotely; virtual shared workspaces expose server-hosted documents for live character-by-character collaboration without local filesystem copies or offline editing. Full remote UI takeover permits one active client; shared-workspace collaboration permits multiple participants.
+
+For those features, the filesystem mirroring, downstream history replication, and offline fork-on-conflict concepts are not requirements. The offline-file branch below remains historical/separate planning and must not be imported as a dependency of the newer model. Its reconnect fork rule does not apply to the virtual workspace, where disconnected editing is disabled. In-flight edit handling still needs a collaboration contract.
+
+The tables and sequencing below reflect July planning, not current delivery certification. Live document hosting also needs connection authorization, coordinated concurrent editing, and virtual resource access; editor step machinery alone is not the complete dependency set. Tailnet membership does not itself grant Fusion application authority. Reliable knowledge uploads need durable delivery and source identity; they do not automatically inherit the offline-file branch's provenance/versioning prerequisites. See the newer capture's dependency and contradiction review before planning implementation.
+
 ## The Idea
 
 Share workspace data between machines and coworkers, and host real-time collaborative docs, using the architecture fs-dev is already building — without inventing a parallel sync pipeline.

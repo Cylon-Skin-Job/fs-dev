@@ -1,0 +1,1715 @@
+{
+  "namespace": "RC-MacAir-15",
+  "pages": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/003-Lessons/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/002-Turn_Identity/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/003-Exchange_Storage/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/004-Metadata/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/005-User_Metadata/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/005-Legacy_Wire_Terminology/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/001-Live_Rendering/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/002-History_Rendering/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/003-Turn_Finalization/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/003-Message_List/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/004-Reply_Action_Chrome/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/006-Tool_Call_Rendering/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/002-Playwright_Browser/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md"
+  ],
+  "before_counts": {
+    "entries": 298,
+    "code": 283,
+    "directory": 10,
+    "configuration": 3,
+    "document": 0,
+    "pattern": 0,
+    "missing": 2
+  },
+  "after_counts": {
+    "entries": 289,
+    "code": 289,
+    "directory": 0,
+    "configuration": 0,
+    "document": 0,
+    "pattern": 0,
+    "missing": 0
+  },
+  "notes": [
+    "CSS is source code. playwright.config.ts is executable TypeScript configuration and is retained as an actual code file; package.json and cli.json are declarative configuration and removed from metadata.",
+    "No document entries or unresolved patterns occur in source-files; directory/wildcard references in Structure prose remain explicitly module families.",
+    "Scope proves path/classification and changed ownership claims; it does not recertify every source file or unrelated page behavior.",
+    "All pre-edit code entries retained unchanged. Every after entry is code; removed/replaced entries carry individual reasons."
+  ],
+  "before": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": [
+      {
+        "source": "ai/<machine>/System/config/cli.json",
+        "resolved": "ai/RC-MacAir-15/System/config/cli.json",
+        "classification": "config/document",
+        "disposition": "removed: JSON configuration belongs in prose, not code-source metadata"
+      },
+      {
+        "source": "fusion-studio-server/lib/cli-config/resolver.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/index.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/types.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatInput.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/index.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/shared/error-display.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/catalog-visual.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-crud.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/003-Lessons/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/index.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatInput.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/hooks/useFileAutocomplete.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread-groups/service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/repository.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/move-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/view-state/thread-worksurface.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-crud.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread/thread-crud.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/repository.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/move-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/view-state/thread-worksurface.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/002-Turn_Identity/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/live-turn-snapshot.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/canonical-drain-context.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/003-Exchange_Storage/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/db/migrations/001_initial.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/audit/audit-subscriber.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/004-Metadata/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/attachments.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/turn-terminal-error.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/harness-diagnostic-service.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/005-User_Metadata/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/redaction-map.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/client-message-router.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadManager.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/member-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ChatFile.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadIndex.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/repository.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/db/migrations/001_initial.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/types/index.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/move-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/view-state/thread-worksurface.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/types.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/errors.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/harness-diagnostic-redactor.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/harness/types.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/live-turn-snapshot.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/event-bus.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/audit/audit-subscriber.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/ws/client-message-router.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/types/index.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/types/chat-wire.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws-client.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/frontier.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/chat-diagnostic-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/chat-action.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/application-link.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/link-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/workspace-request-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-crud.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/worksurface/worksurfaceController.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/005-Legacy_Wire_Terminology/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/chat/",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/link-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/member-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/event-bus.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/client-message-router.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/001-Live_Rendering/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/WorkingActivity.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/activity-stream-handler.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatActivityState.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/002-History_Rendering/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/assistant-parts.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatTurnError.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/003-Turn_Finalization/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/turn-terminal-error.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/audit/audit-subscriber.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useChatArea.ts",
+        "classification": "missing",
+        "disposition": "replaced: deleted hook; Composer uses useLegacyChatHost; Reply Payloads uses reply-text, reply-chrome-actions, useAssistantReplyChromeController, MessageList and useLegacyChatHost for distinct responsibilities"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-grouper.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/clipboard/clipboard-api.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/secrets/clipboard/handlers.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ToolCallBlock.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ToolsPanel.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/catalog-visual.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/index.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/shared/error-display.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/ChatInput.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useChatArea.ts",
+        "classification": "missing",
+        "disposition": "replaced: deleted hook; Composer uses useLegacyChatHost; Reply Payloads uses reply-text, reply-chrome-actions, useAssistantReplyChromeController, MessageList and useLegacyChatHost for distinct responsibilities"
+      },
+      {
+        "source": "fusion-studio-client/src/state/chatComposerDraftStore.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/hooks/useFileAutocomplete.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/styles/dropdown.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/clipboard/clipboard-api.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ThreadRail.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/Sidebar.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/Sidebar.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/003-Message_List/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatTurnError.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/004-Reply_Action_Chrome/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/clipboard/clipboard-api.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/styles/dropdown.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "ai/<machine>/System/styles/views.css",
+        "resolved": "ai/RC-MacAir-15/System/styles/views.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ThreadRail.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/member-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/link-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/006-Tool_Call_Rendering/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/ToolCallBlock.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers/index.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-output.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md": [
+      {
+        "source": "fusion-studio-client/src/components/ChatInput.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/hooks/useFloatingWindow.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/email/EmailComposeWindow.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/e2e/side-chat-adapterless-native.spec.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/MessageList.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/styles/dropdown.css",
+        "classification": "code"
+      },
+      {
+        "source": "ai/<machine>/System/styles/views.css",
+        "resolved": "ai/RC-MacAir-15/System/styles/views.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ViewChatHost.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ThreadedChat.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/capture/CaptureTiles.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/file-explorer/FileExplorer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/wiki/WikiExplorer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/office/OfficeGrid.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/email/EmailGrid.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/email/EmailComposeLayer.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/chat-capable-views.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/move-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md": [
+      {
+        "source": "fusion-studio-server/package.json",
+        "classification": "config/document",
+        "disposition": "removed: JSON configuration belongs in prose, not code-source metadata"
+      },
+      {
+        "source": "fusion-studio-client/package.json",
+        "classification": "config/document",
+        "disposition": "removed: JSON configuration belongs in prose, not code-source metadata"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/002-Playwright_Browser/PAGE.md": [
+      {
+        "source": "fusion-studio-client/playwright.config.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/server.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md": [
+      {
+        "source": "fusion-studio-client/electron/main.cjs",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md": [
+      {
+        "source": "fusion-studio-client/playwright.config.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/server.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread/thread-crud.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/live-turn-snapshot.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/canonical-drain-context.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/turn-terminal-error.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/HistoryFile.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadIndex.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/attachments.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/repository.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/move-service.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/view-state/thread-worksurface.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadManager.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/thread-groups/chat-capable-views.js",
+        "classification": "code"
+      }
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md": [
+      {
+        "source": "fusion-studio-server/lib/thread",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-server/lib/wire",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-server/lib/ws",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/types.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-server/lib/chat-metadata",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatInput.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.css",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/chat",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/chat-file-links",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/tool-renderers",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-client/src/lib/ws",
+        "classification": "directory",
+        "disposition": "removed: directory is a module-family pointer, not a code file; concrete sources and prose map retained"
+      },
+      {
+        "source": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/state/slices/chatSlice.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/ChatArea.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/hooks/useFloatingWindow.ts",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/email/EmailComposeWindow.tsx",
+        "classification": "code"
+      },
+      {
+        "source": "fusion-studio-client/src/components/email/EmailComposeLayer.tsx",
+        "classification": "code"
+      }
+    ]
+  },
+  "after": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md": [
+      "fusion-studio-server/lib/cli-config/resolver.js",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-server/lib/harness/opencode/index.js",
+      "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "fusion-studio-server/lib/harness/types.js",
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+      "fusion-studio-client/src/components/ChatInput.tsx",
+      "fusion-studio-client/src/components/ChatArea.css",
+      "fusion-studio-client/src/lib/tool-renderers/index.ts",
+      "fusion-studio-client/src/lib/tool-renderers/shared/error-display.ts",
+      "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+      "fusion-studio-client/src/lib/catalog-visual.ts",
+      "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/003-Lessons/PAGE.md": [
+      "fusion-studio-server/lib/harness/opencode/index.js",
+      "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/ChatInput.tsx",
+      "fusion-studio-client/src/components/ChatArea.css",
+      "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+      "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+      "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+      "fusion-studio-client/src/hooks/useFileAutocomplete.ts",
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md": [
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/view-state/thread-worksurface.js",
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "fusion-studio-client/src/components/ChatArea.tsx",
+      "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md": [
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/view-state/thread-worksurface.js",
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/lib/ws/threadGroupRows.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/002-Turn_Identity/PAGE.md": [
+      "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+      "fusion-studio-server/lib/thread/live-turn-snapshot.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/003-Exchange_Storage/PAGE.md": [
+      "fusion-studio-server/lib/db/migrations/001_initial.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js",
+      "fusion-studio-server/lib/audit/audit-subscriber.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/004-Metadata/PAGE.md": [
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/attachments.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js",
+      "fusion-studio-server/lib/thread/turn-terminal-error.js",
+      "fusion-studio-server/lib/thread/harness-diagnostic-service.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/005-User_Metadata/PAGE.md": [
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+      "fusion-studio-server/lib/ws/redaction-map.js",
+      "fusion-studio-server/lib/ws/client-message-router.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md": [
+      "fusion-studio-server/lib/thread/ThreadManager.js",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-server/lib/thread-groups/member-service.js",
+      "fusion-studio-server/lib/thread/ChatFile.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js",
+      "fusion-studio-server/lib/thread/ThreadIndex.js",
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/db/migrations/001_initial.js",
+      "fusion-studio-client/src/types/index.ts",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/view-state/thread-worksurface.js",
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/lib/ws/threadGroupRows.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md": [
+      "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "fusion-studio-server/lib/harness/types.js",
+      "fusion-studio-server/lib/harness/errors.js",
+      "fusion-studio-server/lib/harness/opencode/harness-diagnostic-redactor.js",
+      "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md": [
+      "fusion-studio-server/lib/harness/types.js",
+      "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+      "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "fusion-studio-server/lib/thread/live-turn-snapshot.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md": [
+      "fusion-studio-server/lib/event-bus.js",
+      "fusion-studio-server/lib/audit/audit-subscriber.js",
+      "fusion-studio-server/lib/wire/wire-broadcaster.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md": [
+      "fusion-studio-server/lib/ws/client-message-router.js",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "fusion-studio-client/src/types/index.ts",
+      "fusion-studio-client/src/types/chat-wire.ts",
+      "fusion-studio-client/src/lib/ws-client.ts",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+      "fusion-studio-client/src/lib/ws/frontier.ts",
+      "fusion-studio-client/src/lib/ws/chat-diagnostic-handlers.ts",
+      "fusion-studio-server/lib/ws/chat-turn-diagnostic-handlers.js",
+      "fusion-studio-client/src/lib/chat-action.ts",
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+      "fusion-studio-server/lib/thread-groups/application-link.js",
+      "fusion-studio-server/lib/thread-groups/link-service.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+      "fusion-studio-server/lib/ws/workspace-request-handlers.js",
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+      "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "fusion-studio-client/src/lib/worksurface/worksurfaceController.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/005-Legacy_Wire_Terminology/PAGE.md": [
+      "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "fusion-studio-server/lib/wire/wire-broadcaster.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md": [
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "fusion-studio-server/lib/thread-groups/link-service.js",
+      "fusion-studio-server/lib/thread-groups/member-service.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md": [
+      "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+      "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "fusion-studio-server/lib/event-bus.js",
+      "fusion-studio-server/lib/wire/wire-broadcaster.js",
+      "fusion-studio-server/lib/ws/client-message-router.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/001-Live_Rendering/PAGE.md": [
+      "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/chat/WorkingActivity.tsx",
+      "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+      "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+      "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+      "fusion-studio-client/src/lib/ws/activity-stream-handler.ts",
+      "fusion-studio-client/src/state/slices/chatActivityState.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/002-History_Rendering/PAGE.md": [
+      "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/lib/ws/assistant-parts.ts",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-client/src/components/chat/ChatTurnError.tsx",
+      "fusion-studio-server/lib/thread/HistoryFile.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/003-Turn_Finalization/PAGE.md": [
+      "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-server/lib/thread/turn-terminal-error.js",
+      "fusion-studio-server/lib/audit/audit-subscriber.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md": [
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "fusion-studio-client/src/state/slices/chatSlice.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md": [
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+      "fusion-studio-client/src/lib/chat/reply-text.ts",
+      "fusion-studio-client/src/lib/chat/reply-chrome-actions.ts",
+      "fusion-studio-client/src/components/chat/useAssistantReplyChromeController.ts",
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+      "fusion-studio-client/src/lib/tool-grouper.ts",
+      "fusion-studio-client/src/clipboard/clipboard-api.ts",
+      "fusion-studio-server/lib/secrets/clipboard/handlers.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md": [
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/ToolCallBlock.tsx",
+      "fusion-studio-client/src/components/ToolsPanel.css",
+      "fusion-studio-client/src/lib/catalog-visual.ts",
+      "fusion-studio-client/src/lib/tool-renderers/index.ts",
+      "fusion-studio-client/src/lib/tool-renderers/shared/error-display.ts",
+      "fusion-studio-client/src/lib/tool-renderers/shell.ts",
+      "fusion-studio-client/src/lib/ws/tool-result-helpers.ts",
+      "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+      "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md": [
+      "fusion-studio-client/src/components/ChatInput.tsx",
+      "fusion-studio-client/src/components/ChatArea.css",
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+      "fusion-studio-client/src/state/chatComposerDraftStore.ts",
+      "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "fusion-studio-client/src/hooks/useFileAutocomplete.ts",
+      "fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md": [
+      "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+      "fusion-studio-client/src/styles/dropdown.css",
+      "fusion-studio-client/src/clipboard/clipboard-api.ts",
+      "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/components/chat/ThreadRail.tsx",
+      "fusion-studio-client/src/components/Sidebar.tsx",
+      "fusion-studio-client/src/components/Sidebar.css",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/003-Message_List/PAGE.md": [
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/chat/ChatTurnError.tsx",
+      "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/004-Reply_Action_Chrome/PAGE.md": [
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/clipboard/clipboard-api.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md": [
+      "fusion-studio-client/src/styles/dropdown.css",
+      "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "ai/<machine>/System/styles/views.css",
+      "fusion-studio-client/src/components/chat/ThreadRail.tsx",
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-server/lib/thread-groups/member-service.js",
+      "fusion-studio-server/lib/thread-groups/link-service.js",
+      "fusion-studio-client/src/components/chat/useLegacyChatHost.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/006-Tool_Call_Rendering/PAGE.md": [
+      "fusion-studio-client/src/components/ToolCallBlock.tsx",
+      "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "fusion-studio-client/src/components/InstantSegmentRenderer.tsx",
+      "fusion-studio-client/src/lib/tool-renderers/index.ts",
+      "fusion-studio-client/src/lib/tool-output.ts",
+      "fusion-studio-client/src/lib/ws/tool-result-helpers.ts"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md": [
+      "fusion-studio-client/src/components/ChatInput.tsx",
+      "fusion-studio-client/src/components/ChatArea.css",
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "fusion-studio-client/src/components/chat/useLegacyChatHost.ts",
+      "fusion-studio-client/src/hooks/useFloatingWindow.ts",
+      "fusion-studio-client/src/components/email/EmailComposeWindow.tsx",
+      "fusion-studio-client/e2e/side-chat-adapterless-native.spec.ts",
+      "fusion-studio-client/src/components/MessageList.tsx",
+      "fusion-studio-client/src/styles/dropdown.css",
+      "ai/<machine>/System/styles/views.css",
+      "fusion-studio-client/src/components/ChatArea.tsx",
+      "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+      "fusion-studio-client/src/components/chat/ViewChatHost.tsx",
+      "fusion-studio-client/src/components/chat/ThreadedChat.tsx",
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "fusion-studio-client/src/components/capture/CaptureTiles.tsx",
+      "fusion-studio-client/src/components/file-explorer/FileExplorer.tsx",
+      "fusion-studio-client/src/components/wiki/WikiExplorer.tsx",
+      "fusion-studio-client/src/components/office/OfficeGrid.tsx",
+      "fusion-studio-client/src/components/email/EmailGrid.tsx",
+      "fusion-studio-client/src/components/email/EmailComposeLayer.tsx",
+      "fusion-studio-server/lib/thread-groups/chat-capable-views.js",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/002-Playwright_Browser/PAGE.md": [
+      "fusion-studio-client/playwright.config.ts",
+      "fusion-studio-server/server.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md": [
+      "fusion-studio-client/electron/main.cjs"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md": [],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md": [
+      "fusion-studio-client/playwright.config.ts",
+      "fusion-studio-server/server.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md": [
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/live-turn-snapshot.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/turn-terminal-error.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js",
+      "fusion-studio-server/lib/thread/ThreadIndex.js",
+      "fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/attachments.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/file-mentions.js",
+      "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/view-state/thread-worksurface.js",
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "fusion-studio-client/src/lib/ws/threadGroupRows.ts",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy.js",
+      "fusion-studio-server/lib/thread/ThreadManager.js",
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "fusion-studio-client/src/components/ChatArea.tsx",
+      "fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx",
+      "fusion-studio-server/lib/thread-groups/chat-capable-views.js"
+    ],
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md": [
+      "fusion-studio-server/lib/harness/types.js",
+      "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "fusion-studio-client/src/components/ChatInput.tsx",
+      "fusion-studio-client/src/components/ChatArea.css",
+      "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "fusion-studio-client/src/components/ChatArea.tsx",
+      "fusion-studio-client/src/hooks/useFloatingWindow.ts",
+      "fusion-studio-client/src/components/email/EmailComposeWindow.tsx",
+      "fusion-studio-client/src/components/email/EmailComposeLayer.tsx"
+    ]
+  }
+}

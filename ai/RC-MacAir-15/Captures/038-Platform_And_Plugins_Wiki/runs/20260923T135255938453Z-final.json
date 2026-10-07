@@ -1,0 +1,121 @@
+{
+  "command": "final",
+  "checked_at": "2026-09-23T13:52:55Z",
+  "tool_sha256": "2e43b5dea0ce663f2d766e8f015ebdb4d3d44074cf17657a2967bb58c56bb5c5",
+  "packet_sha256": {
+    "PAGE-MAP.json": "7c464c197df867b01a6c956dec0a035b85801dce48aa348c63235f30357b05bd",
+    "SOURCES.json": "4179eca60351dcf3ceb5f1bc3406917542c06261673a262dc77076f3f39ac29b",
+    "CLAIMS.json": "c1dc9e27593006339177ec7af11e850a8fef4055cd4201c27a7ff2e3e46af18c",
+    "COVERAGE.json": "d3272dcc64a5bc0186182ae4cee20db44c5988a35e028cf5767ef689f666818c"
+  },
+  "parser": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter",
+  "inputs": {
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md": "ac07dc3025b3e3a066150cb1530136a4a737f0d5a00e519ff7e241bf6926e382",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md": "78ae558202b957422970845246885212d4fc2db696eb5fa074e6549dc36a68f0",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md": "aca5006e86f4e3610f38f589e1d6ddf075a18d68cf218c030bc19705a8ed3830",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md": "6b57f7bab0dc2d1027971656392bb4103f1501bfa784ec39d463390c8d62ddc0",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md": "f0999475c112d81379d356ecbea6d1ae02d0ed6492cb6ae4b359887c7fc954d7",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md": "3d38d07483700508acb5b5233855502a1e1104c5cb591efb0dd223443efabeaa",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md": "2189100f281e0b945a1f21f282f34c05d587d73d8b1faa865b61ec01e6c8eb4c",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md": "2d035c6a446680dcc1698052b16cc1f9b0c003677d81f3e7ba4c61c2ec41df37",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md": "b96ae5f230c77a702cae3721e1bb0200f89824c2f4dbd5741fa52847ef61511a",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md": "98f6992a5cb610160b4b35eb8b3356cd8b7c5c30730190781cf0ef08427f6341",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md": "ef13256606956ea0fab69847b6aa756a2a617127a74dafff986edc49aedea4e6",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md": "fd73602bc036e65f1d68a01a84ae4d9eb2ff004754c48956c47b490a6c0ebf96",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md": "aa8f2b85925f23346d374fa4f1b21290b66c7a06c08788ef0943ba973a2e6fee",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md": "4c25f961c92e94be69e3641bf8dc15212091fd4351cda2417c12ec2d63614945",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md": "d865233fdab5dbdb5c2c383742634b57113c936e844dd0fd400b19fc709680a3",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md": "fc65e6f6df5fd1779d7e060ce7702c6bc8e50dd24942e5bf52c2c156ce8d16c0",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md": "b66e19f89339d2c2dc0cc59ef1d3a4aaa568fe239c5691425238e5e1d6f1f2ac",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md": "0846d488a4f60f05f69a4afd981775df4865a9bb46926d75e7305b707fde679c",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md": "0912cc8329411e9af0c4f04daf6f3f8de1e3f029f94ffe54ea11570b64c574ba"
+  },
+  "changed_paths": [
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+  ],
+  "counts": {
+    "changed_live_pages": 19,
+    "incoming_pages_checked": 22,
+    "changed_total": 19,
+    "mapped": 19,
+    "existing_snapshots": 444,
+    "pending_links": 0
+  },
+  "failures": [],
+  "warnings": [
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md: source drift; re-inspect affected claims",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md: source drift; re-inspect affected claims"
+  ],
+  "pending": [],
+  "prose_review_hits": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "body_line": 26,
+      "text": "The inspected `create-service.js` reads bundled workspace/view templates from `System_Manager/ai-template`. Its scaffold path selects bundled view IDs and copies numbered view capsules into the machine-scoped `System/Views` root resolved by"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "body_line": 12,
+      "text": "Today, workspace creation copies selected **bundled** view templates into `ai/<machine>/System/Views/`; the renderer dispatches built-in view IDs to React components. These are source-inspected development-checkout facts, not a runtime cert"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "body_line": 17,
+      "text": "The older proposed rule placing every installed view under `ai/<machine>/System/Views` is superseded as a **target**. That remains the observed current code path until the product changes. The older thin-instance interpretation is supersede"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "body_line": 22,
+      "text": "**Target:** Editable instance folders live outside `System`, reference a protected view plugin and stay within that plugin's declared capabilities. **Current limit:** the view registry still discovers `ai/<machine>/System/Views/` capsules, "
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "body_line": 6,
+      "text": "Today the server discovers numbered folders under `ai/<machine>/System/Views/`. Each folder's `manifest.md` declares a canonical, unique `metadata.view-id`; its `name` is the display label. The numeric folder prefix controls order, with fol"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "body_line": 18,
+      "text": "Today `views/index.js` discovers numbered capsules in `ai/<machine>/System/Views/`, reads their `manifest.md`, `content.json` and styles, and `panel-paths.js` resolves access through that registry. `view-state/resolver.js` locates each caps"
+    }
+  ],
+  "staged_generation": {
+    "command": "node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js audit /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/ppw01-audit-fftn2w34/Wiki",
+    "first_exit": 0,
+    "second_exit": 0,
+    "changed_pages_with_markers": 3,
+    "first_stdout_tail": "ct/000-Project/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  updated (children): 007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n  updated (children): 007-Chat_System/004-Chat_UI/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  updated: 010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n  created: 0  updated: 4  skipped: 31\n\nTotal: 0 created, 4 updated, 31 skipped\n",
+    "second_stdout_tail": "\n=== RC-MacAir-15 ===\n  skipped (no-markers): 001-Project/000-Project/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  created: 0  updated: 1  skipped: 32\n\nTotal: 0 created, 1 updated, 32 skipped\n"
+  },
+  "exclusions": [
+    "No product runtime/build/Alpha checks",
+    "Read-only specialist/Chat/UEB pages not recertified",
+    "Semantic content and source routes require independent review"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-06T07:08:56.745896+00:00",
+  "scope": "Readiness-only independent current static packet and collector check",
+  "manifestSha256": "70c12acd2d4639314713aaefaee950ae2f2e3fe009192668ae7c149c88ab3d18",
+  "packetSha256": "ce0e3906e5dd4bb130d954305f7595dac591a28eb23ff90d40bf5443ec1c95c3",
+  "filesChecked": 16,
+  "mismatches": [],
+  "readyReceiptSha256": "becc1fd9acbcd414f05e8d0b3b7017bfa8d505b9ba5e9f1c579e813854b50d3c",
+  "collectorPid": 49427,
+  "collectorPsExit": 0,
+  "collectorSafePs": "49427     1 Ss   Tue Oct  6 00:04:53 2026",
+  "deadline": "2026-10-06T08:04:54.580Z",
+  "independentLiveReceipt": "../READINESS-LIVE-CHECK-20261006T070347Z.json",
+  "sourceDeltaInspection": "v3 to v4: new unique names, preexisting-output refusal, 60-minute bounded duration; passive semantics unchanged",
+  "manualTestComplete": false
+}

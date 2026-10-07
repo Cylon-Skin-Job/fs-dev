@@ -1,0 +1,7 @@
+# S04 orchestrator acceptance — CLEAN
+
+Fresh terminal reviewer /root/pp_s04_acceptance, candidate PPW01-0159a35a4ecb7fd3. No material findings or required repairs; closure unavailable.
+
+Independently inspected all9 live pages, raw contract/standards, source chains, claims/coverage/receipts and immediate new-section routes. All9 hashes match S04-OUTPUTS.json (manifest SHA256 0d25afea3e4f1b715aa47eaebc982385522df19e69021045c6a9c4ff8f308f8f); exact predecessor snapshots equal baseline and independent reconstruction equals S04-PROSE-DIFF.patch. Unrelated prose, generated blocks and WV-G01/G02/G03/G05 unchanged. Settled local/manual context direction and open WV-O06 mechanics/WV-G04 gap remain distinct. Canonical file/shell/save ownership retained. Traced workspace binding through WS/compat/OpenCode, projectRoot reaches --dir and cwd; all10 source hashes match.
+
+Read-only verify(slice,S04):0 failures,17 cumulative pages,22 incoming,444 historical snapshots,8 allowed S05 links. Nine warnings exactly intended mapped article deltas. Scoped diff/direct hygiene passed. Added compat/WS source metadata and capture evidence classified accepted mechanical source accountability, within C09/V2/V5 and slice scope; no product behavior change. Downstream must preserve/reinspect these owners. Source-only, no runtime/builds or broad recertification. No reviewer writes/delegation. S05 and final integration remain pending.

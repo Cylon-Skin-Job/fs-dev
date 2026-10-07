@@ -1,0 +1,13 @@
+{
+  "command": "baseline",
+  "checked_at": "2026-09-21T11:54:21Z",
+  "baseline": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json",
+  "entries": 53,
+  "present": 37,
+  "absent": 16,
+  "wiki_pages": 164,
+  "versions": 330,
+  "source_files": 65,
+  "root_refs": 12,
+  "nested_agents": []
+}

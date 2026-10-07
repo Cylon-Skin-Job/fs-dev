@@ -1,67 +1,36 @@
 ---
 name: File Viewer UI Context
-description: Normative command-time context and resource mapping for the first File Viewer UI-action adapter.
+description: Current connected File save context and attachment owners, with the future prompt UI-action adapter boundary.
 metadata:
-  incoming-edges:
-    - UI Action Provenance Module
-  outgoing-edges:
-    - UI Action And Context Provenance Schema
   source-files:
-    - fusion-studio-client/src/state/panelStore.ts
-    - fusion-studio-client/src/lib/viewActivity.ts
+    - fusion-studio-client/src/components/view-tabs/fileConnectedTabs.ts
+    - fusion-studio-client/src/lib/save-action-context.ts
+    - fusion-studio-client/src/state/fileDataStore.ts
+    - fusion-studio-client/src/components/file-explorer/FileViewer.tsx
+    - fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx
     - fusion-studio-client/src/components/SendToChatButton.tsx
-    - fusion-studio-client/src/components/chat/useChatArea.ts
-    - fusion-studio-client/src/state/chatFileLinkStore.ts
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/resource-path.ts
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-Use this page when implementing or reviewing File Viewer UI-action provenance.
+Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. The connected File owner supplies optional tab/component context to mediated saves; File reading and Chat attachment staging exist. A File prompt-with-resource `ui.action` adapter is not implemented. Tests were inspected, not rerun; no live UI or Alpha claim is made.
 
-## Current Scope
+## Current context source
 
-The owner approved File Viewer for the first adapter pair. The current File Viewer surface reads files and stages file/folder chat attachments; it does not expose direct durable file create/save/move/rename/delete commands. Its first migrated durable command is `chat.send_with_resource` when File Viewer is the active panel and prompt send consumes at least one valid pending resource attachment, regardless of which panel staged it.
+`readActiveFileConnectedTabContext` reads the mounted connected File runtime's current collection and active component descriptor. `readSaveActionContext(panel)` uses it only when its workspace and view match the save's initiating registered panel. It copies bounded `tabId`, `componentTypeId`, `componentInstanceId`, `presenterId` and optional `targetKey`; no matching component yields only available workspace/view context. The accessor's active tab is not a canonical resource identity, and `targetKey` does not authorize a filesystem path.
 
-Tree expansion, tab navigation, and attachment staging are non-mutating. They do not emit `ui.action` events.
+The reader does not reconstruct tab identity from global legacy file-store tabs, navigation history, an attachment ID or a React key. The server sanitizer checks bounded shape and workspace echo, not actual current tab existence. The saved record is a historical snapshot with no live view-state writeback. [UI Action And Context Provenance](../../003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md) gives the full reader → store → save route → durable operation/fact → query chain.
 
-## Context Mapping
+The policy-ready `FileDocumentPresenter` and fallback `FileViewer` consume the central File content store. They are readers/attachment surfaces, not current mediated text-save editors. Production Office/Email saves use the store; their initiating panel does not automatically match the connected File owner. Thus the carrier's support for File tab context is not evidence of a File save gesture or all-view context coverage.
 
-The adapter is selected only when `usePanelStore.getState().currentPanel === 'file-viewer'` at actual prompt-send time.
+## Current attachments and future pair
 
-| Output | Source / rule |
-|---|---|
-| Canonical `ids.workspaceId` | Server coordinator `WorkspaceCommandContextRef` captured for the accepted prompt; not session cache or renderer input. Missing provenance metadata does not block chat. |
-| `context.viewId` | Literal `file-viewer`. |
-| `context.panelId` | Literal `file-viewer`. |
-| `context.route` | `null`; File Viewer has no authoritative route store. |
-| `context.activeTabId` | `activity.activeTabId`, where `activity = normalizeViewActivity(usePanelStore.getState().viewStates['file-viewer']?.activity)`. |
-| `context.activeDocumentPath` | Renderer tentatively converts the active tab path through cached File Viewer/project roots; server preserves it only after private workspace-token binding and re-resolution under the coordinator command root; null/omitted on failure. File Viewer content root may be a configured subdirectory. |
-| `context.activeResourcePath` | Same server-verified canonical workspace-relative path as `activeDocumentPath`. |
-| Canonical `context.selectedResourceId` | Server-derived only from an accepted resource reference; absent/null for this adapter. Local attachment/tab IDs are not canonical resource IDs. |
+`SendToChatButton` resolves panel-relative attachment paths through `resource-path` and stages them through the Chat action bridge. At composer send time `useChatSessionActions` reads workspace/session-owned pending attachments and uses the ordinary prompt route. Tree navigation, tab changes, staging and prompt send do not currently emit a general `ui.action` fact.
 
-Do not use a React key, tab ID, `ChatLinkAttachment.id`, or path string as `selectedResourceId`.
+File and Wiki Viewer are the selected first pair for future prompt-with-resource provenance. The proposed `chat.send_with_resource` intent would distinguish the active File context at send from each attached subject, which can come from another panel or an earlier selection. A configured File content root may be a subdirectory; a future adapter must respect authoritative root resolution rather than assume a panel-relative path is already workspace-relative.
 
-Do not use `useFileStore.activeTabPath` for provenance. File-store tabs are currently global across workspace activation, while panel `viewStates` are workspace-scoped; combining them could attribute an old-workspace path to the active workspace.
+Before building that adapter, approve current-owner selectors, context/subject schema and absence behavior, server admission/path validation, sensitive-field policy, bounds and scheduling/failure semantics. The earlier activity-tab mapping and private-token envelope are proposals; they must be checked against the connected-owner architecture before implementation. Do not promote a tab/path/attachment ID to a resource ID or causal link. Optional context capture must preserve the independently accepted prompt/attachment operation, including its order.
 
-## Resource Mapping
-
-Each valid File Viewer-origin attachment becomes a `resources[]` entry with:
-
-- `role: 'subject'`.
-- `resourceType` equal to the attachment kind. File Viewer Markdown attachments are `doc`; the total mapping also permits `file`, `folder`, `wiki`, and `ticket` subjects normalized by the generic helper.
-- Renderer tentatively proves `fileViewerPanelRoot + relativePath === absolutePath` and cached-project containment. The server requires the private workspace token to match the coordinator command context, re-resolves the File Viewer root/operational target, and derives canonical path under the authoritative command root. If File Viewer is configured to subroot `src`, panel-relative `a.ts` may become canonical `src/a.ts`; equality/copying is never assumed, and stale A evidence under B is omitted without changing the prompt.
-
-The attachment subject may differ from the active tab when a tree-row action stages another file/folder or the user changes tabs before sending. Preserve both facts; do not replace command-time active context with the subject path.
-
-## Migration Boundary
-
-Emit the first-pair envelope when the active panel is supported and at least one pending resource attachment is valid. The generic resource-ref helper also preserves valid subjects originating in other panels; their origin does not replace the active File Viewer context. Otherwise keep the existing prompt path, record a development diagnostic, and never block ordinary prompt sending because provenance metadata is incomplete.
-
-## Required Evidence
-
-- Client build passes.
-- A File Viewer attachment can be staged without emitting `ui.action`.
-- Actual prompt send emits one accepted `ui.action` with `command: 'chat.send_with_resource'`.
-- Active File Viewer tab/path and attachment subject resource are both preserved.
-- With File Viewer active, a provenance-valid attachment staged by another panel still emits File Viewer active context and preserves that cross-panel subject; a mixed provenance-valid/invalid list preserves every valid canonical subject and diagnoses/omits invalid entries only from provenance. The operational prompt attachment list and order remain unchanged.
-- Missing context or enrichment degrades honestly without blocking prompt acceptance or producing falsely precise provenance.
+The [UI Action Provenance Module](../PAGE.md) owns shared design. Future acceptance must exercise staging separately from actual send, matching and unavailable connected owners, cross-panel subjects, stale workspace context, persistence/query and a real display consumer. Existing save-context tests do not certify that future prompt adapter or an audit UI.

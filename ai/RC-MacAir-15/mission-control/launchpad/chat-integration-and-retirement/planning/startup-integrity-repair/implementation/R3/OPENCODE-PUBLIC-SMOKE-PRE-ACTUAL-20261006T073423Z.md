@@ -1,0 +1,25 @@
+# Public OpenCode smoke — prepared, mandatory evidence pending
+
+Latest readiness-only continuation: [fresh v4 packet](R3/manual-readiness-refresh-20261006T070423Z/OWNER-MANUAL-RUNTIME-READY-v4.md) and [independent refresh](READINESS-REFRESH-20261006T070423Z.md). Same scratch runtime revalidated at 2026-10-06T07:04:52Z; passive collector **49427** now runs until **2026-10-06T08:04:54.580Z (1:04:54 AM PDT)**. V3 is terminal; earlier readiness statements below retain their dated scope. Mandatory manual/adoption/review gates remain pending.
+
+Status: **WAITING_OWNER_MANUAL_RUNTIME**, observed independently 2026-10-06T01:51:55Z. No real-provider success or failure is claimed. This is substantive attribution/preparation evidence for approved CHAT-AR-REPAIR-01 §7; it is not smoke acceptance.
+
+[Exact owner-manual packet](R3/OWNER-MANUAL-RUNTIME-READY.md) preserves the selected owner-manual route. [Independent safe receipt](R3/ORCHESTRATOR-PUBLIC-READY.json), builder baseline/restart/native-window receipts and current manifests provide raw evidence.
+
+| Required step | Current state |
+|---|---|
+| Repaired checkout/build and ordinary app attribution | Branch agent/exact-workspace-paths, HEAD d15792920731f85e45b743519d4af2b807d95a9c, dirty work preserved. Ten captured loaded app/restart owners individually rehashed; subset aggregate3a0f158a0ab21d419a4e8b4ded479ebf3768e895a909fee96e308898fff7c031. Built191 files individually match, recorded aggregate9db00d0d596e1e957c225b7a98bf65b34b289cb3dc9adfd997b63e983f784db9. This subset does not claim every repository source. |
+| App/window/process/port | Checkout Electron main57401, server57425, renderer57444; native window142887, sole shell targetAAF359BD9E45BED9BBAE6DFCF7D2377C. Server52199/CDP52197, fusion-shell://app/, continuing connected11 samples/2s. Read-only observation sends no UI/protocol intents. |
+| Disposable profile and registered/selected scratch | Marker-owned stage /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk, nonce f090d27f-fb16-4ff4-9957-a0119380a957. Explicit public-profile-2, RC-MacAir-15. Sole registry and selected public-scratch-2, canonical stage/public-scratch-2. Existing registry/add/switch/readiness owners used; no copied owner DB or real-state editing. |
+| Actual selected chat surface | Public Scratch 2, Local: RC-MacAir-15, Repair Scratch Files; file-viewer Main surface chat-surface:main:1:4a4d00ac-cf96-4918-8dcf-0bcb5056802c. Counts0 threads/0groups/0exchanges; disabled composer before creation is expected. |
+| First and second accepted selected usable New Chat | Unperformed. Required distinct group/thread/view/surface identities and ACK/save selection. |
+| Accepted prompt/real OpenCode/normal completion | Unperformed. Need safe request/ACK/turn/message:sent, actual runtime child and persisted OpenCode session, normal canonical assistant completion. Generic probes/child startup do not establish activation. |
+| Exact durable exchange | Unperformed. Need exact accepted user/assistant, workspace/thread/turn/sequence/terminal ownership; neither RAM nor a receipt alone suffices. |
+| Same-thread passive reopen | Unperformed. Need same visible exact exchange/provider identity, no replacement/duplicate exchange or additional activation/turn. |
+| Supported scratch-only shutdown/cleanup | Intentionally pending until actual manual readback/evidence/review. Preserve this app and safe receipts, then shut down only its exact attributed tree and marker-owned resources. |
+
+Owner actions: use the attributed scratch window, create first and second New Chat with usable selected rows, send one nonsensitive prompt `Reply with exactly CHAT-AR-REPAIR-READY.`, wait for normal completion, select the first row then passively reopen the second and report the result. Marker equality is a safe collection filter/prompt expectation, not an added acceptance rule; harmless formatting differences require exact safe actual-response inspection.
+
+Current narrow passive collector16619 v3 has initial deadline2026-10-06T02:08:36.497Z. It projects safe correlation/terminal metadata, read-only scratch identifiers and fixed-response equality without credentials/proofs/raw provider payload. Revalidate exact process/profile/machine/listeners/workspace before every observation. Expiry is not success or permission: start a fresh uniquely named passive receipt/stop-marker version after revalidation when needed. V1/V2 stopped receipts remain dated/limited; six synthetic DOM oracle cases and five metadata projection cases do not substitute for a live provider.
+
+Older normal development, source-manual and Alpha instances/profiles were preserved. Live Playwright/CDP UI input fallback is ungranted; isolated fixture Playwright does not grant it. [Approved SPEC §7](../SPEC-01-STARTUP-INTEGRITY-REPAIR.md) states “The source task retains owner-manual test coordination” and requires all eight steps. Original-owner S3/S4/ledger incorporation and fresh R3/final review remain separate mandatory holds. No SPEC/current-job acceptance or publication is granted by this preparation.

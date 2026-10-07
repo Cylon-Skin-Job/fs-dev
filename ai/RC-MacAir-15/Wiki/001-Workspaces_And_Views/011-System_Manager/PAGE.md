@@ -1,91 +1,29 @@
 ---
 name: System Manager
-description: Defines System Manager as the protected view/workspace surface for system-level prompts, triggers, tools, skills, and delegated changes.
+description: Explains the current System surface and the intended protected-plugin boundary without treating ordinary view edits as privileged.
 metadata:
-  incoming-edges:
-    - Workspaces And Views
-    - View Architecture
-    - Workspace Paradigm
-  outgoing-edges:
-    - Chat System
-    - Wiki View
-    - Code Standards
   source-files:
     - fusion-studio-client/src/components/SystemViewer.tsx
-    - fusion-studio-server/lib/views/index.js
     - fusion-studio-server/lib/resources/resolver.js
+    - fusion-studio-server/lib/views/index.js
     - fusion-studio-server/lib/workspace/create-service.js
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:12:31Z"
 ---
 
-System Manager is the protected system-level workspace/view surface in Fusion Studio.
+**System Manager** is the platform-facing surface for System resources and workspace management. In current code `SystemViewer.tsx` offers a server-resolved Files panel, a Workspaces list and a New Workspace action that dispatches an agent prompt after switching to the `system-files` workspace. The ordinary Add Project and Create New registration paths are separate; see [Adding Workspaces](../003-Adding_Workspaces/PAGE.md). These UI routes do not establish a universal protected-change approval engine.
 
-From the application code perspective, System Manager is a view/workspace target that can load system-backed prompt files, expose system wiki guidance, and receive delegated requests from normal workspace agents. It should not duplicate the operational System Manager wiki content inside `fs-dev`; that detailed guidance lives in the `System_Manager` workspace itself.
+## Protected boundary and editable instances
 
-## Boundary
+The approved direction puts installed view plugins and their capability definitions in protected System, with a user-mediated route for editing them. System also retains platform-owned database, registry, permissions and dedicated state services; moving editable view instances does not move those authorities. A plugin may define display/content/tab behavior and permitted file, database or process operations. Merely changing an instance's persona, skills, workflow, content-root setting, theme or ordinary configuration must not expand those operations.
 
-Normal workspace agents can read system documentation and request system-level changes, but they should not directly edit protected system files.
+Editable instance folders are intended to move outside `System` into workspace `ai`; their exact path remains open. Today the server discovers capsules in `ai/<machine>/System/Views/`, and the bundled creation flow copies them there. This is the present storage layout, not the future trust boundary. Current dedicated state writes and path checks must still be respected. Filesystem placement alone does not make protected resources tamper-proof; [Persistence And Metadata Standards](../../005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md#protected-system-target-boundary) records the unfinished enforcement scope.
 
-Protected system files include:
+## Workflow remains to be designed
 
-- Prompt files that can grant or guide tool scope.
-- `TRIGGERS.md` or trigger-like files that can execute scripting behavior.
-- Tool and skill definitions.
-- System-wide templates, connector configuration, and cross-workspace automation rules.
+The older delegation idea proposes a request carrying the source workspace/thread, requested protected path and operation, proposed diff and approval context, followed by review or rejection. That is a design sketch, not verified current behavior or a mandatory step for every local view edit. The future plugin-edit workflow, declaration schema and approval presentation remain WV-O04. Ordinary instance edits within a plugin's capability envelope need not be routed through a privileged System Manager request just because they customize an agent persona or workflow. Protected plugin and system changes still require a trusted, user-mediated path.
 
-These files can indirectly create unsafe behavior if edited by a local agent. For example, a trigger could fetch secrets, pass them into a prompt, run an unsafe script, or send data outside the system without clear user awareness.
+## Documentation ownership
 
-## Delegation Flow
+When System Manager work changes workspace templates or registration, V2 view discovery or shared viewer behavior, update the owning Workspaces And Views article first: [Adding Workspaces](../003-Adding_Workspaces/PAGE.md), [View Architecture](../002-View_Architecture/PAGE.md) or [Viewer Search](../012-Viewer_Search/PAGE.md). Keep this page focused on the System surface and protected boundary; link to those owners instead of adding a second workspace architecture account.
 
-When a normal workspace agent wants a protected change, it should file or send a System Manager request instead of editing directly.
-
-The request should include:
-
-- The source workspace and thread.
-- The user request or relevant chat history.
-- The proposed file path.
-- The proposed create/update/delete operation.
-- A summary of intended behavior.
-- The proposed diff, replacement strings, or generated file body.
-- Any claimed user approval context.
-
-System Manager then evaluates the request and returns one of the governed outcomes:
-
-- `blocked`: unsafe, under-specified, or outside policy.
-- `approval_needed`: plausible but requires explicit user approval.
-- `instituted`: safe enough under policy and applied by System Manager.
-
-## Trigger Requests
-
-A future `request_trigger` tool should behave like a tool call from the local agent's perspective, but it should not directly write trigger files.
-
-Instead, it sends a structured request to System Manager. System Manager reviews the requested trigger, checks the source thread, decides whether the user clearly approved the behavior, and either blocks it, asks for approval, or applies it.
-
-Trigger definitions should be kept narrow. Prefer triggers that wake, evaluate criteria, fetch bounded information, and pass well-scoped context to a deterministic custom tool. Avoid broad triggers that can arbitrarily script system behavior.
-
-## Approval UI Direction
-
-If System Manager prepares a protected change, the user should be able to review it before application.
-
-Useful approval surfaces include:
-
-- An inline `Approve` action with a concise summary.
-- A click-to-view file or diff preview.
-- A clear description of what the trigger/tool/prompt will be able to do.
-- A record of why System Manager believes the user asked for the change.
-
-## Example Pattern
-
-A user might ask for a recurring workflow that finds recent music videos in a genre, checks what is buzzworthy, compares results against listening history, and returns a curated list.
-
-The safe shape is not an open-ended trigger that can do anything. The safer shape is:
-
-- A narrow trigger decides when the workflow should wake.
-- Deterministic search tools fetch bounded YouTube/catalog results.
-- Deterministic verification confirms candidate existence and metadata.
-- The assistant ranks results using a prompt and a local preference ledger.
-- The preference ledger updates from user feedback over time.
-- Any new trigger behavior is requested through System Manager approval.
-
-This keeps automation composable while preserving user awareness and system-level review.
+For System storage boundaries, see [Server And Runtime](../../002-Server_And_Runtime/PAGE.md#system-database-boundary). Detailed operational guidance in the separate `System_Manager` workspace is outside this page's certification scope.

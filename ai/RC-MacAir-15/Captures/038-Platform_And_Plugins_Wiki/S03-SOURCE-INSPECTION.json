@@ -1,0 +1,106 @@
+{
+  "at": "2026-09-23T13:20:48.068361+00:00",
+  "limits": "Bounded source/symbol and producer-consumer inspection only. No product tests, build, runtime or security certification. Existing product tests read for scope only. Missing guessed filenames were resolved by rg --files; no claim rests on those names.",
+  "sources": [
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "scope": "ContentArea"
+    },
+    {
+      "path": "fusion-studio-client/src/components/browser/CustomViewer.tsx",
+      "sha256": "94daad613f4f0f9bbdcf5e278ec29bec2133a414d3c6532e99a3fb3390a67792",
+      "scope": "CustomViewer; validateCustomViewerUrl"
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+      "sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "scope": "FileViewer"
+    },
+    {
+      "path": "fusion-studio-client/src/components/iframe/IframeSurface.tsx",
+      "sha256": "cb225687f7dd1976266e2712b815e93afb43087831629113ba5349609e1c8200",
+      "scope": "IframeSurface"
+    },
+    {
+      "path": "fusion-studio-client/src/components/iframe/core/FrameElement.tsx",
+      "sha256": "9b89a2faf15dc6376a3ce0cdb34f5cce0ceb0604792b4b67d59b3a7a879c5e66",
+      "scope": "FrameElement"
+    },
+    {
+      "path": "fusion-studio-client/src/components/iframe/core/useIframeNavigation.ts",
+      "sha256": "4df2c6297a385bbdf9d255ed16cef26af20709e42a660ef10d2a8a1c268954ec",
+      "scope": "useIframeNavigation; handleLoad"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/ComponentTabPanel.tsx",
+      "sha256": "d407ee5a1eb5df41ea8dac3666475e745d931cf0eceaffd4064da45945b3fb53",
+      "scope": "ComponentTabPanel; resolveSafely"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "scope": "ConnectedTabOwnerPorts; createConnectedTabOwner; commit"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+      "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f",
+      "scope": "resolveFilePlacementTarget"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedPresenterTargets.ts",
+      "sha256": "e3dcc0232b6f0edabbd6f7df7bfe48e4f68c12a5bb3c66efb124ebb1068d2805",
+      "scope": "canonicalFilePath; fileDocumentTargetKey"
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileDataStore.ts",
+      "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+      "scope": "FileDataState; contents/contentMetadata/contentErrors/pendingContents"
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileStore.ts",
+      "sha256": "f151b34f15545f0d3c6629834614a9e42f6c7a1c35ffdda8796d39dc5d57e057",
+      "scope": "applyConnectedTabCommit; persistFileTabs"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/atomic-writer.js",
+      "sha256": "b91fdd071eaa53febd4e286572cc38b00071e7e016d5c4ca7b905f9be23ad9e6",
+      "scope": "replace"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+      "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3",
+      "scope": "publishCommand; publishResource"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+      "sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb",
+      "scope": "originFromInput"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/file-operation-repository.js",
+      "sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016",
+      "scope": "prepare"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+      "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce",
+      "scope": "sanitizeReportedUiContext"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "scope": "save; finishSuccess"
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "scope": "STATIC_PUBLISHERS; bootstrapAdmission; createPublisher"
+    }
+  ],
+  "tests_read_only": [
+    "fusion-studio-client/e2e/component-tab-connected-owner.spec.ts",
+    "fusion-studio-server/test/resources/save-controller.test.js",
+    "fusion-studio-server/test/resources/reported-ui-context.test.js"
+  ]
+}

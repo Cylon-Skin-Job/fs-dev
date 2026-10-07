@@ -1,0 +1,169 @@
+{
+  "spec": "PW-01",
+  "primary_count": 24,
+  "supporting_count": 3,
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "scope": "primary",
+      "slice": "S01",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "scope": "primary",
+      "slice": "S01",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "scope": "primary",
+      "slice": "S01",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "scope": "primary",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "scope": "primary",
+      "slice": "S03",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md",
+      "scope": "primary",
+      "slice": "S03",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "scope": "primary",
+      "slice": "S03",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S03",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S03",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S04",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S04",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md",
+      "scope": "primary",
+      "slice": "S04",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "scope": "primary",
+      "slice": "S05",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "scope": "supporting_limited",
+      "slice": "S01",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "scope": "supporting_limited",
+      "slice": "S02",
+      "final_gate": "S06"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "scope": "supporting_limited",
+      "slice": "S01",
+      "final_gate": "S06"
+    }
+  ]
+}

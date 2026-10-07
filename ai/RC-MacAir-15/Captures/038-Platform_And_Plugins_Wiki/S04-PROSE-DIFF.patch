@@ -1,0 +1,213 @@
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md
+@@ -6,7 +6,7 @@
+     - fusion-studio-server/lib/workspace/create-service.js
+     - fusion-studio-server/lib/views/index.js
+     - fusion-studio-client/src/components/ContentArea.tsx
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ This section separates **what Fusion Studio does now**, **the approved direction**, and **choices still open**. It covers the workspace shell and view surfaces. The [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md) owns chat group, session, and placement identity; [Events And Ledger](../../010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md) owns event and provenance contracts. A link into either section does not transfer its authority here.
+@@ -22,6 +22,8 @@
+ Today, workspace creation copies selected **bundled** view templates into `ai/<machine>/System/Views/`; the renderer dispatches built-in view IDs to React components. These are source-inspected development-checkout facts, not a runtime certification or proof of plugin-based provisioning. The approved direction moves editable view instances outside System, keeps capability-bearing plugins protected, and has the server provision views from installed plugins. The exact destination, schema, update lifecycle, and dependency policy remain open. Read [Vision](001-Vision/PAGE.md) for the intended experience and [Decisions](002-Decisions/PAGE.md) for settled boundaries and open choices.
+ 
+ ## Reading routes
++
++[Platform And Plugins](../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) explains the approved shell, component and plugin boundaries, copied editable instances, and canonical file surfaces. This section retains workspace binding, local agent context and the WV gap register.
+ 
+ For workspace identity and registration, read [Workspace Paradigm](../001-Workspace_Paradigm/PAGE.md), [Adding Workspaces](../003-Adding_Workspaces/PAGE.md), and [Workspace Compositions](../021-Workspace_Compositions/PAGE.md). For view definitions, local resources, and state boundaries, read [View Architecture](../002-View_Architecture/PAGE.md), [View Configuration And Agents](../022-View_Configuration_And_Agents/PAGE.md), and [View Activity And Collections](../013-View_Activity_And_Collections/PAGE.md). The [View Catalog](../023-View_Catalog/PAGE.md) leads to short introductions for each bundled template and the System surface; [Unfinished Work](003-Unfinished_Work/PAGE.md) collects bounded gaps, and [Developer Map](../024-Developer_Map/PAGE.md) points to code owners.
+ 
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md
+@@ -3,7 +3,7 @@
+ description: The intended plugin-based workspace and view experience, with current implementation and unresolved mechanics kept distinct.
+ metadata:
+   source-files: []
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ ## Intended experience
+@@ -12,7 +12,11 @@
+ 
+ A view plugin supplies the protected behavior and template for a view type: display, content behavior, tabs, capabilities, and its own maintenance instructions. A recognized folder and declaration schema will tell the platform what a plugin contributes; that schema is still to be designed. A plugin can explain how to adjust an instance or point its content elsewhere. Predictable changes should use a small script or simple tool where possible; AI can coordinate or interpret the exceptional cases. Installing a view should not require an agent to improvise a copy procedure from prose.
+ 
+-Each installed view has editable local resources: its agent persona, skills, special sub-agent definitions, workflows, ordinary configuration, theme, and state. The instance refers to its plugin for behavior and permission boundaries. Its content root can be distinct from the instance folder. Editing those local resources must not silently create database access, new file authority, background processes, or executable display behavior. Those capabilities belong to the protected plugin and a user-mediated plugin-edit path. The target moves editable instances out of System while retaining protected plugins in System; the precise location is unresolved.
++Each installed view receives a separate editable copy of the plugin template, including its agent persona, AGENTS.md, skills, special sub-agent definitions, workflows, ordinary configuration, theme, and state. The instance refers to its plugin for behavior and permission boundaries. Its content root can be distinct from the instance folder. Editing those local resources must not silently create database access, new file authority, background processes, or executable display behavior. Those capabilities belong to the protected plugin and a user-mediated plugin-edit path. The target moves editable instances out of System while retaining protected plugins in System; the precise location is unresolved.
++
++The approved presentation model combines a useful standard component library with registered plugin contributions. Instances can configure and compose these pieces; specialized executable components stay in protected plugins. The platform shell owns tab, drawer and popup/window hosts, while the canonical file surface owns file presentation/editing and platform services own save/history. Components render on the client with explicit data/actions; they do not gain ambient service or database access. [Platform And Plugins](../../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) explains these layers.
++
++The intended agent starts in its own view-instance folder with project-root orientation and authorized project-wide working access, subject to protected System/plugin boundaries. Its own AGENTS and persona enter harness context; its skills are available through the harness, with bodies read when needed. Other views' instructions and skills are deliberately read when requested, not automatically injected. Such a read does not change identity, working directory or capabilities. [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md) separates this settled direction from the remaining harness mechanics and current startup behavior.
+ 
+ This design leaves a useful boundary between what a view knows and what it may do. A persona or skill can guide an assistant without granting the view extra authority. A tab can show content without becoming an independently installed view. The server, renderer, and harness need explicit contracts to apply local resources, validate bindings, and enforce capabilities; the existence of a folder or instructions alone does not prove those contracts are implemented.
+ 
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md
+@@ -3,7 +3,7 @@
+ description: Approved plugin and instance boundaries, precise supersessions, and product choices that remain open.
+ metadata:
+   source-files: []
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ ## Approved direction
+@@ -11,7 +11,9 @@
+ - **Views become plugins.** A view plugin contributes templates, display/content/tab behavior, capability declarations, and maintenance resources. The folder and declaration schema that identifies those contributions is not yet settled.
+ - **Workspace plugins declare composition.** They select and depend on view plugins, while allowing the composition to be edited. An example with six possible views and four selected views does not set a universal inventory.
+ - **The server provisions instances.** It copies the selected installed plugins' view templates and initializes required configuration and state. The existing bundled-template copy path is a current implementation, not proof that plugin-aware provisioning has shipped.
+-- **Instances carry local agent resources.** An instance can contain a persona, skills, special sub-agent definitions, workflows, ordinary configuration, theme, and state. It points to its plugin for display and content behavior. Whether and how a harness loads those resources still needs a separate context contract.
++- **Instances carry copied local agent resources.** The protected plugin supplies a template; the server copies it into a separate editable instance and binds that instance to the installed dependency. The copy can contain persona, AGENTS.md, skills, special sub-agent definitions, workflows, ordinary configuration, theme, and state. Copied instructions and configuration do not become privileged executable code.
++- **Agent orientation is view-local within the project.** The agent starts with its own view-instance working directory and project-root orientation/access, within authorized project scope and protected System/plugin boundaries. Own AGENTS/persona enter harness context; own skills are exposed through the harness with bodies read as needed. Other-view instructions/skills are manually read when requested, not eagerly injected; reads do not automatically change identity, working directory or capabilities. WV-O06 now concerns harness-specific mechanics, not this intended behavior.
++- **Plugin presentation uses platform hosts.** A useful standard library can be configured and composed, and protected plugins can contribute registered presentation components with explicit data/actions. The shell owns tabs, drawers and popup/window lifecycle. Collections can open the canonical file surface in the current tab with a return route or another tab, retaining selection/filter/navigation state; file editing and platform save/history keep their owners. See [Platform Boundaries](../../../011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md) and [Tabs, Drawers And Files](../../../011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md).
+ - **Editable instances move outside System.** The exact `ai` destination and which resources are shared across machines remain open. Capability-bearing plugins remain protected in System and are changed through a deliberate, user-mediated plugin path.
+ - **Ordinary configuration stays within granted capabilities.** Editing a local instance must not create new database or file authority, background-process rights, or executable display behavior. A path on disk is not itself permission enforcement; the future binding and validation mechanisms need explicit design.
+ - **Plugin knowledge travels with its plugin.** Predictable maintenance work should use scripts or simple tools. AI can coordinate or interpret work that needs judgment; it need not perform every deterministic tweak itself.
+@@ -28,6 +30,6 @@
+ 3. **Dependencies:** decide behavior for missing, disabled, or incompatible view plugins and version matching before plugin-based provisioning.
+ 4. **Schemas and enforcement:** define plugin folders/manifests, instance configuration, binding validation, and the user-mediated plugin-edit workflow before capability/provisioning implementation.
+ 5. **Attaching an existing folder:** decide whether an ordinary project folder without `ai` is initialized automatically. That is a proposal, not an approved requirement.
+-6. **Agent context:** define how per-view personas, skills, agents, and workflows are discovered and loaded before claiming that a harness uses them.
++6. **Agent context mechanics (WV-O06):** define harness-specific working-directory setup, discovery and assembly of local context, skill collision handling and enforcement before claiming end-to-end support. The view-local orientation, own AGENTS/persona context, skills available on demand and deliberate manual other-view reads are settled above; this gate does not require a new skill override/precedence model. See [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md#approved-agent-orientation).
+ 
+ These are decision gates, not reasons to treat the approved direction as current behavior. For the observed implementation and its bounded gaps, follow the [section overview](../PAGE.md).
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md
+@@ -3,7 +3,7 @@
+ description: Bounded register of workspace and view capabilities still needed for the approved plugin-based model.
+ metadata:
+   source-files: []
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ The [overview](../PAGE.md) separates the current application from the approved direction. This register collects the demonstrated or source-inspected limits that matter to that direction. It is a planning input, not an exhaustive app backlog or an implementation schedule. Each owning article supplies the fuller current behavior; the [Decisions](../002-Decisions/PAGE.md#open-product-choices) article keeps the product choices open. The code routes are in the [Developer Map](../../024-Developer_Map/PAGE.md). These limits were established by source inspection in the development checkout, not by running the product.
+@@ -22,7 +22,7 @@
+ 
+ ## WV-G04 — View-local agent context
+ 
+-**Target:** Editable view instances can supply persona, skills, special sub-agent definitions and workflows to the AI working in that view. **Current limit:** the inspected OpenCode launch starts from the project root; the inspected view-registry route does not establish assembly of those instance-local resources. This is an unverified end-to-end context path, not proof that no other context mechanism exists. **Remaining capability:** define discovery, precedence, assembly and trust at actual harness activation. **Owner:** harness and context assembly. **Decision gate:** WV-O06 before claiming resources are loaded. See [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md#current-implementation-and-gap).
++**Target:** The agent starts in its own editable view-instance folder with project-root orientation and authorized project-wide working access, subject to protected System/plugin boundaries. Own AGENTS/persona enter harness context; own skills are available through the harness with bodies loaded as needed. Other-view instructions/skills are deliberately read when requested, without automatic identity, capability or working-directory changes. **Current limit:** the inspected OpenCode launch still uses the supplied project root for both `--dir` and process working directory; the inspected view-registry route does not establish assembly of instance-local resources. This is an unverified end-to-end context path, not proof that no other context mechanism exists. **Remaining capability:** implement the settled orientation through harness-specific working-directory setup, discovery, assembly, skill collision handling and enforcement at activation. **Owner:** harness and context assembly. **Decision gate:** WV-O06 for those mechanics before claiming end-to-end support; intended local context and manual cross-view reads are settled. See [View Configuration And Agents](../../022-View_Configuration_And_Agents/PAGE.md#current-implementation-and-gap).
+ 
+ ## WV-G05 — Editable instance placement and capability binding
+ 
+@@ -30,4 +30,6 @@
+ 
+ ## Coverage boundary
+ 
++[Platform And Plugins unfinished work](../../../011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md) owns component hosting, shell/file reuse, hybrid iframe operations and external-store mediation gaps. Provisioning, instance identity, local context and placement remain under the WV IDs here.
++
+ The [View Catalog](../../023-View_Catalog/PAGE.md) labels mounted, configured-iframe, demo and template-only surfaces individually. A template-only entry does not add a new platform gap to this register by itself. [Chat System](../../../007-Chat_System/000-Overview_and_References/PAGE.md) and [Events And Ledger](../../../010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md) retain their own decisions and unfinished work. The older Wiki and Voice specialist trees remain available but were not recertified here.
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md
+@@ -7,7 +7,7 @@
+     - fusion-studio-server/lib/views/view-id.js
+     - fusion-studio-server/lib/views/workspace-registry-writer.js
+     - fusion-studio-client/src/components/ContentArea.tsx
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ A **view definition** describes how a kind of content is displayed and handled. An **installed view instance** is a particular workspace's configuration and local resources. Its **content root** is the material it reads or edits, which may be elsewhere in the project folder. A **tab** presents content inside the view. None of these is interchangeable. The [approved direction](../000-Workspaces_And_Views/001-Vision/PAGE.md) makes the definition a protected view plugin and the instance an editable folder referencing it. A plugin can instead define a workspace composition; plugin does not always mean view.
+@@ -18,6 +18,10 @@
+ 
+ **WV-G03 — repeatable plugin-defined instances:** the current discovery and bundled Add View route require unique view IDs and reject a second installed copy of the same template. `baseViewId` in the current registry projection equals the instance ID; it does not yet give multiple independent instances of one plugin. `ContentArea.tsx` dispatches built-in React components by fixed IDs, with separate custom/browser iframe cases and an unknown-view placeholder. The remaining capability is a plugin-to-instance binding and display dispatch that allows distinct instance identities while retaining the protected plugin's permissions. The platform view registry and renderer own that work. The identity/schema and binding rules remain a product gate (WV-O04); instance update/remove behavior is also open (WV-O02). A template folder alone does not establish this capability.
+ 
++## Approved presentation boundary
++
++A protected view plugin supplies content behavior and may contribute reusable presentation through the platform host contract. Its template is copied into a separate editable instance; configuring or composing registered components there does not create executable authority. Components render on the client from explicit data/actions. The platform shell retains tab, drawer and popup/window identity, focus and lifecycle; the canonical file-type registry and file surface retain presentation/editing, with save/history owned by platform services. A collection may open that file surface in its current tab with a return route or another tab while retaining selection/filter/navigation state. This is approved direction, not a claim that fixed current dispatch implements a general plugin loader or a second tab/save store. See [Composable Presentation](../../011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md) and [Tabs, Drawers And Files](../../011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md).
++
+ ## Content is a separate binding
+ 
+ The server reads a view's `content.json` and resolves a declared root separately from the capsule. Current supported declarations include workspace-relative, machine-relative, view-relative, project-root, selected-folder, absolute, SQLite and none; relative paths are checked against their allowed roots. The default `wiki-viewer` root is `ai/<machine>/Wiki`, `capture-viewer` uses `Captures`, and `file-viewer` uses the project root or session root. Changing a content root is configuration within the existing view implementation, not installation of a new view or a new grant of authority. The target requires plugin binding and content-root validation before treating an editable instance as safe; this page does not claim that future enforcement is already complete.
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md
+@@ -10,7 +10,7 @@
+     - fusion-studio-client/electron/shell-navigation-policy.cjs
+     - fusion-studio-client/electron/main.cjs
+     - fusion-studio-client/src/components/browser/urlValidator.ts
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ **Custom** is the current route for a user-supplied local app or page. The bundled `custom-viewer` template declares an iframe type; a configured custom panel goes through `CustomViewer`, while an instance with `app/index.html` can use the shell-managed local-app iframe path. These are present rendering branches, not a general installable plugin lifecycle.
+@@ -19,4 +19,6 @@
+ 
+ `CustomViewer` validates locally entered URLs. Its iframe hook can attempt to restore the initial page when it can read a changed origin, but a cross-origin redirect can prevent that read; the current app does not reliably confine subframe navigation to the initial origin. Electron currently strips frame-embedding restrictions from non-shell subframe responses, so a server’s restrictive embedding headers do not necessarily stop that page from displaying in Fusion. It does not gain Electron or Node APIs merely by appearing in the view. Custom is optional in the current New Workspace profile. The approved plugin model separates protected display/capability code from editable instance settings, but its declaration and permission enforcement remain future work.
+ 
++The approved hybrid direction places standard host pieces beside a custom iframe region and offers narrow authorized platform-operation requests. It does not grant unrestricted server, Node or database access; the current embedding paths do not establish that bridge. An iframe-side UI library is optional and deferred. [Custom Iframe Composition](../../011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md) owns the target and open interface choices.
++
+ Use [Browser](../005-Browser/PAGE.md) for general web navigation. [View Configuration And Agents](../022-View_Configuration_And_Agents/PAGE.md) distinguishes safe instance edits from plugin capability changes.
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md
+@@ -7,14 +7,14 @@
+     - fusion-studio-server/lib/views/workspace-registry-writer.js
+     - fusion-studio-server/lib/ws/client-message-router.js
+     - fusion-studio-client/src/components/WorkspaceCreateModal.tsx
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ A **workspace plugin** is intended to declare a composition: which view plugins form a useful starting workspace and which dependencies are needed. A person may omit proposed views and configure the result. A six-view example, or reducing it to four, illustrates editability; it does not prescribe a global six-view default. A view plugin supplies the protected display/content/tab behavior, capability declarations, templates and maintenance knowledge for its type. Not every plugin is a view plugin.
+ 
+ ## Approved provisioning
+ 
+-The server is to recognize installed plugin declarations, select the view plugins in a chosen composition, copy their view templates into editable workspace instances, and initialize necessary configuration and state. Each instance then refers back to its protected plugin. Persona, skills, special sub-agent definitions, workflows, theme, state and ordinary configuration live with that editable instance; the protected plugin controls authority. Predictable instance changes should use simple scripts or tools when possible, with AI handling interpretation where needed. Plugin-specific instructions stay with the plugin. This is an approved target, not a description of the current Create New path.
++The server is to recognize installed plugin declarations, select the view plugins in a chosen composition, copy their view templates into editable workspace instances, and initialize necessary configuration and state. Each instance then refers back to its protected plugin. Installing that dependency and creating an editable instance are separate operations; the copied template does not become privileged implementation code. [Plugin Templates And Instances](../../011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md) explains the package/copy boundary. Persona, AGENTS.md, skills, special sub-agent definitions, workflows, theme, state and ordinary configuration live with that editable instance; the protected plugin controls authority. Predictable instance changes should use simple scripts or tools when possible, with AI handling interpretation where needed. Plugin-specific instructions stay with the plugin. This is an approved target, not a description of the current Create New path.
+ 
+ **WV-G02 — plugin-aware compositions and provisioning:** today's `new` profile is a bundled JSON list of five template IDs, and `create-service.js` copies from `System_Manager/ai-template`. The Create New form displays those five, but sends only project path and label. Add View also copies a bundled template. The remaining capability is a server-owned installer/provisioner that reads installed workspace/view plugins, resolves the edited selection and dependencies, creates instances and initializes their state. The workspace controller, create service and future plugin platform own the integration. Before implementation, the owner must settle dependency/version behavior (WV-O03), declaration/binding schemas (WV-O04), copied-instance updates/disable/remove (WV-O02), and the instance destination/portability (WV-O01). No behavior for missing plugins or customized-instance upgrades is implied here.
+ 
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md
+@@ -7,11 +7,13 @@
+     - fusion-studio-server/lib/views/panel-paths.js
+     - fusion-studio-server/lib/view-state/resolver.js
+     - fusion-studio-server/lib/harness/opencode/index.js
++    - fusion-studio-server/lib/harness/compat.js
++    - fusion-studio-server/lib/ws/thread-ws-handlers.js
+     - fusion-studio-client/src/components/ContentArea.tsx
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+-A workspace's **view instance** is the editable local configuration for one installed view. In the approved model, its folder contains ordinary configuration, a content-root reference, theme and state, an agent persona, skills, special sub-agent definitions and workflows. It points to a protected **view plugin** that supplies display, content and tab behavior and declares capabilities. A workspace plugin selects the view plugins for a starting composition; it does not grant an instance new powers. See [View Architecture](../002-View_Architecture/PAGE.md) and [Workspace Compositions](../021-Workspace_Compositions/PAGE.md).
++A workspace's **view instance** is the editable local configuration for one installed view. In the approved model, its folder contains ordinary configuration, a content-root reference, theme and state, an agent persona, AGENTS.md, skills, special sub-agent definitions and workflows supplied by a copied plugin template. It points to a protected **view plugin** that supplies display, content and tab behavior and declares capabilities. A workspace plugin selects the view plugins for a starting composition; it does not grant an instance new powers. See [View Architecture](../002-View_Architecture/PAGE.md) and [Workspace Compositions](../021-Workspace_Compositions/PAGE.md).
+ 
+ ## Approved configuration boundary
+ 
+@@ -19,10 +21,16 @@
+ 
+ A content root is distinct from the instance folder. A configured root may point elsewhere under supported current declarations, but the target must validate that binding against the plugin's granted scope. The user may change where a view reads content without turning its editable files into a new capability source. This is an approved boundary, not a claim that the full plugin enforcement path exists now.
+ 
++## Approved agent orientation
++
++The agent starts with its own view-instance folder as working directory, while knowing the project root and retaining authorized project-wide working access. System and protected plugin boundaries still apply; project scope does not authorize direct protected mutations. The server provisions the separate editable template copy and binding. An instruction file or copied template does not confer executable powers. [Plugin Templates And Instances](../../011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md) owns that distinction.
++
++The instance's own AGENTS and persona enter harness context. Its skills are exposed through the harness as an available catalog, with their bodies read on demand rather than necessarily pasted into initial context. Other views' instructions and skills are deliberately read when requested, not automatically injected into every view's context. Manual reads do not automatically rebind identity, change working directory or grant capabilities. Harness-specific discovery, context assembly, skill collision handling and enforcement remain WV-O06 mechanics; the intended orientation is settled.
++
+ ## Current implementation and gap
+ 
+ Today `views/index.js` discovers numbered capsules in `ai/<machine>/System/Views/`, reads their `manifest.md`, `content.json` and styles, and `panel-paths.js` resolves access through that registry. `view-state/resolver.js` locates each capsule's `state/state.json` and merges it with workspace defaults. The renderer's built-in dispatch is still a fixed component map in `ContentArea.tsx`. This is current implementation, not the relocated instance or plugin-binding design.
+ 
+-**WV-G04 — view-local agent context:** current OpenCode startup uses the project root as its working directory; no current view-instance persona/skills/sub-agent/workflow assembly is established by these paths. Adding files to a future instance folder alone would not prove that a chat launched in that view receives them. Harness/context integration must define discovery, precedence, assembly and trust before claiming view-local agent behavior (WV-O06). This page specifies where those resources should live, not that they are loaded today.
++**WV-G04 — view-local agent context:** in the inspected activation route, `thread-ws-handlers.js` passes the workspace manager's project root through `harness/compat.js` to OpenCode. The adapter uses that supplied `projectRoot` for `--dir` and the spawned process working directory; it does not switch that launch to a view-instance folder. These source paths and the view registry do not establish the intended local persona/AGENTS/skills/sub-agent/workflow assembly end to end. Adding files alone would not prove that a chat launched in that view receives them, and this bounded inspection is not proof that no other context mechanism exists. Harness/context integration must implement the settled orientation and resolve working-directory setup, discovery, assembly, skill collision handling and enforcement (WV-O06). No runtime verification is claimed.
+ 
+ **WV-G05 — capability enforcement and relocation:** the current registry, path resolver and fixed renderer do not implement plugin-defined permissions or the approved outside-System instance placement. The product work must bind each editable instance to an installed protected plugin and enforce capabilities at actual server/display interfaces. Existing purpose-built view-state and path checks still apply; their presence does not prove the entire future protection model, and this gap does not mean all current checks are absent. See [System Manager](../011-System_Manager/PAGE.md) for the protected side and [View Activity And Collections](../013-View_Activity_And_Collections/PAGE.md) for current state ownership.
+--- ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-23-063439.md
++++ ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md
+@@ -6,7 +6,7 @@
+     - fusion-studio-client/src/components/ContentArea.tsx
+     - fusion-studio-client/src/components/file-explorer/FileExplorer.tsx
+     - fusion-studio-server/lib/file-explorer.js
+-  last-modified: "2026-09-21T13:37:22Z"
++  last-modified: "2026-09-23T13:34:39Z"
+ ---
+ 
+ **Files** presents the workspace's project files, with a tree drawer and a viewer for a selected file. The bundled `file-viewer` template declares `project-root` as its data source, and the current New Workspace profile selects it. `FileExplorer` requests the tree through the workspace file service and uses the file viewer for opened content.
+@@ -15,4 +15,4 @@
+ 
+ This is a mounted React view in the fixed `ContentArea` component map. File access is governed by the server's registered panel and path resolution; a template declaration does not grant arbitrary paths. The current view also has activity/tab state, but that is separate from the project's file content and from chat thread identity. See [View Activity And Collections](../013-View_Activity_And_Collections/PAGE.md) for state ownership and [View Architecture](../002-View_Architecture/PAGE.md) for instance versus content root.
+ 
+-The approved future plugin supplies the Files behavior while its editable instance selects content and agent configuration within declared capabilities.
++The approved future plugin supplies the Files behavior while its editable instance selects content and agent configuration within declared capabilities. The Files view is distinct from the reusable canonical file surface: a collection may open that surface in its current tab with a return route or another tab, retaining collection state while canonical file editing and platform save/history keep their owners. [Tabs, Drawers And Files](../../011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md) explains this target without adding another editor or save implementation.

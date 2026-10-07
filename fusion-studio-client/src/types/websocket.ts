@@ -85,8 +85,7 @@ export type WebSocketMessageType =
   // Screenshot manager
   | 'screenshot:data' | 'screenshot:list' | 'screenshot:updated'
   | 'screenshot:missing' | 'screenshot:error' | 'screenshot:file-capture'
-  | 'screenshot:file-captured' | 'screenshot:refresh-source'
-  | 'screenshot:source-refreshed'
+  | 'screenshot:file-captured'
   // Calendar / bookmarks
   | 'calendar:sync_complete'
   | 'bookmarks:list' | 'bookmarks:updated' | 'bookmarks:error'

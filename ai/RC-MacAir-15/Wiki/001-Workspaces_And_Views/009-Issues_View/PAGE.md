@@ -1,0 +1,20 @@
+---
+name: Issues View
+description: A workspace issue board for indexed tickets, with current dispatch limits.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/ContentArea.tsx
+    - fusion-studio-client/src/components/tickets/TicketBoard.tsx
+    - fusion-studio-client/src/state/ticketStore.ts
+  last-modified: "2026-09-28T04:12:31Z"
+---
+
+**Issues** organizes workspace tickets into the visible board. The bundled `issues-viewer` template names the `Issues` content root and is selected by the current New Workspace profile. `TicketBoard` reads `content/tickets.json` through panel data, categorizes tickets by state and assignee, and opens a selected ticket's detail.
+
+## Current status and limits
+
+The fixed React component map mounts the board. Some neighboring notification and trigger rows are demo UI data; showing a ticket or a bot assignee does not itself dispatch work to an agent. Ticket creation, execution and state transitions need their actual owning services or workflows, rather than inference from the template label. The future view plugin may package behavior and instructions, but this page does not define an Issues execution protocol.
+
+For visible-ticket data, Markdown companion authoring, and current creation and dispatch limits, see [Ticketing](../../003-Automation_And_Agents/002-Ticketing/PAGE.md).
+
+For the difference between a view surface and the workspace content it reads, see [View Architecture](../002-View_Architecture/PAGE.md).

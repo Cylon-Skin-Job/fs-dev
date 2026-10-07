@@ -1,0 +1,35 @@
+{
+  "counts": {
+    "generated_blocks": 39,
+    "unchanged_articles": 35,
+    "exact_pre_edit_snapshots": 4,
+    "no_new_ephemeral_refs": 4,
+    "whitespace": 4,
+    "protected_files": 1668,
+    "authority_unchanged": 2,
+    "revision": 1,
+    "product_inventory": 1,
+    "frontmatter": 4,
+    "source_paths_exist": 43,
+    "relative_links": 14,
+    "heading_fragments": 5
+  },
+  "passed": 1824,
+  "errors": [],
+  "warnings": [
+    {
+      "source_metadata": "fusion-studio-client/src/components/chat/",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    },
+    {
+      "source_metadata": "fusion-studio-server/lib/harness/",
+      "classification": "existing directory pointer; Part 6 owns source-metadata normalization"
+    }
+  ],
+  "candidate_pages": {
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md": "fea0b8b7c739baebfcd854638087bcb904c16c2c9beec82412a1ad6cda038a29",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md": "5390a8dda467dc4724c360af46990e2a841d12336e14653e19f5b0ff8421c65f",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md": "e777e1e44661d48fa210535c8133049aeca1db37b7bef4c82903f63b3b984915",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md": "4240c628a252d55a36073bafb65ebb4f98978d0219a13d18e0c0fe53db7058ae"
+  }
+}

@@ -1,0 +1,1998 @@
+{
+  "at": "2026-10-06T08:22:53.530150+00:00",
+  "scope": "independent current R1/R2/R3 product/build/all required Wiki/original adoption before fresh R3 gates",
+  "checks": [
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "expected": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "actual": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "expected": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "actual": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "expected": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "actual": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "expected": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "actual": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "expected": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "actual": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "expected": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "actual": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "expected": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "actual": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "expected": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "actual": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "expected": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "actual": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "expected": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "actual": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "expected": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "actual": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "expected": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "actual": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+      "expected": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "actual": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "expected": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "actual": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+      "expected": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "actual": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "expected": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "actual": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "expected": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "actual": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "expected": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "actual": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "expected": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "actual": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "expected": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "actual": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "expected": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "actual": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "expected": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "actual": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "expected": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "actual": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "expected": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "actual": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "expected": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "actual": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "expected": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "actual": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "expected": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "actual": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "expected": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "actual": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "expected": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "actual": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "expected": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "actual": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "expected": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "actual": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "expected": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "actual": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "expected": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "actual": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "expected": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "actual": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "expected": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "actual": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "expected": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "actual": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "expected": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "actual": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "expected": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "actual": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "expected": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "actual": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "match": true
+    },
+    {
+      "scope": "mixed-source",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "expected": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "actual": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "expected": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "actual": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "expected": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "actual": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "expected": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "actual": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "expected": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "actual": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "expected": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "actual": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "expected": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "actual": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "expected": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "actual": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "expected": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "actual": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "expected": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "actual": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "match": true
+    },
+    {
+      "scope": "loaded-app-owner",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "expected": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "actual": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "expected": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "actual": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "expected": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "actual": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "expected": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "actual": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "expected": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "actual": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "expected": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "actual": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "expected": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "actual": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "expected": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "actual": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "expected": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "actual": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "expected": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "actual": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "expected": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "actual": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "expected": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "actual": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+      "expected": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "actual": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "match": true
+    },
+    {
+      "scope": "accepted-R1-R2",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "expected": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "actual": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "expected": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "actual": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+      "expected": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "actual": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "expected": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "actual": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "expected": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "actual": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "expected": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "actual": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "expected": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "actual": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "expected": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "actual": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "match": true
+    },
+    {
+      "scope": "owned-R3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "expected": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "actual": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "match": true
+    },
+    {
+      "scope": "prerequisite-manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "expected": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d",
+      "actual": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d",
+      "match": true
+    },
+    {
+      "scope": "prerequisite-manifest",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/CURRENT-FINGERPRINTS.json",
+      "expected": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+      "actual": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/CaptureDocumentPresenter-Bej7sqr2.js",
+      "expected": "3cbc006485f85efede5f10c73bba2e74272c2e26cad38a9f6bfc21bf835022d8",
+      "actual": "3cbc006485f85efede5f10c73bba2e74272c2e26cad38a9f6bfc21bf835022d8",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ChatSurfaceComponentMount-BqGI3h2a.js",
+      "expected": "d16b773bfadbaa609a1dbf12c8615274321b55f0d3b2e6227701dc3eceb87745",
+      "actual": "d16b773bfadbaa609a1dbf12c8615274321b55f0d3b2e6227701dc3eceb87745",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileDocumentPresenter-CflsNQo-.css",
+      "expected": "1255a539e24702681e2710bb0895f5a1e7f45646f5ab5873b5fe277987e37517",
+      "actual": "1255a539e24702681e2710bb0895f5a1e7f45646f5ab5873b5fe277987e37517",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileDocumentPresenter-Co1Yziq4.js",
+      "expected": "c75b6283f37ffc9b34c43e225f6455006bc26400c8f44722ac7e7db5c1ea5328",
+      "actual": "c75b6283f37ffc9b34c43e225f6455006bc26400c8f44722ac7e7db5c1ea5328",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileEmptyTabBody-2xnBUkZA.js",
+      "expected": "cb83694962f360f3d497c521d47dfa50866a08837e367521402a01fe0802da72",
+      "actual": "cb83694962f360f3d497c521d47dfa50866a08837e367521402a01fe0802da72",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FileEmptyTabBody-Cxwzun_s.css",
+      "expected": "533ee1a6af9531e9f976b34a852cf650e83357292a75db238be02aa5e72e19c4",
+      "actual": "533ee1a6af9531e9f976b34a852cf650e83357292a75db238be02aa5e72e19c4",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FilePickerDrawerLayer-CQODmtw5.css",
+      "expected": "af6ceb799a35cca419f477260c1aede230fda1e82381d76f9e57de4b7be941d4",
+      "actual": "af6ceb799a35cca419f477260c1aede230fda1e82381d76f9e57de4b7be941d4",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/FilePickerDrawerLayer-Dibi_iZc.js",
+      "expected": "e8a02010125e53c99420da708a6284d192fda770fd575dcba65616fb2d4ff890",
+      "actual": "e8a02010125e53c99420da708a6284d192fda770fd575dcba65616fb2d4ff890",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "expected": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "actual": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "expected": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+      "actual": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "expected": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+      "actual": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "expected": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+      "actual": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "expected": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+      "actual": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "expected": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "actual": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "expected": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+      "actual": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "expected": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "actual": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "expected": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+      "actual": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "expected": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+      "actual": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "expected": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+      "actual": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "expected": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "actual": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "expected": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+      "actual": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "expected": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "actual": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "expected": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+      "actual": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "expected": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "actual": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "expected": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+      "actual": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "expected": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+      "actual": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "expected": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "actual": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "expected": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+      "actual": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "expected": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+      "actual": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "expected": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+      "actual": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "expected": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+      "actual": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "expected": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "actual": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "expected": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "actual": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "expected": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+      "actual": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "expected": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+      "actual": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "expected": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+      "actual": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "expected": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "actual": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "expected": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+      "actual": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "expected": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+      "actual": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "expected": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+      "actual": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "expected": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "actual": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "expected": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+      "actual": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "expected": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "actual": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "expected": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+      "actual": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "expected": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "actual": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "expected": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+      "actual": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "expected": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+      "actual": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "expected": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+      "actual": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "expected": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+      "actual": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "expected": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "actual": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "expected": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+      "actual": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "expected": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "actual": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "expected": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+      "actual": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "expected": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+      "actual": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "expected": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+      "actual": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "expected": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "actual": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "expected": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+      "actual": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "expected": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "actual": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "expected": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+      "actual": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "expected": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+      "actual": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "expected": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+      "actual": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "expected": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+      "actual": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "expected": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+      "actual": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "expected": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "actual": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "expected": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+      "actual": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "expected": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "actual": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+      "expected": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+      "actual": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/MenuSurface-BrYLoXvx.css",
+      "expected": "dab03a11f209ffbeea5130ceb17601c3d851eed429a7e62e2eabb7a05b6f8820",
+      "actual": "dab03a11f209ffbeea5130ceb17601c3d851eed429a7e62e2eabb7a05b6f8820",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/apl-B4CMkyY2.js",
+      "expected": "f242eda34c4a72bd8e51c278934ec62fe4804f129733e27d0441e1dc8bbc07a9",
+      "actual": "f242eda34c4a72bd8e51c278934ec62fe4804f129733e27d0441e1dc8bbc07a9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asciiarmor-Df11BRmG.js",
+      "expected": "a4f24c2097052635b21234f8995ea0bc9aa6eb4627e9aad3d4c7da5fb3eb9321",
+      "actual": "a4f24c2097052635b21234f8995ea0bc9aa6eb4627e9aad3d4c7da5fb3eb9321",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asn1-EdZsLKOL.js",
+      "expected": "ae03ba33f00f6d244c134c98deb75db9ef27894ed42661b6b96cf897561e1bab",
+      "actual": "ae03ba33f00f6d244c134c98deb75db9ef27894ed42661b6b96cf897561e1bab",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/asterisk-B-8jnY81.js",
+      "expected": "47dfc80fb04e1d00d31d9f5286c817e3a75d012bc8c88b97585ea4776a4761c7",
+      "actual": "47dfc80fb04e1d00d31d9f5286c817e3a75d012bc8c88b97585ea4776a4761c7",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/brainfuck-C4LP7Hcl.js",
+      "expected": "de73a71178f148e59b5a6d7ca989842599d46d92836517bad1ddf005a968ab4e",
+      "actual": "de73a71178f148e59b5a6d7ca989842599d46d92836517bad1ddf005a968ab4e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/chat-completing-pinwheel.gif",
+      "expected": "921d36808bfc3816beacbf37ad281d59b9e2414b98f3d533926e5ed6ff89d874",
+      "actual": "921d36808bfc3816beacbf37ad281d59b9e2414b98f3d533926e5ed6ff89d874",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/clike-B9uivgTg.js",
+      "expected": "362289d801a4f7b5abb548e9220660731b08cf3e00989bb8462ebed73bf28e96",
+      "actual": "362289d801a4f7b5abb548e9220660731b08cf3e00989bb8462ebed73bf28e96",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/clojure-BMjYHr_A.js",
+      "expected": "498a60106d02e5d91242032d01e8c02c8405cc0dd2d089d69f55eab8e78d1a20",
+      "actual": "498a60106d02e5d91242032d01e8c02c8405cc0dd2d089d69f55eab8e78d1a20",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cmake-BQqOBYOt.js",
+      "expected": "754963f9ba8388c27113791b9da35a6291f5784fd853027081091ae4b9018ca7",
+      "actual": "754963f9ba8388c27113791b9da35a6291f5784fd853027081091ae4b9018ca7",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cobol-CWcv1MsR.js",
+      "expected": "b5708cea6e07765d16bd3cea07d4a10a3672636bbc45ce2d2646c9f1833a4372",
+      "actual": "b5708cea6e07765d16bd3cea07d4a10a3672636bbc45ce2d2646c9f1833a4372",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/coffeescript-S37ZYGWr.js",
+      "expected": "140d96ba54d87483b611e343940304fd55d851a31289ffb6b9ab1a2c8b4793a2",
+      "actual": "140d96ba54d87483b611e343940304fd55d851a31289ffb6b9ab1a2c8b4793a2",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/commonlisp-DBKNyK5s.js",
+      "expected": "5ab53180afeb19f45f2adb48571c37465b9b697129377d2745eb0948ee8add01",
+      "actual": "5ab53180afeb19f45f2adb48571c37465b9b697129377d2745eb0948ee8add01",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/crystal-SjHAIU92.js",
+      "expected": "66127e5531035963dfda0a8bc314538018e1205865fa9371da29ddc850b3fd7b",
+      "actual": "66127e5531035963dfda0a8bc314538018e1205865fa9371da29ddc850b3fd7b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/css-BnMrqG3P.js",
+      "expected": "aa3e47bd7d7e6f2b9aed7b342b7d6aa059ff6e770c86d64cb0eaf97b403ec98a",
+      "actual": "aa3e47bd7d7e6f2b9aed7b342b7d6aa059ff6e770c86d64cb0eaf97b403ec98a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/cypher-C_CwsFkJ.js",
+      "expected": "4a2a3e7313e1339de833d287d518acc97046ddd16fb244a28b34f15f01f01b4b",
+      "actual": "4a2a3e7313e1339de833d287d518acc97046ddd16fb244a28b34f15f01f01b4b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/d-pRatUO7H.js",
+      "expected": "7d17f349f6b8da47c4e024e6646b867bcae32da8f1262291e93eb551f2d6f15d",
+      "actual": "7d17f349f6b8da47c4e024e6646b867bcae32da8f1262291e93eb551f2d6f15d",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/diff-DbItnlRl.js",
+      "expected": "100f04b4d542403a267b0beed52abb489c507eb75bd1cff9e11447af2dbf9eda",
+      "actual": "100f04b4d542403a267b0beed52abb489c507eb75bd1cff9e11447af2dbf9eda",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dockerfile-BKs6k2Af.js",
+      "expected": "95f163ab68a8f7365d9a168beafab67b4eaaf73ed8a051cad2bbb445d3dbd208",
+      "actual": "95f163ab68a8f7365d9a168beafab67b4eaaf73ed8a051cad2bbb445d3dbd208",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dtd-DF_7sFjM.js",
+      "expected": "e107c8a82ea6a638f3350669326809c15eb5e227e6dae8d8dd41ca139cd522ee",
+      "actual": "e107c8a82ea6a638f3350669326809c15eb5e227e6dae8d8dd41ca139cd522ee",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/dylan-DwRh75JA.js",
+      "expected": "9b7382fd95169a9a2b34765109c2bf6c7ae30b3dd0bd62759b04a49c3d394acc",
+      "actual": "9b7382fd95169a9a2b34765109c2bf6c7ae30b3dd0bd62759b04a49c3d394acc",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ebnf-CDyGwa7X.js",
+      "expected": "ef22ca54434ab2be0f6ed0dc36b246cdcfa507556fed7a847d77064c5fb1c0ef",
+      "actual": "ef22ca54434ab2be0f6ed0dc36b246cdcfa507556fed7a847d77064c5fb1c0ef",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ecl-Cabwm37j.js",
+      "expected": "af42e9e8b926913548f8cf9d90bbe9ea829ced5b235a49d8b59e4f8010113fc1",
+      "actual": "af42e9e8b926913548f8cf9d90bbe9ea829ced5b235a49d8b59e4f8010113fc1",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/eiffel-CnydiIhH.js",
+      "expected": "6a7536ca49edb77b3af0b9a68caeb900aa05f71ae09babb95591fa4699ccb07f",
+      "actual": "6a7536ca49edb77b3af0b9a68caeb900aa05f71ae09babb95591fa4699ccb07f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/elm-vLlmbW-K.js",
+      "expected": "649698475e1b2b949f3af3c199a7e4cb72dbc4e51a111984437689b8893865ad",
+      "actual": "649698475e1b2b949f3af3c199a7e4cb72dbc4e51a111984437689b8893865ad",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/erlang-BNw1qcRV.js",
+      "expected": "8a3a9b30601fc689347511fed678378f5db855c49743cbf971043e1c10b19fed",
+      "actual": "8a3a9b30601fc689347511fed678378f5db855c49743cbf971043e1c10b19fed",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/factor-kuTfRLto.js",
+      "expected": "c3f0ab8713e16d718edae2753adce49b7d87b3ee36d3a529db49e4c7ae209335",
+      "actual": "c3f0ab8713e16d718edae2753adce49b7d87b3ee36d3a529db49e4c7ae209335",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/fcl-Kvtd6kyn.js",
+      "expected": "685d86c935fa25d282da3444b211803edf318f1723b0e3db5a665ec50db10151",
+      "actual": "685d86c935fa25d282da3444b211803edf318f1723b0e3db5a665ec50db10151",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/forth-Ffai-XNe.js",
+      "expected": "f6680528a050997990fd2eac73d2fee5e3c5432b34aaf52fe1fdc2f984db261b",
+      "actual": "f6680528a050997990fd2eac73d2fee5e3c5432b34aaf52fe1fdc2f984db261b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/fortran-DYz_wnZ1.js",
+      "expected": "91936d3b97248972ef6db720395a5f811a4f560a34920d60ebcf3add475162b1",
+      "actual": "91936d3b97248972ef6db720395a5f811a4f560a34920d60ebcf3add475162b1",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/gas-Bneqetm1.js",
+      "expected": "548fd06740ff7e7e6dab57021f454462c6899e78043f5d70e1902e4ca7c317a0",
+      "actual": "548fd06740ff7e7e6dab57021f454462c6899e78043f5d70e1902e4ca7c317a0",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/gherkin-heZmZLOM.js",
+      "expected": "75d36502feb18a52191c195ac7fd3b5f7e57a29b6e73ae30422815efc689fc81",
+      "actual": "75d36502feb18a52191c195ac7fd3b5f7e57a29b6e73ae30422815efc689fc81",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/groovy-D9Dt4D0W.js",
+      "expected": "6912e83a4950c0e255f200359253bfb636344600ab03ad7178aaa166041fb79e",
+      "actual": "6912e83a4950c0e255f200359253bfb636344600ab03ad7178aaa166041fb79e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/haskell-Cw1EW3IL.js",
+      "expected": "b47ca38b34ea1f8fb65c1f4f1043277796f6437c9852bad46a7c6cf1445d6f20",
+      "actual": "b47ca38b34ea1f8fb65c1f4f1043277796f6437c9852bad46a7c6cf1445d6f20",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/haxe-H-WmDvRZ.js",
+      "expected": "3754ffb01bd31420d626dd6139d4fc5b12f58485c5779552a99710740ee0f5da",
+      "actual": "3754ffb01bd31420d626dd6139d4fc5b12f58485c5779552a99710740ee0f5da",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/http-DBlCnlav.js",
+      "expected": "269060ee11376e85e7b8d4c7dd15c014fe4b755289a85d084d125a2615488e75",
+      "actual": "269060ee11376e85e7b8d4c7dd15c014fe4b755289a85d084d125a2615488e75",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/idl-BEugSyMb.js",
+      "expected": "24a7719ff1d38588f4889f8d0f6bca90690f58436a048ef8e3c644aabf1aaffd",
+      "actual": "24a7719ff1d38588f4889f8d0f6bca90690f58436a048ef8e3c644aabf1aaffd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-4inLKB80.js",
+      "expected": "703421c983922d81ad4cc1f5215864d1aef205466c02e069534a73f02bfc3143",
+      "actual": "703421c983922d81ad4cc1f5215864d1aef205466c02e069534a73f02bfc3143",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-B-ev9ziP.js",
+      "expected": "3cf8c43692762042c553cc1b757744a5185d4e1e3044d29dac3694cdfab794b9",
+      "actual": "3cf8c43692762042c553cc1b757744a5185d4e1e3044d29dac3694cdfab794b9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BA4stZ3t.js",
+      "expected": "0fed5a4c2cbf75f455a41dc1dca2046e0df18daba8900f8899fda47bc1c52acd",
+      "actual": "0fed5a4c2cbf75f455a41dc1dca2046e0df18daba8900f8899fda47bc1c52acd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BBABxg3z.js",
+      "expected": "12125f7612392aaaa7ba56043f22b9583d2aca02c7879180ff16c42212880e3f",
+      "actual": "12125f7612392aaaa7ba56043f22b9583d2aca02c7879180ff16c42212880e3f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-BmZ0W5GA.js",
+      "expected": "f5608a8737aa60e56c4e844360c5081635b78f93fae583b5b43af3b6d63b9305",
+      "actual": "f5608a8737aa60e56c4e844360c5081635b78f93fae583b5b43af3b6d63b9305",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CAAcF9Aq.js",
+      "expected": "da6f31846d750c95b31616f7f00cd6e137e382b182f994fa80f6e55dc913139e",
+      "actual": "da6f31846d750c95b31616f7f00cd6e137e382b182f994fa80f6e55dc913139e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CBlo99-V.js",
+      "expected": "d226aaa43072f906315114026b51755162409ea0e6d8319f6a00e1400d84a6d8",
+      "actual": "d226aaa43072f906315114026b51755162409ea0e6d8319f6a00e1400d84a6d8",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CByjXUoY.js",
+      "expected": "d58c9445005d5d8642faf65909ceb1d59b5fbd117161119d1ff1cc5c234385df",
+      "actual": "d58c9445005d5d8642faf65909ceb1d59b5fbd117161119d1ff1cc5c234385df",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Ccl14zbn.js",
+      "expected": "1a92259a47c0a1db69c4983f999754906cebb28e47a73123319c45bbda35e992",
+      "actual": "1a92259a47c0a1db69c4983f999754906cebb28e47a73123319c45bbda35e992",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Cd5u-RY9.js",
+      "expected": "9abe71ee38b95042dc78a7544cf1b522df5ed36602b94cf900107c377a1f4bff",
+      "actual": "9abe71ee38b95042dc78a7544cf1b522df5ed36602b94cf900107c377a1f4bff",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-CkYwWPKA.js",
+      "expected": "e34e59ecfc407341cb33612bb2c96156a225749ba79eab7716da4678ac4addfe",
+      "actual": "e34e59ecfc407341cb33612bb2c96156a225749ba79eab7716da4678ac4addfe",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-D-VGcjKx.css",
+      "expected": "230b93ffbc7fda6a3c17eb38982513963b679b1c994530524ce5ade90417a951",
+      "actual": "230b93ffbc7fda6a3c17eb38982513963b679b1c994530524ce5ade90417a951",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-D7cfHEJY.js",
+      "expected": "dd4a6b13952cf30fbca9df77c6753749047426c16c918668939aaff31bcaa380",
+      "actual": "dd4a6b13952cf30fbca9df77c6753749047426c16c918668939aaff31bcaa380",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DAzXIw0r.js",
+      "expected": "a23482205dc9f6859a44b71e605bbebe31c829f4d4a3408d6f83e4686b8087a3",
+      "actual": "a23482205dc9f6859a44b71e605bbebe31c829f4d4a3408d6f83e4686b8087a3",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DQO5ig1l.js",
+      "expected": "c143f561da9346f3ec7d0f3168f2e20d66554d9429728aad058279f61779925a",
+      "actual": "c143f561da9346f3ec7d0f3168f2e20d66554d9429728aad058279f61779925a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DQZPuh3t.js",
+      "expected": "87fb4f2a9bd1e50092c920c05b86367d8ffec0e7913f0a2ddade802d376c8104",
+      "actual": "87fb4f2a9bd1e50092c920c05b86367d8ffec0e7913f0a2ddade802d376c8104",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DUEXZiFM.js",
+      "expected": "528ccd5a1621ffcfa14ef09e701eb48d51827d1ded3aa095b1c80ce9ea1fe1e8",
+      "actual": "528ccd5a1621ffcfa14ef09e701eb48d51827d1ded3aa095b1c80ce9ea1fe1e8",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DVvzQ662.js",
+      "expected": "a4434328db85903b1b9a0857ab1754183fb294fce85fcefc3f6acbdbabacc938",
+      "actual": "a4434328db85903b1b9a0857ab1754183fb294fce85fcefc3f6acbdbabacc938",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-DoEzcY5q.js",
+      "expected": "2d2ebb871ffdb4f035dc4a6afbe2e463d3290a6216d0aa82528ea7fb2de71dc9",
+      "actual": "2d2ebb871ffdb4f035dc4a6afbe2e463d3290a6216d0aa82528ea7fb2de71dc9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-Dq_rTBQH.js",
+      "expected": "86c163678cb0ca28cd5cf5052aae8a6ff1fc477cc73978bc3b0e3db278ae694d",
+      "actual": "86c163678cb0ca28cd5cf5052aae8a6ff1fc477cc73978bc3b0e3db278ae694d",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-J2r6dQDi.js",
+      "expected": "e2cbaf9d0bebb18dbdf16041a976a308af43cd8623a6476a7f10c61c1b3273d5",
+      "actual": "e2cbaf9d0bebb18dbdf16041a976a308af43cd8623a6476a7f10c61c1b3273d5",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-MMZtbGfg.js",
+      "expected": "af669aca3fcd939d2069521a9c51f99fb1f8bc84f5b79d10b3ad2cbeafa52f18",
+      "actual": "af669aca3fcd939d2069521a9c51f99fb1f8bc84f5b79d10b3ad2cbeafa52f18",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-VI6S4YN0.js",
+      "expected": "d35cda0ef0d269b913db99b4a57fc02f5f91f00f04cdb16ac836467b1191a622",
+      "actual": "d35cda0ef0d269b913db99b4a57fc02f5f91f00f04cdb16ac836467b1191a622",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/index-r1wckcDm.js",
+      "expected": "b1b5bb50508e8cece6f8ad3b02ab05b2e0959c9a0f9706fa887f2769299a366a",
+      "actual": "b1b5bb50508e8cece6f8ad3b02ab05b2e0959c9a0f9706fa887f2769299a366a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/javascript-iXu5QeM3.js",
+      "expected": "182fdca66238d12ed737c8fd2d3f5a4bfec8d6559889f9c79117a1caab05d649",
+      "actual": "182fdca66238d12ed737c8fd2d3f5a4bfec8d6559889f9c79117a1caab05d649",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/julia-DuME0IfC.js",
+      "expected": "9c693e030ec08a516cdbb591c88c08c69a6525445481ba74a899961e8704b9d6",
+      "actual": "9c693e030ec08a516cdbb591c88c08c69a6525445481ba74a899961e8704b9d6",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/livescript-BwQOo05w.js",
+      "expected": "63b490e7cca07ce077a7c204e930a01413d0d5e18064eed03b1e662e01c22103",
+      "actual": "63b490e7cca07ce077a7c204e930a01413d0d5e18064eed03b1e662e01c22103",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/lua-BgMRiT3U.js",
+      "expected": "dabbc2ffcce570b8ac8374c85c98d9f58bf0c51031bd0e9a1a02f080420a2521",
+      "actual": "dabbc2ffcce570b8ac8374c85c98d9f58bf0c51031bd0e9a1a02f080420a2521",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/material-symbols-outlined-CqIkmgaP.woff2",
+      "expected": "9ec3f3deed0be4da191a434b78fdc53e76ead92333290d3f8ee9f3dde34b6339",
+      "actual": "9ec3f3deed0be4da191a434b78fdc53e76ead92333290d3f8ee9f3dde34b6339",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mathematica-DTrFuWx2.js",
+      "expected": "d3613780e5d57d3809324863462a59a54fb9b83f31e223d59f504a77b04dc495",
+      "actual": "d3613780e5d57d3809324863462a59a54fb9b83f31e223d59f504a77b04dc495",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mbox-CNhZ1qSd.js",
+      "expected": "19086bb5a8b00d893a7b6aceea1d06a0cc34c24bdb053031f880cb1bb1994ced",
+      "actual": "19086bb5a8b00d893a7b6aceea1d06a0cc34c24bdb053031f880cb1bb1994ced",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mirc-CjQqDB4T.js",
+      "expected": "76ae2e410f90b453529c367ac69d476e5fb516964c0bf8ffb2676d875b8522b4",
+      "actual": "76ae2e410f90b453529c367ac69d476e5fb516964c0bf8ffb2676d875b8522b4",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mllike-CXdrOF99.js",
+      "expected": "0bf60c6883fe103d813759f1b69baa46af8b5dc0b502aae492c247838a5d8784",
+      "actual": "0bf60c6883fe103d813759f1b69baa46af8b5dc0b502aae492c247838a5d8784",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/modelica-Dc1JOy9r.js",
+      "expected": "03c2e8fe9a47723c0e6eb8a2394543d7e2bdddace7770b4ae9c54005d6ae4be9",
+      "actual": "03c2e8fe9a47723c0e6eb8a2394543d7e2bdddace7770b4ae9c54005d6ae4be9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mscgen-BA5vi2Kp.js",
+      "expected": "f0e7bd8988241778eac8d6093bee63f099bcd957994a35c58979ff33f5a137cc",
+      "actual": "f0e7bd8988241778eac8d6093bee63f099bcd957994a35c58979ff33f5a137cc",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/mumps-BT43cFF4.js",
+      "expected": "1eee059f667d792d74620cbb7e83406488e209e548c7de0f880cd8830d97a58f",
+      "actual": "1eee059f667d792d74620cbb7e83406488e209e548c7de0f880cd8830d97a58f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/nginx-DdIZxoE0.js",
+      "expected": "67487e9c0fa87bca9b8e9be91aad97fca8b610627731156b4ae44116a2b33b36",
+      "actual": "67487e9c0fa87bca9b8e9be91aad97fca8b610627731156b4ae44116a2b33b36",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/nsis-LdVXkNf5.js",
+      "expected": "b57b168755b7a19fc7100fb4dba6b50b66e3e8561606232b8be6020c13ef4f1b",
+      "actual": "b57b168755b7a19fc7100fb4dba6b50b66e3e8561606232b8be6020c13ef4f1b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ntriples-BfvgReVJ.js",
+      "expected": "46bcf88e08c9250fac68671aa5bb4b5314a3ff62c487736825f6bdc41f02392b",
+      "actual": "46bcf88e08c9250fac68671aa5bb4b5314a3ff62c487736825f6bdc41f02392b",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/octave-Ck1zUtKM.js",
+      "expected": "2050e71c70081d414f73ab9b72ccf17a7319d311d6aba18193ba050705d661e9",
+      "actual": "2050e71c70081d414f73ab9b72ccf17a7319d311d6aba18193ba050705d661e9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/oz-BzwKVEFT.js",
+      "expected": "930fe68084255ef156188a29a640431ca0f276d323ce07241b92f1b678390777",
+      "actual": "930fe68084255ef156188a29a640431ca0f276d323ce07241b92f1b678390777",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pascal--L3eBynH.js",
+      "expected": "19eb54c507f12be735989dcfebb5dc2f7a139777cdd71665896fb4bd287f89ca",
+      "actual": "19eb54c507f12be735989dcfebb5dc2f7a139777cdd71665896fb4bd287f89ca",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/perl-CdXCOZ3F.js",
+      "expected": "195216883cd9274b5414861746c3ca02f4df013330b91440c785561fbc188f37",
+      "actual": "195216883cd9274b5414861746c3ca02f4df013330b91440c785561fbc188f37",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pig-CevX1Tat.js",
+      "expected": "8a443e606edc2da2658abe26c048af2a468c4f3244434957fe11320a15938043",
+      "actual": "8a443e606edc2da2658abe26c048af2a468c4f3244434957fe11320a15938043",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/powershell-CFHJl5sT.js",
+      "expected": "5eef7d073bc36b86d7cfd0804c38c091931f20dadc61b176ca2d70ce6bb488d2",
+      "actual": "5eef7d073bc36b86d7cfd0804c38c091931f20dadc61b176ca2d70ce6bb488d2",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/properties-C78fOPTZ.js",
+      "expected": "5b083077fe05a0376e6ca5536d04fb555ba72e848b7a8ba2cd8a7236a3a5d6b9",
+      "actual": "5b083077fe05a0376e6ca5536d04fb555ba72e848b7a8ba2cd8a7236a3a5d6b9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/protobuf-ChK-085T.js",
+      "expected": "872320ac45a7915b0f7aed71325ae2adb105b51cadd2a6fc74b65f5a552791ae",
+      "actual": "872320ac45a7915b0f7aed71325ae2adb105b51cadd2a6fc74b65f5a552791ae",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/pug-DeIclll2.js",
+      "expected": "803a888b8468015a2133ca30b67d5ad7d18a7b67e0715cbb8b0fb5426f790d20",
+      "actual": "803a888b8468015a2133ca30b67d5ad7d18a7b67e0715cbb8b0fb5426f790d20",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/puppet-DMA9R1ak.js",
+      "expected": "c614d78e96603483b265bdb548e7cdd7a54a68df8b7a3556829d7b7ea874eb4e",
+      "actual": "c614d78e96603483b265bdb548e7cdd7a54a68df8b7a3556829d7b7ea874eb4e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/python-BuPzkPfP.js",
+      "expected": "ac31cf70d1ebf5ecde918d2284e736615fab53442c2b3c230bfa83f85f806d78",
+      "actual": "ac31cf70d1ebf5ecde918d2284e736615fab53442c2b3c230bfa83f85f806d78",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/q-pXgVlZs6.js",
+      "expected": "c4828fd3608a4a8a9b322b6e5653aea3b21aa2556267680d5d27520796320fd9",
+      "actual": "c4828fd3608a4a8a9b322b6e5653aea3b21aa2556267680d5d27520796320fd9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/r-B6wPVr8A.js",
+      "expected": "e32bc0fe55b99eb76ad25438a9c224ee4ae4d9ed482e95c40af328e44ea70a64",
+      "actual": "e32bc0fe55b99eb76ad25438a9c224ee4ae4d9ed482e95c40af328e44ea70a64",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/rpm-CTu-6PCP.js",
+      "expected": "60f8f25323f47996c1e5a299f87f42de42bd6c13a584733c4fe3d71ec48ba65a",
+      "actual": "60f8f25323f47996c1e5a299f87f42de42bd6c13a584733c4fe3d71ec48ba65a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ruby-B2Rjki9n.js",
+      "expected": "5cd3a5c7aab2013878c02b629ac364781ffd33eea086457f1d1c28f5cdede906",
+      "actual": "5cd3a5c7aab2013878c02b629ac364781ffd33eea086457f1d1c28f5cdede906",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sas-B4kiWyti.js",
+      "expected": "f8c7889fa764fc5a840cbe7010e1d9f931865efee9d4c510425d62b0ac84075d",
+      "actual": "f8c7889fa764fc5a840cbe7010e1d9f931865efee9d4c510425d62b0ac84075d",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/scheme-C41bIUwD.js",
+      "expected": "7ddaa1a5f63ea49d2ba6007ee977de4495644082218253d0c107f7b6865ce8fe",
+      "actual": "7ddaa1a5f63ea49d2ba6007ee977de4495644082218253d0c107f7b6865ce8fe",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/shell-CjFT_Tl9.js",
+      "expected": "b4da8a11db1127e003f10a94ff707474af1392051c41f1e0ef78152e9bd0ea95",
+      "actual": "b4da8a11db1127e003f10a94ff707474af1392051c41f1e0ef78152e9bd0ea95",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sieve-C3Gn_uJK.js",
+      "expected": "e30edd162cbd37962e7e62440bf9835dad2bb1234288486f24ad4e4940fd1e8f",
+      "actual": "e30edd162cbd37962e7e62440bf9835dad2bb1234288486f24ad4e4940fd1e8f",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/simple-mode-GW_nhZxv.js",
+      "expected": "8ae187bd3b7d02dbf9bd195a73c4c8635c67a557825c91a00ef476d4e1113db2",
+      "actual": "8ae187bd3b7d02dbf9bd195a73c4c8635c67a557825c91a00ef476d4e1113db2",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/smalltalk-CnHTOXQT.js",
+      "expected": "6fea82ec5301f1b147fda0b2e757be2c8dd8b4792c74dac06261c07718290762",
+      "actual": "6fea82ec5301f1b147fda0b2e757be2c8dd8b4792c74dac06261c07718290762",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/solr-DehyRSwq.js",
+      "expected": "c4f3f72687c813db9a8a676f52b958aec08292b294aade4f43ee53222bafb2cd",
+      "actual": "c4f3f72687c813db9a8a676f52b958aec08292b294aade4f43ee53222bafb2cd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sparql-DkYu6x3z.js",
+      "expected": "35e5e4f888aac0249bb3570ac5f07f7dbb45cef40eb8444ec2a3a0772776d0f0",
+      "actual": "35e5e4f888aac0249bb3570ac5f07f7dbb45cef40eb8444ec2a3a0772776d0f0",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/spreadsheet-BCZA_wO0.js",
+      "expected": "44d7acba2c5b735fbda1649b9845fbb6de24821882d2a34682bc726c1925bb03",
+      "actual": "44d7acba2c5b735fbda1649b9845fbb6de24821882d2a34682bc726c1925bb03",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/sql-D0XecflT.js",
+      "expected": "de179cb192745a50f178503fd65ae5ff2488f34b4d421de85961a1207930a125",
+      "actual": "de179cb192745a50f178503fd65ae5ff2488f34b4d421de85961a1207930a125",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/stex-C3f8Ysf7.js",
+      "expected": "bee5f7a433d45272561fef44f62f4c354b7c849efbadfe2143da5595ce0c1537",
+      "actual": "bee5f7a433d45272561fef44f62f4c354b7c849efbadfe2143da5595ce0c1537",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/stylus-B533Al4x.js",
+      "expected": "352405ae3d7bbf0dfcd087d128510cb3cd5f4763bc2e58136e069c7e915be77e",
+      "actual": "352405ae3d7bbf0dfcd087d128510cb3cd5f4763bc2e58136e069c7e915be77e",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/swift-BzpIVaGY.js",
+      "expected": "6fdd63ef4febc2aaff6b39553ef9b5d60a76a59a4ddfedbbd260b0ebded352f9",
+      "actual": "6fdd63ef4febc2aaff6b39553ef9b5d60a76a59a4ddfedbbd260b0ebded352f9",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tcl-DVfN8rqt.js",
+      "expected": "dd357643696c69931e253fb64d0cd3911ac609616448c3197958a821dcbbbd08",
+      "actual": "dd357643696c69931e253fb64d0cd3911ac609616448c3197958a821dcbbbd08",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/textile-CnDTJFAw.js",
+      "expected": "0f2de1a421c605520b0c8b876bd124369085c5fb7f13b12c9dfbcc60bd27c394",
+      "actual": "0f2de1a421c605520b0c8b876bd124369085c5fb7f13b12c9dfbcc60bd27c394",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tiddlywiki-DO-Gjzrf.js",
+      "expected": "0bf0e719c5c34298e72e308cd6be69ca63680a0bf538086adf4939a16f41aa8a",
+      "actual": "0bf0e719c5c34298e72e308cd6be69ca63680a0bf538086adf4939a16f41aa8a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/tiki-DGYXhP31.js",
+      "expected": "3bdc3135821a80ff86d40c2d4fbae733f59b7dcf86a43a2367a17d1df5cb1b80",
+      "actual": "3bdc3135821a80ff86d40c2d4fbae733f59b7dcf86a43a2367a17d1df5cb1b80",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/toml-Bm5Em-hy.js",
+      "expected": "b7f8416bfb193fea056e2ea29ac97d5569055b02829786fae1f23d619a3b08d6",
+      "actual": "b7f8416bfb193fea056e2ea29ac97d5569055b02829786fae1f23d619a3b08d6",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/troff-wAsdV37c.js",
+      "expected": "8e77af30b3dfad9e8c5fb316df448139905aeb2ec55ed63970c1c5f1e43758cd",
+      "actual": "8e77af30b3dfad9e8c5fb316df448139905aeb2ec55ed63970c1c5f1e43758cd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ttcn-CfJYG6tj.js",
+      "expected": "09fd86d60a4bf3f39f56146b8444dab213087d567f3685f91b810499020f5255",
+      "actual": "09fd86d60a4bf3f39f56146b8444dab213087d567f3685f91b810499020f5255",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/ttcn-cfg-B9xdYoR4.js",
+      "expected": "8d367f5c728e0a125912df85cc96c61e1bd2616e3617535c70783494e6361653",
+      "actual": "8d367f5c728e0a125912df85cc96c61e1bd2616e3617535c70783494e6361653",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/turtle-B1tBg_DP.js",
+      "expected": "7aee24b54c788eb05f03336ac595622a7e26d5a51d7d175fc95b12bd139f948a",
+      "actual": "7aee24b54c788eb05f03336ac595622a7e26d5a51d7d175fc95b12bd139f948a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vb-CmGdzxic.js",
+      "expected": "a6d39b887d52687053a94f7fd6438d9e193c78735e36ec0d7585ab54873e0e3a",
+      "actual": "a6d39b887d52687053a94f7fd6438d9e193c78735e36ec0d7585ab54873e0e3a",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vbscript-BuJXcnF6.js",
+      "expected": "6ca48951cc338f55899631cf06bae1f31e0ab9068225eb7a1c4a2bcbe35b1693",
+      "actual": "6ca48951cc338f55899631cf06bae1f31e0ab9068225eb7a1c4a2bcbe35b1693",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/velocity-D8B20fx6.js",
+      "expected": "a83193ff3101931e7df5a8e2c0fcd29d4b9db08d1464e270efdcfd589ad3dc17",
+      "actual": "a83193ff3101931e7df5a8e2c0fcd29d4b9db08d1464e270efdcfd589ad3dc17",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/verilog-C6RDOZhf.js",
+      "expected": "51f07eed339c5f2fb36a10c69b0311f6888e5b93694ac2ba8527da651317091d",
+      "actual": "51f07eed339c5f2fb36a10c69b0311f6888e5b93694ac2ba8527da651317091d",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/vhdl-lSbBsy5d.js",
+      "expected": "9e808646c19567daf6856e0e835ea01b94fc38e4b8529c526872ecf587041256",
+      "actual": "9e808646c19567daf6856e0e835ea01b94fc38e4b8529c526872ecf587041256",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/webidl-ZXfAyPTL.js",
+      "expected": "bce47d0d06b098cede3bbb8ffee3d534c1cd85610afe7463f579e357037a3bd2",
+      "actual": "bce47d0d06b098cede3bbb8ffee3d534c1cd85610afe7463f579e357037a3bd2",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/xquery-DzFWVndE.js",
+      "expected": "c98f053278244c215c51c68f20cc352f038a2fd3c99436400785a6d36a9853bd",
+      "actual": "c98f053278244c215c51c68f20cc352f038a2fd3c99436400785a6d36a9853bd",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/yacas-BJ4BC0dw.js",
+      "expected": "5f69a3c388a14c26bd6060c2eddb3970b6e3e8a40fc6419ce705783685526bf5",
+      "actual": "5f69a3c388a14c26bd6060c2eddb3970b6e3e8a40fc6419ce705783685526bf5",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/assets/z80-Hz9HOZM7.js",
+      "expected": "af74ec9a00d4224b94ceb13fc87cac85fadc218e26b64a2d6e4f7e47a8fede01",
+      "actual": "af74ec9a00d4224b94ceb13fc87cac85fadc218e26b64a2d6e4f7e47a8fede01",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/index.html",
+      "expected": "69b4fa5e2bffd7eaa79d32fbf006e719897ab682a9c69e78f095161ffd85b1b1",
+      "actual": "69b4fa5e2bffd7eaa79d32fbf006e719897ab682a9c69e78f095161ffd85b1b1",
+      "match": true
+    },
+    {
+      "scope": "renderer-dist",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/dist/vite.svg",
+      "expected": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb",
+      "actual": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "expected": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "actual": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "expected": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "actual": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "expected": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "actual": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "expected": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "actual": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "expected": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "actual": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "expected": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "actual": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "expected": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "actual": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "expected": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "actual": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "expected": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "actual": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "expected": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "actual": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "expected": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "actual": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "expected": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "actual": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "expected": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "actual": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "expected": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "actual": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "expected": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "actual": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "expected": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "actual": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "match": true
+    },
+    {
+      "scope": "full-required-wiki",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "expected": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "actual": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "match": true
+    },
+    {
+      "scope": "adopted-original-target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "expected": "7dbb1f2a3c0378984d226ce8ee53cb515f39f40230578659d83e4c0c9db06826",
+      "actual": "7dbb1f2a3c0378984d226ce8ee53cb515f39f40230578659d83e4c0c9db06826",
+      "match": true
+    },
+    {
+      "scope": "adopted-original-target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "expected": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+      "actual": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+      "match": true
+    },
+    {
+      "scope": "adopted-original-target",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "expected": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+      "actual": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+      "match": true
+    }
+  ],
+  "allMatch": true,
+  "originalPrefixExact": true,
+  "existingNativeFullSuiteBuildEvidence": "reuse after current unchanged scoped source verification; exact raw outcomes separately inspected",
+  "manualTest": "sealed real provider/reopen/shutdown complete; no repeat"
+}

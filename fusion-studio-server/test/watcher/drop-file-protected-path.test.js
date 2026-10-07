@@ -4,7 +4,6 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { createActionHandlers } = require('../../lib/watcher/actions');
-const { buildFilter } = require('../../lib/watcher/filter-loader');
 
 function write(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -15,7 +14,6 @@ describe('drop-file protected view boundary', () => {
   let root;
   let canonicalFile;
   let retiredFile;
-  let consoleErrorSpy;
 
   beforeEach(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-drop-file-protection-'));
@@ -23,27 +21,24 @@ describe('drop-file protected view boundary', () => {
     retiredFile = path.join(root, 'ai', 'Machine-A', 'Views', '001-files', 'manifest.md');
     write(canonicalFile, 'canonical-before');
     write(retiredFile, 'retired-before');
-    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
-    consoleErrorSpy.mockRestore();
     fs.rmSync(root, { recursive: true, force: true });
   });
 
-  function filterFor(target, content = 'after') {
-    return buildFilter({
-      name: 'drop-file-test',
-      events: ['create'],
-      action: 'drop-file',
-      path: target,
-      content,
-    }, createActionHandlers({ projectRoot: root }));
+  function writeThroughDropFile(target, content = 'after') {
+    const actions = createActionHandlers({ projectRoot: root });
+    return actions['drop-file']({ path: target, content }, {});
+  }
+
+  async function expectProtectedTargetDenied(target) {
+    await expect(writeThroughDropFile(target)).rejects.toThrow();
   }
 
   test('denies canonical and retired direct targets before overwriting', async () => {
-    await filterFor(canonicalFile).onCreate('source.md', {});
-    await filterFor(retiredFile).onCreate('source.md', {});
+    await expectProtectedTargetDenied(canonicalFile);
+    await expectProtectedTargetDenied(retiredFile);
 
     expect(fs.readFileSync(canonicalFile, 'utf8')).toBe('canonical-before');
     expect(fs.readFileSync(retiredFile, 'utf8')).toBe('retired-before');
@@ -56,8 +51,8 @@ describe('drop-file protected view boundary', () => {
     const aliasTarget = path.join(alias, 'generated.md');
     const nonExistingTarget = path.join(root, 'ai', 'New-Machine', 'System', 'Views', 'new', 'generated.md');
 
-    await filterFor(aliasTarget).onCreate('source.md', {});
-    await filterFor(nonExistingTarget).onCreate('source.md', {});
+    await expectProtectedTargetDenied(aliasTarget);
+    await expectProtectedTargetDenied(nonExistingTarget);
 
     expect(fs.existsSync(path.join(path.dirname(canonicalFile), 'generated.md'))).toBe(false);
     expect(fs.existsSync(path.join(root, 'ai', 'New-Machine'))).toBe(false);
@@ -71,7 +66,7 @@ describe('drop-file protected view boundary', () => {
     fs.symlinkSync(physicalSystem, path.join(aliasMachine, 'System'), 'dir');
     const target = path.join(physicalSystem, 'Views', '001-files', 'manifest.md');
 
-    await filterFor(target).onCreate('source.md', {});
+    await expectProtectedTargetDenied(target);
 
     expect(fs.existsSync(path.join(physicalSystem, 'Views'))).toBe(false);
   });
@@ -85,7 +80,7 @@ describe('drop-file protected view boundary', () => {
       storageRoot, 'Future-Machine', 'System', 'Views', '001-files', 'manifest.md',
     );
 
-    await filterFor(target).onCreate('source.md', {});
+    await expectProtectedTargetDenied(target);
 
     expect(fs.existsSync(path.join(storageRoot, 'Future-Machine'))).toBe(false);
   });
@@ -100,8 +95,8 @@ describe('drop-file protected view boundary', () => {
     const protectedFutureDirectory = path.join(path.dirname(canonicalFile), 'future-dir');
     fs.symlinkSync(protectedFutureDirectory, brokenDirectoryAlias, 'dir');
 
-    await filterFor(brokenFileAlias).onCreate('source.md', {});
-    await filterFor(path.join(brokenDirectoryAlias, 'nested.md')).onCreate('source.md', {});
+    await expectProtectedTargetDenied(brokenFileAlias);
+    await expectProtectedTargetDenied(path.join(brokenDirectoryAlias, 'nested.md'));
 
     expect(fs.lstatSync(brokenFileAlias).isSymbolicLink()).toBe(true);
     expect(fs.existsSync(protectedFutureFile)).toBe(false);
@@ -111,7 +106,7 @@ describe('drop-file protected view boundary', () => {
 
   test('ordinary relative destinations still create and write through the action', async () => {
     const target = path.join('generated', 'notes', 'result.md');
-    await filterFor(target, 'ordinary').onCreate('source.md', {});
+    await writeThroughDropFile(target, 'ordinary');
 
     expect(fs.readFileSync(path.join(root, target), 'utf8')).toBe('ordinary');
   });

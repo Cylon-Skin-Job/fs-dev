@@ -1,0 +1,21 @@
+[Migration 019] Added workspaces.type (default: code)
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '/Users/rccurtrightjr./projects/fs-dev'
+- '/users/rccurtrightjr./projects/fs-dev'
+
+    at /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/prepare-public-smoke.cjs:29:105 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '/Users/rccurtrightjr./projects/fs-dev',
+  expected: '/users/rccurtrightjr./projects/fs-dev',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.6.1

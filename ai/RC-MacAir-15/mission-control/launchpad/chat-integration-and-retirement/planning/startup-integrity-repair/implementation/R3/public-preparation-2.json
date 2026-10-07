@@ -1,0 +1,53 @@
+{
+  "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+  "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+  "workspace": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+  "machine": "RC-MacAir-15",
+  "nonce": "f090d27f-fb16-4ff4-9957-a0119380a957",
+  "database": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-data/fusion.db",
+  "events": [
+    {
+      "type": "workspace:added",
+      "workspaceId": "public-scratch-2",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+      "viewRegistryUnavailable": false
+    },
+    {
+      "type": "workspace:switched",
+      "workspaceId": "public-scratch-2",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+      "viewRegistryUnavailable": false,
+      "bindingRevision": 2
+    }
+  ],
+  "seedRemoved": {
+    "id": "fs-dev",
+    "repoPath": "/Users/rccurtrightjr./projects/fs-dev",
+    "beforeControllerStart": true
+  },
+  "registry": [
+    {
+      "id": "public-scratch-2",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2"
+    }
+  ],
+  "active": {
+    "workspaceId": "public-scratch-2",
+    "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+    "bindingRevision": 2
+  },
+  "readiness": {
+    "status": "ready",
+    "verified": true,
+    "phase": "journal_verified",
+    "errorCode": null,
+    "leases": 0
+  },
+  "lastActive": {
+    "key": "last_active_workspace_id",
+    "value": "public-scratch-2"
+  },
+  "threads": 0,
+  "threadGroups": 0,
+  "preparationOwnersClosed": true
+}

@@ -1,0 +1,278 @@
+{
+  "captured_at": "2026-09-19T02:34:46.160025-07:00",
+  "root": "/Users/rccurtrightjr./projects/fs-dev",
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "branch": "agent/exact-workspace-paths",
+  "scope": "development source inspection; not runtime or Alpha verification",
+  "remote_refresh": {
+    "origin": "fetch succeeded",
+    "gitlab": "fetch succeeded; discovered spec-bs-001-validation-findings"
+  },
+  "refs": [
+    {
+      "ref": "refs/heads/agent/alpha-office-editor-promotion",
+      "commit": "feb740b6fd45246a69cdd4cbae76d18adcbc1cbe",
+      "head_only_ref_only": [
+        "51",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/agent/alpha-packaged-log-path",
+      "commit": "87231c62b03d58f6eefa65472f2f2a6e559406bc",
+      "head_only_ref_only": [
+        "49",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/agent/exact-workspace-paths",
+      "commit": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+      "head_only_ref_only": [
+        "0",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/agent/oe009-complete-office-work",
+      "commit": "5434527aeb8bc1426e2ef46c83db6739fc68ba5a",
+      "head_only_ref_only": [
+        "52",
+        "9"
+      ],
+      "ancestor_of_head": false
+    },
+    {
+      "ref": "refs/heads/agent/rcc-0108-roadmap",
+      "commit": "501eb35379ac0278f9aa20ef7f6b99a16241bac1",
+      "head_only_ref_only": [
+        "39",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/agent/universal-view-tab-bar-spec",
+      "commit": "806b33521907ed4b51cf792d5ef664fe319ea349",
+      "head_only_ref_only": [
+        "38",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/archive/rcc-0108-dirty-state",
+      "commit": "888025748036180c3cdf4749fcd749e17a149bec",
+      "head_only_ref_only": [
+        "39",
+        "1"
+      ],
+      "ancestor_of_head": false
+    },
+    {
+      "ref": "refs/heads/archive/universal-view-tab-bar-wip",
+      "commit": "6565c01a123644d99d987171248a6d7b09f8105b",
+      "head_only_ref_only": [
+        "38",
+        "1"
+      ],
+      "ancestor_of_head": false
+    },
+    {
+      "ref": "refs/heads/codex/implement-tabs03-tab-target-placem",
+      "commit": "22cc435230a209531378c17db56ba17db323e8bf",
+      "head_only_ref_only": [
+        "36",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/codex/prov01-accepted-source",
+      "commit": "acf12dafe7499b04995617e5d9c1512775e5ba12",
+      "head_only_ref_only": [
+        "39",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/codex/prov01-integration",
+      "commit": "2a275a344588b7e604ad666433dff98818c69380",
+      "head_only_ref_only": [
+        "29",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/heads/main",
+      "commit": "737293389d202bd327362a75cce991e5cbb53391",
+      "head_only_ref_only": [
+        "10",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/remotes/gitlab/main",
+      "commit": "bafc1ed0bf6b951d647d9a313f87612f81a012bf",
+      "head_only_ref_only": [
+        "52",
+        "12"
+      ],
+      "ancestor_of_head": false
+    },
+    {
+      "ref": "refs/remotes/gitlab/spec-bs-001-validation-findings",
+      "commit": "3d7e43f1972f24ac41886283855ce0f7adf84bd2",
+      "head_only_ref_only": [
+        "52",
+        "10"
+      ],
+      "ancestor_of_head": false
+    },
+    {
+      "ref": "refs/remotes/origin/agent/exact-workspace-paths",
+      "commit": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+      "head_only_ref_only": [
+        "0",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "commit": "737293389d202bd327362a75cce991e5cbb53391",
+      "head_only_ref_only": [
+        "10",
+        "0"
+      ],
+      "ancestor_of_head": true
+    },
+    {
+      "ref": "refs/remotes/prov01/accepted-source",
+      "commit": "acf12dafe7499b04995617e5d9c1512775e5ba12",
+      "head_only_ref_only": [
+        "39",
+        "0"
+      ],
+      "ancestor_of_head": true
+    }
+  ],
+  "worktrees": "/Users/rccurtrightjr./projects/fs-dev 88637d1 [agent/exact-workspace-paths]",
+  "dirty_status": "M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md\n M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md\n M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json\n M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json\n M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md\n M fusion-studio-client/e2e/office/fixture-lifecycle.mjs\n M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs\n M fusion-studio-client/e2e/office/global-setup.mjs\n M fusion-studio-client/e2e/office/global-teardown.mjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs\n M fusion-studio-client/e2e/office/run-isolated-electron.mjs\n M fusion-studio-client/playwright.office.config.ts\n?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md\n?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md\n?? ai/RC-MacAir-15/Captures/031-Remote_Access/\n?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-022758.md\n?? fusion-studio-client/e2e/office/harness-bounds.mjs",
+  "wiki_pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "sha256": "993b639339d34a7e868687f8b5075015a42639c69ed06cd2e7322ac058558a9b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "sha256": "312233d9030a81d8ac213b54daa268620b9b3277575eefeabd29505bac139f37"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "sha256": "a40d03ddf0a4abcc6f27dbd495cef0838db008fc48a18196675bdc98db51528b"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "sha256": "a5185e4e3959bb41e67b54cd588696c80370f4985eaa4fe39dcd1a7731c2617f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "9b926fa34b86376f56836d2118d48fba7edeb347bc5e3d9fa78426e12a133237"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "sha256": "a84c22311556bc2e4777f5e8414d16117aa7ad42f9698e319e9b171284b0df45"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md",
+      "sha256": "fc1f278f95f280fbc739965db02f12f8893e25acd88e6629cb29357a282322a8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "sha256": "c4542cb8516fb256e964665009f297e4b16b9cdad508f27f66ca6e700293c6e0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "sha256": "986f3968c005c283552680a934f330402a9fbe1725a21e50fa4e0b76d7ea8490"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md",
+      "sha256": "0198978cca8559e8e367cedd4ff15b1b3582a005294469ebe63f3e35b0a058bb"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "sha256": "d5c47e6f77279c47e22625af1ecaf7977f63af0f7a0fe48c7602ec71f6e21343"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md",
+      "sha256": "5d39ed3d549cbcc633047729fae484c15baa2857d553f61c44a6225576856388"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md",
+      "sha256": "9d5394d989cb1789a47e765cf48125b2514a61331f3e3aca457c71824fb0e02e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "9c0bcb904ffce280a0defb6cf371cf07bf00fda9a709407c326c0379375b5cdd"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "sha256": "c7b229dc857ec329a988fdd495c939b7ae67d694091793d9fa7649a4b1cf5b0d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "sha256": "f239d6f09ad05edacbe55fc019db34298ef4af75525b4ac01071d265684a9137"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md",
+      "sha256": "cb8fee8d0ea49442aa74ae0afa187e4005f71c47f08854455c390f165ddba82a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "sha256": "a5bed3cb5bc0143122f842f98b35946eae2f6ce3f3f0f1b4abf5c11ddcf26e41"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "sha256": "cac1aab71c97491f78e88a2df54d076e93ea5e49987882b85d6af5f3f40f4b33"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md",
+      "sha256": "686474202b269c717ed1f744deaea0411d26f64c8be6721cbd11abbbf3cb5de4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "sha256": "f378de5ec2961529e0654e4145c5665b7ade34b035944112490c4b290cfa6644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "sha256": "560b8b00ce8653d1d1e6f11f4f4d5b5151ba1031b7bb7b21950a5b793aea5b6f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "sha256": "663ceeac595d9223df0b5e1558ce582e7663f3989e9f40d73f0ae7c8b94783f9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "sha256": "71c2b0feae4ce745833c8c6373113edc98be9471c0b22d643927ba301c104b1f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "sha256": "dcdd38d2a18d9602a76a62a20ad723685e7312e59cc09efef37ef15ac4ef8234"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "f935caa51479be86e7238944a8d968ad4fb164558e328198429e71c023844b5e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "d12762890c68788fb359198ef38ab5cebc68cef0b47ff8d4062ac3906b405dc5"
+    }
+  ]
+}

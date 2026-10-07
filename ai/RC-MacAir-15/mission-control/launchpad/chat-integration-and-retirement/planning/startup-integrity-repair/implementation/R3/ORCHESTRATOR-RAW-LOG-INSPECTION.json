@@ -1,0 +1,104 @@
+{
+  "workId": "CHAT-AR-REPAIR-01",
+  "observer": "/root/startup_integrity_repair_orchestrator",
+  "observedAt": "2026-10-06T01:49:37Z",
+  "scope": "Independent raw log parsing and fingerprint verification; no R3 acceptance or real-provider proof inferred",
+  "logs": {
+    "server-full.log": {
+      "sha256": "c30c7ae7786bb3b33d79a798b92ea76c78d24c88fc664d8fe4c98f5f8d3b8062",
+      "summaries": [
+        "gyp info ok ",
+        "Test Suites: 221 passed, 221 total",
+        "Tests:       1 skipped, 3265 passed, 3266 total",
+        "Time:        112.097 s, estimated 114 s"
+      ],
+      "warnings": [
+        "(node:54079) Warning: `--localstorage-file` was provided without a valid path",
+        "(node:54079) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated."
+      ],
+      "canaryCount": 13,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 7
+    },
+    "focused-integrated.log": {
+      "sha256": "a564a8aa3942f803eb0876804a8a3a39d9018694038714c490fef3d7eec4d78d",
+      "summaries": [
+        "Test Suites: 19 passed, 19 total",
+        "Tests:       186 passed, 186 total",
+        "Time:        56.535 s"
+      ],
+      "warnings": [
+        "(node:53577) Warning: `--localstorage-file` was provided without a valid path"
+      ],
+      "canaryCount": 13,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 7
+    },
+    "client-build.log": {
+      "sha256": "20136de4105cd398d1ddce92db9b9fa4c04eb2f8223ba911789175a3307b5971",
+      "summaries": [
+        "✓ built in 3.86s"
+      ],
+      "warnings": [
+        "(!) /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/capture/CaptureTiles.tsx is dynamically imported by /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/view-tabs/captureViewTabAdapter.ts but also statically imported by /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/ContentArea.tsx, dynamic import will not move module into another chunk.",
+        "(!) Some chunks are larger than 500 kB after minification. Consider:",
+        "node_modules/gray-matter/lib/engines.js (43:13): Use of eval in \"node_modules/gray-matter/lib/engines.js\" is strongly discouraged as it poses security risks and may cause issues with minification."
+      ],
+      "canaryCount": 0,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 0
+    },
+    "new-chat-fixtures.log": {
+      "sha256": "404fd5f95ea62032d00d722b500682f8fed461f1900556c39228023f090b29b9",
+      "summaries": [
+        "  34 passed (24.3s)"
+      ],
+      "warnings": [
+        "\u001b[2m[WebServer] \u001b[22m(node:54201) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+        "(node:54254) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      ],
+      "canaryCount": 0,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 0
+    },
+    "async-startup-wrapper.log": {
+      "sha256": "507bee464273e36c085c5a7b8bad0516a5ae377a739013970e5e253dd5cc5fa0",
+      "summaries": [
+        "Test Suites: 1 passed, 1 total",
+        "Tests:       2 passed, 2 total",
+        "Time:        0.299 s, estimated 1 s"
+      ],
+      "warnings": [
+        "(node:54924) Warning: `--localstorage-file` was provided without a valid path"
+      ],
+      "canaryCount": 0,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 0
+    },
+    "fixture-lifecycle-tests-current.log": {
+      "sha256": "56460e65105ca699954591a293b8b7ebbf47e38215fec0c171bb5526f0cd90f0",
+      "summaries": [
+        "ℹ tests 10",
+        "ℹ pass 10"
+      ],
+      "warnings": [],
+      "canaryCount": 0,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 0
+    },
+    "guarded-launcher-current.log": {
+      "sha256": "5dfcc8d4352c906e470b77dea3e596365d39e5f07ef7efda187e71f23d5492b0",
+      "summaries": [
+        "  2 passed (15.2s)",
+        "  1 passed (5.1s)"
+      ],
+      "warnings": [
+        "(node:19066) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+        "(node:23443) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      ],
+      "canaryCount": 0,
+      "allCanaryRestored": true,
+      "canaryDeadlineCount": 0
+    }
+  }
+}

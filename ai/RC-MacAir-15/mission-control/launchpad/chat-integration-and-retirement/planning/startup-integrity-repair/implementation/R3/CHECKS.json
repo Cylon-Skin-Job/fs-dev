@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-06T01:50:14.910936+00:00",
+  "status": "AUTOMATED_CHECKS_PASS_MANUAL_ADOPTION_REVIEW_HELD",
+  "checks": [
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "command": "npm run build",
+      "exitCode": 0,
+      "raw": "client-build.log",
+      "warnings": [
+        "gray-matter eval",
+        "CaptureTiles mixed dynamic/static import",
+        "chunk size >500kB"
+      ]
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "command": "node --test e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 10,
+      "raw": "fixture-lifecycle-tests-current.log"
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "command": "node e2e/provenance/run-file-viewer-live.mjs",
+      "exitCode": 0,
+      "raw": "guarded-launcher-current.log",
+      "receipt": "guarded-current-result.json",
+      "normal": {
+        "port": 52375,
+        "passed": 2,
+        "scenarioSelectedSkipped": 1
+      },
+      "factPublishFailure": {
+        "port": 52389,
+        "passed": 1,
+        "scenarioSelectedSkipped": 2
+      },
+      "bothScenariosExecuted": true,
+      "protectedTupleCompared": "unchanged",
+      "sevenEffectStartBlockCounts": "1/1; factory/prohibited0",
+      "observedWatchChildCounts": "0/0",
+      "runtimeHarnessHttpRevalidation": "blocked/factory0",
+      "exactScratchRegistryCount": 2
+    },
+    {
+      "owner": "orchestrator",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "command": "node e2e/provenance/run-file-viewer-live.mjs",
+      "exitCode": 0,
+      "raw": "orchestrator-guarded-launcher-current.log",
+      "receipt": "ORCHESTRATOR-GUARDED-CURRENT-RECEIPT.json",
+      "normalPort": 52422,
+      "factPublishFailurePort": 52436,
+      "sourceBeforeAfterStable": true,
+      "protectedTupleCompared": "unchanged"
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=51978 npx playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/chat-send-transport.spec.ts --output /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Dfr4Nf/results",
+      "actualReservedPort": 51978,
+      "exitCode": 0,
+      "testsPassed": 34,
+      "durationSeconds": 24.3,
+      "raw": "new-chat-fixtures.log",
+      "deviation": "extra --output preserves protected existing client/test-results"
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+      "command": "npx jest --runInBand --runTestsByPath test/runtime/workspace-startup-integrity.test.js test/runtime/isolated-provenance-runtime.test.js test/watch/watcher-retirement.test.js test/event-registry/startup-integration.test.js test/views/view-readiness-coordinator.test.js test/views/view-relocation-recovery.test.js test/ledger/event-ledger.test.js test/screenshot-file-capture-request-id.test.js test/screenshot-protected-view-path.test.js test/calendar/apple-listener-retirement.test.js test/triggers/trigger-loader.test.js test/triggers/cron-scheduler.test.js test/shutdown.test.js test/chat-metadata/file-mutations-collector.test.js test/ws/file-save-route.test.js test/subscriptions/file-provenance-bootstrap.test.js test/resources/file-provenance-integration.test.js test/agent-provenance/fact-authority-and-ledger.test.js test/wire/canonical-chat-tool-events-provenance.test.js",
+      "exitCode": 0,
+      "suitesPassed": 19,
+      "testsPassed": 186,
+      "durationSeconds": 56.535,
+      "raw": "focused-integrated.log"
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+      "command": "npx jest --runInBand --runTestsByPath test/views/readiness-startup.test.js",
+      "exitCode": 0,
+      "testsPassed": 2,
+      "raw": "async-startup-wrapper.log"
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+      "command": "npm test -- --runInBand",
+      "exitCode": 0,
+      "suitesPassed": 221,
+      "testsPassed": 3265,
+      "testsSkipped": 1,
+      "durationSeconds": 112.097,
+      "raw": "server-full.log",
+      "nativePretest": {
+        "command": "npm run build:native-observer",
+        "innerCommand": "node-gyp rebuild --directory native/secure-file-observer",
+        "exitCode": 0
+      },
+      "warnings": [
+        "invalid --localstorage-file",
+        "DEP0190 shell:true argument warning"
+      ],
+      "skippedTest": {
+        "file": "test/harness/compat.test.js",
+        "suite": "Spawn Behavior",
+        "name": "new mode spawns via harness",
+        "reason": "existing TODO requires actual kimi CLI"
+      }
+    },
+    {
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair",
+      "command": "python3 implementation/R3/retirement-source-audit.py",
+      "exitCode": 0,
+      "receipt": "retirement-source-sweep-current.json",
+      "exactInternalArgv": "recorded in receipt, literal original \u00a76.S3 regex and dependency inspection",
+      "rgExitCode": 1,
+      "rgMatches": 0,
+      "chokidarDependencyMatches": 0,
+      "retiredPathsAbsent": 5
+    },
+    {
+      "cwd": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+      "command": "node public-dom-oracle-v3.test.mjs /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk f090d27f-fb16-4ff4-9957-a0119380a957",
+      "exitCode": 0,
+      "casesPassed": 6,
+      "raw": "public-dom-oracle-v3-fixture-results.json",
+      "fixtureOnly": true
+    },
+    {
+      "cwd": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+      "command": "node public-child-projection.test.mjs > public-child-projection-result.json",
+      "exitCode": 0,
+      "casesPassed": 5,
+      "raw": "public-child-projection-result.json",
+      "fixtureOnly": true
+    },
+    {
+      "cwd": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+      "command": "node observe-public-baseline-current.mjs /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk f090d27f-fb16-4ff4-9957-a0119380a957 > public-baseline-current.log 2>&1",
+      "exitCode": 0,
+      "raw": "public-baseline-current.log",
+      "receipt": "public-baseline-current.json",
+      "readOnly": true,
+      "noUIInputs": true,
+      "canonicalPublicExchangeProved": false
+    }
+  ],
+  "explicitEvidenceLimits": {
+    "startupCanaryReceiptsPerFocusedAndFullLog": 13,
+    "teardownDeadlineMarkersPerLog": 7,
+    "allCanaryRootGuardListenerRestoration": true,
+    "providerCausalInference": false,
+    "priorHelperPasses": "dated historical; current helper rerun retained",
+    "priorV1Oracle": "known limited whole-message marker; preserved and terminal",
+    "scenarioSelectedSkips": "expected selector exclusions, both scenarios executed"
+  },
+  "unperformedGates": [
+    {
+      "gate": "SPEC \u00a77 actual ordinary authenticated Electron/OpenCode owner-manual exchange and passive same-thread reopen",
+      "resolver": "human owner, parent coordinator",
+      "release": "actual first/second usable selected identity, prompt ACK/message:sent/turn, real runtime child/session, normal canonical response, exact durable exchange and same-thread passive readback"
+    },
+    {
+      "gate": "original S3/S4/ledger adoption",
+      "resolver": "original owner or acknowledged successor via parent",
+      "release": "explicit incorporation preserving original history and residuals"
+    },
+    {
+      "gate": "fresh builder clean-room review",
+      "resolver": "R3 builder after all required raw evidence available",
+      "release": "fresh read-only clean-room-reviewer current whole R3 criteria/evidence clean; terminal lifecycle recorded"
+    },
+    {
+      "gate": "fresh acceptance and full integration",
+      "resolver": "parent",
+      "release": "separate fresh acceptance then repair+original full contract gate"
+    }
+  ]
+}

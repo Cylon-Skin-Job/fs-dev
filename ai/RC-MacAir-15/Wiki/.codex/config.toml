@@ -1,0 +1,5 @@
+# Wiki-local agent capability; this does not start a run.
+# Standalone role definitions are in .codex/agents/*.toml.
+# Model, reasoning effort, permissions and concurrency inherit session defaults.
+[agents]
+enabled = true

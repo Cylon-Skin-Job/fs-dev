@@ -1,0 +1,52 @@
+{
+  "at": "2026-09-23T13:07:18.535006+00:00",
+  "limits": "Source-only inspection; no runtime certification. Bounded symbol regions read with surrounding producer/consumer code.",
+  "sources": [
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabLauncherCatalog.ts",
+      "sha256": "bd144eddc1866b16e39ae8a2d9bfb1d2aa7ceaed1cc222e3ef1231c158c9c8c7",
+      "scope": "COMPONENT_TAB_LAUNCHER_CATALOG; findComponentTabLauncherCatalogEntry"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "scope": "ConnectedTabOwnerPorts; createConnectedTabOwner; apply; beginLaunch"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/captureConnectedOwnerPorts.ts",
+      "sha256": "91b7587754243f5569d03a71ee83d5e3aff808dbf313dc5d8d513457a425fefb",
+      "scope": "createCaptureConnectedOwnerPorts; readCollection; applyCollection"
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+      "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f",
+      "scope": "createFileConnectedOwnerPorts; readCollection; applyCollection"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/create-service.js",
+      "sha256": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641",
+      "scope": "scaffoldProjectV2Unchecked; readV2Manifest"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/ai-paths.js",
+      "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "scope": "getMachineViewsRoot"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "scope": "listV2ViewFolders; loadV2ViewShellFromEntry"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a",
+      "scope": "assertGenericViewMutationAllowed; isProtectedAiNamespace"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "scope": "save"
+    }
+  ],
+  "test_inspection": "component-tab-connected-owner.spec.ts lines 1-170: policy fixtures and harness imports inspected only; not executed."
+}

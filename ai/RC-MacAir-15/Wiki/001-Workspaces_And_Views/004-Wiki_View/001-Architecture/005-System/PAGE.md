@@ -2,19 +2,12 @@
 name: Wiki System
 description: Filesystem and tooling model for the wiki system, including runtime path resolution, terminal access, and the current `Wiki/` contract.
 metadata:
-  incoming-edges:
-    - Wiki
-    - Wiki Architecture
-  outgoing-edges:
-    - Markdown Frontmatter Model
-    - Wiki Structure
   source-files:
     - fusion-studio-server/lib/views/index.js
     - fusion-studio-server/lib/wiki/wiki-tree.js
-    - fusion-studio-server/scripts/query-wiki.js
+    - fusion-studio-server/scripts/wiki.js
     - fusion-studio-client/src/lib/resource-path.ts
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 The wiki system is local-first and folder-first.
@@ -31,12 +24,14 @@ ai/<machine>/Wiki/
   000-Wiki_Guidance/
     PAGE.md
   001-Workspaces_And_Views/
-    PAGE.md
+    000-Workspaces_And_Views/PAGE.md
     004-Wiki_View/
-      PAGE.md
+      000-Wiki_View/PAGE.md
       001-Architecture/
-        PAGE.md
+        000-Architecture/PAGE.md
 ```
+
+The capsule path above describes the current runtime. The approved editable-instance/protected-plugin direction is separate; see [View Configuration And Agents](../../../022-View_Configuration_And_Agents/PAGE.md).
 
 ## Runtime Resolution
 
@@ -53,7 +48,7 @@ ai/<machine>/Wiki/
 From the server package:
 
 ```bash
-node scripts/query-wiki.js --workspace "/Users/rccurtrightjr./projects/fs-dev" --scope current --limit 20
+node scripts/wiki.js query --workspace /path/to/project --scope current --limit 20
 ```
 
 ## Maintenance Rule

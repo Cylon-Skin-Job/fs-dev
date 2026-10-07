@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-23T12:47:15.963484+00:00",
+  "primary_outputs_manifest": "S00-OUTPUTS.json",
+  "records": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S00-HANDOFF.md",
+      "sha256": "b77dc204908896eae5fa64058bcb97467be5c78de567d6012b12c6d820ebf7b6"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S00-BUILDER-REVIEW-01.md",
+      "sha256": "4bfee493e1a73bf0f6512ef0b9df29a4ab5fcfd505f225c180c87eeccd544bbc"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S00-OUTPUTS.json",
+      "sha256": "799ba060d74886de7c5b201f2d3f9b38b6c779ec5151211c5df2fb2a2948356f"
+    }
+  ],
+  "reviewer": "/root/pp_s00_builder/s00_review_1",
+  "gate": "CLEAN",
+  "terminal_confirmed": true,
+  "closure": "unavailable: no close_agent tool"
+}

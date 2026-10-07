@@ -1,0 +1,19 @@
+---
+name: Email View
+description: A mounted mail and document UI whose mailbox content is currently mock data.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/ContentArea.tsx
+    - fusion-studio-client/src/components/email/EmailGrid.tsx
+    - fusion-studio-client/src/components/email/EmailSurface.tsx
+    - fusion-studio-client/src/components/email/emailFakeData.ts
+  last-modified: "2026-09-21T13:37:22Z"
+---
+
+**Email** is a bundled optional template with a mounted `EmailGrid` React view. The UI combines a mail mode, folders and document-oriented surfaces. The visible mailbox in `EmailSurface` filters `EMAIL_FAKE_MESSAGES`; the account switcher also uses fake account records. That makes the present mail surface a mock interface, not evidence of a connected provider or send/receive integration.
+
+## Current status and limits
+
+The template's `data-source: sqlite` field is a declaration, not proof that this UI reads live email from `fusion.db`. Email is absent from the current five-view New Workspace profile. Some document and file interactions use workspace panel files; they should not be confused with service-owned mailbox content. The approved storage direction keeps live connected email authoritative at its source, as described in [Events And Ledger Decisions](../../010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md).
+
+Future plugin behavior, account binding and capability permissions require separate implementation. [View Architecture](../002-View_Architecture/PAGE.md) explains why a bundled template alone does not prove them.

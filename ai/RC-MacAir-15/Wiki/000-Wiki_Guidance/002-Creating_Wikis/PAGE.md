@@ -2,17 +2,15 @@
 name: Creating Wiki Content
 description: Steps for adding new sections, heading articles, main articles, and sub-articles.
 metadata:
-  incoming-edges:
-    - Wiki Guidance
-    - Wiki Style Guide
-  outgoing-edges:
-    - Wiki Style Guide
-    - Updating Wiki Content
   source-files:
-    - fusion-studio-server/scripts/sync-wiki-tocs.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/scripts/wiki.js
+    - fusion-studio-server/lib/wiki/audit/toc-sync.js
+  last-modified: "2026-09-19T10:34:31Z"
 ---
+
+## Page Metadata
+
+Use the [Wiki Style Guide frontmatter schema](../001-Style_Guide/PAGE.md#frontmatter-contract) for every new page: `name`, `description`, `metadata.source-files`, and quoted UTC `metadata.last-modified` set to its actual creation time. Source files are exact code paths, or `[]` where no code subject applies. Do not add incoming/outgoing edges, connected-skills, or related-trigger-files. The example timestamp in the guide is not a default.
 
 ## New Section
 
@@ -41,7 +39,9 @@ Create `NNN-Sub_Name/PAGE.md` under the article and add it to the parent's `## C
 ## Sync Script
 
 ```bash
-node fusion-studio-server/scripts/sync-wiki-tocs.js /path/to/workspace
+node fusion-studio-server/scripts/wiki.js audit /path/to/workspace
 ```
 
 Manual-run only. It maintains marker blocks in heading articles, generates TOC pages only for legacy folders without heading articles, and logs `skipped (no-markers)` for heading articles that have not opted in yet.
+
+The audit does not currently stamp `last-modified`, and legacy generated TOC frontmatter still uses the older relationship lists. Normalize newly created pages to the current schema and stamp pages whose content actually changed; preserve no-op pages and script-owned block contents.

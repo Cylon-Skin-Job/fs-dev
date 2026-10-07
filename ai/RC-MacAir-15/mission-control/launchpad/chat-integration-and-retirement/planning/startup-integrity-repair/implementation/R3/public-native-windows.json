@@ -1,0 +1,18 @@
+{
+  "mainPid" : 57401,
+  "readOnly" : true,
+  "windows" : [
+    {
+      "kCGWindowBounds" : {
+        "Height" : 1000,
+        "Width" : 1600,
+        "X" : 160,
+        "Y" : 122
+      },
+      "kCGWindowLayer" : 0,
+      "kCGWindowNumber" : 142887,
+      "kCGWindowOwnerName" : "Electron",
+      "ownerPid" : 57401
+    }
+  ]
+}

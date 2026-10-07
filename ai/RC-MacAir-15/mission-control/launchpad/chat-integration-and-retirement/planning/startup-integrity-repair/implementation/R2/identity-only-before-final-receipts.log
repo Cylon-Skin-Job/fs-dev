@@ -1,0 +1,209 @@
+Audited startup registry rejection: undefined
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-ZBeF7j","port":51620,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851","port":51621,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+(node:49717) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/runtime/workspace-startup-integrity.test.js (11.361 s)
+  ● actual normal startup/listen invokes preserved automation consumers once
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "leases": 1,
+    +   "leases": 0,
+        "phase": "journal_verified",
+        "status": "ready",
+        "verified": true,
+      }
+
+      27 |     ]);
+      28 |     for (const stage of fixture.readiness.stages) {
+    > 29 |       expect(stage.status).toMatchObject({ status: 'ready', verified: true, phase: 'journal_verified', leases: 1 });
+         |                            ^
+      30 |     }
+      31 |     const operations = fixture.readiness.events.filter(item => item.kind === 'operation-ensure');
+      32 |     expect(operations).toHaveLength(1);
+
+      at Object.toMatchObject (test/runtime/workspace-startup-integrity.test.js:29:28)
+
+  ● actual unavailable startup refuses all consumers after genuine registered readiness conflict
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 153
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +       "viewId": "issues-viewer",
+    +     },
+    +     "name": "resolveViewRoot",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +       "viewId": "issues-viewer",
+    +     },
+    +     "name": "resolveOperationalViewRoot",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "scriptRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A/ai/Test-Provenance/System/Views/001-issues-viewer/scripts",
+    +     },
+    +     "name": "script",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A/ai/components",
+    +     },
+    +     "name": "components",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +     },
+    +     "name": "actions",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +       "viewId": "agents-viewer",
+    +     },
+    +     "name": "resolveOperationalViewRoot",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +     },
+    +     "name": "triggers",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {},
+    +     "name": "cron-factory",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {},
+    +     "name": "cron-register",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {},
+    +     "name": "cron-start",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    +   Object {
+    +     "details": Object {
+    +       "projectRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-grZ851/workspace-A",
+    +     },
+    +     "name": "runner",
+    +     "retirementCompleted": false,
+    +     "status": Object {
+    +       "errorCode": "root_conflict",
+    +       "leases": 0,
+    +       "phase": null,
+    +       "status": "unavailable",
+    +       "verified": false,
+    +     },
+    +   },
+    + ]
+
+      70 |
+      71 | function expectNoPipeline(fixture) {
+    > 72 |   expect(fixture.readiness.stages).toEqual([]);
+         |                                    ^
+      73 |   expect(fixture.componentLoad).not.toHaveBeenCalled();
+      74 |   expect(fixture.actionWiring).not.toHaveBeenCalled();
+      75 |   expect(fixture.heartbeatStart).not.toHaveBeenCalled();
+
+      at toEqual (test/runtime/workspace-startup-integrity.test.js:72:36)
+      at Object.expectNoPipeline (test/runtime/workspace-startup-integrity.test.js:91:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 11 skipped, 13 total
+Snapshots:   0 total
+Time:        11.389 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js".

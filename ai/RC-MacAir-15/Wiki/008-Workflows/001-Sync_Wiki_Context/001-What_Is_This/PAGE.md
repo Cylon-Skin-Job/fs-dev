@@ -1,24 +1,11 @@
 ---
-name: What Is This?
-description: Sub-agent prompt for the Sync Wiki Context workflow. Writes the "What Is This?" section of the root Wiki Guide.
+name: "What Is This?"
+description: "Read-only research prompt for refreshing the corresponding Wiki Guide section."
+metadata:
+  source-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-You are a sub-agent in the Sync Wiki Context workflow. Your job is to write ONE section of the root Wiki Guide.
+Write `## What Is This?` in 2–4 sentences. Read the project AGENTS.md, README and current Wiki Guide. Explain Fusion Studio and what its wiki records; distinguish the app from its configured AI harnesses. Use prose without navigation links.
 
-## Your Section
-
-Write a `## What Is This?` section that answers: What is the Fusion Studio wiki? What does it document? What is Fusion Studio (the app)?
-
-## Research
-
-Read these files for context:
-
-- `AGENTS.md` (at the project root — the project orientation)
-- `README.md` (at the project root, if it exists)
-
-## Rules
-
-- 2–4 sentences. Concise but complete.
-- An AI or human opening the wiki folder blind should immediately understand what they're looking at.
-- Do NOT include links in this section — it's prose, not navigation.
-- Do NOT write to any file. Return ONLY the markdown section (the `## What Is This?` heading + body paragraphs).
+Return the requested Markdown section plus a separate evidence note naming inspected files and uncertainties. Do not write files. The coordinator owns synthesis, verification and edits.

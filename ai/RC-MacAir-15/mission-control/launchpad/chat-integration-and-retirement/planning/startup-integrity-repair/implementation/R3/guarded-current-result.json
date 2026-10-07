@@ -1,0 +1,187 @@
+{
+  "helperSha256": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+  "externalEvidence": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-nrBthZ",
+  "externalLog": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/guarded-launcher-current.log",
+  "protectedState": {
+    "outcome": "passed",
+    "before": {
+      "developmentDb": "dc8b78a4de60f990be98d7d0ff194890f1d3c891f83523a24d7262f185ff2360",
+      "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+      "developerWorkspace": "1b0b7abd095b2b1e9ed47a5f3811d47358b863287424da27eb6c87c0a357aae1",
+      "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+    },
+    "after": {
+      "developmentDb": "dc8b78a4de60f990be98d7d0ff194890f1d3c891f83523a24d7262f185ff2360",
+      "normalProfileDb": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+      "developerWorkspace": "1b0b7abd095b2b1e9ed47a5f3811d47358b863287424da27eb6c87c0a357aae1",
+      "repositoryPlaywrightOutput": "f278b20a9b07e190871a1920b61fe7f38857c1afa599006e52e4f96fe6d0c530"
+    },
+    "comparison": "unchanged"
+  },
+  "scenarios": [
+    {
+      "scenario": "normal",
+      "port": 52375,
+      "selectedTests": {
+        "passed": 2,
+        "skippedByScenario": 1
+      },
+      "phase": "startup-audit",
+      "cleanup": "owned-marker-verified",
+      "startupEffects": [
+        {
+          "name": "calendar-adapters",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "calendar-broadcaster",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "cli-config-bootstrap",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "harness-broadcaster",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "harness-status-revalidation",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "theme-css-bootstrap",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "workspace-automation-pipeline",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        }
+      ],
+      "runtimeEffects": [
+        {
+          "name": "harness-http-revalidation",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        }
+      ],
+      "registeredWorkspaces": [
+        {
+          "id": "provenance-a",
+          "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-IBwCQH/workspace-a"
+        },
+        {
+          "id": "provenance-b",
+          "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-IBwCQH/workspace-b"
+        }
+      ],
+      "auditSha256": "b9f656e4d8c7fe4a263e7c2bbd35ff958fe1653795e2c2d08c2efd82ba8a3133",
+      "scenarioReceiptSha256": "22e018651df45f0a9c8fc1b661df76ceaf954dde71fa4aaba24e3ddba6d4a576"
+    },
+    {
+      "scenario": "fact-publish-failure",
+      "port": 52389,
+      "selectedTests": {
+        "passed": 1,
+        "skippedByScenario": 2
+      },
+      "phase": "startup-audit",
+      "cleanup": "owned-marker-verified",
+      "startupEffects": [
+        {
+          "name": "calendar-adapters",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "calendar-broadcaster",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "cli-config-bootstrap",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "harness-broadcaster",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "harness-status-revalidation",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "theme-css-bootstrap",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        },
+        {
+          "name": "workspace-automation-pipeline",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        }
+      ],
+      "runtimeEffects": [
+        {
+          "name": "harness-http-revalidation",
+          "startRequests": 1,
+          "blockedRequests": 1,
+          "prohibitedAttempts": 0,
+          "factoryInvocations": 0
+        }
+      ],
+      "registeredWorkspaces": [
+        {
+          "id": "provenance-a",
+          "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-9ZQNAx/workspace-a"
+        },
+        {
+          "id": "provenance-b",
+          "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-9ZQNAx/workspace-b"
+        }
+      ],
+      "auditSha256": "7b9ff28e850894a8d43edaa51ff81073115461ad2f61ff0931f86488dc039e84",
+      "scenarioReceiptSha256": "23f9644e30d928f53802c6d9e805769878fcdcd7ec0030fb42e466c03e596df4"
+    }
+  ]
+}

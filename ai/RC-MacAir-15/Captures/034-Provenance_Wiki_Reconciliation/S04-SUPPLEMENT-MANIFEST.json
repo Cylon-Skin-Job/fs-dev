@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-19T03:38:34.917634-07:00",
+  "supplements": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before_sha256": "814685413d701b57a9d61d8240bdb501e5b50bf5b545ee8efa5b86b9611a3aa9",
+      "before_bytes": 21228,
+      "after_sha256": "91f9916f1bd8717977506cab503ab7040209b5beb675fe454123ff40673750c8",
+      "append": "\n## S04 tools, checkpoints and query evidence\n\nThree primary pages reconciled against current source and accepted ATP-D15\u201317/Bridge identity boundaries. See [S04-EVIDENCE.md](S04-EVIDENCE.md), exact source/test/authority anchors in S04-SOURCE-EVIDENCE.json and checks in S04-CHECKS.json. Current full Chat arguments/results persistence is distinct from bounded provenance query disclosure; terminal-only capture, candidate misses, native prerequisites, sparse first/changed/unchanged checkpoints, exchange binding, ledger/query and actual renderer consumers are explicitly bounded. Product tests/runtime were not run. S04-D01 adopts newer owner-directed source-only wiki metadata and actual edit timestamps on three pages; S06 adapts cumulative validation/migration.\n"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before_sha256": "0ec53b8cbd4b84b1acc80bd7702b136121466f6afa5da52837bafb3f2142f448",
+      "before_bytes": 8508,
+      "after_sha256": "fd9b24bdb9a5cdde2f1e0c717ef1d1bd4b0e65886c4028039f90fc3ff74b6a1f",
+      "append": "\n## S04 bounded updates\n\n- DEP-01/DEP-02: current Chat overview/shared view state were read without edits. Session/turn authority remains distinct from group/view/tab/surface identity. BRIDGE-02 approved conformance is not universal provenance emission; current tool facts do not carry a general UI context envelope. Full exchanges may retain arguments/results although public activity summaries omit them. Existing nullable exchange-binding deletion and other S01 lifecycle gaps remain documented, not repaired.\n- S05/S06: preserve terminal-snapshot versus synthetic incremental distinction. Production OpenCode can leave no provenance activity when interrupted before a valid terminal snapshot. Reconciliation cannot recover candidates/raw input lost with memory. Observed change is not causal proof or a pre-tool image.\n- Query display remains future: exact client-src search finds resource query helper and response plumbing but no production caller; no agent-activity client consumer. File v2 invalidation has current store consumers and does not imply history UI. S03 targeted/reconnect dirty limitations remain unchanged.\n- DEP-06 update for S06: current owner-edited Wiki000 now points to existing `fusion-studio-server/scripts/wiki.js audit`, superseding earlier missing-generator wording. No generator run is warranted; generated navigation must remain byte-identical.\n- S04-D01: owner-directed source-files plus actual quoted UTC last-modified replaces legacy metadata on edited pages. Root confirmed S06 cumulative adaptation/task-edited-page migration; parent alone owns the later approximate completion-stamp pass after writers finish. No unrelated pages are authorized by this policy update.\n"
+    }
+  ]
+}

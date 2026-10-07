@@ -1,0 +1,903 @@
+{
+  "schema_version": 1,
+  "claims": [
+    {
+      "id": "PP-D01",
+      "classification": "approved",
+      "authority": "D01",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+      "anchor": "how-to-read-this-section",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D02",
+      "classification": "approved",
+      "authority": "D02",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "anchor": "approved-ownership-model",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D03",
+      "classification": "approved",
+      "authority": "D03",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "anchor": "approved-ownership-model",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D04",
+      "classification": "approved",
+      "authority": "D04",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "anchor": "approved-ownership-model",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D05",
+      "classification": "approved",
+      "authority": "D05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "protected-package-and-editable-copy",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D06",
+      "classification": "approved",
+      "authority": "D06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "anchor": "collection-to-file-and-back",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D07",
+      "classification": "approved",
+      "authority": "D07",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "protected-package-and-editable-copy",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D08",
+      "classification": "approved",
+      "authority": "D08",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "protected-package-and-editable-copy",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D09",
+      "classification": "approved",
+      "authority": "D09",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "anchor": "approved-agent-orientation",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D10",
+      "classification": "approved",
+      "authority": "D10",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "anchor": "standard-host-pieces-beside-a-custom-region",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D11",
+      "classification": "approved",
+      "authority": "D11",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "anchor": "content-and-system-have-different-owners",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-D12",
+      "classification": "approved",
+      "authority": "D12",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "workspace-selection-and-maintenance",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O01",
+      "classification": "open",
+      "authority": "O01",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O02",
+      "classification": "open",
+      "authority": "O02",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O03",
+      "classification": "open",
+      "authority": "O03",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O04",
+      "classification": "open",
+      "authority": "O04",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O05",
+      "classification": "open",
+      "authority": "O05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O06",
+      "classification": "open",
+      "authority": "O06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-O07",
+      "classification": "open",
+      "authority": "O07",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "open-choices-and-decision-gates",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR01",
+      "classification": "current",
+      "claim": "Built-ins use fixed ID React dispatch; custom/local app and browser branches remain separate.",
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "symbol": "CONTENT_COMPONENTS; ContentArea; ContentFrame",
+      "source_sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx",
+          "symbol": "ViewTabBar",
+          "sha256": "886482040483da3985b87f74d6886b7ce6ec1a7372c9be5575135e908992c6b1"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR02",
+      "classification": "current",
+      "claim": "Closed two-entry code-owned Capture/File launcher catalog, not arbitrary plugin loading.",
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabLauncherCatalog.ts",
+      "symbol": "COMPONENT_TAB_LAUNCHER_CATALOG; findComponentTabLauncherCatalogEntry",
+      "source_sha256": "bd144eddc1866b16e39ae8a2d9bfb1d2aa7ceaed1cc222e3ef1231c158c9c8c7",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+          "symbol": "createConnectedTabOwner; beginLaunch",
+          "sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/captureConnectedOwnerPorts.ts",
+          "symbol": "createCaptureHomeLauncherBinding; launcherFor",
+          "sha256": "91b7587754243f5569d03a71ee83d5e3aff808dbf313dc5d8d513457a425fefb"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "createFileOpenLauncherBinding; launcherFor",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR03",
+      "classification": "current",
+      "claim": "Generic component tab machinery delegates read/apply to established owner ports; no second durable tab store.",
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "symbol": "ConnectedTabOwnerPorts; createConnectedTabOwner; commit",
+      "source_sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "readCollection; applyCollection",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/ComponentTabPanel.tsx",
+          "symbol": "ComponentTabPanel; resolveSafely",
+          "sha256": "d407ee5a1eb5df41ea8dac3666475e745d931cf0eceaffd4064da45945b3fb53"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileStore.ts",
+          "symbol": "applyConnectedTabCommit; persistFileTabs",
+          "sha256": "f151b34f15545f0d3c6629834614a9e42f6c7a1c35ffdda8796d39dc5d57e057"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR04",
+      "classification": "current",
+      "claim": "Code-owned file target is consumed by Files placement ports; separately FileViewer reads active selection and content from established stores.",
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedPresenterTargets.ts",
+      "symbol": "canonicalFilePath; fileDocumentTargetKey",
+      "source_sha256": "e3dcc0232b6f0edabbd6f7df7bfe48e4f68c12a5bb3c66efb124ebb1068d2805",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "resolveFilePlacementTarget",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        },
+        {
+          "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+          "symbol": "FileViewer",
+          "sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "symbol": "FileDataState; contents/contentMetadata/contentErrors/pendingContents",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR05",
+      "classification": "current",
+      "claim": "Current creation copies bundled System_Manager templates into machine System/Views, not installed plugin templates.",
+      "path": "fusion-studio-server/lib/workspace/create-service.js",
+      "symbol": "scaffoldProjectV2Unchecked; readV2Manifest",
+      "source_sha256": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641",
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/workspace/ai-paths.js",
+          "symbol": "getMachineViewsRoot",
+          "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/index.js",
+          "symbol": "listV2ViewFolders; loadV2ViewShellFromEntry",
+          "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR06",
+      "classification": "current",
+      "claim": "Inspected thread activation validates workspace manager projectRoot and passes it through compat to OpenCode; adapter uses it for --dir and process cwd. Instance-local context assembly remains unverified end to end.",
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "symbol": "buildRunArgs; startThread/sendMessage",
+      "source_sha256": "8c1c6e9e9a8771b5d212bfad0d959e78e608fc0beb304399a3c3e450a13f430b",
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/harness/compat.js",
+          "symbol": "spawnThreadWire; startHarness",
+          "sha256": "5b1b041ec7ab259e9f8f6e0320e503f3c0059d44c3a206de7a413b64708fe7bf"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+          "symbol": "spawnAndSetupWire",
+          "sha256": "e4f58921839ac8f3a12b9f89522290e4f271382811683e17db416bf579fe6c8c"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/index.js",
+          "symbol": "listV2ViewFolders; loadV2ViewShellFromEntry",
+          "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "anchor": "current-implementation-and-gap",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR07",
+      "classification": "current",
+      "claim": "Mediated save prepares required preimage before replacement; optional reported context degrades separately; postwrite fact trouble is distinct from source-write outcome and admitted status is not proof of delivery. Four static trusted publisher identities do not form a generic plugin factory.",
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "symbol": "save; finishSuccess",
+      "source_sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+          "symbol": "publishCommand; publishResource",
+          "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "symbol": "STATIC_PUBLISHERS; bootstrapAdmission; createPublisher",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/file-operation-repository.js",
+          "symbol": "prepare",
+          "sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/atomic-writer.js",
+          "symbol": "replace",
+          "sha256": "b91fdd071eaa53febd4e286572cc38b00071e7e016d5c4ca7b905f9be23ad9e6"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+          "symbol": "sanitizeReportedUiContext",
+          "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+          "symbol": "originFromInput",
+          "sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "anchor": "current-source-inspected-save-boundary",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR08",
+      "classification": "current",
+      "claim": "ContentArea separates fixed built-ins/local app/custom branches; local URL wrapper passes through IframeSurface to FrameElement. Navigation hook cannot enforce changed-origin comparison when cross-origin location read fails. Named paths do not establish general hybrid operation interface or SDK.",
+      "path": "fusion-studio-client/src/components/browser/CustomViewer.tsx",
+      "symbol": "CustomViewer; validateCustomViewerUrl",
+      "source_sha256": "94daad613f4f0f9bbdcf5e278ec29bec2133a414d3c6532e99a3fb3390a67792",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/ContentArea.tsx",
+          "symbol": "ContentArea",
+          "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/IframeSurface.tsx",
+          "symbol": "IframeSurface",
+          "sha256": "cb225687f7dd1976266e2712b815e93afb43087831629113ba5349609e1c8200"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/core/useIframeNavigation.ts",
+          "symbol": "useIframeNavigation; handleLoad",
+          "sha256": "4df2c6297a385bbdf9d255ed16cef26af20709e42a660ef10d2a8a1c268954ec"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/core/FrameElement.tsx",
+          "symbol": "FrameElement",
+          "sha256": "9b89a2faf15dc6376a3ce0cdb34f5cce0ceb0604792b4b67d59b3a7a879c5e66"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "anchor": "current-source-inspected-embedding",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-CUR09",
+      "classification": "current",
+      "claim": "Purpose-built view-path checks exist; save controller invokes the policy before Git-related mutation preparation for selected save reasons. This is not complete plugin capability enforcement.",
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "symbol": "assertGenericViewMutationAllowed; isProtectedAiNamespace",
+      "source_sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a",
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "symbol": "save",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D05",
+      "classification": "approved",
+      "authority": "D05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D06",
+      "classification": "approved",
+      "authority": "D06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D07",
+      "classification": "approved",
+      "authority": "D07",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D08",
+      "classification": "approved",
+      "authority": "D08",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D09",
+      "classification": "approved",
+      "authority": "D09",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D10",
+      "classification": "approved",
+      "authority": "D10",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D11",
+      "classification": "approved",
+      "authority": "D11",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S01-D12",
+      "classification": "approved",
+      "authority": "D12",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "anchor": "approved-direction",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S01-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S02-D04",
+      "classification": "approved",
+      "authority": "D04",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "anchor": "configure-compose-then-implement",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S02-D05",
+      "classification": "approved",
+      "authority": "D05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "anchor": "configure-compose-then-implement",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S02-D06",
+      "classification": "approved",
+      "authority": "D06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "anchor": "an-illustrative-capture-collection",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S02-D09",
+      "classification": "approved",
+      "authority": "D09",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "anchor": "local-agent-resources",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S02-CUR10",
+      "classification": "current",
+      "claim": "Connected owner uses explicit read/apply ports; Capture adapts panel state, Files adapts file store connected-tab action; no second durable store in these paths.",
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "symbol": "ConnectedTabOwnerPorts; createConnectedTabOwner; apply; beginLaunch",
+      "source_sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/captureConnectedOwnerPorts.ts",
+          "symbol": "createCaptureConnectedOwnerPorts; readCollection; applyCollection",
+          "sha256": "91b7587754243f5569d03a71ee83d5e3aff808dbf313dc5d8d513457a425fefb"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "createFileConnectedOwnerPorts; readCollection; applyCollection",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "anchor": "current-source-inspected-foundation",
+      "limits": "Named producer/consumer source inspection only; no product build/test/runtime. Does not prove generalized plugin loading or illustrative Capture flow.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S02-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S03-D02",
+      "classification": "approved",
+      "authority": "D02",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "anchor": "containers-and-chat",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S03-D03",
+      "classification": "approved",
+      "authority": "D03",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "anchor": "commands-perform-work-and-facts-describe-outcomes",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S03-O05",
+      "classification": "open",
+      "authority": "O05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "anchor": "remaining-capability",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S03-O07",
+      "classification": "open",
+      "authority": "O07",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "anchor": "keep-protection-and-observation-distinct",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S03-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D04",
+      "classification": "approved",
+      "authority": "D04",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "anchor": "approved-presentation-boundary",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D05",
+      "classification": "approved",
+      "authority": "D05",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "anchor": "approved-presentation-boundary",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D06",
+      "classification": "approved",
+      "authority": "D06",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "anchor": "approved-presentation-boundary",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D07",
+      "classification": "approved",
+      "authority": "D07",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "anchor": "approved-provisioning",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D08",
+      "classification": "approved",
+      "authority": "D08",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "anchor": "approved-agent-orientation",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-D10",
+      "classification": "approved",
+      "authority": "D10",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "anchor": "current-status-and-limits",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-O04",
+      "classification": "open",
+      "authority": "O04",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "anchor": "open-product-choices",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S04-G04",
+      "classification": "gap",
+      "authority": "D09/O04; WV-G04/WV-O06",
+      "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "anchor": "wv-g04--view-local-agent-context",
+      "limits": "Current supplied projectRoot launch and registry inspection do not establish end-to-end local context. No exhaustive absence or runtime claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S04-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR01",
+      "classification": "current",
+      "claim": "Built-ins use fixed ID React dispatch; custom/local app and browser branches remain separate.",
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "symbol": "CONTENT_COMPONENTS; ContentArea; ContentFrame",
+      "source_sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx",
+          "symbol": "ViewTabBar",
+          "sha256": "886482040483da3985b87f74d6886b7ce6ec1a7372c9be5575135e908992c6b1"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g01--component-host-and-contributions",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR02",
+      "classification": "current",
+      "claim": "Closed two-entry code-owned Capture/File launcher catalog, not arbitrary plugin loading.",
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabLauncherCatalog.ts",
+      "symbol": "COMPONENT_TAB_LAUNCHER_CATALOG; findComponentTabLauncherCatalogEntry",
+      "source_sha256": "bd144eddc1866b16e39ae8a2d9bfb1d2aa7ceaed1cc222e3ef1231c158c9c8c7",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+          "symbol": "createConnectedTabOwner; beginLaunch",
+          "sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/captureConnectedOwnerPorts.ts",
+          "symbol": "createCaptureHomeLauncherBinding; launcherFor",
+          "sha256": "91b7587754243f5569d03a71ee83d5e3aff808dbf313dc5d8d513457a425fefb"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "createFileOpenLauncherBinding; launcherFor",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g01--component-host-and-contributions",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR03",
+      "classification": "current",
+      "claim": "Generic component tab machinery delegates read/apply to established owner ports; no second durable tab store.",
+      "path": "fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts",
+      "symbol": "ConnectedTabOwnerPorts; createConnectedTabOwner; commit",
+      "source_sha256": "3b408af90beb3c514d238a10b7c436c6229167f0b917a036d93a121ef93d0c63",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "readCollection; applyCollection",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        },
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/ComponentTabPanel.tsx",
+          "symbol": "ComponentTabPanel; resolveSafely",
+          "sha256": "d407ee5a1eb5df41ea8dac3666475e745d931cf0eceaffd4064da45945b3fb53"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileStore.ts",
+          "symbol": "applyConnectedTabCommit; persistFileTabs",
+          "sha256": "f151b34f15545f0d3c6629834614a9e42f6c7a1c35ffdda8796d39dc5d57e057"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g02--shell-and-canonical-file-reuse",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR04",
+      "classification": "current",
+      "claim": "Code-owned file target identity is consumed by Files placement ports.",
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedPresenterTargets.ts",
+      "symbol": "canonicalFilePath; fileDocumentTargetKey",
+      "source_sha256": "e3dcc0232b6f0edabbd6f7df7bfe48e4f68c12a5bb3c66efb124ebb1068d2805",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts",
+          "symbol": "resolveFilePlacementTarget",
+          "sha256": "5e2d5091d1e8f69f5818e0accf616d4e3a653779e00c6df8d278df58ba9b178f"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g02--shell-and-canonical-file-reuse",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR08",
+      "classification": "current",
+      "claim": "ContentArea separates fixed built-ins/local app/custom branches; local URL wrapper passes through IframeSurface to FrameElement. Navigation hook cannot enforce changed-origin comparison when cross-origin location read fails. Named paths do not establish general hybrid operation interface or SDK.",
+      "path": "fusion-studio-client/src/components/browser/CustomViewer.tsx",
+      "symbol": "CustomViewer; validateCustomViewerUrl",
+      "source_sha256": "94daad613f4f0f9bbdcf5e278ec29bec2133a414d3c6532e99a3fb3390a67792",
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/components/ContentArea.tsx",
+          "symbol": "ContentArea",
+          "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/IframeSurface.tsx",
+          "symbol": "IframeSurface",
+          "sha256": "cb225687f7dd1976266e2712b815e93afb43087831629113ba5349609e1c8200"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/core/useIframeNavigation.ts",
+          "symbol": "useIframeNavigation; handleLoad",
+          "sha256": "4df2c6297a385bbdf9d255ed16cef26af20709e42a660ef10d2a8a1c268954ec"
+        },
+        {
+          "path": "fusion-studio-client/src/components/iframe/core/FrameElement.tsx",
+          "symbol": "FrameElement",
+          "sha256": "9b89a2faf15dc6376a3ce0cdb34f5cce0ceb0604792b4b67d59b3a7a879c5e66"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g03--hybrid-custom-region-interface",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-S05-CUR07",
+      "classification": "current",
+      "claim": "Mediated save prepares required preimage before replacement; optional reported context degrades separately; postwrite fact trouble is distinct from source-write outcome and admitted status is not proof of delivery. Four static trusted publisher identities do not form a generic plugin factory.",
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "symbol": "save; finishSuccess",
+      "source_sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+          "symbol": "publishCommand; publishResource",
+          "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "symbol": "STATIC_PUBLISHERS; bootstrapAdmission; createPublisher",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/file-operation-repository.js",
+          "symbol": "prepare",
+          "sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/atomic-writer.js",
+          "symbol": "replace",
+          "sha256": "b91fdd071eaa53febd4e286572cc38b00071e7e016d5c4ca7b905f9be23ad9e6"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+          "symbol": "sanitizeReportedUiContext",
+          "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+          "symbol": "originFromInput",
+          "sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb"
+        }
+      ],
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g04--external-store-mediation",
+      "limits": "Source inspection of named owner/producer-consumer route only; no product runtime/build checks. Negative conclusions are bounded to this inspected route, not an exhaustive absence claim.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-G01",
+      "classification": "gap",
+      "authority": "D04/D05/O02/O06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g01--component-host-and-contributions",
+      "limits": "Bounded source-inspected foundations; end-to-end target unverified, not an exhaustive absence conclusion.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-G02",
+      "classification": "gap",
+      "authority": "D02/D06/O02/O06",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g02--shell-and-canonical-file-reuse",
+      "limits": "Bounded source-inspected foundations; end-to-end target unverified, not an exhaustive absence conclusion.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-G03",
+      "classification": "gap",
+      "authority": "D10/O05",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g03--hybrid-custom-region-interface",
+      "limits": "Bounded source-inspected foundations; end-to-end target unverified, not an exhaustive absence conclusion.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    },
+    {
+      "id": "PP-G04",
+      "classification": "gap",
+      "authority": "D03/D11/O07",
+      "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "anchor": "pp-g04--external-store-mediation",
+      "limits": "Bounded source-inspected foundations; end-to-end target unverified, not an exhaustive absence conclusion.",
+      "reviewer_conclusion": "CLEAN",
+      "review_evidence": "S05-BUILDER-REVIEW-01.md"
+    }
+  ]
+}

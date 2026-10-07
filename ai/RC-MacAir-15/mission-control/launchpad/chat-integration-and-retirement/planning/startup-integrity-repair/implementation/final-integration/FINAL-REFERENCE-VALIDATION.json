@@ -1,0 +1,1150 @@
+{
+  "at": "2026-10-06T09:33:56.035186+00:00",
+  "reportsChecked": 8,
+  "localLinksChecked": 163,
+  "missing": [],
+  "links": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FINAL-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FINAL-REVIEWER-LIFECYCLE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-REVIEWER-LIFECYCLE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "../../chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "REGRESSION-RESULTS.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/CUMULATIVE-CHECK-RESULT.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/CUMULATIVE-CHECK-RESULT.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/COMPLETE-DEVIATION-AND-PATH-APPENDIX.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETE-DEVIATION-AND-PATH-APPENDIX.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FINAL-CANDIDATE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-CANDIDATE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/cleanup-sealed/cleanup-before.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/cleanup-before.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/cleanup-sealed/cleanup-after.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/cleanup-after.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md:26",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "target": "final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "final-integration/FINAL-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "STARTUP-NEGATIVE-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-NEGATIVE-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "REGRESSION-RESULTS.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R1/CURRENT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R1/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R2/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "R3/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "ORIGINAL-OWNER-INCORPORATION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/ORIGINAL-OWNER-INCORPORATION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "target": "OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "final-integration/FINAL-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R1/focused-tests.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/focused-tests.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R1/orchestrator-focused-tests.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/orchestrator-focused-tests.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R1/R1-BUILDER-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-BUILDER-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R1/consumer-smoke.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/consumer-smoke.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "STARTUP-NEGATIVE-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-NEGATIVE-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R2/orchestrator-focused-tests.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/orchestrator-focused-tests.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R2/CURRENT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/CURRENT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R2/orchestrator-isolated-async.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/orchestrator-isolated-async.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R2/orchestrator-identity-only-negative.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/orchestrator-identity-only-negative.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "STARTUP-NEGATIVE-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-NEGATIVE-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/orchestrator-affected-regression-result.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-affected-regression-result.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/orchestrator-affected-regression.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-affected-regression.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/HANDOFF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/HANDOFF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/CHECKS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CHECKS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/ORCHESTRATOR-RAW-LOG-INSPECTION.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-RAW-LOG-INSPECTION.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/ORCHESTRATOR-HELD-MANIFEST-INSPECTION.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-HELD-MANIFEST-INSPECTION.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/server-full.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/server-full.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/new-chat-fixtures.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/new-chat-fixtures.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/retirement-source-sweep-current.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/retirement-source-sweep-current.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "GUARDED-SERVER-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/orchestrator-lifecycle-current.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-lifecycle-current.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/orchestrator-guarded-command-result-current.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-command-result-current.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "R3/orchestrator-guarded-launcher-current.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-launcher-current.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "target": "final-integration/CUMULATIVE-CHECK-RESULT.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/CUMULATIVE-CHECK-RESULT.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "final-integration/FINAL-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-guarded-receipt-inspection.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-receipt-inspection.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/guarded-safe-evidence/protected-state-receipt.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-safe-evidence/protected-state-receipt.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-guarded-launcher.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-launcher.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-guarded-command-result.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-command-result.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/ORCHESTRATOR-GUARDED-RECEIPT.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-RECEIPT.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-lifecycle.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-lifecycle.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-lifecycle-current.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-lifecycle-current.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-guarded-launcher-current.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-launcher-current.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/orchestrator-guarded-command-result-current.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-command-result-current.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "target": "R3/ORCHESTRATOR-GUARDED-CURRENT-RECEIPT.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-GUARDED-CURRENT-RECEIPT.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/FINAL-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../OWNER-APPROVAL.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/OWNER-APPROVAL.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "SOURCE-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SOURCE-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/runtime-complete-20261006T074525Z/ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/ACTUAL-RUNTIME-CHRONOLOGY-AND-NO-ACTIVATION.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/HANDOFF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/HANDOFF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R1/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R2/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R1/R1-BUILDER-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-BUILDER-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/OWNER-MANUAL-RUNTIME-READY.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/OWNER-MANUAL-RUNTIME-READY.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "ORIGINAL-OWNER-INCORPORATION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/ORIGINAL-OWNER-INCORPORATION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "READINESS-REFRESH-20261006T070423Z.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/READINESS-REFRESH-20261006T070423Z.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "ORIGINAL-OWNER-INCORPORATION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/ORIGINAL-OWNER-INCORPORATION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/original-adoption-20261006/ADOPTION-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "ORIGINAL-OWNER-INCORPORATION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/ORIGINAL-OWNER-INCORPORATION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/original-adoption-20261006/SUCCESSOR-ACKNOWLEDGMENT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/original-adoption-20261006/SUCCESSOR-ACKNOWLEDGMENT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/SPEC-01-STARTUP-INTEGRITY-REPAIR.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SPEC-01-STARTUP-INTEGRITY-REPAIR.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/STARTUP-NEGATIVE-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-NEGATIVE-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R1/PREIMAGE-RECEIPT.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/PREIMAGE-RECEIPT.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R1/orchestrator-negative-preimage.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/orchestrator-negative-preimage.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R2/IDENTITY-CONTROL.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/IDENTITY-CONTROL.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R2/orchestrator-identity-only-negative.log",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/orchestrator-identity-only-negative.log",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R1/R1-BUILDER-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-BUILDER-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R2/R2-BUILDER-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-BUILDER-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "../../../startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "target": "S4-repaired-integration-report.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/SOURCE-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SOURCE-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/RUNTIME-CURRENT-FINGERPRINTS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/RUNTIME-CURRENT-FINGERPRINTS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "S3-startup-integrity-reassessment.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/CHECKS.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CHECKS.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/ORCHESTRATOR-INSPECTION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-INSPECTION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/OPENCODE-PUBLIC-SMOKE.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/orchestrator-shutdown-inspection.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-shutdown-inspection.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/wiki-inventory.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/wiki-inventory.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/ORCHESTRATOR-WIKI-CURRENT-INSPECTION.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/ORCHESTRATOR-WIKI-CURRENT-INSPECTION.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/R3-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/R3-ACCEPTANCE-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "target": "../../../startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S1-builder-report-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S1-builder-report-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S1-orchestrator-acceptance-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S1-orchestrator-acceptance-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S2-builder-report-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S2-builder-report-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S2-orchestrator-acceptance-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S2-orchestrator-acceptance-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S3-builder-report-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-builder-report-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S3-orchestrator-acceptance-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-orchestrator-acceptance-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-builder-report-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-builder-report-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-native-ui-retry-2026-10-04.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-native-ui-retry-2026-10-04.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-new-chat-repair-builder-2026-10-05.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-repair-builder-2026-10-05.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-new-chat-orchestrator-2026-10-05.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-orchestrator-2026-10-05.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-orchestrator-acceptance-2026-10-03.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-orchestrator-acceptance-2026-10-03.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-native-ui-retry-2026-10-04.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-native-ui-retry-2026-10-04.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/ORIGINAL-RECORD-SUCCESSOR-APPROVAL.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/original-adoption-20261006/SUCCESSOR-ACKNOWLEDGMENT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/original-adoption-20261006/SUCCESSOR-ACKNOWLEDGMENT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S3-startup-integrity-reassessment.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-repaired-integration-report.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/R3-ACCEPTANCE.json",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE.json",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/R3/R3-ACCEPTANCE-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/R3-ACCEPTANCE-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "S4-repaired-integration-report.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "target": "../../../startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "resolvedPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FIN-D01-MEASUREMENT-DISPOSITION.md",
+      "exists": true,
+      "generatedByThisOperationBeforeReturn": false
+    }
+  ],
+  "scope": "local file targets; no external link request or new test execution"
+}

@@ -1,0 +1,14 @@
+✔ failed scenario preserves the original error/phase and safe receipts before owned cleanup (5.638417ms)
+✔ successful scenario retains the audit and validates marker cleanup (2.345666ms)
+✔ protected state is compared after failure, preserving the failure and real drift evidence (2.126625ms)
+✔ a failed scenario with unchanged protected state still records its comparison (1.565541ms)
+✔ success cannot pass protected-state drift (1.941208ms)
+✔ changed ownership or unsafe linked artifacts retain the root without deleting foreign bytes (2.669875ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.620791

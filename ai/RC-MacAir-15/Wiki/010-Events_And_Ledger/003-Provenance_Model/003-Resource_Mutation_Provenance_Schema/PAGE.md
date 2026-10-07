@@ -1,96 +1,52 @@
 ---
 name: Resource Mutation Provenance Schema
-description: Schema guidance for file and folder mutation events from watchers, UI file APIs, file explorer operations, sync jobs, imports, and scripts.
+description: Read the implemented mediated-save facts and optional reported context, distinct from broader resource-mutation schema proposals.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-    - Tool Call Provenance Schema
-  outgoing-edges:
-    - Chat Metadata Provenance Schema
-    - Tool Call Provenance Schema
-    - Ledger Event Provenance Schema
-    - File Version Provenance Schema
-    - UI Action Provenance Module
   source-files:
-    - fusion-studio-server/lib/watch/workspace-watcher.js
-    - fusion-studio-server/lib/file-explorer.js
-    - fusion-studio-server/lib/ws/workspace-request-handlers.js
-    - fusion-studio-client/src/state/fileDataStore.ts
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json
+    - fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json
+    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
+    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/ws/file-save-route.js
+    - fusion-studio-server/lib/ws/resource-provenance-route.js
+    - fusion-studio-client/src/lib/save-action-context.ts
+    - fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. This page supplies the mechanical `serverMutationId` branch assignment; decision-tagged cross-domain choices remain open.
+Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
 
-Use this page before changing file-change events, watcher payloads, file API mutation messages, or resource cache invalidation metadata.
+## Current closed save facts
 
-Resource mutation provenance covers file and folder changes observed or caused by watcher events, UI file APIs, file explorer saves, sync/import jobs, scripts, triggers, schedulers, and tool calls.
+The registered `file.command_accepted@1` and `resource.mutated@1` schemas describe one mediated text-save operation. The command fact follows durable acceptance; the mutation fact requires successful replacement. They do not use the older proposed common `eventFamily`/`ids`/`provenance`/`resourceMutation` envelope.
 
-## Boundary
+| Field | Current meaning |
+|---|---|
+| `eventId`, `eventType`, `schemaVersion`, `occurredAt`, `workspaceId`, `operationId` | Reservation-bound host identity and time; exact event name and version 1 |
+| `commandId` | Owning durable save command in both facts |
+| `origin` | `kind: local_client`, server connection ID, `assurance: transport_only`, optional `reportedUiContext` |
+| `resource` | Host `resourceId`, `kind: file`, canonical workspace-relative `path`, plus ingress `access.panel` and `access.path` |
+| Command `intent` | `kind: save`; optional save reason, milestone and client action ID within validation bounds |
+| Mutation `commandAcceptedEventId` | Reserved command-acceptance identity; not proof that its separate admission axis completed |
+| Mutation `mutation` | `kind: create` or `modify`, with optional save reason/milestone |
+| Mutation `fileVersionId` | Operational required-preimage row identity; not a canonical version event |
 
-Resource mutation events are the bridge between filesystem facts and higher-level causes. They must preserve the distinction between "this changed" and "this actor caused it."
+There are no concrete content hashes or snapshot bytes in `resource.mutated@1`. Required preimage bytes/hash and intended-after hash live in owning System records; bounded query results expose preimage metadata. Create-by-save has an absent preimage. Other mutation commands and watcher events have not acquired this schema. See [File Versioning](../../006-File_Versioning/PAGE.md) and [Render Sync](../../005-Resource_Events_And_Render_Sync/PAGE.md).
 
-## Domain Payload
+## Optional reported UI context
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily: 'resource',
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle,
-  ids,
-  actor,
-  provenance,
-  context,
-  resourceMutation: {
-    resourceEventId,
-    resourceId,
-    resourceType,
-    path,
-    oldPath,
-    operation,
-    observedAt,
-    observerEventType,
-    contentHashBefore,
-    contentHashAfter,
-    sizeBefore,
-    sizeAfter,
-    symlink
-  },
-  resources: [],
-  redaction
-}
-```
+`fileDataStore.saveFile` calls synchronous `readSaveActionContext(panel)` at command time. It requires a current workspace and registered panel; it reads matching connected File owner state for optional active component-tab fields. Other registered save panels can contribute workspace/view context without those File component fields. It does not infer identities from an unrelated active tab or capture all UI actions.
 
-View and panel fields belong under `context`, not inside `resourceMutation`.
-Use `provenance.confidence` for attribution confidence. Do not add a second attribution enum inside `resourceMutation`.
-`observerEventType` stores the watcher or legacy collector event kind, such as create, modify, delete, or rename. It is not an event ID and should not be confused with `provenance.observedBy`.
+The carrier permits `workspaceId`, `viewId`, `viewInstanceId`, `tabId`, `componentTypeId`, `componentInstanceId`, `presenterId` and `targetKey`. Identifier caps are 128 UTF-8 bytes and target key is 512. The current reader does not fabricate `viewInstanceId`. Server sanitization requires a usable view ID for retained context, derives workspace from the session, strips unknown/invalid optional fields, and drops the whole subtree for a bad or mismatching supplied workspace. Null/missing context may be omitted silently; degraded/mismatched input uses fixed diagnostics. Sanitization precedes locked request-schema validation so optional context failure does not reject an otherwise valid save. This exception does not relax path/content/operation validation or required preimage storage.
 
-For the first package, successful resource redaction uses exact strings `resource-metadata-v1` / `'1'` and the branch matrix in SPEC-34. A present before/after side requires both its state-hash and matching mutation-hash omissions as `policy_unapproved` plus two redaction omission pointers. An absent side uses mutation hash omission `not_applicable`; an unavailable side uses `not_observed`; neither adds a hash redaction pointer. Every concrete hash field remains absent, and retaining one rejects the candidate. `resourceMutation.fileVersionIds` is not a first-package field and is absent until its later domain registration. Policy failure preserves the mutation or watcher fact and invokes recovery.
+`reported-ui-context` maps retained fields to `file_operations` columns. `fact-reservation-bindings` reconstructs them in command and resource facts, and the resource ledger transaction copies them to `resource_provenance_events` beside the canonical payload. `resource-provenance-repository.query` returns the stored context and preimage metadata; view/tab/component/presenter/target selectors filter those historical columns. It does not reread live tab configuration to reconstruct the past, return snapshot bytes or change tab state.
 
-For `ids.serverMutationId`, the server-produced resource-mutation branch requires the command handler to generate or propagate it. Watcher-observed resource facts prohibit it. Resource validators, projections, and ledger correlation consume that branch identity; workspace/view lifecycle events do not.
+The typed query runs through `resource:provenance:query/result/error` with server-bound workspace/epoch validation and bounded results. The client protocol helper and response registration exist; the inspected client source has no production invocation of `queryResourceProvenance`, so this transport is not evidence of a mounted audit/history screen. Query UI belongs to later work.
 
-## Attribution Rules
+## Meaning and future scope
 
-- Direct attribution requires a registered SPEC-40 `prepareCanonicalCandidate` binding that consumes the upstream domain event's `AcceptedCanonicalRef`. In 40b1a the UI root/parent/causation/origin/cause group is registered only for a resource candidate directly initiated by an accepted `ui.action`; first-package lifecycle registers no upstream group. SPEC-40b2 and later owning slices may add tool, harness, trigger, scheduler, script, automation, agent, audit, or lifecycle cause pointers only by extending both schema and pointer/domain registries. The builder inserts a complete proven group and records private proof; a copied inspection string or raw operational, runtime, candidate, user-supplied, rejected, or unpublished ID omits the group with fixed `accepted_relationship_unbound` while the independently safe resource fact remains eligible.
-- Watcher-only attribution is observed or correlated, not direct.
-- Unknown external changes should stay unknown when no causal ID is available.
+The context is reported comparison evidence, not an authenticated actor, permission, causal verdict or resource identity. T1 domain mutations and their T2 action context are the durable direction; ambient T3 navigation/focus/scroll is not retained by this carrier. This implementation does not emit a general `ui.action`, assign a universal UI action ID, or cover all panels, prompt attachments or commands.
 
-## Connections
-
-- Chat metadata may attach relevant mutations under `chatResources.mutations` only if finding 4/`CHAT-D01` approves and registers that sidecar's relationship to shared `resources[]`; this example is not current authority.
-- After its later registration, a tool call links to a mutation through `provenance.cause.toolCallId` only when the builder consumes the accepted canonical tool ref; otherwise it uses later watcher correlation without inventing a direct cause.
-- Ledger events store the canonical resource event and graph edges.
-- File versioning subscribes to resource mutation events.
-- UI context can explain which view/document was active when a user-initiated mutation happened.
-- Audits can answer who or what changed a path and whether attribution was direct or inferred.
-
-## Gaps To Close
-
-- Watcher payloads currently lack stable event IDs and full provenance.
-- Resource events need workspace identity before multi-workspace correlation is safe.
-- Existing ledger behavior can infer watcher file changes as user actions, which violates observer-vs-cause.
-- Direct WebSocket `file_changed` paths need to become derived output rather than source-of-truth events.
+Broader resource schemas, watcher provenance, automation causes and graph edges remain proposals requiring their owning contracts. The exact supported save snapshot/context behavior already has authority; an older blanket hash prohibition or accepted-reference gate does not disable it. Preserve unknown attribution rather than guessing, as explained in [Correlation And Causality](../../007-Correlation_And_Causality/PAGE.md).

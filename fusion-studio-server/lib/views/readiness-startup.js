@@ -18,14 +18,13 @@ async function startWorkspacePipelineWhenReady({
   const projectRoot = getProjectRoot();
   const workspaceId = getWorkspaceId();
   if (!projectRoot || !workspaceId) {
-    startPipeline({ sessions, projectRoot, workspaceId });
     return Object.freeze({ started: false, reason: 'no_active_workspace' });
   }
   const readinessContext = Object.freeze({ projectRoot, workspaceId });
   try {
     await viewReadiness.ensureWorkspaceViewReadiness(readinessContext);
     await viewReadiness.withViewReadinessLease(readinessContext, async () => {
-      startPipeline({ sessions, projectRoot, workspaceId });
+      await startPipeline({ sessions, projectRoot, workspaceId });
     });
     return Object.freeze({ started: true, reason: null });
   } catch (error) {

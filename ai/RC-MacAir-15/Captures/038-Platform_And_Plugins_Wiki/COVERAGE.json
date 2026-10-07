@@ -1,0 +1,1291 @@
+{
+  "schema_version": 1,
+  "phase": "SPEC_READY_FOR_OWNER_REVIEW: all six slices and fresh final integration CLEAN; owner acceptance separate",
+  "entries": [
+    {
+      "id": "D01",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "containers-and-chat",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+          "anchor": "commands-perform-work-and-facts-describe-outcomes",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "configure-compose-then-implement",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "configure-compose-then-implement",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "an-illustrative-capture-collection",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "collection-to-file-and-back",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "protected-package-and-editable-copy",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+          "anchor": "approved-provisioning",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "protected-package-and-editable-copy",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+          "anchor": "approved-provisioning",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "local-agent-resources",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D10",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+          "anchor": "standard-host-pieces-beside-a-custom-region",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+          "anchor": "current-status-and-limits",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D11",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+          "anchor": "content-and-system-have-different-owners",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "D12",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+          "anchor": "approved-direction",
+          "check": "S01 decisions self-review; independent S01 review CLEAN",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "workspace-selection-and-maintenance",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+          "anchor": "approved-provisioning",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C01",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "six-roles",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "extending-presentation",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "configure-compose-then-implement",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "an-illustrative-capture-collection",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+          "anchor": "standard-host-pieces-beside-a-custom-region",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "file-and-collection-ownership",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "collection-to-file-and-back",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+          "anchor": "approved-presentation-boundary",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "instance-and-capability-ownership",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "protected-package-and-editable-copy",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+          "anchor": "approved-provisioning",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "instance-and-capability-ownership",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "local-agent-resources",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "data-and-custom-regions",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+          "anchor": "current-source-inspected-save-boundary",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+          "anchor": "data-and-custom-regions",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+          "anchor": "current-source-inspected-embedding",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+          "anchor": "current-status-and-limits",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 self-review; remaining detailed routes planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+          "anchor": "an-illustrative-capture-collection",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC01",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC02",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC03",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC04",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC05",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC06",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        }
+      ]
+    },
+    {
+      "id": "AC07",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        },
+        {
+          "slice": "S05",
+          "check": "All six builder and separate orchestrator acceptance gates completed; see EXECUTION.md and S00-S05 acceptance records",
+          "review": "S05-ACCEPTANCE-REVIEW-01.md; final integration still pending"
+        },
+        {
+          "gate": "final_integration",
+          "reviewer": "/root/pp_final_integration",
+          "result": "CLEAN",
+          "check": "FINAL-INTEGRATION-REVIEW-01.md; HANDOFF.md; all six slice gates and final post-stamp output evidence complete",
+          "limits": "Documentation/source inspection only; owner acceptance separate"
+        }
+      ],
+      "completion_status": "verified",
+      "pending_obligations": []
+    },
+    {
+      "id": "AC08",
+      "outputs": [
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md"
+      ],
+      "status": "verified",
+      "evidence": [
+        {
+          "slice": "S01",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+          "anchor": "how-to-read-this-section",
+          "check": "S01 portion only; see S01-HANDOFF.md; later slices and final gate planned",
+          "review": "S01-BUILDER-REVIEW-01.md: CLEAN for S01 portion only; future portions retain planned/partial status"
+        },
+        {
+          "slice": "S02",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S02-SELF-REVIEW.md; S02 validation; applicable portion only",
+          "review": "S02-BUILDER-REVIEW-01.md: CLEAN for S02 portion; later mapped portions remain pending"
+        },
+        {
+          "slice": "S03",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+          "anchor": "current-source-inspected-foundation",
+          "check": "S03-SELF-REVIEW.md; slice S03 validation; applicable portion only",
+          "review": "S03-BUILDER-REVIEW-01.md: CLEAN for S03 portion; later portions remain pending"
+        },
+        {
+          "slice": "S04",
+          "output": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+          "anchor": "approved-agent-orientation",
+          "check": "S04-SELF-REVIEW.md; S04-PROSE-DIFF.patch; slice S04 validation; applicable portion only",
+          "review": "S04-BUILDER-REVIEW-01.md: CLEAN for S04; final generated links/stamp/integration remain S05"
+        },
+        {
+          "slice": "S05",
+          "output": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+          "anchor": "workspace-gaps-keep-their-existing-owners",
+          "check": "S05-SELF-REVIEW.md and S05-OUTPUTS.json; final source/hash, link, snapshot, metadata, staging and timestamp checks; prior evidence retained",
+          "review": "S05-BUILDER-REVIEW-01.md CLEAN on final stamped bytes; parent acceptance and final integration remain pending"
+        },
+        {
+          "slice": "S05",
+          "check": "All six builder and separate orchestrator acceptance gates completed; see EXECUTION.md and S00-S05 acceptance records",
+          "review": "S05-ACCEPTANCE-REVIEW-01.md; final integration still pending"
+        },
+        {
+          "gate": "final_integration",
+          "reviewer": "/root/pp_final_integration",
+          "result": "CLEAN",
+          "check": "FINAL-INTEGRATION-REVIEW-01.md; HANDOFF.md; all six slice gates and final post-stamp output evidence complete",
+          "limits": "Documentation/source inspection only; owner acceptance separate"
+        }
+      ],
+      "completion_status": "verified",
+      "pending_obligations": []
+    }
+  ],
+  "status_semantics": "verified means earned documentation/output/evidence coverage. AC07 and AC08 are not fully accepted until the orchestrator records S05 acceptance, final integration CLEAN and final HANDOFF. No future review is claimed."
+}

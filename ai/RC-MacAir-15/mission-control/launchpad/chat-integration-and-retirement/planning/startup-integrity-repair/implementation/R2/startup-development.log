@@ -1,0 +1,20 @@
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-45v4kU","port":51627,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-nBaTR7","port":51631,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-HmpsY1","port":51633,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-1ex3IK","port":51634,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-40junj","port":51635,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-HRy9Pz","port":51636,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-YJOE3P","port":51637,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-h5UPnf","port":51639,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-Rz3qv5","port":51641,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-FGGwNh","port":51642,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-IpYIRI","port":51643,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-I7Kuf1","port":51644,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-QyZpbN","port":51645,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+(node:49813) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        40.099 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js".

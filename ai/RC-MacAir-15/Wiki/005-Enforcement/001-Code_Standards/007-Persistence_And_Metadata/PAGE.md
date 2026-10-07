@@ -2,17 +2,14 @@
 name: Persistence And Metadata Standards
 description: Rules for SQLite writes, migrations, thread managers, metadata, file mirrors, and durable state updates.
 metadata:
-  incoming-edges:
-    - Code Standards
-  outgoing-edges:
-    - Architecture Routing
-    - State Management Standards
   source-files:
     - fusion-studio-server/lib/db.js
-    - fusion-studio-server/lib/thread/
-    - fusion-studio-server/lib/chat-metadata/
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/thread/ThreadManager.js
+    - fusion-studio-server/lib/thread/HistoryFile.js
+    - fusion-studio-server/lib/chat-metadata/exchange-metadata-aggregator.js
+    - fusion-studio-server/lib/views/index.js
+    - fusion-studio-server/lib/view-state/resolver.js
+  last-modified: "2026-09-21T13:37:22Z"
 ---
 
 Use this page before changing SQLite tables, migrations, thread metadata,
@@ -23,6 +20,16 @@ exchange metadata, workspace state, or file-backed mirrors.
 Use the owning manager or service for durable state. Direct database writes are
 allowed only when the caller also preserves every mirror, metadata contract, and
 event expectation owned by the normal path.
+
+## System ownership and evidence scope
+
+The [Server And Runtime System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary) is the approved storage direction. `fusion.db` is System: mutable Fusion configuration, registrations, grants and subscriptions plus durable chat/history, ledger, provenance, snapshots and recovery records. Connected apps remain authoritative for their live content. Workspace applications may own files or a separate workspace SQLite database; that database is content, not the System database. Existing file-backed System configuration and view state need not all move to SQLite.
+
+Plugins use defined interfaces and approved capabilities. They cannot create arbitrary System tables, use System as their app database, receive an ambient database handle or grant themselves authority. Platform-owned migrations remain distinct from plugin access. A historical snapshot is an audit/recovery copy; restoration is a separate permitted write to the authoritative source. Preserve history by default with explicit user-controlled cleanup, while mutable configuration remains mutable.
+
+Status: this boundary is approved target direction; the linked hub's current database/calendar/delete observations were source inspected on 2026-09-19, without product runtime checks. Current calendar tables are a known live-content storage gap, and current session deletion and diagnostic cleanup still exist. Do not treat either as permission to extend the gap or as proof of universal preservation. Other identity/recovery requirements on this standards page retain their own contract scope and are not recertified by this bounded update.
+
+For provenance, required mediated-save preimage storage must succeed before replacement. Optional reported context can degrade, while postwrite fact/projection recovery has a different failure boundary. Existing tool checkpoints are observations after activity, not universal preimages or a general restore facility. See [Events And Ledger Decisions](../../../010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md) before generalizing these mechanisms to another operation.
 
 ## Persistence Owners
 
@@ -40,10 +47,11 @@ event expectation owned by the normal path.
 
 ## Durable identity boundaries
 
-- A view capsule's immutable identity is `metadata.view-id` in `manifest.md`,
-  qualified by `workspaceId`. The target capsule root is
-  `ai/<machine>/System/Views/`. Folder name, numeric prefix, ordering, and
-  display name may change without changing that identity.
+- A current view capsule's immutable identity is `metadata.view-id` in `manifest.md`,
+  qualified by `workspaceId`. The current capsule root is
+  `ai/<machine>/System/Views/`. The approved editable-instance target is outside
+  `System`, with the exact path and future plugin/instance identity schema open.
+  Folder name, numeric prefix, ordering, and display name do not replace the current identity.
 - A visible thread group owns membership, ordering, title, ranked collection
   assignments, view binding, and current-primary history in SQLite. Archive is
   a derived projection when no assignment is valid; do not add a separate
@@ -72,8 +80,9 @@ view-dependent initialization already completed, including one later archived.
 
 ## View definition versus content root
 
-The capsule is control-plane configuration; `content.json` declares the
-separate content root. A content root may live under `ai/<machine>/`, at
+The current capsule is control-plane configuration; `content.json` declares the
+separate content root. In the approved model, editable instance configuration
+moves outside `System` and binds to a protected plugin; see [View Configuration And Agents](../../../001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md). A content root may live under `ai/<machine>/`, at
 workspace root, or at another supported location. Moving or ignoring the
 capsule does not move, ignore, or rewrite its content. All consumers resolve
 both through the owning view registry instead of concatenating physical paths.

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-06T08:38:30.476614+00:00",
+  "scope": "Final current original retirement/source-route/dependency sweep and scoped tracked whitespace check",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+  "literalOriginalCommand": [
+    "rg",
+    "-n",
+    "require\\(['\"]chokidar['\"]\\)|from ['\"]chokidar['\"]|watch/core|watch/workspace-watcher|hotkey-screenshot-watcher|watch/calendar-watcher|abandonAll",
+    "lib",
+    "package.json"
+  ],
+  "rgExit": 1,
+  "matches": [],
+  "dependencyMatches": [],
+  "retiredPathsAbsent": [
+    "lib/watch/core.js",
+    "lib/watch/workspace-watcher.js",
+    "lib/screenshot/hotkey-screenshot-watcher.js",
+    "lib/screenshot/source-folder-service.js",
+    "lib/watch/calendar-watcher.js"
+  ],
+  "retiredScreenshotRefreshSourceRouteMatches": [],
+  "scopedGitDiffCheck": {
+    "paths": [
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "limits": "Git diff checks tracked deltas only; current new source/test files are separately inspected by fresh reviewers."
+}

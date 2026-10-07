@@ -21,6 +21,7 @@
  */
 
 import { useMemo } from 'react';
+import { readOpenSideChatPlacements } from '../../lib/chat/side-chat-placements';
 import { usePanelStore } from '../../state/panelStore';
 import { getCurrentThreadGroupId } from '../../state/slices/chatSurfaceSlice';
 import {
@@ -34,7 +35,6 @@ import type { ViewTabAdapterModel } from '../view-tabs/viewTabAdapters';
 import {
   composeAdapterlessSideChatRail,
   composeSideChatAdapter,
-  readOpenSideChatPlacements,
   type SideChatBridgeContext,
 } from './sideChatBridge';
 

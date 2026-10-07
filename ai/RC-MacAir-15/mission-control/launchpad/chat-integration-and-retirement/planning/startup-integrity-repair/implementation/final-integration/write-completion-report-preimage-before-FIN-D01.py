@@ -1,0 +1,100 @@
+"""Finalize owned reports only after actual final terminal CLEAN and sealed cleanup."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,re
+BASE=Path(__file__).resolve().parents[1]
+FINAL=BASE/'final-integration'
+ORIGINAL=BASE.parent.parent/'chokidar-retirement-and-harness-launch/spec/implementation'
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+AT=datetime.now(timezone.utc).isoformat()
+verdict=json.loads((FINAL/'FINAL-ACCEPTANCE.json').read_text())
+assert verdict['verdict']=='CLEAN' and verdict['bothCompleteContractsCovered'] is True and verdict['terminal'] is True
+cleanup=json.loads((FINAL/'cleanup-sealed/SEALED-MANIFEST.json').read_text())
+assert cleanup['protectedUnchanged'] and cleanup['olderUnchanged'] and cleanup['temporaryReceiptRootRemoved']
+assert len(cleanup['removedRoots'])==10 and not any(Path(p).exists() for p in cleanup['removedRoots'])
+dest=FINAL/'completion-report-preimages';dest.mkdir(exist_ok=False)
+changes=[]
+def record(p,content,name):
+ raw=p.read_bytes();(dest/name).write_bytes(raw);p.write_text(content)
+ changes.append({'path':str(p),'preimage':str(dest/name),'beforeSha256':sha(raw),'afterSha256':sha(p.read_bytes()),'reason':'actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes'})
+rawpath=FINAL/'FINAL-INTEGRATION-REVIEW-01-RAW.md';assert sha(rawpath.read_bytes())==verdict['rawReportSha256']
+body=(FINAL/'COMPLETION-CANDIDATE.md').read_text()
+body=body[body.index('## Outcome and exact scope'):body.index('## Review lineage, cleanup and limitations')]
+def move_links(text):
+ def replace(match):
+  target=match.group(1)
+  if target.startswith(('/', '#', 'http:', 'https:', 'app:', 'plugin:')): return match.group(0)
+  path,separator,fragment=target.partition('#')
+  return '('+os.path.relpath((FINAL/path).resolve(),BASE)+separator+fragment+')'
+ return re.sub(r'(?<=\])\(([^\s()]+)\)',replace,text)
+body=move_links(body)
+body=body.replace('Fresh full final review and cleanup remain pending here, human acceptance separate.','Fresh full original+repair final review is CLEAN and owned cleanup is verified; human completed-work acceptance is separate.')
+body=body.replace('current documentation claims await final independent gates','current documentation claims are covered by the completed full final gate')
+body=body.replace('Earlier CLEAN never becomes this final verdict','Earlier CLEAN never supplies this new final verdict')
+intro=f'''# CHAT-AR-REPAIR-01 final implementation and complete original integration report
+
+**SPEC_READY_FOR_OWNER_REVIEW**, recorded {AT}. All R1/R2/R3 slices are accepted. The fresh independent final reviewer explicitly covers BOTH entire approved CHAT-AR-REPAIR-01 and original CHAT-AR-SPEC-01 contracts/current bytes/raw evidence and is terminal CLEAN. All required original S3/S4/ledger incorporation and canonical documentation are actual adopted records. Marker-owned scratch roots, apps and observer are cleaned with safe raw proof retained. No further hands-and-eyes test is needed. Human completed-work acceptance remains pending; this does not authorize Git/Alpha, another SPEC or domain/main/checkpoint takeover.
+
+Final reviewer {verdict['reviewer']}; [verbatim return](final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md), SHA {verdict['rawReportSha256']}; [current gate receipt](final-integration/FINAL-ACCEPTANCE.json) and [lifecycle](final-integration/FINAL-REVIEWER-LIFECYCLE.json). The candidate identifies the dirty current worktree, not HEAD alone. No lower gate was reopened for elapsed time or administrative adoption.
+
+'''
+matrix=(ORIGINAL/'S4-repaired-integration-report.md').read_text().split('## Complete original §8 and repair requirement matrix\n',1)[1].split('## Actual public runtime',1)[0]
+matrix=matrix.replace('Whole-R3 builder and separate acceptance are now CLEAN; fresh complete both-contract final review and marker cleanup follow.','Whole-R3 builder, separate acceptance and fresh complete both-contract final review are CLEAN; marker cleanup independently verified.')
+matrix=matrix.replace('**Full integration and owner gates remain pending** at this revision','**Completed-work human acceptance remains pending** at this revision')
+tail=f'''## Complete original acceptance and preservation
+{matrix}
+The full gate also explicitly covers original owner amendments/R-01–07, all S1–S4, §7 compatibility/shutdown and §9 deferrals. It does not narrow to these ten summary rows. Chokidar/dependency/deleted routes remain retired; screenshots use the direct request-correlated PNG/attachment flow; gallery/ribbon owners are distinct; Apple callback/no-await stops with cached-row caveat; Google/preserved broadcaster remain. Save/tool provenance, legacy workspace/thread ledger durability, workspace/CLI/theme/shutdown and existing New Chat/save/conflict selection owners remain under their established contracts.
+
+## Exact deviations and current paths
+
+[Complete deviation/path/command appendix](final-integration/COMPLETE-DEVIATION-AND-PATH-APPENDIX.md) contains all16 repair deviation entries, exact original text/change/reason/files/checks/observable effect/risk/downstream fields and unchanged original D01–D03 ledger text. Every deviation stays visible in both ledgers and original S3/S4 addenda. Its21-path current repair union/commands and raw source references are substantive; historical original gate/manual states remain dated. The appendix's prepared-before-final state is history; this final gate supplies current completion. D07 downstream evidence-selection duty is implemented through current-vs-dated reports and exact loaded source versus broader fixture/Wiki/build hashes: overall **compatible deviation**, no required downstream product SPEC correction or indispensable owner product decision. No broad harness recovery/performance/new health/schema/subscription/native replacement scope was added.
+
+## Complete review lineage and lifecycle
+
+R1: responsible fresh builder r1_builder; fresh builder reviewer r1_builder/r1_builder_review_01; separate orchestrator r1_acceptance_review_01. R2: r2_builder; r2_builder/r2_builder_review_01; r2_acceptance_review_01. R3: r3_builder; r3_builder/r3_builder_review_01; separate r3_acceptance_review_01. All terminal CLEAN/current accepted; exact raw reports/manifests/lifecycle are in each slice directory. Final identity {verdict['reviewer']} is new and separate, fork none/inherited root model and effort without override. All gates stop after the first materially clean pass, no arbitrary ceiling. Available runtime exposes no close_agent; terminal lifecycle is retained, no closure invented.
+
+R3 exact acceptance raw SHA ec5150bab3bef5126f5577d4bffb56b6fc26a72c3b2eb25dee40ccfc9cbde6d9 and receipt11c3cdf542988b1829d1dd1b291c21c102756dc59590924077bad890389c4b32. Final candidate [manifest](final-integration/FINAL-CANDIDATE.json) SHA0665b45455361aea5854d16ce3d6fcd3cad6d89035b99358c7ecef5b6a570b83. Reviewed roots are inspected before deletion, then cleanup receipts/current retained archive are independently verified within this same fresh final pass. Final lifecycle/result is actual evidence, not a historical slice label.
+
+## Reviewed cleanup and exact preservation
+
+[Sealed cleanup manifest](final-integration/cleanup-sealed/SEALED-MANIFEST.json), [before](final-integration/cleanup-sealed/cleanup-before.json), [after](final-integration/cleanup-sealed/cleanup-after.json) identify the actual protected boundary and outcome. All10 retained roots from18-entry resource inventory are removed after raw review, eight guarded scenario roots already clean, then external receipt root marker/nonce/copyhash checked and removed. Only marker-owned resources are removed; no live older app, owner DB, Alpha profile or global provider session is deleted. The four protected hashes and nine older process identities match before/after; comparisons run on failure and success paths. Raw safe34-file actual runtime packet and22 exact negative source bytes remain hash-verified; private scratch DB/configuration/payloads are not copied. Original negative execution roots are gone, so any new execution requires a new scoped marker-owned fixture; the retained byte archive is preservation, not a new run.
+
+Supported scratch stop happened earlier at07:39:25.338Z under its own protected boundary ended07:40:28.716Z. The final root cleanup is a distinct coordinated interval, recorded in the receipts. Both proof scopes stay separate. Final reporting/ledger annotations happen after the cleanup interval and terminal review; exact preimages and completion fingerprints identify those administrative changes. They do not change product/test/oracle/Wiki or invalidate valid execution evidence.
+
+## Advisory and practical limits
+
+The dated [Ledger Event Provenance Schema line26](/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md:26) says three legacy whitelist topics, while current production whitelist has two after file:changed retirement. The September19 inspection scope and corrected required16+1 inventory do not supply a new acceptance violation; disposition **advisory**, outside the required targeted adoption. The actual code/test/source-of-truth inventory and complete final review establish the current two-topic behavior. Future owner-directed provenance-page maintenance should update this single claim on current-source reread; no broad Wiki rewrite or reopened implementation gate is required.
+
+Other explicit limits: existing Node/build/color warnings and one Kimi TODO skip; controlled cron callbacks with real Date; seven normal-canary owner-drain deadline fallbacks prove fixture cleanup, not general graceful production shutdown; sampled safe SQL/DOM observations and normalized visible assistant whitespace preserve raw hash distinctions; supported exact scratch process-stop scope; Apple cached rows may stale without automatic refresh; historically waived/unperformed45-minute soak; no Alpha, performance/general provider recovery, durable exactly-once autonomous scheduling, replacement observation or native connector guarantee. None waives mandatory actual OpenCode/persistence/post-completion reopen or original acceptance.
+
+## Exact completion identity and next owner checkpoint
+
+[Final artifact manifest](final-integration/FINAL-ARTIFACT-FINGERPRINTS.json) records current core, frozen approval/history, original adopted targets, aggregate/lifecycle/raw/evidence/archive receipts and final report hashes. It is written after this report to avoid self-hash recursion; current annotation preimages are preserved. Required source/build/tests/guarded/raw provider evidence retain their measured original scopes and commands. No commit-producing operation, publication, branch movement, Alpha action, scheduling or main/checkpoint/domain write occurred.
+
+Next action: parent presents this completed repair and whole-original integration summary to the human for explicit completed-work acceptance. Owner approval to implement and bounded successor appointment are preserved; neither is completed-work acceptance. No additional hands-on test or product decision is presently required. No automatic following SPEC begins.
+'''
+p=BASE/'SPEC-FINAL-REPORT.md';assert not p.exists();p.write_text(intro+body+tail)
+current=f'''## Current state — {AT}
+
+**SPEC_READY_FOR_OWNER_REVIEW.** R1/R2/R3 are accepted; fresh complete repair+original final integration is CLEAN, with raw retained roots inspected before protected cleanup and final receipts verified. Required actual OpenCode normal completion/persistence/post-completion passive reopen/scratch stop, original S3/S4/ledger adoption and all17Wiki verification are complete. All marker-owned scratch resources are cleaned and safe receipts/negative bytes preserved. No further owner UI action is requested. Completed-work human acceptance remains pending.
+
+Next action: parent presents the [substantive final report](SPEC-FINAL-REPORT.md) for explicit owner acceptance. [Full both-contract raw review](final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md), [final receipt](final-integration/FINAL-ACCEPTANCE.json), [cleanup](final-integration/cleanup-sealed/SEALED-MANIFEST.json) and [final identities](final-integration/FINAL-ARTIFACT-FINGERPRINTS.json) supply current facts. Earlier waits/unperformed/old CLEAN labels are dated history with exact preimages. No following SPEC/publication/Alpha or domain/main transfer is authorized.
+
+'''
+for name in ['STARTUP-REPAIR-REPORT.md','REGRESSION-RESULTS.md','GUARDED-SERVER-PROOF.md','SLICE-AND-DEVIATION-LEDGER.md']:
+ p=BASE/name;text=p.read_text();head=text.split('\n',1)[0];history=text[text.index('## Earlier execution account and command evidence'):]
+ if name=='SLICE-AND-DEVIATION-LEDGER.md':history+=f'''\n## Current complete integration and cleanup — {AT}\n\nFresh {verdict['reviewer']} terminal CLEAN covers BOTH complete contracts/current source/raw evidence and actual cleanup receipts; [raw](final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md) SHA {verdict['rawReportSha256']}. All slices accepted, all16repair/original3 deviations remain classified/preserved, D07 compatible selection correction propagated. Ten retained marker roots plus receipt output are cleaned; four protected/older identities unchanged; safe34runtime/22negative bytes retained. Original ledgerprefix/historical approvals/reports preserved. Final current administrative annotations retain exact preimages and do not invalidate product checks. State SPEC_READY_FOR_OWNER_REVIEW; explicit human completed-work acceptance still pending; no nextSPEC/publication/Alpha.\n'''
+ record(p,head+'\n\n'+current+history,name)
+p=ORIGINAL/'S4-repaired-integration-report.md';text=p.read_text()
+text=text.replace('**evidence adopted; R1/R2/R3 accepted; fresh complete repair+original final review and marker cleanup pending**','**evidence adopted; R1/R2/R3 accepted; fresh complete repair+original final review CLEAN and marker cleanup verified; owner acceptance pending**')
+text+=f'''\n## Actual full original and repair integration — {AT}\n\nFresh {verdict['reviewer']} terminal CLEAN explicitly covers BOTH complete approved contracts/current bytes/raw evidence: original all amendments/R01–07/S1–S4/§7compatibility/ten§8/§9deferrals and repair REQ01–07/R1–R3/public§7/adoption§8/final§9. [Verbatim final report](../../../startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md), SHA {verdict['rawReportSha256']}; [completed substantive packet](../../../startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md). This is a new actual full verdict, not a promotion of any earlier label. All material gaps are closed; all16repair/original3 deviations and limits remain explicit.\n\nRetained raw roots were inspected first, then coordinated marker-owned final cleanup/protected comparison and exact safe receipt/archive verification occurred before the same gate's terminal verdict. [Cleanup manifest](../../../startup-integrity-repair/implementation/final-integration/cleanup-sealed/SEALED-MANIFEST.json): ten roots gone/eight prior scenario roots gone, output root removed, four protected hashes/older identity tuple unchanged, safe34runtime/22negative bytes preserved. Original historical approval/reports and entire9630-byte ledger prefix remain byte-exact. The dated LedgerEventProvenanceSchema line26 topic-count claim is a reasoned advisory, outside required17 targeted inventory; no broad update/waiver.\n\nCurrent original S4 and whole-job technical integration is ready for completed-work owner review, with exact full scope/mapping/evidence/cleanup. Original adoption-stage and R3-stage pending statements above remain dated. **Explicit human completed-work acceptance is still required and unclaimed.** No automatic nextSPEC, Git/Alpha, domain/main/checkpoint takeover or provider replay follows.\n'''
+record(p,text,'original-S4-repaired-integration-report.md')
+p=ORIGINAL/'SLICE-AND-DEVIATION-LEDGER.md';assert sha(p.read_bytes()[:9630])=='8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240'
+text=p.read_text()+f'''\n## Current successor whole-contract integration — {AT}\n\nNew fresh {verdict['reviewer']} terminal CLEAN explicitly reviews both COMPLETE original and repair contracts/current bytes/raw evidence, including actual protected marker cleanup after raw review; [verbatim result](../../../startup-integrity-repair/implementation/final-integration/FINAL-INTEGRATION-REVIEW-01-RAW.md) SHA {verdict['rawReportSha256']}. [Current final report](../../../startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md) and [S4 full mapping](S4-repaired-integration-report.md) identify tested claims, real provider/persistence/reopen proof, all16repair+original3 deviations, warnings/skips/residuals and exact final identities. Ten retained roots/eight prior scenario roots are gone; safe runtime/negative bytes remain; protected4/older identity tuple unchanged. No historical verdict supplies current proof.\n\nWhole original and repair technical integration is SPEC_READY_FOR_OWNER_REVIEW; human completed-work acceptance remains pending. Previous manual/adoption/gate waits are dated chronology. Original frozen approval and9630-byte ledgerprefix/D01–03/datedreports preserve their bytes and owner state. No nextSPEC, publication, Alpha/main/checkpoint/domain or scheduling authority transfers.\n'''
+record(p,text,'original-SLICE-AND-DEVIATION-LEDGER.md')
+assert sha(p.read_bytes()[:9630])=='8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240'
+report={'at':AT,'state':'SPEC_READY_FOR_OWNER_REVIEW','finalReportPath':str(BASE/'SPEC-FINAL-REPORT.md'),'finalReportSha256':sha((BASE/'SPEC-FINAL-REPORT.md').read_bytes()),'changes':changes,'originalPrefixPreserved':True,'noProductWikiTestOracleRuntimeNormativeChange':True,'ownerAcceptance':'pending'}
+(FINAL/'COMPLETION-RECORD-REFRESH.json').write_text(json.dumps(report,indent=2)+'\n')
+source=json.loads((BASE/'SOURCE-FINGERPRINTS.json').read_text());source['implementationSnapshots'].append({'at':AT,'stage':'current technical completion after final clean/cleanup','record':str(FINAL/'COMPLETION-RECORD-REFRESH.json'),'sha256':sha((FINAL/'COMPLETION-RECORD-REFRESH.json').read_bytes()),'finalReportSha256':report['finalReportSha256'],'changes':changes,'ownerAcceptance':'pending'})
+(BASE/'SOURCE-FINGERPRINTS.json').write_text(json.dumps(source,indent=2)+'\n')
+print(json.dumps({'at':AT,'finalReport':report['finalReportPath'],'sha256':report['finalReportSha256'],'annotatedRecords':len(changes),'originalPrefixPreserved':True,'ownerAcceptance':'pending'}))

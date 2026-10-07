@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-06T09:23:37.917840+00:00",
+  "intervalEnd": "2026-10-06T09:21:54.439244+00:00",
+  "initialProtectedBoundaryStarted": "2026-10-06T09:17:39.980905+00:00",
+  "initialAfterAt": "2026-10-06T09:17:43.771469+00:00",
+  "sealedAfterIntervalEnd": true,
+  "files": [
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/.chat-ar-cleanup-owned.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/.chat-ar-cleanup-owned.json",
+      "sha256": "7023e5332baff035ea406a6a687080cfaf4da1900129311a03f8da6f83782a8c",
+      "bytes": 184
+    },
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/cleanup-before.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/cleanup-before.json",
+      "sha256": "d7c3db1ecd4bfd8f00a14260c44c28797dc78777a393354f67e10c5d92096a50",
+      "bytes": 8301
+    },
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/cleanup-after.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/cleanup-after.json",
+      "sha256": "8e15eb66ff5f1211c97a84747ea282dcc4745100af18d0bae9ce7d2286578f51",
+      "bytes": 5697
+    },
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/developer-db-attribution.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/developer-db-attribution.json",
+      "sha256": "245c8a6ed5f4c7b8fbcd9645d9ca5c1745b8295ea680389409ae2cb622de753f",
+      "bytes": 1095
+    },
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/post-cleanup-current-protection-and-integrity.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/post-cleanup-current-protection-and-integrity.json",
+      "sha256": "9d63e411db35981d049fb2cf4d4ea552b0a17936570d1a55a008ea59a8a27570",
+      "bytes": 2196
+    },
+    {
+      "source": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw/protected-interval-end.json",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cleanup-sealed/protected-interval-end.json",
+      "sha256": "46f81cdedac5eeac2524bdb9f94659995029b968e05dc3a1c0c229d87f5ebd30",
+      "bytes": 713
+    }
+  ],
+  "markerNonce": "98a37def-68a6-45f8-8963-e147f1a41ec8",
+  "removedRoots": [
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-oracle-eakswdjf",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-orchestrator-uxkmt9_9",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-D3YBjZ",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Dfr4Nf",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-Xrfzm4",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-nrBthZ",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-evidence-opm2tF"
+  ],
+  "initialCleanupExitCode": 1,
+  "initialProtectedUnchanged": false,
+  "initialPhysicalDeltaScopes": [
+    "developmentDb"
+  ],
+  "freshCurrentProtectedUnchanged": true,
+  "freshReadOnlyQuickCheckPassed": true,
+  "olderUnchanged": true,
+  "observedDbWritePrecedesDeletionBoundary": true,
+  "oldLogicalEqualityClaimed": false,
+  "noPrivateDatabaseOrConfigurationCopy": true,
+  "temporaryReceiptRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-final-cleanup-w6rdqujw",
+  "temporaryReceiptRootRemoval": "verified marker/nonce and hash-identical six safe receipt copies then deletion",
+  "finalIndependentDisposition": "pending active reviewer; no initial all4 pass inferred",
+  "temporaryReceiptRootRemoved": true
+}

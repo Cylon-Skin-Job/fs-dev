@@ -2,10 +2,6 @@
 name: Wiki Structure
 description: File and module map for the wiki viewer, terminal wiki scanner, and frontmatter rendering path.
 metadata:
-  incoming-edges:
-    - Wiki
-    - Wiki Architecture
-  outgoing-edges: []
   source-files:
     - fusion-studio-client/src/components/wiki/WikiExplorer.tsx
     - fusion-studio-client/src/components/wiki/TopicList.tsx
@@ -16,9 +12,8 @@ metadata:
     - fusion-studio-client/src/state/wikiStore.ts
     - fusion-studio-server/lib/views/panel-paths.js
     - fusion-studio-server/lib/wiki/wiki-tree.js
-    - fusion-studio-server/scripts/query-wiki.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/scripts/wiki.js
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 ## Client Files
@@ -29,7 +24,7 @@ metadata:
 - `fusion-studio-client/src/components/wiki/EdgePanel.tsx` renders contextual child navigation for selected article folders, including `000-` heading articles.
 - `fusion-studio-client/src/state/wikiStore.ts` stores root tree, selected context, viewed page, history, content, loading, and errors.
 - `fusion-studio-client/src/lib/front-matter.ts` owns system-wide Markdown frontmatter parsing and Office/Email document setting serialization.
-- `fusion-studio-client/src/lib/wiki-frontmatter.ts` normalizes `name`, `description`, and known metadata edge lists for Wiki display.
+- `fusion-studio-client/src/lib/wiki-frontmatter.ts` normalizes `name`, `description`, and known metadata lists, including source files and legacy edge compatibility, for Wiki display. Authored pages follow the current source-only Style Guide; the normalizer does not render `last-modified`.
 - `fusion-studio-client/src/lib/resource-path.ts` maps `wiki-viewer` copy/send paths to `ai/<machine>/Wiki`.
 
 ## Server Files
@@ -38,7 +33,7 @@ metadata:
 - `fusion-studio-server/lib/views/panel-paths.js` maps `wiki-viewer` to that resolved content root for file tree/content requests.
 - `fusion-studio-server/lib/file-explorer.js` serves tree and content requests from the resolved panel path.
 - `fusion-studio-server/lib/wiki/wiki-tree.js` scans wiki folders for terminal access.
-- `fusion-studio-server/scripts/query-wiki.js` exposes terminal wiki queries.
+- `fusion-studio-server/scripts/wiki.js` exposes terminal wiki queries.
 - `fusion-studio-server/package.json` provides the `wiki` npm script.
 
 ## Content Files

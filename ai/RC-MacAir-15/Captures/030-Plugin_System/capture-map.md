@@ -1,7 +1,7 @@
 # Capture Map — Plugin System Suite
 
 **Capture:** cross-read hub for the plugin-system captures · **Parent:** [`plugin-system-vision.md`](./plugin-system-vision.md)
-**Status:** living index · **Updated:** 2026-09-15
+**Status:** living index · **Updated:** 2026-09-22
 **Trickle-down:** none (index) · **Roll-up:** update when captures are added or move
 
 ---
@@ -15,6 +15,7 @@
 | [`./decisions.md`](./decisions.md) | Root owner decisions (`PLUG-D###`) | Living record |
 | [`./issues.md`](./issues.md) | Root open questions and gates (`PLUG-I###`) | Living record |
 | [`../032-Plugin_Backend/backend-architecture.md`](../032-Plugin_Backend/backend-architecture.md) | Backend capture: gates split, layer architecture, command-surface contract, modularization plan | Working architecture |
+| [`../037-Plugin_Integration_And_Parallel_Roadmaps/integration-overview.md`](../037-Plugin_Integration_And_Parallel_Roadmaps/integration-overview.md) | High-level integration with newer CHAT-AR work; candidate concurrent roadmap tracks and shared contracts | Exploration; no implementation approval |
 
 Per-view captures are created as execution begins and will appear here.
 

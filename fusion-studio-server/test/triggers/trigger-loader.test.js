@@ -55,7 +55,7 @@ message: "Turn ready"
       { 'create-ticket': action },
     );
 
-    expect(result).toEqual({ filters: [], cronTriggers: [] });
+    expect(result).toEqual({ cronTriggers: [] });
     eventBus.emit('chat:turn_end', {
       workspace: 'workspace-2', status: 'ready', threadId: 'thread-1',
     });
@@ -86,9 +86,7 @@ message: "Turn ready"
     }
   });
 
-  test('editable file definitions retain watcher filtering and script action topology', () => {
-    const runScript = jest.fn(() => ({ summary: 'checked' }));
-    jest.doMock('../../lib/triggers/script-runner', () => ({ runScript }));
+  test('file-change definitions remain inert and do not register an action', () => {
     const agentsRoot = writeTriggers(projectRoot, `# Triggers
 
 ---
@@ -106,40 +104,18 @@ message: "Changed {{filePath}}"
     const action = jest.fn();
     const { loadTriggers } = require('../../lib/triggers/trigger-loader');
 
-    const { filters, cronTriggers } = loadTriggers(
+    const result = loadTriggers(
       projectRoot,
       agentsRoot,
       { agents: { helper: { folder: 'bot' } } },
       { 'create-ticket': action },
     );
 
-    expect(cronTriggers).toEqual([]);
-    expect(filters).toHaveLength(1);
-    expect(filters[0].shouldWatch('notes/readme.md', {})).toBe(true);
-    expect(filters[0].shouldWatch('ignored.md', {})).toBe(false);
-    expect(filters[0].shouldWatch('notes/readme.txt', {})).toBe(false);
-
-    filters[0].onCreate('notes/readme.md', {});
-    expect(action).not.toHaveBeenCalled();
-    filters[0].onModify('notes/readme.md', { basename: 'readme.md' });
-
-    expect(runScript).toHaveBeenCalledWith(
-      'scripts/check.js', 'inspect', expect.objectContaining({
-        event: 'modify', filePath: 'notes/readme.md', basename: 'readme.md',
-      }), projectRoot,
-    );
-    expect(action).toHaveBeenCalledTimes(1);
-    expect(action.mock.calls[0]).toHaveLength(2);
-    const [definition, variables] = action.mock.calls[0];
-    expect(definition.ticket).toEqual({
-      assignee: 'helper',
-      title: 'Changed notes/readme.md',
-      body: 'Changed notes/readme.md',
+    expect(result).toEqual({ cronTriggers: [] });
+    require('../../lib/event-bus').emit('file:changed', {
+      filePath: 'notes/readme.md', event: 'modify',
     });
-    expect(variables.result).toEqual({ summary: 'checked' });
-    expect(variables.appendResourceFact).toBeUndefined();
-    expect(definition.grants).toBeUndefined();
-    expect(definition.capabilities).toBeUndefined();
+    expect(action).not.toHaveBeenCalled();
   });
 
   test('cron definitions remain inert data returned to the established scheduler owner', () => {
@@ -164,7 +140,7 @@ message: "Daily check"
       { 'create-ticket': action },
     );
 
-    expect(result.filters).toEqual([]);
+    expect(result).not.toHaveProperty('filters');
     expect(result.cronTriggers).toEqual([{
       assignee: 'helper',
       trigger: expect.objectContaining({

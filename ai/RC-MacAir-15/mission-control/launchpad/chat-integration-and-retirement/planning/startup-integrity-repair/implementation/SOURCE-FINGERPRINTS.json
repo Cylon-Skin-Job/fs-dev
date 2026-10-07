@@ -1,0 +1,1009 @@
+{
+  "schemaVersion": 1,
+  "workId": "CHAT-AR-REPAIR-01",
+  "orchestrator": "/root/startup_integrity_repair_orchestrator",
+  "observedAt": "2026-10-06T00:10:44.264662+00:00",
+  "memoryCwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "implementationCheckout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "permissions": "Effective runtime developer metadata: danger-full-access, approval never",
+  "sourceCheck": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+      "approvedPlanningFingerprint": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "currentSha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "approvedPlanningFingerprint": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "currentSha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "approvedPlanningFingerprint": "bacd8e529cb922a06a0cc5a5733a5bd0049554708368b1bcc78dbff12a326d74",
+      "currentSha256": "bacd8e529cb922a06a0cc5a5733a5bd0049554708368b1bcc78dbff12a326d74",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "approvedPlanningFingerprint": "371a62f2429b5eca4e3c461d6e78d0e22332719ea4f4541b7458b8878f41c972",
+      "currentSha256": "371a62f2429b5eca4e3c461d6e78d0e22332719ea4f4541b7458b8878f41c972",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "approvedPlanningFingerprint": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "currentSha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "approvedPlanningFingerprint": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "currentSha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "approvedPlanningFingerprint": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "currentSha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "approvedPlanningFingerprint": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "currentSha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+      "approvedPlanningFingerprint": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+      "currentSha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "approvedPlanningFingerprint": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "currentSha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "approvedPlanningFingerprint": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+      "currentSha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "approvedPlanningFingerprint": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "currentSha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "approvedPlanningFingerprint": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "currentSha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "approvedPlanningFingerprint": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "currentSha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/001-Harness_Boundary/PAGE.md",
+      "approvedPlanningFingerprint": "c2befc2bfc71701074fae823ea1c13f1f2d87f4e19702b01e78f9407f01d52e2",
+      "currentSha256": "c2befc2bfc71701074fae823ea1c13f1f2d87f4e19702b01e78f9407f01d52e2",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "approvedPlanningFingerprint": "bf5109fd6a7a310a8d62311274708829df0ab9ab4ae09334ccb003d20701d37b",
+      "currentSha256": "bf5109fd6a7a310a8d62311274708829df0ab9ab4ae09334ccb003d20701d37b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "approvedPlanningFingerprint": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "currentSha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "approvedPlanningFingerprint": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "currentSha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "approvedPlanningFingerprint": "669a86efc1c85658b64011b768622c5b1bd387fb02965fc9bef36f078fec2649",
+      "currentSha256": "669a86efc1c85658b64011b768622c5b1bd387fb02965fc9bef36f078fec2649",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "approvedPlanningFingerprint": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "currentSha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md",
+      "approvedPlanningFingerprint": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "currentSha256": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md",
+      "approvedPlanningFingerprint": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "currentSha256": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "approvedPlanningFingerprint": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "currentSha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "approvedPlanningFingerprint": "886fe0f833d9eacc055166f5a6184f7d39c330ef772f860a8b438d0fb1e08825",
+      "currentSha256": "886fe0f833d9eacc055166f5a6184f7d39c330ef772f860a8b438d0fb1e08825",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+      "approvedPlanningFingerprint": "d358ffef0dbb44288ca1b6a127fb3acaa741e1e82bb538654074e166a28fabcf",
+      "currentSha256": "d358ffef0dbb44288ca1b6a127fb3acaa741e1e82bb538654074e166a28fabcf",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/DECISIONS.md",
+      "approvedPlanningFingerprint": "9a345ca61569884d53c69a1124af650a2f053c2c417a4661aa09d4c23ea66629",
+      "currentSha256": "9a345ca61569884d53c69a1124af650a2f053c2c417a4661aa09d4c23ea66629",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md",
+      "approvedPlanningFingerprint": "9ce666a9ae0413399d912da8fe2df9f7ef088bfe06e2bf212e4346ef15e4119c",
+      "currentSha256": "9ce666a9ae0413399d912da8fe2df9f7ef088bfe06e2bf212e4346ef15e4119c",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/INTENT.md",
+      "approvedPlanningFingerprint": "5cde48efedf41c447de6659b42259e7aeeabcc97c3c7e65c9d2b014fd3ac1781",
+      "currentSha256": "5cde48efedf41c447de6659b42259e7aeeabcc97c3c7e65c9d2b014fd3ac1781",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+      "approvedPlanningFingerprint": "adddc01c66bbfb4e6b7db9a8b261b66f54457c523e55c5624b5a6ba2a5c35084",
+      "currentSha256": "adddc01c66bbfb4e6b7db9a8b261b66f54457c523e55c5624b5a6ba2a5c35084",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json",
+      "approvedPlanningFingerprint": "859b232ddbf3acd72981886ede6f01d1c8000cc4c0d8a0b16f5ce575084417c3",
+      "currentSha256": "859b232ddbf3acd72981886ede6f01d1c8000cc4c0d8a0b16f5ce575084417c3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/CANDIDATE.json",
+      "approvedPlanningFingerprint": "8ef475f5d2a4043ab3e4ae36ebbb97e14dcc549dc9a9282866763ef42c74ce27",
+      "currentSha256": "8ef475f5d2a4043ab3e4ae36ebbb97e14dcc549dc9a9282866763ef42c74ce27",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/OWNER-APPROVAL.md",
+      "approvedPlanningFingerprint": "e0704ea562f4b6e2b9bb685cbf0a101b10314df1476ab3f784a6a309f8e7a24e",
+      "currentSha256": "e0704ea562f4b6e2b9bb685cbf0a101b10314df1476ab3f784a6a309f8e7a24e",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/SPEC-01-CHOKIDAR-RETIREMENT-AND-CHAT-VERIFICATION.md",
+      "approvedPlanningFingerprint": "bd9068de68a1d83d74d2a1d309eb28f433db97aa11a2f73f9bd872453e6521c3",
+      "currentSha256": "bd9068de68a1d83d74d2a1d309eb28f433db97aa11a2f73f9bd872453e6521c3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-builder-report-2026-10-03.md",
+      "approvedPlanningFingerprint": "75ac47bff8c844417f0faff58507cde4c94d468a457917a6820631916b2bf573",
+      "currentSha256": "75ac47bff8c844417f0faff58507cde4c94d468a457917a6820631916b2bf573",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-orchestrator-acceptance-2026-10-03.md",
+      "approvedPlanningFingerprint": "41eed0a6b2e4b9cc9fd85e8e46b6b93d809d8c3ea822d1f21dac54c7487913c3",
+      "currentSha256": "41eed0a6b2e4b9cc9fd85e8e46b6b93d809d8c3ea822d1f21dac54c7487913c3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-builder-report-2026-10-03.md",
+      "approvedPlanningFingerprint": "76a24a785563714a427555a995031bb79939124151c1682c38f0b473c9debf91",
+      "currentSha256": "76a24a785563714a427555a995031bb79939124151c1682c38f0b473c9debf91",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-native-ui-retry-2026-10-04.md",
+      "approvedPlanningFingerprint": "a387faa407e54e9497a2538e68560afc7ff39cedeea26aa2abbb51097b7d5c28",
+      "currentSha256": "a387faa407e54e9497a2538e68560afc7ff39cedeea26aa2abbb51097b7d5c28",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-orchestrator-2026-10-05.md",
+      "approvedPlanningFingerprint": "33d5c86c60655dcb297ec27c3a3f71122905341acf9adc6131adf752e5c5cba2",
+      "currentSha256": "33d5c86c60655dcb297ec27c3a3f71122905341acf9adc6131adf752e5c5cba2",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-new-chat-repair-builder-2026-10-05.md",
+      "approvedPlanningFingerprint": "e850610d156a45edb2ec0c14f1275e98e842a1391a3619d863a89e4d00cf77ff",
+      "currentSha256": "e850610d156a45edb2ec0c14f1275e98e842a1391a3619d863a89e4d00cf77ff",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-orchestrator-acceptance-2026-10-03.md",
+      "approvedPlanningFingerprint": "3b9d2efffc1079a86176f19ba1e628fa02fed873960a7ba6050f45a2b2650b54",
+      "currentSha256": "3b9d2efffc1079a86176f19ba1e628fa02fed873960a7ba6050f45a2b2650b54",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "approvedPlanningFingerprint": "8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240",
+      "currentSha256": "8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/INPUT-PACKET.json",
+      "approvedPlanningFingerprint": "25390f6649cef10bec4ea9794ec4a087c2d7bcec40e8684cc3b5f283553ada26",
+      "currentSha256": "25390f6649cef10bec4ea9794ec4a087c2d7bcec40e8684cc3b5f283553ada26",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/PLANNING.md",
+      "approvedPlanningFingerprint": "b18c3e3b83114a8b924db2e09773eba7830a4ad8e58aba61f1aaba01dbd9d172",
+      "currentSha256": "b18c3e3b83114a8b924db2e09773eba7830a4ad8e58aba61f1aaba01dbd9d172",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/reports/CLOSURE-AUTHORITY-I01.md",
+      "approvedPlanningFingerprint": "bf607733aede2a218999966a6624d4bd43c55a1a9f48934b4d412862f6e8d5a5",
+      "currentSha256": "bf607733aede2a218999966a6624d4bd43c55a1a9f48934b4d412862f6e8d5a5",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/reports/CLOSURE-AUTHORITY-WORKER-REVIEW-01.md",
+      "approvedPlanningFingerprint": "b7c59f5c12da52fdc5dad96ef87087f4038184813a21e8481ef9c87fdf21a042",
+      "currentSha256": "b7c59f5c12da52fdc5dad96ef87087f4038184813a21e8481ef9c87fdf21a042",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/REPORT.md",
+      "approvedPlanningFingerprint": "05351396df3cb19a4d64ef0b7c87b07a3b02d4009dad7532efcb835e13a5b504",
+      "currentSha256": "05351396df3cb19a4d64ef0b7c87b07a3b02d4009dad7532efcb835e13a5b504",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/SOURCE-EVIDENCE.json",
+      "approvedPlanningFingerprint": "ca8a751250b39e59dc9e27df9fbda482d4151d7a2385090f7f9840979b281b2e",
+      "currentSha256": "ca8a751250b39e59dc9e27df9fbda482d4151d7a2385090f7f9840979b281b2e",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/chat-fixtures.log",
+      "approvedPlanningFingerprint": "f670974a1415a84d6726c9bed24ff5f75cda1a3f35b68d7bc5d7a46b6dd36666",
+      "currentSha256": "f670974a1415a84d6726c9bed24ff5f75cda1a3f35b68d7bc5d7a46b6dd36666",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/client-build.log",
+      "approvedPlanningFingerprint": "608a5a3379a565df5bebf7007dd44344b5096eb3a4174ba92052bb44afecf327",
+      "currentSha256": "608a5a3379a565df5bebf7007dd44344b5096eb3a4174ba92052bb44afecf327",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/provenance-live.log",
+      "approvedPlanningFingerprint": "b008042f875d4c3b4460b40110e5a53aca73deaffa40ef6455d99539b0bd6e89",
+      "currentSha256": "b008042f875d4c3b4460b40110e5a53aca73deaffa40ef6455d99539b0bd6e89",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/server-suite.log",
+      "approvedPlanningFingerprint": "0395fdf3dd41d27abc868c5762bf2c7c595b6a095688372246d62c08d2272f3d",
+      "currentSha256": "0395fdf3dd41d27abc868c5762bf2c7c595b6a095688372246d62c08d2272f3d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/startup-contract-probe.cjs",
+      "approvedPlanningFingerprint": "761da0b3cebda96f15ecc95a9fdaa945abb6470d28e5f263c5e1767de178b3dc",
+      "currentSha256": "761da0b3cebda96f15ecc95a9fdaa945abb6470d28e5f263c5e1767de178b3dc",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/startup-contract-result.json",
+      "approvedPlanningFingerprint": "6963f418310054e3943cb5740c218329dff27b75ce8b904834ef2eef91368a64",
+      "currentSha256": "6963f418310054e3943cb5740c218329dff27b75ce8b904834ef2eef91368a64",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "approvedPlanningFingerprint": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "currentSha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-send-transport.spec.ts",
+      "approvedPlanningFingerprint": "c6b5b57d57e450e2d7e5927d75adeee686f200dd3da61b0d94b983885a5a0e3b",
+      "currentSha256": "c6b5b57d57e450e2d7e5927d75adeee686f200dd3da61b0d94b983885a5a0e3b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "approvedPlanningFingerprint": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "currentSha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+      "approvedPlanningFingerprint": "3f70b4b0ca455748d87806ab8d11152e1b4e270cb8f0ee6913b61d9a3cddd43e",
+      "currentSha256": "3f70b4b0ca455748d87806ab8d11152e1b4e270cb8f0ee6913b61d9a3cddd43e",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "approvedPlanningFingerprint": "ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27",
+      "currentSha256": "ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/playwright.chat-architecture.config.ts",
+      "approvedPlanningFingerprint": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+      "currentSha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/playwright.provenance.config.ts",
+      "approvedPlanningFingerprint": "21240b955fb7045ccb6a5c5dfda756ca1bd037ab842fe91a5b103a2b9c4253d1",
+      "currentSha256": "21240b955fb7045ccb6a5c5dfda756ca1bd037ab842fe91a5b103a2b9c4253d1",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "approvedPlanningFingerprint": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "currentSha256": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/calendar/index.js",
+      "approvedPlanningFingerprint": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+      "currentSha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/components/component-loader.js",
+      "approvedPlanningFingerprint": "a54e807a0ab3814353e68e72c8446f55791433eef2e14af43f1c6f22f697c231",
+      "currentSha256": "a54e807a0ab3814353e68e72c8446f55791433eef2e14af43f1c6f22f697c231",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/runner/index.js",
+      "approvedPlanningFingerprint": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+      "currentSha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+      "approvedPlanningFingerprint": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "currentSha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "approvedPlanningFingerprint": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+      "currentSha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/triggers/cron-scheduler.js",
+      "approvedPlanningFingerprint": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+      "currentSha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/triggers/trigger-loader.js",
+      "approvedPlanningFingerprint": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+      "currentSha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/index.js",
+      "approvedPlanningFingerprint": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "currentSha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "approvedPlanningFingerprint": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "currentSha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-runtime.js",
+      "approvedPlanningFingerprint": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "currentSha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+      "approvedPlanningFingerprint": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "currentSha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/workspace/ai-paths.js",
+      "approvedPlanningFingerprint": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "currentSha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "approvedPlanningFingerprint": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "currentSha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/package.json",
+      "approvedPlanningFingerprint": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "currentSha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "approvedPlanningFingerprint": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "currentSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+      "approvedPlanningFingerprint": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+      "currentSha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "approvedPlanningFingerprint": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "currentSha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "approvedPlanningFingerprint": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "currentSha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/view-readiness-coordinator.test.js",
+      "approvedPlanningFingerprint": "a9fbd5a86aa4f27a4ca4d6127378c3b368b0d6a7654b768205d0dfb12e4b95b9",
+      "currentSha256": "a9fbd5a86aa4f27a4ca4d6127378c3b368b0d6a7654b768205d0dfb12e4b95b9",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "approvedPlanningFingerprint": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "currentSha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "matches": true
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-startup-probe-9Z40sC/startup-contract-result.json",
+      "approvedPlanningFingerprint": "5f525eb698301211e33b7a833062f31d3879ec8260c8ce1b5cd9366bb329f33d",
+      "currentSha256": "5f525eb698301211e33b7a833062f31d3879ec8260c8ce1b5cd9366bb329f33d",
+      "matches": true
+    }
+  ],
+  "scopedDirtyBaseline": " M fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts\n M fusion-studio-server/lib/startup.js\n M fusion-studio-server/lib/testing/isolated-provenance-runtime.js\n M fusion-studio-server/test/event-registry/startup-integration.test.js\n?? fusion-studio-server/test/watch/watcher-retirement.test.js\n",
+  "limits": [
+    "These fingerprints establish current provenance, not correctness.",
+    "Original app/server state is preserved; no app operations performed.",
+    "Normative planning files remain frozen."
+  ],
+  "implementationSnapshots": [
+    {
+      "slice": "R1",
+      "state": "accepted",
+      "observedAt": "2026-10-06T00:32:43.201728+00:00",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "manifestSha256": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d",
+      "acceptanceReviewer": "/root/startup_integrity_repair_orchestrator/r1_acceptance_review_01",
+      "acceptanceReport": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-ACCEPTANCE-REVIEW-01.md",
+      "currentPaths": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "beforeSha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+          "afterSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+          "lines": 508
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+          "beforeSha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+          "afterSha256": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+          "lines": 600
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+          "beforeSha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+          "afterSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+          "lines": 316
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+          "beforeSha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+          "afterSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+          "lines": 55
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+          "beforeSha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+          "afterSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+          "lines": 306
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "beforeSha256": null,
+          "afterSha256": "12b47073ccbdddd0109a93bcadad0b81dd35c82dfc42b8a5b8320be12e974a00",
+          "lines": 84
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+          "beforeSha256": null,
+          "afterSha256": "7450bd2ab3636ca4123307c8d71bffa9391dde07557230e55457f2b2cd8de7f7",
+          "lines": 247
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+          "beforeSha256": null,
+          "afterSha256": "3539c61e9b9e240323f387bb68a7937658d01faf8673609162cd3bfa4b63026c",
+          "lines": 47
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+          "beforeSha256": null,
+          "afterSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+          "lines": 51
+        }
+      ]
+    },
+    {
+      "slice": "R2",
+      "state": "accepted",
+      "observedAt": "2026-10-06T01:00:31.742733+00:00",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/CURRENT-FINGERPRINTS.json",
+      "manifestSha256": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+      "acceptanceReviewer": "/root/startup_integrity_repair_orchestrator/r2_acceptance_review_01",
+      "acceptanceReport": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/R2-ACCEPTANCE-REVIEW-01.md",
+      "currentPaths": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+          "beforeSha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+          "afterSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "lines": 865
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+          "beforeSha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+          "afterSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+          "lines": 37
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "beforeSha256": "12b47073ccbdddd0109a93bcadad0b81dd35c82dfc42b8a5b8320be12e974a00",
+          "afterSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "lines": 227
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+          "beforeSha256": "7450bd2ab3636ca4123307c8d71bffa9391dde07557230e55457f2b2cd8de7f7",
+          "afterSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+          "lines": 279
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+          "beforeSha256": "3539c61e9b9e240323f387bb68a7937658d01faf8673609162cd3bfa4b63026c",
+          "afterSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+          "lines": 48
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+          "beforeSha256": null,
+          "afterSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+          "lines": 178
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+          "beforeSha256": null,
+          "afterSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "lines": 47
+        }
+      ]
+    },
+    {
+      "slice": "R3",
+      "state": "waiting-owner-manual-runtime-and-original-adoption",
+      "observedAt": "2026-10-06T01:55:40.250494+00:00",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/CURRENT-FINGERPRINTS.json",
+      "manifestSha256": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+      "currentPaths": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+          "beforeSha256": "3f70b4b0ca455748d87806ab8d11152e1b4e270cb8f0ee6913b61d9a3cddd43e",
+          "afterSha256": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+          "kind": "modified",
+          "scope": "CST-A02/RLV-A01 bounded fixture lifecycle integration"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+          "beforeSha256": null,
+          "afterSha256": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+          "kind": "new",
+          "scope": "CST-A02/RLV-A01 bounded fixture lifecycle integration"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+          "beforeSha256": null,
+          "afterSha256": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+          "kind": "new",
+          "scope": "CST-A02/RLV-A01 bounded fixture lifecycle integration"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+          "beforeSha256": "bacd8e529cb922a06a0cc5a5733a5bd0049554708368b1bcc78dbff12a326d74",
+          "afterSha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+          "kind": "scoped canonical Wiki update",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181325.md",
+          "intermediatePreimages": [
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181627.md",
+              "sha256": "167e13795aaa90d676c36aa94c95099e5eed38c212634525f32bab4c9b6c9c68",
+              "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+            }
+          ]
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+          "beforeSha256": "371a62f2429b5eca4e3c461d6e78d0e22332719ea4f4541b7458b8878f41c972",
+          "afterSha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+          "kind": "scoped canonical Wiki update",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181325.md",
+          "intermediatePreimages": [
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181627.md",
+              "sha256": "bb5ca083a7e79a2979d2d738b4452bf066ee437575decdccb08e6a3486c5d5a4",
+              "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+            }
+          ]
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+          "beforeSha256": "669a86efc1c85658b64011b768622c5b1bd387fb02965fc9bef36f078fec2649",
+          "afterSha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+          "kind": "scoped canonical Wiki update",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181325.md",
+          "intermediatePreimages": [
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181627.md",
+              "sha256": "3e1f3851b8eed24ac914f2d2ec8d05336c6fd53da56dd594eb3ef04b8b64eea8",
+              "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+            }
+          ]
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+          "beforeSha256": "c122697d64c5e0afaf7ca182ff072515be32ad7dc6e11d768ae0b0d7958f38e1",
+          "afterSha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+          "kind": "scoped canonical Wiki update",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181325.md",
+          "intermediatePreimages": [
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181627.md",
+              "sha256": "cc596e1cfbbddafc906b416e69cf0a4ae4b0c3b8414dfc94080a07fdb90d2c6a",
+              "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+            },
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-182133.md",
+              "sha256": "773c7f3c731771e844c8bed5bc898ac15d894b0f49470a3cf8ab2239e543065d",
+              "reason": "Complete exact source map for named readiness/test inventories."
+            }
+          ]
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+          "beforeSha256": "bf5109fd6a7a310a8d62311274708829df0ab9ab4ae09334ccb003d20701d37b",
+          "afterSha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+          "kind": "scoped canonical Wiki update",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-181325.md",
+          "intermediatePreimages": [
+            {
+              "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-182133.md",
+              "sha256": "e16e862a8dd5ea73526ba2416c1879ea2a7da2e07b75953cc16456957f809086",
+              "reason": "Complete exact source map for named readiness/test inventories."
+            }
+          ]
+        }
+      ],
+      "mergedAcceptedPrerequisitePaths": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+          "sha256": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "sha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js",
+          "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/event-registry/startup-integration.test.js",
+          "sha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+          "sha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+          "sha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+          "sha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+          "sha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+          "sha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/test/watch/watcher-retirement.test.js",
+          "sha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f"
+        }
+      ],
+      "inspection": "R3/ORCHESTRATOR-INSPECTION.md",
+      "reviewers": "required fresh whole-R3 builder/acceptance/final gates pending",
+      "currentOwnedBytesAndEvidenceChecked": true,
+      "manualProviderSuccess": false
+    },
+    {
+      "slice": "R3",
+      "scope": "readiness-only continuation",
+      "state": "waiting-owner-manual-runtime",
+      "observedAt": "2026-10-06T07:09:57.809135+00:00",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z/READINESS-FINGERPRINTS-v4.json",
+      "manifestSha256": "70c12acd2d4639314713aaefaee950ae2f2e3fe009192668ae7c149c88ab3d18",
+      "sourceBuildChanges": false,
+      "collectorPid": 49427,
+      "deadline": "2026-10-06T08:04:54.580Z",
+      "noProductOrOriginalRecordEdits": true,
+      "noNewAcceptance": true
+    },
+    {
+      "observedAt": "2026-10-06T07:40:28.716Z",
+      "phase": "actual-provider-reopen-and-supported-scratch-stop",
+      "scope": "Evidence-only continuation; unchanged accepted product/build evidence retained; no original records or normative writes",
+      "liveReadback": {
+        "path": "R3/ORCHESTRATOR-ACTUAL-READBACK-01.json",
+        "sha256": "3de2674977eacdfdd0ad571810ad80fb9af0a7b7dc87f2fe0112e14c4b308706"
+      },
+      "wireAndOrderedProjection": {
+        "path": "R3/ORCHESTRATOR-POST-COMPLETION-PROJECTION-01.json",
+        "sha256": "656b1ab9c3d2a2b32ba3a914e3e78d9334ffdbed71868889883248ebc58f6a66"
+      },
+      "shutdownInspection": {
+        "path": "R3/orchestrator-shutdown-inspection.json",
+        "sha256": "05d044e83302c37415e9685cf64baa1ef0ff716506b65c75513e85d71ce22fc3"
+      },
+      "focalChildPid": 24140,
+      "focalTurn": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "focalExchange": 2,
+      "scratchStopped": true,
+      "originalAdoption": "ungranted",
+      "r3Acceptance": "pending"
+    },
+    {
+      "observedAt": "2026-10-06T07:49:45.561092+00:00",
+      "phase": "sealed-runtime-current-packet",
+      "currentRuntimeReport": {
+        "path": "R3/runtime-complete-20261006T074525Z/FINAL-RUNTIME-HANDOFF.md",
+        "sha256": "f75449f3766023179a18cb9b63c17111f1b81ad20511a0302663a9f69be65080"
+      },
+      "currentRuntimeManifest": {
+        "path": "R3/runtime-complete-20261006T074525Z/RUNTIME-CURRENT-FINGERPRINTS.json",
+        "sha256": "2af6542b8c3776bb8c183f8c3d46a91dd78e185ec2a74e446782149f20586cb0"
+      },
+      "currentRuntimePacketChecks": {
+        "observedAt": "2026-10-06T07:49:45.561092+00:00",
+        "state": "WAITING_ORIGINAL_OWNER_ACKNOWLEDGMENT",
+        "runtimeReportSha256": "f75449f3766023179a18cb9b63c17111f1b81ad20511a0302663a9f69be65080",
+        "runtimeManifestSha256": "2af6542b8c3776bb8c183f8c3d46a91dd78e185ec2a74e446782149f20586cb0",
+        "runtimeFilesChecked": 34,
+        "mismatches": [],
+        "originalHistoricalPreimagesChecked": 10,
+        "originalMismatches": [],
+        "originalRequestedNewTargetsStillAbsent": true,
+        "builderLifecycle": "terminalcompleted;close_agentnotexposed",
+        "r1r2": "acceptedunchanged",
+        "r3WholeBuilderAcceptanceFinal": "pendingoriginaladoptionandfreshgates",
+        "protectedIntervalEnded": "2026-10-06T07:40:28.716Z",
+        "ownerUIActionNeeded": false
+      },
+      "productOrNormativeWrites": false
+    },
+    {
+      "observedAt": "2026-10-06T08:22:53.530150+00:00",
+      "phase": "actual-original-adoption",
+      "adoptionManifest": {
+        "path": "original-adoption-20261006/ADOPTION-MANIFEST.json",
+        "sha256": "d230c0d8b563d163ea23f439722dd7d5ea69bc00833fc57379dacd3649b531ab"
+      },
+      "originalTargets": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S3-startup-integrity-reassessment.md",
+          "sha256": "7dbb1f2a3c0378984d226ce8ee53cb515f39f40230578659d83e4c0c9db06826",
+          "bytes": 11272
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+          "sha256": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+          "bytes": 19109
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+          "sha256": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+          "bytes": 12307
+        }
+      ],
+      "historicalPrefixExact": true,
+      "currentCandidateInspection": {
+        "path": "final-integration/CURRENT-CANDIDATE-INSPECTION.json",
+        "sha256": "91dc3237cf64401f0c95670f5298d7bf2db273b8e1b901468da6276998077018",
+        "comparisons": 284,
+        "allMatch": true
+      },
+      "r1r2": "accepted unchanged",
+      "r3": "builder review in progress; acceptance/final pending"
+    },
+    {
+      "at": "2026-10-06T09:03:59.622347+00:00",
+      "stage": "R3 accepted; original and current aggregate acceptance annotations",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/R3-ACCEPTANCE-ADOPTION-REFRESH.json",
+      "sha256": "2eb4976bf627e1e17928c4fa3a34a3a8b12ed9e3563d1b91a8ef14021e40b5c7",
+      "changes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/STARTUP-REPAIR-REPORT.md",
+          "beforeSha256": "1b86743e6cf05eabcfe891f3e1325163ac11ecf4ac19ba1a2b2512d334aa2a2f",
+          "afterSha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/REGRESSION-RESULTS.md",
+          "beforeSha256": "d224ff5d2079262dd023a62e16d45965bfbdb9d51798aa237ff3eae123cfd660",
+          "afterSha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/GUARDED-SERVER-PROOF.md",
+          "beforeSha256": "eca3f633f523480efc12338bdefbdaf2b5e9043152e909c9141c83ec107d0e5e",
+          "afterSha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/SLICE-AND-DEVIATION-LEDGER.md",
+          "beforeSha256": "5ef2d2f00ee35768ca829e5e234f928b6e536df7d379500e2531386f4c54cdf7",
+          "afterSha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-S4-repaired-integration-report.md",
+          "beforeSha256": "55b88841cadeda591088f0fdae1d912f0637fcf1e0257d6721c0aaa2b1ae4396",
+          "afterSha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/original-SLICE-AND-DEVIATION-LEDGER.md",
+          "beforeSha256": "b27391be3539e6e8de60cf42aede8b6e2060d6e8dc48b701a2c48faeaeab10c6",
+          "afterSha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETION-CANDIDATE.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/r3-acceptance-recorded/COMPLETION-CANDIDATE.md",
+          "beforeSha256": "b612634a71c746f9965e9dfb88fc6b013b20a3cd637090c34256daa0ab86b794",
+          "afterSha256": "9cccf1dad36e34ddd2e5c1b8b567f4c441c57934fe09592ecf5b73d3673ba2b8",
+          "reason": "actual terminal R3 acceptance and pending full both-contract final review; administrative adoption"
+        }
+      ],
+      "ownerAcceptance": "pending"
+    },
+    {
+      "at": "2026-10-06T09:33:00.449950+00:00",
+      "stage": "current technical completion after final clean/cleanup",
+      "record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/COMPLETION-RECORD-REFRESH.json",
+      "sha256": "a3afab3af60abf4e1d3225bd772514d83d875abdeff141974ff9cf089cc5bd3a",
+      "finalReportSha256": "bb4aff9f428bd6202f5d86fd32b3f3abfc75bdcc28090afb1737d0bcd5c83d7d",
+      "changes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/STARTUP-REPAIR-REPORT.md",
+          "beforeSha256": "fdcb8aceb94e8afbc75346f3421fc0c806b3dae46fdd685e1a9933b0d9b658e6",
+          "afterSha256": "fe2ffdfd9e8912f1d1e688121a040cedbc845eb864a2de16f170f9eb129601f7",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/REGRESSION-RESULTS.md",
+          "beforeSha256": "d6945615832b65d746f67b262d5de15b78ec512ffa599095cb8fd812a327f20d",
+          "afterSha256": "71ba136bb80faaf4b29863f3981b2643dae4698a3f5b57e6bdbd38ca11c963ca",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/GUARDED-SERVER-PROOF.md",
+          "beforeSha256": "59c1af3104a405efb59cc3839ba3f4a89b006499e3b461f0adb2a80b5a07e31d",
+          "afterSha256": "377a048e49cdfbee66e8a781e6540d472d5c0322ad702ab1c945768e65fa97a3",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/SLICE-AND-DEVIATION-LEDGER.md",
+          "beforeSha256": "21e9524bb38618db9badbd734e224cf4777974cb29799086f33af213d721e30e",
+          "afterSha256": "b83b7e1b8e0468ce55a1cdbff3e6b7a9c3e26b41d0cd08326bef8b61ddad836b",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/S4-repaired-integration-report.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/original-S4-repaired-integration-report.md",
+          "beforeSha256": "3a6ff94d634657301d83a4465e27b9f7d8cdb43cd107d281b4b9e9425e9e8f9d",
+          "afterSha256": "9a8c01bf1c29fc62a60b6f9a45f0d79afed80c1b103dbe1c5f0e22c3a3ee9c67",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+          "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/original-SLICE-AND-DEVIATION-LEDGER.md",
+          "beforeSha256": "b303155738804cfd8f2394089bfd147ed0c62aa59751796e0b8effeb144b461b",
+          "afterSha256": "cf624f7256cf6b11187b541e4a36ba638eb05aa34eb4d30891da464ca3bcbc0c",
+          "reason": "actual full both-contract terminal result and reviewed protected cleanup; final state annotation without product/runtime/test changes"
+        }
+      ],
+      "ownerAcceptance": "pending",
+      "finalStateTenseCorrection": {
+        "beforeSha256": "d461b8da8bc989ac2793842a1625cd93acc1bf5a68b08c93804ad606f50bd54a",
+        "afterSha256": "bb4aff9f428bd6202f5d86fd32b3f3abfc75bdcc28090afb1737d0bcd5c83d7d",
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/completion-report-preimages/SPEC-FINAL-REPORT-before-current-scope-annotation.md",
+        "reason": "current full-review scope tense and final FIN-D01 matrix inclusion; no core/raw-evidence change"
+      }
+    }
+  ]
+}

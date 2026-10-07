@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-06T08:44:36.797161+00:00",
+  "purpose": "Current aggregate openings reconcile actual runtime/adoption and builder gate; preserve exact dated previous bytes",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/STARTUP-REPAIR-REPORT.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/administrative-refresh-20261006/STARTUP-REPAIR-REPORT.md",
+      "beforeSha256": "bc0e01555bde5141afff140334247ec679ef4f81d15af0ed468643ed99ccf5fc",
+      "afterSha256": "1b86743e6cf05eabcfe891f3e1325163ac11ecf4ac19ba1a2b2512d334aa2a2f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/REGRESSION-RESULTS.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/administrative-refresh-20261006/REGRESSION-RESULTS.md",
+      "beforeSha256": "4635b43ad4fb6e6489499ef53e692bcc9bcac684d8f5bab8e9311b0777fe22ce",
+      "afterSha256": "d224ff5d2079262dd023a62e16d45965bfbdb9d51798aa237ff3eae123cfd660"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/GUARDED-SERVER-PROOF.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/administrative-refresh-20261006/GUARDED-SERVER-PROOF.md",
+      "beforeSha256": "572993e25ff15546165673a39bb8bb2d3431be95cbc1d77c2308619acb86e749",
+      "afterSha256": "eca3f633f523480efc12338bdefbdaf2b5e9043152e909c9141c83ec107d0e5e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/administrative-refresh-20261006/SLICE-AND-DEVIATION-LEDGER.md",
+      "beforeSha256": "953ff737f452911d9ddf655f6df3a9d68d83eede0f83bbf0ba95ad5851f807f0",
+      "afterSha256": "5ef2d2f00ee35768ca829e5e234f928b6e536df7d379500e2531386f4c54cdf7"
+    }
+  ],
+  "productOrWikiChange": false,
+  "originalTargetsChange": false,
+  "normativeOrApprovalChange": false,
+  "testEvidenceInvalidated": false,
+  "gatePolicy": "After builder reviewer terminal clean, before separate acceptance; no additional builder review or test rerun for administrative reporting",
+  "ownerAcceptance": "pending"
+}

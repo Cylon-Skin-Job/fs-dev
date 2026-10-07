@@ -2,8 +2,42 @@
 name: Chat Testing And Operations
 description: Vertical smoke tests, browser Playwright, Electron Playwright, and Fusion restart guidance for chat work.
 metadata:
-  last-modified: "2026-09-29T07:12:08Z"
+  last-modified: "2026-10-06T01:21:33Z"
   source-files:
+    - fusion-studio-server/lib/startup.js
+    - fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js
+    - fusion-studio-server/test/watch/watcher-retirement.test.js
+    - fusion-studio-server/test/event-registry/startup-integration.test.js
+    - fusion-studio-server/test/views/view-readiness-coordinator.test.js
+    - fusion-studio-server/test/views/view-relocation-recovery.test.js
+    - fusion-studio-server/test/ledger/event-ledger.test.js
+    - fusion-studio-server/test/screenshot-file-capture-request-id.test.js
+    - fusion-studio-server/test/screenshot-protected-view-path.test.js
+    - fusion-studio-server/test/calendar/apple-listener-retirement.test.js
+    - fusion-studio-server/test/triggers/trigger-loader.test.js
+    - fusion-studio-server/test/triggers/cron-scheduler.test.js
+    - fusion-studio-server/test/shutdown.test.js
+    - fusion-studio-server/test/chat-metadata/file-mutations-collector.test.js
+    - fusion-studio-server/test/ws/file-save-route.test.js
+    - fusion-studio-server/test/subscriptions/file-provenance-bootstrap.test.js
+    - fusion-studio-server/test/resources/file-provenance-integration.test.js
+    - fusion-studio-server/test/agent-provenance/fact-authority-and-ledger.test.js
+    - fusion-studio-server/test/wire/canonical-chat-tool-events-provenance.test.js
+    - fusion-studio-server/lib/views/readiness-startup.js
+    - fusion-studio-server/lib/views/readiness-runtime.js
+    - fusion-studio-server/lib/views/readiness-coordinator.js
+    - fusion-studio-server/lib/views/relocation-service.js
+    - fusion-studio-server/lib/workspace/workspace-controller.js
+    - fusion-studio-server/lib/testing/isolated-provenance-runtime.js
+    - fusion-studio-server/test/runtime/workspace-startup-integrity.test.js
+    - fusion-studio-server/test/views/readiness-startup.test.js
+    - fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs
+    - fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs
+    - fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs
+    - fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts
+    - fusion-studio-client/playwright.provenance.config.ts
+    - fusion-studio-client/playwright.chat-architecture.config.ts
+    - fusion-studio-client/e2e/threaded-chat-host.spec.ts
     - fusion-studio-client/playwright.config.ts
     - fusion-studio-client/e2e/chat-send-transport.spec.ts
     - fusion-studio-client/e2e/trusted-shell-auth-smoke.mjs
@@ -80,6 +114,16 @@ For renderer chat-send changes, also exercise the production `ws/product-send.ts
 For receipt inquiry changes, build the client, then run `npx playwright test --config=playwright.chat-architecture.config.ts e2e/prompt-submission-recovery.spec.ts e2e/chat-send-transport.spec.ts e2e/prompt-ownership.slice-c.spec.ts e2e/thread-bootstrap-order.spec.ts e2e/visible-wait.spec.ts` from the client and `npm test -- --runInBand --runTestsByPath test/ws/prompt-submission-recovery.integration.test.js` from the server. The recovery spec uses the production send-result boundary for refusal, uncertainty and auth-queue cases, fake time for the 15-second start, five-second inquiry and bounded retries, and the isolated browser composer for scheduled/manual status and existing feedback. The default Playwright config is outside this isolated route and can contact a live development server.
 
 The default `node e2e/trusted-shell-auth-smoke.mjs` entry now also runs `chat-recovery-native-scenario.mjs` in a disposable profile, workspace and SQLite database. A staged test-only server fault drops `message:sent` while preserving durable acceptance; the browser's real authenticated socket then checks one refused inquiry, one manual receipt readback, and one uncertain post-enqueue inquiry. The native case checks exact status/prompt counts and one durable receipt/exchange per attempt; it does not prove live provider failure causes, eventual reconnect after the injected socket throw, or Alpha health. Temporary fixture data and owned processes are removed afterward.
+
+## Startup retirement and guarded provenance
+
+Startup or workspace-readiness changes run the production-entry `test/runtime/workspace-startup-integrity.test.js`, strict registry `test/runtime/isolated-provenance-runtime.test.js`, retirement `test/watch/watcher-retirement.test.js`, startup-order `test/event-registry/startup-integration.test.js`, and `test/views/readiness-startup.test.js`, together with coordinator/recovery, ledger, direct screenshot, Calendar, trigger, shutdown and save/tool provenance regressions. Source/dependency sweeps verify the retired workspace, screenshot-folder and Apple directory watchers remain absent. Ready-startup scratch canaries verify components/actions, legacy chat/ticket/agent/system event triggers, cron and runner setup under the held readiness lease. They do not launch a real autonomous worker.
+
+After building the renderer, `node e2e/provenance/run-file-viewer-live.mjs` from the client runs normal and fact-publication-failure scenarios against the actual isolated server. Each scenario uses `NODE_ENV=test`, `Test-Provenance`, exactly two registered scratch workspaces, a marker-owned profile, a fresh non-3001 port and `reuseExistingServer: false`. The audit expects all seven startup effects and runtime harness HTTP revalidation to be blocked, with zero effect factories, filesystem watchers or children. The browser assertions retain registry authority, mediated-save/prewrite protection, postwrite recovery and narrowly scoped refresh behavior.
+
+The launcher compares protected developer databases, the normal profile database, workspace bytes and repository Playwright output on both success and failure. Before nonce-checked scenario cleanup, it retains the content-free isolated audit and safe failure artifacts in a separate marker-owned temporary evidence directory. Raw traces receive only size/hash receipts because they can contain authentication material; their payloads are not copied. A failure keeps its original phase and error boundary, and evidence-finalization failure retains the original owned scenario directory for investigation. These fixture checks do not establish actual public provider operation.
+
+Public OpenCode acceptance additionally uses the ordinary authenticated Electron shell with a disposable profile and an actually registered and selected scratch workspace. Observe the first and second New Chat selections, real prompt acceptance and canonical completion, the exact durable exchange, and passive reopening of the same thread. Provider-free fixtures, startup readiness, connection indicators, generic spawn success and redacted error markers cannot substitute for those observations. Any unperformed manual runtime step remains an explicit acceptance gap.
 
 <!-- children:start -->
 ## Children

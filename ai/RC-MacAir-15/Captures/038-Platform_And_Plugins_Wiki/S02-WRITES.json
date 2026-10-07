@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-templates-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S02",
+      "--phase",
+      "content"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:06:27Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"342eb6ee20cbd4bdd6f19c9db7519ba5940fff9c8e5bc97561ea8c573bc93e59\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S02\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "write",
+      "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-composition-proposal.md",
+      "--expect",
+      "absent",
+      "--slice",
+      "S02",
+      "--phase",
+      "content"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"path\": \"ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md\",\n  \"action\": \"write\",\n  \"at\": \"2026-09-23T13:06:27Z\",\n  \"before_sha256\": null,\n  \"after_sha256\": \"2db745c46c8274cfa8fbfe1854ce7894f4b0c16e39868830c68633c5dab8d5b2\",\n  \"snapshot\": null,\n  \"status\": \"complete\",\n  \"slice\": \"S02\",\n  \"phase\": \"content\"\n}\n",
+    "stderr": ""
+  }
+]

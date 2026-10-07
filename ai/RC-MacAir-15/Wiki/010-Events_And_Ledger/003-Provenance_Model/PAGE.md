@@ -2,249 +2,55 @@
 name: Events Provenance Model
 description: How event metadata records actor, observer, confidence, causal IDs, UI context, tool call IDs, trigger run IDs, script run IDs, and external changes.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events And Ledger Decisions
-    - Events Taxonomy
-    - Events Correlation And Causality
-    - Chat Metadata Provenance Schema
-    - Tool Call Provenance Schema
-    - Resource Mutation Provenance Schema
-    - Ledger Event Provenance Schema
-    - File Version Provenance Schema
-    - Automation Run Provenance Schema
-    - UI Action And Context Provenance Schema
-    - UI Action Provenance Module
-    - Audit Query And Review Provenance Schema
   source-files:
-    - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/subscriptions/admission.js
+    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
+    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+    - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
+    - fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js
+    - fusion-studio-server/lib/ledger/event-ledger.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Prefer one composable schema with registered reusable extensions, but leave decision-tagged findings unresolved until explicit owner approval.
+Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
 
-Use this page before changing event origin, source, actor, or causal metadata.
+Provenance records what Fusion knew, when it knew it and the identity of the responsible operation or observation. Observation and causation are separate. A path mentioned by a tool, a later file hash, a watcher callback or an admitted event identity does not alone prove who changed the file.
 
-Provenance separates observation from causation. Chokidar can observe a mutation, but it usually cannot prove who caused it. UI commands, assistant tool calls, trigger runs, scheduler runs, scripts, and known system jobs should carry durable IDs when they initiate work.
+## Current carriers and identities
 
-## Required Distinctions
+| Carrier | Identity and meaning | Limit |
+|---|---|---|
+| Save command/mutation | Server-reserved operation, command, acceptance-event, resource-event, resource and preimage-version IDs; `resource.path` is canonical workspace-relative identity while `resource.access` is ingress panel/path | `commandAcceptedEventId` references the reserved acceptance identity; it is not an older accepted-reference capability and need not prove delivery or a ledger row |
+| Save origin | `origin.kind = local_client`, server `connectionId`, `assurance = transport_only`, optional `reportedUiContext` | Reported view/tab/component context is historical context, not authenticated human identity, permission, a general UI action record or ownership of live view state |
+| Tool activity | `operationId` is the host activity ID; `thread` carries thread/turn, `tool` carries provider tool-call ID/name/status and optional argument/result fingerprints; reported and observed times are separate | Fingerprints do not publish raw output or prove execution changed a path; the activity is normalized separately from detailed Chat exchange content |
+| File observation | `operationId` is the observation ID; `source` links activity/edge/thread/turn/tool/harness; checkpoint and previous checkpoint IDs describe a path-scoped observed history | First observation is not a pre-tool image. Prior observed state need not immediately precede the tool's write; `absent` has no live resource ID |
+| Legacy ledger | Compatibility fields and correlation/causation values copied when present | `file:changed` is not recorded; broad workspace watcher production is retired |
 
-- `source`: the producer of the canonical event record.
-- `origin`: the initiating actor or context that caused work.
-- `observedBy`: the subsystem that detected the fact.
-- `confidence`: whether attribution is direct, correlated, inferred, or unknown.
-- `cause`: durable schema-approved upstream initiator IDs such as UI action ID, tool call ID, harness ID/run/event ID, automation run ID, or audit query ID. Trigger/scheduler/script/agent subtype cause IDs remain `AUT-D03`/finding-1 candidates. Chat turn, parent event, root event, correlation, and causation IDs live under `ids`.
-- `eventId`: the canonical event/graph node ID. Domain-specific IDs belong inside the domain payload.
-- `occurredAt`: the canonical event time. Use `observedAt` only for observer facts and `startedAt`/`endedAt`/`durationMs` only for lifecycle data.
-- `context`: UI, client, route, scope, and active-resource context. Do not mix view/panel fields into resource or domain payloads.
+The four governed facts share only their actual registered top-level identity fields and domain-specific bodies. No universal common envelope, confidence enum, accepted-reference delivery ABI or generalized causal graph is implemented. Consult the exact [Taxonomy](../002-Event_Taxonomy/PAGE.md) and [Ledger Event Provenance](004-Ledger_Event_Provenance_Schema/PAGE.md) before adding fields.
 
-## Unknown Is Valid
+## Failure boundaries
 
-If the app cannot connect a file change to UI, assistant, trigger, scheduler, script, sync, import, or known system work, the mutation should remain external or unknown.
+Operational authentication/authorization, command shape, workspace/path safety and required save recovery protection can gate work. The mediated save requires a durable operation and exact eligible preimage before replacement. A storage or preimage failure there must prevent replacement; a blanket rule that versioning is always optional would violate the supported guarantee.
 
-Sync, import, and known system jobs use `automation.runId` with an appropriate `automation.kind`; downstream canonical events reference that ID only through a registered builder binding that consumes the accepted automation reference.
+Optional reported UI context is sanitized or omitted for malformed/oversized fields or a mismatching workspace echo without rejecting otherwise valid work. The renderer omits tab fields from an unavailable or nonmatching connected owner; the server does not verify the current existence of a syntactically valid tab/component ID. After a filesystem replacement, failed admission or projection cannot make it un-happen; pending/conflict states and freshness recovery describe that failure. Tool provenance observes reported execution and cannot rewrite an executed result as failed. Admission and required acknowledgments are actually awaited at their owning boundaries; they are not guaranteed zero-latency side effects.
 
-For watcher-only events, `source` can be the resource-event producer/enricher that produced the canonical event while `observedBy` is the workspace watcher that detected the filesystem fact. Reserve `resource-event-mapper` for derived render/cache projections such as `viewRefs`.
+## Approved direction
 
-## Metadata Must Not Gate Valid Work
+Use timestamped facts with shared host identities where available, preserve unknown attribution and keep source evidence separate from causal conclusions. Record save/session grain rather than keystrokes. Historical copies support auditing/recovery while [System ownership](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) keeps connected applications and workspace content authoritative outside the System database. Restoration remains a separately permitted operation against that source.
 
-Provenance is an observational and query system, not authorization for an otherwise valid user action. Validate the operation and its provenance separately.
+The trusted save/subscription agreement replaced older accepted-reference and broad versioning blockers only within that bounded scope. The agent extension separately covers normalized observational activity/fingerprints, sparse eligible checkpoints and two admitted ledger projections. The save-context extension reuses the existing carrier. None approves every older chat/tool/native-reference, automation, UI-action or graph design.
 
-- Authentication, authorization, command shape, required mutation target, workspace resolution, and path safety are operational checks. They may reject an unsafe command before it executes.
-- Missing or malformed provenance context, attribution IDs, active-view fields, cause links, native references, enrichment, hashes, token counts, ledger availability, or versioning availability must not reject, delay, roll back, or suppress an otherwise valid operation.
-- Canonical IDs and timestamps that the server controls are generated by the accepting producer. Do not require the renderer to manufacture them as a condition of interaction.
-- When attribution cannot be established, use `external` or `unknown` with honest confidence. When enrichment cannot be captured, use the schema's omission/unavailable form. When no trustworthy canonical provenance record can be built, emit a structured non-canonical diagnostic and continue the operation.
-- A provenance, ledger, versioning, compaction, or audit subscriber failure is isolated from the source operation. It may retry/defer only under its owner-approved bounded idempotency policy, otherwise it skips/terminates its own record with a fixed diagnostic; it must not make the already-valid source action fail. Ledger production retry/defer remains blocked on `LED-D04`.
-- Redaction failure fails closed for sensitive material by omitting that material or its derived hash/preview. It never fails the source operation. Whether a non-sensitive event core is canonical depends on the domain registry: only an explicitly registered failure-safe-core branch may be admitted.
+## Open design
 
-An operationally necessary fact can still be required for a domain subscriber. For example, a resource invalidation needs a resolved workspace and canonical path. A mutation handler must establish those values as part of safely executing the mutation; optional provenance enrichment is not allowed to become a second gate.
+### Governing new consumers without duplicating data
 
-Some values are dual-use. A thread ID may be required to route a prompt, a provider tool-call ID may be required to return a tool result, and a workspace/path may be required to perform a mutation. Their operational copy can legitimately gate that operation. Failure to project or persist the same value into provenance after the operation is accepted cannot retroactively fail it. Implementations must keep those validation paths separate even when they use the same underlying value.
+Owner direction recorded 2026-09-27 PDT requires new capabilities to declare provenance and schema ownership as part of planning, including explicit foundation extensions where the current implementation is insufficient. See [the code planning rule](../../005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md#governed-capability-planning). This does not impose an unimplemented universal envelope or turn telemetry into causal proof.
 
-## Common Core Envelope
+For the proposed health logger, retain content-free scalar observations in a separate SQLite store, not chat history or raw tool output. Keep notes/bookmarks/history in fusion.db and cross-reference through appropriately authorized tools. Distinguish source-reported time, host receipt time and renderer progress; absence of sampled evidence is not absence of a defect. Reuse measurement owners with Diagnostics; its raw ephemeral display is a different disclosure boundary.
 
-Every provenance leg should share one envelope. Domain schemas add registered payload extensions under keys such as `chat`, `tool`, `resourceMutation`, `ledgerEvent`, `fileVersion`, `automation`, `uiAction`, or `audit`. Multiple domain/sidecar keys are not implicitly authorized: finding 4 must settle whether chat/tool resource buckets are registered sidecars or folded into shared `resources[]` roles.
+System event ledger, personal chat persistence, audit projections and optional health retention have distinct purposes and failure policies. Governance governs authority and contracts; it does not mandate one storage destination. Required prewrite protection remains required, while best-effort health must be bounded and fail without blocking chat. Physical database separation helps isolate the design but does not enforce plugin permissions by itself. General plugin capabilities and automatic exports remain future work.
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily,
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle: {
-    startedAt,
-    endedAt,
-    durationMs,
-    status
-  },
-  ids: {
-    workspaceId,
-    machineId,
-    machineName,
-    threadId,
-    turnId,
-    exchangeId,
-    messageId,
-    rootEventId,
-    parentEventId,
-    correlationId,
-    causationId,
-    serverMutationId,
-    harnessId,
-    harnessRunId,
-    harnessEventId
-  },
-  actor: {
-    type,
-    id
-  },
-  provenance: {
-    source: {
-      type,
-      module,
-      path,
-      handler
-    },
-    origin: {
-      type,
-      id
-    },
-    observedBy: {
-      type,
-      module,
-      path,
-      handler
-    },
-    confidence,
-    cause: {
-      uiActionId,
-      toolCallId,
-      harnessId,
-      harnessRunId,
-      harnessEventId,
-      automationRunId,
-      auditQueryId
-    }
-  },
-  context: {
-    scope,
-    viewId,
-    panelId,
-    route,
-    activeTabId,
-    activeDocumentPath,
-    activeResourcePath,
-    selectedResourceId
-  },
-  resources: [
-    {
-      role,
-      resourceId,
-      resourceType,
-      path,
-      oldPath,
-      relatedEventId,
-      resourceEventId,
-      fileVersionId
-    }
-  ],
-  redaction: {
-    status,
-    policyId,
-    policyVersion,
-    omissions: []
-  }
-}
-```
-
-`ids.serverMutationId` is assigned to the server-produced resource-mutation branch: the server command handler generates or propagates it, server-resource validation requires it, and watcher-observed resource facts prohibit it. It is not a generic workspace/view lifecycle ID.
-
-Automation subtype cause fields are deliberately absent from the settled common-core example while finding 1 remains open. Domain examples may show them only as `AUT-D03` candidates. Likewise, `chatResources` and `toolResources` are finding-4 candidates, not registered schema, and domain `fileVersionIds` projections remain absent until their owning relationship schema, accepted-reference binding, bounds, and registration are approved.
-
-`redaction.status` is `not_required`, `applied`, or `failed`; `policyId` and `policyVersion` are strings. Potentially sensitive registered domains require status plus policy ID/version before complete ledger payload persistence. A pre-UEB failed-redaction safe core may be admitted only when that domain's registry entry defines its exact shape. In the first package only `ui.action` has one. Resource and lifecycle redaction failure publishes no canonical event/reference and uses its non-canonical freshness recovery without failing the source operation. If an inconsistent accepted delivery reaches ledger, storage may keep only the restricted ledger-only `defensive_fallback` body and diagnostic. That body is not a canonical safe core, cannot provide historical relationship proof, and neither admits an event nor makes a rejected candidate canonical.
-
-## Identity Mapping
-
-`eventId` is the canonical event or graph-node ID for this record. Domain IDs are not aliases for `eventId`; they identify domain records or related events inside a payload.
-
-| ID | Meaning |
-|---|---|
-| `eventId` | Canonical event/graph node for the current record. |
-| `ledger_events.ledger_event_id` | Persistence/query projection assigned to the ledger row after accepted delivery; never inserted into canonical event JSON. |
-| `resourceMutation.resourceEventId` | Domain ID for a resource mutation fact, usually also linked by a ledger edge. |
-| `fileVersion.fileVersionId` | Domain ID for a file version record. |
-| `tool.toolCallId` | Provider/app tool-call identity. |
-| `uiAction.uiActionId` | Server-generated durable identity for an accepted UI-origin action. |
-| `ids.messageId` | Canonical app/chat message identity. Provider-native message IDs stay under provider-keyed `nativeRefs`. |
-| `ids.harnessId` | Canonical harness/adapter identity, such as an OpenCode harness adapter. |
-| `ids.harnessRunId` | Canonical run identity for a harness invocation. |
-| `ids.harnessEventId` | Provider-neutral domain identity for an adapter-normalized harness event; `eventId` remains canonical graph identity. |
-| `ids.serverMutationId` | Server command identity for a server-produced canonical resource mutation; required on that branch and prohibited on watcher-observed resource facts. |
-| `automation.runId` | Common automation run identity across trigger, scheduler, script, sync, import, agent, and system automation kinds. |
-| `audit.auditQueryId` | Domain ID for an audit or review query. |
-| `chat.turnEventId` | Compatibility mirror of `eventId` for a chat turn lifecycle event. |
-| `chat.exchangeSavedEventId` | Chat-domain event ID for exchange persistence. |
-
-Ledger row IDs and edge-row keys exist only in private persistence/query projections. No canonical payload or canonical identity contains a `ledger` block or persistence key. Canonical relationships use event/domain/content identities and registered graph semantics.
-
-A compact projection may rename or regroup canonical fields only through a registered projection schema that declares exact source pointers, member equivalence, presence/derivation rules, and redaction behavior. Names such as `causeIds` are projection aliases, not a second identity vocabulary.
-
-An event must not copy its own domain identity into `provenance.cause.*`. Cause IDs reference distinct upstream initiators. The current record's identity stays in `eventId` and its domain payload.
-
-After redaction, `prepareCanonicalCandidate` consumes upstream accepted refs, inserts each fully proven schema-registered atomic relationship group into a fresh safe clone, and stores private pointer/ref proof. Canonical publication accepts only that opaque prepared candidate; copying the same ordinary string exposed by `inspectAcceptedRef` does not carry proof. Raw, unbound, mismatched, forged, stale, or wrong-workspace proof leaves the whole affected group absent, reports only exact fixed `accepted_relationship_unbound`, and never suppresses an otherwise valid relationship-free fact. Whole-fact rejection is reserved for invalid required fact core, unsanitizable safe base, unrelated final schema error, or publication failure. Admission clones/freezes the safe event, binds its registered identity to an opaque ref, and freezes one `{ acceptedRef }` context. Every listener uses exact ABI `listener(frozenEvent, deliveryContext)`; bare-ref argument two is invalid, and identity-sensitive consumers use `assertAcceptedDelivery(frozenEvent, acceptedRef)`.
-
-The same builder rule applies to upstream canonical event relationships. `ids.parentEventId` is the immediate producing canonical predecessor, `ids.rootEventId` is that predecessor's accepted root or its own event ID when it has no root, and `ids.causationId` is the event type's registered direct initiating canonical cause. Root, parent, causation, and same-source domain mirrors declared as one group consume the same immediate-parent capability and are inserted or omitted atomically; an arbitrary retained ancestor cannot substitute. Each relationship requires an exact candidate event type, source event type, target pointer, and selector registration plus the source `AcceptedCanonicalRef` or hash-revalidated historical capability. Workspace identity is embedded in both capabilities. Workspace-scoped candidate/source IDs must be equal by default; a cross-workspace relation requires a separately registered policy and an opaque authorization capability bound to the exact operation and workspaces. No such cross-workspace selector exists in the first package. Missing, null, stale, forged, or mismatched proof omits the group and never affects the base canonical fact or source operation.
-
-Workspace identity/root for the current operation comes from a coordinator-captured command context or an explicit already-authorized workspace argument, never a session cache; thread/turn and selected-resource IDs may come from their own authoritative operational owners because they are not proof of an upstream event. A new correlation ID may be freshly server-generated; carrying an existing correlation/event ID requires an accepted binding. Raw IDs recovered from mutable session, operation, renderer, provider, candidate state, or even copied from `inspectAcceptedRef` never populate accepted-only relationship fields directly.
-
-`provenance.origin.id` may reference an upstream domain/run/action/tool identity. Do not store domain IDs in `provenance.origin.eventId`; canonical event IDs belong in event records, ledger edges, `ids.parentEventId`, `ids.causationId`, or normalized resource/edge references.
-
-## Common Enums
-
-| Field | Values |
-|---|---|
-| `eventFamily` | `chat`, `chat.tool`, `resource`, `workspace`, `view`, `theme`, `ledger`, `file.version`, `automation`, `ui`, `audit` |
-| `provenance.origin.type` | `ui`, `tool`, `harness`, `trigger`, `scheduler`, `script`, `sync`, `import`, `agent`, `system`, `external`, `unknown` |
-| `provenance.confidence` | `direct`, `correlated`, `inferred`, `unknown` |
-| `actor.type` | `human`, `assistant`, `trigger`, `scheduler`, `script`, `sync`, `import`, `agent`, `system`, `external`, `unknown` |
-| `context.scope` | `ui`, `headless`, `harness`, `system`, `external` |
-| `eventPhase` | Domain-specific phase such as `start`, `args`, `result`, `complete`, `observe`, `persist`, `review` |
-
-Ledger rows preserve the persisted canonical event's `eventFamily` and `eventType`. Use `eventFamily: 'ledger'` only for ledger-internal maintenance, repair, migration, or audit events. File-change storm batches remain `eventFamily: 'file.version'` with `eventType: 'file.version.change_batch'` unless a later decision promotes storm control to its own family.
-
-Harness identity is canonical and provider-neutral. Use `harnessId`, `harnessRunId`, and `harnessEventId` for adapter-normalized harness facts; do not add provider-specific canonical fields such as `openCodeRunId` or `openCodeEventId`. OpenCode session/event/message IDs belong in provider-keyed `nativeRefs` such as `nativeRefs.opencode` or the harness/tool domain payload for debugging, dedupe, replay, and adapter audits.
-
-Do not add `openCode` as a `provenance.origin.type`; use the closest existing origin category such as `tool`, `harness`, `agent`, `system`, `external`, or `unknown`.
-
-## Edge Types
-
-Use a shared edge vocabulary so graph queries do not depend on payload-specific field names.
-
-| Edge | Meaning |
-|---|---|
-| `caused_by` | An event was directly caused by another event or domain entity. |
-| `observed_by` | A subsystem observed a fact without necessarily causing it. |
-| `triggered` | An event triggered automation, scheduling, or follow-up work. |
-| `mutated` | An actor/event changed a resource. |
-| `read` | An actor/event read a resource. |
-| `wrote` | An actor/event wrote or generated a resource. |
-| `versioned_as` | A resource mutation produced a file version record. |
-| `restored_from` | A resource state was restored from a prior version. |
-| `compacts` | A compaction or storm event summarizes a bounded set of events. |
-| `represents` | A summary, storm, or audit event stands for affected resources or representative states. |
-| `queried` | An audit or search event queried another event/entity. |
-| `reviewed` | An audit or review event evaluated evidence. |
-| `recommended` | A review event produced a recommendation, ticket, rule, or follow-up. |
-
-## Schema Legs
-
-Define provenance schemas close to the system leg they describe. Each leg should use the same core fields for source, origin, actor, observer, confidence, and causal IDs, but it can add domain-specific fields for useful audits.
-
-Define Resource Mutation, Ledger Event, and UI Action And Context first when implementing. Those three establish event identity, attribution, and query anchors; tool, file-version, automation, and audit schemas can then link to stable IDs instead of inventing parallel correlation fields.
+A composable common envelope and durable causal graph remain design directions, not executable schemas. Exact relationship meaning/proof, canonical tool/native-output handling, broad version events, automation run generation and audit schemas need feature-specific decisions. Older candidate/ref/lease APIs, redaction branches and executor capacities must not be presented as current or automatically required. Preserve meaningful distinctions between producer, reported origin, observer and evidence without manufacturing a confidence verdict or inserting unregistered fields.
 
 ## Children
 

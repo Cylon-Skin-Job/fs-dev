@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-06T01:58:07Z",
+  "orchestrator": "/root/startup_integrity_repair_orchestrator",
+  "ownedSubstantiveReportLocalLinkCheck": "passed; seven current reports checked, no missing links",
+  "handoff": "../OWNER-MANUAL-HANDOFF.md",
+  "handoffSha256": "5c6a079b2672f274ec103e70be141d98e7139027dfe7ff70f47def3f23d47e14",
+  "scopedDiffCheck": {
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+    "command": "git diff --check -- eight owned R3 fixture/Wiki paths",
+    "exitCode": 0,
+    "output": ""
+  },
+  "children": "all direct slice writers and earlier reviewers terminal completed; close_agent unavailable",
+  "status": "WAITING_OWNER_MANUAL_RUNTIME",
+  "originalAdoption": "waiting actual original-owner acknowledgment/incorporation or explicit acknowledged successor",
+  "wholeR3AndFinalReview": "pending mandatory raw evidence; no CLEAN or SPEC_READY claim"
+}

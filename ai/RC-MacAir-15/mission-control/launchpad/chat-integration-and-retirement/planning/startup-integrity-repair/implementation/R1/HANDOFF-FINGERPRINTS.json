@@ -1,0 +1,54 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "checkedAt": "2026-10-06T00:27:26.142328+00:00",
+  "reviewer": "/root/startup_integrity_repair_orchestrator/r1_builder/r1_builder_review_01",
+  "reviewerStatus": "completed",
+  "reviewResult": "CLEAN",
+  "closure": "close_agent unavailable in exposed runtime",
+  "artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/CURRENT-FINGERPRINTS.json",
+      "sha256": "600e884f0f277545f6bb59c50db15a76b807e4b0497a222e06e1660d00f03f5d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/ORCHESTRATOR-INSPECTION.md",
+      "sha256": "59c7f74b08879a5e6442652ed1628ea96f0b9adb6d3093a5c339d0a7c2fa876d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/PREIMAGE-RECEIPT.json",
+      "sha256": "0fa2d8e35f4dffffd9b583689c83d79da24247b67a0eb13f74759ca125ec80b2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-BUILDER-REPORT.md",
+      "sha256": "d7f0a86e0238c13ee7fdda0ba02f129fa322a512f3dbf881a6a600cbe3a6323d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-BUILDER-REVIEW-01.md",
+      "sha256": "e9aee75f39a902d976b64c4b389deeec156c57dc7db20da09a85e1e36f0ac26c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/R1-DELTA.patch",
+      "sha256": "3679d968d4b1322a159974a4f46ad87785169c1abbe87bcf27a0092aca61a7e4"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/consumer-smoke.log",
+      "sha256": "9442c79962578a6d366e2e59d64b5c6307ca27fa022cce1ec68f1bfbfba5c2bd"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/focused-tests.log",
+      "sha256": "c622b3ed63e5bb7b5e245f883abb0787c4e4aec8d723cf5212337b5845716624"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/negative-startup-preimage.log",
+      "sha256": "f2b852d444c9ab2f2aeebbe1d62915a3484d96a4cd4e2f197599e14cc1303adf"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/orchestrator-focused-tests.log",
+      "sha256": "1fafec615362925d2824b158daf89645ff64e8efb3eb3da7b948d8b4331bcea2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/orchestrator-negative-preimage.log",
+      "sha256": "7abb2afdd992521aa19f583ef866336855a073effa46a4d8873eddcd03d5a7cc"
+    }
+  ]
+}

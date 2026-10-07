@@ -1,0 +1,169 @@
+{
+  "slice": "S06",
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-040021.md",
+      "before_sha256": "85edb31a9a0eb77de660e7ceb4f13b7328551a95e929dabf690b726ff1d9bc33",
+      "snapshot_sha256": "85edb31a9a0eb77de660e7ceb4f13b7328551a95e929dabf690b726ff1d9bc33",
+      "after_sha256": "bfdcce5e4b705c74e95e1552a4b6e717bdb52a21ce510726ff7780c4fbdd3957",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-040021.md",
+      "before_sha256": "62e0349b0e50462f42b690e6fdc6dab6af84fc74f2c9d54ecb24d6a93606de5c",
+      "snapshot_sha256": "62e0349b0e50462f42b690e6fdc6dab6af84fc74f2c9d54ecb24d6a93606de5c",
+      "after_sha256": "974bf1db71927ad15aa38fa138927500da7d08fd009536eac03194906b547df4",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-040021.md",
+      "before_sha256": "8f4fc54e9895bad4e988996bbf7366c6d9baff1cf9a2accafb5c1506fe8b2675",
+      "snapshot_sha256": "8f4fc54e9895bad4e988996bbf7366c6d9baff1cf9a2accafb5c1506fe8b2675",
+      "after_sha256": "1c72ed2f8792ad30c8983c141d5a97284f735c5fa3766384d01c15409e849f82",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "before_sha256": "237038cba9010a345b785df9003193bd350e2febbf6025481ec98efb262d9f84",
+      "snapshot_sha256": "237038cba9010a345b785df9003193bd350e2febbf6025481ec98efb262d9f84",
+      "after_sha256": "c88f14bb2f5d7d3d4266b23aaa8b4c86c562094107e2f7f1412792826e62749a",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-040021.md",
+      "before_sha256": "86a5d19b998b413d7e59ec515c11439400d67d63a20c0eebb3d0b4b4d926a8c1",
+      "snapshot_sha256": "86a5d19b998b413d7e59ec515c11439400d67d63a20c0eebb3d0b4b4d926a8c1",
+      "after_sha256": "ed0a090e19d768da355d94e5f47e1fec2062098a34d4355f75031cd8a218e776",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-040021.md",
+      "before_sha256": "5df60aecf62d9591858ee6a90e2854982d601dbf2bf093c64672dff91df652a7",
+      "snapshot_sha256": "5df60aecf62d9591858ee6a90e2854982d601dbf2bf093c64672dff91df652a7",
+      "after_sha256": "05fb9589a5aa7d68be93e8865db1c2f9716fe817f8ecbabb4f4964733da41680",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "before_sha256": "9e1c1cf2133a5c226d5136e0b7ef71afe7ef86f0a431e0d65e19a597fde2253d",
+      "snapshot_sha256": "9e1c1cf2133a5c226d5136e0b7ef71afe7ef86f0a431e0d65e19a597fde2253d",
+      "after_sha256": "1e3f7881053f65a5fa632ebdbdad21346e76e3f8b1b5a14731d0fceac0cbd1f5",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-040021.md",
+      "before_sha256": "d6f29d7a30a81b75c617575b45f6c9d3bee1a5f9290eb20f6f890395038e252f",
+      "snapshot_sha256": "d6f29d7a30a81b75c617575b45f6c9d3bee1a5f9290eb20f6f890395038e252f",
+      "after_sha256": "9084487902df640f96c12b0dd8b87b4290d965b9f539f0363f9779e19632c71e",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-040021.md",
+      "before_sha256": "781a87c0154a6814ba7a0d436b09b11be783c0832d50a48951931f7e1d0fb618",
+      "snapshot_sha256": "781a87c0154a6814ba7a0d436b09b11be783c0832d50a48951931f7e1d0fb618",
+      "after_sha256": "4e08e5665371f9585ed1e19cdbe3f210849ac4afd86e0363e23d2de34a0200d2",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-040021.md",
+      "before_sha256": "511ae7b20857860cc6a3ddb9007af048b197203f16bce9a3bf4461253a92bd1d",
+      "snapshot_sha256": "511ae7b20857860cc6a3ddb9007af048b197203f16bce9a3bf4461253a92bd1d",
+      "after_sha256": "3143fe75fe31d3c34831aa135964e5b5268890340c3635dd73da1964184cddaa",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-040021.md",
+      "before_sha256": "bda6ad2a3b78ad6066eb0db28261f609d3e2ece8e26759b9cf41d08fb0526021",
+      "snapshot_sha256": "bda6ad2a3b78ad6066eb0db28261f609d3e2ece8e26759b9cf41d08fb0526021",
+      "after_sha256": "a273c1446c304ead23348f537be44123f5176aaf0d3eb664cf64d3291d9b5b5b",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040021.md",
+      "before_sha256": "c803b1cc3a1850492fdbac73326b90e3578bd023b971466dba2f4783c24c6659",
+      "snapshot_sha256": "c803b1cc3a1850492fdbac73326b90e3578bd023b971466dba2f4783c24c6659",
+      "after_sha256": "7350bce4c6d283ee5ca64e0ed2490326d1cca2aae1043b27c2fce3963effc7b8",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable",
+      "repair_snapshots": [
+        {
+          "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040308.md",
+          "before_sha256": "b1e4ef34e0095c41de3293004b7fbc8e9fb3d2237714ad9db50383d516ca7280",
+          "snapshot_sha256": "b1e4ef34e0095c41de3293004b7fbc8e9fb3d2237714ad9db50383d516ca7280",
+          "after_sha256": "7350bce4c6d283ee5ca64e0ed2490326d1cca2aae1043b27c2fce3963effc7b8",
+          "at": "2026-09-19T11:03:08Z",
+          "reason": "Root read found broad source-directory replacement corrupted collector suffix; independently confirmed and repaired exact path; writer now matches only whole directory entry."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "before_sha256": "7a82f32ecf8f0196c1de52b03b719ba3320b8ae8207c2ea16f46b337b935439d",
+      "snapshot_sha256": "7a82f32ecf8f0196c1de52b03b719ba3320b8ae8207c2ea16f46b337b935439d",
+      "after_sha256": "87f4aa61ab2eb25097245eba46f662822409a9e01c1b3a50f6c4598e7539d2f7",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "before_sha256": "8ff92f6735e8149d3c481e409171d6d6ac96b0598e6a710c1bdd2bd7d1e118c9",
+      "snapshot_sha256": "8ff92f6735e8149d3c481e409171d6d6ac96b0598e6a710c1bdd2bd7d1e118c9",
+      "after_sha256": "09fb7b06a8f91b0e50dc33a15cad39ff5e20cde057ba6133d1c007801681fce4",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-040021.md",
+      "before_sha256": "c6dc42e0e15ef23d0697ef39d308698e5044788c21338beee0a5d5aa52b88df9",
+      "snapshot_sha256": "c6dc42e0e15ef23d0697ef39d308698e5044788c21338beee0a5d5aa52b88df9",
+      "after_sha256": "c48b4a5aed2c65d0195410e267beed5509189756a9f7e3a3500e39f91a66d624",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "before_sha256": "b6357046872aef01c729268a41ecf3ee732d5b1bab62a1634bcf336f39f4a4ec",
+      "snapshot_sha256": "b6357046872aef01c729268a41ecf3ee732d5b1bab62a1634bcf336f39f4a4ec",
+      "after_sha256": "baecb88fbedd53a1b83548350aa2439fe4ff6d442dfb4e5ed0daeb1ba66243d0",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "at": "2026-09-19T11:00:21Z",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-040021.md",
+      "before_sha256": "6d7a6d5e8e80c4fd75ccdff0824d7791ed345787fd2abce90342760019e1e9a0",
+      "snapshot_sha256": "6d7a6d5e8e80c4fd75ccdff0824d7791ed345787fd2abce90342760019e1e9a0",
+      "after_sha256": "03a0f9d5c3ba6966157678cbffeab3e96f900e5b675baff90d7ba671574290c4",
+      "reason": "Current owner metadata policy; exact supporting code pointers; overview completion scope/baseline where applicable"
+    }
+  ],
+  "candidate": "PW01-f24d5cd427b9ca14"
+}

@@ -1,0 +1,92 @@
+{
+  "slice": "S02",
+  "at": "2026-09-19T03:10:38.780858-07:00",
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md",
+      "before_sha256": "a5185e4e3959bb41e67b54cd588696c80370f4985eaa4fe39dcd1a7731c2617f",
+      "snapshot_sha256": "a5185e4e3959bb41e67b54cd588696c80370f4985eaa4fe39dcd1a7731c2617f",
+      "after_sha256": "237038cba9010a345b785df9003193bd350e2febbf6025481ec98efb262d9f84"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md",
+      "before_sha256": "9b926fa34b86376f56836d2118d48fba7edeb347bc5e3d9fa78426e12a133237",
+      "snapshot_sha256": "9b926fa34b86376f56836d2118d48fba7edeb347bc5e3d9fa78426e12a133237",
+      "after_sha256": "86a5d19b998b413d7e59ec515c11439400d67d63a20c0eebb3d0b4b4d926a8c1"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md",
+      "before_sha256": "9c0bcb904ffce280a0defb6cf371cf07bf00fda9a709407c326c0379375b5cdd",
+      "snapshot_sha256": "9c0bcb904ffce280a0defb6cf371cf07bf00fda9a709407c326c0379375b5cdd",
+      "after_sha256": "ac50d5dfb38b5d908b4b52421ab5f62f48aa0233fb41e1b32bb05bce1c034ce6"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md",
+      "before_sha256": "986f3968c005c283552680a934f330402a9fbe1725a21e50fa4e0b76d7ea8490",
+      "snapshot_sha256": "986f3968c005c283552680a934f330402a9fbe1725a21e50fa4e0b76d7ea8490",
+      "after_sha256": "9e1c1cf2133a5c226d5136e0b7ef71afe7ef86f0a431e0d65e19a597fde2253d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md",
+      "before_sha256": "c7b229dc857ec329a988fdd495c939b7ae67d694091793d9fa7649a4b1cf5b0d",
+      "snapshot_sha256": "c7b229dc857ec329a988fdd495c939b7ae67d694091793d9fa7649a4b1cf5b0d",
+      "after_sha256": "d6f29d7a30a81b75c617575b45f6c9d3bee1a5f9290eb20f6f890395038e252f",
+      "repair_snapshots": [
+        {
+          "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md",
+          "before_sha256": "2107533f124efb68ad27174a59aaefd40dd7534a99562b32a3637813a6f9ab80",
+          "snapshot_sha256": "2107533f124efb68ad27174a59aaefd40dd7534a99562b32a3637813a6f9ab80",
+          "reason": "Self-review made migration 040 locked schema refresh explicit; ordinary reconcile still preserves rows."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md",
+      "before_sha256": "f378de5ec2961529e0654e4145c5665b7ade34b035944112490c4b290cfa6644",
+      "snapshot_sha256": "f378de5ec2961529e0654e4145c5665b7ade34b035944112490c4b290cfa6644",
+      "after_sha256": "781a87c0154a6814ba7a0d436b09b11be783c0832d50a48951931f7e1d0fb618",
+      "repair_snapshots": [
+        {
+          "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md",
+          "before_sha256": "38cf0b0624f58629012dccecfb9b6c454fe1cf4525ac452df84cbca7ee44f440",
+          "snapshot_sha256": "38cf0b0624f58629012dccecfb9b6c454fe1cf4525ac452df84cbca7ee44f440",
+          "reason": "Self-review corrected actual FileViewer source owner path."
+        },
+        {
+          "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md",
+          "before_sha256": "27b698aa559a193e3cb0b5924bc016684916725e986bce723aebddd7f4febb39",
+          "snapshot_sha256": "27b698aa559a193e3cb0b5924bc016684916725e986bce723aebddd7f4febb39",
+          "reason": "Root integration observation, independently source-validated: list connected and legacy File consumers and policy-gated mount owners."
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md",
+      "before_sha256": "f935caa51479be86e7238944a8d968ad4fb164558e328198429e71c023844b5e",
+      "snapshot_sha256": "f935caa51479be86e7238944a8d968ad4fb164558e328198429e71c023844b5e",
+      "after_sha256": "a5c1b320b61188f9c86c159e94d75de395f907a458f6eef74dc2451b1097e415"
+    }
+  ],
+  "deviations": [],
+  "capture_append_changes": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before_sha256": "24bdd54cd4e98f0aca3581a4e62b1921d2c7d6c270c21b7be6805f4982a28d5e",
+      "after_sha256": "37dbcb82957f99ffc9b370490db25b8988eba3c74ff6e57bc303269dd4f9cae9",
+      "reason": "Required per-slice evidence and cross-section dependency supplement; no normative authority change."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before_sha256": "81dc03a92c2dc7d1df3c81d8e48f124e795b332bc6db241053afd6f4bf62d4ad",
+      "after_sha256": "ed668f16c1774b1cea23208a30094b2c2a3dde3acb6d499db98c026ff69db318",
+      "reason": "Required per-slice evidence and cross-section dependency supplement; no normative authority change."
+    }
+  ]
+}

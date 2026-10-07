@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair",
+  "candidateId": "sha256:29749ceb65dab37535a047f64cbd57aa1ddd6f149191c1a4f6ae6d1bf31cf6e4",
+  "artifacts": [
+    {
+      "path": "SOURCES.json",
+      "sha256": "d124abc38a76f7e63011184387c6d2c5b6e5778333c4d29c146a8bb9d07cdaff"
+    },
+    {
+      "path": "SPEC-01-STARTUP-INTEGRITY-REPAIR.md",
+      "sha256": "0d7a3176cca89b017162970b2fe8f28a5c8b902547fba48f797a2cc68060ac3c"
+    }
+  ]
+}

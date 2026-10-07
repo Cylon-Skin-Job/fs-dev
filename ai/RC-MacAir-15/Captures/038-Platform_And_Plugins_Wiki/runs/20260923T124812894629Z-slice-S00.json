@@ -1,0 +1,51 @@
+{
+  "command": "slice S00",
+  "checked_at": "2026-09-23T12:48:12Z",
+  "tool_sha256": "2e43b5dea0ce663f2d766e8f015ebdb4d3d44074cf17657a2967bb58c56bb5c5",
+  "packet_sha256": {
+    "PAGE-MAP.json": "7c464c197df867b01a6c956dec0a035b85801dce48aa348c63235f30357b05bd",
+    "SOURCES.json": "4179eca60351dcf3ceb5f1bc3406917542c06261673a262dc77076f3f39ac29b",
+    "CLAIMS.json": "27e4f714fd25b321b71ec4172b9da0b370ebf4bb6786298807eef639d3f3fb85",
+    "COVERAGE.json": "f165d06de1a95da360ef77a35906489988ae1c884e74438e8f1412a823326472"
+  },
+  "parser": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter",
+  "inputs": {
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md": null,
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md": "58165cc333b5b74108ab70dad2f26246207104fbff81eaac51800fbf6aafcbec",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md": "51a147b459c50632d2236fc01d3c0fe556a13f5cd4c14d03d578232469c98bfb",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md": "77495240714010228061df9e2133488aa8eaaefbe01f6e87b7c7f4b147e53628",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md": "1bbc11c6794ae2fbee8971716a6551ef54117b3b619c65f441e1ed161fa9cca2",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md": "37255baf982013ea6afb3728eb7a1b69f12fa2b29ecb9fed2f3fd9b1d3448ad2",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md": "50e99e6508f17819bc35b64964a64b7f2b5ddaa361535a66d093092e5e7614a6",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md": "df46717db98874b8e53cc6abbb615e87f9b156aa40cf99d7929af06a75646bdd",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md": "a0aa796aa3ae7cc41e6d6ab619feb1c55e05d11e56afb5e176c2d7b1bcf0456f",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md": "b1a17c0ab9d5316d32d9d9caa1a72c3ad0da82d8795896f563803818be78bf55",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md": "74cf6222a22bed763e08fd4f2df301447fe1dfedc067bfc352ba5a6d5a791d30"
+  },
+  "changed_paths": [],
+  "counts": {
+    "incoming_pages_checked": 22,
+    "changed_total": 0,
+    "mapped": 19,
+    "existing_snapshots": 444,
+    "pending_links": 0
+  },
+  "failures": [],
+  "warnings": [],
+  "pending": [],
+  "prose_review_hits": [],
+  "staged_generation": null,
+  "exclusions": [
+    "No product runtime/build/Alpha checks",
+    "Read-only specialist/Chat/UEB pages not recertified",
+    "Semantic content and source routes require independent review"
+  ]
+}

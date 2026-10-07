@@ -1,0 +1,33 @@
+{
+  "observer": "/root/startup_integrity_repair_orchestrator",
+  "method": "native read_thread, newest settled/runtime turn, read-only",
+  "originalOwners": [
+    {
+      "threadId": "01a1042c-09df-7473-a1e1-f458eee6b93d",
+      "host": "local",
+      "title": "Orchestrator: Chokidar retirement and\u2026",
+      "status": {
+        "type": "notLoaded"
+      },
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "lastTurnStatus": "interrupted",
+      "ownershipTransfer": false,
+      "processStopInferred": false
+    },
+    {
+      "threadId": "01a0ea32-f152-77a2-afc2-b73e8976685a",
+      "host": "local",
+      "title": "Map Fusion\u2013OpenCode chat failure states",
+      "status": {
+        "type": "notLoaded"
+      },
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "lastTurnStatus": "completed",
+      "ownershipTransfer": false,
+      "processStopInferred": false
+    }
+  ],
+  "noPersistentMessagesSent": true,
+  "noOriginalRecordsEdited": true,
+  "recordedAt": "2026-10-06T01:56:30Z"
+}

@@ -2,36 +2,17 @@
 name: Integrations And Tools
 description: Navigation map for external systems, local tools, setup-adjacent integrations, hooks, screenshots, secrets, and theme tooling.
 metadata:
-  incoming-edges:
-    - Wiki Guide
-  outgoing-edges:
-    - GitLab
-    - Secrets Manager
-    - Hooks
-    - Screenshot Capture
-    - Custom Theme CSS
   source-files: []
-  connected-skills:
-    - gitlab
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:12:31Z"
 ---
 
-Use this section for external systems, app/tool integrations, CLI/tooling references, and setup-adjacent integrations.
+Use this section for external systems, local tools and setup-adjacent integrations. Each article distinguishes implemented behavior from proposals.
 
-## Planned Children
+## Subject articles
 
-- `001-GitLab/` - GitLab integration and issue/wiki references.
-- `002-Secrets_Manager/` - local secret/token handling and manual token boundaries.
-- `003-Hooks/` - hook behavior and integration points.
-- `004-Screenshot_Capture/` - screenshot capture tooling and behavior.
-- `005-Custom_Theme_CSS/` - theme CSS customization guidance.
+- [GitLab](001-GitLab/PAGE.md) describes repository remotes, credential code and current issue-sync limits.
+- [Secrets Manager](002-Secrets_Manager/PAGE.md) describes current credential storage and lookup limits.
+- [Screenshot Capture](004-Screenshot_Capture/PAGE.md) separates app captures, macOS imports and optional CLI access.
+- [Custom Theme CSS](005-Custom_Theme_CSS/PAGE.md) explains the current picker and fixed CSS loader.
 
-## Migration Sources
-
-- [Project > GitLab](../001-Project/017-GitLab/PAGE.md)
-- [Project > Hooks](../001-Project/018-Hooks/PAGE.md)
-- [Project > Screenshot Capture](../001-Project/020-Screenshot_Capture/PAGE.md)
-- [System Tools > Secrets Manager](../002-System_Tools/002-Secrets_Manager/PAGE.md)
-- [System Tools > Custom Theme CSS](../002-System_Tools/001-Custom_Theme_CSS/PAGE.md)
-
-Keep integration docs factual. If an integration is planned or partially implemented, say that explicitly.
+Generic workspace file watching belongs to [Background Services](../002-Server_And_Runtime/006-Background_Services/PAGE.md); the old wiki-specific Hooks proposal is preserved only as a predecessor route.

@@ -1,26 +1,18 @@
 ---
-name: Office Viewer (moved)
-description: REDIRECT. Office Viewer has moved into the Fusion Home templated-workspace section. See 009-Fusion_Home/001-Office_Viewer.
+name: Office View
+description: The built-in Office document surface, with a route to retained specialist detail.
 metadata:
-  incoming-edges: []
-  outgoing-edges:
-    - Office Viewer
-  source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  source-files:
+    - fusion-studio-client/src/components/ContentArea.tsx
+    - fusion-studio-client/src/components/office/OfficeGrid.tsx
+    - fusion-studio-server/lib/views/index.js
+  last-modified: "2026-09-21T13:37:22Z"
 ---
 
-> **This page has moved.**
->
-> Office Viewer is now part of the
-> [Fusion Home](../../009-Fusion_Home/000-Fusion_Home/PAGE.md) templated
-> workspace. The current content lives at
-> [Office Viewer](../../009-Fusion_Home/001-Office_Viewer/PAGE.md). The document
-> editor deep-dive is now its own top-level article,
-> [Documents](../../009-Fusion_Home/005-Documents/PAGE.md) (with
-> [Lessons](../../009-Fusion_Home/000-Fusion_Home/001-Lessons/PAGE.md),
-> [Milkdown](../../009-Fusion_Home/005-Documents/001-Milkdown/PAGE.md), and
-> [Crepe](../../009-Fusion_Home/005-Documents/002-Crepe/PAGE.md)).
->
-> This redirect is left in place so old links do not break. It can be removed
-> once inbound links have been updated.
+**Office** is the built-in document and folder surface for a workspace's Office content root. The bundled `office-viewer` template is selected in several startup profiles but not in the five-view New Workspace profile. `ContentArea` mounts `OfficeGrid` as a React component. The grid presents files and folders, including editor and search routes; it is a view type, not a synonym for every instance label.
+
+## Current status and limits
+
+One workspace may label an Office instance **Drive**. That label does not rename the template or define a global Drive view type. Current content resolution uses the machine-scoped `ai/<machine>/Office` root for `office-viewer`; future plugin and instance customization is separate from that observed path. Office editing has its own deeper behavior and limitations; this introduction does not recertify them.
+
+Read the retained [Office Viewer specialist reference](../../009-Fusion_Home/001-Office_Viewer/PAGE.md) and [Documents](../../009-Fusion_Home/005-Documents/PAGE.md) for implementation detail. See [View Architecture](../002-View_Architecture/PAGE.md) for type, identity and content-root distinctions.

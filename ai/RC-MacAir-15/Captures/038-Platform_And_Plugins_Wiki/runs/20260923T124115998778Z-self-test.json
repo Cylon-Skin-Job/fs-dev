@@ -1,0 +1,138 @@
+{
+  "command": "self-test",
+  "checked_at": "2026-09-23T12:41:15Z",
+  "tool_sha256": "f3d540d6c4be94b9f2b6af3806828b53c27d005bd882cd99a9cc69c6e2e88d9b",
+  "packet_sha256": {
+    "PAGE-MAP.json": "7c464c197df867b01a6c956dec0a035b85801dce48aa348c63235f30357b05bd",
+    "SOURCES.json": "4179eca60351dcf3ceb5f1bc3406917542c06261673a262dc77076f3f39ac29b",
+    "CLAIMS.json": "27e4f714fd25b321b71ec4172b9da0b370ebf4bb6786298807eef639d3f3fb85",
+    "COVERAGE.json": "f165d06de1a95da360ef77a35906489988ae1c884e74438e8f1412a823326472"
+  },
+  "parser": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter",
+  "cases": [
+    {
+      "case": "good",
+      "passed": true
+    },
+    {
+      "case": "bad_yaml",
+      "passed": true
+    },
+    {
+      "case": "native_date",
+      "passed": true
+    },
+    {
+      "case": "bad_date",
+      "passed": true
+    },
+    {
+      "case": "duplicate",
+      "passed": true
+    },
+    {
+      "case": "directory",
+      "passed": true
+    },
+    {
+      "case": "declarative_json_source",
+      "passed": true
+    },
+    {
+      "case": "missing_link",
+      "passed": true
+    },
+    {
+      "case": "missing_fragment",
+      "passed": true
+    },
+    {
+      "case": "reference_link",
+      "passed": true
+    },
+    {
+      "case": "collapsed_reference_broken",
+      "passed": true
+    },
+    {
+      "case": "shortcut_reference_broken",
+      "passed": true
+    },
+    {
+      "case": "shortcut_reference_valid",
+      "passed": true
+    },
+    {
+      "case": "duplicate_heading_slug",
+      "passed": true
+    },
+    {
+      "case": "intermediate_future",
+      "passed": true
+    },
+    {
+      "case": "final_future_rejected",
+      "passed": true
+    },
+    {
+      "case": "valid_edit_chain",
+      "passed": true
+    },
+    {
+      "case": "unauthorized_edit",
+      "passed": true
+    },
+    {
+      "case": "overwritten_snapshot",
+      "passed": true
+    },
+    {
+      "case": "intermediate_predecessor_missing",
+      "passed": true
+    },
+    {
+      "case": "missing_overview_marker",
+      "passed": true
+    },
+    {
+      "case": "stale_children_block_with_valid_link",
+      "passed": true
+    },
+    {
+      "case": "stamp_body_alteration",
+      "passed": true
+    },
+    {
+      "case": "stamp_only_valid",
+      "passed": true
+    },
+    {
+      "case": "bounded_preserves_domain_metadata",
+      "passed": true
+    },
+    {
+      "case": "claimed_source_valid",
+      "passed": true
+    },
+    {
+      "case": "claimed_source_drift",
+      "passed": true
+    },
+    {
+      "case": "unexplained_external_drift",
+      "passed": true
+    },
+    {
+      "case": "attributed_external_drift",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "passed": 29,
+    "total": 29
+  },
+  "failures": [],
+  "exclusions": [
+    "Disposable fixture only; no live wiki mutation"
+  ]
+}

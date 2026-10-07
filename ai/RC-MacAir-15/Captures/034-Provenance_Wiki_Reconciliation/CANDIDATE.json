@@ -1,0 +1,43 @@
+{
+  "candidate_id": "PW01-f24d5cd427b9ca14",
+  "aggregate_sha256": "f24d5cd427b9ca14558ac488bef173316a24b5c33a0a44ecfb3a68293c123fd5",
+  "serialization": "sorted bundle-relative path, TAB, lowercase SHA-256, LF; UTF-8",
+  "artifacts": [
+    {
+      "path": "BASELINE.json",
+      "sha256": "d6e8470175d561fcc8cf7a4b320413b619418f24ed645ef3535771a724610704"
+    },
+    {
+      "path": "BASELINE.md",
+      "sha256": "30768971b95fa7856e3ca20ba36e01a581e5b7ff1577bfe10f3c5a4e3c34c71d"
+    },
+    {
+      "path": "DECISIONS.md",
+      "sha256": "ea82ab968a616281085eb10965b25273cf26b1362f4cd88e84046744fba3f39f"
+    },
+    {
+      "path": "INDEX.md",
+      "sha256": "585fb7904695864f660a6f0fdd27a7484f64a2e10ddf15af62df45015712df02"
+    },
+    {
+      "path": "ISSUES.md",
+      "sha256": "e3024513cdc7738a150c335eb6d88384463a648f794ab6c3616f0132a22da4ca"
+    },
+    {
+      "path": "PAGE-MAP.json",
+      "sha256": "6b74b67e62e62066c2dd56616029e9739c8f2123f8d10548b4a89ea8eb13c49b"
+    },
+    {
+      "path": "SLICES.md",
+      "sha256": "9cac0024dc3131629ccab341210e209562003a961cd012dea85ddbdb58e4b775"
+    },
+    {
+      "path": "SPEC.md",
+      "sha256": "93fc7f36293094fc82ce9ee133ed272fda09be964004130c28c21d5736467d7d"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "17cf6c1d803c595eaf864ad4244a9c72688cf1c9b5e90a0a7e22d47bc90a82d1"
+    }
+  ]
+}

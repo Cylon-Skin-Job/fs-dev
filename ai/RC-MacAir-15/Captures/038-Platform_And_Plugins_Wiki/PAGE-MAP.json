@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+      "slice": "S01",
+      "action": "create",
+      "purpose": "Canonical overview, vocabulary and reading routes; explicit intended/current/open labels; generated navigation."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "slice": "S01",
+      "action": "create",
+      "purpose": "Accepted D01-D12, precise supersessions, unresolved implementation/product choices with future gates."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "slice": "S01",
+      "action": "create",
+      "purpose": "Shell versus services versus renderer components versus plugins versus editable instances. Preserve canonical file renderer/type registry and Chat/System ownership."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "slice": "S02",
+      "action": "create",
+      "purpose": "Protected implementation and contribution folders versus template payload; server copy/bind/configure; workspace composition; exact schema/location and update/dependency semantics open."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "slice": "S02",
+      "action": "create",
+      "purpose": "Standard library plus extensible registered presentation contributions; configure, compose, then code; human Capture example and bounded current tab-host evidence."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "slice": "S03",
+      "action": "create",
+      "purpose": "Shell containers versus content; platform file surface in current/new tab; collection selection/filter/back state; host focus/lifecycle; preserve exact Chat authority, no new drawer catalog promised."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "slice": "S03",
+      "action": "create",
+      "purpose": "Files/app-owned stores versus System; authorized commands execute operations, provenance records facts/results and event bus distributes governed facts; failure timing links to current owning authority."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "slice": "S03",
+      "action": "create",
+      "purpose": "Hybrid target: custom region alongside standard pieces and narrow platform operations; current iframe rendering is not proof of bridge/SDK; UI SDK inside iframe deferred."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "slice": "S05",
+      "action": "create",
+      "purpose": "Bounded PP-G gap register with source-inspection limitations, current owner, target, remaining capability and decision gate; cross-reference rather than duplicate WV gaps."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Add short Platform And Plugins reading route; update only relevant generated navigation if changed."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Clarify layered presentation, plugin template copying and local harness versus manual cross-view context; link new section without replacing workspace concept."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Resolve intended CWD/local/context/manual-crossview behavior; retain remaining mechanics under WV-O06; add component-host boundary and relevant crosslinks."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Update WV-G04 intended contract and narrowed WV-O06 gate; link new PP-G register without claiming gap resolved or changing other WV gaps."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Distinguish plugin-supplied content behavior from platform-owned tab shell and canonical file surface; link new composition owner; preserve inspected registry facts."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Add approved hybrid direction and link new owner; preserve current limitations and avoid asserting new bridge exists."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Link template provisioning explanation and clarify installed dependency versus created instance only; retain existing lifecycle/status."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Record template persona/AGENTS/skills; view CWD, project-root orientation/access subject to protected areas, local harness availability and manual reads elsewhere; narrow context mechanics gap; preserve current project-root spawn fact after fresh inspection."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "slice": "S04",
+      "action": "bounded_update",
+      "purpose": "Add one short distinction/link between Files view and reusable canonical file surface; preserve current File Viewer behavior and limitations."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "slice": "S05",
+      "action": "bounded_update",
+      "purpose": "Add new section status/reading route and generated section link only; preserve all unrelated status prose and existing guidance."
+    }
+  ],
+  "rules": [
+    "No deletions, moves, renumbering or duplicate section-root PAGE.md. All other wiki pages, historical .versions, product code, templates, runtime files and design captures are read-only.",
+    "Every changed live page may adopt required metadata and timestamp; preserve unrelated metadata/body.",
+    "S05 may regenerate authorized marker blocks, repair links and stamp earlier mapped pages; material content repairs return through the owning builder and both reviews.",
+    "Outside-map material conflicts require a recorded scope amendment and affected preparation review before editing; do not bury them in a clean status."
+  ]
+}

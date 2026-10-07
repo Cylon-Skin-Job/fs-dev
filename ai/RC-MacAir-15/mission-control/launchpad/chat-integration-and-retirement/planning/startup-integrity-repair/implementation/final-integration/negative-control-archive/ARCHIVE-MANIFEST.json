@@ -1,0 +1,162 @@
+{
+  "at": "2026-10-06T08:31:23.318646+00:00",
+  "purpose": "Exact22 source-byte copies retained before marker-owned external cleanup; diagnostic controls remain distinctly labelled; no pristine counterfactual substitution",
+  "files": [
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/startup.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "bytes": 38597
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+      "bytes": 17862
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-startup.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "bytes": 1333
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-runtime.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "bytes": 4200
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "bytes": 10665
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/index.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "bytes": 19709
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "bytes": 16335
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "bytes": 10597
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "bytes": 2703
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "bytes": 15361
+    },
+    {
+      "control": "pristine",
+      "original": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/pristine/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "bytes": 32207
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/startup.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "bytes": 38597
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8",
+      "bytes": 17857
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-startup.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "bytes": 1333
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-runtime.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "bytes": 4200
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "bytes": 10665
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/index.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "bytes": 19709
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "bytes": 16335
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "bytes": 10597
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "bytes": 2703
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "bytes": 15361
+    },
+    {
+      "control": "identity-only",
+      "original": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/negative-control-archive/identity-only/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "bytes": 32207
+    }
+  ],
+  "dependencyResolutionLimit": "Archived source bytes only, not a new executed proof. Exact original executed symlink/dependency hashes are in R2/IDENTITY-CONTROL.json. Original roots remain through actual final reviewer read.",
+  "soleIdentityDeltaRecordedBy": "R2/IDENTITY-CONTROL.json"
+}

@@ -1,31 +1,13 @@
 ---
-name: PDF Viewing Within Office View
-description: PDF viewing surface built within the Office view in Fusion Home. Stub - planned; expected to present significant complexity.
+name: "PDFs in Fusion Home"
+description: "Planning placeholder for PDFs within the Fusion Home composition."
 metadata:
-  incoming-edges:
-    - Fusion Home
-  outgoing-edges:
-    - Fusion Home
-    - Artifacts
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-> **Stub.** This page is a breadcrumb. Deep content is pending a dedicated
-> build pass.
+This is a planning placeholder for a PDFs viewer surface in [Fusion Home](../000-Fusion_Home/PAGE.md), not evidence of a shipped feature or an installed view. The [Office Viewer](../001-Office_Viewer/PAGE.md) and [Documents](../005-Documents/PAGE.md) own existing Office behavior.
 
-This article covers **PDF viewing** built within the
-[Office Viewer](../001-Office_Viewer/PAGE.md) view in
-[Fusion Home](../000-Fusion_Home/PAGE.md). Because the Office view does a lot,
-PDFs are split to their own top-level article (peer to
-[Documents](../005-Documents/PAGE.md), [Sheets](../006-Sheets/PAGE.md), and
-[Artifacts](../008-Artifacts/PAGE.md)) so it can grow its own sub-articles. It
-runs on the shared SQLite layer and does not drop into new workspaces
-automatically but can be added by user action.
+PDF presentation and any conversion/editing behavior remain open. HTML exports are covered separately under [Artifacts](../008-Artifacts/PAGE.md).
 
-HTML rendering of converted/exported files is a separate concern, covered under
-[Artifacts](../008-Artifacts/PAGE.md).
-
-This surface is expected to present significant complexity. Scope and
-architecture are pending a dedicated build pass.
+Do not infer a storage schema from this placeholder. Live app content belongs in its files, application database or connected service, with System retaining platform state and provenance. Future presentation should use the [Platform And Plugins](../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) contracts; no dedicated plugin or provisioning behavior is established here.

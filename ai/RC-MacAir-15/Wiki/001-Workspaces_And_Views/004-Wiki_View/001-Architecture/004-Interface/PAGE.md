@@ -2,20 +2,13 @@
 name: Wiki Interface
 description: User-facing wiki interface model, including the three-column layout, contextual right sidebar, rendered frontmatter, and read-only browsing behavior.
 metadata:
-  incoming-edges:
-    - Wiki
-    - Wiki Architecture
-  outgoing-edges:
-    - Markdown Frontmatter Model
-    - Wiki Structure
   source-files:
     - fusion-studio-client/src/components/wiki/WikiExplorer.tsx
     - fusion-studio-client/src/components/wiki/TopicList.tsx
     - fusion-studio-client/src/components/wiki/PageViewer.tsx
     - fusion-studio-client/src/components/wiki/EdgePanel.tsx
     - fusion-studio-client/src/state/wikiStore.ts
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 The wiki interface is a three-column reader for folder-first `PAGE.md` content.
@@ -27,12 +20,12 @@ The wiki interface is a three-column reader for folder-first `PAGE.md` content.
 │ Topic List   │ PAGE.md rendered content    │ Context children │
 │              │                             │                  │
 │ Wiki Guide   │ Name                        │ Top article      │
-│ Project      │ ----                        │ Child sections   │
+│ Workspaces   │ ----                        │ Child sections   │
 │ Chat         │ Description                 │ Child articles   │
 │ Wiki         │ ----                        │                  │
 │ Browser      │ Markdown body               │                  │
 │              │ ----                        │                  │
-│              │ Metadata edge lists         │                  │
+│              │ Source file references         │                  │
 └──────────────┴─────────────────────────────┴──────────────────┘
 ```
 
@@ -52,7 +45,7 @@ The wiki interface is a three-column reader for folder-first `PAGE.md` content.
 - `name` renders as the top article title.
 - `description` renders beneath the title with a separator.
 - Markdown body renders below the description.
-- `metadata` renders at the bottom under deterministic relationship headings.
+- The footer displays known nonempty metadata lists, including `source-files`; it still supports legacy relationship fields. New authoring uses source files and a timestamp, without edges. The timestamp is not currently rendered by this footer.
 
 ## Maintenance Rule
 

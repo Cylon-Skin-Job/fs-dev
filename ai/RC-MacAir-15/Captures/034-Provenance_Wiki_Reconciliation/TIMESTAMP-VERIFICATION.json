@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "independent_byte_comparisons": 27,
+  "exact_predecessor_snapshots": 27,
+  "previous_capture_files_unchanged": 98,
+  "git_diff_check_exit": 0,
+  "aggregate": "a90ac31b7f14bb7e8decf01c32eacfab223881af4acb5db91302fca8669bfb02"
+}

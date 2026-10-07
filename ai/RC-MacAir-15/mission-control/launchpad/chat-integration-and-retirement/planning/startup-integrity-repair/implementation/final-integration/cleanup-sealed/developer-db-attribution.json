@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-06T09:19:44.984652+00:00",
+  "readOnly": true,
+  "noDatabaseConnectionYet": true,
+  "databaseFiles": [
+    {
+      "name": "fusion.db",
+      "bytes": 397090816,
+      "mtime": "2026-10-06T09:17:35.609198+00:00",
+      "sha256": "0557c87a67824b7778c70d0e5b9be6b8a747b27e3976a54fea9b8c267f2b6f6d"
+    }
+  ],
+  "developerDbOpenHandles": [
+    {
+      "pid": 77007,
+      "fields": [
+        "cnode",
+        "f3",
+        "tREG",
+        "n/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+        "f15",
+        "tREG",
+        "n/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+        "f16",
+        "tREG",
+        "n/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db"
+      ]
+    }
+  ],
+  "lsofExitCode": 0,
+  "safeWriterProcessIdentities": [
+    {
+      "pid": 77007,
+      "ppid": 77002,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "commandSha256": "57d624432c46f828c9612581bce915c19734a4fea2c1a84cae5287bfdc8d8478",
+      "isDeveloperServerCommand": true,
+      "isNode": true
+    }
+  ]
+}

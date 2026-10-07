@@ -1,0 +1,565 @@
+--- before/fusion-studio-server/lib/startup.js
++++ after/fusion-studio-server/lib/startup.js
+@@ -41,6 +41,7 @@
+ const { loadComponents, getModalDefinition } = require('./components/component-loader');
+ const views = require('./views');
+ const viewReadiness = require('./views/readiness-runtime');
++const { startWorkspacePipelineWhenReady } = require('./views/readiness-startup');
+ const { createViewReadinessCoordinator } = require('./views/readiness-coordinator');
+ const { createViewRelocationService } = require('./views/relocation-service');
+ const { createShutdownHandler } = require('./shutdown');
+@@ -666,12 +667,14 @@
+       console.log(`[Server] Default CLI: ${process.env.KIMI_PATH || 'kimi'}`);
+ 
+       try {
+-        await isolatedProvenance.defineStartupEffect('workspace-automation-pipeline', () => {
+-          _startPipeline({
++        await isolatedProvenance.defineStartupEffect('workspace-automation-pipeline', () => (
++          startWorkspacePipelineWhenReady({
+             sessions,
+-            projectRoot: getProjectRoot(),
+-          });
+-        }).start();
++            getProjectRoot,
++            getWorkspaceId: workspaceController.getActiveWorkspaceId,
++            startPipeline: _startPipeline,
++          })
++        )).start();
+       } catch (err) {
+         // Don't crash the server if pipeline init fails — log and continue
+         console.error('[Server] Pipeline init error:', err);
+--- before/fusion-studio-server/lib/views/readiness-startup.js
++++ after/fusion-studio-server/lib/views/readiness-startup.js
+@@ -18,14 +18,13 @@
+   const projectRoot = getProjectRoot();
+   const workspaceId = getWorkspaceId();
+   if (!projectRoot || !workspaceId) {
+-    startPipeline({ sessions, projectRoot, workspaceId });
+     return Object.freeze({ started: false, reason: 'no_active_workspace' });
+   }
+   const readinessContext = Object.freeze({ projectRoot, workspaceId });
+   try {
+     await viewReadiness.ensureWorkspaceViewReadiness(readinessContext);
+     await viewReadiness.withViewReadinessLease(readinessContext, async () => {
+-      startPipeline({ sessions, projectRoot, workspaceId });
++      await startPipeline({ sessions, projectRoot, workspaceId });
+     });
+     return Object.freeze({ started: true, reason: null });
+   } catch (error) {
+--- before/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js
++++ after/fusion-studio-server/test/runtime/workspace-startup-integrity.test.js
+@@ -18,9 +18,29 @@
+     // Do not accept a healthy listen/returned handler as automation evidence.
+     if (process.env.STARTUP_INTEGRITY_PREIMAGE_ROOT) {
+       const rejection = fixture.errors.find(args => args[0] === '[Server] Pipeline init error:');
+-      process.stderr.write(`Audited startup registry rejection: ${rejection?.[1]?.message}\n`);
+-    }
+-    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++      if (rejection) process.stderr.write(`Preimage startup pipeline error: ${rejection[1]?.message}\n`);
++    }
++    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++    expect(fixture.readiness.stages.map(item => item.name)).toEqual([
++      'resolveViewRoot', 'resolveOperationalViewRoot', 'script', 'components', 'actions',
++      'resolveOperationalViewRoot', 'triggers', 'cron-factory', 'cron-register', 'cron-start', 'runner',
++    ]);
++    for (const stage of fixture.readiness.stages) {
++      expect(stage.status).toMatchObject({ status: 'ready', verified: true, phase: 'journal_verified', leases: 1 });
++    }
++    const operations = fixture.readiness.events.filter(item => item.kind === 'operation-ensure');
++    expect(operations).toHaveLength(1);
++    expect(operations[0].input).toEqual(fixture.readiness.context);
++    const acquired = fixture.readiness.events.find(item => item.kind === 'acquired');
++    expect(acquired).toMatchObject({ input: fixture.readiness.context, status: { leases: 1 }, lease: {
++      verified: true, phase: 'journal_verified', projectRoot: fixture.workspaces[0].repoPath,
++      viewsRoot: fixture.workspace.viewsRoot,
++    } });
++    expect(fixture.readiness.events.indexOf(acquired)).toBeGreaterThan(
++      fixture.readiness.events.findLastIndex(item => item.kind === 'verified'),
++    );
++    expect(fixture.readiness.events.filter(item => item.kind === 'released')).toHaveLength(1);
++    expect(fixture.readiness.runtime.getViewReadinessStatus(fixture.readiness.context)).toMatchObject({ leases: 0 });
+     expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
+     expect(fixture.componentLoad).toHaveBeenCalledWith(path.join(fixture.workspaces[0].repoPath, 'ai/components'));
+     expect(fixture.components.getModalDefinition('scratch')).toMatchObject({ config: { name: 'scratch-modal' } });
+@@ -46,6 +66,129 @@
+   } finally {
+     await fixture.cleanup();
+   }
++}, 30_000);
++
++function expectNoPipeline(fixture) {
++  expect(fixture.readiness.stages).toEqual([]);
++  expect(fixture.componentLoad).not.toHaveBeenCalled();
++  expect(fixture.actionWiring).not.toHaveBeenCalled();
++  expect(fixture.heartbeatStart).not.toHaveBeenCalled();
++  expect(fixture.cronFactory).not.toHaveBeenCalled();
++  expect(fs.existsSync(fixture.workspace.ticketReceipts)).toBe(false);
++  expect(fixture.readiness.events.filter(item => item.kind === 'acquired')).toEqual([]);
++}
++
++test('actual unavailable startup refuses all consumers after genuine registered readiness conflict', async () => {
++  const fixture = await createStartupEntryFixture({
++    preimageRoot: process.env.STARTUP_INTEGRITY_PREIMAGE_ROOT, readiness: { conflict: true },
++  });
++  try {
++    await fixture.start();
++    expect(fixture.readiness.registeredStatus).toMatchObject({ status: 'unavailable', verified: false, errorCode: 'root_conflict' });
++    expect(fixture.controller.getActiveWorkspaceId()).toBe('A');
++    expect(fixture.runtimeModule.EXPECTED_STARTUP_EFFECTS).toContain('workspace-automation-pipeline');
++    expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
++    expectNoPipeline(fixture);
++    expect(fixture.readiness.events.filter(item => item.kind === 'operation-ensure')).toHaveLength(1);
++  } finally { await fixture.cleanup(); }
++}, 30_000);
++
++test('actual preparing startup waits for real migration verification before consumers and lease', async () => {
++  const fixture = await createStartupEntryFixture({ readiness: { preparing: true } });
++  let starting;
++  try {
++    starting = fixture.start();
++    await fixture.readiness.preparationEntered;
++    await fixture.readiness.operationEntered;
++    expect(fixture.readiness.runtime.getViewReadinessStatus(fixture.readiness.context)).toMatchObject({ status: 'preparing', leases: 0 });
++    expectNoPipeline(fixture);
++    expect(fixture.readiness.events.filter(item => item.kind === 'operation-ensure')).toHaveLength(1);
++    fixture.readiness.releasePreparation();
++    await starting;
++    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++    for (const stage of fixture.readiness.stages) expect(stage.status).toMatchObject({ verified: true, leases: 1 });
++    expect(fixture.readiness.runtime.getViewReadinessStatus(fixture.readiness.context)).toMatchObject({ status: 'ready', leases: 0 });
++  } finally {
++    fixture.readiness.releasePreparation();
++    await starting?.catch(() => {});
++    await fixture.cleanup();
++  }
++}, 30_000);
++
++test('actual startup retirement during scratch script waits for lease and denies late work', async () => {
++  const fixture = await createStartupEntryFixture({ readiness: { retireDuringScript: true } });
++  try {
++    await fixture.start();
++    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++    expect(fixture.heartbeatStart).toHaveBeenCalledTimes(1);
++    for (const stage of fixture.readiness.stages) {
++      expect(stage.status.leases).toBe(1);
++      expect(stage.retirementCompleted).toBe(false);
++    }
++    expect(fixture.readiness.leaseDenial).toBe('view_registry_unavailable');
++    await expect(fixture.readiness.lateAdmission).resolves.toEqual({ code: 'view_registry_unavailable' });
++    await fixture.readiness.retirement;
++    expect(fixture.readiness.retirementCompleted).toBe(true);
++    expect(fixture.readiness.events.find(item => item.kind === 'retirement-effect').status.leases).toBe(0);
++    expect(fixture.readiness.events.filter(item => item.kind === 'released')).toHaveLength(1);
++  } finally { await fixture.cleanup(); }
++}, 30_000);
++
++test.each(['retiring', 'retireBeforeAcquire'])('actual startup refuses %s readiness with zero consumer work', async mode => {
++  const fixture = await createStartupEntryFixture({ readiness: { [mode]: true, holdRetirement: true } });
++  try {
++    await fixture.start();
++    expectNoPipeline(fixture);
++    expect(fixture.readiness.retirementCompleted).toBe(false);
++    expect(fixture.readiness.runtime.getViewReadinessStatus(fixture.readiness.context)).toMatchObject({ verified: false, leases: 0 });
++    expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
++  } finally { await fixture.cleanup(); }
++}, 30_000);
++
++test('actual startup relocates capsules and loads only the canonical-root script under lease', async () => {
++  const fixture = await createStartupEntryFixture({ readiness: { relocate: true } });
++  try {
++    expect(fs.existsSync(fixture.viewSetup.oldRoot)).toBe(true);
++    await fixture.start();
++    expect(fs.existsSync(fixture.viewSetup.oldRoot)).toBe(false);
++    const scripts = fixture.readiness.stages.filter(item => item.name === 'script');
++    expect(scripts).toHaveLength(1);
++    expect(scripts[0].details.scriptRoot).toBe(path.join(fixture.workspace.viewsRoot, '001-issues-viewer/scripts'));
++    expect(scripts[0].status).toMatchObject({ verified: true, leases: 1 });
++    const verified = fixture.readiness.events.filter(item => item.kind === 'verified');
++    expect(verified.at(-1).result).toMatchObject({
++      workspaceId: 'A', machineIdentity: 'Test-Provenance', projectRoot: fixture.workspaces[0].repoPath,
++      destinationRoot: fixture.workspace.viewsRoot,
++    });
++    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++    expect(fixture.heartbeatStart).toHaveBeenCalledTimes(1);
++  } finally { await fixture.cleanup(); }
++}, 30_000);
++
++test('actual startup releases lease and uses existing catch after downstream initialization failure', async () => {
++  const fixture = await createStartupEntryFixture({ readiness: { failPipeline: true } });
++  try {
++    await fixture.start();
++    expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:'))
++      .toEqual([['[Server] Pipeline init error:', expect.objectContaining({ message: 'scratch downstream initialization failure' })]]);
++    expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
++    expect(fixture.actionWiring).not.toHaveBeenCalled();
++    expect(fixture.readiness.stages.at(-1)).toMatchObject({ name: 'components', status: { leases: 1 } });
++    expect(fixture.readiness.events.filter(item => item.kind === 'released')).toHaveLength(1);
++    expect(fixture.readiness.runtime.getViewReadinessStatus(fixture.readiness.context)).toMatchObject({ leases: 0 });
++  } finally { await fixture.cleanup(); }
++}, 30_000);
++
++test.each([
++  { missingRoot: true }, { missingId: true }, { missingRoot: true, missingId: true },
++])('actual startup skips all view work when workspace identity is incomplete: %j', async readiness => {
++  const fixture = await createStartupEntryFixture({ readiness });
++  try {
++    await fixture.start();
++    expectNoPipeline(fixture);
++    expect(fixture.readiness.events.filter(item => item.kind === 'operation-ensure')).toEqual([]);
++    expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
++  } finally { await fixture.cleanup(); }
+ }, 30_000);
+ 
+ test('failed actual isolated startup restores guards, timers, listeners and owned database', async () => {
+--- before/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js
++++ after/fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js
+@@ -7,6 +7,7 @@
+ const { randomUUID } = require('crypto');
+ const { createStartupWorkspace } = require('./startup-workspace');
+ const { observeStartupResources } = require('./startup-failure-resources');
++const { observeStartupReadiness, configureStartupViews } = require('./startup-readiness-observer');
+ 
+ const SERVER_ROOT = path.resolve(__dirname, '../../..');
+ const MARKER = '.fusion-provenance-test-owned';
+@@ -63,7 +64,7 @@
+   return path.join(shadowLib, 'startup.js');
+ }
+ 
+-async function createStartupEntryFixture({ isolated = false, preimageRoot, failAfterDbInit = false } = {}) {
++async function createStartupEntryFixture({ isolated = false, preimageRoot, failAfterDbInit = false, readiness = {} } = {}) {
+   jest.resetModules();
+   const nonce = randomUUID();
+   const root = ownedDirectory(fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'fusion-startup-canary-')), nonce);
+@@ -73,6 +74,7 @@
+   }));
+   const workspace = createStartupWorkspace(workspaces[0].repoPath, MACHINE);
+   createStartupWorkspace(workspaces[1].repoPath, MACHINE);
++  const viewSetup = configureStartupViews(workspace, MACHINE, readiness);
+   const port = await reservePort();
+   const previousEnv = { ...process.env };
+   Object.assign(process.env, {
+@@ -150,19 +152,36 @@
+   }));
+   const resources = observeStartupResources(SERVER_ROOT);
+   const components = require(path.join(SERVER_ROOT, 'lib/components/component-loader'));
++  const originalComponentLoad = components.loadComponents;
+   const componentLoad = jest.spyOn(components, 'loadComponents');
+   const actions = require(path.join(SERVER_ROOT, 'lib/watcher/actions'));
++  const originalActionWiring = actions.createActionHandlers;
+   const actionWiring = jest.spyOn(actions, 'createActionHandlers');
+   const runner = require(path.join(SERVER_ROOT, 'lib/runner'));
++  const originalHeartbeatStart = runner.checkHeartbeats;
+   const heartbeatStart = jest.spyOn(runner, 'checkHeartbeats');
++  const readinessObserver = observeStartupReadiness({
++    serverRoot: SERVER_ROOT, workspaces, machine: MACHINE, options: readiness,
++    consumers: { components, actions, runner, originals: {
++      loadComponents: originalComponentLoad, createActionHandlers: originalActionWiring,
++      checkHeartbeats: originalHeartbeatStart,
++    } },
++  });
+   const cronModule = require(path.join(SERVER_ROOT, 'lib/triggers/cron-scheduler'));
+   const originalCronFactory = cronModule.createCronScheduler;
+   const cronIntervals = [];
+   const cronSchedulers = [];
+   const cronFactory = jest.spyOn(cronModule, 'createCronScheduler').mockImplementation((...args) => {
++    readinessObserver.observeStage('cron-factory');
+     const scheduler = originalCronFactory(...args);
+     const originalStart = scheduler.start;
++    const originalRegister = scheduler.register;
++    scheduler.register = (...registerArgs) => {
++      readinessObserver.observeStage('cron-register');
++      return originalRegister(...registerArgs);
++    };
+     scheduler.start = () => {
++      readinessObserver.observeStage('cron-start');
+       const before = intervals.length;
+       originalStart();
+       cronIntervals.push(...intervals.slice(before));
+@@ -178,11 +197,12 @@
+     root, nonce, port, appData, workspaces, workspace, messages, errors, intervals,
+     components, componentLoad, actionWiring, heartbeatStart, runtimeModule,
+     cronFactory, cronIntervals, cronSchedulers,
++    readiness: readinessObserver, viewSetup,
+     db: actualDb, controller, exitCodes,
+     async start() {
+       return startup.start({
+         server, app: require('express')(), sessions,
+-        getProjectRoot: () => controller.getActiveWorkspaceSync()?.repoPath || null,
++        getProjectRoot: () => readiness.missingRoot ? null : controller.getActiveWorkspaceSync()?.repoPath || null,
+         productSessionRegistry: {
+           getAllClients: () => [], getClientByConnectionId: () => null, getSessionForClient: () => null,
+         },
+@@ -192,6 +212,7 @@
+     },
+     async cleanup() {
+       try {
++        await readinessObserver.finish();
+         if (shutdown) await shutdown('fixture-cleanup');
+         if (!shutdown || exitCodes.at(-1) !== 0) {
+           // Startup audit failure occurs before shutdown publication. Explicitly
+@@ -217,6 +238,7 @@
+         else global.__holdRegistry = priorHold;
+         for (const spy of [intervalSpy, timeoutSpy, errorSpy, logSpy, warnSpy, componentLoad, actionWiring, heartbeatStart, cronFactory]) spy.mockRestore();
+         resources.restore();
++        readinessObserver.restore();
+         for (const key of Object.keys(process.env)) if (!(key in previousEnv)) delete process.env[key];
+         Object.assign(process.env, previousEnv);
+         for (const entry of [...EXTERNAL_STUBS, 'lib/db', 'lib/shutdown']) jest.dontMock(path.join(SERVER_ROOT, entry));
+@@ -231,6 +253,16 @@
+             && process.listeners(name).every(listener => before.includes(listener))
+           )),
+           exitCodes,
++          readiness: {
++            context: readinessObserver.context,
++            registeredStatus: readinessObserver.registeredStatus,
++            operationRequests: readinessObserver.events.filter(item => item.kind === 'operation-ensure').length,
++            acquired: readinessObserver.events.filter(item => item.kind === 'acquired').length,
++            released: readinessObserver.events.filter(item => item.kind === 'released').length,
++            stages: readinessObserver.stages.map(({ name, status, retirementCompleted, details }) => ({
++              name, status, retirementCompleted, ...details,
++            })),
++          },
+           // Fixed fixture diagnostics only; the pipeline assertion checks the
+           // original error object directly before any cleanup.
+           cleanupErrors: errors.filter(args => String(args[0]).startsWith('[Shutdown]'))
+--- before/fusion-studio-server/test/runtime/fixtures/startup-workspace.js
++++ after/fusion-studio-server/test/runtime/fixtures/startup-workspace.js
+@@ -22,6 +22,7 @@
+         "const fs = require('fs');",
+         "const path = require('path');",
+         "const output = path.join(__dirname, '../../../../../../ticket-receipts.jsonl');",
++        'global.__startupScratchScript?.(__dirname);',
+         "fs.appendFileSync(output, JSON.stringify({ kind: 'script-loaded' }) + '\\n');",
+         'module.exports = function createTicket(ticket) {',
+         "  fs.appendFileSync(output, JSON.stringify({ kind: 'ticket', ...ticket }) + '\\n');",
+--- before/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js
++++ after/fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js
+@@ -0,0 +1,178 @@
++'use strict';
++
++const fs = require('fs');
++const path = require('path');
++
++function deferred() {
++  let resolve;
++  const promise = new Promise(done => { resolve = done; });
++  return { promise, resolve };
++}
++
++// Observe real readiness and consumer owners. Gates delay real migration or
++// retirement; no fixture manufactures a verified result or an admitted lease.
++function observeStartupReadiness({ serverRoot, workspaces, machine, options, consumers }) {
++  const runtime = require(path.join(serverRoot, 'lib/views/readiness-runtime'));
++  const context = { projectRoot: workspaces[0].repoPath, workspaceId: workspaces[0].id };
++  const events = [];
++  const stages = [];
++  const spies = [];
++  const preparationEntered = deferred();
++  const operationEntered = deferred();
++  const preparationGate = deferred();
++  const retirementGate = deferred();
++  const previousScriptObserver = global.__startupScratchScript;
++  let owner;
++  let registeredStatus;
++  let preparation;
++  let retirement;
++  let retirementCompleted = false;
++  let lateAdmission;
++  let leaseDenial;
++
++  const install = runtime.installViewReadinessOwner;
++  spies.push(jest.spyOn(runtime, 'installViewReadinessOwner').mockImplementation(nextOwner => {
++    owner = nextOwner;
++    return install({
++      ...nextOwner,
++      async ensureReady(input) {
++        events.push({ kind: 'ensure', input: { ...input } });
++        const result = await nextOwner.ensureReady(input);
++        events.push({ kind: 'verified', input: { ...input }, result });
++        return result;
++      },
++      acquireLease(input) {
++        events.push({ kind: 'acquire', input: { ...input } });
++        const lease = nextOwner.acquireLease(input);
++        events.push({ kind: 'acquired', input: { ...input }, status: nextOwner.getStatus(input), lease });
++        return {
++          ...lease,
++          release() {
++            lease.release();
++            events.push({ kind: 'released', status: nextOwner.getStatus(input) });
++          },
++        };
++      },
++    });
++  }));
++
++  function beginRetirement() {
++    retirement = runtime.retireWorkspaceViewReadiness(context, async () => {
++      events.push({ kind: 'retirement-effect', status: owner.getStatus(context) });
++      if (options.holdRetirement) await retirementGate.promise;
++      retirementCompleted = true;
++      return true;
++    });
++    lateAdmission = runtime.ensureWorkspaceViewReadiness(context).then(
++      () => ({ unexpectedlyAdmitted: true }), error => ({ code: error.code }),
++    );
++    try { runtime.acquireViewReadinessLease(context); }
++    catch (error) { leaseDenial = error.code; }
++  }
++
++  const ensureOperation = runtime.ensureWorkspaceViewReadiness;
++  spies.push(jest.spyOn(runtime, 'ensureWorkspaceViewReadiness').mockImplementation(async input => {
++    events.push({ kind: 'operation-ensure', input: { ...input } });
++    operationEntered.resolve();
++    const result = await ensureOperation(input);
++    if (options.retireBeforeAcquire) beginRetirement();
++    return result;
++  }));
++
++  function observeStage(name, details = {}) {
++    stages.push({ name, details, status: runtime.getViewReadinessStatus(context), retirementCompleted });
++    if (name === 'script' && options.retireDuringScript) beginRetirement();
++  }
++  global.__startupScratchScript = scriptRoot => observeStage('script', { scriptRoot });
++  const views = require(path.join(serverRoot, 'lib/views'));
++  for (const name of ['resolveViewRoot', 'resolveOperationalViewRoot']) {
++    const original = views[name];
++    spies.push(jest.spyOn(views, name).mockImplementation((...args) => {
++      observeStage(name, { projectRoot: args[0], viewId: args[1] });
++      return original(...args);
++    }));
++  }
++  for (const [module, name, stage] of [
++    [consumers.components, 'loadComponents', 'components'],
++    [consumers.actions, 'createActionHandlers', 'actions'],
++    [consumers.runner, 'checkHeartbeats', 'runner'],
++    [require(path.join(serverRoot, 'lib/triggers/trigger-loader')), 'loadTriggers', 'triggers'],
++  ]) {
++    // Existing fixture spies retain the original implementation in consumers.
++    const call = consumers.originals?.[name] || module[name];
++    const spy = jest.isMockFunction(module[name]) ? module[name] : jest.spyOn(module, name);
++    spy.mockImplementation((...args) => {
++      observeStage(stage, { projectRoot: stage === 'actions' ? args[0].projectRoot : args[0] });
++      if (stage === 'components' && options.failPipeline) throw new Error('scratch downstream initialization failure');
++      return call(...args);
++    });
++    if (!consumers.originals?.[name]) spies.push(spy);
++  }
++
++  const controller = require(path.join(serverRoot, 'lib/workspace/workspace-controller'));
++  const originalStart = controller.start;
++  spies.push(jest.spyOn(controller, 'start').mockImplementation(async (...args) => {
++    const result = await originalStart(...args);
++    registeredStatus = runtime.getViewReadinessStatus(context);
++    events.push({ kind: 'registered-pass', status: registeredStatus });
++    // View discovery during controller initialization is not pipeline work.
++    stages.length = 0;
++    if (options.missingId) {
++      spies.push(jest.spyOn(controller, 'getActiveWorkspaceId').mockReturnValue(null));
++    }
++    if (options.preparing) {
++      const { createViewReadinessCoordinator } = require(path.join(serverRoot, 'lib/views/readiness-coordinator'));
++      const { createViewRelocationService } = require(path.join(serverRoot, 'lib/views/relocation-service'));
++      const migration = createViewRelocationService({ db: require(path.join(serverRoot, 'lib/db')).getDb() });
++      runtime.installViewReadinessOwner(createViewReadinessCoordinator({
++        machineIdentity: machine,
++        migrationService: {
++          async ensureReady(input) {
++            preparationEntered.resolve();
++            await preparationGate.promise;
++            return migration.ensureReady(input);
++          },
++        },
++      }));
++      preparation = owner.ensureReady(context);
++      // Attach a handler immediately; cleanup still awaits the real operation.
++      preparation.catch(() => {});
++    }
++    if (options.retiring) beginRetirement();
++    return result;
++  }));
++
++  return {
++    runtime, context, events, stages, observeStage,
++    get registeredStatus() { return registeredStatus; },
++    get retirementCompleted() { return retirementCompleted; },
++    get retirement() { return retirement; },
++    get lateAdmission() { return lateAdmission; },
++    get leaseDenial() { return leaseDenial; },
++    preparationEntered: preparationEntered.promise,
++    operationEntered: operationEntered.promise,
++    releasePreparation: preparationGate.resolve,
++    releaseRetirement: retirementGate.resolve,
++    async finish() {
++      preparationGate.resolve();
++      retirementGate.resolve();
++      await preparation?.catch(() => {});
++      await retirement;
++      await lateAdmission;
++    },
++    restore() {
++      for (const spy of spies.reverse()) spy.mockRestore();
++      if (previousScriptObserver === undefined) delete global.__startupScratchScript;
++      else global.__startupScratchScript = previousScriptObserver;
++    },
++  };
++}
++
++function configureStartupViews(workspace, machine, options) {
++  const oldRoot = path.join(path.dirname(path.dirname(workspace.viewsRoot)), 'Views');
++  if (options.conflict) fs.mkdirSync(oldRoot, { recursive: true });
++  if (options.relocate) fs.renameSync(workspace.viewsRoot, oldRoot);
++  return { oldRoot, machine };
++}
++
++module.exports = { observeStartupReadiness, configureStartupViews };
+--- before/fusion-studio-server/test/views/readiness-startup.test.js
++++ after/fusion-studio-server/test/views/readiness-startup.test.js
+@@ -0,0 +1,47 @@
++'use strict';
++
++const runtime = require('../../lib/views/readiness-runtime');
++const { createViewReadinessCoordinator } = require('../../lib/views/readiness-coordinator');
++const { startWorkspacePipelineWhenReady } = require('../../lib/views/readiness-startup');
++const { installHistoricalReadinessFixture } = require('./historical-readiness-fixture');
++const { createFixture, requestFor, serviceFor, writeCapsule } = require('./view-relocation-fixtures');
++
++test.each([false, true])('startup wrapper awaits asynchronous initialization and releases on rejection=%s', async reject => {
++  const fixture = await createFixture();
++  let finish;
++  let entered;
++  const pending = new Promise(resolve => { finish = resolve; });
++  const started = new Promise(resolve => { entered = resolve; });
++  let starting;
++  try {
++    writeCapsule(fixture.oldRoot);
++    const owner = createViewReadinessCoordinator({
++      machineIdentity: fixture.machineIdentity, migrationService: serviceFor(fixture),
++    });
++    runtime.installViewReadinessOwner(owner);
++    let settled = false;
++    starting = startWorkspacePipelineWhenReady({
++      sessions: new Map(), getProjectRoot: () => fixture.projectRoot,
++      getWorkspaceId: () => fixture.workspaceId,
++      async startPipeline() {
++        entered();
++        await pending;
++        if (reject) throw new Error('scratch asynchronous initialization failure');
++      },
++    });
++    starting.then(() => { settled = true; }, () => { settled = true; });
++    await started;
++    expect(owner.getStatus(requestFor(fixture))).toMatchObject({ verified: true, leases: 1 });
++    await Promise.resolve();
++    expect(settled).toBe(false);
++    finish();
++    if (reject) await expect(starting).rejects.toThrow('scratch asynchronous initialization failure');
++    else await expect(starting).resolves.toEqual({ started: true, reason: null });
++    expect(owner.getStatus(requestFor(fixture))).toMatchObject({ verified: true, leases: 0 });
++  } finally {
++    finish();
++    await starting?.catch(() => {});
++    installHistoricalReadinessFixture();
++    await fixture.cleanup();
++  }
++});

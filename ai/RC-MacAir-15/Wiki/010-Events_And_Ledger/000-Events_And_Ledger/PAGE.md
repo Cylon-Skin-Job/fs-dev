@@ -1,61 +1,46 @@
 ---
 name: Events And Ledger
-description: Durable map for Fusion Studio events, Universal Event Bus, ledger provenance, resource mutations, file versioning, and future system-improvement loops.
+description: Read the System boundary, inspected provenance behavior, approved direction, and open choices before designing event or storage changes.
 metadata:
-  incoming-edges:
-    - Wiki Guidance
-  outgoing-edges:
-    - Events And Ledger Vision
-    - Events And Ledger Decisions
-    - Events Universal Event Bus
-    - Events Taxonomy
-    - Events Provenance Model
-    - UI Action Provenance Module
-    - Events Ledger Schema
-    - Events Resource Events And Render Sync
-    - Events File Versioning
-    - Events Correlation And Causality
-    - Events Change Storm Control
-    - Events Assistant Query And Review Loops
-    - Events And Ledger Structure
-    - Chat Harness And Event Flow
-    - Universal Event Bus Standards
-    - Resource Event Sync Controller
-    - Universal Ledger File Versioning and Provenance
   source-files:
-    - fusion-studio-server/lib/event-bus.js
-    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
-    - fusion-studio-server/lib/watch/workspace-watcher.js
-    - fusion-studio-server/lib/watch/core.js
-    - fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/db.js
+    - fusion-studio-server/lib/subscriptions/admission.js
+    - fusion-studio-server/lib/subscriptions/controller.js
+    - fusion-studio-server/lib/file-mutations/save-controller.js
+    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+    - fusion-studio-server/lib/agent-provenance/resource-observer.js
+    - fusion-studio-server/lib/ledger/event-ledger.js
+  last-modified: "2026-10-06T22:14:26Z"
 ---
 
-Start here before changing event emission, event subscription, ledger storage,
-file/resource mutation tracking, provenance, or any feature that turns system
-activity into durable knowledge.
+Status: reconciled on 2026-09-19 across the 24 Events And Ledger articles and the bounded System/provenance subjects in three supporting articles. The inspected development checkout is `/Users/rccurtrightjr./projects/fs-dev`, at HEAD `88637d11c65be53d4f2ad0f049f64a07fa3db1de`, with dirty working files. Claims follow the inspected working bytes rather than HEAD alone; unrelated concurrent changes were preserved. This is source and documentation inspection, not a product test, runtime pass, whole-app storage audit or whole-wiki certification. Installed Alpha is a separate, unverified baseline. Generated navigation below is a topic map, not proof that every described subsystem exists.
 
-Events And Ledger is the system memory layer for Fusion Studio. It connects
-runtime facts from the Universal Event Bus, chat turns, tool calls, UI actions,
-triggers, scheduler runs, resource mutations, and future file versions into a
-queryable history. The short-term purpose is reliable resource/render sync. The
-long-term purpose is a knowledge graph of system behavior that can support
-forensic debugging, restore, optimization suggestions, and recursive
-self-improvement.
+Events And Ledger describes Fusion Studio's system memory: operational facts, provenance and bounded recovery records. Chat is one producer and consumer; workspace files, tools, render freshness and future integrations also need honest history. Recording a fact does not by itself prove a cause, authorize a plugin, or provide a restore operation.
 
-This section is broader than chat. Chat remains one producer and consumer of
-events, but the ledger must also understand workspace resources, views, files,
-folders, render invalidation, automation, background workers, and external
-changes observed through the filesystem.
+## Start with ownership and evidence
 
-Orient with [Vision](001-Vision/PAGE.md) and [Decisions](002-Decisions/PAGE.md) before designing event names, metadata fields, provenance rules, resource sync behavior, or ledger subscribers.
+Read the [System database boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) first, then [Decisions](002-Decisions/PAGE.md) and [Vision](001-Vision/PAGE.md). `fusion.db` is System: mutable Fusion controls and durable history. Connected applications remain authoritative for their live content; workspace content can use files or a separate workspace database. Historical snapshots do not become a second editable application store.
+
+When preparing a feature, apply the settled boundary before selecting a table, event or transport. Read current behavior separately from approved target direction and unapproved proposals. Recheck the relevant production caller, owner and consumer in source at build time. A known implementation gap is work to plan, not a reason to redefine the target or re-ask a settled question. Ask the owner only when a material product choice is missing or contradictory; source questions should be answered by inspection.
+
+## Current implementation, source inspected
+
+- `lib/subscriptions/admission.js` and `controller.js` provide trusted built-in governed admission on the existing event bus for `file.command_accepted@1`, `resource.mutated@1`, `agent.tool_completed@1` and `resource.state_observed@1`. Legacy `emit/on` paths still coexist. Admission does not guarantee delivery or durable projection.
+- `lib/file-mutations/save-controller.js` reserves a mediated text save and prepares its exact eligible preimage before filesystem replacement. Required prewrite recovery storage can reject the save; optional reported context can degrade. Postwrite fact/projection failures have recovery paths and must not be confused with prewrite failure.
+- `lib/agent-provenance/resource-observer.js` observes bounded tool-associated resources after activity, with sparse checkpoints. An observed state is not an earlier preimage or proof that the tool changed the file. Safe observation requires the supported native observer; unavailable support is an explicit failure.
+- `lib/file-mutations/reported-ui-context.js` preserves optional reported save context. The general `ui.action` subsystem, universal file-version graph, broad audit/review UI and general restore remain future work, not consequences of the save carrier.
+
+Paths above are under `fusion-studio-server/`. The [Server And Runtime hub](../../002-Server_And_Runtime/PAGE.md#current-calendar-storage-gap) traces the known calendar content-storage gap and existing deletion limitations. These bounded observations are not an app-wide storage audit. Existing test assertions and historical reports are evidence of intent or past results, not fresh passes.
+
+## Approved direction and open work
+
+Preserve durable history by default, keep mutable control records mutable, use defined interfaces and approved capabilities, and separate observation from causation. Resource freshness should preserve the user's working context. Broader automation, causal graphs, audit loops, storm compaction, retention and restore need their own precise contracts before implementation. See [Decisions](002-Decisions/PAGE.md#open-product-choices) for the choices and when they matter.
 
 <!-- section-toc:start -->
 ## Guidance and Preferences
 
-- [Vision](001-Vision/PAGE.md) - Product and developer goals for event provenance, ledger history, file versioning, render/resource sync, and future assistant-led system analysis.
-- [Decisions](002-Decisions/PAGE.md) - Durable decisions for Fusion Studio events, Universal Event Bus usage, resource/render sync, ledger provenance, and future file versioning.
+- [Vision](001-Vision/PAGE.md) - Product direction for explainable system history, bounded recovery, and future provenance analysis.
+- [Decisions](002-Decisions/PAGE.md) - Settled System ownership and bounded provenance contracts, with current gaps and future product choices separated.
 
 ## Technical Articles in this Wiki Section
 
@@ -63,31 +48,17 @@ Orient with [Vision](001-Vision/PAGE.md) and [Decisions](002-Decisions/PAGE.md) 
 - [Event Taxonomy](../002-Event_Taxonomy/PAGE.md) - Categories for UI actions, chat lifecycle, tool calls, harness events, triggers, scheduler runs, resource mutations, render events, and external observations.
 - [Provenance Model](../003-Provenance_Model/PAGE.md) - How event metadata records actor, observer, confidence, causal IDs, UI context, tool call IDs, trigger run IDs, script run IDs, and external changes.
 - [Ledger Schema](../004-Ledger_Schema/PAGE.md) - SQLite event table concerns for payload storage, indexes, retention, correlation IDs, and graph-style relationships between events.
-- [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) - How file and folder mutations flow through UEB into cache invalidation and React/Zustand state without private per-view listeners.
-- [File Versioning](../006-File_Versioning/PAGE.md) - How resource mutation events will attach to before and after snapshots, diffs, restore, and file history.
-- [Correlation And Causality](../007-Correlation_And_Causality/PAGE.md) - How the system links watcher observations to UI actions, tool calls, trigger runs, scheduler scripts, and nearby file versions.
-- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - How high-frequency file changes are compacted or summarized so the ledger remains useful.
+- [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) - Trace mediated text saves through governed projections to the two mounted File Viewer consumers; distinguish reconnect and dirty-buffer limits.
+- [File Versioning](../006-File_Versioning/PAGE.md) - Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
+- [Correlation And Causality](../007-Correlation_And_Causality/PAGE.md) - Interpret durable operation links, reported UI context and observed resource history without turning temporal association into causal proof.
+- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - Legacy bus and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
 - [Assistant Query And Review Loops](../009-Assistant_Query_And_Review_Loops/PAGE.md) - How future workers can inspect conversations, tool calls, file versions, and failures to surface concrete improvements.
-- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, watcher, resource sync, metadata collectors, and future versioning work.
-- [UI Action Provenance Module](../011-UI_Action_Provenance_Module/PAGE.md) - Central client module contract for capturing UI-origin command context, normalized resources, and handoff to server-owned UI action provenance.
+- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, resource sync, metadata collectors, and future versioning work.
+- [UI Action Provenance Module](../011-UI_Action_Provenance_Module/PAGE.md) - Implemented save-context carrier and future shared UI-action design, including Wiki and File adapter boundaries.
 <!-- section-toc:end -->
 
-## Related Existing Pages
+## Related guidance
 
-- [Provenance Schema Cross-Article Findings](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) - Active correction and unresolved-issue log. Together with owner direction in chat on 2026-07-15, it is the authority for the current schema-alignment corrections; decision-tagged findings remain open.
 - [Chat Harness And Event Flow](../../007-Chat_System/002-Harness_And_Event_Flow/PAGE.md)
-- [Chat Universal Event Bus](../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md)
-- [Canonical Events](../../007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md)
 - [Universal Event Bus Standards](../../005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md)
 - [Persistence And Metadata Standards](../../005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md)
-- [Provenance Spec Set Map](../../../Captures/008-Provenance-Temp/00-provenance-spec-set-map.md)
-- [Provenance Implementation Master Plan](../../../Captures/008-Provenance-Temp/01-provenance-implementation-master-plan.md)
-- [Resource Event Sync Controller Spec](../../../Captures/008-Provenance-Temp/32-resource-event-sync-controller.md)
-- [Universal Ledger File Versioning Spec](../../../Captures/008-Provenance-Temp/33-universal-ledger-file-versioning.md)
-- [UI Action Provenance Module Spec](../../../Captures/008-Provenance-Temp/34-ui-action-provenance-module.md)
-- [Universal Ledger Storage, Edges, and Indexes Spec](../../../Captures/008-Provenance-Temp/35-universal-ledger-storage-edges-indexes.md)
-- [Harness, Tool, and Native Reference Provenance Spec](../../../Captures/008-Provenance-Temp/36-harness-tool-native-ref-provenance.md)
-- [Automation, Trigger, Scheduler, Script, and Agent Provenance Spec](../../../Captures/008-Provenance-Temp/37-automation-trigger-scheduler-provenance.md)
-- [Audit Query and Review Provenance Loops Spec](../../../Captures/008-Provenance-Temp/38-audit-query-review-provenance-loops.md)
-- [Change Storm Control and Compaction Spec](../../../Captures/008-Provenance-Temp/39-change-storm-control-compaction.md)
-- [Provenance Schema Registry and Event Validation Spec](../../../Captures/008-Provenance-Temp/40-provenance-schema-registry-validation.md)

@@ -1,0 +1,113 @@
+{
+  "at_baseline": "2026-09-21T11:54:21Z",
+  "failures": [
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Setup-Wizard"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Screenshot-Capture"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Secrets"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link GitLab"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Workspace-Agent-Model"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Workspaces"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Background-Agents"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Progressive-Disclosure"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Chat_System"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Wiki-System"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Wiki-Interface"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Ticket-Routing"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md: missing link Run-Auditing"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/PAGE.md: missing link Secrets"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md: missing link Wiki-System"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md: missing link Workspace-Index"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md: missing link Ticket-Routing"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md: missing link Wiki-System"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md: missing link Workspace-Agent-Model"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md: missing link Ticket-Routing"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/PAGE.md: missing link Setup-Wizard"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md: missing link Screenshot-Capture"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md: missing link GitLab"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md: missing link Secrets"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md: missing link Background-Agents"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md: missing link Secrets"
+    ],
+    [
+      "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+      "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/PAGE.md: missing link ../enforcement/themes-and-state"
+    ]
+  ]
+}

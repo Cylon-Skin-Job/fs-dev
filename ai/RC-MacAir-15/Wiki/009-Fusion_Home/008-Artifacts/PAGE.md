@@ -1,30 +1,13 @@
 ---
-name: HTML Artifact Viewing Within Office View
-description: HTML artifact viewing surface built within the Office view in Fusion Home - rendering/viewing of HTML files and exported/converted artifacts. Stub - planned.
+name: "HTML Artifacts in Fusion Home"
+description: "Planning placeholder for HTML Artifacts within the Fusion Home composition."
 metadata:
-  incoming-edges:
-    - Fusion Home
-  outgoing-edges:
-    - Fusion Home
-    - PDF Viewing Within Office View
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-> **Stub.** This page is a breadcrumb. Deep content is pending a dedicated
-> build pass.
+This is a planning placeholder for a HTML Artifacts viewer surface in [Fusion Home](../000-Fusion_Home/PAGE.md), not evidence of a shipped feature or an installed view. The [Office Viewer](../001-Office_Viewer/PAGE.md) and [Documents](../005-Documents/PAGE.md) own existing Office behavior.
 
-This article covers **HTML artifact viewing** built within the
-[Office Viewer](../001-Office_Viewer/PAGE.md) view in
-[Fusion Home](../000-Fusion_Home/PAGE.md) — rendering and viewing of HTML files
-and exported/converted artifacts. Because the Office view does a lot, Artifacts
-are split to their own top-level article (peer to
-[Documents](../005-Documents/PAGE.md), [Sheets](../006-Sheets/PAGE.md), and
-[Pdfs](../007-Pdfs/PAGE.md)) so it can grow its own sub-articles. It runs on the
-shared SQLite layer and does not drop into new workspaces automatically but can
-be added by user action.
+The intended subject is viewing HTML files and exported artifacts. Composition, isolation and custom rendering must follow the platform boundary; see [PDFs](../007-Pdfs/PAGE.md) for the separate PDF subject.
 
-PDF viewing is a separate concern, covered under [Pdfs](../007-Pdfs/PAGE.md).
-
-Scope and architecture are pending a dedicated build pass.
+Do not infer a storage schema from this placeholder. Live app content belongs in its files, application database or connected service, with System retaining platform state and provenance. Future presentation should use the [Platform And Plugins](../../011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md) contracts; no dedicated plugin or provisioning behavior is established here.

@@ -1,0 +1,56 @@
+{
+  "at": "2026-09-23T13:36:17.458354+00:00",
+  "sources": [
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "sha256": "8c1c6e9e9a8771b5d212bfad0d959e78e608fc0beb304399a3c3e450a13f430b",
+      "scope": "buildRunArgs 43\u201347; startThread/sendMessage 135\u2013205"
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/compat.js",
+      "sha256": "5b1b041ec7ab259e9f8f6e0320e503f3c0059d44c3a206de7a413b64708fe7bf",
+      "scope": "spawnThreadWire/startHarness 245\u2013305"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "sha256": "e4f58921839ac8f3a12b9f89522290e4f271382811683e17db416bf579fe6c8c",
+      "scope": "spawnAndSetupWire 656\u2013705; manager binding and supplied projectRoot"
+    },
+    {
+      "path": "fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "scope": "listV2ViewFolders/loadV2ViewShellFromEntry 315\u2013410"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/create-service.js",
+      "sha256": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641",
+      "scope": "template constants 28\u201330; scaffoldProjectV2Unchecked 65\u2013125"
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "scope": "CONTENT_COMPONENTS/ContentFrame/ContentArea 34\u2013120"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "sha256": "899294e7d1aa1c6848c2b98ec1544284958d59a78033b4ad01425feddd9405ee",
+      "scope": "getRuntimeKey and activation projectRoot references; inspection only, not a new output claim"
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/process-manager.js",
+      "sha256": "ed6851fcf1c7488378ace4f49907871378fe662c59cf4a7369b287c999667a5b",
+      "scope": "projectRoot routing symbols; inspection only, not a new output claim"
+    },
+    {
+      "path": "fusion-studio-server/test/harness/opencode/harness-send-message.test.js",
+      "sha256": "a5973cb158265a7ae382e79088216f7469445688f713161805f2d7c0d1089906",
+      "scope": "source-only expectations around --dir/cwd at 128\u2013168; not executed"
+    },
+    {
+      "path": "fusion-studio-server/test/harness/compat.test.js",
+      "sha256": "b8ee5c9b839b9cc36badc695b5eb91862266b4a55195c41d38ac04f1ddc66426",
+      "scope": "search/read for adapter boundary; not executed"
+    }
+  ],
+  "limits": "Bounded named source/symbol inspection; prior source evidence retained for unchanged paragraphs. No runtime certification, app launch, build or product tests. Missing guessed thread-runtime.js resolved to thread-runtime-controller.js; no claim uses nonexistent file."
+}

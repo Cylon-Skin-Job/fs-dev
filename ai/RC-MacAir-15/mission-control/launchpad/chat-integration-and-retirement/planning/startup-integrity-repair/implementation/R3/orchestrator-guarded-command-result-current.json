@@ -1,0 +1,21 @@
+{
+  "command": "node e2e/provenance/run-file-viewer-live.mjs",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+  "exitCode": 0,
+  "endedAt": "2026-10-06T01:35:33.454091+00:00",
+  "sourceBefore": {
+    "e2e/provenance/run-file-viewer-live.mjs": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+    "e2e/provenance/guarded-proof-lifecycle.mjs": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+    "e2e/provenance/guarded-proof-lifecycle.test.mjs": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+    "e2e/provenance/file-viewer-live-resource.spec.ts": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+    "playwright.provenance.config.ts": "21240b955fb7045ccb6a5c5dfda756ca1bd037ab842fe91a5b103a2b9c4253d1"
+  },
+  "sourceAfter": {
+    "e2e/provenance/run-file-viewer-live.mjs": "be41517990769bc0794f453d337e240db8336baf8e16414ce081ec1e1b6d2855",
+    "e2e/provenance/guarded-proof-lifecycle.mjs": "4a84e765eb77e5d4f31ad09fd987106a2df190e51273f5643fcde6c6b321f736",
+    "e2e/provenance/guarded-proof-lifecycle.test.mjs": "d2fce3324493391d54ad761d8f8f48a0821bea6a11ad4549fedaf603b6dc8bd2",
+    "e2e/provenance/file-viewer-live-resource.spec.ts": "cee08d07802ece81858e0c08305e09824f824a954ceca37ef84e3371bcff2bb0",
+    "playwright.provenance.config.ts": "21240b955fb7045ccb6a5c5dfda756ca1bd037ab842fe91a5b103a2b9c4253d1"
+  },
+  "sourceUnchanged": true
+}

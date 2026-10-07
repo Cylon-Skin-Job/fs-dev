@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-06T07:46:54.659034+00:00",
+  "scope": "Independent current product/build hashes, exact external/adopted evidence copy hashes and no-activation/raw owner chronology inspection",
+  "sourceBuildCheckCount": 264,
+  "copiedEvidenceCount": 29,
+  "mismatches": [],
+  "originalNormativePreserved": true,
+  "coordinatorPacketDrift": "Current owned incorporation packet is changed by authorized additive evidence, not original adoption or normative drift",
+  "exactSelectedHistory": true,
+  "focalExchange2VisibleAndDurable": true,
+  "finalOwnerPassiveReturnAt": "2026-10-06T07:30:24.725Z",
+  "lateNonPassiveOwnerStages": [],
+  "ownerStageCounts": {
+    "thread_open_request": 10,
+    "thread_open_return": 10,
+    "prompt_frame": 3,
+    "prompt_routed": 3,
+    "spawn_attempt": 3,
+    "spawn_return": 3,
+    "child_close": 3,
+    "session_patch_committed": 2
+  },
+  "collectorTerminalAt": "2026-10-06T07:39:13.033Z",
+  "scratchStopAt": "2026-10-06T07:39:25.338Z",
+  "protectedUnchanged": true,
+  "scratchLogicalUnchanged": true,
+  "olderIdentitiesUnchanged": true,
+  "unmetGates": [
+    "original S3/S4/ledger adoption by original owner or acknowledged successor",
+    "fresh whole-R3 builder review after necessary adoption evidence",
+    "fresh orchestrator slice acceptance",
+    "fresh integration explicitly covering repair and original contracts",
+    "owner acceptance"
+  ],
+  "orderedOracleIndependent": "R3/ORCHESTRATOR-ORDERED-HISTORY-ORACLE.log;6pass0skip"
+}

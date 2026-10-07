@@ -1,0 +1,18 @@
+{
+  "supplements": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EVIDENCE.md",
+      "before_bytes": 22716,
+      "before_sha256": "13d310bc07eb54e6060915fa572a1cbee42b350765b61c6ed69c2a2fe5b55a4a",
+      "append": "\n## S06 cumulative disposition\n\nAll 27 current pages and all 438 S00 input blocks have terminal records in S06-DISPOSITIONS.json. S06-EVIDENCE.md supplies separate AC01\u201310 rows and V1\u2013V6 scope, source chains remain raw evidence in S01\u2013S05-EVIDENCE and current identities in S06-SOURCE-EVIDENCE. Metadata adopts explicit owner policy; only 17 earlier pages are edited, with actual timestamps and complete predecessor snapshots. FINAL-ARTICLE-HASHES.json is the exact 27-page pre-parent-completion-stamp identity. No runtime/app/Alpha certification follows.\n",
+      "after_sha256": "00a6a4566ac5a6ff1fe06f030883c71416d112bb187f5030140cb58df0462add"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CROSS-SECTION-DEPENDENCIES.md",
+      "before_bytes": 12200,
+      "before_sha256": "ef07abfad5ae6bb10fcb1dab97dbc057d76b2203bde0338374376feed1c1dee8",
+      "append": "\n## S06 final dependency disposition\n\n- DEP-06 resolved for current guidance: owner Wiki000 now names existing scripts/wiki.js audit; source inspected, no automatic last-modified stamping. No generator run, all TOC bytes preserved. The earlier missing sync-wiki-tocs note is historical, not a current blocker.\n- DEP-07 resolved under explicit owner packet authority: Server now points to lib/thread/thread-runtime-manager.js (ThreadRuntimeManager); Persistence source lists exact ThreadManager.js, HistoryFile.js and exchange-metadata-aggregator.js. Only metadata changed; unrelated supporting prose is not recertified.\n- DEP-01/02 remain read-only Chat/shared-view ownership: current session/group/view/surface and historical context boundaries agree locally. No mandatory external correction was identified; future prompt/UI adapters coordinate those owners.\n- DEP-03/04 remain plugin-owner follow-up: no blanket adopted producer grammar, lifecycle/output ABI or raw bus/System DB permission; narrow save/agent overlays qualify old hash/nonwaiting claims. Exact earlier S05 handoff remains applicable.\n- DEP-05/PW-O05 remains a documented calendar implementation gap with no migration or live DB audit. DEP-08 concurrent Office work remains preserved and unclaimed. Retention/restore and broad provenance PW-O01\u201304 remain non-blocking future decisions.\n- Parent session 01a0b8f8-22a1-7c82-ba10-b6afe27fa857 separately owns the authorized completion timestamp pass after SPEC-ready/writers terminal. Use FINAL-ARTICLE-HASHES.json to snapshot exact current predecessors; S06 only applied normal actual per-edit timestamps.\n",
+      "after_sha256": "0f0bc233960df8422f03a7d63a2ce7cbd4cd7731f5691f2204c888ad947abbf9"
+    }
+  ]
+}

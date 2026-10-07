@@ -1,0 +1,102 @@
+{
+  "fixtureOnly": true,
+  "liveUIInputs": false,
+  "cases": [
+    {
+      "name": "harmless different completed response",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": false,
+        "completedAssistantVisible": true,
+        "matchingAssistantRows": 0,
+        "completedAssistantRows": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "user marker alone",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": false,
+        "completedAssistantVisible": false,
+        "matchingAssistantRows": 0,
+        "completedAssistantRows": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "completed assistant",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": true,
+        "completedAssistantVisible": true,
+        "matchingAssistantRows": 1,
+        "completedAssistantRows": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "hidden matching assistant",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": false,
+        "completedAssistantVisible": false,
+        "matchingAssistantRows": 0,
+        "completedAssistantRows": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "foreign host marker",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": false,
+        "completedAssistantVisible": false,
+        "matchingAssistantRows": 0,
+        "completedAssistantRows": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "streaming assistant",
+      "observed": {
+        "oracleVersion": 3,
+        "selectedHostThreadId": "thread-2",
+        "selectedHostWorkspaceId": "public-scratch-2",
+        "selectedHostViewId": "file-viewer",
+        "selectedGroupId": "group-2",
+        "fixedPromptVisible": true,
+        "fixedResponseVisible": true,
+        "completedAssistantVisible": false,
+        "matchingAssistantRows": 1,
+        "completedAssistantRows": 0
+      },
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "stamped_at": "2026-09-21T13:30:01Z",
+  "entries": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-063001.md",
+      "before_sha256": "aa1b0133ea437891cc320057e37c0eb516faa2ef952c0a3884375887aa120991",
+      "after_sha256": "94c0b395c033b4e4342164df7f47e1fc852604cdad32cbe724dfbe97826907bf"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-063001.md",
+      "before_sha256": "237c3959a112171bcd40e1e9d3a46960df109ce6200627e4601e792e17b24e7a",
+      "after_sha256": "0912fb1c2d9caae8880240097eb01db8eda3d0e33143b637713aea1e71e58e41"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-063001.md",
+      "before_sha256": "1791a9b05ffeef889f40f07cfd55c470da1b7676aea009826baeeaff1eea4df1",
+      "after_sha256": "88de8aa647c229aeb4cb5d23b69f6ba5cd7177a55be355cddf21ed8c977b9f16"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063001.md",
+      "before_sha256": "9957fd4a10659387c0f30c729683d0a0c1b40f3ec19578ce07747474a2a58671",
+      "after_sha256": "baba62d977a91c047c9a5129db3597f783b92effa4c9bcde3552ab63af60d366"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-063001.md",
+      "before_sha256": "9090290f48e7c92733c02895ae29a890543a48596c65b9132aa32d52a67083d2",
+      "after_sha256": "12d583ecc38888b7659cc27e0abe9ff191e69443eb3fb5fa5dd8a646ef8fb1fe"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-063001.md",
+      "before_sha256": "3ba4a5763b59fd8a5dc4278afa60956ca16fbfae129eae8935ad5e2c5df0dc65",
+      "after_sha256": "96693e2b5be638d2c409c6d33cd31e3ded82ddfe52e5af98b23ba46f7e0a2273"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-063001.md",
+      "before_sha256": "78be8419e8684f44b754749270883c39baecfe306c010700c0fbca7f1ac9b8d8",
+      "after_sha256": "f4eea8d8b6262a0ff1078513f61cb2fa1628dc2ac1cdea950b5c19dc1e292da3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-063001.md",
+      "before_sha256": "cc87632e58f4fab97ab8e4c24d2f4b4505d30c0ff01e276aa7796480862679d4",
+      "after_sha256": "c7d3fd8e7295a8c36921770249679be21360b07c795039410a6039e602c624f7"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-063001.md",
+      "before_sha256": "2b02b2ad7257299d6a45909eaff38fe1323cc225c14543c1c9321274ba18abe6",
+      "after_sha256": "a3fb31e1bfe7e640f9a944990372ef48e27d8107f6d12901d2bd7db738084b60"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-063001.md",
+      "before_sha256": "a016423cf1a6da8b1fcb3780ed8e21789ae4e2e0b4a2dd47d407839434fc7d60",
+      "after_sha256": "c8b3c4c7e56907840471a11dd24e504dc13382567f14b0eb8b048cf515a93976"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-063001.md",
+      "before_sha256": "b9fde05f1e1c5d6d26d607231edc8619c2e41b0e31f5707a447c92e5fda41507",
+      "after_sha256": "a439c86de63c779fbbb222ff6fd79bb99b929b7cb43aecdbb65cd0d09a259cab"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-21-063001.md",
+      "before_sha256": "39723b228239de27c362d4990acbfe4e815a3b5ba6daef4cde1048bcd7c518c9",
+      "after_sha256": "d20a1adf9f81aa4e13a97efacd278863a9e272a2ae279921658d349c52dd7c6c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-21-063001.md",
+      "before_sha256": "2a36e27bc71e6ac5e60ae29b66f348060dfef74f7d0fdd62110fcb9f8b26dbba",
+      "after_sha256": "0a831d146172e4953679044c35bc6c3268472dad01b58190bb55f16ac251a767"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-21-063002.md",
+      "before_sha256": "9fb2bbc6f0e2ef30bc0d46e70b6b0d8ad807e2a6fd5f59965b11b2acad9b1531",
+      "after_sha256": "d74a4eea3adef70a48d2a5291331cf50fab69a498a5d7437bc54a65580acc357"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "a3709e31c07067bbf1c168babadea1feddf3cf83476f67aa22f9c999980f5632",
+      "after_sha256": "95f099b29db61492e74ef9cbdfe0decc266be6434a75e411abf758e4192ce19e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "992a4d542d29fa284ab26ffb5ce0042c0102cb8e24196c7e04a124d962984449",
+      "after_sha256": "f06f29d9f473c25427db0b4d6bba27de98876d8301d99cba3caf61fb2600a2eb"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "921b654e1790ff763cacebb401f2c789813377dc5a6bd3ee592d7000ea652075",
+      "after_sha256": "c9c3dc9442aba245183f59d0bd16e9b1ce1ac26c391c8285580a03ac8feb6919"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "d349f9b347699b1694dd39fd29c33c4e1b76d9bbca67c680aa7c76abdfd84eb4",
+      "after_sha256": "0e5550d70e05c1c95634df91889071f9893732bdca51668a804571cc9eb0eef6"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "173ddf727344632751ab370658068e2165bc4c8037a49fbcc8f632a570e4c913",
+      "after_sha256": "0cbd4dc60d0fc9863de3fb98de064ceab2b11aeb3c23b68fcc6c564967f9e9fb"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "3ea160b6a223724c1c66f1959fc5b50188d9b23248a8a60d90ec57d8c31575dd",
+      "after_sha256": "e6ffb273f6b5b28727988ddc48141f677d88fe40c1e30329b7446bf0f062437e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "0ec28a76692aa8d9e17e05c8f2064af3557b51231448fce143333c25ba7bf8c5",
+      "after_sha256": "ea5022cf766fff184c60cd9d98fb9714349f3502970313e0e495d0c6b29250ea"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "317d2c4e54f47335a836c6a2dba75cfc59bc6b68e3846b3e4ffdc4d0adc601ca",
+      "after_sha256": "84de56f23f0b46775dade27b07fd894ef246fc9c8e49b2959f902f96d96a552a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/.versions/2026-09-21-063002.md",
+      "before_sha256": "54e44fe59201f940e408043320f6b3c184e6c2b90ffa6da5d242ba1a4ff0e788",
+      "after_sha256": "b2c66c109203c48b65ed7a175ef1b5e880e1ad3416785c3f48432b305ee0d333"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-21-063002.md",
+      "before_sha256": "45f5a1c7c307c18ba27b23831e642d41b96d4f80bd4e7addf7210ca0be54e619",
+      "after_sha256": "db29b58eefeda74c48036b95d4c9c259d6621a3620ffb34cb476d5f3191e28f5"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-21-063002.md",
+      "before_sha256": "bdbed03525d3fc2bc7270c5ee30f3d9101afc19732c60eeeea5beca279f427be",
+      "after_sha256": "f3a62c749d342c7b993808762854af86ff833bbd173766a6efdc3fdee1d83412"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/.versions/2026-09-21-063002.md",
+      "before_sha256": "51d557889de3a8f9a4b19c12451bb584661006569e39c795cc12bbf0d2d061e6",
+      "after_sha256": "27a1157490c2dc8843d49870cb87bfd74f1d812aa995cc914300d07861421988"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/.versions/2026-09-21-063002.md",
+      "before_sha256": "d1820df8478defd9be0394a215718dc8009ba9cad498daa9cd1ef210b76d95e9",
+      "after_sha256": "163f873a25cf16dce59643bba4f6d59686a515fda9e70be61ea0074df3f1edef"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-063002.md",
+      "before_sha256": "fb2806347dc2efded85581a59bc619fe800477154edd8c7059605fd606d71b07",
+      "after_sha256": "188a0b49264cbe5b87af55e8417455dd813dc19c7704a755d384469ea28c2f9d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-063002.md",
+      "before_sha256": "9db8ced26912cff7af3d875426098b059cac22b0174141f8f810177a2daa98a3",
+      "after_sha256": "1037c6027b1de054c8dcefa53c9990f7fd31b38984a037f0ebab36a82455a0db"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-063002.md",
+      "before_sha256": "83c0b4352368bd234499d9338416c8cac76ee4bbe1c6694f94c276781fb179d6",
+      "after_sha256": "5db12b39da1b9be49876f47fbb384da9df9f802f2dba8ad9448c2f7cdf9b6715"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-063002.md",
+      "before_sha256": "46c94975996b3e9267c79b349122969346cec7fc0f409dc0413afffef9c79a56",
+      "after_sha256": "50d27e8144b7308ece5f8fbb6b833d9e8ae933ecdbc05cbeda2634319f0d371c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-063002.md",
+      "before_sha256": "c79638863544acb3aadbec667396fc6f937701a1cc0ad8f41424dfbecdbf1af5",
+      "after_sha256": "f5ff5a38ba5d63ff465b6ed6aaf71eb858b5ea358c770659934180bd45c1ac7e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-063002.md",
+      "before_sha256": "575cb80ffb552832584ecf26e4ca2d07f95a42199c31339818a82ccd1d286b17",
+      "after_sha256": "c8953955fb93e06e0a0589d2e8639104797d652156e1699e45b680f4839bec0d"
+    }
+  ],
+  "scope": "Only live PAGE-MAP pages changed since execution baseline; no retired, untouched, retained or historical pages."
+}

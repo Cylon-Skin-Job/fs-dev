@@ -1,0 +1,27 @@
+Audited startup registry rejection: unknown isolated provenance startup effect: workspace-automation-pipeline
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-13gLnA","port":51442,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+(node:47723) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/runtime/workspace-startup-integrity.test.js (5.831 s)
+  ● actual normal startup/listen invokes preserved automation consumers once
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      21 |       process.stderr.write(`Audited startup registry rejection: ${rejection?.[1]?.message}\n`);
+      22 |     }
+    > 23 |     expect(fixture.componentLoad).toHaveBeenCalledTimes(1);
+         |                                   ^
+      24 |     expect(fixture.errors.filter(args => args[0] === '[Server] Pipeline init error:')).toEqual([]);
+      25 |     expect(fixture.componentLoad).toHaveBeenCalledWith(path.join(fixture.workspaces[0].repoPath, 'ai/components'));
+      26 |     expect(fixture.components.getModalDefinition('scratch')).toMatchObject({ config: { name: 'scratch-modal' } });
+
+      at Object.toHaveBeenCalledTimes (test/runtime/workspace-startup-integrity.test.js:23:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 skipped, 3 total
+Snapshots:   0 total
+Time:        5.864 s, estimated 7 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js".

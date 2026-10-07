@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-06T07:31:45.360851+00:00",
+  "sourceBuildMatchedBeforeLiveObservation": true,
+  "priorManifestSha256": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+  "mixedSourceAggregateSha256": "8288b85c0fa79a7d4405bad9a934df8e6262127e5e195cc8dc194535a0162832",
+  "buildAggregateSha256": "9db00d0d596e1e957c225b7a98bf65b34b289cb3dc9adfd997b63e983f784db9",
+  "loadedAppOwnerSubset": {
+    "at": "2026-10-06T01:32:53.103721+00:00",
+    "scope": "App product and established restart owners captured after attributed launch; fixture/tests/Wiki excluded. These source bytes have not changed since launch.",
+    "files": {
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+    },
+    "sha256": "3a0f158a0ab21d419a4e8b4ded479ebf3768e895a909fee96e308898fff7c031",
+    "builtRendererSha256": "9db00d0d596e1e957c225b7a98bf65b34b289cb3dc9adfd997b63e983f784db9",
+    "currentFixtureAndDocumentationAggregateIsSeparate": true,
+    "appRestartForEvidenceRepairs": false
+  },
+  "inspectedCurrentOwners": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/logging.js",
+      "sha256": "2acf3c7bee42238358add9b447fe3091a3eb275e20ccccc45f5ea8e77bf4b0ab"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/harness/opencode/index.js",
+      "sha256": "5dbe53e8f262661164dca0a87ab3f217ead35150629fd43ca42020685f9973e0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "sha256": "1d62309c6787b816351f5df540f6688f4d61536652c74421688349a0f4a82060"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/harness/opencode/turn-outcome.js",
+      "sha256": "b01efd354b33b383fc27d0dbcf4dbb206bf581463357397616eaac564ccf14f1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wire/wire-broadcaster.js",
+      "sha256": "387b66a9de20991fe47a1d5df330d739d954e94334aca1655e61b88ffdc168f1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wire/canonical-chat-terminal-events.js",
+      "sha256": "19aa50621324a586069d3f2e95aa9f2d3c37b9a22bbb35c370aebc447fc81372"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/thread/HistoryFile.js",
+      "sha256": "632e4dee32ccc275c76a0399c6eafdb6167c9524896df4fb6b004d033b2d2f39"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "sha256": "f9c1ed9b35faa9654996943e35271ac33d5226e096d918952fbab1a96213856f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/lib/ws/thread-history.ts",
+      "sha256": "31607f2180659c581df682c5a59bdffe008218738b3c69de08c30ca5aa9b90df"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/lib/ws/assistant-parts.ts",
+      "sha256": "c95ccdafa5f974e58d573df0f62b97e0474fea4e74d6bd722cc43d9ce5b03195"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/MessageList.tsx",
+      "sha256": "14f4a03763243843cc9e3f8a717a4a0b823c8d7235b05fcc761f51938b8a45cb"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx",
+      "sha256": "23c35fc2a645ec4cebb6f9ba03cd6b8536e669ff9d1d82e90b0bd11f973e3208"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    }
+  ],
+  "v4CurrentScriptSha256": "5aacb3af8aa2d65a2b685bcc89d24552ba1cd81ffd9892f429b3688bdf7c93e6",
+  "currentObserverPid": 49427,
+  "deadline": "2026-10-06T08:04:54.580Z",
+  "ownerLogSource": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-live.log",
+  "ownerLogProjectionOnly": true,
+  "noRawLogProviderPayloadsAdopted": true
+}

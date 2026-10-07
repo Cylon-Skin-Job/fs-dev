@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-06T00:51:34.562109+00:00",
+  "builder": "/root/startup_integrity_repair_orchestrator/r2_builder",
+  "reviewer": "/root/startup_integrity_repair_orchestrator/r2_builder/r2_builder_review_01",
+  "agentType": "clean-room-reviewer",
+  "forkTurns": "none",
+  "modelEffort": "inherited root without override",
+  "terminalStatus": "completed",
+  "result": "CLEAN",
+  "rawReturn": "R2-BUILDER-REVIEW-01.md",
+  "rawReturnSha256": "f48ae96a7dcf17c375e6928be4fe50531db2c557f9364f6df181f7071c7925bf",
+  "closure": "close_agent unavailable among exposed tools; could not attempt",
+  "passes": 1,
+  "postReviewProductEdits": false,
+  "candidateManifestSha256": "5c3268ba72fa1c14ed1b3606b344dd54dfe8701bf45139e7987ce34644aedbb8",
+  "finalBuilderReportSha256": "313c2524136fbb87520ac6b8ca78ecb6069808d3aed0bb5e6f503023fa9ec984"
+}

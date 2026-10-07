@@ -1,0 +1,55 @@
+{
+  "candidateId": "FUSION-BROWSER-MVP-1cb620be9a9c6a79",
+  "aggregateSha256": "1cb620be9a9c6a798c0cff5f7525bf6a063c8ef7c0c8162528a1b74ded7b26b3",
+  "algorithm": "SHA256 of ordered relative-path + NUL + file-SHA256 + LF, UTF-8",
+  "artifacts": [
+    {
+      "path": "BUNDLE-INDEX.md",
+      "sha256": "7e79dd92e2f6e86208bac8798097449d57e76222f348ff506fe8d9b73413e72a"
+    },
+    {
+      "path": "DECISIONS.md",
+      "sha256": "6ef1b97988c1a3c37b791f28afc3ea82791a80d1b380765251e0bbee5d95f573"
+    },
+    {
+      "path": "GUIDANCE.md",
+      "sha256": "575add9578336896a11620be83534552e2edd8ffc2204b1e07f6deee9d3d665e"
+    },
+    {
+      "path": "ISSUES.md",
+      "sha256": "5f350db84f4e73313694be4bd78c4b38a5a380f7be95796ccf7398f1d088d493"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "202f190c07941460d86ac878d110aec31ea2c91ba4c9d0d996a7fff921e0b9c0"
+    },
+    {
+      "path": "SPEC-01-AUTHORIZATION-POLICY.md",
+      "sha256": "de8f8c72b9e4cd7c6edd1a46d875de7ab9810fd4dcca2a0e62f259cd7d636954"
+    },
+    {
+      "path": "SPEC-02-BROWSER-PAIRING.md",
+      "sha256": "610c55adfb679d570939b45bccdcd1515b738035d286a98c2fb311a6f7596246"
+    },
+    {
+      "path": "SPEC-03-REMOTE-INGRESS.md",
+      "sha256": "4a31cbec8ad72bdf512a33bbf58dfb7841a7db62ad6a9d59f5a09822c2df1a1d"
+    },
+    {
+      "path": "SPEC-04-REMOTE-TURN-CONTINUITY.md",
+      "sha256": "875ad7476761e03d28943d9c2e7766bdd1409422e7a894a390410354a53b0fe2"
+    },
+    {
+      "path": "SPEC-05-BROWSER-WORKSPACE-CLIENT.md",
+      "sha256": "ab91f11091a6e9112d502f28db57ec24e40c75e01fcca2f147feb0734c54d4b5"
+    },
+    {
+      "path": "SPEC-06-HOST-LIFECYCLE.md",
+      "sha256": "0cd24ba16ec016f2803f7051fb2dc8db9a72c0454968ae757b1ef3c3d37303fc"
+    },
+    {
+      "path": "SPEC-07-TAILSCALE-SETUP.md",
+      "sha256": "123431d748047268dff1e04c0f20e3521ab2ab83e5023097b9544d8886d2975b"
+    }
+  ]
+}

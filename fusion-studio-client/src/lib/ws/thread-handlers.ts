@@ -19,7 +19,7 @@ import { loadRootTree } from '../file-tree';
 import { showToast } from '../toast';
 import { threadRowsFromProjections } from './threadGroupRows';
 import { retireDeletedWorksurfaceGroup } from '../worksurface/worksurfaceDeletion';
-import { requestWorksurfaceEntryRead } from '../worksurface/worksurfaceController';
+import { requestGroupSelection, requestWorksurfaceEntryRead } from '../worksurface/worksurfaceController';
 import { isSideChatCapableView } from '../worksurface/sideChatViews';
 import type { WebSocketMessage, Thread } from '../../types';
 
@@ -142,11 +142,26 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
           viewId: typeof msg.viewId === 'string' && msg.viewId ? msg.viewId : null,
           entry: msg.thread,
         });
-        // A correlated creation is selected only when its matching opened
-        // response arrives. Cancellation may leave the committed group intact.
+        // Correlated creation actions own their pending-open registration.
+        // Ordinary rail/header New Chat has no requestId, so bind its accepted
+        // destination through the existing content-switch gate, or register
+        // its open when the view has no worksurface adapter. A view-bound
+        // create never writes the Legacy selection or global view content.
         if (!msg.requestId) {
-          store.setCurrentThreadId(msg.threadId);
-          store.setChatActive(true);
+          if (typeof msg.viewId === 'string' && msg.viewId && store.activeWorkspaceId) {
+            if (!msg.threadGroupId
+              || !requestGroupSelection(store.activeWorkspaceId, msg.viewId, msg.threadGroupId)) {
+              store.requestThreadOpen({
+                workspaceId: store.activeWorkspaceId,
+                viewId: msg.viewId,
+                threadId: msg.threadId,
+                threadGroupId: msg.threadGroupId,
+              });
+            }
+          } else {
+            store.setCurrentThreadId(msg.threadId);
+            store.setChatActive(true);
+          }
         }
         // PER_THREAD_CHAT_STATE: clear this thread's slot specifically.
         store.clearChat(msg.threadId);

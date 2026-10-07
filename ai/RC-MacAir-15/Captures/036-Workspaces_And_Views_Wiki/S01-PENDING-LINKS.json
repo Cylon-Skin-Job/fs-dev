@@ -1,0 +1,11 @@
+{
+  "slice": "S01",
+  "expires_at": "S05 final",
+  "targets": [
+    {"path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md", "owner_slice": "S02"},
+    {"path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md", "owner_slice": "S03"},
+    {"path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/PAGE.md", "owner_slice": "S04"},
+    {"path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md", "owner_slice": "S05"},
+    {"path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/PAGE.md", "owner_slice": "S05"}
+  ]
+}

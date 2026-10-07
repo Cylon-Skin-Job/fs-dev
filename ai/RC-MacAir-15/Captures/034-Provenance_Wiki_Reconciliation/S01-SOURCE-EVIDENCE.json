@@ -1,0 +1,216 @@
+{
+  "at": "2026-09-19T03:00:00.955217-07:00",
+  "evidence": "source inspected, tests asserted not rerun",
+  "files": [
+    {
+      "path": "fusion-studio-server/lib/db.js",
+      "anchors": "14\u201317 DB_PATH; 25\u201353 initDb/getDb",
+      "sha256": "343780913d538c1dfddf0d430fb2c17ea7e1f3008e3d38936543fc9a29f6ca76"
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "anchors": "231 DB init; 240\u2013241 diagnostic cleanup; 591\u2013594 broadcaster; 613\u2013616 calendar startup",
+      "sha256": "888433c47713f11bef8b79790daeaa26c450f9d623d8e543bc0d10e29afa1e02"
+    },
+    {
+      "path": "fusion-studio-server/server.js",
+      "anchors": "170 calendar router mount",
+      "sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/index.js",
+      "anchors": "14\u201329 start conditional adapters",
+      "sha256": "3677e7563383c9e4c0b56077212247a7dab838a7492a1cc6ea4849b44804407b"
+    },
+    {
+      "path": "fusion-studio-server/lib/background-services/config.js",
+      "anchors": "34\u201392 fixed config path, environment override and isEnabled default false",
+      "sha256": "da4f8365c3eee743d7580f3e828cc3c89d35840544d3b518590210176c189401"
+    },
+    {
+      "path": "fusion-studio-server/lib/watch/calendar-watcher.js",
+      "anchors": "17\u201329 watcher subscription callback",
+      "sha256": "60dd2503592e65bab15c61b62b39b09957a91704f5cfb6f2ae640b163024044c"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/apple/sync.js",
+      "anchors": "9\u201329 run reader/convert/upsert/fact",
+      "sha256": "b2f571af00173e8d843f3e48024c9e6ffc511f26efb568492dbdcdcda05a7d31"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/google/poller.js",
+      "anchors": "7\u201325 runSync/start",
+      "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/google/client.js",
+      "anchors": "3\u201321 post config requirements",
+      "sha256": "ffd48d57e262988156a11d8992efea13db2835106430d96b6608dfe278fe40fe"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/google/sync.js",
+      "anchors": "8\u201330 run bridge/convert/upsert/fact",
+      "sha256": "00bad86406281c6a0a24786e5a371e87cef377e826ca002e2fd5a9eb3e72abb0"
+    },
+    {
+      "path": "fusion-studio-server/lib/calendar/db-writer.js",
+      "anchors": "1\u201319 upsertCalendars/upsertEvents shared getDb",
+      "sha256": "159b5d646fd16c6272567ecfbf030da1c5258d5e65b142ecbd2bbcb0140e5529"
+    },
+    {
+      "path": "fusion-studio-server/lib/db/migrations/022_calendar_sync.js",
+      "anchors": "1\u201329 schema",
+      "sha256": "10ceb1dbfb2d28d4907a62c738bc7fafec1bcd42f1703ef66a58c7473d234cdc"
+    },
+    {
+      "path": "fusion-studio-server/lib/http/calendar-routes.js",
+      "anchors": "13\u201343 GET calendars/events",
+      "sha256": "165281dd7ae9994ac5f792929079c8ee428fe7ec10fab538ad65586f0fbc022d"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/calendar-broadcaster.js",
+      "anchors": "9\u201326 sync event fanout",
+      "sha256": "a152b9ddb45659ccf323c68b8a0307318ca533c083196074f5a9b7222489b3e3"
+    },
+    {
+      "path": "fusion-studio-client/src/state/calendarStore.ts",
+      "anchors": "140\u2013174 fetch/map HTTP; 177\u2013187 no writeback; 189\u2013215 date/demo behavior",
+      "sha256": "271b72f695597f64228ec1634c2ceaf173273739e1b8d22d9e47045a858a4b70"
+    },
+    {
+      "path": "fusion-studio-client/src/components/calendar/CalendarViewer.tsx",
+      "anchors": "10\u201332 store selectors/demo mount; 110\u2013128 render store rows",
+      "sha256": "1c3979328a4dc20b0c628a182047b6fdfc1ea601b430fb95ca00960ec5b3a716"
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "anchors": "28,42 CalendarViewer registration",
+      "sha256": "968622f942a171ea2e99dd98a5ce7cd8e78c68d5b4f17064a5f459bf68d0760d"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/calendar-handlers.ts",
+      "anchors": "8\u201316 handleCalendarMessage fetchEvents",
+      "sha256": "a9b2673aef5e4b3bec81d4ab8ccaebc73ade51ab771ac01d26b85160f010d85a"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "anchors": "31,435 calendar message registration",
+      "sha256": "87f49bcbd8aac776d9fb40abb34330ba1f489d54840b5c63fc28771cc392007d"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/ThreadManager.js",
+      "anchors": "681\u2013725 deleteThread owner/index/mirror path",
+      "sha256": "fa9e1f7c67010858f078f6f19fc62ba82a64392fb4daf9b8e8d7451fc8f29114"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/ThreadIndex.js",
+      "anchors": "202\u2013210 scoped SQL delete",
+      "sha256": "c8a9129239bae9ca14931591cc9f2a16e38fdefd80882b7b9a4019f26fcfea82"
+    },
+    {
+      "path": "fusion-studio-server/lib/db/migrations/001_initial.js",
+      "anchors": "24\u201330 exchange foreign key cascade",
+      "sha256": "159a6d52257dcf2e76be2c2c6f563ff5ef23cbe4f3fcb5c2964697c0cb0438d1"
+    },
+    {
+      "path": "fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js",
+      "anchors": "36 exchange binding; 396\u2013404 deletion trigger clears exchange clocks, checkpoint tables separate",
+      "sha256": "cbdd98c8469f16f2089132bd3ae9b1e0334ef59c1537a41116274a11b16e914b"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/harness-diagnostic-service.js",
+      "anchors": "64\u201366 retention constants; 196\u2013245 cleanup; 303\u2013322 insertion cleanup; runStartupDiagnosticCleanup wrapper",
+      "sha256": "c8da56ae4c4c62390a10b4442716981198f18a12d836c6a69e294728fd2e939c"
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "anchors": "28\u201351 static four publishers; 148\u2013221 createPublisher verification/freeze/admission/delivery",
+      "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d"
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "anchors": "264\u2013306 dispatchAdmittedFact/deliverAdmittedFact awaits required_ack",
+      "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e"
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+      "anchors": "5\u20139 whitelist; 40\u201349 fallback actor heuristic",
+      "sha256": "c5b68f7646535182a75f24be88783a631f8492b16904ddeedfcf480240cd08ca"
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+      "anchors": "11\u201329 legacy wildcard writes",
+      "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "anchors": "141\u2013168 readPreimage; 420\u2013594 save reservation/prepare/atomic replace/failure/terminal return",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/text-codec.js",
+      "anchors": "15\u201368 exact UTF-8/scalar/NUL/size rules",
+      "sha256": "95b4b256eda552d9f193761fa7d31fbdbdb42cc34143101e62ca6e2f0bb9df6d"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/path-authority.js",
+      "anchors": "72\u2013181 resolve registry/panel/root/final symlink safety",
+      "sha256": "7bf9762e21d9eca7caf80c0dd130f2be0dffcf7207d31e0089cb84fcec4206fd"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+      "anchors": "58\u2013112 publishCommand/publishResource/recovery",
+      "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3"
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+      "anchors": "75\u2013140 sanitizeReportedUiContext",
+      "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/save-action-context.ts",
+      "anchors": "49\u2013105 buildContext/readSaveActionContext",
+      "sha256": "661694ffe969bfab723faa85c6d102dd12a09bf2f6e263e0629502f4b0c04deb"
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileDataStore.ts",
+      "anchors": "518\u2013568 saveFile production v1 caller and context",
+      "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/client-message-router.js",
+      "anchors": "442 file_save dispatch",
+      "sha256": "c10727bf72f5b54923647d55d17cf4ea413d771ba83236b7432509204fcfb1c1"
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/file-save-route.js",
+      "anchors": "114\u2013173 handleValidatedFileSave validates authority/context then owner",
+      "sha256": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875"
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+      "anchors": "152\u2013338 processClaim native availability and observation",
+      "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4"
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "anchors": "169\u2013348 applySuccessfulObservation sparse first/changed/unchanged",
+      "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2"
+    },
+    {
+      "path": "fusion-studio-server/test/thread/harness-diagnostic-service.test.js",
+      "anchors": "212\u2013274 retention/caps; 318\u2013340 startup assertions, NOT RERUN",
+      "sha256": "ffab28a9d01bdec1f58aaa787cabab127b664cf1cc0f3f5dbdcf5041bf93b16a"
+    },
+    {
+      "path": "fusion-studio-server/test/ws/file-save-route.test.js",
+      "anchors": "351\u2013413 context assertions, NOT RERUN",
+      "sha256": "00ad8e92d573f5a07dfe157e93a1c68d2c3d885cc7b633824a9611aca3d7eb8d"
+    },
+    {
+      "path": "fusion-studio-server/test/resources/save-controller.test.js",
+      "anchors": "575\u2013635 postwrite recovery; 877\u2013896 prewrite outage assertions, NOT RERUN",
+      "sha256": "bd4bb14439ff1315ddca018f21a7c0ec1ea5fee8d38484529951e7ba87200600"
+    }
+  ]
+}

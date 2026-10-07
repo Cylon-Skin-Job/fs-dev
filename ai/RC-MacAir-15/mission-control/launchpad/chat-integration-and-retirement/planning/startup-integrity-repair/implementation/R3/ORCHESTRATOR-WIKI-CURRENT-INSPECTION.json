@@ -1,0 +1,128 @@
+{
+  "scope": "Independent current Wiki inventory/preimage/source-metadata verification",
+  "articles": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "disposition": "scoped-update",
+      "currentMatches": true,
+      "actualSha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "preimageMatches": true,
+      "intermediatePreimagesMatch": true,
+      "sourceFilesCount": 19,
+      "missingSourceFiles": []
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "disposition": "scoped-update",
+      "currentMatches": true,
+      "actualSha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "preimageMatches": true,
+      "intermediatePreimagesMatch": true,
+      "sourceFilesCount": 15,
+      "missingSourceFiles": []
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "disposition": "unchanged-accurate",
+      "currentMatches": true,
+      "actualSha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "disposition": "scoped-update",
+      "currentMatches": true,
+      "actualSha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "preimageMatches": true,
+      "intermediatePreimagesMatch": true,
+      "sourceFilesCount": 16,
+      "missingSourceFiles": []
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "disposition": "scoped-update",
+      "currentMatches": true,
+      "actualSha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "preimageMatches": true,
+      "intermediatePreimagesMatch": true,
+      "sourceFilesCount": 39,
+      "missingSourceFiles": []
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "disposition": "scoped-update",
+      "currentMatches": true,
+      "actualSha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "preimageMatches": true,
+      "intermediatePreimagesMatch": true,
+      "sourceFilesCount": 41,
+      "missingSourceFiles": []
+    }
+  ],
+  "recordedAt": "2026-10-06T01:56:30Z"
+}

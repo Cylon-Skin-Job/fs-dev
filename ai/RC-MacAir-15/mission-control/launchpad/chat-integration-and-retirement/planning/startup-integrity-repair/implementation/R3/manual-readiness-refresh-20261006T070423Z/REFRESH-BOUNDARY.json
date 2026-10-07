@@ -1,0 +1,19 @@
+{
+  "role": "bounded R3 readiness-only refresh",
+  "createdAt": "2026-10-06T07:04:23.737794+00:00",
+  "controllerHome": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memoryCwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "ownedWrites": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/manual-readiness-refresh-20261006T070423Z",
+  "historicalManifestPreserved": true,
+  "stage": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk",
+  "stageNonce": "f090d27f-fb16-4ff4-9957-a0119380a957",
+  "liveUIInputs": false,
+  "liveProtocolIntents": false,
+  "v4Differences": [
+    "unique output/ready/stop marker names with refusal on existing outputs",
+    "60-minute observation deadline; no scheduling",
+    "v3 DOM/child/canonical-frame projection semantics unchanged"
+  ],
+  "uuid": "741ff554-bccd-4906-891c-62f844748b7d"
+}

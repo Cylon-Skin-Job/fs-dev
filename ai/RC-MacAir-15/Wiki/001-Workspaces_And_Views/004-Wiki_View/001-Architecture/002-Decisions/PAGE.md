@@ -2,16 +2,8 @@
 name: Wiki Decisions
 description: Durable wiki system decisions covering folder structure, navigation behavior, metadata, and the current pre-release source of truth.
 metadata:
-  incoming-edges:
-    - Wiki
-    - Wiki Architecture
-  outgoing-edges:
-    - Wiki Interface
-    - Wiki System
-    - Markdown Frontmatter Model
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 ## Decisions
@@ -22,11 +14,11 @@ metadata:
 - **Article folders spawn right-sidebar navigation.** This includes `000-` heading articles when they have child pages; the right sidebar is the contextual child map for the selected article.
 - **Split context selection from viewed page selection.** Left sidebar selection controls right-sidebar contents; right-sidebar clicks only change the center page.
 - **Adopt system-wide YAML frontmatter.** Wiki pages use the same `---` delimited `name`, `description`, and `metadata` envelope as READMEs, skill documents, Office documents, and other searchable Markdown.
-- **Render metadata as edge lists.** Incoming edges, outgoing edges, source files, connected skills, and related trigger files form the future deterministic update graph.
-- **Keep maintenance docs under one Wiki article tree.** Interface, system, frontmatter, lessons, decisions, and changelog pages live under `Project > Wiki`.
+- **Record source files and actual edit time.** Authored metadata lists exact code files and a quoted UTC `last-modified` value. Do not record relationship edges, skills or triggers; body links provide navigation. Existing renderer compatibility with old metadata is not authoring policy.
+- **Keep maintenance docs under one Wiki article tree.** Interface, system, frontmatter, lessons, decisions, and changelog pages live under `Workspaces And Views > Wiki View`.
 
 ## Open Questions
 
-- Should every existing page receive frontmatter immediately, or should frontmatter be added opportunistically as pages are touched?
+- Adopt the current metadata schema when a page is edited; do not stamp untouched pages or imply that modification proves factual freshness.
 - Should terminal wiki search index frontmatter fields before full-text body search?
-- Should metadata edge values be raw strings, normalized IDs, or typed paths?
+- A future freshness index may use source-file lists, but no edge registry is required.

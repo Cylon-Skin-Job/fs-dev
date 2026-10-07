@@ -1,93 +1,36 @@
 ---
 name: Audit Query And Review Provenance Schema
-description: Schema guidance for assistant and user forensic queries, saved audit results, review loops, and recommendation events.
+description: Current bounded query transports and future saved audit, review, and recommendation contracts.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-  outgoing-edges:
-    - Ledger Event Provenance Schema
-    - Chat Metadata Provenance Schema
-    - File Version Provenance Schema
-    - Events Assistant Query And Review Loops
   source-files:
-    - fusion-studio-server/lib/ledger/event-ledger.js
-    - fusion-studio-server/lib/thread/chat-search.js
-    - fusion-studio-server/lib/audit/audit-subscriber.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/ws/resource-provenance-route.js
+    - fusion-studio-server/lib/ws/agent-activity-route.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/agent-provenance/query-repository.js
+    - fusion-studio-server/lib/event-registry/seed-catalog.js
+    - fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts
+    - fusion-studio-client/src/lib/ws-client.ts
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before designing assistant-facing ledger queries, saved audit runs, automated review loops, or generated recommendations.
+Status: source inspected on 2026-09-19 in the development checkout. Bounded save-provenance and agent-activity query transports exist. Saved audit/query/review facts, recommendation schemas and a mounted provenance audit UI are not implemented in the inspected paths. No product tests or runtime were run.
 
-Audit query provenance records who asked a forensic question, what scope was searched, what evidence was returned, and what confidence or recommendation came out of the review.
+## Current query boundary
 
-## Boundary
+`resource:provenance:query` passes through the existing WebSocket router to `resource-provenance-route.js`: it validates the active server workspace/epoch and registered schema, normalizes the requested panel/path, and asks `resource-provenance-repository.js` for mutation summaries. Results include operation/resource/version identity, snapshot metadata and optional reported UI context, without snapshot bytes. Default limit is 50, capped at 200.
 
-Audit queries consume chat metadata, tool call records, resource events, ledger events, file versions, automation runs, and UI context. Review loops can emit their own ledger events and recommendations.
+`agent:activity:query` uses its own registered route and `query-repository.js` for bounded activity/observation summaries, exact selectors and cursor pagination. Its default is 50, capped at 100. It does not return raw tool arguments/results or checkpoint bytes. An available detail reference points to existing Chat exchange storage; it is not a new captured-output artifact. Both routes report invalid, stale, unavailable or failed requests rather than changing historical operations. Current schemas do not create an audit run merely because a query was issued.
 
-Downstream recommendations, tickets, or follow-up events reference `auditQueryId` only through an accepted canonical audit/review reference. Query failure can return an incomplete/error result to the caller, but a rejected or unpublished audit ID never becomes an ID-bearing origin, cause, mirror, or ledger edge.
+The client has `queryResourceProvenance`, strict result/error validation, pending-request handling and workspace retirement. The source search finds no production invocation of that helper and no agent-activity client consumer. Existing File Viewer resource invalidation is a rendering path, not audit/history presentation. See [Assistant Query And Review Loops](../../009-Assistant_Query_And_Review_Loops/PAGE.md) for the complete query and consumer limitations.
 
-Evidence/result arrays and edges receive live IDs only through accepted delivery refs. Historical IDs require opaque `AcceptedLedgerRowRef` capabilities returned after trusted revalidation of accepted/validation status, exact stored safe payload, schema/policy version, identity columns, and payload hash. Row/status values alone never prove admission. Rejected-candidate diagnostics, raw runtime/provider IDs, unresolved filter inputs, and missing/tampered ledger targets remain explicit incomplete-evidence diagnostics outside canonical result arrays and edges.
+## Product direction
 
-## Proposed Domain Payload
+A useful audit should explain what changed, where the evidence came from, what is missing and which conclusions are uncertain. A future review may combine saved actions, tool observations, history and snapshots, then retain an understandable evidence set and recommendation. Temporal association is not causation; first observations are not preimages. Review confidence describes the conclusion, distinct from confidence in an event's attribution.
 
-This shape is decision input, not registration-ready. `AUD-D01` must settle the exact schema and branches described below before audit persistence:
+Audits are downstream observations. Missing evidence, query failure or recommendation persistence failure must not change the source operation being reviewed. Recommendations do not grant permission to execute changes, create arbitrary System app tables or give an assistant/plugin raw database or bus access. Durable audit history belongs to [System](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary); live application content remains at its authoritative source.
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily: 'audit',
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle,
-  ids,
-  actor,
-  provenance,
-  context,
-  audit: {
-    auditQueryId,
-    queryType,
-    filters,
-    evidenceEventIds: [],
-    resultEventIds: [],
-    resultFileVersionIds: [],
-    resultThreadIds: [],
-    resultTurnIds: [],
-    resultToolCallIds: [],
-    resultHarnessIds: [],
-    resultHarnessRunIds: [],
-    resultHarnessEventIds: [],
-    resultAutomationRunIds: [],
-    resultUiActionIds: [],
-    reviewConfidence,
-    generatedRecommendationIds: [],
-    generatedTicketIds: []
-  },
-  resources: [],
-  redaction
-}
-```
+## Open before a saved-audit or review-loop feature
 
-Use structured `actor` and `context` from the common envelope instead of a standalone `requestedBy` field.
+The owner must settle the query types and typed/redacted filters; exact event/lifecycle and incomplete/unavailable/cancel states; evidence/result identities and relationship validation; confidence meaning; recommendation and ticket ownership; disclosure/redaction; deterministic filter/result/text/graph/byte bounds and overflow; pagination and follow-up discoverability. A broader graph query also needs a separately approved causal/edge contract. Old accepted-reference APIs and candidate result arrays are proposals, not prerequisites retroactively imposed on today's bounded queries.
 
-`audit.reviewConfidence` describes confidence in the audit result or recommendation. It is separate from `provenance.confidence`, which describes attribution confidence for the event itself.
-
-`resultAutomationRunIds`, `resultUiActionIds`, `resultTurnIds`, and harness result arrays must be registered in the schema registry before implementation. If registry support is deferred, expose those references only through ledger edges and domain refs until registration lands.
-
-## Connections
-
-- Audit queries traverse ledger edges and chat metadata.
-- File versions supply before/after evidence.
-- Tool calls, harness runs, automation runs, and UI actions explain likely causes.
-- UI context helps separate user actions from assistant or headless automation.
-- Review recommendations can become future tickets, rules, skills, triggers, UI affordances, or code changes.
-
-## Gaps To Close
-
-- Current ledger querying is closer to recent-event listing than graph traversal.
-- Saved audit-query records do not exist yet.
-- Query outputs need confidence, redaction, and evidence references.
-- Audit pending state should use turn identity where chat turns are involved.
-- `AUD-D01` requires owner approval before SPEC-40b2f audit registration or SPEC-38b-38f: exact event/phase/lifecycle branches; versioned query types and typed/redacted filters; result/evidence presence and accepted-proof rules; review confidence; failure/incomplete/unavailable/cancel semantics; recommendation/ticket payload and domain ownership; redaction policy/failure-safe branch; deterministic hard limits, overflow diagnostics, and pagination for filters/evidence/results/summaries/recommendations/tickets/traversal/serialized bytes; and fail-open tests. SPEC-38a may gather evidence only. This does not block the first Wiki/File packet.
+A query UI must specify its real callers, response consumers and presentation of missing evidence. An autonomous review loop must additionally specify its trigger, allowed actions and approval boundary. Retention, deletion, restore and export require their own user-controlled lifecycle decisions; preserve history by default meanwhile. [File Version Provenance](../005-File_Version_Provenance_Schema/PAGE.md), [Chat Metadata](../001-Chat_Metadata_Provenance_Schema/PAGE.md) and [Ledger Event Provenance](../004-Ledger_Event_Provenance_Schema/PAGE.md) describe available evidence without implying those future schemas exist.

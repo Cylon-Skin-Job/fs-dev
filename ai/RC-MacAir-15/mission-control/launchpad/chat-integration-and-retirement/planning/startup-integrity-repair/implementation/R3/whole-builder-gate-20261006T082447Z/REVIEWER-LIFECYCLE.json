@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "gate": "builder-owned whole R3",
+  "builder": "/root/startup_integrity_repair_orchestrator/r3_builder",
+  "reviewer": "/root/startup_integrity_repair_orchestrator/r3_builder/r3_builder_review_01",
+  "agentType": "clean-room-reviewer",
+  "forkTurns": "none",
+  "modelOverride": null,
+  "reasoningEffortOverride": null,
+  "inheritedRootSettings": true,
+  "noPriorWholeR3ReviewerConclusionsOrDesiredVerdictSupplied": true,
+  "scope": "R3 whole slice and immediate accepted R1/R2/original complete preservation/adoption seams",
+  "reviewManifestSha256": "cb8c49d343669b06f613e7d7aa7d86ca2999c329dddeaee378faa125c103f7a2",
+  "preSpawnInventory": "only r3_builder active in its task tree; no prior reviewer or child present",
+  "events": [
+    {
+      "observedAt": "2026-10-06T08:29:50.275434+00:00",
+      "type": "dispatch acknowledged active",
+      "canonicalReviewer": "/root/startup_integrity_repair_orchestrator/r3_builder/r3_builder_review_01",
+      "note": "native spawn returned canonical task name; precise dispatch timestamp not exposed"
+    },
+    {
+      "observedAt": "2026-10-06T08:41:04.851934+00:00",
+      "type": "native final and list_agents completed verified",
+      "result": "CLEAN",
+      "materialFindings": 0,
+      "advisoriesRequiringRepair": 0
+    },
+    {
+      "observedAt": "2026-10-06T08:45:17.875458+00:00",
+      "type": "factual command receipt lookup terminal completed verified by native list_agents",
+      "noNewReviewOrTest": true,
+      "resultUnchanged": "CLEAN"
+    }
+  ],
+  "closeAgentCapability": {
+    "exposed": false,
+    "availableMatchingTools": [],
+    "checkedAt": "2026-10-06T08:28:46Z",
+    "attempt": "unavailable; no nonexistent command invoked",
+    "closureIsNotGateBlocker": true,
+    "terminalAttemptDisposition": "unavailable after terminal; no exposed close_agent tool, canonical native agent already completed",
+    "finalDisposition": "unavailable after final terminal/factual reply; no exposed close_agent tool; native reviewer completed"
+  },
+  "status": "completed",
+  "result": "CLEAN",
+  "reportedCompletionAt": "2026-10-06T08:37:21Z",
+  "rawReport": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/whole-builder-gate-20261006T082447Z/R3-BUILDER-REVIEW-01-RAW.md",
+    "sha256": "501e24d2b074aafdc52d69115c2b461fd1e618015c7247d594c6568cdfe6c989"
+  },
+  "firstMateriallyCleanPassStopped": true,
+  "newReviewerPassesAfterClean": 0,
+  "factualLookup": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/whole-builder-gate-20261006T082447Z/R3-BUILDER-REVIEW-01-COMMAND-LOOKUP.md",
+    "sha256": "afd9f886d73db6b933b938d11e465ed07d0fbf25d95b7cddc8f7920537894e71",
+    "pureMetadataOnly": true,
+    "compactHistoryMetadataLimitsPreserved": true
+  }
+}

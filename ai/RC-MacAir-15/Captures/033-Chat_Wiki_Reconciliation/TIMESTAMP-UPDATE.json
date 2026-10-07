@@ -1,0 +1,156 @@
+{
+  "timestamp": "2026-09-19T10:34:31Z",
+  "purpose": "Owner-requested current timestamps for the 20 reconciled articles and 5 updated guidance/schema articles. Only metadata.last-modified changes; earlier acceptance evidence is preserved.",
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033431.md",
+      "before_sha256": "84f8950ba61548b6ae6980d886fe55d90421371470ba8d8c835ad305c870a4c0",
+      "after_sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033431.md",
+      "before_sha256": "638e7ab5c4b3f895fbf58215417d60465bc2567e5f1049b3772dba52bee3a22e",
+      "after_sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033431.md",
+      "before_sha256": "62ae751a3f2632f1cfc9ce61b9e2ba3e2744ebaa908ce96c349f3585c3da0506",
+      "after_sha256": "669827c9f3cbd8970d074ba55defa333a3a14b154ffe97a9e27047b4d1c674d9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033431.md",
+      "before_sha256": "3e0f22864552f0ffa5875676bb1085635cfb23ca48b6750576a73d0c7cdbe508",
+      "after_sha256": "c995d59bde9a95dacaa9f9ae844d1d9701b05c6f8a259b3ced9fe9b6608c3288"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033431.md",
+      "before_sha256": "3dc7abb033bc68d5e3463cc80ccaad1124ad9e9cd10a2575d6527bd773c9dd63",
+      "after_sha256": "4e528382625aeef8cab6f5be9a52a5af35d2fce1c9675168ba8f5d87495d0055"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-033431.md",
+      "before_sha256": "4240c628a252d55a36073bafb65ebb4f98978d0219a13d18e0c0fe53db7058ae",
+      "after_sha256": "a36a727136e597b8b899a1c4b01be8a0404018a09a37451f189f5dfae9331d9a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-033431.md",
+      "before_sha256": "4b1a18cf80b65176a04572a6eaec3e7651ce1b3dcda36aa0a16fd62ece0b82f6",
+      "after_sha256": "db2a7e89316a3169fad557805e1c767a5a0577e17165ac9c074dcd7203af1205"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-033431.md",
+      "before_sha256": "def8dc92efb90fa5accda8ca41b50211af6a55dfd6df161ff7911e7780bf5e3d",
+      "after_sha256": "e06ceba6c95aff9f1c91f8baeb783f04a0229df542ab3547a2a9f801409fe23e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-033431.md",
+      "before_sha256": "d47062fbde88b5b06cb91fe7ee83641f95ff4ab24de43b4c67afdfeb96a02a0c",
+      "after_sha256": "5b5b55758454c34c706dba8d0d88ac8abc97fac1d9911d84dafaa6963c6d8a13"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-033431.md",
+      "before_sha256": "3580a6447a0bcf869f273642c4c5e4d4a45e41a5f785869adab9a38061c7ddc2",
+      "after_sha256": "be775a56a14b49b12ae47423a2c1e0c739091bc28174f28448185c00daab30ab"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-033431.md",
+      "before_sha256": "35d52954efa5c655b65e165dfe393faa0efcb053e07dba97749839fbc2b754e8",
+      "after_sha256": "3760761e13aa42eb1071c6a270458dce59dc6f8bab57277b49d12eeaad190a68"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-033431.md",
+      "before_sha256": "7dabc94731f6cbfdd552f801072ab77932dc6e59d8c23f815f16a4406c071607",
+      "after_sha256": "34871e39dec14a6b300d17d87ef79aab600b2b37fc7e6989335f3deefb4cca27"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-033431.md",
+      "before_sha256": "3dff6d2f113f417480e235e36992ed02e7d5a606c2702056e183cfbf93c8639d",
+      "after_sha256": "575fb0fe8ffdeb3950480ba0a2967b7b26f8dbeccfbe29d8b26ce38ecda73d36"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-033431.md",
+      "before_sha256": "65f25415d21f0ce5e6b0ebd99ad1591529064db6f7768a3541dd0243f6fa8d00",
+      "after_sha256": "59a2e541f479208f59558257e68810979b7c209e0e493c2900baa6164c7fb5a8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-033431.md",
+      "before_sha256": "72f732b1f32d65cba86a89bd9b88149572f505d2dc68ff78aa639197ed4cfa91",
+      "after_sha256": "1d01c0831dde9cc37144ab989fbbb8eda55236df996e16673d7efa4ee9a61940"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-033431.md",
+      "before_sha256": "bab6e50ad907faef2861ab420971c9323537e04a981c220575c97a117f376b09",
+      "after_sha256": "66d243fd062b9a185c4c3f20d207369cfe5cd61f2fac11bf3a0e7c65f9602701"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-033431.md",
+      "before_sha256": "b04933d5c95f724312508b3be0e46a6891185349233727af1ee53b7dac5dda8d",
+      "after_sha256": "d1193f21e46d3709805aa25aeb3ad1f250202bf64a85cea006a718e51772a3f7"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-033431.md",
+      "before_sha256": "2ae641953bda73983a10535e2a40241fd9cf24263b9d339fa61588f9b79d8342",
+      "after_sha256": "f33f80840149f0166c462269e40a7d3c66836af632572ee19f339ecc314f7fdf"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-033431.md",
+      "before_sha256": "10f0e30ee09ab0aec3c15eb8f551b792b54dd5c4d4f7c7c9eb3d970c0c53bf14",
+      "after_sha256": "858dc8307e00f5988c9b20d7b177c469724bb62baabc9762d43f59607d673be3"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-033431.md",
+      "before_sha256": "2108f294909a59d45e748ec3614f7754d00c79707f6fe484bb9b6d0205e23324",
+      "after_sha256": "c16e88f111f0957309de6667a69ba64e0286150d0d9a27653a336b976492579e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-033431.md",
+      "before_sha256": "7dbc007c936793585b2eb30c6611667012f32e799afc220a772c469f0531a557",
+      "after_sha256": "606b767188d6410d2b1cde90ebb6058dad76bc52bccd5d6f66c123c71ea81224"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-033431.md",
+      "before_sha256": "976ac7bde9c3e743e62904807e9d412f0fab7445c2d6ff748bcb1e4deb1d3ee3",
+      "after_sha256": "2f28230ac90dbd2ca42aa33b3cc2b223e3ec02b14a8b28a83bb2d9c87a99e74a"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-033431.md",
+      "before_sha256": "ec3e2f42bd020d5f221a7f2220179fc082905909ce59d42b163f9240a4e9f892",
+      "after_sha256": "05dc90a0a0674246199b10bb61383ae5309b32683f2c02ac7a5d7ab9aa692c97"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-033431.md",
+      "before_sha256": "742417607e58117a2cf395fabb87a683664837def1d67080747cf6953ebffe2e",
+      "after_sha256": "2575fd2b33972397d59225bd222cb6b203e444bc273872fe136ba718b82ffe65"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-033431.md",
+      "before_sha256": "f0796f4915d9ba23be35f20110987289f616be0e021df4610fed3ad77acc6910",
+      "after_sha256": "0e675d83d6853d387a5b660ee54bf0635b2aa884a22fca8fde75f0bcf991eb8e"
+    }
+  ]
+}

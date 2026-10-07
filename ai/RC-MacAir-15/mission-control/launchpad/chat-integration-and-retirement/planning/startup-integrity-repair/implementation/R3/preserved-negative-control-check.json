@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-06T01:40:14.049757+00:00",
+  "pristineFiles": [
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe"
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414"
+    }
+  ],
+  "identityOnlyFiles": [
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-startup.js",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-runtime.js",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/index.js",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414"
+    }
+  ],
+  "pristineCount": 11,
+  "identityOnlyCount": 11,
+  "modifiedOrCleaned": false
+}

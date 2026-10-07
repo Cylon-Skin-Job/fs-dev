@@ -1,44 +1,30 @@
 ---
 name: Events Change Storm Control
-description: How high-frequency file changes are compacted or summarized so the ledger remains useful.
+description: Legacy bus and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events Ledger Schema
-    - Events File Versioning
   source-files:
-    - fusion-studio-server/lib/watch/workspace-watcher.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/event-bus.js
+    - fusion-studio-server/lib/event-registry/seed-catalog.js
+    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+  last-modified: "2026-10-06T22:14:26Z"
 ---
 
-Use this page before persisting high-volume file mutation events.
+Status: source inspected on 2026-09-19 in the development checkout. Legacy bus guards and bounded tool checkpoints exist. The generic workspace watcher and its rename heuristics have since been retired. A governed storm detector, durable storm-batch schema and compaction policy are not implemented in the inspected owners. No runtime or load test was run.
 
-The ledger must preserve that a change storm happened without flooding durable storage or future assistant context. Formatters, generated builds, loops, triggers, schedulers, and external tools can produce many mutations quickly.
+## Current mechanisms and limits
 
-`ULV-D04` remains owner-blocked before storm detection, batch persistence, or compaction. In addition to window thresholds, it must approve global detector caps for active windows, tracked workspace/group keys, buffered member refs, timers, diagnostics, pending reconciliation, and aggregate in-memory/serialized state; hard persisted caps for affected path/resource arrays, representative event/version IDs, cause/actor/resource entries, compacting edges, rows per window, diagnostics, and serialized summary bytes; deterministic admission/coalescing/eviction/expiry/cleanup/ordering/selection/deduplication; first/last preservation; overflow counters/flags and follow-up discoverability; crash/restart persistence-or-discard behavior; byte serialization/encoding; cap-conflict precedence; and configuration ownership. Adversarial unique-key or sustained load must remain bounded. Overflow may degrade storm metadata but cannot suppress/delay source facts, drop artifacts before accepted 35f, or merge unrelated keys into false attribution. No implementation may invent defaults or call either the detector or summary bounded before that decision closes.
+The generic workspace watcher has been retired; it no longer excludes paths, sends changes to filters, emits broad legacy `file:changed` events, or infers rename candidates. The legacy bus retains its own delivery/coalescing/chain controls for independent producers; those do not create a durable change-storm summary or guarantee bounded historical growth.
 
-## Policy Shape
+Current mediated saves preserve eligible exact preimages. Tool observation stores sparse eligible checkpoints and reuses unchanged state. These narrower mechanisms have their own admission, retry and failure rules, documented in [File Versioning](../006-File_Versioning/PAGE.md). Neither registers a general storm batch or authorizes dropping existing history. The registry's four built-in fact types contain no storm event.
 
-- Producers should emit facts.
-- Ledger/versioning subscribers should decide when to compact, summarize, or drop intermediate snapshots.
-- Storm records should preserve time range, affected paths, count, actor/provenance, and representative before/after state when available.
-- Mixed-cause or mixed-actor storms should summarize attribution in `changeStorm.causeSummary` instead of inventing a single precise top-level cause.
-- Limits should be explicit: changes per minute, max versions per file per window, max blob size, and retention behavior.
+## Direction and proposals
 
-## First Versioning Slice Shape
+The product goal is to retain evidence that a high-frequency burst occurred without flooding history or future assistant context. Summaries should make their time span, affected resources, counts, missing detail and representative state understandable. Mixed actors or causes must remain mixed/unknown instead of becoming a false single attribution. Compaction belongs with history consumers; it must not suppress or roll back the source work.
 
-Until explicitly promoted to a separate event family, storm batches are versioning/ledger compaction events:
+A batch event, summary schema, sampling strategy and representative first/last versions are design proposals. Earlier version-event names and accepted-reference examples are not current APIs or approved capacity defaults. The accepted save preimage and tool checkpoint/hash policies remain valid in their exact scopes; a blanket ban on all hashes would be incorrect, as would extending them to arbitrary storm output.
 
-- `eventFamily: 'file.version'`
-- `eventType: 'file.version.change_batch'`
-- Domain payload key: `changeStorm`
+## Decisions before storm detection or compaction
 
-`changeStorm` should include affected paths, count, started/ended timestamps, reason, first/last event IDs, `causeSummary`, and representative before/after hashes or snapshot IDs when available. `causeSummary` should preserve per-confidence, per-cause, and per-actor counts. If compacted events have mixed causes, omit top-level `provenance.cause`; if compacted events have mixed actors, use a non-specific top-level actor and keep actor detail in `changeStorm.causeSummary`.
+A future feature must settle grouping keys, thresholds/windows and configuration ownership; global detector/key/timer/buffer limits; persisted path/identity/summary/serialized-byte limits; deterministic admission, ordering, deduplication, coalescing, expiry and overflow; first/last selection and discoverability of omitted detail; crash/restart behavior; redaction and eligible representative content. Sustained unique-key traffic must be accounted for as well as bursts on one file. No numerical capacity is approved by this page.
 
-Every live ID-bearing storm member must come from an accepted canonical delivery ref. A historical member requires an opaque fully revalidated `AcceptedLedgerRowRef`. First/last/representative own identities use ordinary event/domain selectors. Cause/actor/resource IDs embedded in a member require SPEC-39-registered exact target/source `acceptedPayloadPointer` bindings against that capability; whole-object/raw-pointer copies and raw row/status strings never qualify. Raw runtime/candidate IDs, tampered rows, and rejected diagnostics remain outside arrays/summaries as unknown or incomplete diagnostics.
-
-Slice 39d historical edge/query support cannot begin until SPEC-35d and SPEC-40c are accepted. Earlier live storm persistence does not authorize reading raw ledger IDs or rows as historical proof.
-
-Storm-batch persistence/compaction requires explicit file type/size eligibility, threshold, retention, and redaction/hash decisions. Representative hashes require the redaction/hash policy; snapshot or diff references require the snapshot/diff policy decision before persistence.
+Deleting or compacting snapshots additionally requires the explicit user-controlled retention policy and recovery guarantees. Preservation by default is already settled; exact tiers, durations and user controls are not. Historical copies support audit/recovery, while restore is a separately permitted write to the authoritative source. The [Ledger Schema](../004-Ledger_Schema/PAGE.md) and [System boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) own those distinctions. Do not reopen that storage boundary merely to design a storm feature.

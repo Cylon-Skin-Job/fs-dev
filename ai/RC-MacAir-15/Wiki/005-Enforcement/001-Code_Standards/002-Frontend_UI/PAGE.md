@@ -2,17 +2,11 @@
 name: Frontend UI Standards
 description: Rules for UI components, composer/reply chrome, user intents, and presentation boundaries.
 metadata:
-  incoming-edges:
-    - Code Standards
-  outgoing-edges:
-    - Architecture Routing
-    - State Management Standards
-    - Chat Styling And Workspace CSS
   source-files:
-    - fusion-studio-client/src/components/
     - fusion-studio-client/src/lib/chat-action.ts
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/chat/reply-chrome-actions.ts
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+  last-modified: "2026-09-28T04:18:57Z"
 ---
 
 Use this page before changing React components, chat chrome, buttons, menus,
@@ -86,6 +80,10 @@ Use semantic selection kinds:
 Several visually checked values must never be exposed as radio items. Shared
 visual checkmarks do not override the selection semantics communicated to
 assistive technology.
+
+## Copy actions
+
+**Approved direction; implementation pending:** User-initiated Copy actions should write the intended payload once to the system clipboard without retaining a Fusion Studio clipboard-history copy. Keep copy behavior in a connected feature controller or small platform utility, with reusable presentation receiving a callback. Ordinary paste remains a system action. Current `writeAndRecord` callers and the opt-in clipboard monitor are transitional code scheduled for removal by approved product direction; do not extend managed history when adding a copy action. Credential values belong in [Secrets Manager](../../../004-Integrations_And_Tools/002-Secrets_Manager/PAGE.md), not a copy-history store.
 
 ## Required Checks
 

@@ -1,0 +1,117 @@
+{
+  "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c",
+  "sourceRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r1-preimage-0eszen0n",
+  "soleDelta": {
+    "file": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+    "beforeSha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+    "afterSha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8",
+    "from": "workspace-watcher-trigger-pipeline",
+    "to": "workspace-automation-pipeline"
+  },
+  "files": [
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/startup.js",
+      "originalSha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "originalSha256": "d5fba64a72c8a5d5340bbe1edc57878ae5e377e2ab8e4ee3014c2e567294ee6a",
+      "sha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-startup.js",
+      "originalSha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9",
+      "sha256": "391568b7931da1325eb65dedc93ba2d8e534ba5a85dc6aaaf2fc9e066fdef3a9"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-runtime.js",
+      "originalSha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "originalSha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/views/index.js",
+      "originalSha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "sha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "originalSha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "originalSha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0",
+      "sha256": "ac2f540f425873da13cb00b4d10e0678ec41c4af8fbb83f72bdac67bf3452ac0"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "originalSha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79",
+      "sha256": "b19bd2c6fb7bc4245cf7ca2775c47ebdfe96d23cf466e045b33cfdd11d2e0a79"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "originalSha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe",
+      "sha256": "ed25619a52813164ae61b11cf87e1da47cc27f752ffa9eaeed36e3ec9944bcfe"
+    },
+    {
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "originalSha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414",
+      "sha256": "66931c8d42d1a2ae090fb5a77f9682a4417f1f4aba3215f069fc0a0436db8414"
+    }
+  ],
+  "controlMarker": {
+    "owner": "/root/startup_integrity_repair_orchestrator/r2_builder",
+    "purpose": "CHAT-AR-REPAIR-01 R2 identity-only counterfactual retained for manager cleanup",
+    "nonce": "3847d4ec-ccb9-4e01-9679-65e3d92d5803",
+    "createdAt": "2026-10-06T00:41:37.775204+00:00"
+  },
+  "executedSeam": [
+    {
+      "load": "shadow copied startup",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/startup.js",
+      "sha256": "cab1812bcf64f579b64c70d22d54ac93042d24aeb5ba2d21dc6ab660f2a2bda3"
+    },
+    {
+      "load": "shadow copied effect runtime",
+      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c/fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "sha256": "9cbc2e8a1142550523f5f10995a4174cad99f69f2f5aa8cc7a8d4e0b9857a8b8"
+    }
+  ],
+  "unchangedDependencySymlinks": [
+    {
+      "relative": "lib/views/index.js",
+      "resolvesTo": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/index.js",
+      "auditedSha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "currentSha256": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3"
+    },
+    {
+      "relative": "lib/views/readiness-runtime.js",
+      "resolvesTo": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-runtime.js",
+      "auditedSha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "currentSha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+    },
+    {
+      "relative": "lib/views/readiness-coordinator.js",
+      "resolvesTo": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-coordinator.js",
+      "auditedSha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "currentSha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011"
+    },
+    {
+      "relative": "lib/workspace/workspace-controller.js",
+      "resolvesTo": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/workspace/workspace-controller.js",
+      "auditedSha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "currentSha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    }
+  ],
+  "wrapperExcluded": "Audited copied startup has no readiness-startup import/call. Its disconnected wrapper copy retains audited hash and is not loaded. Current changed readiness-startup is not a dependency of this negative startup; no readiness source mock or manufactured owner is used.",
+  "negativeCommand": "STARTUP_INTEGRITY_PREIMAGE_ROOT='/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r2-identity-control-0vi4iw2c' npx jest --runInBand --runTestsByPath test/runtime/workspace-startup-integrity.test.js -t 'actual unavailable startup|actual normal startup'",
+  "negativeExitCode": 1,
+  "negativeResult": "2 expected failing readiness assertions: ready stages have lease0; conflict retains unavailable/root_conflict and reaches all11 consumer stages with lease0. Identity is valid; no unknown-name failure.",
+  "everySavedControlHashStillMatches": true
+}

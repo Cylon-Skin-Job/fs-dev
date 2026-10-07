@@ -1,0 +1,128 @@
+{
+  "source_inspected_at": "2026-09-21T11:58:30Z",
+  "renderer_source": "fusion-studio-client/src/components/ContentArea.tsx",
+  "renderer_sha256": "968622f942a171ea2e99dd98a5ce7cd8e78c68d5b4f17064a5f459bf68d0760d",
+  "entries": [
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/001-browser-viewer/manifest.md",
+      "sha256": "b18cad6aed78b835948a397f6e61c7080fd1b595eda34d3f6e436d64283e83af",
+      "view_id": "browser-viewer",
+      "name": "Browser",
+      "type": "browser",
+      "has_content_json": true,
+      "built_in_component_map": false
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/002-capture-viewer/manifest.md",
+      "sha256": "c4d80d62444e228c1fdacb0b995c7b9d3c3e3c38fe28901ed21ce6eb0062e888",
+      "view_id": "capture-viewer",
+      "name": "Captures",
+      "type": "captures",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/003-office-viewer/manifest.md",
+      "sha256": "522163c761b98208fb2cc23c1d9e3cabc1e981e169013fb4f6e1797ebefe8323",
+      "view_id": "office-viewer",
+      "name": "Office",
+      "type": "office",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/004-library-viewer/manifest.md",
+      "sha256": "2a5002be91612a27a9fae3882017c9afa6f213b81842b83667874fb6aa24fbbf",
+      "view_id": "library-viewer",
+      "name": "Library",
+      "type": "library",
+      "has_content_json": true,
+      "built_in_component_map": false
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/005-media-viewer/manifest.md",
+      "sha256": "195ea6698b886be1f681e8702685225cf5c4fcdbd377381e8813c559fb617c46",
+      "view_id": "media-viewer",
+      "name": "Media",
+      "type": "media",
+      "has_content_json": true,
+      "built_in_component_map": false
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/006-email-viewer/manifest.md",
+      "sha256": "0ce3a77eb4afaaed1bcc9a23619c4acbc3b9165e7e51b64846b8ea89223ef496",
+      "view_id": "email-viewer",
+      "name": "Email",
+      "type": "email",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/007-calendar-viewer/manifest.md",
+      "sha256": "5d248119019831ff2c60fc5bc32d8b7c5ea2508633e3f77cd83ea2faa6b41fba",
+      "view_id": "calendar-viewer",
+      "name": "Calendar",
+      "type": "calendar",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/008-contacts-viewer/manifest.md",
+      "sha256": "bfcbcb7af91bb0b59117a67e99e37a4702ec6be60202cf2222a1d57805e2f4a0",
+      "view_id": "contacts-viewer",
+      "name": "Contacts",
+      "type": "contacts",
+      "has_content_json": true,
+      "built_in_component_map": false
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/009-custom-viewer/manifest.md",
+      "sha256": "5243a826adab52ad256b2cec44373fa33bbd1405d28f837e3a1e11071051487f",
+      "view_id": "custom-viewer",
+      "name": "Custom",
+      "type": "iframe",
+      "has_content_json": true,
+      "built_in_component_map": false
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/010-file-viewer/manifest.md",
+      "sha256": "5568a66753ebfc3e200c78d221c75c7b00ccb54b927b87b41c4586b2aead9406",
+      "view_id": "file-viewer",
+      "name": "Files",
+      "type": "file-explorer",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/011-issues-viewer/manifest.md",
+      "sha256": "f2bc28ff523fcf1daa7154de3dcf00dac47cbb2b25f3fc0023c03ce7e92a9fd1",
+      "view_id": "issues-viewer",
+      "name": "Issues",
+      "type": "ticket-board",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/012-wiki-viewer/manifest.md",
+      "sha256": "27140a3ab112c1312eb52214f755c8d68f17b9d3d0d7aa3aa7ad3bc1dc20ae03",
+      "view_id": "wiki-viewer",
+      "name": "Wiki",
+      "type": "wiki",
+      "has_content_json": true,
+      "built_in_component_map": true
+    },
+    {
+      "path": "System_Manager/ai-template/templates/view-templates/013-agents-viewer/manifest.md",
+      "sha256": "1e00317a56694c7dca8bd921904c8c9efc8db92c66744338c104ef9d087be388",
+      "view_id": "agents-viewer",
+      "name": "Agents",
+      "type": "agent-tiles",
+      "has_content_json": true,
+      "built_in_component_map": true
+    }
+  ],
+  "limits": [
+    "Template existence and component-map presence do not prove a complete working view.",
+    "No product runtime verification."
+  ]
+}

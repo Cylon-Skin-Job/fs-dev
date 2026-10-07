@@ -1,22 +1,15 @@
 ---
-name: Calendar Viewer
-description: Calendar view in Fusion Home. Stub - planned; runs on the shared SQLite layer and ships with the Fusion Home templated workspace.
+name: "Calendar Viewer"
+description: "Fusion Home routing to current view status and future connected-app direction."
 metadata:
-  incoming-edges:
-    - Fusion Home
-  outgoing-edges:
-    - Fusion Home
   source-files: []
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
-> **Stub.** This page is a breadcrumb. Deep content is pending a dedicated
-> build pass.
+Calendar has a mounted demo UI and optional, incomplete sync/storage paths. This is not a finished connected calendar integration.
 
-**Calendar Viewer** is a planned office-app view inside
-[Fusion Home](../000-Fusion_Home/PAGE.md). It is part of the templated workspace
-that ships with Fusion Studio and runs on the shared SQLite layer; it does not
-drop into new workspaces automatically but can be added by user action.
+Read [Calendar Viewer current status](../../001-Workspaces_And_Views/016-Calendar_View/PAGE.md) before planning changes. The [Fusion Home profile](../000-Fusion_Home/PAGE.md) does not currently select this view. A future office-app composition is a design direction, not a shipped inventory.
 
-Scope, schema, and editing behavior are pending a dedicated build pass.
+Connected services remain authoritative for live application content. Existing Calendar writes into `fusion.db`, when enabled, are a documented implementation gap against that direction; they do not establish a shared System database for every app.
+
+Account binding, editing, capabilities and complete integration behavior need their own implementation decisions.

@@ -11,8 +11,6 @@ const screenshotService = require('../workspace/screenshot-service');
 const workspaceState = require('../workspace/workspace-state');
 const workspaceController = require('../workspace/workspace-controller');
 const aiPaths = require('../workspace/ai-paths');
-const sourceFolderService = require('./source-folder-service');
-const hotkeyScreenshotWatcher = require('./hotkey-screenshot-watcher');
 const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
 
 async function prepareFileScreenshot(workspaceId) {
@@ -130,8 +128,6 @@ function createScreenshotHandlers({ getAllClients }) {
 
       try {
         const prepared = await prepareFileScreenshot(workspaceId);
-        await sourceFolderService.refresh();
-        await hotkeyScreenshotWatcher.refresh();
         const savedPath = await saveFileScreenshot(dataUrl, prepared);
         ws.send(JSON.stringify({
           type: 'screenshot:file-captured',
@@ -150,22 +146,6 @@ function createScreenshotHandlers({ getAllClients }) {
       }
     },
 
-    'screenshot:refresh-source': async (ws, _msg) => {
-      try {
-        const sourcePath = await sourceFolderService.refresh();
-        await hotkeyScreenshotWatcher.refresh();
-        ws.send(JSON.stringify({
-          type: 'screenshot:source-refreshed',
-          sourcePath,
-        }));
-      } catch (err) {
-        console.error('[ScreenshotHandler] refresh-source failed:', err.message);
-        ws.send(JSON.stringify({
-          type: 'screenshot:error',
-          message: err.message,
-        }));
-      }
-    },
   };
 }
 

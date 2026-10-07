@@ -1,44 +1,59 @@
 ---
 name: Events And Ledger Structure
-description: File and module map for event bus, ledger, watcher, resource sync, metadata collectors, and future versioning work.
+description: File and module map for event bus, ledger, resource sync, metadata collectors, and future versioning work.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events Universal Event Bus
-    - Events Resource Events And Render Sync
-    - Events Ledger Schema
   source-files:
     - fusion-studio-server/lib/event-bus.js
-    - fusion-studio-server/lib/ledger
-    - fusion-studio-server/lib/watch
-    - fusion-studio-server/lib/chat-metadata
-    - fusion-studio-client/src/lib/ws
-    - fusion-studio-client/src/state/fileDataStore.ts
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/startup.js
+    - fusion-studio-server/lib/event-registry/index.js
+    - fusion-studio-server/lib/event-registry/seed-catalog.js
+    - fusion-studio-server/lib/subscriptions/admission.js
+    - fusion-studio-server/lib/subscriptions/controller.js
+    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/agent-provenance/fact-authority-repository.js
+    - fusion-studio-server/lib/file-mutations/save-controller.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Current file/module map for events, resource sync, provenance, and ledger work.
+Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
 
-## Server
+This map identifies current owners; it is not a claim that every planned provenance subsystem is implemented. Server paths below begin at `fusion-studio-server/`; client paths begin at `fusion-studio-client/`.
 
-| File | Role |
+## Current server
+
+| Owner | Responsibility |
 |---|---|
-| `fusion-studio-server/lib/event-bus.js` | Universal Event Bus pub/sub. |
-| `fusion-studio-server/lib/watch/core.js` | Central chokidar watcher manager. |
-| `fusion-studio-server/lib/watch/workspace-watcher.js` | Workspace filesystem observation and UEB file-change emission. |
-| `fusion-studio-server/lib/ledger/event-ledger-subscriber.js` | Durable event ledger subscriber. |
-| `fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js` | Chat turn file mutation metadata collection. |
-| `fusion-studio-server/lib/ws/workspace-request-handlers.js` | File move/rename/delete command paths that need canonical resource event emission. |
-| `fusion-studio-server/lib/file-explorer.js` | File create/save paths and legacy file change emission. |
+| `lib/db.js`, `lib/startup.js` | System DB/migrations, registry initialization, host composition and startup reconciliation before public traffic |
+| `lib/event-registry/index.js`, `reconcile.js`, `repository.js`, `policy.js` | Database-backed effective schema/subscription/grant authority; no project-file discovery |
+| `lib/event-registry/seed-catalog.js`, `subscription-seed-catalog.js`, `schemas/*.json` | Shipped locked schema and handler contracts; command/query/projection definitions are not all facts |
+| `lib/subscriptions/admission.js`, `file-provenance-bootstrap.js` | Four sealed publisher identities and durable reservation verification |
+| `lib/subscriptions/generation-compiler.js`, `handler-catalog.js`, `capability-factory.js`, `controller.js` | Closed handlers, exact grants/filter compilation, reload generations, delivery and acknowledgments |
+| `lib/event-bus.js` | Separate legacy EventEmitter compatibility API and synchronous chain guards |
+| `lib/ledger/event-ledger-subscriber.js`, `event-ledger.js` | Legacy whitelist (`workspace:switched`, `thread:state_changed`), sanitized event projection and shutdown drain |
+| `lib/ws/file-save-route.js`, `lib/file-mutations/save-owner.js`, `save-controller.js` | Public save validation and the required operation/preimage/atomic replacement contract |
+| `lib/file-mutations/durable-reservations.js`, `fact-replay.js`, `reconciliation.js` | Save authority, pending fact replay, restart outcome/cleanup handling |
+| `lib/ledger/resource-provenance-repository.js`, `provenance-ledger-handler.js` | Same-fact save ledger transaction and compact provenance queries |
+| `lib/agent-provenance/activity-owner.js`, `activity-repository.js`, `fact-authority-repository.js`, `fact-admission-reconciler.js` | Normalized agent activity, producer fact state and admission reconciliation |
+| `lib/agent-provenance/resource-observer.js`, `checkpoint-repository.js`, `observation-job-repository.js` | Bounded post-tool observation/checkpoints and durable jobs; uses `native/secure-file-observer/index.js` |
+| `lib/agent-provenance/agent-ledger-repository.js`, `agent-ledger-reconciler.js` | Two admitted agent fact projections with producer-owned durable retry state |
+| `lib/agent-provenance/renderer-projection-authority.js`, `renderer-projection-scheduler.js` | Durable observation invalidation work, distinct from save projection callback |
+| `lib/subscriptions/handlers/resource-render-projection.js`, `lib/ws/resource-projection-publisher.js` | Save invalidation and workspace-bound projection transport |
+| `lib/ws/resource-provenance-route.js`, `agent-activity-route.js`, `lib/agent-provenance/query-repository.js` | Typed bounded query transports/repositories; no mounted audit UI follows from these modules |
+| `lib/chat-metadata/collectors/file-mutations.js` | Optional legacy `file:changed` correlation when another producer supplies an event; no general workspace watcher input |
 
-## Client
+## Current client integration
 
-| File | Role |
+| Owner | Responsibility |
 |---|---|
-| `fusion-studio-client/src/lib/ws/file-handlers.ts` | Current file WebSocket response and change handling. |
-| `fusion-studio-client/src/state/fileDataStore.ts` | Central file tree/content cache and invalidation state. |
-| `fusion-studio-client/src/components/wiki/WikiExplorer.tsx` | Current private Wiki tree/content loading path. |
-| `fusion-studio-client/src/state/wikiStore.ts` | Wiki selection, content, history, and view state. |
-| `fusion-studio-client/src/hooks/usePanelData.ts` | Generic per-view WebSocket data hook targeted for migration. |
+| `src/state/fileDataStore.ts` | Mediated save caller and central File Viewer invalidation/refetch state |
+| `src/lib/save-action-context.ts` | Optional reported context captured from registered live view/component state |
+| `src/lib/ws/file-handlers.ts` | Save/query/read response and resource projection handling |
+| `src/components/ContentArea.tsx`, `src/components/view-tabs/ViewTabBar.tsx`, `viewTabAdapters.ts`, `fileConnectedAdapter.ts` | Policy-gated File document mounting; connected presenter when ready, legacy children otherwise |
+| `src/components/file-explorer/FileDocumentPresenter.tsx`, `FileViewer.tsx` | Connected and legacy File consumers of central file state respectively |
+
+Detailed save/freshness and tool/query contracts are in their topic articles. Chat persistence and identity remain owned by [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md); naming a source here does not replace that authority.
+
+## Planned areas
+
+General UI action adapters, canonical automation/audit records, causal graph traversal, canonical file-version events, arbitrary plugin producers and universal restore/retention remain future or open. The implemented save context, sparse checkpoint stores and query helpers are narrower counterparts. Locate the current owner and [settled decisions](../000-Events_And_Ledger/002-Decisions/PAGE.md) before planning an extension; do not infer a production module from an older exact API proposal.

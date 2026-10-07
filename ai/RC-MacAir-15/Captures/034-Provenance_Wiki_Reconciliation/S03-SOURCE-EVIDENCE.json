@@ -1,0 +1,4209 @@
+{
+  "at": "2026-09-19T03:27:24.090751-07:00",
+  "candidate": "PW01-f24d5cd427b9ca14",
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "files": [
+    {
+      "path": "fusion-studio-client/e2e/agent-resource-projection-source.spec.ts",
+      "sha256": "1d2c97f7695c2c28463eefeb13a7fff31b979a2b96b6acf93ff71495fe3a3a7f",
+      "line_count": 151,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 20,
+          "text": "function changed(overrides: Partial<ResourceChangedMessageV2> = {}): ResourceChangedMessageV2 {"
+        },
+        {
+          "line": 32,
+          "text": "function reset(messages: Array<Record<string, unknown>>, closes: Array<[number, string]>) {"
+        },
+        {
+          "line": 50,
+          "text": "test('v2 client validator mirrors the immutable server union exactly', () => {"
+        },
+        {
+          "line": 74,
+          "text": "test('v2 stable dominant-edge identity dedupes exact replay and rejects conflict', () => {"
+        },
+        {
+          "line": 97,
+          "text": "test('first, changed, unchanged, absent, and agent recovery all use targeted refetch', () => {"
+        },
+        {
+          "line": 141,
+          "text": "test('stale v2 is ignored and malformed v2 closes instead of falling into v1', () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/e2e/file-save-protocol-source.spec.ts",
+      "sha256": "998a1d0cdfe935b1d39bca40925ca698bd7cbbf8c51644da677911e0f831ea61",
+      "line_count": 541,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 24,
+          "text": "function success(request: {"
+        },
+        {
+          "line": 50,
+          "text": "function resetStores(messages: Array<Record<string, unknown>>) {"
+        },
+        {
+          "line": 69,
+          "text": "test('exact request builder emits closed own keys and omits absent optionals', () => {"
+        },
+        {
+          "line": 86,
+          "text": "clientActionId: 'action-1', reportedUiContext: { viewId: 'office-viewer' },"
+        },
+        {
+          "line": 90,
+          "text": "reportedUiContext: { viewId: 'office-viewer' },"
+        },
+        {
+          "line": 98,
+          "text": "test('response correlation requires request id and both current workspace-pair values', () => {"
+        },
+        {
+          "line": 118,
+          "text": "test('runtime response guard rejects closed-union drift, missing reserved ids, and warning disorder', () => {"
+        },
+        {
+          "line": 142,
+          "text": "test('all first-party save reasons use the advertised v1 sender and wait for correlated success', async () => {"
+        },
+        {
+          "line": 165,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(request))).toBe(true);"
+        },
+        {
+          "line": 171,
+          "text": "test('wrong-id and stale-pair replies cannot settle a pending save', async () => {"
+        },
+        {
+          "line": 178,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(wrongId)).toBe(false);"
+        },
+        {
+          "line": 180,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(stale)).toBe(false);"
+        },
+        {
+          "line": 183,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(request))).toBe(true);"
+        },
+        {
+          "line": 187,
+          "text": "test('a save acknowledgement only clears the dirty revision it captured', async () => {"
+        },
+        {
+          "line": 198,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(first))).toBe(true);"
+        },
+        {
+          "line": 206,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(second))).toBe(true);"
+        },
+        {
+          "line": 212,
+          "text": "test(`${panel} navigation drains an in-flight save and every later dirty revision`, async () => {"
+        },
+        {
+          "line": 236,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(first))).toBe(true);"
+        },
+        {
+          "line": 242,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(second))).toBe(true);"
+        },
+        {
+          "line": 246,
+          "text": "test(`${panel} navigation aborts when its pending save loses acknowledgement`, async () => {"
+        },
+        {
+          "line": 267,
+          "text": "test('A -> B -> A clears old correlation so a delayed first-A reply is discarded', async () => {"
+        },
+        {
+          "line": 279,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(firstA))).toBe(false);"
+        },
+        {
+          "line": 284,
+          "text": "test('reconnect retires the epoch and pending correlation without erasing dirty/content state', async () => {"
+        },
+        {
+          "line": 310,
+          "text": "test('workspace bootstrap traffic starts only after the bind helper runs', async () => {"
+        },
+        {
+          "line": 325,
+          "text": "test('other workspace-bound bootstrap stays deferred until the bound workspace is applied', () => {"
+        },
+        {
+          "line": 344,
+          "text": "test('pair-less fixed rejection correlates by request id; legacy remains active until advertised', async () => {"
+        },
+        {
+          "line": 355,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(rejected)).toBe(true);"
+        },
+        {
+          "line": 371,
+          "text": "test('legacy A -> B -> A retires ambiguous path correlation until socket replacement', async () => {"
+        },
+        {
+          "line": 414,
+          "text": "test('an in-flight autosave serializes rather than suppresses a required milestone', async () => {"
+        },
+        {
+          "line": 426,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(first))).toBe(true);"
+        },
+        {
+          "line": 432,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(second))).toBe(true);"
+        },
+        {
+          "line": 436,
+          "text": "test('outcome-unknown and transport send failure preserve dirty state and reject completion', async () => {"
+        },
+        {
+          "line": 457,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(outcomeUnknown)).toBe(true);"
+        },
+        {
+          "line": 470,
+          "text": "test('throwing WebSocket sends reject and remove pending v1 and legacy saves', async () => {"
+        },
+        {
+          "line": 491,
+          "text": "test('document milestone callers clear dirty state only after correlated acknowledgement', async () => {"
+        },
+        {
+          "line": 499,
+          "text": "saveFile: useFileDataStore.getState().saveFile,"
+        },
+        {
+          "line": 509,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(outbound))).toBe(true);"
+        },
+        {
+          "line": 517,
+          "text": "saveFile: () => new Promise<void>((_resolve, reject) => { rejectSave = reject; }),"
+        },
+        {
+          "line": 525,
+          "text": "test('document milestone acknowledgement does not clear a newer editor revision', async () => {"
+        },
+        {
+          "line": 532,
+          "text": "saveFile: useFileDataStore.getState().saveFile,"
+        },
+        {
+          "line": 537,
+          "text": "expect(useFileDataStore.getState().handleSaveResponseV1(success(outbound))).toBe(true);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+      "sha256": "71b9225703049a33f09b2c08b860d00b113eaebd1ca1715cc61d4e7f3f1d6968",
+      "line_count": 601,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 41,
+          "text": "function installBrowserWireObserver(page: Page) {"
+        },
+        {
+          "line": 96,
+          "text": "async function waitForPageMessage(page: Page, predicate: (message: WireMessage) => boolean) {"
+        },
+        {
+          "line": 107,
+          "text": "async function openFolder(page: Page, name: string) {"
+        },
+        {
+          "line": 120,
+          "text": "async function openFile(page: Page, folders: string[], fileName: string) {"
+        },
+        {
+          "line": 127,
+          "text": "function parseMessageEvent(event: Event): WireMessage | null {"
+        },
+        {
+          "line": 131,
+          "text": "async function fixtureConnection() {"
+        },
+        {
+          "line": 150,
+          "text": "async function waitForFixtureMessage("
+        },
+        {
+          "line": 164,
+          "text": "async function sendAndWait("
+        },
+        {
+          "line": 174,
+          "text": "function currentFixturePair(messages: WireMessage[]) {"
+        },
+        {
+          "line": 184,
+          "text": "function saveRequest(pair: ReturnType<typeof currentFixturePair>, requestId: string, panel: string, filePath: string, content: string): WireMessage {"
+        },
+        {
+          "line": 188,
+          "text": "reportedUiContext: { viewId: 'file-viewer', viewInstanceId: 'isolated-live-proof' },"
+        },
+        {
+          "line": 192,
+          "text": "async function assertStartupAudit() {"
+        },
+        {
+          "line": 229,
+          "text": "async function prepareFileViewer(page: Page) {"
+        },
+        {
+          "line": 242,
+          "text": "async function observeVisibleText(page: Page, text: string) {"
+        },
+        {
+          "line": 257,
+          "text": "async function releaseHeldA1Reads(page: Page, rollbackContent: string, rollbackFileName: string) {"
+        },
+        {
+          "line": 282,
+          "text": "test('ordinary File Viewer save projects, refetches narrowly, joins provenance, rejects stale/duplicate delivery, rehydrates, and preserves aliases', async ({ page }) => {"
+        },
+        {
+          "line": 496,
+          "text": "test('post-write fact publication failure emits targeted recovery before the visible refetch', async ({ page }) => {"
+        },
+        {
+          "line": 545,
+          "text": "test('production workspace bind module gates replies behind the bind frame and closes on overflow', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/e2e/resource-provenance-protocol-source.spec.ts",
+      "sha256": "35372686e9248481df2e2c2454c2a90af33e01ff99819d6b1c37f80eb1a486b3",
+      "line_count": 199,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 13,
+          "text": "function setup(messages: Array<Record<string, unknown>>) {"
+        },
+        {
+          "line": 29,
+          "text": "test('query sender captures the atomic workspace pair and resolves only an exact current response', async () => {"
+        },
+        {
+          "line": 45,
+          "text": "test('A to B to A stale replies cannot settle and binding retirement rejects the pending query', async () => {"
+        },
+        {
+          "line": 60,
+          "text": "test('closed response guard rejects raw/unknown snapshot fields and invalid discriminants', async () => {"
+        },
+        {
+          "line": 76,
+          "text": "test('query sender requires the active bind to advertise provenance v1 before registering or sending', async () => {"
+        },
+        {
+          "line": 93,
+          "text": "test('workspace switch and reconnect replace the provenance advertisement with the new bind', async () => {"
+        },
+        {
+          "line": 114,
+          "text": "function contextBearingItem(context: unknown): Record<string, unknown> {"
+        },
+        {
+          "line": 132,
+          "text": "reportedUiContext: context,"
+        },
+        {
+          "line": 138,
+          "text": "test('context-bearing durable items are accepted with the bounded snapshot preserved', async () => {"
+        },
+        {
+          "line": 159,
+          "text": "expect(items[0].origin.reportedUiContext).toEqual(context);"
+        },
+        {
+          "line": 165,
+          "text": "delete (bareItem.origin as Record<string, unknown>).reportedUiContext;"
+        },
+        {
+          "line": 173,
+          "text": "test('context-bearing items fail closed on missing required identities, unknown fields, or over-cap values', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/ContentArea.tsx",
+      "sha256": "968622f942a171ea2e99dd98a5ce7cd8e78c68d5b4f17064a5f459bf68d0760d",
+      "line_count": 116,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 49,
+          "text": "function ContentFrame({ panel, children }: { panel: string; children: ReactNode }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/documentSaveAcknowledgement.ts",
+      "sha256": "c1cfc2376ff4e14190403764549bef01a458e8dbe689f925b9f093b337685aea",
+      "line_count": 56,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 13,
+          "text": "export function isDocumentDirty(panel: string, path: string): boolean {"
+        },
+        {
+          "line": 17,
+          "text": "export function documentDirtyRevision(panel: string, path: string): number {"
+        },
+        {
+          "line": 21,
+          "text": "export async function saveBeforeDocumentNavigation({"
+        },
+        {
+          "line": 37,
+          "text": "export async function saveAcknowledgedMilestone({"
+        },
+        {
+          "line": 51,
+          "text": "saveFile: SaveFileAction;"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/email/EmailDocumentPage.tsx",
+      "sha256": "de126e78670706ebbc291b5217f80ae7668f8a12f20baa8b5dec73e47767e677",
+      "line_count": 364,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 54,
+          "text": "export function EmailDocumentPage({"
+        },
+        {
+          "line": 71,
+          "text": "const handleSaveRef = useRef<(opts?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => Promise<void>>(async () => {});"
+        },
+        {
+          "line": 129,
+          "text": "handleSaveRef,"
+        },
+        {
+          "line": 157,
+          "text": "const handleSave = useCallback(async (options?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => {"
+        },
+        {
+          "line": 183,
+          "text": "useEffect(() => { handleSaveRef.current = handleSave; }, [handleSave]);"
+        },
+        {
+          "line": 216,
+          "text": "saveCurrent: () => handleSaveRef.current({ reason: 'autosave' }),"
+        },
+        {
+          "line": 229,
+          "text": "void handleSave({ notify: true, reason: 'manual' }).catch(() => {});"
+        },
+        {
+          "line": 236,
+          "text": "}, [handleSave, requestNavigation]);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileContentRenderer.tsx",
+      "sha256": "77b1c00cfc00e007c454895958ffb7beafd47713688c9b62d68048e8afc1f54a",
+      "line_count": 15,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "export function FileContentRenderer({ content, extension }: FileContentRendererProps) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx",
+      "sha256": "1a2bdf9c09b4a7a27a25131c51a2823d6f175fe0edb1050dd633b36b7da04574",
+      "line_count": 88,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 29,
+          "text": "export function FileDocumentPresenter({ input }: { input: FileDocumentPresenterInput }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileExplorer.tsx",
+      "sha256": "0594ddf3368a4c5049ac899f9bbbede99628f3aa8ed6fc572ff8e3da2fdbe18d",
+      "line_count": 90,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 18,
+          "text": "export function FileExplorer() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+      "sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "line_count": 106,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function getFileBreadcrumb(path: string): { folders: string[]; fileName: string } {"
+        },
+        {
+          "line": 17,
+          "text": "export function FileViewer() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/office/OfficeDocumentPage.tsx",
+      "sha256": "39e4be6c50d146ea03a15a31869bed5f0e48f110e8593c911ff2a3b3ae32989e",
+      "line_count": 534,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 71,
+          "text": "export function OfficeDocumentPage({"
+        },
+        {
+          "line": 87,
+          "text": "const handleSaveRef = useRef<(opts?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => Promise<void>>(async () => {});"
+        },
+        {
+          "line": 212,
+          "text": "handleSaveRef,"
+        },
+        {
+          "line": 258,
+          "text": "const handleSave = useCallback(async (options?: { notify?: boolean; reason?: SaveReason; milestone?: string }) => {"
+        },
+        {
+          "line": 315,
+          "text": "useEffect(() => { handleSaveRef.current = handleSave; }, [handleSave]);"
+        },
+        {
+          "line": 392,
+          "text": "saveCurrent: () => handleSaveRef.current({ reason: 'autosave' }),"
+        },
+        {
+          "line": 406,
+          "text": "void handleSave({ notify: true, reason: 'manual' }).catch(() => {});"
+        },
+        {
+          "line": 413,
+          "text": "}, [handleSave, requestNavigation]);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/ViewTabBar.tsx",
+      "sha256": "886482040483da3985b87f74d6886b7ce6ec1a7372c9be5575135e908992c6b1",
+      "line_count": 152,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 26,
+          "text": "function optionalContentValue(adapter: ViewTabAdapterModel): {"
+        },
+        {
+          "line": 42,
+          "text": "function hasOwnProperty(value: unknown, key: string): boolean {"
+        },
+        {
+          "line": 58,
+          "text": "export function ViewTabBar({ panel, children }: ViewTabBarProps) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedAdapter.ts",
+      "sha256": "bd0fb7f51bf1a0dda53219a7314de353d5332d8567800136a7cb899a2b88922c",
+      "line_count": 328,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 70,
+          "text": "export function fileConnectedPresenterRegistrations(): readonly FirstPartyComponentRegistration[] {"
+        },
+        {
+          "line": 90,
+          "text": "function boundedUnavailableSurface() {"
+        },
+        {
+          "line": 139,
+          "text": "export function useFileConnectedAdapter(enabled: boolean): ViewTabAdapterModel | null {"
+        },
+        {
+          "line": 318,
+          "text": "function useActiveEmptyObservation("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/fileConnectedTabs.ts",
+      "sha256": "60b676440cc04ff0bb1b59f2d0881ef7d16d6780046020c466bea9be1d8d5f3c",
+      "line_count": 158,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 30,
+          "text": "export function setActiveFileConnectedRuntime("
+        },
+        {
+          "line": 39,
+          "text": "export function isFileConnectedActive(): boolean {"
+        },
+        {
+          "line": 75,
+          "text": "export function readActiveFileConnectedTabContext(): ActiveFileConnectedTabContext | null {"
+        },
+        {
+          "line": 119,
+          "text": "export function openFileDocument(request: {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/components/view-tabs/viewTabAdapters.ts",
+      "sha256": "275579b0c1cb4a9ee042543238bd62957a93e19181d5bfae28ce2c04f8bc368b",
+      "line_count": 76,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 48,
+          "text": "export function useViewTabAdapter(panelId: string): ViewTabAdapterModel | null {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/save-action-context.ts",
+      "sha256": "661694ffe969bfab723faa85c6d102dd12a09bf2f6e263e0629502f4b0c04deb",
+      "line_count": 105,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "*       command time for `reportedUiContext`."
+        },
+        {
+          "line": 33,
+          "text": "function boundedScalar(value: unknown, maxBytes: number): string | undefined {"
+        },
+        {
+          "line": 49,
+          "text": "function buildContext(panel: string): ComponentActionContext | undefined {"
+        },
+        {
+          "line": 99,
+          "text": "export function readSaveActionContext(panel: string): ComponentActionContext | undefined {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "sha256": "87f49bcbd8aac776d9fb40abb34330ba1f489d54840b5c63fc28771cc392007d",
+      "line_count": 635,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 85,
+          "text": "export function abandonWsResponseTracking(): void {"
+        },
+        {
+          "line": 92,
+          "text": "function ensureOfficePaletteWorkspaceSubscription(): void {"
+        },
+        {
+          "line": 142,
+          "text": "function isWebSocketMessage(value: unknown): value is WebSocketMessage {"
+        },
+        {
+          "line": 155,
+          "text": "export function redactMessageForLog(msg: WebSocketMessage): WebSocketMessage {"
+        },
+        {
+          "line": 186,
+          "text": "export function sendFusionMessage(msg: Record<string, unknown>) {"
+        },
+        {
+          "line": 193,
+          "text": "export function onFusionMessage<T = FusionMessagePayload>(type: string, listener: (msg: T) => void): () => void {"
+        },
+        {
+          "line": 204,
+          "text": "export function onFusionResponse<T = FusionMessagePayload>("
+        },
+        {
+          "line": 218,
+          "text": "function emitFusion(type: string, msg: WebSocketMessage) {"
+        },
+        {
+          "line": 225,
+          "text": "function retireFusionResponseListeners(): void {"
+        },
+        {
+          "line": 239,
+          "text": "function retireConnectionState(): void {"
+        },
+        {
+          "line": 250,
+          "text": "function connectCurrentRuntime() {"
+        },
+        {
+          "line": 356,
+          "text": "function handleRuntimeTransportChange(): void {"
+        },
+        {
+          "line": 381,
+          "text": "export function connectWs() {"
+        },
+        {
+          "line": 387,
+          "text": "export function disconnectWs() {"
+        },
+        {
+          "line": 412,
+          "text": "function handleMessageWithinDiagnosticBoundary("
+        },
+        {
+          "line": 627,
+          "text": "export function handleMessage("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+      "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+      "line_count": 441,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 145,
+          "text": "function folderFromPath(filePath: string): string {"
+        },
+        {
+          "line": 149,
+          "text": "function extensionFromPath(filePath: string): string | undefined {"
+        },
+        {
+          "line": 155,
+          "text": "function symlinkMetadata(msg: { isSymlink?: boolean; symlinkTarget?: string }): FileResourceMetadata | undefined {"
+        },
+        {
+          "line": 161,
+          "text": "function shouldApplyFileMutationResponse("
+        },
+        {
+          "line": 173,
+          "text": "function responseCorrelation(msg: {"
+        },
+        {
+          "line": 190,
+          "text": "function closeForInvalidCanonicalMessage(reason: string): void {"
+        },
+        {
+          "line": 199,
+          "text": "export function handleFileMessage(msg: WebSocketMessage): boolean {"
+        },
+        {
+          "line": 275,
+          "text": "case 'resource:changed': {"
+        },
+        {
+          "line": 292,
+          "text": "case 'resource:refresh_required': {"
+        },
+        {
+          "line": 304,
+          "text": "useFileDataStore.getState().handleSaveResponseV1(msg as unknown as FileSaveResponseV1);"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/file-save-protocol.ts",
+      "sha256": "ba2e5a1bcffc1237718413f5ca546740b49863a2c647bd388f94f1c8fb42a26f",
+      "line_count": 223,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 33,
+          "text": "function scalarStringWithin(value: unknown, maxBytes: number): value is string {"
+        },
+        {
+          "line": 48,
+          "text": "function exactKeys(value: Record<string, unknown>, required: string[], optional: string[] = []): boolean {"
+        },
+        {
+          "line": 54,
+          "text": "function validPair(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 57,
+          "text": "&& UUID_PATTERN.test(value.workspaceEpoch);"
+        },
+        {
+          "line": 60,
+          "text": "function normalizedPath(value: unknown): value is string {"
+        },
+        {
+          "line": 66,
+          "text": "function validIngress(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 77,
+          "text": "function validAcceptedIdentity(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 82,
+          "text": ".every((key) => typeof value[key] === 'string' && UUID_PATTERN.test(value[key] as string))"
+        },
+        {
+          "line": 88,
+          "text": "export function isFileSaveResponseV1(value: unknown): value is FileSaveResponseV1 {"
+        },
+        {
+          "line": 167,
+          "text": "export function createFileSaveRequestV1(input: WorkspaceBinding & {"
+        },
+        {
+          "line": 174,
+          "text": "reportedUiContext?: FileSaveRequestV1['reportedUiContext'];"
+        },
+        {
+          "line": 194,
+          "text": "...(input.reportedUiContext !== undefined ? { reportedUiContext: input.reportedUiContext } : {}),"
+        },
+        {
+          "line": 204,
+          "text": "export function responseMatchesPendingFileSave("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/resource-projection-protocol.ts",
+      "sha256": "571ef9ead16583f756d47b244fca4101002a023371b6ac39b48c90faae53b278",
+      "line_count": 119,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 10,
+          "text": "function exactKeys(value: Record<string, unknown>, keys: readonly string[]): boolean {"
+        },
+        {
+          "line": 16,
+          "text": "function bounded(value: unknown, maxBytes: number): value is string {"
+        },
+        {
+          "line": 30,
+          "text": "function normalizedPath(value: unknown): value is string {"
+        },
+        {
+          "line": 35,
+          "text": "function validBase(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 38,
+          "text": "&& typeof value.workspaceEpoch === 'string' && UUID_PATTERN.test(value.workspaceEpoch)"
+        },
+        {
+          "line": 41,
+          "text": "&& typeof value.operationId === 'string' && UUID_PATTERN.test(value.operationId);"
+        },
+        {
+          "line": 44,
+          "text": "function validObservedBase(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 47,
+          "text": "&& typeof value.workspaceEpoch === 'string' && UUID_PATTERN.test(value.workspaceEpoch)"
+        },
+        {
+          "line": 53,
+          "text": "export function isResourceChangedMessageV1(value: unknown): value is ResourceChangedMessageV1 {"
+        },
+        {
+          "line": 62,
+          "text": "&& typeof item.eventId === 'string' && UUID_PATTERN.test(item.eventId)"
+        },
+        {
+          "line": 63,
+          "text": "&& typeof item.resourceId === 'string' && UUID_PATTERN.test(item.resourceId)"
+        },
+        {
+          "line": 69,
+          "text": "export function isResourceChangedMessageV2(value: unknown): value is ResourceChangedMessageV2 {"
+        },
+        {
+          "line": 85,
+          "text": "|| typeof item.projectionId !== 'string' || !UUID_PATTERN.test(item.projectionId)"
+        },
+        {
+          "line": 86,
+          "text": "|| typeof item.sourceActivityId !== 'string' || !UUID_PATTERN.test(item.sourceActivityId)"
+        },
+        {
+          "line": 87,
+          "text": "|| typeof item.sourceEdgeId !== 'string' || !UUID_PATTERN.test(item.sourceEdgeId)"
+        },
+        {
+          "line": 89,
+          "text": "|| typeof item.snapshotId !== 'string' || !UUID_PATTERN.test(item.snapshotId)"
+        },
+        {
+          "line": 98,
+          "text": "|| typeof item.checkpointEventId !== 'string' || !UUID_PATTERN.test(item.checkpointEventId)"
+        },
+        {
+          "line": 99,
+          "text": "|| typeof item.checkpointObservationId !== 'string' || !UUID_PATTERN.test(item.checkpointObservationId)) {"
+        },
+        {
+          "line": 105,
+          "text": "? hasResource && typeof item.resourceId === 'string' && UUID_PATTERN.test(item.resourceId)"
+        },
+        {
+          "line": 109,
+          "text": "export function isResourceRefreshRequiredV1(value: unknown): value is ResourceRefreshRequiredV1 {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts",
+      "sha256": "f0a2eddc06a2b65ada726e53dcd1db9d9ce48bc4885707166608f545b345dc88",
+      "line_count": 195,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 20,
+          "text": "function validId(value: unknown, maxBytes = 128): value is string {"
+        },
+        {
+          "line": 24,
+          "text": "function validPair(value: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 26,
+          "text": "&& UUID_PATTERN.test(value.workspaceEpoch);"
+        },
+        {
+          "line": 29,
+          "text": "function exactKeys(value: Record<string, unknown>, required: string[], optional: string[] = []): boolean {"
+        },
+        {
+          "line": 35,
+          "text": "function validPath(value: unknown): value is string {"
+        },
+        {
+          "line": 41,
+          "text": "function validTimestamp(value: unknown): value is number {"
+        },
+        {
+          "line": 61,
+          "text": "function validReportedUiContext(value: unknown): boolean {"
+        },
+        {
+          "line": 74,
+          "text": "function validItem(value: unknown): value is ResourceProvenanceItemV1 {"
+        },
+        {
+          "line": 86,
+          "text": ".every((key) => typeof item[key] === 'string' && UUID_PATTERN.test(item[key] as string))) return false;"
+        },
+        {
+          "line": 92,
+          "text": "if (!exactKeys(origin, ['kind', 'assurance', 'connectionId'], ['reportedUiContext'])"
+        },
+        {
+          "line": 95,
+          "text": "if (origin.reportedUiContext !== undefined && !validReportedUiContext(origin.reportedUiContext)) {"
+        },
+        {
+          "line": 106,
+          "text": "&& typeof snapshot.sha256 === 'string' && /^[0-9a-f]{64}$/u.test(snapshot.sha256)"
+        },
+        {
+          "line": 111,
+          "text": "function isResponse(value: unknown): value is ResourceProvenanceResponseV1 {"
+        },
+        {
+          "line": 139,
+          "text": "export function retirePendingResourceProvenanceQueries(): void {"
+        },
+        {
+          "line": 144,
+          "text": "export function handleResourceProvenanceResponse(value: unknown): boolean {"
+        },
+        {
+          "line": 162,
+          "text": "export function queryResourceProvenance("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/workspace-handlers.ts",
+      "sha256": "c9e9630feb7a2bfbd402d0d45dfe2ddddc618423b03db9954308ba627f19388c",
+      "line_count": 825,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 115,
+          "text": "function toWorkspacePanelStateSnapshot(snapshot: WorkspaceStateSnapshot): Partial<WorkspacePanelState> {"
+        },
+        {
+          "line": 121,
+          "text": "function bindingWorkspaceId(msg: WebSocketMessage, legacyId: string | null | undefined): string | null {"
+        },
+        {
+          "line": 126,
+          "text": "function isBindingRevision(value: unknown): value is number {"
+        },
+        {
+          "line": 130,
+          "text": "export async function bootstrapWorkspaceAfterBind("
+        },
+        {
+          "line": 139,
+          "text": "function applyWorkspaceSwitch("
+        },
+        {
+          "line": 205,
+          "text": "function completeWorkspaceInit("
+        },
+        {
+          "line": 219,
+          "text": "export function retirePendingWorkspaceExposure(): void {"
+        },
+        {
+          "line": 228,
+          "text": "function isCurrentViewRegistryUpdate("
+        },
+        {
+          "line": 250,
+          "text": "function beginViewRegistryUpdate("
+        },
+        {
+          "line": 293,
+          "text": "function armWorkspaceExposureFallback(pending: PendingWorkspaceExposure): void {"
+        },
+        {
+          "line": 309,
+          "text": "function beginWorkspaceSwitch("
+        },
+        {
+          "line": 352,
+          "text": "export function capturePendingWorkspaceExposure(): Readonly<WorkspaceExposureSnapshot> | null {"
+        },
+        {
+          "line": 363,
+          "text": "export function canInstallWorkspaceProjection("
+        },
+        {
+          "line": 394,
+          "text": "export async function awaitPendingWorkspaceBinding("
+        },
+        {
+          "line": 413,
+          "text": "export async function acceptInstalledWorkspaceProjection("
+        },
+        {
+          "line": 455,
+          "text": "function acceptClearedWorkspaceProjection("
+        },
+        {
+          "line": 479,
+          "text": "function clearUnavailableViewRegistryUi(): void {"
+        },
+        {
+          "line": 487,
+          "text": "function processViewRegistryFrame("
+        },
+        {
+          "line": 573,
+          "text": "export function handleWorkspaceMessage("
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileDataStore.ts",
+      "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+      "line_count": 1006,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 136,
+          "text": "handleSaveResponseV1: (response: FileSaveResponseV1) => boolean;"
+        },
+        {
+          "line": 141,
+          "text": "applyTargetedProjection: (path: string) => void;"
+        },
+        {
+          "line": 157,
+          "text": "saveFile: ("
+        },
+        {
+          "line": 171,
+          "text": "beginWorkspaceGeneration: (workspaceId: string | null, workspaceEpoch?: string | null) => void;"
+        },
+        {
+          "line": 196,
+          "text": "function createSaveCompletion(): PendingFileSaveCompletion {"
+        },
+        {
+          "line": 206,
+          "text": "function saveFailure(message?: string): Error {"
+        },
+        {
+          "line": 214,
+          "text": "function sendWs(msg: Record<string, unknown>): boolean {"
+        },
+        {
+          "line": 418,
+          "text": "applyTargetedProjection: (path) => {"
+        },
+        {
+          "line": 480,
+          "text": "handleSaveResponseV1: (response) => {"
+        },
+        {
+          "line": 518,
+          "text": "saveFile: (panel, path, content, reason, milestone, capturedDirtyRevision) => {"
+        },
+        {
+          "line": 543,
+          "text": "const reportedUiContext = readSaveActionContext(panel);"
+        },
+        {
+          "line": 552,
+          "text": "...(reportedUiContext ? { reportedUiContext } : {}),"
+        },
+        {
+          "line": 879,
+          "text": "beginWorkspaceGeneration: (workspaceId, workspaceEpoch) => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+      "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+      "line_count": 403,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 33,
+          "text": "function sha256(text) {"
+        },
+        {
+          "line": 37,
+          "text": "function kindForFact(fact) {"
+        },
+        {
+          "line": 43,
+          "text": "function sourceBindingMatches(kind, row, fact) {"
+        },
+        {
+          "line": 56,
+          "text": "function projectionFor(kind, fact, projectedAt) {"
+        },
+        {
+          "line": 69,
+          "text": "correlation_id: fact.operationId,"
+        },
+        {
+          "line": 70,
+          "text": "causation_id: null,"
+        },
+        {
+          "line": 84,
+          "text": "correlation_id: fact.source.activityId,"
+        },
+        {
+          "line": 85,
+          "text": "causation_id: null,"
+        },
+        {
+          "line": 110,
+          "text": "function eventMatches(row, expected) {"
+        },
+        {
+          "line": 116,
+          "text": "function edgeMatches(row, expected) {"
+        },
+        {
+          "line": 120,
+          "text": "function createAgentLedgerRepository(db, {"
+        },
+        {
+          "line": 140,
+          "text": "async function sourceRow(kind, eventId, executor = db) {"
+        },
+        {
+          "line": 145,
+          "text": "async function verifySource(fact, executor = db) {"
+        },
+        {
+          "line": 154,
+          "text": "async function listCandidates({ now, includeRunning = false, limit = 101, excludedKeys = [] }) {"
+        },
+        {
+          "line": 207,
+          "text": "async function nextWake(excludedKeys = []) {"
+        },
+        {
+          "line": 240,
+          "text": "async function claim(candidate, claimedAt) {"
+        },
+        {
+          "line": 269,
+          "text": "async function claimFact(fact, claimedAt) {"
+        },
+        {
+          "line": 293,
+          "text": "async function appendClaimed(claim, projectedAt) {"
+        },
+        {
+          "line": 347,
+          "text": "async function settleFailure(claim, transitionNow, { terminal = false } = {}) {"
+        },
+        {
+          "line": 367,
+          "text": "async function recover(candidate, transitionNow) {"
+        },
+        {
+          "line": 376,
+          "text": "async function state(kind, eventId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+      "line_count": 354,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('../db/migrations/036_agent_tool_provenance');"
+        },
+        {
+          "line": 32,
+          "text": "function digest(bytes) {"
+        },
+        {
+          "line": 36,
+          "text": "function storedBytesEqual(stored, observed) {"
+        },
+        {
+          "line": 44,
+          "text": "function verifyUtf8Bytes(value, { takeOwnership = false } = {}) {"
+        },
+        {
+          "line": 46,
+          "text": "if (value.length > MAX_SNAPSHOT_BYTES) throw new RangeError('snapshot exceeds 10 MiB');"
+        },
+        {
+          "line": 74,
+          "text": "function stateMatches(snapshot, state, sha256, byteLength) {"
+        },
+        {
+          "line": 79,
+          "text": "function chooseDominant(edges) {"
+        },
+        {
+          "line": 86,
+          "text": "function observationFact({ activity, dominant, eventId, observationId, snapshotId, observedAt, state, relation, resourceId, sha256, byteLength, previousSnapshotId }) {"
+        },
+        {
+          "line": 121,
+          "text": "function createAgentCheckpointRepository(db, {"
+        },
+        {
+          "line": 129,
+          "text": "async function insertBlob(trx, bytes, sha256, now) {"
+        },
+        {
+          "line": 147,
+          "text": "async function advanceObservationJob(trx, activityId, claimToken, now) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/fact-authority-repository.js",
+      "sha256": "2db31b728b022854474231665da185573ad0904bc42d94bf83fb37c6caa338be",
+      "line_count": 276,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 42,
+          "text": "function digest(text) {"
+        },
+        {
+          "line": 46,
+          "text": "function bodyFromFact(fact) {"
+        },
+        {
+          "line": 59,
+          "text": "function durableInput(definition, identity, body) {"
+        },
+        {
+          "line": 72,
+          "text": "function createAgentFactAuthorityRepository(db, { canAttempt = () => true } = {}) {"
+        },
+        {
+          "line": 90,
+          "text": "function definitionForKind(kind) {"
+        },
+        {
+          "line": 96,
+          "text": "function assertSourceRow(kind, row) {"
+        },
+        {
+          "line": 122,
+          "text": "async function load(kind, eventId, executor = db) {"
+        },
+        {
+          "line": 129,
+          "text": "async function createPublishInput(kind, eventId) {"
+        },
+        {
+          "line": 150,
+          "text": "async function verifyReservation({ reservation, producerId, schemaKey, schemaVersion }) {"
+        },
+        {
+          "line": 168,
+          "text": "async function commitVerifiedAdmission({ reservation, fact, now = Date.now() }) {"
+        },
+        {
+          "line": 203,
+          "text": "async function markConflict(kind, eventId, now = Date.now()) {"
+        },
+        {
+          "line": 218,
+          "text": "async function listPending({ limit = 101, excludedKeys = [] } = {}) {"
+        },
+        {
+          "line": 255,
+          "text": "async function state(kind, eventId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+      "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+      "line_count": 526,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 4,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('../db/migrations/036_agent_tool_provenance');"
+        },
+        {
+          "line": 9,
+          "text": "function immediate() {"
+        },
+        {
+          "line": 13,
+          "text": "function isRetryable(error) {"
+        },
+        {
+          "line": 16,
+          "text": "|| RETRYABLE_DB.test(String(error?.message));"
+        },
+        {
+          "line": 19,
+          "text": "function createAgentResourceObserver({"
+        },
+        {
+          "line": 54,
+          "text": "function blockedClaimTokens() {"
+        },
+        {
+          "line": 59,
+          "text": "function blockedActivityIds() {"
+        },
+        {
+          "line": 64,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 68,
+          "text": "function scheduleWakeAt(at) {"
+        },
+        {
+          "line": 80,
+          "text": "function deferFailedTransition(key, error, operation, onSuccess = () => {}) {"
+        },
+        {
+          "line": 98,
+          "text": "async function retryDueTransitions({ limit, shouldContinue }) {"
+        },
+        {
+          "line": 122,
+          "text": "async function delayedTransition(key, operation) {"
+        },
+        {
+          "line": 133,
+          "text": "async function loadAuthorizedRoot(context) {"
+        },
+        {
+          "line": 141,
+          "text": "async function closeTimeout(claim, attempt) {"
+        },
+        {
+          "line": 152,
+          "text": "async function processClaim(claim) {"
+        },
+        {
+          "line": 244,
+          "text": "byteLimit: MAX_SNAPSHOT_BYTES,"
+        },
+        {
+          "line": 339,
+          "text": "function installClaimTask(claim) {"
+        },
+        {
+          "line": 352,
+          "text": "async function processRetriedClaim(claim) {"
+        },
+        {
+          "line": 364,
+          "text": "async function drain({ startup = false } = {}) {"
+        },
+        {
+          "line": 435,
+          "text": "function armNextWake() {"
+        },
+        {
+          "line": 449,
+          "text": "function runDrain(startup = false) {"
+        },
+        {
+          "line": 455,
+          "text": "function signal() {"
+        },
+        {
+          "line": 477,
+          "text": "async function start() {"
+        },
+        {
+          "line": 483,
+          "text": "function enableContinuations() {"
+        },
+        {
+          "line": 491,
+          "text": "function deferContinuations() {"
+        },
+        {
+          "line": 495,
+          "text": "async function shutdown({ timeoutMs = 2_000, deadline = Number.POSITIVE_INFINITY } = {}) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/audit/audit-subscriber.js",
+      "sha256": "7e32880bf0479f7c2e8a2d1fd62e480b4184a868994c5c21d4a2d6444a4a0f72",
+      "line_count": 318,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 31,
+          "text": "function bindingAuthorityFor(event) {"
+        },
+        {
+          "line": 40,
+          "text": "function pendingKey(event) {"
+        },
+        {
+          "line": 55,
+          "text": "function startAuditSubscriber({ enableAgentExchangeBinding = false } = {}) {"
+        },
+        {
+          "line": 75,
+          "text": "function stopAuditSubscriber() {"
+        },
+        {
+          "line": 89,
+          "text": "function trackTurnEnd(event) {"
+        },
+        {
+          "line": 102,
+          "text": "async function drainAuditSaves({"
+        },
+        {
+          "line": 146,
+          "text": "function handleStatusUpdate(event) {"
+        },
+        {
+          "line": 169,
+          "text": "async function handleTurnEnd(event) {"
+        },
+        {
+          "line": 268,
+          "text": "async function finalizeSavedExchange(event, savedExchange) {"
+        },
+        {
+          "line": 284,
+          "text": "function cleanupStalePendingData() {"
+        },
+        {
+          "line": 297,
+          "text": "function getPendingCount() {"
+        },
+        {
+          "line": 306,
+          "text": "function getPendingForThread(workspaceId, projectRoot, workspaceEpoch, threadId, turnId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+      "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+      "line_count": 94,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function turnKey(event) {"
+        },
+        {
+          "line": 20,
+          "text": "function normalizeMutation(event) {"
+        },
+        {
+          "line": 52,
+          "text": "function captureFileChange(event) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/db/migrations/035_file_provenance.js",
+      "sha256": "18bd81495ac4f8dc830740687e8582f53d35d3e6299944d17a62d3fb916d52f6",
+      "line_count": 435,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 3,
+          "text": "const MAX_SNAPSHOT_BYTES = 10 * 1024 * 1024;"
+        },
+        {
+          "line": 5,
+          "text": "exports.up = async function up(knex) {"
+        },
+        {
+          "line": 137,
+          "text": "AND preimage_byte_length BETWEEN 0 AND ${MAX_SNAPSHOT_BYTES}"
+        },
+        {
+          "line": 145,
+          "text": "AND intended_after_byte_length BETWEEN 0 AND ${MAX_SNAPSHOT_BYTES}"
+        },
+        {
+          "line": 370,
+          "text": "typeof(byte_length) = 'integer' AND byte_length BETWEEN 0 AND ${MAX_SNAPSHOT_BYTES}"
+        },
+        {
+          "line": 428,
+          "text": "exports.down = async function down(knex) {"
+        },
+        {
+          "line": 435,
+          "text": "exports.MAX_SNAPSHOT_BYTES = MAX_SNAPSHOT_BYTES;"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js",
+      "sha256": "cbdd98c8469f16f2089132bd3ae9b1e0334ef59c1537a41116274a11b16e914b",
+      "line_count": 424,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 3,
+          "text": "const MAX_SNAPSHOT_BYTES = 10 * 1024 * 1024;"
+        },
+        {
+          "line": 24,
+          "text": "exports.up = async function up(knex) {"
+        },
+        {
+          "line": 230,
+          "text": "byte_length INTEGER NOT NULL CHECK (typeof(byte_length) = 'integer' AND byte_length BETWEEN 0 AND ${MAX_SNAPSHOT_BYTES}),"
+        },
+        {
+          "line": 254,
+          "text": "byte_length INTEGER NOT NULL CHECK (typeof(byte_length) = 'integer' AND byte_length BETWEEN 0 AND ${MAX_SNAPSHOT_BYTES}),"
+        },
+        {
+          "line": 407,
+          "text": "exports.down = async function down(knex) {"
+        },
+        {
+          "line": 423,
+          "text": "exports.MAX_SNAPSHOT_BYTES = MAX_SNAPSHOT_BYTES;"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-bus.js",
+      "sha256": "46c44f4f8b2a1ee471eb1dffa679b554b6fca7adcad3a988acd2dec87d35dc81",
+      "line_count": 166,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 39,
+          "text": "function eventKey(data) {"
+        },
+        {
+          "line": 47,
+          "text": "function isSameEventLoop(type, data) {"
+        },
+        {
+          "line": 61,
+          "text": "function emit(type, data = {}) {"
+        },
+        {
+          "line": 85,
+          "text": "function emitSafely(type, event) {"
+        },
+        {
+          "line": 92,
+          "text": "function exactEffectKey(event) {"
+        },
+        {
+          "line": 103,
+          "text": "function trackEffect(event, result) {"
+        },
+        {
+          "line": 122,
+          "text": "async function drainEventEffects(identity, {"
+        },
+        {
+          "line": 156,
+          "text": "function on(type, handler) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-registry/schemas/file-command-accepted-v1.json",
+      "sha256": "eb7e16db3c2ed6fd51d6572c792e8feb0e6df0fbe70bb11b0b5a1f1f88f741af",
+      "line_count": 105,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 40,
+          "text": "\"reportedUiContext\": {"
+        },
+        {
+          "line": 62,
+          "text": "\"reportedUiContext\": { \"$ref\": \"#/$defs/reportedUiContext\" }"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-registry/schemas/resource-mutated-v1.json",
+      "sha256": "6a07bdfe5eba8a7c1cf8a77c55faecfbf7ef16272a390d54d9236cd43327e55a",
+      "line_count": 108,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 44,
+          "text": "\"reportedUiContext\": {"
+        },
+        {
+          "line": 66,
+          "text": "\"reportedUiContext\": { \"$ref\": \"#/$defs/reportedUiContext\" }"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/event-registry/subscription-seed-catalog.js",
+      "sha256": "2435a0dce4b6075801b8422469169c3d3e1e2f2df0f3ad8d399c5d43829be1ee",
+      "line_count": 221,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "function deepFreeze(value) {"
+        },
+        {
+          "line": 17,
+          "text": "function createSeed(subscriptionId, input) {"
+        },
+        {
+          "line": 202,
+          "text": "function createSystemSubscriptionIntegrityCatalog() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/atomic-writer.js",
+      "sha256": "b91fdd071eaa53febd4e286572cc38b00071e7e016d5c4ca7b905f9be23ad9e6",
+      "line_count": 268,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');"
+        },
+        {
+          "line": 21,
+          "text": "function classifyFsFailure(error, fallback) {"
+        },
+        {
+          "line": 25,
+          "text": "function createAtomicWriter({ fsPromises = fs.promises } = {}) {"
+        },
+        {
+          "line": 26,
+          "text": "function tempPathFor(target, operationId) {"
+        },
+        {
+          "line": 30,
+          "text": "function sameDirectoryIdentity(expected, actual) {"
+        },
+        {
+          "line": 37,
+          "text": "function sameFileIdentity(expected, actual) {"
+        },
+        {
+          "line": 44,
+          "text": "async function verifyParent(target, directoryHandle = null) {"
+        },
+        {
+          "line": 65,
+          "text": "async function verifyWrittenTemp(tempPath, expectedFingerprint, expectedBytes) {"
+        },
+        {
+          "line": 101,
+          "text": "async function verifyFinalTarget({ target, mutationKind, preimageSha256, tempPath }) {"
+        },
+        {
+          "line": 131,
+          "text": "if (!sameFileIdentity(target.fingerprint, openedStat) || openedStat.size > MAX_SNAPSHOT_BYTES) {"
+        },
+        {
+          "line": 152,
+          "text": "async function replace({ target, operationId, bytes, mutationKind, preimageSha256 }) {"
+        },
+        {
+          "line": 242,
+          "text": "async function cleanup({ target, operationId }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/checkpoint-adapter.js",
+      "sha256": "732abbb6683a70e98e44831bcf43d938b241ca8f2aac7d1a5bae83228e775013",
+      "line_count": 28,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "function createCheckpointAdapter({ commit = commitIfChanged, clock = () => new Date() } = {}) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/durable-reservations.js",
+      "sha256": "bd615efbde764acd3233dd6558c5730d990a316be17f1aa72c187f059305cdd9",
+      "line_count": 72,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 19,
+          "text": "function createDurableReservationAuthority(db) {"
+        },
+        {
+          "line": 23,
+          "text": "async function issue({ operationId, schemaKey }) {"
+        },
+        {
+          "line": 41,
+          "text": "async function verify({ reservation, producerId, schemaKey, schemaVersion }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-replay.js",
+      "sha256": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3",
+      "line_count": 118,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 3,
+          "text": "function assertPublishers(publishers) {"
+        },
+        {
+          "line": 16,
+          "text": "function createFactReplay({"
+        },
+        {
+          "line": 30,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 34,
+          "text": "async function refreshOrOriginal(operation) {"
+        },
+        {
+          "line": 42,
+          "text": "async function recover(operation, reason) {"
+        },
+        {
+          "line": 58,
+          "text": "async function publishCommand(operation) {"
+        },
+        {
+          "line": 77,
+          "text": "async function publishResource(operation) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js",
+      "sha256": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb",
+      "line_count": 162,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 6,
+          "text": "reportedUiContextFromRow,"
+        },
+        {
+          "line": 13,
+          "text": "function omitUndefined(object) {"
+        },
+        {
+          "line": 17,
+          "text": "function originFromInput(origin, serverWorkspaceId, onDiagnostic = () => {}) {"
+        },
+        {
+          "line": 26,
+          "text": "const { context: reportedUiContext, diagnostic } = sanitizeReportedUiContext("
+        },
+        {
+          "line": 27,
+          "text": "origin.reportedUiContext,"
+        },
+        {
+          "line": 34,
+          "text": "kind: 'local_client', connectionId, assurance: 'transport_only', reportedUiContext,"
+        },
+        {
+          "line": 38,
+          "text": "function intentFromInput(input) {"
+        },
+        {
+          "line": 59,
+          "text": "function commandBody(input, ids, resourceId, origin, intent) {"
+        },
+        {
+          "line": 73,
+          "text": "function resourceBody(row) {"
+        },
+        {
+          "line": 74,
+          "text": "const reportedUiContext = reportedUiContextFromRow(row);"
+        },
+        {
+          "line": 82,
+          "text": "reportedUiContext,"
+        },
+        {
+          "line": 99,
+          "text": "function commandBodyFromRow(row) {"
+        },
+        {
+          "line": 108,
+          "text": "reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 117,
+          "text": "function durableHash({ schemaKey, eventId, occurredAt, workspaceId, operationId, body }) {"
+        },
+        {
+          "line": 130,
+          "text": "function requestBindingHash({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/file-operation-repository.js",
+      "sha256": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016",
+      "line_count": 696,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 4,
+          "text": "const { createFileVersionRepository, MAX_SNAPSHOT_BYTES } = require('./file-version-repository');"
+        },
+        {
+          "line": 18,
+          "text": "reportedUiContextColumns,"
+        },
+        {
+          "line": 19,
+          "text": "reportedUiContextFromRow,"
+        },
+        {
+          "line": 44,
+          "text": "function parseTerminalResponse(value) {"
+        },
+        {
+          "line": 54,
+          "text": "function mapOperation(row, { idempotentReplay = false } = {}) {"
+        },
+        {
+          "line": 73,
+          "text": "reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 125,
+          "text": "function createFileOperationRepository(db, options = {}) {"
+        },
+        {
+          "line": 131,
+          "text": "function newId(provided, label) {"
+        },
+        {
+          "line": 135,
+          "text": "async function reserve(input) {"
+        },
+        {
+          "line": 150,
+          "text": "|| intendedAfterByteLength > MAX_SNAPSHOT_BYTES"
+        },
+        {
+          "line": 171,
+          "text": "function validateWinner(winner) {"
+        },
+        {
+          "line": 178,
+          "text": "async function reserveOnce() {"
+        },
+        {
+          "line": 222,
+          "text": "...reportedUiContextColumns(origin.reportedUiContext),"
+        },
+        {
+          "line": 277,
+          "text": "async function prepare({ operationId, preimage, intendedAfterSha256, intendedAfterByteLength, preparedAt }) {"
+        },
+        {
+          "line": 317,
+          "text": "async function markAttempted(operationId, attemptedAt) {"
+        },
+        {
+          "line": 336,
+          "text": "async function markPreparedBeforeReplaceFailed({ operationId, completedAt }) {"
+        },
+        {
+          "line": 367,
+          "text": "async function markSucceeded({ operationId, occurredAt, completedAt, fingerprint }) {"
+        },
+        {
+          "line": 424,
+          "text": "async function markFailed({ operationId, failureCode, completedAt, reconciledAt = null }) {"
+        },
+        {
+          "line": 471,
+          "text": "async function markOutcomeUnknown({"
+        },
+        {
+          "line": 520,
+          "text": "async function setAxis(operationId, column, from, to, now) {"
+        },
+        {
+          "line": 538,
+          "text": "async function markTempCleanupComplete(operationId, now) {"
+        },
+        {
+          "line": 542,
+          "text": "async function storeTerminalResponse(operationId, response, now) {"
+        },
+        {
+          "line": 569,
+          "text": "async function storeResponseSnapshot(operationId, response, now) {"
+        },
+        {
+          "line": 621,
+          "text": "async function getById(operationId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/file-version-repository.js",
+      "sha256": "748955d606e8e58fe530a57239fe155ffbb79d540d5af1182343306b0558744a",
+      "line_count": 121,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 4,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('../db/migrations/035_file_provenance');"
+        },
+        {
+          "line": 11,
+          "text": "function sha256(bytes) {"
+        },
+        {
+          "line": 15,
+          "text": "function normalizePreimage(preimage) {"
+        },
+        {
+          "line": 31,
+          "text": "if (preimage.bytes.length > MAX_SNAPSHOT_BYTES) {"
+        },
+        {
+          "line": 32,
+          "text": "throw new RangeError(`preimage exceeds ${MAX_SNAPSHOT_BYTES} bytes`);"
+        },
+        {
+          "line": 44,
+          "text": "function metadataFromRow(row) {"
+        },
+        {
+          "line": 57,
+          "text": "function createFileVersionRepository(db) {"
+        },
+        {
+          "line": 60,
+          "text": "async function insertInTransaction(trx, input) {"
+        },
+        {
+          "line": 118,
+          "text": "MAX_SNAPSHOT_BYTES,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/path-authority.js",
+      "sha256": "7bf9762e21d9eca7caf80c0dd130f2be0dffcf7207d31e0089cb84fcec4206fd",
+      "line_count": 237,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 18,
+          "text": "function isInside(root, candidate) {"
+        },
+        {
+          "line": 27,
+          "text": "function fingerprint(stat) {"
+        },
+        {
+          "line": 38,
+          "text": "function toggleFirstAsciiLetter(value) {"
+        },
+        {
+          "line": 46,
+          "text": "async function detectsCaseInsensitivePath(candidate, candidateStat, fsPromises) {"
+        },
+        {
+          "line": 68,
+          "text": "function createPathAuthority({"
+        },
+        {
+          "line": 73,
+          "text": "async function getWorkspace(workspaceId) {"
+        },
+        {
+          "line": 88,
+          "text": "async function resolve({ workspaceId, panel, ingressPath }) {"
+        },
+        {
+          "line": 196,
+          "text": "async function resolveCanonical({ workspaceId, canonicalPath }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/reconciliation.js",
+      "sha256": "b8b1c1aa2896117dc85de000262b66fb448e65e2b99e6f4053514de2e0dd059f",
+      "line_count": 163,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');"
+        },
+        {
+          "line": 11,
+          "text": "function createFileSaveReconciler({"
+        },
+        {
+          "line": 35,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 39,
+          "text": "async function recover(operation, reason) {"
+        },
+        {
+          "line": 55,
+          "text": "async function observe(operation) {"
+        },
+        {
+          "line": 69,
+          "text": "if (stat.size > MAX_SNAPSHOT_BYTES || !Number.isInteger(fs.constants.O_NOFOLLOW)) {"
+        },
+        {
+          "line": 76,
+          "text": "if (!openedStat.isFile() || openedStat.size > MAX_SNAPSHOT_BYTES) {"
+        },
+        {
+          "line": 92,
+          "text": "async function cleanupTerminal(operation, knownTarget = null) {"
+        },
+        {
+          "line": 106,
+          "text": "async function reconcile() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/reported-ui-context.js",
+      "sha256": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce",
+      "line_count": 179,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 6,
+          "text": "* One job: treat the renderer-supplied `reportedUiContext` as untrusted"
+        },
+        {
+          "line": 51,
+          "text": "function scalarWithin(value, maxBytes) {"
+        },
+        {
+          "line": 67,
+          "text": "function isUsableWorkspaceId(value) {"
+        },
+        {
+          "line": 76,
+          "text": "function sanitizeReportedUiContext(rawContext, serverWorkspaceId) {"
+        },
+        {
+          "line": 137,
+          "text": "function assertCanonicalReportedUiContext(rawContext, serverWorkspaceId) {"
+        },
+        {
+          "line": 140,
+          "text": "if (diagnostic || !context) throw new TypeError('reportedUiContext is not a canonical context');"
+        },
+        {
+          "line": 146,
+          "text": "throw new TypeError('reportedUiContext is not a canonical context');"
+        },
+        {
+          "line": 152,
+          "text": "function reportedUiContextFromRow(row) {"
+        },
+        {
+          "line": 164,
+          "text": "function reportedUiContextColumns(context) {"
+        },
+        {
+          "line": 176,
+          "text": "reportedUiContextColumns,"
+        },
+        {
+          "line": 177,
+          "text": "reportedUiContextFromRow,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+      "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "line_count": 592,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 18,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');"
+        },
+        {
+          "line": 42,
+          "text": "function ids(operation) {"
+        },
+        {
+          "line": 54,
+          "text": "function capturedPair(session) {"
+        },
+        {
+          "line": 62,
+          "text": "function createFileSaveController({"
+        },
+        {
+          "line": 95,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 99,
+          "text": "async function recover(operation, reason) {"
+        },
+        {
+          "line": 115,
+          "text": "function rejected(errorCode, extra = {}) {"
+        },
+        {
+          "line": 128,
+          "text": "function acceptedBase(operation, pair) {"
+        },
+        {
+          "line": 141,
+          "text": "async function readPreimage(target) {"
+        },
+        {
+          "line": 149,
+          "text": "if (stat.size > MAX_SNAPSHOT_BYTES) {"
+        },
+        {
+          "line": 170,
+          "text": "async function markAcceptedFailure(operation, code) {"
+        },
+        {
+          "line": 187,
+          "text": "async function failBeforeWriterInvocation(operation, acceptedFailureCode) {"
+        },
+        {
+          "line": 213,
+          "text": "async function cleanupTerminal(operation, target) {"
+        },
+        {
+          "line": 223,
+          "text": "function cacheTerminalResponse(operationId, requestCacheKey, response) {"
+        },
+        {
+          "line": 237,
+          "text": "async function persistTerminalResponse(operation, response, requestCacheKey) {"
+        },
+        {
+          "line": 258,
+          "text": "function buildSuccessResponse(operation, pair, checkpointState) {"
+        },
+        {
+          "line": 278,
+          "text": "function outcomeUnknownResponse(operation, pair) {"
+        },
+        {
+          "line": 287,
+          "text": "async function finishSuccess(operation, pair, target) {"
+        },
+        {
+          "line": 308,
+          "text": "function failedBeforeReplace(operation, pair, code) {"
+        },
+        {
+          "line": 317,
+          "text": "async function replayAcceptedResult(operation, pair, requestCacheKey) {"
+        },
+        {
+          "line": 360,
+          "text": "async function markDurableSuccess(operation, fingerprintValue) {"
+        },
+        {
+          "line": 383,
+          "text": "async function save({ session, intent, capturedWorkspacePair }) {"
+        },
+        {
+          "line": 388,
+          "text": "if (!UUID_PATTERN.test(intent?.expectedWorkspaceEpoch || '')) throw new TypeError('invalid epoch');"
+        },
+        {
+          "line": 402,
+          "text": "|| !UUID_PATTERN.test(capturedWorkspacePair.workspaceEpoch || '')"
+        },
+        {
+          "line": 430,
+          "text": "reportedUiContext: intent.reportedUiContext,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/save-owner.js",
+      "sha256": "f39cb7ccebe325e51315bffd3aeeb0128fe29396f4dbf43fa8172c768334af7c",
+      "line_count": 59,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function createFileSaveOwner({"
+        },
+        {
+          "line": 25,
+          "text": "function installPublishers(publishers) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/file-mutations/text-codec.js",
+      "sha256": "95b4b256eda552d9f193761fa7d31fbdbdb42cc34143101e62ca6e2f0bb9df6d",
+      "line_count": 78,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "const { MAX_SNAPSHOT_BYTES } = require('./file-version-repository');"
+        },
+        {
+          "line": 15,
+          "text": "function assertScalarNulFreeString(value, code = 'unsupported_text') {"
+        },
+        {
+          "line": 33,
+          "text": "function sha256(bytes) {"
+        },
+        {
+          "line": 37,
+          "text": "function encodeIntendedText(value) {"
+        },
+        {
+          "line": 40,
+          "text": "if (bytes.length > MAX_SNAPSHOT_BYTES) {"
+        },
+        {
+          "line": 46,
+          "text": "function validatePreimageBytes(value) {"
+        },
+        {
+          "line": 48,
+          "text": "if (value.length > MAX_SNAPSHOT_BYTES) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+      "sha256": "c5b68f7646535182a75f24be88783a631f8492b16904ddeedfcf480240cd08ca",
+      "line_count": 205,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 23,
+          "text": "function isRecordedEventType(type) {"
+        },
+        {
+          "line": 27,
+          "text": "async function getMachineIdentity(db) {"
+        },
+        {
+          "line": 36,
+          "text": "function inferWorkspaceId(event) {"
+        },
+        {
+          "line": 40,
+          "text": "function inferActor(event) {"
+        },
+        {
+          "line": 54,
+          "text": "function inferSourceModule(event) {"
+        },
+        {
+          "line": 63,
+          "text": "function buildSummary(event) {"
+        },
+        {
+          "line": 77,
+          "text": "function sanitizePayload(value, seen = new WeakSet()) {"
+        },
+        {
+          "line": 103,
+          "text": "function tagsForEvent(event) {"
+        },
+        {
+          "line": 119,
+          "text": "function edgesForEvent(event, machineIdentity) {"
+        },
+        {
+          "line": 139,
+          "text": "async function recordEvent(db, event, options = {}) {"
+        },
+        {
+          "line": 159,
+          "text": "correlation_id: event.correlationId || event.correlation_id || null,"
+        },
+        {
+          "line": 160,
+          "text": "causation_id: event.causationId || event.causation_id || null,"
+        },
+        {
+          "line": 191,
+          "text": "async function listRecentEvents(db, options = {}) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/provenance-ledger-handler.js",
+      "sha256": "dd3badf6a61c6cac23ddc1938ef64a72658963bbf4495b5dda8c95d76c58c362",
+      "line_count": 28,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 3,
+          "text": "function createProvenanceLedgerHandler() {"
+        },
+        {
+          "line": 4,
+          "text": "return async function handleResourceMutation(fact, context) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/provenance-query-paths.js",
+      "sha256": "8d2c73e606590e55fc53af471ea3e92d679f51fa656d31193e8623d77b954d92",
+      "line_count": 170,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 24,
+          "text": "function invalidSelector(message) {"
+        },
+        {
+          "line": 28,
+          "text": "function normalizeSelector(normalize) {"
+        },
+        {
+          "line": 37,
+          "text": "async function realpathSelector(fsPromises, target, label) {"
+        },
+        {
+          "line": 46,
+          "text": "function toCanonical(workspaceReal, targetReal, label) {"
+        },
+        {
+          "line": 52,
+          "text": "function createProvenanceQueryPathNormalizer({"
+        },
+        {
+          "line": 61,
+          "text": "async function panelContext(workspaceId, panel) {"
+        },
+        {
+          "line": 85,
+          "text": "async function normalizeExact(context, selectedPath) {"
+        },
+        {
+          "line": 128,
+          "text": "async function normalizeFolder(context, folderPrefix) {"
+        },
+        {
+          "line": 146,
+          "text": "async function normalize({ workspaceId, panel, path: selectedPath, folderPrefix }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "sha256": "bba3f47ff6fabeaad15d19c208f327f276df6ffc5ca9cf60deb02b347c287e97",
+      "line_count": 302,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "reportedUiContextFromRow,"
+        },
+        {
+          "line": 20,
+          "text": "function validateFact(fact) {"
+        },
+        {
+          "line": 40,
+          "text": "assertCanonicalReportedUiContext(fact.origin.reportedUiContext, fact.workspaceId);"
+        },
+        {
+          "line": 45,
+          "text": "function rowMatchesFact(operation, fact) {"
+        },
+        {
+          "line": 74,
+          "text": "function mapQueryRow(row) {"
+        },
+        {
+          "line": 100,
+          "text": "reportedUiContext: reportedUiContextFromRow(row),"
+        },
+        {
+          "line": 106,
+          "text": "function createResourceProvenanceRepository(db) {"
+        },
+        {
+          "line": 109,
+          "text": "async function appendResourceFact(fact, { projectedAt = Date.now() } = {}) {"
+        },
+        {
+          "line": 155,
+          "text": "correlation_id: fact.operationId,"
+        },
+        {
+          "line": 156,
+          "text": "causation_id: null,"
+        },
+        {
+          "line": 188,
+          "text": "reported_view_id: fact.origin.reportedUiContext?.viewId ?? null,"
+        },
+        {
+          "line": 189,
+          "text": "reported_view_instance_id: fact.origin.reportedUiContext?.viewInstanceId ?? null,"
+        },
+        {
+          "line": 190,
+          "text": "reported_tab_id: fact.origin.reportedUiContext?.tabId ?? null,"
+        },
+        {
+          "line": 191,
+          "text": "reported_component_type_id: fact.origin.reportedUiContext?.componentTypeId ?? null,"
+        },
+        {
+          "line": 192,
+          "text": "reported_component_instance_id: fact.origin.reportedUiContext?.componentInstanceId ?? null,"
+        },
+        {
+          "line": 193,
+          "text": "reported_presenter_id: fact.origin.reportedUiContext?.presenterId ?? null,"
+        },
+        {
+          "line": 194,
+          "text": "reported_target_key: fact.origin.reportedUiContext?.targetKey ?? null,"
+        },
+        {
+          "line": 209,
+          "text": "async function query(options) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "sha256": "888433c47713f11bef8b79790daeaa26c450f9d623d8e543bc0d10e29afa1e02",
+      "line_count": 888,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 58,
+          "text": "async function initializeRuntimeMachineIdentity({ initializeIdentity, resolveIdentity } = {}) {"
+        },
+        {
+          "line": 70,
+          "text": "function createAgentWorkspaceRootResolver({ getWorkspaceById, realpath = fs.promises.realpath } = {}) {"
+        },
+        {
+          "line": 74,
+          "text": "return async function resolveWorkspaceRoot(workspaceId) {"
+        },
+        {
+          "line": 88,
+          "text": "function createAgentPhaseAOwner({"
+        },
+        {
+          "line": 106,
+          "text": "return async function shutdownAgentOwners(options) {"
+        },
+        {
+          "line": 186,
+          "text": "async function start({"
+        },
+        {
+          "line": 766,
+          "text": "function _startPipeline({ sessions, projectRoot, workspaceId }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/admission.js",
+      "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "line_count": 325,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 54,
+          "text": "function assertPlainObject(value, label) {"
+        },
+        {
+          "line": 64,
+          "text": "function assertExactKeys(value, keys, label) {"
+        },
+        {
+          "line": 72,
+          "text": "function assertIdentity(identity) {"
+        },
+        {
+          "line": 93,
+          "text": "|| !/^[0-9a-f]{64}$/u.test(identity.canonicalHash)"
+        },
+        {
+          "line": 97,
+          "text": "function rejectionReport() {"
+        },
+        {
+          "line": 101,
+          "text": "function diagnose(runtime, code, publisher) {"
+        },
+        {
+          "line": 115,
+          "text": "function normalizeDeliveries(deliveries) {"
+        },
+        {
+          "line": 135,
+          "text": "function durableInput(publisher, identity, body) {"
+        },
+        {
+          "line": 148,
+          "text": "function createPublisher(runtime, publisher) {"
+        },
+        {
+          "line": 149,
+          "text": "return Object.freeze(async function publishFact(input) {"
+        },
+        {
+          "line": 232,
+          "text": "|| /database is locked|cannot start a transaction within a transaction/iu.test(String(error?.message));"
+        },
+        {
+          "line": 242,
+          "text": "function bootstrapAdmission({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/capability-factory.js",
+      "sha256": "70aac6ce5a3569046ef54641f19b21f4c33d67af2cdf5f6343d96f60350d4fe9",
+      "line_count": 172,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 31,
+          "text": "function assertProviders(providers) {"
+        },
+        {
+          "line": 41,
+          "text": "function sameFact(candidate, fact) {"
+        },
+        {
+          "line": 45,
+          "text": "function snapshotExactMessage(message, allowedKeys, label) {"
+        },
+        {
+          "line": 60,
+          "text": "function createScopedCapabilityFactory(providers) {"
+        },
+        {
+          "line": 64,
+          "text": "function assertAvailable({ handlerKey, grants }) {"
+        },
+        {
+          "line": 77,
+          "text": "function createScopedContext({ handlerKey, grants, fact }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/controller.js",
+      "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+      "line_count": 314,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "function boundedText(value) {"
+        },
+        {
+          "line": 16,
+          "text": "function snapshotFact(fact) {"
+        },
+        {
+          "line": 20,
+          "text": "function createSubscriptionController({"
+        },
+        {
+          "line": 50,
+          "text": "function diagnose(code, fields = {}, error = null) {"
+        },
+        {
+          "line": 69,
+          "text": "function inspectGeneration() {"
+        },
+        {
+          "line": 83,
+          "text": "function getDiagnostics() {"
+        },
+        {
+          "line": 87,
+          "text": "function compileOne(effectiveState, entry, generationId) {"
+        },
+        {
+          "line": 96,
+          "text": "async function performReload() {"
+        },
+        {
+          "line": 155,
+          "text": "function enqueueReload() {"
+        },
+        {
+          "line": 161,
+          "text": "async function start() {"
+        },
+        {
+          "line": 182,
+          "text": "async function reload() {"
+        },
+        {
+          "line": 187,
+          "text": "function quiesce() {"
+        },
+        {
+          "line": 192,
+          "text": "async function stop() {"
+        },
+        {
+          "line": 218,
+          "text": "function observeBestEffort(result, descriptor) {"
+        },
+        {
+          "line": 228,
+          "text": "function observeRequiredAck(result, descriptor) {"
+        },
+        {
+          "line": 264,
+          "text": "async function dispatchAdmittedFact(sourceFact) {"
+        },
+        {
+          "line": 299,
+          "text": "function deliverAdmittedFact(sourceFact) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/file-provenance-bootstrap.js",
+      "sha256": "f7a7dbf2e7da649fb9178905e41109d654f649ea7749187b9e9c668c2e480d25",
+      "line_count": 44,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "function bootstrapFileProvenanceAdmission({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+      "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+      "line_count": 297,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 121,
+          "text": "function schemaKey(reference) {"
+        },
+        {
+          "line": 125,
+          "text": "function schemaAuthority(schema) {"
+        },
+        {
+          "line": 134,
+          "text": "function compileGeneration({ effectiveState, handlerCatalog, createScopedContext, generationId }) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+      "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+      "line_count": 118,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "function createResourceRenderProjectionHandler({ dedupeLimit = DEFAULT_DEDUPE_LIMIT } = {}) {"
+        },
+        {
+          "line": 14,
+          "text": "function diagnose(context, code) {"
+        },
+        {
+          "line": 18,
+          "text": "function recoveryFor(fact) {"
+        },
+        {
+          "line": 30,
+          "text": "async function failProjection(fact, context, error, diagnosticCode) {"
+        },
+        {
+          "line": 40,
+          "text": "function reserveCapacity() {"
+        },
+        {
+          "line": 51,
+          "text": "return async function handleResourceRenderProjection(fact, context) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/versioning.js",
+      "sha256": "ce8113e8d1785143b6836f7eacf59cd5f79140d898e12d33bc4d10da449cb68f",
+      "line_count": 176,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 22,
+          "text": "function runGit(contentRoot, args) {"
+        },
+        {
+          "line": 26,
+          "text": "function readGitDirectoryPointer(gitFile) {"
+        },
+        {
+          "line": 35,
+          "text": "function resolveExistingDirectory(candidate, label) {"
+        },
+        {
+          "line": 51,
+          "text": "function resolveGitMutationPaths(contentRoot) {"
+        },
+        {
+          "line": 102,
+          "text": "async function ensureRepo(contentRoot) {"
+        },
+        {
+          "line": 132,
+          "text": "function findWorkspaceRoot(startPath) {"
+        },
+        {
+          "line": 149,
+          "text": "async function commitIfChanged(contentRoot, relativePath, message) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a",
+      "line_count": 480,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 15,
+          "text": "function isInside(root, candidate) {"
+        },
+        {
+          "line": 24,
+          "text": "function pathVariants(value) {"
+        },
+        {
+          "line": 44,
+          "text": "function isProtectedAiNamespace(aiRoot, candidate) {"
+        },
+        {
+          "line": 53,
+          "text": "function isProtectedNamespace(workspaceRoot, candidate) {"
+        },
+        {
+          "line": 57,
+          "text": "async function nearestExistingResolution(candidate, fsPromises, visitedLinks = new Set()) {"
+        },
+        {
+          "line": 94,
+          "text": "async function protectedRootInventory(workspaceRoot, fsPromises) {"
+        },
+        {
+          "line": 176,
+          "text": "async function collectProtectedReachability(roots, fsPromises) {"
+        },
+        {
+          "line": 237,
+          "text": "async function collectTreePaths(root, fsPromises) {"
+        },
+        {
+          "line": 261,
+          "text": "async function collectProjectedTreePaths(sourceRoot, destinationRoot, fsPromises) {"
+        },
+        {
+          "line": 266,
+          "text": "async function inspect("
+        },
+        {
+          "line": 342,
+          "text": "async function assertGenericViewMutationAllowed({"
+        },
+        {
+          "line": 400,
+          "text": "async function assertTargetAllowed(target) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/watch/workspace-watcher.js",
+      "sha256": "acd4b8a7e58223c5c3fa0259f7c2d6471b618e769e98b24b2b3ed0c9104511b3",
+      "line_count": 187,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 40,
+          "text": "function createWatcher(projectRoot, options = {}) {"
+        },
+        {
+          "line": 51,
+          "text": "function notifyFilters(event, filePath, extra) {"
+        },
+        {
+          "line": 95,
+          "text": "function checkForRenameTarget(filename) {"
+        },
+        {
+          "line": 110,
+          "text": "function scheduleDelete(filePath) {"
+        },
+        {
+          "line": 122,
+          "text": "function handleFileEvent(event, absolutePath) {"
+        },
+        {
+          "line": 152,
+          "text": "// function so isExcluded operates on the relative path as it does elsewhere."
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "sha256": "0411d054fce528a93be962e8ae2f36a1af72123960c9799323f2dab066a35d4e",
+      "line_count": 455,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 19,
+          "text": "function createDrainDrivenCanonicalChatEventApplier({"
+        },
+        {
+          "line": 44,
+          "text": "function lifecycleCurrent(payload) {"
+        },
+        {
+          "line": 48,
+          "text": "function authorityFor(payload) {"
+        },
+        {
+          "line": 52,
+          "text": "function currentTurn(control) {"
+        },
+        {
+          "line": 59,
+          "text": "function jsonSafePersistedResult(result) {"
+        },
+        {
+          "line": 66,
+          "text": "function applyChatEvent(event, ws, drainContext) {"
+        },
+        {
+          "line": 90,
+          "text": "function applyTurnStart(payload, route, control) {"
+        },
+        {
+          "line": 117,
+          "text": "async function applyToolCall(payload, route, control) {"
+        },
+        {
+          "line": 136,
+          "text": "async function applyToolCallArgs(payload, route, control) {"
+        },
+        {
+          "line": 181,
+          "text": "async function applyToolResult(payload, route, control) {"
+        },
+        {
+          "line": 196,
+          "text": "async function applyTerminalToolSnapshot(payload, route, control) {"
+        },
+        {
+          "line": 321,
+          "text": "function applySubagentUpdate(payload, route, control) {"
+        },
+        {
+          "line": 341,
+          "text": "function applyStatusMetadata(payload, route, control) {"
+        },
+        {
+          "line": 368,
+          "text": "function applyStepBegin(payload, route, control) {"
+        },
+        {
+          "line": 412,
+          "text": "async function applyTurnEnd(payload, route, control) {"
+        },
+        {
+          "line": 444,
+          "text": "function createCanonicalChatEventApplier(options) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+      "sha256": "70ec260b07453ef22ac8b581cbc5d0c0a127d63b6169400b6d9385f3861a4d2a",
+      "line_count": 266,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 37,
+          "text": "function createWireBroadcaster({ getClientForThread }) {"
+        },
+        {
+          "line": 39,
+          "text": "function workspaceIdForEvent(event) {"
+        },
+        {
+          "line": 49,
+          "text": "function sendToThread(event, wireMessage) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/client-message-router.js",
+      "sha256": "c10727bf72f5b54923647d55d17cf4ea413d771ba83236b7432509204fcfb1c1",
+      "line_count": 889,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 79,
+          "text": "function createClientMessageRouter({"
+        },
+        {
+          "line": 137,
+          "text": "function fanViewRegistryUpdated(message, binding) {"
+        },
+        {
+          "line": 281,
+          "text": "async function handleClientMessageWithinBoundary(message, isBinary = false) {"
+        },
+        {
+          "line": 863,
+          "text": "function handleClientMessage(message, isBinary = false) {"
+        },
+        {
+          "line": 869,
+          "text": "function handleClientClose() {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/file-save-route.js",
+      "sha256": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875",
+      "line_count": 209,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 34,
+          "text": "function independentlyValidRequestId(value) {"
+        },
+        {
+          "line": 38,
+          "text": "function validEnvelope(message) {"
+        },
+        {
+          "line": 44,
+          "text": "&& UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 47,
+          "text": "function response(errorCode, extra = {}) {"
+        },
+        {
+          "line": 60,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 64,
+          "text": "function omitReportedUiContext(message) {"
+        },
+        {
+          "line": 65,
+          "text": "const { reportedUiContext: _omitted, ...rest } = message;"
+        },
+        {
+          "line": 69,
+          "text": "function classifyContentError(errors) {"
+        },
+        {
+          "line": 82,
+          "text": "function createFileSaveRoute({"
+        },
+        {
+          "line": 93,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 97,
+          "text": "function closeInvalidAuthority(ws) {"
+        },
+        {
+          "line": 102,
+          "text": "async function sendValidated(ws, session, value) {"
+        },
+        {
+          "line": 112,
+          "text": "async function handleValidatedFileSave({ ws, session, message }) {"
+        },
+        {
+          "line": 133,
+          "text": "const sanitizedContext = sanitizeReportedUiContext(message.reportedUiContext, pair.workspaceId);"
+        },
+        {
+          "line": 136,
+          "text": "? { ...message, reportedUiContext: sanitizedContext.context }"
+        },
+        {
+          "line": 185,
+          "text": "reportedUiContext: sanitizedContext.context,"
+        },
+        {
+          "line": 191,
+          "text": "async function handleFileSave(input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/file-viewer-read-route.js",
+      "sha256": "c2de7b8df0e48ff9c56ebaf1c834165a0a5c4236168516ff7fa35bdb99d81629",
+      "line_count": 204,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 40,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 53,
+          "text": "function recoverRequestId(message) {"
+        },
+        {
+          "line": 57,
+          "text": "function validEnvelope(kind, message) {"
+        },
+        {
+          "line": 64,
+          "text": "&& UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 67,
+          "text": "function protocolError(kind, code, extra = {}) {"
+        },
+        {
+          "line": 78,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 82,
+          "text": "function createFileViewerReadRoute({"
+        },
+        {
+          "line": 95,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 99,
+          "text": "function closeInvalidAuthority(ws, reason = 'file viewer read authority unavailable') {"
+        },
+        {
+          "line": 104,
+          "text": "async function sendValidated(kind, ws, session, value, transportPair = null) {"
+        },
+        {
+          "line": 114,
+          "text": "async function handleValidated(kind, { ws, session, message }) {"
+        },
+        {
+          "line": 183,
+          "text": "async function handle(kind, input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+      "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+      "line_count": 259,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 39,
+          "text": "function snapshotExact(value, keys, label) {"
+        },
+        {
+          "line": 54,
+          "text": "function validateChangedBase(value) {"
+        },
+        {
+          "line": 72,
+          "text": "function validateRefreshBase(value, allowedReasons) {"
+        },
+        {
+          "line": 87,
+          "text": "function validateObservedV2(value) {"
+        },
+        {
+          "line": 129,
+          "text": "function boundPairForWorkspace(session, workspaceId) {"
+        },
+        {
+          "line": 138,
+          "text": "function sameWorkspacePair(left, right) {"
+        },
+        {
+          "line": 143,
+          "text": "function closeForProjectionReconnect(ws) {"
+        },
+        {
+          "line": 153,
+          "text": "function assertNotAborted(signal) {"
+        },
+        {
+          "line": 161,
+          "text": "function createResourceProjectionPublishers({"
+        },
+        {
+          "line": 174,
+          "text": "async function publish(message, schemaKey, schemaVersion = 1, { signal } = {}) {"
+        },
+        {
+          "line": 219,
+          "text": "async function publishResourceChanged(value) {"
+        },
+        {
+          "line": 223,
+          "text": "async function publishSubscriberRefreshRequired(value) {"
+        },
+        {
+          "line": 230,
+          "text": "async function publishControllerRefreshRequired(value) {"
+        },
+        {
+          "line": 237,
+          "text": "async function publishResourceObservedV2(value, options) {"
+        },
+        {
+          "line": 241,
+          "text": "async function publishAgentObservationRefreshRequired(value, options) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/resource-provenance-route.js",
+      "sha256": "8555703be80788d4675ea8f564c5dfceb4fbdc1a7d581a9dcdf0667a8b67ab20",
+      "line_count": 215,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 16,
+          "text": "function scalarStringWithin(value, maxBytes) {"
+        },
+        {
+          "line": 31,
+          "text": "function validRequestId(value) {"
+        },
+        {
+          "line": 35,
+          "text": "function validEnvelope(message) {"
+        },
+        {
+          "line": 41,
+          "text": "&& UUID_PATTERN.test(message.workspaceEpoch);"
+        },
+        {
+          "line": 44,
+          "text": "function error(code, extra = {}) {"
+        },
+        {
+          "line": 53,
+          "text": "function hasInactiveSchema(errors) {"
+        },
+        {
+          "line": 57,
+          "text": "function createResourceProvenanceRoute({"
+        },
+        {
+          "line": 70,
+          "text": "function diagnose(code) {"
+        },
+        {
+          "line": 74,
+          "text": "function closeInvalidAuthority(ws) {"
+        },
+        {
+          "line": 79,
+          "text": "async function sendFixedQueryFailure(ws, session, requestId, pair) {"
+        },
+        {
+          "line": 89,
+          "text": "async function sendValidated(ws, session, value) {"
+        },
+        {
+          "line": 97,
+          "text": "&& UUID_PATTERN.test(value.workspaceEpoch)) {"
+        },
+        {
+          "line": 114,
+          "text": "async function handleValidatedQuery({ ws, session, message }) {"
+        },
+        {
+          "line": 197,
+          "text": "async function handleQuery(input) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/workspace-request-handlers.js",
+      "sha256": "2fe0eda3c252f6eb4c2c7c21f4614ed658dd3a5d598fb8be6ea66e2981bb5458",
+      "line_count": 900,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 42,
+          "text": "function officeThumbnailPathForDocument(documentPath) {"
+        },
+        {
+          "line": 46,
+          "text": "async function moveOfficeThumbnail(sourcePath, targetPath) {"
+        },
+        {
+          "line": 58,
+          "text": "async function removeOfficeThumbnail(documentPath) {"
+        },
+        {
+          "line": 68,
+          "text": "function createWorkspaceRequestHandlers({ ws, session, getAllClients }) {"
+        },
+        {
+          "line": 71,
+          "text": "function isPathInside(root, candidate) {"
+        },
+        {
+          "line": 76,
+          "text": "function isValidEntryName(name) {"
+        },
+        {
+          "line": 84,
+          "text": "function broadcastFileChanged(panel, filePath, workspaceId) {"
+        },
+        {
+          "line": 93,
+          "text": "async function runReadyViewOperation(operation) {"
+        },
+        {
+          "line": 111,
+          "text": "function relativeToPanel(absPath) {"
+        },
+        {
+          "line": 124,
+          "text": "function captureRequestCorrelation(clientMsg) {"
+        },
+        {
+          "line": 151,
+          "text": "function sendWorksurfaceError({ viewId, threadGroupId, correlation, error, lane }) {"
+        },
+        {
+          "line": 181,
+          "text": "function broadcastWorksurfaceChanged(detail) {"
+        },
+        {
+          "line": 200,
+          "text": "function readWorksurfaceIdentity(clientMsg) {"
+        },
+        {
+          "line": 211,
+          "text": "function worksurfaceRequestErrorCode(clientMsg, viewId) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/workspace-session.js",
+      "sha256": "465a45755f604b84426dcc787b27e542a42f0d060402c4cff477230ffc91eada",
+      "line_count": 213,
+      "evidence": "source inspected for bounded S03 claims",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function closeForReconnect(ws, reason = 'workspace session requires reconnect') {"
+        },
+        {
+          "line": 17,
+          "text": "function sendSerialized(ws, serialized) {"
+        },
+        {
+          "line": 47,
+          "text": "function ensureBuffer(session) {"
+        },
+        {
+          "line": 52,
+          "text": "function beginWorkspaceBind(session, {"
+        },
+        {
+          "line": 61,
+          "text": "if (workspaceEpoch != null && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u.test(workspaceEpoch)) {"
+        },
+        {
+          "line": 75,
+          "text": "function currentWorkspacePair(session) {"
+        },
+        {
+          "line": 84,
+          "text": "function pendingWorkspacePair(session) {"
+        },
+        {
+          "line": 92,
+          "text": "function bufferSerializedReply(ws, session, serialized, pair) {"
+        },
+        {
+          "line": 112,
+          "text": "async function sendWorkspaceBoundReply(ws, session, message, deliveryPair = null) {"
+        },
+        {
+          "line": 130,
+          "text": "async function completeWorkspaceBind(ws, session, bindFrame, expectedPair = pendingWorkspacePair(session)) {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ledger/resource-provenance-repository.test.js",
+      "sha256": "3fa4289dd60d21bb803714181e038e17b8c3e2d40f4b8a70cbf6da35b3538bec",
+      "line_count": 271,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "function uuid(number) {"
+        },
+        {
+          "line": 16,
+          "text": "function input(number, canonicalPath, acceptedAt) {"
+        },
+        {
+          "line": 30,
+          "text": "async function succeededOperation(operations, number, canonicalPath, acceptedAt, occurredAt, preimage) {"
+        },
+        {
+          "line": 54,
+          "text": "async function factFor(db, operations, operationId) {"
+        },
+        {
+          "line": 75,
+          "text": "test('stores exact duplicates idempotently and refuses a conflicting established event ID', async () => {"
+        },
+        {
+          "line": 110,
+          "text": "test('queries AND-combined selectors with deterministic ordering/default/max limits and no bytes', async () => {"
+        },
+        {
+          "line": 168,
+          "text": "test('defaults to 50 rows and permits the exact 200-row maximum', async () => {"
+        },
+        {
+          "line": 190,
+          "text": "test('filters by view/tab/component/presenter/target and echoes the validated context', async () => {"
+        },
+        {
+          "line": 207,
+          "text": "origin: { ...base.origin, reportedUiContext: context },"
+        },
+        {
+          "line": 236,
+          "text": ".origin.reportedUiContext).toEqual(contextB);"
+        },
+        {
+          "line": 242,
+          "text": "test('retries concurrent exact duplicate append across two connections without raw contention', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/file-provenance-integration.test.js",
+      "sha256": "aa1f0f316d0316a71fa0db858858b6d79572af19134fd73374f6c2d5b776de2c",
+      "line_count": 200,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 45,
+          "text": "test('an in-root symlink-parent save is queryable by physical exact and folder selectors', async () => {"
+        },
+        {
+          "line": 113,
+          "text": "reportedUiContext: {"
+        },
+        {
+          "line": 183,
+          "text": "expect(queryReplies[0].items[0].origin.reportedUiContext).toEqual({"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/path-authority-and-atomic-writer.test.js",
+      "sha256": "f8bd32e36d9b035ef309113a7a38dd795fc52eb8a25404f52e6644001b80efa0",
+      "line_count": 324,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 26,
+          "text": "function authority(overrides = {}) {"
+        },
+        {
+          "line": 38,
+          "text": "test('normalizes different panel aliases to one canonical physical path', async () => {"
+        },
+        {
+          "line": 51,
+          "text": "test('allows in-root filenames whose segments begin with two dots', async () => {"
+        },
+        {
+          "line": 62,
+          "text": "test('normalizes case aliases of an existing physical file to one canonical spelling', async () => {"
+        },
+        {
+          "line": 78,
+          "text": "test('the production panel resolver does not derive authority from retired unscoped view folders', () => {"
+        },
+        {
+          "line": 84,
+          "text": "test('uses the workspace registry and rejects traversal, external parents, symlinks, and directories', async () => {"
+        },
+        {
+          "line": 98,
+          "text": "test('writes, syncs, closes and performs exactly one rename', async () => {"
+        },
+        {
+          "line": 117,
+          "text": "test('detects preimage conflict before rename and preserves the competing bytes', async () => {"
+        },
+        {
+          "line": 132,
+          "text": "test('cleanup refuses protected hard-link and broken-symlink operation sidecars', async () => {"
+        },
+        {
+          "line": 157,
+          "text": "test('rejects a same-byte target replacement with a different physical inode', async () => {"
+        },
+        {
+          "line": 172,
+          "text": "test('rejects operation-temp pathname substitution before rename', async () => {"
+        },
+        {
+          "line": 202,
+          "text": "test('never reports success when the verified temp is substituted inside rename', async () => {"
+        },
+        {
+          "line": 251,
+          "text": "test('rejects a rebound parent before disclosing intended bytes to an operation temp', async () => {"
+        },
+        {
+          "line": 269,
+          "text": "test('distinguishes rename failure from post-rename directory-sync uncertainty', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/reconciliation.test.js",
+      "sha256": "0b108ef13dd4a534e6b8110f3a6fcad0708ceb01e07084444efa49dcf0c5838a",
+      "line_count": 333,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 15,
+          "text": "function uuid(number) {"
+        },
+        {
+          "line": 45,
+          "text": "function input(number, canonicalPath, currentFingerprint = null) {"
+        },
+        {
+          "line": 56,
+          "text": "function authority() {"
+        },
+        {
+          "line": 62,
+          "text": "function publishers(calls) {"
+        },
+        {
+          "line": 77,
+          "text": "test('after a real SQLite reopen, accepted fails, prepared becomes unknown, and succeeded replays without writing', async () => {"
+        },
+        {
+          "line": 162,
+          "text": "test('replays a succeeded admitted fact while ledger remains pending and keeps the same event identity', async () => {"
+        },
+        {
+          "line": 187,
+          "text": "test('does not recover a prepared pre-replace operation or an attempted operation without postimage evidence', async () => {"
+        },
+        {
+          "line": 223,
+          "text": "test('retries terminal temp cleanup after SQLite reopen without repeating the write', async () => {"
+        },
+        {
+          "line": 262,
+          "text": "test('restart cleanup never unlinks a protected file through a hard-linked operation temp', async () => {"
+        },
+        {
+          "line": 304,
+          "text": "test('owner accepts one exact publisher injection without exposing publisher closures', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/reported-ui-context.test.js",
+      "sha256": "530d661ccca9bc07d14ec8593d23eca1af90f14c492fdaf29d8866112f2ce561",
+      "line_count": 274,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 15,
+          "text": "reportedUiContextFromRow,"
+        },
+        {
+          "line": 34,
+          "text": "function uuid(number) {"
+        },
+        {
+          "line": 38,
+          "text": "function reservationInput(start, overrides = {}) {"
+        },
+        {
+          "line": 50,
+          "text": "reportedUiContext: { ...CONTEXT },"
+        },
+        {
+          "line": 66,
+          "text": "async function succeed(operations, operation, occurredAt, preimage = { kind: 'absent' }) {"
+        },
+        {
+          "line": 91,
+          "text": "test('uses the server workspace, preserves bounds, and reports fixed diagnostics', () => {"
+        },
+        {
+          "line": 121,
+          "text": "test('originFromInput stays strict about base origin while degrading malformed context fail-open', () => {"
+        },
+        {
+          "line": 127,
+          "text": "reportedUiContext: 'not-an-object',"
+        },
+        {
+          "line": 138,
+          "text": "test('persists both durable fact bodies with the validated context and stable bindings on replay', async () => {"
+        },
+        {
+          "line": 157,
+          "text": "expect(reportedUiContextFromRow(row)).toEqual(CONTEXT);"
+        },
+        {
+          "line": 160,
+          "text": "expect(commandBody.origin.reportedUiContext).toEqual(CONTEXT);"
+        },
+        {
+          "line": 172,
+          "text": "expect(resourceBody.origin.reportedUiContext).toEqual(CONTEXT);"
+        },
+        {
+          "line": 189,
+          "text": "test('omits the context on renderer workspace mismatch without changing the accepted save', async () => {"
+        },
+        {
+          "line": 197,
+          "text": "reportedUiContext: { ...CONTEXT, workspaceId: 'workspace-other' },"
+        },
+        {
+          "line": 205,
+          "text": "expect(commandBody.origin.reportedUiContext).toBeUndefined();"
+        },
+        {
+          "line": 208,
+          "text": "test('the controller path never rejects or delays a save for malformed context', async () => {"
+        },
+        {
+          "line": 248,
+          "text": "for (const [index, reportedUiContext] of malformed.entries()) {"
+        },
+        {
+          "line": 260,
+          "text": "reportedUiContext,"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/resources/save-controller.test.js",
+      "sha256": "bd4bb14439ff1315ddca018f21a7c0ec1ea5fee8d38484529951e7ba87200600",
+      "line_count": 1013,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 56,
+          "text": "function publishers({"
+        },
+        {
+          "line": 79,
+          "text": "function controller(overrides = {}) {"
+        },
+        {
+          "line": 86,
+          "text": "test('creates with an absent snapshot and reports independently pending ledger truth', async () => {"
+        },
+        {
+          "line": 99,
+          "text": "test('rejects canonical, retired, pseudo-panel, symlink, hard-link, encoded, and non-existing protected saves before reservation', async () => {"
+        },
+        {
+          "line": 138,
+          "text": "test('checkpoint saves preflight generated Git paths before reservation or file effects', async () => {"
+        },
+        {
+          "line": 157,
+          "text": "test('checkpoint saves reject a protected separate Git directory before reservation', async () => {"
+        },
+        {
+          "line": 178,
+          "text": "test('captures exact old bytes and aliases reuse canonical resource identity', async () => {"
+        },
+        {
+          "line": 192,
+          "text": "test('concurrent panel aliases serialize on the canonical resource mutex', async () => {"
+        },
+        {
+          "line": 225,
+          "text": "test('concurrent case aliases serialize as one physical resource on case-insensitive volumes', async () => {"
+        },
+        {
+          "line": 262,
+          "text": "test('concurrent absent case aliases serialize behind the winning physical spelling', async () => {"
+        },
+        {
+          "line": 353,
+          "text": "test('same-connection successful acknowledgement replay returns the stored response without side effects', async () => {"
+        },
+        {
+          "line": 386,
+          "text": "test('same-connection terminal failure replay returns stored IDs without a second attempt', async () => {"
+        },
+        {
+          "line": 523,
+          "text": "test('rejects envelope, stale pair, semantic text, and untrusted path before reservation', async () => {"
+        },
+        {
+          "line": 538,
+          "text": "test('valid milestone metadata is bound into both replayable fact bodies', async () => {"
+        },
+        {
+          "line": 562,
+          "text": "test('command admission failure does not block the write and remains pending', async () => {"
+        },
+        {
+          "line": 569,
+          "text": "test('resource admission failure leaves successful filesystem truth pending', async () => {"
+        },
+        {
+          "line": 587,
+          "text": "test('missing render subscriber delivery recovers, while an invoked delivery does not', async () => {"
+        },
+        {
+          "line": 616,
+          "text": "test('validation and pre-rename failure never emit recovery', async () => {"
+        },
+        {
+          "line": 630,
+          "text": "test('queue overflow returns save_busy before reserving identities', async () => {"
+        },
+        {
+          "line": 638,
+          "text": "test('unsupported preimage is a durable pre-replace failure with no resource fact', async () => {"
+        },
+        {
+          "line": 649,
+          "text": "test('rejects an oversized preimage from opened-file stat without reading its bytes', async () => {"
+        },
+        {
+          "line": 678,
+          "text": "test('bounds the opened preimage read when the file grows after its small stat', async () => {"
+        },
+        {
+          "line": 709,
+          "text": "test('pre-rename and post-rename failures produce truthful retry domains', async () => {"
+        },
+        {
+          "line": 740,
+          "text": "test('post-write DB failure stays a successful file save pending reconciliation', async () => {"
+        },
+        {
+          "line": 766,
+          "text": "test('success transition acknowledgement loss is read back without duplicate work', async () => {"
+        },
+        {
+          "line": 795,
+          "text": "test('persistent post-write storage outage can never demote a completed replacement to retry-safe rejection', async () => {"
+        },
+        {
+          "line": 831,
+          "text": "test('an identical waiter rechecks the stable response cache after post-write storage loss', async () => {"
+        },
+        {
+          "line": 877,
+          "text": "test('persistent pre-write storage outage retains accepted IDs and never becomes rejected', async () => {"
+        },
+        {
+          "line": 896,
+          "text": "test('attempt-registration failure becomes durable failed and never restart ambiguity', async () => {"
+        },
+        {
+          "line": 918,
+          "text": "test('prepare commit followed by acknowledgement loss terminalizes before any writer invocation', async () => {"
+        },
+        {
+          "line": 948,
+          "text": "test('attempt commit followed by acknowledgement loss terminalizes before any writer invocation', async () => {"
+        },
+        {
+          "line": 978,
+          "text": "test('checkpoint failure remains a warning after the projection cutover', async () => {"
+        },
+        {
+          "line": 988,
+          "text": "test('ledger stored and conflict states remain distinct from fact admission', async () => {"
+        },
+        {
+          "line": 1004,
+          "text": "test('real atomic writer performs one filesystem replacement', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/subscriptions/resource-render-projection-handler.test.js",
+      "sha256": "d7835873a07b1b9a4b91d28a5afba9d630af30cfc742e857b96a89eeea69c47c",
+      "line_count": 151,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "function fact(overrides = {}) {"
+        },
+        {
+          "line": 24,
+          "text": "function context(overrides = {}) {"
+        },
+        {
+          "line": 34,
+          "text": "test('builds only the canonical File Viewer projection from the admitted fact', async () => {"
+        },
+        {
+          "line": 48,
+          "text": "test('suppresses an exact duplicate and diagnoses a conflicting event identity', async () => {"
+        },
+        {
+          "line": 73,
+          "text": "test('atomically joins a concurrent duplicate and rejects a concurrent conflict before publish', async () => {"
+        },
+        {
+          "line": 105,
+          "text": "test('keeps in-flight dedupe bounded and permits retry after capacity is released', async () => {"
+        },
+        {
+          "line": 128,
+          "text": "test('projection construction or publication failure emits only subscriber-owned recovery', async () => {"
+        },
+        {
+          "line": 144,
+          "text": "test('requires exactly the narrow governed capability surface it uses', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/file-save-route.test.js",
+      "sha256": "00ad8e92d573f5a07dfe157e93a1c68d2c3d885cc7b633824a9611aca3d7eb8d",
+      "line_count": 520,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 18,
+          "text": "function socket() {"
+        },
+        {
+          "line": 34,
+          "text": "function activeSession(epoch = EPOCH_A1) {"
+        },
+        {
+          "line": 47,
+          "text": "function request(overrides = {}) {"
+        },
+        {
+          "line": 62,
+          "text": "function exactSuccess(message) {"
+        },
+        {
+          "line": 79,
+          "text": "function exactSuccessFromIntent(intent) {"
+        },
+        {
+          "line": 102,
+          "text": "test('validates the public request, maps reason to saveReason, and emits an exact response', async () => {"
+        },
+        {
+          "line": 125,
+          "text": "clientActionId: undefined, reportedUiContext: undefined,"
+        },
+        {
+          "line": 132,
+          "text": "test('accepts an empty milestone while preserving the reason/milestone coupling', async () => {"
+        },
+        {
+          "line": 171,
+          "text": "test('maps content exceeding 10 MiB of encoded UTF-8 to too_large before mutation', async () => {"
+        },
+        {
+          "line": 217,
+          "text": "test('invalid envelope is rejected without relying on request fields for correlation', async () => {"
+        },
+        {
+          "line": 231,
+          "text": "test('binding, A -> B, and A -> B -> A reject stale intent before owner/path I/O', async () => {"
+        },
+        {
+          "line": 262,
+          "text": "test('locked schema checksum drift fails closed before mutation', async () => {"
+        },
+        {
+          "line": 282,
+          "text": "test('owner exceptions and response drift close with fixed diagnostics and never serialize request content', async () => {"
+        },
+        {
+          "line": 299,
+          "text": "test('direct composition writes through the mediated controller without the retired save broadcast', async () => {"
+        },
+        {
+          "line": 351,
+          "text": "test('passes the validated component context through with the server-derived workspace', async () => {"
+        },
+        {
+          "line": 365,
+          "text": "reportedUiContext: {"
+        },
+        {
+          "line": 373,
+          "text": "expect(seen[0].intent.reportedUiContext).toEqual({"
+        },
+        {
+          "line": 380,
+          "text": "test('degrades malformed/oversized/stale reportedUiContext instead of rejecting the save', async () => {"
+        },
+        {
+          "line": 401,
+          "text": "for (const [, reportedUiContext, expected] of cases) {"
+        },
+        {
+          "line": 406,
+          "text": "message: request({ requestId: `ctx-${seen.length + 1}`, reportedUiContext }),"
+        },
+        {
+          "line": 409,
+          "text": "expect(seen.at(-1).intent.reportedUiContext).toEqual(expected.context);"
+        },
+        {
+          "line": 414,
+          "text": "test('completed paired route reply is held behind an in-progress bind frame', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/resource-projection-publisher.test.js",
+      "sha256": "dd33ee2fe297587b1f21687f069ff893278d739c7347129b0e94290582c74dff",
+      "line_count": 349,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 22,
+          "text": "function activeSession(workspaceId, workspaceEpoch) {"
+        },
+        {
+          "line": 33,
+          "text": "function bindingSession(workspaceId, workspaceEpoch) {"
+        },
+        {
+          "line": 47,
+          "text": "function socket() {"
+        },
+        {
+          "line": 63,
+          "text": "function changed(overrides = {}) {"
+        },
+        {
+          "line": 72,
+          "text": "function refresh(reason, overrides = {}) {"
+        },
+        {
+          "line": 80,
+          "text": "function observed(overrides = {}) {"
+        },
+        {
+          "line": 92,
+          "text": "function publishers(sessions, overrides = {}) {"
+        },
+        {
+          "line": 105,
+          "text": "test('routes only to matching open sessions and injects each recipient epoch', async () => {"
+        },
+        {
+          "line": 129,
+          "text": "test('publishes strict v2 observation unions with the stable dominant-edge identity', async () => {"
+        },
+        {
+          "line": 150,
+          "text": "test('uses the existing bind queue so the bind frame precedes projection and recovery', async () => {"
+        },
+        {
+          "line": 171,
+          "text": "test('superseding a bind during async flush closes before a new-epoch projection can escape', async () => {"
+        },
+        {
+          "line": 176,
+          "text": "ws.send = function controlledSend(payload, callback) {"
+        },
+        {
+          "line": 211,
+          "text": "test('a projection for the previous workspace is not admitted to a new bind queue', async () => {"
+        },
+        {
+          "line": 223,
+          "text": "test('schema rejection and send failure reject the provider; send failure closes for reconnect', async () => {"
+        },
+        {
+          "line": 235,
+          "text": "ws.send = function fail(_payload, callback) { callback(new Error('send failed')); };"
+        },
+        {
+          "line": 241,
+          "text": "test('schema infrastructure failure closes only matching recipients and no-recipient publish stays inert', async () => {"
+        },
+        {
+          "line": 264,
+          "text": "test('deferred validation cannot deliver a captured projection after its pair is superseded', async () => {"
+        },
+        {
+          "line": 298,
+          "text": "test('projection overflow uses the sole bind queue and closes for reconnect', async () => {"
+        },
+        {
+          "line": 311,
+          "text": "test('controller and subscriber recovery closures enforce disjoint exact reason sets', async () => {"
+        },
+        {
+          "line": 339,
+          "text": "test('rejects malformed bases before session routing', async () => {"
+        }
+      ]
+    },
+    {
+      "path": "fusion-studio-server/test/ws/resource-provenance-route.test.js",
+      "sha256": "03ebb9e878b0c5662c2b642b4d8e59df64cc30aee7ce4e2a5b909462540dde45",
+      "line_count": 431,
+      "evidence": "test assertions inspected selectively; not rerun",
+      "anchors": [
+        {
+          "line": 19,
+          "text": "function activeSession(workspaceId = 'workspace-a', workspaceEpoch = A1) {"
+        },
+        {
+          "line": 26,
+          "text": "function query(overrides = {}) {"
+        },
+        {
+          "line": 34,
+          "text": "function createHarness(overrides = {}) {"
+        },
+        {
+          "line": 52,
+          "text": "function createV2Workspace() {"
+        },
+        {
+          "line": 89,
+          "text": "test('rejects binding and stale-pair preconditions before selector/query work', async () => {"
+        },
+        {
+          "line": 108,
+          "text": "test('normalizes panel aliases and combines every selector with the captured workspace', async () => {"
+        },
+        {
+          "line": 127,
+          "text": "test('forwards bounded view/tab/component/presenter/target context selectors', async () => {"
+        },
+        {
+          "line": 173,
+          "text": "test('returns fixed query_failed for repository errors', async () => {"
+        },
+        {
+          "line": 188,
+          "text": "test('distinguishes typed selector rejection from path-normalizer infrastructure failure', async () => {"
+        },
+        {
+          "line": 229,
+          "text": "test('production panel stat failure returns fixed query_failed and only its bounded diagnostic', async () => {"
+        },
+        {
+          "line": 259,
+          "text": "test('production V2 manifest EIO returns fixed query_failed instead of unknown-panel rejection', async () => {"
+        },
+        {
+          "line": 293,
+          "text": "test('production V2 Views-directory EIO returns fixed query_failed', async () => {"
+        },
+        {
+          "line": 327,
+          "text": "test('production V2 entry-classification EIO returns fixed query_failed', async () => {"
+        },
+        {
+          "line": 362,
+          "text": "test('a truly unknown V2 panel remains invalid_request without an infrastructure diagnostic', async () => {"
+        },
+        {
+          "line": 388,
+          "text": "test('registry validation exception returns fixed query_failed without retry or route diagnostic', async () => {"
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "at": "2026-09-19T03:27:24.004741-07:00",
+      "command": [
+        "git",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "exit": 0,
+      "stdout": "/Users/rccurtrightjr./projects/fs-dev\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.008702-07:00",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "88637d11c65be53d4f2ad0f049f64a07fa3db1de\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.029954-07:00",
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit": 0,
+      "stdout": " M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md\n M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md\n M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json\n M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json\n M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md\n M ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md\n M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md\n M fusion-studio-client/e2e/office/fixture-lifecycle.mjs\n M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs\n M fusion-studio-client/e2e/office/global-setup.mjs\n M fusion-studio-client/e2e/office/global-teardown.mjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs\n M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs\n M fusion-studio-client/e2e/office/run-isolated-electron.mjs\n M fusion-studio-client/playwright.office.config.ts\n?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md\n?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md\n?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md\n?? ai/RC-MacAir-15/Captures/031-Remote_Access/\n?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/\n?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-032540.md\n?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-021443.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020136.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020824.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-022758.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-023606.md\n?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-024336.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-032620.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032330.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032540.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md\n?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md\n?? fusion-studio-client/e2e/office/harness-bounds.mjs\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.038256-07:00",
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname) %(objectname)"
+      ],
+      "exit": 0,
+      "stdout": "refs/codex/turn-diffs/captures/1789811090392/90705b29-e958-4d02-a6db-a74e55b6b3f8/base 8304a78d0c1b6eacc3638809ea1a753172036bf3\nrefs/codex/turn-diffs/checkpoints/be6a4578f5942feded8c17efd0628596ffbba1a45e62c6122f8c73bdaf73c964/aef5b12ed5277c7923ef24c5082f70d1d2c10465b3b4e384dd53b0277116c026/1789811947215/47d84c0e-a575-4f0e-a77b-e8a2d456ff20 82ab607b50b8877e3928a3738d81951e43708047\nrefs/heads/agent/alpha-office-editor-promotion feb740b6fd45246a69cdd4cbae76d18adcbc1cbe\nrefs/heads/agent/alpha-packaged-log-path 87231c62b03d58f6eefa65472f2f2a6e559406bc\nrefs/heads/agent/exact-workspace-paths 88637d11c65be53d4f2ad0f049f64a07fa3db1de\nrefs/heads/agent/oe009-complete-office-work 5434527aeb8bc1426e2ef46c83db6739fc68ba5a\nrefs/heads/agent/rcc-0108-roadmap 501eb35379ac0278f9aa20ef7f6b99a16241bac1\nrefs/heads/agent/universal-view-tab-bar-spec 806b33521907ed4b51cf792d5ef664fe319ea349\nrefs/heads/archive/rcc-0108-dirty-state 888025748036180c3cdf4749fcd749e17a149bec\nrefs/heads/archive/universal-view-tab-bar-wip 6565c01a123644d99d987171248a6d7b09f8105b\nrefs/heads/codex/implement-tabs03-tab-target-placem 22cc435230a209531378c17db56ba17db323e8bf\nrefs/heads/codex/prov01-accepted-source acf12dafe7499b04995617e5d9c1512775e5ba12\nrefs/heads/codex/prov01-integration 2a275a344588b7e604ad666433dff98818c69380\nrefs/heads/main 737293389d202bd327362a75cce991e5cbb53391\nrefs/remotes/gitlab/HEAD bafc1ed0bf6b951d647d9a313f87612f81a012bf\nrefs/remotes/gitlab/main bafc1ed0bf6b951d647d9a313f87612f81a012bf\nrefs/remotes/gitlab/spec-bs-001-validation-findings 3d7e43f1972f24ac41886283855ce0f7adf84bd2\nrefs/remotes/origin/HEAD 737293389d202bd327362a75cce991e5cbb53391\nrefs/remotes/origin/agent/exact-workspace-paths 88637d11c65be53d4f2ad0f049f64a07fa3db1de\nrefs/remotes/origin/main 737293389d202bd327362a75cce991e5cbb53391\nrefs/remotes/prov01/accepted-source acf12dafe7499b04995617e5d9c1512775e5ba12\nrefs/stash 1e19f9241d206a232e54a857df18e3d396ddab9a\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.048668-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "saveFile\\(|queryResourceProvenance|readSaveActionContext",
+        "fusion-studio-client/src"
+      ],
+      "exit": 0,
+      "stdout": "fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts:162:export function queryResourceProvenance(\nfusion-studio-client/src/lib/save-action-context.ts:99:export function readSaveActionContext(panel: string): ComponentActionContext | undefined {\nfusion-studio-client/src/state/fileDataStore.ts:25:import { readSaveActionContext } from '../lib/save-action-context';\nfusion-studio-client/src/state/fileDataStore.ts:529:          get().saveFile(panel, path, content, reason, milestone, dirtyRevision)\nfusion-studio-client/src/state/fileDataStore.ts:543:      const reportedUiContext = readSaveActionContext(panel);\nfusion-studio-client/src/components/documentSaveAcknowledgement.ts:54:  await saveFile(panel, path, content, 'milestone', milestone, capturedDirtyRevision);\nfusion-studio-client/src/components/office/OfficeDocumentPage.tsx:291:      await saveFile(\nfusion-studio-client/src/components/email/EmailDocumentPage.tsx:168:      await saveFile(\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.056971-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "resource:provenance|file_save|handleFileMessage",
+        "fusion-studio-client/src/lib/ws-client.ts",
+        "fusion-studio-server/lib/ws/client-message-router.js"
+      ],
+      "exit": 0,
+      "stdout": "fusion-studio-client/src/lib/ws-client.ts:16:import { handleFileMessage } from './ws/file-handlers';\nfusion-studio-client/src/lib/ws-client.ts:428:  if (handleFileMessage(msg)) return;\nfusion-studio-server/lib/ws/client-message-router.js:442:      if (clientMsg.type === 'file_save') {\nfusion-studio-server/lib/ws/client-message-router.js:452:      if (clientMsg.type === 'resource:provenance:query') {\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.068667-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "readSnapshotBytes|file\\.version|restoreOfVersionId|resource:invalidate|recoveryRemote|conflict_pending|uiActionSeed|PreparedCanonicalCandidate",
+        "fusion-studio-server/lib",
+        "fusion-studio-client/src"
+      ],
+      "exit": 0,
+      "stdout": "fusion-studio-server/lib/file-mutations/file-version-repository.js:105:    async readSnapshotBytes(fileVersionId) {\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.075480-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "file_changed|file:changed",
+        "fusion-studio-server/lib/ws/workspace-request-handlers.js",
+        "fusion-studio-server/lib/watch/workspace-watcher.js"
+      ],
+      "exit": 0,
+      "stdout": "fusion-studio-server/lib/watch/workspace-watcher.js:84:      emit('file:changed', {\nfusion-studio-server/lib/watch/workspace-watcher.js:87:      emit('file:changed', {\nfusion-studio-server/lib/watch/workspace-watcher.js:91:      emit('file:changed', { workspaceId, projectRoot, filePath, event, context: ctx });\nfusion-studio-server/lib/ws/workspace-request-handlers.js:87:    const payload = JSON.stringify({ type: 'file_changed', panel, filePath });\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.080334-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "file.command_accepted|resource.mutated|resource-render-projection|deliveryPolicy",
+        "fusion-studio-server/lib/event-registry/subscription-seed-catalog.js"
+      ],
+      "exit": 0,
+      "stdout": "28:    deliveryPolicy: seedEnvelope.deliveryPolicy,\n41:    eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }],\n46:      scope: { eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }] },\n57:  deliveryPolicy: 'required_ack',\n61:    { definitionKind: 'event', schemaKey: 'resource.mutated', schemaVersion: 1 },\n68:    handlerKey: 'system.resource-render-projection',\n71:      eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }],\n76:        scope: { eventTypes: [{ eventType: 'resource.mutated', schemaVersion: 1 }] },\n104:    deliveryPolicy: 'best_effort',\n108:      { definitionKind: 'event', schemaKey: 'resource.mutated', schemaVersion: 1 },\n151:    deliveryPolicy: 'required_ack',\n183:    deliveryPolicy: 'required_ack',\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:27:24.088549-07:00",
+      "command": [
+        "rg",
+        "-n",
+        "dirty|reconnect|generation|stale|snapshot|post-write|pre-rename",
+        "fusion-studio-client/e2e/file-save-protocol-source.spec.ts",
+        "fusion-studio-client/e2e/agent-resource-projection-source.spec.ts",
+        "fusion-studio-server/test/resources/save-controller.test.js"
+      ],
+      "exit": 0,
+      "stdout": "fusion-studio-client/e2e/agent-resource-projection-source.spec.ts:27:    snapshotId: SNAPSHOT, state: 'bytes', resourceId: RESOURCE,\nfusion-studio-client/e2e/agent-resource-projection-source.spec.ts:46:  useFileDataStore.setState({ generation: 0, workspaceId: null, workspaceEpoch: null });\nfusion-studio-client/e2e/agent-resource-projection-source.spec.ts:141:test('stale v2 is ignored and malformed v2 closes instead of falling into v1', () => {\nfusion-studio-client/e2e/agent-resource-projection-source.spec.ts:147:  }))).toBe('stale');\nfusion-studio-client/e2e/agent-resource-projection-source.spec.ts:149:  expect(handleFileMessage({ ...changed(), snapshotId: null })).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:163:    expect(useFileDataStore.getState().dirtyFlags[`file-viewer:${path}`]).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:167:    expect(useFileDataStore.getState().dirtyFlags[`file-viewer:${path}`]).toBeUndefined();\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:171:test('wrong-id and stale-pair replies cannot settle a pending save', async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:179:  const stale = { ...success(request), workspaceEpoch: EPOCH_A2 };\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:180:  expect(useFileDataStore.getState().handleSaveResponseV1(stale)).toBe(false);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:182:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:note.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:187:test('a save acknowledgement only clears the dirty revision it captured', async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:200:  expect(useFileDataStore.getState().dirtyFlags[key]).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:208:  expect(useFileDataStore.getState().dirtyFlags[key]).toBeUndefined();\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:212:  test(`${panel} navigation drains an in-flight save and every later dirty revision`, async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:263:    expect(useFileDataStore.getState().dirtyFlags[`${panel}:report.md`]).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:284:test('reconnect retires the epoch and pending correlation without erasing dirty/content state', async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:300:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:note.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:305:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:note.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:356:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:note.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:398:  )).rejects.toThrow('must reconnect');\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:436:test('outcome-unknown and transport send failure preserve dirty state and reject completion', async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:459:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:unknown.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:466:  expect(useFileDataStore.getState().dirtyFlags['file-viewer:offline.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:491:test('document milestone callers clear dirty state only after correlated acknowledgement', async () => {\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:500:    setLocalDirty: (dirty) => { localDirtyTransitions.push(dirty); },\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:508:  expect(useFileDataStore.getState().dirtyFlags['email-viewer:draft.md']).toBe(true);\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:512:  expect(useFileDataStore.getState().dirtyFlags['email-viewer:draft.md']).toBeUndefined();\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:518:    setLocalDirty: (dirty) => { localDirtyTransitions.push(dirty); },\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:533:    setLocalDirty: (dirty) => { localDirtyTransitions.push(dirty); },\nfusion-studio-client/e2e/file-save-protocol-source.spec.ts:540:  expect(useFileDataStore.getState().dirtyFlags['email-viewer:draft.md']).toBe(true);\nfusion-studio-server/test/resources/save-controller.test.js:86:  test('creates with an absent snapshot and reports independently pending ledger truth', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:523:  test('rejects envelope, stale pair, semantic text, and untrusted path before reservation', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:528:      .resolves.toMatchObject({ errorCode: 'stale_workspace' });\nfusion-studio-server/test/resources/save-controller.test.js:616:  test('validation and pre-rename failure never emit recovery', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:626:    await c.save({ session: session(), intent: intent({ requestId: 'pre-rename-failure' }) });\nfusion-studio-server/test/resources/save-controller.test.js:709:  test('pre-rename and post-rename failures produce truthful retry domains', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:740:  test('post-write DB failure stays a successful file save pending reconciliation', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:752:    const replayIntent = intent({ requestId: 'post-write-db-failure' });\nfusion-studio-server/test/resources/save-controller.test.js:795:  test('persistent post-write storage outage can never demote a completed replacement to retry-safe rejection', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:815:    const replayIntent = intent({ requestId: 'persistent-post-write-outage' });\nfusion-studio-server/test/resources/save-controller.test.js:831:  test('an identical waiter rechecks the stable response cache after post-write storage loss', async () => {\nfusion-studio-server/test/resources/save-controller.test.js:864:    const replayIntent = intent({ requestId: 'queued-post-write-outage' });\nfusion-studio-server/test/resources/save-controller.test.js:888:      success: false, outcome: 'failed_before_replace', errorCode: 'snapshot_failed',\n",
+      "stderr": ""
+    }
+  ],
+  "source_drift_from_S00": [],
+  "relevant_ref_drift": false,
+  "scope": "Read-only source and static test assertions; no product runtime, live database, test execution, fetch or app operation."
+}

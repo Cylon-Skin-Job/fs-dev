@@ -1,90 +1,43 @@
 ---
 name: File Version Provenance Schema
-description: Schema guidance for before and after snapshots, diffs, restore records, and file version IDs tied to resource events.
+description: Identify current save-preimage and agent-checkpoint records without implying a universal file-version event or restore contract.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-    - Resource Mutation Provenance Schema
-  outgoing-edges:
-    - Resource Mutation Provenance Schema
-    - Ledger Event Provenance Schema
-    - Events File Versioning
   source-files:
-    - fusion-studio-server/lib/versioning.js
-    - fusion-studio-server/lib/file-explorer.js
-    - fusion-studio-server/lib/db/migrations/029_event_ledger.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/db/migrations/035_file_provenance.js
+    - fusion-studio-server/lib/db/migrations/036_agent_tool_provenance.js
+    - fusion-studio-server/lib/file-mutations/file-version-repository.js
+    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
+    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-server/lib/file-mutations/checkpoint-adapter.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. File-version hash behavior remains an owner decision under finding 5 and ULV-D10.
+Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
 
-Use this page before designing universal SQLite file versioning, restore behavior, snapshot storage, or diff storage.
+## Current operational preimage record
 
-File version provenance ties content history to canonical resource mutation events. It should not become a second watcher or Git-based source of truth.
+Migration `035_file_provenance.js` owns `file_versions` alongside the save operation/resource/projection tables. `file-version-repository.insertInTransaction` is called by operation preparation before replacement, not by a post-mutation universal version subscriber. Reserved IDs alone do not mean the mutation succeeded or its resource fact was admitted.
 
-## Boundary
+| Stored column | Meaning |
+|---|---|
+| `file_version_id`, `operation_id`, `resource_id`, `resource_event_id` | Host-generated identities bound to the reserved save operation and its prospective resource fact |
+| `preimage_kind` | Exact `bytes` or `absent` state before replacement |
+| `snapshot_bytes`, `sha256`, `encoding`, `byte_length` | Exact eligible before bytes, SHA-256, `utf-8` and byte length; absent has null bytes/hash/encoding and zero length |
+| `captured_at` | Preparation-time capture timestamp |
 
-File version records are created only from admitted canonical resource mutation deliveries. After owner decision `ULV-D12` closes the exact non-batch event/lifecycle/envelope/identity/order/idempotency/failure/transaction contract, the 40b2d1 builder consumes that resource ref to insert both `fileVersion.createdFromResourceEventId` and `ids.parentEventId` from the same upstream `eventId`, and optionally inserts `ids.correlationId` only from that upstream event's present validated correlation; absence means omission. Copied, raw, prepopulated, or mismatched bindings fail. Accepted SPEC-35d separately proves `versioned_as`. The version event uses the versioning subscriber as source/observer and may project safe non-ID context/type/confidence, but it does not transitively copy root/causation, actor/origin IDs, or cause IDs embedded in the resource event because the resource ref cannot prove those earlier refs. Audits traverse through the accepted resource event; an earlier identity appears directly only when the producer separately binds its original live ref or revalidated historical capability.
+The transaction couples the row to prepared operation state. Reusing an established file-version identity with different data conflicts. The public resource-provenance query joins snapshot metadata, not bytes; the repository's internal `readSnapshotBytes` method is not a public restore command. No after snapshot or computed/stored diff is added by this row. Intended-after hash/length are operation binding data, not a general after-version artifact.
 
-Exception: `file.version.change_batch` storm records carry `changeStorm` instead of `fileVersion`; SPEC-39 owns that payload.
+## Current agent checkpoint record
 
-## Domain Payload
+Migration `036_agent_tool_provenance.js` owns the separate `agent_resource_snapshots` and `agent_snapshot_blobs`. `checkpoint-repository` stores an eligible post-activity bytes/absent observation, its path/workspace, activity/observation/event/snapshot identities, observed clock and previous snapshot link. Exact byte content is deduplicated by hash with byte-equality checking. First/changed state creates a snapshot and `resource.state_observed@1`; unchanged state reuses the snapshot and adds no new observation fact. It can still drive renderer invalidation.
 
-`fileVersion.createdFromResourceEventId` is builder-inserted from the accepted resource event's top-level `eventId`. Optional `fileVersion.createdFromResourceMutationId` is not distinct identity: it must equal that same source's registered `/resourceMutation/resourceEventId` and `domainIds.resourceEventId`, inserted through the exact SPEC-40b2d1 target/source selector. Missing source domain identity omits it; raw/copied/mismatched IDs are invalid. Branchwise registry order is live-only 40b2d1 metadata/hash-only candidate (whose concrete hashes remain prohibited until finding 5 and `ULV-D10` approve their policy), post-40c 40b2d1h historical replay/backfill, 40b2d2 content artifacts, then 40b2d3 storm batches; each activates before matching behavior and uses the SPEC-35b/35d/35f/40c gates defined by the File Versioning page.
+A first read may establish a baseline. A prior checkpoint is a prior observation, not guaranteed pre-tool content. These snapshots do not mint save `fileVersionId` values or canonical `file.version` events. The observer's native security and eligibility checks can fail without a checkpoint; bounded metadata then records the failure rather than fabricating bytes. Agent timing/capture detail belongs to the tool provenance owner.
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily: 'file.version',
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle,
-  ids,
-  actor,
-  provenance,
-  context,
-  fileVersion: {
-    fileVersionId,
-    createdFromResourceEventId,
-    createdFromResourceMutationId,
-    resourceId,
-    resourceType,
-    path,
-    oldPath,
-    operation,
-    snapshotBeforeId,
-    snapshotAfterId,
-    diffId,
-    contentHashBefore,
-    contentHashAfter,
-    sizeBefore,
-    sizeAfter,
-    restoreOfVersionId,
-    retentionClass,
-    eligibility
-  },
-  resources: [],
-  redaction
-}
-```
+## Direction and unimplemented schema
 
-Directories, deletes, renames, binaries, generated files, large files, and restore events need explicit eligibility and retention behavior.
+System owns historical recovery/audit copies; the authoritative file or connected app owns live content. Restoration requires a separately permitted mutation to that source. Existing reason-based Git checkpoints remain a third mechanism, not universal snapshot restoration.
 
-The hash fields above are candidates, not an approval to copy resource-event hashes. First-package resource events omit every concrete content hash under `resource-metadata-v1`. A file-version record may carry hashes only if the owner selects the separate-policy branch in finding 5 and ULV-D10 registers that exact file-version hash/redaction policy; otherwise those fields remain absent.
+General version events, before/after/diff/restore lineage, version graph edges and change-storm batches are unimplemented design areas. The former universal example was a proposal and is not a payload callers may send. Binary/generated/large-file eligibility, retention/deletion, redaction/export, restore coverage and conflicts require feature-specific decisions. Preserve history by default; no new pruning policy or restore operation is approved here. The bounded save and agent snapshot/hash contracts are already implemented and must not be blocked by older general policy proposals.
 
-## Connections
-
-- Resource mutation events trigger version creation.
-- Ledger edges connect versions to chat turns, tool calls, UI actions, triggers, schedulers, and scripts.
-- Chat metadata can reference version IDs for mutations that occurred during a turn.
-- Audits can compare before/after content and walk from a broken file to the likely cause.
-
-## Gaps To Close
-
-- Existing Git-based versioning is separate and reason-based.
-- There is no universal version table linked to resource events.
-- Storm compaction and retention policy must be defined before high-frequency snapshots are enabled.
-- Binary files, large files, generated files, and secrets need eligibility and redaction rules.
+See [File Versioning](../../006-File_Versioning/PAGE.md), [Resource Mutation Provenance](../003-Resource_Mutation_Provenance_Schema/PAGE.md) and [System Database Boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).

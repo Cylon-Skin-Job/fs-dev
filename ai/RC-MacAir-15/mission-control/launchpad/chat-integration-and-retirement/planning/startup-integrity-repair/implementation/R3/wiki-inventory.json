@@ -1,0 +1,304 @@
+{
+  "checkedAt": "2026-10-06T01:21:33Z",
+  "originalInventoryCount": 16,
+  "extraRepairArticleCount": 1,
+  "articles": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "bacd8e529cb922a06a0cc5a5733a5bd0049554708368b1bcc78dbff12a326d74",
+      "afterSha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "disposition": "scoped-update",
+      "details": {
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181325.md",
+        "preimageSha256": "bacd8e529cb922a06a0cc5a5733a5bd0049554708368b1bcc78dbff12a326d74",
+        "sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+        "sourceFilesAdded": [
+          "fusion-studio-server/lib/views/readiness-startup.js",
+          "fusion-studio-server/lib/views/readiness-runtime.js",
+          "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "fusion-studio-server/lib/views/relocation-service.js",
+          "fusion-studio-server/lib/workspace/workspace-controller.js",
+          "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "fusion-studio-server/test/views/readiness-startup.test.js"
+        ],
+        "intermediatePreimages": [
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181627.md",
+            "sha256": "167e13795aaa90d676c36aa94c95099e5eed38c212634525f32bab4c9b6c9c68",
+            "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "371a62f2429b5eca4e3c461d6e78d0e22332719ea4f4541b7458b8878f41c972",
+      "afterSha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "disposition": "scoped-update",
+      "details": {
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181325.md",
+        "preimageSha256": "371a62f2429b5eca4e3c461d6e78d0e22332719ea4f4541b7458b8878f41c972",
+        "sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+        "sourceFilesAdded": [
+          "fusion-studio-server/lib/views/readiness-startup.js",
+          "fusion-studio-server/lib/views/readiness-runtime.js",
+          "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "fusion-studio-server/lib/views/relocation-service.js",
+          "fusion-studio-server/lib/workspace/workspace-controller.js",
+          "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "fusion-studio-server/test/views/readiness-startup.test.js"
+        ],
+        "intermediatePreimages": [
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181627.md",
+            "sha256": "bb5ca083a7e79a2979d2d738b4452bf066ee437575decdccb08e6a3486c5d5a4",
+            "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "afterSha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "afterSha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "afterSha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "afterSha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "afterSha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "afterSha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "afterSha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "afterSha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "afterSha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "afterSha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "afterSha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "afterSha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "disposition": "unchanged-accurate",
+      "details": {
+        "reason": "Retirement, ledger whitelist, independent save/tool evidence and noncausal/future limits remain accurate; startup repair adds no invalidated claim."
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "669a86efc1c85658b64011b768622c5b1bd387fb02965fc9bef36f078fec2649",
+      "afterSha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "disposition": "scoped-update",
+      "details": {
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181325.md",
+        "preimageSha256": "669a86efc1c85658b64011b768622c5b1bd387fb02965fc9bef36f078fec2649",
+        "sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+        "sourceFilesAdded": [
+          "fusion-studio-server/lib/views/readiness-startup.js",
+          "fusion-studio-server/lib/views/readiness-runtime.js",
+          "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "fusion-studio-server/lib/views/relocation-service.js",
+          "fusion-studio-server/lib/workspace/workspace-controller.js",
+          "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "fusion-studio-server/test/views/readiness-startup.test.js"
+        ],
+        "intermediatePreimages": [
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181627.md",
+            "sha256": "3e1f3851b8eed24ac914f2d2ec8d05336c6fd53da56dd594eb3ef04b8b64eea8",
+            "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "inventory": "original-RV2-A01-16",
+      "beforeSha256": "c122697d64c5e0afaf7ca182ff072515be32ad7dc6e11d768ae0b0d7958f38e1",
+      "afterSha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "disposition": "scoped-update",
+      "details": {
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181325.md",
+        "preimageSha256": "c122697d64c5e0afaf7ca182ff072515be32ad7dc6e11d768ae0b0d7958f38e1",
+        "sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+        "sourceFilesAdded": [
+          "fusion-studio-server/lib/views/readiness-startup.js",
+          "fusion-studio-server/lib/views/readiness-runtime.js",
+          "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "fusion-studio-server/lib/views/relocation-service.js",
+          "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "fusion-studio-server/test/views/readiness-startup.test.js",
+          "fusion-studio-server/test/views/view-readiness-coordinator.test.js",
+          "fusion-studio-server/test/views/view-relocation-recovery.test.js"
+        ],
+        "intermediatePreimages": [
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181627.md",
+            "sha256": "cc596e1cfbbddafc906b416e69cf0a4ae4b0c3b8414dfc94080a07fdb90d2c6a",
+            "reason": "Preparing joins migration before admission; clarify wait versus refusal."
+          },
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-182133.md",
+            "sha256": "773c7f3c731771e844c8bed5bc898ac15d894b0f49470a3cf8ab2239e543065d",
+            "reason": "Complete exact source map for named readiness/test inventories."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "inventory": "repair-section-8",
+      "beforeSha256": "bf5109fd6a7a310a8d62311274708829df0ab9ab4ae09334ccb003d20701d37b",
+      "afterSha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "disposition": "scoped-update",
+      "details": {
+        "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-181325.md",
+        "preimageSha256": "bf5109fd6a7a310a8d62311274708829df0ab9ab4ae09334ccb003d20701d37b",
+        "sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+        "sourceFilesAdded": [
+          "fusion-studio-server/lib/views/readiness-startup.js",
+          "fusion-studio-server/lib/views/readiness-runtime.js",
+          "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "fusion-studio-server/lib/views/relocation-service.js",
+          "fusion-studio-server/lib/workspace/workspace-controller.js",
+          "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+          "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "fusion-studio-server/test/views/readiness-startup.test.js",
+          "fusion-studio-client/e2e/provenance/run-file-viewer-live.mjs",
+          "fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.mjs",
+          "fusion-studio-client/e2e/provenance/guarded-proof-lifecycle.test.mjs",
+          "fusion-studio-client/e2e/provenance/file-viewer-live-resource.spec.ts",
+          "fusion-studio-client/playwright.provenance.config.ts",
+          "fusion-studio-client/playwright.chat-architecture.config.ts",
+          "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "fusion-studio-server/lib/startup.js",
+          "fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+          "fusion-studio-server/test/watch/watcher-retirement.test.js",
+          "fusion-studio-server/test/event-registry/startup-integration.test.js",
+          "fusion-studio-server/test/views/view-readiness-coordinator.test.js",
+          "fusion-studio-server/test/views/view-relocation-recovery.test.js",
+          "fusion-studio-server/test/ledger/event-ledger.test.js",
+          "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+          "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+          "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "fusion-studio-server/test/triggers/cron-scheduler.test.js",
+          "fusion-studio-server/test/shutdown.test.js",
+          "fusion-studio-server/test/chat-metadata/file-mutations-collector.test.js",
+          "fusion-studio-server/test/ws/file-save-route.test.js",
+          "fusion-studio-server/test/subscriptions/file-provenance-bootstrap.test.js",
+          "fusion-studio-server/test/resources/file-provenance-integration.test.js",
+          "fusion-studio-server/test/agent-provenance/fact-authority-and-ledger.test.js",
+          "fusion-studio-server/test/wire/canonical-chat-tool-events-provenance.test.js"
+        ],
+        "intermediatePreimages": [
+          {
+            "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-182133.md",
+            "sha256": "e16e862a8dd5ea73526ba2416c1879ea2a7da2e07b75953cc16456957f809086",
+            "reason": "Complete exact source map for named readiness/test inventories."
+          }
+        ]
+      }
+    }
+  ]
+}

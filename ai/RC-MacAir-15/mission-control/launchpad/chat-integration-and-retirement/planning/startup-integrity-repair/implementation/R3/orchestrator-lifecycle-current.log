@@ -1,0 +1,18 @@
+✔ failed scenario preserves the original error/phase and safe receipts before owned cleanup (5.2305ms)
+✔ successful scenario retains the audit and validates marker cleanup (2.73425ms)
+✔ protected state is compared after failure, preserving the failure and real drift evidence (2.804167ms)
+✔ a failed scenario with unchanged protected state still records its comparison (1.920083ms)
+✔ success cannot pass protected-state drift (1.823208ms)
+✔ changed ownership or unsafe linked artifacts retain the root without deleting foreign bytes (2.638334ms)
+✔ trace metadata and failure phase are persisted before scenario deletion (2.488042ms)
+✔ pre-cleanup receipt failure retains the original root and failure boundary (2.467ms)
+✔ failed final receipt update preserves pending metadata and the original scenario failure (2.933167ms)
+✔ protected comparison receipt failure never masks the original scenario failure (2.450125ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.531541

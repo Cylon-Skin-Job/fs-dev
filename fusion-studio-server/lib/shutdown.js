@@ -11,7 +11,6 @@ function createShutdownHandler({
   server,
   sessions,
   terminateTransports,
-  closeWatchers,
   beginQuiesce = () => {},
   phaseAOwners = [],
   stopSubscriptions = async () => {},
@@ -86,7 +85,7 @@ function createShutdownHandler({
         try { beginQuiesce(); } catch {}
 
         logger.log('[Shutdown] draining concurrent owners');
-        const owners = [...phaseAOwners, async () => closeWatchers()];
+        const owners = [...phaseAOwners];
         const ownersDrained = await runUntil('owner drain', ownerDeadlineMs, async () => {
           const results = await Promise.allSettled(owners.map((owner) => owner({
             signal: abortController.signal,

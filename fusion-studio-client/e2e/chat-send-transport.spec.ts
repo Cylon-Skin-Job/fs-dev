@@ -318,8 +318,10 @@ test('SEND-05 installs exact open/model correlation before a synchronous server 
       }
       if (frame.type === 'thread:open-assistant') {
         createdSequence += 1;
+        // Legacy helpers omit viewId; the server preserves that null binding
+        // instead of inferring the previously opened view's population.
         handleThreadMessage({ type: 'thread:created', workspaceId: address.workspaceId,
-          viewId: 'view-sync', threadId: `sync-created-${createdSequence}`,
+          viewId: frame.viewId ?? null, threadId: `sync-created-${createdSequence}`,
           threadGroupId: `sync-created-group-${createdSequence}`,
           thread: { name: 'Created synchronously', status: 'active' } } as never);
       }

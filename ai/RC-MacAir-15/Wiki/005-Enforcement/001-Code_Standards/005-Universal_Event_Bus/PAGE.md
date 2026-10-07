@@ -2,103 +2,76 @@
 name: Universal Event Bus Standards
 description: Rules for using the server-side universal event bus without confusing commands, facts, chat lifecycle, and provider protocol.
 metadata:
-  incoming-edges:
-    - Code Standards
-  outgoing-edges:
-    - Architecture Routing
-    - WebSocket Protocol Standards
-    - Chat Universal Event Bus
   source-files:
     - fusion-studio-server/lib/event-bus.js
+    - fusion-studio-server/lib/startup.js
+    - fusion-studio-server/lib/subscriptions/admission.js
+    - fusion-studio-server/lib/subscriptions/controller.js
+    - fusion-studio-server/lib/subscriptions/generation-compiler.js
+    - fusion-studio-server/lib/subscriptions/capability-factory.js
+    - fusion-studio-server/lib/file-mutations/save-controller.js
     - fusion-studio-server/lib/wire/canonical-chat-event-applier.js
     - fusion-studio-server/lib/wire/wire-broadcaster.js
     - fusion-studio-server/lib/audit/audit-subscriber.js
-  connected-skills: []
-  related-trigger-files: []
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before emitting, subscribing to, or bypassing universal event bus
-events.
+Status: event/provenance rules reconciled against approved direction and source inspected on 2026-09-19. This page distinguishes the implemented trusted built-in path from broader design proposals. It does not certify unrelated Chat behavior or a fresh product test/runtime pass.
 
-## Rule
+Use this page before emitting, subscribing to or bypassing universal event bus events.
 
-The event bus carries facts after something happened. It is not the command
-transport for user requests.
+## Commands and facts
 
-## Topics And Canonical Payloads
+User requests enter existing WebSocket handlers/controllers or authorized scheduled commands. Facts describe acceptance, success, failure or observation after the described transition has occurred. A command-accepted fact can precede mutation; a mutation fact cannot. The event bus is not a request/response command router. Subscribers needing new work use an authorized owning command rather than bypassing its validation.
 
-Use flat `domain:action` strings only as bus topics. A canonical payload has a unique `eventId`; dotted `eventType` plus `eventFamily` is classification. Do not treat the colon topic as event identity or classification.
+Payloads use product vocabulary, relevant entity/workspace identity and the smallest non-sensitive context. Do not emit raw provider protocol or secrets. Adapter-normalized Chat events and governed provenance facts are different boundaries; the word canonical in an older module name does not establish governed admission.
 
-Payloads use product vocabulary and include the smallest useful context:
+## Current governed contract
 
-- entity ID, such as `threadId`, `ticketId`, or `workspaceId`
-- workspace or scope when ownership matters
-- non-sensitive metadata needed by subscribers
-- no raw secrets
-- no raw provider protocol
+The host seals four publisher identities in `subscriptions/admission.js`: the save owner's `file.command_accepted@1` and `resource.mutated@1`, and the agent owners' `agent.tool_completed@1` and `resource.state_observed@1`. Each verifies a durable reservation and complete canonical input hash, validates the active database-backed schema, and freezes the fact before private delivery. Public legacy `emit/on` cannot grant admitted status. There is no public arbitrary producer catalog or plugin publisher factory.
 
-Migrated canonical publication accepts only an opaque `PreparedCanonicalCandidate`, canonical-clones/deep-freezes its safe event, binds its allowlisted identity to an opaque ref, and freezes one `{ acceptedRef }` context. `prepareCanonicalCandidate` is the sole accepted-only relationship constructor: it consumes upstream refs, inserts registered event/domain IDs, and records private pointer/ref proof; copying an `inspectAcceptedRef` string is insufficient. Every task uses exact ABI `listener(frozenEvent, deliveryContext)` with the same event/context/ref; bare-ref argument two is invalid. Identity-sensitive consumers use `assertAcceptedDelivery`. Mismatched, forged, unbound, or raw relationships fail. False admission exposes no event/ref/context and queues nothing. Tasks re-enter async chain context.
+The current facts use top-level event/workspace/operation/time fields plus closed domain bodies. Do not require the older proposed common `eventFamily`/`ids`/`provenance` envelope or accepted-reference listener ABI. Exact command/query/projection names and versions are listed in [Event Taxonomy](../../../010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md).
 
-## Failure Isolation
+Database definitions and permission requests are separate from grants. The compiler requires an installed allowlisted handler and its exact capabilities; runtime contexts expose same-fact append, scheduling, bounded renderer messages and fixed diagnostics, not ambient DB/bus access. Configuration may narrow or revoke authority but cannot grant, restore or expand it. A future human Systems authorization surface is not implied by a test-only authorization fixture. Plugins remain subject to the [System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary).
 
-Canonical publication is a provenance side effect, not command authorization, success, or a prerequisite to execution. After operational validation accepts a command, the operational path starts before initiating provenance is submitted to the supervised admission executor; the command/response chain never invokes or awaits provenance or an accepted-ref promise. Downstream producers use an already-filled command-scoped ref slot or omit the relationship without waiting. Mutation facts do not exist before the owning mutation succeeds; their provenance/recovery work is scheduled only after success and outside the mutation result/response chain. Missing metadata follows the omission/diagnostic path without lookup or retry.
+## Failure timing and required protection
 
-The command slot is a private per-command object, never keyed by renderer IDs. Only frozen-registry producers can acquire leases while the command scope is open. `peekAccepted()` is non-blocking; pending/terminal/late branches return no ref. Producers release leases in `finally`, the command closes acquisition in `finally`, and the supervised admission task always settles or runs its cancellation finalizer. Slot/ref state is deleted only after close, terminal admission, and zero leases. Exact APIs, reasons, races, and tests are normative in SPEC-40.
+Do not impose a universal rule that source commands never await provenance. Current admission awaits durable reservation verification, schema validation and subscriber dispatch. The controller invokes handlers in deterministic order; `required_ack` waits up to 2,000 ms per handler, while best-effort promises are observed without awaiting. Timeout is not cancellation. Current trusted handlers do not use the older proposed independent listener executor or accepted-ref leases.
 
-Optional enrichment is used only when already available. After admission, UEB enqueues every listener as a separate supervised-executor task; it never calls listener code in the admission/source-operation stack or awaits returned promises. All callbacks are queued before task execution, each task re-enters the captured async-chain context, and rejections are diagnosed with deterministic test draining. Subscriber callbacks must use async I/O and offload unbounded CPU work; synchronous filesystem/database/provider I/O is forbidden. Ledger, versioning, audit, compaction, and other subscribers cannot hold the operation response open. Failures or unavailable dependencies never reject, delay, roll back, or rewrite the source result.
+`admitted: true` is not proof of delivery, persistence or renderer receipt. A required callback's completion can still represent rescheduled/conflicting work; consult producer-owned durable state. Subscriber failure cannot retroactively revoke admission or undo completed source work. Preserve the implemented bounded retry/reconciliation rules described in [Ledger Event Provenance](../../../010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md), rather than inferring unbounded retry or forbidding all retry.
 
-Only operational authentication, authorization, command shape, provider protocol, target/workspace resolution, and path safety may gate execution. A value used operationally can still be optional in provenance; failure to project or persist it after acceptance cannot retroactively fail the operation.
+The mediated save requires a durable operation and eligible exact preimage before replacement. Required prewrite storage/protection failure prevents mutation. Optional reported UI context is different: malformed/oversized context or a mismatching workspace echo is omitted without denying a valid save. Postwrite publication or projection failure records pending/conflict/recovery state without claiming that the completed write did not happen. Agent observation follows reported tool execution and cannot rewrite its result or create a pre-tool image after the fact. The renderer omits tab fields from an unavailable or nonmatching connected owner; the server does not verify the current existence of a syntactically valid tab/component ID.
 
-Rejected or suppressed candidates expose no accepted reference. Raw candidate/runtime IDs must not enter downstream ID-bearing origins, causes, mirrors, edges, or evidence. Subscriber failure does not revoke an accepted reference.
+Use the registered `resource:changed` projections and `resource:refresh_required` recovery through the workspace-bound WebSocket and central File Viewer state. A successful server send is not client acknowledgment. Preserve the owning freshness/dirty-buffer contract; do not turn recovery into a canonical mutation fact or promise general view coverage.
 
-After a resource mutation/observation, pre-admission rejection/throw/suppression exposes no ref/delivery; post-admission projection failure preserves the accepted ref/frozen event for other subscribers. Both invoke non-canonical `resource:refresh_required`. Clients preserve navigation/history/scroll/dirty/optimistic/undo state; clean entries replace and dirty entries use `recoveryRemote`/`conflict_pending`. Reconnect cannot claim false freshness. Recovery is never canonical.
+## Legacy and scoped supersessions
 
-## Chat Lifecycle
+Legacy `emit/on` remains available for existing Chat and trigger paths. It uses colon topics and synchronous chain guards. The retired generic workspace watcher no longer supplies broad file-change events. The legacy ledger records `workspace:switched` and `thread:state_changed`; it ignores `file:changed` even if another producer emits that legacy topic. Neither those events nor every `chat:*` emission pass the private governed admission path. Preserve Chat exchange persistence ownership and route new claims through [Chat System](../../../007-Chat_System/000-Overview_and_References/PAGE.md).
 
-The target chat lifecycle goes through registered canonical chat events. During first-package 40b1, however, the existing `canonical-chat-event-applier.js` name is historical: its `chat:*` emissions are a named legacy compatibility path, not SPEC-40 canonical admission. They may continue feeding existing chat persistence, metadata collectors, automation, and WebSocket fan-out, but they must not call `publishCanonical`, receive `AcceptedCanonicalRef`/delivery context, set canonical admission status, enter canonical-only ledger/subscribers, or carry new accepted-only relationships such as `uiActionId`.
+The accepted trusted save/subscription implementation supersedes older accepted-reference, causal-proof and broad versioning prerequisites only for that bounded scope. The separately accepted agent overlay covers normalized activity/fingerprints, sparse eligible checkpoints and its two exact ledger facts. It does not register broad `chat.tool.*` or native-output events, causal edges, canonical version events, ledger-internal events or arbitrary plugin executors. The save-context carrier does not implement general `ui.action`.
 
-SPEC-40b2 must register the exact affected chat types/redaction policies, migrate the applier to prepared-candidate publication, and remove this exception before chat facts or UI cause/result links are treated as canonical. Tests in 40b1 spy on canonical publication/ledger ingress and prove legacy `chat:*` has no accepted delivery, not merely that one field is absent.
+Older exact candidate/ref/lease APIs, historical proof capabilities and executor capacities remain proposals outside those agreements. Broader causal, plugin, automation, redaction, versioning and retention/restore contracts require feature-specific decisions. Apply settled System and observation principles without treating the whole old draft as approved or reopening already settled bounded behavior.
 
-## Commands Versus Events
+## Required review questions
 
-Commands enter through WebSocket handlers, controllers, or scheduled jobs.
+### New-capability adoption rule
 
-Events are emitted after the command succeeds, fails, or changes state.
+The 2026-09-27 owner direction makes governed schema/provenance planning the default for new cross-capability work. Follow [Governed capability planning](../000-Code_Standards/PAGE.md#governed-capability-planning). Extend missing publisher, handler, filter and scoped-capability support explicitly; do not imply arbitrary subscriber installation already exists or add an ungoverned side route because the current catalog is bounded.
 
-Examples:
+Shared diagnostics/health measurements need one scalar owner per stage, a closed typed observation contract, bounded sampling and authorized consumers. Raw opt-in Diagnostics, personal chat audit, system provenance and retained content-free health are not interchangeable data products. Best-effort health must not delay typing/rendering; current required save protections remain required. No new health publisher/capability or generic plugin executor is implemented by this standard.
 
-| User request | Command path | Event/fact path |
-|---|---|---|
-| Send prompt | `prompt` WS message | `chat:*` lifecycle events |
-| Compact thread | `thread:action` with `action: compact` | optional `thread:compacted` fact |
-| Move primary chat to a side tab | `thread:action` with `action: move_chat_to_side` | optional `thread:primary_changed` fact |
-| Add secret | `secrets:*` WS handler | `secret:added` fact |
-
-## Forbidden Bypasses
-
-- emitting raw OpenCode, Kimi, or other provider events
-- using the event bus as a request/response API
-- persisting chat exchanges outside the canonical turn-end path
-- emitting facts before the owning mutation succeeds
-- adding listener side effects without loop and failure considerations
-
-## Required Checks
-
-- Is this a fact or a request?
-- Who owns the mutation that makes the fact true?
-- Which subscribers need the event?
-- Could the event loop back into the same action?
-- Does the payload expose secrets, prompts, or provider-native data?
-- Are core construction, redaction, validation, admission, and invalidation projection bounded, synchronous, and free of I/O, with their outcome unable to gate the operation?
-- Is optional enrichment already available rather than fetched, and are listener callbacks queued outside the admission/operation stack with async rejections observed but not awaited?
-- Do subscriber tests forbid synchronous filesystem/database/provider I/O and prove one pending listener cannot prevent later queued listeners from running?
-- Can a rejected or suppressed candidate leak an ID into a cause, mirror, edge, or evidence field?
-- After a valid resource mutation or safely established watcher observation, does every failed publication/projection branch invoke freshness recovery without changing the operation or observed fact?
+- Is this a command, an accepted-command fact, a mutation fact, an observation or a projection, and who owns the transition?
+- Does the real producer have a host-minted publisher and durable reservation, or is this still legacy compatibility?
+- Are schema/filter/grant/handler checks and the exact scoped capability preserved?
+- Are required prewrite protection, optional context, admission, acknowledgment, durable storage and client freshness distinguished?
+- Do retries, duplicates, conflicts, timeouts and restart/shutdown follow the owning bounded implementation?
+- Could a raw topic, copied ID, reported UI context or observed hash be mistaken for permission, authentication or causal proof?
+- Are provider details and sensitive content kept within their approved disclosure boundary?
 
 ## Related Pages
 
 - [Code Standards](../000-Code_Standards/PAGE.md)
 - [Architecture Routing](../001-Architecture_Routing/PAGE.md)
 - [WebSocket Protocol Standards](../004-WebSocket_Protocol/PAGE.md)
+- [Universal Event Bus](../../../010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md)
 - [Chat Universal Event Bus](../../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md)
-- [Canonical Events](../../../007-Chat_System/002-Harness_And_Event_Flow/002-Canonical_Events/PAGE.md)

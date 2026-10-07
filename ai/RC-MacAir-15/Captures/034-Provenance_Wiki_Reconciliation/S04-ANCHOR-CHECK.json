@@ -1,0 +1,176 @@
+{
+  "status": "PASS",
+  "method": "All human-readable filename:line/range citations resolve uniquely to current hashed source and fall within real line count. Symbols and claims manually inspected; this numerical check alone does not prove semantics.",
+  "citations": [
+    {
+      "path": "fusion-studio-server/lib/audit/audit-subscriber.js",
+      "range": "31\u201348,167\u2013248",
+      "line_count": 318
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/HistoryFile.js",
+      "range": "79\u2013121",
+      "line_count": 190
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/exchange-bind-repository.js",
+      "range": "17\u201343,72\u2013164",
+      "line_count": 167
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/exchange-binder.js",
+      "range": "6\u20139,68\u201399",
+      "line_count": 236
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "range": "165\u2013299",
+      "line_count": 410
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/json-event-translator.js",
+      "range": "158\u2013176,192\u2013280",
+      "line_count": 373
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/canonical-harness-event-bridge.js",
+      "range": "563\u2013685",
+      "line_count": 915
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "range": "195\u2013322",
+      "line_count": 455
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/turn-authority.js",
+      "range": "26\u201351",
+      "line_count": 60
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/activity-owner.js",
+      "range": "9\u201310,46\u201388,161\u2013285",
+      "line_count": 505
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/activity-repository.js",
+      "range": "35\u201365,150\u2013170",
+      "line_count": 577
+    },
+    {
+      "path": "fusion-studio-server/lib/wire/canonical-chat-event-applier.js",
+      "range": "24,119\u2013190",
+      "line_count": 455
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/announced-activity-reconciler.js",
+      "range": "41\u201368",
+      "line_count": 261
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/resource-extractor.js",
+      "range": "8,219\u2013295",
+      "line_count": 295
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/candidate-fingerprints.js",
+      "range": "69\u2013137",
+      "line_count": 146
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/fact-authority-repository.js",
+      "range": "11\u201332,101\u2013207",
+      "line_count": 276
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "range": "323\u2013469",
+      "line_count": 888
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+      "range": "131\u2013143,156\u2013350",
+      "line_count": 526
+    },
+    {
+      "path": "fusion-studio-server/native/secure-file-observer/index.js",
+      "range": "7\u201318,47\u201394",
+      "line_count": 94
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "range": "44\u201371",
+      "line_count": 354
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "range": "280\u2013340",
+      "line_count": 354
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+      "range": "253\u2013277",
+      "line_count": 354
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+      "range": "56\u2013107",
+      "line_count": 403
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/client-message-router.js",
+      "range": "451\u2013470",
+      "line_count": 889
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/agent-activity-route.js",
+      "range": "103\u2013178",
+      "line_count": 196
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/resource-provenance-route.js",
+      "range": "114\u2013196",
+      "line_count": 215
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/query-repository.js",
+      "range": "57\u201396,125\u2013250",
+      "line_count": 256
+    },
+    {
+      "path": "fusion-studio-server/lib/ledger/resource-provenance-repository.js",
+      "range": "209\u2013295",
+      "line_count": 302
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts",
+      "range": "139\u2013195",
+      "line_count": 195
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws-client.ts",
+      "range": "245,266,429",
+      "line_count": 635
+    },
+    {
+      "path": "fusion-studio-server/lib/agent-provenance/renderer-projection-authority.js",
+      "range": "27\u2013132",
+      "line_count": 137
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "range": "459\u2013469,694\u2013698",
+      "line_count": 888
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+      "range": "275\u2013299",
+      "line_count": 441
+    },
+    {
+      "path": "fusion-studio-client/src/state/fileDataStore.ts",
+      "range": "383\u2013453",
+      "line_count": 1006
+    }
+  ]
+}

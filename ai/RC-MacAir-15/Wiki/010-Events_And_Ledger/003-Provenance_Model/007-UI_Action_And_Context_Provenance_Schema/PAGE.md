@@ -1,84 +1,48 @@
 ---
 name: UI Action And Context Provenance Schema
-description: Schema guidance for client-originated actions, active view context, active resources, file commands, and send-to-chat operations.
+description: Implemented mediated-save UI context and the boundary to future general UI-action provenance.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-  outgoing-edges:
-    - Chat Metadata Provenance Schema
-    - Resource Mutation Provenance Schema
-    - Ledger Event Provenance Schema
-    - UI Action Provenance Module
   source-files:
-    - fusion-studio-client/src/state/slices/viewSlice.ts
-    - fusion-studio-client/src/state/activeResourceStore.ts
-    - fusion-studio-client/src/components/chat/useChatArea.ts
-    - fusion-studio-server/lib/ws/workspace-request-handlers.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/save-action-context.ts
+    - fusion-studio-client/src/components/view-tabs/fileConnectedTabs.ts
+    - fusion-studio-client/src/state/fileDataStore.ts
+    - fusion-studio-server/lib/ws/file-save-route.js
+    - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
+    - fusion-studio-server/lib/file-mutations/fact-reservation-bindings.js
+    - fusion-studio-server/lib/ledger/resource-provenance-repository.js
+    - fusion-studio-client/src/lib/ws/resource-provenance-protocol.ts
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before changing client-originated commands, active resource capture, send-to-chat metadata, or file save/create/move/rename/delete requests.
+Status: source inspected on 2026-09-19 in the development checkout. Optional `reportedUiContext` on mediated saves is implemented. A general `ui.action` event, `uiActionId` envelope and per-view prompt-attachment provenance adapters are not implemented. Tests were inspected, not rerun; no app or Alpha behavior is certified.
 
-UI action provenance captures what the human did in Fusion Studio and what was active when the command was sent.
+## Current save-context contract
 
-## Boundary
+`fileDataStore.saveFile` calls `readSaveActionContext(panel)` for the versioned save request. The argument is the initiating document's panel, not an inferred currently focused panel. The synchronous reader requires a current workspace ID and a matching registered panel configuration. It reports workspace/view identity and reads tab/component details only from a live connected File owner matching that workspace and view. Missing owner, non-component tab, missing values or read failure omits fields or the whole context; it never invents identities or writes view state.
 
-The renderer sends tentative non-ID active view, panel, tab, document, route, selected resource path, and similar UI context known at command time. The accepting server captures workspace ID/root/transition from the coordinator's `WorkspaceCommandContextRef`; session workspace/root fields are caches only. Renderer context/resources qualify only when the exact private workspace token binds to that same command ref and the server re-resolves paths/targets under it. The client token lives only in one memory-only slot keyed by the exact current OPEN WebSocket, outside all state caches and persistence, and is synchronously cleared on init/switch replacement, close, disconnect, socket replacement, and shutdown. First-package `ui.action` is a root canonical fact and omits root, parent, and causation IDs; any future UI relationship requires an exact SPEC-40 candidate/source selector and accepted capability. The server attempts an optional fresh correlation for the new chain. Successful generation inserts it through a private fresh-correlation binding; generator absence/throw, allocation, or registration failure omits only `ids.correlationId`, reports fixed `fresh_correlation_unavailable`, and leaves the otherwise safe UI fact and command unchanged. No renderer/client/session/operation/raw correlation is copied as fallback. Raw event/causation IDs in mutable session/operation state never qualify. Unknown legacy renderer relationship-ID fields are discarded. After successful workspace binding, missing optional UI details may remain null/unknown without blocking the command. Missing/stale/forged/wrong-connection binding or root/target mismatch creates no canonical `ui.action`, ID, ref, mirror, or edge and reports only exact frozen `{ code: 'workspace_context_unbound' }` to the dedicated one-key, process-memory counter sink; no token, path, workspace, connection, transition, attachment, reason, or exception value is retained. The command still proceeds.
+| Field | Current handling |
+|---|---|
+| `workspaceId` | Renderer echo; server derives authority from the captured session workspace/epoch. A supplied mismatching or invalid echo omits context. |
+| `viewId` | Required for retained context; renderer checks panel registration. Server checks scalar shape, not actual current panel/tab existence. |
+| `tabId`, `componentTypeId`, `componentInstanceId`, `presenterId` | Optional connected-owner values, each limited to 128 UTF-8 bytes. |
+| `viewInstanceId` | Supported optional carrier field, not populated by the current reader. |
+| `targetKey` | Optional opaque component target, up to 512 UTF-8 bytes; not path authority or a resource ID. |
 
-Renderer input is not a durable canonical event by itself. After independently accepting the source command, the server starts the operational path and submits UI safe-core construction/redaction/validation/admission to the supervised executor outside the command/response chain. The command never invokes or awaits provenance or an accepted-ref promise. Accepted events eventually reach canonical subscribers; a downstream producer uses an already-filled ref slot through `prepareCanonicalCandidate` or omits the relationship and diagnoses without waiting. Optional enrichment is included only when already available.
+Workspace/view and other identifier strings use the same 128-byte scalar bound. The server's `sanitizeReportedUiContext` drops unknown or malformed fields, requires usable view identity and substitutes the server workspace. It emits fixed noncanonical omission/degradation diagnostics. Sanitization precedes schema validation so optional context cannot reject an otherwise valid save. Syntactically valid tab/component values can still be stale or fabricated; the server does not verify the existence of the current tab. The save's workspace/epoch, content and path authorization remain independently enforced.
 
-Only after successful workspace binding, missing/failed/thrown first-pair UI redaction may use the exact safe core `redaction = { status: 'failed', policyId: 'ui-resource-metadata-v1', policyVersion: '1', omissions: ['/*:redaction_failed'] }`; both policy values are strings. It omits optional context/IDs/client correlation/result mirrors, carries empty resources, and contains no free-text summary, prompt, or content. Workspace binding failure is not redaction failure and cannot use this core.
+## Persistence and query chain
 
-For the owner-approved first adapter pair, the migrated command is `chat.send_with_resource` when Wiki Viewer or File Viewer is the active panel and the prompt actually sends at least one valid pending resource attachment. Attachments may originate in any panel; every valid attachment remains a subject resource and its origin does not choose the active-context adapter. Merely navigating, selecting, or staging an attachment does not emit `ui.action`.
+The save route passes sanitized context to the save owner. `file-operation-repository.js` stores its dedicated reported-context columns; `fact-reservation-bindings.js` reconstructs context from that durable operation into `file.command_accepted@1` and `resource.mutated@1`. The resource ledger projection stores the admitted mutation payload and query columns. Resource provenance queries return it under `origin.reportedUiContext`; the client response validator checks the bounded shape and current workspace pair.
 
-## Domain Payload
+This is a historical snapshot. Later tab closure or configuration changes do not rewrite the record, and provenance writes nothing back into the view's live `state.json`. `queryResourceProvenance` and response plumbing exist, but the bounded production client search finds no caller mounting a history/audit display. A query transport does not establish a user-facing UI.
 
-```js
-{
-  schemaVersion: 1,
-  eventId,
-  eventFamily: 'ui',
-  eventType: 'ui.action',
-  occurredAt,
-  ids,
-  actor: { type: 'human' },
-  provenance,
-  context,
-  uiAction: {
-    uiActionId,
-    clientCommandId,
-    command
-  },
-  resources: [],
-  redaction
-}
-```
+Origin remains a reported local-client fact with `transport_only` assurance, not authenticated human identity or a direct causal proof. A tab, component, connection or target key is not a grant. Required save preimages and optional context have different failure rules; see [Resource Mutation Provenance](../003-Resource_Mutation_Provenance_Schema/PAGE.md) and [Ledger Event Provenance](../004-Ledger_Event_Provenance_Schema/PAGE.md).
 
-This is the exact first-package shape after successful workspace binding: `redaction` is required; lifecycle, ledger, actor ID, input summary, and result/resource mirrors are absent. `context` is required for full success and absent only in the exact failed-redaction safe core. Failed binding produces no candidate rather than a partial shape.
+## Approved granularity and remaining design
 
-`uiAction` describes user intent and command/request context. Resource mutations, tool calls, and chat turns describe the consequences.
-Active document and thread context belong in the shared `context` and `ids` fields. `uiAction` may keep snapshots only when a value is intentionally different from the canonical context at event time.
+T1 domain mutations are durable/searchable; T2 UI action context belongs with the mutation as evidence. T3 ambient interaction such as focus, opening a tab, navigation or reordering is not durably recorded as provenance. Potential reaction-only telemetry is a separate future bus decision; scroll/geometry is excluded. These are coverage goals, not a claim that every current command emits history.
 
-Connection/client/receiver identifiers remain transient server-owned routing state and are not first-pair canonical or ledger fields. They are not authorization, stable identity, or causality. The server may use routing values in non-canonical diagnostics or future approved multi-client metadata, but the renderer does not echo them and their absence never blocks a prompt.
+Keep workspace, immutable view, visible thread group, chat session, transient surface and tab/component identities separate. Tab/component identity belongs in context, never actor identity. The adopted actor taxonomy recognizes human, assistant, trigger, scheduler, script, sync, import, agent, system, external and unknown; it does not turn reported context into authenticated authorship. [Chat Metadata Provenance](../001-Chat_Metadata_Provenance_Schema/PAGE.md) describes the current Chat boundary.
 
-After the operational path starts and workspace binding succeeds, the server admission task generates the canonical `uiActionId`. The optional renderer `clientCommandId` must match `[A-Za-z0-9_-]{1,128}` and remains non-authoritative client correlation, never a fallback for canonical `ids.correlationId`. Invalid client correlation is omitted without suppressing an otherwise valid UI fact. Canonical correlation is separately optional and server-generated through SPEC-40's nullable fresh binding; unavailable/thrown generation omits that independent group only. Individually optional active UI details enrich the record when available; no other renderer correlation or relationship ID is accepted. Missing optional details degrade to null/unknown/omission state. The server accepts renderer input only through SPEC-34's fixed-schema nonrecursive bounded extractor and retains no original seed reference. Binding or extraction failure emits no record and only a non-sensitive fixed diagnostic. Neither branch fails or delays the source interaction.
-
-Exact Wiki Viewer and File Viewer selector mappings are normative in the [UI Action Provenance Module](../../011-UI_Action_Provenance_Module/PAGE.md) and its child pages. For this pair, `context.route` and `context.selectedResourceId` are explicitly `null` because no authoritative source exists; an attachment ID is not promoted into either field.
-
-## Connections
-
-- Chat metadata captures UI context at prompt acceptance.
-- Registered downstream mutations can use `provenance.cause.uiActionId` only when `prepareCanonicalCandidate` inserts it from the already-available accepted `ui.action` ref and records private proof; a copied accessor string, raw server candidate, or renderer value never qualifies.
-
-First-package 40b1a leaves existing `chat:*` facts on a named non-canonical compatibility path and does not add `uiActionId` to them. Exact chat cause/result linkage begins only after `CHAT-D01` closes and SPEC-40b2a registers the affected chat schema and redaction policy; chat publication never waits for the UI ref.
-- Resource events and file versions can point back to UI-origin commands.
-- Ledger records distinguish local user actions from assistant, automation, and external changes.
-- Audits can answer what view/document/tab was active when a mutation or chat send happened.
-
-## Gaps To Close
-
-- Most UI commands do not carry canonical `uiActionId`.
-- Existing numeric view-state `clientMutationId` exists only for some view-state writes and is not a provenance identifier. UI action provenance uses `clientCommandId` when a client-side command correlation ID is needed.
-- Active resource state is mostly client-only and is not consistently attached to server commands.
-- Multi-client initiator/receiver identity remains a deferred routing/audit design and is not part of the first-pair canonical payload.
+The [UI Action Provenance Module](../../011-UI_Action_Provenance_Module/PAGE.md) retains the first Wiki/File direction and its unresolved implementation boundary. Before broader UI-action publication, decide the actual command coverage, identity/relationship schema, server admission, sensitive-field policy, executor capacities and lifecycle, and the live context selectors for each view. Older token, accepted-reference and safe-core examples are design input, not current wire contracts. They neither block accepted save context nor authorize a new producer.

@@ -1,0 +1,39 @@
+{
+  "at": "2026-09-23T12:45:56.337501+00:00",
+  "command": [
+    "node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js",
+    "audit",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/ppw01-stage-snupizfc/Wiki"
+  ],
+  "runs": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "stdout": "\n=== RC-MacAir-15 ===\n  skipped (no-markers): 001-Project/000-Project/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  updated (children): 007-Chat_System/002-Harness_And_Event_Flow/PAGE.md\n  updated (children): 007-Chat_System/004-Chat_UI/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  updated: 010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md\n  created: 0  updated: 4  skipped: 29\n\nTotal: 0 created, 4 updated, 29 skipped\n",
+      "stderr": ""
+    },
+    {
+      "run": 2,
+      "exit_code": 0,
+      "stdout": "\n=== RC-MacAir-15 ===\n  skipped (no-markers): 001-Project/000-Project/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md\n  skipped (no-markers): 001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md\n  skipped (no-markers): 002-System_Tools/000-System_Tools/PAGE.md\n  skipped (no-markers): 005-Enforcement/000-Enforcement/PAGE.md\n  skipped (no-markers): 005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md\n  updated: 006-System_Manager/PAGE.md\n  skipped (no-markers): 009-Fusion_Home/000-Fusion_Home/PAGE.md\n  created: 0  updated: 1  skipped: 30\n\nTotal: 0 created, 1 updated, 30 skipped\n",
+      "stderr": ""
+    }
+  ],
+  "owned_input_hashes": {
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md": "58165cc333b5b74108ab70dad2f26246207104fbff81eaac51800fbf6aafcbec",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md": "51a147b459c50632d2236fc01d3c0fe556a13f5cd4c14d03d578232469c98bfb",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md": "77495240714010228061df9e2133488aa8eaaefbe01f6e87b7c7f4b147e53628",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md": "1bbc11c6794ae2fbee8971716a6551ef54117b3b619c65f441e1ed161fa9cca2",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md": "37255baf982013ea6afb3728eb7a1b69f12fa2b29ecb9fed2f3fd9b1d3448ad2",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md": "50e99e6508f17819bc35b64964a64b7f2b5ddaa361535a66d093092e5e7614a6",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md": "df46717db98874b8e53cc6abbb615e87f9b156aa40cf99d7929af06a75646bdd",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md": "a0aa796aa3ae7cc41e6d6ab619feb1c55e05d11e56afb5e176c2d7b1bcf0456f",
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md": "b1a17c0ab9d5316d32d9d9caa1a72c3ad0da82d8795896f563803818be78bf55",
+    "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md": "74cf6222a22bed763e08fd4f2df301447fe1dfedc067bfc352ba5a6d5a791d30"
+  },
+  "idempotent": true,
+  "imported": false,
+  "changes": [],
+  "exclusions": "No whole pages, unowned marker regions, legacy TOCs, audit state, or relationship metadata imported. No product runtime."
+}

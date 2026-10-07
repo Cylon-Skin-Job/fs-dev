@@ -32,9 +32,9 @@ module.exports = {
   },
 
   filter: {
-    description: 'Watcher filter definitions — declarative file-change filters with match/exclude patterns, actions, and templates.',
+    description: 'Legacy filter frontmatter retained for compatibility; no active workspace watcher registers file-change filters.',
     fields: [],
-    activatesEventBus: true,
+    activatesEventBus: false,
   },
 
   component: {

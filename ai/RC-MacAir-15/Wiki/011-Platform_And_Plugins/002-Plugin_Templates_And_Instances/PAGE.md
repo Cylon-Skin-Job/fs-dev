@@ -1,0 +1,42 @@
+---
+name: Plugin Templates And Editable View Instances
+description: Explains protected plugin code, server-provisioned editable instances and local agent resources, alongside current bundled scaffolding.
+metadata:
+  source-files:
+    - fusion-studio-server/lib/workspace/create-service.js
+    - fusion-studio-server/lib/workspace/ai-paths.js
+    - fusion-studio-server/lib/views/index.js
+    - fusion-studio-server/lib/views/protected-path-policy.js
+    - fusion-studio-server/lib/file-mutations/save-controller.js
+  last-modified: "2026-09-23T13:50:37Z"
+---
+
+A view plugin supplies reusable behavior; a view instance supplies a workspace's editable configuration and local resources. The approved model keeps those two things separate so that tailoring an instance does not rewrite the implementation or grant it new powers. This page describes that target first, then the narrower current source-inspected foundation.
+
+## Protected package and editable copy
+
+In the approved direction, the protected plugin contains its executable implementation, server-interpreted contributions and a template payload. The server copies the template into a separate editable instance, binds that instance to the installed plugin and initializes configuration and state. The installed dependency and the created instance are distinct: installing a definition is not the same as configuring a place to use it.
+
+Templates supply ordinary configuration and local agent resources: persona, AGENTS.md, relevant skills and, where applicable, workflows and sub-agent definitions. Copied resources remain editable within the plugin's permitted scope. They do not become privileged code merely because they came from a plugin. An instance may configure or compose registered presentation, but it cannot introduce executable authority through an import path or grant itself file, database, process or network powers. Specialized executable contributions stay in the protected package; plugin changes use a deliberate user-mediated route. [Platform Boundaries](../001-Platform_Boundaries/PAGE.md) separates these responsibilities.
+
+Editable instances belong outside System. Exact folder names, manifest/binding grammar and shared versus machine-specific placement remain open. A content-root reference is also separate from the instance folder: changing which content a view displays must stay within validated authority. Neither a folder name nor an instruction file is an enforcement mechanism.
+
+## Workspace selection and maintenance
+
+A workspace plugin describes a useful starting composition of view dependencies and instances. That selection can be customized; an example number of views is not a mandatory inventory. The server owns interpreting the selection, provisioning template copies, validating bindings and initializing the result. [Workspace Compositions](../../001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md) owns the detailed provisioning account and [WV-G02](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g02--plugin-aware-composition-and-provisioning) owns the remaining capability.
+
+Predictable maintenance should use scripts or tools with plugin-provided instructions. An assistant can help interpret a person's needs and tailor permitted local resources; an ad hoc instruction sequence does not replace server provisioning, validation or authorization. Missing, disabled or incompatible dependencies, updates to customized copies, removal and migration still need lifecycle decisions. This model does not select their behavior.
+
+## Local agent resources
+
+The approved agent orientation is the view-instance folder as working directory, with project-root orientation and authorized project-wide working access. System and protected plugin boundaries still apply. The instance's own persona and AGENTS enter harness context; its skills are available through the harness, with full bodies read when needed rather than necessarily pasted into initial context.
+
+Other views' instructions and skills are deliberately read when requested, not eagerly injected into every agent. Reading them does not change the agent's identity or working directory and does not grant capabilities. [View Configuration And Agents](../../001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md) retains implementation evidence; [WV-G04](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g04--view-local-agent-context) retains the context gap. Harness-specific discovery, assembly, skill collision handling and enforcement remain open mechanics, rather than reopening the intended orientation.
+
+## Current source-inspected foundation
+
+The inspected `create-service.js` reads bundled workspace/view templates from `System_Manager/ai-template`. Its scaffold path selects bundled view IDs and copies numbered view capsules into the machine-scoped `System/Views` root resolved by `ai-paths.js`. The consumer in `views/index.js` discovers that root, reads manifest identity and loads content/layout configuration. This is bundled scaffolding and registry loading, not an installed-plugin provisioner or a choice of future editable-instance location.
+
+Purpose-built view-path checks also exist in `protected-path-policy.js`. For example, the mediated save controller invokes that policy before its Git-related mutation preparation for selected save reasons. That bounded check does not establish complete future plugin capability enforcement or prove that all System/plugin paths are protected against every agent operation.
+
+These observations come from the named source paths only; no product runtime was exercised. [WV-G03](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g03--repeatable-instances-of-a-view-plugin) and [WV-G05](../../001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md#wv-g05--editable-instance-placement-and-capability-binding) retain repeatable-instance and capability/placement gaps. The [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates) cover schemas, dependencies and harness mechanics. Continue to [Composable Presentation](../003-Composable_Presentation/PAGE.md) for what an instance can configure and compose in the approved model.

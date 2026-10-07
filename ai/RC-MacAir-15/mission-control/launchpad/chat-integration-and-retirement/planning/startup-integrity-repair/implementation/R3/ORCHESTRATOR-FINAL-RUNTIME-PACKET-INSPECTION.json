@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-06T07:49:45.561092+00:00",
+  "state": "WAITING_ORIGINAL_OWNER_ACKNOWLEDGMENT",
+  "runtimeReportSha256": "f75449f3766023179a18cb9b63c17111f1b81ad20511a0302663a9f69be65080",
+  "runtimeManifestSha256": "2af6542b8c3776bb8c183f8c3d46a91dd78e185ec2a74e446782149f20586cb0",
+  "runtimeFilesChecked": 34,
+  "mismatches": [],
+  "originalHistoricalPreimagesChecked": 10,
+  "originalMismatches": [],
+  "originalRequestedNewTargetsStillAbsent": true,
+  "builderLifecycle": "terminalcompleted;close_agentnotexposed",
+  "r1r2": "acceptedunchanged",
+  "r3WholeBuilderAcceptanceFinal": "pendingoriginaladoptionandfreshgates",
+  "protectedIntervalEnded": "2026-10-06T07:40:28.716Z",
+  "ownerUIActionNeeded": false
+}

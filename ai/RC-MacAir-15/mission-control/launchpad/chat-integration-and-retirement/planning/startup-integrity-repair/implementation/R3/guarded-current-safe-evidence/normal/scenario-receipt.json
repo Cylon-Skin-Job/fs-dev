@@ -1,0 +1,15 @@
+{
+  "scenario": "normal",
+  "sourceRoot": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-IBwCQH",
+  "status": "passed",
+  "phase": "startup-audit",
+  "cleanup": "owned-marker-verified",
+  "artifacts": [
+    {
+      "path": "app-data/isolated-provenance-audit.json",
+      "bytes": 12438,
+      "sha256": "b9f656e4d8c7fe4a263e7c2bbd35ff958fe1653795e2c2d08c2efd82ba8a3133",
+      "retained": true
+    }
+  ]
+}

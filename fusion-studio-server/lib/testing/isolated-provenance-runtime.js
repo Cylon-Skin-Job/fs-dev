@@ -15,9 +15,8 @@ const EXPECTED_STARTUP_EFFECTS = Object.freeze([
   'cli-config-bootstrap',
   'harness-broadcaster',
   'harness-status-revalidation',
-  'hotkey-screenshot-watcher',
   'theme-css-bootstrap',
-  'workspace-watcher-trigger-pipeline',
+  'workspace-automation-pipeline',
 ]);
 const EXPECTED_RUNTIME_EFFECTS = Object.freeze([
   'harness-http-revalidation',
@@ -100,16 +99,22 @@ function parseWorkspaces(raw) {
 
 function createEffectRegistry(enabled, expectedEffects, effectKind, onChange = () => {}) {
   const effects = new Map();
+  const violations = [];
+
+  function rejectDefinition(message, ErrorType = Error) {
+    violations.push(message);
+    throw new ErrorType(message);
+  }
 
   function defineEffect(name, factory) {
     if (!expectedEffects.includes(name)) {
-      throw new Error(`unknown isolated provenance ${effectKind} effect: ${name}`);
+      rejectDefinition(`unknown isolated provenance ${effectKind} effect: ${name}`);
     }
     if (typeof factory !== 'function') {
-      throw new TypeError(`isolated provenance ${effectKind} effect requires a factory: ${name}`);
+      rejectDefinition(`isolated provenance ${effectKind} effect requires a factory: ${name}`, TypeError);
     }
     if (effects.has(name)) {
-      throw new Error(`isolated provenance ${effectKind} effect repeated: ${name}`);
+      rejectDefinition(`isolated provenance ${effectKind} effect repeated: ${name}`);
     }
     const state = {
       name,
@@ -153,7 +158,13 @@ function createEffectRegistry(enabled, expectedEffects, effectKind, onChange = (
       .sort((left, right) => left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
   }
 
-  return Object.freeze({ defineEffect, snapshot });
+  return Object.freeze({
+    defineEffect,
+    snapshot,
+    assertValid() {
+      if (violations.length) throw new Error(violations[0]);
+    },
+  });
 }
 
 function createGlobalObservationGuards(enabled) {
@@ -380,6 +391,10 @@ function createIsolatedProvenanceRuntime({
   }
 
   async function finalizeStartupAudit(db) {
+    // A locally caught definition error cannot turn an invalid composition
+    // into a passing audit even when all expected effects were also defined.
+    startupEffects.assertValid();
+    runtimeEffects.assertValid();
     const effectSnapshot = startupEffects.snapshot();
     const effectByName = new Map(effectSnapshot.map((effect) => [effect.name, effect]));
     const missing = EXPECTED_STARTUP_EFFECTS.filter((name) => !effectByName.has(name));

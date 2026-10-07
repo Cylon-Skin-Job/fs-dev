@@ -2,37 +2,86 @@
 name: Events Universal Event Bus
 description: Canonical firehose rules for Fusion Studio events, subscriber boundaries, and producer responsibilities.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events And Ledger Decisions
-    - Universal Event Bus Standards
-    - Chat Universal Event Bus
   source-files:
     - fusion-studio-server/lib/event-bus.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/startup.js
+    - fusion-studio-server/lib/event-registry/index.js
+    - fusion-studio-server/lib/event-registry/reconcile.js
+    - fusion-studio-server/lib/event-registry/policy.js
+    - fusion-studio-server/lib/event-registry/filter.js
+    - fusion-studio-server/lib/event-registry/subscription-seed-catalog.js
+    - fusion-studio-server/lib/subscriptions/admission.js
+    - fusion-studio-server/lib/subscriptions/generation-compiler.js
+    - fusion-studio-server/lib/subscriptions/controller.js
+    - fusion-studio-server/lib/subscriptions/capability-factory.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-Use this page before adding a new event producer, event subscriber, or cross-system event path.
+Status: source inspected on 2026-09-19 in the development checkout. This page describes the implemented bounded contracts and separates future direction below. Existing tests were inspected as assertions, not rerun; no live runtime or installed Alpha verification is claimed.
 
-The Universal Event Bus is the canonical firehose for application facts. Events are emitted after something happened. They are not a request/response API and should not become a second command router.
+Use this page before adding an event producer, subscriber or cross-system event path. Commands enter the owning controller; facts describe command acceptance, completed work or observations. The bus is not a request/response command router.
 
-## Boundaries
+## Current startup and authority
 
-- Producers emit facts with enough metadata for subscribers to decide relevance.
-- Subscribers filter, compact, persist, broadcast, or trigger follow-up work.
-- Canonical candidates pass schema validation or a validated-or-diagnosed publisher before canonical-only subscribers act. Record validation never becomes authorization or failure of the already-valid source operation.
-- Canonical publication accepts only a privately registered `PreparedCanonicalCandidate`. `prepareCanonicalCandidate` strips caller-supplied proof fields, consumes upstream refs, and privately proves each registered atomic accepted-only relationship group. A missing, copied, stale, forged, mismatched, wrong-workspace, or otherwise unbound proof omits the whole affected relationship group with fixed value-free diagnostic `accepted_relationship_unbound`; it does not suppress an otherwise valid relationship-free base fact or affect the source operation. Whole-candidate suppression is reserved for an invalid required fact core, an unsanitizable base after relationship removal, an unrelated final schema error, or UEB failure. Admission clones/freezes the safe event, binds its allowlisted identity to an opaque ref, and freezes one `{ acceptedRef }` context. Every D01-admitted listener task calls exact ABI `listener(frozenEvent, deliveryContext)` with the same event/context/ref; bare-ref argument two is invalid. UEB returns `{ published: true, acceptedRef }` before listener code. Identity-sensitive consumers require `assertAcceptedDelivery`. A false publication result exposes no event/ref/context and queues nothing. Legacy `emit()` is non-migrated only.
-- Source commands never await admission or a ref. A private per-command slot exposes only leased non-blocking `peekAccepted()` to frozen-registry producers. Command/producer `finally` paths close/release it; late/pending/terminal branches omit relationships, and private state is deleted only after close, terminal admission, and zero leases. SPEC-40 owns the exact slot API and race tests.
-- Async listener chains preserve depth/trigger context across `await` boundaries using async-scoped context rather than process-global synchronous state. Concurrent root emissions remain isolated. Subscriber throws/rejections are logged and do not revoke an already true publish result.
-- Resource sync, ledger persistence, metadata collectors, and future versioning consume accepted canonical events. TRIGGERS.md file-change execution remains on its one fail-open workspace-watcher path; mutation handlers do not add a second matcher, and canonical automation/resource events observe and correlate it without authorizing execution.
-- New watchers or private event buses should not be added when the existing UEB pipeline can carry the event.
+### Adoption direction versus implemented scope
 
-`UEB-D01` is OWNER APPROVAL REQUIRED before SPEC-40a/40b1a or first-package assembly. It must define exact admission/listener executor item and byte capacities, concurrency/fairness, enqueue/eviction/drop behavior, cancellation finalizers, per-task event/context/ref retained-byte and lifetime caps, never-settling isolation, and listener saturation. Byte accounting defines measured representation/encoding, object/container overhead, shared-event/context/ref apportionment, queued/active/cancelling ownership, charge/release points, cap precedence, and bounded cap-plus-one measurement. Every command has a bounded private owner cell whose atomic `open_empty|open_slot -> closed` transition makes completion/cancel/throw win safely over late installation; owner-cell initialization failure disables only provenance. UI preflight allocates no slot/link until all bounded data is ready; nullable slot allocation failure installs/offers nothing; install after close terminalizes/releases the new slot; and only after successful install does the fixed module-private offer receive the branded slot synchronously. Only its D01-created link enters task ownership. D01 defines global owner-cell/live-slot count/byte caps, per-slot/per-producer lease caps, repeated acquisition, slot/ref/lease lifetime, and the private nonserializable `AcceptedRefSlotTaskLink` representation/item/byte charge, atomic link-creation/admission-or-finalization transition, single-settlement rule, partial-state release, leaked-cell/link/lease expiry/forced cleanup, slot-registry shutdown, restart, and fixed value-free overload/leak diagnostics. Slot/lease exhaustion returns absent/null and releases bounded provenance state. Link creation/measurement/setup failure, rejection, or overflow invokes the internal fixed link finalizer, settles an installed slot once, terminates only provenance work, independently skips saturated listener deliveries, and never backpressures or retries a source operation. No queued owner cell/slot handle, caller callback, runnable, finalizer, or command-context handle is permitted. No capacity/accounting/default may be inferred.
+Owner direction recorded 2026-09-27 PDT: new capabilities should extend this common governed foundation and consume it through authorized subscribers. Follow [governed capability planning](../../005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md#governed-capability-planning), [taxonomy](../002-Event_Taxonomy/PAGE.md) and [provenance](../003-Provenance_Model/PAGE.md). The bounded foundation below is implemented; arbitrary chat/render health publishers and plugin subscribers are not.
+
+The [follow-up domain](../../../mission-control/launchpad/fusion-health-and-governed-observability/TICKET.md) coordinates shared diagnostic measurements, remaining render work, ledger/audit destinations, a separate sampled health store, and future plugin/view integration. Missing schema, publisher or capability support must be a planned dependency, not a second bespoke bus or silent legacy bypass. Best-effort does not automatically mean off-thread: current callbacks execute inline, so a health sink must enforce bounded producer cost explicitly.
+
+Plugin-registered views are approved direction, not current general infrastructure. Eligible view implementations should leave bespoke server composition; protected operations remain server-owned behind narrow granted callable capabilities. Local DOM/render work stays local, and core chat persistence/runtime authority does not move into an untrusted view. Exact plugin contracts and migration scope require planning.
+
+`fusion-studio-server/lib/startup.js` initializes the System database and migrations, then `initializeEventRegistry` reconstructs effective authority before subscribers and public sockets start. Migration `034_event_registry_authority.js` owns schema, subscription and grant tables. `reconcileSystemSchemas` inserts missing locked shipped definitions and their initial grants, preserves existing rows and lifecycle reductions, and diagnoses collisions. It does not repair a modified locked definition by silently overwriting it or restore a removed grant. Invalid rows become ineffective in derived state; infrastructure initialization failure remains startup-fatal.
+
+`event-registry/policy.js` checks canonical JSON/checksum, locked identity, enabled state, schema references, installed handler and requested-versus-granted capabilities. Requests do not grant themselves authority. The public initialized registry exposes read/validate access, not a human permission UI. Folder discovery cannot install or activate a handler. Platform migrations own schema evolution; the [System boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary) excludes arbitrary plugin tables and self-grants.
+
+The subscription compiler selects the four built-in handler keys, validates exact required capability scopes and provider availability, then orders descriptors by priority and ordinal subscription ID. Filters allow exact event type/version and closed resource predicates for operation, kind and ingress panel; they are not arbitrary executable expressions. `file.command_accepted@1` is registered and publishable but is not an allowed subscription filter or a seeded ledger input.
+
+## Current governed admission
+
+`subscriptions/admission.js` seals one lexical publisher catalog and injects exact closures into the durable save and agent owners. It does not expose a public producer selector. The catalog is:
+
+| Producer | Fact |
+|---|---|
+| `system.file-save-controller` | `file.command_accepted@1`, `resource.mutated@1` |
+| `system.agent-tool-activity-controller` | `agent.tool_completed@1` |
+| `system.agent-resource-observer` | `resource.state_observed@1` |
+
+Each publisher accepts a private reservation plus a body. The reservation authority rereads durable producer state; admission binds producer/schema/workspace/operation/event/time and verifies the canonical input hash, validates the active schema, then deep-freezes the fact. Caller-supplied envelope fields in the body are rejected. Rejection returns `admitted: false`, null event ID and no deliveries. Replaying identical reserved input can redeliver the same event; admission is not a universal deduplication service.
+
+Save reservations come from `file_operations`. Agent reservations come from `agent_tool_activities` or `agent_resource_snapshots`; only those two publishers commit their producer admission state before dispatch. This asymmetry is intentional current behavior. Durable source state, rather than an older proposed accepted-reference graph, supplies the authority.
+
+## Current delivery and failure timing
+
+| Handler | Seeded input | Policy and bounded responsibility |
+|---|---|---|
+| `system.provenance-ledger` | `resource.mutated@1` | `required_ack`; append the exact save projection through a same-fact capability |
+| `system.agent-provenance-ledger` | Both agent facts | `required_ack`; invoke the durable ledger owner |
+| `system.agent-resource-observer` | `agent.tool_completed@1` | `required_ack`; validate/signal the durable observation queue, not perform detached filesystem observation in the callback |
+| `system.resource-render-projection` | `resource.mutated@1` | `best_effort`; publish File Viewer invalidation or freshness recovery |
+
+`controller.js` snapshots one generation per delivery, calls matching handlers in order and awaits each required acknowledgment for up to 2,000 ms. Best-effort promises are observed for rejection but not awaited. A required timeout does not cancel its handler; the controller retains it for drain, and application shutdown supplies the outer deadline. This is not the older proposal in which every listener runs in an independent nonwaiting executor.
+
+The publisher awaits reservation lookup, payload validation and delivery. `admitted: true` means admission succeeded even if delivery throws, times out, is absent or a later projection fails. Delivery `completed` means the callback resolved; inspect the owning durable state to learn whether ledger work stored, conflicted or was rescheduled. `invoked` is not persistence or client acknowledgment. Scoped capability contexts expose only the permitted same-fact append, scheduling, renderer message and fixed diagnostic operations; handlers receive no ambient database or bus authority.
+
+Reload atomically installs a valid generation. If compilation fails, only unchanged, independently revalidated prior descriptors survive; an authority-read failure clears the visible generation. In-flight work retains its selected generation. Reload is explicit/startup-driven, not a filesystem settings watcher.
+
+A save awaits command-fact publication before preparing its required preimage. Rejected command-fact admission can remain pending without denying the save, but failed operation reservation, durable preimage preparation or attempted-write recording prevents replacement. After replacement, admission/projection recovery must not reinterpret the completed write as an untouched target. Agent observations follow reported tool activity and do not authorize or reverse execution. See [Ledger Event Provenance](../003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md) for persistence and reconciliation.
+
+## Legacy compatibility remains separate
+
+`lib/event-bus.js` still exports `emit`, `on` and the EventEmitter singleton. `emit` delivers type listeners then wildcard listeners under synchronous depth/same-event guards, with best-effort error handling. Its depth counter is process-local synchronous state, not a generalized async causal chain. Governed delivery never calls public `emit/on`; emitting a governed-looking topic cannot create admitted delivery.
+
+Chat and existing triggers still use legacy paths. Broad workspace watcher production is retired. The wildcard legacy ledger subscriber records only `workspace:switched` and `thread:state_changed`; `file:changed` remains a legacy topic but is ignored by that ledger writer. It cannot make every bus topic durable. Chat's adapter-normalized event naming does not imply admission into governed facts. Chat lifecycle remains owned by [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md).
+
+## Approved direction and open work
+
+Use one governed fact architecture, separate commands from facts, keep permission requests distinct from grants, and preserve honest timestamped observations without requiring causal verdicts. The accepted trusted save/subscription scope replaced older accepted-reference/lease/causal-proof prerequisites only for that bounded implementation. The accepted agent overlay adds normalized activity, eligible observation checkpoints and exactly two ledger facts; it does not activate the wider draft.
+
+General plugin emission/executors, canonical chat/tool/native-output schemas, causal graphs, canonical version events and broad automation remain future work. Older exact candidate/ref/lease APIs and executor capacities are proposals, not current APIs or mandated implementations. Resolve their material choices when a feature needs them; do not reopen the settled System boundary.
 
 ## Related Pages
 
 - [Decisions](../000-Events_And_Ledger/002-Decisions/PAGE.md)
+- [Taxonomy](../002-Event_Taxonomy/PAGE.md)
 - [Universal Event Bus Standards](../../005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md)
-- [Chat Universal Event Bus](../../007-Chat_System/002-Harness_And_Event_Flow/003-Universal_Event_Bus/PAGE.md)

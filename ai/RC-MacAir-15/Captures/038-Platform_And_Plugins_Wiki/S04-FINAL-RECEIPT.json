@@ -1,0 +1,126 @@
+{
+  "at": "2026-09-23T13:41:59.787462+00:00",
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "candidate": "PPW01-0159a35a4ecb7fd3",
+  "article_source_recheck": [
+    {
+      "manifest": "S04-OUTPUTS.json",
+      "count": 9,
+      "mismatches": []
+    },
+    {
+      "manifest": "S04-SOURCE-INSPECTION.json",
+      "count": 10,
+      "mismatches": []
+    }
+  ],
+  "final_validation": "runs/20260923T134129716750Z-slice-S04.json",
+  "baseline_sha256": "81eed171b191aec3d35f76176d8bc1e0bfd0f329445fd45de199b5e0a80632cc",
+  "artifacts": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-01-proposal.md",
+      "sha256": "9a55ad9629028ad7eb5f948172ba4b08dc00e502750e6613c874dd8eb61393fa"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-02-proposal.md",
+      "sha256": "b6329f027b9075fa2d92374af3b391dee0b903d3f87c50ac5199ed1e41ebb728"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-03-proposal.md",
+      "sha256": "d478ecaa278bf6ee5b426fa2dee62366ab56e56070037cb5d0248c0ebbe239e0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-04-proposal.md",
+      "sha256": "964132426c102bb21e130dbd4f475864192e0a3964fb06a4e8c039cc8c154417"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-05-proposal.md",
+      "sha256": "0011845fb0caa6693318e4835e4e9ac37a994967058ce2c99af04ea3220040f8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-06-proposal.md",
+      "sha256": "973b768ac15d79271a6e728a99ab3b707ef3521623e3ce9735fb9e4dc16ad32d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-07-proposal.md",
+      "sha256": "defa589625977c2ffa56892861d814d9bc6c5421afc0fad2d7a1db046a6219e9"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-08-proposal.md",
+      "sha256": "c4e6a1d9a21f39a007ba7da7a6370a76a9bc98428b1506de23f81d1e508b0c5e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-09-proposal.md",
+      "sha256": "61d9a135dfcba72b8020e02dc4c2ea2f89033357c164e8844ec7ade12f5ef0b8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-BUILDER-REVIEW-01.md",
+      "sha256": "ffec0e1c8d76859133b4ccef9f41e61554a0211eb94b80787b0e0fc41bb10bc0"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-HANDOFF-DRAFT.md",
+      "sha256": "6ee91dda004bffd33e85c247c2bc68401b11ad61c962d9a44d3b35e92d06d3a4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-HANDOFF.md",
+      "sha256": "5e4297e36243372ac1dd26166e5934b49ba6e04c94071fdad20d636fddc7ccb4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-HYGIENE.json",
+      "sha256": "bc62eb9a0ae34fd80610681fdde6025838ca9e693ba2f424f435ee8d86102814"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-LIFECYCLE.json",
+      "sha256": "1334320866dba4ead2a9d55a463acadf8eae91ccaac34bc578223e4a0c99009c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-OUTPUTS.json",
+      "sha256": "0d25afea3e4f1b715aa47eaebc982385522df19e69021045c6a9c4ff8f308f8f"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-PROPOSALS.json",
+      "sha256": "ed19a63ca0f2fb0e7de6562c33c26d6af2610ffbd0ef249e67dc0f3b2e6f8dc8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-PROSE-DIFF.patch",
+      "sha256": "35892f95e6351f9592161817a2776d181c17c24a95a9457dc3534592132a04ad"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-SELF-REVIEW.md",
+      "sha256": "ffc7adfc1cc804758af242689bc8377d32ad2454a424469dbacd1126d5c55cc8"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-SOURCE-INSPECTION.json",
+      "sha256": "415143c1dddc7021ad92892ee18dbd89058730aa9045fa4bd07fbbbbd2ab4edd"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-WRITES.json",
+      "sha256": "d53e0c6dd43c016aeb2f45155074704c97eea8e9250a65032eebfad28af1501e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s04-proposals.py",
+      "sha256": "6b4c2d8bdb3b490f4d3c3ac34653e1b401203232d203b202be3964f9e7482d18"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s04-evidence.py",
+      "sha256": "5b469ecf4713b652c63002b49c1c45f4b8f97ee61f8484b5f7ba25ae4742b826"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/CLAIMS.json",
+      "sha256": "6f61db9140b61fbf250de64ece2de557a9cc573760d6c7d36d0c5abc55bd8b72"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/COVERAGE.json",
+      "sha256": "8340eec96238e4fdeffb23a7f2cc4c19e9ada7df3b35df8871b623d110d02596"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/SOURCE-INSPECTION.md",
+      "sha256": "ae556758b70ad4640477209a33f8c013438027c8bad0f9b43e62a8137f012e3c"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/EDIT-RECEIPTS.json",
+      "sha256": "1fbd797a21f3afdc4c5d2b4a6811607f244f62f73ae1f9343eee8be75f4f7845"
+    }
+  ],
+  "limits": "Reporting/evidence finalization only after clean review; no article bytes changed. Full final stamp and integration remain S05."
+}

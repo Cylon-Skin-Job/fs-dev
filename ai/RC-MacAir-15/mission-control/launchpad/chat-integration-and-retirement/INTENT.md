@@ -4,11 +4,15 @@
 
 ## Outcomes
 
-Give later plugin and view work an exact, reviewed chat source/build baseline, a contract map, actual retirement findings, and honestly scoped verification.
+Finish fixing the current last build, including required verification and closeout, under the owner's October 5 [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work).
+
+Historical remit: give later plugin and view work an exact, reviewed chat source/build baseline, a contract map, actual retirement findings, and honestly scoped verification. Preserve that evidence; it does not authorize ongoing new work beyond the current build.
 
 D-006 authorizes First Draft, independent review and Roadmap preparation with three simple SPEC candidates: simplify the two transport entry files, unify chat command send behavior, and fix the false-send receipt-status check. These are candidate boundaries for discussion, not executable SPECs or approval to build (D-004).
 
 ## Boundaries
+
+Broader follow-on OpenCode harness repair/testing belongs in [its new home](../chat-harness-repair-and-testing/TICKET.md) after the current job is finished. Necessary repairs/checks within the current approved job stay here. D-008 narrows future responsibility without reopening acceptance, relocating implementation or changing existing gates.
 
 SPEC-06 remains owner-accepted with residuals. This folder does not reopen its acceptance. Ongoing bookmarks, unrelated dogfood reports, logger design, and new health-event subscriptions belong in the [health folder](../fusion-health-and-governed-observability/TICKET.md). Folder creation does not alter earlier product acceptance or authorize implementation.
 

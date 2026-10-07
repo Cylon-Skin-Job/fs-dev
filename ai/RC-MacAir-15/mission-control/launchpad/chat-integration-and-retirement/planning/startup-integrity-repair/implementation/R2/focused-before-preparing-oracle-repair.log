@@ -1,0 +1,21 @@
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-eYf6lw","port":51649,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-4DF7Hz","port":51651,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-MOWiuy","port":51652,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-yOpShe","port":51653,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-MdSVBH","port":51654,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-Pu8MRu","port":51655,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-4rMNjL","port":51656,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-i5qEvI","port":51657,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-wcUBSc","port":51659,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-xuZe7P","port":51660,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"normal","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-uhhr7f","port":51661,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":["[Shutdown] owner drain exceeded its phase deadline"]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-7sj8Ek","port":51664,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[],"cleanupErrors":[]}
+STARTUP_CANARY_RECEIPT {"mode":"isolated-v1","root":"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-TNuMIR","port":51665,"cleaned":true,"guardsRestored":true,"listenersRestored":true,"exitCodes":[0],"cleanupErrors":[]}
+(node:49971) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Test Suites: 8 passed, 8 total
+Tests:       117 passed, 117 total
+Snapshots:   0 total
+Time:        43.146 s, estimated 44 s
+Ran all test suites within paths "test/runtime/workspace-startup-integrity.test.js", "test/views/view-readiness-coordinator.test.js", "test/views/view-relocation-recovery.test.js", "test/triggers/trigger-loader.test.js", "test/triggers/cron-scheduler.test.js", "test/event-registry/startup-integration.test.js", "test/watch/watcher-retirement.test.js", "test/shutdown.test.js".

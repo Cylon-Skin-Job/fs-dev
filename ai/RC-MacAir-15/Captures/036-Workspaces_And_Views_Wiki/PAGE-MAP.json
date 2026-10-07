@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "section": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/",
+  "entries": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "action": "rewrite",
+      "slice": "S01",
+      "purpose": "Overview and reader routes; distinguish target, current, retained specialist references."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+      "action": "rewrite",
+      "slice": "S02",
+      "purpose": "Project folder, registered workspace, machine scope, identity and content ownership; remove reader/router/executor taxonomy as workspace identity."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "action": "rewrite",
+      "slice": "S02",
+      "purpose": "View definition/plugin versus installed instance; current fixed-id renderer and future repeatable instances; separate content root."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
+      "action": "rewrite",
+      "slice": "S02",
+      "purpose": "Current add/create/hide/restore/register/readiness flows and accurate default Capture ID; link intended plugin provisioning."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md",
+      "action": "rewrite",
+      "slice": "S04",
+      "purpose": "Concise Wiki introduction and retained technical-reference route; clearly bounded review scope."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/001-Changelog/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/002-Decisions/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/003-Lessons/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/004-Interface/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/005-System/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/007-Structure/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/PAGE.md",
+      "action": "rewrite",
+      "slice": "S04",
+      "purpose": "Human-readable Browser introduction with current limits and source map."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "action": "rewrite",
+      "slice": "S04",
+      "purpose": "Human-readable Custom introduction; distinguish custom iframe from plugin provisioning."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/002-Decisions/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/003-Lessons/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/004-Rule_System/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/005-Transcription_Flow/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/006-Structure/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/PAGE.md",
+      "action": "retain_reference",
+      "slice": null,
+      "purpose": "Byte-preserved specialist/reference article; not recertified by this SPEC. Classify its scope from owned entry points."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/PAGE.md",
+      "action": "rewrite",
+      "slice": "S03",
+      "purpose": "Current System surface versus plugin-management direction; ordinary editable view resources no longer universally require privileged System delegation. Preserve unresolved workflow semantics."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/PAGE.md",
+      "action": "rewrite",
+      "slice": "S03",
+      "purpose": "Shared reference: source-check scope and categorize current implementation, without inventing universal plugin search."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md",
+      "action": "rewrite",
+      "slice": "S03",
+      "purpose": "Human-readable state/ownership entry; preserve accepted Chat group/placement behavior, source-check relevant integrations and link detailed Chat authority."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/PAGE.md",
+      "action": "rewrite",
+      "slice": "S04",
+      "purpose": "Short Office introduction pointing to retained Fusion Home specialist documentation; instance label Drive does not rename type universally."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md",
+      "action": "retire",
+      "slice": "S05",
+      "purpose": "Retire duplicate top-level TOC after inbound links point to 000 overview; preserve exact predecessor."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "action": "create",
+      "slice": "S01",
+      "purpose": "Owner-approved intended model."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "action": "create",
+      "slice": "S01",
+      "purpose": "Owner decisions, precise supersessions, and unresolved product choices."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "action": "create",
+      "slice": "S05",
+      "purpose": "Consolidated bounded gap index with stable WV-G identifiers, article links, evidence and future decision gates."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Files introduction."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Agents view introduction; distinguish this view from personas attached to other views."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Issues introduction; display versus actual execution/dispatch."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Capture introduction."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Calendar introduction; mounted demo/read/write limits, link Provenance current storage gap."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Email introduction; verify mounted behavior, never infer integration from template."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Contacts catalog entry; distinguish template/placeholder versus implemented surface."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Library catalog entry; distinguish template/placeholder versus implemented surface."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Media catalog entry; distinguish template/placeholder versus implemented surface."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "action": "create",
+      "slice": "S02",
+      "purpose": "Workspace plugins, selected view dependencies and server-owned plugin provisioning; existing bundled-template copying explicitly separate."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "action": "create",
+      "slice": "S03",
+      "purpose": "Editable instance config, content root, personas, skills, sub-agents, workflows; capabilities remain in protected plugin; context loading gaps."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/PAGE.md",
+      "action": "create",
+      "slice": "S04",
+      "purpose": "Concise index of 13 template types plus System platform surface, links to human introductions, installation/implementation status; voice and editors are capabilities, not automatically view types."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/PAGE.md",
+      "action": "create",
+      "slice": "S05",
+      "purpose": "Exact current source owners, read-only specialist references, source-inspection limitations and platform boundaries."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S05",
+      "purpose": "Only Workspaces And Views description/status and generated navigation; do not claim whole-wiki completion."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S03",
+      "purpose": "Only workspace lifecycle/view-path/view-state subsections: current source versus relocated-instance target; preserve Provenance System/calendar/history contracts."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S03",
+      "purpose": "Only clarify current protected-System capsule placement versus newer target outside System; retain state ownership/service boundaries."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S03",
+      "purpose": "Only Durable identity boundaries and View definition versus content root: supersede target System/Views location with current-only label and new target link; preserve remaining authority/persistence contracts."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S03",
+      "purpose": "Only current path versus approved relocation scope note and link; do not change current CSS cascade, paths or state ownership into invented future schemas."
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md",
+      "action": "bounded_support",
+      "slice": "S05",
+      "purpose": "Only correct inbound root link to canonical overview and brief routing description; retain other content."
+    }
+  ],
+  "rules": [
+    "No other live wiki articles may change. Additional discovered inbound-link owners require a documented scope amendment and affected review before editing.",
+    "Retained reference pages and all existing .versions bytes remain unchanged. New snapshots are permitted only beside changed or retired articles.",
+    "S05 may modify generated blocks, link references and metadata on earlier owned pages, and repair their accepted contracts through the builder/reviewer loop."
+  ]
+}

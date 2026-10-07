@@ -1,0 +1,32 @@
+{
+  "commands": [
+    {
+      "at": "2026-09-19T03:41:18.544894-07:00",
+      "command": [
+        "node",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-verify.cjs"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 3,\n  \"sourceHashes\": 61,\n  \"evidenceAnchors\": 34,\n  \"snapshots\": 3,\n  \"links\": 11,\n  \"vocabulary\": 0,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-09-19T03:41:18.714938-07:00",
+      "command": [
+        "node",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-verify.cjs",
+        "--read-only"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 3,\n  \"sourceHashes\": 61,\n  \"evidenceAnchors\": 34,\n  \"snapshots\": 3,\n  \"links\": 11,\n  \"vocabulary\": 0,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+      "stderr": ""
+    }
+  ],
+  "manual_checks": {
+    "exact_diff_reconstruction": "PASS: difflib.unified_diff complete preimages versus current pages equals S04-PAGES.diff",
+    "readability": "PASS: rewritten paragraphs single physical lines; tables/links/status labels raw-reviewed",
+    "scope": "Only writer script explicit three pages/preimages plus this capture; protected/source/test/runtime owner files read-only",
+    "untracked_inspection": "Every S04 text/JSON/script receipt directly read; no trailing whitespace"
+  },
+  "product_smoke_runtime": "N/A prohibited by documentation-only SPEC; no app/module execution"
+}

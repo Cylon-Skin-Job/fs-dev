@@ -1,0 +1,152 @@
+{
+  "at": "2026-10-06T01:17:07.603Z",
+  "target": {
+    "repo": "/Users/rccurtrightjr./projects/fs-dev",
+    "client": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "main": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "machine": "RC-MacAir-15",
+    "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+    "profileMode": "explicit",
+    "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+    "bin": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "runtime": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/fusion-restart",
+    "portFile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server.port",
+    "dryRun": false,
+    "database": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-data/fusion.db",
+    "serverLog": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2/server-live.log"
+  },
+  "selected": [],
+  "related": [
+    {
+      "pid": 12448,
+      "ppid": 12443,
+      "start": "Wed Sep 30 15:15:42 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/SoloBooks",
+      "machine": "RC-SoloBooks",
+      "executable": "/Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper",
+      "kind": "main"
+    },
+    {
+      "pid": 12449,
+      "ppid": 12443,
+      "start": "Wed Sep 30 15:15:42 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/SoloBooks",
+      "machine": "RC-SoloBooks",
+      "executable": "/Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper",
+      "kind": "main"
+    },
+    {
+      "pid": 12886,
+      "ppid": 1,
+      "start": "Mon Oct  5 08:55:21 2026",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "profile": "/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated",
+      "machine": "RC-MacAir-15",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "kind": "main"
+    },
+    {
+      "pid": 12892,
+      "ppid": 12886,
+      "start": "Mon Oct  5 08:55:21 2026",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "profile": "/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated",
+      "machine": "RC-MacAir-15",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "kind": "server"
+    },
+    {
+      "pid": 12904,
+      "ppid": 12886,
+      "start": "Mon Oct  5 08:55:22 2026",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "profile": "/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated",
+      "machine": "RC-MacAir-15",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "kind": "renderer"
+    },
+    {
+      "pid": 48636,
+      "ppid": 1,
+      "start": "Thu Oct  1 12:36:56 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+      "machine": "RC-Alpha",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "kind": "main"
+    },
+    {
+      "pid": 48649,
+      "ppid": 48636,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+      "machine": "RC-Alpha",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "kind": "main"
+    },
+    {
+      "pid": 48650,
+      "ppid": 48636,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+      "machine": "RC-Alpha",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "kind": "main"
+    },
+    {
+      "pid": 48653,
+      "ppid": 48636,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+      "machine": "RC-Alpha",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "kind": "server"
+    },
+    {
+      "pid": 48666,
+      "ppid": 48636,
+      "start": "Thu Oct  1 12:37:00 2026",
+      "cwd": "/",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+      "machine": "RC-Alpha",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer)",
+      "kind": "renderer"
+    },
+    {
+      "pid": 77002,
+      "ppid": 1,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "cwd": "/",
+      "profile": null,
+      "machine": "RC-MacAir-15",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "kind": "main"
+    },
+    {
+      "pid": 77007,
+      "ppid": 77002,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "cwd": "/",
+      "profile": null,
+      "machine": "RC-MacAir-15",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "kind": "server"
+    },
+    {
+      "pid": 77021,
+      "ppid": 77002,
+      "start": "Mon Sep 28 01:40:08 2026",
+      "cwd": "/",
+      "profile": null,
+      "machine": "RC-MacAir-15",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "kind": "renderer"
+    }
+  ]
+}

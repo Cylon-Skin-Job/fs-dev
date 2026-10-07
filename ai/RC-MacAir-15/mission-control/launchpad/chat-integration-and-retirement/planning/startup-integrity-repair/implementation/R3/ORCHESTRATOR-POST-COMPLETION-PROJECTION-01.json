@@ -1,0 +1,164 @@
+{
+  "observedAt": "2026-10-06T07:32:06.349761+00:00",
+  "scope": "Independent raw safe v4 projection and ordered per-exchange comparison; no UI input or provider invocation",
+  "liveReceiptAt": "2026-10-06T07:30:58.424Z",
+  "liveReceiptSha256": "3de2674977eacdfdd0ad571810ad80fb9af0a7b7dc87f2fe0112e14c4b308706",
+  "v4SnapshotByteLength": 90228,
+  "v4SnapshotSha256": "74edff86ca6334af34fa573047fc2b59597cfcb4139fc4ff3aba8f3c75aa46c7",
+  "v4Events": [
+    {
+      "at": "2026-10-06T07:30:00.533Z",
+      "kind": "canonical-correlation",
+      "direction": "sent",
+      "type": "thread:open",
+      "workspaceId": "public-scratch-2",
+      "threadGroupId": "tg-8cd66103-1ad3-4a76-9dfb-f8f20f4a3662"
+    },
+    {
+      "at": "2026-10-06T07:30:02.181Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "thread:opened",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-19-54-139",
+      "threadGroupId": "tg-8cd66103-1ad3-4a76-9dfb-f8f20f4a3662",
+      "viewId": "file-viewer",
+      "workspaceEpoch": "53813c99-2283-4b6a-b351-8c87de0d1a95",
+      "historyOnly": false,
+      "exchangeIds": [
+        1
+      ]
+    },
+    {
+      "at": "2026-10-06T07:30:04.365Z",
+      "kind": "canonical-correlation",
+      "direction": "sent",
+      "type": "thread:open",
+      "workspaceId": "public-scratch-2",
+      "threadGroupId": "tg-0281b53b-4ef4-48de-95c7-41e8c44e308a"
+    },
+    {
+      "at": "2026-10-06T07:30:05.464Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "thread:opened",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-20-09-736",
+      "threadGroupId": "tg-0281b53b-4ef4-48de-95c7-41e8c44e308a",
+      "viewId": "file-viewer",
+      "workspaceEpoch": "53813c99-2283-4b6a-b351-8c87de0d1a95",
+      "historyOnly": false,
+      "exchangeIds": [
+        2
+      ]
+    },
+    {
+      "at": "2026-10-06T07:30:08.718Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "message:sent",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-20-09-736",
+      "requestId": "7a35bc9cfc9b4ce4750db34f5bd68ff5",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c"
+    },
+    {
+      "at": "2026-10-06T07:30:09.315Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "turn_begin",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-20-09-736",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "streamSeq": 1
+    },
+    {
+      "at": "2026-10-06T07:30:20.583Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "turn_end",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-20-09-736",
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "streamSeq": 5,
+      "activityRevision": 2,
+      "reason": "other",
+      "partial": false
+    },
+    {
+      "at": "2026-10-06T07:30:26.432Z",
+      "kind": "canonical-correlation",
+      "direction": "sent",
+      "type": "thread:open",
+      "workspaceId": "public-scratch-2",
+      "threadGroupId": "tg-8cd66103-1ad3-4a76-9dfb-f8f20f4a3662"
+    },
+    {
+      "at": "2026-10-06T07:30:27.524Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "thread:opened",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-19-54-139",
+      "threadGroupId": "tg-8cd66103-1ad3-4a76-9dfb-f8f20f4a3662",
+      "viewId": "file-viewer",
+      "workspaceEpoch": "53813c99-2283-4b6a-b351-8c87de0d1a95",
+      "historyOnly": false,
+      "exchangeIds": [
+        1
+      ]
+    },
+    {
+      "at": "2026-10-06T07:30:30.292Z",
+      "kind": "canonical-correlation",
+      "direction": "sent",
+      "type": "thread:open",
+      "workspaceId": "public-scratch-2",
+      "threadGroupId": "tg-0281b53b-4ef4-48de-95c7-41e8c44e308a"
+    },
+    {
+      "at": "2026-10-06T07:30:31.416Z",
+      "kind": "canonical-correlation",
+      "direction": "received",
+      "type": "thread:opened",
+      "workspaceId": "public-scratch-2",
+      "threadId": "2026-10-06T00-20-09-736",
+      "threadGroupId": "tg-0281b53b-4ef4-48de-95c7-41e8c44e308a",
+      "viewId": "file-viewer",
+      "workspaceEpoch": "53813c99-2283-4b6a-b351-8c87de0d1a95",
+      "historyOnly": false,
+      "exchangeIds": [
+        2,
+        3
+      ]
+    }
+  ],
+  "perExchangeDomComparisons": [
+    {
+      "exchangeId": 2,
+      "seq": 1,
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "userHashExact": true,
+      "oneAssistantText": true,
+      "completedNonstreaming": true,
+      "assistantNormalizedHashExact": true,
+      "assistantRawBytesEqual": false
+    },
+    {
+      "exchangeId": 3,
+      "seq": 2,
+      "turnId": "60a5264c-61ce-4d8d-976c-125e416bb85c",
+      "userHashExact": true,
+      "oneAssistantText": true,
+      "completedNonstreaming": true,
+      "assistantNormalizedHashExact": true,
+      "assistantRawBytesEqual": false
+    }
+  ],
+  "counts": {
+    "threads": 2,
+    "exchanges": 3,
+    "receipts": 3
+  },
+  "oracleLimit": "Original one-row exactComparison aggregate false after additional actual prompt; ordered per-exchange comparison preserves actual history. Callback at timestamps are processing time, authoritative owner record timestamps separately retained."
+}

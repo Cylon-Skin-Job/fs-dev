@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-06T01:32:53.103721+00:00",
+  "scope": "App product and established restart owners captured after attributed launch; fixture/tests/Wiki excluded. These source bytes have not changed since launch.",
+  "files": {
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/testing/isolated-provenance-runtime.js": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/startup.js": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-startup.js": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+  },
+  "sha256": "3a0f158a0ab21d419a4e8b4ded479ebf3768e895a909fee96e308898fff7c031",
+  "builtRendererSha256": "9db00d0d596e1e957c225b7a98bf65b34b289cb3dc9adfd997b63e983f784db9",
+  "currentFixtureAndDocumentationAggregateIsSeparate": true,
+  "appRestartForEvidenceRepairs": false
+}

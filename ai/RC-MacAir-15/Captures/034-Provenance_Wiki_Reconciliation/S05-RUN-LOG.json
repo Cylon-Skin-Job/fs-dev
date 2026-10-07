@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "command": [
+        "node",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-verify.cjs",
+        "--read-only"
+      ],
+      "started_at": "2026-09-19T10:50:58.208174+00:00",
+      "finished_at": "2026-09-19T10:50:58.400274+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 7,\n  \"sourceHashes\": 73,\n  \"evidenceAnchors\": 25,\n  \"snapshots\": 14,\n  \"links\": 29,\n  \"vocabulary\": 0,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation"
+      ],
+      "started_at": "2026-09-19T10:50:58.400285+00:00",
+      "finished_at": "2026-09-19T10:50:58.407477+00:00",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "Python difflib reconstruct each initial snapshot \u2192 current page; equality with S05-PAGES.diff",
+      "at": "2026-09-19T10:50:58.410857+00:00",
+      "exit": 0,
+      "result": "Exact equality for all seven pages"
+    },
+    {
+      "command": [
+        "node",
+        "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-verify.cjs",
+        "--read-only"
+      ],
+      "started_at": "2026-09-19T10:53:30.562998+00:00",
+      "finished_at": "2026-09-19T10:53:30.711301+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"frontmatters\": 27,\n  \"changedPages\": 7,\n  \"sourceHashes\": 73,\n  \"evidenceAnchors\": 25,\n  \"snapshots\": 14,\n  \"links\": 29,\n  \"vocabulary\": 0,\n  \"preexistingSupportingLimitations\": 0\n}\n",
+      "stderr": "",
+      "reason": "Final capture bookkeeping check after terminal CLEAN; wiki/source unchanged"
+    }
+  ],
+  "prior_validation_failure": "Initial s05-verify.cjs exited 1 on evidence line bounds; four citations corrected; subsequent cumulative checks passed. Initial failure wall-clock was not separately captured; no invented timestamp."
+}

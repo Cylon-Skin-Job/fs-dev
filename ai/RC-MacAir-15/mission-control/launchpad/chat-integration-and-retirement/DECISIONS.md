@@ -47,3 +47,9 @@
 - **Source:** Direct owner message in this conversation, 2026-09-28: “Let’s send it to Roadmap Creation.”
 - **Status:** active planning authorization; executable candidate approval remains pending.
 - **Scope:** Reuse CHAT-SIMPLE-DRAFT-001 rev1 and ROADMAP-PREP to create the three-SPEC executable candidate, resolve R1–R4, run independent stage and release validation, and return the exact candidate for owner approval. Preserve D-005's deferred failure-map scope. This authorizes planning and review, not product implementation.
+
+### D-008 — Narrow to the current build and separate follow-on harness work
+
+- **Source:** Direct owner instruction in the project-folder planning conversation, October 5, 2026: “We can keep Integration and Retirement scoped to the current jib of fixing this last build.” Followed by “After that, I think the Open Code harness stuff needs to be in a new folder” and “Let's call it Chat harness repair and testing.” Recorded by Codex side chat (ephemeral), 2026-10-05T16:19:23Z. No unavailable conversation UUID/turn locator is invented.
+- **Status:** active
+- **Scope:** Keep this home focused on fixing/finishing the current last-build job identified by the October 5 Chokidar/harness handoff, including necessary concrete repairs, verification and existing owner acceptance. Subsequent broader OpenCode harness repair/testing belongs in [the new folder](../chat-harness-repair-and-testing/TICKET.md) after closeout. This narrows D-001/D-002's future remit and changes D-005's follow-on workfolder destination; prior approvals, findings and task history are preserved. No task is reassigned/resumed, implementation/evidence relocated, new product repair approved or Git/Alpha prerequisite added.

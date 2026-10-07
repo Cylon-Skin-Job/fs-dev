@@ -1,0 +1,339 @@
+{
+  "mode": "isolated-v1",
+  "machine": "Test-Provenance",
+  "scenario": "fact-publish-failure",
+  "port": 52436,
+  "appData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/app-data",
+  "dbPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/app-data/server-data/fusion.db",
+  "dbExists": true,
+  "workspaces": [
+    {
+      "id": "provenance-a",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/workspace-a"
+    },
+    {
+      "id": "provenance-b",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/workspace-b"
+    }
+  ],
+  "registeredWorkspaces": [
+    {
+      "id": "provenance-a",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/workspace-a"
+    },
+    {
+      "id": "provenance-b",
+      "repoPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-provenance-live-eLirqS/workspace-b"
+    }
+  ],
+  "registryAuthority": {
+    "schemas": [
+      {
+        "schema_id": "27c767a2-c48e-4dad-bfec-2e16429be9e4",
+        "schema_key": "resource.mutated",
+        "schema_version": 1,
+        "definition_kind": "event",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "295255a020121b058d083f2b8f25bc899e771b248e0d8e3fd9b8624e1417d8f5"
+      },
+      {
+        "schema_id": "3c728bed-889f-4e9f-92f5-2d43b50dc97d",
+        "schema_key": "file_save",
+        "schema_version": 1,
+        "definition_kind": "command",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "5e0bfc415aaef5e71c7b45a9232c340ac96beecebac4e8d814f40c65bbb21355"
+      },
+      {
+        "schema_id": "6656a4ee-b1a2-4e07-8ea7-a2bbeb2929bb",
+        "schema_key": "agent.tool_completed",
+        "schema_version": 1,
+        "definition_kind": "event",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "0a182718ed4cb6134a3e7c01c4ec17c4ec910dd90dd90860012dc27a5d23ce90"
+      },
+      {
+        "schema_id": "8188e044-d893-4961-aa0f-6f12da755896",
+        "schema_key": "resource:changed",
+        "schema_version": 1,
+        "definition_kind": "projection",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "bd8d6143736edbb4a8189d26fc09c20db5590f47cafb15009e173098cc1cda74"
+      },
+      {
+        "schema_id": "9263ddf1-f7b7-40d0-b177-9cf843b91064",
+        "schema_key": "file_content",
+        "schema_version": 1,
+        "definition_kind": "query",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "6a6a2f8345e5100f2656906f24865133ae2264afbfcf40606787892071921080"
+      },
+      {
+        "schema_id": "a4070b63-bffe-4a9f-9b7f-4c3ff2da8d60",
+        "schema_key": "resource.state_observed",
+        "schema_version": 1,
+        "definition_kind": "event",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "b83b6372060c021aa4e48e396a7197f773228a1b63dd24c4d46e41aac335a608"
+      },
+      {
+        "schema_id": "b4587e3c-4e61-4076-97b4-d34884c15097",
+        "schema_key": "resource:refresh_required",
+        "schema_version": 1,
+        "definition_kind": "projection",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "4949d78bf460b9148d5e264017e67a023114bd4453ff56a1171281fb6ceef17d"
+      },
+      {
+        "schema_id": "bb403f95-625a-4e0b-8a13-e192737654c8",
+        "schema_key": "file_tree",
+        "schema_version": 1,
+        "definition_kind": "query",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "a2342f3713c61768296fda63aafe2f96519fcb5888476765e046eac29f34846a"
+      },
+      {
+        "schema_id": "d8ba7295-e7c1-46a7-aa87-e295d6776c26",
+        "schema_key": "file.command_accepted",
+        "schema_version": 1,
+        "definition_kind": "event",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "66d5273e1de53e11781ebcf7e6de496cd2bf868fc2c794cf10877a75fc0bf71e"
+      },
+      {
+        "schema_id": "da63b7c4-55d1-4cee-9a13-95cc2621bb64",
+        "schema_key": "agent:activity",
+        "schema_version": 1,
+        "definition_kind": "query",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "979b93d4ce379da20661d020a78e7081adb90f0d3c2d9a1a2a6aa6baf10ffeb3"
+      },
+      {
+        "schema_id": "e4d64cbc-1ce9-46fd-8bb4-07368e2fe4f5",
+        "schema_key": "resource:provenance",
+        "schema_version": 1,
+        "definition_kind": "query",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "4ea746bea8f3b6b2478127edd0c3a444844b361a1071841e8298dd55b3a29782"
+      },
+      {
+        "schema_id": "e9dfdb74-96ef-4c6b-a521-07727ae6d59a",
+        "schema_key": "resource:changed",
+        "schema_version": 2,
+        "definition_kind": "projection",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "definition_sha256": "e0ddd31ef664d901e54cd6c88b3b40bda5a99b8ce9a3665ed63ee055bf52c954"
+      }
+    ],
+    "subscriptions": [
+      {
+        "subscription_id": "5442f168-edc3-44f9-9000-b2548f3882e6",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "handler_key": "system.agent-resource-observer",
+        "priority": -50,
+        "delivery_policy": "required_ack",
+        "definition_sha256": "da7508d689bd443acda61cd8a607d4d57eaa7ab85fe8ea92d1427ea9e8d7e982"
+      },
+      {
+        "subscription_id": "5a936691-c114-46c0-8540-4bf6a68011a5",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "handler_key": "system.provenance-ledger",
+        "priority": -100,
+        "delivery_policy": "required_ack",
+        "definition_sha256": "60ec7cffaff2c91db806a962fa87e77c4e3966c1f2a6bd3f2508523f2d205b32"
+      },
+      {
+        "subscription_id": "713ad4f0-fc40-4f08-8f18-c6e3cbde62dc",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "handler_key": "system.resource-render-projection",
+        "priority": 0,
+        "delivery_policy": "best_effort",
+        "definition_sha256": "ca9041575160e3d30182abc0918c975dee23e7ca48a36813b365b6227e14c6e3"
+      },
+      {
+        "subscription_id": "d64557f0-49fb-4cb1-bc62-d2e70c1d16b1",
+        "owner_id": "fusion-studio",
+        "status": "enabled",
+        "handler_key": "system.agent-provenance-ledger",
+        "priority": -100,
+        "delivery_policy": "required_ack",
+        "definition_sha256": "79458a5d6909cf5461246a087014c649b565de3d98a811f509ea590d796618d6"
+      }
+    ],
+    "grants": [
+      {
+        "subscription_id": "5442f168-edc3-44f9-9000-b2548f3882e6",
+        "capability_key": "agent.schedule_observation",
+        "state": "granted",
+        "scope_json": "{\"workspaceScope\":\"event\"}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "5442f168-edc3-44f9-9000-b2548f3882e6",
+        "capability_key": "diagnostic.write_fixed",
+        "state": "granted",
+        "scope_json": "{\"codes\":[\"agent_observation_schedule_failed\"]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "5442f168-edc3-44f9-9000-b2548f3882e6",
+        "capability_key": "fact.consume",
+        "state": "granted",
+        "scope_json": "{\"eventTypes\":[{\"eventType\":\"agent.tool_completed\",\"schemaVersion\":1}]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "5a936691-c114-46c0-8540-4bf6a68011a5",
+        "capability_key": "diagnostic.write_fixed",
+        "state": "granted",
+        "scope_json": "{\"codes\":[\"ledger_duplicate_conflict\",\"ledger_write_failed\"]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "5a936691-c114-46c0-8540-4bf6a68011a5",
+        "capability_key": "fact.consume",
+        "state": "granted",
+        "scope_json": "{\"eventTypes\":[{\"eventType\":\"resource.mutated\",\"schemaVersion\":1}]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "5a936691-c114-46c0-8540-4bf6a68011a5",
+        "capability_key": "ledger.append_resource_fact",
+        "state": "granted",
+        "scope_json": "{\"workspaceScope\":\"event\"}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "713ad4f0-fc40-4f08-8f18-c6e3cbde62dc",
+        "capability_key": "diagnostic.write_fixed",
+        "state": "granted",
+        "scope_json": "{\"codes\":[\"render_projection_duplicate_conflict\",\"render_projection_failed\"]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "713ad4f0-fc40-4f08-8f18-c6e3cbde62dc",
+        "capability_key": "fact.consume",
+        "state": "granted",
+        "scope_json": "{\"eventTypes\":[{\"eventType\":\"resource.mutated\",\"schemaVersion\":1}]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "713ad4f0-fc40-4f08-8f18-c6e3cbde62dc",
+        "capability_key": "renderer.publish_resource_changed",
+        "state": "granted",
+        "scope_json": "{\"messageType\":\"resource:changed\",\"messageVersion\":1,\"panel\":\"file-viewer\",\"workspaceScope\":\"event\"}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "713ad4f0-fc40-4f08-8f18-c6e3cbde62dc",
+        "capability_key": "renderer.publish_resource_refresh_required",
+        "state": "granted",
+        "scope_json": "{\"messageType\":\"resource:refresh_required\",\"messageVersion\":1,\"panel\":\"file-viewer\",\"reasons\":[\"projection_failed\"],\"workspaceScope\":\"event\"}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "d64557f0-49fb-4cb1-bc62-d2e70c1d16b1",
+        "capability_key": "diagnostic.write_fixed",
+        "state": "granted",
+        "scope_json": "{\"codes\":[\"agent_ledger_conflict\",\"agent_ledger_source_missing\",\"agent_ledger_write_failed\"]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "d64557f0-49fb-4cb1-bc62-d2e70c1d16b1",
+        "capability_key": "fact.consume",
+        "state": "granted",
+        "scope_json": "{\"eventTypes\":[{\"eventType\":\"agent.tool_completed\",\"schemaVersion\":1},{\"eventType\":\"resource.state_observed\",\"schemaVersion\":1}]}",
+        "authorized_by_kind": "system_seed"
+      },
+      {
+        "subscription_id": "d64557f0-49fb-4cb1-bc62-d2e70c1d16b1",
+        "capability_key": "ledger.append_agent_fact",
+        "state": "granted",
+        "scope_json": "{\"workspaceScope\":\"event\"}",
+        "authorized_by_kind": "system_seed"
+      }
+    ]
+  },
+  "startupEffects": [
+    {
+      "name": "calendar-adapters",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "calendar-broadcaster",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "cli-config-bootstrap",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "harness-broadcaster",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "harness-status-revalidation",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "theme-css-bootstrap",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    },
+    {
+      "name": "workspace-automation-pipeline",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    }
+  ],
+  "runtimeEffects": [
+    {
+      "name": "harness-http-revalidation",
+      "startRequests": 1,
+      "blockedRequests": 1,
+      "prohibitedAttempts": 0,
+      "factoryInvocations": 0
+    }
+  ],
+  "observationGuards": {
+    "installed": true,
+    "attempts": {
+      "childProcess": 0,
+      "filesystemWatch": 0
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-06T08:24:26.580140+00:00",
+  "gate": "orchestrator final cumulative focused verification",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+  "command": "npx jest --runInBand --runTestsByPath test/runtime/workspace-startup-integrity.test.js test/runtime/isolated-provenance-runtime.test.js test/watch/watcher-retirement.test.js test/event-registry/startup-integration.test.js test/views/view-readiness-coordinator.test.js test/views/view-relocation-recovery.test.js test/ledger/event-ledger.test.js test/screenshot-file-capture-request-id.test.js test/screenshot-protected-view-path.test.js test/calendar/apple-listener-retirement.test.js test/triggers/trigger-loader.test.js test/triggers/cron-scheduler.test.js test/shutdown.test.js test/chat-metadata/file-mutations-collector.test.js test/ws/file-save-route.test.js test/subscriptions/file-provenance-bootstrap.test.js test/resources/file-provenance-integration.test.js test/agent-provenance/fact-authority-and-ledger.test.js test/wire/canonical-chat-tool-events-provenance.test.js",
+  "exitCode": 0,
+  "suitesPassed": 19,
+  "testsPassed": 186,
+  "durationSeconds": 64.062,
+  "raw": "cumulative-focused.log",
+  "rawSha256": "37f0298d4cf58c7f6a6888f1afc8fc990091b5ae19ab64fd4185d4d87ca8e535",
+  "prePostComparisons": 284,
+  "scopedDrift": [],
+  "canaryReceiptCount": 13,
+  "canaryPorts": [
+    54282,
+    54286,
+    54326,
+    54327,
+    54328,
+    54329,
+    54330,
+    54334,
+    54336,
+    54337,
+    54342,
+    54344,
+    54345
+  ],
+  "allCanaryCleanupAndGuardsListenersRestored": true,
+  "normalFixtureOwnerDrainFallbacks": 7,
+  "limits": [
+    "Fixture fallback is cleanup not proof of production graceful shutdown",
+    "Existing Node localstorage warning retained",
+    "Full native/server/build/NewChat raw evidence reused on current unchanged source/build scope; no live repeated prompt"
+  ]
+}

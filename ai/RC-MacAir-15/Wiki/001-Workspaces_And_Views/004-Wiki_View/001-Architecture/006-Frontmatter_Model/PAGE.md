@@ -2,26 +2,16 @@
 name: Markdown Frontmatter Model
 description: System-wide Markdown frontmatter contract for display names, descriptions, retrieval metadata, and renderer-owned settings.
 metadata:
-  incoming-edges:
-    - Wiki
-    - Wiki Architecture
-    - Wiki Interface
-    - Wiki System
-  outgoing-edges: []
   source-files:
     - fusion-studio-client/src/lib/front-matter.ts
     - fusion-studio-client/src/lib/wiki-frontmatter.ts
     - fusion-studio-client/src/components/wiki/PageViewer.tsx
-    - fusion-studio-client/src/components/office/OfficeDocumentPage.tsx
-    - fusion-studio-client/src/components/office/officeTableGeometry.ts
-  connected-skills:
-    - customize-opencode
-  related-trigger-files: []
+  last-modified: "2026-09-19T10:34:31Z"
 ---
 
 Fusion Studio Markdown frontmatter adopts the same delimiter paradigm as OpenCode skills. The envelope is system-wide: Wiki pages, READMEs, skill documents, Office documents, and other searchable Markdown documents should use `name`, `description`, and `metadata`.
 
-Wiki rendering normalizes a known subset of `metadata` for edge display. Other domains can store structured metadata under the same object.
+For new and edited wiki pages, the [Wiki Style Guide](../../../../000-Wiki_Guidance/001-Style_Guide/PAGE.md#frontmatter-contract) defines authored `metadata.source-files` and `metadata.last-modified`; relationship lists are retired from wiki authoring. The renderer still accepts its legacy list fields and does not display the new timestamp in that normalized footer. Other domains retain their structured settings under the same metadata object.
 
 ## Shape
 
@@ -30,16 +20,9 @@ Wiki rendering normalizes a known subset of `metadata` for edge display. Other d
 name: Runtime Model
 description: Explains how chat runtime state moves through the client and server. Use this page when changing runtime ownership, message flow, or state synchronization.
 metadata:
-  incoming-edges:
-    - Chat
-  outgoing-edges:
-    - Rendering Model
-    - State Model
   source-files:
-    - fusion-studio-client/src/state/wikiStore.ts
-  connected-skills:
-    - js-conventions
-  related-trigger-files: []
+    - fusion-studio-client/src/lib/wiki-frontmatter.ts
+  last-modified: "2026-09-19T10:00:00Z"
   display:
     font:
       family: serif
@@ -60,27 +43,28 @@ metadata:
 Markdown content starts here.
 ```
 
+The timestamp is illustrative; use the actual edit time. The `display` and `tables` fields demonstrate Office-owned settings, not required wiki metadata.
+
 ## Display Contract
 
 - `name` renders as the article name at the top of the page.
 - `description` renders beneath the name.
 - A separator line divides the description from the Markdown body.
-- Wiki renders known `metadata` edge fields at the bottom under relationship headings.
+- The current Wiki renderer still normalizes its legacy relationship lists and source-file list for footer display. New wiki authoring omits the relationship lists; `last-modified` remains raw metadata and is not currently normalized into that footer.
 - Office/Email preserve the entire envelope while updating `metadata.display`.
 - Office preserves Markdown table content and stores renderer-owned row/column geometry in `metadata.tables`.
 
 ## Metadata Sections
 
-- **Incoming Edges:** Pages, concepts, or resources that point into this page.
-- **Outgoing Edges:** Pages, concepts, or resources this page points toward.
-- **Source Files:** Code files whose edits may require this page to change.
-- **Connected Skills:** Skills whose edits may require this page to change, or skills this page explains.
-- **Related Trigger Files:** Trigger/hook files whose edits may require this page to change.
+- **Source Files (`source-files`):** Authored exact code-file paths whose changes may require this page to be checked. No edge or skill/trigger relationship lists are required.
+- **Last Modified (`last-modified`):** Quoted UTC string recording the actual latest page edit, using `YYYY-MM-DDTHH:mm:ssZ`. It records modification, not verification; writers currently maintain it explicitly.
 - **Display:** Office/Email document display settings such as font, alignment, and margins.
-- **Tables:** Office table display metadata such as column widths and row heights. The current Office shape uses `tableIndex`, `fingerprint`, `columns`, and `rows`.
+- **Tables:** Office table display metadata. Its schema belongs to the Office documentation and is not changed by the wiki metadata policy.
+
+Older files can still contain `incoming-edges`, `outgoing-edges`, `connected-skills`, and `related-trigger-files`. Their parser compatibility is not an instruction to author or maintain them. Remove those keys when adopting the current schema on an edited wiki page, while retaining ordinary links and unrelated domain-owned metadata.
 
 Renderer-owned Markdown settings belong under `metadata` unless there is a strong reason for a separate top-level field. Office and Email document display settings use `metadata.display`.
 
 ## Future Use
 
-The metadata graph should support deterministic retrieval and tickets. When a source file, skill, trigger, or wiki page changes, tooling can query metadata and file update tickets for affected wiki pages. When a user or AI needs to find an Office document, README, or skill, `name`, `description`, and structured `metadata` provide the first retrieval pass before body-text search.
+A source-file-to-page lookup could route changed code to the documentation that needs review. The authored source list is sufficient for that accountability; no recorded edge graph is required. Automated freshness checks, update tickets, timestamp maintenance, and timestamp display must be described as future work unless verified in current code. In particular, `last-modified` alone cannot establish when a page's claims were last checked.

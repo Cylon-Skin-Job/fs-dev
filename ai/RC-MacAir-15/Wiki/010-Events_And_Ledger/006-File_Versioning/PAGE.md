@@ -1,33 +1,54 @@
 ---
 name: Events File Versioning
-description: How resource mutation events will attach to before and after snapshots, diffs, restore, and file history.
+description: Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
 metadata:
-  incoming-edges:
-    - Events And Ledger
-  outgoing-edges:
-    - Events Provenance Model
-    - Events Ledger Schema
-    - Universal Ledger File Versioning and Provenance
   source-files:
-    - fusion-studio-server/lib/ledger/event-ledger-subscriber.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/file-mutations/save-controller.js
+    - fusion-studio-server/lib/file-mutations/path-authority.js
+    - fusion-studio-server/lib/file-mutations/text-codec.js
+    - fusion-studio-server/lib/file-mutations/atomic-writer.js
+    - fusion-studio-server/lib/file-mutations/file-operation-repository.js
+    - fusion-studio-server/lib/file-mutations/file-version-repository.js
+    - fusion-studio-server/lib/file-mutations/reconciliation.js
+    - fusion-studio-server/lib/file-mutations/checkpoint-adapter.js
+    - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+    - fusion-studio-server/lib/agent-provenance/resource-observer.js
+    - fusion-studio-server/lib/versioning.js
+  last-modified: "2026-09-19T11:52:20Z"
 ---
 
-> **Schema correction authority (2026-07-15):** Apply [provenance schema finding 5](../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. The metadata/hash-only label does not approve concrete file-version hashes; the separate-policy branch remains an owner decision.
+Status: source inspected on 2026-09-19 in the development checkout. Current behavior below is the bounded implementation, not a fresh runtime result. Existing test assertions were inspected, not rerun; installed Alpha was not checked.
 
-Use this page before designing SQLite file version storage.
+## Current mechanisms
 
-File versioning should be a ledger subscriber over canonical resource events. It should not become a second filesystem watcher, a Git wrapper, or a parallel mutation source of truth.
+| Mechanism | What is retained | What it does not establish |
+|---|---|---|
+| Mediated UTF-8 save | `file_operations` durable command/mutation state and `file_versions` exact before bytes or explicit absent preimage | General before/after versions for every filesystem operation, a canonical version event or restore UI |
+| Agent observation | Sparse path-linked `agent_resource_snapshots` and deduplicated exact UTF-8 `agent_snapshot_blobs` after eligible observation | A pre-tool snapshot, proof that the tool changed those bytes, or a diff |
+| Existing Git checkpoint adapter | Reason-based `versioning.commitIfChanged` after successful save for session end, checkpoint or milestone | The required preimage guarantee or general System snapshot restoration |
 
-Metadata/hash-only version rows are not a policy-free fallback. `ULV-D03` must approve which file types, sizes, and classes may receive any version record, including binary/generated/large/temp/ignored/symlink/unsupported handling. `ULV-D05` must approve retention/deletion for metadata rows, edges, and indexes as well as snapshots/diffs/blobs. Together with `ULV-D10` hash/redaction approval, both block metadata/hash-only persistence. `ULV-D12` additionally requires owner approval of the exact non-batch event types, phase/lifecycle and envelope presence, identity/idempotency, bounds, ordering/dedupe/replay/retry/restart, safe failure branches, and subscriber/ledger transaction boundaries; conceptual generic/unknown fields are not defaults. SPEC-35b storage must be accepted and live-ref-only registry Slice 40b2d1 must be active before live metadata emission; before 40b2d1h, restart/replay uses D12's approved omit/diagnose/defer branch and performs no raw-ID backfill. Historical replay/backfill additionally requires accepted SPEC-40c and active 40b2d1h. SPEC-35d is required before version edges. Content artifacts additionally require `ULV-D02` and active 40b2d2. Storm batches require ULV-D03/D04/D05/D10, accepted SPEC-35b, and active 40b2d3; 39d historical edge/query support requires accepted 35d and 40c, and compaction/drop requires accepted 35f.
+These stores have separate identities and owners. The save response's `checkpointState` describes the optional Git step, not an agent checkpoint or the required preimage. Its failure is a warning after the write. Snapshots are System audit/recovery copies under the [System boundary](../../002-Server_And_Runtime/PAGE.md#system-database-boundary); they do not replace the live file or connected app as authority.
 
-## Future Responsibilities
+## Required save preimage and replacement
 
-- Capture before/after snapshots or blobs for eligible file mutations.
-- Store diffs or derived summaries where useful.
-- Link each version to the canonical resource event that caused or observed it.
-- Preserve reachability to UI actions, assistant tool calls, harness ID/run/event, trigger, scheduler, script, automation run, sync/import, agent, system, audit, or external observations through the accepted source resource event. Copy an earlier identity directly only when the version producer separately holds and builder-binds that original live accepted ref or a revalidated historical capability; never transitively copy embedded upstream IDs from the resource event.
-- Support restore and forensic query workflows without depending on Git status.
+The supported command is one validated Unicode-scalar, NUL-free JSON string encoded exactly as UTF-8, at most 10 MiB. Existing bytes must also be at most 10 MiB, fatal-decode and round-trip exactly as NUL-free UTF-8. Empty text and a UTF-8 BOM are supported. Unsupported encodings/binary content, oversized preimages, directories and final symlinks are rejected before replacement. Parents must exist and resolve within both the authoritative workspace and panel roots; an in-root parent alias can normalize to the physical path. Protected-path checks further constrain the target and generated Git/temp paths.
 
-The resource-sync work must preserve event identity and provenance hooks, but version storage belongs to the versioning build unless explicitly folded in.
+`path-authority.resolve` derives the physical workspace-relative path and fingerprint. The shared path serialization and a second resolution precede `file-operation-repository.reserve`; the operation binds host-generated operation, command, event, resource and file-version IDs plus request origin/intent/content hash. The same connection/request with identical binding replays its stored terminal result without repeating replacement or checkpoint side effects. This is not a blanket guarantee for newly generated requests or reconnect retries.
+
+The controller reads an existing preimage through bounded no-follow file access. `prepare` transactionally inserts the complete preimage row and changes the operation to prepared. A missing target stores `absent` with no bytes/hash and becomes create-by-save. Only after durable attempt registration does `atomic-writer.replace` create an exclusive operation temp, write and sync it, verify temp/parent/final identity and old-content hash, rename once and sync the directory. This narrows races but does not provide a platform-independent compare-and-swap against arbitrary external writers across the final pathname rename window.
+
+## Failure and restart truth
+
+Required reservation, preimage or prepare failure prevents replacement. For example, invalid old UTF-8 leaves those original bytes unchanged, records a failed accepted operation and returns `failed_before_replace`; no `resource.mutated` fact is emitted. Command admission is a separate axis: it may remain pending while the durable protected save continues.
+
+An error after rename can mean `outcome_unknown` with `retrySafe: false`; the controller cannot safely call it a failed unperformed mutation. Startup reconciliation fails accepted/unprepared work, marks unattempted prepared work failed, and records attempted prepared work as unknown with bounded current-state evidence. Matching the intended postimage hash does not upgrade that unknown operation to success or rerun its mutation. Succeeded operations can replay pending facts/ledger work with their original IDs; temp cleanup is separately tracked.
+
+If replacement succeeds but durable success recording fails, the current response remains a successful write with pending provenance after bounded persistence attempts. A restart can still find prepared/attempted state and report unknown. Response snapshots/cache prevent immediate duplicate side effects where available; they cannot make unavailable durable state certain. After successful replacement, publication, ledger, projection or Git-checkpoint failures never justify blindly replaying the write.
+
+## Observation checkpoints and future versioning
+
+The agent observer runs after reported activity, using its captured workspace authority and the secure native observation boundary. Missing native support fails observation rather than falling back to unsafe pathname capture. Eligible exact UTF-8 bytes are bounded at 10 MiB. First observation creates a checkpoint; a changed bytes/absent state creates another linked to the prior observed snapshot; unchanged state reuses the checkpoint. A read can establish the first baseline. The earlier observed checkpoint is not necessarily the state immediately before a tool ran.
+
+The approved bounded save and agent contracts already permit their exact snapshots and hashes. Older general policy prerequisites must not be applied as blanket prohibitions to these stores. Broader `file.version` events, general diffs, restore commands/UI, arbitrary binary/large-file eligibility, deletion/rename/move coverage and lifecycle policy remain outside this implementation. Preserve history by default; exact retention, redaction/export and restore conflict/provider permissions require decisions when those features are specified. Restoring is a separate permitted write to the authoritative source, not editing a historical copy.
+
+See [File Version Provenance Schema](../003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md) for current record fields and [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) for the consumer path.

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-06T01:52:38.069965+00:00",
+  "observer": "/root/startup_integrity_repair_orchestrator",
+  "manifestSha256": "c45d4b2c657cb9070bd207e782666d8c42051478ebb8392b785e64aff8ddf8dc",
+  "checksSha256": "104ed02f4addb17959f2abab153636efda5d0ca2bc52272477d3abb8e49b8c67",
+  "validatedCounts": {
+    "authority": 7,
+    "mergedR1R2": 13,
+    "R3OwnedChanges": 8,
+    "evidence": 110,
+    "mixedSources": 40,
+    "loadedAppOwners": 10,
+    "distFiles": 191
+  },
+  "failures": [],
+  "scope": "Current-byte and raw evidence provenance, not R3 acceptance; individual source/dist hashes verified; mixed/loaded aggregate serialization not independently recomputed",
+  "requiredManualAndOriginalAdoption": true
+}

@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-06T01:21:57.164Z",
+  "attributeBefore": {
+    "mainPid": 57401,
+    "serverPid": 57425,
+    "rendererPids": [
+      57444
+    ],
+    "serverPort": 52199,
+    "debugPort": 52197,
+    "mainExecutable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "mainEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "mainCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "serverEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "serverCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "rendererExecutables": [
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+    ],
+    "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+    "machine": "RC-MacAir-15",
+    "serverUserData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2"
+  },
+  "attributeAfter": {
+    "mainPid": 57401,
+    "serverPid": 57425,
+    "rendererPids": [
+      57444
+    ],
+    "serverPort": 52199,
+    "debugPort": 52197,
+    "mainExecutable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "mainEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "mainCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "serverEntry": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "serverCwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "rendererExecutables": [
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+    ],
+    "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2",
+    "machine": "RC-MacAir-15",
+    "serverUserData": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-profile-2"
+  },
+  "connection": {
+    "connectedAfterWorkspaceInit": true,
+    "samples": 11,
+    "durationMs": 2000
+  },
+  "targetId": "AAF359BD9E45BED9BBAE6DFCF7D2377C",
+  "window": {
+    "targetId": "AAF359BD9E45BED9BBAE6DFCF7D2377C",
+    "nativeInventory": "public-native-windows.json",
+    "cdpWindowMethod": "unsupported-read-only-method"
+  },
+  "dom": {
+    "url": "fusion-shell://app/",
+    "title": "Fusion Studio",
+    "workspaceLabel": "Public Scratch 2",
+    "machine": "Local: RC-MacAir-15",
+    "workspaces": [
+      {
+        "id": "public-scratch-2",
+        "active": true
+      }
+    ],
+    "panels": [
+      {
+        "id": "file-viewer",
+        "active": true
+      }
+    ],
+    "chats": [
+      {
+        "host": "main",
+        "workspaceId": "public-scratch-2",
+        "viewId": "file-viewer",
+        "threadId": "",
+        "surfaceId": "chat-surface:main:1:4a4d00ac-cf96-4918-8dcf-0bcb5056802c"
+      }
+    ],
+    "rows": [],
+    "newChatCount": 1,
+    "inputCount": 1
+  },
+  "registry": [
+    {
+      "id": "public-scratch-2",
+      "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-r3-stage-5ko0edmk/public-scratch-2",
+      "label": "Public Scratch 2"
+    }
+  ],
+  "selected": {
+    "value": "public-scratch-2"
+  },
+  "counts": {
+    "threads": 0,
+    "groups": 0,
+    "exchanges": 0
+  },
+  "readOnlyObservation": true,
+  "noUIInputs": true
+}

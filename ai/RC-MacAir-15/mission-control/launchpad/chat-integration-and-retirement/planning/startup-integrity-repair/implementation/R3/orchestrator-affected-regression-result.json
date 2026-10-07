@@ -1,0 +1,30 @@
+{
+  "command": [
+    "npx",
+    "jest",
+    "--runInBand",
+    "--runTestsByPath",
+    "test/runtime/workspace-startup-integrity.test.js",
+    "test/runtime/isolated-provenance-runtime.test.js",
+    "test/watch/watcher-retirement.test.js",
+    "test/event-registry/startup-integration.test.js",
+    "test/views/view-readiness-coordinator.test.js",
+    "test/views/view-relocation-recovery.test.js",
+    "test/ledger/event-ledger.test.js",
+    "test/screenshot-file-capture-request-id.test.js",
+    "test/screenshot-protected-view-path.test.js",
+    "test/calendar/apple-listener-retirement.test.js",
+    "test/triggers/trigger-loader.test.js",
+    "test/triggers/cron-scheduler.test.js",
+    "test/shutdown.test.js",
+    "test/chat-metadata/file-mutations-collector.test.js",
+    "test/ws/file-save-route.test.js",
+    "test/subscriptions/file-provenance-bootstrap.test.js",
+    "test/resources/file-provenance-integration.test.js",
+    "test/agent-provenance/fact-authority-and-ledger.test.js",
+    "test/wire/canonical-chat-tool-events-provenance.test.js"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server",
+  "exitCode": 0,
+  "endedAt": "2026-10-06T01:25:54.449945+00:00"
+}

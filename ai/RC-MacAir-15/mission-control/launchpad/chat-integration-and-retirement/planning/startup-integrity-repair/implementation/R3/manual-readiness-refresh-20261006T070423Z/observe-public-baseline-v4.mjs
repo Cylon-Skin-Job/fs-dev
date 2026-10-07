@@ -1,0 +1,22 @@
+import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';
+import {resolveTarget} from '/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs';
+import {systemProcesses,selectOwnedProcesses,validateRuntime,listenerPids} from '/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs';
+import {observeConnection,loadChromium} from '/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs';
+const root=process.argv[2],nonce=process.argv[3];if(fs.readFileSync(path.join(root,'.chat-ar-r3-owned'),'utf8')!==nonce+'\n')throw Error('unowned stage');
+const target=resolveTarget(['--repo','/Users/rccurtrightjr./projects/fs-dev','--machine','RC-MacAir-15','--user-data',path.join(root,'public-profile-2')]);
+const run=path.join(target.runtime,'run-gWZBmc');const verified=JSON.parse(fs.readFileSync(path.join(run,'verified.json'),'utf8'));
+const attribute=()=>validateRuntime(systemProcesses(),target,verified.mainPid,verified.serverPort,listenerPids(verified.serverPort),verified.debugPort,listenerPids(verified.debugPort));
+const before=attribute();const browser=await loadChromium(target).connectOverCDP('http://127.0.0.1:'+verified.debugPort);
+let receipt;
+try{
+ const pages=browser.contexts().flatMap(c=>c.pages()).filter(p=>p.url()==='fusion-shell://app/');if(pages.length!==1)throw Error('ambiguous shell');const page=pages[0];
+ const connection=await observeConnection(()=>page.evaluate(()=>({url:location.href,connected:document.querySelectorAll('.rv-connection-status.connected').length,text:document.querySelector('.rv-connection-status.connected')?.textContent})));
+ const session=await page.context().newCDPSession(page);const info=await session.send('Target.getTargetInfo');const window={targetId:info.targetInfo.targetId,nativeInventory:'public-native-windows-v4.json',cdpWindowMethod:'unsupported-read-only-method'};
+ const dom=await page.evaluate(()=>({url:location.href,title:document.title,workspaceLabel:document.querySelector('.rv-workspace-name')?.textContent,machine:document.querySelector('.rv-ai-source-selector__value')?.textContent,workspaces:Array.from(document.querySelectorAll('[data-workspace-id]'),e=>({id:e.getAttribute('data-workspace-id'),active:e.classList.contains('is-active')})),panels:Array.from(document.querySelectorAll('[data-panel]'),e=>({id:e.getAttribute('data-panel'),active:e.classList.contains('active')})),chats:Array.from(document.querySelectorAll('[data-chat-host]'),e=>({host:e.getAttribute('data-chat-host'),workspaceId:e.getAttribute('data-chat-workspace-id'),viewId:e.getAttribute('data-chat-view-id'),threadId:e.getAttribute('data-chat-thread-id'),surfaceId:e.getAttribute('data-surface-id')})),rows:Array.from(document.querySelectorAll('[data-thread-id][data-thread-group-id]'),e=>({threadId:e.getAttribute('data-thread-id'),threadGroupId:e.getAttribute('data-thread-group-id'),selected:e.getAttribute('data-selected')})),newChatCount:document.querySelectorAll('.rv-new-chat-btn').length,inputCount:document.querySelectorAll('.rv-chat-input').length}));
+ const db=new (createRequire(path.join(target.repo,'fusion-studio-server/package.json'))('better-sqlite3'))(target.database,{readonly:true,fileMustExist:true});
+ const registry=db.prepare('SELECT id,repo_path,label FROM workspaces ORDER BY id').all();const selected=db.prepare("SELECT value FROM system_config WHERE key='last_active_workspace_id'").get();const counts={threads:db.prepare('SELECT COUNT(*) AS count FROM threads').get().count,groups:db.prepare('SELECT COUNT(*) AS count FROM thread_groups').get().count,exchanges:db.prepare('SELECT COUNT(*) AS count FROM exchanges').get().count};db.close();
+ if(registry.length!==1||registry[0].id!=='public-scratch-2'||selected.value!==registry[0].id||!dom.workspaces.some(w=>w.id===registry[0].id&&w.active)||dom.machine!=='Local: RC-MacAir-15'||!dom.panels.some(p=>p.id==='file-viewer'&&p.active)||dom.newChatCount<1)throw Error('scratch DOM/registry binding incomplete');
+ receipt={at:new Date().toISOString(),attributeBefore:before,attributeAfter:attribute(),connection,targetId:info.targetInfo.targetId,window,dom,registry,selected,counts,readOnlyObservation:true,noUIInputs:true};
+ fs.writeFileSync(path.join(root,'public-baseline-v4.json'),JSON.stringify(receipt,null,2)+'\n',{flag:'wx',mode:0o600});console.log(JSON.stringify(receipt));
+ await session.detach();
+}finally{await browser.close();}

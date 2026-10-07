@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-06T07:31:45.360851+00:00",
+  "status": "WAITING_OWNER_POST_COMPLETION_PASSIVE_REOPEN",
+  "ownerTestimony": "Yes to second prompt/response visible after reopening; app left available",
+  "runtimeResult": "normal real provider turns + exact durable and current visible readback proved; after-completion reopen still requires proof",
+  "remaining": [
+    "focal post-completion passive reopen",
+    "coordinated scratch-only shutdown",
+    "original-owner adoption",
+    "fresh builder/acceptance/full integration",
+    "owner acceptance"
+  ],
+  "files": [
+    {
+      "path": "ACTUAL-CHRONOLOGY.json",
+      "sha256": "d3f93219dd89c8a8996a3d7212b9984cab4eb5451ced298e79459ad1b398ca98",
+      "size": 4490
+    },
+    {
+      "path": "ACTUAL-OPENCODE-SMOKE-HELD.md",
+      "sha256": "027b3f7b707be2aa14159e1c6db81fc899bc7e487c46092c635e82c4bcf36f67",
+      "size": 8923
+    },
+    {
+      "path": "SOURCE-AND-OBSERVER-RECEIPT.json",
+      "sha256": "d7e5c9113c4b0c12abb9856da0192a8717b2b09b7f2fc33d22eeb2df1acd6601",
+      "size": 5698
+    },
+    {
+      "path": "public-actual-native-windows.json",
+      "sha256": "6a78bd05bc2738c8d708926451a39f07ce6c367551cff60b82da95b1e19f888c",
+      "size": 2093
+    },
+    {
+      "path": "public-actual-readback.json",
+      "sha256": "8b1e214c8fd219df86fd4fcaa72c2622c91d4f0795c759fea84c0b6440a660f1",
+      "size": 13908
+    },
+    {
+      "path": "public-actual-readback.log",
+      "sha256": "7c3c6eeb27e3d8f5ead28f7119c8ec024641743fafbda493a23351bb7da24906",
+      "size": 10546
+    },
+    {
+      "path": "public-actual-shapes-v2.json",
+      "sha256": "38cdc076bf032bd9cf879db5020cf29cf0711ee46c4094be305a23df96313eeb",
+      "size": 9994
+    },
+    {
+      "path": "public-actual-shapes-v2.log",
+      "sha256": "712cfb442bb171dc30761a109119cb49cbf057a36301c2680e2afe4c82a7a8c0",
+      "size": 7419
+    },
+    {
+      "path": "public-actual-shapes.log",
+      "sha256": "e961973bd1f6e58dc56f89b1bd78a78cfdc6d46fd4e77f077c75198db7fbfa58",
+      "size": 617
+    },
+    {
+      "path": "public-manual-receipts-v4.jsonl",
+      "sha256": "74edff86ca6334af34fa573047fc2b59597cfcb4139fc4ff3aba8f3c75aa46c7",
+      "size": 90228
+    },
+    {
+      "path": "public-observer-ready-v4.json",
+      "sha256": "becc1fd9acbcd414f05e8d0b3b7017bfa8d505b9ba5e9f1c579e813854b50d3c",
+      "size": 2856
+    },
+    {
+      "path": "public-observer-v4-process.json",
+      "sha256": "540a8fc632db7a0cdfb3bd7caacf5c719be7b8742985b521b9315f19b935930a",
+      "size": 412
+    },
+    {
+      "path": "read-public-actual-readback.mjs",
+      "sha256": "e5a126e2e0c8932b93f2a4bf322ababa6284c6cd2e43f48fc1de4c3074bdde30",
+      "size": 7826
+    },
+    {
+      "path": "read-public-actual-shapes-v2.mjs",
+      "sha256": "ca6ded9dfdb5a4b98899464e6477b111b6b5ec8aefe75208364204ba277dbc58",
+      "size": 6653
+    },
+    {
+      "path": "read-public-actual-shapes.mjs",
+      "sha256": "11a2dd68bdaab3c5bdcce21b70ccd00ab9d4db4aa9c10d38f67627bbbeeabefa",
+      "size": 6642
+    }
+  ]
+}

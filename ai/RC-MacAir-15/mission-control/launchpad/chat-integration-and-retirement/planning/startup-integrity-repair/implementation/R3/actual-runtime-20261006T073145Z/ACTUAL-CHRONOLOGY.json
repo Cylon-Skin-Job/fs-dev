@@ -1,0 +1,153 @@
+{
+  "sampleAt": "2026-10-06T07:27:33.143Z",
+  "observerTimestamps": "callback processing times; do not order original owner actions from these alone",
+  "ownerClockRecords": [
+    {
+      "at": "2026-10-06T07:19:54.167Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:19:54.320Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:03.108Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_attempt",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "hadStoredSessionId": false
+    },
+    {
+      "at": "2026-10-06T07:20:03.111Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_return",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302
+    },
+    {
+      "at": "2026-10-06T07:20:05.975Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "child_close",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302,
+      "exitCode": 0,
+      "sawNativeJson": true,
+      "sawSessionId": true,
+      "sawTurnEnd": true,
+      "stopRequested": false
+    },
+    {
+      "at": "2026-10-06T07:20:05.977Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "session_patch_committed",
+      "turnId": "0cbe3b1d-84d1-416c-bcef-9301ddd98dcf",
+      "harnessId": "opencode",
+      "pid": 11302
+    },
+    {
+      "at": "2026-10-06T07:20:09.966Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:09.968Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:12.160Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:12.162Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:13.742Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:13.743Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:16.644Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:16.646Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:18.125Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_request",
+      "hasThreadId": false
+    },
+    {
+      "at": "2026-10-06T07:20:18.127Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "thread_open_return"
+    },
+    {
+      "at": "2026-10-06T07:20:23.774Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_attempt",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "hadStoredSessionId": false
+    },
+    {
+      "at": "2026-10-06T07:20:23.774Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "spawn_return",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140
+    },
+    {
+      "at": "2026-10-06T07:20:25.436Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "child_close",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140,
+      "exitCode": 0,
+      "sawNativeJson": true,
+      "sawSessionId": true,
+      "sawTurnEnd": true,
+      "stopRequested": false
+    },
+    {
+      "at": "2026-10-06T07:20:25.439Z",
+      "event": "temp_chat_boundary_v1",
+      "stage": "session_patch_committed",
+      "turnId": "27ebfe22-7ebd-4119-bd23-1c78d136e7fa",
+      "harnessId": "opencode",
+      "pid": 24140
+    }
+  ],
+  "lastRecordedOpenRequest": "2026-10-06T07:20:18.125Z",
+  "lastRecordedOpenReturn": "2026-10-06T07:20:18.127Z",
+  "secondProviderSpawn": "2026-10-06T07:20:23.774Z",
+  "secondProviderClose": "2026-10-06T07:20:25.436Z",
+  "secondSessionCommit": "2026-10-06T07:20:25.439Z",
+  "postCompletionReopenObserved": false,
+  "requestToCoordinator": "one first-to-existing-second passive row switch after completion, no prompt/New Chat"
+}

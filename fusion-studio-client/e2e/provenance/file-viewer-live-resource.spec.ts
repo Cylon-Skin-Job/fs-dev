@@ -33,9 +33,8 @@ const expectedStartupEffects = [
   'cli-config-bootstrap',
   'harness-broadcaster',
   'harness-status-revalidation',
-  'hotkey-screenshot-watcher',
   'theme-css-bootstrap',
-  'workspace-watcher-trigger-pipeline',
+  'workspace-automation-pipeline',
 ];
 
 function installBrowserWireObserver(page: Page) {

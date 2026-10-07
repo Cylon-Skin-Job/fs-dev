@@ -1,97 +1,52 @@
 ---
 name: Automation Run Provenance Schema
-description: Schema guidance for TRIGGERS.md events, scheduler runs, script runs, sync/import jobs, ticket creation, and background agent runs.
+description: Current legacy automation and settled history direction, with future governed run and captured-output decisions.
 metadata:
-  incoming-edges:
-    - Events Provenance Model
-  outgoing-edges:
-    - Resource Mutation Provenance Schema
-    - Ledger Event Provenance Schema
-    - File Version Provenance Schema
   source-files:
+    - fusion-studio-server/lib/views/readiness-startup.js
+    - fusion-studio-server/lib/views/readiness-runtime.js
+    - fusion-studio-server/lib/views/readiness-coordinator.js
+    - fusion-studio-server/lib/views/relocation-service.js
+    - fusion-studio-server/lib/workspace/workspace-controller.js
+    - fusion-studio-server/lib/testing/isolated-provenance-runtime.js
+    - fusion-studio-server/test/runtime/workspace-startup-integrity.test.js
+    - fusion-studio-server/test/views/readiness-startup.test.js
+    - fusion-studio-server/lib/startup.js
     - fusion-studio-server/lib/triggers/trigger-loader.js
     - fusion-studio-server/lib/triggers/cron-scheduler.js
     - fusion-studio-server/lib/triggers/script-runner.js
+    - fusion-studio-server/lib/watcher/actions.js
     - fusion-studio-server/lib/runner/index.js
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-server/lib/runner/run-folder.js
+    - fusion-studio-server/lib/event-registry/seed-catalog.js
+  last-modified: "2026-10-06T01:16:27Z"
 ---
 
-> **Schema correction authority (2026-07-15):** Apply the [provenance cross-article findings](../../../../Captures/008-Provenance-Temp/provenance-schema-findings.md) and owner direction in chat. Automation subtype and captured-output choices remain open under `AUT-D03`, `AUT-D01`, and findings 1/3.
+Status: current source describes legacy triggers, cron jobs and agent-run records; a general governed automation run/match schema and executor are not implemented. Startup-entry tests exercise the real effect and view-readiness owners with scratch consumers. Those tests establish bounded startup reachability, not an active automation run or measured public provider behavior. Future contracts below are distinct from current runtime behavior.
 
-Use this page before changing trigger execution, scheduled runs, script runner output, background agents, or automation-created tickets.
+## Current operational automation
 
-Automation run provenance covers headless work that can create chat prompts, tickets, tool calls, resource mutations, ledger events, and file versions.
+`startup.js` registers one post-listen `workspace-automation-pipeline` effect. Its readiness wrapper captures the active workspace ID/root from the controller, ensures view readiness and holds a verified lease while resolving view roots and initializing issue scripts, components, actions, triggers, cron and runner monitoring. Pending preparation is joined before admission; these consumers cannot enter while readiness remains unverified. Missing identity or unavailable or retiring readiness admits none of them. The lease releases on success or failure; the existing outer startup catch remains. Within admitted initialization, startup reads the Agents registry, loads component definitions and action handlers, then calls `loadTriggers`. The loader scans registered agent folders, active view capsules and `ai/components` for `TRIGGERS.md`. File-change blocks remain parseable definitions but have no active watcher input or automatic delivery; chat/ticket/agent/system blocks register legacy colon-topic bus listeners; cron blocks go to `createCronScheduler`. A missing/unreadable registry or load failure is caught by startup and does not establish that any trigger is active on this machine.
 
-## Boundary
+The scheduler checks supported daily or cron expressions every minute, uses an in-memory same-minute guard, optionally retries a failed condition and calls the ticket creator. This is not a durable exactly-once scheduler across restart. Ticket creation can apply the existing auto-hold behavior. File-filter scripts have no active watcher caller and do not run automatically. These facts do not approve future captured-output semantics.
 
-Automation runs need durable run IDs so later audits can distinguish triggered scripts from assistant tool calls, UI actions, external filesystem changes, and unknown background work.
+The separate agent runner creates timestamp-named run folders and a manifest, tracks active runs and emits legacy `agent:run_started`, `agent:run_completed`, `agent:run_failed` and `agent:run_stalled` events. Those operational IDs and file records are not a registered common automation fact or proof of a governed causal relationship. The [Universal Event Bus](../../001-Universal_Event_Bus/PAGE.md) explains the legacy/governed split; the current registry has save and tool-observation facts, with no generic automation producer.
 
-TRIGGERS.md file-change execution is operational and fail-open with respect to provenance. Its one workspace-watcher matcher consumes established observations exactly once, and mutation handlers do not invoke a second matcher. It does not await canonical resource construction, redaction, validation, publication, or an accepted reference. Canonical automation facts observe the match only after the exact SPEC-40b2c branch is registered. Open owner decision `AUT-D02` blocks direct matched-resource IDs/edges until a private non-wait accepted-reference handoff and exactly-once semantics are approved; until then independently safe automation facts omit those relationships without delaying, suppressing, retrying, or duplicating the run.
+## Settled direction
 
-Open owner decision `AUT-D03` blocks even the base canonical automation run/match registration, emission, accepted ref, and persistence until exact per-kind run-ID generation owner/timing/format/handoff, phase/lifecycle presence, subtype IDs, actor/provenance/context, sensitive-field redaction/failure behavior, bounds, ordering/dedupe/replay/restart/cancel semantics, and fail-open tests are approved. The settled requirement that canonical automation facts contain durable `automation.runId` and `automation.kind` is not reopened. Before D03 closes, only audit and inert ABI/fixture proposals may proceed; no production generator or new ID ABI may be added or exposed. AUT-D01 separately governs result branches.
+Automation history should make triggered scripts, scheduled jobs, imports/syncs, background agents and system work distinguishable from UI actions, assistant tool activity and unknown external changes. Every eventual canonical automation fact must contain durable `automation.runId` and `automation.kind`. This common-field requirement is settled; it does not settle each kind's ID generation, handoff, lifecycle or schema.
 
-## Domain Payload
+Future provenance observes automation without authorizing, duplicating, suppressing or failing its execution. Missing attribution remains unknown or unlinked. Provenance/redaction failure must omit unsafe output and derived hashes/previews while retaining a safe non-sensitive core and diagnostic when possible. This automation-specific direction does not remove the existing mediated save's required prewrite recovery protection or promise that all current admission work is nonwaiting.
 
-The following shape is non-authoritative `AUT-D03` decision input, not an executable schema or registration contract, except for the settled requirement that every eventual canonical automation fact contains durable `automation.runId` and `automation.kind`. D03 may accept, replace, split, or remove the example's event types, phases, lifecycle branches, subtype/optional fields, and presence rules, but not those two common fields. Until D03 closes and is propagated/back-validated, no implementation may infer their generation ABI or a producer, registry entry, accepted ref, persistence branch, bound, redaction rule, or test expectation from this example. `AUT-D01` separately controls any result extension and `AUT-D02` any matched-resource accepted relationship.
+Preserve durable history by default under the [System boundary](../../../002-Server_And_Runtime/PAGE.md#system-database-boundary). System owns configuration, grants and historical records; connected services keep authoritative live content. Plugins need defined interfaces and approved capabilities, cannot self-grant or create arbitrary System app tables, and are not admitted merely by placing a trigger file or manifest on disk. Existing raw trigger closures remain compatibility behavior; a future governed migration must register each executable definition as its own permission subject and invoke scoped named commands.
 
-```js
-{
-  schemaVersion,
-  eventId,
-  eventFamily: 'automation',
-  eventType,
-  eventPhase,
-  occurredAt,
-  lifecycle,
-  ids,
-  actor,
-  provenance,
-  context: {
-    scope: 'headless'
-  },
-  automation: {
-    runId,
-    kind: 'trigger' | 'scheduler' | 'script' | 'sync' | 'import' | 'agent' | 'system',
-    triggerRunId,
-    schedulerRunId,
-    scriptRunId,
-    agentRunId,
-    triggerName,
-    triggerFile,
-    schedule,
-    matchedEventId,
-    condition,
-    scriptPath,
-    // AUT-D01 + TOOL-D01 + finding 3 must approve the owner-selected unified
-    // captured-output extension contract before any result metrics appear.
-    ticketId,
-    resourceEventIds: [],
-    // fileVersionIds remains absent until its owning relationship registration.
-  },
-  resources: [],
-  redaction
-}
-```
+## Open contracts and their feature triggers
 
-`automation.runId` and `automation.kind` are the settled common fields across trigger, scheduler, script, sync, import, agent, and system jobs. Subtype IDs remain D03 candidates until their exact ownership/equality/presence is approved. Sync, import, and system jobs still require the two common fields; any future subsystem-specific ID requires an approved schema change.
-Domain `fileVersionIds` remains absent until the owning file-version relationship schema, accepted-reference binding, bounds, and registration are approved; an empty candidate array is not early authority.
-After at least one canonical event establishing an automation run is accepted, a downstream event may store the accepted `automation.runId` only in a selector its D03/owning schema explicitly approves. The automation event itself may use upstream event causality only through a D03/AUT-D02-approved selector and registered accepted-reference binding and never self-references. While `AUT-D02` is open, operational file-trigger matches always omit upstream resource IDs/edges while preserving any independently safe D03-approved match/run fact. No subtype index role, optionality, equality, or selector exists until D03 approves it.
+| Feature to build | Decision still required |
+|---|---|
+| Governed run/match publication | Per-kind run ID owner, timing, format and operational handoff; exact event/phase/lifecycle branches, subtype IDs, actor/context, sensitive fields, safe omission, bounds and restart/replay/deduplication/cancel semantics. No production generator or registry API follows from the common-field requirement alone. |
+| Direct file-trigger causality | How one operational watcher match links to independently admitted evidence without waiting, duplicate execution or invented cause; handoff lifetime, ordering, fanout, rename and missing/late/rejected evidence. |
+| Captured script output | Raw return versus normalized return/stdout/stderr, falsy values, Promise handling, lifecycle outcomes and timeout enforcement; shared output contract, serialization, redaction, hashes/bytes, truncation and external storage. Current tool fingerprints do not settle this output policy. |
+| Arbitrary plugin execution/emission | Registration and consent grammar, capability grants, revocation, host-owned publisher boundary and bounded isolation. Existing trusted built-ins do not confer plugin execution or raw bus access. |
 
-The runtime's raw run ID is operational state, not automatically a publishable cause. The automation publisher returns an accepted reference only after canonical acceptance. On validation/publication failure, execution continues and no D03-approved downstream ID selector/mirror/edge may use that rejected identity. `origin.id`, automation/subtype cause IDs, and `automationRef` are candidate field names only until D03 and the owning downstream schema approve them. A later accepted lifecycle event can establish the reference only for subsequent work.
-Automation execution outcome uses the common envelope's `lifecycle.status`; do not add a second `automation.status` field.
-
-## Connections
-
-- Trigger runs can be caused by resource events, chat events, scheduler events, or other automation events.
-- Scripts and agents can cause resource mutations and file versions.
-- Chat prompts and downstream events link to `automation.runId` only through an accepted upstream automation reference.
-- `context.scope = 'headless'` is a D03 candidate, not an approved context value or presence rule.
-- Audits can trace trigger-to-script-to-file or scheduler-to-agent-to-ticket chains.
-
-## Implementation Gaps
-
-- Common-field product intent is resolved: eventual canonical trigger, scheduler, script, sync/import, agent, and system automation facts must contain durable `automation.runId` and `automation.kind`. Production generation/integration remains blocked until `AUT-D03` approves the exact per-kind ABI; this statement alone authorizes no generator change.
-- Script captured-output fields remain unregistered. `AUT-D01`, `TOOL-D01`, and finding 3 must select the unified extension contract—including whether it is one shared block—before defining automation mapping, result domain, falsy/Promise handling, serialization/encoding, hashes, bytes, truncation, external storage, omission/redaction, per-branch presence, failure material, timeout behavior, or lifecycle mappings. The failure-isolation branch is decided: provenance/redaction failure never fails automation execution; unsafe result material and derived hashes/previews are omitted, while the non-sensitive run/event core and a diagnostic remain when possible.
-- Agent run events need ledger records.
-- Automation-created tickets/actions need causal links to matched events and run IDs.
+The older common envelope, accepted-reference machinery, exact executor capacities and result/subtype fields are proposals outside the accepted save and tool-observation scopes. Resolve only the choices needed by the feature being specified. [Resource Mutation](../003-Resource_Mutation_Provenance_Schema/PAGE.md), [Ledger Event](../004-Ledger_Event_Provenance_Schema/PAGE.md) and [File Version](../005-File_Version_Provenance_Schema/PAGE.md) describe the narrower implemented owners.

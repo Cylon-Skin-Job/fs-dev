@@ -1,0 +1,33 @@
+{
+  "slice": "S04",
+  "at": "2026-09-19T03:35:54.281726-07:00",
+  "pages": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "before_sha256": "a84c22311556bc2e4777f5e8414d16117aa7ad42f9698e319e9b171284b0df45",
+      "snapshot_sha256": "a84c22311556bc2e4777f5e8414d16117aa7ad42f9698e319e9b171284b0df45",
+      "after_sha256": "3b10f1937f1ce32ff7120a75ba49cf494d7d96f27ddea4548797c830d55a2f1d",
+      "written_at": "2026-09-19T03:35:54.282249-07:00"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "before_sha256": "fc1f278f95f280fbc739965db02f12f8893e25acd88e6629cb29357a282322a8",
+      "snapshot_sha256": "fc1f278f95f280fbc739965db02f12f8893e25acd88e6629cb29357a282322a8",
+      "after_sha256": "52a4a38c4e4a0ed80544418c8bcc6200035740063d23dcca1c11f5f10cb34933",
+      "written_at": "2026-09-19T03:35:54.284530-07:00"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md",
+      "snapshot": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-033554.md",
+      "before_sha256": "686474202b269c717ed1f744deaea0411d26f64c8be6721cbd11abbbf3cb5de4",
+      "snapshot_sha256": "686474202b269c717ed1f744deaea0411d26f64c8be6721cbd11abbbf3cb5de4",
+      "after_sha256": "a118a7f302949b91533cf7e1e039b5859e86ceec12db2fc4012f49c46b3dc603",
+      "written_at": "2026-09-19T03:35:54.286568-07:00"
+    }
+  ],
+  "deviations": [
+    "S04-D01 current owner-edited wiki metadata policy supersedes legacy V2 arrays on edited pages"
+  ]
+}

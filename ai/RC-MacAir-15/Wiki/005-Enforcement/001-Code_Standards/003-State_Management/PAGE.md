@@ -2,17 +2,15 @@
 name: State Management Standards
 description: Rules for store ownership, backend state authority, hydration, and avoiding duplicated state checks.
 metadata:
-  incoming-edges:
-    - Code Standards
-  outgoing-edges:
-    - Frontend UI Standards
-    - WebSocket Protocol Standards
-    - Persistence And Metadata Standards
   source-files:
-    - fusion-studio-client/src/state/
-    - fusion-studio-client/src/lib/ws/
-  connected-skills: []
-  related-trigger-files: []
+    - fusion-studio-client/src/state/slices/viewSlice.ts
+    - fusion-studio-client/src/lib/ws/thread-handlers.ts
+    - fusion-studio-server/lib/view-state/resolver.js
+    - fusion-studio-server/lib/view-state/writer.js
+    - fusion-studio-client/src/lib/viewActivity.ts
+    - fusion-studio-client/src/lib/viewCollections.ts
+    - fusion-studio-client/src/hooks/useFileTileMenu.ts
+  last-modified: "2026-09-21T13:37:22Z"
 ---
 
 Use this page before adding or changing client stores, hydration logic, runtime
@@ -56,9 +54,7 @@ It must not contain transcripts, harness runtime, chat drafts, thread-list
 visibility, or other shell chrome. SQLite may own thread-group structure and
 membership, but it must not become a second owner for this view-local snapshot.
 
-Fusion-owned view-state persistence uses the narrow view-state service even
-when capsules live under the protected System tree. That authority must not be
-re-exported as a generic agent/harness file-write capability.
+Fusion-owned view-state persistence currently uses the narrow view-state service while capsules live under `ai/<machine>/System/Views/`. The approved target relocates editable instances outside `System`; it does not change service ownership or make state restore universal. That service authority must not be re-exported as a generic agent/harness file-write capability. See [View Configuration And Agents](../../../001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md).
 
 Keep chat identities separate: `threadGroupId` selects the visible body of
 work; `threadId` routes one chat session; `surfaceId` scopes transient mounted

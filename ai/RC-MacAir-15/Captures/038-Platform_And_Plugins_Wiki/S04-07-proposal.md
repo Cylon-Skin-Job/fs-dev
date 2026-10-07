@@ -1,0 +1,21 @@
+---
+name: Workspace Compositions
+description: Explains editable workspace-plugin compositions and server provisioning as approved direction, alongside current bundled-template creation.
+metadata:
+  source-files:
+    - fusion-studio-server/lib/workspace/create-service.js
+    - fusion-studio-server/lib/views/workspace-registry-writer.js
+    - fusion-studio-server/lib/ws/client-message-router.js
+    - fusion-studio-client/src/components/WorkspaceCreateModal.tsx
+  last-modified: "2026-09-21T13:37:22Z"
+---
+
+A **workspace plugin** is intended to declare a composition: which view plugins form a useful starting workspace and which dependencies are needed. A person may omit proposed views and configure the result. A six-view example, or reducing it to four, illustrates editability; it does not prescribe a global six-view default. A view plugin supplies the protected display/content/tab behavior, capability declarations, templates and maintenance knowledge for its type. Not every plugin is a view plugin.
+
+## Approved provisioning
+
+The server is to recognize installed plugin declarations, select the view plugins in a chosen composition, copy their view templates into editable workspace instances, and initialize necessary configuration and state. Each instance then refers back to its protected plugin. Installing that dependency and creating an editable instance are separate operations; the copied template does not become privileged implementation code. [Plugin Templates And Instances](../../011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md) explains the package/copy boundary. Persona, AGENTS.md, skills, special sub-agent definitions, workflows, theme, state and ordinary configuration live with that editable instance; the protected plugin controls authority. Predictable instance changes should use simple scripts or tools when possible, with AI handling interpretation where needed. Plugin-specific instructions stay with the plugin. This is an approved target, not a description of the current Create New path.
+
+**WV-G02 — plugin-aware compositions and provisioning:** today's `new` profile is a bundled JSON list of five template IDs, and `create-service.js` copies from `System_Manager/ai-template`. The Create New form displays those five, but sends only project path and label. Add View also copies a bundled template. The remaining capability is a server-owned installer/provisioner that reads installed workspace/view plugins, resolves the edited selection and dependencies, creates instances and initializes their state. The workspace controller, create service and future plugin platform own the integration. Before implementation, the owner must settle dependency/version behavior (WV-O03), declaration/binding schemas (WV-O04), copied-instance updates/disable/remove (WV-O02), and the instance destination/portability (WV-O01). No behavior for missing plugins or customized-instance upgrades is implied here.
+
+The target keeps editable instances outside `System`, while protected plugins stay within it. The exact instance path is open. A local instance's content-root setting can point at material elsewhere, but cannot grant fresh database, file, process or executable-display authority by itself. [View Architecture](../002-View_Architecture/PAGE.md) separates that binding from instance identity and records the repeatable-instance limit (WV-G03). [Adding Workspaces](../003-Adding_Workspaces/PAGE.md) describes what a user can do today; [Decisions](../000-Workspaces_And_Views/002-Decisions/PAGE.md) holds the unresolved product gates.

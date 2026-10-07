@@ -1,0 +1,44 @@
+---
+name: Tabs, Drawers And Canonical Files
+description: Separates shell hosts from collection and file content, with current tab owners and the approved reusable file flow.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/view-tabs/componentTabConnectedOwner.ts
+    - fusion-studio-client/src/components/view-tabs/fileConnectedOwnerPorts.ts
+    - fusion-studio-client/src/state/fileStore.ts
+    - fusion-studio-client/src/components/view-tabs/ComponentTabPanel.tsx
+    - fusion-studio-client/src/components/view-tabs/fileConnectedPresenterTargets.ts
+    - fusion-studio-client/src/components/file-explorer/FileViewer.tsx
+  last-modified: "2026-09-23T13:19:05Z"
+---
+
+A tab, drawer or popup/window is a shell-owned host. A collection, file surface or custom region is content placed inside it. In the approved composition model, changing the content does not transfer navigation, focus or container lifecycle to a plugin. Reuse the established state owners instead of creating another tab store.
+
+## Collection to file and back
+
+The approved flow lets a collection open the canonical platform file surface in its current tab with a return route, or in another tab. The platform file-type registry and canonical presentation/editing surface remain the file owner; a collection does not implement another editor or save path.
+
+| Responsibility | Owner |
+|---|---|
+| Tab identity, placement, focus and container lifecycle | Shell and its established connected owners. |
+| Selection, search/filter and collection navigation state | Collection, retained when opening a file and returning. |
+| File presentation and editing | Canonical platform file surface under its own mode rules. |
+| Validated save, history and recovery operations | Owning platform services. |
+
+For example, the [illustrative Capture collection](../003-Composable_Presentation/PAGE.md#an-illustrative-capture-collection) can show folder-backed cards and search, request a selected file in the current tab, then return to its prior collection state. Opening in another tab changes the placement choice, not data authority or save ownership. This is an illustrative target sequence, not a claim that the current Capture view implements the whole flow.
+
+Generalized duplicate-tab, dirty-buffer, restoration and close policies remain open where not already governed by an existing owner. The target does not impose raw-only editing or revise the canonical editor's mode/save rules. [Files View](../../001-Workspaces_And_Views/007-File_View/PAGE.md) owns current view behavior; [View Activity And Collections](../../001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md) owns the detailed state account. [Data And Actions](../005-Data_And_Actions/PAGE.md) explains why an open or save callback does not grant storage authority.
+
+## Containers and Chat
+
+A shell can host different content without turning every tab or drawer into a separate plugin. A popup/window is likewise a container, not a new persistence owner. The initial drawer content catalog, component inventory and rollout order remain [open choices](../000-Platform_And_Plugins/001-Decisions/PAGE.md#open-choices-and-decision-gates); this model does not choose a new launcher inventory.
+
+Chat keeps its own identity and placement contract. The [Side Chat decision](../../007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md#2026-09-19--side-chat-tabs-and-non-chat-windows) places one session in a content tab, without a new left thread list or the removed left sliding-panel target. The right-hand list button remains, with its future shared behavior separate. Generic non-chat popup/window hosting does not restore floating chat. Read [Chat System](../../007-Chat_System/000-Overview_and_References/PAGE.md) for group, session and placement ownership; no current Chat implementation status is certified here.
+
+## Current source-inspected foundation
+
+`componentTabConnectedOwner.ts` delegates collection reads and writes through explicit owner ports. The Files ports in `fileConnectedOwnerPorts.ts` derive records from the existing file store and apply changes through its `applyConnectedTabCommit` action. That action in `fileStore.ts` persists the tab collection through the existing file-tab path and updates the presentation state. This connected machinery does not create a second durable tab store.
+
+`ComponentTabPanel.tsx` validates an active record, resolves its component through the supplied resolver and renders ready, empty or unavailable content. The code-owned file target helper in `fileConnectedPresenterTargets.ts` is consumed by the Files ports when resolving a file placement. Separately, `FileViewer.tsx` reads the active file from the file store and reads content/loading/error state from the existing file data store for presentation. These are bounded examples of current host and content ownership, not a general plugin registration interface or proof that every collection already reuses the canonical file surface.
+
+This evidence is source inspection only, without product runtime checks. Follow [Unfinished Work](../000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md) for shell/file reuse generalization and [Custom Iframe Composition](../006-Custom_Iframe_Composition/PAGE.md) for specialized embedded content within the target hosting model.

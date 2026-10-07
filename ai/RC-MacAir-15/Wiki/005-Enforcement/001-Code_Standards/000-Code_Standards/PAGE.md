@@ -2,23 +2,8 @@
 name: Code Standards
 description: Modularity expectations, file structure rules, architecture layers, CSS rules, naming conventions, and planning checklist for code changes.
 metadata:
-  incoming-edges:
-    - Enforcement
-  outgoing-edges:
-    - Architecture Routing
-    - Frontend UI Standards
-    - State Management Standards
-    - WebSocket Protocol Standards
-    - Universal Event Bus Standards
-    - Harness Adapter Standards
-    - Persistence And Metadata Standards
-    - Testing And Smoke Slices
-    - Themes and State
   source-files: []
-  connected-skills:
-    - css-conventions
-    - js-conventions
-  related-trigger-files: []
+  last-modified: "2026-09-28T04:56:08Z"
 ---
 
 # Code Standards
@@ -45,6 +30,19 @@ standards for specific code surfaces.
 | Vertical slices, smoke tests, route-level verification | [Testing And Smoke Slices](../008-Testing_And_Smoke_Slices/PAGE.md) |
 
 ## Hard Routing Rule
+
+### Governed capability planning
+
+Owner direction recorded 2026-09-27 PDT: new cross-capability behavior must be designed within the schema/provenance/subscriber model, not added as a parallel bespoke server route. Roadmap Creators and implementers must:
+
+1. Identify existing owners and classify commands, facts, observations, queries and projections. Link the [Event Taxonomy and executable schema catalog](../../../010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md), [Provenance Model](../../../010-Events_And_Ledger/003-Provenance_Model/PAGE.md) and [UEB standards](../005-Universal_Event_Bus/PAGE.md).
+2. Reuse definitions when meaning, identity, units, timing and authority agree. Create closed, versioned domain definitions when they do not; avoid a generic optional-field envelope merely to make unrelated capabilities look alike.
+3. Declare producer authority, subscriber grants/capabilities, delivery/failure behavior and storage ownership. A missing framework capability becomes an explicit foundation dependency or same-SPEC extension, not an undocumented bypass. Registration is not permission and legacy emit/on is not governed admission.
+4. Measure/publish once at each owned stage and fan out authorized projections. Diagnostics and retained health consumers share scalar derivation; server arrival and renderer receipt are legitimately different stages. UI reset must not reset or double-count retention state.
+5. Separate required protection/provenance from best-effort sampled telemetry. Governance does not require every observation to block a command, enter the System ledger or live in fusion.db. A separate health store does not itself enforce access permissions.
+6. Include exact schema/consumer references, migration/retirement, tests and affected wiki updates in the SPEC. Label each capability implemented, approved direction or missing. Preserve current evidence limits; passing a planning review is not runtime validation.
+
+This applies to new capability boundaries, not every private helper or keystroke. Existing legacy paths require explicit migration planning; this direction does not pretend they have already migrated. The [follow-up brief](../../../../mission-control/launchpad/fusion-health-and-governed-observability/TICKET.md) captures logger/render/ledger/plugin/view coordination; it is not an approved implementation roadmap.
 
 Do not add a new user action, WebSocket message, backend handler, service,
 event, or harness method until the existing owner for that category of work has
@@ -81,6 +79,7 @@ A 250-line file rendering UI + calling APIs + managing state = not fine (three j
 3. **Imports tell the story.** If a file imports from 5+ unrelated modules, it's probably orchestrating too many concerns.
 4. **Extract when the second consumer appears.** Don't pre-extract. Three similar lines of code is better than a premature abstraction. Extract when a second file needs the same thing.
 5. **Delete, don't deprecate.** No `_unused` prefixes, no `// removed` comments, no backwards-compatibility shims for one-time operations. If it's dead, delete it.
+6. **Ship the target, don't preserve the old path.** When a replacement composition, host, or flow is accepted, it becomes the production behavior in the same program of work. Do not keep the previous production path alive "for compatibility" behind flags, docks, or legacy hosts — that hides the accepted feature and doubles the surface every future change must support. Local and developer data is disposable: prefer wiping or migrating it over carrying legacy modes. If a transition period is genuinely required, the owner asks for it explicitly.
 
 ---
 
@@ -303,3 +302,16 @@ Full audit completed 2026-04-06. 22 specs with dependencies, gotchas, and silent
 - **LiveSegmentRenderer.tsx** — DO NOT SPLIT, breaks completion → `specs/13-live-segment-renderer-split.md`
 - **State store decoupling** — Zustand pattern is standard → `specs/20-state-store-decoupling.md`
 - **App.tsx imports** — root orchestrator, expected → `specs/22-app-tsx-import-reduction.md`
+
+<!-- section-toc:start -->
+## Technical Articles in this Wiki Section
+
+- [Architecture Routing](../001-Architecture_Routing/PAGE.md) - Rules for finding and using existing dispatchers, interpreters, controllers, and service boundaries before adding new routes.
+- [Frontend UI](../002-Frontend_UI/PAGE.md) - Rules for UI components, composer/reply chrome, user intents, and presentation boundaries.
+- [State Management](../003-State_Management/PAGE.md) - Rules for store ownership, backend state authority, hydration, and avoiding duplicated state checks.
+- [WebSocket Protocol](../004-WebSocket_Protocol/PAGE.md) - Rules for WebSocket message additions, canonical client intent, backend routing, and handler ownership.
+- [Universal Event Bus](../005-Universal_Event_Bus/PAGE.md) - Rules for using the server-side universal event bus without confusing commands, facts, chat lifecycle, and provider protocol.
+- [Harness Adapters](../006-Harness_Adapters/PAGE.md) - Rules for provider-specific CLI/service adapters, canonical events, and canonical thread actions.
+- [Persistence And Metadata](../007-Persistence_And_Metadata/PAGE.md) - Rules for SQLite writes, migrations, thread managers, metadata, file mirrors, and durable state updates.
+- [Testing And Smoke Slices](../008-Testing_And_Smoke_Slices/PAGE.md) - Rules for vertical slices, focused smoke tests, route-level verification, and reporting residual risk.
+<!-- section-toc:end -->

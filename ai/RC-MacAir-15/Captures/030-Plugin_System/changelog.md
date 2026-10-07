@@ -2,6 +2,7 @@
 
 Append-only; newest first. `YYYY-MM-DD — entry (capture)`.
 
+- 2026-09-22 — Added [037 integration capture](../037-Plugin_Integration_And_Parallel_Roadmaps/integration-overview.md) at owner request. Newer chat supersedes conflicting plugin-folder assumptions; direct CHAT-AR supervisor handoff replaces the historical post-CHAT-04 branch condition. Candidate parallel tracks remain unapproved. *(integration)*
 - 2026-09-15 — **Suite created in fs-dev.** Carried the plugin program out of
   `~/projects/plug-ins` into the Captures view at owner direction
   ([PLUG-D011](./decisions.md#plug-d011--execution-home-moved-to-fs-dev-captures)).
